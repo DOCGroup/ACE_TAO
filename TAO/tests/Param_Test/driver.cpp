@@ -298,7 +298,6 @@ Driver::run (void)
         delete client;
       }
       break;
-
     case Options::TEST_RECURSIVE_STRUCT:
       {
         Param_Test_Client<Test_Recursive_Struct> *client = new
@@ -312,7 +311,6 @@ Driver::run (void)
         delete client;
       }
       break;
-
     case Options::TEST_OBJREF_STRUCT:
       {
         Param_Test_Client<Test_Objref_Struct> *client = new
@@ -326,7 +324,6 @@ Driver::run (void)
         delete client;
       }
       break;
-
     case Options::TEST_UB_STRUCT_SEQUENCE:
       {
         Param_Test_Client<Test_Struct_Sequence> *client = new
@@ -356,8 +353,34 @@ Driver::run (void)
       {
         Param_Test_Client<Test_Bounded_Struct_Sequence> *client = new
           Param_Test_Client<Test_Bounded_Struct_Sequence> (this->orb_.in (),
-                                                           this->objref_.in(),
+                                                           this->objref_.in (),
                                                            new Test_Bounded_Struct_Sequence);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+    case Options::TEST_UB_ARRAY_SEQUENCE:
+      {
+        Param_Test_Client<Test_Array_Sequence> *client = new
+          Param_Test_Client<Test_Array_Sequence> (this->orb_.in (),
+                                                  this->objref_.in (),
+                                                  new Test_Array_Sequence);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+    case Options::TEST_BD_ARRAY_SEQUENCE:
+      {
+        Param_Test_Client<Test_Bounded_Array_Sequence> *client = new
+          Param_Test_Client<Test_Bounded_Array_Sequence> (this->orb_.in (),
+                                                          this->objref_.in (),
+                                                          new Test_Bounded_Array_Sequence);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
@@ -369,7 +392,7 @@ Driver::run (void)
       {
         Param_Test_Client<Test_ObjRef> *client = new
           Param_Test_Client<Test_ObjRef> (this->orb_.in (),
-                                          this->objref_.in(),
+                                          this->objref_.in (),
                                           new Test_ObjRef);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
@@ -508,7 +531,6 @@ Driver::run (void)
         delete client;
       }
       break;
-
     case Options::TEST_EXCEPTION:
       {
         Param_Test_Client<Test_Exception> *client = new
@@ -522,7 +544,6 @@ Driver::run (void)
         delete client;
       }
       break;
-
     case Options::TEST_BIG_UNION:
       {
         Param_Test_Client<Test_Big_Union> *client = new
@@ -607,6 +628,8 @@ template class Param_Test_Client<Test_Objref_Struct>;
 template class Param_Test_Client<Test_Struct_Sequence>;
 template class Param_Test_Client<Test_Unbounded_Struct_Sequence>;
 template class Param_Test_Client<Test_Bounded_Struct_Sequence>;
+template class Param_Test_Client<Test_Array_Sequence>;
+template class Param_Test_Client<Test_Bounded_Array_Sequence>;
 template class Param_Test_Client<Test_ObjRef>;
 template class Param_Test_Client<Test_ObjRef_Sequence>;
 template class Param_Test_Client<Test_TypeCode>;
@@ -645,6 +668,8 @@ template class Param_Test_Client<Test_Multdim_Array>;
 #pragma instantiate Param_Test_Client<Test_Struct_Sequence>
 #pragma instantiate Param_Test_Client<Test_Unbounded_Struct_Sequence>
 #pragma instantiate Param_Test_Client<Test_Bounded_Struct_Sequence>
+#pragma instantiate Param_Test_Client<Test_Array_Sequence>
+#pragma instantiate Param_Test_Client<Test_Bounded_Array_Sequence>
 #pragma instantiate Param_Test_Client<Test_ObjRef>
 #pragma instantiate Param_Test_Client<Test_ObjRef_Sequence>
 #pragma instantiate Param_Test_Client<Test_TypeCode>

@@ -177,6 +177,18 @@ public:
       Param_Test::Bounded_StructSeq_out s3,
       CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual Param_Test::ArraySeq * test_array_sequence (
+      const Param_Test::ArraySeq & s1,
+      Param_Test::ArraySeq & s2,
+      Param_Test::ArraySeq_out s3,
+      CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual Param_Test::Bounded_ArraySeq * test_bounded_array_sequence (
+      const Param_Test::Bounded_ArraySeq & s1,
+      Param_Test::Bounded_ArraySeq & s2,
+      Param_Test::Bounded_ArraySeq_out s3,
+      CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   virtual Param_Test::Coffee_Mix * test_coffe_mix (
       const Param_Test::Coffee_Mix & s1,
       Param_Test::Coffee_Mix & s2,

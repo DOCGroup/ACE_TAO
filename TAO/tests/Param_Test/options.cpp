@@ -121,6 +121,10 @@ Options::parse_args (int argc, char **argv)
           this->test_type_ = Options::TEST_UB_STRUCT_SEQUENCE;
         else if (!ACE_OS::strcmp (get_opts.optarg, "bd_struct_seq"))
           this->test_type_ = Options::TEST_BD_STRUCT_SEQUENCE;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "ub_array_seq"))
+          this->test_type_ = Options::TEST_UB_ARRAY_SEQUENCE;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "bd_array_seq"))
+          this->test_type_ = Options::TEST_BD_ARRAY_SEQUENCE;
         else if (!ACE_OS::strcmp (get_opts.optarg, "objref"))
           this->test_type_ = Options::TEST_OBJREF;
         else if (!ACE_OS::strcmp (get_opts.optarg, "typecode"))

@@ -118,9 +118,19 @@ be_visitor_sequence_cs::gen_unbounded_sequence (be_sequence *node)
   pt->accept (visitor);
   *os << " *,this->buffer_);" << be_nl
       << be_nl
-      << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
-      << "tmp[i] = old[i];" << be_uidt_nl
-      << be_nl
+      << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl;
+
+  if (pt->node_type () == AST_Decl::NT_array)
+    {
+      pt->accept (visitor);
+      *os << "_var::copy (tmp[i], old[i]);" << be_uidt_nl;
+    }
+  else
+    {
+      *os << "tmp[i] = old[i];" << be_uidt_nl;
+    }
+
+  *os << be_nl
       << "if (this->release_)" << be_idt_nl
       << full_class_name << "::freebuf (old);" << be_uidt_nl << be_uidt_nl
       << "}" << be_nl

@@ -96,10 +96,20 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
         *os << "TAO_Bounded_WString_Sequence";
       break;
     default: // not a managed type
-      if (node->unbounded ())
-        *os << "TAO_Unbounded_Sequence<";
+      if (bt->base_node_type () == AST_Decl::NT_array)
+        {
+          if (node->unbounded ())
+            *os << "TAO_Unbounded_Array_Sequence<";
+          else
+            *os << "TAO_Bounded_Array_Sequence<";
+        }
       else
-        *os << "TAO_Bounded_Sequence<";
+        {
+          if (node->unbounded ())
+            *os << "TAO_Unbounded_Sequence<";
+          else
+            *os << "TAO_Bounded_Sequence<";
+        }
       break;
     }
 
@@ -109,7 +119,6 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
                   0);
   be_visitor_sequence_base_template_args visitor (ctx,node);
   ctx->state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
-  //be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
   if (bt->accept (&visitor) == -1)
     {
@@ -119,7 +128,6 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
                          "base type visit failed\n"),
                         -1);
     }
-  //delete visitor;
 
   // find out if the sequence is of a managed type and if it is bounded or not
   if (node->managed_type () == be_sequence::MNG_STRING
@@ -132,6 +140,24 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
     }
   else
     {
+      // If we are a sequence of arrays, the template includes
+      // a _var parameter.
+      if (bt->base_node_type () == AST_Decl::NT_array)
+        {
+          *os << ", ";
+
+          if (bt->accept (&visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_sequence_ch::"
+                                 "visit_sequence - "
+                                 "base type visit failed\n"),
+                                -1);
+            }
+
+          *os << "_var";
+        }
+
       if (node->unbounded ())
         {
           *os << ">";
@@ -281,27 +307,6 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   *os << node->name () << "::~" << node->local_name ()
       << " (void) // dtor" << be_nl
       << "{}\n\n";
-
-#if 0
-  if (!this->ctx_->tdef ())
-    {
-      // by using a visitor to declare and define the TypeCode, we have the
-      // added advantage to conditionally not generate any code. This will be
-      // based on the command line options. This is still TO-DO
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
-      ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_sequence_cs::"
-                             "visit_sequence - "
-                             "TypeCode definition failed\n"
-                             ), -1);
-        }
-    }
-#endif
 
   os->gen_endif ();
   node->cli_stub_gen (1);
