@@ -27,6 +27,8 @@
 #include "Default_Thread_Lane_Resources_Manager.h"
 #include "Default_Collocation_Resolver.h"
 
+#include "debug.h"
+
 ACE_RCSID (tao,
            TAO_Internal,
            "$Id$")
