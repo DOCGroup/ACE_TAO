@@ -300,7 +300,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                                  this->concurrency_strategy_) == -1)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("\n\nTAO (%P|%t) SHMIOP_Acceptor::open_i - %p\n\n"),
                     ACE_TEXT ("cannot open acceptor")));
       return -1;
@@ -316,7 +316,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
   if (this->base_acceptor_.acceptor ().get_local_addr (this->address_) != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("\n\nTAO (%P|%t) SHMIOP_Acceptor::open_i - %p\n\n"),
                     ACE_TEXT ("cannot get local addr")));
       return -1;
@@ -328,7 +328,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                                     sizeof tmp_host) != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("\n\nTAO (%P|%t) SHMIOP_Acceptor::open_i - %p\n\n"),
                     ACE_TEXT ("cannot cache hostname")));
       return -1;
@@ -390,7 +390,7 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) TAO_SHMIOP_Acceptor::object_key - ")
                       ACE_TEXT ("error while decoding host/port")));
         }
