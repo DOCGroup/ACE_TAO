@@ -14,9 +14,13 @@ Tue Jun 30 09:27:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * etc/ACE-guidelines.html: added a guideline about using ACE_Export.
 
-        * ace/Message_Queue.cpp (ACE_Message_Queue_Vx::dtor): added close ()
-          call to destructor, because the one in the parent class will never
-          get called because head_ is always 0.
+        * ace/Message_Queue.cpp (ACE_Message_Queue_Vx::dtor; VxWorks only):
+          added close () call to destructor, because the one in the parent
+          class will never get called because head_ is always 0 in the derived
+          class.
+
+        * ace/Message_Queue.i (VxWorks only): finished implementing the
+          ACE_Message_Queue_Vx inline member functions.
 
         * tests/Message_Queue_Test.cpp: added performance tests and
           tests of ACE_Message_Queue_Vx.
