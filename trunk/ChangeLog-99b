@@ -5,6 +5,9 @@ Sun Mar 21 09:44:30 1999  David L. Levine  <levine@cs.wustl.edu>
           is enabled, because it notices the memory-in-use.
 
         * examples/Naming/Makefile: changed SRC to PSRC.
+
+        * examples/Naming/Makefile,performance-tests/Misc/Makefile,
+          tests/Makefile:
           Use ace_components instead of the current ACE_COMPONENTS
           setting to determine what should be built.
 
