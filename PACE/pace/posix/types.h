@@ -20,8 +20,10 @@
 
 #include <sys/types.h>
 
+#if defined (PACE_SUNOS)
 /* specific to SunOS 5.7 ace.cs <luther@cs.wustl.edu> */
-#include <inttypes.h>
+# include <inttypes.h>
+#endif /* (PACE_SUNOS) */
 
 /* Wrap a handle. */
 # define PACE_HANDLE int
