@@ -128,7 +128,11 @@ private:
   const ACE_Handle_Set &handles_;
   // The <Handle_Set> we are iterating through.
 
+#if defined (ACE_WIN32)
+  u_int handle_index_; 
+#else
   int handle_index_; 
+#endif /* ACE_WIN32 */
   // Index of the bit we're examining in the current <word_num_> word.
 
   int word_num_;

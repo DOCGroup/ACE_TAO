@@ -1742,11 +1742,13 @@ typedef const char *LPCTSTR;
 typedef char *LPTSTR;
 typedef char TCHAR;
 
+#if !defined (__TEXT)
 #if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
 #define __TEXT(STRING) L##STRING
 #else
 #define __TEXT(STRING) STRING 
 #endif /* UNICODE && ACE_HAS_UNICODE */
+#endif /* !defined __TEXT */
 
 #if defined (m88k)
 #define RUSAGE_SELF 1
@@ -1861,13 +1863,27 @@ struct ACE_OVERLAPPED
 };
 
 // Add some typedefs and macros to enhance Win32 conformance...
-typedef int LPSECURITY_ATTRIBUTES;
+#if !defined (LPSECURITY_ATTRIBUTES)
+#define LPSECURITY_ATTRIBUTES int;
+#endif /* !defined LPSECURITY_ATTRIBUTES */
+#if !defined (GENERIC_READ)
 #define GENERIC_READ 0
+#endif /* !defined GENERIC_READ */
+#if !defined (FILE_SHARE_READ)
 #define FILE_SHARE_READ 0
+#endif /* !defined FILE_SHARE_READ */
+#if !defined (OPEN_EXISTING)
 #define OPEN_EXISTING 0
+#endif /* !defined OPEN_EXISTING */
+#if !defined (FILE_ATTRIBUTE_NORMAL)
 #define FILE_ATTRIBUTE_NORMAL 0
+#endif /* !defined FILE_ATTRIBUTE_NORMAL */
+#if !defined (MAXIMUM_WAIT_OBJECTS)
 #define MAXIMUM_WAIT_OBJECTS 0
+#endif /* !defined MAXIMUM_WAIT_OBJECTS */
+#if !defined (FILE_FLAG_OVERLAPPED)
 #define FILE_FLAG_OVERLAPPED 0
+#endif /* !defined FILE_FLAG_OVERLAPPED */
 
 #if defined (ACE_HAS_BROKEN_IF_HEADER)
 struct ifafilt;
