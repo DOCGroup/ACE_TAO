@@ -645,7 +645,6 @@ TAO_NAMESPACE  OBV_Messaging
   private:
     CORBA::Boolean _pd_is_system_exception;
     CORBA::Boolean _pd_byte_order;
-    typedef _tao_seq_Octet _marshaled_exception_seq;
     _tao_seq_Octet _pd_marshaled_exception;
   };
 
