@@ -7,7 +7,8 @@
 // =  DESCRITPTION
 //     Testing the platform for POSIX Asynchronous I/O. If
 //     ACE_HAS_AIO_CALLS is defined, we also test the POSIX <aio_>
-//     calls with real time signals on.
+//     calls with real time signals on. We dont test the things with
+//     aio_suspend.  
 //
 // = AUTHOR
 //    Programming for the Real World. Bill O. GallMeister.
