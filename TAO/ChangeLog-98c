@@ -1,3 +1,25 @@
+Tue Sep 30 17:27:00 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* <RELEASE>: Tagged a release for limited consumption until the
+ 	Service Configurator bug is fixed.
+	
+	* tests/multiCubit/svr.cpp: Added code to properly release CORBA
+ 	objects.  Delays between task activations simply aid in debugging
+ 	and are not necessary.
+
+	* tao/singletons.h: Made TAO_ORB_Core's singleton type
+ 	compile-time selectable via the TAO_HAS_TSS_ORBCORE compiler flag.
+
+	* tao/orbobj.cpp: Corrected an incorrect shift count, and the ORB
+ 	Core now defaults to using the host name of the local host.
+
+	* tao/Orb_Core.[hi]: Added explicit CTOR.
+
+	* tao/Orb_Core.cpp: Insured that the correct template type was
+ 	instantiated.
+
+	* tao/Makefile: Added -DTAO_HAS_TSS_ORBCORE to CPPFLAGS.
+
 Tue Sep 30 16:43:12 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* docs/releasenotes.html: Added some notes on the ORB Core.
