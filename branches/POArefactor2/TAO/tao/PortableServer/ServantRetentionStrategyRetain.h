@@ -22,8 +22,6 @@
 
 #include "ServantRetentionStrategyNonRetain.h"
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 class TAO_POA;
 
 namespace TAO
@@ -187,8 +185,6 @@ namespace TAO
     };
   }
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_SERVANT_RETENTION_STRATEGY_RETAIN_H */

@@ -9,8 +9,6 @@ ACE_RCSID (PortableServer,
            ServantRetentionStrategyFactoryImpl,
            "$Id$")
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   namespace Portable_Server
@@ -33,7 +31,9 @@ namespace TAO
         }
         case ::PortableServer::NON_RETAIN :
         {
+#if (TAO_HAS_MINIMUM_POA == 0)
           ACE_NEW_RETURN (strategy, ServantRetentionStrategyNonRetain, 0);
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
           break;
         }
       }
@@ -53,16 +53,10 @@ namespace TAO
     ACE_FACTORY_DEFINE (TAO_PortableServer, ServantRetentionStrategyFactoryImpl)
 
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
     template class ACE_Dynamic_Service<ServantRetentionStrategyFactoryImpl>;
-
     #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
     #pragma instantiate ACE_Dynamic_Service<ServantRetentionStrategyFactoryImpl>
-
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 

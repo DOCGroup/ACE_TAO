@@ -21,11 +21,6 @@ ACE_RCSID (PortableServer,
            Servant_Retention_Strategy,
            "$Id$")
 
-  // @@Johnny, I don;t think this is required anymore. For example,
-  // the root create_* will not be available and hence none of these
-  // will be loaded at all. Extra checks are probably a waste.
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   namespace Portable_Server
@@ -365,4 +360,3 @@ namespace TAO
   }
 }
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
