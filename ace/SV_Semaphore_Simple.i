@@ -3,7 +3,6 @@
 
 // SV_Semaphore_Simple.i
 
-#include "ace/SV_Semaphore_Simple.h"
 #include "ace/Trace.h"
 
 inline int
