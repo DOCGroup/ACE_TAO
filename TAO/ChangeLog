@@ -1,3 +1,112 @@
+Wed Apr 16 00:18:08 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/AbstractBase.inl (_is_a):
+	* tao/AbstractBase.cpp (_is_a):
+
+	  Uninlined this method.  There wasn't much point in inlining it
+	  since it is a virtual method.
+
+	* tao/Any.cpp:
+	* tao/Any_T.cpp:
+
+	  Nuked trailing whitespace.
+
+	* tao/CORBA_String.h:
+
+	  Include "ace/iosfwd.h" instead of "ace/streams.h" to reduce
+	  compile times.  Forward declarations are enough.
+
+	* tao/CORBA_String.cpp:
+	* tao/Messaging_SyncScopeC.cpp:
+	* tao/corbafwd.cpp:
+
+	  Include "ace/OS.h".  Necessitated by above change.
+
+	* tao/Exception.h:
+
+	  Include "ace/SStringfwd.h" and "ace/iosfwd.h" instead of
+	  "ace/SString.h".  The latter is more expensive than the latter
+	  two.
+
+	  Forward declare "ACE_Allocator" class.  Necessitated by above
+	  change.
+
+	* tao/GIOP_Message_Generator_Parser.h:
+	* tao/Utils/Auto_Functor.h:
+
+	  Include "ace/Global_Macros.h".  Necessitated by header inclusion
+	  reductions.
+
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Object.h:
+	* tao/Parser_Registry.h:
+	* tao/Queued_Message.h:
+	* tao/corbafwd.i:
+	* tao/PortableServer/Object_Adapter.h:
+	* tao/PortableServer/POA.h:
+
+	  Cosmetic improvements.
+
+	* tao/NVList.h:
+	* tao/Object.cpp:
+	* tao/Profile.h:
+
+	  Include "ace/Synch.h".  Necessitated by header inclusion
+	  reductions.
+
+	* tao/Object_KeyC.cpp:
+
+	  Include "ace/ACE.h".  Necessitated by header inclusion
+	  reductions.
+
+	* tao/Transport_Connector.h:
+	* tao/Wait_Strategy.h:
+
+	  Forward declare ACE_Time_Value class.  Necessitated by header
+	  inclusion reductions.
+
+	* tao/append.cpp (append):
+
+	  Added missing line feed in debugging output.
+
+	* tao/RTCORBA/Private_Transport_Descriptor.h:
+
+	  Don't bother using the ACE_UNIMPLEMENTED_FUNC macro when
+	  declaring private unimplemented copy constructors and assignment
+	  operators.  Reduces need to include other headers.  All
+	  compilers supported by TAO no longer need this macro.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.cpp
+	  (validate_property):
+
+	  Do not use the deprecated Any extraction operator when checking
+	  the validity of the "Factories" property, i.e. use the operator
+	  that expects a pointer to a "const" object.
+
+	From Carlos O'Ryan <coryan@atdesk.com>
+	* tao/PortableServer/Object_Adapter.cpp (open):
+
+	  Iterate over the registered IOR interceptors so that they may be
+	  given the opportunity to add tagged components to the profiles
+	  for servants managed by the Root POA.  [Bug 1414]
+
+	* tao/PortableServer/POA.cpp (id_to_reference_i):
+
+	  Use the POA's default ObjectReferenceTemplate to create object
+	  references.  [Bug 1414]
+
+	  (establish_components):
+
+	  Do not create a PortableInterceptor::IORInfo object if no IOR
+	  interceptors are registered.  Optimizes POA creation times for
+	  the common case, i.e. no registered IOR interceptors.
+	  [Bug 1414]
+
+	  Turned PortableInterceptor::establish_components() and
+	  PortableInterceptor::components_established() calls into
+	  non-servant upcalls.  Removes some locks that were held during
+	  IOR interceptor calls.  Fixes a deadlock.  [Bug 1414]
+
 Mon Apr 14 13:19:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
@@ -6,7 +115,7 @@ Mon Apr 14 13:19:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  decode_endpoints () is virtual in the TAO_Profile hierarchy and
 	  seems to have a specific semantics in all protocols. The SSL
 	  specifics have to be wrapped up in a seperate method which is
-	  private and not mixed with other protcols! 
+	  private and not mixed with other protcols!
 
 Mon Apr 14 14:16:35 2003  Pradeep Gore  <pradeep@oomworks.com>
 
@@ -14,7 +123,7 @@ Mon Apr 14 14:16:35 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  Defined virtual base class methods to stop Suncc/HPUX ACC339
 	  compiler warnings.Thanks to David Smith <dts@prismtechnologies.com>
 	  for bringing this to attention.
-  
+
 Mon Apr 14 11:24:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IIOP_Profile.cpp:
@@ -59,7 +168,7 @@ Mon Apr 14 11:52:30 2003  Dave Smith  <dts@prismtechnologies.com>
           For HPUX11, replaced the call to the ACE_NEW_RETURN macro with
           its expansion, as the call seems to confuse the compiler
 
-2003-04-14    <dts@axwell>
+Mon Apr 14 00:01:00 2003  <dts@axwell>
 
         * orbsvcs/tests/Notify/RT_lib/RT_POA_Command.h
           Removed clash with symbol defined in
@@ -83,7 +192,6 @@ Sun Apr 13 13:25:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           virtual functions, accessors for object_key (), were inlined,
           declared and defined in every protocol. Moved the accessor to
           the base class and non-virtualized them.
-
 
 Sun Apr 13 08:07:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -166,7 +274,6 @@ Fri Apr 11 09:33:41 2003  Dave Smith  <dts@prismtechnologies.com>
         * orbsvcs/test/Notify/lib/SupplierAdmin_Command.h
           Removed clash with symbol defined in
           /usr/include/machine/cpu.h on HPUX.
-
 
 Thu Apr 10 07:06:07 2003 Pradeep Gore <pradeep@oomworks.com>
 
@@ -328,7 +435,6 @@ Wed Apr 09 14:54:03 2003  Pradeep Gore  <pradeep@oomworks.com>
           Move the Activation_ManagerC to the top of the Makefile to fix
           compile errors. Thanks to Johnny Willemsen
           <jwillemsen@remedy.nl> for this suggestion.
-
 
 Wed Apr  9 13:47:26 2003  Stuart Jones  <jones_s@ociweb.com>
 
@@ -6262,28 +6368,28 @@ Wed Mar  5 00:01:09 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Tue Mar  4 13:44:06 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-        * TAO/TAO_IDL/be/be_visitor_operation/operation.cpp:
-        * TAO/TAO_IDL/be/be_visitor_operation/operation_ss.cpp: Wrap the
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp: Wrap the
           marshal / unmarshal code to check for errors and call the
           appropriate static function to raise the related exception.
 
-        * TAO/tao/Any.cpp:
-        * TAO/tao/Any.h:
-        * TAO/tao/CDR.cpp:
-        * TAO/tao/CDR.h:
-        * TAO/tao/CDR.i:
-        * TAO/tao/GIOP_Message_Base.cpp:
-        * TAO/tao/GIOP_Message_Generator_Parser_10.cpp:
-        * TAO/tao/GIOP_Message_Generator_Parser_12.cpp:
-        * TAO/tao/GIOP_Message_Lite.cpp:
-        * TAO/tao/IIOP_Acceptor.cpp:
-        * TAO/tao/IIOP_Profile.cpp:
-        * TAO/tao/IIOP_Transport.cpp:
-        * TAO/tao/Invocation.cpp:
-        * TAO/tao/Invocation.h:
-        * TAO/tao/Invocation.i:
-        * TAO/tao/Makefile.tao:
-        * TAO/tao/ORB.cpp:
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/CDR.cpp:
+        * tao/CDR.h:
+        * tao/CDR.i:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Transport.cpp:
+        * tao/Invocation.cpp:
+        * tao/Invocation.h:
+        * tao/Invocation.i:
+        * tao/Makefile.tao:
+        * tao/ORB.cpp:
         * tao/ORB_Core.cpp:
         * tao/ORB_Core.h:
         * tao/ORB_Core.i:
@@ -6311,15 +6417,15 @@ Tue Mar  4 13:44:06 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
           The functionality conforms with CORBA 3.0 section 13.10.
 
-        * TAO/tao/Codeset_Manager.cpp:
-        * TAO/tao/Codeset_Manager.h:
-        * TAO/tao/Codeset_Translator_Factory.cpp:
-        * TAO/tao/Codeset_Translator_Factory.h:
-        * TAO/tao/Codeset_Translator_Factory_T.cpp:
-        * TAO/tao/Codeset_Translator_Factory_T.h: New files added to to
+        * tao/Codeset_Manager.cpp:
+        * tao/Codeset_Manager.h:
+        * tao/Codeset_Translator_Factory.cpp:
+        * tao/Codeset_Translator_Factory.h:
+        * tao/Codeset_Translator_Factory_T.cpp:
+        * tao/Codeset_Translator_Factory_T.h: New files added to to
           support the codeset framework
 
-        * TAO/tests/CodeSets: A new test, including a sample translator
+        * tests/CodeSets: A new test, including a sample translator
           library.
 
 Tue Mar  4 08:57:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -7115,53 +7221,53 @@ Fri Feb 21 17:49:54 2003  Edward Scott  <eas@prismtechnologies.com>
           Correct IFR Service handling IDL with C++ keyword identifiers.
           Fixes bug 1393.
 
-        * TAO/orbsvcs/tests/Bug_1393_Regression/Bug_1393_Client.dsp:
-        * TAO/orbsvcs/tests/Bug_1393_Regression/Bug_1393_Client_Static.dsp:
-        * TAO/orbsvcs/tests/Bug_1393_Regression/Bug_1393_Regression.dsw:
-        * TAO/orbsvcs/tests/Bug_1393_Regression/Bug_1393_Regression.mpc:
-        * TAO/orbsvcs/tests/Bug_1393_Regression/client.cpp:
-        * TAO/orbsvcs/tests/Bug_1393_Regression/Makefile:
-        * TAO/orbsvcs/tests/Bug_1393_Regression/Makefile.bor:
-        * TAO/orbsvcs/tests/Bug_1393_Regression/Makefile.Bug_1393_Client:
-        * TAO/orbsvcs/tests/Bug_1393_Regression/Makefile.Bug_1393_Client.bor:
-        * TAO/orbsvcs/tests/Bug_1393_Regression/README:
-        * TAO/orbsvcs/tests/Bug_1393_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_1393_Regression/Bug_1393_Client.dsp:
+        * orbsvcs/tests/Bug_1393_Regression/Bug_1393_Client_Static.dsp:
+        * orbsvcs/tests/Bug_1393_Regression/Bug_1393_Regression.dsw:
+        * orbsvcs/tests/Bug_1393_Regression/Bug_1393_Regression.mpc:
+        * orbsvcs/tests/Bug_1393_Regression/client.cpp:
+        * orbsvcs/tests/Bug_1393_Regression/Makefile:
+        * orbsvcs/tests/Bug_1393_Regression/Makefile.bor:
+        * orbsvcs/tests/Bug_1393_Regression/Makefile.Bug_1393_Client:
+        * orbsvcs/tests/Bug_1393_Regression/Makefile.Bug_1393_Client.bor:
+        * orbsvcs/tests/Bug_1393_Regression/README:
+        * orbsvcs/tests/Bug_1393_Regression/run_test.pl:
           Regression test for 1393.
 
         * tao/PortableServer/POA.cpp (TAO_POA):
           Recover from failure to contact IMR in create_POA with
           persistent policy. Fixes bug 1395.
 
-        * TAO/orbsvcs/tests/Bug_1395_Regression/Bug_1395_Client.dsp:
-        * TAO/orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.dsw:
-        * TAO/orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
-        * TAO/orbsvcs/tests/Bug_1395_Regression/Bug_1395_Server.dsp:
-        * TAO/orbsvcs/tests/Bug_1395_Regression/client.cpp:
-        * TAO/orbsvcs/tests/Bug_1395_Regression/Makefile:
-        * TAO/orbsvcs/tests/Bug_1395_Regression/Makefile.Bug_1395_Client:
-        * TAO/orbsvcs/tests/Bug_1395_Regression/Makefile.Bug_1395_Server:
-        * TAO/orbsvcs/tests/Bug_1395_Regression/README:
-        * TAO/orbsvcs/tests/Bug_1395_Regression/run_test.pl:
-        * TAO/orbsvcs/tests/Bug_1395_Regression/server.cpp:
-        * TAO/orbsvcs/tests/Bug_1395_Regression/Test_i.cpp:
-        * TAO/orbsvcs/tests/Bug_1395_Regression/Test.idl:
-        * TAO/orbsvcs/tests/Bug_1395_Regression/Test_i.h:
+        * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Client.dsp:
+        * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.dsw:
+        * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
+        * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Server.dsp:
+        * orbsvcs/tests/Bug_1395_Regression/client.cpp:
+        * orbsvcs/tests/Bug_1395_Regression/Makefile:
+        * orbsvcs/tests/Bug_1395_Regression/Makefile.Bug_1395_Client:
+        * orbsvcs/tests/Bug_1395_Regression/Makefile.Bug_1395_Server:
+        * orbsvcs/tests/Bug_1395_Regression/README:
+        * orbsvcs/tests/Bug_1395_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_1395_Regression/server.cpp:
+        * orbsvcs/tests/Bug_1395_Regression/Test_i.cpp:
+        * orbsvcs/tests/Bug_1395_Regression/Test.idl:
+        * orbsvcs/tests/Bug_1395_Regression/Test_i.h:
           Regression test for 1395.
 
         * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (parse_args):
           Fixed usage message (Bug 1438).
 
-        * TAO/orbsvcs/tests/Bug_1436_Regression/README:
-        * TAO/orbsvcs/tests/Bug_1436_Regression/run_test.pl:
-        * TAO/orbsvcs/tests/Bug_1436_Regression/test.idl:
+        * orbsvcs/tests/Bug_1436_Regression/README:
+        * orbsvcs/tests/Bug_1436_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_1436_Regression/test.idl:
           Regression test for 1436.
 
         * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
           Prevent registration of server with empty server name in the
           ImplRepo service. Fixes bug 1437.
 
-        * TAO/orbsvcs/tests/Bug_1437_Regression/README:
-        * TAO/orbsvcs/tests/Bug_1437_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_1437_Regression/README:
+        * orbsvcs/tests/Bug_1437_Regression/run_test.pl:
           Regression test for 1437.
 
 Fri Feb 21 06:54:45 2003  Ossama Othman  <ossama@uci.edu>
