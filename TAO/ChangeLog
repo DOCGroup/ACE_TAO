@@ -2,7 +2,8 @@ Tue Jan 11 14:49:40 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp:
         
-          Removed creation of unused file descriptor. Thanks to
+          Added close of temporary file created only inside
+          #ifndef ACE_LACKS_MKSTEMP guard. Thanks to
           M. C. Gahan <mcgahan@sparta.com> for reporting the
           problem of the dangling descriptor. This fix closes
           [BUGID:2026].

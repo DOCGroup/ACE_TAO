@@ -696,6 +696,8 @@ DRV_pre_proc (const char *myfile)
   char * t_file  = tmp_cpp_file;
   char * t_ifile = tmp_cpp_ifile;
 
+  ACE_OS::close (tf_fd);
+
 #endif  /* ACE_LACKS_MKSTEMP */
 
   // Rename temporary files so that they have extensions accepted
