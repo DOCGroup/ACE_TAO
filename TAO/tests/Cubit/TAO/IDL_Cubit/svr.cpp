@@ -82,7 +82,7 @@ main (int argc, char *argv[])
 
   ACE_NEW_RETURN (factory, Cubit_Factory_i ("factory", num_of_objs), 1);
 
-  if (TAO_debug_level >= 0)
+  if (TAO_debug_level > 0)
     {
       // Stringify the objref we'll be implementing, and print it to
       // stdout.  Someone will take that string and give it to a

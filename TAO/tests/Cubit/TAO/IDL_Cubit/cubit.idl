@@ -34,9 +34,7 @@ interface Cubit
     e_0th,
     e_1st,
     e_2nd,
-    e_3rd,
-    e_4th,
-    e_5th
+    e_3rd
   };
   // Enumeration of the different elements in a union.
 
