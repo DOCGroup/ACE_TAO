@@ -9,7 +9,6 @@
 
 #include "Node_Handler.h"
 #include "IC_Handler.h"
-#include "SP_Handler.h"
 #include "SR_Handler.h"
 
 #include <iostream>
@@ -83,8 +82,10 @@ namespace CIAO
               sr.property.length (i + 1);
 
               // delegate the populating process
+              /*
               SP_Handler::process_SatisfierProperty (this->iter_,
                                                      sr.property[i]);
+              */
             }
           else
             {

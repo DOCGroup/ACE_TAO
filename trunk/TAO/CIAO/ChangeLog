@@ -1,3 +1,12 @@
+Fri May  7 13:17:10 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/ConFig_Handlers/Domain_Handler.cpp:
+        * DnC/Config_Handlers/Domain_Handler.h:
+        * DnC/Config_Handlers/Resource_Handler.cpp:
+        * DnC/Config_Handlers/SR_Handler.cpp:
+
+          Updated the handlers to handler href, xmi:id cases.
+
 Fri May  7 12:53:34 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* CCF/CCF/CIDL/CIDL.mpc:
