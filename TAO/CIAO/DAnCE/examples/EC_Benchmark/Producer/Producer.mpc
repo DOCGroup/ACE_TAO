@@ -23,7 +23,7 @@ project(Producer_svnt) : ciao_servant_dnc {
   sharedname  = Producer_svnt
   libs    += Producer_stub EC_Benchmark_stub EC_Benchmark_svnt
   libpaths += ..
-  idlflags +=  -Wb,skel_export_macro=PRODUCER_SVNT_Export -Wb,skel_export_include=Producer_svnt_export.h
+  idlflags +=  -Wb,export_macro=PRODUCER_SVNT_Export -Wb,export_include=Producer_svnt_export.h
   dynamicflags = PRODUCER_SVNT_BUILD_DLL
 
   CIDL_Files {
@@ -70,5 +70,8 @@ project (Producer_controller) : ciao_client_dnc, valuetype {
   Source_Files {
     controller.cpp
   }
+  
+  Header_Files {
+  }  
 }
 

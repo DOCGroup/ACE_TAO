@@ -3,17 +3,15 @@
 /**
  * @file controller.cpp
  *
- * This program interact with a EC component, and set the rate of the
- * EC.
+ * This program interact with a Producer component.
  */
 
-#include "ECC.h"
+#include "ProducerC.h"
 #include "ace/Get_Opt.h"
-#include "ace/streams.h"
 
-const char *rategen_ior_ = 0;
-int rate = 2;
-int turn_on = 1;
+char* producer_ior = 0;
+
+int niterations = 100;
 
 int
 parse_args (int argc, char *argv[])
@@ -25,30 +23,15 @@ parse_args (int argc, char *argv[])
     {
       switch (c)
         {
-        case 'o':
-          turn_on = 1;
-          break;
-
-        case 'f':
-          turn_on = 0;
-          break;
-
         case 'k':
-          rategen_ior_ = get_opts.opt_arg ();
+          producer_ior = get_opts.opt_arg ();
           break;
-
-        case 'r':
-        rate = atoi (get_opts.opt_arg ());
-        break;
 
         case '?':  // display help for use of the server.
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "usage:  %s\n"
-                             "-o (Turn on the rate generator)\n"
-                             "-f (Turn off the rate generator)\n"
-                             "-k <EC IOR> (default is file://rategen.ior)\n"
-                             "-r <rate in hertz> (default is 3)\n"
+                             "-k <EC IOR> (default is file://Producer.ior)\n"
                              "\n",
                              argv [0]),
                             -1);
@@ -56,14 +39,9 @@ parse_args (int argc, char *argv[])
         }
     }
 
-  if (rategen_ior_ == 0)
+  if (producer_ior == 0)
     {
-      rategen_ior_ = "file://ec.ior";
-    }
-
-  if (rate == 0)
-    {
-      rate = 3;
+      producer_ior = "file://Producer.ior";
     }
 
   return 0;
@@ -87,43 +65,26 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var obj =
-        orb->string_to_object (rategen_ior_
+        orb->string_to_object (producer_ior
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      BasicSP::EC_var pulser
-        = BasicSP::EC::_narrow (obj.in ()
-                                ACE_ENV_ARG_PARAMETER);
+      EC_Benchmark::Producer_var producer
+        = EC_Benchmark::Producer::_narrow (obj.in ()
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (CORBA::is_nil (pulser.in ()))
+      if (CORBA::is_nil (producer.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR, 
-                             "Unable to acquire 'EC' objref\n"),
+                             "Unable to acquire 'Producer' objref\n"),
                             -1);
         }
 
-      pulser->hertz (rate
-                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (turn_on)
+      for (int i = 0; i < niterations; ++i)
         {
-          pulser->hertz (rate
-                         ACE_ENV_ARG_PARAMETER);
+          producer->start (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
-          ACE_DEBUG ((LM_DEBUG, "Start up the Event services\n"));
-
-          pulser->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      else
-        {
-          pulser->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          ACE_DEBUG ((LM_DEBUG, "Stop the ES\n"));
         }
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);

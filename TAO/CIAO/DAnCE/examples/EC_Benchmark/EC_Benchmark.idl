@@ -22,7 +22,7 @@ module EC_Benchmark
   interface trigger
     {
       void start ();
-      void stop ();
+      //void stop ();
     };
 
   /**

@@ -18,7 +18,7 @@ module EC_Benchmark
 {
   component Producer supports trigger
     {
-      publishes TimeOut timeout;
+      emits TimeOut timeout;
     };
 
   home ProducerHome manages Producer
