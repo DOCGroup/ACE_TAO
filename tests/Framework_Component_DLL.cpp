@@ -78,6 +78,13 @@ template class ACE_Framework_Component_T<ACE_DLL_Singleton_T<FWCT_DLL_Singleton_
 #pragma instantiate FWCT_DLL_Singleton_Adapter_T<Simple_Service>
 #pragma instantiate ACE_DLL_Singleton_T< FWCT_DLL_Singleton_Adapter_T <Simple_Service>,
                                          ACE_SYNCH_MUTEX >
-#pragma instanitiate ACE_Framework_Component_T<ACE_DLL_Singleton_T<FWCT_DLL_Singleton_Adapter_T<Simple_Service>,
+#pragma instantiate ACE_Framework_Component_T<ACE_DLL_Singleton_T<FWCT_DLL_Singleton_Adapter_T<Simple_Service>,
                                                ACE_SYNCH_MUTEX> >;
+#elif defined (__GNUC__) && defined (_AIX)
+
+template ACE_DLL_Singleton_T<FWCT_DLL_Singleton_Adapter_T <Simple_Service>,
+                             ACE_SYNCH_MUTEX> *
+  ACE_DLL_Singleton_T<FWCT_DLL_Singleton_Adapter_T <Simple_Service>,
+                      ACE_SYNCH_MUTEX>::singleton_;
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
