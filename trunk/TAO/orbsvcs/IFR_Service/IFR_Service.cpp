@@ -30,7 +30,6 @@ IFR_Service::init (int argc,
                    ACE_ENV_ARG_DECL)
 {
   int result;
-  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->orb_ = CORBA::ORB_init (argc,
