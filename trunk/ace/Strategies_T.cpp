@@ -299,15 +299,6 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
       // Close down handler to avoid memory leaks.
       svc_handler->close (0);
 
-      // If <reuse_addr_> is true then we will close the socket and
-      // open it again...
-      if (this->reuse_addr_)
-        {
-          this->peer_acceptor_.close ();
-          this->peer_acceptor_.open (this->peer_acceptor_addr_,
-                                     this->reuse_addr_);
-        }
-
       return -1;
     }
   else
