@@ -505,6 +505,9 @@ public:
   CORBA::Object_ptr resolve_dynanyfactory (CORBA::Environment &ACE_TRY_ENV);
   // Resolve the Dynamic Any Factory
 
+  CORBA_Object_ptr resolve_ior_manipulation (CORBA::Environment&);
+  // Resolve the IOR Manipulation reference for this ORB.
+
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
   // Reference counting...
@@ -559,6 +562,8 @@ protected:
   void resolve_dynanyfactory_i (CORBA::Environment &ACE_TRY_ENV);
   // Obtain and cache the dynamic any factory object reference
 
+  void resolve_iormanipulation_i (CORBA::Environment &ACE_TRY_ENV);
+  // Obtain and cache the IORManipulation factory object reference
 private:
   // The ORB Core should not be copied
   ACE_UNIMPLEMENTED_FUNC (TAO_ORB_Core(const TAO_ORB_Core&))
@@ -599,6 +604,9 @@ protected:
 
   CORBA::Object_ptr dynany_factory_;
   // The cached object reference for the DynAnyFactory.
+
+  CORBA::Object_ptr ior_manip_factory_;
+  // The cached object reference for the IORManipulataion.
 
   CORBA::ORB_var orb_;
   // @@ Should we keep a single ORB pointer? This is good because

@@ -31,7 +31,7 @@
 #include "tao/Exception.h"
 #include "tao/IOR_LookupTable.h"
 #include "tao/Services.h"
-#include "tao/IORManipulation.h"
+
 
 // Interceptor definitions.
 #include "tao/PortableInterceptor.h"
@@ -685,8 +685,7 @@ protected:
   CORBA_Object_ptr resolve_policy_current (CORBA::Environment&);
   // Resolve the Policy Current for this thread.
 
-  CORBA_Object_ptr resolve_ior_manipulation (CORBA::Environment&);
-  // Resolve the IOR Manipulation reference for this ORB.
+
 
   CORBA_Object_ptr resolve_rt_orb (CORBA_Environment &ACE_TRY_ENV);
   // Resolve the RTORB.
@@ -767,10 +766,6 @@ private:
 
   TAO_IOR_LookupTable lookup_table_;
   // Table of ObjectID->IOR mappings.
-
-  TAO_IOR_Manipulation_impl ior_manipulation_;
-  // object used for manipulation profiles in an object reference, that
-  // is an IOR.
 
   CORBA::Boolean use_omg_ior_format_;
   // Decides whether to use the URL notation or to use IOR notation.
