@@ -7654,7 +7654,7 @@ private:
                  i < SIZE; \
                  ++i) \
             { \
-              (POINTER)[i].~CLASS (); \
+              (&(POINTER)[i])->~CLASS (); \
             } \
           } \
       } \
@@ -7678,7 +7678,7 @@ private:
                  i < SIZE; \
                  ++i) \
             { \
-              (POINTER)[i].~CLASS (); \
+              (&(POINTER)[i])->~CLASS (); \
             } \
             DEALLOCATOR (POINTER); \
           } \
@@ -7702,7 +7702,7 @@ private:
                    i < SIZE; \
                    ++i) \
               { \
-                (POINTER)[i].~T_CLASS (); \
+                (&(POINTER)[i])->~T_CLASS (); \
               } \
             } \
         } \
@@ -7736,7 +7736,7 @@ private:
                    i < SIZE; \
                    ++i) \
               { \
-                (POINTER)[i].~T_CLASS (); \
+                (&(POINTER)[i])->~T_CLASS (); \
               } \
               DEALLOCATOR (POINTER); \
             } \
@@ -7789,7 +7789,7 @@ private:
                    i < SIZE; \
                    ++i) \
               { \
-                (POINTER)[i].~T_CLASS (); \
+                (&(POINTER)[i])->~T_CLASS (); \
               } \
               DEALLOCATOR (POINTER); \
             } \
