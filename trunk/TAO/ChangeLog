@@ -1,3 +1,12 @@
+Tue Jan 14 22:11:14 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Crashed_Callback/client.dsp:
+	* tests/Crashed_Callback/server.dsp:
+	* tests/MProfile_Connection_Timeout/client.dsp:
+	* tests/MT_Timeout/MT_Timeout_Client.dsp:
+	* tests/MT_Timeout/MT_Timeout_Server.dsp: Fixed the release
+	  configurations. 
+
 Tue Jan 14 20:46:40 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Crashed_Callback/client.dsp:
