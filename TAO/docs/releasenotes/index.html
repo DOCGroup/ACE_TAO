@@ -51,7 +51,8 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
     <P> Current status: (As of Dec 16th, 1997.)
     <UL>
       <LI> Support for sequences of strings and object references
-          added. However, it is not tested yet. </LI>
+          added. However, it is not tested yet so there may be some
+          bugs.  We should have these fixed in a day or so. </LI>
 
       <LI> Support for handling exceptions added. TAO does not use
           direct C++ exceptions. Instead it uses the
@@ -113,7 +114,8 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
 	<LI> Some of the known bugs/incomplete tasks are:
             <UL>
               <LI>
-                  We need support for TIEs </LI>
+                  We need support for ``TIEs'' (i.e., the object form
+                  of the Adapter pattern). </LI>
               <LI>
                   TypeCode generation for multidimensional arrays and
                   indirected typecodes is still a problem. </LI>
@@ -126,8 +128,8 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
               <LI> Deal with names in the IDL definition that are C++
                   keywords. </LI>
 
-              <LI> IDL is case insensitive. However, it looks like our
-                  front-end is case sensitive. Thanks to Anil Gopinath
+              <LI> IDL is case-insensitive. However, it looks like our
+                  front-end is case-sensitive. Thanks to Anil Gopinath
                   (anil@ittc.ukans.edu) for pointing this out. </LI>
 
               <LI> tao_idl generates code for a *.idl file only inside
