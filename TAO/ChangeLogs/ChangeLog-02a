@@ -10,14 +10,19 @@ Fri Jun 28 18:08:18 2002  Ossama Othman  <ossama@uci.edu>
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h:
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.inl:
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_MemberLocator.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadMap.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadMap.cpp:
 	* orbsvcs/orbsvcs/LoadBalancing/LB_MemberLocator.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_Pull_Handler.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_MemberLocator.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_MonitorMap.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_MonitorMap.cpp:
 	* orbsvcs/orbsvcs/LoadBalancing/LB_Pull_Handler.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Pull_Handler.cpp:
 	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.h:
 	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_conf.h:
 
 	  Preliminary implementation of TAO's new load balancer.  It
 	  implements the current joint load balancing submission
