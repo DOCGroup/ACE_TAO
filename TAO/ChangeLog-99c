@@ -1,3 +1,9 @@
+Thu Jul 15 16:51:36 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp
+	* orbsvcs/tests/Simple_Naming/client.cpp:
+	  Removed/protected debugging messages.
+
 Thu Jul 15 16:11:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/DynSched.cpp (relate_task_entries_recurse),
