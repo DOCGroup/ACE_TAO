@@ -1,6 +1,12 @@
+Mon Dec 15 16:49:58 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/IDL_Cubit/clnt.cpp (cube_sequence): declare
+          local variables "l" and "j" as u_int instead of int, to avoid
+          signed/unsigned comparison.
+
 Thu Dec 11 16:44:26 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp: 
+	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp:
 	  Fixed typo missed on the previous release.
 
 Thu Dec 11 22:18:52 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
