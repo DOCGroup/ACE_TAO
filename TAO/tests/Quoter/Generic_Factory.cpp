@@ -215,7 +215,7 @@ Quoter_Generic_Factory_Server::parse_args (void)
 {
   // We need the 'O' in get_opt () because we also want to have ORB
   // parameters, they all start with 'O'.
-  ACE_Get_Opt get_opt (this->argc_, this->argv_, "O?");
+  ACE_Get_Opt get_opt (this->argc_, this->argv_, "Ol?");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -229,6 +229,7 @@ Quoter_Generic_Factory_Server::parse_args (void)
         break;
       case 'l':
         this->use_LifeCycle_Service_ = 1;
+        break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%s: unknown arg, -%c\n"

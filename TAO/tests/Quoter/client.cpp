@@ -146,7 +146,7 @@ Quoter_Client::run (void)
   }
 
   // Caution, the object reference stays the same
-/*    
+    
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Moved object\n"));
 
@@ -159,7 +159,7 @@ Quoter_Client::run (void)
     return -1;
   }
   
-  ACE_DEBUG ((LM_DEBUG, "Moved object: ACE Hardware = %i\n", q)); */
+  ACE_DEBUG ((LM_DEBUG, "Moved object: ACE Hardware = %i\n", q));
   return 0;  
 }
 
