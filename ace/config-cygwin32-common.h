@@ -9,7 +9,9 @@
 
 #ifndef ACE_CYGWIN32_COMMON_H
 #define ACE_CYGWIN32_COMMON_H
+
 #define CYGWIN32
+
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_SYSV_MSG_H
 #define ACE_LACKS_RPC_H
@@ -29,7 +31,7 @@
 #define ACE_LACKS_MKTEMP
 
 #if ! defined (__ACE_INLINE__)
-#define __ACE_INLINE__
+# define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
@@ -95,27 +97,8 @@
 
 # define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 
-#if 0
-  // Wed Sep 23 22:29:37 1998  David L. Levine  <levine@cs.wustl.edu>
-  // Disabled this, because it doesn't really look right.  I think
-  // that it was added to work around some problems with very early
-  // versions of glib2.  It no longer seems to be necessary.
-
-  // Fixes a problem with new versions of Linux...
-  #ifndef msg_accrights
-  # undef msg_control
-  # define msg_accrights msg_control
-  #endif
-
-  #ifndef msg_accrightslen
-  # undef msg_controllen
-  # define msg_accrightslen msg_controllen
-  #endif
-#endif /* 0 */
-
 // Compiler/platform supports alloca().
 #define ACE_HAS_ALLOCA
-
 
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
@@ -128,8 +111,8 @@
 
 // ONLY define this if you have config'd multicast into a 2.x kernel.
 // If you do anything else, we've never tested it!
-#if ! defined(ACE_HAS_IP_MULTICAST)
-#define ACE_HAS_IP_MULTICAST
+#if !defined(ACE_HAS_IP_MULTICAST)
+# define ACE_HAS_IP_MULTICAST
 #endif /* #if ! defined(ACE_HAS_IP_MULTICAST) */
 
 #define ACE_HAS_BIG_FD_SET
@@ -181,6 +164,7 @@
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
+
 #define ACE_LACKS_MKFIFO
 
 #endif /* ACE_LINUX_COMMON_H */
