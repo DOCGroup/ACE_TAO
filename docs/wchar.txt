@@ -57,6 +57,41 @@ ACE_USES_WCHAR.  I'm hoping to remove these by adding a new ACE_OS_Win32
 class to perform the same task, but until then these ugly macros get the job
 done.
 
+@subsection wchar_logmsg ACE_Log_Msg support
+
+One of the more troublesome aspect of supporting wide and Ansi strings is
+the fact that the format strings for ACE_DEBUG and family always had to have
+ACE_TEXT (or ACE_LIB_TEXT) around them.  
+
+Now this should not be the case, since ACE_Log_Msg was extended to support
+both types of format strings concurrently.  This is okay, but when strings
+are printed out via the format_string, care has to be taken.
+
+It is interesting how Unix and Windows treats the format specifiers 
+differently, based on their history.  Win32 uses %s, %c, %S and %C, whereas
+Linux seems to use %s, %c, %ls, and %lc.  And they even treat %s and %c 
+differently.  The route ACE takes is a bit of a mixture of both:
+
+- %c: prints out an Ansi character
+- %C: prints out an Ansi string
+- %s: prints out an ACE_TCHAR string
+- %w: prints out a Wide character
+- %W: prints out a Wide string
+
+An example, which will also function correctly even when ACE_USES_WCHAR is 
+defined:
+
+@verbatim
+void print (char *a_str, wchar_t *w_str, ACE_TCHAR *t_str)
+{
+    ACE_DEBUG ((LM_DEBUG, 
+                "%C %s %W\n", 
+                a_str, 
+                t_str, 
+                w_str));
+}
+@endverbatim
+
 @subsection wchar_win32macros Relation to Win32's UNICODE and _UNICODE macros
 
 It used to be that in previous versions of ACE that the Win32 macros affected
@@ -68,7 +103,7 @@ they are needed on non-Win32 platforms.
 
 The way I'd recommend doing this is to add the typdefs to config.h.
 
-@subsection wcahr_legacy Legacy Support
+@subsection wchar_legacy Legacy Support
 
 Most of the old macros (ACE_HAS_UNICODE, ACE_HAS_MOSTLY_UNICODE_APIS) are 
 ignored by default by ACE, since the new macros replaced them.  If 

@@ -1447,7 +1447,7 @@ ACE_OS::sysconf (int name)
 ACE_INLINE int
 ACE_OS::mutex_init (ACE_mutex_t *m,
                     int type,
-                    const ACE_TCHAR *name,
+                    const char *name,
                     ACE_mutexattr_t *attributes,
                     LPSECURITY_ATTRIBUTES sa)
 {
@@ -1574,9 +1574,16 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   switch (type)
     {
     case USYNC_PROCESS:
-      m->proc_mutex_ = ACE_TEXT_CreateMutex (ACE_OS::default_win32_security_attributes (sa),
-                                             FALSE,
-                                             name);
+#   if defined (ACE_HAS_WINCE)
+      // @@todo (brunsch) This idea should be moved into ACE_OS_Win32.
+      m->proc_mutex_ = ::CreateMutexW (ACE_OS::default_win32_security_attributes (sa),
+                                       FALSE,
+                                       ACE_Ascii_To_Wide (name).wchar_rep ());
+#   else /* ACE_HAS_WINCE */
+      m->proc_mutex_ = ::CreateMutexA (ACE_OS::default_win32_security_attributes (sa),
+                                       FALSE,
+                                       name);
+#   endif /* ACE_HAS_WINCE */
       if (m->proc_mutex_ == 0)
         ACE_FAIL_RETURN (-1);
       else
@@ -1663,6 +1670,45 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_PACE */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::mutex_init (ACE_mutex_t *m,
+                    int type,
+                    const wchar_t *name,
+                    ACE_mutexattr_t *attributes,
+                    LPSECURITY_ATTRIBUTES sa)
+{
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_WTHREADS)
+  m->type_ = type;
+
+  switch (type)
+    {
+    case USYNC_PROCESS:
+      m->proc_mutex_ = ::CreateMutexW (ACE_OS::default_win32_security_attributes (sa),
+                                       FALSE,
+                                       name);
+      if (m->proc_mutex_ == 0)
+        ACE_FAIL_RETURN (-1);
+      else
+        return 0;
+    case USYNC_THREAD:
+      return ACE_OS::thread_mutex_init (&m->thr_mutex_,
+                                        type,
+                                        name,
+                                        attributes);
+    }
+
+  errno = EINVAL;
+  return -1;
+#else /* ACE_HAS_THREADS && ACE_HAS_WTHREADS */
+  return ACE_OS::mutex_init (m, 
+                             type, ACE_Wide_To_Ascii (name).char_rep (), 
+                             attributes, 
+                             sa);
+#endif /* ACE_HAS_THREADS && ACE_HAS_WTHREADS */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::mutex_destroy (ACE_mutex_t *m)
@@ -2000,7 +2046,7 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
 ACE_INLINE int
 ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
                            int type,
-                           const ACE_TCHAR *name,
+                           const char *name,
                            ACE_mutexattr_t *arg)
 {
   // ACE_OS_TRACE ("ACE_OS::thread_mutex_init");
@@ -2031,6 +2077,43 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 
 #endif /* ACE_HAS_THREADS */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
+                           int type,
+                           const wchar_t *name,
+                           ACE_mutexattr_t *arg)
+{
+  // ACE_OS_TRACE ("ACE_OS::thread_mutex_init");
+#if defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_WTHREADS)
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+  ::InitializeCriticalSection (m);
+  return 0;
+
+# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_PACE)
+  ACE_UNUSED_ARG (type);
+  // Force the use of USYNC_THREAD!
+  return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg);
+
+# elif defined (VXWORKS) || defined (ACE_PSOS)
+  return mutex_init (m, type, name, arg);
+
+# endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
+
+#else
+  ACE_UNUSED_ARG (m);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+  ACE_NOTSUP_RETURN (-1);
+
+#endif /* ACE_HAS_THREADS */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::thread_mutex_destroy (ACE_thread_mutex_t *m)
@@ -2268,7 +2351,7 @@ ACE_OS::condattr_destroy (ACE_condattr_t &attributes)
 ACE_INLINE int
 ACE_OS::cond_init (ACE_cond_t *cv,
                    ACE_condattr_t &attributes,
-                   const ACE_TCHAR *name,
+                   const char *name,
                    void *arg)
 {
   // ACE_OS_TRACE ("ACE_OS::cond_init");
@@ -2317,8 +2400,19 @@ ACE_OS::cond_init (ACE_cond_t *cv,
 # endif /* ACE_HAS_PACE */
 }
 
+#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
-ACE_OS::cond_init (ACE_cond_t *cv, short type, const ACE_TCHAR *name, void *arg)
+ACE_OS::cond_init (ACE_cond_t *cv,
+                   ACE_condattr_t &attributes,
+                   const wchar_t *name,
+                   void *arg)
+{
+  return ACE_OS::cond_init (cv, attributes, ACE_Wide_To_Ascii (name).char_rep (), arg);
+}
+#endif /* ACE_HAS_WCHAR */
+
+ACE_INLINE int
+ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
 {
   ACE_condattr_t attributes;
   if (ACE_OS::condattr_init (attributes, type) == 0
@@ -2329,6 +2423,14 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const ACE_TCHAR *name, void *arg)
     }
   return -1;
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
+{
+  return ACE_OS::cond_init (cv, type, ACE_Wide_To_Ascii (name).char_rep (), arg);
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::cond_signal (ACE_cond_t *cv)
@@ -3133,7 +3235,7 @@ ACE_INLINE int
 ACE_OS::sema_init (ACE_sema_t *s,
                    u_int count,
                    int type,
-                   const ACE_TCHAR *name,
+                   const char *name,
                    void *arg,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
@@ -3286,10 +3388,10 @@ ACE_OS::sema_init (ACE_sema_t *s,
   // Create the semaphore with its value initialized to <count> and
   // its maximum value initialized to <max>.
   *s =
-    ACE_TEXT_CreateSemaphore (ACE_OS::default_win32_security_attributes (sa),
-                              count,
-                              max,
-                              name);
+    ::CreateSemaphoreA (ACE_OS::default_win32_security_attributes (sa),
+                        count,
+                        max,
+                        name);
 
   if (*s == 0)
     ACE_FAIL_RETURN (-1);
@@ -3359,6 +3461,74 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_PACE */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::sema_init (ACE_sema_t *s,
+                   u_int count,
+                   int type,
+                   const wchar_t *name,
+                   void *arg,
+                   int max,
+                   LPSECURITY_ATTRIBUTES sa)
+{
+# if !defined (ACE_HAS_PACE) && defined (ACE_HAS_WTHREADS)
+#   if ! defined (ACE_USES_WINCE_SEMA_SIMULATION)
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (arg);
+  // Create the semaphore with its value initialized to <count> and
+  // its maximum value initialized to <max>.
+  *s =
+    ::CreateSemaphoreW (ACE_OS::default_win32_security_attributes (sa),
+                        count,
+                        max,
+                        name);
+
+  if (*s == 0)
+    ACE_FAIL_RETURN (-1);
+  /* NOTREACHED */
+  else
+    return 0;
+#   else /* ACE_USES_WINCE_SEMA_SIMULATION */
+  int result = -1;
+
+  // Initialize internal object for semaphore simulation.
+  // Grab the lock as soon as possible when we initializing
+  // the semaphore count.  Notice that we initialize the
+  // event object as "manually reset" so we can amortize the
+  // cost for singling/reseting the event.
+  // @@ I changed the mutex type to thread_mutex.  Notice that this
+  // is basically a CriticalSection object and doesn't not has
+  // any security attribute whatsoever.  However, since this
+  // semaphore implementation only works within a process, there
+  // shouldn't any security issue at all.
+  if (ACE_OS::thread_mutex_init (&s->lock_, type, name, (ACE_mutexattr_t *)arg) == 0
+      && ACE_OS::event_init (&s->count_nonzero_, 1,
+                             count > 0, type, name, arg, sa) == 0
+      && ACE_OS::thread_mutex_lock (&s->lock_) == 0)
+    {
+      s->count_ = count;
+
+      if (ACE_OS::thread_mutex_unlock (&s->lock_) == 0)
+        result = 0;
+    }
+
+  // Destroy the internal objects if we didn't initialize
+  // either of them successfully.  Don't bother to check
+  // for errors.
+  if (result == -1)
+    {
+      ACE_OS::thread_mutex_destroy (&s->lock_);
+      ACE_OS::event_destroy (&s->count_nonzero_);
+    }
+  return result;
+#   endif /* ACE_USES_WINCE_SEMA_SIMULATION */
+# else /* ACE_HAS_PACE && ACE_HAS_WTHREADS */
+  // Just call the normal char version.
+  return ACE_OS::sema_init (s, count, type, ACE_Wide_To_Ascii (name).char_rep (), arg, max, sa);
+# endif /* ACE_HAS_PACE && ACE_HAS_WTHREADS */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::sema_post (ACE_sema_t *s)
@@ -4246,17 +4416,25 @@ ACE_OS::event_init (ACE_event_t *event,
                     int manual_reset,
                     int initial_state,
                     int type,
-                    const ACE_TCHAR *name,
+                    const char *name,
                     void *arg,
                     LPSECURITY_ATTRIBUTES sa)
 {
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (arg);
-  *event = ACE_TEXT_CreateEvent (ACE_OS::default_win32_security_attributes(sa),
-                                 manual_reset,
-                                 initial_state,
-                                 name);
+# if defined (ACE_HAS_WINCE)
+  // @@todo (brunsch) This idea should be moved into ACE_OS_Win32.
+  *event = ::CreateEventW (ACE_OS::default_win32_security_attributes(sa),
+                           manual_reset,
+                           initial_state,
+                           ACE_Ascii_To_Wide (name).wchar_rep ());
+# else /* ACE_HAS_WINCE */
+  *event = ::CreateEventA (ACE_OS::default_win32_security_attributes(sa),
+                           manual_reset,
+                           initial_state,
+                           name);
+# endif /* ACE_HAS_WINCE */
   if (*event == NULL)
     ACE_FAIL_RETURN (-1);
   else
@@ -4288,6 +4466,39 @@ ACE_OS::event_init (ACE_event_t *event,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::event_init (ACE_event_t *event,
+                    int manual_reset,
+                    int initial_state,
+                    int type,
+                    const wchar_t *name,
+                    void *arg,
+                    LPSECURITY_ATTRIBUTES sa)
+{
+#if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (arg);
+  *event = ::CreateEventW (ACE_OS::default_win32_security_attributes(sa),
+                           manual_reset,
+                           initial_state,
+                           name);
+  if (*event == NULL)
+    ACE_FAIL_RETURN (-1);
+
+  return 0;
+#else  /* ACE_WIN32 */
+  return ACE_OS::event_init (event, 
+                             manual_reset, 
+                             initial_state, 
+                             type,
+                             ACE_Wide_To_Ascii (name).char_rep (),
+                             arg,
+                             sa);
+#endif /* ACE_WIN32 */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::event_destroy (ACE_event_t *event)

@@ -5011,12 +5011,22 @@ public:
   static int cond_destroy (ACE_cond_t *cv);
   static int cond_init (ACE_cond_t *cv,
                         short type = ACE_DEFAULT_SYNCH_TYPE,
-                        const ACE_TCHAR *name = 0,
+                        const char *name = 0,
                         void *arg = 0);
   static int cond_init (ACE_cond_t *cv,
                         ACE_condattr_t &attributes,
-                        const ACE_TCHAR *name = 0,
+                        const char *name = 0,
                         void *arg = 0);
+# if defined (ACE_HAS_WCHAR)
+  static int cond_init (ACE_cond_t *cv,
+                        short type,
+                        const wchar_t *name,
+                        void *arg = 0);
+  static int cond_init (ACE_cond_t *cv,
+                        ACE_condattr_t &attributes,
+                        const wchar_t *name,
+                        void *arg = 0);
+# endif /* ACE_HAS_WCHAR */
   static int cond_signal (ACE_cond_t *cv);
   static int cond_timedwait (ACE_cond_t *cv,
                              ACE_mutex_t *m,
@@ -5381,9 +5391,16 @@ public:
   //@{ @name A set of wrappers for mutex locks.
   static int mutex_init (ACE_mutex_t *m,
                          int type = ACE_DEFAULT_SYNCH_TYPE,
-                         const ACE_TCHAR *name = 0,
+                         const char *name = 0,
                          ACE_mutexattr_t *arg = 0,
                          LPSECURITY_ATTRIBUTES sa = 0);
+#if defined (ACE_HAS_WCHAR)
+  static int mutex_init (ACE_mutex_t *m,
+                         int type,
+                         const wchar_t *name,
+                         ACE_mutexattr_t *arg = 0,
+                         LPSECURITY_ATTRIBUTES sa = 0);
+#endif /* ACE_HAS_WCHAR */
   static int mutex_destroy (ACE_mutex_t *m);
 
   /// Win32 note: Abandoned mutexes are not treated differently. 0 is
@@ -5410,8 +5427,14 @@ public:
   //@{ @name A set of wrappers for mutex locks that only work within a single process.
   static int thread_mutex_init (ACE_thread_mutex_t *m,
                                 int type = ACE_DEFAULT_SYNCH_TYPE,
-                                const ACE_TCHAR *name = 0,
+                                const char *name = 0,
                                 ACE_mutexattr_t *arg = 0);
+#if defined (ACE_HAS_WCHAR)
+  static int thread_mutex_init (ACE_thread_mutex_t *m,
+                                int type,
+                                const wchar_t *name,
+                                ACE_mutexattr_t *arg = 0);
+#endif /* ACE_HAS_WCHAR */
   static int thread_mutex_destroy (ACE_thread_mutex_t *m);
   static int thread_mutex_lock (ACE_thread_mutex_t *m);
   static int thread_mutex_trylock (ACE_thread_mutex_t *m);
@@ -5644,14 +5667,23 @@ public:
   static int rw_unlock (ACE_rwlock_t *rw);
   //@}
 
-  //@{ @name A set of wrappers for auto-reset and manuaevents.
+  //@{ @name A set of wrappers for auto-reset and manual events.
   static int event_init (ACE_event_t *event,
                          int manual_reset = 0,
                          int initial_state = 0,
                          int type = ACE_DEFAULT_SYNCH_TYPE,
-                         const ACE_TCHAR *name = 0,
+                         const char *name = 0,
                          void *arg = 0,
                          LPSECURITY_ATTRIBUTES sa = 0);
+# if defined (ACE_HAS_WCHAR)
+  static int event_init (ACE_event_t *event,
+                         int manual_reset,
+                         int initial_state,
+                         int type,
+                         const wchar_t *name,
+                         void *arg = 0,
+                         LPSECURITY_ATTRIBUTES sa = 0);
+# endif /* ACE_HAS_WCHAR */
   static int event_destroy (ACE_event_t *event);
   static int event_wait (ACE_event_t *event);
   static int event_timedwait (ACE_event_t *event,
@@ -5666,10 +5698,19 @@ public:
   static int sema_init (ACE_sema_t *s,
                         u_int count,
                         int type = ACE_DEFAULT_SYNCH_TYPE,
-                        const ACE_TCHAR *name = 0,
+                        const char *name = 0,
                         void *arg = 0,
                         int max = 0x7fffffff,
                         LPSECURITY_ATTRIBUTES sa = 0);
+# if defined (ACE_HAS_WCHAR)
+  static int sema_init (ACE_sema_t *s,
+                        u_int count,
+                        int type,
+                        const wchar_t *name,
+                        void *arg = 0,
+                        int max = 0x7fffffff,
+                        LPSECURITY_ATTRIBUTES sa = 0);
+# endif /* ACE_HAS_WCHAR */
   static int sema_post (ACE_sema_t *s);
   static int sema_post (ACE_sema_t *s,
                         size_t release_count);

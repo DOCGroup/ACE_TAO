@@ -97,11 +97,9 @@ ACE_SSL_Context::ssl_library_init (void)
           // rwlock_init(&(ACE_SSL_Context::lock_[i]), USYNC_THREAD,
           // 0);
           if (ACE_OS::mutex_init(&(ACE_SSL_Context::lock_[i]),
-                                 USYNC_THREAD,
-                                 0) != 0)
+                                 USYNC_THREAD) != 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) ACE_SSL_Context::ssl_library_init ")
-                        ACE_TEXT ("- %p\n"),
+                        "(%P|%t) ACE_SSL_Context::ssl_library_init - %p\n",
                         "mutex_init"));
         }
 

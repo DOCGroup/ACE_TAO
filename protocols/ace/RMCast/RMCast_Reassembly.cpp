@@ -51,7 +51,7 @@ ACE_RMCast_Reassembly::data (ACE_RMCast::Data &data)
   if (data.payload->length () + data.fragment_offset > data.total_size)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("RMCast_Reassembly::data - invalid size\n")));
+                  "RMCast_Reassembly::data - invalid size\n"));
       return -1; // Corrupt message?
     }
 

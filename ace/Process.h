@@ -114,7 +114,12 @@ public:
 
   /// Set the working directory for the process.  strlen of <wd> must
   /// be <= MAXPATHLEN.
-  void working_directory (const ACE_TCHAR *wd);
+  void working_directory (const char *wd);
+
+#if defined (ACE_HAS_WCHAR)
+  /// wchar_t version of working_directory
+  void working_directory (const wchar_t *wd);
+#endif /* ACE_HAS_WCHAR */
 
   /**
    * Set the command-line arguments.  <format> can use any printf
@@ -126,6 +131,11 @@ public:
    * on success, -1 on failure.
    */
   int command_line (const ACE_TCHAR *format, ...);
+
+#if defined (ACE_HAS_WCHAR) && !defined (ACE_HAS_WINCE)
+  /// Anti-TChar version of command_line ()
+  int command_line (const ACE_ANTI_TCHAR *format, ...);
+#endif /* ACE_HAS_WCHAR && !ACE_HAS_WINCE */
 
   /// Same as above in argv format.  <argv> must be null terminated.
   int command_line (const ACE_TCHAR * const argv[]);
@@ -323,6 +333,9 @@ protected:
 
   /// Pointer to buffer of command-line arguments.  E.g., "-f foo -b bar".
   ACE_TCHAR *command_line_buf_;
+
+  /// Max length of command_line_buf_
+  int command_line_buf_len_;
 
   /// Argv-style command-line arguments.
   ACE_TCHAR *command_line_argv_[MAX_COMMAND_LINE_OPTIONS];

@@ -33,8 +33,8 @@ ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
 
   if (this->ssl_ == 0)
     ACE_ERROR ((LM_ERROR,
-		ACE_TEXT ("(%P|%t) ACE_SSL_SOCK_Stream ")
-                ACE_TEXT ("- cannot allocate new SSL structure%p\n"),
+		"(%P|%t) ACE_SSL_SOCK_Stream "
+                "- cannot allocate new SSL structure %p\n",
 		ACE_TEXT ("")));
 
   ::SSL_set_verify (this->ssl_,

@@ -30,7 +30,7 @@
   do { if(!(X)) { \
   int __ace_error = ACE_OS::last_error (); \
   ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-  ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, -1, __ace_error, ace___->restart (), \
+  ace___->set (__FILE__, __LINE__, -1, __ace_error, ace___->restart (), \
                ace___->msg_ostream (), ace___->msg_callback ()); \
   ace___->log (LM_ERROR, ACE_LIB_TEXT ("ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n"), #X, -1); \
   } } while (0)
@@ -49,14 +49,14 @@
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->conditional_set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, 0, __ace_error); \
+    ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
     ace___->log_hexdump X; \
   } while (0)
 #define ACE_RETURN(Y) \
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set (ACE_TEXT_CHAR_TO_TCHAR (__FILE__), __LINE__, Y, __ace_error, ace___->restart (), \
+    ace___->set (__FILE__, __LINE__, Y, __ace_error, ace___->restart (), \
                  ace___->msg_ostream (), ace___->msg_callback ()); \
     return Y; \
   } while (0)
@@ -64,7 +64,7 @@
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->conditional_set (ACE_TEXT_CHAR_TO_TCHAR (__FILE__), __LINE__, Y, __ace_error); \
+    ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
     ace___->log X; \
     return Y; \
   } while (0)
@@ -72,14 +72,14 @@
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->conditional_set (ACE_TEXT_CHAR_TO_TCHAR (__FILE__), __LINE__, -1, __ace_error); \
+    ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
     ace___->log X; \
   } while (0)
 #define ACE_DEBUG(X) \
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->conditional_set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, 0, __ace_error); \
+    ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
     ace___->log X; \
   } while (0)
 #define ACE_ERROR_INIT(VALUE, FLAGS) \
@@ -254,10 +254,10 @@ public:
   int linenum (void);
 
   /// Set the file name where an error occurred.
-  void file (const ACE_TCHAR *);
+  void file (const char *);
 
   /// Get the file name where an error occurred.
-  const ACE_TCHAR *file (void);
+  const char *file (void);
 
   /// Set the message that describes what type of error occurred.
   void msg (const ACE_TCHAR *);
@@ -385,7 +385,7 @@ public:
    * restart flag, ostream, and the callback object.  This combines
    * all the other set methods into a single method.
    */
-  void set (const ACE_TCHAR *file,
+  void set (const char *file,
             int line,
             int op_status = -1,
             int errnum = 0,
@@ -395,7 +395,7 @@ public:
 
   /// These values are only actually set if the requested priority is
   /// enabled.
-  void conditional_set (const ACE_TCHAR *file,
+  void conditional_set (const char *file,
                         int line,
                         int op_status,
                         int errnum);
@@ -406,6 +406,7 @@ public:
    *  + 'A': print an ACE_timer_t value (which could be either double or ACE_UINT32.)
    *  + 'a': exit the program at this point (var-argument is the exit status!)
    *  + 'c': print a character
+   *  + 'C': print a character string
    *  + 'i', 'd': print a decimal number
    *  + 'I', indent according to nesting depth
    *  + 'e', 'E', 'f', 'F', 'g', 'G': print a double
@@ -425,11 +426,16 @@ public:
    *  + 'D': print timestamp in month/day/year hour:minute:sec:usec format.
    *  + 't': print thread id (1 if single-threaded)
    *  + 'u': print as unsigned int
-   *  + 'W': print out a wide (Unicode) character string (currently Win32 only).
+   *  + 'w': prints a wide character
+   *  + 'W': print a wide character string
    *  + 'X', 'x': print as a hex number
    *  + '%': print out a single percent sign, '%'
    */
   ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
+
+#if defined (ACE_HAS_WCHAR)
+  ssize_t log (ACE_Log_Priority priority, const ACE_ANTI_TCHAR *format, ...);
+#endif /* ACE_HAS_WCHAR */
 
   /**
    * An alternative logging mechanism that makes it possible to
@@ -492,7 +498,7 @@ private:
   int linenum_;
 
   /// File where the error occurred.
-  ACE_TCHAR file_[MAXPATHLEN + 1];
+  char file_[MAXPATHLEN + 1];
 
   /// The error message.
   ACE_TCHAR msg_[ACE_Log_Record::MAXLOGMSGLEN];
@@ -574,7 +580,7 @@ private:
   struct
   {
     int is_set_;
-    const ACE_TCHAR *file_;
+    const char *file_;
     int line_;
     int op_status_;
     int errnum_;

@@ -5724,13 +5724,23 @@ ACE_OS::condattr_destroy (ACE_condattr_t &)
 int
 ACE_OS::cond_init (ACE_cond_t *cv,
                    ACE_condattr_t &attributes,
-                   const ACE_TCHAR *name, void *arg)
+                   const char *name, void *arg)
 {
   return ACE_OS::cond_init (cv, attributes.type, name, arg);
 }
 
+#if defined (ACE_HAS_WCHAR)
 int
-ACE_OS::cond_init (ACE_cond_t *cv, short type, const ACE_TCHAR *name, void *arg)
+ACE_OS::cond_init (ACE_cond_t *cv,
+                   ACE_condattr_t &attributes,
+                   const wchar_t *name, void *arg)
+{
+  return ACE_OS::cond_init (cv, attributes.type, name, arg);
+}
+#endif /* ACE_HAS_WCHAR */
+
+int
+ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
 {
   ACE_OS_TRACE ("ACE_OS::cond_init");
 # if defined (ACE_HAS_THREADS)
@@ -5757,6 +5767,37 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const ACE_TCHAR *name, void *arg)
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_THREADS */
 }
+
+#if defined (ACE_HAS_WCHAR)
+int
+ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
+{
+  ACE_OS_TRACE ("ACE_OS::cond_init");
+# if defined (ACE_HAS_THREADS)
+  cv->waiters_ = 0;
+  cv->was_broadcast_ = 0;
+
+  int result = 0;
+  if (ACE_OS::sema_init (&cv->sema_, 0, type, name, arg) == -1)
+    result = -1;
+  else if (ACE_OS::thread_mutex_init (&cv->waiters_lock_) == -1)
+    result = -1;
+#   if defined (VXWORKS) || defined (ACE_PSOS)
+  else if (ACE_OS::sema_init (&cv->waiters_done_, 0, type) == -1)
+#   else
+  else if (ACE_OS::event_init (&cv->waiters_done_) == -1)
+#   endif /* VXWORKS */
+    result = -1;
+  return result;
+# else
+  ACE_UNUSED_ARG (cv);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+  ACE_NOTSUP_RETURN (-1);
+# endif /* ACE_HAS_THREADS */
+}
+#endif /* ACE_HAS_WCHAR */
 
 int
 ACE_OS::cond_signal (ACE_cond_t *cv)
