@@ -42,14 +42,18 @@ static const char usage [] =
 "[[-?]\n"
 "                 [-O[RBport] ORB port number]\n"
 "                 [-m <count> of messages to send [100]\n"
-"                 [-f name of schedler input data file]]\n";
+"                 [-f name of scheduler input data file]\n"
+"                 [-d name of scheduler header dump file]\n"
+"                 [-s to suppress data updates by EC]]\n";
 
 
 Logging_Supplier::Logging_Supplier (int argc, char** argv)
 : argc_(argc),
   argv_(argv),
   total_messages_(10),
-  input_file_name_(0)
+  input_file_name_(0),
+  update_data_ (1),
+  schedule_file_name_(0)
 {
   navigation_.roll = navigation_.pitch = 0;
 }
@@ -213,7 +217,6 @@ Logging_Supplier::load_schedule_data
                        oper_name,
                        BUFSIZ-1);
 
-
       data->utilitzation = (double)(20.0+ACE_OS::rand() %10);
       data->overhead = (double)(ACE_OS::rand() %20);
 
@@ -245,6 +248,12 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
 {
   static u_long last_completion = 0;
 
+  // constants for periods (in units of one hundred nanoseconds)
+  const TimeBase::TimeT ONE_HZ_PERIOD = 10000000;
+  const TimeBase::TimeT FIVE_HZ_PERIOD = ONE_HZ_PERIOD / 5 ;
+  const TimeBase::TimeT TEN_HZ_PERIOD = ONE_HZ_PERIOD / 10;
+  const TimeBase::TimeT TWENTY_HZ_PERIOD = ONE_HZ_PERIOD / 20;
+
   TAO_TRY
   {
     Schedule_Viewer_Data **sched_data;
@@ -256,6 +265,26 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
            (strcmp((*sched_data)->operation_name, "high_1") == 0)  ||
            (strcmp((*sched_data)->operation_name, "low_1") == 0))
       {
+        if ((strcmp((*sched_data)->operation_name, "high_20") == 0) ||
+            (strcmp((*sched_data)->operation_name, "high_1") == 0))
+          {
+            navigation_.criticality = 1;
+          }
+        else
+          {
+            navigation_.criticality = 0;
+          }
+
+        if ((strcmp((*sched_data)->operation_name, "high_20") == 0) ||
+            (strcmp((*sched_data)->operation_name, "low_20") == 0))
+          {
+            navigation_.deadline_time = TWENTY_HZ_PERIOD;
+          }
+        else
+          {
+            navigation_.criticality = ONE_HZ_PERIOD;
+          }
+
         navigation_.position_latitude = ACE_OS::rand() % 90;
         navigation_.position_longitude = ACE_OS::rand() % 180;
         navigation_.altitude = ACE_OS::rand() % 100;
@@ -263,16 +292,12 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
         navigation_.roll = (navigation_.roll >= 180) ? -180 : navigation_.roll + 1;
         navigation_.pitch =  (navigation_.pitch >= 90) ? -90 : navigation_.pitch + 1;
 
-        navigation_.utilization =            0.0;
-        navigation_.overhead =               0.0;
-        navigation_.arrival_time_secs =      0;
-        navigation_.arrival_time_usecs =     0;
-        navigation_.deadline_time_secs =     0;
-        navigation_.deadline_time_usecs =    0;
-        navigation_.completion_time_secs =   0;
-        navigation_.completion_time_usecs =  0;
-        navigation_.computation_time_secs =  0;
-        navigation_.computation_time_usecs = 0;
+        navigation_.utilization =       0.0;
+        navigation_.overhead =          0.0;
+        navigation_.arrival_time =      ORBSVCS_Time::zero;
+        navigation_.completion_time =   ORBSVCS_Time::zero;
+        navigation_.computation_time =  ORBSVCS_Time::zero;
+        navigation_.update_data =       update_data_;
 
 
         // because the scheduler data does not supply these values
@@ -286,6 +311,27 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
                 (strcmp((*sched_data)->operation_name, "high_5") == 0)  ||
                 (strcmp((*sched_data)->operation_name, "low_5") == 0))
       {
+        if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
+            (strcmp((*sched_data)->operation_name, "high_5") == 0))
+          {
+            weapons_.criticality = 1;
+          }
+        else
+          {
+            weapons_.criticality = 0;
+          }
+
+        if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
+            (strcmp((*sched_data)->operation_name, "low_10") == 0))
+          {
+            navigation_.deadline_time = TEN_HZ_PERIOD;
+          }
+        else
+          {
+            navigation_.criticality = FIVE_HZ_PERIOD;
+          }
+
+
         weapons_.number_of_weapons = 2;
         weapons_.weapon1_identifier = CORBA::string_alloc (30);
         strcpy (weapons_.weapon1_identifier,"Photon Torpedoes");
@@ -302,16 +348,13 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
         weapons_.weapon5_identifier = CORBA::string_alloc (1);
         strcpy (weapons_.weapon5_identifier, "");
         weapons_.weapon5_status = 0;
-        weapons_.utilization =            0.0;
-        weapons_.overhead =               0.0;
-        weapons_.arrival_time_secs =      0;
-        weapons_.arrival_time_usecs =     0;
-        weapons_.deadline_time_secs =     0;
-        weapons_.deadline_time_usecs =    0;
-        weapons_.completion_time_secs  =  0;
-        weapons_.completion_time_usecs =  0;
-        weapons_.computation_time_secs =  0;
-        weapons_.computation_time_usecs = 0;
+        weapons_.utilization =       0.0;
+        weapons_.overhead =          0.0;
+        weapons_.arrival_time =      ORBSVCS_Time::zero;
+        weapons_.completion_time  =  ORBSVCS_Time::zero;
+        weapons_.computation_time =  ORBSVCS_Time::zero;
+        weapons_.update_data =       update_data_;
+
 
         data.replace (_tc_Weapons, &weapons_, 0, TAO_TRY_ENV);
       }
@@ -362,7 +405,7 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
 unsigned int
 Logging_Supplier::get_options (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:m:");
+  ACE_Get_Opt get_opt (argc, argv, "f:m:d:s");
   int opt;
   int temp;
 
@@ -398,6 +441,23 @@ Logging_Supplier::get_options (int argc, char *argv [])
                                  argv[0]),
                                 1);
             }
+          break;
+        case 'd':
+          this->schedule_file_name_ = get_opt.optarg;
+
+          if (!this->schedule_file_name_ || ACE_OS::strlen (this->schedule_file_name_) > 0)
+            ACE_DEBUG ((LM_DEBUG,"Dumping file!\n"));
+          else
+            {
+              this->input_file_name_ = 0;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%s: file name must be specified with -d option",
+                                 argv[0]),
+                                1);
+            }
+          break;
+        case 's':
+          update_data_ = 0;
           break;
         default:
         case '?':

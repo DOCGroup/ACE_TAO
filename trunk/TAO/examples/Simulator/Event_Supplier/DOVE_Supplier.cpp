@@ -53,11 +53,10 @@ DOVE_Supplier::notify (CORBA::Any &message)
     event.header.source = SOURCE_ID;
     event.header.type = ACE_ES_EVENT_NOTIFICATION;
     event.header.ttl = 1;
-    event.header.creation_time = ORBSVCS_Time::zero;
+    ACE_hrtime_t creation_time = ACE_OS::gethrtime ();
+    ORBSVCS_Time::hrtime_to_TimeT (event.header.creation_time, creation_time);
     event.header.ec_recv_time = ORBSVCS_Time::zero;
     event.header.ec_send_time = ORBSVCS_Time::zero;
-    //event.data_.x = 0;
-    //event.data_.y = 0;
     event.data.any_value = message;
 
     RtecEventComm::EventSet events;
@@ -129,7 +128,7 @@ DOVE_Supplier::get_EventChannel ()
     ACE_Scheduler_Factory::use_config (namingContext_var.in ());
 
 
-    // Get a reference to the Event Servie
+    // Get a reference to the Event Service
     CosNaming::Name channel_name (1);
     channel_name.length (1);
     channel_name[0].id = CORBA::string_dup ("EventService");

@@ -2,11 +2,11 @@ $Id$
 
 Documentation for the Simulator/DOVE demo
 
-Purpose: To show how the event service can be used to as a media to
+Purpose: To show how the event service can be used to as a medium to
          transport monitoring events including data. Also to
          show how objects implemented in Java can access/can be accessed
          by TAO objects.
-         An other purpose is also to show the feasability of
+         Another purpose is also to show the feasability of
          the DOVE framework as mentioned in
          http://www.cs.wustl.edu/~schmidt/dove.html and
          http://www.cs.wustl.edu/~schmidt/DOVE_and_LifeCycleService.ps.gz
@@ -17,11 +17,16 @@ Application: Using the Event Service as distribution media, event
              The event channel transports events from suppliers to
              consumers. Filtering can be activated.
              The mapping to DOVE is the following:
-             Event Channel - DOVE Agent
-             Event Consumer - DOVE Browser and/or DOVE MIB
-             Event Supplier - Monitored Application (here
-                              an object supplying recorded scheduling
-                              and dummy information)
+             Event Channel -    DOVE Agent
+             Event Consumer -   DOVE Browser and/or DOVE MIB
+             Event Supplier -   Monitored Application (here
+                                an object supplying recorded scheduling
+                                and dummy information)
+             Logging Supplier - Monitored Application (here an object supplying
+                                creation times and updating a flag to record
+                                actual EC arrival and dispatching times in
+                                the scheduling information data structure
+                                viewed by the browser)
 
 
 Implementation:
@@ -45,15 +50,14 @@ Implementation:
              it to various Visualization Components.
 
 
-For more informations refer to:
+For more information refer to:
         $TAO_ROOT/docs/releasenotes/index.html
 
 
 Requirements:
            * C++ compiler
-                   * Java JDK 1,1,x
-                   * ACE/TAO environment,
-                   * Visibroker 3.2 for Java
+           * ACE/TAO environment,
+           * Visibroker 3.2+ for Java
 
 
 !!RELEASE CHANGES:
@@ -67,6 +71,14 @@ Requirements:
 
         - it is no longer required to start the scheduling service
 
+        - the file make.bat has been expanded and refined for use on NT
+          The following make targets are defined:
+            make clean - removes all class files and idl generated java files
+            make realclean - updates idl files, does a make clean
+            make vb - makes the browser, using visibroker for java
+            make jdk - makes the browser, using jdk 
+                       (the does not currently work with jdk)
+
 Parts of the Demo:
 
         * DOVE Browser (implemented in Java using Visibroker 3.2 for Java)
@@ -74,18 +86,24 @@ Parts of the Demo:
         * Event Supplier, can be seen as a monitored object, called
           DOVE Application (implemented in C++ using TAO)
 
+        * Logging Supplier, can be seen as a monitored object, called
+          DOVE Application (implemented in C++ using TAO) - rather than
+          providing canned simulation data, allows the actual EC arrival and
+          dispatching information to be recorded in the scheduling data
+
         * DOVE MIB, storing event data on persistent storage and keeping
           track of statistical data (implemented in C++ using TAO)
 
 Files:
         Common:
-        NavWeap.idl - IDL definition of the Weapons and Navigation struct
+        NavWeap.idl - IDL definition of the Weapons and Navigation structures
         README - this readme file
-
 
         Event Supplier: (in directory  $TAO_ROOT/orbsvcs/tests/Simulator/Event_Supplier/)
         Event_Sup.cpp - Event Supplier
         Event_Sup.h   - Event Supplier class definition
+        Logging_Sup.cpp - Event Supplier for EC logging
+        Logging_Sup.h   - Event Supplier for EC logging class definition
         Makefile      - Event Supplier Makefile
                 (Event_Con.cpp, Event_Con.h - Event Consumer for testing)
                 svc.conf - helper file
@@ -133,6 +151,7 @@ Compiling:
                 "compile $TAO_ROOT/orbsvcs/Naming_Service"
                 "compile $TAO_ROOT/orbsvcs/Scheduling_Service"
 
+        UNIX platforms:
                 Then, just run "make" in top level Simulator
                 directory.  The DOVEBrowser requires VisiJava's
                 idl2java and vbjc.  If they are not on your PATH,
@@ -142,6 +161,15 @@ Compiling:
 
                   make VISIJAVA_BIN=/usr/local/VisiJava-3.2
 
+        NT:
+                Open the Event_Sup.dsw workspace found in the
+                Event_Supplier directory in MSVC++ 5.0+
+                and build the Event_Sup and Logging_Sup projects.
+
+                Change to the DOVEBrowser directory and run
+                "make vb" to build the browser using Visibroker
+                (you may first want to do a "make realclean").
+
 Starting:
         Start in the following order on different ORB ports:
                 * Naming Service
@@ -150,11 +178,18 @@ Starting:
                 You can use "start_services" on Unix machines. The
                 script is located in $TAO_ROOT/orbsvcs/tests.
 
-        Supplier:
+        Event Supplier (simulation data):
                 Event_Sup -ORBport 10040 -f MLF.dat -m 1000
 
                 // -m 1000 for 1000 events sent by the supplier
                 // -f MLF.dat to read scheduling data from this file as input
+
+
+        Logging Supplier (live latency and latency jitter data):
+                Logging_Sup -ORBport 10040 -f MLF.dat -m 1000
+
+                // -m 1000 for 1000 events sent by the supplier
+                // -f MLF.dat to read operation names from this file as input
 
 
         DOVE Browser:
@@ -177,3 +212,4 @@ Starting:
 
                 // -m 100 for storing the next 100 events
                 // -f myfile for the name of the file in which it will be stored
+
