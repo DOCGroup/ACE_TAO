@@ -1,3 +1,16 @@
+Sat Sep  4 00:18:49 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/DynUnion_i.cpp : 
+	* tao/DynAny_i.cpp:
+	* tao/DynArray_i.cpp:
+	* tao/DynSequence_i.cpp:
+	* tao/DynStruct_i.cpp:
+	* tao/DynUnion_i.cpp:
+	* tao/Typecode.cpp:
+	* tao/decode.cpp:
+	* tao/deep_free.cpp:
+	* tao/skip.cpp: Fixed warnings on SunCC 5.0 & Linux_EGCS
+
 Sat Sep 03 00:13:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tao/append.cpp,
