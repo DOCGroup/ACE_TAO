@@ -167,8 +167,6 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   // With ACE_HAS_TSS_EMULATION, ts_storage_ is initialized by the call to
   // ACE_OS::tss_open () in the function body.
 {
-  ACE_NEW (registered_objects_, ACE_Unbounded_Queue<ACE_Cleanup_Info>);
-
   ACE_MT (ACE_NEW (lock_, ACE_Recursive_Thread_Mutex));
 
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
@@ -198,6 +196,11 @@ ACE_Object_Manager::ACE_Object_Manager (void)
                           ACE_TOKEN_INVARIANTS_CREATION_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex, ACE_TSS_CLEANUP_LOCK)
 # endif /* ACE_MT_SAFE */
+
+  // Do this after the allocation of ACE_STATIC_OBJECT_LOCK.  It shouldn't
+  // matter, but just in case ACE_Static_Object_Lock::instance () gets
+  // changed . . .
+  ACE_NEW (registered_objects_, ACE_Unbounded_Queue<ACE_Cleanup_Info>);
 
   // Hooks for preallocated objects and arrays provided by application.
   ACE_APPLICATION_PREALLOCATED_OBJECT_DEFINITIONS
