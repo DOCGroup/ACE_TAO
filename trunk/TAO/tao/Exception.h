@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_EXCEPTION_H)
+#ifndef TAO_EXCEPTION_H
 #  define TAO_EXCEPTION_H
 
 class CORBA_Any;

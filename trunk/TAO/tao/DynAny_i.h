@@ -13,7 +13,7 @@
 //
 // =========================================================================
 
-#if !defined (TAO_DYNANY_I_H)
+#ifndef TAO_DYNANY_I_H
 #define	TAO_DYNANY_I_H
 
 #include "tao/corba.h"

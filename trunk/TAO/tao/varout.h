@@ -17,7 +17,7 @@
 //   Aniruddha Gokhale
 // ============================================================================
 
-#if !defined (TAO_VAROUT_H)
+#ifndef TAO_VAROUT_H
 #define TAO_VAROUT_H
 
 class CORBA_Object;

@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_ANY_H)
+#ifndef TAO_ANY_H
 #define TAO_ANY_H
 
 class TAO_Export CORBA_Any

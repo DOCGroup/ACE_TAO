@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_IDL_POAC_H)
+#ifndef TAO_IDL_POAC_H
 #define TAO_IDL_POAC_H
 
 class TAO_ServantBase;

@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_SEQUENCE_H)
+#ifndef TAO_SEQUENCE_H
 #  define TAO_SEQUENCE_H
 
 class CORBA_Object;

@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_UNION_H)
+#ifndef TAO_UNION_H
 #  define TAO_UNION_H
 
 class TAO_Export TAO_Base_Union

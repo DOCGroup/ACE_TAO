@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_ORB_STRATEGIES_T_H)
+#ifndef TAO_ORB_STRATEGIES_T_H
 #  define TAO_ORB_STRATEGIES_T_H
 
 #include "ace/Strategies_T.h"

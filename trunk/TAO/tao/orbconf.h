@@ -20,7 +20,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_ORB_CONFIG_H)
+#ifndef TAO_ORB_CONFIG_H
 #define TAO_ORB_CONFIG_H
 
 #include "ace/OS.h"

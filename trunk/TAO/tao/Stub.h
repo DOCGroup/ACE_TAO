@@ -28,7 +28,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_STUB_H)
+#ifndef TAO_STUB_H
 #  define TAO_STUB_H
 
 // Descriptions of parameters.

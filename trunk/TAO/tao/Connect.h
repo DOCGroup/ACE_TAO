@@ -1,7 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#if !defined (TAO_CONNECT_H)
+#ifndef TAO_CONNECT_H
 #  define TAO_CONNECT_H
 
 // ============================================================================

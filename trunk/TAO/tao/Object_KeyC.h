@@ -10,8 +10,8 @@
 // Information on TAO is available at
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#if !defined (_TAO_IDL_OBJECT_KEYC_H_)
-#define _TAO_IDL_OBJECT_KEYC_H_
+#ifndef TAO_IDL_OBJECT_KEYC_H
+#define TAO_IDL_OBJECT_KEYC_H
 
 #if !defined (_TAO__TAO_SEQ_OCTET_CH_)
 #define _TAO__TAO_SEQ_OCTET_CH_
@@ -94,4 +94,4 @@ typedef TAO_tao_seq_Octet_out TAO_ObjectKey_out;
 #include "Object_KeyC.i"
 #endif // defined INLINE
 
-#endif /* _TAO_IDL_OBJECT_KEYC_H_ */
+#endif /* TAO_IDL_OBJECT_KEYC_H */

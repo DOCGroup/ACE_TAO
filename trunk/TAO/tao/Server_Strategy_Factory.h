@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_SERVER_STRATEGY_FACTORY_H)
+#ifndef TAO_SERVER_STRATEGY_FACTORY_H
 #  define TAO_SERVER_STRATEGY_FACTORY_H
 
 class TAO_Server_Strategy_Factory : public ACE_Service_Object

@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_IDL_POAS_H)
+#ifndef TAO_IDL_POAS_H
 #define TAO_IDL_POAS_H
 
 #include "tao/POAC.h"

@@ -22,8 +22,8 @@
 //
 // ============================================================================
 
-#if !defined (CORBA_OBJECT_H)
-#  define CORBA_OBJECT_H
+#ifndef TAO_CORBA_OBJECT_H
+#  define TAO_CORBA_OBJECT_H
 
 class TAO_ServantBase;
 class STUB_Object;
@@ -237,4 +237,4 @@ public:
 # include "tao/Object.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* CORBA_OBJECT_H */
+#endif /* TAO_CORBA_OBJECT_H */

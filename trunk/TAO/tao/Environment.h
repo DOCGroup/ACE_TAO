@@ -22,7 +22,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_ENVIRONMENT_H)
+#ifndef TAO_ENVIRONMENT_H
 #  define TAO_ENVIRONMENT_H
 
 class CORBA_Exception;

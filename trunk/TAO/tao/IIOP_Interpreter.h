@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_IIOP_INTERPRETER_H)
+#ifndef TAO_IIOP_INTERPRETER_H
 #define TAO_IIOP_INTERPRETER_H
 
 // Useful typedefs.

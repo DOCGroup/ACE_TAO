@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_OPTABLE_H)
+#ifndef TAO_OPTABLE_H
 #define TAO_OPTABLE_H
 
 class TAO_operation_db_entry

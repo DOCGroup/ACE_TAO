@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_SEQUENCE_T_H)
+#ifndef TAO_SEQUENCE_T_H
 #define TAO_SEQUENCE_T_H
 
 template <class T>

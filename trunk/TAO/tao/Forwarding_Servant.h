@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_FORWARDING_SERVANT_H)
+#ifndef TAO_FORWARDING_SERVANT_H
 #define TAO_FORWARDING_SERVANT_H
 
 #include "tao/corba.h"

@@ -22,7 +22,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_ALIGN_H)
+#ifndef TAO_ALIGN_H
 #define TAO_ALIGN_H
 
 // Type for doing arithmetic on pointers ... as elsewhere, we assume

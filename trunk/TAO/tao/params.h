@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_PARAMS_H)
+#ifndef TAO_PARAMS_H
 #  define TAO_PARAMS_H
 
 // Forward decls.

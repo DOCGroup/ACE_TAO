@@ -18,7 +18,7 @@
 // 
 // ============================================================================
 
-#if !defined (TAO_DEBUG_H)
+#ifndef TAO_DEBUG_H
 #define	TAO_DEBUG_H
 
 // These are global to simplify is use by other code, very much in

@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_TYPECODE_H)
+#ifndef TAO_TYPECODE_H
 #  define TAO_TYPECODE_H
 
 // Forward decl.

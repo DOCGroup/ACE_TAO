@@ -22,7 +22,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_MASTER_CORBA_H)
+#ifndef TAO_MASTER_CORBA_H
 #define TAO_MASTER_CORBA_H
 
 // Include user-defined and platform-specific ORB configuration stuff.

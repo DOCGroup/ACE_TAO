@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -25,8 +26,8 @@
 //
 // ============================================================================
 
-#if !defined (_TAO_IDL_POA_CORBA_H_)
-#define _TAO_IDL_POA_CORBA_H_
+#ifndef TAO_IDL_POA_CORBA_H
+#define TAO_IDL_POA_CORBA_H
 
 #include "PolicyC.h"
 #include "CurrentC.h"
@@ -1170,4 +1171,4 @@ private:
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#endif /* if !defined */
+#endif /* TAO_IDL_POA_CORBA_H */

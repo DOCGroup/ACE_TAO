@@ -21,7 +21,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_IIOPOBJ_H)
+#ifndef TAO_IIOPOBJ_H
 #  define TAO_IIOPOBJ_H
 
 class TAO_GIOP_Invocation;

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_DEFAULT_SERVER_FACTORY_H)
+#ifndef TAO_DEFAULT_SERVER_FACTORY_H
 #  define TAO_DEFAULT_SERVER_FACTORY_H
 
 #include "tao/corba.h"

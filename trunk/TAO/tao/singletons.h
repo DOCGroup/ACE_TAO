@@ -20,7 +20,7 @@
 // 
 // ============================================================================
 
-#if !defined (TAO_SINGLETONS_H)
+#ifndef TAO_SINGLETONS_H
 #  define TAO_SINGLETONS_H
 
 typedef ACE_Singleton<TAO_Marshal_Factory, ACE_SYNCH_RECURSIVE_MUTEX> TAO_MARSHAL_FACTORY;

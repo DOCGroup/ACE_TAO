@@ -17,7 +17,7 @@
 // 
 // ============================================================================
 
-#if !defined (TAO_INTERNAL_H)
+#ifndef TAO_INTERNAL_H
 #  define TAO_INTERNAL_H
 
 #  include "tao/corba.h"
