@@ -2,6 +2,14 @@ Wed Aug 26 23:57:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.6 released.
 
+Wed Aug 26 22:29:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/POA/Explicit_Activation/Alternate_Resource_Factory/*:
+	  Renamed Alternate_Resource_Factory.* to Alt_Resource_Factory.*.
+	
+	* tao/ORB_Core.h (TAO_ORB_Core): Don't need to specify default
+	  parameters when declaring friend relationship.
+
 Wed Aug 26 22:52:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: 
