@@ -11,7 +11,7 @@
 int 
 main (int argc, char *argv[])
 {                                                                
-  char *rendezvous = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
+  const char *rendezvous = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
 
   // Create a server address.
   ACE_UNIX_Addr server_addr (rendezvous);
