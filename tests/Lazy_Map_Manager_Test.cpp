@@ -321,7 +321,7 @@ active_map_test (void)
 }
 
 int
-main (int, ASYS_TCHAR *)
+main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Lazy_Map_Manager_Test"));
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
