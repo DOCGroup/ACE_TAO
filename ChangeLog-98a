@@ -3,6 +3,10 @@ Tue Mar 31 15:27:25 1998  Steve Huston  <shuston@riverace.com>
 	* apps/JAWS/server/JAWS_Pipeline_Handler.cpp: Defined 'status' in
 	  the put() function.
 
+	* ace/config-dgux-4.x-ghs.h: Removed settings for ACE_SIZEOF_LONG_LONG
+	  since the compiler doesn't really support a long long that ACE
+	  is looking for (64-bit).  Use the ACE-supplied ACE_ULongLong type.
+
 Tue Mar 31 10:46:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Msg_WFMO_Reactor.cpp: Changed to use
