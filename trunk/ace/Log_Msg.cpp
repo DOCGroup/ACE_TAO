@@ -751,9 +751,9 @@ ACE_Log_Msg::log (const char *format_str,
                   {
                     type = SKIP_SPRINTF;
                     char day_and_time[35];
-                    ACE_OS::sprintf (bp, "%s",
-                                     ACE::timestamp (day_and_time,
-                                                     sizeof day_and_time));
+                    ACE::timestamp (day_and_time,
+                                    sizeof day_and_time);
+                    ACE_OS::sprintf (bp, "%s", day_and_time);
                     break;
                   }
                 case 't': // Format thread id.
