@@ -218,11 +218,10 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
                                       ACE_static_cast (long,
                 ACE_CU64_TO_CU32 (elapsed) % ACE_ONE_SECOND_IN_NSECS / 1000));
 
-              const long to_ec_nsecs =
-                ACE_static_cast (long, ec_recv - creation);
+              const long to_ec_nsecs = ACE_CU64_TO_CU32 (ec_recv - creation);
               ACE_Time_Value to_ec (to_ec_nsecs / ACE_ONE_SECOND_IN_NSECS,
-                                    (ACE_CU64_TO_CU32 (to_ec_nsecs) %
-                                       ACE_ONE_SECOND_IN_NSECS) / 1000);
+                                    to_ec_nsecs % ACE_ONE_SECOND_IN_NSECS /
+                                      1000);
 
               ACE_Time_Value in_ec, from_ec;
               if (! short_circuit_EC)
@@ -496,7 +495,7 @@ Latency_Supplier::start_generating_events (void)
                   "timeout = %d "
                   "interval = %d "
                   "tv.msec () = %d\n",
-                  timeout,
+                  ACE_U64_TO_U32 (timeout),
                   timeout_interval,
                   tv_timeout.msec ()));
 
