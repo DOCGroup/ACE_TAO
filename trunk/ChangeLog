@@ -1,3 +1,10 @@
+Tue Apr 29 09:24:07 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Use the project name as the default library name instead of the
+          directory name.
+
 Tue Apr 29 08:47:16 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
