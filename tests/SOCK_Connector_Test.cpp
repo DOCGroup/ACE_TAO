@@ -154,7 +154,7 @@ succeed_nonblocking (void)
   if (status == 0 || (status == -1 && errno != EWOULDBLOCK))
     {
       ACE_DEBUG((LM_DEBUG,
-		 ASYS_TEXT ("Immediate success/fail; test not completed\n")));
+                 ASYS_TEXT ("Immediate success/fail; test not completed\n")));
       status = 0;
     }
   else
@@ -163,15 +163,19 @@ succeed_nonblocking (void)
         status = con.complete (sock);
 
       if (status == -1)
-	{
-	  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("%p\n"),
-		      ASYS_TEXT("connect:complete")));
-	  if (errno == ECONNREFUSED || errno == ENOTCONN)
-	    status = 0;
-	}
+        {
+          // In cast the errno gets overwritten by the printout.  It
+          // does on LynxOS 2.5.0.
+          const int saved_errno = errno;
+
+          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("%p\n"),
+                      ASYS_TEXT("connect:complete")));
+          if (saved_errno == ECONNREFUSED || errno == ENOTCONN)
+            status = 0;
+        }
       else
-	ACE_DEBUG((LM_DEBUG,
-		   ASYS_TEXT("Connect which should succeed, did\n")));
+        ACE_DEBUG((LM_DEBUG,
+                   ASYS_TEXT("Connect which should succeed, did\n")));
     }
 
   // Just in case.
