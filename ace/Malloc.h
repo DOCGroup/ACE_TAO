@@ -69,13 +69,8 @@ struct ACE_Export ACE_Malloc_Stats
 // multiple, like 8-byte data alignment, etc.  The allocated area's
 // padding to your selected size is done with an added array of long[]
 // and your compiler will decide how to align things in memory.
-//
-// If you want to use this feature, define ACE_MALLOC_PADDING in your
-// config.h file and use a signed integer number of bytes you want, e.g.:
-//
-// #define ACE_MALLOC_PADDING ((int) 4096)
 
-#define ACE_MALLOC_PADDING 1
+#define ACE_MALLOC_PADDING 16
 #endif /* ACE_MALLOC_PADDING */
 
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
@@ -104,8 +99,8 @@ public:
   // Size of this header control block.
 
 #if (ACE_MALLOC_PADDING > 1)
-#define ACE_MALLOC_PADDING_SIZE ((ACE_MALLOC_PADDING - \
-                                  (sizeof (ACE_MALLOC_HEADER_PTR) + sizeof (size_t)) / sizeof (long)))
+#define ACE_MALLOC_PADDING_SIZE ((int) (ACE_MALLOC_PADDING - \
+                                  (sizeof (ACE_MALLOC_HEADER_PTR) + sizeof (size_t))) / (int) sizeof (long))
   long padding_[ACE_MALLOC_PADDING_SIZE < 1 ? 1 : ACE_MALLOC_PADDING_SIZE];
 #endif /* ACE_MALLOC_PADDING > 0 */
 
@@ -199,7 +194,7 @@ public:
                                       + sizeof (ACE_Malloc_Stats)))
 #else
 #define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_NAME_NODE_PTR) \
-                                      + sizeof (ACE_MALLOC_HEADER_PTR *) \
+                                      + sizeof (ACE_MALLOC_HEADER_PTR) \
                                       + MAXNAMELEN))
 #endif /* ACE_HAS_MALLOC_STATS */
 
