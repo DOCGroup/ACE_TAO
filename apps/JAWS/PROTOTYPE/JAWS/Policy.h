@@ -4,6 +4,7 @@
 #if !defined (JAWS_POLICY_H)
 #define JAWS_POLICY_H
 
+#include "JAWS/Export.h"
 #include "JAWS/Concurrency.h"
 
 class JAWS_IO;

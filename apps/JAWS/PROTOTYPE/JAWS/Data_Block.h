@@ -6,6 +6,7 @@
 
 #include "ace/Message_Block.h"
 
+#include "JAWS/Export.h"
 #include "JAWS/Pipeline.h"
 
 class JAWS_IO_Handler;
