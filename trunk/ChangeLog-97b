@@ -1,3 +1,24 @@
+Sat Sep 13 23:51:55 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
+
+	* ace/ACE_Library.{mak,mdp}: Removed Service_Record.cpp and added
+	  Service_Type.cpp in project file.
+	
+	* ace/:  Removed ace.{mak,mdp} and replaced them with
+	  ACE_Library.{mak,mdp}.  MSVC 4.2 insists to change the release
+	  version DLL from our original setting "ace.{dll,lib}" to "ACE
+	  dynamic Library.{dll,lib}".  This is so far the only known
+	  method to get around this.
+	
+	* netsvcs/servers/servers.{dsw,dsp}: Changed the output filenames
+	  of debug version from maind.exe to main.exe.
+	
+	* netsvcs/lib/netsvcs.{dsw,dsp}: Changed the output filenames of
+	  debug version from netsvcsd.{dll,lib} to netsvcs.{dll,lib}.
+  
+	* ace/ace.dsw:
+	* ace/ace_{dll,lib}.dsp: Removed Service_Record.cpp and added
+ 	  Service_Type.cpp.
+
 Sat Sep 13 21:12:22 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (open): Fixed a typo.
