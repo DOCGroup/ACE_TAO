@@ -839,6 +839,10 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
     }
 }
 
+  // *************************************************************
+  // TAO_Sequence_Extracter_Base
+  // *************************************************************
+
 CORBA::TCKind
 TAO_Sequence_Extracter_Base::
 sequence_type (CORBA::TypeCode* type_code,
@@ -866,7 +870,6 @@ sequence_type (CORBA::TypeCode* type_code,
 
   return return_value;
 }
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 ACE_MT (template class TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>);

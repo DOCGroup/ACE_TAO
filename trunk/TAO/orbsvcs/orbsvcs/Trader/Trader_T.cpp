@@ -320,15 +320,40 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
           kind_2 != CORBA::tk_void &&
           kind_1 == kind_2)
         {
-          // Allocate a new sequence and extract into it.
-          ACE_NEW_RETURN (short_seq, SEQ_TYPE, return_value);
-          return_value = extract_value (any_value,
-                                        this->typecode_,
-                                        (void *) short_seq);          
+          if (any_value.any_owns_data ())
+            {
+              ACE_NEW_RETURN (seq, SEQ_TYPE, return_value);
+              TAO_InputCDR stream (ACE_static_cast (ACE_Message_Block*,
+                                                    any_value.value ()));
+
+              CORBA::Boolean decode_succeded =
+                (stream.decode (this->typecode_, seq, 0, TAO_TRY_ENV) ==
+                 CORBA::TypeCode::TRAVERSE_CONTINUE);
+              TAO_CHECK_ENV;
+              
+              if (decode_succeded)
+                {
+                  ((CORBA::Any *) &any_value)->replace (any_value.type (),
+                                                        seq,
+                                                        1,
+                                                        TAO_TRY_ENV);
+                  TAO_CHECK_ENV;
+                  return_value = CORBA::B_TRUE;
+                }
+              else
+                delete seq;
+            }
+          else 
+            {
+              seq = ACE_static_cast (SEQ_TYPE*, any_value.value ());
+              return_value = CORBA::B_TRUE;
+            }
         }
     }
   TAO_CATCHANY
     {
+      if (seq != 0)
+        delete seq;
     }
   TAO_ENDTRY;  
   
