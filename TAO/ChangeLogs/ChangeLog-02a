@@ -1,3 +1,17 @@
+Fri Jul  7 11:08:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs.IFR_Service/ConstantDef_i.cpp:
+	* orbsvcs/IFR_Service/Contained_i.cpp:
+	* orbsvcs/IFR_Service/Container_i.cpp:
+	* orbsvcs/IFR_Service/IFR_Service.cpp:
+	* orbsvcs/IFR_Service/IFR_Service.h:
+	* orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+	* orbsvcs/IFR_Service/Options.cpp:
+	* orbsvcs/IFR_Service/Repository_i.cpp:
+
+	  Various cases of unused variables/arguments, mismatched
+	  signatures, unreachable code, etc., reported by cxx.
+
 Thu Jul  7 08:09:00 2000  Bruce Trask   <brucetrask@aol.com>
 
       * tao/Object_Adapter.h:
