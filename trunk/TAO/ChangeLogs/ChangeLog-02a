@@ -1,3 +1,112 @@
+Fri May 24 09:48:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	A long list with documentation updates.
+
+	* orbsvcs/orbsvcs/Concurrency/CC_Lock.h
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.h
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.h
+	* orbsvcs/orbsvcs/Concurrency/Concurrency_Loader.h
+	* orbsvcs/orbsvcs/Concurrency/Concurrency_Utils.cpp
+	* orbsvcs/orbsvcs/Concurrency/Concurrency_Utils.h
+	  Converted old style documentation to doxygen style
+
+	* orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.h
+	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h
+	  Improved doxygen documentation
+
+	* orbsvcs/orbsvcs/ETCL/ETCL_Constraint_Visitor.h
+	* orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.h
+	  Converted old style documentation to doxygen style
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.h
+	* orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.h
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h
+	  Converted old style documentation to doxygen style
+
+	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h
+	* orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.h
+	* orbsvcs/orbsvcs/Notify/Notify_Channel_Objects_Factory.h
+	* orbsvcs/orbsvcs/Notify/Notify_Collection.h
+	* orbsvcs/orbsvcs/Notify/Notify_Collection_Factory.h
+	* orbsvcs/orbsvcs/Notify/Notify_Command.h
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h
+	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.h
+	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.h
+	* orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h
+	* orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.h
+	* orbsvcs/orbsvcs/Notify/Notify_Event.h
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.h
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager_Objects_Factory.h
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Map.h
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Processor.h
+	* orbsvcs/orbsvcs/Notify/Notify_Factory.h
+	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_FilterFactory_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h
+	* orbsvcs/orbsvcs/Notify/Notify_Listener_Filter_Eval_Command.h
+	* orbsvcs/orbsvcs/Notify/Notify_Listeners.h
+	* orbsvcs/orbsvcs/Notify/Notify_Lookup_Command.h
+	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.h
+	* orbsvcs/orbsvcs/Notify/Notify_POA_Factory.h
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.h
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.h
+	* orbsvcs/orbsvcs/Notify/Notify_Proxy_T.h
+	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_Signal_Property_T.h
+	* orbsvcs/orbsvcs/Notify/Notify_Source_Filter_Eval_Command.h
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredEvents.h
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_Update_Dispatch_Command.h
+	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h
+	  Converted old style documentation to doxygen style
+
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h
+	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.h
+	  Converted old style documentation to doxygen style
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h
+	  Improved doxygen documentation
+
+	* orbsvcs/orbsvcs/Time/TAO_TIO.h
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h
+	* orbsvcs/orbsvcs/Time/TAO_UTO.h
+	* orbsvcs/orbsvcs/Time/Timer_Helper.h
+	  Converted old style documentation to doxygen style
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h
+	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.h
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.h
+	* orbsvcs/orbsvcs/Trader/Interpreter.h
+	* orbsvcs/orbsvcs/Trader/Locking.h
+	* orbsvcs/orbsvcs/Trader/Offer_Database.h
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators.h
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.h
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.h
+	* orbsvcs/orbsvcs/Trader/Trader.h
+	* orbsvcs/orbsvcs/Trader/Trader_Constraint_Visitors.h
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.h
+	* orbsvcs/orbsvcs/Trader/Trader_T.h
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.h
+	  Converted old style documentation to doxygen style
+
 Thu May 23 16:38:54 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Flushing_Strategy.h:
@@ -15,7 +124,7 @@ Thu May 23 17:38:10 2002  Jeff Parsons <parsons@cs.wustl.edu>
           Added overrides of _is_a() and _get_interface(), so DSI calls
           to these methods can be handled by the ORB, but only in
           the context of an existing request (see the CORBA C++
-          mapping, section 1.38.3). Thanks to Eric Quere 
+          mapping, section 1.38.3). Thanks to Eric Quere
           <Eric.Quere@med.ge.com> and Frank Pilhofer <fp@fpx.de> for
           reporting the omission.
 
@@ -78,7 +187,7 @@ Thu May 23 12:51:51 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
           Fixed a bug in the IDL compiler's handling of
           #pragma prefix when there is a chain of included IDL files
-          and repeated includes in the chain. Thanks to Bill Tonseth 
+          and repeated includes in the chain. Thanks to Bill Tonseth
           <wtonseth@yahoo.com> for reporting the bug.
 
 Thu May 23 13:34:35 2002  Carlos O'Ryan  <coryan@atdesk.com>
@@ -133,7 +242,7 @@ Tue May 21 16:10:11 2002 Ru Gunatilleke <ru@ociweb.com>
 	* examples/RTCORBA/Activity/README: Fixed the description on
 	  supplying the service configurator file.
 
-	* examples/RTCORBA/Activity/svc.conf.server: Added -POACount 1 
+	* examples/RTCORBA/Activity/svc.conf.server: Added -POACount 1
 	  and -JobCount 2.  Thanks to Patrick Lardieri
  	  <patrick.j.lardieri@lmco.com> and Gautam Thaker
  	  <gthaker@atl.lmco.com> for reporting this and to

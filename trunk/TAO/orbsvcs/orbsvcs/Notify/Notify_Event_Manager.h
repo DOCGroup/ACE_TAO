@@ -1,20 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   Orbsvcs
-//
-// = FILENAME
-//   Notify_Event_Manager.h
-//
-// = DESCRIPTION
-//   An Event Manager for the Notification Service.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_Event_Manager.h
+ *
+ *  $Id$
+ *
+ * An Event Manager for the Notification Service.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NOTIFY_EVENT_MANAGER
 #define TAO_NOTIFY_EVENT_MANAGER
@@ -41,123 +38,126 @@ class TAO_Notify_EMO_Factory;
 class TAO_Notify_Event_Processor;
 class TAO_Notify_AdminProperties;
 
+/**
+ * @class TAO_Notify_Event_Manager
+ *
+ * @brief TAO_Notify_Event_Manager
+ *
+ * Handles all aspects of event propogation thru the channel.
+ * Also keeps track of publications and subscriptions.
+ */
 class TAO_Notify_Export TAO_Notify_Event_Manager
 {
-  // = TITLE
-  //   TAO_Notify_Event_Manager
-  //
-  // = DESCRIPTION
-  //   Handles all aspects of event propogation thru the channel.
-  //   Also keeps track of publications and subscriptions.
 
  public:
   // = Initialization and termination code.
+  /// Constructor.
   TAO_Notify_Event_Manager (TAO_Notify_EventChannel_i* parent,
                             TAO_Notify_EMO_Factory* emo_factory);
-  // Constructor.
 
+  /// Destructor.
   ~TAO_Notify_Event_Manager ();
-  // Destructor.
 
+  /// Init
   void init (ACE_ENV_SINGLE_ARG_DECL);
-  // Init
 
+  /// Shutdown operations.
   void shutdown (ACE_ENV_SINGLE_ARG_DECL);
-  // Shutdown operations.
 
   // = Publish/Subscribe management
   // = Subscription
+  /// Subscribes <event_listener> for events <added>.
+  /// Unsubscribes <event_listener> for events <removed>.
   void subscribe_for_events (TAO_Notify_EventListener* event_listener, const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed ACE_ENV_ARG_DECL);
-  // Subscribes <event_listener> for events <added>.
-  // Unsubscribes <event_listener> for events <removed>.
 
   // = Publications
+  /// Suppliers can send anonymous requests to the Event Manager to indicate
+  /// what kind of events they expect to produce.
   void update_publication_list (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed ACE_ENV_ARG_DECL);
-  // Suppliers can send anonymous requests to the Event Manager to indicate
-  // what kind of events they expect to produce.
 
   // = Updates
+  /// Registers the subscription update listener with the Event Manager.
   void register_for_subscription_updates (TAO_Notify_UpdateListener* update_listener ACE_ENV_ARG_DECL);
-  // Registers the subscription update listener with the Event Manager.
 
+  /// Unregister from subscription updates.
   void unregister_from_subscription_updates (TAO_Notify_UpdateListener* update_listener ACE_ENV_ARG_DECL);
-  // Unregister from subscription updates.
 
+  /// Registers the publication update listener with the Event Manager.
   void register_for_publication_updates (TAO_Notify_UpdateListener* update_listener ACE_ENV_ARG_DECL);
-  // Registers the publication update listener with the Event Manager.
 
+  /// Unregister from publication updates.
   void unregister_from_publication_updates (TAO_Notify_UpdateListener* update_listener ACE_ENV_ARG_DECL);
-  // Unregister from publication updates.
 
   // = Accessors
+  /// Obtain the publication list.
   CosNotification::EventTypeSeq* obtain_offered_types (void);
-  // Obtain the publication list.
 
+  /// Obtain the subscription list.
   CosNotification::EventTypeSeq* obtain_subscription_types (void);
-  // Obtain the subscription list.
 
+  /// Get the event map.
   TAO_Notify_Event_Map* event_map (void);
-  // Get the event map.
 
+  /// Get the Event Processor.
   TAO_Notify_Event_Processor* event_processor (void);
-  // Get the Event Processor.
 
+  /// Get the Admin Properties.
   TAO_Notify_AdminProperties* admin_properties (void);
-  // Get the Admin Properties.
 
+  /// Get the Resource Factory.
   TAO_Notify_EMO_Factory* resource_factory (void);
-  // Get the Resource Factory.
 
   // = Event forwarding methods.
+  /// Delivers the event to listeners subscribed for <event>
+  /// <event_source> is the <event> source to the Event Manager.
   void process_event (TAO_Notify_Event* event,
                       TAO_Notify_EventSource* event_source
                       ACE_ENV_ARG_DECL);
-  // Delivers the event to listeners subscribed for <event>
-  // <event_source> is the <event> source to the Event Manager.
 
   void update_task_admins (void);
 
 protected:
   // = Event dispatching methods.
+  /// Dispatch the updates to the <update_listener_list>
   void dispatch_updates_i (TAO_Notify_UpdateListener_List* update_listener_list,
                            TAO_Notify_EventType_List& added,
                            TAO_Notify_EventType_List& removed
                            ACE_ENV_ARG_DECL);
-  // Dispatch the updates to the <update_listener_list>
 
   // = Data members.
+  /// The Event Channel that we're managing for.
   TAO_Notify_EventChannel_i * event_channel_;
-  // The Event Channel that we're managing for.
 
+  /// Container for event <-> source/sinks mappings.
   TAO_Notify_Event_Map* event_map_;
-  // Container for event <-> source/sinks mappings.
 
+  /// Handles processing of events.
   TAO_Notify_Event_Processor * event_processor_;
-  // Handles processing of events.
 
+  /// Dispatches updates to update listeners.
   TAO_Notify_Worker_Task * updates_dispatching_task_;
-  // Dispatches updates to update listeners.
 
+  /// Event manager objects factory.
   TAO_Notify_EMO_Factory* emo_factory_;
-  // Event manager objects factory.
 
+  /// The locking strategy.
   ACE_Lock* lock_;
-  // The locking strategy.
 
+  /// Admin properties.
   TAO_Notify_AdminProperties* admin_properties_;
-  // Admin properties.
 };
 
 /**************************************************************************/
 
+ /**
+  * @class TAO_Notify_Update_Worker
+  *
+  * @brief TAO_Notify_Update_Worker
+  *
+  * Worker to send update commands to the updates dispatching task.
+  */
 class TAO_Notify_Export TAO_Notify_Update_Worker : public TAO_ESF_Worker<TAO_Notify_UpdateListener>
 {
-  // = TITLE
-  //   TAO_Notify_Update_Worker
-  //
-  // = DESCRIPTION
-  //   Worker to send update commands to the updates dispatching task.
-  //
  public:
   // = Initialization and termination code.
   TAO_Notify_Update_Worker (TAO_Notify_Worker_Task * updates_dispatching_task, TAO_Notify_EventType_List& added, TAO_Notify_EventType_List& removed);
@@ -166,12 +166,12 @@ class TAO_Notify_Export TAO_Notify_Update_Worker : public TAO_ESF_Worker<TAO_Not
   void work (TAO_Notify_UpdateListener* listener ACE_ENV_ARG_DECL);
  protected:
   // = Data members.
+  /// Data to transmit.
   TAO_Notify_EventType_List& added_;
   TAO_Notify_EventType_List& removed_;
-  // Data to transmit.
 
+  /// Update dispatcher
   TAO_Notify_Worker_Task * updates_dispatching_task_;
-  // Update dispatcher
 };
 
 #if defined (__ACE_INLINE__)

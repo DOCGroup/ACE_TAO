@@ -1,19 +1,16 @@
-// $Id$
-// ==========================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   Notify_ProxyConsumer_T.h
-//
-// = DESCRIPTION
-//   Template Base class for all Proxy Consumers.
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_ProxyConsumer_T.h
+ *
+ *  $Id$
+ *
+ * Template Base class for all Proxy Consumers.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NOTIFY_PROXYCONSUMER_T_H
 #define TAO_NOTIFY_PROXYCONSUMER_T_H
@@ -35,32 +32,33 @@ class TAO_Notify_SupplierAdmin_i;
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_Notify_ProxyConsumer
+ *
+ * @brief TAO_Notify_ProxyConsumer
+ *
+ * The is a base class for all proxy consumers.
+ */
 template <class SERVANT_TYPE>
 class TAO_Notify_Export TAO_Notify_ProxyConsumer : public TAO_Notify_Proxy<SERVANT_TYPE>, virtual public TAO_Notify_EventSource
 {
-  // = TITLE
-  //   TAO_Notify_ProxyConsumer
-  //
-  // = DESCRIPTION
-  //   The is a base class for all proxy consumers.
-  //
 
 public:
+  /// Constructor
   TAO_Notify_ProxyConsumer (TAO_Notify_SupplierAdmin_i* supplier_admin);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_Notify_ProxyConsumer (void);
-  // Destructor
 
+  /// Init the Proxy.
   void init (CosNotifyChannelAdmin::ProxyID myID ACE_ENV_ARG_DECL);
-  // Init the Proxy.
 
   // = TAO_Notify_EventSource methods.
+  /// Evaluates true if this event is acceptable by the Source.
   virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event ACE_ENV_ARG_DECL);
-  // Evaluates true if this event is acceptable by the Source.
 
+  /// The Worker task associated with the event listener for filter evaluation.
   TAO_Notify_Worker_Task* filter_eval_task (void);
-  // The Worker task associated with the event listener for filter evaluation.
 
   virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
@@ -85,7 +83,7 @@ public:
     CosNotifyComm::InvalidEventType
   ));
 
-  // override the set_qos that comes from TAO_Notify_Proxy
+  // Override the set_qos that comes from TAO_Notify_Proxy
   // so we can update the qos on our tasks.
   virtual void set_qos (
     const CosNotification::QoSProperties & qos
@@ -98,18 +96,18 @@ public:
 
 protected:
   // = Helper methods
+  /// Derived classes should call this when their suppliers connect.
   void on_connected (ACE_ENV_SINGLE_ARG_DECL);
-  // Derived classes should call this when their suppliers connect.
 
+  /// Derived classes should call this when their suppliers disconnect.
   void on_disconnected (ACE_ENV_SINGLE_ARG_DECL);
-  // Derived classes should call this when their suppliers disconnect.
 
   // = Data members
+  /// My parent supplier admin.
   TAO_Notify_SupplierAdmin_i* supplier_admin_;
-  // My parent supplier admin.
 
+  /// The filter evaluation task for this listener.
   TAO_Notify_Worker_Task* filter_eval_task_;
-  // The filter evaluation task for this listener.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

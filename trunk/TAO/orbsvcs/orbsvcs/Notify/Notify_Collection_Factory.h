@@ -1,21 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Notification
-//
-// = FILENAME
-//   Notify_Collection_Factory.h
-//
-// = DESCRIPTION
-//   A factory fpr the collection types used by Notify.
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Notify_Collection_Factory.h
+ *
+ *  $Id$
+ *
+ * A factory fpr the collection types used by Notify.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_COLLECTION_FACTORY_H
 #define NOTIFY_COLLECTION_FACTORY_H
@@ -30,21 +26,22 @@
 #include "notify_export.h"
 #include "Notify_Collection.h"
 
+/**
+ * @class TAO_Notify_Collection_Factory
+ *
+ * @brief TAO_Notify_Collection_Factory
+ *
+ * Collection factory
+ */
 class TAO_Notify_Export TAO_Notify_Collection_Factory : public ACE_Service_Object
 {
-  // = TITLE
-  //   TAO_Notify_Collection_Factory
-  //
-  // = DESCRIPTION
-  //   Collection factory
-  //
 public:
   // = Methods to create listener collections.
+  /// Create the event listener list.
   virtual TAO_Notify_EventListener_List* create_event_listener_list (ACE_ENV_SINGLE_ARG_DECL) = 0;
-  // Create the event listener list.
 
+  /// Create update listener list.
  virtual TAO_Notify_UpdateListener_List* create_update_listener_list (ACE_ENV_SINGLE_ARG_DECL) = 0;
-  // create update listener list.
 };
 
 #include "ace/post.h"

@@ -1,19 +1,16 @@
-// $Id$
-// =========================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   Notify_ProxySupplier.h
-//
-// = DESCRIPTION
-//   Template Base class for all Proxy Suppliers.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Notify_ProxySupplier.h
+ *
+ *  $Id$
+ *
+ * Template Base class for all Proxy Suppliers.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 #ifndef TAO_NOTIFY_PROXY_SUPPLIER_T_H
 #define TAO_NOTIFY_PROXY_SUPPLIER_T_H
 #include "ace/pre.h"
@@ -30,36 +27,37 @@ class TAO_Notify_ConsumerAdmin_i;
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_Notify_ProxySupplier
+ *
+ * @brief TAO_Notify_ProxySupplier
+ *
+ * The is a base class for all proxy suppliers.
+ */
 template <class SERVANT_TYPE>
 class TAO_Notify_Export TAO_Notify_ProxySupplier : public TAO_Notify_Proxy <SERVANT_TYPE>, virtual public TAO_Notify_EventListener
 {
-  // = TITLE
-  //   TAO_Notify_ProxySupplier
-  //
-  // = DESCRIPTION
-  //   The is a base class for all proxy suppliers.
-  //
 
 public:
+  /// Constructor
   TAO_Notify_ProxySupplier (TAO_Notify_ConsumerAdmin_i* consumeradmin);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_Notify_ProxySupplier (void);
-  // Destructor
 
+  /// Init the Proxy.
   void init (CosNotifyChannelAdmin::ProxyID myID ACE_ENV_ARG_DECL);
-  // Init the Proxy.
 
   // = Notify_Event_Listener methods
   virtual void dispatch_event (TAO_Notify_Event &event ACE_ENV_ARG_DECL);
 
   virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event, CORBA::Boolean eval_parent ACE_ENV_ARG_DECL);
 
+  /// The Worker task associated with the event listener for event dispatching
   virtual TAO_Notify_Worker_Task* event_dispatch_task (void);
-  // The Worker task associated with the event listener for event dispatching
 
+  /// The Worker task associated with the event listener for filter evaluation.
   virtual TAO_Notify_Worker_Task* filter_eval_task (void);
-  // The Worker task associated with the event listener for filter evaluation.
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr MyAdmin (
@@ -148,34 +146,34 @@ public:
 
  protected:
   // = Helper methods
+  /// Derived classes should implement this.
   virtual void dispatch_event_i (TAO_Notify_Event &event ACE_ENV_ARG_DECL) = 0;
-  // Derived classes should implement this.
 
+  /// Derived classes should call this when their consumers connect.
   void on_connected (ACE_ENV_SINGLE_ARG_DECL);
-  // Derived classes should call this when their consumers connect.
 
+  /// Derived classes should call this when their consumers disconnect.
   void on_disconnected (ACE_ENV_SINGLE_ARG_DECL);
-  // Derived classes should call this when their consumers disconnect.
 
   // = Data members
+  /// My parent consumer admin.
   TAO_Notify_ConsumerAdmin_i* consumer_admin_;
-  // My parent consumer admin.
 
+  /// A list of event types that we are interested in.
   TAO_Notify_EventType_List subscription_list_;
-  // A list of event types that we are interested in.
 
+  /// True if we are connected to a consumer and suspended.
   CORBA::Boolean is_suspended_;
-  // True if we are connected to a consumer and suspended.
 
+  /// A list of events populated when we're suspended.
   typedef ACE_Unbounded_Queue<TAO_Notify_Event*> TAO_Notify_Event_List;
   TAO_Notify_Event_List event_list_;
-  // A list of events populated when we're suspended.
 
+  /// The dispatching task to send events to a listener group affiliated with this listener.
   TAO_Notify_Worker_Task* dispatching_task_;
-  // The dispatching task to send events to a listener group affiliated with this listener.
 
+  /// The filter evaluation task for this listener.
   TAO_Notify_Worker_Task* filter_eval_task_;
-  // The filter evaluation task for this listener.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
