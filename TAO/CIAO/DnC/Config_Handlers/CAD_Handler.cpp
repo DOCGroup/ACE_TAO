@@ -116,11 +116,10 @@ void CAD_Handler::update_spr_refs
 void CAD_Handler::process_instance (DOMNodeIterator* iter,
                                     Deployment::SubcomponentInstantiationDescription& sid)
 {
-  ACE_TString root_node_name;
-
-  root_node_name = XMLString::transcode
+  char* root_node_name_ch = XMLString::transcode
     (this->doc_->getDocumentElement ()->getNodeName ());
-
+  ACE_TString root_node_name (root_node_name_ch);
+  XMLString::release (root_node_name_ch);
 
   for (DOMNode* node = iter->nextNode();
        node != 0;
