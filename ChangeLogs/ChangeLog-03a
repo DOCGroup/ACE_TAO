@@ -1,3 +1,10 @@
+Mon Feb 25 19:30:54 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Collection_Test.cpp: Moved the declaration of UglyThing
+          to a new file, Collection_Test.h.  Visual Age C++ needs it in
+          a separate file to do auto template instantiation.
+        * tests/Collection_Test.h: New file.
+
 Mon Feb 25 19:27:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.cpp (log): In handling for %t, fixed the feature
