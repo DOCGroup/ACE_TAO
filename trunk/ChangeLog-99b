@@ -4,6 +4,8 @@ Sat Feb 20 15:39:16 1999  David L. Levine  <levine@cs.wustl.edu>
           to call an exit hook that is registered by the ACE_Object_Manager,
           instead of directly calling ACE_Object_Manager::fini ().
 
+        * ace/OS.i (thr_self): moved definitions to before first use.
+
 Sat Feb 20 11:50:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/OS.i (thr_equal): Moved the body of ACE_OS::thr_equal before
