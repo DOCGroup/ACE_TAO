@@ -6,7 +6,7 @@ NAME = TAO_IFR_Client
 
 OBJFILES = \
 	$(OBJDIR)\InterfaceC.obj \
-        $(OBJDIR)\IFR_Client_Adapter_Impl
+        $(OBJDIR)\IFR_Client_Adapter_Impl.obj
 
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_IFR_CLIENT_CFLAGS)
