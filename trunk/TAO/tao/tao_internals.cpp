@@ -1,5 +1,9 @@
+// $Id$
+
+#include "tao/tao_internals.h"
+
 #if !defined(__ACE_INLINE__)
-#  include "tao_internals.h"
+#  include "tao_internals.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Service_Config.h"
