@@ -157,7 +157,7 @@ CORBA::Current::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Current:1.0"
         ) ||
       !ACE_OS::strcmp (

@@ -26,23 +26,22 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:302
 
 
 #include "Policy_ForwardC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "Policy_ForwardC.i"
+#include "Policy_ForwardC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:65
 
 // Arg traits specializations.
 namespace TAO
@@ -50,7 +49,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_POLICYLIST_CS_)
@@ -100,13 +99,13 @@ void CORBA::PolicyList::_tao_any_destructor (
   )
 {
   PolicyList * _tao_tmp_pointer =
-    ACE_static_cast (PolicyList *, _tao_void_pointer);
+    static_cast<PolicyList *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_POLICYTYPESEQ_CS_)
@@ -153,7 +152,7 @@ void CORBA::PolicyTypeSeq::_tao_any_destructor (
   )
 {
   PolicyTypeSeq * _tao_tmp_pointer =
-    ACE_static_cast (PolicyTypeSeq *, _tao_void_pointer);
+    static_cast<PolicyTypeSeq *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -170,13 +169,13 @@ CORBA::Boolean operator<< (
     const CORBA::PolicyList &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
-
+      CORBA::Boolean _tao_marshal_flag = true;
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag =
@@ -184,11 +183,11 @@ CORBA::Boolean operator<< (
                 _tao_sequence[i].in (), strm
               );
         }
-
+      
       return _tao_marshal_flag;
     }
-
-  return 0;
+  
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -197,7 +196,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-
+  
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -205,31 +204,31 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
-
+      
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-
+      
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
+      if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
-
+      
       // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
-
+      CORBA::Boolean _tao_marshal_flag = true;
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
         }
-
+      
       return _tao_marshal_flag;
-
+    
     }
-
-  return 0;
+  
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_CORBA_PolicyList_CPP_ */
@@ -245,15 +244,15 @@ CORBA::Boolean operator<< (
     const CORBA::PolicyTypeSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       return strm.write_ulong_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
-
-  return 0;
+  
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -262,7 +261,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-
+  
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -270,24 +269,24 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
-
+      
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-
+      
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
+      if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
-
+      
       // Retrieve all the elements.
       return strm.read_ulong_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-
+    
     }
-
-  return 0;
+  
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_CORBA_PolicyTypeSeq_CPP_ */
@@ -305,17 +304,17 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::SetOverrideType &_tao_enum
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-
+  
   if (_tao_result == 1)
     {
-      _tao_enumval = ACE_static_cast (CORBA::SetOverrideType, _tao_temp);
+      _tao_enumval = static_cast<CORBA::SetOverrideType> (_tao_temp);
     }
-
+  
   return _tao_result;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -443,4 +442,4 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::SetOverrideType &_tao_enum
         CORBA::PolicyType \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

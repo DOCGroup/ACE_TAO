@@ -686,7 +686,7 @@ nobase_include_HEADERS = \
   PolicyS.h \
   Policy_Forward.pidl \
   Policy_ForwardC.h \
-  Policy_ForwardC.i \
+  Policy_ForwardC.inl \
   Policy_Manager.h \
   Policy_Manager.i \
   Policy_Set.h \
