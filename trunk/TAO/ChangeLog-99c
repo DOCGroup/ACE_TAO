@@ -1,3 +1,20 @@
+Mon Sep 21 12:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/Makefile,
+	  TAO_IDL/tao_idl.dsp:
+	  Added the files be_visitor_ami_pre_proc.{h,cpp}.
+
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
+	  TAO_IDL/be_include/be_visitor_ami_pre_proc.h
+	  Created these files to hold the pre processor
+	  for generating implied AMI IDL code. 
+
+	* TAO_IDL/be/be_produce.cpp:
+	  Put a hook in to the AMI preprocessor.
+
+	* TAO_IDL/be_include/be.h:
+	  Added an include for the AMI preprocessor.
+
 Tue Sep 21 11:53:36 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* Added the following changes from Christopher Kohlhoff 

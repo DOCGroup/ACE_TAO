@@ -99,6 +99,25 @@ BE_produce (void)
       BE_abort ();
     }
 
+  if (idl_global->ami_call_back () == I_TRUE)
+    {
+      // Make a first pass over the AST and introduce
+      // AMI specific interfaces, methods and valuetypes.
+      be_visitor_context *local_ctx = new be_visitor_context (ctx);
+
+      visitor = new be_visitor_ami_pre_proc (local_ctx);
+      
+      if (root->accept (visitor) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) be_produce - "
+                      "client header for Root failed\n"));
+          BE_abort ();
+        }
+      // it is our responsibility to free up the visitor
+      delete visitor;
+    }
+
   // Code generation involves six steps because of the six files that we
   // generate.
 
