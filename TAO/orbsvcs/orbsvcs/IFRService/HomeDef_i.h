@@ -220,6 +220,59 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  // Common code for create_factory_i and create_finder_i.
+  CORBA::Object_ptr create_common (
+      CORBA::DefinitionKind created_kind,
+      const char *id,
+      const char *name,
+      const char *version,
+      const char *sub_section,
+      const CORBA::ParDescriptionSeq &params,
+      const CORBA::ExceptionDefSeq &exceptions
+      ACE_ENV_ARG_DECL
+    );
+
+  void fill_op_desc_seq (ACE_Configuration_Section_Key &key,
+                         CORBA::OpDescriptionSeq &ods,
+                         const char *sub_section
+                         ACE_ENV_ARG_DECL);
+
+  void fill_op_desc (ACE_Configuration_Section_Key &key,
+                     CORBA::OperationDescription &od,
+                     char *sub_section
+                     ACE_ENV_ARG_DECL);
+
+  void fill_param_desc_seq (ACE_Configuration_Section_Key &key,
+                            CORBA::ParDescriptionSeq &pds,
+                            const char *sub_section
+                            ACE_ENV_ARG_DECL);
+
+  void fill_param_desc (ACE_Configuration_Section_Key &key,
+                        CORBA::ParameterDescription &pd,
+                        const char *sub_section
+                        ACE_ENV_ARG_DECL);
+
+  void fill_exc_desc_seq (ACE_Configuration_Section_Key &key,
+                          CORBA::ExcDescriptionSeq &eds,
+                          char *sub_section
+                          ACE_ENV_ARG_DECL);
+
+  void fill_exc_desc (ACE_Configuration_Section_Key &key,
+                      CORBA::ExceptionDescription &ed,
+                      char *sub_section
+                      ACE_ENV_ARG_DECL);
+
+  void fill_attr_desc_seq (ACE_Configuration_Section_Key &key,
+                           CORBA::ExtAttrDescriptionSeq &eads,
+                           const char *sub_section
+                           ACE_ENV_ARG_DECL);
+
+  void fill_attr_desc (ACE_Configuration_Section_Key &key,
+                       CORBA::ExtAttributeDescription &ead,
+                       const char *sub_section
+                       ACE_ENV_ARG_DECL);
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

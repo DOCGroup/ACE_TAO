@@ -105,6 +105,22 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  /// Common code for the set/get operations with attributes and initializers.
+
+  void fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
+                        ACE_Configuration_Section_Key &key,
+                        const char *sub_section
+                        ACE_ENV_ARG_DECL);
+
+  void exceptions (ACE_Configuration_Section_Key &key,
+                   const char *sub_section,
+                   const CORBA::ExcDescriptionSeq &exceptions);
+
+  void exceptions (ACE_Configuration_Section_Key &key,
+                   const char *sub_section,
+                   const CORBA::ExceptionDefSeq &exceptions);
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -58,7 +58,12 @@ TAO_OperationDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL )
   retval->kind = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  retval->value <<= this->make_description (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::OperationDescription od;
+  this->make_description (od
+                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  retval->value <<= od;
   ACE_CHECK_RETURN (0);
 
   return retval._retn ();
@@ -621,13 +626,12 @@ TAO_OperationDef_i::exceptions_i (const CORBA::ExceptionDefSeq &exceptions
 
 }
 
-CORBA::OperationDescription
+void
 TAO_OperationDef_i::make_description (
-      ACE_ENV_SINGLE_ARG_DECL)
+    CORBA::OperationDescription &od
+    ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::OperationDescription od;
-
   od.name = this->name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (od);
 
@@ -749,6 +753,12 @@ TAO_OperationDef_i::make_description (
     {
       od.exceptions.length (0);
     }
-
-  return od;
 }
+
+CORBA::TypeCode_ptr 
+TAO_OperationDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->result_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+

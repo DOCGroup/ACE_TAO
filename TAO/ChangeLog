@@ -1,3 +1,40 @@
+Sun Jun  8 10:20:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRServiceComponentContainer_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceContainer_i.h:
+        * orbsvcs/orbsvcs/IFRServiceEventDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceEventPortDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceExtAbstractInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceExtAbstractInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRServiceExtAttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceExtAttributeDef_i.h:
+        * orbsvcs/orbsvcs/IFRServiceExtInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceExtInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRServiceExtLocalInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceExtLocalInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRServiceExtValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceExtValueDef_i.h:
+        * orbsvcs/orbsvcs/IFRServiceFactoryDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceFactoryDef_i.h:
+        * orbsvcs/orbsvcs/IFRServiceFinderDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceFinderDef_i.h:
+        * orbsvcs/orbsvcs/IFRServiceHomeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceHomeDef_i.h:
+        * orbsvcs/orbsvcs/IFRServiceIFR_Service_Utils_T.cpp:
+        * orbsvcs/orbsvcs/IFRServiceIFR_Service_Utils_T.h:
+        * orbsvcs/orbsvcs/IFRServiceInterfaceAttrExtension_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceInterfaceAttrExtension_i.h:
+        * orbsvcs/orbsvcs/IFRServiceInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRServiceOperationDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceOperationDef_i.h:
+        * orbsvcs/orbsvcs/IFRServiceValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRServiceValueDef_i.h:
+
+	  Added partial support in the IFR for valuetypes, components, homes
+	  and eventtypes.
+
 Sun Jun  8 12:49:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/RtEC/MCast/MCast.cpp:

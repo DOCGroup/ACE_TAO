@@ -338,6 +338,9 @@ public:
   static int name_clash (const char *name);
   // Called from TAO_IFR_Service_Utils::name_exists() when we
   // are a base valuetype.
+
+  void fill_value_description (CORBA::ValueDescription &desc
+                               ACE_ENV_ARG_DECL);
     
 private:
   void fill_vm_seq (CORBA::ValueMemberSeq &vm_seq

@@ -45,6 +45,21 @@ public:
                                ACE_ENV_ARG_DECL);
 };
 
+template<typename T_desc, typename T_impl>
+class TAO_IFR_Desc_Utils
+{
+public:
+  static void fill_desc_begin (T_desc &desc,
+                               TAO_Repository_i *repo,
+                               ACE_Configuration_Section_Key &key
+                               ACE_ENV_ARG_DECL);
+
+  static void fill_desc_begin_ex (T_desc &desc,
+                                  TAO_Repository_i *repo,
+                                  ACE_Configuration_Section_Key &key
+                                  ACE_ENV_ARG_DECL);
+};
+
 template<typename T_strseq>
 class TAO_IFR_Strseq_Utils
 {

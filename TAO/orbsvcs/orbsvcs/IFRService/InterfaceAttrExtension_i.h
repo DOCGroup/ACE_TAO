@@ -50,16 +50,6 @@ public:
   virtual ~TAO_InterfaceAttrExtension_i (void);
   // Destructor
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
   virtual 
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
   describe_ext_interface (

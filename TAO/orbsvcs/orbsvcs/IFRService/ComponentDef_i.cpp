@@ -182,28 +182,29 @@ TAO_ComponentDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
                   0);
   CORBA::ComponentIR::ComponentDescription_var desc_var = desc_ptr;
 
-  desc_ptr->name = this->name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  desc_ptr->id = this->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
   ACE_TString holder;
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "name",
+                                            holder);
+  desc_ptr->name = holder.fast_rep ();;
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "id",
+                                            holder);
+  desc_ptr->id = holder.fast_rep ();
+
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "container_id",
                                             holder);
-
   desc_ptr->defined_in = holder.c_str ();
-  ACE_CHECK_RETURN (0);
-
-  desc_ptr->version = this->version_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "version",
+                                            holder);
+  desc_ptr->version = holder.fast_rep ();
 
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "base_component",
                                             holder);
-
-  desc_ptr->base_component = holder.c_str ();
+  desc_ptr->base_component = holder.fast_rep ();
 
   CORBA::ULong count = 0;
   ACE_Configuration_Section_Key supports_key;
@@ -312,8 +313,7 @@ TAO_ComponentDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (0);
   CORBA::Contained::Description_var retval = cont_desc_ptr;
 
-  cont_desc_ptr->kind = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  cont_desc_ptr->kind = CORBA::dk_Component;
 
   cont_desc_ptr->value <<= desc_ptr;
   return retval._retn ();
@@ -682,7 +682,7 @@ TAO_ComponentDef_i::create_emits (const char *id,
                                name,
                                version,
                                value
-                                ACE_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::ComponentIR::EmitsDef_ptr
