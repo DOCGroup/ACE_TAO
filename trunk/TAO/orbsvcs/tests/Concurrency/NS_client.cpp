@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "NS_client.h"
+#include "stdio.h"
 
 // constructor
 
@@ -27,7 +28,9 @@ CosNaming_Client::CosNaming_Client (void)
     argv_ (0),
     exit_later_ (0),
     resolve_name_ (0),
-    name_to_resolve_ (0)
+    name_to_resolve_ (0),
+    context_to_resolve_ (0),
+    list_contents_ (0)
 {
 }
 
@@ -36,7 +39,7 @@ CosNaming_Client::CosNaming_Client (void)
 int
 CosNaming_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dxn:");
+  ACE_Get_Opt get_opts (argc_, argv_, "dxn:c:l");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -45,12 +48,19 @@ CosNaming_Client::parse_args (void)
       case 'd':  // debug flag
 	TAO_debug_level++;
 	break;
+      case 'l':
+	this->list_contents_ = 1;
+	break;
       case 'x':
 	this->exit_later_++;
 	break;
       case 'n':
         this->resolve_name_ = 1;
         this->name_to_resolve_ = get_opts.optarg;
+        break;
+      case 'c':
+        this->resolve_name_ = 1;
+        this->context_to_resolve_ = get_opts.optarg;
         break;
       case '?':
       default:
@@ -78,7 +88,9 @@ CosNaming_Client::run (void)
   // We could even use the iterators.
 
   if(this->resolve_name_)
-    resolve_name(this->name_to_resolve_);
+    resolve_name(this->context_to_resolve_, this->name_to_resolve_);
+  if(this->list_contents_)
+    list_contents();
   return 0;
 }
 
@@ -86,14 +98,15 @@ CosNaming_Client::~CosNaming_Client (void)
 {
 }
 
-int CosNaming_Client::resolve_name(char *n)
+int
+CosNaming_Client::resolve_name(char *c, char *n)
 {
   TAO_TRY
     {
       CosNaming::Name name (2);
       name.length (2);
-      name[0].id = CORBA::string_dup ("CosConcurrency");
-      name[1].id = CORBA::string_dup ("LockSetFactory");
+      name[0].id = CORBA::string_dup (c);
+      name[1].id = CORBA::string_dup (n);
       CORBA::Object_var obj = this->naming_context_->resolve (name,TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -106,6 +119,38 @@ int CosNaming_Client::resolve_name(char *n)
     {
       TAO_TRY_ENV.print_exception ("init");
       return -1;
+    }
+  TAO_ENDTRY;
+}
+
+void
+CosNaming_Client::list_contents(void)
+{
+  CosNaming::BindingIterator_var bi;
+  CosNaming::BindingList_var li;
+  CORBA::ULong how_many = 0;
+  CORBA::Boolean more = CORBA::B_FALSE;
+  CosNaming::Binding_var b;
+  CosNaming::Name n;
+  CORBA::ULong names = 0;
+
+  TAO_TRY
+    {
+      this->naming_context_->list(how_many, li, bi, TAO_TRY_ENV);
+
+      while(more = bi->next_one(b, TAO_TRY_ENV))
+        {
+          n = b->binding_name;
+          names = n.length();
+          printf("(%i) Name: ", names);
+          for(int i=0; i<names; i++)
+            printf("%s ", n[i].id._retn());
+          printf("type: %s\n",
+                 (b->binding_type==CosNaming::ncontext)?"C":"O");
+        };
+    }
+  TAO_CATCHANY
+    {
     }
   TAO_ENDTRY;
 }
