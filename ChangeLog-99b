@@ -4,6 +4,13 @@ Tue Feb 16 17:08:53 1999  Steve Huston  <shuston@riverace.com>
           class definition to new file, transceiver.h, to build ok on AIX (P15)
           and fixed core dump if ctor fails to connect.
 
+	* examples/Connection/misc: Moved some class definitions from
+          test_upipe.cpp to new file test_upipe.h to build ok on AIX (P17).
+          Same thing with Connection_Handler - new file Connection_Handler.h.
+
+        * examples/Connection/misc/Makefile: Clean out tempinc directory
+          between program compiles so AIX xlC doesn't freak out.
+
 Tue Feb 16 16:42:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/CORBA_macros.h (ACE_PRINT_EXCEPTION): A new macro that deal
