@@ -2531,7 +2531,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #if defined (ACE_WIN32)
       result = ::WaitForSingleObject (cv->sema_, msec_timeout);
 #else
-      result = ACE_OS::sema_wait (&cv->sema_, msec_timeout);
+      ACE_Time_Value timeout (0, msec_timeout * 1000);
+      result = ACE_OS::sema_wait (&cv->sema_, timeout);
 #endif /* ACE_WIN32 */
     }
 
@@ -2593,7 +2594,11 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
   else if (last_waiter)
     // Release the signaler/broadcaster if we're the last waiter.
+#if defined (ACE_WIN32)
     ACE_OS::event_signal (&cv->waiters_done_);
+#else
+    ACE_OS::sema_post (&cv->waiters_done_);
+#endif /* ACE_WIN32 */
 
   // We must always regain the external mutex, even when errors occur
   // because that's the guarantee that we give to our callers.
@@ -6279,12 +6284,12 @@ ACE_OS::open (const char *filename,
         {
         case ERROR_FILE_EXISTS:
           errno = EEXIST;
-	  break;
-	  /* NOTREACHED */
-	case ERROR_SHARING_VIOLATION:
-	  errno = EACCES;
-	  break;
-	  /* NOTREACHED */
+          break;
+          /* NOTREACHED */
+        case ERROR_SHARING_VIOLATION:
+          errno = EACCES;
+          break;
+          /* NOTREACHED */
         }
     }
   return h;
