@@ -718,16 +718,6 @@ TAO_Stub::get_policy (CORBA::PolicyType type,
 
   // Validity check.  Make sure requested policy type is appropriate
   // for this scope.
-  // @@ Angelo: is this the right exception to raise?  I would thing
-  //   that maybe CORBA::InvalidPolicies or something like that is
-  //   what the spec requires?
-  //   In fact, I could not find anything in the spec about raising
-  //   exceptions while querying policies, maybe you can always query
-  //   these policies, even at the object level, but the query just
-  //   results in a <nil> policy returned?
-  //   In that case the exception should only be raised when *setting*
-  //   the policy, and that raises another exception, as specified in
-  //   the 4.3.8 section of the spec....
   if (type == RTCORBA::THREADPOOL_POLICY_TYPE
       || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
     ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
@@ -776,8 +766,6 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type,
   // construction time...
 
 #if (TAO_HAS_RT_CORBA == 1)
-
-  // @@ Angelo: please see my comments above...
 
   // Validity check.  Make sure requested policy type is appropriate
   // for this scope.
@@ -848,11 +836,6 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
       CORBA::ULong slot = policy->policy_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      // @@ Angelo: I'm almost certain that you cannot raise this
-      // exception here, the only one allowed by the spec is
-      // CORBA::InvalidPolicies, please fix it.
-      // BTW, please add the throw specs while you are at it.
-      //
       if (slot == RTCORBA::THREADPOOL_POLICY_TYPE
           || slot == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
           || slot == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
@@ -918,7 +901,6 @@ TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types,
     {
       CORBA::ULong type = types[i];
 
-      // @@ Angelo: please check the comments above.
       if (type == RTCORBA::THREADPOOL_POLICY_TYPE
           || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
           || type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
