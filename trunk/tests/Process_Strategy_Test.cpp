@@ -450,33 +450,33 @@ client (void *arg)
 
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
-      if (connector.open (stream, server_addr) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+      if (connector.connect (stream, server_addr) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 0);
       else if (stream.send_n (command, command_len) != command_len)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_n"), -1);
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_n"), 0);
       else if (connector.close () == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), -1);
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), 0);
     }
 
   command = "read";
   command_len = ACE_OS::strlen (command);
 
-  if (connector.open (stream, server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+  if (connector.connect (stream, server_addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 0);
   else if (stream.send_n (command, command_len) != command_len)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_n"), 0);
 
   char buf[BUFSIZ];
   ssize_t n = stream.recv (buf, sizeof buf);
 
   if (n <= 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"), 0);
   else
     {
       size_t count = ACE_OS::atoi (buf);
 
       // Make sure that the count is correct.
-      ACE_ASSERRT (count == ACE_MAX_ITERATIONS);
+      ACE_ASSERT (count == ACE_MAX_ITERATIONS);
     }
 
   return 0;
@@ -497,7 +497,7 @@ server (void *)
   ACE_Service_Config::run_reactor_event_loop ();
 
   // Remove the filename.
-  ACE_OS::unlink (this->filename ());
+  ACE_OS::unlink (OPTIONS::instance ()->filename ());
 
   return 0;
 }
@@ -517,12 +517,12 @@ main (int argc, char *argv[])
   ACE_INET_Addr server_addr;
 
   // Bind acceptor to any port and then find out what the port was.
-  if (acceptor.open (addr,
+  if (acceptor.open ((const ACE_INET_Addr &) ACE_Addr::sap_any,
 		     ACE_Service_Config::reactor (),
 		     0,
 		     0,
 		     OPTIONS::instance ()->concurrency_strategy ()) == -1
-      || counting_acceptor.acceptor ().get_local_addr (addr) == -1)
+      || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
   else
     {
@@ -537,7 +537,7 @@ main (int argc, char *argv[])
 	  exit (-1);
 	  /* NOTREACHED */
 	case 0:
-	  server ();
+	  server (0);
 	  break;
 	  /* NOTREACHED */
 	default:
