@@ -1,3 +1,8 @@
+Mon Jul 16 07:34:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/Event_Service/Makefile: Updated
+	  dependencies.  
+
 Sun Jul 15 9:59:24 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
 	* tests/Param_Test/anyop.dsp (InputPath): Set the dependecy for
