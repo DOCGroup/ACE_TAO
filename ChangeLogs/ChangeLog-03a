@@ -1,5 +1,11 @@
-Wed Sep  5 18:58:00 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+Wed Sep  5 18:58:00 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
+	* ace/QoS/QoS_Session.h: 
+	* ace/QoS/QoS_Session_Impl.h: 	
+	* ace/QoS/QoS_Session_Impl.cpp:
+
+	  Added rapi_sender and rapi_reserve calls with null tspec and flow spec respectively to facilitate the tearing down of PATH and RESV messages.
+	
 	* ace/OS.h: 
 	* ace/OS.i:
 
