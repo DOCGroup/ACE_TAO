@@ -148,6 +148,9 @@ typedef unsigned __int64 ACE_UINT64;
 // Template specialization is supported
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
+// No system support for replacing any previous mappings.
+#define ACE_LACKS_AUTO_MMAP_REPLACEMENT
+
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
         #define ACE_NTRACE 1
