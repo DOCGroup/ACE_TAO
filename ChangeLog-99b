@@ -1,8 +1,14 @@
+Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp: Added support for the 'W' (UNICODE) option for
+	  Win32.  Thanks to Valery Arkhangorodsky
+ 	  <valerya@servicesoft.com> for contributing this.
+
 Mon Jul 26 20:58:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/POSIX_Asynch_IO.cpp: 
 	* ace/WIN32_Asynch_IO.cpp: Fixed the double deletion problem of
-	  the result classes. Thanks to  "Nesbitt, Bill"
+	  the result classes. Thanks to  Bill Nesbitt
 	  <bnesbitt@magellan.com> for reporting this.      
   
 Mon Jul 26 18:09:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
