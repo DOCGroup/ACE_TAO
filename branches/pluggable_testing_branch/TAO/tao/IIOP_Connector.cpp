@@ -223,7 +223,7 @@ TAO_IIOP_Connector::make_profile (const char *endpoint,
   //
   // or:
   //
-  //    //host:port/object_key 
+  //    //host:port/object_key
 
   ACE_NEW_RETURN (profile,
                   TAO_IIOP_Profile (endpoint, ACE_TRY_ENV),
@@ -260,6 +260,7 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
       // Failure: not an IIOP IOR
       // DO NOT throw an exception here.
     }
+  // @@ Fred&Ossama: Could we just write return 1 outside the else?
 }
 
 

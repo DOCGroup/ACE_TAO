@@ -24,6 +24,10 @@
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
 #include "tao/POAC.h"
+
+// @@ Fred&Ossama: In this file you only use pointers
+//    TAO_Connector_Registry and Acceptor_Registry, you should forward 
+//    declare the classes, and not include the complete header file.
 #include "tao/Connector_Registry.h"
 #include "tao/Acceptor_Registry.h"
 
@@ -293,7 +297,7 @@ protected:
 
   TAO_Acceptor_Registry *acceptor_registry_;
   // The registry which maintains a list of acceptor factories for each
-  // loaded protocol. 
+  // loaded protocol.
 
   TAO_ProtocolFactorySet *protocol_factories_;
   // Pointer to the list of protocol loaded into this ORB instance.

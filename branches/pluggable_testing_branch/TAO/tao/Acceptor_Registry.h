@@ -38,6 +38,14 @@ class TAO_Resource_Factory;
 typedef ACE_Unbounded_Set<TAO_Acceptor*>
         TAO_AcceptorSet;
 
+// @@ Fred&Ossama: Even though ye typing fingers may ache the DOC
+//    group style (or lack of it) is to call this stuff
+//    TAO_AcceptorSetIterator (not Itor).
+//    You may want to define this typedef inside the Acceptor_Registry 
+//    to avoid namespace pollution. This is specially true since you
+//    don't export the Iterator (or the set) in the class interface,
+//    and it is only used in the implementation.
+//
 typedef ACE_Unbounded_Set_Iterator<TAO_Acceptor*>
         TAO_AcceptorSetItor;
 
@@ -78,7 +86,9 @@ public:
 
   int open (TAO_ORB_Core *orb_core);
   // Initialize all registered acceptors.  Return -1 on error.
-
+  // @@ Fred&Ossama: What is the relationship between the ORB_Core and
+  //    the Acceptor_Registry? Is there just one per orb core? Should
+  //    tbe acceptor registry know which ORB_Core it belongs to?
 private:
 
   TAO_AcceptorSet acceptors_;

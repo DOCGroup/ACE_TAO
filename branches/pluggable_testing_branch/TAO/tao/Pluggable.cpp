@@ -49,8 +49,8 @@ TAO_IOP_Version::operator= (const TAO_IOP_Version &src)
   return *this;
 }
 
-// Generic Profile 
-CORBA::ULong 
+// Generic Profile
+CORBA::ULong
 TAO_Profile::tag (void) const
 {
   return this->tag_;
@@ -76,7 +76,7 @@ TAO_Transport::tag (void) const
   return this->tag_;
 }
 
-// Connector 
+// Connector
 TAO_Connector::TAO_Connector (CORBA::ULong tag)
   : tag_(tag)
 {
@@ -204,7 +204,7 @@ TAO_Connector::make_mprofile (const char *string,
   //    `1.3//moo/arf'
   //    `1.3//shu/arf'
   //    `1.3//chicken/arf'
-  // 
+  //
   // If no version is provided then the string will be of the form:
   //    `//moo/arf'
 
@@ -260,7 +260,7 @@ TAO_Connector::make_mprofile (const char *string,
                                   ACE_TRY_ENV) != 0)
             {
               ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
-              // Failure:  Problem during profile creation 
+              // Failure:  Problem during profile creation
             }
 
           // Create a Profile using the individual endpoint string

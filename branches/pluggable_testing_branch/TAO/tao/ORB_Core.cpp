@@ -241,12 +241,16 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           //    per protocol bases.  Especially since a IP name will have
           //    no meaning for say ATM or UNIX domain or Bus based I/O
           // @@ Rather than specify a hostname and port number for the
-          //    server, one or more endpoints should be specified.  An 
+          //    server, one or more endpoints should be specified.  An
           //    endpoint will have the following format:
           //    IOP:[major.minor]//address1,address2,...,addressn/
           //    so for IIOP this would be:
           //    iiop://myhost_ether:5050,myhost_atm:6060/
           //    fredk.
+          // @@ Fred&Ossama: I think the option should just die or
+          //    simply have the same effect as an extra -ORBendpoint 
+          //    i.e. simply add another endpoin to the list in
+          //    orb_params().
 
           // Specify the name of the host (i.e., interface) on which
           // the server should listen.
@@ -401,11 +405,11 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           // For example,  specify -ORBpreconnect once for each protocol
           //   -ORBpreconnect iiop://tango:10015,watusi:10016/
           //   -ORBpreconnect busX_iop://board1:0x07450000,board2,0x08450000/
-          // Or chain all possible endpoint designations together 
+          // Or chain all possible endpoint designations together
           //   -ORBpreconnect iiop://tango:10015,watusi:10016/,
           //              busX_iop://board1:0x07450000,board2,0x08450000/
           // fredk
-          // 
+          //
           // Get a string which describes the host/port of connections
           // we want to cache up-front, thus reducing the latency of
           // the first call.  It is specified as a comma-separated
@@ -517,7 +521,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   // Initialize the Service Configurator -check for return values.
   // Load the resource factory, connector registry, acceptor registry
-  // and protocols.  Will need to call the open () method on 
+  // and protocols.  Will need to call the open () method on
   // the registries!
   int result = TAO_Internal::open_services (svc_config_argc,
                                             svc_config_argv);
@@ -622,13 +626,13 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
 
-  // ** Set up the pluggable protocol infrastructure.  First get a 
-  // pointer to the protocol factories set, then obtain pointers to 
+  // ** Set up the pluggable protocol infrastructure.  First get a
+  // pointer to the protocol factories set, then obtain pointers to
   // all factories loaded by the service configurator.
   // Load all protocol factories!
   if (trf->init_protocol_factories () == -1)
     return -1;
-  
+
   // init the ORB core's pointer
   this->protocol_factories (trf->get_protocol_factories ());
 
@@ -644,7 +648,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   if (this->connector_registry ()->open (this) != 0)
     return -1;
 
-  // Init acceptor_registry_ 
+  // Init acceptor_registry_
   this->acceptor_registry (trf->get_acceptor_registry ());
 
   if (this->acceptor_registry ()->open (this) == -1)
@@ -685,8 +689,8 @@ TAO_ORB_Core::set_iiop_endpoint ( int dotted_decimal_addresses,
 
   char buffer[MAXHOSTNAMELEN + 1];
 
-  if (rendezvous.addr_to_string (buffer, 
-                                 MAXHOSTNAMELEN, 
+  if (rendezvous.addr_to_string (buffer,
+                                 MAXHOSTNAMELEN,
                                  dotted_decimal_addresses) == -1)
     {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -698,7 +702,7 @@ TAO_ORB_Core::set_iiop_endpoint ( int dotted_decimal_addresses,
   endpoint.set ("iiop://", 1);
   endpoint += buffer;
   endpoint += ACE_CString("/");
- 
+
   // @@ more ugliness .... fredk
   this->orb_params ()->addr (rendezvous);
   this->orb_params ()->host (host);

@@ -31,8 +31,8 @@ class TAO_ORB_Core;
 class TAO_Export TAO_IIOP_Transport : public TAO_Transport
 {
   // = TITLE
-  //   This class acts as a bridge class to the transport specific 
-  //   connection handler (handler_).  
+  //   This class acts as a bridge class to the transport specific
+  //   connection handler (handler_).
   //
   // = DESCRIPTION
   //   Specialization of the base TAO_Transport class to handle the IIOP
@@ -40,13 +40,13 @@ class TAO_Export TAO_IIOP_Transport : public TAO_Transport
   //   the client and server side.
 public:
   TAO_IIOP_Transport (TAO_IIOP_Handler_Base *handler);
-  // Base object's creator method. 
+  // Base object's creator method.
 
   ~TAO_IIOP_Transport (void);
   // Default destructor.
 
   CORBA::ULong tag (void);
-  // Returns the specific IOP instance, in this case UIOP.
+  // Returns the specific IOP instance, in this case IIOP.
 
   void close_connection (void);
   // Call the corresponding connection handlers handle_close method.
@@ -118,7 +118,7 @@ class TAO_Export TAO_IIOP_Client_Transport : public TAO_IIOP_Transport
   // = TITLE
   //   The Transport class used for Client side communication with a
   //   server.
-  // 
+  //
   // = DESCRIPTION
   //   Specialization of the TAO_IIOP_Transport class for client
   //   side.  Methods related to sending one and two way requests
@@ -167,7 +167,7 @@ public:
   // Default destructor
 
   TAO_Server_Connection_Handler *server_handler (void);
-  //  Return a pointer to the underlying connection handler. 
+  //  Return a pointer to the underlying connection handler.
 
 private:
   TAO_Server_Connection_Handler *server_handler_;

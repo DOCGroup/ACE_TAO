@@ -36,7 +36,7 @@ TAO_IIOP_Protocol_Factory::make_acceptor (void)
   return acceptor;
 }
 
-int 
+int
 TAO_IIOP_Protocol_Factory::init (int argc, char* argv[])
 {
   return 0;
@@ -62,4 +62,3 @@ ACE_STATIC_SVC_DEFINE (TAO_IIOP_Protocol_Factory,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_IIOP_Protocol_Factory)
-

@@ -158,6 +158,14 @@ public:
   // Equality operator
 };
 
+// @@ Fred&Ossama: We need a *concrete* class (something that can be
+//    instantiated) that can be used to represent profiles for
+//    protocols we don't know.  This is required in the spec because
+//    we are supposed to preserve foreign profiles when communicating
+//    with other ORBs.
+//    A simple class with noops for most methods and just the basics
+//    required for marshaling and demarshaling is what we need.
+//
 class TAO_Export TAO_Profile
 {
   // = TITLE
@@ -244,6 +252,10 @@ public:
   virtual CORBA::ULong _decr_refcnt (void) = 0;
   // Decrement the object's reference count.  When this count goes to
   // 0 this object will be deleted.
+  // @@ Fred&Ossama: guys, reference counting *should* be implemented
+  //    in the base class, otherwise you are just going to end up
+  //    repeating code and forcing the user to implement things not
+  //    directly related to protocols.
 
   virtual ~TAO_Profile (void);
   // If you have a virtual method you need a virtual dtor.

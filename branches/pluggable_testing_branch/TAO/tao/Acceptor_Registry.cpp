@@ -21,6 +21,9 @@ TAO_Acceptor_Registry::~TAO_Acceptor_Registry (void)
 TAO_Acceptor  *
 TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
 {
+  // @@ Fred&Ossama: Since this is going to be a common operation you
+  //    may want to consider using a Hash_Map_Manager, or even a
+  //    simple Map_Manager.
 
   TAO_AcceptorSetItor end =
                 this->acceptors_.end ();
@@ -38,11 +41,20 @@ TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
 int
 TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
 {
+  // @@ Fred&Ossama: This is not the problem you have to solve right
+  //    now, but we thought about giving explicit names to each
+  //    endpoint, the user could then use those names to setup
+  //    policies in the ORB that indicate which endpoints are served
+  //    by which thread.
+  //    IMHO that is one more reason to keep a list of endpoints in
+  //    the ORB_Core, instead of a string.
+  //    BTW, that also removes the restriction of using ';' in the
+  //    addresses.  Just my two cents.
 
   // protocol_factories is in the following form
   //   IOP1://addr1,addr2,...,addrN/;IOP2://addr1,...addrM/;...
 
-  ACE_Auto_Basic_Array_Ptr <char> 
+  ACE_Auto_Basic_Array_Ptr <char>
                         str (orb_core->orb_params ()->endpoints ().rep ());
 
   ACE_Auto_Basic_Array_Ptr <char> addr_str;
@@ -52,7 +64,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
      iop_str != 0;
      iop_str = ACE_OS::strtok_r (0, ";",  &last_iop))
     {
-  
+
       ACE_CString iop (iop_str);
       int indx = iop.find ("://", 0);
       if ( indx == iop.npos)
@@ -61,12 +73,12 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
                        "(%P|%t) Invalid endpoint epecification.\n"),
                        -1);
         }
-  
+
       ACE_CString prefix = iop.substring (0, indx);
       ACE_CString addrs  = iop.substring (indx+3);
       if (addrs [addrs.length () - 1] == '/')
         addrs [addrs.length () - 1] = '\0'; // get rid of trailing /
-  
+
       char *last_addr=0;
       addr_str.reset (addrs.rep ());
       for (char *astr = ACE_OS::strtok_r (addr_str.get (), ",", &last_addr);
@@ -76,16 +88,16 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
                                          &last_addr))
         {
           ACE_CString address (astr);
-  
+
           // Now get the list of avaliable protocol factories.
-          TAO_ProtocolFactorySetItor end = 
+          TAO_ProtocolFactorySetItor end =
                           orb_core->protocol_factories ()->end ();
-          TAO_ProtocolFactorySetItor factory = 
+          TAO_ProtocolFactorySetItor factory =
                         orb_core->protocol_factories ()->begin ();
-          
+
           TAO_Acceptor *acceptor;
-          for (acceptor = 0 ; 
-               factory != end ; 
+          for (acceptor = 0 ;
+               factory != end ;
                factory++)
             {
               if ((*factory)->factory ()->match_prefix (prefix))
@@ -100,7 +112,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
 
                       break;
                     }
-                  else 
+                  else
                     {
                       ACE_ERROR_RETURN ((LM_ERROR,
                                          "(%P|%t) Unable to create an acceptor for %s\n",
@@ -133,4 +145,4 @@ template class ACE_Unbounded_Set_Iterator<TAO_Acceptor*>;
 
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Acceptor*>;
 
-#endif
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
