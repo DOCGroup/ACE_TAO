@@ -27,14 +27,14 @@ else
 LSRC    += $(LSRC2)
 ifdef PRELIB
 ifdef PRELIB_USES_OBJ_ONLY
-VSHOBJS = $(LSRC:%.cpp=$(VSHDIR)%.o)
+VSHOBJS = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
 else
-VSHOBJS = $(LSRC:%.cpp=$(VSHDIR)%.$(SOEXT))
+VSHOBJS = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
 endif
 VSHOBJS1 = $(VSHOBJS)
 else
-VSHOBJS = $(LSRC:%.cpp=$(VSHDIR)%.$(SOEXT))
-VSHOBJS1 = $(LSRC:%.cpp=$(VSHDIR)%.o)
+VSHOBJS = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
+VSHOBJS1 = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
 endif
 endif
 
