@@ -471,7 +471,6 @@ CORBA::ORB::create_struct_tc (
     const CORBA::StructMemberSeq & members
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -498,7 +497,6 @@ CORBA::ORB::create_union_tc (
     const CORBA::UnionMemberSeq & members
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -525,7 +523,6 @@ CORBA::ORB::create_enum_tc (
     const CORBA::EnumMemberSeq & members
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -551,7 +548,6 @@ CORBA::ORB::create_alias_tc (
     CORBA::TypeCode_ptr original_type
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -577,7 +573,6 @@ CORBA::ORB::create_exception_tc (
     const CORBA::StructMemberSeq & members
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -602,7 +597,6 @@ CORBA::ORB::create_interface_tc (
     const char *name
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -625,7 +619,6 @@ CORBA::ORB::create_string_tc (
     CORBA::ULong bound
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -647,7 +640,6 @@ CORBA::ORB::create_wstring_tc (
     CORBA::ULong bound
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -670,7 +662,6 @@ CORBA::ORB::create_fixed_tc (
     CORBA::UShort scale
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -694,7 +685,6 @@ CORBA::ORB::create_sequence_tc (
     CORBA::TypeCode_ptr element_type
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -718,7 +708,6 @@ CORBA::ORB::create_array_tc (
     CORBA::TypeCode_ptr element_type
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -745,7 +734,6 @@ CORBA::ORB::create_value_tc (
     const CORBA::ValueMemberSeq & members
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -773,7 +761,6 @@ CORBA::ORB::create_value_box_tc (
     CORBA::TypeCode_ptr boxed_type
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -798,7 +785,6 @@ CORBA::ORB::create_native_tc (
     const char *name
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -821,7 +807,6 @@ CORBA::ORB::create_recursive_tc (
     const char *id
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -844,7 +829,6 @@ CORBA::ORB::create_abstract_interface_tc (
     const char *name
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -868,7 +852,6 @@ CORBA::ORB::create_local_interface_tc (
     const char *name
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -892,7 +875,6 @@ CORBA::ORB::create_component_tc (
     const char *name
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -916,7 +898,6 @@ CORBA::ORB::create_home_tc (
     const char *name
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -943,7 +924,6 @@ CORBA::ORB::create_event_tc (
     const CORBA::ValueMemberSeq &members
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -1318,17 +1298,6 @@ CORBA::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
   TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-#if defined (ACE_HAS_EXCEPTIONS)
-  // This must be done after the system TypeCodes and Exceptions have
-  // been initialized.  An unexpected exception will cause TAO's
-  // unexpected exception handler to be called.  That handler
-  // transforms all unexpected exceptions to CORBA::UNKNOWN, which of
-  // course requires the TypeCode constants and system exceptions to
-  // have been initialized.
-  TAO_Singleton_Manager::instance ()->_set_unexpected (
-    CORBA::ORB::_tao_unexpected_exception);
-#endif /* ACE_HAS_EXCEPTIONS */
-
   // Verify some of the basic implementation requirements.  This test
   // gets optimized away by a decent compiler (or else the rest of the
   // routine does).
@@ -1405,16 +1374,6 @@ CORBA::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-}
-
-void CORBA::ORB::_tao_unexpected_exception (void)
-{
-#if defined(ACE_HAS_EXCEPTIONS)
-  throw CORBA::UNKNOWN ();
-#else
-  // Nothing to do, this will be handled by the ORB core when sending
-  // the exception back to the client...
-#endif /* ACE_HAS_EXCEPTIONS */
 }
 
 const ACE_CString &
@@ -1892,8 +1851,6 @@ CORBA::Policy_ptr
 CORBA::ORB::create_policy (CORBA::PolicyType type,
                            const CORBA::Any& val
                            ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
@@ -1909,8 +1866,6 @@ CORBA::ORB::create_policy (CORBA::PolicyType type,
 CORBA::Policy_ptr
 CORBA::ORB::_create_policy (CORBA::PolicyType type
                             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());

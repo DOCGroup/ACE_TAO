@@ -13,6 +13,7 @@ ACE_RCSID (DynamicInterface,
 #include "tao/Marshal.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl.h"
+#include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Server_Request.inl"
@@ -244,4 +245,3 @@ CORBA::ServerRequest::gateway_exception_reply (ACE_CString &raw_exception)
 # pragma instantiate TAO_Pseudo_Out_T<CORBA::ServerRequest, CORBA::ServerRequest_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

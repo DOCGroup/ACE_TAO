@@ -2,6 +2,8 @@
 #include "PortableInterceptorC.h"
 #include "ORB_Constants.h"
 #include "SystemException.h"
+#include "PolicyC.h"
+
 
 ACE_RCSID (tao,
            PolicyFactory_Registry,
