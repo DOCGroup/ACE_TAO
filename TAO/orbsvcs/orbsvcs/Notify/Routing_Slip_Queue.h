@@ -3,7 +3,7 @@
 
 #ifndef TAO_NOTIFY_ROUTING_SLIP_QUEUE_H
 #define TAO_NOTIFY_ROUTING_SLIP_QUEUE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Routing_Slip.h"
 
@@ -88,5 +88,5 @@ namespace TAO_Notify
 #include "Routing_Slip_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_NOTIFY_ROUTING_SLIP_QUEUE_H */

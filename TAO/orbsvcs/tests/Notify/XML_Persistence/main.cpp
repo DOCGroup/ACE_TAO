@@ -2,18 +2,18 @@
  *  $Id$
  */
 
-#include <orbsvcs/orbsvcs/CosNotificationC.h>
-#include <orbsvcs/orbsvcs/NotifyExtC.h>
-#include <orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h>
+#include "orbsvcs/orbsvcs/CosNotificationC.h"
+#include "orbsvcs/orbsvcs/NotifyExtC.h"
+#include "orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h"
 
-#include <tao/TimeBaseC.h>
-#include <tao/corba.h>
-#include <tao/PortableServer/PortableServer.h>
+#include "tao/TimeBaseC.h"
+#include "tao/corba.h"
+#include "tao/PortableServer/PortableServer.h"
 
 #include "ace/OS_NS_string.h"
-#include <ace/OS_NS_stdio.h>
-#include <ace/Dynamic_Service.h>
-#include <ace/ARGV.h>
+#include "ace/OS_NS_stdio.h"
+#include "ace/Dynamic_Service.h"
+#include "ace/ARGV.h"
 
 class TestSupplier
 : public POA_CosNotifyComm::StructuredPushSupplier

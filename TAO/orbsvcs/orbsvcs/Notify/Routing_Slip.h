@@ -11,7 +11,7 @@
 
 #ifndef TAO_NOTIFY_ROUTING_SLIP_H
 #define TAO_NOTIFY_ROUTING_SLIP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_serv_export.h"
 #include "Event.h"
@@ -239,5 +239,5 @@ private:
 #include "Routing_Slip.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_NOTIFY_ROUTING_SLIP_H */

@@ -17,10 +17,10 @@
 #include "Object.h"
 #include "Name_Value_Pair.h"
 
-#include <tao/corba.h>
+#include "tao/corba.h"
 
-#include <ace/SString.h>
-#include <ace/Vector_T.h>
+#include "ace/SString.h"
+#include "ace/Vector_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
