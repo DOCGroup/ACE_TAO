@@ -47,11 +47,15 @@ likely unpredictable and erroneous results. <P>
   <LI>Build and install the TAO release under <CODE>$TAO_ROOT</CODE>.<P>
 
       <UL>
-        <LI>Change directory to <CODE>$TAO_ROOT/</CODE> and
-            execute <code><a href="#makenotes">make</a></code>.
-            This will build the TAO run-time library, the
-            TAO IDL compiler, the TAO CORBA Object Services,
-            the examples, and test programs. <P></li>
+        <LI>Compile the Library: Change directory to 
+            <CODE>$TAO_ROOT/tao</CODE> and execute 
+            <code><a href="#makenotes">make</a></code>.
+	<LI>Compile TAO_IDL: Change directory to 
+            <CODE>$TAO_ROOT/TAO_IDL</CODE> and execute
+            <code><a href="#makenotes">make</a></code>. 
+	<LI>Compile ORB Services: Change directory to 
+            <CODE>$TAO_ROOT/orbsvcs/orbsvcs</CODE> and execute
+            <code><a href="#makenotes">make</a></code>. 
       </UL>
 
   <LI>To test that the TAO release is properly configured, follow
