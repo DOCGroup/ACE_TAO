@@ -486,12 +486,12 @@ RtecScheduler::RT_Info_out::RT_Info_out (RtecScheduler::RT_Info_var &p) // const
 }
 
 ACE_INLINE
-RtecScheduler::RT_Info_out::RT_Info_out (RtecScheduler::RT_Info_out &p) // copy constructor
+RtecScheduler::RT_Info_out::RT_Info_out (const RtecScheduler::RT_Info_out &p) // copy constructor
 	: ptr_ (p.ptr_)
 {}
 
 ACE_INLINE RtecScheduler::RT_Info_out &
-RtecScheduler::RT_Info_out::operator= (RtecScheduler::RT_Info_out &p)
+RtecScheduler::RT_Info_out::operator= (const RtecScheduler::RT_Info_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;
@@ -791,12 +791,12 @@ RtecScheduler::_tao__seq_RT_Info_Set_out::_tao__seq_RT_Info_Set_out (RtecSchedul
 }
 
 ACE_INLINE
-RtecScheduler::_tao__seq_RT_Info_Set_out::_tao__seq_RT_Info_Set_out (RtecScheduler::_tao__seq_RT_Info_Set_out &p) // copy constructor
+RtecScheduler::_tao__seq_RT_Info_Set_out::_tao__seq_RT_Info_Set_out (const RtecScheduler::_tao__seq_RT_Info_Set_out &p) // copy constructor
 	: ptr_ (p.ptr_)
 {}
 
 ACE_INLINE RtecScheduler::_tao__seq_RT_Info_Set_out &
-RtecScheduler::_tao__seq_RT_Info_Set_out::operator= (RtecScheduler::_tao__seq_RT_Info_Set_out &p)
+RtecScheduler::_tao__seq_RT_Info_Set_out::operator= (const RtecScheduler::_tao__seq_RT_Info_Set_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;

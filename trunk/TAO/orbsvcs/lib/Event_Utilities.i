@@ -60,13 +60,6 @@ ACE_ConsumerQOS_Factory::insert_act (RtecEventComm::EventData act)
   return this->insert (dependency);
 }
 
-ACE_INLINE int
-ACE_ConsumerQOS_Factory::forward (RtecEventComm::EventType type)
-{
-  qos_.forward_event.type_ = type;
-  return 0;
-}
-
 ACE_INLINE const RtecEventChannelAdmin::ConsumerQOS& 
 ACE_ConsumerQOS_Factory::get_ConsumerQOS (void)
 {

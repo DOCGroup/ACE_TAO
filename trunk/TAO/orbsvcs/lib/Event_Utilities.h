@@ -162,13 +162,6 @@ public:
   int insert_act (RtecEventComm::EventData act);
   // This will be inserted as type ACE_ES_EVENT_ACT.
 
-  int forward (RtecEventComm::EventType type);
-  // When this is called, the events dependencies inserted *will*
-  // *not* be forwarded to the consumer.  Instead, when the
-  // dependencies are satisfied, an event of type <type> will be
-  // generated and forwarded to consumers that register to receive
-  // <type> events.
-
   // = Conversion operators.  The Event Channel takes ConsumerQOS
   // objects.
 
