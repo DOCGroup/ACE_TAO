@@ -1,3 +1,8 @@
+Thu Dec  7 18:32:27 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Removed the
+	  inclusion of inline file.
+
 Thu Dec  7 17:36:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
           This set of changes aim to satisfy the demands placed for the
