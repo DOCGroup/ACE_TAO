@@ -28,12 +28,14 @@
 #if defined (ACE_HAS_STRING_CLASS)
 #if defined (ACE_WIN32)
 typedef CString ACE_IOStream_String;
-#elif defined (ACE_HAS_STANDARD_CPP_LIBRARY) && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-#include /**/ <string>
-typedef std::string ACE_IOStream_String;
 #else
+#if !defined (ACE_HAS_STDCPP_STL_INCLUDES)
 #include /**/ <String.h>
 typedef String ACE_IOStream_String;
+#else
+#include /**/ <string>
+typedef string ACE_IOStream_String;
+#endif /* ! ACE_HAS_STDCPP_STL_INCLUDES */
 #endif /* ACE_WIN32 */
 
 #if defined (DEC_CXX)
