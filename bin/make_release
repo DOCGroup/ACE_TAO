@@ -778,7 +778,7 @@ sub generate_makefiles () {
     # Need todo a common chmod on the file lists!
     my $here = Cwd::getcwd();
 
-    my $exclude_option = '-exclude TAO/TAOACE.mwc,TAO/CIAO/CIAOTAO.mwc';
+    my $exclude_option = '-exclude ASNMP/asnmp.mwc,TAO/TAOACE.mwc,TAO/CIAO/CIAOTAO.mwc';
     my $tmp_mpc_option =
         '-recurse -hierarchy -relative ACE_ROOT=';
 
