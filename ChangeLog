@@ -4,6 +4,9 @@ Tue Mar 12 09:06:00 2002  Si Mong Park  <spark@ociweb.com>
           Incorrect file had been checked in on prior commit.
           This is the correct file.
 
+        * tests/Config_Test.cpp:
+          Fixed incorrect delete statement.
+
 Tue Mar 12 08:54:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * etc/Svc_Conf_l.cpp.diff:
