@@ -1,3 +1,9 @@
+Mon Jan 31 15:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h:
+          Added missing header include directives that are necessary due
+          to inter-header dependency reductions in ACE.
+
 Mon Jan 31 15:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/Activator_NT_Service.cpp:
