@@ -334,7 +334,9 @@ ACE_ARGV::create_buf_from_queue(void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Unbounded_Queue<char *>;
 template class ACE_Unbounded_Queue_Iterator<char *>;
+template class ACE_Node<char *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Unbounded_Queue<char *>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<char *>
+#pragma instantiate ACE_Node<char *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
