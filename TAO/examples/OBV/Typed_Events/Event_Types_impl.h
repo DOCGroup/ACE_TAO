@@ -47,7 +47,7 @@ class Event_impl : public virtual OBV_Event,
   Event_impl ();
   virtual ~Event_impl ();
 
-  virtual void do_print (void);
+  virtual void do_print (CORBA::Environment &ACE_TRY_EN);
   // Implementation of the do_print () operation the valuetype should have.
   // All operations in valuetypes are virtual.
 
