@@ -2498,9 +2498,11 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 {
   // Calculate the space required for the key
   int buffer_size =
-    this->persistent_key_type_length () +
     this->system_id_key_type_length () +
+#if !defined (POA_NO_TIMESTAMP)
+    this->persistent_key_type_length () +
     TAO_Creation_Time::creation_time_length () +
+#endif /* POA_NO_TIMESTAMP */
     this->complete_name_.length () +
     TAO_POA::name_separator_length () +
     id.length ();
