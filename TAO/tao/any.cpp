@@ -196,13 +196,12 @@ deep_copy (CORBA::TypeCode_ptr tc,
     break;
 
     case CORBA::tk_objref:
-      *(CORBA::Object_ptr *) dest = CORBA::Object::
-        _duplicate (*(CORBA::Object_ptr *) source);
+      *(CORBA::Object_ptr *) dest = CORBA::Object::_duplicate (*(CORBA::Object_ptr *) source);
       break;
 
     case CORBA::tk_sequence:
       {
-        CORBA::OctetSeq          *src, *dst;
+        CORBA::OctetSeq *src, *dst;
         CORBA::TypeCode_ptr      tcp;
         size_t                  size;
 
@@ -399,6 +398,8 @@ deep_free (CORBA::TypeCode_ptr tc,
 			     0,
 			     env);
       // @@ This better be allocated via new[].
+      // @@ (ANDY) I'm not sure what to do here...should I delete the value?  It seems
+      // that the DTOR for the sequence will insure that this buffer goes away.
       delete [] ((CORBA::OctetSeq *) value)->buffer;
       break;
 

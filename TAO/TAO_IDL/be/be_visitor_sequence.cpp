@@ -121,7 +121,10 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   os << " " << node->local_name () << ";" << nl;
 
-      // Generate the typecode decl
+  os << "typedef " << node->local_name () << "* "
+     << node->local_name () << "_ptr;\n";
+
+  // Generate the typecode decl
   if (node->is_nested ())
     {
       // we have a scoped name
@@ -133,8 +136,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     {
       // we are in the ROOT scope
       os.indent ();
-      os << "extern CORBA::TypeCode_ptr " << node->tc_name
-        ()->last_component () << ";\n\n";
+      os << "extern CORBA::TypeCode_ptr "
+	 << node->tc_name ()->last_component () << ";\n\n";
     }
 
 
@@ -193,6 +196,9 @@ be_visitor_sequence_base_ch::~be_visitor_sequence_base_ch (void)
 be_decl *
 be_visitor_sequence_base_ch::seq_scope (void)
 {
+  if (this->node_ == 0)
+    return 0;
+
   be_decl *scope = 0;
   if (this->node_->is_nested ())
     scope = be_scope::narrow_from_scope (this->node_->defined_in ())->decl ();
@@ -221,7 +227,7 @@ be_visitor_sequence_base_ch::visit_sequence (be_sequence *node)
 
 // helper
 int
-be_visitor_sequence_base_ch::visit_node (be_type * /* node */)
+be_visitor_sequence_base_ch::visit_node (be_type *)
 {
   TAO_OutStream &os = this->stream ();
   os << this->current_type_->nested_type_name (this->seq_scope ());
@@ -229,7 +235,7 @@ be_visitor_sequence_base_ch::visit_node (be_type * /* node */)
 }
 
 int
-be_visitor_sequence_base_ch::visit_interface (be_interface * /* node */)
+be_visitor_sequence_base_ch::visit_interface (be_interface *)
 {
   TAO_OutStream &os = this->stream ();
   os << this->current_type_->nested_type_name (this->seq_scope ());
@@ -237,7 +243,7 @@ be_visitor_sequence_base_ch::visit_interface (be_interface * /* node */)
 }
 
 int
-be_visitor_sequence_base_ch::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_sequence_base_ch::visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream &os = this->stream ();
   os << this->current_type_->nested_type_name (this->seq_scope ());
@@ -245,7 +251,7 @@ be_visitor_sequence_base_ch::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
-be_visitor_sequence_base_ch::visit_string (be_string * /* node */)
+be_visitor_sequence_base_ch::visit_string (be_string * )
 {
   // NO-OP, we have ad-hoc classes from strings.
   return 0;
@@ -303,6 +309,9 @@ be_visitor_sequence_elemtype::~be_visitor_sequence_elemtype (void)
 be_decl *
 be_visitor_sequence_elemtype::seq_scope (void)
 {
+  if (this->node_ == 0)
+    return 0;
+
   be_decl *scope = 0;
   if (this->node_->is_nested ())
     scope = be_scope::narrow_from_scope (this->node_->defined_in ())->decl ();
@@ -313,15 +322,12 @@ int
 be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream &os = this->stream ();
-  be_sequence *seq = be_sequence::narrow_from_decl (this->be_node ());
-  if (!seq)
-    return -1;
 
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      if (seq->unbounded ())
-        os << "TAO_Object_Manager<CORBA::Object> ";
+      os << "TAO_Object_Manager<CORBA::Object> ";
+      break;
     default:
       os << this->current_type_->name () << " &";
     }
@@ -336,7 +342,7 @@ be_visitor_sequence_elemtype::visit_sequence (be_sequence *node)
 
 // helper
 int
-be_visitor_sequence_elemtype::visit_node (be_type *node)
+be_visitor_sequence_elemtype::visit_node (be_type *)
 {
   TAO_OutStream &os = this->stream ();
 
@@ -348,12 +354,9 @@ be_visitor_sequence_elemtype::visit_node (be_type *node)
 }
 
 int
-be_visitor_sequence_elemtype::visit_interface (be_interface *node)
+be_visitor_sequence_elemtype::visit_interface (be_interface *)
 {
   TAO_OutStream &os = this->stream ();
-  be_sequence *seq = be_sequence::narrow_from_decl (this->be_node ());
-  if (!seq)
-    return -1;
 
   os << "TAO_Object_Manager <"
      << this->current_type_->nested_type_name (this->seq_scope ())
@@ -363,12 +366,9 @@ be_visitor_sequence_elemtype::visit_interface (be_interface *node)
 }
 
 int
-be_visitor_sequence_elemtype::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_sequence_elemtype::visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream &os = this->stream ();
-  be_sequence *seq = be_sequence::narrow_from_decl (this->be_node ());
-  if (!seq)
-    return -1;
 
   os << "TAO_Object_Manager <"
      << this->current_type_->nested_type_name (this->seq_scope ())
@@ -378,12 +378,9 @@ be_visitor_sequence_elemtype::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
-be_visitor_sequence_elemtype::visit_string (be_string * /*node*/)
+be_visitor_sequence_elemtype::visit_string (be_string *)
 {
   TAO_OutStream &os = this->stream ();
-  be_sequence *seq = be_sequence::narrow_from_decl (this->be_node ());
-  if (!seq)
-    return -1;
 
   os << "TAO_String_Manager ";
   return 0;

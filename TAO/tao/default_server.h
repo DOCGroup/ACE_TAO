@@ -38,8 +38,20 @@ public:
   // = Server-side ORB Strategy Factory Methods.
   virtual CONCURRENCY_STRATEGY *concurrency_strategy (void);
 
-  virtual TAO_Object_Table *create_object_table (void);
+  virtual TAO_Object_Table_Impl *create_object_table (void);
   // Factory method for object tables.
+
+  virtual ACE_Lock *create_poa_lock (void);
+  // Creates and returns a lock for POA based on the setting for
+  // <-ORBpoalock>.  A setting of <thread> returns an
+  // <ACE_Lock_Adapter\<ACE_Thread_Mutex\>>; a setting of <null>
+  // returns an <ACE_Lock_Adapter\<ACE_NULL_Mutex\>>.
+
+  virtual ACE_Lock *create_poa_mgr_lock (void);
+  // Creates and returns a lock for a POA Manager based on the setting
+  // for <-ORBpoamgrlock>.  A setting of <thread> returns an
+  // <ACE_Lock_Adapter\<ACE_Thread_Mutex\>>; a setting of <null>
+  // returns an <ACE_Lock_Adapter\<ACE_NULL_Mutex\>>.
 
   // = Service Configurator hooks.
   virtual int init (int argc, char *argv[]);
@@ -52,7 +64,11 @@ public:
   // <-ORBtablesize> <{num}>
   //   to set the table size
   // <-ORBdemuxstrategy> <{which}>
-  //   where <{which}> is one of <dynamic>, <linear>, or <active>.
+  //   where <{which}> is one of <dynamic>, <linear>, or <active>
+  // <-ORBpoalock> <{which}>
+  //   where <{which}> is one of <thread> or <null> (default <thread>)
+  // <-ORBpoamgrlock> <{which}>
+  //   where <{which}> is one of <thread> or <null> (default <thread>)
   
 private:
   void tokenize (char *flag_string);
@@ -65,6 +81,18 @@ private:
   
   TAO_Demux_Strategy object_lookup_strategy_;
   // The type of lookup/demultiplexing strategy being used
+
+  enum Lock_Type
+  {
+    TAO_NULL_LOCK,
+    TAO_THREAD_LOCK
+  };
+
+  Lock_Type poa_lock_type_;
+  // The type of lock to be returned by <create_poa_lock()>.
+  
+  Lock_Type poa_mgr_lock_type_;
+  // The type of lock to be returned by <create_poa_mgr_lock()>.
 
   // = Strategies Used.
   TAO_Reactive_Strategy<TAO_Server_Connection_Handler> reactive_strategy_;

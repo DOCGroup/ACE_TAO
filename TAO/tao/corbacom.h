@@ -58,9 +58,6 @@ class CORBA_Any_out;
 class CORBA_TypeCode;
 //typedef class CORBA_TypeCode *CORBA_TypeCode_ptr;
 
-class CORBA_POA;
-//typedef class CORBA_POA *CORBA_BOA_ptr;
-
 class CORBA_Exception;
 //typedef class CORBA_Exception *CORBA_Exception_ptr;
 
@@ -134,15 +131,24 @@ typedef class CORBA_InterfaceDef *
 
 // =Forward declarations
 struct TAO_Dispatch_Context;
-class TAO_Object_Table;
+class TAO_Object_Table_Impl;
 class TAO_Operation_Table;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_ORB_Parameters;
 struct CDR;
 
+// The new (POA) base class for servants.
+class TAO_ServantBase;
+
 // enum values defined in nvlist.h, bitwise ORed.
 typedef u_int CORBA_Flags;
+
+#  if	SIZEOF_BOOL != 0
+  typedef bool			CORBA_Boolean;
+#  else	/* "bool" not builtin to this compiler */
+  typedef int			CORBA_Boolean;
+#  endif /* "bool" not builtin */
 
 // forward declare sequences.
 template <class T> class TAO_Unbounded_Sequence;
@@ -163,14 +169,10 @@ struct CORBA_SEQUENCE
   u_int length;
 #endif /* SIZEOF_LONG */
   T *buffer;
-#  if   SIZEOF_BOOL != 0
-  bool release;
-#  else /* "bool" not builtin to this compiler */
-  int  release;
-#  endif /* "bool" not builtin */
-
+  CORBA_Boolean release; // Only here to make it compliant with IDL-generated layout
+  
   CORBA_SEQUENCE (void)
-    : maximum (0), length (0), buffer (0) { }
+    : maximum (0), length (0), buffer (0), release(CORBA::B_FALSE) { }
 
   // XXX destructor should free buffer, elements!!
   ~CORBA_SEQUENCE (void) { }
@@ -188,16 +190,14 @@ public:
   // typedef void Status; // g++ doesn't like this
   // return status of operations in a number of standard CORBA classes.
 
-#  if   SIZEOF_BOOL != 0
-  typedef bool                  Boolean;
+#  if	SIZEOF_BOOL != 0
 #    define B_FALSE false
 #    define B_TRUE true
-
-#  else /* "bool" not builtin to this compiler */
-  typedef int                   Boolean;
+#  else	/* "bool" not builtin to this compiler */
   enum { B_FALSE = 0, B_TRUE = 1 };
 #  endif /* "bool" not builtin */
 
+  typedef CORBA_Boolean Boolean;
   typedef Boolean &Boolean_out; // out type for boolean
 
   typedef u_char Octet;
@@ -426,9 +426,6 @@ public:
   typedef CORBA_Any_out     Any_out;
   typedef Any               *Any_ptr;
 
-  typedef CORBA_POA POA;
-  typedef POA *POA_ptr;
-
   typedef CORBA_Environment Environment;
   typedef Environment *Environment_ptr;
 
@@ -526,7 +523,6 @@ public:
 #undef TAO_SYSTEM_EXCEPTION
 
   // = all the CORBA::is_nil methods
-  static Boolean is_nil (POA_ptr);
   static Boolean is_nil (Object_ptr);
   static Boolean is_nil (Environment_ptr);
   static Boolean is_nil (NamedValue_ptr);
@@ -539,7 +535,6 @@ public:
   static Boolean is_nil (ServerRequest_ptr req);
 
   // = all the CORBA release methods
-  static void release (POA_ptr);
   static void release (Object_ptr);
   static void release (Environment_ptr);
   static void release (NamedValue_ptr);
@@ -704,7 +699,6 @@ extern "C" TAO_Export const TAO_IID IID_IIOP_ServerRequest;
 extern "C" TAO_Export const TAO_IID IID_STUB_Object;
 extern "C" TAO_Export const TAO_IID IID_IIOP_Object;
 extern "C" TAO_Export const TAO_IID IID_IIOP_ORB;
-extern "C" TAO_Export const TAO_IID IID_POA;
 
 // NOTE: stub APIs are nonportable, and must be explicitly #included
 // by code emitted from an IDL compiler.

@@ -85,17 +85,11 @@ private:
   char **argv_;
   // arguments from command line.
 
-  const char *cubit_factory_key_;
+  char *cubit_factory_key_;
   // Key of factory obj ref.
 
   char *cubit_key_;
   // Key of the obj ref to be retrieved via the factory.
-
-  char *hostname_;
-  // Hostname of server.
-
-  CORBA::UShort portnum_;
-  // default port number of server.
 
   u_int loop_count_;
   // Number of times to do the cube operations.
@@ -103,11 +97,8 @@ private:
   int exit_later_;
   // Flag to tell server to not exit immediately
 
-  Cubit_Factory_ptr factory_;
+  Cubit_Factory_var factory_;
   // factory pointer for cubit.
-
-  CORBA::Object_ptr objref_;
-  // storage of the factory objref
 
   CORBA::Environment env_;
   // Environment variable
@@ -115,7 +106,7 @@ private:
   Cubit_ptr cubit_;
   // Cubit obj ref
 
-  CORBA::ORB_ptr orb_ptr_;
+  CORBA::ORB_var orb_;
   // Remember our orb
 
   u_int call_count_;

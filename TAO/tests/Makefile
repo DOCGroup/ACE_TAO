@@ -8,7 +8,10 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Cubit \
+DIRS  = \
+	Cubit \
+	POA \
+	Param_Test \
 	Thruput
 
 # The following test hasn't been updated yet

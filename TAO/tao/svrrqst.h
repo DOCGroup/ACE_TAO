@@ -24,6 +24,8 @@
 #if !defined (TAO_SVRRQST_H)
 #define TAO_SVRRQST_H
 
+class TAO_POA;
+
 class TAO_Export CORBA_ServerRequest : public TAO_IUnknown
   // = TITLE
   //   XXX this is currently in an intermediate state; this is not
@@ -67,7 +69,7 @@ public:
   virtual CORBA::Principal_ptr 	caller (void) = 0;
   virtual CORBA::Object_ptr  target (void) = 0;
   virtual CORBA::String  op_name (void) = 0;
-  virtual CORBA::POA_ptr  oa (void) = 0;
+  virtual TAO_POA *oa (void) = 0;
   virtual CORBA::ORB_ptr  orb (void) = 0;
 };
 
@@ -80,7 +82,7 @@ public:
 
   IIOP_ServerRequest (CDR *msg,
 		      CORBA::ORB_ptr the_orb,
-		      CORBA::POA_ptr the_poa);
+		      TAO_POA *the_poa);
 
   virtual ~IIOP_ServerRequest (void);
 
@@ -101,7 +103,7 @@ public:
   CORBA::Principal_ptr 	caller (void);
   CORBA::Object_ptr  target (void);
   CORBA::ORB_ptr  orb (void);
-  CORBA::POA_ptr  oa (void);
+  TAO_POA *oa (void);
 
   // Stuff required for COM IUnknown support
 
@@ -132,7 +134,7 @@ private:
   CORBA::ORB_ptr orb_;
   // The ORB with which this server request is associated.
 
-  CORBA::POA_ptr poa_;
+  TAO_POA *poa_;
   // The object adapter with whicih this server request is associated.
 };
 

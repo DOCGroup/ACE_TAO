@@ -67,8 +67,8 @@ protected:
 
   // = Event channel adminstration references.
   RtecEventChannelAdmin::EventChannel_var channel_admin_;
-  RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin_;
-  RtecEventChannelAdmin::ProxyPushSupplier_ptr suppliers_;
+  RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
+  RtecEventChannelAdmin::ProxyPushSupplier_var suppliers_;
 
 private:
   RtecScheduler::handle_t rt_info_;

@@ -16,14 +16,6 @@
 
 #include "CosNaming_i.h"
 
-NS_NamingContext::NS_NamingContext (const char *key)
-  : POA_CosNaming::NamingContext (key)
-{
-  if (context_.open (NS_MAP_SIZE) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "NS_NamingContext"));
-  // deal with fault
-}
-
 NS_NamingContext::NS_NamingContext (void)
 {
   if (context_.open (NS_MAP_SIZE) == -1)
@@ -92,7 +84,6 @@ NS_NamingContext::bind (const CosNaming::Name& n,
 {
   IT_env.clear ();
 
-  cout << "sizeof Naming Component = %d\n" << sizeof (CosNaming::NameComponent) << endl;
   // get the length of the name
   CORBA::ULong len = n.length ();
 
@@ -147,7 +138,7 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
   if (len == 0)
     {
       IT_env.clear ();
-      IT_env.exception (new POA_CosNaming::NamingContext::InvalidName);
+      IT_env.exception (new CosNaming::NamingContext::InvalidName);
       return;
     }
 
@@ -370,34 +361,32 @@ NS_NamingContext::unbind (const CosNaming::Name& n,
 	}
     }
 }
-
-CosNaming::NamingContext_ptr
-NS_NamingContext::new_context (CORBA::Environment &IT_env)
+    
+CosNaming::NamingContext_ptr 
+NS_NamingContext::new_context (CORBA::Environment &_env) 
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (IT_env);
 
   NS_NamingContext *c = new NS_NamingContext;
 
-  return NS_NamingContext::_duplicate (c);
+  return c->_this (_env);
 }
-
-CosNaming::NamingContext_ptr
-NS_NamingContext::bind_new_context (const CosNaming::Name& n,
-				    CORBA::Environment &IT_env)
+    
+CosNaming::NamingContext_ptr 
+NS_NamingContext::bind_new_context (const CosNaming::Name& n, 
+				    CORBA::Environment &_env) 
 {
   NS_NamingContext *c = new NS_NamingContext;
 
-  bind_context (n, c, IT_env);
-
-  // release object if exception occurs.
-  if (IT_env.exception () != 0)
+  bind_context (n, c->_this (_env), _env);
+  
+  // release object if exception occurs.   
+  if (_env.exception () != 0)
     {
-      CORBA::release (c);
+      delete c;
       return CosNaming::NamingContext::_nil ();
     }
-
-  return NS_NamingContext::_duplicate (c);
+  
+  return c->_this (_env);
 }
 
 void
@@ -413,16 +402,13 @@ NS_NamingContext::destroy (CORBA::Environment &IT_env)
   // destroy context
   CORBA::release (tie_ref_);
 }
-
-void
-NS_NamingContext::list (CORBA::ULong how_many,
-			CosNaming::BindingList_out bl,
-			CosNaming::BindingIterator_out bi,
-			CORBA::Environment &IT_env)
+    
+void 
+NS_NamingContext::list (CORBA::ULong how_many, 
+			CosNaming::BindingList_out bl, 
+			CosNaming::BindingIterator_out bi, 
+			CORBA::Environment &) 
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (IT_env);
-
   // Dynamically allocate hash map iterator.
   NS_NamingContext::HASH_MAP::ITERATOR *hash_iter =
     new NS_NamingContext::HASH_MAP::ITERATOR (context_);
@@ -441,7 +427,7 @@ NS_NamingContext::list (CORBA::ULong how_many,
        ACE_UNUSED_ARG (bind_iter);
 
        //  bind_iter->initialize (bi);
-	   CosNaming::BindingIterator::_duplicate (bi);
+       CosNaming::BindingIterator::_duplicate (bi);
 
        n = how_many;
     }
