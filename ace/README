@@ -184,6 +184,7 @@ ACE_HAS_UNION_WAIT			The wait() system call takes a (union wait *) rather than i
 ACE_HAS_UNIXWARE_SVR4_SIGNAL_T		Has inconsistent SVR4 signal stuff, but not the same as the other platforms
 ACE_HAS_UNICODE				Platform/compiler supports UNICODE
 ACE_HAS_USING_KEYWORD			Compiler supports the new using keyword for C++ namespaces.
+ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in ACE_NOTSUP.  Useful for tracking down origin of ACE_NOTSUP.
 ACE_HAS_VOIDPTR_MMAP			Platform requires void * for mmap().
 ACE_HAS_VOIDPTR_SOCKOPT			OS/compiler uses void * arg 4 setsockopt() rather than const char *
 ACE_HAS_WIN32_TRYLOCK			The Win32 platform support TryEnterCriticalSection() (WinNT 4.0 and beyond)
@@ -385,6 +386,9 @@ ACE_HAS_LONGLONG_T:
 
   Solaris:
      has long long
+
+  OSF1:
+     has 64 bit long
 
   HPUX:
      doesn't.
