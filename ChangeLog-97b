@@ -1,3 +1,7 @@
+Tue Oct 21 02:23:26 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ACE version 4.3.23, released Tue Oct 21 02:23:26 1997.
+
 Tue Oct 21 02:18:56 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* examples/Makefile: Things are happier now, so we've added back
