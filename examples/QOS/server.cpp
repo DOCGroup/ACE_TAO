@@ -27,7 +27,6 @@
 static int ValidOptions (char *argv[],
                          int argc,
                          OPTIONS *pOptions);
-static void PrintOptions (OPTIONS *pOptions);
 static void Usage (char *szProgramname,
                    OPTIONS *pOptions);
 
@@ -90,7 +89,6 @@ fill_ace_qos_flowspec_default (ACE_QoS *pQos,
 }
 
 int SetQos (QOS_OPTIONS *pQosOptions,
-            int bSetQos,
             ACE_QoS *pQos) 
 {
   int bError = FALSE;
@@ -175,7 +173,6 @@ main (int argc, char * argv[])
       if (QOS_IOCTL_SET_BEFORE == options.qosOptions.qosIoctlSet)
         {
           if (SetQos (&options.qosOptions,
-                      TRUE,
                       &qos))
             ACE_DEBUG ((LM_DEBUG,
                         "  QOS set before accept\n"));
@@ -184,7 +181,6 @@ main (int argc, char * argv[])
         {
           options.qosOptions.bDisableSignalling = TRUE;
           if (SetQos (&options.qosOptions,
-                      TRUE,
                       &qos))
             ACE_DEBUG ((LM_DEBUG,
                         "  QOS set qos before accept - will be "
@@ -254,7 +250,7 @@ main (int argc, char * argv[])
   // subscribe will be added that constrains the various features of
   // GQoS like different flags etc.
 
-  ACE_QoS_Manager *ace_qos_manager;
+  ACE_QoS_Manager *ace_qos_manager = 0;
 
   if (dgram_mcast.subscribe (mult_addr,
                              qos_params,
@@ -267,9 +263,7 @@ main (int argc, char * argv[])
                              0,
                              ACE_OVERLAPPED_SOCKET_FLAG 
                              | ACE_FLAG_MULTIPOINT_C_LEAF 
-                             | ACE_FLAG_MULTIPOINT_D_LEAF,
-							  ace_qos_manager,
-                             qos_session) == -1)
+                             | ACE_FLAG_MULTIPOINT_D_LEAF) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in subscribe\n"),
                       -1);
@@ -337,7 +331,7 @@ main (int argc, char * argv[])
   // Set the QoS for the session. Replaces the ioctl () call that was
   // being made previously.
   if (qos_session->qos (&dgram_mcast,
-						ace_qos_manager,
+                        ace_qos_manager,
                         ace_qos) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to set QoS\n"),
@@ -512,7 +506,6 @@ ValidOptions (char *argv[],
               int argc,
               OPTIONS *pOptions)
 {
-  int bValidOptions = TRUE;
   *pOptions = default_options;
 
   for (int i = 1; i < argc; i++)
@@ -727,109 +720,6 @@ ValidOptions (char *argv[],
                       pOptions->nBufSize);
       return TRUE;
     }
-}
-
-static 
-void PrintOptions (OPTIONS *pOptions)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "Options\n"
-              "  Protocol %d\n"
-              "  Port %d\n",
-              pOptions->spOptions.iProtocol,
-              pOptions->port));
-
-  if (pOptions->qosOptions.bReceiver)
-    ACE_DEBUG ((LM_DEBUG,
-                "  Act as Receiver\n"));
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "  Act as sender and send to %s\n"
-                  "  Sleep %d milliseconds between sends\n"
-                  "  Fill buffer with <%c>\n", 
-                  pOptions->szHostname,
-                  pOptions->dwSleep,
-                  pOptions->fillchar));
-
-      if (pOptions->nRepeat)
-        ACE_DEBUG ((LM_DEBUG,
-                    "  Repeat sending the buffer %d times\n", 
-                    pOptions->nRepeat));
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "  Repeat sending the buffer continually\n"));
-
-    }
-  ACE_DEBUG ((LM_DEBUG,
-              "  Bufsize %d (1K increments)\n"
-              "  Multicast is %s\n", 
-              pOptions->nBufSize,
-              (pOptions->spOptions.bMulticast ? "Enabled" : "Disabled")));
-
-  if (pOptions->spOptions.bQos)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "  Qos template %s\n"
-                  "  Qos to be set ", 
-                  pOptions->qosOptions.szTemplate));
-      
-      switch (pOptions->qosOptions.qosIoctlSet)
-        {
-        case QOS_IOCTL_SET_BEFORE: 
-          ACE_DEBUG ((LM_DEBUG,
-                      "Before accept/connect/joinleaf\n"));
-          break;
-        case QOS_IOCTL_SET_AFTER:  
-          ACE_DEBUG ((LM_DEBUG,
-                      "After accept/connect/joinleaf\n")); 
-          break;
-        case QOS_IOCTL_SET_DURING: 
-          ACE_DEBUG ((LM_DEBUG,
-                      "During accept/connect/joinleaf\n"));
-          break;
-        case QOS_IOCTL_SET_QOS: 
-          if (pOptions->qosOptions.bReceiver)
-            ACE_DEBUG ((LM_DEBUG,
-                        "During FD_QOS, implies QOS with no "
-                        "signaling set before accept/connect "
-                        "(eventually)\n"));
-          else
-            {
-              pOptions->qosOptions.qosIoctlSet = QOS_IOCTL_SET_BEFORE;
-              ACE_DEBUG ((LM_DEBUG,
-                          "Before connect\n"));
-            }
-          break;
-        }
-
-      if (pOptions->qosOptions.bConfirmResv )
-        ACE_DEBUG ((LM_DEBUG,
-                    "  RESV confirmation to be requested\n"));
-
-      if (INVALID_SEND_PRIORITY != pOptions->qosOptions.SendPriority)
-        ACE_DEBUG ((LM_DEBUG,
-                    "  Qos TC SendPriority to be set to %d\n", 
-                    pOptions->qosOptions.SendPriority));
-      if (!pOptions->qosOptions.bReceiver)
-        {
-          if (pOptions->qosOptions.bWaitToSend)
-            ACE_DEBUG ((LM_DEBUG,
-                        "  Wait for RESV before sending data\n"));
-          else
-            ACE_DEBUG ((LM_DEBUG,
-                        "  Do not wait for RESV to start sending data\n"));
-        }
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "  Qos must be set during Accept = %s\n", 
-                    (pOptions->qosOptions.bMustSetQosInAccept?"TRUE":"FALSE")));
-           
-      ACE_DEBUG ((LM_DEBUG,
-                  "  Query for QOS buffer size: %s\n\n",
-                  (pOptions->qosOptions.bQueryBufferSize?"TRUE":"FALSE")));
-    }
-  return;
 }
 
 //      Print out usage table for the program
