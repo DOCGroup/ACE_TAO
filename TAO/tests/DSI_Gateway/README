@@ -4,7 +4,8 @@
 optimize some demarshaling/marshaling and data copying in the
 implementation of DSI/DII based gateways. The DSI/DII gateway can
 also pass requests and replies that are not in native (the
-gateway's) byte order.
+gateway's) byte order. NOTE - For this last feature to work, you
+must compile ACE with ACE_ENABLE_SWAP_ON_WRITE defined.
 
 	This is a smoke test and simple example for those 
 features. Use
