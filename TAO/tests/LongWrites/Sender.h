@@ -35,7 +35,7 @@ public:
     /// Run the test using receive_data() operations
     TEST_WRITE,
     /// Run the test using return_data() operations
-    TEST_READ_WRITE,
+    TEST_READ_WRITE
   };
 
   /// Run the test in a separate thread

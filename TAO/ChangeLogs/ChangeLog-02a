@@ -1,7 +1,22 @@
+Tue Apr 24 11:59:04 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/LongWrites/Sender.h:
+          Fixed warnings under Sun/CC 4.2
+
 Tue Apr 24 11:46:45 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO_Static.dsp:
           Fixed list of files for the static TAO library.
+
+Tue Apr 24 10:58:07 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Big_Oneways/client.cpp:
+        * tests/Big_Oneways/server.cpp:
+        * tests/Big_Request_Muxing/Client_Task.cpp:
+        * tests/Big_Twoways/Session.cpp:
+        * tests/Big_Twoways/client.cpp:
+        * tests/Big_Twoways/server.cpp:
+          Fixed Fuzz errors about missing ACE_CHECK/ACE_TRY_CHECK
 
 Tue Apr 24 10:47:22 2001  Carlos O'Ryan  <coryan@uci.edu>
 
