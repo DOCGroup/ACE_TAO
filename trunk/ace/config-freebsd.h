@@ -67,6 +67,7 @@ ange */
 
 // Platform supports POSIX timers via struct timespec.
 #define ACE_HAS_POSIX_TIME
+#define ACE_HAS_UALARM
 
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T
