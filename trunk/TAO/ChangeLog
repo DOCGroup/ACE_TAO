@@ -16,6 +16,8 @@ Thu May  1 11:25:42 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.h:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h:
+	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator.cpp:
+	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator.h:
 	* tao/AbstractBase.cpp:
 	* tao/AbstractBase.h:
 	* tao/AbstractBase.inl:
