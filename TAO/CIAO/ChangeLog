@@ -1,3 +1,171 @@
+Fri May 30 19:33:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CCF/DesignNotes:
+        * CCF/Makefile:
+        * CCF/Version:
+        * CCF/CCF/CCF.sln:
+        * CCF/CCF/Makefile:
+        * CCF/CCF/CIDL/CIDL.cpp:
+        * CCF/CCF/CIDL/CIDL.vcproj:
+        * CCF/CCF/CIDL/CIDL_LexicalAnalyzer.hpp:
+        * CCF/CCF/CIDL/CIDL_Parser.hpp:
+        * CCF/CCF/CIDL/CIDL_SemanticAction.hpp:
+        * CCF/CCF/CIDL/CIDL_SemanticActionImpl.hpp:
+        * CCF/CCF/CIDL/CIDL_SyntaxTree.cpp:
+        * CCF/CCF/CIDL/CIDL_SyntaxTree.hpp:
+        * CCF/CCF/CIDL/CIDL_SyntaxTreeFwd.hpp:
+        * CCF/CCF/CIDL/CIDL_Traversal.cpp:
+        * CCF/CCF/CIDL/CIDL_Traversal.hpp:
+        * CCF/CCF/CIDL/MSVC_Pragmas.hpp:
+        * CCF/CCF/CIDL/Makefile:
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.cpp:
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.vcproj:
+        * CCF/CCF/CodeGenerationKit/CommandLine.cpp:
+        * CCF/CCF/CodeGenerationKit/CommandLine.hpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineDescriptor.hpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineGrammar.cpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineGrammar.hpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineParser.cpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineParser.hpp:
+        * CCF/CCF/CodeGenerationKit/IDLStream.hpp:
+        * CCF/CCF/CodeGenerationKit/MSVC_Pragmas.hpp:
+        * CCF/CCF/CodeGenerationKit/Makefile:
+        * CCF/CCF/CodeGenerationKit/Regex.hpp:
+        * CCF/CCF/CompilerElements/DiagnosticStream.cpp:
+        * CCF/CCF/CompilerElements/DiagnosticStream.hpp:
+        * CCF/CCF/CompilerElements/ExH.hpp:
+        * CCF/CCF/CompilerElements/FileSystem.hpp:
+        * CCF/CCF/CompilerElements/MSVC_Pragmas.hpp:
+        * CCF/CCF/CompilerElements/Parser.hpp:
+        * CCF/CCF/CompilerElements/Preprocessor.hpp:
+        * CCF/CCF/CompilerElements/ReferenceCounting.hpp:
+        * CCF/CCF/CompilerElements/SemanticAction.hpp:
+        * CCF/CCF/CompilerElements/Token.hpp:
+        * CCF/CCF/CompilerElements/TokenStream.hpp:
+        * CCF/CCF/CompilerElements/Traversal.hpp:
+        * CCF/CCF/IDL2/IDL2.cpp:
+        * CCF/CCF/IDL2/IDL2.vcproj:
+        * CCF/CCF/IDL2/IDL2_LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/IDL2_LexicalAnalyzer.hpp:
+        * CCF/CCF/IDL2/IDL2_Parser.hpp:
+        * CCF/CCF/IDL2/IDL2_SemanticAction.hpp:
+        * CCF/CCF/IDL2/IDL2_SemanticActionImpl.hpp:
+        * CCF/CCF/IDL2/IDL2_SyntaxTree.cpp:
+        * CCF/CCF/IDL2/IDL2_SyntaxTree.hpp:
+        * CCF/CCF/IDL2/IDL2_SyntaxTree.tpp:
+        * CCF/CCF/IDL2/IDL2_SyntaxTreeFwd.hpp:
+        * CCF/CCF/IDL2/IDL2_SyntaxTree_BuiltIn.cpp:
+        * CCF/CCF/IDL2/IDL2_SyntaxTree_BuiltIn.hpp:
+        * CCF/CCF/IDL2/IDL2_SyntaxTree_Value.hpp:
+        * CCF/CCF/IDL2/IDL2_Traversal.cpp:
+        * CCF/CCF/IDL2/IDL2_Traversal.hpp:
+        * CCF/CCF/IDL2/MSVC_Pragmas.hpp:
+        * CCF/CCF/IDL2/Makefile:
+        * CCF/CCF/IDL3/IDL3.cpp:
+        * CCF/CCF/IDL3/IDL3.vcproj:
+        * CCF/CCF/IDL3/IDL3_LexicalAnalyzer.hpp:
+        * CCF/CCF/IDL3/IDL3_Parser.hpp:
+        * CCF/CCF/IDL3/IDL3_SemanticAction.hpp:
+        * CCF/CCF/IDL3/IDL3_SemanticActionImpl.hpp:
+        * CCF/CCF/IDL3/IDL3_SyntaxTree.cpp:
+        * CCF/CCF/IDL3/IDL3_SyntaxTree.hpp:
+        * CCF/CCF/IDL3/IDL3_SyntaxTreeFwd.hpp:
+        * CCF/CCF/IDL3/IDL3_SyntaxTree_EventType.cpp:
+        * CCF/CCF/IDL3/IDL3_SyntaxTree_EventType.hpp:
+        * CCF/CCF/IDL3/IDL3_Traversal.cpp:
+        * CCF/CCF/IDL3/IDL3_Traversal.hpp:
+        * CCF/CCF/IDL3/MSVC_Pragmas.hpp:
+        * CCF/CCF/IDL3/Makefile:
+        * CCF/External/Utility/Makefile:
+        * CCF/External/Utility/Version:
+        * CCF/External/Utility/Config/Archive.gcc.post.rules:
+        * CCF/External/Utility/Config/Archive.gcc.pre.rules:
+        * CCF/External/Utility/Config/Archive.post.rules:
+        * CCF/External/Utility/Config/Archive.pre.rules:
+        * CCF/External/Utility/Config/Documentation.post.rules:
+        * CCF/External/Utility/Config/Documentation.pre.rules:
+        * CCF/External/Utility/Config/Executable.gcc.post.rules:
+        * CCF/External/Utility/Config/Executable.gcc.pre.rules:
+        * CCF/External/Utility/Config/Executable.generic.post.rules:
+        * CCF/External/Utility/Config/Executable.generic.pre.rules:
+        * CCF/External/Utility/Config/Executable.post.rules:
+        * CCF/External/Utility/Config/Executable.pre.rules:
+        * CCF/External/Utility/Config/Recursion.post.rules:
+        * CCF/External/Utility/Config/Recursion.pre.rules:
+        * CCF/External/Utility/Config/Shared.gcc.post.rules:
+        * CCF/External/Utility/Config/Shared.gcc.pre.rules:
+        * CCF/External/Utility/Config/Shared.generic.post.rules:
+        * CCF/External/Utility/Config/Shared.generic.pre.rules:
+        * CCF/External/Utility/Config/Shared.post.rules:
+        * CCF/External/Utility/Config/Shared.pre.rules:
+        * CCF/External/Utility/Config/Thoughts:
+        * CCF/External/Utility/Documentation/Makefile:
+        * CCF/External/Utility/Documentation/News.html:
+        * CCF/External/Utility/Documentation/index.html:
+        * CCF/External/Utility/Documentation/ExH/Makefile:
+        * CCF/External/Utility/Documentation/ExH/Makefile.documentation:
+        * CCF/External/Utility/Documentation/ExH/News.html:
+        * CCF/External/Utility/Documentation/ExH/index.html:
+        * CCF/External/Utility/Documentation/ExH/Example/Makefile:
+        * CCF/External/Utility/Documentation/ExH/Logic/Makefile:
+        * CCF/External/Utility/Documentation/ExH/System/Makefile:
+        * CCF/External/Utility/Documentation/ReferenceCounting/Makefile:
+        * CCF/External/Utility/Documentation/ReferenceCounting/News.html:
+        * CCF/External/Utility/Documentation/ReferenceCounting/index.html:
+        * CCF/External/Utility/Documentation/Style/CXX.css:
+        * CCF/External/Utility/Documentation/Style/CXX_Blue.css:
+        * CCF/External/Utility/Documentation/Synch/Makefile:
+        * CCF/External/Utility/Documentation/Synch/News.html:
+        * CCF/External/Utility/Documentation/Synch/index.html:
+        * CCF/External/Utility/Documentation/Synch/Policy/Makefile:
+        * CCF/External/Utility/Utility/ExH/Compound.hpp:
+        * CCF/External/Utility/Utility/ExH/Compound.tpp:
+        * CCF/External/Utility/Utility/ExH/Converter.hpp:
+        * CCF/External/Utility/Utility/ExH/Converter.tpp:
+        * CCF/External/Utility/Utility/ExH/ExH.hpp:
+        * CCF/External/Utility/Utility/ExH/StringConverter.hpp:
+        * CCF/External/Utility/Utility/ExH/StringConverter.ipp:
+        * CCF/External/Utility/Utility/ExH/StringStreamConverter.hpp:
+        * CCF/External/Utility/Utility/ExH/StringStreamConverter.ipp:
+        * CCF/External/Utility/Utility/ExH/Logic/DescriptiveException.hpp:
+        * CCF/External/Utility/Utility/ExH/Logic/DescriptiveException.ipp:
+        * CCF/External/Utility/Utility/ExH/Logic/Exception.hpp:
+        * CCF/External/Utility/Utility/ExH/Logic/Exception.ipp:
+        * CCF/External/Utility/Utility/ExH/System/DescriptiveException.hpp:
+        * CCF/External/Utility/Utility/ExH/System/DescriptiveException.ipp:
+        * CCF/External/Utility/Utility/ExH/System/Exception.hpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/DefaultImpl.hpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/DefaultImpl.ipp:
+        * CCF/External/Utility/Utility/ReferenceCounting/ExternalLockImpl.hpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/ExternalLockImpl.ipp:
+        * CCF/External/Utility/Utility/ReferenceCounting/Interface.hpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/Interface.ipp:
+        * CCF/External/Utility/Utility/ReferenceCounting/Interface.tpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/ReferenceCounting.hpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/SmartPtr.hpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/SmartPtr.tpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/StrictPtr.hpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/StrictPtr.tpp:
+        * CCF/External/Utility/Utility/Synch/Policy/Null.hpp:
+        * CCF/External/Utility/Utility/Synch/Policy/Null.ipp:
+        * CIDLC/CIDLC.sln:
+        * CIDLC/CIDLC.vcproj:
+        * CIDLC/ExecutorMapp:ingGenerator.cpp:
+        * CIDLC/ExecutorMapp:ingGenerator.hpp:
+        * CIDLC/Literals.hpp:
+        * CIDLC/Makefile:
+        * CIDLC/ServantGenerator.cpp:
+        * CIDLC/ServantGenerator.hpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.hpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.hpp:
+        * CIDLC/Version:
+        * CIDLC/cidlc.cpp:
+
+	  Source code, documentation and build files for the 
+	  CIDL compiler.
+
 Fri May 30 18:18:25 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/*:
@@ -23,7 +191,7 @@ Fri May 30 17:41:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/OEP/Display/RateGen/RateGen_svnt.dsp:
 
           Changed the location of the CIDL compiler executable to
-          CIAO_ROOT/bin.
+          CIAO_ROOT/bin for the MSVC projects.
 
         * examples/OEP/Display/NavDisplay/NavDisplay_svnt.cpp:
         * examples/OEP/Display/NavDisplay/NavDisplay_svnt.h:
