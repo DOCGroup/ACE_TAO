@@ -292,11 +292,18 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Create child POA with SERVER_DECLARED PriorityModelPolicy,
+      // and MULTIPLE_ID id uniqueness policy (so we can use one
+      // servant to create several objects).
       CORBA::PolicyList poa_policy_list;
-      poa_policy_list.length (1);
+      poa_policy_list.length (2);
       poa_policy_list[0] =
         rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
                                               poa_priority,
+                                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      poa_policy_list[1] =
+        root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

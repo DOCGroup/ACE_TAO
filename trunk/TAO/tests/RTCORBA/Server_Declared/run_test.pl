@@ -40,7 +40,7 @@ if ($^O eq "MSWin32")
                     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=1 ";
 }
 
-$client_args = "-p file://$iorfile1 -o file://iorfile2";
+$client_args = "-p file://$iorfile1 -o file://$iorfile2";
 
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        $server_args);

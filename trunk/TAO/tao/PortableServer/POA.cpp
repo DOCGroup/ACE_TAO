@@ -18,6 +18,7 @@
 #include "tao/Exception.h"
 #include "tao/Stub.h"
 #include "tao/debug.h"
+#include "tao/Acceptor_Registry.h"
 
 #include "tao/RT_Policy_i.h"
 #include "Default_Acceptor_Filter.h"
@@ -2092,14 +2093,25 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
 #if (TAO_HAS_RT_CORBA == 1)
 
 int
-TAO_POA::valid_priority (RTCORBA::Priority priority )
+TAO_POA::valid_priority (RTCORBA::Priority priority)
 {
-  return 1;
+  // Make sure <priority> matches our resource configuration, i.e., we
+  // have at least one endpoint that can provide service for the
+  // specified <priority>.
+  TAO_Acceptor_Registry *ar =
+    this->orb_core_.acceptor_registry ();
+  
+  for (TAO_Acceptor **a = ar->begin (); a != ar->end (); ++a)
+    {
+      if ((*a)->priority () == priority)
+        return 1;
+    }
+  
+  return 0;
 }
 
 void
-TAO_POA::validate_priority_and_policies (RTCORBA::Priority priority,
-                                         CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::validate_policies (CORBA::Environment &ACE_TRY_ENV)
 {
   // For each of the above operations, if the POA supports the
   // IMPLICIT_ACTIVATION option for the ImplicitActivationPolicy then
@@ -2118,15 +2130,6 @@ TAO_POA::validate_priority_and_policies (RTCORBA::Priority priority,
   if (this->policies ().priority_model () != TAO_POA_Policies::SERVER_DECLARED)
     {
       ACE_THROW (PortableServer::POA::WrongPolicy ());
-    }
-
-  // If the priority parameter of any of the above operations is not a
-  // valid CORBA priority or if it fails to match the priority
-  // configuration for resources assigned to the POA, then the ORB
-  // shall raise a BAD_PARAM system exception.
-  if (!this->valid_priority (priority))
-    {
-      ACE_THROW (CORBA::BAD_PARAM ());
     }
 
   // In all other respects the semantics of the corresponding
@@ -3359,7 +3362,8 @@ TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
-     client_exposed_fixed_policies_ ()
+     client_exposed_fixed_policies_ (),
+     orb_core_ (orb_core)
 {
 
 #if (TAO_HAS_RT_CORBA == 1)
@@ -3417,7 +3421,8 @@ TAO_POA_Policies::TAO_POA_Policies (const TAO_POA_Policies &rhs)
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
-     client_exposed_fixed_policies_ ( rhs.client_exposed_fixed_policies ())
+     client_exposed_fixed_policies_ ( rhs.client_exposed_fixed_policies ()),
+     orb_core_ (rhs.orb_core_)
 {
 
 #if (TAO_HAS_RT_CORBA == 1)
@@ -3517,74 +3522,101 @@ TAO_POA_Policies::parse_policies (const CORBA::PolicyList &policies,
       ACE_CHECK;
     }
 
-  if (this->validity_check () == -1)
-    {
-      ACE_THROW (PortableServer::POA::InvalidPolicy ());
-    }
+  this->validity_check (ACE_TRY_ENV);
 }
 
-int
-TAO_POA_Policies::validity_check (void)
+void
+TAO_POA_Policies::validity_check (CORBA::Environment &ACE_TRY_ENV)
 {
   // The NON_RETAIN policy requires either the USE_DEFAULT_SERVANT or
   // USE_SERVANT_MANAGER policies.
   if (this->servant_retention_ == PortableServer::NON_RETAIN)
     if (this->request_processing_ != PortableServer::USE_SERVANT_MANAGER &&
         this->request_processing_ != PortableServer::USE_DEFAULT_SERVANT)
-      return -1;
+      ACE_THROW (PortableServer::POA::InvalidPolicy ());
 
   // USE_ACTIVE_OBJECT_MAP_ONLY requires the RETAIN policy.
   if (this->request_processing_ == PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY)
     if (this->servant_retention_ != PortableServer::RETAIN)
-      return -1;
+      ACE_THROW (PortableServer::POA::InvalidPolicy ());
 
   // USE_DEFAULT_SERVANT requires the MULTIPLE_ID policy.
   if (this->request_processing_ == PortableServer::USE_DEFAULT_SERVANT)
     if (this->id_uniqueness_ != PortableServer::MULTIPLE_ID)
-      return -1;
+      ACE_THROW (PortableServer::POA::InvalidPolicy ());
 
   // IMPLICIT_ACTIVATION requires the SYSTEM_ID and RETAIN policies.
   if (this->implicit_activation_ == PortableServer::IMPLICIT_ACTIVATION)
     if (this->servant_retention_ != PortableServer::RETAIN ||
         this->id_assignment_ != PortableServer::SYSTEM_ID)
-      return -1;
+      ACE_THROW (PortableServer::POA::InvalidPolicy ());
 
-  int result = 0;
+  // Perform checks for RTCORBA policies.
+  // @@ What are the appropriate exceptions to throw?
 
-  result = this->validate_priority_model ();
-  if (result != 0)
-    return result;
+  // @@ We have to force ORB_Core open, in order for
+  // Acceptor_Registry/acceptors get created, so that we can do
+  // validation.  Once threadpools are in place, this may not be
+  // necessary. 
+  this->orb_core_.open (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  result = this->validate_server_protocol ();
-  if (result != 0)
-    return result;
+  if (this->validate_priority_model () == -1)
+    ACE_THROW (CORBA::BAD_PARAM ());
 
-  result = this->validate_priority_bands ();
-  if (result != 0)
-    return result;
+  if (this->validate_server_protocol () == -1)
+    ACE_THROW (PortableServer::POA::InvalidPolicy ());
 
-  return 0;
+  if (this->validate_priority_bands () == -1)
+    ACE_THROW (PortableServer::POA::InvalidPolicy ());
 }
 
 int
 TAO_POA_Policies::validate_priority_model (void)
 {
+  if (this->priority_model_ == SERVER_DECLARED)
+    {
+      // Make sure we have at least one endpoint that can provide
+      // service for the specified SERVER_DECLARED priority.
+      TAO_Acceptor_Registry *ar = this->orb_core_.acceptor_registry ();
+  
+      for (TAO_AcceptorSetIterator a = ar->begin (); a != ar->end (); ++a)
+        {
+          if ((*a)->priority () == this->server_priority_)
+            return 0;
+        }
+      
+      return -1;
+    }
+
   return 0;
 }
 
 int
 TAO_POA_Policies::validate_server_protocol (void)
 {
-  return 0;
+  // Make sure we have an endpoint for at least one of the protocols
+  // specified in the RTCORBA::ServerProtocolPolicy.  This ensure we
+  // will be able to create non-nil object references.
+
+  RTCORBA::ProtocolList &protocols =
+    this->server_protocol_->protocols_rep ();
+
+  TAO_Acceptor_Registry *ar = this->orb_core_.acceptor_registry ();
+  
+  for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+    {
+      CORBA::ULong protocol_type = protocols[j].protocol_type;
+      for (TAO_AcceptorSetIterator a = ar->begin (); a != ar->end (); ++a)
+        {
+          if ((*a)->tag () == protocol_type)
+            return 0;
+        }
+    }
+  return -1;
 }
 
 #if (TAO_HAS_RT_CORBA == 1)
-
-int
-TAO_POA_Policies::validate_client_protocol (RTCORBA::ClientProtocolPolicy_ptr)
-{
-  return 0;
-}
 
 int
 TAO_POA_Policies::validate_priority_bands ()
@@ -3718,6 +3750,10 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
         priority_model->server_priority (ACE_TRY_ENV);
       ACE_CHECK;
 
+      if (this->server_priority_ < RTCORBA::minPriority
+          || this->server_priority_ > RTCORBA::maxPriority)
+        ACE_THROW (PortableServer::POA::InvalidPolicy ());
+
       return;
     }
 
@@ -3728,12 +3764,6 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
 
   if (!CORBA::is_nil (client_protocol.in ()))
     {
-      int result =
-        this->validate_client_protocol (client_protocol.in ());
-
-      if (result != 0)
-        ACE_THROW (PortableServer::POA::InvalidPolicy ());
-
       CORBA::ULong current_length =
         this->client_exposed_fixed_policies_.length ();
 
@@ -4097,12 +4127,7 @@ TAO_POA::client_exposed_policies (CORBA::Short object_priority,
       if (priority_model == TAO_POA_Policies::CLIENT_PROPAGATED)
         priority = poa_priority;
       else
-        {
-          if (object_priority == TAO_INVALID_PRIORITY)
-            priority = poa_priority;
-          else
-            priority = object_priority;
-        }
+        priority = object_priority;
 
       TAO_PriorityModelPolicy *priority_model_policy;
       ACE_NEW_THROW_EX (priority_model_policy,
