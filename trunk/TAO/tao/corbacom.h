@@ -6,7 +6,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    corbacom.h
 //
@@ -15,8 +15,8 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc. and Andy Gokhale
-//     <gokhale@cs.wustl.edu>. 
-// 
+//     <gokhale@cs.wustl.edu>.
+//
 // ============================================================================
 
 #if !defined (TAO_CORBACOM_H)
@@ -138,10 +138,10 @@ class TAO_ORB_Parameters;
 struct CDR;
 
 // enum values defined in nvlist.h, bitwise ORed.
-typedef u_int CORBA_Flags; 
+typedef u_int CORBA_Flags;
 
 template <class T>
-struct CORBA_SEQUENCE 
+struct CORBA_SEQUENCE
   // = TITLE
   //    Utility template class.
   //
@@ -164,9 +164,9 @@ struct CORBA_SEQUENCE
   ~CORBA_SEQUENCE (void) { }
 };
 
-class TAO_Export CORBA 
+class TAO_Export CORBA
   // = TITLE
-  //    Provides the CORBA namespace. 
+  //    Provides the CORBA namespace.
   //
   // = DESCRIPTION
   //    This class allows the use of CORBA::Foo, as well as CORBA_Foo
@@ -177,7 +177,7 @@ public:
   typedef bool			Boolean;
 #    define B_FALSE false
 #    define B_TRUE true
-  
+
 #  else	/* "bool" not builtin to this compiler */
   typedef int			Boolean;
   enum { B_FALSE = 0, B_TRUE = 1 };
@@ -259,7 +259,7 @@ public:
   typedef long double LongDouble;
 #  else
 #    define	NONNATIVE_LONGDOUBLE
-  struct LongDouble 
+  struct LongDouble
   {
     char ld[16];
   };
@@ -349,7 +349,7 @@ public:
     // String_out
     // =DESCRIPTION
     // To support the memory management for "out" parameter passing mode.
-    
+
   public:
     // =operations
 
@@ -376,7 +376,7 @@ public:
 
     char *&ptr (void);
     // return underlying instance
-   
+
   private:
     char *&ptr_;
     // instance
@@ -396,14 +396,14 @@ public:
   typedef wchar_t WChar;
 #endif
   typedef WChar *WString;
-  
+
   typedef WChar &WChar_out; // out type for WChar
 
   static WString wstring_alloc (ULong len);
   static WString wstring_copy (const WChar *const);
   static void wstring_free (WChar *const);
 
-  // various CORBA defined classes 
+  // various CORBA defined classes
 
   typedef CORBA_Any         Any;
   typedef CORBA_Any_var     Any_var;
@@ -447,27 +447,27 @@ public:
   typedef TypeCode *TypeCode_ptr;
 
   typedef CORBA_UserException  UserException;
-  
+
   typedef CORBA_SEQUENCE <TypeCode_ptr> ExceptionList;
   typedef ExceptionList *ExceptionList_ptr;
 
   typedef CORBA_ImplementationDef *ImplementationDef_ptr;
-  
+
   typedef class CORBA_InterfaceDef *InterfaceDef_ptr;
 
   // enum values defined in nvlist.hh, bitwise ORed.
-  typedef u_int Flags; 
-  
+  typedef u_int Flags;
+
   // Completion Status for System exceptions
-  enum CompletionStatus 
+  enum CompletionStatus
   {
     COMPLETED_YES,     // successful or exceptional completion
     COMPLETED_NO,      // didn't change any state; retry is OK
     COMPLETED_MAYBE    // can't say what happened; retry unsafe
   };
-  
+
   // exception type
-  enum ExceptionType 
+  enum ExceptionType
   {
     NO_EXCEPTION,
     SYSTEM_EXCEPTION,
@@ -517,7 +517,7 @@ public:
   static Boolean is_nil (ORB_ptr);
   static Boolean is_nil (Principal_ptr);
   static Boolean is_nil (ServerRequest_ptr req);
-  
+
   // = all the CORBA release methods
   static void release (POA_ptr);
   static void release (Object_ptr);
@@ -531,7 +531,7 @@ public:
   static void release (ORB_ptr);
   static void release (ServerRequest_ptr req);
 
-  enum TCKind 
+  enum TCKind
   {
     tk_null               = 0,
     tk_void               = 1,
@@ -556,21 +556,21 @@ public:
     tk_array              = 20,
     tk_alias              = 21,           // 94-11-7
     tk_except             = 22,           // 94-11-7
-    
+
     // these five are OMG-IDL data type extensions
     tk_longlong           = 23,           // 94-9-32 Appendix A (+ 2)
     tk_ulonglong          = 24,           // 94-9-32 Appendix A (+ 2)
     tk_longdouble         = 25,           // 94-9-32 Appendix A (+ 2)
     tk_wchar              = 26,           // 94-9-32 Appendix A (+ 2)
     tk_wstring            = 27,           // 94-9-32 Appendix A (+ 2)
-    
+
     // This symbol is not defined by CORBA 2.0.  It's used to speed up
     // dispatch based on TCKind values, and lets many important ones
     // just be table lookups.  It must always be the last enum value!!
-    
+
     TC_KIND_COUNT
   };
-  
+
   // All the typecode constants
   static TypeCode_ptr          _tc_null;
   static TypeCode_ptr          _tc_void;
@@ -641,10 +641,10 @@ public:
 			   char *orb_name,
 			   Environment &env);
   // ORB initialisation, per OMG document 94-9-46.
-  
+
   // Define flags for NVList add methods
-  enum 
-  { 
+  enum
+  {
     ARG_IN = 0x01,
     ARG_OUT = 0x02,
     ARG_INOUT = 0x04,
@@ -657,8 +657,10 @@ typedef CORBA::OctetSeq TAO_opaque;
 extern CORBA::TypeCode TC_opaque;
 
 typedef void (*TAO_Skeleton)(CORBA::ServerRequest &,
-			     CORBA::Object_ptr, 
-			     CORBA::Environment &);
+                             //			     CORBA::Object_ptr,
+                             void *, // object_ptr
+                             void *, // context_ptr
+                             CORBA::Environment &);
 // signature of a skeleton for every operation of an interface
 
 // COM interface IIDs
