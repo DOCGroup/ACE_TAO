@@ -1,6 +1,12 @@
+Sun Feb  8 13:06:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/templates/cbx.mpd:
+	  Improved the CBuilderX template. Don't compile template files and
+	  disabled some warnings.
+
 Sat Feb  7 19:33:56 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* examples/RMCast/Send_File/Sender.cpp (ACE_TMAIN): 
+	* examples/RMCast/Send_File/Sender.cpp (ACE_TMAIN):
 	  Fixed a typo in the comments.  Thanks to Olli Savia <ops@iki.fi>
  	  for the patch.
 
@@ -8,7 +14,7 @@ Fri Feb  6 15:49:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_client.mpb:
         * bin/MakeProjectCreator/config/ciao_servant.mpb:
-        
+
           Added TAO_ROOT/tao and CIAO_ROOT/ciao to the include
           paths (C++ and (C)IDL). These additions allow users
           to include <orb.idl> or <Components.idl> without
