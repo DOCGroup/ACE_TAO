@@ -3,7 +3,7 @@ Sat Dec 12 09:15:14 1998  David L. Levine  <levine@cs.wustl.edu>
         * performance-tests/Cubit/TAO/MT_Cubit/client.cpp
           (print_latency_stats): "microseconds" instead of "seconds".
           Also, added a call to ACE_OS::exit (), for the utilization
-          test only.  Otherwise, the program never terminates.when running the
+          test only.  Otherwise, the program never terminates.
 
 Fri Dec 11 16:53:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
