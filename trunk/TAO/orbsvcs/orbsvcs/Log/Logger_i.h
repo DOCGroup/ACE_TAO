@@ -36,6 +36,7 @@ public:
   // Currently, <name> is unused.
 };
 
+
 class Logger_i : public virtual POA_Logger
 {
   // = TITLE
@@ -51,7 +52,12 @@ public:
 		    CORBA::Environment &_env);
   // Writes the <log_rec> to the standard output.
 
-  // @@ Matt, please add the method for verbosity().
+  Logger::Verbosity_Level verbosity (void) const;
+  // Gets the verbosity level
+  
+  void verbosity (Logger::Verbosity_Level level, CORBA::Environment &env);
+  // Sets the verbosity level. Valid values are {VERBOSE, VERBOSE_LITE
+  //  and SILENT}. Defaults to VERBOSE
 
 private:
   ACE_Log_Priority priority_conversion (Logger::Log_Priority priority);

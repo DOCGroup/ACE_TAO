@@ -1,3 +1,29 @@
+Tue Jul 21 21:12:31 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/Logger_i.{h,cpp}:Added 2 new methods to get and
+	set the verbosity level 
+
+	* orbsvcs/orbsvcs/Logger.idl: Enabled the verbosity method
+
+	* orbsvcs/tests/Logger/run_test.pl: Renamed from
+	runtests.pl. Removed nameservice code 
+
+	* orbsvcs/tests/Logger/README: Edited to provide more detail
+
+	* orbsvcs/tests/Logger/client_i.{h,cpp}: New files. Interface and
+	implementation of the <Logger_Client> class   
+
+	* orbsvcs/tests/Logger/server_i.{h,cpp}: New files. Interface and
+	implementation of the <Logger_Server> class.  
+
+	* orbsvcs/tests/Logger/client.cpp: Restructured the code. Moved
+	most of the work onto the <Logger_Client> class defined in
+	client_i.h. main () is now rather stripped down 
+
+	* orbsvcs/tests/Logger/server.cpp: Restructured the code. Moved
+	most of the work onto the <Logger_Server> class defined in
+	server_i.h. main () is now rather stripped down.
+	
 Tue Jul 21 17:29:15 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs_lib.dsp: 
