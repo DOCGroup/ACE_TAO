@@ -121,7 +121,7 @@ test_registering_all_handlers (void)
   Time_Handler rt[ACE_MAX_TIMERS];
   int t_id[ACE_MAX_TIMERS];
 
-  for (int i = 0; i < ACE_MAX_TIMERS; i++)
+  for (int i = 0; i < int (ACE_MAX_TIMERS); i++)
     {
       t_id[i] =
         ACE_Proactor::instance ()->schedule_timer (rt[i], 
