@@ -15,10 +15,10 @@ project(DsNotifyLogAdmin) : orbsvcslib, core {
     Log {
       DsNotifyLogAdminC.cpp
       DsNotifyLogAdminS.cpp
-      Log/NotifyLogFactory_i
-      Log/NotifyLog_i
-      Log/NotifyLogConsumer
-      Log/NotifyLogNotification
+      Log/NotifyLogFactory_i.cpp
+      Log/NotifyLog_i.cpp
+      Log/NotifyLogConsumer.cpp
+      Log/NotifyLogNotification.cpp
     }
   }
 }
