@@ -1,3 +1,10 @@
+Fri May 21 12:27:16 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
+	* orbsvcs/orbsvcs/AV/sfp.cpp:
+	  Fixed g++ template errors and warnings. Thanks to David and Andy
+	  for reporting these errors.
+
 Fri May 21 09:20:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/GIOP.cpp:
