@@ -92,7 +92,7 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
       error = 1;
     }
 
-  // set blocking mode 
+  // set blocking mode
   if (!error &&
       ACE_Flag_Manip::clr_flags
         (result.connect_handle (), ACE_NONBLOCK) != 0)
@@ -218,8 +218,12 @@ ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &
                 ACE_LIB_TEXT("ACE_Asynch_Connector::<getpeername> failed")));
 
   // Set the addresses.
-  local_address.set  ((const sockaddr_in *) &local_addr,  local_size);
-  remote_address.set ((const sockaddr_in *) &remote_addr, remote_size);
+  local_address.set  (ACE_reinterpret_cast (sockaddr_in *,
+                                            &local_addr),
+                      local_size);
+  remote_address.set (ACE_reinterpret_cast (sockaddr_in *,
+                                            &remote_addr),
+                      remote_size);
 
 #if 0
   // @@ Just debugging.
