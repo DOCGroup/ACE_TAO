@@ -48,7 +48,8 @@ clone:
 		(clone -s $(ACE_ROOT)/$$dir $$dir) \
 	done
 
-RELEASE_FILES = ACE_wrappers/ACE-categories \
+RELEASE_FILES = ACE_wrappers/ACE-INSTALL.html \
+		ACE_wrappers/ACE-categories \
 	        ACE_wrappers/ACE-install.sh \
 	        ACE_wrappers/ACE-lessons.html \
 		ACE_wrappers/ASNMP \
@@ -61,7 +62,6 @@ RELEASE_FILES = ACE_wrappers/ACE-categories \
 	        ACE_wrappers/ChangeLog-94 \
 	        ACE_wrappers/ChangeLog-93 \
 		ACE_wrappers/FAQ \
-		ACE_wrappers/INSTALL \
 		ACE_wrappers/Makefile \
 		ACE_wrappers/README \
 		ACE_wrappers/STL \
