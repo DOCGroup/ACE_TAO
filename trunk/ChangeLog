@@ -1,3 +1,11 @@
+Wed Mar 17 18:20:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.pl:
+          Added -c commandline option. With this option you can say that the
+          script has to look for a codeguard log. This log is placed in the
+          same directory as the executable, with the same name but with a cgl
+          extension. We use this for a new codeguard enabled BCB6 build.
+
 Tue Mar 16 16:56:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* asnmp/tests/Gauge_test.cpp:
@@ -6,7 +14,7 @@ Tue Mar 16 16:56:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  #ifdef'ed portions of the code which has no chances of compiling
 	  on Win32, since native support for the used basic types are
 	  missing. Changing the types to something else makes the test
-	  useless. Commenting it out for Win32 shouldn't hurt anyone. 
+	  useless. Commenting it out for Win32 shouldn't hurt anyone.
 
 Tue Mar 16 16:34:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -16,10 +24,10 @@ Tue Mar 16 16:34:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  #ifdef'ed portions of the code which has no chances of compiling
 	  on Win32, since native support for the used basic types are
 	  missing. Changing the types to something else makes the test
-	  useless. Commenting it out for Win32 shouldn't hurt anyone. 
+	  useless. Commenting it out for Win32 shouldn't hurt anyone.
 
 Tue Mar 16 10:48:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-	  
+
 	* ace/Logging_Strategy.cpp:
 
 	  Use std::streamoff () to get the offset instead of casting.
@@ -29,7 +37,7 @@ Tue Mar 16 10:48:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  #included OS_NS_string.h.
 
-	  Thanks to Oliver Kellog for providing the patches. 
+	  Thanks to Oliver Kellog for providing the patches.
 
 Tue Mar 16 09:40:36 2004  Chad Elliott  <elliott_c@ociweb.com>
 
