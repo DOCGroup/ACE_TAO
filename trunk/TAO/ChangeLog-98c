@@ -1,5 +1,32 @@
 Mon Jun 15 16:14:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* test/Cubit/TAO/IDL_Cubit/collocation_test.cpp: New program to
+	  test the performance of collocation optimization.
+
+	* test/Cubit/TAO/IDL_Cubit/server_i.{h,cpp}:
+	* test/Cubit/TAO/IDL_Cubit/client_i.{h,cpp}:
+	* test/Cubit/TAO/IDL_Cubit/server.cpp:
+	* test/Cubit/TAO/IDL_Cubit/client.cpp: Extracted out the
+	  implementation of Cubit_Server and Cubit_Client to *_i.{h,cpp}
+	  so that I can reuse them with collocation_test.cpp. 
+
+	  When shutting down the ORB, the client side will first turn off
+	  the collocation optimization and get the shutdown object from
+	  Naming Service.  Then, it calls the shutdown method of that
+	  object.  Without this, we can't shutdown the server ORB.
+
+	* test/Cubit/TAO/IDL_Cubit/cubit_i.cpp:
+	* test/Cubit/TAO/IDL_Cubit/cubit.idl:  Added a new interface for
+	  shutting down the server ORB.  This is necessary because we
+	  can't use the shutdown in collocated object (which shuts down
+	  the wrong ORB.)
+
+	* test/Cubit/TAO/IDL_Cubit/Makefile: Added settings for building
+	  collocation_test.  Tidy up the Makefile a bit.
+
+	* tests/Cubit/TAO/IDL_Cubit/README: Added documentation for
+	  collocation_test.
+
 	* tao/ORB_Core.{h,i} (using_collocation): Added a new method to allow
 	  turn on/off collocation optimization at run time.
 
