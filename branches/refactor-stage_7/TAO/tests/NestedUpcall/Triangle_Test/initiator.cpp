@@ -217,7 +217,7 @@ Initiator_Server::init (int argc,
   this->str_ =
     this->orb_manager_.activate (this->initiator_i_ptr_
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
 #if 0
   ACE_DEBUG ((LM_DEBUG,

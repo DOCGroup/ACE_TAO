@@ -46,7 +46,7 @@ include $(TAO_ROOT)/taoconfig.mk
 
 THIS_TEST_LIBS = -lTAO_Messaging -lTAO_IORManip
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(THIS_TEST_LIBS) $(TAO_CLNT_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(THIS_TEST_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
