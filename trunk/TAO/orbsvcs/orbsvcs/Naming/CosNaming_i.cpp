@@ -335,7 +335,9 @@ NS_NamingContext::rebind_context (const CosNaming::Name &n,
       NS_ExtId oldname;
 
       // try rebinding the name.
-      if (context_.rebind (name, entry, oldname, oldentry) < 0);
+      if (context_.rebind (name, entry, oldname, oldentry) < 0)
+        // @@ Marina, can you please finish this off?
+        ACE_ASSERT (!"sorry, not implemented");
         // deal with consequences
     }
 }

@@ -58,8 +58,7 @@ incarnation (CORBA::Environment& _env)
   if (this->lock_->acquire_read () == -1)
     {
       inc_num = this->incarnation_;
-      if (this->lock_->release () == -1)
-        ;
+      this->lock_->release ();
     }
   else
     {
