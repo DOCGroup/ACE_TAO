@@ -28,6 +28,10 @@
 
 #include "tao/LocalObject.h"
 
+#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
+# include "ace/SString.h"
+#endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
