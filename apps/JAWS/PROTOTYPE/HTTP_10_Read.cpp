@@ -51,6 +51,7 @@ JAWS_HTTP_10_Read_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
       }
       break;
     case JAWS_IO_Handler::READ_ERROR:
+    case JAWS_IO_Handler::READ_ERROR_A:
       {
         JAWS_TRACE ("JAWS_HTTP_10_Read_Task::handle_put, READ_ERROR");
         return -1;
