@@ -314,6 +314,36 @@ ACE_OS::gethrtime (void)
 }
 #endif /* ACE_HAS_PENTIUM && __GNUC__ */
 
+#if defined (ACE_WIN32) || defined (VXWORKS)
+// Don't inline on those platforms because this function contains
+// string literals, and some compilers, e.g., g++, don't handle those
+// efficiently in unused inline functions.
+int 
+ACE_OS::uname (struct utsname *name)
+{
+  // ACE_TRACE ("ACE_OS::uname");
+#if defined (ACE_WIN32)
+  size_t maxnamelen = sizeof name->nodename;
+  ::strcpy (name->sysname, "Win32");
+  // Any ideas what these should be?
+  ::strcpy (name->release, "???");
+  ::strcpy (name->version, "???");
+  ::strcpy (name->machine, "???");
+
+  return ACE_OS::hostname (name->nodename, maxnamelen);
+#elif defined (VXWORKS)
+  size_t maxnamelen = sizeof name->nodename;
+  ::strcpy (name->sysname, "VxWorks");
+  ::strcpy (name->release, "???");
+  ::strcpy (name->version, "???");
+  ::strcpy (name->machine, "???");
+
+  return ACE_OS::hostname (name->nodename, maxnamelen);
+#endif /* ACE_WIN32 */
+}
+#endif /* ACE_WIN32 || VXWORKS */
+
+
 #if defined(ACE_MT_SAFE) && defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 
 int ACE_OS::netdb_mutex_inited_ = 0;
