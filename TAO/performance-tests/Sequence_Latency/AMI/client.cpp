@@ -7,8 +7,13 @@
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_string.h"
 
-ACE_RCSID(AMI_Latency, client, "$Id$")
+
+ACE_RCSID (AMI,
+           client,
+           "$Id$")
+
 
 const char *ior = "file://test.ior";
 

@@ -1,12 +1,15 @@
 // $Id$
 
 #include "test_i.h"
+#include "ace/OS_NS_string.h"
 
-ACE_RCSID (Abstract_Interface, 
-           test_i, 
+
+ACE_RCSID (Abstract_Interface,
+           test_i,
            "$Id$")
 
-char * 
+
+char *
 foo_i::foo_op (const char * inarg
                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
@@ -29,7 +32,7 @@ foo_i::foo_op (const char * inarg
   return retval._retn ();
 }
 
-char * 
+char *
 foo_i::base_op (const char * inarg
                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
@@ -52,7 +55,7 @@ foo_i::base_op (const char * inarg
   return retval._retn ();
 }
 
-void 
+void
 passer_i::pass_ops (base_out outarg
                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
@@ -67,7 +70,7 @@ passer_i::pass_ops (base_out outarg
   ACE_CHECK;
 }
 
-void 
+void
 passer_i::pass_state (base_out outarg
                       ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((
@@ -101,4 +104,3 @@ passer_i::pass_state (base_out outarg
 
   outarg = tc._retn ();
 }
-
