@@ -11,8 +11,6 @@
 
 #include "Process_Element.h"
 
-DOMDocument* create_document (const char *url);
-
 /*
  *  Base class for the process function classes.
  */

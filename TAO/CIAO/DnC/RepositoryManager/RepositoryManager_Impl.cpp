@@ -30,7 +30,7 @@ installPackage (const char* installation_name,
                    Deployment::PackageError))
 {
   DOMBuilder* parser = 
-     CIAO::Config_Handler::Utils::create_parser (location);
+     CIAO::Config_Handler::Utils::create_parser ();
   DOMDocument* top_pc_doc = parser->parseURI (location);
   auto_ptr<DOMBuilder> cleanup_parser (parser);
   CIAO::Config_Handler::TPD_Handler top_pc_handler (top_pc_doc,
