@@ -505,8 +505,8 @@ typedef int key_t;
 #    define ACE_Proper_Import_Flag _import
 //   @@ Don't know how to handle this when using Borland's compilers.
 #    define ACE_EXPORT_SINGLETON_DECLARATION(T)
-#    define ACE_IMPORT_SIGNLETON_DECLARATION(T)
-#    define ACE_PROPER_SIGNLETON_INSTANTIATION(T)
+#    define ACE_IMPORT_SINGLETON_DECLARATION(T)
+#    define ACE_PROPER_SINGLETON_INSTANTIATION(T)
 #  else /* Microsoft: */
 #    define ACE_Proper_Export_Flag __declspec (dllexport)
 #    define ACE_Proper_Import_Flag __declspec (dllimport)
