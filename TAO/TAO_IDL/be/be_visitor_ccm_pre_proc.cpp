@@ -58,8 +58,6 @@ be_exception *EXCEPS[N_EXCEPS];
 be_visitor_ccm_pre_proc::be_visitor_ccm_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     module_id_ ("Components"),
-    connection_ (0),
-    connections_ (0),
     cookie_ (0),
     already_connected_ (0),
     invalid_connection_ (0),
@@ -358,15 +356,6 @@ be_visitor_ccm_pre_proc::gen_uses (be_component *node)
         }
       else
         {
-          if (this->create_uses_multiple_stuff (node, pd) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_ccm_pre_proc::"
-                                 "gen_uses - "
-                                 "create_uses_multiple_stuff failed\n"),
-                                -1);
-            }
-
           if (this->gen_connect_multiple (node, pd) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -1460,152 +1449,6 @@ be_visitor_ccm_pre_proc::lookup_one_exception (be_component *node,
   if (result == 0)
     {
       return -1;
-    }
-
-  return 0;
-}
-
-int
-be_visitor_ccm_pre_proc::create_uses_multiple_stuff (
-    be_component *node,
-    AST_Component::port_description *pd
-  )
-{
-  if (this->create_uses_multiple_struct (node, pd) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "create_uses_multiple_stuff - "
-                         "create_uses_multiple_struct failed\n"),
-                        -1);
-    }
-
-  if (this->create_uses_multiple_sequence (node, pd) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "create_uses_multiple_stuff - "
-                         "create_uses_multiple_sequence failed\n"),
-                        -1);
-    }
-
-  return 0;
-}
-
-int
-be_visitor_ccm_pre_proc::create_uses_multiple_struct (
-    be_component *node,
-    AST_Component::port_description *pd
-  )
-{
-  UTL_ScopedName *full_name = 
-    this->create_scoped_name (0,
-                              pd->id->get_string (),
-                              "Connection",
-                              node);
-  ACE_NEW_RETURN (this->connection_,
-                  be_structure (0,
-                                0,
-                                0),
-                  -1);
-  this->connection_->set_defined_in (node);
-  this->connection_->set_imported (node->imported ());
-  this->connection_->set_name (full_name);
-
-  Identifier o_id ("objref");
-  UTL_ScopedName o_sn (&o_id,
-                       0);
-  AST_Field *m_objref = 0;
-  ACE_NEW_RETURN (m_objref,
-                  be_field (pd->impl,
-                            &o_sn),
-                  -1);
-  o_id.destroy ();
-
-  if (this->connection_->be_add_field (m_objref) == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "create_uses_multiple_struct - "
-                         "be_add_field failed\n"),
-                        -1);
-    }
-
-  Identifier v_id ("ck");
-  UTL_ScopedName v_sn (&v_id,
-                       0);
-  AST_Field *m_ck = 0;
-  ACE_NEW_RETURN (m_ck,
-                  be_field (this->cookie_,
-                            &v_sn),
-                  -1);
-
-  if (this->connection_->be_add_field (m_ck) == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "create_uses_multiple_struct - "
-                         "be_add_field failed\n"),
-                        -1);
-    }
-
-  if (node->be_add_structure (this->connection_) == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "create_uses_multiple_struct - "
-                         "be_add_structure failed\n"),
-                        -1);
-    }
-
-  return 0;
-}
-
-int
-be_visitor_ccm_pre_proc::create_uses_multiple_sequence (
-    be_component *node,
-    AST_Component::port_description *pd
-  )
-{
-  ACE_UINT64 bound = 0;
-  ACE_NEW_RETURN (
-      this->connections_,
-      be_sequence (
-          idl_global->gen ()->create_expr (
-                                  bound,
-                                  AST_Expression::EV_ulong
-                                ),
-          this->connection_,
-          0,
-          0,
-          0
-        ),
-      -1
-    );
-
-  UTL_ScopedName *sn = 
-    this->create_scoped_name (0,
-                              pd->id->get_string (),
-                              "Connections",
-                              node);
-  AST_Typedef *td = 0;
-  ACE_NEW_RETURN (td,
-                  be_typedef (this->connections_,
-                              0,
-                              0,
-                              0),
-                  -1);
-  td->set_defined_in (node);
-  td->set_imported (node->imported ());
-  td->set_name (sn);
-
-  if (node->be_add_typedef (td) == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "create_uses_multiple_sequence - "
-                         "be_add_typedef failed\n"),
-                        -1);
     }
 
   return 0;
