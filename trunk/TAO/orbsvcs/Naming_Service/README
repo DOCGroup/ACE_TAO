@@ -12,14 +12,14 @@ The following describes how to run the TAO Naming Service.
 
 1. Syntax
 
-        % Naming_Server [-ORBNameServicePort nsport]
-                        [-o ior_output_file]
-                        [-p pid_file_name]
-                        [-s context_size]
-                        [-t time]
-                        [-f persitence_file_name]
-                        [-b base_address]
-			[-m (1=enable multicast(default),0=disable]
+        % Naming_Service [-ORBNameServicePort nsport]
+                         [-o ior_output_file]
+                         [-p pid_file_name]
+                         [-s context_size]
+                         [-t time]
+                         [-f persitence_file_name]
+                         [-b base_address]
+			 [-m (1=enable multicast(default),0=disable]
 
 2. Optional Command-line Arguments
 

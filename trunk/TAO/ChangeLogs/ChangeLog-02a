@@ -1,3 +1,9 @@
+Fri Feb  2 14:20:26 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/README: Changed the README file so that
+	  it uses the "Name_Service" rather than "Name_Server."  Thanks to
+ 	  Luther Baker for pointing this out.
+
 Fri Feb  2 13:35:19 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/RT_ORB.h:
