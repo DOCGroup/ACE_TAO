@@ -90,6 +90,11 @@ public:
   // Return the <index'th> character in the string (doesn't perform
   // bounds checking).
 
+  ACE_CString substring (const size_t offset, const size_t length = -1);
+  // Return a substring given an offset and length, if length == -1
+  // use rest of str return empty substring if offset or offset/length
+  // are invalid
+
   int operator== (const ACE_CString &s) const;
   // Equality comparison operator (must match entire string).
 
@@ -251,6 +256,11 @@ public:
 
   void operator= (const ACE_WString &);
   // Assignment operator (does copy memory).
+
+  ACE_WString substring (const size_t offset, const size_t length = -1);
+  // return a substring given an offset and length, if length == -1
+  // use rest of str return empty substring if offset or offset/length
+  // are invalid.
 
   void operator += (const ACE_WString &);
   // Concat operator (does copy memory).

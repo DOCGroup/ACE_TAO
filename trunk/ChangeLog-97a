@@ -1,4 +1,24 @@
-Sat Jun  7 11:27:45 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+Sat Jun  7 16:40:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/SString.h (string.): Added a substring() member function to
+ 	  ACE_*String classes.  Thanks to Michael MacFaden <mrm@cisco.com>
+ 	  for contributing this.
+
+	* ace/ACE: Added a new method called
+
+	  int get_ip_interfaces(count, address_array) 
+
+	  which will query the OS kernel for the IP addresses for each network
+	  interface found and return a count and array of ACE_INET_Addr objects.
+	  The reason for adding this method is that most client apps
+	  assume gethostbyname(uname|gethostname)) will work.  If the
+	  nameservices is misconfigured/broken or the machine is multi-homed,
+	  the client apps have alot of coding to do to figure out if an inteface
+	  represents a local address or not.  On UNIX, this includes
+	  the loopback addr. On NT, the loopback addr is not added
+	  (but may change the impl if others think this useful).
+	  Thanks to Michael MacFaden <mrm@cisco.com> for contributing
+	  this.
 
 	* ace/Synch[_T]: Changed all the classes so that internal instance
  	  variables are now protected rather than private.  This allows
