@@ -1,3 +1,8 @@
+Thu Nov 28 22:30:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/OBV/TC_Alignment/client.cpp: Fixed errors and warnings in
+	  builds where exceptions are turned off.
+
 Thu Nov 28 14:45:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp (svc): 
