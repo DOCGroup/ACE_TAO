@@ -194,19 +194,14 @@ private:
                       FILE* out);
 
   /** 
-   * Method to skip whitespaces in a string.  Whitespace is defined as:
-   * spaces (' ')  and tabs ('\t'). 
+   * Method to squish leading and trailing whitespaces in a string.
+   * Whitespace is defined as: spaces (' '), tabs ('\t') or cr/lf.
    * Returns a pointer to the first non-whitespace character in the 
-   * buffer provided.  It does return null ('\0') if it is reached
+   * buffer provided, or a pointer to the terminating null if the string
+   * is all whitespace. The terminating null is moved forward to the
+   * first character past the last non-whitespace.
    */
-  const ACE_TCHAR *skip_whitespace (const ACE_TCHAR *src);
-
-  /** 
-   * Looks in provided string for whitespace.  Whitespace is defined as
-   * spaces (' ')  and tabs ('\t'). 
-   * Returns true if found and false if not found
-   */
-  int string_has_white_space (const ACE_TCHAR *string_value);
+  ACE_TCHAR *squish (ACE_TCHAR *src);
 
   ACE_Ini_ImpExp (const ACE_Ini_ImpExp&);
   ACE_Ini_ImpExp& operator= (const ACE_Ini_ImpExp&);
