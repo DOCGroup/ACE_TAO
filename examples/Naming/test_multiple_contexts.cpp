@@ -1,6 +1,6 @@
 #include "ace/Naming_Context.h"
 
-int main ()
+int main (int, char *[])
 {
 
   static u_long ACE_DEFAULT_BASE_ADDR_1 = (1 * 64 * 1024 * 1024); 

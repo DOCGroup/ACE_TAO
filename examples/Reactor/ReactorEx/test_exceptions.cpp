@@ -75,7 +75,7 @@ public:
 };
 
 int
-main (void)
+main (int, char *[])
 {
   Event_Handler handler;
   ACE_ReactorEx::instance ()->register_handler (&handler);
