@@ -338,10 +338,10 @@ int IpAddress::is_private() const
   return FALSE; 
 }
 
-  // convert address into octet string format in network byte order
+// convert address into octet string format in network byte order
 void IpAddress::to_octet(OctetStr& octet) const
 {
-
+   octet.set_data( smival.value.string.ptr, smival.value.string.len);
 }
  
 
