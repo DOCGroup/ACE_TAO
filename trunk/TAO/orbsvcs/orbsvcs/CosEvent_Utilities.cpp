@@ -385,23 +385,20 @@ CosEC_ServantBase::init_ConsumerQOS (RtecScheduler::handle_t cons_handle,
           }
         while (tok != 0);
     }
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Auto_Basic_Ptr<FactoryCosEventChannel_i>;
-template class auto_ptr<FactoryCosEventChannel_i>;
 template class CosEC_Utility_Methods<RtecScheduler::Scheduler>;
 template class CosEC_Utility_Methods<RtecEventChannelAdmin::EventChannel>;
 template class CosEC_Utility_Methods<CosEventChannelAdmin::EventChannel>;
-template class CosEC_Utility_Methods<CosEC_Utility_NIL>;
+// template class CosEC_Utility_Methods<CosEC_Utility_NIL>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate CosEC_Utility_Methods<RtecScheduler::Scheduler>
 #pragma instantiate CosEC_Utility_Methods<RtecEventChannelAdmin::EventChannel>
 #pragma instantiate CosEC_Utility_Methods<CosEventChannelAdmin::EventChannel>
-#pragma instantiate CosEC_Utility_Methods<CosEC_Utility_NIL>
-#pragma instantiate ACE_Auto_Basic_Ptr<FactoryCosEventChannel_i>
-#pragma instantiate auto_ptr<FactoryCosEventChannel_i>
+// #pragma instantiate CosEC_Utility_Methods<CosEC_Utility_NIL>
 
 #endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */

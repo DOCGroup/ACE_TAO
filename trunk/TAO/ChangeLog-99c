@@ -1,3 +1,8 @@
+Wed May 19 13:07:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
+	  Fixed several syntax errors, at least it compiles now.
+
 Wed May 19 00:20:08 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent_Utilities.{h,cpp}:
