@@ -125,21 +125,18 @@ SOURCE=.\NavWeapC.h
 # PROP Default_Filter "*.idl"
 # Begin Source File
 
-SOURCE=.\NavWeap.idl
+SOURCE="..\NavWeap.idl"
 
 !IF  "$(CFG)" == "Logging_Sup - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "Logging_Sup - Win32 Debug"
-
-USERDEP__NAVWE="..\$(InputName).idl"	
-# Begin Custom Build
-InputPath=.\NavWeap.idl
+# PROP Ignore_Default_Tool 1
+USERDEP__NAVWE="..\..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
+InputPath="..\NavWeap.idl"
 InputName=NavWeap
 
 BuildCmds= \
-	xcopy ..\$(InputName).idl \
-	..\..\..\..\bin\tao_idl -Ge 1    -I ..\..\..\  -I ..\..\..\orbsvcs\orbsvcs $(InputName).idl \
-	
+	..\..\..\..\bin\Release\tao_idl -Ge 1 -I ..\..\..\ -I ..\..\..\orbsvcs\orbsvcs $(InputPath)
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -148,6 +145,45 @@ BuildCmds= \
    $(BuildCmds)
 
 "$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "Logging_Sup - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__NAVWE="..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
+InputPath="..\NavWeap.idl"
+InputName=NavWeap
+
+BuildCmds= \
+	..\..\..\..\bin\tao_idl -Ge 1 -I ..\..\..\ -I ..\..\..\orbsvcs\orbsvcs $(InputPath)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
