@@ -93,6 +93,8 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   //  set the sub state as generating code for the output operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
+  // @@ TODO don't use the IIOP interpreter here, we should use << and
+  // >> operators, or even the operator for the base CORBA::Object!!
   *os << "ACE_INLINE CORBA::Boolean" << be_nl
       << "operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
@@ -123,6 +125,8 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   // set the substate as generating code for the input operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
+  // @@ TODO don't use the IIOP interpreter here, we should use << and
+  // >> operators, or even the operator for the base CORBA::Object!!
   *os << "ACE_INLINE CORBA::Boolean" << be_nl
       << "operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
@@ -153,7 +157,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
       << "TAO_ENDTRY;" << be_nl
-      << "return 0;" << be_uidt_nl;
+      << "ACE_NOTREACHED (return 0);" << be_uidt_nl;
   *os << "}\n\n";
 
   node->cli_stub_cdr_op_gen (1);

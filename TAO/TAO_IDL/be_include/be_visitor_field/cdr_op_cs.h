@@ -22,6 +22,8 @@
 #ifndef _BE_VISITOR_FIELD_CDR_OP_CS_H_
 #define _BE_VISITOR_FIELD_CDR_OP_CS_H_
 
+#include "be_visitor_scope.h"
+
 class be_visitor_field_cdr_op_cs : public be_visitor_decl
 {
   //
@@ -73,6 +75,31 @@ public:
   virtual int visit_union (be_union *node);
   // visit union type
 
+};
+
+class be_visitor_cdr_op_field_decl : public be_visitor_scope
+{
+  //
+  // = TITLE
+  //   be_visitor_cdr_op_cs_field_decl
+  //
+  // = DESCRIPTION
+  //   When generating CDR operators for fields of structures and/or
+  //   unions it may be necessary to define some local variables (for
+  //   instance to hold temporary T_forany objects); this visitor
+  //   generates that code.
+  //
+public:
+  be_visitor_cdr_op_field_decl (be_visitor_context *ctx);
+  // constructor
+
+  virtual int visit_field (be_field *node);
+  // visit the field node
+
+  // = visit operations for data types that require a local variable.
+
+  virtual int visit_array (be_array *node);
+  // visit array type
 };
 
 #endif /*  _BE_VISITOR_FIELD_CDR_OP_CS_H_ */
