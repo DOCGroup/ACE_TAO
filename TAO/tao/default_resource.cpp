@@ -29,7 +29,9 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     use_locked_data_blocks_ (1),
     reactor_type_ (TAO_REACTOR_SELECT_MT),
     cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK),
-    protocol_factories_ ()
+    protocol_factories_ (),
+    connection_caching_type_ (TAO_CONNECTION_CACHING_STRATEGY),
+    purge_percentage_ (TAO_PURGE_PERCENT)
 {
 }
 
@@ -177,6 +179,45 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                           "(%P|%t) Unable to add protocol factories for %s: %p\n",
                           argv[curarg]));
           }
+      }
+
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBConnectionCachingStrategy") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    "lru") == 0)
+              this->connection_caching_type_ = TAO_LRU;
+            else if (ACE_OS::strcasecmp (name,
+                                         "lfu") == 0)
+              this->connection_caching_type_ = TAO_LFU;
+            else if (ACE_OS::strcasecmp (name,
+                                         "fifo") == 0)
+              this->connection_caching_type_ = TAO_FIFO;
+            else if (ACE_OS::strcasecmp (name,
+                                         "null") == 0)
+              this->connection_caching_type_ = TAO_NULL;
+            else
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO_Default_Factory - unknown argument"
+                          " <%s> for -ORBConnectionCachingStrategy\n", name));
+          }
+      }
+
+   else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBPurgePercentage") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+            this->purge_percentage_ = ACE_OS::atoi (argv[curarg]);
+        else
+           ACE_DEBUG ((LM_DEBUG,
+                       "TAO_Default_Factory - unknown argument"
+                       "for -ORBPurgePercentage\n"));
       }
 
   return 0;
@@ -452,6 +493,18 @@ TAO_Default_Resource_Factory::output_cdr_buffer_allocator (void)
   ACE_Allocator *allocator = 0;
   ACE_NEW_RETURN (allocator, NULL_LOCK_ALLOCATOR, 0);
   return allocator;
+}
+
+int 
+TAO_Default_Resource_Factory::get_connection_caching_strategy_type (void) const
+{
+  return this->connection_caching_type_;
+}
+
+double
+TAO_Default_Resource_Factory::get_purge_percentage (void) const
+{
+  return this->purge_percentage_;
 }
 
 // ****************************************************************
