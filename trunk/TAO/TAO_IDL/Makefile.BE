@@ -7236,6 +7236,293 @@ realclean: clean
  be/be_visitor_enum/any_op_ch.cpp be/be_visitor_enum/any_op_cs.cpp \
  be/be_visitor_enum/cdr_op_ch.cpp be/be_visitor_enum/cdr_op_ci.cpp
 
+.obj/be_visitor_eventtype.o .obj/be_visitor_eventtype.so .shobj/be_visitor_eventtype.o .shobj/be_visitor_eventtype.so: be/be_visitor_eventtype.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/Time_Value.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Malloc_Allocator.h \
+ $(ACE_ROOT)/ace/Malloc_Allocator.i \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
+ be_include/be_eventtype.h be_include/be_valuetype.h \
+ be_include/be_interface.h be_include/be_scope.h include/utl_scope.h \
+ include/ast_decl.h include/utl_scoped_name.h include/utl_idlist.h \
+ include/utl_list.h include/TAO_IDL_FE_Export.h include/idl_bool.h \
+ include/idl_narrow.h include/ast_expression.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ include/ast_typedef.h include/ast_type.h be_include/be_type.h \
+ be_include/be_decl.h be_include/be_codegen.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Framework_Component.h \
+ $(ACE_ROOT)/ace/Framework_Component.inl \
+ $(ACE_ROOT)/ace/Framework_Component_T.h \
+ $(ACE_ROOT)/ace/Framework_Component_T.inl \
+ $(ACE_ROOT)/ace/Framework_Component_T.cpp \
+ be_include/TAO_IDL_BE_Export.h include/ast_interface.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+ include/ast_valuetype.h include/ast_field.h include/ast_eventtype.h \
+ be_include/be_visitor_eventtype.h be_include/be_visitor_valuetype.h \
+ include/idl_defines.h be_include/be_visitor_scope.h \
+ be_include/be_visitor_decl.h be_include/be_visitor.h \
+ be_include/be_visitor_valuetype/valuetype.h \
+ be_include/be_visitor_valuetype/valuetype_ch.h \
+ be_include/be_visitor_valuetype/valuetype_obv_ch.h \
+ be_include/be_visitor_valuetype/valuetype_obv_ci.h \
+ be_include/be_visitor_valuetype/valuetype_obv_cs.h \
+ be_include/be_visitor_valuetype/valuetype_ci.h \
+ be_include/be_visitor_valuetype/valuetype_cs.h \
+ be_include/be_visitor_valuetype/valuetype_sh.h \
+ be_include/be_visitor_valuetype/valuetype_si.h \
+ be_include/be_visitor_valuetype/valuetype_ss.h \
+ be_include/be_visitor_valuetype/any_op_ch.h \
+ be_include/be_visitor_valuetype/any_op_cs.h \
+ be_include/be_visitor_valuetype/cdr_op_ch.h \
+ be_include/be_visitor_valuetype/cdr_op_ci.h \
+ be_include/be_visitor_valuetype/cdr_op_cs.h \
+ be_include/be_visitor_valuetype/marshal_ch.h \
+ be_include/be_visitor_valuetype/marshal_cs.h \
+ be_include/be_visitor_valuetype/arglist.h \
+ be_include/be_visitor_valuetype/field_ch.h \
+ be_include/be_visitor_valuetype/field_ci.h \
+ be_include/be_visitor_valuetype/field_cs.h \
+ be_include/be_visitor_valuetype/field_cdr_ch.h \
+ be_include/be_visitor_valuetype/field_cdr_ci.h \
+ be_include/be_visitor_valuetype/obv_module.h \
+ be_include/be_visitor_valuetype/ami_exception_holder_ch.h \
+ be_include/be_visitor_valuetype/ami_exception_holder_cs.h \
+ be_include/be_visitor_valuetype/valuetype_init.h \
+ be_include/be_visitor_valuetype/valuetype_init_ch.h \
+ be_include/be_visitor_valuetype/valuetype_init_ci.h \
+ be_include/be_visitor_valuetype/valuetype_init_cs.h \
+ be_include/be_visitor_valuetype/valuetype_init_arglist_ch.h \
+ be_include/be_visitor_eventtype/eventtype_ch.h \
+ be_include/be_visitor_eventtype/eventtype_ci.h \
+ be_include/be_visitor_eventtype/eventtype_cs.h \
+ be_include/be_visitor_eventtype/eventtype_sh.h \
+ be_include/be_visitor_eventtype/eventtype_si.h \
+ be_include/be_visitor_eventtype/eventtype_ss.h \
+ be_include/be_visitor_eventtype/eventtype_obv_ch.h \
+ be_include/be_visitor_eventtype/eventtype_obv_ci.h \
+ be_include/be_visitor_eventtype/eventtype_obv_cs.h \
+ be_include/be_visitor_eventtype/any_op_ch.h \
+ be_include/be_visitor_eventtype/any_op_cs.h \
+ be_include/be_visitor_eventtype/cdr_op_ch.h \
+ be_include/be_visitor_eventtype/cdr_op_ci.h \
+ be_include/be_visitor_eventtype/cdr_op_cs.h \
+ be_include/be_visitor_context.h be_include/be_helper.h \
+ be/be_visitor_eventtype/eventtype_ch.cpp \
+ be/be_visitor_eventtype/eventtype_ci.cpp \
+ be/be_visitor_eventtype/eventtype_cs.cpp \
+ be/be_visitor_eventtype/eventtype_sh.cpp \
+ be/be_visitor_eventtype/eventtype_si.cpp \
+ be/be_visitor_eventtype/eventtype_ss.cpp \
+ be/be_visitor_eventtype/eventtype_obv_ch.cpp \
+ be/be_visitor_eventtype/eventtype_obv_ci.cpp \
+ be/be_visitor_eventtype/eventtype_obv_cs.cpp \
+ be/be_visitor_eventtype/any_op_ch.cpp \
+ be/be_visitor_eventtype/any_op_cs.cpp \
+ be/be_visitor_eventtype/cdr_op_ch.cpp \
+ be/be_visitor_eventtype/cdr_op_ci.cpp \
+ be/be_visitor_eventtype/cdr_op_cs.cpp
+
+.obj/be_visitor_eventtype_fwd.o .obj/be_visitor_eventtype_fwd.so .shobj/be_visitor_eventtype_fwd.o .shobj/be_visitor_eventtype_fwd.so: be/be_visitor_eventtype_fwd.cpp \
+ be_include/be_eventtype_fwd.h be_include/be_valuetype_fwd.h \
+ be_include/be_interface_fwd.h be_include/be_type.h \
+ be_include/be_decl.h include/ast_decl.h include/utl_scoped_name.h \
+ include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ include/idl_bool.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/Time_Value.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ include/idl_narrow.h include/ast_type.h include/ast_interface_fwd.h \
+ include/ast_valuetype_fwd.h include/ast_eventtype_fwd.h \
+ be_include/be_visitor_eventtype_fwd.h be_include/be_visitor_decl.h \
+ be_include/be_visitor.h be_include/be_codegen.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Framework_Component.h \
+ $(ACE_ROOT)/ace/Framework_Component.inl \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Framework_Component_T.h \
+ $(ACE_ROOT)/ace/Framework_Component_T.inl \
+ $(ACE_ROOT)/ace/Framework_Component_T.cpp \
+ be_include/TAO_IDL_BE_Export.h \
+ be_include/be_visitor_eventtype_fwd/eventtype_fwd_ch.h \
+ be_include/be_visitor_eventtype_fwd/any_op_ch.h \
+ be_include/be_visitor_eventtype_fwd/cdr_op_ch.h \
+ be_include/be_visitor_eventtype_fwd/cdr_op_ci.h \
+ be_include/be_visitor_valuetype_fwd.h \
+ be_include/be_visitor_valuetype_fwd/valuetype_fwd_ch.h \
+ be_include/be_visitor_valuetype_fwd/any_op_ch.h \
+ be_include/be_visitor_valuetype_fwd/cdr_op_ch.h \
+ be_include/be_visitor_valuetype_fwd/cdr_op_ci.h \
+ be_include/be_visitor_context.h \
+ be/be_visitor_eventtype_fwd/eventtype_fwd_ch.cpp \
+ be/be_visitor_eventtype_fwd/any_op_ch.cpp \
+ be/be_visitor_eventtype_fwd/cdr_op_ch.cpp \
+ be/be_visitor_eventtype_fwd/cdr_op_ci.cpp
+
 .obj/be_visitor_exception.o .obj/be_visitor_exception.so .shobj/be_visitor_exception.o .shobj/be_visitor_exception.so: be/be_visitor_exception.cpp \
  be_include/be_field.h be_include/be_decl.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
