@@ -121,6 +121,8 @@ TAO_Connector_Registry::connect (TAO_Profile *&profile,
   // Find the appropriate connector object
   TAO_Connector *connector =
     this->get_connector (profile->tag ());
+  if (connector == 0)
+    return -1;
 
   return connector->connect (profile, transport);
 }
@@ -150,7 +152,7 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
                                            mprofile,
                                            ACE_TRY_ENV) == 0)
             // Success.
-            return 0;  
+            return 0;
         }
       else
         // Failure: Null pointer to connector in connector registry.
@@ -180,7 +182,6 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
     {
       if (TAO_debug_level > 0)
         {
-          // @@ TODO create a generic profile in this case...
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) unknown profile tag %d\n",
                       tag));

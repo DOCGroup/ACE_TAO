@@ -1,3 +1,10 @@
+Wed Jun 30 16:18:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connector_Registry.cpp:
+	  Fixed problem when trying to connect using foreign or unknown
+	  profiles. Thanks to "alvarez" <alvarez@nagra-kudelski.ch> for
+	  reporting this problem.
+
 Wed Jun 30 15:46:32 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/releasenotes/index.html:
