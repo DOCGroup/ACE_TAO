@@ -1,3 +1,7 @@
+Thu May 21 21:59:19 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO version 0.1.23 released.
+
 Thu May 21 17:28:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/GIOP.cpp (writev_n): added static cast of iov_len to
