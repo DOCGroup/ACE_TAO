@@ -1,3 +1,13 @@
+Sun Jun 20 20:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Callback_Quoter/Consumer_Input_Handler.h:
+        * examples/Callback_Quoter/Consumer_Signal_Handler.h:
+        * examples/Callback_Quoter/Supplier_i.h:
+          Removed include of ace/OS.h
+
+        * examples/Callback_Quoter/Supplier_i.cpp:
+          Added missing include
+
 Sun Jun 20 18:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Smart_Proxies/On_Demand/Smart_Test_Factory.h:
