@@ -1,3 +1,11 @@
+Fri Aug 16 09:12:48 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/POA_Hooks.h (TAO_POA_Hooks):
+	* orbsvcs/orbsvcs/PortableGroup/POA_Hooks.cpp:
+
+	  Fixed minimum CORBA build errors by placing the offending code
+	  within an "#ifdef TAO_HAS_MINIMUM_POA" block.
+
 Thu Aug 15 10:45:00 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:

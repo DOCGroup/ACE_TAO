@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #include "POA_Hooks.h"
 #include "PortableGroup_Loader.h"
 #include "PortableGroup_Request_Dispatcher.h"
@@ -7,19 +5,23 @@
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 
-ACE_RCSID (tao,
-           PortableGroup,
+
+ACE_RCSID (PortableGroup,
+           POA_Hooks,
            "$Id$")
 
 
-TAO_POA_Hooks::TAO_POA_Hooks (PortableGroup_Request_Dispatcher &request_dispatcher) :
-  request_dispatcher_ (request_dispatcher)
+TAO_POA_Hooks::TAO_POA_Hooks (
+  PortableGroup_Request_Dispatcher &request_dispatcher)
+  : request_dispatcher_ (request_dispatcher)
 {
 }
 
 TAO_POA_Hooks::~TAO_POA_Hooks (void)
 {
 }
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::ObjectId *
 TAO_POA_Hooks::create_id_for_reference (
@@ -248,3 +250,5 @@ TAO_POA_Hooks::disassociate_reference_with_id (
     ))
 {
 }
+
+#endif  /* TAO_HAS_MINIMUM_POA == 0 */
