@@ -1,3 +1,14 @@
+Wed Aug 30 19:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/paramlist.cpp:
+	  Disabled valuetypes from being part of Dynamic::Paramlist
+	  creation.
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+	  Removed generation of length variable before creating the 
+	  Paramlist.
+	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp:
+	  Removed unecessary be_type declarations.
+	
 Wed Aug 30 15:20:55 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	  Fix for compile errors:
