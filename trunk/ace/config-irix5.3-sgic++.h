@@ -13,10 +13,7 @@
 #include <sys/bsd_types.h>
 #define _BSD_TYPES
 
-// The Irix 6.x float.h doesn't allow us to distinguish between a
-// double and a long double.  So, we have to hard-code this.  We
-// assume that it is necessary on Irix 5.3 also.
-#define ACE_SIZEOF_LONG_DOUBLE 16
+#define ACE_SIZEOF_LONG_DOUBLE 8
 
 #define ACE_NEEDS_SYSTIME_H
 // Optimize ACE_Handle_Set for select().

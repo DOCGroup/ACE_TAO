@@ -10,9 +10,19 @@
 #include "ace/config-g++-common.h"
 
 // The Irix 6.x float.h doesn't allow us to distinguish between a
-// double and a long double.  So, we have to hard-code this.  We
-// assume that it is necessary on Irix 5.3 also.
-#define ACE_SIZEOF_LONG_DOUBLE 16
+// double and a long double.  So, we have to hard-code this.  Thanks
+// to Bob Laferriere <laferrie@gsao.med.ge.com> for figuring it out.
+#if defined (_MIPS_SIM)               // 6.X System
+# if defined (_ABI64)  &&  (_MIPS_SIM == _ABI64)
+#   define ACE_SIZEOF_LONG_DOUBLE 16
+# elif defined (_NABI32)  &&  (_MIPS_SIM == _NABI32)
+#   define ACE_SIZEOF_LONG_DOUBLE 16
+# elif defined (_ABIO32)  &&  (_MIPS_SIM == _ABIO32)
+#   define ACE_SIZEOF_LONG_DOUBLE  8
+# endif
+#else
+# define ACE_SIZEOF_LONG_DOUBLE  8    // 5.3 System
+#endif
 
 // Platform supports the very odd IRIX 6.2 threads...
 #define ACE_HAS_IRIX62_THREADS
