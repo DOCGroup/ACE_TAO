@@ -17,7 +17,8 @@ ACE_RCSID(Sched, Config_Scheduler, "$Id$")
 
 ACE_Config_Scheduler::ACE_Config_Scheduler (void)
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
-  : scheduler_strategy_ ((RtecScheduler::Preemption_Priority_t) TAO_MIN_CRITICAL_PRIORITY)
+  : scheduler_strategy_ (ACE_static_cast (RtecScheduler::Preemption_Priority_t,
+                                          TAO_MIN_CRITICAL_PRIORITY))
   , impl (new ACE_Strategy_Scheduler (scheduler_strategy_))
 #else
   : impl (new Scheduler_Generic)
@@ -270,7 +271,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   // anomaly severity.
   RtecScheduler::Anomaly_Severity severity = RtecScheduler::ANOMALY_NONE;
   RtecScheduler::Scheduling_Anomaly **anomaly = 0;
-  char *anomaly_severity_msg = "NONE";
+  const char *anomaly_severity_msg = "NONE";
   CORBA::ULong anomaly_index = 0;
   if (anomalies.ptr () == 0)
     {
@@ -327,7 +328,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         ACE_DEBUG ((LM_DEBUG,
                     "%s: %s\n",
                     anomaly_severity_msg,
-                    (const char*) ((*anomaly)->description)));
+                    (*anomaly)->description));
 
         // Store the anomaly in the anomaly sequence out parameter
         anomalies[anomaly_index] = **anomaly;
@@ -382,11 +383,11 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   // return the set of scheduled RT_Infos
   if (infos.ptr () == 0)
     {
-      infos = new RtecScheduler::RT_Info_Set(impl->tasks ());
+      infos = new RtecScheduler::RT_Info_Set (impl->tasks ());
     }
   infos->length (impl->tasks ());
   for (RtecScheduler::handle_t handle = 1;
-       handle <= (RtecScheduler::handle_t) impl->tasks ();
+       handle <= ACE_static_cast (RtecScheduler::handle_t, impl->tasks ());
        ++handle)
     {
       RtecScheduler::RT_Info* rt_info = 0;
@@ -394,7 +395,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         {
         case BaseSchedImplType::SUCCEEDED:
           // We know that handles start at 1.
-          infos[CORBA::ULong(handle - 1)] = *rt_info;
+          infos[ACE_static_cast (CORBA::ULong, handle - 1)] = *rt_info;
           break;
         case BaseSchedImplType::FAILED:
         case BaseSchedImplType::ST_UNKNOWN_TASK:
@@ -415,7 +416,8 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   configs->length (impl->minimum_priority_queue () + 1);
   for (RtecScheduler::Preemption_Priority_t priority = 0;
        priority <=
-         (RtecScheduler::Preemption_Priority_t) impl->minimum_priority_queue ();
+         ACE_static_cast (RtecScheduler::Preemption_Priority_t,
+                          impl->minimum_priority_queue ());
        ++priority)
     {
       RtecScheduler::Config_Info* config_info = 0;
