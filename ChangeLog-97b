@@ -1,5 +1,9 @@
 Fri Oct 24 17:39:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* netsvcs/lib/Server_Logging_Handler_T: Fixed this code so that if
+ 	  we're on an HP/UX that has broken templates we don't use the
+ 	  Base_Optimizer.  Thanks to Per Andersson for providing this fix.
+
 	* ace/Thread_Manager: Added a destructor for ACE_Thread_Descriptor
  	  to keep some compilers happy.  Thanks to Chuck Gehr
  	  <gehr@sweng.stortek.com> for reporting this.
