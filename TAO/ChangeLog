@@ -1,3 +1,18 @@
+Tue Dec 31 20:55:48 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* performance-tests/Memory/Single_Threaded: A simple test for
+	  tracking memory usage. This is going to be compiled only on Linux
+
+ 	* performance-tests/Memory/Single_Threaded/Memory_Growth.mpc: 
+	* performance-tests/Memory/Single_Threaded/Makefile:
+	* performance-tests/Memory/Single_Threaded/Memory_Growth.cpp:
+	* performance-tests/Memory/Single_Threaded/Memory_Growth.h:
+	* performance-tests/Memory/Single_Threaded/README:
+	* performance-tests/Memory/Single_Threaded/Test.idl:
+	* performance-tests/Memory/Single_Threaded/client.cpp:
+	* performance-tests/Memory/Single_Threaded/server.cpp: Files for
+	  the new test.
+
 Tue Dec 31 19:33:09 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Condition.h:
