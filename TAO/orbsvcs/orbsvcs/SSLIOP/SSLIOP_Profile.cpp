@@ -203,8 +203,8 @@ TAO_SSLIOP_Profile::add_endpoint (TAO_SSLIOP_Endpoint * endp)
   endp->next_ = this->ssl_endpoint_.next_;
   this->ssl_endpoint_.next_ = endp;
 
-  // We do not want to add our iiop endpoint counterpart when we are
-  // decoding a profile, and iiop endpoints have been added before we
+  // We do not want to add our IIOP endpoint counterpart when we are
+  // decoding a profile, and IIOP endpoints have been added before we
   // even get to SSLIOP-specific decoding.
   if (endp->iiop_endpoint () != 0)
     this->TAO_IIOP_Profile::add_endpoint (endp->iiop_endpoint ());
@@ -230,7 +230,7 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
            i < this->count_ - 1;
            ++i)
         {
-          endpoints[i] = endpoint->ssl_component_;
+          endpoints[i] = endpoint->ssl_component ();
           endpoint = endpoint->next_;
         }
 
