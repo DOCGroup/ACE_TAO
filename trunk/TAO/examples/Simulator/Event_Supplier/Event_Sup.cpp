@@ -130,7 +130,7 @@ Demo_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
 
       CORBA::Short x = 0;
       RtecEventChannelAdmin::SupplierQOS qos_;
-      qos_.publications.length (2);
+      qos_.publications.length (1);
       qos_.publications[0].event.source_ = SOURCE_ID;
       qos_.publications[0].event.type_ = ACE_ES_EVENT_NOTIFICATION;
       qos_.publications[0].event.ttl_ = 1;
@@ -146,7 +146,7 @@ Demo_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
                                                             TAO_TRY_ENV);
       qos_.publications[0].dependency_info.number_of_calls = 1;
       qos_.publications[0].dependency_info.rt_info = rt_info_;
-      qos_.publications[1].event.source_ = SOURCE_ID;
+ /*     qos_.publications[1].event.source_ = SOURCE_ID;
       qos_.publications[1].event.type_ = ACE_ES_EVENT_SHUTDOWN;
       qos_.publications[1].event.ttl_ = 1;
       qos_.publications[1].event.creation_time_ = ORBSVCS_Time::zero; 
@@ -156,11 +156,11 @@ Demo_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
       qos_.publications[1].event.data_.x = 0;
       qos_.publications[1].event.data_.y = 0;
       qos_.publications[1].event.data_.any_value.replace (CORBA::_tc_short,
-                                                            &x,
-                                                            0,
-                                                            TAO_TRY_ENV);
+                                                          &x,
+                                                          0,
+                                                          TAO_TRY_ENV);
       qos_.publications[1].dependency_info.number_of_calls = 1;
-      qos_.publications[1].dependency_info.rt_info = rt_info_;
+      qos_.publications[1].dependency_info.rt_info = rt_info_;*/
 
       // = Connect as a supplier.
       this->supplier_admin_ =
