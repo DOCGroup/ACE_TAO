@@ -39,11 +39,11 @@ ACE_LSOCK_Stream::send_msg (const iovec iov[],
   ACE_TRACE ("ACE_LSOCK_Stream::send_msg");
   msghdr send_msg;
 
-  send_msg.msg_iov	    = (iovec *) iov;
-  send_msg.msg_iovlen	    = n;
-  send_msg.msg_name	    = (char *) 0;
-  send_msg.msg_namelen	    = 0;
-  send_msg.msg_accrights    = (char *) &fd;
+  send_msg.msg_iov = (iovec *) iov;
+  send_msg.msg_iovlen = n;
+  send_msg.msg_name = 0;
+  send_msg.msg_namelen = 0;
+  send_msg.msg_accrights = (char *) &fd;
   send_msg.msg_accrightslen = sizeof fd;
 
   return ACE_OS::sendmsg (this->ACE_SOCK_Stream::get_handle (), 
@@ -61,11 +61,11 @@ ACE_LSOCK_Stream::recv_msg (iovec iov[],
   ACE_TRACE ("ACE_LSOCK_Stream::recv_msg");
   msghdr recv_msg;
   
-  recv_msg.msg_iov	    = (iovec *) iov;
-  recv_msg.msg_iovlen	    = n;
-  recv_msg.msg_name	    = (char *) 0;
-  recv_msg.msg_namelen	    = 0;
-  recv_msg.msg_accrights    = (char *) &fd;
+  recv_msg.msg_iov = (iovec *) iov;
+  recv_msg.msg_iovlen = n;
+  recv_msg.msg_name = 0;
+  recv_msg.msg_namelen = 0;
+  recv_msg.msg_accrights = (char *) &fd;
   recv_msg.msg_accrightslen = sizeof fd;
 
   return ACE_OS::recvmsg (this->ACE_SOCK_Stream::get_handle (), 

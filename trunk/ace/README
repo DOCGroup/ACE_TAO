@@ -168,6 +168,7 @@ ACE_LACKS_SYSV_SHMEM			Platform lacks System V shared memory (e.g., Win32 and Vx
 ACE_LACKS_SIGINFO_H			Platform lacks the siginfo.h include file (e.g., MVS)
 ACE_LACKS_SOCKETPAIR			Platform lacks the socketpair() call (e.g., SCO UNIX)
 ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES	Compiler doesn't support static data member templates
+ACE_LACKS_STRCASECMP			Compiler/platform lacks strcasecmp() (e.g., DG/UX, UNIXWARE, VXWORKS)
 ACE_LACKS_STRRECVFD			Platform doesn't define struct strrecvfd.
 ACE_LACKS_SYSCALL			Platform doesn't have syscall() prototype
 ACE_LACKS_SYSV_MSQ_PROTOS		Platform doesn't have prototypes for Sys V msg()* queues.

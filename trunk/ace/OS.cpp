@@ -338,22 +338,24 @@ ACE_OS::gethostbyname (const char *name)
 #if defined (VXWORKS)
   // not thread safe!
   static hostent ret;
-  static int first_addr;
+  static int first_addr = ::hostGetByName ((char *) name);
   static char *hostaddr[2];
 
-  if ((first_addr = ::hostGetByName ((char *) name)) < 0)
+  if (first_addr == -1)
     return 0;
+
   hostaddr[0] = (char *) &first_addr;
   hostaddr[1] = 0;
 
-  ret.h_name = (char *) name;  /* might not be official: just echo input arg */
+  // might not be official: just echo input arg.
+  ret.h_name = (char *) name;  
   ret.h_addrtype = AF_INET;
   ret.h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN;
   ret.h_addr_list = hostaddr;
 
   return &ret;
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN ((char *) ::gethostbyname (name), struct hostent *, 0);
+  ACE_SOCKCALL_RETURN (::gethostbyname ((char *) name), struct hostent *, 0);
 #else
   ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0); 
 #endif /* ACE_HAS_NONCONST_GETBY */
