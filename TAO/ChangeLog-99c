@@ -37,7 +37,11 @@ Mon May 24 16:20:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	    struct foo {
 	      long x;
 	      sequence<foo> offspring;
-	    };
+	    }; 
+	  Also made the IDL compiler use interpreted marshaling
+	  until a further mod to the IDl compiler is made
+	  (according to Andy, his changes work now only for
+	  interpreted marshaling).
 
 Mon May 24 16:03:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
