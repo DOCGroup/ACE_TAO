@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_structure, 
-           structure_cs, 
+ACE_RCSID (be_visitor_structure,
+           structure_cs,
            "$Id$")
 
 // ***************************************************************************
@@ -35,7 +35,7 @@ be_visitor_structure_cs::~be_visitor_structure_cs (void)
 {
 }
 
-int 
+int
 be_visitor_structure_cs::visit_structure (be_structure *node)
 {
   if (node->cli_stub_gen () || node->imported ())
@@ -54,7 +54,7 @@ be_visitor_structure_cs::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_structure_cs::"
                              "visit_structure - "
-                             "TypeCode definition failed\n"), 
+                             "TypeCode definition failed\n"),
                             -1);
         }
     }
@@ -67,13 +67,16 @@ be_visitor_structure_cs::visit_structure (be_structure *node)
 
   if (be_global->any_support ())
     {
-      *os << "void "
+      *os << "void " << be_nl
           << node->name ()
-          << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
+          << "::_tao_any_destructor (" << be_idt << be_idt_nl
+          << "void *_tao_void_pointer" << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << node->local_name () << " *tmp = ACE_static_cast ("
-          << node->local_name () << "*, _tao_void_pointer);" << be_nl
-          << "delete tmp;" << be_uidt_nl
+          << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
+          << "ACE_static_cast (" << node->local_name ()
+          << " *, _tao_void_pointer);" << be_uidt_nl
+          << "delete _tao_tmp_pointer;" << be_uidt_nl
           << "}";
     }
 
@@ -84,13 +87,9 @@ be_visitor_structure_cs::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_structure_cs::"
                          "visit_structure - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
-
-  // Generate the conditional explicit template instantiations for our
-  // _var and/or _out clases.
-  node->gen_common_tmplinst (os);
 
   node->cli_stub_gen (I_TRUE);
   return 0;

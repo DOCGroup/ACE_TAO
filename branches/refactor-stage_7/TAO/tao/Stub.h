@@ -32,7 +32,6 @@
 # undef IOR
 #endif /* HPUX && IOR */
 
-
 // Forward declarations.
 class TAO_RelativeRoundtripTimeoutPolicy;
 class TAO_Client_Priority_Policy;
@@ -72,6 +71,9 @@ struct TAO_Exception_Data
 
   /// The allocator for this exception.
   TAO_Exception_Alloc alloc;
+
+  /// The typecode pointer for this exception.
+  CORBA::TypeCode_ptr tc_ptr;
 };
 
 /**

@@ -15,6 +15,12 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -584,3 +590,4 @@ void POA_ImplementationRepository::ServerInformationIterator_tie<T>::destroy  (
 }
 
 #endif /* ACE_HAS_USING_KEYWORD */
+

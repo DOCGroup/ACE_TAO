@@ -21,13 +21,12 @@ class Visual_i : public POA_Test_Interceptors::Visual
 public:
   Visual_i (CORBA::ORB_ptr orb);
 
-  virtual void normal (CORBA::Long arg
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
   virtual CORBA::Long calculate (CORBA::Long one,
                                  CORBA::Long two
                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void normal (CORBA::Long arg,
+               CORBA::String_out msg
+               ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Test_Interceptors::Visual::VarLenStruct * the_structure (

@@ -25,8 +25,8 @@
 #include "be_argument.h"
 #include "be_visitor.h"
 
-ACE_RCSID (be, 
-           be_operation, 
+ACE_RCSID (be,
+           be_operation,
            "$Id$")
 
 be_operation::be_operation (void)
@@ -62,6 +62,13 @@ be_operation::be_operation (AST_Type *rt,
 {
   ACE_NEW (this->strategy_,
            be_operation_default_strategy (this));
+
+  if (!this->imported ())
+    {
+      be_type *bt = be_type::narrow_from_decl (rt);
+      bt->seen_in_operation (I_TRUE);
+      this->set_arg_seen_bit (bt);
+    }
 }
 
 

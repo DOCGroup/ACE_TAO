@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_VALUEBASE_H
 #define TAO_VALUEBASE_H
 
@@ -29,6 +28,8 @@
 #include "ace/Basic_Types.h"
 #include "ace/Synch_T.h"
 #include "ace/CORBA_macros.h"
+#include "tao/Object_Argument_T.h"
+#include "tao/Arg_Traits_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -43,14 +44,8 @@ namespace CORBA
   extern TAO_Valuetype_Export void add_ref (ValueBase *);
   extern TAO_Valuetype_Export void remove_ref (ValueBase *);
 
-  typedef TAO_Value_Var_T<ValueBase, tao_ValueBase_life> ValueBase_var;
-  typedef TAO_Value_Out_T<ValueBase, tao_ValueBase_life> ValueBase_out;
-
-  struct TAO_Valuetype_Export tao_ValueBase_life
-  {
-    static void tao_add_ref (ValueBase *);
-    static void tao_remove_ref (ValueBase *);
-  };
+  typedef TAO_Value_Var_T<ValueBase> ValueBase_var;
+  typedef TAO_Value_Out_T<ValueBase> ValueBase_out;
 
   /**
    * @class ValueBase
@@ -213,6 +208,19 @@ operator<< (TAO_OutputCDR&, const CORBA::ValueBase *);
 
 TAO_Valuetype_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA::ValueBase *&);
+
+/// Used in generated code if CORBA::ValueBase is an argument or return type.
+namespace TAO
+{
+  template<>
+  class TAO_Valuetype_Export Arg_Traits<CORBA::ValueBase>
+    : public Object_Arg_Traits_T<CORBA::ValueBase *,
+                                 CORBA::ValueBase_var,
+                                 CORBA::ValueBase_out,
+                                 TAO::Value_Traits<CORBA::ValueBase> >
+  {
+  };
+};
 
 #if defined (__ACE_INLINE__)
 # include "ValueBase.inl"

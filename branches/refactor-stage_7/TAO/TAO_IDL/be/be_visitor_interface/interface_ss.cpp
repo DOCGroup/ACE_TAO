@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           interface_ss, 
+ACE_RCSID (be_visitor_interface,
+           interface_ss,
            "$Id$")
 
 // ************************************************************
@@ -76,7 +76,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   const char *flat_name = flat_name_holder.c_str ();
 
-  if (node->gen_operation_table (flat_name, full_skel_name) == -1)
+  if (node->gen_operation_table () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_ss::"
@@ -141,7 +141,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
 
 
-  *os << be_uidt_nl 
+  *os << be_uidt_nl
       << "{" << be_nl
       << "}" << be_nl << be_nl;
 
@@ -354,7 +354,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
           << "\"IDL:org.omg/CORBA/AbstractBase:1.0\"" << be_uidt_nl
           << ")";
     }
-      
+
   *os << be_uidt << be_uidt_nl
       << " )" << be_nl
       << "{" << be_idt_nl
@@ -383,7 +383,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   *os << "if (ACE_OS::strcmp (logical_type_id," << be_nl
-      << "                    \"IDL:omg.org/CORBA/Object:1.0\") == 0)" 
+      << "                    \"IDL:omg.org/CORBA/Object:1.0\") == 0)"
       << be_idt_nl
       << "{" << be_idt_nl
       << "return ACE_static_cast(PortableServer::Servant, this);"
@@ -408,7 +408,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   return 0;
 }
 
-int 
+int
 be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
                                                   be_interface *base,
                                                   TAO_OutStream *os)
@@ -518,9 +518,15 @@ be_visitor_interface_ss::this_method (be_interface *node)
 
   *os << "CORBA::Object_var obj = tmp;" << be_nl
       << "(void) safe_stub.release ();" << be_nl
-      << "return " << "::" << node->full_name ()
-      << "::_unchecked_narrow (obj.in ());"
-      << be_uidt_nl
+      << "typedef ::" << node->name () << " STUB_SCOPED_NAME;" << be_nl
+      << "return" << be_idt_nl
+      << "TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow ("
+      << be_idt << be_idt_nl
+      << "obj.in ()," << be_nl
+      << node->flat_client_enclosing_scope ()
+      << node->base_proxy_broker_name ()
+      << "_Factory_function_pointer" << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
 }
 
@@ -563,8 +569,6 @@ int
 be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-
-  // Strategized Proxy Broker Implementation.
   be_visitor_context ctx = *this->ctx_;
 
   ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS);
@@ -579,37 +583,38 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
                         -1);
     }
 
+  // Strategized Proxy Broker Implementation.
   if (be_global->gen_thru_poa_collocation ()
       || be_global->gen_direct_collocation ())
     {
-      ctx =  (*this->ctx_);
+      ctx = *this->ctx_;
       be_visitor_interface_strategized_proxy_broker_ss ispb_visitor (&ctx);
 
       if (node->accept (&ispb_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_cs::"
+                             "be_visitor_interface_ss::"
                              "generate_proxy_classes - "
                              "codegen for Base Proxy Broker class failed\n"),
                             -1);
         }
 
       *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+          << "// " << __FILE__ << ":" << __LINE__;
 
-      // Proxy Broker  Factory Function.
-      *os << be_nl
-          << node->full_base_proxy_broker_name () << " *" << be_nl
+      // Proxy Broker Factory Function.
+      *os << be_nl << be_nl
+          << "TAO::Collocation_Proxy_Broker *" << be_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_function (CORBA::Object_ptr obj)" << be_nl
+          << "_Factory_function (CORBA::Object_ptr)" << be_nl
           << "{" << be_idt_nl
-          << "ACE_UNUSED_ARG (obj);" << be_nl
-          << "return ::"
+          << "return" << be_idt_nl
+          << "::"
           << node->full_strategized_proxy_broker_name ()
           << "::" <<"the"
           << node->strategized_proxy_broker_name ()
-          << "();" << be_uidt_nl
+          << "();" << be_uidt << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       // Proxy Broker Function Pointer Initializer.
@@ -625,22 +630,25 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
           << "_Factory_function;"
-          << be_uidt_nl 
+          << be_uidt_nl
           << be_nl
           << "return 0;" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
-
-      *os << "static int " <<  node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
+      *os << "static int" << be_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_Initializer (ACE_reinterpret_cast (size_t, "
+          << "_Stub_Factory_Initializer_Scarecrow =" << be_idt_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_Initializer));"
-          << be_uidt_nl << be_nl;
+          << "_Factory_Initializer (" << be_idt << be_idt_nl
+          << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
+          << "size_t," << be_nl
+          << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_Initializer" << be_uidt_nl
+          << ")" << be_uidt << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl << be_nl;
     }
 
 
@@ -709,7 +717,7 @@ be_visitor_interface_ss::generate_local_name (be_interface *node)
 }
 
 ACE_CString
-be_visitor_interface_ss::generate_full_skel_name (be_interface *node)
+be_visitor_interface_ss::generate_full_skel_name  (be_interface *node)
 {
   return ACE_CString (node->full_skel_name ());
 }

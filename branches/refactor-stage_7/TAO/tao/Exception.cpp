@@ -14,6 +14,7 @@
 #include "ace/Malloc.h"
 #include "ace/SString.h"
 #include "ace/streams.h"
+#include "ace/Malloc.h"
 
 
 #if !defined (__ACE_INLINE__)
@@ -1282,7 +1283,7 @@ STANDARD_EXCEPTION_LIST
 CORBA::SystemException * \
 CORBA::name ::_tao_create (void) \
 { \
-  CORBA::SystemException *result; \
+  CORBA::name *result; \
   ACE_NEW_RETURN (result, CORBA::name (), 0); \
   return result; \
 }

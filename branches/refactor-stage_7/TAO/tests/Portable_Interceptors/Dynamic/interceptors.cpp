@@ -60,20 +60,41 @@ Echo_Client_Request_Interceptor::send_request (
               "\"%s\"\n",
               op.in ()));
 
-  if (ACE_OS::strcmp (op.in (), "normal") == 0)
+  // For the "normal" operation, get the argument list.
+  if (ACE_OS::strcmp (op.in (),
+                      "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist =
         ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::Long param;
-      CORBA::ULong i = 0;  // index -- explicitly used to avoid
-                           // overloaded operator ambiguity.
-      paramlist[i].argument >>= param;
+      if (paramlist->length () != 2)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) All parameters not available \n"));
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "The arg is %d\n",
-                  param));
+        }
+
+      CORBA::ULong first = 0, second = 1; // If you dont understand
+                                          // why this is  done, then
+                                          // try changing it.
+      if (paramlist[first].mode != CORBA::PARAM_IN ||
+          paramlist[second].mode != CORBA::PARAM_OUT)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) ERROR in the extracted argument list \n"));
+        }
+
+      CORBA::Long param = 0;
+      paramlist[first].argument >>= param;
+
+      if (param != 10)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) ERROR in send_request while checking ",
+                      "the value of the extracted ",
+                      "arguments \n"));
+        }
     }
 }
 
@@ -109,20 +130,56 @@ Echo_Client_Request_Interceptor::receive_reply (
               "from \"%s\"\n",
               op.in ()));
 
-  if (ACE_OS::strcmp (op.in (), "normal") == 0)
+    // For the "normal" operation, get the argument list.
+  if (ACE_OS::strcmp (op.in (),
+                      "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist =
         ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::Long param;
-      CORBA::ULong i = 0;  // index -- explicitly used to avoid
-                           // overloaded operator ambiguity.
-      paramlist[i].argument >>= param;
+      if (paramlist->length () != 2)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) All parameters not available \n"));
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "The arg is %d\n",
-                  param));
+        }
+
+      CORBA::ULong first = 0, second = 1; // If you dont understand
+                                          // why this is  done, then
+                                          // try changing it.
+      if (paramlist[first].mode != CORBA::PARAM_IN ||
+          paramlist[second].mode != CORBA::PARAM_OUT)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) ERROR in the extracted argument list \n"));
+        }
+
+      CORBA::Long param = 0;
+      paramlist[first].argument >>= param;
+
+      if (param != 10)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) ERROR in send_request while checking ",
+                      "the value of the extracted ",
+                      "arguments \n"));
+        }
+
+      const char *str = 0;
+
+      paramlist[second].argument >>= str;
+
+      CORBA::String_var transfer (str);
+
+      if (ACE_OS::strcmp (str,
+                          "DO_NOT_INSULT_MY_INTELLIGENCE") != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) ERROR in send_request while checking ",
+                      "the value of the extracted ",
+                      "out arguments \n"));
+        }
     }
 
   if (ACE_OS::strcmp (op.in (), "calculate") == 0)
@@ -137,9 +194,11 @@ Echo_Client_Request_Interceptor::receive_reply (
       paramlist[i++].argument >>= param1;
       paramlist[i].argument >>= param2;
 
+      cout << "Here" << endl;
       CORBA::Any_var result_any = ri->result (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
+      cout << "Here ***" << endl;
       (result_any.in ()) >>= result;
 
       ACE_DEBUG ((LM_DEBUG,

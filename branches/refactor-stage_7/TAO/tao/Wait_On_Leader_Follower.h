@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_WAIT_ON_LEADER_FOLLOWER_H
 #define TAO_WAIT_ON_LEADER_FOLLOWER_H
 #include /**/ "ace/pre.h"

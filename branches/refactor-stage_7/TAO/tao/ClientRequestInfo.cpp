@@ -1,6 +1,7 @@
 // -*- C++ -*-
 #include "ClientRequestInfo.h"
 #include "ClientRequestInfo_i.h"
+#include "ace/streams.h"
 
 ACE_RCSID (TAO,
            ClientRequestInfo,

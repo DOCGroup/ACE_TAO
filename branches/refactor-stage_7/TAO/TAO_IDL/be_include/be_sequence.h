@@ -49,7 +49,6 @@ public:
     MNG_STRING,
     MNG_WSTRING,
     MNG_OBJREF,
-    MNG_ABSTRACT,
     MNG_VALUE,
     MNG_PSEUDO
   };
@@ -64,7 +63,7 @@ public:
                idl_bool abstract);
   // Constructor.
 
-  virtual int create_name (be_typedef *node = 0);
+  virtual int create_name (be_typedef *node);
   // Create a name for ourselves. If we are typedefed, then we get the name of
   // the typedef node, else we generate a name for ourselves.
 
@@ -91,6 +90,7 @@ public:
   // Report the instance name for instantiation.
 
   int gen_base_class_name (TAO_OutStream *os,
+                           char * linebreak,
                            AST_Decl *elem_scope);
   // Common code for generating the name and parameters of our
   // template sequence base class.
@@ -99,9 +99,8 @@ public:
   void field_node (be_field *node);
   // Accessors for the member.
 
-protected:
   virtual char *gen_name (void);
-  // Helper to create_name.
+  // Helper to create_name, also used by the traits visitor.
 
 private:
   const char *smart_fwd_helper_name (AST_Decl *elem_scope,

@@ -30,6 +30,9 @@
 #include "ace/Unbounded_Queue.h"
 #include "ace/Atomic_Op.h"
 #include "ace/CORBA_macros.h"
+#include "ace/Synch_Traits.h"
+
+
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -57,7 +60,7 @@ namespace CORBA
    * the feature may eventaully disappear from CORBA.  It is
    * implemented only to make the arg list of
    * CORBA::Object::_create_request() compliant. The only (pointer)
-   * value that should be passed is 0. 
+   * value that should be passed is 0.
    */
   class TAO_DynamicInterface_Export Context
   {

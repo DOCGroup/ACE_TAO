@@ -32,9 +32,9 @@
 class TAO_OutStream;
 class TAO_IDL_Inheritance_Hierarchy_Worker;
 class be_visitor;
-
-// Forward declaration of the strategy
 class be_interface_strategy;
+
+class UTL_ExceptList;
 
 class be_interface : public virtual AST_Interface,
                      public virtual be_scope,
@@ -84,7 +84,7 @@ public:
   virtual const char *full_name (void);
   // Return the stringified full name.
 
-  const char *flat_name (void) const;
+  virtual const char *flat_name (void);
   // Return the flattened full scoped name.
 
   virtual const char *repoID (void) const;
@@ -259,7 +259,19 @@ public:
                               be_interface *,
                               TAO_OutStream *os);
   // Helper method passed to the template method to generate code for the
-  // skeletons in the inline file.
+  // skeletons in the header and inline files.
+
+  static int gen_colloc_op_decl_helper (be_interface *derived,
+                                        be_interface *ancestor,
+                                        TAO_OutStream *os);
+  // Helper method passed to the template method to generate code for the
+  // collocated functions in the header file.
+
+  static int gen_colloc_op_defn_helper (be_interface *derived,
+                                        be_interface *ancestor,
+                                        TAO_OutStream *os);
+  // Helper method passed to the template method to generate code for the
+  // collocated functions in the source file.
 
   static int copy_ctor_helper (be_interface *,
                                be_interface *,
@@ -296,15 +308,19 @@ public:
   int gen_operation_table (void);
   // Generate the operation table including entries for inherited interfaces.
 
-  int gen_operation_table (const char *flat_name,
-                           const char *skeleton_class_name);
-  // Like the previous version, but receive the class "flat name" and
-  // skeleton names as arguments.  Useful in the generation of closely
-  // related classes, such as the AMH skeleton.
-
-  int gen_optable_entries (const char *full_skeleton_name,
+  int gen_optable_entries (be_interface *derived_interface,
+                           const char *full_skeleton_name,
                            TAO_OutStream *os);
   // generate the operation table entries.
+
+  static void gen_collocated_skel_body (be_interface *derived,
+                                        be_interface *ancestor,
+                                        AST_Decl *d,
+                                        const char *prefix,
+                                        idl_bool direct,
+                                        UTL_ExceptList *list,
+                                        TAO_OutStream *os);
+  // Common code called from gen_colloc_op_defn_helper().
 
   void analyze_parentage (void);
   // Compute whether or not we have both abstract and concrete parents,
@@ -368,6 +384,11 @@ private:
 
   void gen_linear_search_instance (const char *flat_name);
   // Create an instance of the linear search optable.
+
+  static void gen_throw_spec (UTL_ExceptList *list,
+                              TAO_OutStream *os);
+  // Helper for the helpers that generate collocated static 
+  // base class methods.
 
 protected:
   int var_out_seq_decls_gen_;

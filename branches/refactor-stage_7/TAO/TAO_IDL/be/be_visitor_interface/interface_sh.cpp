@@ -82,7 +82,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       class_name +=  node->local_name ();
     }
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the skeleton class name.

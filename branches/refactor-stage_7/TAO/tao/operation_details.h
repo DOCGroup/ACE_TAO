@@ -14,19 +14,32 @@
 #define TAO_OPERATION_DETAILS_H
 
 #include /**/ "ace/pre.h"
-
 #include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "Service_Context.h"
 #include "target_specification.h"
 
+struct TAO_Exception_Data;
 
-// @@ Bala: Why is this not part of the RequestHeader?!
+namespace CORBA
+{
+  class Exception;
+}
+
+namespace Dynamic
+{
+  class ParameterList;
+  class ExceptionList;
+}
+namespace TAO
+{
+  class Argument;
+}
+
 /**
  * @class TAO_Operation_Details
  *
@@ -45,7 +58,11 @@ public:
   ///Constructor
   TAO_Operation_Details (const char *name,
                          CORBA::ULong len,
-                         CORBA::Boolean argument_flag);
+                         CORBA::Boolean argument_flag,
+                         TAO::Argument **args = 0,
+                         CORBA::ULong num_args = 0,
+                         TAO_Exception_Data *ex_data = 0,
+                         CORBA::Long ex_count = 0);
 
   /// Operation name
   const char* opname (void) const;
@@ -93,6 +110,28 @@ public:
   /// Set method for the addressing mode
   void addressing_mode (CORBA::Short addr);
 
+  /// Creates and returns a CORBA::Exception object whose repository
+  /// id \a ex matches the exception list that this operation
+  /// specified.
+  /**
+   * This step is important to decode the exception that the client
+   * got from the server. If the exception received from the server
+   * is not found in the list of exceptions specified by the operation
+   * this call would raise an UNKNOWN exception.
+   */
+  CORBA::Exception *corba_exception (const char *ex
+                                     ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  bool marshal_args (TAO_OutputCDR &cdr);
+  bool demarshal_args (TAO_InputCDR &cdr);
+  bool parameter_list (Dynamic::ParameterList &);
+  bool exception_list (Dynamic::ExceptionList &);
+  bool result (CORBA::Any *);
+
+  TAO::Argument **args (void);
+  CORBA::ULong args_num (void) const ;
+
 private:
 
   /// Name of the operation being invoked.
@@ -122,14 +161,18 @@ private:
   /// valid when sending a request.
   TAO_Service_Context reply_service_info_;
 
-  // The first element of header is service context list;
-  // transactional context would be acquired here using the
-  // transaction service APIs.  Other kinds of context are as yet
-  // undefined.
-  //
-
   /// Addressing  mode for this request.
   TAO_Target_Specification::TAO_Target_Address addressing_mode_;
+
+  TAO::Argument **args_;
+
+  CORBA::ULong num_args_;
+
+  /// The type of exceptions that the operations can throw.
+  TAO_Exception_Data *ex_data_;
+
+  /// Count of the exceptions that operations can throw.
+  CORBA::ULong ex_count_;
 };
 
 #if defined (__ACE_INLINE__)

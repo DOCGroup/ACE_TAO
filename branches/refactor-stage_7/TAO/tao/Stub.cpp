@@ -662,14 +662,14 @@ TAO_Stub::sync_strategy (void)
 {
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-  int has_synchronization;
+  bool has_synchronization;
   Messaging::SyncScope scope;
 
   this->orb_core_->call_sync_scope_hook (this,
                                          has_synchronization,
                                          scope);
 
-  if (has_synchronization == 1)
+  if (has_synchronization == true)
     return this->orb_core_->get_sync_strategy (this,
                                                scope);
 

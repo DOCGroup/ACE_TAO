@@ -12,8 +12,11 @@
 
 #include "ORB_Manager.h"
 #include "tao/Environment.h"
+#include "ace/Log_Msg.h"
 
-ACE_RCSID(tao, ORB_Manager, "$Id$")
+ACE_RCSID (tao,
+           ORB_Manager,
+           "$Id$")
 
 // constructor
 TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,

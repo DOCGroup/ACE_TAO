@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SERVER_INTERCEPTOR_ADAPTER_H
 #define TAO_SERVER_INTERCEPTOR_ADAPTER_H
 

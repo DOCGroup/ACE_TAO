@@ -17,6 +17,7 @@
 #include "PortableServerC.h"
 #include "tao/Abstract_Servant_Base.h"
 #include "ace/Atomic_Op.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -106,15 +107,21 @@ protected:
                                              void *derived_this
                                              ACE_ENV_ARG_DECL);
 
-  /// Find an operation in the operation table.
+  /// Please see documentation in tao/Abstract_Servant_Base.h for
+  /// details.
   virtual int _find (const char *opname,
                      TAO_Skeleton &skelfunc,
                      const unsigned int length = 0);
 
-  /// Register a CORBA IDL operation name.
-  virtual int _bind (const char *opname,
-                     const TAO_Skeleton skel_ptr);
+  virtual int _find (const char *opname,
+                     TAO_Collocated_Skeleton &skelfunc,
+                     TAO::Collocation_Strategy st,
+                     const unsigned int length = 0);
 
+  /// Register a CORBA IDL operation name.
+  /*virtual int _bind (const char *opname,
+                     const TAO_Skeleton skel_ptr);
+  */
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
 
@@ -169,7 +176,7 @@ public:
    */
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
-  /** 
+  /**
    * Returns the current reference count value.  This method is
    * non-standard and is only here to simplify debugging.
    */

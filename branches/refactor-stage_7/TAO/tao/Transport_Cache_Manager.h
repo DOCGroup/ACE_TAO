@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CONNECTION_CACHE_MANAGER_H
 #define TAO_CONNECTION_CACHE_MANAGER_H
 #include /**/ "ace/pre.h"

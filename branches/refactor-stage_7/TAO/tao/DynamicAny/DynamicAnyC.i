@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNANY___CI_)
 #define _DYNAMICANY_DYNANY___CI_
@@ -35,7 +35,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNFIXED___CI_)
 #define _DYNAMICANY_DYNFIXED___CI_
@@ -43,7 +43,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNENUM___CI_)
 #define _DYNAMICANY_DYNENUM___CI_
@@ -51,7 +51,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNSTRUCT___CI_)
 #define _DYNAMICANY_DYNSTRUCT___CI_
@@ -59,7 +59,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNUNION___CI_)
 #define _DYNAMICANY_DYNUNION___CI_
@@ -67,7 +67,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNSEQUENCE___CI_)
 #define _DYNAMICANY_DYNSEQUENCE___CI_
@@ -75,7 +75,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNARRAY___CI_)
 #define _DYNAMICANY_DYNARRAY___CI_
@@ -83,7 +83,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNVALUE___CI_)
 #define _DYNAMICANY_DYNVALUE___CI_
@@ -91,7 +91,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNANYFACTORY___CI_)
 #define _DYNAMICANY_DYNANYFACTORY___CI_
@@ -99,7 +99,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -124,7 +124,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_DynamicAny_NameValuePairSeq_I_
 #define _TAO_CDR_OP_DynamicAny_NameValuePairSeq_I_
@@ -142,7 +142,7 @@ CORBA::Boolean TAO_DynamicAny_Export operator>> (
 #endif /* _TAO_CDR_OP_DynamicAny_NameValuePairSeq_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -168,7 +168,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_DynamicAny_NameDynAnyPairSeq_I_
 #define _TAO_CDR_OP_DynamicAny_NameDynAnyPairSeq_I_
@@ -186,7 +186,7 @@ CORBA::Boolean TAO_DynamicAny_Export operator>> (
 #endif /* _TAO_CDR_OP_DynamicAny_NameDynAnyPairSeq_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_DynamicAny_AnySeq_I_
 #define _TAO_CDR_OP_DynamicAny_AnySeq_I_
@@ -204,7 +204,7 @@ CORBA::Boolean TAO_DynamicAny_Export operator>> (
 #endif /* _TAO_CDR_OP_DynamicAny_AnySeq_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_DynamicAny_DynAnySeq_I_
 #define _TAO_CDR_OP_DynamicAny_DynAnySeq_I_

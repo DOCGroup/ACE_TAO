@@ -152,16 +152,18 @@ int be_visitor_array_ci::visit_array (be_array *node)
         }
     }
 
-  // Generate _life struct static member definitions.
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  // Generate the array traits specialization definitions.
+
   *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << node->fwd_helper_name () << "_life::tao_free ("
+      << "TAO::Array_Traits<" << fname << ", " 
+      << fname << "_slice>::tao_free ("
       << be_idt << be_idt_nl
       << fname << "_slice * _tao_slice" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -172,7 +174,8 @@ int be_visitor_array_ci::visit_array (be_array *node)
   *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
-      << node->fwd_helper_name () << "_life::tao_dup ("
+      << "TAO::Array_Traits<" << fname << ", " 
+      << fname << "_slice>::tao_dup ("
       << be_idt << be_idt_nl
       << "const " << fname << "_slice * _tao_slice" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -183,7 +186,8 @@ int be_visitor_array_ci::visit_array (be_array *node)
   *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << node->fwd_helper_name () << "_life::tao_copy ("
+      << "TAO::Array_Traits<" << fname << ", " 
+      << fname << "_slice>::tao_copy ("
       << be_idt << be_idt_nl
       << fname << "_slice * _tao_to," << be_nl
       << "const " << fname << "_slice * _tao_from" << be_uidt_nl
@@ -195,7 +199,8 @@ int be_visitor_array_ci::visit_array (be_array *node)
   *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
-      << node->fwd_helper_name () << "_life::tao_alloc (void)" << be_nl
+      << "TAO::Array_Traits<" << fname << ", " 
+      << fname << "_slice>::tao_alloc (void)" << be_nl
       << "{" << be_idt_nl
       << "return " << fname << "_alloc ();" << be_uidt_nl
       << "}";

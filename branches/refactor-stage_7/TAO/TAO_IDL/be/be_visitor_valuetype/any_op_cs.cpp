@@ -99,16 +99,6 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \\"
-      << be_idt_nl
-      << "  defined (ACE_HAS_GNU_REPO)" << be_nl
-      << "template class TAO::Any_Impl_T<" << node->full_name ()
-      << ">;" << be_uidt_nl
-      << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
-      << "#  pragma instantiate TAO::Any_Impl_T<" << node->full_name ()
-      << ">" << be_uidt_nl
-      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
-
   node->cli_stub_any_op_gen (1);
   return 0;
 }

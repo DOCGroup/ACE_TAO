@@ -34,6 +34,7 @@
 #include "PolicyC.h"
 
 #include "ace/Thread_Mutex.h"
+#include "ace/Guard_T.h"
 
 typedef enum
 {
@@ -175,8 +176,7 @@ namespace CORBA
 
     typedef
       TAO_Unbounded_Pseudo_Sequence<
-          CORBA::Request,
-          CORBA::Request_var
+          CORBA::Request
         >
       RequestSeq;
 
@@ -184,8 +184,7 @@ namespace CORBA
       TAO_VarSeq_Var_T<
           RequestSeq,
           TAO_Pseudo_Object_Manager<
-              CORBA::Request,
-              CORBA::Request_var
+              CORBA::Request
             >
         >
       RequestSeq_var;
@@ -195,8 +194,7 @@ namespace CORBA
           RequestSeq,
           RequestSeq_var,
           TAO_Pseudo_Object_Manager<
-              CORBA::Request,
-              CORBA::Request_var
+              CORBA::Request
             >
         >
       RequestSeq_out;

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SERVER_STRATEGY_FACTORY_H
 #define TAO_SERVER_STRATEGY_FACTORY_H
 #include /**/ "ace/pre.h"

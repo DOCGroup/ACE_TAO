@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "ORB_Core.h"
 #include "ORB_Table.h"
 
@@ -2305,6 +2304,9 @@ ACE_Allocator*
 TAO_ORB_Core::output_cdr_dblock_allocator (void)
 {
 
+  return this->lane_resources ().output_cdr_dblock_allocator ();
+
+#if 0
   // Allocating memory here confuses purify a bit. We do delete this
   // memory when TSS delete
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
@@ -2320,43 +2322,20 @@ TAO_ORB_Core::output_cdr_dblock_allocator (void)
       this->resource_factory ()->output_cdr_dblock_allocator ();
 
   return tss->output_cdr_dblock_allocator_;
+#endif /* if 0*/
 }
 
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_buffer_allocator (void)
 {
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
-  if (tss == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("(%P|%t) %p\n"),
-                       ACE_LIB_TEXT ("TAO_ORB_Core::input_cdr_buffer_allocator (); ")
-                       ACE_LIB_TEXT ("no more TSS keys")),
-                      0);
-
-  if (tss->output_cdr_buffer_allocator_ == 0)
-    tss->output_cdr_buffer_allocator_ =
-      this->resource_factory ()->output_cdr_buffer_allocator ();
-
-  return tss->output_cdr_buffer_allocator_;
+  return this->lane_resources ().output_cdr_buffer_allocator ();
 }
 
 
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_msgblock_allocator (void)
 {
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
-  if (tss == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("(%P|%t) %p\n"),
-                       ACE_LIB_TEXT ("TAO_ORB_Core::output_cdr_msgblock_allocator (); ")
-                       ACE_LIB_TEXT ("no more TSS keys")),
-                      0);
-
-  if (tss->output_cdr_msgblock_allocator_ == 0)
-    tss->output_cdr_msgblock_allocator_ =
-      this->resource_factory ()->output_cdr_msgblock_allocator ();
-
-  return tss->output_cdr_msgblock_allocator_;
+  return this->lane_resources ().output_cdr_msgblock_allocator ();
 }
 
 
@@ -2390,78 +2369,6 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
                                     dblock_allocator,
                                     lock_strategy);
 }
-
-#if 0
-// @@todo: This will go off after sometime. We may no longer need
-// this, since we could as well use the input_cdr* for use.
-
-ACE_Data_Block *
-TAO_ORB_Core::data_block_for_message_block (size_t size)
-{
-
-  ACE_Allocator *dblock_allocator;
-  ACE_Allocator *buffer_allocator;
-
-  dblock_allocator =
-    this->message_block_dblock_allocator ();
-  buffer_allocator =
-    this->message_block_buffer_allocator ();
-
-  ACE_Lock* lock_strategy = 0;
-  if (this->resource_factory ()->use_locked_data_blocks ())
-    {
-      lock_strategy = &this->data_block_lock_;
-    }
-
-  return this->create_data_block_i (size,
-                                    buffer_allocator,
-                                    dblock_allocator,
-                                    lock_strategy);
-}
-
-ACE_Allocator*
-TAO_ORB_Core::message_block_dblock_allocator (void)
-{
-  if (this->message_block_dblock_allocator_ == 0)
-    {
-      // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->message_block_dblock_allocator_ == 0)
-        this->message_block_dblock_allocator_ =
-          this->resource_factory ()->input_cdr_dblock_allocator ();
-    }
-  return this->message_block_dblock_allocator_;
-}
-
-ACE_Allocator*
-TAO_ORB_Core::message_block_buffer_allocator (void)
-{
-  if (this->message_block_buffer_allocator_ == 0)
-    {
-      // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->message_block_buffer_allocator_ == 0)
-        this->message_block_buffer_allocator_ =
-          this->resource_factory ()->input_cdr_buffer_allocator ();
-    }
-  return this->message_block_buffer_allocator_;
-}
-
-ACE_Allocator*
-TAO_ORB_Core::message_block_msgblock_allocator (void)
-{
-  if (this->message_block_msgblock_allocator_ == 0)
-    {
-      // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->message_block_msgblock_allocator_ == 0)
-        this->message_block_msgblock_allocator_ =
-          this->resource_factory ()->input_cdr_buffer_allocator ();
-    }
-  return this->message_block_msgblock_allocator_;
-}
-
-#endif /*if 0*/
 
 ACE_Data_Block *
 TAO_ORB_Core::create_data_block_i (size_t size,
@@ -2535,7 +2442,7 @@ TAO_ORB_Core::implrepo_service (void)
 
 void
 TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
-                                    int &has_synchronization,
+                                    bool &has_synchronization,
                                     Messaging::SyncScope &scope)
 {
   Sync_Scope_Hook sync_scope_hook =
@@ -2543,7 +2450,7 @@ TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
 
   if (sync_scope_hook == 0)
     {
-      has_synchronization = 0;
+      has_synchronization = false;
       return;
     }
 
@@ -2615,7 +2522,7 @@ TAO_ORB_Core::stubless_sync_scope (void)
 
 void
 TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
-                                 int &has_timeout,
+                                 bool &has_timeout,
                                  ACE_Time_Value &time_value)
 {
   Timeout_Hook timeout_hook =
@@ -2623,7 +2530,7 @@ TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
 
   if (timeout_hook == 0)
     {
-      has_timeout = 0;
+      has_timeout = false;
       return;
     }
   (*timeout_hook) (this, stub, has_timeout, time_value);
@@ -2677,7 +2584,7 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 
 void
 TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
-                                  int &has_timeout,
+                                  bool &has_timeout,
                                   ACE_Time_Value &time_value)
 {
   Timeout_Hook connection_timeout_hook =
@@ -2685,10 +2592,12 @@ TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
 
   if (connection_timeout_hook == 0)
     {
-      has_timeout = 0;
+      has_timeout = false;
       return;
     }
+
   (*connection_timeout_hook) (this, stub, has_timeout, time_value);
+  has_timeout = true;
 }
 
 void
@@ -2835,14 +2744,11 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
 // ****************************************************************
 
 TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
-  : output_cdr_dblock_allocator_ (0),
-    output_cdr_buffer_allocator_ (0),
-    output_cdr_msgblock_allocator_ (0),
-    event_loop_thread_ (0),
-    client_leader_thread_ (0),
-    lane_ (0),
-    ts_objects_ (),
-    orb_core_ (0)
+  : event_loop_thread_ (0)
+  , client_leader_thread_ (0)
+  , lane_ (0)
+  , ts_objects_ ()
+  , orb_core_ (0)
 #if TAO_HAS_INTERCEPTORS == 1
     , pi_current_ ()
     , client_request_info_ (0)
@@ -2856,17 +2762,6 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
 
 TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 {
-  if (this->output_cdr_dblock_allocator_ != 0)
-    this->output_cdr_dblock_allocator_->remove ();
-  delete this->output_cdr_dblock_allocator_;
-
-  if (this->output_cdr_buffer_allocator_ != 0)
-    this->output_cdr_buffer_allocator_->remove ();
-  delete this->output_cdr_buffer_allocator_;
-
-  if (this->output_cdr_msgblock_allocator_ != 0)
-    this->output_cdr_msgblock_allocator_->remove ();
-  delete this->output_cdr_msgblock_allocator_;
 
 #if TAO_HAS_INTERCEPTORS == 1
   CORBA::release (this->client_request_info_);
@@ -2928,6 +2823,48 @@ TAO_ORB_Core_instance (void)
   return orb_table->first_orb ();
 }
 
+
+TAO::Collocation_Strategy
+TAO_ORB_Core::collocation_strategy_new (CORBA::Object_ptr object
+                                        ACE_ENV_ARG_DECL)
+{
+
+  TAO_Stub *stub = object->_stubobj ();
+  if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
+      stub->servant_orb_var ()->orb_core () != 0)
+    {
+      TAO_ORB_Core *orb_core =
+        stub->servant_orb_var ()->orb_core ();
+
+      int collocated =
+        orb_core->collocation_resolver ().is_collocated (object
+                                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (TAO::TAO_CS_REMOTE_STRATEGY);
+
+      if (collocated)
+        {
+          switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
+            {
+            case THRU_POA:
+              return TAO::TAO_CS_THRU_POA_STRATEGY;
+
+            case DIRECT:
+              {
+                /////////////////////////////////////////////////////////////
+                // If the servant is null and you are collocated this means
+                // that the POA policy NON-RETAIN is set, and with that policy
+                // using the DIRECT collocation strategy is just insane.
+                /////////////////////////////////////////////////////////////
+                ACE_ASSERT (object->_servant () != 0);
+                return TAO::TAO_CS_DIRECT_STRATEGY;
+              }
+            }
+        }
+    }
+
+  // In this case the Object is a client.
+  return TAO::TAO_CS_REMOTE_STRATEGY;
+}
 
 int
 TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object

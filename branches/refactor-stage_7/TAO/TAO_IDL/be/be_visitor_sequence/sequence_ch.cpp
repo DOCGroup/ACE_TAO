@@ -71,6 +71,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                         -1);
     }
 
+  bt->seen_in_sequence (I_TRUE);
   AST_Decl::NodeType nt = bt->node_type ();
 
   // If our base type is an anonymouse sequence, we must create a  name
@@ -118,7 +119,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       << node->local_name () << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
 
-  if (node->gen_base_class_name (os, this->ctx_->scope ()) == -1)
+  if (node->gen_base_class_name (os, "", this->ctx_->scope ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
@@ -248,9 +249,8 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << node->local_name () << "," << be_nl
           << "TAO_Object_Manager<" << be_idt << be_idt_nl
           << elem->nested_type_name (scope) << "," << be_nl;
-      *os << elem->nested_type_name (scope, "_var") << "," << be_nl
-          << elem->fwd_helper_name () << "_life" << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
+      *os << elem->nested_type_name (scope, "_var") << be_uidt_nl << ">"
+          << be_uidt << be_uidt_nl
           << ">" << be_uidt_nl
           << node->local_name () << "_var;" << be_uidt;
 
@@ -261,35 +261,8 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << node->local_name () << "_var," << be_nl
           << "TAO_Object_Manager<" << be_idt << be_idt_nl
           << elem->nested_type_name (scope) << "," << be_nl;
-      *os << elem->nested_type_name (scope, "_var") << "," << be_nl
-          << elem->fwd_helper_name () << "_life" << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_out;" << be_uidt;
-
-      break;
-    case be_sequence::MNG_ABSTRACT:
-      *os << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl;
-      *os << elem->nested_type_name (scope, "_var") << "," << be_nl
-          << elem->fwd_helper_name () << "_life" << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_var;" << be_uidt;
-
-      *os << be_nl << be_nl
-          << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << node->local_name () << "_var," << be_nl
-          << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl;
-      *os << elem->nested_type_name (scope, "_var") << "," << be_nl
-          << elem->fwd_helper_name () << "_life" << be_uidt_nl
-          << ">" << be_uidt << be_uidt_nl
+      *os << elem->nested_type_name (scope, "_var") << be_uidt_nl << ">"
+          << be_uidt << be_uidt_nl
           << ">" << be_uidt_nl
           << node->local_name () << "_out;" << be_uidt;
 
@@ -299,8 +272,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
           << node->local_name () << "," << be_nl
           << "TAO_Pseudo_Object_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl;
-      *os << elem->nested_type_name (scope, "_var") << be_uidt_nl
+          << elem->nested_type_name (scope) << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
           << ">" << be_uidt_nl
           << node->local_name () << "_var;" << be_uidt;
@@ -311,8 +283,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << node->local_name () << "," << be_nl
           << node->local_name () << "_var," << be_nl
           << "TAO_Pseudo_Object_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl;
-      *os << elem->nested_type_name (scope, "_var") << be_uidt_nl
+          << elem->nested_type_name (scope) << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
           << ">" << be_uidt_nl
           << node->local_name () << "_out;" << be_uidt;
@@ -324,8 +295,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << node->local_name () << "," << be_nl
           << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
           << elem->nested_type_name (scope) << "," << be_nl;
-      *os << elem->nested_type_name (scope, "_var") << "," << be_nl
-          << elem->fwd_helper_name () << "_life" << be_uidt_nl
+      *os << elem->nested_type_name (scope, "_var") << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
           << ">" << be_uidt_nl
           << node->local_name () << "_var;" << be_uidt;
@@ -337,8 +307,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << node->local_name () << "_var," << be_nl
           << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
           << elem->nested_type_name (scope) << "," << be_nl;
-      *os << elem->nested_type_name (scope, "_var") << "," << be_nl
-          << elem->fwd_helper_name () << "_life" << be_uidt_nl
+      *os << elem->nested_type_name (scope, "_var") << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
           << ">" << be_uidt_nl
           << node->local_name () << "_out;" << be_uidt;
@@ -398,11 +367,6 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
             << node->local_name () << "," << be_nl
             << elem->nested_type_name (scope);
 
-        /*if (nt == AST_Decl::NT_array)
-          {
-            *os << "_slice *";
-            }*/
-
         *os << be_uidt_nl
             << ">" << be_uidt_nl
             << node->local_name () << "_var;" << be_uidt;
@@ -413,11 +377,6 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
             << node->local_name () << "," << be_nl
             << node->local_name () << "_var," << be_nl
             << elem->nested_type_name (scope);
-
-        /*if (nt == AST_Decl::NT_array)
-          {
-            *os << "_slice *";
-            }*/
 
         *os << be_uidt_nl
             << ">" << be_uidt_nl

@@ -17,6 +17,7 @@ ACE_RCSID (tao,
            Any_T,
            "$Id$")
 
+
 template<typename T>
 TAO::Any_Basic_Impl_T<T>::Any_Basic_Impl_T (CORBA::TypeCode_ptr tc,
                                             const T & val)
@@ -90,8 +91,8 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
                         mb->rd_ptr () - mb->base (),
                         mb->wr_ptr () - mb->base (),
                         impl->_tao_byte_order (),
-						            TAO_DEF_GIOP_MAJOR,
-						            TAO_DEF_GIOP_MINOR);
+                                                            TAO_DEF_GIOP_MAJOR,
+                                                            TAO_DEF_GIOP_MINOR);
 
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 

@@ -12,6 +12,7 @@
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
 //=============================================================================
+
 #ifndef TAO_ACCEPTOR_H
 #define TAO_ACCEPTOR_H
 #include /**/ "ace/pre.h"

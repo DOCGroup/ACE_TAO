@@ -201,7 +201,7 @@ public:
   virtual const char *full_name (void);
   // Return the stringified full name.
 
-  const char *flat_name (void);
+  virtual const char *flat_name (void);
   // Return the flattened full scoped name.
 
   const char *repoID (void);
@@ -284,6 +284,9 @@ protected:
   char *repoID_;
   // Repository ID.
 
+  char *flat_name_;
+  // Flattened fully scoped name.
+
   int contains_wstring_;
   // If we are a scope, do we contain a wstring at some level?
 
@@ -343,9 +346,6 @@ private:
 
   idl_bool typeid_set_;
   // Has our repo id been set by a typeId declaration?
-
-  char *flat_name_;
-  // Flattened fully scoped name.
 
   UTL_ScopedName *last_referenced_as_;
   // Temporary holder of the most recent way we were reference.

@@ -13,6 +13,7 @@
 
 #ifndef TAO_ORB_CORE_H
 #define TAO_ORB_CORE_H
+
 #include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
@@ -137,14 +138,6 @@ private:
 
 public:
 
-
-  /// The allocators for the output CDR streams.
-  //@{
-  ACE_Allocator *output_cdr_dblock_allocator_;
-  ACE_Allocator *output_cdr_buffer_allocator_;
-  ACE_Allocator *output_cdr_msgblock_allocator_;
-  //@}
-
   /**
    * @todo
    * The rest of the resources are not currently in use, just a plan
@@ -181,9 +174,7 @@ public:
 };
 
 
-
 // ****************************************************************
-
 /**
  * @class TAO_ORB_Core
  *
@@ -282,6 +273,9 @@ public:
    * @note
    * No-Collocation is a special case of collocation.
    */
+  static TAO::Collocation_Strategy collocation_strategy_new (CORBA::Object_ptr object
+                                                             ACE_ENV_ARG_DECL);
+
   static int collocation_strategy (CORBA::Object_ptr object
                                    ACE_ENV_ARG_DECL);
   //@}
@@ -582,13 +576,13 @@ public:
    * thread and current ORB.
    */
   void call_timeout_hook (TAO_Stub *stub,
-                          int &has_timeout,
+                          bool &has_timeout,
                           ACE_Time_Value &time_value);
 
   /// Define the Timeout_Hook signature
   typedef void (*Timeout_Hook) (TAO_ORB_Core *,
                                 TAO_Stub *,
-                                int&,
+                                bool&,
                                 ACE_Time_Value&);
 
   static void set_timeout_hook (Timeout_Hook hook);
@@ -609,7 +603,7 @@ public:
    * thread and current ORB.
    */
   void connection_timeout (TAO_Stub *stub,
-                           int &has_timeout,
+                           bool &has_timeout,
                            ACE_Time_Value &time_value);
 
   /// Define the Timeout_Hook signature
@@ -623,14 +617,14 @@ public:
 
 
   void call_sync_scope_hook (TAO_Stub *stub,
-                             int &has_synchronization,
+                             bool &has_synchronization,
                              Messaging::SyncScope &scope);
 
   TAO_Sync_Strategy &get_sync_strategy (TAO_Stub *stub,
                                         Messaging::SyncScope &scope);
   typedef void (*Sync_Scope_Hook) (TAO_ORB_Core *,
                                    TAO_Stub *,
-                                   int &,
+                                   bool &,
                                    Messaging::SyncScope &);
   static void set_sync_scope_hook (Sync_Scope_Hook hook);
 

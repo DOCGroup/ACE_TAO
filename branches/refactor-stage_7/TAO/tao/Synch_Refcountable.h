@@ -12,6 +12,7 @@
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
 //=============================================================================
+
 #ifndef TAO_SYNCH_REFCOUNTABLE_H
 #define TAO_SYNCH_REFCOUNTABLE_H
 #include /**/ "ace/pre.h"

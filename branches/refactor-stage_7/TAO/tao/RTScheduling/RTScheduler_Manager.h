@@ -21,7 +21,7 @@
 #endif /* _MSC_VER */
 
 #include "RTScheduler.h"
-//#include "tao/LocalObject.h"
+#include "tao/LocalObject.h"
 
 class TAO_RTScheduler_Manager;
 class TAO_RTScheduler_Manager_var;
@@ -40,7 +40,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Manager :
 {
 public:
 
-	TAO_RTScheduler_Manager (void);
+        TAO_RTScheduler_Manager (void);
   /// Constructor.
   TAO_RTScheduler_Manager (TAO_ORB_Core*);
 

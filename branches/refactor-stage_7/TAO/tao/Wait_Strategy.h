@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_WAIT_STRATEGY_H
 #define TAO_WAIT_STRATEGY_H
 #include /**/ "ace/pre.h"

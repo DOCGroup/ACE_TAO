@@ -76,6 +76,12 @@ CORBA::Any_var::_retn (void)
   return temp;
 }
 
+ACE_INLINE CORBA::Any *
+CORBA::Any_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
 // *************************************************************
 // CORBA::Any_var insertion operators
 // *************************************************************
@@ -438,4 +444,3 @@ TAO::Unknown_IDL_Type::_tao_byte_order (void) const
 {
   return this->byte_order_;
 }
-
