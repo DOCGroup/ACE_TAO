@@ -19,7 +19,14 @@
 #include "TestS.h"
 #include "OLT_Export.h"
 
-class OLT_Export Test_i : public POA_Test
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
+class OLT_Export Test_i : public POA_Test, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   Implement the Test interface
@@ -49,5 +56,9 @@ private:
 #if defined(__ACE_INLINE__)
 #include "Test_i.i"
 #endif /* __ACE_INLINE__ */
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif /* TAO_OBJECT_LOADER_TEST_I_H */
