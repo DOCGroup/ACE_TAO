@@ -104,10 +104,6 @@ invocation_exception_test (Test_ptr obj,
 int
 main (int argc, char *argv[])
 {
-  // Make sure we can support multiple priorities that are required
-  // for this test.
-  check_supported_priorities ();
-
   ACE_TRY_NEW_ENV
     {
       // Initialize ORB.
@@ -124,6 +120,10 @@ main (int argc, char *argv[])
                     argv);
       if (result != 0)
         return result;
+
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in ());
 
       // Get the RTORB.
       CORBA::Object_var object =

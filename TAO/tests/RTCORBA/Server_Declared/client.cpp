@@ -80,10 +80,6 @@ check_policy (Test_ptr server
 int
 main (int argc, char *argv[])
 {
-  // Make sure we can support multiple priorities that are required
-  // for this test.
-  check_supported_priorities ();
-
   ACE_TRY_NEW_ENV
     {
       // Initialize the ORB, resolve references and parse arguments.
@@ -97,7 +93,11 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-          // Test object 1.
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in());
+
+      // Test object 1.
       CORBA::Object_var object =
         orb->string_to_object (ior1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

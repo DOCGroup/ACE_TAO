@@ -6,6 +6,7 @@
 #include "tao/RTCORBA/RT_Policy_i.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
+#include "../check_supported_priorities.cpp"
 
 class Test_i : public POA_Test
 {
@@ -174,6 +175,10 @@ main (int argc, char *argv[])
 
       if (parse_args (argc, argv) != 0)
         return 1;
+        
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in());
 
       CORBA::Object_var object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);

@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/Strategies/advanced_resource.h"
+#include "../check_supported_priorities.cpp"
 
 const char *ior = "file://test.ior";
 
@@ -44,6 +45,10 @@ main (int argc, char *argv[])
 
       if (parse_args (argc, argv) != 0)
         return 1;
+        
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in());
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);

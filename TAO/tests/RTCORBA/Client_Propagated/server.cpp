@@ -109,10 +109,6 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  // Make sure we can support multiple priorities that are required
-  // for this test.
-  check_supported_priorities ();
-
   ACE_TRY_NEW_ENV
     {
       // Standard initialization:
@@ -124,6 +120,10 @@ main (int argc, char *argv[])
 
       if (parse_args (argc, argv) != 0)
         return 1;
+
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in());
 
       CORBA::Object_var object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
@@ -171,7 +171,7 @@ main (int argc, char *argv[])
                               poa_policy_list
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
+      
       Test_i server_impl (orb.in ());
 
       PortableServer::ObjectId_var id =
@@ -243,3 +243,4 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
