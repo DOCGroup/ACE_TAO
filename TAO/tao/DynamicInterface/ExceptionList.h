@@ -40,8 +40,8 @@
 
 namespace CORBA
 {
-  TAO_DynamicInterface_Export void release (ExceptionList_ptr);
-  TAO_DynamicInterface_Export Boolean is_nil (ExceptionList_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (ExceptionList_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ExceptionList_ptr);
 
   typedef TAO_Pseudo_Var_T<ExceptionList> ExceptionList_var;
   typedef TAO_Pseudo_Out_T<ExceptionList, ExceptionList_var> ExceptionList_out;

@@ -1,3 +1,14 @@
+Wed Apr 23 18:12:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicInterface/Context.h:
+        * tao/DynamicInterface/ExceptionList.h:
+
+          Changed the declaration of CORBA::is_nil and CORBA::release
+          fir ContextList and ExceptionList to use 
+          TAO_NAMESPACE_INLINE_FUNCTION instead of 
+          TAO_DynamicInterface_Export, which was causing multiple definitions
+          in builds with __ACE_INLINE__ defined.
+
 Wed Apr 23 18:06:48 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/POA.cpp (id_to_reference_i):
