@@ -1,3 +1,13 @@
+Sat Apr 14 17:01:05 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/TAO.dsp:
+          Complete merge for Win32, CVS' automatic merge was not quite the
+          right thing for this file.
+
+        * tao/BiDir_Policy_i.cpp:
+          This file was removed in the main trunk but was accidentally
+          resurrected during the merge.
+
 Sat Apr 14 12:59:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Block_Flushing_Strategy.h:
