@@ -976,6 +976,10 @@ SOURCE=.\Transport_Timer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\TSS_Resources.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Typecode.cpp
 # End Source File
 # Begin Source File
@@ -1910,6 +1914,10 @@ SOURCE=.\Transport_Timer.h
 # Begin Source File
 
 SOURCE=.\try_macros.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TSS_Resources.h
 # End Source File
 # Begin Source File
 
