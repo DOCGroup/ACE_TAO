@@ -31,8 +31,8 @@ FILES = be/be_array \
         be/be_constant \
         be/be_enum \
         be/be_enum_val \
-	be/be_event \
-	be/be_event_fwd \
+	be/be_eventtype \
+	be/be_eventtype_fwd \
         be/be_exception \
         be/be_expression \
         be/be_factory \
