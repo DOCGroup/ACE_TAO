@@ -9,6 +9,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "tao/BoundsC.h"
+#include "tao/Typecode.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/BoundsC.i"

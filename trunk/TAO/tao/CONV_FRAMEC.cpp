@@ -19,6 +19,7 @@
 
 #include "tao/CONV_FRAMEC.h"
 #include "tao/Any.h"
+#include "tao/Typecode.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/CONV_FRAMEC.i"

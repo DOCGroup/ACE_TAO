@@ -125,22 +125,6 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
   this->wchar_translator_ = wchar_translator;
 }
 
-CORBA::TypeCode::traverse_status
-TAO_OutputCDR::append (CORBA::TypeCode_ptr tc,
-                       TAO_InputCDR *src,
-                       CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object (tc,
-                                                           ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  if (mobj == 0)
-    return CORBA::TypeCode::TRAVERSE_STOP;
-
-  return mobj->append (tc, src, this, ACE_TRY_ENV);
-}
-
 // ****************************************************************
 
 TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
@@ -168,21 +152,4 @@ TAO_InputCDR::init_translators (void)
       this->char_translator_ = this->orb_core_->from_iso8859 ();
       this->wchar_translator_ = this->orb_core_->from_unicode ();
     }
-}
-
-CORBA::TypeCode::traverse_status
-TAO_InputCDR::skip (CORBA::TypeCode_ptr tc,
-                    CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object
-    (tc, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  if (mobj == 0)
-    return CORBA::TypeCode::TRAVERSE_STOP;
-
-  return mobj->skip (tc,
-                     this,
-                     ACE_TRY_ENV);
 }

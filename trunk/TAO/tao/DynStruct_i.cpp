@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
-
 // ====================================================================
 //
 // = LIBRARY
@@ -23,6 +21,7 @@
 #include "tao/DynStruct_i.h"
 #include "tao/InconsistentTypeCodeC.h"
 #include "tao/ORB.h"
+#include "tao/Marshal.h"
 
 // Constructors and destructor
 
@@ -77,7 +76,10 @@ TAO_DynStruct_i::TAO_DynStruct_i (const CORBA_Any& any)
               ACE_TRY_CHECK;
 
               // Move to the next field in the CDR stream.
-              cdr.skip (field_tc.in ());
+              (void) TAO_Marshal_Object::perform_skip (field_tc.in (),
+                                                       &cdr,
+                                                       ACE_TRY_ENV);
+              ACE_TRY_CHECK;
             }
         }
       else
@@ -345,7 +347,10 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
           ACE_CHECK;
 
           // Move to the next field in the CDR stream.
-          cdr.skip (field_tc.in ());
+          (void) TAO_Marshal_Object::perform_skip (field_tc.in (),
+                                                   &cdr,
+                                                   ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
     }
   else
@@ -394,9 +399,10 @@ TAO_DynStruct_i::to_any (CORBA::Environment& ACE_TRY_ENV)
       TAO_InputCDR field_cdr (field_mb,
                               field_any->_tao_byte_order ());
 
-      out_cdr.append (field_tc,
-                      &field_cdr,
-                      ACE_TRY_ENV);
+      (void) TAO_Marshal_Object::perform_append (field_tc,
+                                                 &field_cdr,
+                                                 &out_cdr,
+                                                 ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
 

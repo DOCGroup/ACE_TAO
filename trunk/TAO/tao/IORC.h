@@ -19,7 +19,7 @@
 #include "tao/CDR.h"
 #include "tao/Object.h"
 #include "tao/Sequence.h"
-#include "tao/Sequence_T.h"
+#include "tao/Exception.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

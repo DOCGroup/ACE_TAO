@@ -345,9 +345,10 @@ CORBA_Any::_tao_encode (TAO_OutputCDR &cdr,
   TAO_InputCDR in (this->cdr_,
                    this->byte_order_,
                    orb_core);
-  cdr.append (this->type_,
-              &in,
-              ACE_TRY_ENV);
+  TAO_Marshal_Object::perform_append (this->type_,
+                                      &in,
+                                      &cdr,
+                                      ACE_TRY_ENV);
 }
 
 void
@@ -366,7 +367,7 @@ CORBA_Any::_tao_decode (TAO_InputCDR &cdr,
 
   // Skip over the next aregument.
   CORBA::TypeCode::traverse_status status =
-    cdr.skip (this->type_, ACE_TRY_ENV);
+    TAO_Marshal_Object::perform_skip (this->type_, &cdr, ACE_TRY_ENV);
   ACE_CHECK;
 
   if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -1596,9 +1597,10 @@ operator<< (TAO_OutputCDR& cdr,
     {
       TAO_InputCDR input (x._tao_get_cdr (),
                           x._tao_byte_order ());
-      cdr.append (x.type (),
-                  &input,
-                  ACE_TRY_ENV);
+      TAO_Marshal_Object::perform_append (x.type (),
+                                          &input,
+                                          &cdr,
+                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA_Exception, ex)
@@ -1629,7 +1631,7 @@ operator>> (TAO_InputCDR &cdr,
 
       // Skip over the next aregument.
       CORBA::TypeCode::traverse_status status =
-        cdr.skip (tc.in (), ACE_TRY_ENV);
+        TAO_Marshal_Object::perform_skip (tc.in (), &cdr, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)

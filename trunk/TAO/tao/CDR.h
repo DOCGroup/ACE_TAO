@@ -1,9 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-// $Id$
-
-
 // ============================================================================
 //
 // = LIBRARY
@@ -53,8 +50,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Typecode.h"
 
 class TAO_ORB_Core;
 
@@ -119,13 +114,6 @@ public:
 
   ~TAO_OutputCDR (void);
   // Destructor.
-
-  CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
-                                           TAO_InputCDR *src,
-                                           CORBA_Environment &ACE_TRY_ENV =
-                                           TAO_default_environment ());
-  // Append the contents of the CDR stream based on information
-  // described by <tc>; returning any errors in <ACE_TRY_ENV>.
 
   // @@ TODO: do we want a special method to write an array of
   // strings and wstrings?
@@ -220,12 +208,6 @@ public:
   // destructor
 
   // = TAO specific methods.
-
-  CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                         CORBA_Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ());
-  // Skip the contents of the CDR stream based on information
-  // described by <tc>; returning any errors in <ACE_TRY_ENV>.
 
   TAO_ORB_Core *orb_core (void) const;
   // Accessor
