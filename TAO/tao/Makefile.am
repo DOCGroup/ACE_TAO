@@ -151,6 +151,7 @@ ORB_CORE_FILES = \
   Reply_Dispatcher.cpp \
   Synch_Reply_Dispatcher.cpp \
   Asynch_Reply_Dispatcher.cpp \
+  Asynch_Timeout_Handler.cpp \
   Dynamic_Adapter.cpp \
   IOPC.cpp \
   IOPS.cpp \
@@ -390,6 +391,7 @@ HEADER_FILES = \
   Reply_Dispatcher.h \
   Synch_Reply_Dispatcher.h \
   Asynch_Reply_Dispatcher.h \
+  Asynch_Timeout_Handler.h \
   WrongTransactionC.h \
   Dynamic_Adapter.h \
   corba.h \

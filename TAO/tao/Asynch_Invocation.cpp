@@ -9,7 +9,9 @@ ACE_RCSID(tao, Asynch_Invocation, "$Id$")
 #include "tao/Stub.h"
 #include "tao/Object_KeyC.h"
 #include "tao/Transport_Mux_Strategy.h"
-#include "Transport.h"
+#include "tao/Transport.h"
+#include "tao/Asynch_Timeout_Handler.h"
+#include "tao/try_macros.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Asynch_Invocation.i"
@@ -89,20 +91,51 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   int retval =
     this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
-                                                                             this->rd_);
+                                               this->rd_);
   if (retval == -1)
     {
       // @@ What is the right way to handle this error?
       this->close_connection ();
 
       ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
-                                                                       CORBA::COMPLETED_NO),
-                                          TAO_INVOKE_EXCEPTION);
+                                         CORBA::COMPLETED_NO),
+                        TAO_INVOKE_EXCEPTION);
     }
+
+  // AMI Timeout Handling Begin
+
+  if (this->max_wait_time_ != 0)
+    {
+      ACE_Reactor *r = this->orb_core_->reactor ();
+
+      // @@ Michael: Optimization: The timeout handler should actually 
+      //             be allocated on the stack in the reply handler!
+      TAO_Asynch_Timeout_Handler *timeout_handler;
+      ACE_NEW_THROW_EX (timeout_handler,
+                        TAO_Asynch_Timeout_Handler (this->rd_,
+                                                    this->transport_->tms (),
+                                                    this->op_details_.request_id ()),
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (TAO_DEFAULT_MINOR_CODE,
+                                                                   ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
+
+      // Let the reply dispatcher remember the timeout_handler
+      this->rd_->timeout_handler (timeout_handler);
+
+      r->schedule_timer (timeout_handler,  // handler
+                         0,                // arg
+                         *this->max_wait_time_);
+    }
+
+  // AMI Timeout Handling End
+
+
 
   // Just send the request, without trying to wait for the reply.
   retval = TAO_GIOP_Invocation::invoke (0,
-                                                                      ACE_TRY_ENV);
+                                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
 
   if (retval != TAO_INVOKE_OK)

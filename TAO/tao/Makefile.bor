@@ -24,6 +24,7 @@ OBJFILES = \
 	$(OBJDIR)\append.obj \
 	$(OBJDIR)\Asynch_Invocation.obj \
 	$(OBJDIR)\Asynch_Reply_Dispatcher.obj \
+	$(OBJDIR)\Asynch_Timeout_Handler.obj \
 	$(OBJDIR)\BiDir_ORBInitializer.obj \
 	$(OBJDIR)\BiDir_Policy_i.obj \
 	$(OBJDIR)\BiDir_PolicyFactory.obj \
