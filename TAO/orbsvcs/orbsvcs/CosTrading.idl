@@ -174,9 +174,9 @@ module CosTrading {
 		enum HowManyProps { none, some, all };
 
 		union SpecifiedProps switch ( HowManyProps ) {
-		        case none: long corba_long1;
+		        case none: boolean none_;
 			case some: PropertyNameSeq prop_names;
-			case all: long corba_long2;
+			case all: boolean all_;
 		};
 
 		exception IllegalPreference {
@@ -573,7 +573,7 @@ module CosTradingDynamic {
 	};
 
 	struct DynamicProp {
-#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+#ifdef TAO_HAS_DYNAMIC_PROPERTY_BUG
 	         string eval_if;
 #else
 		 DynamicPropEval eval_if;
