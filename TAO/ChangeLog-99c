@@ -3,6 +3,7 @@ Thu Sep  9 21:30:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* tao/ORB.cpp (string_to_object):
 
 	  If a NULL string is passed as an argument, throw an exception.
+	  [Bug 316]
 
 Thu Sep  9 20:49:17 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
