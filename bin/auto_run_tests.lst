@@ -114,6 +114,7 @@ TAO/tests/ORB_shutdown/run_test.pl
 TAO/tests/DSI_Gateway/run_test.pl: !MINIMUM
 TAO/tests/DynAny_Test/run_test.pl: !MINIMUM
 TAO/tests/Connection_Purging/run_test.pl: !ST
+TAO/tests/Server_Connection_Purging/run_test.pl: !Win32
 TAO/tests/LongUpcalls/run_test.pl: !MINIMUM
 TAO/tests/Reliable_Oneways/run_test.pl: !MINIMUM
 TAO/tests/Blocking_Sync_None/run_test.pl: !MINIMUM
