@@ -1,3 +1,12 @@
+Thu Jan 25 10:14:01 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tao/PortableServer/ORB_Manager.h: Changed "servant_name" to
+	  "object_name" for activate_under_child_poa().  Thanks to
+ 	  Jean-Francois Daune <Daune@IBA.be> for reporting this
+ 	  discrepancy.
+  
+        * THANKS: We recently added our 1,100 contributor to ACE+TAO!
+	
 Thu Jan 25 10:15:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/DII_Cubit/client.dsp:
@@ -9,7 +18,7 @@ Wed Jan 24 17:00:52 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Transport.h:
 	  Document the design for the new treatment of outgoing data,
-	  basically it should supports non-blocking (reactive) I/O, queued
+	  basically it should support non-blocking (reactive) I/O, queued
 	  messages, urgent data, per-message timeouts and multiple threads
 	  waiting on outgoing messages (ala Leader/Followers).
 

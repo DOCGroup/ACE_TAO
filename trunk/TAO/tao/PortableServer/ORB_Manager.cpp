@@ -214,7 +214,7 @@ TAO_ORB_Manager::deactivate (const char *id,
 // Activate the object with the object_name under the child POA.
 
 char *
-TAO_ORB_Manager::activate_under_child_poa (const char* object_name,
+TAO_ORB_Manager::activate_under_child_poa (const char *object_name,
                                            PortableServer::Servant servant,
                                            CORBA_Environment& ACE_TRY_ENV)
 {

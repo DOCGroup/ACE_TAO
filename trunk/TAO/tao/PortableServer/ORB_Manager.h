@@ -103,13 +103,13 @@ public:
                        TAO_default_environment ());
   // Deactivate object in RootPOA.
 
-  char *activate_under_child_poa (const char *servant_name,
+  char *activate_under_child_poa (const char *object_name,
                                   PortableServer::Servant servant,
                                   CORBA_Environment &ACE_TRY_ENV =
                                      TAO_default_environment ());
   // Precondition: init_child_poa has been called.  Activate <servant>
   // using the POA <activate_object_with_id> created from the string
-  // servant_name. Users should call this to activate objects under
+  // <object_name>. Users should call this to activate objects under
   // the child_poa.
 
   void deactivate_under_child_poa (const char *id,

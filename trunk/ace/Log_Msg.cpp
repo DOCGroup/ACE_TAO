@@ -721,8 +721,8 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
 
 #if defined (ACE_HAS_WCHAR)
 /**
- * Since this is the ANTI_TCHAR version, we need to convert 
- * the format string over.  
+ * Since this is the ANTI_TCHAR version, we need to convert
+ * the format string over.
  */
 ssize_t
 ACE_Log_Msg::log (ACE_Log_Priority log_priority,
@@ -775,7 +775,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   // If conditional values were set and the log priority is correct,
   // then the values are actually set.
   if (conditional_values)
-    this->set (this->conditional_values_.file_,   
+    this->set (this->conditional_values_.file_,
                this->conditional_values_.line_,
                this->conditional_values_.op_status_,
                this->conditional_values_.errnum_,
@@ -876,7 +876,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'N':
                     // @@ UNICODE
                   ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%s"),
-                                   this->file () ? 
+                                   this->file () ?
                                           ACE_TEXT_CHAR_TO_TCHAR (this->file ())
                                         : ACE_LIB_TEXT ("<unknown file>"));
                   type = SKIP_SPRINTF;
@@ -1035,7 +1035,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'I': // Indent with nesting_depth*width spaces
                   type = SKIP_SPRINTF;
                   if (!wpc)
-                    w[wpc++] = 1;
+                    w[wpc++] = ACE_Trace::get_nesting_indent ();
                   w[wpc-1] *= this->trace_depth_;
                   ACE_OS::memset (bp, ' ', w[wpc-1]);
                   bp += w[wpc - 1];
@@ -1155,7 +1155,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
                   break;
                 case 'C':
-                  type = 1 + wpc; 
+                  type = 1 + wpc;
 #if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                   fp[1] = 'S';
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
@@ -1187,13 +1187,13 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   type = SKIP_SPRINTF;
                   ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%lc"), va_arg (argp, wint_t));
 #else /* ACE_WIN32 */
-                  fp[1] = 'u';  // Since this isn't really supported well                 
+                  fp[1] = 'u';  // Since this isn't really supported well
 #endif /* ACE_WIN32 */
                   break;
                 case 'c':
                   type = 4 + wpc;
 #if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                  fp[1] = 'C';  
+                  fp[1] = 'C';
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
                   break;
                 case 'd': case 'i': case 'o':
