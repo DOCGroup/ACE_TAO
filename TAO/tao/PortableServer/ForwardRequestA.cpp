@@ -42,7 +42,6 @@ static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_PortableServe
     { "forward_reference", &CORBA::_tc_Object }
     
   };
-
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
