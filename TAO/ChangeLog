@@ -1,3 +1,10 @@
+Wed Nov 24 17:08:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/run_test.pl:
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/run_test.pl:
+
+	  New files.
+
 Wed Nov 24 17:01:22 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/TAO_Service/README:
