@@ -1,3 +1,20 @@
+Thu May  1 15:03:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao_IFR_Client/IFR_BaseC.cpp:
+        * tao_IFR_Client/IFR_BaseC.h:
+        * tao_IFR_Client/IFR_BaseC.i:
+        * tao_IFR_Client/IFR_BasicC.cpp:
+        * tao_IFR_Client/IFR_BasicC.h:
+        * tao_IFR_Client/IFR_BasicC.i:
+        * tao_IFR_Client/IFR_ComponentsC.cpp:
+        * tao_IFR_Client/IFR_ComponentsC.h:
+        * tao_IFR_Client/IFR_ComponentsC.i:
+        * tao_IFR_Client/IFR_ExtendedC.cpp:
+        * tao_IFR_Client/IFR_ExtendedC.h:
+        * tao_IFR_Client/IFR_ExtendedC.i:
+
+          Regenerated these files.
+
 Thu May  1 14:16:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTCORBA/RTCORBAC.cpp:
