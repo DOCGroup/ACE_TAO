@@ -44,6 +44,8 @@ TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
 
 #define TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "PortableServerC.h"
+#undef TAO_PORTABLESERVER_SAFE_INCLUDE
+
 #include "AdapterActivatorC.h"
 #include "POAManagerC.h"
 #include "PS_CurrentC.h"
@@ -51,7 +53,6 @@ TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
 #include "ServantActivatorC.h"
 #include "ServantLocatorC.h"
 #include "ServantManagerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"
 

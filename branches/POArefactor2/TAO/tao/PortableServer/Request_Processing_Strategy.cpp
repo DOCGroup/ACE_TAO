@@ -112,12 +112,13 @@ namespace TAO
     }
 
     PortableServer::Servant
-    AOM_Only_Request_Processing_Strategy::locate_servant (const char *operation,
-                        const PortableServer::ObjectId &system_id,
-                        TAO::Portable_Server::Servant_Upcall &servant_upcall,
-                        TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                        int &wait_occurred_restart_call
-                        ACE_ENV_ARG_DECL)
+    AOM_Only_Request_Processing_Strategy::locate_servant (
+      const char *operation,
+      const PortableServer::ObjectId &system_id,
+      TAO::Portable_Server::Servant_Upcall &servant_upcall,
+      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
+      int &wait_occurred_restart_call
+      ACE_ENV_ARG_DECL)
     {
       ACE_UNUSED_ARG (operation);
       ACE_UNUSED_ARG (system_id);
@@ -219,12 +220,13 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Default_Servant_Request_Processing_Strategy::locate_servant (const char *operation,
-                        const PortableServer::ObjectId &system_id,
-                        TAO::Portable_Server::Servant_Upcall &servant_upcall,
-                        TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                        int &wait_occurred_restart_call
-                        ACE_ENV_ARG_DECL)
+    Default_Servant_Request_Processing_Strategy::locate_servant (
+      const char *operation,
+      const PortableServer::ObjectId &system_id,
+      TAO::Portable_Server::Servant_Upcall &servant_upcall,
+      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
+      int &wait_occurred_restart_call
+      ACE_ENV_ARG_DECL)
     {
       ACE_UNUSED_ARG (operation);
       ACE_UNUSED_ARG (system_id);
@@ -348,31 +350,34 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Servant_Activator_Request_Processing_Strategy::locate_servant (const char *operation,
-                        const PortableServer::ObjectId &system_id,
-                        TAO::Portable_Server::Servant_Upcall &servant_upcall,
-                        TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                        int &wait_occurred_restart_call
-                        ACE_ENV_ARG_DECL)
+    Servant_Activator_Request_Processing_Strategy::locate_servant (
+      const char *operation,
+      const PortableServer::ObjectId &system_id,
+      TAO::Portable_Server::Servant_Upcall &servant_upcall,
+      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
+      int &wait_occurred_restart_call
+      ACE_ENV_ARG_DECL)
     {
-  // If the POA has the USE_SERVANT_MANAGER policy, a servant manager
-  // has been associated with the POA so the POA will invoke incarnate
-  // or preinvoke on it to find a servant that may handle the
-  // request. (The choice of method depends on the NON_RETAIN or
-  // RETAIN policy of the POA.) If no servant manager has been
-  // associated with the POA, the POA raises the OBJ_ADAPTER system
-  // exception.
-  //
-  // If a servant manager is located and invoked, but the servant
-  // manager is not directly capable of incarnating the object, it
-  // (the servant manager) may deal with the circumstance in a variety
-  // of ways, all of which are the application's responsibility.  Any
-  // system exception raised by the servant manager will be returned
-  // to the client in the reply. In addition to standard CORBA
-  // exceptions, a servant manager is capable of raising a
-  // ForwardRequest exception. This exception includes an object
-  // reference.
-  //
+      ACE_UNUSED_ARG (operation);
+
+      // If the POA has the USE_SERVANT_MANAGER policy, a servant manager
+      // has been associated with the POA so the POA will invoke incarnate
+      // or preinvoke on it to find a servant that may handle the
+      // request. (The choice of method depends on the NON_RETAIN or
+      // RETAIN policy of the POA.) If no servant manager has been
+      // associated with the POA, the POA raises the OBJ_ADAPTER system
+      // exception.
+      //
+      // If a servant manager is located and invoked, but the servant
+      // manager is not directly capable of incarnating the object, it
+      // (the servant manager) may deal with the circumstance in a variety
+      // of ways, all of which are the application's responsibility.  Any
+      // system exception raised by the servant manager will be returned
+      // to the client in the reply. In addition to standard CORBA
+      // exceptions, a servant manager is capable of raising a
+      // ForwardRequest exception. This exception includes an object
+      // reference.
+      //
       if (CORBA::is_nil (this->servant_activator_.in ()))
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -563,14 +568,17 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Servant_Locator_Request_Processing_Strategy::locate_servant (const char *operation,
-                        const PortableServer::ObjectId &system_id,
-                        TAO::Portable_Server::Servant_Upcall &servant_upcall,
-                        TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                        int &wait_occurred_restart_call
-                        ACE_ENV_ARG_DECL)
+    Servant_Locator_Request_Processing_Strategy::locate_servant (
+      const char *operation,
+      const PortableServer::ObjectId &system_id,
+      TAO::Portable_Server::Servant_Upcall &servant_upcall,
+      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
+      int &wait_occurred_restart_call
+      ACE_ENV_ARG_DECL)
     {
       ACE_UNUSED_ARG (wait_occurred_restart_call);
+      ACE_UNUSED_ARG (system_id);
+
       // If the POA has the USE_SERVANT_MANAGER policy, a servant manager
       // has been associated with the POA so the POA will invoke incarnate
       // or preinvoke on it to find a servant that may handle the
@@ -642,9 +650,7 @@ namespace TAO
 
       // Success
       return servant;
-
     }
-
   }
 }
 

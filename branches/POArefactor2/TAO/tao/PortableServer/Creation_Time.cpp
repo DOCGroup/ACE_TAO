@@ -8,4 +8,3 @@ ACE_RCSID (PortableServer,
 # include "Creation_Time.inl"
 #endif /* ! __ACE_INLINE__ */
 
-

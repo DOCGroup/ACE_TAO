@@ -24,22 +24,15 @@
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/poa_macros.h"
 #include "tao/PortableServer/Servant_Location.h"
+#include "tao/PortableServer/Default_Policy_Validator.h"
+#include "tao/PortableServer/POA_Policy_Set.h"
 
 #include "tao/Adapter.h"
 #include "tao/Server_Strategy_Factory.h"
-
-// Local Object
 #include "tao/LocalObject.h"
 
 #include "ace/Reverse_Lock_T.h"
 #include "ace/Condition_Thread_Mutex.h"
-
-// Policy Validators
-#include "Default_Policy_Validator.h"
-
-// Policy Set
-#include "POA_Policy_Set.h"
-
 #include "ace/Map_T.h"
 
 #if defined(_MSC_VER)
