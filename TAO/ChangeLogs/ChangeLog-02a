@@ -1,3 +1,8 @@
+Fri Sep 28 13:52:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connection_Handler.cpp (handle_input): Fixed a unused
+	  variable warning.
+
 Fri Sep 28 12:33:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
