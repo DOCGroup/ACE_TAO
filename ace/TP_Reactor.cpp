@@ -91,6 +91,14 @@ ACE_TP_Reactor::max_notify_iterations (int /*iterations*/)
               "(%P|%t) This has no effect in the TP_Reactor.. \n"));
 }
 
+int
+ACE_TP_Reactor::max_notify_iterations (void)
+{
+  ACE_TRACE ("ACE_TP_Reactor::max_notify_iterations");
+
+  return 0;
+}
+
 
 int
 ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
