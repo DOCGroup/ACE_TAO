@@ -154,10 +154,11 @@ TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_LYNX_PPC/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_LYNX_PPC
 
-[SunOS_GCC272]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_SUNOS_GCC272/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_SUNOS_GCC272
+# Build not running anymore
+#[SunOS_GCC272]
+#TYPE = TIMEONLY
+#LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_SUNOS_GCC272/
+#WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_SUNOS_GCC272
 
 [RedHat_7.0_Full]
 TYPE = TIMEONLY
