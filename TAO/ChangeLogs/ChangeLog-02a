@@ -1,3 +1,9 @@
+Mon Apr 23 11:49:01 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+          Added a sanity check for the length of sequences not to exceed
+          the length of the stream - cf. bug 58.
+
 Mon Apr 23 10:40:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/MT_Timeout/client.cpp:
