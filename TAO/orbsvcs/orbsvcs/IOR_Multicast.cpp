@@ -76,15 +76,14 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   // The header has the length of the data following it.
   CORBA::Short header;
   ACE_UINT16 remote_port;
+  
+  char * name;
+  ACE_NEW_RETURN (name, char [BUFSIZ], 0);
 
-  char *name;
-  ACE_NEW_RETURN (name,
-                  char [BUFSIZ],
-                  0);
   CORBA::String_var service_name (name);
-
+  
   ACE_INET_Addr remote_addr;
-
+  
   // Take a peek at the header and get the length of data in bytes.
   ssize_t n = this->mcast_dgram_.recv (&header,
                                        sizeof(header),
@@ -121,7 +120,11 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                        "TAO_IOR_Multicast::handle_input recv = %d\n",
 		       n), 
 		      0);
-  else if (TAO_debug_level > 0)
+
+  // Null terminate.
+  service_name [header - sizeof (ACE_UINT16)] = 0;
+  
+  if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"(%P|%t) Received multicast.\n"
 		"Service Name received : %s\n"
@@ -131,11 +134,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   
   ACE_CString ior (this->ior_);
   
-  // Null terminate.
-  service_name [header - sizeof (ACE_UINT16)] = 0;
-  
-  if (ACE_OS::strcmp (service_name.in (),
-                      "NameService") != 0)
+  if (ACE_OS::strcmp (service_name.in (), "NameService") != 0)
     {
       // The client has requested an IOR other than for the Name
       // Service.  Lookup the table for the IOR. The call to find_ior
@@ -178,3 +177,4 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                 result));
   return 0;
 }
+
