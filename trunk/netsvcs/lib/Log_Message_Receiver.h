@@ -143,7 +143,7 @@ public:
   void log_record (const char *hostname,
                    ACE_Log_Record &record);  
 private:
-  void operator= (const Log_Message_Receiver<ACE_SYNCH_2> &rhs);
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const Log_Message_Receiver<ACE_SYNCH_2> &rhs))
   
   // Attributes.
   Log_Message_Receiver_Impl<ACE_SYNCH_2> *receiver_impl_;
@@ -168,10 +168,6 @@ private:
   Log_Message_Receiver_Impl (void);
   ~Log_Message_Receiver_Impl (void);
   
-  // = Not implemeted
-  Log_Message_Receiver_Impl (const Log_Message_Receiver_Impl<ACE_SYNCH_2> &rhs);
-  void operator=(const Log_Message_Receiver_Impl<ACE_SYNCH_2> &rhs);
-    
   typedef ACE_Guard<ACE_SYNCH_MUTEX_T> Guard;
   // Attributes
   int count_;
@@ -180,6 +176,10 @@ private:
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   static ACE_SYNCH_MUTEX_T copy_lock_;
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+
+  // = Not implemeted
+  ACE_UNIMPLEMENTED_FUNC (Log_Message_Receiver_Impl (const Log_Message_Receiver_Impl<ACE_SYNCH_2> &rhs))
+  ACE_UNIMPLEMENTED_FUNC (void operator=(const Log_Message_Receiver_Impl<ACE_SYNCH_2> &rhs))
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
