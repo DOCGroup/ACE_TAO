@@ -30,7 +30,7 @@
 
 ACE_RCSID(DOVEMIB, DOVEMIB, "$Id$")
 
-static const char usage [] = 
+static const char usage [] =
 "[-? |\n"
 "            [-O[RBport] ORB port number]"
 "            [-m <count> of messages to receive [100]]"
@@ -47,11 +47,11 @@ MIB_Consumer::MIB_Consumer (void)
 : anyAnalyser_ (input_file_name) {
 }
 
-int 
+int
 MIB_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
                               const char *my_name) {
   ACE_TRY_NEW_ENV
-	{
+        {
     // Get a Scheduler.
 
     RtecScheduler::Scheduler_ptr server =
@@ -124,7 +124,7 @@ MIB_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
 }
 
 void
-MIB_Consumer::disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+MIB_Consumer::disconnect_push_consumer (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -167,10 +167,10 @@ MIB_Consumer::push (const RtecEventComm::EventSet &events,
       if (events_received_ == 1) {
         ACE_DEBUG ((LM_DEBUG, "MIB Consumer: received an event, going to be mute.\n"));
       }
- 
+
       ACE_TRY
       {
-        // print the time stamps 
+        // print the time stamps
         ACE_hrtime_t creation;
         ORBSVCS_Time::TimeT_to_hrtime (creation,
                                        events[i].header.creation_time);
@@ -186,7 +186,7 @@ MIB_Consumer::push (const RtecEventComm::EventSet &events,
         anyAnalyser_.printTimeStamp (creation, ec_recv, ec_send);
 
         if (events[i].data.any_value.any_owns_data ())
-        { 
+        {
           void * void_ptr = ACE_OS::malloc (events[i].data.any_value.type()->size(ACE_TRY_ENV));
 
           TAO_InputCDR stream ((ACE_Message_Block *)events[i].data.any_value.value ());
@@ -200,18 +200,18 @@ MIB_Consumer::push (const RtecEventComm::EventSet &events,
             ACE_OS::free(void_ptr);
             return;
           }
-	      ACE_TRY_CHECK;
+              ACE_TRY_CHECK;
 
           // invoke the AnyAnalyser
-          anyAnalyser_.printAny (events[i].data.any_value.type(), void_ptr);               
+          anyAnalyser_.printAny (events[i].data.any_value.type(), void_ptr);
           ACE_OS::free(void_ptr);
         }
         else
-        {                          
+        {
           // invoke the AnyAnalyser
-          anyAnalyser_.printAny (events[i].data.any_value.type(), events[i].data.any_value.value());                         
+          anyAnalyser_.printAny (events[i].data.any_value.type(), events[i].data.any_value.value());
         }
-          
+
       }
       ACE_CATCHANY {
         ACE_ERROR ((LM_ERROR, "(%t)Error in extracting the Navigation and Weapons data.\n"));
@@ -226,7 +226,7 @@ MIB_Consumer::shutdown (void)
 {
   ACE_TRY_NEW_ENV
     {
-      // cause the AnyAnalyser to close the file 
+      // cause the AnyAnalyser to close the file
       anyAnalyser_.close();
 
       // Disconnect from the push supplier.
@@ -260,7 +260,7 @@ get_options (int argc, char *argv [])
 
   while ((opt = get_opt ()) != EOF)
   {
-    switch (opt) 
+    switch (opt)
       {
       case '?':
         ACE_DEBUG ((LM_DEBUG,
@@ -272,7 +272,7 @@ get_options (int argc, char *argv [])
       case 'f':
         input_file_name = get_opt.optarg;
 
-        if (!input_file_name || ACE_OS::strlen (input_file_name) == 0) {            
+        if (!input_file_name || ACE_OS::strlen (input_file_name) == 0) {
           input_file_name = 0;
           ACE_ERROR_RETURN ((LM_ERROR,
                               "%s: file name must be specified with -f option",
@@ -337,7 +337,7 @@ main (int argc, char *argv [])
         PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      PortableServer::POAManager_var poa_manager = 
+      PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -388,7 +388,7 @@ main (int argc, char *argv [])
 
       if (mIB_Consumer->open_consumer (ec.ptr (),
                                        "MIB_Consumer") == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, 
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "Someone was feeling introverted.\n"),
                           -1);
 
