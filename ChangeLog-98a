@@ -13,6 +13,9 @@ Wed Dec 03 06:26:14 1997  David L. Levine  <levine@cs.wustl.edu>
           moved ACE_Atomic_Op<ACE_Thread_Mutex, int> instantiation from
           ace/Future.cpp to where it is used.
 
+        * ace/OS.cpp (inet_aton): return 0 if addr argument is 0.  Thanks
+          to Wei for reporting this.
+
 Wed Dec 03 00:17:50 1997    <irfan@TWOSTEP>
 
 	* tests/test_config.h: Removed code for
