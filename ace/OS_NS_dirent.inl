@@ -1,6 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
+#include "ace/OS_Memory.h"
+
 ACE_INLINE void
 ACE_OS::closedir (ACE_DIR *d)
 {

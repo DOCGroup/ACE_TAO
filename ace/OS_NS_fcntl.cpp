@@ -9,6 +9,11 @@ ACE_RCSID(ace, OS_NS_fcntl, "$Id$")
 # include "ace/OS_NS_fcntl.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_Thread.h"
+#include "ace/OS_NS_macros.h"
+#include "ace/Object_Manager_Base.h"
+
 ACE_HANDLE
 ACE_OS::open (const char *filename,
               int mode,

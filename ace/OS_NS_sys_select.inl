@@ -1,6 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
+#include "ace/os_include/os_errno.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_macros.h"
 

@@ -7,6 +7,8 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_errno.h"
 #if defined (ACE_HAS_PRIOCNTL)
 #  include /**/ <sys/priocntl.h>
 #endif /* ACE_HAS_PRIOCNTL */
