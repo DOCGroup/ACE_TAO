@@ -1387,21 +1387,19 @@ TAO_ORB_Core::services_callbacks_init (void)
   // @@ Other service callbacks can be added here
 }
 
-#if 0
-int
-TAO_ORB_Core::service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
-                                          TAO_Profile *profile
-                                          ACE_ENV_ARG_DECL)
+TAO::Invocation_Status
+TAO_ORB_Core::service_raise_comm_failure (
+    IOP::ServiceContextList &clist,
+    TAO_Profile *profile
+    ACE_ENV_ARG_DECL)
 {
   if (this->ft_service_.service_callback ())
     {
       return this->ft_service_.service_callback ()->
-                 raise_comm_failure (invoke,
+                 raise_comm_failure (clist,
                                      profile
                                      ACE_ENV_ARG_PARAMETER);
     }
-
-  invoke->close_connection ();
 
   ACE_THROW_RETURN (CORBA::COMM_FAILURE (
       CORBA::SystemException::_tao_minor_code (
@@ -1412,17 +1410,18 @@ TAO_ORB_Core::service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
 }
 
 
-int
-TAO_ORB_Core::service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
-                                               TAO_Profile *profile
-                                               ACE_ENV_ARG_DECL)
+TAO::Invocation_Status
+TAO_ORB_Core::service_raise_transient_failure (
+    IOP::ServiceContextList &clist,
+    TAO_Profile *profile
+    ACE_ENV_ARG_DECL)
 {
   if (this->ft_service_.service_callback ())
     {
-      return this->ft_service_.service_callback ()->
-                 raise_transient_failure (invoke,
-                                          profile
-                                          ACE_ENV_ARG_PARAMETER);
+      return
+        this->ft_service_.service_callback ()->raise_transient_failure (clist,
+                                 profile
+                                 ACE_ENV_ARG_PARAMETER);
     }
 
   ACE_THROW_RETURN (CORBA::TRANSIENT (
@@ -1433,7 +1432,6 @@ TAO_ORB_Core::service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
         TAO_INVOKE_EXCEPTION);
 }
 
-#endif /*if 0*/
 void
 TAO_ORB_Core::service_context_list (
     TAO_Stub *stub,

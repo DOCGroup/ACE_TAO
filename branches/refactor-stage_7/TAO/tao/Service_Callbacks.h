@@ -25,6 +25,7 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
+#include "tao/Invocation_Utils.h"
 
 class TAO_Profile;
 class TAO_MProfile;
@@ -39,6 +40,11 @@ namespace CORBA
   typedef Object *Object_ptr;
 
   class Environment;
+}
+
+namespace IOP
+{
+  class ServiceContextList;
 }
 
 /**
@@ -86,15 +92,17 @@ public:
 
   /// Allow the service layer to decide whether the COMM_FAILURE
   /// exception should be thrown or a reinvocation is needed
-  virtual int raise_comm_failure (TAO_GIOP_Invocation *invoke,
-                                  TAO_Profile *profile
-                                  ACE_ENV_ARG_DECL);
+  virtual TAO::Invocation_Status raise_comm_failure (
+      IOP::ServiceContextList &clist,
+      TAO_Profile *profile
+      ACE_ENV_ARG_DECL);
 
   /// Allow the service layer to decide whether the TRANSIENT
   /// exception should be thrown or a reinvocation is needed
-  virtual int raise_transient_failure (TAO_GIOP_Invocation *invoke,
-                                       TAO_Profile *profile
-                                       ACE_ENV_ARG_DECL);
+  virtual TAO::Invocation_Status raise_transient_failure (
+      IOP::ServiceContextList &clist,
+      TAO_Profile *profile
+      ACE_ENV_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)

@@ -36,6 +36,7 @@
 #include "tao/ObjectKey_Table.h"
 #include "tao/Messaging_SyncScopeC.h"
 #include "tao/Object.h"
+#include "tao/Invocation_Utils.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "Interceptor_List.h"
@@ -44,6 +45,7 @@
 
 #include "ace/Thread_Manager.h"
 #include "ace/Lock_Adapter_T.h"
+
 
 // Forward declarations
 class TAO_Acceptor;
@@ -112,6 +114,11 @@ namespace CORBA
   typedef ORB *ORB_ptr;
 
   class PolicyList;
+}
+
+namespace IOP
+{
+  class ServiceContextList;
 }
 
 namespace PortableInterceptor
@@ -865,24 +872,23 @@ public:
   /// Return a reference to the Fault Tolerant service object.
   TAO_Fault_Tolerance_Service &fault_tolerance_service (void);
 
-#if 0
   /// Raise a comm failure exception if a service is not loaded, else
   /// delegate to the service to see what the service has to do for
   /// this case.
-  int service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
-                                  TAO_Profile *profile
-                                  ACE_ENV_ARG_DECL);
-
-
+  TAO::Invocation_Status service_raise_comm_failure (
+      IOP::ServiceContextList &clist,
+      TAO_Profile *profile
+      ACE_ENV_ARG_DECL);
 
   /// Raise a transient failure exception if a service is not loaded,
   /// else delegate to the service to see what the service has to do
   /// for this case.
-  int service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
-                                       TAO_Profile *profile
-                                       ACE_ENV_ARG_DECL);
+  TAO::Invocation_Status service_raise_transient_failure (
+      IOP::ServiceContextList &clist,
+      TAO_Profile *profile
+      ACE_ENV_ARG_DECL);
+
   //@}
-#endif /*if 0*/
 
   /**
    * @name Portable Interceptor Related Methods
