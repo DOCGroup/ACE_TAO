@@ -4,6 +4,15 @@
 
 # use lib "$ENV{ACE_ROOT}/bin";
 
+## TO-DO
+##   * Added command line options to selective compile library, et.al.
+##   * Allow controlling the "ignore error" from command line. (-k?)
+##   * Added cvs update.  Also controllable from command line.
+##   * Added building an running version_tests/.  It uses a different
+##     naming scheme.
+##   * Selectively build some specific configs from command line.
+##   * Control of build/rebuild all from command line.
+
 $Ignore_error = 0;
 
 @Lists= ("Win32 Debug",
