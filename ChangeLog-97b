@@ -4,12 +4,29 @@ Mon Oct 13 16:27:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 	* tests/Priority_Reactor_Test.cpp: 
 	  Fixed wrong header file, thanks to Irfan (irfan@cs.wustl.edu)
 
-Mon Oct 13 15:39:12 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
-
 	* examples/Shared_Malloc/test_persistence.cpp: 
 	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: 
 	  Added a couple of ACE_NOTREACHED, thanks to Torbjorn Lindgren
 	  <tl@funcom.no> for pointing out this one.
+
+	* ace/Priority_Reactor.cpp: 
+	  Added some more template specializations.
+
+	* tests/Priority_Reactor_Test.cpp: 
+	  Fixed a number of bugs: hostname not initialized when creating
+	  the server address.
+	  The Svc_Handler base class should be instantiated using the
+	  ACE_*_STREAM macros.
+	  The code for non-threaded platforms was broken.
+	  Thanks to Irfan <irfan@cs.wustl.edu>
+
+	* tests/Priority_Task_Test.cpp: 
+	  We use the new ACE_Sched_Priority_Iterator.
+
+	* include/makeinclude/platform_irix6.x-32_sgic++.GNU: 
+	* include/makeinclude/platform_irix6.x-n32_sgic++.GNU: 
+	  Removed this old config files, they have been superseeded by
+	  platform_irix6.x_sgic++.GNU.
 
 Mon Oct 13 15:41:32 1997  Steve Huston  <shuston@riverace.com>
 
@@ -27,24 +44,6 @@ Mon Oct 13 15:41:32 1997  Steve Huston  <shuston@riverace.com>
 
 	* tests/Conn_Test.h:
 	* tests/Process_Strategy_Test.h: Added #include "ace/SOCK_Stream.h"
-
-Mon Oct 13 14:10:30 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
-
-	* tests/Priority_Reactor_Test.cpp: 
-	  Fixed a number of bugs: hostname not initialized when creating
-	  the server address.
-	  The Svc_Handler base class should be instantiated using the
-	  ACE_*_STREAM macros.
-	  The code for non-threaded platforms was broken.
-	  Thanks to Irfan <irfan@cs.wustl.edu>
-
-	* tests/Priority_Task_Test.cpp: 
-	  We use the new ACE_Sched_Priority_Iterator.
-
-	* include/makeinclude/platform_irix6.x-32_sgic++.GNU: 
-	* include/makeinclude/platform_irix6.x-n32_sgic++.GNU: 
-	  Removed this old config files, they have been superseeded by
-	  platform_irix6.x_sgic++.GNU.
 
 Mon Oct 13 13:42:05 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
@@ -83,11 +82,6 @@ Mon Oct 13 12:58:01 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/Priority_Reactor_Test.cpp (handle_input): added
 	  ACE_UNUSED_ARG (h).
-
-Mon Oct 13 09:58:11 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
-
-	* ace/Priority_Reactor.cpp: 
-	  Added some more template specializations.
 
 Mon Oct 13 03:25:45 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
