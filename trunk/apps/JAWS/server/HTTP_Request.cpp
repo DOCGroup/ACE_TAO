@@ -25,6 +25,7 @@ HTTP_Request::HTTP_Request (void)
     method_ (0),
     uri_ (0),
     version_ (0),
+    path_ (0),
     cgi_ (0),
     cgi_env_ (0),
     cgi_args_ (0),
@@ -42,8 +43,11 @@ HTTP_Request::~HTTP_Request (void)
   ACE_OS::free (this->method_);
   ACE_OS::free (this->uri_);
   ACE_OS::free (this->version_);
+  ACE_OS::free (this->path_);
   ACE_OS::free (this->query_string_);
   ACE_OS::free (this->path_info_);
+
+  delete this->cgi_env_;
 }
 
 int
@@ -74,7 +78,7 @@ HTTP_Request::parse_request (ACE_Message_Block &mb)
 
   mb.wr_ptr (strlen(mb.rd_ptr ()) - mb.length ());
 
-  return (this->headers_.end_of_headers ()
+  return ((this->headers_.end_of_headers () || this->version () == 0)
           ? this->init (mb.rd_ptr (), mb.length ())
           : 0);
 }
@@ -115,6 +119,11 @@ HTTP_Request::parse_request_line (char * const request_line)
         {
           if (this->type () != HTTP_Request::GET)
             this->status_ = HTTP_Status_Code::STATUS_NOT_IMPLEMENTED;
+        }
+
+      if (this->path (this->uri ()) == 0)
+        {
+          this->status_ = HTTP_Status_Code::STATUS_NOT_FOUND;
         }
     }
 
@@ -164,13 +173,19 @@ HTTP_Request::version (void) const
   return this->version_;
 }
 
+const char *
+HTTP_Request::path (void) const
+{
+  return this->path_;
+}
+
 int
 HTTP_Request::cgi (void) const
 {
   return this->cgi_;
 }
 
-const char *
+const char * const *
 HTTP_Request::cgi_env (void) const
 {
   return this->cgi_env_;
@@ -203,6 +218,39 @@ int
 HTTP_Request::type (void) const
 {
   return type_;
+}
+
+const Headers &
+HTTP_Request::headers (void) const
+{
+  return this->headers_;
+}
+
+const char *
+HTTP_Request::header_strings (int index) const
+{
+  const char *hs = 0;
+  if (0 <= index && index < NUM_HEADER_STRINGS)
+    {
+      hs = this->header_strings_[index];
+    }
+
+  return hs;
+}
+
+const char *
+HTTP_Request::header_values (int index) const
+{
+  const char *hs = 0;
+  const char *hv = 0;
+
+  if (0 <= index && index < NUM_HEADER_STRINGS)
+    {
+      hs = this->header_strings_[index];
+      hv = this->headers_[hs];
+    }
+
+  return hs;
 }
 
 char *
@@ -382,24 +430,46 @@ HTTP_Request::cgi (char *uri_string)
       *cgi_question++ = '\0';
       if (*cgi_question != '\0')
         {
-          if (ACE_OS::strchr (cgi_question, '='))
-            this->cgi_env_ = cgi_question;
-          else
-            this->cgi_args_ = cgi_question;
-
           // We need the ``original'' QUERY_STRING for the environment.
           // We will substitute '+'s for spaces in the other copy.
 
           this->query_string_ = ACE_OS::strdup (cgi_question);
 
           char *ptr = cgi_question;
+          int count = 0;
           do
             {
               if (*ptr == '+') *ptr = ' ';
+              else if (*ptr == '&' || *ptr == '=') count++;
             }
           while (*++ptr);
+          count++;
 
-          HTTP_Helper::HTTP_decode_string (cgi_question);
+          if (ACE_OS::strchr (cgi_question, '='))
+            {
+              this->cgi_env_ = new char *[count+1];
+
+              int i = 0;
+              ptr = cgi_question;
+              do
+                {
+                  this->cgi_env_ [i++] = ptr;
+                  while (*ptr++)
+                    {
+                      if (*ptr == '&' || *ptr == '=')
+                        *ptr = '\0';
+                    }
+                  HTTP_Helper::HTTP_decode_string (this->cgi_env_[i-1]);
+                }
+              while (i < count);
+
+              this->cgi_env_[count] = 0;
+            }
+          else
+            {
+              this->cgi_args_ = cgi_question;
+              HTTP_Helper::HTTP_decode_string (cgi_question);
+            }
         }
     }
 
@@ -411,4 +481,57 @@ HTTP_Request::cgi (char *uri_string)
     }
 
   return this->cgi_;
+}
+
+const char *
+HTTP_Request::path (const char *uri_string)
+{
+  char const *file_name = uri_string;
+ 
+  char buf[MAXPATHLEN+1];
+  buf[0] = '\0';
+
+  if (file_name == 0) return 0;
+
+  if (*file_name == '/')
+    {
+      file_name++;
+      if (*file_name == '~')
+        {
+          char *ptr = buf;
+ 
+          while (*++file_name && *file_name != '/')
+            *ptr++ = *file_name;
+ 
+          *ptr = '\0';
+ 
+          if (ptr == buf)
+            ACE_OS::strcpy (buf, ACE_OS::getenv ("HOME"));
+          else
+            {
+#if !defined (ACE_WIN32) && !defined (VXWORKS)
+              char pw_buf[BUFSIZ];
+              struct passwd pw_struct;
+              if (ACE_OS::getpwnam_r (buf, &pw_struct, pw_buf, sizeof (pw_buf))
+                  == 0)
+                return 0;
+              ACE_OS::strcpy (buf, pw_struct.pw_dir);
+#endif /* NOT ACE_WIN32 AND NOT VXWORKS */
+            }
+ 
+          ACE_OS::strcat (buf, HTTP_Config::instance ()->user_dir ());
+          ACE_OS::strcat (buf, file_name);
+        }
+      else
+        {
+          // With a starting '/' but no '~'
+          ACE_OS::strcat (buf, HTTP_Config::instance ()->document_root ());
+          ACE_OS::strcat (buf, file_name - 1);
+        }
+    }
+
+  if (*buf != '\0')
+    this->path_ = ACE_OS::strdup (buf);
+
+  return this->path_;
 }

@@ -68,18 +68,50 @@ following command-line arguments:
 	By default, JAWS will used port 5432 with 5 threads and apply
 the synchronous thread pool strategy.
 
-	When given a GET request without an absolute path, JAWS
-assumes the file should be located somewhere relative to the directory
-the server was executed from.
+	JAWS also responds to several environment variables.  This is
+a temporary feature which will be replaced by a more general
+configuration file similar to NCSA httpd's.  The environment variables
+are:
+	JAWS_DOCUMENT_ROOT
+	  This is the starting point the server will use to look
+	  for files.
+	  Default value: the current directory of the server.
+
+	JAWS_CGI_PATH
+	  This is intended to be a ``:'' delimited list of paths
+	  (similar to your regular PATH environment variable) which
+	  describes the possible locations for CGI binaries.
+	  Default value: Any directory named ``cgi-bin''.
+
+	JAWS_USER_DIR
+	  This is the name of the subdirectory in a users home
+	  directory which contains publicly available WWW documents.
+	  Default value: ``.www''.
+
+	JAWS_DIR_INDEX
+	  The name of the file which is sent, if present, when the URL
+	  leads to a directory.
+	  Default value: ``index.html''.
 
 	You may test the server by executing telnet, opening a
 connection to the server machine on the server port.  For instance:
 
-	$ telnet open machinename 5432
+	$ telnet machinename 5432
 	Trying ###.###.###.###...
 	Connected to machinename.your.domain
 	Escape character is '^]'.
-	GET main.cpp
+	GET /main.cpp
+	// main.cpp
+	//...
+
+	Note that if you use an HTTP/1.0 get request, then you have
+to hit return twice before the file will be sent.  E.g.,
+
+	$ telnet machinename 5432
+	Trying ###.###.###.###...
+	Connected to machinename.your.domain
+	Escape character is '^]'.
+	GET /main.cpp HTTP/1.0
 
 	// main.cpp
 	//...
