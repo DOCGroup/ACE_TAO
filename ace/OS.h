@@ -181,6 +181,10 @@
 #define ACE_ALLOC_HOOK_DEFINE(CLASS) 
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
+// This file should be a link to the platform/compiler-specific
+// configuration file (e.g., config-sunos5-sunc++-4.x.h).  
+#include "ace/config.h"
+
 #if defined (ACE_LACKS_KEY_T)
 #if defined (ACE_WIN32)
 // Win32 doesn't use numeric values to name its semaphores, it uses
@@ -194,10 +198,6 @@ typedef int key_t;
 #if defined (VXWORKS)
 #include /**/ <vxWorks.h>
 #endif /* VXWORKS */
-
-// This file should be a link to the platform/compiler-specific
-// configuration file (e.g., config-sunos5-sunc++-4.x.h).  
-#include "ace/config.h"
 
 #if defined (ACE_LACKS_FILELOCKS)
 struct flock 
