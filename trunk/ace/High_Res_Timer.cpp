@@ -128,7 +128,9 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
         ACE_OS::gettimeofday () - actual_start;
 
       // Store the sample.
-      delta_hrtime.sample ((stop - start) / ACE_static_cast (ACE_UINT32, 1u));
+      delta_hrtime.sample (ACE_static_cast (ACE_UINT32,
+                                            (stop - start) /
+                                            ACE_static_cast (ACE_UINT32, 1u)));
       actual_sleeps.sample (actual_delta.msec () * 100u);
     }
 
