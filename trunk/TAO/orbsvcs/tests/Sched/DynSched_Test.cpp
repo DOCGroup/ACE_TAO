@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Strategy_Scheduler.h"
+#include "orbsvcs/Time_Utilities.h"
 #if defined (ACE_HAS_QUANTIFY)
 # include <quantify.h>
 #endif /* ACE_HAS_QUANTIFY */
@@ -13,52 +14,84 @@ ACE_RCSID(Sched, DynSched_Test, "$Id$")
 #define TEN_HZ     1000000
 #define TWENTY_HZ   500000
 
-typedef RtecScheduler::handle_t handle_t;
-typedef RtecScheduler::Dependency_Info Dependency_Info;
-typedef RtecScheduler::Preemption_Priority Preemption_Priority;
-typedef RtecScheduler::OS_Priority OS_Priority;
-typedef RtecScheduler::Sub_Priority Sub_Priority;
-typedef RtecScheduler::RT_Info RT_Info;
-typedef RtecScheduler::Time Time;
-typedef RtecScheduler::Period Period;
-typedef RtecScheduler::Info_Type Info_Type;
-typedef RtecScheduler::Dependency_Type Dependency_Type;
+class DynSched_Test
+  // = TITLE
+  //    DynSched Test wrapper
+  // = DESCRIPTION
+  //    Wraps static functions for test
+{
+public:
+
+  static void setup_rt_info (RtecScheduler::RT_Info &info,
+                             const char *entry_point,
+                             u_long period,
+                             RtecScheduler::Time execution,
+                             RtecScheduler::Criticality_t criticality,
+                             RtecScheduler::Importance_t importance,
+                             u_long threads);
+  // Initializes an RT_Info.
+
+  static int register_rt_info (ACE_DynScheduler &scheduler,
+                               RtecScheduler::RT_Info &info);
+  // Registers an RT_Info.
 
 
-static
+#if 0 /* not currently used */
+  static void setup_conjunction (RtecScheduler::RT_Info &info,
+                                 const char *entry_point);
+  // Sets up a conjunction.
+
+  static void setup_disjunction (RtecScheduler::RT_Info &info,
+                                 const char *entry_point);
+  // Sets up a disjunction.
+
+#endif /* not currently used */
+
+  static int run_schedule (ACE_Scheduler_Strategy &strategy,
+                           const char *output_filename,
+                           const char *heading);
+  // Creates the schedule, runs timelines.
+
+};
+
+
+// Initializes an RT_Info.
+
 void
-setup_rt_info (RT_Info &info, const char *entry_point, u_long period,
-               u_long execution, RtecScheduler::Criticality criticality,
-               RtecScheduler::Importance importance, u_long threads)
+DynSched_Test::setup_rt_info (RtecScheduler::RT_Info &info,
+                              const char *entry_point,
+                              u_long period,
+                              RtecScheduler::Time execution,
+                              RtecScheduler::Criticality_t criticality,
+                              RtecScheduler::Importance_t importance,
+                              u_long threads)
 {
   // copy the passed entry point string into the RT_Info
   info.entry_point = CORBA::string_dup (entry_point);
 
-  const TimeBase::ulonglong execution_time = {execution, 0};
-  const TimeBase::ulonglong zero = {0, 0};
-
   // initialize other values
   info.handle = 0;
-  info.worst_case_execution_time = execution_time;
-  info.typical_execution_time = execution_time;
-  info.cached_execution_time = zero;
+  info.worst_case_execution_time = execution;
+  info.typical_execution_time = execution;
+  info.cached_execution_time = ORBSVCS_Time::zero ();
   info.period = period;
   info.criticality = criticality;
   info.importance = importance;
-  info.quantum = zero;
+  info.quantum = ORBSVCS_Time::zero ();
   info.threads = threads;
   info.priority = 0;
-  info.dynamic_subpriority = 0;
-  info.static_subpriority = 0;
+  info.preemption_subpriority = 0;
   info.preemption_priority = 0;
   info.info_type = RtecScheduler::OPERATION;
   info.volatile_token = 0;
 }
 
-static
+
+// Registers an RT_Info.
+
 int
-register_rt_info (ACE_DynScheduler &scheduler,
-                  RtecScheduler::RT_Info &info)
+DynSched_Test::register_rt_info (ACE_DynScheduler &scheduler,
+                                 RtecScheduler::RT_Info &info)
 {
   int result = 0;
 
@@ -73,55 +106,55 @@ register_rt_info (ACE_DynScheduler &scheduler,
 }
 
 #if 0 /* not currently used */
-static
+
+// Sets up a conjunction.
+
 void
-setup_conjunction (RT_Info &info, const char *entry_point)
+DynSched_Test::setup_conjunction (RtecScheduler::RT_Info &info,
+                                  const char *entry_point)
 {
   // copy the passed entry point string into the RT_Info
   info.entry_point = CORBA::string_dup (entry_point);
 
-  const TimeBase::ulonglong zero = {0, 0};
-
   // initialize other values
   info.handle = 0;
-  info.worst_case_execution_time = zero;
-  info.typical_execution_time = zero;
-  info.cached_execution_time = zero;
+  info.worst_case_execution_time = ORBSVCS_Time::zero ();
+  info.typical_execution_time = ORBSVCS_Time::zero ();
+  info.cached_execution_time = ORBSVCS_Time::zero ();
   info.period = 0;
   info.criticality = RtecScheduler::VERY_LOW_CRITICALITY;
   info.importance = RtecScheduler::VERY_LOW_IMPORTANCE;
-  info.quantum = zero;
+  info.quantum = ORBSVCS_Time::zero ();
   info.threads = 0;
   info.priority = 0;
-  info.dynamic_subpriority = 0;
-  info.static_subpriority = 0;
+  info.preemption_subpriority = 0;
   info.preemption_priority = 0;
   info.info_type = RtecScheduler::CONJUNCTION;
   info.volatile_token = 0;
 }
 
-static
+
+// Sets up a disjunction.
+
 void
-setup_disjunction (RT_Info &info, const char *entry_point)
+DynSched_Test::setup_disjunction (RtecScheduler::RT_Info &info,
+                                  const char *entry_point)
 {
   // copy the passed entry point string into the RT_Info
   info.entry_point = CORBA::string_dup (entry_point);
 
-  const TimeBase::ulonglong zero = {0, 0};
-
   // initialize other values
   info.handle = 0;
-  info.worst_case_execution_time = zero;
-  info.typical_execution_time = zero;
-  info.cached_execution_time = zero;
+  info.worst_case_execution_time = ORBSVCS_Time::zero ();
+  info.typical_execution_time = ORBSVCS_Time::zero ();
+  info.cached_execution_time = ORBSVCS_Time::zero ();
   info.period = 0;
   info.criticality = RtecScheduler::VERY_LOW_CRITICALITY;
   info.importance = RtecScheduler::VERY_LOW_IMPORTANCE;
-  info.quantum = zero;
+  info.quantum = ORBSVCS_Time::zero ();
   info.threads = 0;
   info.priority = 0;
-  info.dynamic_subpriority = 0;
-  info.static_subpriority = 0;
+  info.preemption_subpriority = 0;
   info.preemption_priority = 0;
   info.info_type = RtecScheduler::DISJUNCTION;
   info.volatile_token = 0;
@@ -129,51 +162,52 @@ setup_disjunction (RT_Info &info, const char *entry_point)
 #endif /* not currently used */
 
 
-static
+// Creates the schedule, runs timelines.
+
 int
-run_schedule (ACE_Scheduler_Strategy &strategy,
-              const char *output_filename, const char *heading)
+DynSched_Test::run_schedule (ACE_Scheduler_Strategy &strategy,
+                             const char *output_filename,
+                             const char *heading)
 {
-//  RtecScheduler::RT_Info low_10, low_20, high_10, high_20;
   RtecScheduler::RT_Info low_1, low_5, low_10, low_20;
   RtecScheduler::RT_Info high_1, high_5, high_10, high_20;
 
   ACE_Strategy_Scheduler scheduler (strategy);
 
-  setup_rt_info (low_1,   "low_1",   ONE_HZ,    180000,
-                 RtecScheduler::LOW_CRITICALITY,
-                 RtecScheduler::HIGH_IMPORTANCE, 1);
-  setup_rt_info (low_5,   "low_5",   FIVE_HZ,   180000,
-                 RtecScheduler::LOW_CRITICALITY,
-                 RtecScheduler::HIGH_IMPORTANCE, 1);
-  setup_rt_info (low_10,  "low_10",  TEN_HZ,    180000,
-                 RtecScheduler::LOW_CRITICALITY,
-                 RtecScheduler::HIGH_IMPORTANCE, 1);
-  setup_rt_info (low_20,  "low_20",  TWENTY_HZ, 180000,
-                 RtecScheduler::LOW_CRITICALITY,
-                 RtecScheduler::HIGH_IMPORTANCE, 1);
-  setup_rt_info (high_1,  "high_1",  ONE_HZ,    180000,
-                 RtecScheduler::HIGH_CRITICALITY,
-                 RtecScheduler::LOW_IMPORTANCE,  1);
-  setup_rt_info (high_5,  "high_5",  FIVE_HZ,   180000,
-                 RtecScheduler::HIGH_CRITICALITY,
-                 RtecScheduler::LOW_IMPORTANCE,  1);
-  setup_rt_info (high_10, "high_10", TEN_HZ,    180000,
-                 RtecScheduler::HIGH_CRITICALITY,
-                 RtecScheduler::LOW_IMPORTANCE,  1);
-  setup_rt_info (high_20, "high_20", TWENTY_HZ, 180000,
-                 RtecScheduler::HIGH_CRITICALITY,
-                 RtecScheduler::LOW_IMPORTANCE,  1);
+  DynSched_Test::setup_rt_info (low_1,   "low_1", ONE_HZ,    180000,
+                                RtecScheduler::LOW_CRITICALITY,
+                                RtecScheduler::HIGH_IMPORTANCE, 1);
+  DynSched_Test::setup_rt_info (low_5,   "low_5",   FIVE_HZ,   180000,
+                                RtecScheduler::LOW_CRITICALITY,
+                                RtecScheduler::HIGH_IMPORTANCE, 1);
+  DynSched_Test::setup_rt_info (low_10,  "low_10",  TEN_HZ,    180000,
+                                RtecScheduler::LOW_CRITICALITY,
+                                RtecScheduler::HIGH_IMPORTANCE, 1);
+  DynSched_Test::setup_rt_info (low_20,  "low_20",  TWENTY_HZ, 180000,
+                                RtecScheduler::LOW_CRITICALITY,
+                                RtecScheduler::HIGH_IMPORTANCE, 1);
+  DynSched_Test::setup_rt_info (high_1,  "high_1",  ONE_HZ,    180000,
+                                RtecScheduler::HIGH_CRITICALITY,
+                                RtecScheduler::LOW_IMPORTANCE,  1);
+  DynSched_Test::setup_rt_info (high_5,  "high_5",  FIVE_HZ,   180000,
+                                RtecScheduler::HIGH_CRITICALITY,
+                                RtecScheduler::LOW_IMPORTANCE,  1);
+  DynSched_Test::setup_rt_info (high_10, "high_10", TEN_HZ,    180000,
+                                RtecScheduler::HIGH_CRITICALITY,
+                                RtecScheduler::LOW_IMPORTANCE,  1);
+  DynSched_Test::setup_rt_info (high_20, "high_20", TWENTY_HZ, 180000,
+                                RtecScheduler::HIGH_CRITICALITY,
+                                RtecScheduler::LOW_IMPORTANCE,  1);
 
   if (
-      register_rt_info (scheduler, low_1)   ||
-      register_rt_info (scheduler, low_5)   ||
-      register_rt_info (scheduler, low_10)  ||
-      register_rt_info (scheduler, low_20)  ||
-      register_rt_info (scheduler, high_1)  ||
-      register_rt_info (scheduler, high_5)  ||
-      register_rt_info (scheduler, high_10) ||
-      register_rt_info (scheduler, high_20))
+      DynSched_Test::register_rt_info (scheduler, low_1)   ||
+      DynSched_Test::register_rt_info (scheduler, low_5)   ||
+      DynSched_Test::register_rt_info (scheduler, low_10)  ||
+      DynSched_Test::register_rt_info (scheduler, low_20)  ||
+      DynSched_Test::register_rt_info (scheduler, high_1)  ||
+      DynSched_Test::register_rt_info (scheduler, high_5)  ||
+      DynSched_Test::register_rt_info (scheduler, high_10) ||
+      DynSched_Test::register_rt_info (scheduler, high_20))
   {
     return -1;
   }
@@ -181,7 +215,10 @@ run_schedule (ACE_Scheduler_Strategy &strategy,
 #if defined (ACE_HAS_QUANTIFY)
   quantify_start_recording_data ();
 #endif /* ACE_HAS_QUANTIFY */
-  ACE_DynScheduler::status_t status = scheduler.schedule ();
+
+  ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> anomaly_set;
+  ACE_DynScheduler::status_t status = scheduler.schedule (anomaly_set);
+
 #if defined (ACE_HAS_QUANTIFY)
   quantify_stop_recording_data ();
 #endif /* ACE_HAS_QUANTIFY */
@@ -199,17 +236,20 @@ run_schedule (ACE_Scheduler_Strategy &strategy,
           break;
 
         default :
-          printf ("scheduler.output_timeline (\"%s\") failed: returned %d\n",
-                  output_filename, status);
-         return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "scheduler.output_timeline (\"%s\") failed: "
+                             "returned %d\n",
+                             output_filename, status), -1);
       }
 
       break;
 
     default :
 
-      printf ("scheduler.schedule () failed: returned %d\n", status);
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "scheduler.schedule () failed: "
+                         "returned %d\n",
+                         status), -1);
   }
 
   return 0;
@@ -224,18 +264,15 @@ main (int, char *[])
   // priority level (number of priority levels in critical set - 1) for each.
 
   ACE_RMS_Scheduler_Strategy rms_strategy (3);
-//  ACE_RMS_Scheduler_Strategy rms_strategy (1);
 
   ACE_MLF_Scheduler_Strategy mlf_strategy (0);
   ACE_EDF_Scheduler_Strategy edf_strategy (0);
 
-  ACE_RMS_Dyn_Scheduler_Strategy rms_dyn_strategy (3);
-//  ACE_RMS_Dyn_Scheduler_Strategy rms_dyn_strategy (1);
-
   ACE_MUF_Scheduler_Strategy muf_strategy (0);
 
-  result = run_schedule (rms_strategy, "RMS_Timelines",
-                         "RMS Scheduling Strategy");
+  result =
+    DynSched_Test::run_schedule (rms_strategy, "RMS_Timelines",
+                                 "RMS Scheduling Strategy");
   if (result < 0)
   {
     printf ("run_schedule (rms_strategy, \"RMS_Timelines\", "
@@ -244,8 +281,9 @@ main (int, char *[])
     return 1;
   }
 
-  result = run_schedule (mlf_strategy, "MLF_Timelines",
-                         "MLF Scheduling Strategy");
+  result =
+    DynSched_Test::run_schedule (mlf_strategy, "MLF_Timelines",
+                                 "MLF Scheduling Strategy");
   if (result < 0)
   {
     printf ("run_schedule (mlf_strategy, \"MLF_Timelines\", "
@@ -254,8 +292,9 @@ main (int, char *[])
     return 1;
   }
 
-  result = run_schedule (edf_strategy, "EDF_Timelines",
-                         "EDF Scheduling Strategy");
+  result =
+    DynSched_Test::run_schedule (edf_strategy, "EDF_Timelines",
+                                 "EDF Scheduling Strategy");
   if (result < 0)
   {
     printf ("run_schedule (edf_strategy, \"EDF_Timelines\", "
@@ -264,18 +303,9 @@ main (int, char *[])
     return 1;
   }
 
-  result = run_schedule (rms_dyn_strategy, "RMS_Dyn_Timelines",
-                         "RMS-Dynamic Scheduling Strategy");
-  if (result < 0)
-  {
-    printf ("run_schedule (rms_dyn_strategy, \"RMS_Dyn_Timelines\", "
-            "\"RMS-Dynamic Scheduling Strategy\") returned %d\n",
-            result);
-    return 1;
-  }
-
-  result = run_schedule (muf_strategy, "MUF_Timelines",
-                         "MUF Scheduling Strategy");
+  result =
+    DynSched_Test::run_schedule (muf_strategy, "MUF_Timelines",
+                                 "MUF Scheduling Strategy");
   if (result < 0)
   {
     printf ("run_schedule (muf_strategy, \"MUF_Timelines\", "
