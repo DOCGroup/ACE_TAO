@@ -103,7 +103,8 @@ main (int argc, char *argv[])
       ACE_Argv_Type_Converter catc (argc, argv);
       CORBA::ORB_var corb =
         CORBA::ORB_init (catc.get_argc (),
-                         catc.get_TCHAR_argv ()
+                         catc.get_TCHAR_argv (),
+                         ""
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
