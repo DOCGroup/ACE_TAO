@@ -113,7 +113,7 @@ Test_DynArray::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: set_elements/get_elements\n"));
 
-      AnySeq as_in (2);
+      CORBA::AnySeq as_in (2);
       as_in.length (2);
       CORBA::Any in_any3;
       in_any3 <<= data.m_long1;
@@ -122,7 +122,7 @@ Test_DynArray::run_test (void)
       ftc1->set_elements (as_in,
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      AnySeq* as_out = ftc1->get_elements (ACE_TRY_ENV);
+      CORBA::AnySeq* as_out = ftc1->get_elements (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA_Any out_any2 = (*as_out)[1];
       CORBA::Long l_out2;
