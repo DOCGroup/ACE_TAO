@@ -23,8 +23,7 @@ DIRS  = CDR \
 	IORManipulation \
 	Timeout \
 	Connection_Purging \
-	ORB_init \
-	DSI_Gateway
+	ORB_init
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -42,7 +41,8 @@ ifndef minimum_corba
   DIRS += DynAny_Test
 
 # No NVList and Context in minimum CORBA
-  DIRS += Param_Test
+  DIRS += Param_Test \
+	DSI_Gateway
 
 # No Implicit activation in minimum CORBA
   DIRS += Faults
