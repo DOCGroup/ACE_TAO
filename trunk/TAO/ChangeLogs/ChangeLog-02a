@@ -1,3 +1,37 @@
+Wed May 09 14:07:56 2001  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/DII_Invocation.h:
+        * tao/DynamicInterface/DII_Invocation.inl:
+        * tao/DynamicInterface/Request.cpp:
+        * tao/DynamicInterface/Request.h:
+        * tao/DynamicInterface/Request.inl:
+        * tao/DynamicInterface/Server_Request.cpp:
+        * tao/DynamicInterface/Server_Request.h:
+        * tests/DSI_Gateway/DSI_Gateway_Service.dsp:
+        * tests/DSI_Gateway/README:
+        * tests/DSI_Gateway/client.cpp:
+        * tests/DSI_Gateway/gateway.cpp:
+        * tests/DSI_Gateway/server.cpp:
+        * tests/DSI_Gateway/test.idl:
+        * tests/DSI_Gateway/test_dsi.cpp:
+        * tests/DSI_Gateway/test_dsi.h:
+        * tests/DSI_Gateway/test_dsi.i:
+        * tests/DSI_Gateway/test_i.cpp:
+        * tests/DSI_Gateway/test_i.h:
+
+          Changes to DynamicInterface classes to enable the
+          storage/retrieval of a user exception when instantiation
+          of these classe are used in a gateway. Also changes
+          to the test code to use this new capability, and to
+          remove the gateway's dependence on any IDL-generated
+          files. README file updated, and files added to the
+          MSVC project for completeness. The gateway test may
+          now be run normally, as before, or with a command line
+          option that tests the passing of a user exception
+          from the server, through the gateway and back to the
+          client. This closes [BUGID:500].
+
 Wed May 09 13:55:56 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/GIOP_Message_Base.cpp:
