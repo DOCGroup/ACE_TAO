@@ -1,3 +1,17 @@
+Tue Jun  6 10:32:51 2000  Edan Ayal <edanayal@yahoo.com>
+  
+	* ace/Message_Queue.h: Added the following two pure
+	  virtual methods to class 'ACE_Message_Queue_Base':
+
+	  virtual ACE_Notification_Strategy *notification_strategy (void) = 0;
+	  virtual void notification_strategy (ACE_Notification_Strategy *s) = 0;
+	  virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
+                                         ACE_Time_Value *timeout = 0);
+
+	  These methods allow the 'ACE_Message_Queue_Base' to be used as a
+ 	  base class (without specifying the synch method or templatizing
+ 	  on it) and access/alter the notification strategy.
+	
 Tue Jun  6 09:42:39 2000  Chris Kohlhoff <chris@kohlhoff.com>
 
         * include/makeinclude/ace_flags.bor:
