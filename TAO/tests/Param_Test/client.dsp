@@ -457,7 +457,7 @@ InputPath=.\param_test.idl
 InputName=param_test
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -I..\..\tao\ -Ge 1  $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I..\..\ -Ge 1  $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -496,7 +496,7 @@ InputPath=.\param_test.idl
 InputName=param_test
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -I..\..\tao\ -Ge 1 $(InputName).idl
+	..\..\..\bin\tao_idl -I..\..\ -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

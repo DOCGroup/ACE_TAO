@@ -1,3 +1,17 @@
+Sat Feb 14 15:10:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
+	* orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
+	* performance-tests/Anyop/Anyop.dsp:
+	* performance-tests/Anyop/Anyop.dsw:
+	* tests/DynAny_Test/basic_test.dsp:
+	* tests/Param_Test/anyop.dsp:
+	* tests/Param_Test/client.dsp:
+	* tests/Param_Test/server.dsp:
+
+	  Fixed a bunch of path problems that prevented them from getting
+	  compiled fine.
+
 Sat Feb 14 13:24:03 2004  Steve Totten  <totten_s@ociweb.com>
 
         * docs/releasenotes/index.html:
