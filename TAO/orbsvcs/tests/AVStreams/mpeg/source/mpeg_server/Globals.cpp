@@ -51,6 +51,7 @@ int Video_Timer_Global::preTimerVal = 0;
 
 Video_Global::Video_Global (void)
 {
+  data_host = 0;
   live_source = 0;
   video_format = 0;
  
