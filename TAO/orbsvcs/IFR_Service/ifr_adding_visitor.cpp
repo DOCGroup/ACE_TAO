@@ -3937,6 +3937,7 @@ ifr_adding_visitor::fill_supported_interfaces (CORBA::InterfaceDefSeq &result,
   switch (node->node_type ())
     {
       case AST_Decl::NT_valuetype:
+      case AST_Decl::NT_eventtype:
         {
           AST_ValueType *v = AST_ValueType::narrow_from_decl (node);
           s_length = v->n_supports ();
@@ -4050,7 +4051,8 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
            f_iter.next (), ++index)
         {
           arg = AST_Argument::narrow_from_decl (f_iter.item ());
-          result[i].members[index].name = arg->local_name ()->get_string ();  
+          result[i].members[index].name =
+            CORBA::string_dup (arg->local_name ()->get_string ());  
           result[i].members[index].type = 
             CORBA::TypeCode::_duplicate (CORBA::_tc_void);
           
@@ -4082,7 +4084,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
         {
           excp = AST_Exception::narrow_from_decl (ei.item ());
           result[i].exceptions[index].name = 
-            excp->local_name ()->get_string ();
+            CORBA::string_dup (excp->local_name ()->get_string ());
           result[i].exceptions[index].id = excp->repoID ();
           result[i].exceptions[index].defined_in =
             ScopeAsDecl (excp->defined_in ())->repoID ();

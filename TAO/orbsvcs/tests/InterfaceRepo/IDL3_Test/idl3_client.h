@@ -52,8 +52,11 @@ private:
 
   int component_test (ACE_ENV_SINGLE_ARG_DECL);
   int home_test (ACE_ENV_SINGLE_ARG_DECL);
-  int valuetype_test (ACE_ENV_SINGLE_ARG_DECL);
-  int eventtype_test (ACE_ENV_SINGLE_ARG_DECL);
+
+  // Also tests eventtype.
+  int valuetype_test (const char *repo_id,
+                      const char *prefix
+                      ACE_ENV_ARG_DECL);
 
   int component_attribute_test (
       CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var &
@@ -79,26 +82,31 @@ private:
                        const char **ids
                        ACE_ENV_ARG_DECL);
 
-  int valuetype_inheritance_test (CORBA::ExtValueDef_var &
+  int valuetype_inheritance_test (CORBA::ExtValueDef_var &,
+                                  const char *prefix
                                   ACE_ENV_ARG_DECL);
 
   int valuetype_attribute_test (
-      CORBA::ExtValueDef::ExtFullValueDescription_var &
+      CORBA::ExtValueDef::ExtFullValueDescription_var &,
+      const char *prefix
       ACE_ENV_ARG_DECL
     );
 
   int valuetype_operation_test (
-      CORBA::ExtValueDef::ExtFullValueDescription_var &
+      CORBA::ExtValueDef::ExtFullValueDescription_var &,
+      const char *prefix
       ACE_ENV_ARG_DECL
     );
 
   int valuetype_member_test (
-      CORBA::ExtValueDef::ExtFullValueDescription_var &
+      CORBA::ExtValueDef::ExtFullValueDescription_var &,
+      const char *prefix
       ACE_ENV_ARG_DECL
     );
 
   int valuetype_factory_test (
-      CORBA::ExtValueDef::ExtFullValueDescription_var &
+      CORBA::ExtValueDef::ExtFullValueDescription_var &,
+      const char *prefix
       ACE_ENV_ARG_DECL
     );
 

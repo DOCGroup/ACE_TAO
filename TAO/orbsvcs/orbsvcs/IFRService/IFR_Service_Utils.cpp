@@ -1017,8 +1017,8 @@ TAO_IFR_Service_Utils::gen_valuetype_tc_r (
 {
   ACE_TString name;
   repo->config ()->get_string_value (key,
-                                      "name",
-                                    name);
+                                     "name",
+                                     name);
   ACE_TString id;
   repo->config ()->get_string_value (key,
                                      "id",
