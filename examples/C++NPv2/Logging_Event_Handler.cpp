@@ -9,7 +9,9 @@
 #include "Logging_Event_Handler.h"
 
 int Logging_Event_Handler::open () {
-  char filename[MAXHOSTNAMELEN + sizeof (LOGFILE_SUFFIX) + 1];
+
+  static const char LOGFILE_SUFFIX[] = ".log";
+  char filename[MAXHOSTNAMELEN + sizeof (LOGFILE_SUFFIX)];
   ACE_INET_Addr logging_peer_addr;
 
   logging_handler_.peer ().get_remote_addr (logging_peer_addr);

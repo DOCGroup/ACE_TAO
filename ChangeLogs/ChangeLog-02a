@@ -1,3 +1,15 @@
+Mon Apr 22 20:40:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/Logging_Event_Handler.{cpp h}:
+          Moved LOGFILE_SUFFIX to open() method. Changed get_handle() to be
+          const to match the signature inherited from ACE_Event_Handler.
+
+        * examples/C++NPv2/Logging_Event_Handler_Ex.h: Moved MAX_CLIENT_TIMEOUT
+          into class declaration as an enum.
+
+        * examples/Logging_Handler.h: Added terminating ';' to inlined
+          methods.
+
 Mon Apr 22 18:33:20 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Reactor/WFMO_Reactor/run_test.pl: This file will allow

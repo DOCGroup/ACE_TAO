@@ -14,10 +14,6 @@
 
 #include "Logging_Handler.h"
 
-#if !defined (LOGFILE_SUFFIX)
-#define LOGFILE_SUFFIX ".log"
-#endif /* LOGFILE_SUFFIX */
-
 class Logging_Event_Handler : public ACE_Event_Handler
 {
 protected:
@@ -47,8 +43,8 @@ public:
                             ACE_Reactor_Mask = 0);
 
   // Return socket handle of the contained <Logging_Handler>.
-  virtual ACE_HANDLE get_handle ()
-  { return peer ().get_handle (); };
+  virtual ACE_HANDLE get_handle (void) const
+    { return logging_handler_.peer ().get_handle (); };
 
   // Get a reference to the contained <ACE_SOCK_Stream>.
   ACE_SOCK_Stream &peer () { return logging_handler_.peer (); };
