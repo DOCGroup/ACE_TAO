@@ -157,6 +157,7 @@ IDL_GlobalData::IDL_GlobalData (void)
     n_allocated_idl_files_ (0),
     pd_parse_state (PS_NoState),
     pd_idl_src_file (0),
+    tao_root_ (0),
     gperf_path_ (0),
     temp_dir_ (0),
     ident_string_ (0),
@@ -955,6 +956,19 @@ IDL_GlobalData::temp_dir (void) const
 }
 
 void
+IDL_GlobalData::tao_root (const char *s)
+{
+  delete [] this->tao_root_;
+  this->tao_root_ = ACE::strnew (s);
+}
+
+const char *
+IDL_GlobalData::tao_root (void) const
+{
+  return this->tao_root_;
+}
+
+void
 IDL_GlobalData::gperf_path (const char *s)
 {
   delete [] this->gperf_path_;
@@ -1076,6 +1090,8 @@ IDL_GlobalData::destroy (void)
   this->pd_indent = 0;
   delete [] this->pd_local_escapes;
   this->pd_local_escapes = 0;
+  delete [] this->tao_root_;
+  this->tao_root_ = 0;
   delete [] this->gperf_path_;
   this->gperf_path_ = 0;
   delete [] this->temp_dir_;
