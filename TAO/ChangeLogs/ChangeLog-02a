@@ -1,3 +1,8 @@
+Sun Apr 28 18:01:47 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Makefile:
+	* tests/Makefile.bor: Added the new tests to the list.
+
 Sun Apr 28 17:57:00 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Connect_Strategy_Test/client.cpp:
