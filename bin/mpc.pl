@@ -55,6 +55,11 @@ my(@creators) = ('GNUACEProjectCreator',
 # Subroutine Section
 # ************************************************************
 
+sub getBasePath {
+  return $mpcpath;
+}
+
+
 sub which {
   my($prog)   = shift;
   my($exec)   = $prog;
