@@ -27,7 +27,8 @@ Sat Nov  2 17:44:00 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  A pure virtual call is_suspended_i () was added to the
 	  ACE_Select_Reactor_Base class to make the check for a suspended
 	  handle possible within the bind () call. Thanks to Irfan
-	  Pyarali<irfan@oomworks.com> who reported this problem. 
+	  Pyarali<irfan@oomworks.com> who reported this problem. This
+	  should fix the problem reported in [BUG 1305].
 
 Fri Nov  1 07:35:10 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
