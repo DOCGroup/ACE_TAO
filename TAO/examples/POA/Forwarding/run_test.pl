@@ -52,6 +52,7 @@ sub run_test
     $args = "-o server3 -f file://server2";
     $SRV3 = Process::Create ($EXEPREFIX."server".$EXE_EXT,
                              $args);
+    print STDERR ("server $args\n");
     
     if (ACE::waitforfile_timed ("server3", 15) == -1) 
     {
