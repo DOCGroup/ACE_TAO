@@ -53,7 +53,7 @@ public:
 class INT_ID
 {
   // = TITLE 
-  //    This is the Hash Entry.
+  //     This is the Hash Entry.
 public: 
   INT_ID (void);
   // Default constructor 
