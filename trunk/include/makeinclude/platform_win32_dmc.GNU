@@ -35,7 +35,7 @@ CC      = dmc
 CXX     = dmc
 RC      =
 
-CFLAGS += $(MODEL_FLAGS)
+CFLAGS += $(MODEL_FLAGS) -ND
 
 EXEEXT = .exe
 
