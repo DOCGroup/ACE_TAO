@@ -598,7 +598,7 @@ ACE::ldfind (const ASYS_TCHAR filename[],
 #if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
       got_suffix ? 0 : ACE_OS::strlen (dll_suffix) >= (sizeof searchfilename / sizeof (char)))
 #else
-      got_suffix ? 0 : ACE_OS::strlen (dll_suffix) >= (sizeof searchfilename / sizeof (char)))
+      got_suffix ? 0 : ACE_OS::strlen (dll_suffix) >= (sizeof searchfilename / sizeof (ASYS_TCHAR)))
 #endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
     {
       errno = ENOMEM;
@@ -1689,7 +1689,7 @@ ACE::set_handle_limit (int new_limit)
 
   if (new_limit == -1)
     new_limit = max_limit;
-  
+
   if (new_limit < 0)
     {
       errno = EINVAL;
