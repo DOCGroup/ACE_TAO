@@ -1,55 +1,64 @@
+Mon Dec 24 16:16:56 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/examples/RtEC/Schedule/Schedule.dsw:
+	* orbsvcs/examples/RtEC/Schedule/EC_Schedule_Service.dsp:
+	* orbsvcs/tests/FaultTolerance/IOGR/IOGR.dsw:
+	* orbsvcs/tests/FaultTolerance/IOGR/server.dsp:
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
+	  Add missing projects and workspaces for MSVC6
+
 Mon Dec 24 15:31:59 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.cpp: 
-	* tao/DynamicInterface/ExceptionList.cpp: 
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.cpp: 
-	* tao/PortableServer/Servant_Base.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.cpp:
+	* tao/DynamicInterface/ExceptionList.cpp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.cpp:
+	* tao/PortableServer/Servant_Base.cpp:
           Added explicit template instantiation for ACE_Atomic_Op_Ex<>.
-  
+
 Mon Dec 24 11:01:55 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h: 
-	  Fixed Single_Threaded compile errors. Replaced 
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+	  Fixed Single_Threaded compile errors. Replaced
 	  ACE_Condition_Thread_Mutex with TAO_SYNCH_CONDITION.
 
 Mon Dec 24 10:24:33 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (start_server_i): 
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (start_server_i):
 	  Added a call to
-  
-          proc_opts.avoid_zombies (1); 
-  
+
+          proc_opts.avoid_zombies (1);
+
           to avoid zombies on UNIX platforms.  Thanks to Kirat Singh
  	  <kirat.singh@gs.com> for reporting this.
 
 Sun Dec 23 09:46:48 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
-	  Fixed link errors. Added TAO_Strategies(d).lib to the list of 
+	  Fixed link errors. Added TAO_Strategies(d).lib to the list of
 	  libraries.
 
 Sun Dec 23 09:06:05 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp: 
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
 	  Fixed compiler warnings.
 
 Sat Dec 22 23:30:12 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* examples/RTCORBA/Activity/Task_Stats.h: 
+	* examples/RTCORBA/Activity/Task_Stats.h:
 	  Fixed compiler errors on TRU64CXX. Added #include
 	  "tao/debug.h"
 
 Sat Dec 22 23:03:25 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* examples/RTCORBA/Activity/Activity.cpp: 
-	* examples/RTCORBA/Activity/Job_i.cpp: 
+	* examples/RTCORBA/Activity/Activity.cpp:
+	* examples/RTCORBA/Activity/Job_i.cpp:
 	  Fixed compile errors.
 
-	* examples/RTCORBA/Activity/Periodic_Task.cpp: 
+	* examples/RTCORBA/Activity/Periodic_Task.cpp:
 	  Fixed compiler warnings.
-	
+
 Sat Dec 22 11:28:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/Param_Test/Makefile:
