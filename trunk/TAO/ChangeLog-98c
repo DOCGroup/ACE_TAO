@@ -1,3 +1,10 @@
+Wed Apr 01 22:37:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Default_Servant/client.cpp: Fixed options parsing.
+
+	* tao/Servant_Base.h: Added TAO_Export to
+ 	  TAO_DynamicImplementation.
+
 Wed Apr  1 17:33:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit: Cleaned up the formatting of the code

@@ -26,7 +26,7 @@ static char *message = "POA rules!!";
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, "k:f:m:");
   int c;
 
   while ((c = get_opts ()) != -1)
