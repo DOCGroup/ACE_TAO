@@ -1,3 +1,15 @@
+Thu Feb 25 17:35:10 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/DLL_Test.cpp:
+	  Changed the OBJ_SUFFIX to ".so" as on Linux the .o file cannot
+	  be a shared object. Also the OBJ_PREFIX is now "./lib" for 
+	  non-Win32 platforms.
+	* tests/Makefile:
+	  Additional option DLL_TEST added so that a .so can be produced
+	  for DLL_Test.
+	* tests/Makefile.DLL:
+	  This is the makefile which produces libDLL_Test.so for DLL_Test.
+	
 Wed Feb 24 23:47:22 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* examples/Reactor/Proactor/test_proactor.cpp: 
