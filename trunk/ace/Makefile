@@ -190,7 +190,8 @@ OTHER_FILES = \
   Registry_Name_Space \
   Remote_Name_Space \
   QoS_Session_Impl \
-  QoS_Session_Factory
+  QoS_Session_Factory \
+  QoS_Manager
 
 TEMPLATE_FILES = \
            Acceptor \
