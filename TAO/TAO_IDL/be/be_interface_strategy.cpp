@@ -379,7 +379,7 @@ be_interface_prefix_suffix_strategy::local_coll_name (int type)
   return this->local_coll_name_;
 }
 
-#endif 0
+#endif /* 0 */
 
 // ****************************************************************
 // AMI Hander Strategy
