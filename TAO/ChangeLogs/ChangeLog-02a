@@ -1,3 +1,15 @@
+Wed Apr 25 10:51:18 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/Big_Oneways/*.bor
+        * tests/Big_Twoways/*.bor
+          Added BCB makefiles for these new test
+
+        * tests/Makefile.bor
+          Added new tests and removed one deleted test
+
+        * tests/AMI_Bufferent/client.bor
+          Added missing source file
+
 Wed Apr 25 03:34:15 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Connection_Handler.cpp (handle_close): No
