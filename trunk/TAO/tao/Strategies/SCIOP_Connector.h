@@ -119,7 +119,8 @@ private:
   TAO_SCIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
   /// Try to make a connection to the next endpoint in the list.
-  TAO_Transport *make_connection_i (TAO_Transport_Descriptor_Interface &desc,
+  TAO_Transport *make_connection_i (TAO::Profile_Transport_Resolver *r,
+                                    TAO_Transport_Descriptor_Interface &desc,
                                     ACE_Time_Value *timeout,
                                     TAO_SCIOP_Endpoint *sciop_endpoint);
 
