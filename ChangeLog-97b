@@ -1,3 +1,8 @@
+Wed Oct  8 09:52:20 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/Parse_Node.cpp: 
+	  Fixed the minor sintax error *again*.
+
 Tue Oct  7 17:10:51 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
 	* ace/Token_Manager.cpp: 
