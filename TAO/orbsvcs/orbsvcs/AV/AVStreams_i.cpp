@@ -2283,7 +2283,7 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (void)
   :sfp_ (0),
    address_ (0),
    format_ (0),
-   direction_ (INVALID)
+   direction_ (TAO_AV_INVALID)
 {
 }
 
@@ -2320,13 +2320,13 @@ int
 TAO_Forward_FlowSpec_Entry::parse (char *flowSpec_entry)
 {
   TAO_Tokenizer tokenizer (flowSpec_entry,'\\');
-  if (this->parse_flow_protocol_string (tokenizer [FLOW_PROTOCOL]) < 0)
+  if (this->parse_flow_protocol_string (tokenizer [TAO_AV_FLOW_PROTOCOL]) < 0)
     return -1;
-  this->set_direction (tokenizer [DIRECTION]);
-  if (this->parse_address (tokenizer [ADDRESS]) < 0)
+  this->set_direction (tokenizer [TAO_AV_DIRECTION]);
+  if (this->parse_address (tokenizer [TAO_AV_ADDRESS]) < 0)
     return -1;
-  this->format_ = tokenizer [FORMAT];
-  this->flowname_ = tokenizer [FLOWNAME];
+  this->format_ = tokenizer [TAO_AV_FORMAT];
+  this->flowname_ = tokenizer [TAO_AV_FLOWNAME];
   return 0;
 }
 
@@ -2334,11 +2334,11 @@ int
 TAO_FlowSpec_Entry::set_direction (char *direction)
 {
   if (ACE_OS::strcasecmp (direction,"in") == 0)
-    this->direction_ = DIR_IN;
+    this->direction_ = TAO_AV_DIR_IN;
   else if (ACE_OS::strcasecmp (direction,"out") == 0)
-    this->direction_ = DIR_OUT;
+    this->direction_ = TAO_AV_DIR_OUT;
   else if (ACE_OS::strcasecmp (direction,"inout") == 0)
-    this->direction_ = DIR_INOUT;
+    this->direction_ = TAO_AV_DIR_INOUT;
   return 0;
 }
 
@@ -2378,13 +2378,13 @@ int
 TAO_Reverse_FlowSpec_Entry::parse (char *flowSpec_entry)
 {
   TAO_Tokenizer tokenizer (flowSpec_entry,'\\');
-  if (this->parse_flow_protocol_string (tokenizer [FLOW_PROTOCOL]) < 0)
+  if (this->parse_flow_protocol_string (tokenizer [TAO_AV_FLOW_PROTOCOL]) < 0)
     return -1;
-  this->set_direction (tokenizer [DIRECTION]);
-  if (this->parse_address (tokenizer [ADDRESS]) < 0)
+  this->set_direction (tokenizer [TAO_AV_DIRECTION]);
+  if (this->parse_address (tokenizer [TAO_AV_ADDRESS]) < 0)
     return -1;
-  this->format_ = tokenizer [FORMAT];
-  this->flowname_ = tokenizer [FLOWNAME];
+  this->format_ = tokenizer [TAO_AV_FORMAT];
+  this->flowname_ = tokenizer [TAO_AV_FLOWNAME];
   return 0;
 }
 

@@ -1001,10 +1001,10 @@ public:
   //     An helper entry class in the flow spec sequence passed to bind_devs.
   enum Direction
   {
-    INVALID = -1, 
-    DIR_IN = 0, 
-    DIR_OUT = 1, 
-    DIR_INOUT = 2};
+    TAO_AV_INVALID = -1, 
+    TAO_AV_DIR_IN = 0, 
+    TAO_AV_DIR_OUT = 1, 
+    TAO_AV_DIR_INOUT = 2};
 
   TAO_FlowSpec_Entry (void);
   // constructor.
@@ -1059,7 +1059,11 @@ class TAO_ORBSVCS_Export TAO_Forward_FlowSpec_Entry
   :public TAO_FlowSpec_Entry
 {
 public:
-  enum Position {FLOWNAME=0,DIRECTION,FORMAT,FLOW_PROTOCOL,ADDRESS};
+  enum Position {TAO_AV_FLOWNAME = 0,
+                 TAO_AV_DIRECTION = 1,
+                 TAO_AV_FORMAT = 2,
+                 TAO_AV_FLOW_PROTOCOL = 3,
+                 TAO_AV_ADDRESS = 4};
 
   virtual int parse (char* flowSpec_entry);
   // construct the entry from a string specified by the flowSpec grammar.
@@ -1069,7 +1073,11 @@ class TAO_ORBSVCS_Export TAO_Reverse_FlowSpec_Entry
   :public TAO_FlowSpec_Entry
 {
 public:
-  enum Position {FLOWNAME=0,ADDRESS,FLOW_PROTOCOL,DIRECTION,FORMAT};
+  enum Position {TAO_AV_FLOWNAME = 0,
+                 TAO_AV_ADDRESS = 1,
+                 TAO_AV_FLOW_PROTOCOL = 2,
+                 TAO_AV_DIRECTION = 3,
+                 TAO_AV_FORMAT = 4};
 
   virtual int parse (char* flowSpec_entry);
   // construct the entry from a string specified by the flowSpec grammar.
