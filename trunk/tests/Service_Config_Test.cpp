@@ -121,7 +121,7 @@ run_test (int argc, ACE_TCHAR *argv[])
   ACE_ARGV new_argv;
 
   const ACE_TCHAR svc_conf[] =
-#if defined (ACE_USES_WCHAR) && ACE_USES_WCHAR == 1
+#if defined (ACE_USES_WCHAR)
     // When using full Unicode support, use the version of the Service
     // Configurator file that is UTF-16 encoded.
     //
@@ -137,7 +137,7 @@ run_test (int argc, ACE_TCHAR *argv[])
 #else
     // ASCII (UTF-8) encoded Service Configurator file.
     ACE_TEXT ("Service_Config_Test.conf");
-#endif  /* ACE_USES_WCHAR == 1 */
+#endif  /* ACE_USES_WCHAR */
 
   // Process the Service Configurator directives in this test's
   ACE_ASSERT (new_argv.add (argv) != -1
