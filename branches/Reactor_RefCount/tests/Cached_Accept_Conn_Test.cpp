@@ -171,15 +171,10 @@ template class ACE_Creation_Strategy<Client_Svc_Handler>;
 template class ACE_Hash_Map_Entry<ACE_ADDR, Client_Svc_Handler *>;
 template class ACE_Hash<ACE_ADDR>;
 template class ACE_Equal_To<ACE_ADDR>;
-template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *>;
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_NOOP_Concurrency_Strategy<Client_Svc_Handler>;
 template class ACE_Recycling_Strategy<Client_Svc_Handler>;
 template class ACE_Strategy_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Svc_Tuple<Client_Svc_Handler>;
+template class ACE_NonBlocking_Connect_Handler<Client_Svc_Handler>;
 
 template class ACE_Strategy_Acceptor<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>;
 template class Accept_Strategy<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>;
@@ -265,15 +260,10 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 #pragma instantiate ACE_Hash_Map_Entry<ACE_ADDR, Client_Svc_Handler *>
 #pragma instantiate ACE_Hash<ACE_ADDR>
 #pragma instantiate ACE_Equal_To<ACE_ADDR>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_NOOP_Concurrency_Strategy<Client_Svc_Handler>
 #pragma instantiate ACE_Recycling_Strategy<Client_Svc_Handler>
 #pragma instantiate ACE_Strategy_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Svc_Tuple<Client_Svc_Handler>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<Client_Svc_Handler>
 
 #pragma instantiate ACE_Strategy_Acceptor<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate Accept_Strategy<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>

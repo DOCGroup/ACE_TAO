@@ -14,9 +14,9 @@
 //     However, this test is not to test the priority aspect of the
 //     CLASSIX Reactor.  In fact <ACE_CLASSIX_Select_Reactor> does not
 //     handle priorities.
-//    
+//
 //     This is a test for <ACE_CLASSIX_CO_Connector> and
-//     <ACE_CLASSIX_CO_Acceptor> 
+//     <ACE_CLASSIX_CO_Acceptor>
 // ============================================================================
 
 #include "ace/Get_Opt.h"
@@ -114,22 +114,22 @@ Read_Handler::handle_input (ACE_HANDLE h)
   char buf[BUFSIZ];
 
 //  ACE_DEBUG((LM_DEBUG,
-//	     "(%P|%t|%x) read from handle %d...", this, h));
+//           "(%P|%t|%x) read from handle %d...", this, h));
   ssize_t result = this->peer ().recv (buf, sizeof (buf));
 
   //
   // Work around the blocking problem with ipcSend() in ClassixOS 3.1
   // This counter ensures that the reader reads before the writer sends too
   // many messages.
-  // 
+  //
   max_msg--;
 
   if (result <= 0)
     {
       if (result < 0 && errno == EWOULDBLOCK)
       {
-	  max_msg++;
-	  return 0;
+          max_msg++;
+          return 0;
       }
 
       if (result != 0)
@@ -150,8 +150,8 @@ Read_Handler::handle_input (ACE_HANDLE h)
     }
 
 //  ACE_DEBUG((LM_DEBUG,
-//	     "...(%P|%t) read %d bytes from handle %d, priority %d\n",
-//	     result, h, priority ()));
+//           "...(%P|%t) read %d bytes from handle %d, priority %d\n",
+//           result, h, priority ()));
   return 0;
 }
 
@@ -170,23 +170,23 @@ Write_Handler::svc (void)
     ACE_Time_Value pause (0, 1000);
     for (int i = 0; i < opt_nloops; ++i)
     {
-	// Work around the blocking problem with ipcSend() in ClassixOS 3.1
-	// ipcSend() will block instead of returning K_EFULL value,
-	// if resources are not available.
-	// 
-	// sleep for the reader to empty some messages
-	while (max_msg.value() >= opt_max_msgs)
-	    ACE_OS::sleep(pause);
+        // Work around the blocking problem with ipcSend() in ClassixOS 3.1
+        // ipcSend() will block instead of returning K_EFULL value,
+        // if resources are not available.
+        //
+        // sleep for the reader to empty some messages
+        while (max_msg.value() >= opt_max_msgs)
+            ACE_OS::sleep(pause);
 
 
-	if (this->peer ().send_n (ACE_ALPHABET,
-				  sizeof (ACE_ALPHABET) - 1) == -1)
-	{
-	    ACE_DEBUG((LM_DEBUG, "%t %p\n", "send_n\n"));
-	    ACE_OS::sleep (pause);
-	    continue;
-	}
-	max_msg++;
+        if (this->peer ().send_n (ACE_ALPHABET,
+                                  sizeof (ACE_ALPHABET) - 1) == -1)
+        {
+            ACE_DEBUG((LM_DEBUG, "%t %p\n", "send_n\n"));
+            ACE_OS::sleep (pause);
+            continue;
+        }
+        max_msg++;
     }
   this->peer().close_writer();
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Write Handler exiting svc\n"));
@@ -226,13 +226,13 @@ client (void *arg)
         }
       else
         {
-	    // Let the new Svc_Handler to its job...
-	    writer->svc ();
+            // Let the new Svc_Handler to its job...
+            writer->svc ();
 
-	    // then close the connection and release the Svc_Handler.
-	    writer->destroy ();
-	    
-	    return 0;
+            // then close the connection and release the Svc_Handler.
+            writer->destroy ();
+
+            return 0;
         }
     }
 
@@ -249,7 +249,7 @@ main (int argc, char *argv[])
 
   // initialize environment, eg. reactor, etc.
   ACE_CLASSIX_OS os;
-  
+
   ACE_Get_Opt getopt (argc, argv, "dc:l:m:t:i:", 1);
 
   for (int c; (c = getopt ()) != -1; )
@@ -290,7 +290,7 @@ main (int argc, char *argv[])
   // Acceptor
   ACE_DEBUG((LM_DEBUG, "Create an Acceptor\n"));
   ACCEPTOR acceptor(ACE_Reactor::instance(), 0);
-  // The acceptor uses the global reactor and does not use select. 
+  // The acceptor uses the global reactor and does not use select.
 
   acceptor.priority (ACE_Event_Handler::HI_PRIORITY);
   ADDR server_addr;
@@ -347,12 +347,7 @@ template class auto_ptr<ACE_Reactor>;
 template class ACE_Auto_Basic_Ptr<ACE_Reactor>;
 template class auto_ptr<ACE_Select_Reactor>;
 template class ACE_Auto_Basic_Ptr<ACE_Select_Reactor>;
-template class ACE_Map_Manager<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*>;
-template class ACE_Svc_Tuple<Write_Handler>;
+template class ACE_NonBlocking_Connect_Handler<Write_Handler>;
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -363,11 +358,6 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Reactor>
 #pragma instantiate auto_ptr<ACE_Select_Reactor>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Select_Reactor>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*>
-#pragma instantiate ACE_Svc_Tuple<Write_Handler>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<Write_Handler>
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

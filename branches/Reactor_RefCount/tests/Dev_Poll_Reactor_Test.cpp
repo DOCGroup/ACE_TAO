@@ -557,38 +557,14 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Acceptor<Server, ACE_SOCK_ACCEPTOR>;
 template class ACE_Connector<Client, ACE_SOCK_CONNECTOR>;
-
-template class ACE_Svc_Tuple<Server>;
-template class ACE_Svc_Tuple<Client>;
-
-template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Server> *>;
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Server> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Server> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Server> *, ACE_SYNCH_RW_MUTEX>;
-
-template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client> *>;
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Client> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_NonBlocking_Connect_Handler<Client>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Acceptor<Server, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Connector<Client, ACE_SOCK_CONNECTOR>
-
-#pragma instantiate ACE_Svc_Tuple<Server>
-#pragma instantiate ACE_Svc_Tuple<Client>
-
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Server> *>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Server> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Server> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Server> *, ACE_SYNCH_RW_MUTEX>
-
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client> *>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Client> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<Client>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -599,7 +575,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Dev_Poll_Reactor_Test"));
   ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("Dev Poll and Event Poll are not supported")
+              ACE_TEXT ("Dev Poll and Event Poll are not supported ")
               ACE_TEXT ("on this platform\n")));
   ACE_END_TEST;
   return 0;
