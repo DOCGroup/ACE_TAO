@@ -287,7 +287,6 @@ public:
 
   // = Close a connection, first sending GIOP::CloseConnection
   static void close_connection (ACE_SOCK_Stream &fd, void *ctx);
-  static void close_connection (ACE_HANDLE &fd, void *ctx);
 
   // = Generic server side data dispatch methods
 
@@ -326,25 +325,12 @@ public:
 			       void *context,
 			       CORBA_Environment &env);
 
-  static int incoming_message (ACE_HANDLE &handle,
-			       ForwardFunc check_forward,
-			       RequestHandler handle_request,
-			       void *context,
-			       CORBA_Environment &env);
-
   static CORBA_Boolean send_message (CDR &stream, 
 				     ACE_SOCK_Stream &peer);
-  // @@ Can we remove the <ACE_HANDLE> variants soon?
-  static CORBA_Boolean send_message (CDR &stream, 
-				     ACE_HANDLE &connection);
 
   // = Reads message, returns message type from header.
 
   static MsgType read_message (ACE_SOCK_Stream &peer, 
-			       CDR &msg, 
-			       CORBA_Environment &env);
-
-  static MsgType read_message (ACE_HANDLE &connection,
 			       CDR &msg, 
 			       CORBA_Environment &env);
 };
