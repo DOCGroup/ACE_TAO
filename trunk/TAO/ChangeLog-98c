@@ -1,3 +1,8 @@
+Fri Dec 11 12:18:37 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* docs/compiler.html: Updated documentation for lookup
+	strategies. 
+
 Fri Dec 11 11:11:27 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_sequence.cpp:
