@@ -140,6 +140,18 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
 		   PortableInterceptor::ForwardRequest))
 {
 
+  int priority;
+  ACE_hthread_t current;
+  ACE_Thread::self (current);
+  if (ACE_Thread::getprio (current, priority) == -1)
+    return;
+  
+  ACE_DEBUG ((LM_DEBUG,
+	      "Request thread priority is %d %d\n",
+	      priority,
+	      ACE_DEFAULT_THREAD_PRIORITY));
+  
+  
   IOP::ServiceContext* srv_con = new IOP::ServiceContext;
   srv_con->context_id = Client_Interceptor::SchedulingInfo;
   srv_con->context_data.length (sizeof (long));
@@ -220,6 +232,14 @@ Fixed_Priority_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo
 void 
 Fixed_Priority_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr
                                       ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   PortableInterceptor::ForwardRequest))
+{
+}
+
+void 
+Fixed_Priority_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr
+				     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
 {
