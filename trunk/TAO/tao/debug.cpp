@@ -22,6 +22,7 @@
 #endif /* ! ACE_HAS_PTHREADS && ! ACE_HAS_DCE_DRAFT4_THREADS */
 
 u_int TAO_Export TAO_debug_level = 0;
+u_int TAO_Export TAO_orbdebug = 0;
 char *TAO_Export TAO_debug_filter = "l";
 
 static FILE *debug_stream = stderr;
