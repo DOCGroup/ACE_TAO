@@ -1,3 +1,10 @@
+Tue Nov 23 07:39:23 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Modified to support the MPC 'version' keyword.  If version is set,
+          then we will set the SOVERSION macro.
+
 Tue Nov 23 07:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL.cpp:
