@@ -707,8 +707,9 @@ bgcolor="#ffffff">
   <li>Do not use run-time type identification (RTTI).  Some platforms
       do not support it.<p>
 
-  <li>Do not use exception handling.  Some platforms do not support it.
-      And, it imposes an execution speed penalty.<p>
+  <li>Do not use C++ exception handling directly.  Some platforms do
+      not support it.  And, it can impose an execution speed penalty.
+      Instead use the TAO/ACE try/catch macros.<p>
 
   <li>Because ACE does not use exception handling, dealing with
       failures requires a bit of care.  This is especially true
@@ -760,6 +761,16 @@ bgcolor="#ffffff">
       defined, for the same reason that having side-effects in
       <code>ACE_ASSERT</code>s won't work either, <em>i.e.</em>, because
       the code is removed.<p>
+
+  <li>Immediately after opening a temporary file, unlink it.  For
+      example:
+      <pre><code>
+      ACE_HANDLE h = open the file (filename);
+
+      ACE_OS::unlink (filename);
+      </code></pre><p>
+
+      This avoids leaving the temporary file even if the program crashes.<p>
 </ul>
 
 
