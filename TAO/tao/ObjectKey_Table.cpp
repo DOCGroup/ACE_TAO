@@ -162,7 +162,6 @@ TAO::ObjectKey_Table::unbind_i (TAO::Refcounted_ObjectKey *&key_new)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  // Instantiations for the Hash Map
 template class ACE_RB_Tree <TAO::ObjectKey,
                             TAO::Refcounted_ObjectKey,
                             TAO::Less_Than_ObjectKey,

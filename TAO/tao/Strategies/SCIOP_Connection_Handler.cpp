@@ -76,6 +76,12 @@ TAO_SCIOP_Connection_Handler::~TAO_SCIOP_Connection_Handler (void)
 }
 
 int
+TAO_SCIOP_Connection_Handler::open_handler (void *v)
+{
+  return this->open (v);
+}
+
+int
 TAO_SCIOP_Connection_Handler::open (void*)
 {
   if (this->set_socket_option (this->peer (),
@@ -151,57 +157,6 @@ TAO_SCIOP_Connection_Handler::open (void*)
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
   return 0;
-}
-
-int
-TAO_SCIOP_Connection_Handler::activate (long flags,
-                                       int n_threads,
-                                       int force_active,
-                                       long priority,
-                                       int grp_id,
-                                       ACE_Task_Base *task,
-                                       ACE_hthread_t thread_handles[],
-                                       void *stack[],
-                                       size_t stack_size[],
-                                       ACE_thread_t  thread_names[])
-{
-  if (TAO_debug_level)
-    ACE_DEBUG  ((LM_DEBUG,
-                 ACE_LIB_TEXT ("TAO (%P|%t) - SCIOP_Connection_Handler::"),
-                 ACE_LIB_TEXT ("activate %d threads, flags = %d\n"),
-                 n_threads,
-                 flags,
-                 THR_BOUND));
-
-  // Set the id in the transport now that we're active.
-  // Use C-style cast b/c otherwise we get warnings on lots of compilers
-  this->transport ()->id ((size_t) this->get_handle ());
-
-  return TAO_SCIOP_SVC_HANDLER::activate (flags,
-                                         n_threads,
-                                         force_active,
-                                         priority,
-                                         grp_id,
-                                         task,
-                                         thread_handles,
-                                         stack,
-                                         stack_size,
-                                         thread_names);
-}
-
-int
-TAO_SCIOP_Connection_Handler::svc (void)
-{
-  // This method is called when an instance is "activated", i.e.,
-  // turned into an active object.  Presumably, activation spawns a
-  // thread with this method as the "worker function".
-
-  // Clear the non-blocking mode here
-  ACE_Flag_Manip::clr_flags (this->get_handle (),
-                             ACE_NONBLOCK);
-
-  // Call the implementation here
-  return this->svc_i ();
 }
 
 int

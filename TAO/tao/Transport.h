@@ -828,6 +828,10 @@ private:
   friend class TAO_Reactive_Flushing_Strategy;
   friend class TAO_Leader_Follower_Flushing_Strategy;
 
+  /// Needs priveleged access to
+  /// event_handler_i ()
+  friend class TAO_Thread_Per_Connection_Handler;
+
   /// Schedule handle_output() callbacks
   int schedule_output_i (void);
 

@@ -104,6 +104,11 @@ TAO_DIOP_Connection_Handler::dgram (void)
 }
 // DIOP Additions - End
 
+int
+TAO_DIOP_Connection_Handler::open_handler (void *v)
+{
+  return this->open (v);
+}
 
 int
 TAO_DIOP_Connection_Handler::open (void*)
@@ -144,61 +149,6 @@ TAO_DIOP_Connection_Handler::open_server (void)
   this->transport ()->id ((size_t) this->get_handle ());
 
   return 0;
-}
-
-int
-TAO_DIOP_Connection_Handler::activate (long flags,
-                                       int n_threads,
-                                       int force_active,
-                                       long priority,
-                                       int grp_id,
-                                       ACE_Task_Base *task,
-                                       ACE_hthread_t thread_handles[],
-                                       void *stack[],
-                                       size_t stack_size[],
-                                       ACE_thread_t  thread_names[])
-{
-  if (TAO_debug_level)
-    ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) DIOP_Connection_Handler::activate %d ")
-                 ACE_TEXT ("threads, flags = %d\n"),
-                 n_threads,
-                 flags,
-                 THR_BOUND));
-  // @@ Michael: I believe we do not need active service handlers right now.
-  // @@ Frank: Not disabled yet...
-
-  // Set the id in the transport now that we're active.
-  this->transport ()->id ((size_t) this->get_handle ());
-
-  return TAO_DIOP_SVC_HANDLER::activate (flags,
-                                         n_threads,
-                                         force_active,
-                                         priority,
-                                         grp_id,
-                                         task,
-                                         thread_handles,
-                                         stack,
-                                         stack_size,
-                                         thread_names);
-}
-
-int
-TAO_DIOP_Connection_Handler::svc (void)
-{
-  // @@ Michael: I believe we do not need active service handlers right now.
-  // @@ Frank: Not yet...
-
-  // This method is called when an instance is "activated", i.e.,
-  // turned into an active object.  Presumably, activation spawns a
-  // thread with this method as the "worker function".
-
-  // Clear the non-blocking mode here
-  ACE_Flag_Manip::clr_flags (this->get_handle (),
-                             ACE_NONBLOCK);
-
-  // Call the implementation here
-  return this->svc_i ();
 }
 
 int
