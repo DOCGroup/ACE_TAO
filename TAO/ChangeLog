@@ -1,3 +1,21 @@
+Mon Apr 12 18:16:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjectIdListC.{h,cpp.i}:
+        * tao/PI_ForwardC.{h,cpp,i}:
+        * tao/PortableInterceptorA.cpp:
+        * tao/PortableInterceptorC.{h,cpp,i}:
+        * tao/ShortSeqA.cpp:
+        * tao/ShortSeqC.{h,cpp,i}:
+          Regenerated these files
+
+        * tao/ObjectIdList.pidl:
+        * tao/PI_Forward.pidl:
+        * tao/PortableInterceptor.pidl:
+          Updated regeneration message
+
+        * tao/PortableInterceptorA.h:
+          Removed these files
+
 Mon Apr 12 18:09:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RTCORBAC.{h,cpp,i}:
