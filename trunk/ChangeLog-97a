@@ -1,3 +1,13 @@
+Sun May 18 15:13:14 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* netsvcs/lib/Server_Logging_Handler.cpp: removed second
+	  ACE_Svc_Handler specialization for non-threaded, has-TLI case.
+	  That's because it is the same as the first; the only difference
+	  was that one specialized with ACE_SYNCH and the other with
+	  ACE_NULL_SYNCH.  Without threads, those macros expand to the
+	  same thing.  Thanks Sandro Doro <doros@aureus.sublink.org> for
+	  reporting this.
+
 Sun May 18 09:20:15 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Singleton.cpp: Added the updated version of
