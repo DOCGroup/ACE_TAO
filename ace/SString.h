@@ -42,23 +42,23 @@ class ACE_Export ACE_CString
   friend ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
   friend ostream &operator << (ostream &, const ACE_CString &);
 public:
-  ACE_CString (ACE_Allocator *allocator = 0);
+  ACE_CString (ACE_Allocator *alloc = 0);
   // Default constructor.
 
-  ACE_CString (const char *s, ACE_Allocator *allocator = 0);
+  ACE_CString (const char *s, ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory. 
 
   ACE_CString (const ACE_CString &);
   // Copy constructor.
 
-  ACE_CString (const ACE_USHORT16 *s, ACE_Allocator *allocator = 0);
+  ACE_CString (const ACE_USHORT16 *s, ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory.
   // Probable loss of data. Please use with care.
 
   ~ACE_CString (void);
   // Deletes the memory...
 
-  ACE_CString (const char *s, size_t len, ACE_Allocator *allocator = 0);
+  ACE_CString (const char *s, size_t len, ACE_Allocator *alloc = 0);
   // Constructor that copies <len> chars of <s> into dynamically
   // allocated memory (will NUL terminate the result).
 
@@ -140,10 +140,10 @@ public:
   ACE_SString (ACE_Allocator *allocator = 0);
   // Default constructor.
 
-  ACE_SString (const char *s, ACE_Allocator *allocator = 0);
+  ACE_SString (const char *s, ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory. 
 
-  ACE_SString (const char *s, size_t len, ACE_Allocator *allocator = 0);
+  ACE_SString (const char *s, size_t len, ACE_Allocator *alloc = 0);
   // Constructor that copies <len> chars of <s> into dynamically
   // allocated memory (will NUL terminate the result).
 
@@ -218,20 +218,24 @@ class ACE_Export ACE_WString
 {
   friend ACE_WString operator+ (const ACE_WString &, const ACE_WString &);
 public:
-  ACE_WString (ACE_Allocator *allocator = 0);
+  ACE_WString (ACE_Allocator *alloc = 0);
   // Default constructor.
 
-  ACE_WString (const char *s, ACE_Allocator *allocator = 0);
+  ACE_WString (const char *s, 
+	       ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory.
 
-  ACE_WString (const ACE_USHORT16 *s, ACE_Allocator *allocator = 0);
+  ACE_WString (const ACE_USHORT16 *s, 
+	       ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory.
 
-  ACE_WString (const ACE_USHORT16 *s, size_t len, ACE_Allocator *allocator = 0);
+  ACE_WString (const ACE_USHORT16 *s, 
+	       size_t len, 
+	       ACE_Allocator *alloc = 0);
   // Constructor that copies <len> ACE_USHORT16's of <s> into dynamically
   // allocated memory (will NUL terminate the result).
 
-  ACE_WString (size_t len, ACE_Allocator *allocator = 0);
+  ACE_WString (size_t len, ACE_Allocator *alloc = 0);
   // Constructor that dynamically allocates memory for <len> + 1
   // ACE_USHORT16 characters. The newly created memory is set memset to 0.
 
