@@ -44,6 +44,11 @@
 #     include /**/ <iostream.h>
 #     include /**/ <fstream.h>
 #     include /**/ <iomanip.h>
+#     if defined (_MSC_VER)
+#       include /**/ <strstrea.h>
+#     else
+#       include /**/ <strstream.h>
+#     endif /* _MSC_VER */
 #   else
 #     include /**/ <iostream>
 #     include /**/ <fstream>
@@ -52,6 +57,7 @@
 #     include /**/ <streambuf>
 #     include /**/ <iomanip>
 #     include /**/ <ios>
+#     include /**/ <strstream>
 #   endif /* ACE_USES_OLD_IOSTREAMS */
 
 #   if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
@@ -68,6 +74,9 @@
         using std::ifstream;
         using std::ofstream;
         using std::fstream;
+
+        using std::istrstream;
+        using std::ostrstream;
 
         using std::cin;
         using std::cout;
