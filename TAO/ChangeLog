@@ -1,3 +1,8 @@
+Wed Oct  8 09:14:10 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/Makefile:
+	  Added Kokyu_dsrt_schedulers subdirectory to DIRS.
+
 Wed Oct  8 08:09:11 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.dsp

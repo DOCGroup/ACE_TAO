@@ -28,7 +28,8 @@ DIRS  = Callback_Quoter \
 	TypeCode_Creation \
 	ior_corbaloc \
 	RTCORBA \
-	RTScheduling
+	RTScheduling \
+	Kokyu_dsrt_schedulers 
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
