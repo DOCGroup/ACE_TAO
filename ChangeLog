@@ -1,3 +1,11 @@
+Sat Jun 23 08:34:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Max_Default_Port_Test.cpp: Fixed a unused warning in
+	  Single Threaded  builds.
+	
+	* tests/run_tests.lst: Prevented the above test from running in
+	  Single Threaded configurations.
+
 Sat Jun 23 06:19:39 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
         * ace/OS.i: For some god knows why reason, _POSIX_C_SOURCE doesn't
