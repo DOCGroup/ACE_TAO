@@ -18,6 +18,7 @@ Tue Jun  8 14:43:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Tue Jun  8 15:38:01 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* docs/Options.html: 
 	* tao/default_client.cpp (create_transport_mux_strategy): Renamed
 	the ORBtransportmuxstrategy to ORBRequestMuxStrategy. 
 
