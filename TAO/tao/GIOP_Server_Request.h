@@ -22,6 +22,7 @@
 #define TAO_GIOP_SERVER_REQUEST_H
 
 #include "tao/Server_Request.h"
+#include "tao/Principal.h"
 
 class TAO_Export GIOP_ServerRequest : public CORBA_ServerRequest
 {
@@ -191,7 +192,7 @@ private:
   TAO_ObjectKey object_key_;
   // The object key of the destination object.
 
-  CORBA::Principal_ptr requesting_principal_;
+  CORBA::Principal_var requesting_principal_;
   // Identifies the requester
 };
 
