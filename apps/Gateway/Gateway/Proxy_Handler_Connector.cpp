@@ -91,3 +91,13 @@ Proxy_Handler_Connector::initiate_connection (Proxy_Handler *proxy_handler,
     }
   return 0;
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Connector<Proxy_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Guard<ACE_RW_Mutex>;
+template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Proxy_Handler> *, ACE_RW_Mutex>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<Proxy_Handler> *, ACE_RW_Mutex>;
+template class ACE_Read_Guard<ACE_RW_Mutex>;
+template class ACE_Svc_Tuple<Proxy_Handler>;
+template class ACE_Write_Guard<ACE_RW_Mutex>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
