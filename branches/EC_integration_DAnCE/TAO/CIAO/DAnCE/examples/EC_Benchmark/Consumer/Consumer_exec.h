@@ -2,59 +2,49 @@
 
 // ================================================================
 /**
- * @file BMDevice_exec.h
+ * @file Consumer_exec.h
  *
- * Header file for the actual BMDevice and BMDeviceHome component
- * implementations.  These classes are the implementations of local
- * interfaces defined in BMDeviceEI.idl.
+ * Header file for the actual Consumer and ConsumerHome component
+ * implementations. 
  *
- * @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
+ * @author Gan Deng <gan.deng@vanderbilt.edu>
  */
 // ================================================================
 
-#ifndef CIAO_BMDEVICE_EXEC_H
-#define CIAO_BMDEVICE_EXEC_H
+#ifndef CIAO_CONSUMER_EXEC_H
+#define CIAO_CONSUMER_EXEC_H
 
-#include "BMDeviceEIC.h"
+#include "ConsumerEC.h"
+#include "Consumer_exec_export.h"
+
 #include "tao/LocalObject.h"
+#include "ace/High_Res_Timer.h"
 
-namespace MyImpl
+const int niterations = 100;
+
+namespace Consumer_Impl
 {
   /**
-   * @class BMDEVICE_exec_i
+   * @class Consumer_exec_i
    *
    * An example RateGen executor implementation class.
    */
-  class BMDEVICE_EXEC_Export BMDevice_exec_i :
-    public virtual BasicSP::BMDevice_Exec,
+  class CONSUMER_EXEC_Export Consumer_exec_i :
+    public virtual Consumer_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default constructor.
-    BMDevice_exec_i ();
+    Consumer_exec_i ();
 
     /// Default destructor.
-    ~BMDevice_exec_i ();
+    ~Consumer_exec_i ();
 
-    // Operations from BasicSP::BMDevice
-
-    virtual BasicSP::CCM_ReadData_ptr
-    get_data_read (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    // Operations from EC_Benchmark::Consumer
 
     virtual void
-    push_timeout (BasicSP::TimeOut *ev
+    push_timeout (EC_Benchmark::TimeOut *ev
                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    // Operations from BasicSP::position
-
-    virtual char *
-    data_read (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    virtual char *
-    get_data (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
@@ -79,7 +69,6 @@ namespace MyImpl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-
     virtual void
     ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -90,27 +79,30 @@ namespace MyImpl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
   protected:
-    const char *str_;
+    /// Copmponent specific context
+    Consumer_Exec_Context_var context_;
 
-   /// Copmponent specific context
-    BasicSP::CCM_BMDevice_Context_var context_;
+    CORBA::ULong event_count_;
+    // Keep track of the number of events received.
+
+    ACE_hrtime_t end_time_[niterations];
   };
 
   /**
-   * @class BMDeviceHome_exec_i
+   * @class ConsumerHome_exec_i
    *
-   * BMDevice home executor implementation class.
+   * Consumer home executor implementation class.
    */
-  class BMDEVICE_EXEC_Export BMDeviceHome_exec_i :
-    public virtual BasicSP::CCM_BMDeviceHome,
+  class CONSUMER_EXEC_Export ConsumerHome_exec_i :
+    public virtual ConsumerHome_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default ctor.
-    BMDeviceHome_exec_i ();
+    ConsumerHome_exec_i ();
 
     /// Default dtor.
-    ~BMDeviceHome_exec_i ();
+    virtual ~ConsumerHome_exec_i ();
 
     // Explicit home operations.
 
@@ -121,12 +113,11 @@ namespace MyImpl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
   };
-
 }
 
 // Executor DLL entry point.  CIAO's deployment and assembly framework
 // invokes this function on the resulting DLL to get the home executor.
-extern "C" BMDEVICE_EXEC_Export ::Components::HomeExecutorBase_ptr
-createBMDeviceHome_Impl (void);
+extern "C" CONSUMER_EXEC_Export ::Components::HomeExecutorBase_ptr
+createConsumerHome_Impl (void);
 
-#endif /* CIAO_BMDEVICE_EXEC_H*/
+#endif /* CIAO_CONSUMER_EXEC_H*/
