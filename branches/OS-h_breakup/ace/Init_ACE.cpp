@@ -5,6 +5,7 @@
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/Object_Manager.h"
+#include "ace/Trace.h"
 
 ACE_RCSID (ace,
            Init_ACE,
