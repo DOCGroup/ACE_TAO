@@ -1,3 +1,10 @@
+Mon Dec 30 12:10:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+ 	* examples/AMH/Sink_Server/st_server.dsp:
+	* examples/AMH/Sink_Server/client.dsp:
+	* examples/AMH/Sink_Server/mt_server.dsp: Changed the include path
+	  information in the release builds.
+
 Mon Dec 30 08:49:31 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp:
