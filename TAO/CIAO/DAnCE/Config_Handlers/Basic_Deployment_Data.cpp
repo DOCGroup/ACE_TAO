@@ -8,11 +8,6 @@ namespace CIAO
     // TCKind
     // 
 
-    TCKind::
-    TCKind ()
-    {
-    }
-
     TCKind::Value TCKind::
     integral () const
     {
@@ -771,10 +766,11 @@ namespace CIAO
     // 
 
     Any::
-    Any ()
+    Any (::CIAO::Config_Handlers::DataType const& type__,
+    ::CIAO::Config_Handlers::DataValue const& value__)
     :
-    type_ (new ::CIAO::Config_Handlers::DataType ()),
-    value_ (new ::CIAO::Config_Handlers::DataValue ()),
+    type_ (new ::CIAO::Config_Handlers::DataType (type__)),
+    value_ (new ::CIAO::Config_Handlers::DataValue (value__)),
     regulator__ ()
     {
       type_->container (this);
@@ -848,10 +844,11 @@ namespace CIAO
     // 
 
     Property::
-    Property ()
+    Property (::XMLSchema::string< char > const& name__,
+    ::CIAO::Config_Handlers::Any const& value__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    value_ (new ::CIAO::Config_Handlers::Any ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    value_ (new ::CIAO::Config_Handlers::Any (value__)),
     regulator__ ()
     {
       name_->container (this);
@@ -925,10 +922,11 @@ namespace CIAO
     // 
 
     Node::
-    Node ()
+    Node (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& label__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    label_ (new ::XMLSchema::string< char > ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    label_ (new ::XMLSchema::string< char > (label__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1001,11 +999,6 @@ namespace CIAO
     // SatisfierPropertyKind
     // 
 
-    SatisfierPropertyKind::
-    SatisfierPropertyKind ()
-    {
-    }
-
     SatisfierPropertyKind::Value SatisfierPropertyKind::
     integral () const
     {
@@ -1034,11 +1027,13 @@ namespace CIAO
     // 
 
     SatisfierProperty::
-    SatisfierProperty ()
+    SatisfierProperty (::XMLSchema::string< char > const& name__,
+    ::CIAO::Config_Handlers::SatisfierPropertyKind const& kind__,
+    ::CIAO::Config_Handlers::Any const& value__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    kind_ (new ::CIAO::Config_Handlers::SatisfierPropertyKind ()),
-    value_ (new ::CIAO::Config_Handlers::Any ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    kind_ (new ::CIAO::Config_Handlers::SatisfierPropertyKind (kind__)),
+    value_ (new ::CIAO::Config_Handlers::Any (value__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1137,11 +1132,13 @@ namespace CIAO
     // 
 
     Resource::
-    Resource ()
+    Resource (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& resourceType__,
+    ::CIAO::Config_Handlers::SatisfierProperty const& property__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    resourceType_ (new ::XMLSchema::string< char > (resourceType__)),
+    property_ (new ::CIAO::Config_Handlers::SatisfierProperty (property__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1240,12 +1237,15 @@ namespace CIAO
     // 
 
     SharedResource::
-    SharedResource ()
+    SharedResource (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& resourceType__,
+    ::CIAO::Config_Handlers::Node const& node__,
+    ::CIAO::Config_Handlers::SatisfierProperty const& property__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    node_ (new ::CIAO::Config_Handlers::Node ()),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    resourceType_ (new ::XMLSchema::string< char > (resourceType__)),
+    node_ (new ::CIAO::Config_Handlers::Node (node__)),
+    property_ (new ::CIAO::Config_Handlers::SatisfierProperty (property__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1369,11 +1369,13 @@ namespace CIAO
     // 
 
     Requirement::
-    Requirement ()
+    Requirement (::XMLSchema::string< char > const& resourceType__,
+    ::XMLSchema::string< char > const& name__,
+    ::CIAO::Config_Handlers::Property const& property__)
     :
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    name_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::Property ()),
+    resourceType_ (new ::XMLSchema::string< char > (resourceType__)),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    property_ (new ::CIAO::Config_Handlers::Property (property__)),
     regulator__ ()
     {
       resourceType_->container (this);
@@ -1472,11 +1474,13 @@ namespace CIAO
     // 
 
     ResourceDeploymentDescription::
-    ResourceDeploymentDescription ()
+    ResourceDeploymentDescription (::XMLSchema::string< char > const& requirementName__,
+    ::XMLSchema::string< char > const& resourceName__,
+    ::CIAO::Config_Handlers::Any const& resourceValue__)
     :
-    requirementName_ (new ::XMLSchema::string< char > ()),
-    resourceName_ (new ::XMLSchema::string< char > ()),
-    resourceValue_ (new ::CIAO::Config_Handlers::Any ()),
+    requirementName_ (new ::XMLSchema::string< char > (requirementName__)),
+    resourceName_ (new ::XMLSchema::string< char > (resourceName__)),
+    resourceValue_ (new ::CIAO::Config_Handlers::Any (resourceValue__)),
     regulator__ ()
     {
       requirementName_->container (this);
@@ -1575,10 +1579,11 @@ namespace CIAO
     // 
 
     ArtifactDeploymentDescription::
-    ArtifactDeploymentDescription ()
+    ArtifactDeploymentDescription (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& source__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    source_ (new ::XMLSchema::string< char > ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    source_ (new ::XMLSchema::string< char > (source__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1918,10 +1923,11 @@ namespace CIAO
     // 
 
     MonolithicDeploymentDescription::
-    MonolithicDeploymentDescription ()
+    MonolithicDeploymentDescription (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& source__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    source_ (new ::XMLSchema::string< char > ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    source_ (new ::XMLSchema::string< char > (source__)),
     regulator__ ()
     {
       name_->container (this);
@@ -2180,11 +2186,6 @@ namespace CIAO
     // ResourceUsageKind
     // 
 
-    ResourceUsageKind::
-    ResourceUsageKind ()
-    {
-    }
-
     ResourceUsageKind::Value ResourceUsageKind::
     integral () const
     {
@@ -2213,12 +2214,15 @@ namespace CIAO
     // 
 
     InstanceResourceDeploymentDescription::
-    InstanceResourceDeploymentDescription ()
+    InstanceResourceDeploymentDescription (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
+    ::XMLSchema::string< char > const& requirementName__,
+    ::XMLSchema::string< char > const& resourceName__,
+    ::CIAO::Config_Handlers::Any const& resourceValue__)
     :
-    resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind ()),
-    requirementName_ (new ::XMLSchema::string< char > ()),
-    resourceName_ (new ::XMLSchema::string< char > ()),
-    resourceValue_ (new ::CIAO::Config_Handlers::Any ()),
+    resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind (resourceUsage__)),
+    requirementName_ (new ::XMLSchema::string< char > (requirementName__)),
+    resourceName_ (new ::XMLSchema::string< char > (resourceName__)),
+    resourceValue_ (new ::CIAO::Config_Handlers::Any (resourceValue__)),
     regulator__ ()
     {
       resourceUsage_->container (this);
@@ -2342,12 +2346,15 @@ namespace CIAO
     // 
 
     InstanceDeploymentDescription::
-    InstanceDeploymentDescription ()
+    InstanceDeploymentDescription (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& node__,
+    ::XMLSchema::string< char > const& source__,
+    ::XMLSchema::IDREF< char > const& implementation__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    node_ (new ::XMLSchema::string< char > ()),
-    source_ (new ::XMLSchema::string< char > ()),
-    implementation_ (new ::XMLSchema::IDREF< char > ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    node_ (new ::XMLSchema::string< char > (node__)),
+    source_ (new ::XMLSchema::string< char > (source__)),
+    implementation_ (new ::XMLSchema::IDREF< char > (implementation__)),
     regulator__ ()
     {
       name_->container (this);
@@ -2630,11 +2637,6 @@ namespace CIAO
     // CCMComponentPortKind
     // 
 
-    CCMComponentPortKind::
-    CCMComponentPortKind ()
-    {
-    }
-
     CCMComponentPortKind::Value CCMComponentPortKind::
     integral () const
     {
@@ -2663,16 +2665,23 @@ namespace CIAO
     // 
 
     ComponentPortDescription::
-    ComponentPortDescription ()
+    ComponentPortDescription (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& specificType__,
+    ::XMLSchema::string< char > const& supportedType__,
+    ::XMLSchema::string< char > const& provider__,
+    ::XMLSchema::string< char > const& exclusiveProvider__,
+    ::XMLSchema::string< char > const& exclusiveUser__,
+    ::XMLSchema::string< char > const& optional__,
+    ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    specificType_ (new ::XMLSchema::string< char > ()),
-    supportedType_ (new ::XMLSchema::string< char > ()),
-    provider_ (new ::XMLSchema::string< char > ()),
-    exclusiveProvider_ (new ::XMLSchema::string< char > ()),
-    exclusiveUser_ (new ::XMLSchema::string< char > ()),
-    optional_ (new ::XMLSchema::string< char > ()),
-    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    specificType_ (new ::XMLSchema::string< char > (specificType__)),
+    supportedType_ (new ::XMLSchema::string< char > (supportedType__)),
+    provider_ (new ::XMLSchema::string< char > (provider__)),
+    exclusiveProvider_ (new ::XMLSchema::string< char > (exclusiveProvider__)),
+    exclusiveUser_ (new ::XMLSchema::string< char > (exclusiveUser__)),
+    optional_ (new ::XMLSchema::string< char > (optional__)),
+    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind (kind__)),
     regulator__ ()
     {
       name_->container (this);
@@ -2896,10 +2905,11 @@ namespace CIAO
     // 
 
     ComponentPropertyDescription::
-    ComponentPropertyDescription ()
+    ComponentPropertyDescription (::XMLSchema::string< char > const& name__,
+    ::CIAO::Config_Handlers::DataType const& type__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    type_ (new ::CIAO::Config_Handlers::DataType ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    type_ (new ::CIAO::Config_Handlers::DataType (type__)),
     regulator__ ()
     {
       name_->container (this);
@@ -2973,9 +2983,9 @@ namespace CIAO
     // 
 
     ComponentExternalPortEndpoint::
-    ComponentExternalPortEndpoint ()
+    ComponentExternalPortEndpoint (::XMLSchema::string< char > const& portName__)
     :
-    portName_ (new ::XMLSchema::string< char > ()),
+    portName_ (new ::XMLSchema::string< char > (portName__)),
     regulator__ ()
     {
       portName_->container (this);
@@ -3024,11 +3034,13 @@ namespace CIAO
     // 
 
     PlanSubcomponentPortEndpoint::
-    PlanSubcomponentPortEndpoint ()
+    PlanSubcomponentPortEndpoint (::XMLSchema::string< char > const& portName__,
+    ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__,
+    ::XMLSchema::IDREF< char > const& instance__)
     :
-    portName_ (new ::XMLSchema::string< char > ()),
-    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind ()),
-    instance_ (new ::XMLSchema::IDREF< char > ()),
+    portName_ (new ::XMLSchema::string< char > (portName__)),
+    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind (kind__)),
+    instance_ (new ::XMLSchema::IDREF< char > (instance__)),
     regulator__ ()
     {
       portName_->container (this);
@@ -3167,9 +3179,9 @@ namespace CIAO
     // 
 
     ExternalReferenceEndpoint::
-    ExternalReferenceEndpoint ()
+    ExternalReferenceEndpoint (::XMLSchema::string< char > const& location__)
     :
-    location_ (new ::XMLSchema::string< char > ()),
+    location_ (new ::XMLSchema::string< char > (location__)),
     regulator__ ()
     {
       location_->container (this);
@@ -3218,12 +3230,15 @@ namespace CIAO
     // 
 
     ConnectionResourceDeploymentDescription::
-    ConnectionResourceDeploymentDescription ()
+    ConnectionResourceDeploymentDescription (::XMLSchema::string< char > const& targetName__,
+    ::XMLSchema::string< char > const& requirementName__,
+    ::XMLSchema::string< char > const& resourceName__,
+    ::CIAO::Config_Handlers::Any const& resourceValue__)
     :
-    targetName_ (new ::XMLSchema::string< char > ()),
-    requirementName_ (new ::XMLSchema::string< char > ()),
-    resourceName_ (new ::XMLSchema::string< char > ()),
-    resourceValue_ (new ::CIAO::Config_Handlers::Any ()),
+    targetName_ (new ::XMLSchema::string< char > (targetName__)),
+    requirementName_ (new ::XMLSchema::string< char > (requirementName__)),
+    resourceName_ (new ::XMLSchema::string< char > (resourceName__)),
+    resourceValue_ (new ::CIAO::Config_Handlers::Any (resourceValue__)),
     regulator__ ()
     {
       targetName_->container (this);
@@ -3347,9 +3362,9 @@ namespace CIAO
     // 
 
     PlanConnectionDescription::
-    PlanConnectionDescription ()
+    PlanConnectionDescription (::XMLSchema::string< char > const& name__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
     regulator__ ()
     {
       name_->container (this);
@@ -3716,9 +3731,9 @@ namespace CIAO
     // 
 
     ImplementationDependency::
-    ImplementationDependency ()
+    ImplementationDependency (::XMLSchema::string< char > const& requiredType__)
     :
-    requiredType_ (new ::XMLSchema::string< char > ()),
+    requiredType_ (new ::XMLSchema::string< char > (requiredType__)),
     regulator__ ()
     {
       requiredType_->container (this);
@@ -3767,11 +3782,13 @@ namespace CIAO
     // 
 
     Capability::
-    Capability ()
+    Capability (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& resourceType__,
+    ::CIAO::Config_Handlers::SatisfierProperty const& property__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    resourceType_ (new ::XMLSchema::string< char > (resourceType__)),
+    property_ (new ::CIAO::Config_Handlers::SatisfierProperty (property__)),
     regulator__ ()
     {
       name_->container (this);
@@ -3870,14 +3887,19 @@ namespace CIAO
     // 
 
     ImplementationRequirement::
-    ImplementationRequirement ()
+    ImplementationRequirement (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
+    ::XMLSchema::string< char > const& resourcePort__,
+    ::XMLSchema::string< char > const& componentPort__,
+    ::XMLSchema::string< char > const& resourceType__,
+    ::XMLSchema::string< char > const& name__,
+    ::CIAO::Config_Handlers::Property const& property__)
     :
-    resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind ()),
-    resourcePort_ (new ::XMLSchema::string< char > ()),
-    componentPort_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    name_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::Property ()),
+    resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind (resourceUsage__)),
+    resourcePort_ (new ::XMLSchema::string< char > (resourcePort__)),
+    componentPort_ (new ::XMLSchema::string< char > (componentPort__)),
+    resourceType_ (new ::XMLSchema::string< char > (resourceType__)),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    property_ (new ::CIAO::Config_Handlers::Property (property__)),
     regulator__ ()
     {
       resourceUsage_->container (this);
@@ -4051,11 +4073,13 @@ namespace CIAO
     // 
 
     ComponentPackageReference::
-    ComponentPackageReference ()
+    ComponentPackageReference (::XMLSchema::string< char > const& requiredUUID__,
+    ::XMLSchema::string< char > const& requiredName__,
+    ::XMLSchema::string< char > const& requiredType__)
     :
-    requiredUUID_ (new ::XMLSchema::string< char > ()),
-    requiredName_ (new ::XMLSchema::string< char > ()),
-    requiredType_ (new ::XMLSchema::string< char > ()),
+    requiredUUID_ (new ::XMLSchema::string< char > (requiredUUID__)),
+    requiredName_ (new ::XMLSchema::string< char > (requiredName__)),
+    requiredType_ (new ::XMLSchema::string< char > (requiredType__)),
     regulator__ ()
     {
       requiredUUID_->container (this);
@@ -4154,10 +4178,11 @@ namespace CIAO
     // 
 
     SubcomponentPortEndpoint::
-    SubcomponentPortEndpoint ()
+    SubcomponentPortEndpoint (::XMLSchema::string< char > const& portName__,
+    ::XMLSchema::IDREF< char > const& instance__)
     :
-    portName_ (new ::XMLSchema::string< char > ()),
-    instance_ (new ::XMLSchema::IDREF< char > ()),
+    portName_ (new ::XMLSchema::string< char > (portName__)),
+    instance_ (new ::XMLSchema::IDREF< char > (instance__)),
     regulator__ ()
     {
       portName_->container (this);
@@ -4231,9 +4256,9 @@ namespace CIAO
     // 
 
     AssemblyConnectionDescription::
-    AssemblyConnectionDescription ()
+    AssemblyConnectionDescription (::XMLSchema::string< char > const& name__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
     regulator__ ()
     {
       name_->container (this);
@@ -4662,9 +4687,7 @@ namespace CIAO
 
     DataType::
     DataType (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);
@@ -4691,9 +4714,7 @@ namespace CIAO
 
     DataValue::
     DataValue (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);
@@ -4810,14 +4831,8 @@ namespace CIAO
 
     Any::
     Any (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    type_ (new ::CIAO::Config_Handlers::DataType ()),
-    value_ (new ::CIAO::Config_Handlers::DataValue ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      type_->container (this);
-      value_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -4828,14 +4843,14 @@ namespace CIAO
 
         if (n == "type")
         {
-          ::CIAO::Config_Handlers::DataType t (e);
-          type (t);
+          type_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > (new ::CIAO::Config_Handlers::DataType (e));
+          type_->container (this);
         }
 
         else if (n == "value")
         {
-          ::CIAO::Config_Handlers::DataValue t (e);
-          value (t);
+          value_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataValue > (new ::CIAO::Config_Handlers::DataValue (e));
+          value_->container (this);
         }
 
         else 
@@ -4849,14 +4864,8 @@ namespace CIAO
 
     Property::
     Property (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    value_ (new ::CIAO::Config_Handlers::Any ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      value_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -4867,14 +4876,14 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "value")
         {
-          ::CIAO::Config_Handlers::Any t (e);
-          value (t);
+          value_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Any > (new ::CIAO::Config_Handlers::Any (e));
+          value_->container (this);
         }
 
         else 
@@ -4888,14 +4897,8 @@ namespace CIAO
 
     Node::
     Node (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    label_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      label_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -4906,14 +4909,14 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "label")
         {
-          ::XMLSchema::string< char > t (e);
-          label (t);
+          label_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          label_->container (this);
         }
 
         else 
@@ -4971,16 +4974,8 @@ namespace CIAO
 
     SatisfierProperty::
     SatisfierProperty (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    kind_ (new ::CIAO::Config_Handlers::SatisfierPropertyKind ()),
-    value_ (new ::CIAO::Config_Handlers::Any ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      kind_->container (this);
-      value_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -4991,20 +4986,20 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "kind")
         {
-          ::CIAO::Config_Handlers::SatisfierPropertyKind t (e);
-          kind (t);
+          kind_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierPropertyKind > (new ::CIAO::Config_Handlers::SatisfierPropertyKind (e));
+          kind_->container (this);
         }
 
         else if (n == "value")
         {
-          ::CIAO::Config_Handlers::Any t (e);
-          value (t);
+          value_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Any > (new ::CIAO::Config_Handlers::Any (e));
+          value_->container (this);
         }
 
         else 
@@ -5018,16 +5013,8 @@ namespace CIAO
 
     Resource::
     Resource (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      resourceType_->container (this);
-      property_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5038,20 +5025,20 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "resourceType")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceType (t);
+          resourceType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceType_->container (this);
         }
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::SatisfierProperty t (e);
-          property (t);
+          property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > (new ::CIAO::Config_Handlers::SatisfierProperty (e));
+          property_->container (this);
         }
 
         else 
@@ -5065,18 +5052,8 @@ namespace CIAO
 
     SharedResource::
     SharedResource (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    node_ (new ::CIAO::Config_Handlers::Node ()),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      resourceType_->container (this);
-      node_->container (this);
-      property_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5087,26 +5064,26 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "resourceType")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceType (t);
+          resourceType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceType_->container (this);
         }
 
         else if (n == "node")
         {
-          ::CIAO::Config_Handlers::Node t (e);
-          node (t);
+          node_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Node > (new ::CIAO::Config_Handlers::Node (e));
+          node_->container (this);
         }
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::SatisfierProperty t (e);
-          property (t);
+          property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > (new ::CIAO::Config_Handlers::SatisfierProperty (e));
+          property_->container (this);
         }
 
         else 
@@ -5120,16 +5097,8 @@ namespace CIAO
 
     Requirement::
     Requirement (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    name_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::Property ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      resourceType_->container (this);
-      name_->container (this);
-      property_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5140,20 +5109,20 @@ namespace CIAO
 
         if (n == "resourceType")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceType (t);
+          resourceType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceType_->container (this);
         }
 
         else if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::Property t (e);
-          property (t);
+          property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (new ::CIAO::Config_Handlers::Property (e));
+          property_->container (this);
         }
 
         else 
@@ -5167,16 +5136,8 @@ namespace CIAO
 
     ResourceDeploymentDescription::
     ResourceDeploymentDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    requirementName_ (new ::XMLSchema::string< char > ()),
-    resourceName_ (new ::XMLSchema::string< char > ()),
-    resourceValue_ (new ::CIAO::Config_Handlers::Any ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      requirementName_->container (this);
-      resourceName_->container (this);
-      resourceValue_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5187,20 +5148,20 @@ namespace CIAO
 
         if (n == "requirementName")
         {
-          ::XMLSchema::string< char > t (e);
-          requirementName (t);
+          requirementName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          requirementName_->container (this);
         }
 
         else if (n == "resourceName")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceName (t);
+          resourceName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceName_->container (this);
         }
 
         else if (n == "resourceValue")
         {
-          ::CIAO::Config_Handlers::Any t (e);
-          resourceValue (t);
+          resourceValue_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Any > (new ::CIAO::Config_Handlers::Any (e));
+          resourceValue_->container (this);
         }
 
         else 
@@ -5214,14 +5175,8 @@ namespace CIAO
 
     ArtifactDeploymentDescription::
     ArtifactDeploymentDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    source_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      source_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5232,14 +5187,14 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "source")
         {
-          ::XMLSchema::string< char > t (e);
-          source (t);
+          source_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          source_->container (this);
         }
 
         else if (n == "node")
@@ -5298,14 +5253,8 @@ namespace CIAO
 
     MonolithicDeploymentDescription::
     MonolithicDeploymentDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    source_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      source_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5316,14 +5265,14 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "source")
         {
-          ::XMLSchema::string< char > t (e);
-          source (t);
+          source_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          source_->container (this);
         }
 
         else if (n == "artifact")
@@ -5411,18 +5360,8 @@ namespace CIAO
 
     InstanceResourceDeploymentDescription::
     InstanceResourceDeploymentDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind ()),
-    requirementName_ (new ::XMLSchema::string< char > ()),
-    resourceName_ (new ::XMLSchema::string< char > ()),
-    resourceValue_ (new ::CIAO::Config_Handlers::Any ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      resourceUsage_->container (this);
-      requirementName_->container (this);
-      resourceName_->container (this);
-      resourceValue_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5433,26 +5372,26 @@ namespace CIAO
 
         if (n == "resourceUsage")
         {
-          ::CIAO::Config_Handlers::ResourceUsageKind t (e);
-          resourceUsage (t);
+          resourceUsage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceUsageKind > (new ::CIAO::Config_Handlers::ResourceUsageKind (e));
+          resourceUsage_->container (this);
         }
 
         else if (n == "requirementName")
         {
-          ::XMLSchema::string< char > t (e);
-          requirementName (t);
+          requirementName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          requirementName_->container (this);
         }
 
         else if (n == "resourceName")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceName (t);
+          resourceName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceName_->container (this);
         }
 
         else if (n == "resourceValue")
         {
-          ::CIAO::Config_Handlers::Any t (e);
-          resourceValue (t);
+          resourceValue_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Any > (new ::CIAO::Config_Handlers::Any (e));
+          resourceValue_->container (this);
         }
 
         else 
@@ -5466,18 +5405,8 @@ namespace CIAO
 
     InstanceDeploymentDescription::
     InstanceDeploymentDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    node_ (new ::XMLSchema::string< char > ()),
-    source_ (new ::XMLSchema::string< char > ()),
-    implementation_ (new ::XMLSchema::IDREF< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      node_->container (this);
-      source_->container (this);
-      implementation_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5488,26 +5417,26 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "node")
         {
-          ::XMLSchema::string< char > t (e);
-          node (t);
+          node_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          node_->container (this);
         }
 
         else if (n == "source")
         {
-          ::XMLSchema::string< char > t (e);
-          source (t);
+          source_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          source_->container (this);
         }
 
         else if (n == "implementation")
         {
-          ::XMLSchema::IDREF< char > t (e);
-          implementation (t);
+          implementation_ = ::std::auto_ptr< ::XMLSchema::IDREF< char > > (new ::XMLSchema::IDREF< char > (e));
+          implementation_->container (this);
         }
 
         else if (n == "configProperty")
@@ -5598,26 +5527,8 @@ namespace CIAO
 
     ComponentPortDescription::
     ComponentPortDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    specificType_ (new ::XMLSchema::string< char > ()),
-    supportedType_ (new ::XMLSchema::string< char > ()),
-    provider_ (new ::XMLSchema::string< char > ()),
-    exclusiveProvider_ (new ::XMLSchema::string< char > ()),
-    exclusiveUser_ (new ::XMLSchema::string< char > ()),
-    optional_ (new ::XMLSchema::string< char > ()),
-    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      specificType_->container (this);
-      supportedType_->container (this);
-      provider_->container (this);
-      exclusiveProvider_->container (this);
-      exclusiveUser_->container (this);
-      optional_->container (this);
-      kind_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5628,50 +5539,50 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "specificType")
         {
-          ::XMLSchema::string< char > t (e);
-          specificType (t);
+          specificType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          specificType_->container (this);
         }
 
         else if (n == "supportedType")
         {
-          ::XMLSchema::string< char > t (e);
-          supportedType (t);
+          supportedType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          supportedType_->container (this);
         }
 
         else if (n == "provider")
         {
-          ::XMLSchema::string< char > t (e);
-          provider (t);
+          provider_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          provider_->container (this);
         }
 
         else if (n == "exclusiveProvider")
         {
-          ::XMLSchema::string< char > t (e);
-          exclusiveProvider (t);
+          exclusiveProvider_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          exclusiveProvider_->container (this);
         }
 
         else if (n == "exclusiveUser")
         {
-          ::XMLSchema::string< char > t (e);
-          exclusiveUser (t);
+          exclusiveUser_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          exclusiveUser_->container (this);
         }
 
         else if (n == "optional")
         {
-          ::XMLSchema::string< char > t (e);
-          optional (t);
+          optional_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          optional_->container (this);
         }
 
         else if (n == "kind")
         {
-          ::CIAO::Config_Handlers::CCMComponentPortKind t (e);
-          kind (t);
+          kind_ = ::std::auto_ptr< ::CIAO::Config_Handlers::CCMComponentPortKind > (new ::CIAO::Config_Handlers::CCMComponentPortKind (e));
+          kind_->container (this);
         }
 
         else 
@@ -5685,14 +5596,8 @@ namespace CIAO
 
     ComponentPropertyDescription::
     ComponentPropertyDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    type_ (new ::CIAO::Config_Handlers::DataType ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      type_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5703,14 +5608,14 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "type")
         {
-          ::CIAO::Config_Handlers::DataType t (e);
-          type (t);
+          type_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > (new ::CIAO::Config_Handlers::DataType (e));
+          type_->container (this);
         }
 
         else 
@@ -5724,12 +5629,8 @@ namespace CIAO
 
     ComponentExternalPortEndpoint::
     ComponentExternalPortEndpoint (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    portName_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      portName_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5740,8 +5641,8 @@ namespace CIAO
 
         if (n == "portName")
         {
-          ::XMLSchema::string< char > t (e);
-          portName (t);
+          portName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          portName_->container (this);
         }
 
         else 
@@ -5755,16 +5656,8 @@ namespace CIAO
 
     PlanSubcomponentPortEndpoint::
     PlanSubcomponentPortEndpoint (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    portName_ (new ::XMLSchema::string< char > ()),
-    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind ()),
-    instance_ (new ::XMLSchema::IDREF< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      portName_->container (this);
-      kind_->container (this);
-      instance_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5775,8 +5668,8 @@ namespace CIAO
 
         if (n == "portName")
         {
-          ::XMLSchema::string< char > t (e);
-          portName (t);
+          portName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          portName_->container (this);
         }
 
         else if (n == "provider")
@@ -5787,14 +5680,14 @@ namespace CIAO
 
         else if (n == "kind")
         {
-          ::CIAO::Config_Handlers::CCMComponentPortKind t (e);
-          kind (t);
+          kind_ = ::std::auto_ptr< ::CIAO::Config_Handlers::CCMComponentPortKind > (new ::CIAO::Config_Handlers::CCMComponentPortKind (e));
+          kind_->container (this);
         }
 
         else if (n == "instance")
         {
-          ::XMLSchema::IDREF< char > t (e);
-          instance (t);
+          instance_ = ::std::auto_ptr< ::XMLSchema::IDREF< char > > (new ::XMLSchema::IDREF< char > (e));
+          instance_->container (this);
         }
 
         else 
@@ -5808,12 +5701,8 @@ namespace CIAO
 
     ExternalReferenceEndpoint::
     ExternalReferenceEndpoint (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    location_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      location_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5824,8 +5713,8 @@ namespace CIAO
 
         if (n == "location")
         {
-          ::XMLSchema::string< char > t (e);
-          location (t);
+          location_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          location_->container (this);
         }
 
         else 
@@ -5839,18 +5728,8 @@ namespace CIAO
 
     ConnectionResourceDeploymentDescription::
     ConnectionResourceDeploymentDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    targetName_ (new ::XMLSchema::string< char > ()),
-    requirementName_ (new ::XMLSchema::string< char > ()),
-    resourceName_ (new ::XMLSchema::string< char > ()),
-    resourceValue_ (new ::CIAO::Config_Handlers::Any ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      targetName_->container (this);
-      requirementName_->container (this);
-      resourceName_->container (this);
-      resourceValue_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5861,26 +5740,26 @@ namespace CIAO
 
         if (n == "targetName")
         {
-          ::XMLSchema::string< char > t (e);
-          targetName (t);
+          targetName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          targetName_->container (this);
         }
 
         else if (n == "requirementName")
         {
-          ::XMLSchema::string< char > t (e);
-          requirementName (t);
+          requirementName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          requirementName_->container (this);
         }
 
         else if (n == "resourceName")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceName (t);
+          resourceName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceName_->container (this);
         }
 
         else if (n == "resourceValue")
         {
-          ::CIAO::Config_Handlers::Any t (e);
-          resourceValue (t);
+          resourceValue_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Any > (new ::CIAO::Config_Handlers::Any (e));
+          resourceValue_->container (this);
         }
 
         else 
@@ -5894,12 +5773,8 @@ namespace CIAO
 
     PlanConnectionDescription::
     PlanConnectionDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5910,8 +5785,8 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "source")
@@ -5961,12 +5836,8 @@ namespace CIAO
 
     ImplementationDependency::
     ImplementationDependency (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    requiredType_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      requiredType_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5977,8 +5848,8 @@ namespace CIAO
 
         if (n == "requiredType")
         {
-          ::XMLSchema::string< char > t (e);
-          requiredType (t);
+          requiredType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          requiredType_->container (this);
         }
 
         else 
@@ -5992,16 +5863,8 @@ namespace CIAO
 
     Capability::
     Capability (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      resourceType_->container (this);
-      property_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -6012,20 +5875,20 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "resourceType")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceType (t);
+          resourceType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceType_->container (this);
         }
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::SatisfierProperty t (e);
-          property (t);
+          property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > (new ::CIAO::Config_Handlers::SatisfierProperty (e));
+          property_->container (this);
         }
 
         else 
@@ -6039,22 +5902,8 @@ namespace CIAO
 
     ImplementationRequirement::
     ImplementationRequirement (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind ()),
-    resourcePort_ (new ::XMLSchema::string< char > ()),
-    componentPort_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    name_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::Property ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      resourceUsage_->container (this);
-      resourcePort_->container (this);
-      componentPort_->container (this);
-      resourceType_->container (this);
-      name_->container (this);
-      property_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -6065,38 +5914,38 @@ namespace CIAO
 
         if (n == "resourceUsage")
         {
-          ::CIAO::Config_Handlers::ResourceUsageKind t (e);
-          resourceUsage (t);
+          resourceUsage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceUsageKind > (new ::CIAO::Config_Handlers::ResourceUsageKind (e));
+          resourceUsage_->container (this);
         }
 
         else if (n == "resourcePort")
         {
-          ::XMLSchema::string< char > t (e);
-          resourcePort (t);
+          resourcePort_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourcePort_->container (this);
         }
 
         else if (n == "componentPort")
         {
-          ::XMLSchema::string< char > t (e);
-          componentPort (t);
+          componentPort_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          componentPort_->container (this);
         }
 
         else if (n == "resourceType")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceType (t);
+          resourceType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceType_->container (this);
         }
 
         else if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::Property t (e);
-          property (t);
+          property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (new ::CIAO::Config_Handlers::Property (e));
+          property_->container (this);
         }
 
         else 
@@ -6110,16 +5959,8 @@ namespace CIAO
 
     ComponentPackageReference::
     ComponentPackageReference (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    requiredUUID_ (new ::XMLSchema::string< char > ()),
-    requiredName_ (new ::XMLSchema::string< char > ()),
-    requiredType_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      requiredUUID_->container (this);
-      requiredName_->container (this);
-      requiredType_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -6130,20 +5971,20 @@ namespace CIAO
 
         if (n == "requiredUUID")
         {
-          ::XMLSchema::string< char > t (e);
-          requiredUUID (t);
+          requiredUUID_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          requiredUUID_->container (this);
         }
 
         else if (n == "requiredName")
         {
-          ::XMLSchema::string< char > t (e);
-          requiredName (t);
+          requiredName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          requiredName_->container (this);
         }
 
         else if (n == "requiredType")
         {
-          ::XMLSchema::string< char > t (e);
-          requiredType (t);
+          requiredType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          requiredType_->container (this);
         }
 
         else 
@@ -6157,14 +5998,8 @@ namespace CIAO
 
     SubcomponentPortEndpoint::
     SubcomponentPortEndpoint (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    portName_ (new ::XMLSchema::string< char > ()),
-    instance_ (new ::XMLSchema::IDREF< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      portName_->container (this);
-      instance_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -6175,14 +6010,14 @@ namespace CIAO
 
         if (n == "portName")
         {
-          ::XMLSchema::string< char > t (e);
-          portName (t);
+          portName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          portName_->container (this);
         }
 
         else if (n == "instance")
         {
-          ::XMLSchema::IDREF< char > t (e);
-          instance (t);
+          instance_ = ::std::auto_ptr< ::XMLSchema::IDREF< char > > (new ::XMLSchema::IDREF< char > (e));
+          instance_->container (this);
         }
 
         else 
@@ -6196,12 +6031,8 @@ namespace CIAO
 
     AssemblyConnectionDescription::
     AssemblyConnectionDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -6212,8 +6043,8 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "deployRequirement")

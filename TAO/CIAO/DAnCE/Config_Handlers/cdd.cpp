@@ -1,4 +1,4 @@
-//$Id$
+// $Id$
 #include "cdd.hpp"
 
 namespace CIAO
@@ -9,10 +9,11 @@ namespace CIAO
     // 
 
     Domain::
-    Domain ()
+    Domain (::XMLSchema::string< char > const& label__,
+    ::XMLSchema::string< char > const& UUID__)
     :
-    label_ (new ::XMLSchema::string< char > ()),
-    UUID_ (new ::XMLSchema::string< char > ()),
+    label_ (new ::XMLSchema::string< char > (label__)),
+    UUID_ (new ::XMLSchema::string< char > (UUID__)),
     regulator__ ()
     {
       label_->container (this);
@@ -238,14 +239,8 @@ namespace CIAO
 
     Domain::
     Domain (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    label_ (new ::XMLSchema::string< char > ()),
-    UUID_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      label_->container (this);
-      UUID_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -256,14 +251,14 @@ namespace CIAO
 
         if (n == "label")
         {
-          ::XMLSchema::string< char > t (e);
-          label (t);
+          label_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          label_->container (this);
         }
 
         else if (n == "UUID")
         {
-          ::XMLSchema::string< char > t (e);
-          UUID (t);
+          UUID_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          UUID_->container (this);
         }
 
         else if (n == "sharedResource")

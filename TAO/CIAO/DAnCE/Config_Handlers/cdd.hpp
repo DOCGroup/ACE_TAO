@@ -85,7 +85,9 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > infoProperty_;
 
       public:
-      Domain ();
+      Domain (::XMLSchema::string< char > const& label__,
+      ::XMLSchema::string< char > const& UUID__);
+
       Domain (::XSCRT::XML::Element< char > const&);
       Domain (Domain const& s);
 

@@ -1,4 +1,4 @@
-//$Id$
+// $Id$
 #ifndef CCD_HPP
 #define CCD_HPP
 
@@ -64,13 +64,16 @@ namespace CIAO
       // supportedType
       // 
       public:
-      bool supportedType_p () const;
-      ::XMLSchema::string< char > const& supportedType () const;
-      ::XMLSchema::string< char >& supportedType ();
-      void supportedType (::XMLSchema::string< char > const& );
+      typedef ::std::vector< ::XMLSchema::string< char > >::iterator supportedType_iterator;
+      typedef ::std::vector< ::XMLSchema::string< char > >::const_iterator supportedType_const_iterator;
+      supportedType_iterator begin_supportedType ();
+      supportedType_iterator end_supportedType ();
+      supportedType_const_iterator begin_supportedType () const;
+      supportedType_const_iterator end_supportedType () const;
+      void add_supportedType (::XMLSchema::string< char > const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::string< char > > supportedType_;
+      ::std::vector< ::XMLSchema::string< char > > supportedType_;
 
       // idlFile
       // 
@@ -86,13 +89,16 @@ namespace CIAO
       // configProperty
       // 
       public:
-      bool configProperty_p () const;
-      ::CIAO::Config_Handlers::Property const& configProperty () const;
-      ::CIAO::Config_Handlers::Property& configProperty ();
-      void configProperty (::CIAO::Config_Handlers::Property const& );
+      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
+      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
+      configProperty_iterator begin_configProperty ();
+      configProperty_iterator end_configProperty ();
+      configProperty_const_iterator begin_configProperty () const;
+      configProperty_const_iterator end_configProperty () const;
+      void add_configProperty (::CIAO::Config_Handlers::Property const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::Property > configProperty_;
+      ::std::vector< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // port
       // 
@@ -143,6 +149,7 @@ namespace CIAO
 
       public:
       ComponentInterfaceDescription ();
+
       ComponentInterfaceDescription (::XSCRT::XML::Element< char > const&);
       ComponentInterfaceDescription (ComponentInterfaceDescription const& s);
 

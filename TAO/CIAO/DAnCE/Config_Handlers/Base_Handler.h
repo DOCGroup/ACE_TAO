@@ -12,71 +12,69 @@
 #define CIAO_CONFIG_HANDLERS_BASE_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_export.h"
-#include "Basic_Deployment_Data.hpp"
-#include "ace/Hash_Map_Manager.h"
-#include "ace/Null_Mutex.h"
+#include "Config_Handlers/Config_Handlers_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Hash_Map_Manager.h"
+#include "ace/Null_Mutex.h"
+#include "Config_Handlers/XSCRT/XMLSchema.hpp"
+
 namespace CORBA
 {
-  struct String_var;
-  struct StringSeq;
+  class String_out;
+  class StringSeq;
 }
 
 namespace CIAO
 {
-
   namespace Config_Handlers
-  {  
-   
+  {
     /*
      * @class Base_Handler
      *
-     * @brief base class for Type handlers.
-     *
-     * 
-     *
+     * @brief
      */
-    
-    class Config_Handlers_Export Base_Handler{
-     
+    class Config_Handlers_Export Base_Handler
+    {
     public:
-      
-      typedef ACE_Hash_Map_Manager<ACE_TString, size_t, ACE_Null_Mutex> IDREF_MAP;
-       
       Base_Handler (void);
+
       virtual ~Base_Handler (void);
-      
+
       /// Populates a CORBA string with the provided XMLString.
-      void handle_string (const ::XMLSchema::string <char> &str, 
-                          CORBA::String_var &tofill);
-      
+      void populate_string (const ::XMLSchema::string <char> &str,
+                            CORBA::String_out &tofill);
+
       /// Appends the string provided to the provided StringSeq.
-      void handle_string_seq (::XMLSchema::string <char> &str, 
-                              CORBA::StringSeq &tofill);
-      
-      /// The Deployment spec references elements by 
-      /// their position within their parent sequence.
-      /// These two methods allow an element's index
-      /// to be stored/retrieved.
-        
-      /// Map the index <index> of an element to its IDREF <id>.
-      void bind_ref (ACE_TString& id, size_t index);
-        
+      void populate_string_seq (const ::XMLSchema::string <char> &str,
+                                CORBA::StringSeq &tofill);
+
+      /// The Deployment spec references elements by their position
+      /// within their parent sequence.
+      /**
+       * These two methods allow an element's index to be
+       * stored/retrieved.  Map the index <index> of an element to its
+       * IDREF <id>.
+       */
+      bool bind_ref (ACE_CString& id, size_t index);
+
       /// Retrieve the index of an element with its IDREF <id>.
-      /// Returns 0 if the <id> was found.
-      int get_ref (ACE_TString& id, size_t val);         
+      /**
+       * @\return true if the <id> was found.
+       */
+      bool find_ref (ACE_CString& id, size_t val);
 
     private:
-      
+      typedef ACE_Hash_Map_Manager<ACE_CString,
+                                   size_t,
+                                   ACE_Null_Mutex> IDREF_MAP;
+
       /// The map used to store and look up the indexes
       /// of elements referenced by their index.
-      IDREF_MAP idref_map_;  
-
+      IDREF_MAP idref_map_;
     };
   }
 }

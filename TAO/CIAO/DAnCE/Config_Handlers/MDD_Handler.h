@@ -14,13 +14,14 @@
 #include /**/ "ace/pre.h"
 
 #include "Base_Handler.h"
-#include "Config_Handlers_export.h"
-#include "ace/config-lite.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "Config_Handlers_export.h"
+#include "ace/config-lite.h"
 
 
 namespace Deployment
@@ -37,33 +38,31 @@ namespace CIAO
 
    class MonolithicDeploymentDescription;
 
-
-   /*
+    /*
     * @class MDD_Handler
     *
     * @brief Handler class for <MonolithicDeploymentDescription> types.
     *
-    * This class defines handler methods to map values from
-    * XSC MonolithicDeploymentDescription objects, parsed from the descriptor files, to the
-    * corresponding CORBA IDL Any type.
+    * This class defines handler methods to map values from XSC
+    * MonolithicDeploymentDescription objects, parsed from the
+    * descriptor files, to the corresponding CORBA IDL types.
     *
     */
-    
-    class Config_Handlers_Export MDD_Handler : public Base_Handler{
-     
-      public:
 
-        MDD_Handler (void);
-        virtual ~MDD_Handler (void);
+    class Config_Handlers_Export MDD_Handler
+    {
+    public:
 
-        void get_MonolithicDeploymentDescription (
-             Deployment::MonolithicDeploymentDescription& toconfig, 
-             MonolithicDeploymentDescription& desc);
+      MDD_Handler (void);
+      virtual ~MDD_Handler (void);
+
+      void get_MonolithicDeploymentDescription (
+          Deployment::MonolithicDeploymentDescription& toconfig,
+          MonolithicDeploymentDescription& desc);
 
     };
   }
 }
 
-#include /**/ "ace/post.h" 
+#include /**/ "ace/post.h"
 #endif /* CIAO_CONFIG_HANDLERS_MDD_Handler_H */
-

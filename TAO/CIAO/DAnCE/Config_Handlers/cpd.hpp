@@ -52,7 +52,9 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentImplementationDescription > referencedImplementation_;
 
       public:
-      PackagedComponentImplementation ();
+      PackagedComponentImplementation (::XMLSchema::string< char > const& name__,
+      ::CIAO::Config_Handlers::ComponentImplementationDescription const& referencedImplementation__);
+
       PackagedComponentImplementation (::XSCRT::XML::Element< char > const&);
       PackagedComponentImplementation (PackagedComponentImplementation const& s);
 
@@ -147,6 +149,7 @@ namespace CIAO
 
       public:
       ComponentPackageDescription ();
+
       ComponentPackageDescription (::XSCRT::XML::Element< char > const&);
       ComponentPackageDescription (ComponentPackageDescription const& s);
 

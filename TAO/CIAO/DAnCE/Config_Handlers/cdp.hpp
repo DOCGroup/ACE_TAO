@@ -141,7 +141,9 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::Property > infoProperty_;
 
       public:
-      DeploymentPlan ();
+      DeploymentPlan (::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes__,
+      ::CIAO::Config_Handlers::MonolithicDeploymentDescription const& implementation__);
+
       DeploymentPlan (::XSCRT::XML::Element< char > const&);
       DeploymentPlan (DeploymentPlan const& s);
 

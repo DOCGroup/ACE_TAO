@@ -50,7 +50,9 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ImplementationArtifactDescription > referencedArtifact_;
 
       public:
-      NamedImplementationArtifact ();
+      NamedImplementationArtifact (::XMLSchema::string< char > const& name__,
+      ::CIAO::Config_Handlers::ImplementationArtifactDescription const& referencedArtifact__);
+
       NamedImplementationArtifact (::XSCRT::XML::Element< char > const&);
       NamedImplementationArtifact (NamedImplementationArtifact const& s);
 
@@ -162,6 +164,7 @@ namespace CIAO
 
       public:
       ImplementationArtifactDescription ();
+
       ImplementationArtifactDescription (::XSCRT::XML::Element< char > const&);
       ImplementationArtifactDescription (ImplementationArtifactDescription const& s);
 

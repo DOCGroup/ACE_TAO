@@ -102,7 +102,9 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::ID< char > > id_;
 
       public:
-      SubcomponentInstantiationDescription ();
+      SubcomponentInstantiationDescription (::XMLSchema::string< char > const& name__,
+      ::CIAO::Config_Handlers::ComponentPackageDescription const& package__);
+
       SubcomponentInstantiationDescription (::XSCRT::XML::Element< char > const&);
       SubcomponentInstantiationDescription (SubcomponentInstantiationDescription const& s);
 
@@ -139,7 +141,9 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription > instance_;
 
       public:
-      SubcomponentPropertyReference ();
+      SubcomponentPropertyReference (::XMLSchema::string< char > const& propertyName__,
+      ::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& instance__);
+
       SubcomponentPropertyReference (::XSCRT::XML::Element< char > const&);
       SubcomponentPropertyReference (SubcomponentPropertyReference const& s);
 
@@ -186,7 +190,10 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SubcomponentPropertyReference > delegatesTo_;
 
       public:
-      AssemblyPropertyMapping ();
+      AssemblyPropertyMapping (::XMLSchema::string< char > const& name__,
+      ::XMLSchema::string< char > const& externalName__,
+      ::CIAO::Config_Handlers::SubcomponentPropertyReference const& delegatesTo__);
+
       AssemblyPropertyMapping (::XSCRT::XML::Element< char > const&);
       AssemblyPropertyMapping (AssemblyPropertyMapping const& s);
 
@@ -243,6 +250,7 @@ namespace CIAO
 
       public:
       ComponentAssemblyDescription ();
+
       ComponentAssemblyDescription (::XSCRT::XML::Element< char > const&);
       ComponentAssemblyDescription (ComponentAssemblyDescription const& s);
 
@@ -296,6 +304,7 @@ namespace CIAO
 
       public:
       MonolithicImplementationDescription ();
+
       MonolithicImplementationDescription (::XSCRT::XML::Element< char > const&);
       MonolithicImplementationDescription (MonolithicImplementationDescription const& s);
 
@@ -423,6 +432,7 @@ namespace CIAO
 
       public:
       ComponentImplementationDescription ();
+
       ComponentImplementationDescription (::XSCRT::XML::Element< char > const&);
       ComponentImplementationDescription (ComponentImplementationDescription const& s);
 

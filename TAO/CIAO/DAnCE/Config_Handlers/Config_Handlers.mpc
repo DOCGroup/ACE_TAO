@@ -1,7 +1,6 @@
 //$Id$
 
 project (XSC_Config_Handlers) : ciao_deployment_stub {
-
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   macros   += XML_USE_PTHREADS
@@ -11,14 +10,6 @@ project (XSC_Config_Handlers) : ciao_deployment_stub {
   libs     += xerces-c CIAO_DnC_Server TAO_IFR_Client
 
   Source_Files {
-    Basic_Deployment_Data.cpp
-    CID_Handler.cpp
-    ComponentPropertyDescription_Handler.cpp
-    CPD_Handler.cpp
-    DataType_Handler.cpp
-    MDD_Handler.cpp
-    Prop_Handler.cpp
-    Req_Handler.cpp
     ccd.cpp
     cdd.cpp
     cdp.cpp
@@ -28,10 +19,17 @@ project (XSC_Config_Handlers) : ciao_deployment_stub {
     iad.cpp
     pcd.cpp
     toplevel.cpp
+    Basic_Deployment_Data.cpp
+    DP_Handler.cpp
+    CCD_Handler.cpp
+    Property_Handler.cpp
+    ComponentPropertyDescription_Handler.cpp
     CPD_Handler.cpp
-    CID_Handler.cpp
+    DataType_Handler.cpp
+    MDD_Handler.cpp
+    Req_Handler.cpp
+    CPD_Handler.cpp
     Any_Handler.cpp
-    Prop_Handler.cpp
     ComponentPropertyDescription_Handler.cpp
     DataType_Handler.cpp
     MDD_Handler.cpp
@@ -49,48 +47,11 @@ project (XSC_Config_Handlers) : ciao_deployment_stub {
   }
 
   Header_Files {
-    Basic_Deployment_Data.h
-    CID_Handler.h
-    ComponentPropertyDescription_Handler.h
-    CPD_Handler.h
-    DataType_Handler.h
-    MDD_Handler.h
-    Prop_Handler.h
-    Req_Handler.h
-    Basic_Deployment_Data.hpp
-    ccd.hpp
-    cdd.hpp
-    cdp.hpp
-    cid.hpp
-    cpd.hpp
-    Deployment.hpp
-    iad.hpp
-    pcd.hpp
-    toplevel.hpp
-    CPD_Handler.h
-    CID_Handler.h
-    Any_Handler.h
-    Prop_Handler.h
-    ComponentPropertyDescription_Handler.h
-    DataType_Handler.h
-    MDD_Handler.h
-    Req_Handler.h
-    PCD_Handler.h
-    CEPE_Handler.h
-    PSPE_Handler.h
-    ERE_Handler.h
-    CRDD_Handler.h
-    Base_Handler.h
-    ADD_Handler.h
-    ComponentPropertyDescription_Handler.h
-    RDD_Handler.h
-    ID_Handler.h
   }
 }
 
 project (XSC_Config_Handlers_Tests) : ciao_deployment_stub {
-                                                                                
-                                                                                
+
   exename = test
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   macros   += XML_USE_PTHREADS

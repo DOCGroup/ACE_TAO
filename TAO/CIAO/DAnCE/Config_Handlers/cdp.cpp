@@ -9,10 +9,11 @@ namespace CIAO
     // 
 
     DeploymentPlan::
-    DeploymentPlan ()
+    DeploymentPlan (::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes__,
+    ::CIAO::Config_Handlers::MonolithicDeploymentDescription const& implementation__)
     :
-    realizes_ (new ::CIAO::Config_Handlers::ComponentInterfaceDescription ()),
-    implementation_ (new ::CIAO::Config_Handlers::MonolithicDeploymentDescription ()),
+    realizes_ (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (realizes__)),
+    implementation_ (new ::CIAO::Config_Handlers::MonolithicDeploymentDescription (implementation__)),
     regulator__ ()
     {
       realizes_->container (this);
@@ -501,14 +502,8 @@ namespace CIAO
 
     DeploymentPlan::
     DeploymentPlan (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    realizes_ (new ::CIAO::Config_Handlers::ComponentInterfaceDescription ()),
-    implementation_ (new ::CIAO::Config_Handlers::MonolithicDeploymentDescription ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      realizes_->container (this);
-      implementation_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -531,14 +526,14 @@ namespace CIAO
 
         else if (n == "realizes")
         {
-          ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
-          realizes (t);
+          realizes_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (e));
+          realizes_->container (this);
         }
 
         else if (n == "implementation")
         {
-          ::CIAO::Config_Handlers::MonolithicDeploymentDescription t (e);
-          implementation (t);
+          implementation_ = ::std::auto_ptr< ::CIAO::Config_Handlers::MonolithicDeploymentDescription > (new ::CIAO::Config_Handlers::MonolithicDeploymentDescription (e));
+          implementation_->container (this);
         }
 
         else if (n == "instance")
