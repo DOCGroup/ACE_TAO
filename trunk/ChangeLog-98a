@@ -1,8 +1,10 @@
 Sun Feb 15 16:32:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* netsvcs/clients/Naming/Client/svc.conf: Changed database name
-	  from "$DB" to "localname."  This was causing grief if users
-	  forgot to set this environment variable.
+	* netsvcs/clients/Naming/Client/svc.conf: Removed "-s" flag, which
+	  set the database name for local namespce.  This was causing
+	  grief if users forgot to set this environment variable.  Thanks
+	  to Johannes Gutleber <Johannes.Gutleber@cern.ch> for reporting
+	  this.
 
 Sun Feb 15 15:55:47 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
