@@ -1,3 +1,11 @@
+Thu May 10 09:57:08 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/DSI_Latency/Roundtrip.h:
+        * performance-tests/DSI_Latency/Roundtrip.cpp:
+          The base class don't have a throw spec, I don't think that's
+          such a great idea, but I think it is more consistent to have no
+          throw spec in the derived class also.
+
 Thu May 10 09:50:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/AMI_Latency/AMI_Latency.dsw:
