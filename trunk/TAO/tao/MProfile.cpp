@@ -200,7 +200,7 @@ TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
 }
 
 CORBA::ULong
-TAO_MProfile::hash (CORBA::ULong max, CORBA::Environment &env)
+TAO_MProfile::hash (CORBA::ULong max, CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::ULong hashval = 0;
 
@@ -208,7 +208,10 @@ TAO_MProfile::hash (CORBA::ULong max, CORBA::Environment &env)
     return 0;
 
   for (TAO_PHandle h=0; h < last_ ; h++)
-    hashval += pfiles_[h]->hash (max, env);
+    {
+      hashval += pfiles_[h]->hash (max, ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 
   // The above hash function return an ULong between 0 and max here we
   // simply take the average value and round.
