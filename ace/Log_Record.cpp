@@ -66,7 +66,7 @@ ACE_Log_Record::round_up (void)
 ACE_Log_Record::ACE_Log_Record (void)
   : type_ (0),
     length_ (0),
-    time_stamp_ (0),
+    time_stamp_ (0L),
     pid_ (0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");

@@ -77,7 +77,7 @@ run Recursive_Mutex_Test	# uses Service_Config, Recursive_Thread_Mutex
 run Time_Service_Test		# uses libnetsvcs
 run Tokens_Test
 
-run Map_Manager_Test            # uses Map Manager + Forward and Reverse Map Iterators.
+run Map_Manager_Test            # uses Map Manager and Hash Map Manager + Forward and Reverse Map Iterators.
 run Message_Queue_Test          # uses Message_Queue + Forward and Reverse Message Queue Iterators.
 run Message_Block_Test          # uses Message_Block and Message_Queue
 run Pipe_Test                   # uses Pipe 

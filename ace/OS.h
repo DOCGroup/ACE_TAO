@@ -82,10 +82,6 @@
 // Default shared memory key
 #define ACE_DEFAULT_SHM_KEY 1234 
 
-// Default address for shared memory mapped files and SYSV shared memory
-// (defaults to 64 M).
-#define ACE_DEFAULT_BASE_ADDR ((char *) (64 * 1024 * 1024)) 
-
 // Default segment size used by SYSV shared memory (128 K)
 #define ACE_DEFAULT_SEGMENT_SIZE 1024 * 128
 
@@ -200,6 +196,12 @@ typedef int key_t;
 #define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
+// Default address for shared memory mapped files and SYSV shared memory
+// (defaults to 64 M).
+#if !defined (ACE_DEFAULT_BASE_ADDR)
+#define ACE_DEFAULT_BASE_ADDR ((char *) (64 * 1024 * 1024)) 
+#endif /* ACE_DEFAULT_BASE_ADDR */
+
 // 10 millisecond fudge factor to account for Solaris timers...
 #if !defined (ACE_TIMER_SKEW)
 #define ACE_TIMER_SKEW 1000 * 10
@@ -313,16 +315,17 @@ public:
   static const ACE_Time_Value zero;
   // Constant "0".
 
-  // = Initialization method.
+  // = Initialization methods.
+
   ACE_Time_Value (long sec = 0, long usec = 0);
-  // Default constructor.
+  // Constructor (needed to avoid conflict with the <double> version).
 
   // = Methods for converting to/from various time formats.
   ACE_Time_Value (const struct timeval &t);
-  // Construct a Time_Value from a timeval.
+  // Construct the <ACE_Time_Value> from a <timeval>.
 
   ACE_Time_Value (const timestruc_t &t);
-  //  Initializes the ACE_Time_Value object from a timestruc_t. 
+  //  Initializes the <ACE_Time_Value> object from a <timestruc_t>.
 
   ACE_Time_Value (const ACE_Time_Value &tv);
   // Copy constructor.
