@@ -298,7 +298,7 @@ void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   factory_->removeReplica(factoryId_, this);
-//  death_pending_ = FT_TEST::TestReplica::CLEAN_EXIT;
+  death_pending_ = FT_TEST::TestReplica::CLEAN_EXIT;
 }
 
 //////////////////////////////////////////////
@@ -318,11 +318,6 @@ int FT_TestReplica_i::idle (int & result)
   }
   else if (death_pending_ == FT_TEST::TestReplica::CLEAN_EXIT)
   {
-    ACE_ERROR ((LM_ERROR,
-      "%s#%d: Simulated fault CLEAN_EXIT",
-      factory_->identity(),
-      ACE_static_cast(int, factoryId_ )
-      ));
     result = 0;
     quit = 1;
   }

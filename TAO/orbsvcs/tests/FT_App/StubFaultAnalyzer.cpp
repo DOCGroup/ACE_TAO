@@ -2,7 +2,6 @@
 //
 // $Id$
 
-#include <ace/pre.h>
 #include "StubFaultAnalyzer.h"
 #include <ace/Get_Opt.h>
 #include <tao/PortableServer/ORB_Manager.h>
@@ -367,4 +366,3 @@ int StubFaultAnalyzer::readIORFile(const char * fileName, CORBA::String_var & io
 # pragma instantiate ACE_Vector < FT::PullMonitorable_var >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#include "ace/post.h"

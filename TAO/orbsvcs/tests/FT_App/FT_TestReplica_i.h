@@ -17,7 +17,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/pre.h"
+#include /**/ <ace/pre.h>
 #include "FT_TestReplicaS.h"
 
 ////////////////////
@@ -191,6 +191,6 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* FT_TESTREPLICA_I_H_  */

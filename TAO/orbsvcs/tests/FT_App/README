@@ -2,16 +2,16 @@ $Id$
 
 This is a simple application intended to test Fault Tolerant Corba.
 
-The server implements the IDL in FT_TestReplica.idl which defines 
-the interface FT_TEST::TestReplica  .
+The server implements GenericFactory as a factory that creates TestReplicas.
+TestReplicas are defined in the IDL in FT_TestReplica.idl.
 
 FT_TEST::TestReplica inherits from PullMonitorable and Checkpointable
 to provide access needed by FT Corba's FaultDetector and Orb.
 
-An FT_TEST::TestReplica contains a long counter.  Methods are defined 
-to set, increment, and get the value of the counter.  The counter 
-is also exposed as an attribute named counter.  (i.e. set(x) is 
-exactly equivalent to counter(x), and get() is exactly equivalent 
+An FT_TEST::TestReplica contains a long counter.  Methods are defined
+to set, increment, and get the value of the counter.  The counter
+is also exposed as an attribute named counter.  (i.e. set(x) is
+exactly equivalent to counter(x), and get() is exactly equivalent
 to counter())
 
 In addition there is a method named die that lets the client request
@@ -28,6 +28,11 @@ to 10.  +5 increments the counter by 5 (thereby setting the value to 15).
 
 The '?' commmand lists the possible commands and their options.
 
+Additional programs:
+ ft_notifier is a stub implementation of a fault notifier for testing fault detectors.
+ ft_analyzer is a stub implementation of a fault analyzer for testing the fault notifier
+ ft_registry is an implementation of FactoryRegistry for testing GenericFactories.
+
 To run:
 Start one or more FT_Replicas.  Use a -o <filename> to tell the replica
 where to write its ior..
@@ -35,21 +40,23 @@ where to write its ior..
 Start the FT_Client with -f file1<,filen>...  (i.e. a comma separated list
 of replica IOR files.  To read commands from a file, use -c <command file>
 
-The counter is persistent and will survive server failures.  It's 
-stored in a file named persistent.dat.  
+The counter is persistent and will survive server failures.  It's
+stored in a file named persistent.dat.
 
-Replicas of the server may be run in separate directories to simulate 
-replicated stateful objects (each replica has its own distinct state), or 
-multiple replicas can be run in the same directory to simulate a server 
-with a shared state or one that executes real-world unsafe-to-repeat 
-action  (i.e. "fire the retro rockets" or "expose the patient to 
+Replicas of the server may be run in separate directories to simulate
+replicated stateful objects (each replica has its own distinct state), or
+multiple replicas can be run in the same directory to simulate a server
+with a shared state or one that executes real-world unsafe-to-repeat
+action  (i.e. "fire the retro rockets" or "expose the patient to
 theraputic radiation.")
 
-Tests:
-
-Two Fault Detection unit tests have been created based on this application.
-  run_test_detector.pl uses this application plus a "stub" fault notifier
-   to test the fault detectors and the fault detector factory.
-  run_test_notifier.pl uses this application, the fault detectors+factory,
-   and a stub fault analyzer to test the fault notifier.
+Unit Tests based on this application:
+ run_test_basic.pl tests this application, thereby answering the question,
+       "who will test the tester?".
+ run_test_detector.pl uses this application plus a "stub" fault notifier
+       to test the fault detectors and the fault detector factory.
+ run_test_notifier.pl uses this application, the fault detectors+factory,
+       and a stub fault analyzer to test the fault notifier.
+ run_test_factory.pl uses this application, et. al. to test the GenericFactory
+       implementation in FT_Replica.
 See the internal documentation of the .pl files for more details.

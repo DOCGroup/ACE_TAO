@@ -2,7 +2,6 @@
 //
 // $Id$
 
-#include <ace/pre.h>
 #include "StubBatchConsumer.h"
 #include <ace/Get_Opt.h>
 #include <tao/PortableServer/ORB_Manager.h>
@@ -127,4 +126,3 @@ void StubBatchConsumer::disconnect_sequence_push_consumer (
 //# pragma instantiate ACE_Vector < const char * >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#include "ace/post.h"

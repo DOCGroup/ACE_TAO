@@ -2,7 +2,7 @@
 
 #include "FT_TestReplicaC.h"
 // the following include is relative to $TAO_ROOT
-#include "examples/Simple/Simple_util.h"
+#include <examples/Simple/Simple_util.h>
 #include <iostream>
 #include <fstream>
 
@@ -597,6 +597,7 @@ int FTClientMain::run ()
         }
         if (! handled)
         {
+          std::cout << "FT Client: Exception not handled.  Rethrow. " << std::endl;
           ACE_RE_THROW;
         }
       }
