@@ -77,8 +77,8 @@ public:
   // These methods should be overridden by subclasses if you'd like to
   // provide <Task>-specific initialization and termination behavior.
 
-  /// Hook called to open a Task.  <args> can be used to pass arbitrary
-  /// information into <open>.
+  /// Hook called to initialize a task and prepare it for execution.
+  /// <args> can be used to pass arbitrary information into <open>.
   virtual int open (void *args = 0);
 
   /**
