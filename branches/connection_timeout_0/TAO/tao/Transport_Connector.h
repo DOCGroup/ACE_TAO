@@ -70,13 +70,13 @@ public:
   virtual int close (void) = 0;
 
   /**
-   * To support pluggable we need to abstract away the connect()
-   * method so it can be called from the GIOP code independant of the
-   * actual transport protocol in use.
+   * To support pluggable we need to abstract away the details of the
+   * connect ()  method so it can be called from the invocation code
+   * independent of the actual transport protocol in use.
    */
-  virtual int connect (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc
-                       ACE_ENV_ARG_DECL) = 0;
+  int connect (TAO_GIOP_Invocation *invocation,
+               TAO_Transport_Descriptor_Interface *desc
+               ACE_ENV_ARG_DECL);
 
   /// Initial set of connections to be established.
   /*
@@ -100,6 +100,11 @@ protected:
 
   /// Create a profile with a given endpoint.
   virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL) = 0;
+
+  /// Do an actual connect using the underlying transport to make a
+  /// connection
+  virtual int make_connect (TAO_GIOP_Invocation *invocation,
+                            TAO_Transport_Descriptor_Interface *desc) = 0;
 
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);

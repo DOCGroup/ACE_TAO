@@ -1,3 +1,36 @@
+Fri Apr 12 14:14:01 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connector_Registry.cpp:
+	* tao/Connector_Registry.h: 
+	* tao/Connector_Registry.i: Added a new method, get_connector ()
+	  which returns a TAO_Connector based on a TAO_Endpoint. Need to
+	  deprecate connect (). The connector registry should not be
+	  involved in doing active connects. 
+
+	* tao/Invocation.cpp: Used the connector_registry's get_connector
+	  () to retrieve a connector before calling a connect on it. 
+
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h: Consolidated some of the code from
+	  different protocols. All the transports before setting up a
+	  connection look for a connection in cache. That part of the code
+	  that looks for a connection in the cache has been moved in
+	  here. If a connection is not found in cache, the control is
+	  transferred to the underlying transports to set up a
+	  connection. 
+	
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connector.h: 
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h : Renamed connect () to be
+	  make_connect (). This method now exclusively sets up an active
+	  connection from the client and adds the connection in cache.
+
+
 Thu Apr 11 17:26:21 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Connector.cpp: 

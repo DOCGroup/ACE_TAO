@@ -56,9 +56,6 @@ public:
   // Transport_Connector.h
   int open (TAO_ORB_Core *orb_core);
   int close (void);
-  int connect (TAO_GIOP_Invocation *invocation,
-               TAO_Transport_Descriptor_Interface *desc
-               ACE_ENV_ARG_DECL);
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
   virtual int check_prefix (const char *endpoint);
@@ -66,6 +63,10 @@ public:
   virtual char object_key_delimiter (void) const;
 
 protected:
+  // = The TAO_Connector methods, please check the documentation on
+  // Transport_Connector.h
+  int make_connect (TAO_GIOP_Invocation *invocation,
+                    TAO_Transport_Descriptor_Interface *desc);
 
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h

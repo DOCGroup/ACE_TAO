@@ -93,12 +93,11 @@ TAO_DIOP_Connector::close (void)
 }
 
 int
-TAO_DIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
-                             TAO_Transport_Descriptor_Interface *desc
-                             ACE_ENV_ARG_DECL_NOT_USED)
+TAO_DIOP_Connector::make_connect (TAO_GIOP_Invocation *invocation,
+                                  TAO_Transport_Descriptor_Interface *desc)
 {
   TAO_Transport *&transport = invocation->transport ();
-  // ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
+
   TAO_Endpoint *endpoint = desc->endpoint ();
 
   if (endpoint->tag () != TAO_TAG_UDP_PROFILE)

@@ -1,7 +1,11 @@
 #include "Transport_Connector.h"
+#include "Transport.h"
+#include "ORB_Core.h"
+#include "Invocation.h"
 #include "MProfile.h"
 #include "Profile.h"
 #include "Environment.h"
+#include "Thread_Lane_Resources.h"
 #include "debug.h"
 
 
@@ -196,4 +200,37 @@ TAO_Connector::make_mprofile (const char *string,
     }
 
   return 0;  // Success
+}
+
+int
+TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
+                        TAO_Transport_Descriptor_Interface *desc
+                        ACE_ENV_ARG_DECL_NOT_USED)
+{
+  TAO_Transport *base_transport = 0;
+
+  // Check the Cache first for connections
+  // If transport found, reference count is incremented on assignment
+  if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (desc,
+                                                                              base_transport) == 0)
+    {
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect - ")
+                    ACE_LIB_TEXT ("got an existing transport with id %d\n"),
+                    base_transport->id ()));
+
+      TAO_Transport *&transport = invocation->transport ();
+
+      // No need to _duplicate and release since base_transport
+      // is going out of scope.  Transport now has control of
+      // base_transport.
+      transport = base_transport;
+
+      // Succesful
+      return 0;
+    }
+
+  return this->make_connect (invocation,
+                             desc);
 }
