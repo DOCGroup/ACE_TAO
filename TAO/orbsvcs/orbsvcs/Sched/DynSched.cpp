@@ -83,10 +83,10 @@ ACE_DynScheduler::status_message (ACE_DynScheduler::status_t status)
       return "NOT_SCHEDULED";
     case SUCCEEDED :
       return "SUCCEEDED";
+    case ST_NO_TASKS_REGISTERED :
+      return "ST_NO_TASKS_REGISTERED";
     case ST_TASK_ALREADY_REGISTERED :
       return "TASK_ALREADY_REGISTERED";
-    case ST_BAD_DEPENDENCIES_ON_TASK :
-      return "BAD_DEPENDENCIES_ON_TASK";
     case ST_BAD_INTERNAL_POINTER :
       return "BAD_INTERNAL_POINTER";
     case ST_VIRTUAL_MEMORY_EXHAUSTED :
@@ -95,8 +95,16 @@ ACE_DynScheduler::status_message (ACE_DynScheduler::status_t status)
       return "UNKNOWN_TASK";
     case TASK_COUNT_MISMATCH :
       return "TASK_COUNT_MISMATCH";
+    case THREAD_COUNT_MISMATCH :
+      return "THREAD_COUNT_MISMATCH";
     case INVALID_PRIORITY :
       return "INVALID_PRIORITY";
+    case TWO_WAY_DISJUNCTION :
+      return "TWO_WAY_DISJUNCTION (IGNORED)";
+    case TWO_WAY_CONJUNCTION :
+      return "TWO_WAY_CONJUNCTION (IGNORED)";
+    case UNRECOGNIZED_INFO_TYPE :
+      return "UNRECOGNIZED_INFO_TYPE (IGNORED)";
 
     // The following are only used during scheduling (in the case of
     // off-line scheduling, they are only used prior to runtime).
@@ -111,6 +119,8 @@ ACE_DynScheduler::status_message (ACE_DynScheduler::status_t status)
       return "CYCLE_IN_DEPENDENCIES";
     case ST_UNRESOLVED_REMOTE_DEPENDENCIES :
       return "ST_UNRESOLVED_REMOTE_DEPENDENCIES";
+    case ST_UNRESOLVED_LOCAL_DEPENDENCIES :
+      return "ST_UNRESOLVED_LOCAL_DEPENDENCIES";
     case ST_INVALID_PRIORITY_ORDERING :
       return "INVALID_PRIORITY_ORDERING";
     case UNABLE_TO_OPEN_SCHEDULE_FILE :
@@ -124,6 +134,66 @@ ACE_DynScheduler::status_message (ACE_DynScheduler::status_t status)
   }
 
   return "UNKNOWN STATUS";
+}
+
+// = Utility function for creating an entry for determining
+//   the severity of an anomaly detected during scheduling.
+ACE_DynScheduler::Anomaly_Severity 
+ACE_DynScheduler::anomaly_severity (ACE_DynScheduler::status_t status)
+{
+  // Determine severity of the anomaly
+  switch (status)
+  {
+    // Fatal anomalies reflect unrecoverable internal scheduler errors
+    case ST_BAD_INTERNAL_POINTER :
+    case ST_VIRTUAL_MEMORY_EXHAUSTED :
+    case THREAD_COUNT_MISMATCH :
+    case TASK_COUNT_MISMATCH :
+      return RtecScheduler::ANOMALY_FATAL;
+
+    // Errors reflect severe problems with given scheduling information
+    case UNABLE_TO_OPEN_SCHEDULE_FILE :
+    case UNABLE_TO_WRITE_SCHEDULE_FILE :
+    case NOT_SCHEDULED :
+    case ST_UNRESOLVED_LOCAL_DEPENDENCIES :
+    case ST_UNKNOWN_TASK :
+    case ST_CYCLE_IN_DEPENDENCIES :
+    case ST_INVALID_PRIORITY_ORDERING :
+      return RtecScheduler::ANOMALY_ERROR;
+      break;
+
+    // Warnings reflect serious problems with given scheduling information
+    case ST_TASK_ALREADY_REGISTERED :
+    case ST_UNRESOLVED_REMOTE_DEPENDENCIES :
+    case ST_UTILIZATION_BOUND_EXCEEDED :
+    case ST_INSUFFICIENT_THREAD_PRIORITY_LEVELS :
+    case TWO_WAY_DISJUNCTION :
+    case TWO_WAY_CONJUNCTION :
+    case UNRECOGNIZED_INFO_TYPE :
+    case ST_NO_TASKS_REGISTERED :
+      return RtecScheduler::ANOMALY_WARNING;
+      break;
+
+    // Produce a lowest severity anomaly for any unknown status value
+    default:
+      return RtecScheduler::ANOMALY_NONE;
+      break;
+  }
+}
+
+
+// = Utility function for creating an entry for the
+//   log of anomalies detected during scheduling.
+ACE_DynScheduler::Scheduling_Anomaly * 
+ACE_DynScheduler::create_anomaly (ACE_DynScheduler::status_t status)
+{
+  ACE_DynScheduler::Scheduling_Anomaly * anomaly;
+  ACE_NEW_RETURN (anomaly, ACE_DynScheduler::Scheduling_Anomaly, 0);
+  
+  anomaly->severity = anomaly_severity (status);
+  anomaly->description = status_message (status);
+
+  return anomaly;
 }
 
 
@@ -193,13 +263,13 @@ ACE_DynScheduler::init (const OS_Priority minimum_priority,
 ACE_DynScheduler::status_t
 ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
 {
-  ACE_DynScheduler::status_t ret;
+  ACE_DynScheduler::status_t ret = ST_UNKNOWN_TASK;
 
   // check the pointer we were passed
   if (! rt_info)
   {
     handle = 0;
-    return ST_UNKNOWN_TASK;
+    return ret;
   }
 
   // try to store the new task's information . . .
@@ -454,7 +524,7 @@ ACE_DynScheduler::dispatch_configuration (const Preemption_Priority & p_priority
 
 ACE_DynScheduler::status_t
 ACE_DynScheduler::lookup_rt_info (handle_t handle,
-                               RT_Info*& rtinfo)
+                                  RT_Info*& rtinfo)
 {
   if (handle < 0 || (size_t) handle > rt_info_entries_.size ())
   {
@@ -616,9 +686,13 @@ ACE_DynScheduler::reset ()
 }
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::schedule (void)
+ACE_DynScheduler::schedule (
+  ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
+  RtecScheduler::Anomaly_Severity severity = RtecScheduler::ANOMALY_NONE;
+  RtecScheduler::Anomaly_Severity temp_severity = RtecScheduler::ANOMALY_NONE;
   status_t temp_status = SUCCEEDED;
+  Scheduling_Anomaly *anomaly = 0;
 
   ACE_Guard<LOCK> ace_mon (lock_);
 
@@ -634,137 +708,340 @@ ACE_DynScheduler::schedule (void)
     tasks (rt_info_entries_.size ());
   }
 
-  // set up the task entry data structures, check for call cycles
+  // set up the task entry data structures
   status_ = setup_task_entries ();
-
-  if (status_ == SUCCEEDED)
-  {
-    // check for cycles in the dependency graph: as a side effect, leaves
-    // the ordered_task_entries_ pointer array sorted in topological order,
-    // which is used by propagate_dispatches () to ensure that dispatches
-    // are propagated top down in the call graph.
-    status_ = check_dependency_cycles ();
-  }
-
-  if (status_ == SUCCEEDED)
-  {
-    // task entries are related, now threads can be found
-    status_ = identify_threads ();
-  }
-
-  if ((status_ == SUCCEEDED) || (status_ == ST_UNRESOLVED_REMOTE_DEPENDENCIES))
-  {
-    // invokes the internal thread scheduling method of the strategy
-    temp_status = schedule_threads ();
-    if (temp_status != SUCCEEDED)
-      {
-        status_ = temp_status;
-      }
-  }
-
-  if ((status_ == SUCCEEDED) || (status_ == ST_UNRESOLVED_REMOTE_DEPENDENCIES))
-  {
-    // propagate the dispatch information from the
-    // threads throughout the call graph
-    temp_status = propagate_dispatches ();
-    if (temp_status != SUCCEEDED)
-      {
-        status_ = temp_status;
-      }
-  }
-
-  if ((status_ == SUCCEEDED) || (status_ == ST_UNRESOLVED_REMOTE_DEPENDENCIES))
-  {
-    // invokes the internal dispatch scheduling method of the strategy
-    temp_status = schedule_dispatches ();
-    if (temp_status != SUCCEEDED)
-      {
-        status_ = temp_status;
-      }
-  }
-
-  // calculate utilization, total frame size, critical set
-  if ((status_ == SUCCEEDED) || (status_ == ST_UNRESOLVED_REMOTE_DEPENDENCIES))
-  {
-    temp_status = calculate_utilization_params ();
-    if (temp_status != SUCCEEDED)
-      {
-        status_ = temp_status;
-      }
-  }
-
-  // calculate utilization, total frame size, critical set
-  if ((status_ == SUCCEEDED) || (status_ == ST_UTILIZATION_BOUND_EXCEEDED) ||
-      (status_ == ST_UNRESOLVED_REMOTE_DEPENDENCIES))
-  {
-    temp_status = store_assigned_info ();
-    if (temp_status != SUCCEEDED)
-      {
-        status_ = temp_status;
-      }
-  }
-
-  // generate the scheduling timeline over the total frame size
-  if ((status_ == SUCCEEDED) || (status_ == ST_UTILIZATION_BOUND_EXCEEDED) ||
-      (status_ == ST_UNRESOLVED_REMOTE_DEPENDENCIES))
-  {
-    temp_status = create_timeline ();
-    if (temp_status != SUCCEEDED)
-      {
-        status_ = temp_status;
-      }
-  }
-
-  // store the timeline to a file if one was given
-  if ((timeline_filename_ != 0)  &&
-      ((status_ == SUCCEEDED) || (status_ == ST_UTILIZATION_BOUND_EXCEEDED)))
+  if (status_ != SUCCEEDED)
     {
-      temp_status = output_timeline (timeline_filename_, 0);
-      if (temp_status != SUCCEEDED)
+      // Create an anomaly, add it to anomaly set
+      anomaly = create_anomaly (status_);
+      if (anomaly)
         {
-          status_ = temp_status;
+          anomaly_set.insert (anomaly);
+        }
+      else
+        {
+          return ST_VIRTUAL_MEMORY_EXHAUSTED;
+        }
+
+      switch (anomaly->severity)
+        {
+          case RtecScheduler::ANOMALY_FATAL :
+            return status_;
+
+          default:
+            severity = anomaly->severity;
+            break;
         }
     }
 
-  // if a valid schedule was not generated, clean up from the attempt
+  // check for cycles in the dependency graph: as a side effect, leaves
+  // the ordered_task_entries_ pointer array sorted in topological order,
+  // which is used by propagate_dispatches () to ensure that dispatches
+  // are propagated top down in the call graph.
+  temp_status = check_dependency_cycles ();
+  if (temp_status != SUCCEEDED)
+    {
+      // Create an anomaly, add it to anomaly set
+      anomaly = create_anomaly (temp_status);
+      if (anomaly)
+        {
+          anomaly_set.insert (anomaly);
+        }
+      else
+        {
+          return ST_VIRTUAL_MEMORY_EXHAUSTED;
+        }
+
+      switch (anomaly->severity) 
+        {
+          case RtecScheduler::ANOMALY_FATAL :
+            status_ = temp_status;
+            return status_;
+
+          case RtecScheduler::ANOMALY_ERROR :
+            severity = anomaly->severity;
+            status_ = temp_status;
+            break;
+
+          case RtecScheduler::ANOMALY_WARNING :
+            if (severity == RtecScheduler::ANOMALY_NONE)
+              {
+                severity = anomaly->severity;
+                status_ = temp_status;
+              }
+            break;
+        }
+    }
+
+  // task entries are related, now threads can be found
+  temp_status = identify_threads (anomaly_set);
+  if (temp_status != SUCCEEDED)
+    {
+      temp_severity = anomaly_severity (temp_status);
+      switch (temp_severity) 
+        {
+          case RtecScheduler::ANOMALY_FATAL :
+            status_ = temp_status;
+            return status_;
+
+          case RtecScheduler::ANOMALY_ERROR :
+            severity = temp_severity;
+            status_ = temp_status;
+            break;
+
+          case RtecScheduler::ANOMALY_WARNING :
+            if (severity == RtecScheduler::ANOMALY_NONE)
+              {
+                severity = temp_severity;
+                status_ = temp_status;
+              }
+            break;
+        }
+    }
+
+  // invoke the internal thread scheduling method of the strategy
+  temp_status = schedule_threads (anomaly_set);
+  if (temp_status != SUCCEEDED)
+    {
+      temp_severity = anomaly_severity (temp_status);
+      switch (temp_severity) 
+        {
+          case RtecScheduler::ANOMALY_FATAL :
+            status_ = temp_status;
+            return status_;
+
+          case RtecScheduler::ANOMALY_ERROR :
+            severity = temp_severity;
+            status_ = temp_status;
+            break;
+
+          case RtecScheduler::ANOMALY_WARNING :
+            if (severity == RtecScheduler::ANOMALY_NONE)
+              {
+                severity = temp_severity;
+                status_ = temp_status;
+              }
+            break;
+        }
+    }
+
+  // propagate the dispatch information from the
+  // threads throughout the call graph
+  temp_status = propagate_dispatches (anomaly_set);
+  if (temp_status != SUCCEEDED)
+    {
+      temp_severity = anomaly_severity (temp_status);
+      switch (temp_severity) 
+        {
+          case RtecScheduler::ANOMALY_FATAL :
+            status_ = temp_status;
+            return status_;
+
+          case RtecScheduler::ANOMALY_ERROR :
+            severity = temp_severity;
+            status_ = temp_status;
+            break;
+
+          case RtecScheduler::ANOMALY_WARNING :
+            if (severity == RtecScheduler::ANOMALY_NONE)
+              {
+                severity = temp_severity;
+                status_ = temp_status;
+              }
+            break;
+        }
+    }
+
+  // invoke the internal dispatch scheduling method of the strategy
+  temp_status = schedule_dispatches (anomaly_set);
+  if (temp_status != SUCCEEDED)
+    {
+      temp_severity = anomaly_severity (temp_status);
+      switch (temp_severity) 
+        {
+          case RtecScheduler::ANOMALY_FATAL :
+            status_ = temp_status;
+            return status_;
+
+          case RtecScheduler::ANOMALY_ERROR :
+            severity = temp_severity;
+            status_ = temp_status;
+            break;
+
+          case RtecScheduler::ANOMALY_WARNING :
+            if (severity == RtecScheduler::ANOMALY_NONE)
+              {
+                severity = temp_severity;
+                status_ = temp_status;
+              }
+            break;
+        }
+    }
+
+  // calculate utilization, total frame size, critical set
+  temp_status = calculate_utilization_params ();
+  if (temp_status != SUCCEEDED)
+    {
+      // Create an anomaly, add it to anomaly set
+      anomaly = create_anomaly (temp_status);
+      if (anomaly)
+        {
+          anomaly_set.insert (anomaly);
+        }
+      else
+        {
+          return ST_VIRTUAL_MEMORY_EXHAUSTED;
+        }
+
+      switch (anomaly->severity) 
+        {
+          case RtecScheduler::ANOMALY_FATAL :
+            status_ = temp_status;
+            return status_;
+
+          case RtecScheduler::ANOMALY_ERROR :
+            severity = anomaly->severity;
+            status_ = temp_status;
+            break;
+
+          case RtecScheduler::ANOMALY_WARNING :
+            if (severity == RtecScheduler::ANOMALY_NONE)
+              {
+                severity = anomaly->severity;
+                status_ = temp_status;
+              }
+            break;
+        }
+    }
+
+  // calculate utilization, total frame size, critical set
+  temp_status = store_assigned_info ();
+  if (temp_status != SUCCEEDED)
+    {
+      // Create an anomaly, add it to anomaly set
+      anomaly = create_anomaly (temp_status);
+      if (anomaly)
+        {
+          anomaly_set.insert (anomaly);
+        }
+      else
+        {
+          return ST_VIRTUAL_MEMORY_EXHAUSTED;
+        }
+
+      switch (anomaly->severity) 
+        {
+          case RtecScheduler::ANOMALY_FATAL :
+            status_ = temp_status;
+            return status_;
+
+          case RtecScheduler::ANOMALY_ERROR :
+            severity = anomaly->severity;
+            status_ = temp_status;
+            break;
+
+          case RtecScheduler::ANOMALY_WARNING :
+            if (severity == RtecScheduler::ANOMALY_NONE)
+              {
+                severity = anomaly->severity;
+                status_ = temp_status;
+              }
+            break;
+        }
+    }
+
+  // generate, store the timeline to a file if file was given
+  if (timeline_filename_ != 0)
+    {
+      // generate the scheduling timeline over the total frame size
+      temp_status = create_timeline ();
+      if (temp_status != SUCCEEDED)
+        {
+          // Create an anomaly, add it to anomaly set
+          anomaly = create_anomaly (temp_status);
+          if (anomaly)
+            {
+              anomaly_set.insert (anomaly);
+            }
+          else
+            {
+              return ST_VIRTUAL_MEMORY_EXHAUSTED;
+            }
+
+          switch (anomaly->severity) 
+            {
+              case RtecScheduler::ANOMALY_FATAL :
+                status_ = temp_status;
+                return status_;
+
+              case RtecScheduler::ANOMALY_ERROR :
+                severity = anomaly->severity;
+                status_ = temp_status;
+                break;
+
+              case RtecScheduler::ANOMALY_WARNING :
+                if (severity == RtecScheduler::ANOMALY_NONE)
+                  {
+                    severity = anomaly->severity;
+                    status_ = temp_status;
+                  }
+                break;
+            }
+        }
+
+
+      temp_status = output_timeline (timeline_filename_, 0);
+      if (temp_status != SUCCEEDED)
+        {
+          // Create an anomaly, add it to anomaly set
+          anomaly = create_anomaly (temp_status);
+          if (anomaly)
+            {
+              anomaly_set.insert (anomaly);
+            }
+          else
+            {
+              return ST_VIRTUAL_MEMORY_EXHAUSTED;
+            }
+
+          switch (anomaly->severity) 
+            {
+              case RtecScheduler::ANOMALY_FATAL :
+                status_ = temp_status;
+                return status_;
+
+              case RtecScheduler::ANOMALY_ERROR :
+                severity = anomaly->severity;
+                status_ = temp_status;
+                break;
+
+              case RtecScheduler::ANOMALY_WARNING :
+                if (severity == RtecScheduler::ANOMALY_NONE)
+                  {
+                    severity = anomaly->severity;
+                    status_ = temp_status;
+                  }
+                break;
+            }
+        }
+    }
+
+  // if a valid schedule was generated, mark it as up to date
   switch (status_)
   {
-    // these are statuses that indicate a reasonable schedule was generated
+    // These are statuses that indicate a reasonable schedule was generated.
     case SUCCEEDED:
-    case ST_UTILIZATION_BOUND_EXCEEDED:
-    case ST_UNRESOLVED_REMOTE_DEPENDENCIES:
+    case ST_TASK_ALREADY_REGISTERED :
+    case ST_UNRESOLVED_REMOTE_DEPENDENCIES :
+    case ST_UTILIZATION_BOUND_EXCEEDED :
+    case ST_INSUFFICIENT_THREAD_PRIORITY_LEVELS :
 
         // if we made it here, the schedule is done
         up_to_date_ = 1;
 
-
       break;
 
     default:
-
-      // (try to) remove the output files
-      if (timeline_filename_ && ACE_OS::unlink (timeline_filename_) &&
-          errno != ENOENT)
-      {
-        ACE_OS::perror ("ACE_DynScheduler::schedule (); "
-                        "unable to remove timeline file");
-      }
-      if (runtime_filename_ && ACE_OS::unlink (runtime_filename_) &&
-          errno != ENOENT)
-      {
-        ACE_OS::perror ("ACE_DynScheduler::schedule (); "
-                        "unable to remove schedule file");
-      }
-      if (rt_info_filename_  &&  ACE_OS::unlink (rt_info_filename_)  &&
-          errno != ENOENT)
-      {
-        ACE_OS::perror ("ACE_DynScheduler::schedule (); "
-                        "unable to remove rt_info file");
-      }
-
-      // free resources and remove "up_to_date" mark
-      reset ();
-
       break;
   }
 
@@ -773,10 +1050,13 @@ ACE_DynScheduler::schedule (void)
 }
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::propagate_dispatches ()
+ACE_DynScheduler::propagate_dispatches (
+  ACE_Unbounded_Set<ACE_DynScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
   u_long i;
   frame_size_ = 1;
+  status_t status = SUCCEEDED;
+  Scheduling_Anomaly * anomaly = 0;
 
   // iterate through the ordered_task_entries_ array in order
   // from highest DFS finishing time to lowest, so that every
@@ -784,9 +1064,73 @@ ACE_DynScheduler::propagate_dispatches ()
   // the dispatches propagate top down through the call DAG
   for (i = 0; i < tasks (); ++i)
   {
-    if (ordered_task_entries_ [i]->merge_dispatches (*dispatch_entries_) < 0)
-    {
-      return ST_UNKNOWN_TASK;
+    switch (ordered_task_entries_ [i]->merge_dispatches (*dispatch_entries_))
+    {                      
+      case Task_Entry::INTERNAL_ERROR :
+        // Create an anomaly, add it to anomaly set
+        anomaly = create_anomaly (ST_BAD_INTERNAL_POINTER);
+        if (anomaly)
+          {
+            anomaly_set.insert (anomaly);
+          }
+        else
+          {
+            return ST_VIRTUAL_MEMORY_EXHAUSTED;
+          }
+
+        return ST_BAD_INTERNAL_POINTER;
+
+      case Task_Entry::TWO_WAY_DISJUNCTION :
+        if (status == SUCCEEDED)
+          {
+            status = TWO_WAY_DISJUNCTION;
+          }
+        anomaly = create_anomaly (TWO_WAY_DISJUNCTION);
+        if (anomaly)
+          {
+            anomaly_set.insert (anomaly);
+          }
+        else
+          {
+            return ST_VIRTUAL_MEMORY_EXHAUSTED;
+          }
+        break;
+
+      case Task_Entry::TWO_WAY_CONJUNCTION :
+        if (status == SUCCEEDED)
+          {
+            status = TWO_WAY_CONJUNCTION;
+          }
+        anomaly = create_anomaly (TWO_WAY_CONJUNCTION);
+        if (anomaly)
+          {
+            anomaly_set.insert (anomaly);
+          }
+        else
+          {
+            return ST_VIRTUAL_MEMORY_EXHAUSTED;
+          }
+        break;
+
+      case Task_Entry::UNRECOGNIZED_INFO_TYPE :
+        if (status == SUCCEEDED)
+          {
+            status = UNRECOGNIZED_INFO_TYPE;
+          }
+        anomaly = create_anomaly (UNRECOGNIZED_INFO_TYPE);
+        if (anomaly)
+          {
+            anomaly_set.insert (anomaly);
+          }
+        else
+          {
+            return ST_VIRTUAL_MEMORY_EXHAUSTED;
+          }
+        break;
+
+      case Task_Entry::SUCCEEDED :
+      default:
+        break;
     }
 
     if (ordered_task_entries_ [i]->effective_period () > 0)
@@ -795,14 +1139,9 @@ ACE_DynScheduler::propagate_dispatches ()
         minimum_frame_size (frame_size_,
                             ordered_task_entries_ [i]->effective_period ());
     }
-    else
-    {
-      return ST_UNKNOWN_TASK;
-    }
-
   }
 
-  return SUCCEEDED;
+  return status;
 }
 // propagate the dispatch information from the
 // threads throughout the call graph
@@ -888,7 +1227,7 @@ ACE_DynScheduler::setup_task_entries (void)
   // bail out if there are no tasks registered
   if (tasks () <= 0)
   {
-    return ST_UNKNOWN_TASK;
+    return ST_NO_TASKS_REGISTERED;
   }
 
   // clear the decks of any previous scheduling information
@@ -930,7 +1269,7 @@ ACE_DynScheduler::setup_task_entries (void)
     // tie task entry to corresponding rt_info
     if (! iter.next (info_entry))
     {
-      return ST_UNKNOWN_TASK;
+      return ST_BAD_INTERNAL_POINTER;
     }
     task_entries_ [i].rt_info (*info_entry);
 
@@ -1002,7 +1341,7 @@ ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
 
       if (! dependency_info)
       {
-        return ST_UNKNOWN_TASK;
+        return ST_BAD_INTERNAL_POINTER;
       }
 
       // obtain a pointer to the Task_Entry from the dependency RT_Info
@@ -1011,7 +1350,7 @@ ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
 
       if (! dependency_entry_ptr)
       {
-        return ST_UNKNOWN_TASK;
+        return ST_BAD_INTERNAL_POINTER;
       }
 
       // relate the entries according to the direction of the dependency
@@ -1041,10 +1380,12 @@ ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
 }
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::identify_threads (void)
+ACE_DynScheduler::identify_threads (
+  ACE_Unbounded_Set<ACE_DynScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
   u_int i, j;
   ACE_DynScheduler::status_t result = SUCCEEDED;
+  Scheduling_Anomaly * anomaly = 0;
 
   // walk array of task entries, picking out thread delineators
   for (i = 0; i < tasks_; i++)
@@ -1092,24 +1433,53 @@ ACE_DynScheduler::identify_threads (void)
       else if (task_entries_ [i].rt_info ()->info_type == RtecScheduler::REMOTE_DEPENDANT)
         {
           // Warn about unresolved remote dependencies, mark the task entry
-          result = ST_UNRESOLVED_REMOTE_DEPENDENCIES;
+
+          result = (result == SUCCEEDED)
+                   ? ST_UNRESOLVED_REMOTE_DEPENDENCIES
+                   : result;
+
           task_entries_ [i].has_unresolved_remote_dependencies (1);
           ACE_DEBUG (
              (LM_DEBUG,
               "Warning: an operation identified by "
-              "\"%s\" has unresolved remote dependencies\n.",
+              "\"%s\" has unresolved remote dependencies.\n",
               (const char*) task_entries_ [i].rt_info ()->entry_point));
+
+          // Create an anomaly, add it to anomaly set
+          anomaly = create_anomaly (ST_UNRESOLVED_REMOTE_DEPENDENCIES);
+          if (anomaly)
+            {
+              anomaly_set.insert (anomaly);
+            }
+          else
+            {
+              return ST_VIRTUAL_MEMORY_EXHAUSTED;
+            }
         }
       else
         {
           // Local node that no one calls and has neither rate nor threads is suspect
-          ACE_ERROR_RETURN (
-             (LM_ERROR,
-              "An operation identified by \"%s\" does not specify a period or\n"
-              "visible threads, and is not called by any other operation.  "
-              "Are there backwards dependencies?\n",
-              (const char*) task_entries_ [i].rt_info ()->entry_point),
-              ST_BAD_DEPENDENCIES_ON_TASK);
+          ACE_DEBUG (
+             (LM_DEBUG,
+              "Error: operation \"%s\" does not specify a period or\n"
+              "visible threads, and is not called by any other operation.\n"
+              "Are there backwards dependencies.\n",
+              (const char*) task_entries_ [i].rt_info ()->entry_point));
+
+          result = ST_UNRESOLVED_LOCAL_DEPENDENCIES;
+
+          task_entries_ [i].has_unresolved_local_dependencies (1);
+
+          // Create an anomaly, add it to anomaly set
+          anomaly = create_anomaly (ST_UNRESOLVED_LOCAL_DEPENDENCIES);
+          if (anomaly)
+            {
+              anomaly_set.insert (anomaly);
+            }
+          else
+            {
+              return ST_VIRTUAL_MEMORY_EXHAUSTED;
+            }
         }
     }
   }
@@ -1201,8 +1571,10 @@ ACE_DynScheduler::check_dependency_cycles_recurse (Task_Entry &entry)
 
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::schedule_threads (void)
+ACE_DynScheduler::schedule_threads (ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
+  Scheduling_Anomaly * anomaly = 0;
+
   // make sure there are as many thread delineator
   // entries in the set as the counter indicates
   if (threads_ != thread_delineators_->size ())
@@ -1226,7 +1598,7 @@ ACE_DynScheduler::schedule_threads (void)
 
     if (! iter.next (dispatch_entry))
     {
-      return ST_UNKNOWN_TASK;
+      return ST_BAD_INTERNAL_POINTER;
     }
 
     ordered_thread_dispatch_entries_ [i] = *dispatch_entry;
@@ -1238,7 +1610,8 @@ ACE_DynScheduler::schedule_threads (void)
   if (status == SUCCEEDED)
   {
     // assign priorities to the thread dispatch entries
-    status = assign_priorities (ordered_thread_dispatch_entries_, threads_);
+    status = assign_priorities (ordered_thread_dispatch_entries_, 
+                                threads_, anomaly_set);
   }
 
   return status;
@@ -1247,7 +1620,7 @@ ACE_DynScheduler::schedule_threads (void)
   // entries that are threads, calls internal thread scheduling method
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::schedule_dispatches (void)
+ACE_DynScheduler::schedule_dispatches (ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
   dispatch_entry_count_ = dispatch_entries_->size ();
 
@@ -1257,8 +1630,6 @@ ACE_DynScheduler::schedule_dispatches (void)
   ACE_OS::memset (ordered_dispatch_entries_, 0,
                   sizeof (Dispatch_Entry *) * dispatch_entry_count_);
 
-
-
   ACE_Unbounded_Set_Iterator <Dispatch_Entry *> iter (*dispatch_entries_);
   for (u_int i = 0; i < dispatch_entry_count_; ++i, iter.advance ())
   {
@@ -1266,7 +1637,7 @@ ACE_DynScheduler::schedule_dispatches (void)
 
     if (! iter.next (dispatch_entry))
     {
-      return ST_UNKNOWN_TASK;
+      return ST_BAD_INTERNAL_POINTER;
     }
 
     ordered_dispatch_entries_ [i] = *dispatch_entry;
@@ -1276,7 +1647,8 @@ ACE_DynScheduler::schedule_dispatches (void)
   sort_dispatches (ordered_dispatch_entries_, dispatch_entry_count_);
 
   // assign dynamic and static subpriorities to the thread dispatch entries
-  return assign_subpriorities (ordered_dispatch_entries_, dispatch_entry_count_);
+  return assign_subpriorities (ordered_dispatch_entries_, 
+                               dispatch_entry_count_, anomaly_set);
 }
   // dispatch scheduling method: sets up an array of dispatch entries,
   // calls internal dispatch scheduling method.
@@ -1284,22 +1656,19 @@ ACE_DynScheduler::schedule_dispatches (void)
 ACE_DynScheduler::status_t
 ACE_DynScheduler::store_assigned_info (void)
 {
-
   for  (u_int i = 0; i < dispatch_entry_count_; ++i)
-  {
-  if ((! ordered_dispatch_entries_) || (! (ordered_dispatch_entries_[i])) ||
-      (! (ordered_dispatch_entries_[i]->task_entry ().rt_info ())))
-  {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_DynScheduler::store_assigned_info () could not store "
-                       "priority information (error in internal representation)"),
-                     ST_UNKNOWN_TASK);
-  }
+    {
+      if ((! ordered_dispatch_entries_) || (! (ordered_dispatch_entries_[i])) ||
+          (! (ordered_dispatch_entries_[i]->task_entry ().rt_info ())))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ACE_DynScheduler::store_assigned_info () could not store "
+                             "priority information (error in internal representation)"),
+                             ST_BAD_INTERNAL_POINTER);
+        }
 
   // set OS priority and Scheduler preemption priority and static
   // preemption subpriority in underlying RT_Info
-  // TBD - assign values into a map of priorities and RT_Infos:
-  // an RT_Info can be dispatched at multiple priorities
   ordered_dispatch_entries_ [i]->task_entry ().rt_info ()->priority =
     ordered_dispatch_entries_ [i]->OS_priority ();
   ordered_dispatch_entries_ [i]->task_entry ().rt_info ()->preemption_priority =
@@ -1367,7 +1736,7 @@ ACE_DynScheduler::create_timeline ()
 
       if (reschedule_queue.dequeue_head (rescheduled_entry) < 0)
       {
-        status = ST_UNKNOWN_TASK;
+        status = ST_BAD_INTERNAL_POINTER;
         break;
       }
 
@@ -1382,9 +1751,8 @@ ACE_DynScheduler::create_timeline ()
       break;
     }
 
-
-    // schedule additional dispatcheds of the entry
-    // over the total frame size into the timeline
+    // Schedule additional dispatches of the entry
+    // over the total frame size into the timeline.
     u_long current_frame_offset = 0;
     u_long task_period =
       ordered_dispatch_entries_[i]->task_entry ().effective_period ();
@@ -1424,10 +1792,9 @@ ACE_DynScheduler::create_timeline ()
 
       while (reschedule_queue.is_empty () == 0)
       {
-
         if (reschedule_queue.dequeue_head (rescheduled_entry) < 0)
         {
-          status = ST_UNKNOWN_TASK;
+          status = ST_BAD_INTERNAL_POINTER;
           break;
         }
         status = schedule_timeline_entry (*rescheduled_entry, reschedule_queue);

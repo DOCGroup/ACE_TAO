@@ -81,6 +81,7 @@ public:
                                    CORBA::Long maximum_priority,
                                    RtecScheduler::RT_Info_Set_out infos,
                                    RtecScheduler::Config_Info_Set_out configs,
+                                   RtecScheduler::Scheduling_Anomaly_Set_out anomalies,
                                    CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UTILIZATION_BOUND_EXCEEDED,

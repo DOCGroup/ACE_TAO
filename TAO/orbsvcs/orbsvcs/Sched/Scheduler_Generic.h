@@ -54,7 +54,8 @@ public:
   // Obtains a Config_Info based on its priority.
 
   // = Computes the schedule.
-  virtual status_t schedule (void);
+  virtual status_t 
+    schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &anomaly_set);
 
   // = Access a thread priority.
   virtual int priority (const handle_t handle,
