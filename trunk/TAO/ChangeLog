@@ -1,3 +1,21 @@
+Wed Oct  2 17:01:13 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Log/LogNotification.h:
+	* orbsvcs/orbsvcs/Log/Log_i.h:
+
+	  Doxygen-ated these headers.
+
+	* orbsvcs/orbsvcs/Log/LogNotification.cpp:
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+
+	  Fixed a large number of memory leaks.
+
+	  Fixed emulated exception support.
+
+	  Updated to conform to ACE/TAO coding/style guidelines.
+
+	  Added missing ACE_RCSID macros.
+
 Tue Oct  1 23:27:48 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/Monitor_Signal_Handler.h:

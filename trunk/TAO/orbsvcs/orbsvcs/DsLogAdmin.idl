@@ -259,11 +259,11 @@ module DsLogAdmin
       // Delete records matching constraint <c> or with ids in
       // <ids>. Both operations return the number of records deleted
 
-      void write_records(in Anys records) 
+      void write_records(in Anys records)
         raises(LogFull, LogOffDuty, LogLocked, LogDisabled);
       // Write records to the log storage
 
-      void write_recordlist(in RecordList list) 
+      void write_recordlist(in RecordList list)
         raises(LogFull, LogOffDuty, LogLocked, LogDisabled);
       // Write a list of record ids to storage
 
