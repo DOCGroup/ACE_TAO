@@ -5,7 +5,7 @@
 CC		= cxvxppc
 CXX		= $(CC)
 CFLAGS		+= $(DCFLAGS)
-CCFLAGS		+= $(CFLAGS) --no_rtti
+CCFLAGS		+= $(CFLAGS) --no_rtti -tnone --no_auto_instantiation
 DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX)
