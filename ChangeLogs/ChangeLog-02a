@@ -1,3 +1,48 @@
+Tue Oct 16 23:08:27 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Svc_Conf.h (ACE_Svc_Conf_Param):
+
+	  Added a new ACE_Obstack attribute that is passed down to the
+	  parser and scanner.  This obviates the need for the global
+	  pointer to the ACE_Obstack that was formally used, which in turn
+	  avoids a race condition.
+
+	  (ace_obstack):
+
+	  No longer a need to maintain a global pointer to the ACE_Obstack
+	  instance used during parsing/scanning.
+
+	* ace/Svc_Conf.y:
+	* ace/Svc_Conf.l:
+
+	  Retrieve the Obstack from the parameter passed down to yyparse()
+	  and yylex() instead of using the (now non-existent) global
+	  instance.  This is part of a race condition fix.
+
+	* ace/Svc_Conf_y.cpp:
+	* ace/Svc_Conf_l.cpp:
+
+	  Updated to pull in the changes made to the source files from
+	  which these files were generated.
+
+	* ace/Service_Config.cpp (process_directives_i):
+
+	  The global ACE_Obstack pointer used during each Service
+	  Configurator parse has been removed.  An ACE_Obstack instance is
+	  now passed down to the parser and scanner in a
+	  reentrant/thread-safe manner via the new ACE_Svc_Conf_Param
+	  parameter.  As such, there is no longer any need to maintain a
+	  global pointer to the ACE_Obstack instance in use, nor is it
+	  necessary to store/restore the previous value when performing
+	  nested or parallel Service Configurator directive processing.
+	  This fixes a race condition that was causing some memory
+	  corruption when parsing Service Configurator directives in
+	  parallel.
+
+	  Note that the ACE_Obstack is now instantiated on the stack
+	  rather than the heap, thus improving Service Configurator
+	  directive processing performance.
+
 Mon Oct 15 23:16:55 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Service_Config.h (process_directives_i):

@@ -21,9 +21,6 @@ static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
 // Force the pretty debugging code to compile.
 // #define YYDEBUG 1
 
-// Efficient memory allocation technique.
-ACE_Obstack_T<ACE_TCHAR> *ace_obstack = 0;
-
 // Keeps track of the number of errors encountered so far.
 int yyerrno = 0;
 
@@ -55,11 +52,11 @@ svc_config_entries
       {
         $2->apply (); delete $2;
       }
-      ace_obstack->release ();
+      ACE_SVC_CONF_PARAM->obstack.release ();
     }
   | svc_config_entries error
     {
-      ace_obstack->release ();
+      ACE_SVC_CONF_PARAM->obstack.release ();
     }
   | /* EMPTY */
   ;
@@ -456,13 +453,12 @@ ACE_TCHAR *program_name;
 int
 main (int argc, char *argv[])
 {
-  yyin = stdin;
-  ace_obstack = new ACE_Obstack_T<ACE_TCHAR>;
+  ACE_Svc_Conf_Param param (stdin);
 
   // Try to reopen any filename argument to use YYIN.
   if (argc > 1 && (yyin = freopen (argv[1], "r", stdin)) == 0)
-    (void) ::fprintf (stderr, "usage: %s [file]\n", argv[0]), exit (1);
+    (void) ::fprintf (stderr, "usage: %s [file]\n", argv[0]), ACE_OS::exit (1);
 
-  return yyparse ();
+  return yyparse (&param);
 }
 #endif /* DEBUGGING */

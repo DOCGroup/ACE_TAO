@@ -66,18 +66,18 @@ inactive	      { return token (ACE_INACTIVE); }
                         // single quotes.
                         *s = '\0';
 			yyleng -= 1;
-                        yylval->ident_ = ace_obstack->copy (yytext + 1, yyleng);
+                        yylval->ident_ = ACE_SVC_CONF_PARAM->obstack.copy (yytext + 1, yyleng);
 			return token (ACE_STRING); }
 {ident}		      {
-		        yylval->ident_ = ace_obstack->copy (yytext, yyleng);
+		        yylval->ident_ = ACE_SVC_CONF_PARAM->obstack.copy (yytext, yyleng);
 			return token (ACE_IDENT);
 		      }
 {pathname}	      {
-		        yylval->ident_ = ace_obstack->copy (yytext, yyleng);
+		        yylval->ident_ = ACE_SVC_CONF_PARAM->obstack.copy (yytext, yyleng);
 			return token (ACE_PATHNAME);
 		      }
 {white_space}+	      ; /* EMPTY */
-{newline}	      { ace_lexer_param->yylineno++; }
+{newline}	      { ACE_SVC_CONF_PARAM->yylineno++; ace_yylineno++; }
 {other}		      {
                          ACE_ERROR ((LM_ERROR,
                                      ACE_LIB_TEXT ("unknown character = (%d"), 

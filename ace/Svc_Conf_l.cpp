@@ -882,14 +882,14 @@ ACE_YY_RULE_SETUP
                         // single quotes.
                         *s = '\0';
 			ace_yyleng -= 1;
-                        ace_yylval->ident_ = ace_obstack->copy (ace_yytext + 1, ace_yyleng);
+                        ace_yylval->ident_ = ACE_SVC_CONF_PARAM->obstack.copy (ace_yytext + 1, ace_yyleng);
 			return token (ACE_STRING); }
 //	ACE_YY_BREAK
 case 20:
 ACE_YY_RULE_SETUP
 #line 75 "Svc_Conf.l"
 {
-		        ace_yylval->ident_ = ace_obstack->copy (ace_yytext, ace_yyleng);
+		        ace_yylval->ident_ = ACE_SVC_CONF_PARAM->obstack.copy (ace_yytext, ace_yyleng);
 			return token (ACE_IDENT);
 		      }
 //	ACE_YY_BREAK
@@ -897,7 +897,7 @@ case 21:
 ACE_YY_RULE_SETUP
 #line 79 "Svc_Conf.l"
 {
-		        ace_yylval->ident_ = ace_obstack->copy (ace_yytext, ace_yyleng);
+		        ace_yylval->ident_ = ACE_SVC_CONF_PARAM->obstack.copy (ace_yytext, ace_yyleng);
 			return token (ACE_PATHNAME);
 		      }
 //	ACE_YY_BREAK
@@ -909,7 +909,7 @@ ACE_YY_RULE_SETUP
 case 23:
 ACE_YY_RULE_SETUP
 #line 84 "Svc_Conf.l"
-{ ace_yylineno++; }
+{ ACE_SVC_CONF_PARAM->yylineno++; ace_yylineno++; }
 	ACE_YY_BREAK
 case 24:
 ACE_YY_RULE_SETUP

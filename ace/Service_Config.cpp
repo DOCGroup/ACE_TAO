@@ -371,16 +371,7 @@ ACE_Service_Config::process_directives_i (ACE_Svc_Conf_Param *param)
   ace_yyerrno = 0;
   ace_yylineno = 1;
 
-  ACE_Obstack_T<ACE_TCHAR> *oldstack = ace_obstack;
-
-  ACE_NEW_RETURN (ace_obstack,
-                  ACE_Obstack_T<ACE_TCHAR>,
-                  -1);
-
   ace_yyparse (param);
-
-  delete ace_obstack;
-  ace_obstack = oldstack;
 
   if (param->yyerrno > 0)
     {
