@@ -1,3 +1,12 @@
+Thu Jun 06 13:11:57 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (TAO_ORB_Core):
+
+	  Initialize the "init_ref_map_" hash map to a size much smaller
+	  than ACE_DEFAULT_MAP_SIZE (1024),
+	  i.e. TAO_DEFAULT_OBJECT_REF_TABLE_SIZE instead.  This further
+	  reduces TAO's run-time memory requirements.
+
 Wed Jun  5 18:05:35 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp (visit_valuetype):
