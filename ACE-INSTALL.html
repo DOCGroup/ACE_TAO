@@ -617,9 +617,8 @@ TAO Developer's Guide is released.
 
   <LI><B><a name="LynxOS">LynxOS</a></B><P>
 
-      ACE builds and runs properly on LynxOS 3.0.x, 3.1.x and 4.0.0 for Intel and
-      PowerPC targets. LynxOS 2.5.x is no longer supported.
-
+      ACE builds and runs properly on LynxOS 3.0.x, 3.1.x and 4.0.0 for Intel
+      and PowerPC targets. LynxOS 2.5.x is no longer supported.
       To build ACE on LynxOS 3.0.x you need to update GCC to
       version 2.9-gnupro-98r2, which can be obtained from
       <A HREF="ftp://ftp.lynuxworks.com/compilers/98r2-preview/">
@@ -629,11 +628,11 @@ TAO Developer's Guide is released.
 
       <ul>
         <li>Increase the limits in <code>/etc/starttab</code>,
-          then logout and login again.  We use these limits:
+          then reboot system.  We use these limits:
           <pre>
 # Data, stack, and core file limits (in Kbytes)
-240000
-80000
+64000
+16000
 102400</pre><p>
         <li>Enable or expand virtual memory, with something like:
           <pre>
