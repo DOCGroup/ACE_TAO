@@ -476,17 +476,35 @@ protected:
    *  Parse a SDDecl string.
    *
    *  @param str String containing the encoding name if successful.
-   *  @return 0 if the string was read successfully, 0 otherwise.
+   *  @return 0 if the string was read successfully, -1 otherwise.
    */
   int parse_sddecl (ACEXML_Char*& str);
+
+  /**
+   *  Parse an attribute name.
+   *
+   *  @retval str String containing the value of the attribute name
+   *             if successful.
+   *  @retval 0 otherwise.
+   */
+  ACEXML_Char* parse_attname (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
    *  Parse an attribute value.
    *
    *  @param str String containing the value of the attribute if successful.
-   *  @return 0 if attribute value was read successfully, 0 otherwise.
+   *  @return 0 if attribute value was read successfully, -1 otherwise.
    */
   int parse_attvalue (ACEXML_Char*& str ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   *  Parse a tokenized type attribute.
+   *
+   *  @return 0 if attribute type was read successfully, -1 otherwise.
+   */
+  int parse_tokenized_type (ACEXML_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
@@ -692,7 +710,7 @@ private:
   /**
    *  Pop the top element in the stack and replace current context with that.
    */
-  int pop_context (void);
+  int pop_context (int GE_ref ACEXML_ENV_ARG_DECL);
 
   /**
    *  Create a new ACEXML_CharStream from @a systemId and @a publicId and
@@ -708,6 +726,16 @@ private:
   virtual int switch_input (ACEXML_InputSource* input,
                             const ACEXML_Char* systemId = 0,
                             const ACEXML_Char* publicId = 0);
+
+  /**
+   * Check for a parameter entity reference. This is used to check for the
+   * occurence of a PE Reference withing markupDecl. Additionally this
+   * function consumes any leading or trailing whitespace around the PE
+   * Reference.
+   *
+   * @retval Number of whitespace characters skipped.
+   */
+  int check_for_PE_reference (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *  Reset the parser state.
