@@ -500,3 +500,4 @@ ACE_OS_String::itoa_emulation (int value, wchar_t *string, int radix)
   return string;
 }
 #endif /* ACE_HAS_WCHAR */
+
