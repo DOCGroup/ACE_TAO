@@ -636,7 +636,18 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
 
   if (nt == AST_Decl::NT_pre_defined)
     {
-      AST_PredefinedType *p = AST_PredefinedType::narrow_from_decl (bt);
+      AST_PredefinedType *p = 0;
+      be_typedef *btd = be_typedef::narrow_from_decl (bt);
+
+      if (btd == 0)
+        {
+          p = AST_PredefinedType::narrow_from_decl (bt);
+        }
+      else
+        {
+          p = AST_PredefinedType::narrow_from_decl (btd->base_type ());
+        }
+
       pdt = p->pt ();
     }
 
