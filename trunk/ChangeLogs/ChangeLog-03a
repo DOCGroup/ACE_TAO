@@ -1,3 +1,12 @@
+Mon Oct  1 10:46:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/PerlACE/Run_Test.pm (check_n_cleanup_files): Removed the
+	  word "ERROR" when files are left behind. This was creating noise
+	  in the daily builds. We have captured the problem in the
+	  bugzilla with id #1014. After 1.2 goes out, if someone is
+	  looking at this problem again we need to add this back so that
+	  our daily builds can pick them up.
+
 Sun Sep 30 17:25:33 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Stream.i (send_i, recv_i):
