@@ -404,7 +404,7 @@ public:
    * Format a message to the thread-safe ACE logging mechanism.  Valid
    * options (prefixed by '%', as in printf format strings) include:
    *  + 'A': print an ACE_timer_t value (which could be either double or ACE_UINT32.)
-   *  + 'a': exit the program at this point (var-argument is the exit status!)
+   *  + 'a': abort the program at this point abruptly.
    *  + 'c': print a character
    *  + 'C': print a character string
    *  + 'i', 'd': print a decimal number
