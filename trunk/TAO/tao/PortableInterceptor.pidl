@@ -41,12 +41,10 @@
 #endif
 
 #include <Current.pidl>
-
 #include <Dynamic.pidl>
-
 #include <ObjectReferenceTemplate.pidl>
-
 #include <Messaging_SyncScope.pidl>
+#include <IOP.pidl>
 
 module PortableInterceptor {
 

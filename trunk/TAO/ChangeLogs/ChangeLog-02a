@@ -1,3 +1,10 @@
+Wed Apr 17 09:12:48 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableInterceptor.pidl:
+
+	  Include IOP.pidl to pull in types defined in the standard OMG
+	  IOP module.
+
 Tue Apr 16 16:34:38 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/GIOP_Message_Generator_Parser_12.cpp (write_request_header):
