@@ -1,3 +1,10 @@
+Tue May 1 22:42:44 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/GIOP_Message_Generator_Parser_10.cpp (write_reply_header):
+
+	  Silence the false Fuzz error about a missing ACE_CHECK by adding
+	  the awful "// FUZZ: ignore check_for_ace_check" comment hack.
+
 Tue May  1 22:14:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/POA/Etherealization/Makefile: Changed the includes. This
