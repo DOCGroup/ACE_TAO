@@ -1,3 +1,10 @@
+Sat Aug 14 03:44:02 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* ace/TSS_T.cpp:
+
+	  Fixed compilation errors in the SIngleThreaded builds.
+
+
 Sat Aug 14 03:37:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/OS_NS_Thread.cpp:
