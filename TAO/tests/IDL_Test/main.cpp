@@ -79,7 +79,7 @@ class schmegegging_i : public virtual gleep::schmegegging
 {
 };
 
-struct something_handler : POA_bug_1985_c::d::AMI_somethingHandler
+struct something_handler : public POA_bug_1985_c::d::AMI_somethingHandler
 {
 };
 
