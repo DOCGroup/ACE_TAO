@@ -6565,7 +6565,7 @@ ACE_OS_WString (WIDE_STRING).char_rep ()
 # endif /* UNICODE */
 
 # if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-#   define ASYS_WIDE_STRING(ASCII_STRING) ACE_OS_CString (ASCII_STRING).char_rep ()
+#   define ASYS_WIDE_STRING(ASCII_STRING) ACE_OS_CString (ASCII_STRING).wchar_rep ()
 # else
 #   define ASYS_WIDE_STRING(ASCII_STRING) ASCII_STRING
 # endif /* ACE_HAS_MOSTLY_UNICODE_APIS */

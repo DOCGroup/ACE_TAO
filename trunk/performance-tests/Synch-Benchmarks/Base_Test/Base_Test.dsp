@@ -92,6 +92,10 @@ LINK32=link.exe
 # PROP Default_Filter ".cpp"
 # Begin Source File
 
+SOURCE=.\base_test.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Baseline_Test.cpp
 # End Source File
 # Begin Source File
