@@ -95,8 +95,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   if (node->is_defined ())
     {
-      *os << "\n\n#if defined (_MSC_VER)";
-
       *os << be_nl << be_nl
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name  () << ">::tao_add_ref (" 
@@ -116,8 +114,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "{" << be_idt_nl
           << "CORBA::remove_ref (p);" << be_uidt_nl
           << "}";
-
-      *os << "\n\n#endif /* _MSC_VER */";
     }
 
   // The _downcast method    // %! use ACE_xxx_cast here ?

@@ -47,8 +47,6 @@ be_visitor_traits::visit_root (be_root *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << "\n\n#if defined (_MSC_VER)";
-
   *os << be_nl << be_nl
       << "// Traits specializations." << be_nl
       << "namespace TAO" << be_nl
@@ -64,8 +62,6 @@ be_visitor_traits::visit_root (be_root *node)
 
   *os << be_uidt_nl
       << "};";
-
-  *os << "\n\n#endif /* _MSC_VER */";
 
   return 0;
 }
