@@ -1,3 +1,29 @@
+Wed Jun 16 18:54:32 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	If there is _cxx_ in the beginning of an IDL operation or
+	attribute, we will remove that and keep a copy of the original
+	name. TAO IDL's front end adds _cxx_ prefix to the all the
+	reserved keywords. But when we invoke the operation remotely, we
+	should be sending only the name with out "_cxx_"
+	prefix. Similarly, the look up table should be generated with the
+	names without "_cxx_". 
+		
+	* TAO_IDL/include/ast_decl.h:
+	* TAO_IDL/ast/ast_decl.cpp:
+	Added a new method "original_local_name" to return the
+	operation/attribute name without "_cxx_" prefix.
+	
+	Thanks to Sean Landis <seanl@rsch.comm.mot.com> for reporting this
+	problem.
+	
+	Also, added "-F 0" to the options list given to the gperf by the
+	IDL compiler. This was needed to get rid of the warnings in some
+	platforms. 
+
+	Thanks to Irfan and Naga for helping in this.
+
 Wed Jun 16 18:48:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:
@@ -25,7 +51,6 @@ Wed Jun 16 18:26:06 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 	* orbsvcs/tests/CosEC_Multiple/CosECSupplier.h:
 	* orbsvcs/tests/CosEC_Multiple/CosECSupplier.cpp:
 	  Added the ACE_THROW spec.
-
 
 Wed Jun 16 18:17:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
