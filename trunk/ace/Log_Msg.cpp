@@ -323,7 +323,7 @@ int ACE_Log_Msg::msg_off_ = 0;
 void
 ACE_Log_Msg::close (void)
 {
-#if defined (VXWORKS)
+#if !defined (VXWORKS)
   // Please note that this will be called by a statement that is
   // harded coded into the ACE_Object_Manager's shutdown sequence,
   // in its destructor.
