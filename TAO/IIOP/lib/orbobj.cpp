@@ -28,7 +28,7 @@
 extern void __TC_init_table ();
 extern void __TC_init_standard_exceptions (CORBA_Environment &env);
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
 static pthread_mutex_t		refcnt_lock = PTHREAD_MUTEX_INITIALIZER;
 #endif
 
@@ -106,7 +106,7 @@ ULONG
 __stdcall
 CORBA_ORB::AddRef ()
 {
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     Critical		region (&refcnt_lock);
 #endif
 
@@ -117,7 +117,7 @@ ULONG
 __stdcall
 CORBA_ORB::Release ()
 {
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     Critical		region (&refcnt_lock);
 #endif
 
@@ -126,7 +126,7 @@ CORBA_ORB::Release ()
     if (--_refcount != 0)
 	return _refcount;
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     region.leave ();
 #endif
 
@@ -152,11 +152,11 @@ CORBA_ORB_init (
     CORBA_Environment	&env
 )
 {
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     static pthread_mutex_t	lock = PTHREAD_MUTEX_INITIALIZER;
 
     Critical			region (&lock);
-#endif	// ACE_HAS_THREADS
+#endif	// _POSIX_THREADS
 
     env.clear ();
 

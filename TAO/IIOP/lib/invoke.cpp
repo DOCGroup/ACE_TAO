@@ -54,9 +54,9 @@ IIOP_Object::do_call (
     ...						// ... any parameters
 )
 {
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     ForceSynchronousCancel 	temp;		// side effect driven
-#endif	// ACE_HAS_THREADS
+#endif	// _POSIX_THREADS
 
     GIOP::Invocation		call (this, info->opname,
 				    info->is_roundtrip);
@@ -209,9 +209,9 @@ IIOP_Object::do_dynamic_call (
     CORBA_Environment		&env		// exception reporting
 )
 {
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     ForceSynchronousCancel 	temp;		// side effect driven
-#endif	// ACE_HAS_THREADS
+#endif	// _POSIX_THREADS
 
     GIOP::Invocation		call (this, opname, is_roundtrip);
 
