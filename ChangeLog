@@ -1,3 +1,7 @@
+Mon Nov 25 20:32:02 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/README:  Added ACE_LACKS_PERFECT_MULTICAST_FILTERING.
+
 Mon Nov 25 18:58:33 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Local_Name_Space_T.cpp:

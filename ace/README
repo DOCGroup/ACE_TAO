@@ -802,6 +802,12 @@ ACE_LACKS_NULL_PTHREAD_STATUS           OS requires non-null status pointer
                                         for ::pthread_join ().
 ACE_LACKS_PARAM_H                       Platform lacks <sys/param.h>
                                         (e.g., MVS)
+ACE_LACKS_PERFECT_MULTICAST_FILTERING   Platform lacks IGMPv3 "perfect" filtering
+                                        of multicast dgrams at the socket level.
+                                        If == 1, ACE_SOCK_Dgram_Mcast will bind
+                                        the first joined multicast group to the 
+                                        socket, and all future joins on that 
+                                        socket will fail with an error.
 ACE_LACKS_POSIX_PROTOTYPES              Platform lacks POSIX
                                         prototypes for certain System
                                         V functions like shared memory
