@@ -78,7 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ACE_RCSID(be, be_produce, "$Id$")
 
 // Clean up before exit, whether successful or not.
-TAO_IFR_BE_Export void
+// Need not be exported since it is called only from this file.
+void
 BE_cleanup (void)
 {
   AST_Decl *root = idl_global->root ();
@@ -103,6 +104,66 @@ BE_abort (void)
 
   ACE_OS::exit (1);
 }
+
+// ac must be passed in by reference, because it is also
+// passed by reference to ORB_init, which may modify it.
+// After BE_ifr_init returns to main() the modified argc
+// must be passed to DRV_parse_args().
+TAO_IFR_BE_Export int
+BE_ifr_init (int &ac,
+             char *av[])
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      be_global->orb (CORBA::ORB_init (ac,
+                                       av,
+                                       0,
+                                       ACE_TRY_ENV));
+      ACE_TRY_CHECK;
+
+      CORBA::Object_var object =
+        be_global->orb ()->resolve_initial_references ("InterfaceRepository",
+                                                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (object.in ()))
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("Null objref from resolve_initial_references\n")
+            ),
+            -1
+          );
+        }
+
+      CORBA_Repository_var repo = CORBA_Repository::_narrow (object.in (),
+                                                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (repo.in ()))
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("CORBA::Repository::_narrow failed\n")
+            ),
+            -1
+          );
+        }
+
+      be_global->repository (repo._retn ());
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           ACE_TEXT ("BE_ifr_init"));
+
+      return 1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
  
 // Do the work of this BE. This is the starting point for code generation.
 TAO_IFR_BE_Export void
@@ -121,42 +182,33 @@ BE_produce (void)
       BE_abort ();
     }
 
+  ifr_visitor *visitor = 0;
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       if (be_global->removing ())
         {
-          ifr_removing_visitor visitor;
-
-          TAO_IFR_VISITOR_WRITE_GUARD;
-
-          if (visitor.visit_scope (root) == -1)
-            {
-              ACE_ERROR ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) BE_produce -")
-                  ACE_TEXT (" visiting root scope failed\n")
-                ));
-
-              BE_abort ();
-            }
+          ifr_removing_visitor removing_visitor;
+          visitor = &removing_visitor;
         }
       else
         {
-          ifr_adding_visitor visitor;
+          ifr_adding_visitor adding_visitor;
+          visitor = &adding_visitor;
+        }
 
-          TAO_IFR_VISITOR_WRITE_GUARD;
+      TAO_IFR_VISITOR_WRITE_GUARD;
 
-          if (root->ast_accept (&visitor) == -1)
-            {
-              ACE_ERROR ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) BE_produce -")
-                  ACE_TEXT (" failed to accept visitor\n")
-                ));
+      if (root->ast_accept (visitor) == -1)
+        {
+          ACE_ERROR ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) BE_produce -")
+              ACE_TEXT (" failed to accept visitor\n")
+            ));
 
-              BE_abort ();
-            }
+          BE_abort ();
         }
     }
   ACE_CATCHANY

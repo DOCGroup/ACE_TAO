@@ -79,6 +79,10 @@ extern TAO_IFR_BE_Export BE_GlobalData *be_global;
 // Functions:
 
 extern TAO_IFR_BE_Export void BE_produce (void);
+
 extern TAO_IFR_BE_Export void BE_abort (void);
+
+extern TAO_IFR_BE_Export int BE_ifr_init (int &,
+                                          char *[]);
 
 #endif /* TAO_IFR_BE_EXTERN_H */
