@@ -29,87 +29,69 @@ ACE_RCSID(OctetSeq, OctetSeq, "$Id$")
 
 static int
 test_write_octet (TAO_OutputCDR &cdr,
-                  char* buf, size_t bufsize,
-                  CORBA::Environment& env)
+                  char* buf, size_t bufsize)
 {
   Test::OctetSeq os (bufsize, bufsize, (CORBA::Octet*)buf);
 
-  cdr.encode (Test::_tc_OctetSeq, &os, 0, env);
-  if (env.exception () != 0)
+  if ((cdr << os) == 0)
     return -1;
   return 0;
 }
 
 static int
 test_read_octet (TAO_InputCDR &cdr,
-                 char* /* buf */, 
-                 size_t bufsize,
-                 CORBA::Environment& env)
+                 char* /* buf */,
+                 size_t bufsize)
 {
   Test::OctetSeq os;
 
-  cdr.decode (Test::_tc_OctetSeq, &os, 0, env);
-  if (env.exception () != 0 ||
-      os.length () != bufsize
-      /* || ACE_OS::memcmp( buf, os.get_buffer (), bufsize) != 0 */)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "OCTET: problem demarshalling or unmatched buffer\n"));
-      return -1;
-    }
+  if ((cdr >> os) == 0)
+    return -1;
   return 0;
 }
 
 static int
 test_write_char (TAO_OutputCDR &cdr,
-                 char* buf, 
-                 size_t bufsize,
-                 CORBA::Environment& env)
+                 char* buf,
+                 size_t bufsize)
 {
   Test::CharSeq cs (bufsize, bufsize, buf);
 
-  cdr.encode (Test::_tc_CharSeq, &cs, 0, env);
-  if (env.exception () != 0)
+  if ((cdr << cs) == 0)
     return -1;
   return 0;
 }
 
 static int
 test_read_char (TAO_InputCDR &cdr,
-                char* /* buf */, 
-                size_t bufsize,
-                CORBA::Environment& env)
+                char* /* buf */,
+                size_t bufsize)
 {
   Test::CharSeq cs;
 
-  cdr.decode (Test::_tc_CharSeq, &cs, 0, env);
-  if (env.exception () != 0 ||
-      cs.length () != bufsize
-      /* || ACE_OS::memcmp( buf, cs.get_buffer (), bufsize) != 0 */)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "CHAR: problem demarshalling or unmatched buffer\n"));
-      return -1;
-    }
+  if ((cdr >> cs) == 0)
+    return -1;
   return 0;
 }
 
 typedef
 int (*Writer)(TAO_OutputCDR& cdr,
-              char* buf, size_t bufsize,
-              CORBA::Environment& env);
+              char* buf, size_t bufsize);
 typedef
 int (*Reader)(TAO_InputCDR& cdr,
-              char* buf, size_t bufsize,
-              CORBA::Environment& env);
+              char* buf, size_t bufsize);
 
 int
 run (char* buf, size_t bufsize,
      size_t n, size_t lo, size_t s,
+     int quiet,
      const char* name,
-     Writer writer, Reader reader,
-     CORBA::Environment& env)
+     Writer writer, Reader reader)
 {
+  size_t count = 0;
+  double sum_read = 0;
+  double sum_write = 0;
+
   for (size_t x = lo; x <= bufsize; x += s)
     {
       ACE_High_Res_Timer writing;
@@ -120,16 +102,17 @@ run (char* buf, size_t bufsize,
           writing.start_incr ();
           TAO_OutputCDR output;
 
-          if (writer (output, buf, x, env) != 0)
+          if (writer (output, buf, x) != 0)
             return -1;
           writing.stop_incr ();
 
           reading.start_incr ();
           TAO_InputCDR input (output);
-          if (reader (input, buf, x, env) != 0)
+          if (reader (input, buf, x) != 0)
             return -1;
           reading.stop_incr ();
         }
+
       double m = n;
 
       ACE_Time_Value wtv;
@@ -146,9 +129,23 @@ run (char* buf, size_t bufsize,
 
       double write_average = ACE_U64_TO_U32(wusecs) / m;
       double read_average = ACE_U64_TO_U32(rusecs) / m;
+
+      count++;
+      sum_read += read_average;
+      sum_write += write_average;
+      if (quiet == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s: %d %.3f %.3f\n",
+                      name, x, write_average, read_average));
+        }
+    }
+
+  if (count != 0)
+    {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s: %d %.3f %.3f\n",
-                  name, x, write_average, read_average));
+                  "%s total: %.3f %.3f\n",
+                  name, sum_write / count, sum_read / count));
     }
   return 0;
 }
@@ -156,20 +153,23 @@ run (char* buf, size_t bufsize,
 int
 main (int argc, char *argv[])
 {
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             0,
-                                            TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       int n = 64;
       int lo = 64;
       int hi = 128000;
       int s = 4;
 
-      ACE_Get_Opt get_opt (argc, argv, "n:l:h:s:");
+      int quiet = 0;
+
+      ACE_Get_Opt get_opt (argc, argv, "qn:l:h:s:");
       int opt;
 
       while ((opt = get_opt ()) != EOF)
@@ -188,6 +188,10 @@ main (int argc, char *argv[])
             case 's':
               s = ACE_OS::atoi (get_opt.optarg);
               break;
+            case 'q':
+              quiet = 1;
+              break;
+
             case '?':
             default:
               ACE_DEBUG ((LM_DEBUG,
@@ -223,25 +227,21 @@ main (int argc, char *argv[])
         }
 
       if (run (buf, hi,
-               n, lo, s,
-               "OCTET", test_write_octet, test_read_octet,
-               TAO_TRY_ENV) != 0)
+               n, lo, s, quiet,
+               "OCTET", test_write_octet, test_read_octet) != 0)
         return 1;
-      TAO_CHECK_ENV;
 
       if (run (buf, hi,
-               n, lo, s,
-               "CHAR", test_write_char, test_read_char,
-               TAO_TRY_ENV) != 0)
+               n, lo, s, quiet,
+               "CHAR", test_write_char, test_read_char) != 0)
         return 1;
-      TAO_CHECK_ENV;
       delete[] buf;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("OctetSeq");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "OctetSeq");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }

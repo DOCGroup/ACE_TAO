@@ -34,15 +34,12 @@
 
 ACE_RCSID(tao, ORB_Core, "$Id$")
 
-typedef ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>
-        TAO_ORB_CORE_TSS_RESOURCES;
-
 // ****************************************************************
 
 CORBA::Environment &
 TAO_default_environment ()
 {
-  return *TAO_ORB_CORE_TSS_RESOURCES::instance ()->default_environment_;
+  return *TAO_TSS_RESOURCES::instance ()->default_environment_;
 }
 
 // ****************************************************************
@@ -102,6 +99,12 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
   delete this->from_iso8859_;
   delete this->to_iso8859_;
+
+  if (this->reactor_ != 0)
+    {
+      delete this->reactor_;
+      this->reactor_ = 0;
+    }
 }
 
 int
@@ -233,6 +236,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 #else
   int std_profile_components = 0;
 #endif /* TAO_STD_PROFILE_COMPONENTS */
+
+  int use_tss_resources = -1;
+  // -1 is unknown, default to what the resource factory sets.
+  // @@ This is just for backwards compatibility.
 
   while (arg_shifter.is_anything_left ())
     {
@@ -707,6 +714,22 @@ TAO_ORB_Core::init (int &argc, char *argv[])
            }
         }
 
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBResources") == 0)
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              char *opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, "global") == 0)
+                use_tss_resources = 0;
+              else if (ACE_OS::strcasecmp (opt, "tss") == 0)
+                use_tss_resources = 1;
+
+              arg_shifter.consume_arg ();
+            }
+        }
+
       else if (ACE_OS::strncasecmp (current_arg,
                                     "-ORB",
                                     4) == 0)
@@ -788,7 +811,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                        "ORB Core unable to find a Resource Factory instance"),
                       -1);
 
-  this->reactor (trf->get_reactor ());
+  (void) this->reactor ();
+  // Make sure the reactor is initialized...
 
   TAO_Server_Strategy_Factory *ssf = this->server_factory ();
 
@@ -880,6 +904,11 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // Have registry parse the preconnects
   if (this->orb_params ()->preconnects ().is_empty () == 0)
     this->connector_registry ()->preconnect (this->orb_params ()->preconnects ());
+
+  if (use_tss_resources == -1)
+    this->use_tss_resources_ = 0; // @@ What is the default?
+  else
+    this->use_tss_resources_ = use_tss_resources;
 
   return 0;
 }
@@ -1013,7 +1042,6 @@ TAO_ORB_Core::resource_factory (void)
 
       // @@ Not needed.
       this->resource_factory_from_service_config_ = 0;
-      default_factory->resource_source (TAO_Default_Resource_Factory::TAO_GLOBAL);
       this->resource_factory_ = default_factory;
 
       // @@ At this point we need to register this with the
@@ -1136,9 +1164,24 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resour
   // Inherit properties/objects used in ORB_Core from the
   // parent thread.  Stuff inherited here must already exist
   // in the "parent" orbcore.
+  // This is used in the thread-per-connection concurrency model where
+  // each ORB spawned thread must use the resources of the spawning
+  // thread...
 
-  this->reactor (tss_resources->reactor_);
-  // We'll use the spawning thread's reactor.
+  if (tss_resources->reactor_ != 0)
+    {
+      // We'll use the spawning thread's reactor.
+      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
+      if (tss->reactor_ != 0 && TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - non nil reactor on thread startup!\n"));
+          if (tss->owns_reactor_ != 0)
+            delete tss->reactor_;
+        }
+      tss->reactor_ = tss_resources->reactor_;
+      tss->owns_reactor_ = 0;
+    }
 
   // this->connection_cache (tss_resources->connection_cache_);
   // Inherit connection cache?
@@ -1369,34 +1412,51 @@ TAO_ORB_Core::input_cdr_buffer_allocator (void)
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_dblock_allocator (void)
 {
-  return this->resource_factory ()->output_cdr_dblock_allocator ();
+  TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
+
+  if (tss->output_cdr_dblock_allocator_ == 0)
+    {
+      tss->output_cdr_dblock_allocator_ =
+        this->resource_factory ()->output_cdr_dblock_allocator ();
+    }
+
+  return tss->output_cdr_dblock_allocator_;
 }
 
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_buffer_allocator (void)
 {
-  return this->resource_factory ()->output_cdr_buffer_allocator ();
-}
+  TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
 
-ACE_Reactor *
-TAO_ORB_Core::reactor (ACE_Reactor *r)
-{
-  TAO_ORB_Core_TSS_Resources *tss =
-    TAO_ORB_CORE_TSS_RESOURCES::instance ();
+  if (tss->output_cdr_buffer_allocator_ == 0)
+    {
+      tss->output_cdr_buffer_allocator_ =
+        this->resource_factory ()->output_cdr_dblock_allocator ();
+    }
 
-  ACE_Reactor *old_reactor = tss->reactor_;
-  tss->reactor_ = r;
-  return old_reactor;
+  return tss->output_cdr_buffer_allocator_;
 }
 
 ACE_Reactor *
 TAO_ORB_Core::reactor (void)
 {
-  TAO_ORB_Core_TSS_Resources *tss =
-    TAO_ORB_CORE_TSS_RESOURCES::instance ();
+  TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
 
   if (tss->reactor_ == 0)
-    tss->reactor_ = this->resource_factory ()->get_reactor ();
+    {
+      if (this->use_tss_resources_)
+        {
+          tss->reactor_ = this->resource_factory ()->get_reactor ();
+          tss->owns_reactor_ = 1;
+        }
+      else if (this->reactor_ == 0)
+        {
+          // @@ Double checked locking!
+          this->reactor_ =
+            this->resource_factory ()->get_reactor ();
+        }
+      tss->reactor_ = this->reactor_;
+    }
 
   return tss->reactor_;
 }
@@ -1410,13 +1470,13 @@ TAO_ORB_Core::poa_current (void) const
 CORBA_Environment*
 TAO_ORB_Core::default_environment (void) const
 {
-  return TAO_ORB_CORE_TSS_RESOURCES::instance ()->default_environment_;
+  return TAO_TSS_RESOURCES::instance ()->default_environment_;
 }
 
 void
 TAO_ORB_Core::default_environment (CORBA_Environment* env)
 {
-  TAO_ORB_CORE_TSS_RESOURCES::instance ()->default_environment_ = env;
+  TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
 }
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
@@ -1432,30 +1492,53 @@ TAO_ORB_Core::policy_current (void)
 // ****************************************************************
 
 TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
-  :  reactor_ (0),
-     poa_current_impl_ (0),
-     default_environment_ (&this->tss_environment_),
-#if defined (TAO_HAS_CORBA_MESSAGING)
-     policy_current_ (&this->initial_policy_current_),
-#endif /* TAO_HAS_CORBA_MESSAGING */
+  :  owns_reactor_ (0),
+     reactor_ (0),
      output_cdr_dblock_allocator_ (0),
      output_cdr_buffer_allocator_ (0),
+     output_cdr_msgblock_allocator_ (0),
+     owns_connection_cache_ (0),
      connection_cache_ (0)
 {
 }
 
 TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 {
-  if (this->output_cdr_dblock_allocator_ != 0)
+  if (this->owns_reactor_)
     {
-      delete this->output_cdr_dblock_allocator_;
-      this->output_cdr_dblock_allocator_ = 0;
+      delete this->reactor_;
+      this->reactor_ = 0;
+      this->owns_reactor_ = 0;
     }
-  if (this->output_cdr_buffer_allocator_ != 0)
+
+  delete this->output_cdr_dblock_allocator_;
+  this->output_cdr_dblock_allocator_ = 0;
+  delete this->output_cdr_buffer_allocator_;
+  this->output_cdr_buffer_allocator_ = 0;
+  delete this->output_cdr_msgblock_allocator_;
+  this->output_cdr_msgblock_allocator_ = 0;
+
+  if (this->owns_connection_cache_)
     {
-      delete this->output_cdr_buffer_allocator_;
-      this->output_cdr_buffer_allocator_ = 0;
+      // unimplemented delete this->connection_cache_;
+      this->connection_cache_ = 0;
+      this->owns_connection_cache_ = 0;
     }
+}
+
+// ****************************************************************
+
+TAO_TSS_Resources::TAO_TSS_Resources (void)
+  :  poa_current_impl_ (0),
+     default_environment_ (&this->tss_environment_)
+#if defined (TAO_HAS_CORBA_MESSAGING)
+     , policy_current_ (&this->initial_policy_current_)
+#endif /* TAO_HAS_CORBA_MESSAGING */
+{
+}
+
+TAO_TSS_Resources::~TAO_TSS_Resources (void)
+{
 }
 
 // ****************************************************************
@@ -1547,7 +1630,8 @@ TAO_ORB_Core_instance (void)
 template class ACE_Env_Value<int>;
 template class ACE_Env_Value<u_int>;
 
-template class ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>;
+template class ACE_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>;
+template class ACE_TSS<TAO_TSS_Resources>;
 template class ACE_TSS<TAO_ORB_Core_TSS_Resources>;
 
 template class ACE_Read_Guard<ACE_SYNCH_MUTEX>;
@@ -1569,7 +1653,8 @@ template class ACE_Map_Reverse_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex
 #pragma instantiate ACE_Env_Value<int>
 #pragma instantiate ACE_Env_Value<u_int>
 
-#pragma instantiate ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_TSS<TAO_TSS_Resources>
 #pragma instantiate ACE_TSS<TAO_ORB_Core_TSS_Resources>
 
 #pragma instantiate ACE_Read_Guard<ACE_SYNCH_MUTEX>
