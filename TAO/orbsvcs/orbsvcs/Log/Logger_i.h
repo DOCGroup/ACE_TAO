@@ -13,7 +13,7 @@
 // = AUTHOR
 //    Marina Spivak <marina@cs.wustl.edu> and
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
-// 
+//    Matthew Braun <mjb2@cec.wustl.edu> 
 // ============================================================================
 
 #if !defined (TAO_ORBSVCS_LOGGER_I_H)
@@ -45,8 +45,8 @@ public:
   virtual ~Logger_i (void);
   // destructor
 
-  virtual void log (const char *message,
-                    CORBA::Environment &_env);
+  virtual void log (const Logger::Log_Record &log_rec,
+		    CORBA::Environment &_env);
 
 private:
   char *name_;
