@@ -1,3 +1,8 @@
+Thu Nov  9 19:09:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Connection_Handler.h:
+          Add missing TAO_Export macro, needed for Win32 builds.
+
 Thu Nov  9 20:56:30 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/UIOP_Connect.cpp:
