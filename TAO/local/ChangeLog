@@ -1,3 +1,13 @@
+Mon Nov 17 18:44:29 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tests/Latency.h: 
+	* tests/Latency.cpp: 
+	  Added small classes to implement the Supplier and Consumer
+	  personalities of Latency_Supplier; they delegate on it to do the
+	  job.
+	  The QoS for the Consumer personality of Latency_Supplier was
+	  wrong.
+
 Sun Nov 16 00:11:28 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* README: 
