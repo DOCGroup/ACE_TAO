@@ -62,4 +62,4 @@ POSTLINK = ; $(CC) -groot=$(MVME_DIR) -alttools=$(GHS_DIR) -68040 \
            $(MVME_DIR)/lib/crt/crti.o $@ \
            $(MVME_DIR)/lib/crt/crtn.o \
            -locatedprogram -r; \
-           mv -f $@.final $@
+           mv -f $@.final $@; chmod +x $@
