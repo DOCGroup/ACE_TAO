@@ -493,20 +493,23 @@ public:
 
   // = Pointer to the <Message_Block> directly ahead in the <ACE_Message_Queue>.
   /// Get link to next message.
-  /// Set link to next message.
   ACE_Message_Block *next (void) const;
+
+  /// Set link to next message.
   void next (ACE_Message_Block *);
 
   // = Pointer to the <Message_Block> directly behind in the <ACE_Message_Queue>.
   /// Get link to prev message.
-  /// Set link to prev message.
   ACE_Message_Block *prev (void) const;
+
+  /// Set link to prev message.
   void prev (ACE_Message_Block *);
 
   // = The locking strategy prevents race conditions.
   /// Get the locking strategy.
-  /// Set a new locking strategy and return the hold one.
   ACE_Lock *locking_strategy (void);
+
+  /// Set a new locking strategy and return the hold one.
   ACE_Lock *locking_strategy (ACE_Lock *);
 
   /// Get the current reference count.
