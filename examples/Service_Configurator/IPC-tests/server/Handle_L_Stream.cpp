@@ -6,10 +6,11 @@ ACE_RCSID(server, Handle_L_Stream, "$Id$")
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-/* Static variables. */
+// Static variables.
 
 const char *Handle_L_Stream::DEFAULT_RENDEZVOUS = "/tmp/foo_stream";
 char *Handle_L_Stream::login_name = 0;
+char Handle_L_Stream::login[ACE_MAX_USERID];
 
 #if !defined (__ACE_INLINE__)
 #include "Handle_L_Stream.i"

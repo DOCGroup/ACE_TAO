@@ -23,10 +23,6 @@ ACE_RCSID(server, Handle_Thr_Stream, "$Id$")
 #define PR_ST_1 ACE_PEER_STREAM_1
 #define PR_ST_2 ACE_PEER_STREAM_2
 
-#if defined (ACE_WIN32)
-#define L_cuserid  32
-#endif /* ACE_WIN32 */
-
 template <class SH, PR_AC_1>
 Handle_Thr_Acceptor<SH, PR_AC_2>::~Handle_Thr_Acceptor (void)
 {
@@ -141,7 +137,7 @@ template <PR_ST_1> int
 CLI_Stream<PR_ST_2>::svc (void)
 {
   char buf[BUFSIZ];
-  char login_name[L_cuserid];
+  char login_name[ACE_MAX_USERID];
   int bytes;
 
   ACE_OS::puts ("----------------------------------------");
@@ -153,7 +149,7 @@ CLI_Stream<PR_ST_2>::svc (void)
   ACE_OS::fflush (stdout);
 
   time_t t = ACE_OS::time (0L);
-  ACE_OS::cuserid (login_name, L_cuserid);
+  ACE_OS::cuserid (login_name);
   ACE_OS::sprintf (buf, "user %s %s",
 		   login_name,
 		   ACE_OS::ctime ((const time_t *) &t));

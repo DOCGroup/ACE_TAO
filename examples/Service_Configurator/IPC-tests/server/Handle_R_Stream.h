@@ -31,9 +31,10 @@ private:
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
 
-  ACE_SOCK_Stream    new_remote_stream;
+  ACE_SOCK_Stream new_remote_stream;
   static u_short DEFAULT_PORT;
-  static char    *login_name;
+  static char *login_name;
+  static char login[ACE_MAX_USERID];
 };
 
 extern ACE_Service_Object_Type rs;

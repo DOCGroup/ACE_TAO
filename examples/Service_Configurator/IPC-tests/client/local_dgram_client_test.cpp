@@ -70,7 +70,6 @@ main (int argc, char *argv[])
   ACE_OS::free ((void *) sock_client);
 
   ACE_LSOCK_CODgram sc;
-  ACE_HANDLE handle;
 
   if (sc.open (ACE_UNIX_Addr (rendezvous_codgram),
                ACE_Addr::sap_any) == -1)
@@ -79,7 +78,7 @@ main (int argc, char *argv[])
                        "open"),
                       -1);
 
-  handle = ACE_OS::open (file_name, O_RDONLY);
+  ACE_HANDLE handle = ACE_OS::open (file_name, O_RDONLY);
 
   if (handle == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -95,7 +94,8 @@ main (int argc, char *argv[])
                        "send"),
                       -1);
 
-  char *name = ACE_OS::cuserid (0);
+  char name[ACE_MAX_USERID];
+  ACE_OS::cuserid (name);
 
   if (sd.send (name,
                ACE_OS::strlen (name) + 1,

@@ -12,7 +12,7 @@ ACE_INLINE
 Handle_L_Stream::Handle_L_Stream (void)
 {
   if (Handle_L_Stream::login_name == 0)
-    Handle_L_Stream::login_name = ACE_OS::cuserid (0);
+    Handle_L_Stream::login_name = ACE_OS::cuserid (Handle_L_Stream::login);
 }
 
 ACE_INLINE int

@@ -8,7 +8,7 @@ ACE_INLINE
 Handle_R_Stream::Handle_R_Stream (void)
 {
   if (Handle_R_Stream::login_name == 0)
-    Handle_R_Stream::login_name = ACE_OS::cuserid (0);
+    Handle_R_Stream::login_name = ACE_OS::cuserid (Handle_R_Stream::login);
 }
 
 ACE_INLINE int
