@@ -18,7 +18,7 @@
 #define TAO_CONSTRAINT_NODES_H
 
 #include "Constraint_Tokens.h"
-#include "orbsvcs/CosTradingC.h"
+#include "tao/corba.h"
 
 #if defined(_MSC_VER)
 #pragma warning (disable:4250)
