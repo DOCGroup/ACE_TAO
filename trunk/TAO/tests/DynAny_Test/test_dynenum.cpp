@@ -16,8 +16,6 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
-#include "tao/DynEnum_i.h"
 #include "test_dynenum.h"
 #include "da_testsC.h"
 #include "data.h"
@@ -44,7 +42,7 @@ Test_DynEnum::test_name (void) const
 int
 Test_DynEnum::run_test (void)
 {
-  DynAnyTests::test_enum te;
+  DynAnyTests::test_enum te = DynAnyTests::ZEROTH;
 
   TAO_TRY
     {
@@ -52,9 +50,17 @@ Test_DynEnum::run_test (void)
                  "testing: constructor(Any)/value_as_ulong\n"));
 
       CORBA_Any in_any1;
-      in_any1 <<= DynAnyTests::SECOND;
-      TAO_DynEnum_i de1 (in_any1);
-      CORBA::ULong ul_out1 = de1.value_as_ulong (TAO_TRY_ENV);
+      in_any1 <<= te;
+      CORBA_DynAny_ptr dp1 = this->orb_->create_dyn_any (in_any1,
+                                                         TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      CORBA_DynEnum_ptr de1 = CORBA_DynEnum::_narrow (dp1,
+                                                      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      de1->value_as_ulong (2,
+                           TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      CORBA::ULong ul_out1 = de1->value_as_ulong (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       if (ul_out1 == 2)
         ACE_DEBUG ((LM_DEBUG,
@@ -65,9 +71,12 @@ Test_DynEnum::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: value_as_string\n"));
 
-      CORBA::String s = de1.value_as_string (TAO_TRY_ENV);
+      de1->value_as_string ("FIRST",
+                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      if (!ACE_OS::strcmp (s, "SECOND"))
+      CORBA::String_var s = de1->value_as_string (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      if (!ACE_OS::strcmp (s.in (), "FIRST"))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 
@@ -77,15 +86,19 @@ Test_DynEnum::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
-      TAO_DynEnum_i de2 (DynAnyTests::_tc_test_enum);
-      de2.from_any (in_any1,
+      CORBA_DynEnum_ptr de2 = 
+        this->orb_->create_dyn_enum (DynAnyTests::_tc_test_enum,
+                                     TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      CORBA_Any in_any2;
+      in_any2 <<= DynAnyTests::THIRD;
+      de2->from_any (in_any2,
                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      CORBA_Any* out_any1 = de2.to_any (TAO_TRY_ENV);
+      CORBA_Any* out_any1 = de2->to_any (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      ul_out1 = 0;
       *out_any1 >>= te;
-      if (te == DynAnyTests::SECOND)
+      if (te == DynAnyTests::THIRD)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 
@@ -94,6 +107,13 @@ Test_DynEnum::run_test (void)
       // Created with NEW
       delete out_any1;
 
+      de1->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      CORBA::release (de1);
+      de2->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      CORBA::release (de2);
+      CORBA::release (dp1);
     }
   TAO_CATCHANY
     {

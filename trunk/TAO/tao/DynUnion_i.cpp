@@ -191,7 +191,7 @@ TAO_DynUnion_i::destroy (CORBA::Environment &env)
   this->discriminator_->destroy (env);
 
   // Free the top level
-  CORBA::release (this->_this (env));
+  delete this;
 }
 
 void
@@ -224,8 +224,7 @@ TAO_DynUnion_i::to_any (CORBA::Environment& _env)
 
   CORBA_Any_ptr disc_any = this->discriminator_->to_any (_env);
 
-  ACE_Message_Block* disc_mb =
-    ACE_Message_Block::duplicate (disc_any->_tao_get_cdr ());
+  ACE_Message_Block* disc_mb = disc_any->_tao_get_cdr ();
 
   TAO_InputCDR disc_cdr (disc_mb);
 
@@ -241,8 +240,7 @@ TAO_DynUnion_i::to_any (CORBA::Environment& _env)
 
   CORBA_Any_ptr member_any = this->member_->to_any (_env);
 
-  ACE_Message_Block* member_mb =
-    ACE_Message_Block::duplicate (member_any->_tao_get_cdr ());
+  ACE_Message_Block* member_mb = member_any->_tao_get_cdr ();
 
   TAO_InputCDR member_cdr (member_mb);
 
@@ -284,6 +282,9 @@ TAO_DynUnion_i::next (CORBA::Environment &env)
 
   ++this->index_;
 
+  if (!CORBA::is_nil (this->member_))
+    this->member_->destroy (env);
+
   this->member_ =
     TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->index_,
                                                             env),
@@ -300,6 +301,9 @@ TAO_DynUnion_i::seek (CORBA::Long index,
 
   this->index_ = index;
 
+  if (!CORBA::is_nil (this->member_))
+    this->member_->destroy (env);
+
   this->member_ =
     TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->index_,
                                                             env),
@@ -314,6 +318,9 @@ TAO_DynUnion_i::rewind (CORBA::Environment &env)
     return;
 
   this->index_ = 0;
+
+  if (!CORBA::is_nil (this->member_))
+    this->member_->destroy (env);
 
   this->member_ =
     TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->index_,
@@ -1234,15 +1241,14 @@ TAO_DynUnion_i::Enum_extractor::check_match (const CORBA_Any& inside_any,
                                              const CORBA_Any& outside_any)
 {
   // Get the CDR stream of one argument...
-  ACE_Message_Block* mb =
-    ACE_Message_Block::duplicate (inside_any._tao_get_cdr ());
+  ACE_Message_Block* mb = inside_any._tao_get_cdr ();
 
   TAO_InputCDR inside_cdr (mb);
 
   inside_cdr.read_ulong (this->member_index_);
 
   // And of the other...
-  mb = ACE_Message_Block::duplicate (outside_any._tao_get_cdr ());
+  mb = outside_any._tao_get_cdr ();
 
   TAO_InputCDR outside_cdr (mb);
 
@@ -1338,8 +1344,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
                               CORBA::Environment &env)
 {
   // Get the CDR stream of the argument.
-  ACE_Message_Block* mb =
-    ACE_Message_Block::duplicate (any._tao_get_cdr ());
+  ACE_Message_Block* mb = any._tao_get_cdr ();
 
   TAO_InputCDR cdr (mb);
 
@@ -1347,6 +1352,9 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
 
   CORBA_Any disc_any (disc_tc,
                       cdr.start ());
+
+  if (!CORBA::is_nil (this->discriminator_))
+    this->discriminator_->destroy (env);
 
   // Set the discriminator holder.
   this->discriminator_ = TAO_DynAny_i::create_dyn_any (disc_any,
@@ -1400,6 +1408,9 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
       CORBA_Any member_any (any.type ()->member_type (this->index_,
                                                       env),
                             cdr.start ());
+
+      if (!CORBA::is_nil (this->member_))
+        this->member_->destroy (env);
 
       this->member_ = TAO_DynAny_i::create_dyn_any (member_any,
                                                     env);

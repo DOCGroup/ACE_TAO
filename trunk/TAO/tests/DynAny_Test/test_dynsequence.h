@@ -19,6 +19,8 @@
 #if !defined (TEST_DYNSEQUENCE_H)
 #define TEST_DYNSEQUENCE_H
 
+#include "tao/corba.h"
+
 class Test_DynSequence
 {
 public:

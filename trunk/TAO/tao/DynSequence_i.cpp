@@ -34,8 +34,7 @@ TAO_DynSequence_i::TAO_DynSequence_i (const CORBA_Any& any)
        == CORBA::tk_sequence)
     {
       // Get the CDR stream of the argument.
-      ACE_Message_Block* mb =
-        ACE_Message_Block::duplicate (any._tao_get_cdr ());
+      ACE_Message_Block* mb = any._tao_get_cdr ();
 
       TAO_InputCDR cdr (mb);
 
@@ -45,7 +44,7 @@ TAO_DynSequence_i::TAO_DynSequence_i (const CORBA_Any& any)
       cdr.read_ulong (length);
 
       // Resize the array.
-      this->da_members_ = ACE_Array<CORBA_DynAny_var> (length);
+      this->da_members_.size (length);
 
       // Get the type of the sequence elments.
       CORBA::TypeCode_ptr field_tc = this->get_element_type (env);
@@ -106,23 +105,7 @@ void
 TAO_DynSequence_i::length (CORBA::ULong length,
                            CORBA::Environment& env)
 {
-  // We might get off easy.
-  if (length == this->da_members_.size ())
-    return;
-
-  ACE_Array<CORBA_DynAny_var> new_array (length);
-
-  // Choose the shorter one for the loop bound.
-  CORBA::ULong len =
-    length > this->da_members_.size () ? this->da_members_.size () : length;
-
-  // Copy over.
-  for (CORBA::ULong i = 0; i < len; i++)
-    new_array[i] = this->da_members_[i];
-
-  // Copy back. If length decreases, the extra original members are
-  // still there, but da_members_.size returns the new smaller value.
-  this->da_members_ = new_array;
+  this->da_members_.size (length);
 }
 
 AnySeq_ptr
@@ -150,7 +133,6 @@ TAO_DynSequence_i::get_elements (CORBA::Environment& _env)
       delete temp;
     }
 
-
   return elements;
 }
 
@@ -163,7 +145,7 @@ TAO_DynSequence_i::set_elements (const AnySeq& value,
 
   if (size == 0)
     // Resize the array, it hasn't yet been initialized.
-    this->da_members_ = ACE_Array<CORBA_DynAny_var> (length);
+    this->da_members_.size (length);
   else if (size != length)
     {
       env.exception (new CORBA_DynAny::InvalidSeq);
@@ -177,11 +159,14 @@ TAO_DynSequence_i::set_elements (const AnySeq& value,
       // Check each arg element for type match.
       if (value[i].type ()->equal (element_type,
                                    env))
+        {
+          if (!CORBA::is_nil (this->da_members_[i].in ()))
+            this->da_members_[i]->destroy (env);
 
-        this->da_members_[i] =
-          TAO_DynAny_i::create_dyn_any (value[i],
-                                        env);
-
+          this->da_members_[i] =
+            TAO_DynAny_i::create_dyn_any (value[i],
+                                          env);
+        }
       else
         {
           env.exception (new CORBA_DynAny::InvalidSeq);
@@ -219,10 +204,11 @@ TAO_DynSequence_i::destroy (CORBA::Environment &env)
 {
   // Do a deep destroy
   for (CORBA::ULong i = 0; i < this->da_members_.size (); i++)
-    this->da_members_[i]->destroy (env);
+    if (!CORBA::is_nil (this->da_members_[i].in ()))
+      this->da_members_[i]->destroy (env);
 
   // Free the top level
-  CORBA::release (this->_this (env));
+  delete this;
 }
 
 void
@@ -233,8 +219,7 @@ TAO_DynSequence_i::from_any (const CORBA_Any& any,
                                 env))
     {
       // Get the CDR stream of the argument.
-      ACE_Message_Block* mb =
-        ACE_Message_Block::duplicate (any._tao_get_cdr ());
+      ACE_Message_Block* mb = any._tao_get_cdr ();
       TAO_InputCDR cdr (mb);
 
       CORBA::ULong arg_length;
@@ -246,7 +231,7 @@ TAO_DynSequence_i::from_any (const CORBA_Any& any,
 
       if (length == 0)
         // Resize the array, it hasn't yet been initialized.
-        this->da_members_ = ACE_Array<CORBA_DynAny_var> (arg_length);
+        this->da_members_.size (arg_length);
       else if (length != arg_length)
         {
           env.exception (new CORBA_DynAny::Invalid);
@@ -261,9 +246,9 @@ TAO_DynSequence_i::from_any (const CORBA_Any& any,
           CORBA_Any field_any (field_tc,
                                cdr.start ());
 
-          // Actually a recursive step. Can't call from_any()
-          // recursively because maybe only the top level is created,
-          // but create_dyn_any will do the right thing.
+          if (!CORBA::is_nil (this->da_members_[i].in ()))
+            this->da_members_[i]->destroy (env);
+
           this->da_members_[i] =
             TAO_DynAny_i::create_dyn_any (field_any,
                                           env);
@@ -297,8 +282,7 @@ TAO_DynSequence_i::to_any (CORBA::Environment& _env)
       // Recursive step
       CORBA_Any_ptr field_any = this->da_members_[i]->to_any (_env);
 
-      ACE_Message_Block* field_mb =
-        ACE_Message_Block::duplicate (field_any->_tao_get_cdr ());
+      ACE_Message_Block* field_mb = field_any->_tao_get_cdr ();
 
       TAO_InputCDR field_cdr (field_mb);
 

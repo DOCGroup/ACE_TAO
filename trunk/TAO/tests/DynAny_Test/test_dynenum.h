@@ -19,6 +19,8 @@
 #if !defined (TEST_DYNENUM_H)
 #define TEST_DYNENUM_H
 
+#include "tao/corba.h"
+
 class Test_DynEnum
 {
 public:

@@ -20,7 +20,8 @@
 // Constructors and destructor
 
 TAO_DynEnum_i::TAO_DynEnum_i (const CORBA_Any& any)
-  : type_ (any.type ())
+  : type_ (any.type ()),
+    value_ (0)
 {
   CORBA::Environment env;
 
@@ -30,8 +31,7 @@ TAO_DynEnum_i::TAO_DynEnum_i (const CORBA_Any& any)
   if (TAO_DynAny_i::unalias (this->type_.in (), env) == CORBA::tk_enum)
     {
       // Get the CDR stream of the argument.
-      ACE_Message_Block* mb =
-        ACE_Message_Block::duplicate (any._tao_get_cdr ());
+      ACE_Message_Block* mb = any._tao_get_cdr ();
 
       TAO_InputCDR cdr (mb);
 
@@ -133,7 +133,7 @@ void
 TAO_DynEnum_i::destroy (CORBA::Environment &env)
 {
   // Freeing the top level is all we have to do.
-  CORBA::release (this->_this (env));
+  delete this;
 }
 
 void
@@ -143,8 +143,7 @@ TAO_DynEnum_i::from_any (const CORBA_Any& any,
   if (TAO_DynAny_i::unalias (any.type (), env) == CORBA::tk_enum)
     {
       // Get the CDR stream of the argument.
-      ACE_Message_Block* mb =
-        ACE_Message_Block::duplicate (any._tao_get_cdr ());
+      ACE_Message_Block* mb = any._tao_get_cdr ();
 
       TAO_InputCDR cdr (mb);
 

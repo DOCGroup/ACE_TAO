@@ -48,7 +48,7 @@ TAO_DynAny_i::TAO_DynAny_i (CORBA_TypeCode_ptr tc)
       case CORBA::tk_string:
         break;
       default:
-         env.exception (new CORBA_ORB_InconsistentTypeCode);
+        env.exception (new CORBA_ORB_InconsistentTypeCode);
         break;
     }
 }
@@ -121,7 +121,7 @@ TAO_DynAny_i::copy (CORBA::Environment &env)
 void
 TAO_DynAny_i::destroy (CORBA::Environment &env)
 {
-  CORBA::release (this->_this (env));
+  delete this;
 }
 
 void
@@ -277,7 +277,8 @@ TAO_DynAny_i::insert_string (const char * value,
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_string)
     this->value_ <<= CORBA::Any::from_string (CORBA::string_dup (value), 
-                                              0);
+                                              0,
+                                              1);
   else
     env.exception (new CORBA_DynAny::InvalidValue);
 }

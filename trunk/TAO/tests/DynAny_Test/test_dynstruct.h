@@ -19,6 +19,8 @@
 #if !defined (TEST_DYNSTRUCT_H)
 #define TEST_DYNSTRUCT_H
 
+#include "tao/corba.h"
+
 class Test_DynStruct
 {
 public:
