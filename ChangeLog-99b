@@ -4,6 +4,8 @@ Sat Mar 20 09:06:10 1999  David L. Levine  <levine@cs.wustl.edu>
           and generation () to slot_generation (), to correspond to
           Active_Map_Manager interface change.
 
+        * examples/ASX/Message_Queue/Makefile: changed LSRC to PSRC.
+
 Sat Mar 20 02:03:53 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * acinclude.m4:
