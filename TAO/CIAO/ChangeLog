@@ -1,3 +1,10 @@
+Thu Jan 15 20:17:17 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Documentation/Build.html:
+
+	  Fixed some typos. Thanks to Craig Rodrigues for reporting
+	  them.
+
 Thu Jan 15 17:53:38 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Documentation/Build.html:
