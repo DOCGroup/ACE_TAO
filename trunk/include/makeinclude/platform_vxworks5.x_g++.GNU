@@ -103,6 +103,16 @@ ifeq ($(CPU),SIMNT)
     $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = simpc
 else
+ifeq ($(CPU),PENTIUMPRO)
+  BINXSYM_NAME = xsymDec
+  CFLAGS += -DCPU=PENTIUMPRO
+  TOOLENV = 386
+else
+ifeq ($(CPU),PENTIUM)
+  BINXSYM_NAME = xsymDec
+  CFLAGS += -DCPU=PENTIUM
+  TOOLENV = 386
+else
 ifeq ($(CPU),I80486)
   #### Note: -fno-implicit-templates doesn't seem to work well with g++
   #### cygnus-2.7.2-960126 for pc486 target.  Some member functions don't
@@ -137,10 +147,13 @@ endif # SPARC
 endif # SIMSPARCSOLARIS
 endif # I80386
 endif # I80486
+endif # PENTIUM
+endif # PENTIUMPRO
 endif # SIMNT
 endif # PPC860
 endif # PPC603
 endif # PPC604
+
 
 #### END target CPU-specific settings
 
