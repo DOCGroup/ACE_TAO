@@ -18,7 +18,7 @@ Ping_i::ping (Ping_ptr callback,
 }
 
 void
-Ping_i::pong (CORBA::Environment &ACE_TRY_ENV)
+Ping_i::pong (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Ping_i::pong (%P|%t)\n"));
@@ -32,7 +32,7 @@ Ping_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
 }
 
 PortableServer::POA_ptr
-Ping_i::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+Ping_i::_default_POA (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());

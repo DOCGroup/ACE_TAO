@@ -40,7 +40,7 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback,
       callback->shutdown (is_clean, ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
-  ACE_Time_Value tv (0, 50000);
+  ACE_Time_Value tv (0, 20000);
   ACE_OS::sleep (tv);
   return 0;
 }

@@ -52,7 +52,7 @@ parse_args (int argc, char *argv[])
 }
 
 void
-run_client (ORB_ptr orb,
+run_client (CORBA::ORB_ptr orb,
             Ping_ptr server,
             Ping_ptr callback,
             CORBA::Environment &ACE_TRY_ENV)
