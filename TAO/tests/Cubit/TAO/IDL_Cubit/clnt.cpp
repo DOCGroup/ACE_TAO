@@ -771,6 +771,8 @@ main (int argc, char **argv)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Env_Value<unsigned long>;
+template class ACE_Env_Value<unsigned short>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Env_Value<unsigned long>
+#pragma instantiate ACE_Env_Value<unsigned short>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
