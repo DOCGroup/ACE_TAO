@@ -350,6 +350,7 @@ SOURCE=.\IOR_Multicast.cpp
 # Begin Source File
 
 SOURCE=.\RtecBaseC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

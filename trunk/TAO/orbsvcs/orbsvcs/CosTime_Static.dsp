@@ -261,6 +261,7 @@ SOURCE=.\Time\Timer_Helper.cpp
 # Begin Source File
 
 SOURCE=.\TimeServiceC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
