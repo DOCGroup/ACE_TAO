@@ -11,7 +11,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 
-Notify_Service::Notify_Service (void)
+TAO_Notify_Service::TAO_Notify_Service (void)
   : bootstrap_ (0),
     use_name_svc_ (1),
     ior_output_file_ (0),
@@ -23,15 +23,15 @@ Notify_Service::Notify_Service (void)
   // No-Op.
 }
 
-Notify_Service::~Notify_Service (void)
+TAO_Notify_Service::~TAO_Notify_Service (void)
 {
   if (ior_output_file_)
     fclose(ior_output_file_);
 }
 
 int
-Notify_Service::init_ORB  (int& argc, char *argv []
-                             TAO_ENV_ARG_DECL)
+TAO_Notify_Service::init_ORB (int& argc, char *argv []
+                              TAO_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
@@ -65,8 +65,8 @@ Notify_Service::init_ORB  (int& argc, char *argv []
 }
 
 int
-Notify_Service::init (int argc, char *argv[]
-                      TAO_ENV_ARG_DECL)
+TAO_Notify_Service::init (int argc, char *argv[]
+                          TAO_ENV_ARG_DECL)
 {
   // initalize the ORB.
   if (this->init_ORB (argc, argv
@@ -211,7 +211,7 @@ Notify_Service::init (int argc, char *argv[]
 }
 
 int
-Notify_Service::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Service::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService"
@@ -233,7 +233,7 @@ Notify_Service::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Notify_Service::run (void)
+TAO_Notify_Service::run (void)
 {
   if (TAO_debug_level > 0 )
     ACE_DEBUG ((LM_DEBUG, "%s: Running the Notification Service\n",
@@ -261,7 +261,7 @@ Notify_Service::run (void)
 }
 
 void
-Notify_Service::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Service::shutdown (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Deactivate.
   PortableServer::ObjectId_var oid =
@@ -293,7 +293,7 @@ Notify_Service::shutdown (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Notify_Service::parse_args (int argc, char *argv[])
+TAO_Notify_Service::parse_args (int argc, char *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -406,46 +406,3 @@ Worker::svc (void)
   return 0;
 }
 
-// ****************************************************************
-
-int
-main (int argc, char *argv[])
-{
-  // Init Factories
-  TAO_Notify_Default_CO_Factory::init_svc ();
-  TAO_Notify_Default_POA_Factory::init_svc ();
-  TAO_Notify_Default_Collection_Factory::init_svc ();
-  TAO_Notify_Default_EMO_Factory::init_svc ();
-
-  Notify_Service service;
-
-  ACE_TRY_NEW_ENV
-    {
-      if (service.init (argc,
-                        argv
-                        TAO_ENV_ARG_PARAMETER) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Failed to start the Notification Service.\n"),
-                          1);
-      ACE_TRY_CHECK;
-
-      if (service.run () == -1)
-        {
-          service.shutdown ();
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Failed to run the Notification Service.\n"),
-                            1);
-        }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Failed to start the Notification Service\n");
-      return 1;
-    }
-  ACE_ENDTRY;
-
-  service.shutdown ();
-
-  return 0;
-}

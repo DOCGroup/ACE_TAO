@@ -1,4 +1,4 @@
-// *- C++ -*-
+/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -7,16 +7,17 @@
 //    ace
 //
 // = FILENAME
-//    NT_Naming_Server.cpp
+//    NT_Notify_Server.cpp
 //
 //
 // = DESCRIPTION
-//    Driver program that runs the TAO Naming Service as a Windows NT
+//    Driver program that runs the TAO Notification Service as a Windows NT
 //    Service.
 //
 // = AUTHORS
-//    John Tucker <jtucker@infoglide.com> and
-//    Mike Vitalo <mvitalo@infoglide.com>
+//    John Tucker <jtucker@infoglide.com>,
+//    Mike Vitalo <mvitalo@infoglide.com>, and
+//    David Robison <drrobison@openroadsconsulting.com> 
 //
 // ============================================================================
 
@@ -38,9 +39,12 @@ main (int, char*[])
 #else
 
 #include "ace/Get_Opt.h"
+#include "ace/Arg_Shifter.h"
+#include "ace/ARGV.h"
+#include "ace/Configuration.h"
 
 #include "winreg.h"
-#include "NT_Naming_Service.h"
+#include "NT_Notify_Service.h"
 
 // Default for the -i (install) option
 #define DEFAULT_SERVICE_INIT_STARTUP SERVICE_DEMAND_START
@@ -56,8 +60,7 @@ public:
   int run (int argc, char *argv[]);
 
 private:
-  void parse_args (int argc,
-                   char *argv[]);
+  void parse_args (int argc, char *argv[]);
   void print_usage_and_die (void);
 
 private:
@@ -122,7 +125,7 @@ Options::parse_args (int argc, char *argv[])
       {
       case 'i':
         opt_install = 1;
-        opt_startup = ACE_OS::atoi (get_opt.opt_arg ());
+        opt_startup = ACE_OS::atoi (get_opt.optarg);
         if (opt_startup <= 0)
           print_usage_and_die ();
         break;
@@ -137,7 +140,7 @@ Options::parse_args (int argc, char *argv[])
         break;
       case 't':
         opt_type = 1;
-        opt_startup = ACE_OS::atoi (get_opt.opt_arg ());
+        opt_startup = ACE_OS::atoi (get_opt.optarg);
         if (opt_startup <= 0)
           print_usage_and_die ();
         break;
@@ -147,7 +150,7 @@ Options::parse_args (int argc, char *argv[])
       default:
         // -i can also be given without a value - if so, it defaults
         // to defined value.
-        if (ACE_OS::strcmp (get_opt.argv ()[get_opt.opt_ind () - 1], "-i") == 0)
+        if (ACE_OS::strcmp (get_opt.argv_[get_opt.optind-1], "-i") == 0)
           {
             opt_install = 1;
             opt_startup = DEFAULT_SERVICE_INIT_STARTUP;
@@ -168,14 +171,14 @@ ConsoleHandler (DWORD /* ctrlType */)
 }
 
 ACE_NT_SERVICE_DEFINE (service,
-                       TAO_NT_Naming_Service,
-                       "TAO NT Naming Service");
+                       TAO_NT_Notify_Service,
+                       "TAO NT Notify Service");
 
 int
 Options::run (int argc, char* argv[])
 {
-  SERVICE::instance ()->name ("TAO_NT_Naming_Service",
-                              "TAO NT Naming Service");
+  SERVICE::instance ()->name ("TAO_NT_Notify_Service",
+                              "TAO NT Notify Service");
 
   this->parse_args (argc, argv);
 
