@@ -33,6 +33,7 @@
 #include "ace/Remote_Tokens.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Token_Invariants.h"
+#include "ace/Barrier.h"
 
 ACE_RCSID(tests, Tokens_Test, "$Id$")
 
