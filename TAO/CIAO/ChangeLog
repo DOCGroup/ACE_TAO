@@ -1,3 +1,10 @@
+Tue Apr 20 15:50:07 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* examples\Hello\Sender\Sender_exec.h (Sender_Impl): 
+
+          <message_> was getting initialized properly causing a crash
+	  later in the execution.
+
 Mon Apr 19 18:04:11 2004  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DnC/Config_Handlers/ACD_Handler.cpp
