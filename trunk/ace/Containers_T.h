@@ -531,6 +531,12 @@ public:
   // Move forward by one element in the list.  Returns 0 when all the
   // items in the list have been seen, else 1.
 
+  T* advance_and_remove (int dont_remove);
+  // Advance the iterator while removing the original item from the list.
+  // Return a pointer points to the original (removed) item.  If
+  // <dont_remove> equals 0, this function behaves like advance() but
+  // return 0 (NULL) instead.
+
   int first (void);
   // Move to the first element in the list.  Returns 0 if the
   // list is empty, else 1.
