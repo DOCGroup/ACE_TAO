@@ -44,6 +44,7 @@ ACE_AIX_CLEAN := $(shell $(RM) ./testAIXCompilerVersion.cpp)
 # grab it here and pass it all to the compiler as well.
 AIX_MAJOR_VERS := $(shell uname -v)
 AIX_MINOR_VERS := $(shell uname -r)
+AIX_VERS := $(AIX_MAJOR_VERS)0$(AIX_MINOR_VERS)
 
 # Use of exceptions should be a compiler-specific setting, but for now it's
 # not. IBM C/C++ doesn't have a way to turn exceptions off, and Visual
@@ -81,7 +82,7 @@ LD          = $(ACE_ROOT)/bin/aix_shr $(CXX)
 RANLIB	    = ranlib
 TEMPINCDIR  = tempinc
 
-CPPFLAGS    += -DACE_AIX_MAJOR_VERS=$(AIX_MAJOR_VERS) -DACE_AIX_MINOR_VERS=$(AIX_MINOR_VERS)
+CPPFLAGS    += -DACE_AIX_VERS=$(AIX_VERS)
 # -qinitauto seems like an interesting option, but some tests (specifically
 # Process_Strategy_Test) hang with it turned on. This should be investigated
 # at some point.

@@ -87,15 +87,15 @@
 
 // Use BSD 4.4 socket definitions for pre-AIX 4.2.  The _BSD setting also
 // controls the data type used for waitpid(), wait(), and wait3().
-#if (ACE_AIX_MINOR_VERS < 2)
+#if (ACE_AIX_VERS < 402)
 #  define _BSD 44
 #  define ACE_HAS_UNION_WAIT
-#endif /* ACE_AIX_MINOR_VERS < 3 */
+#endif /* ACE_AIX_VERS < 402 */
 
 // This environment requires this thing, pre-AIX 4.3
-#if (ACE_AIX_MINOR_VERS < 3)
+#if (ACE_AIX_VERS < 403)
 #  define _BSD_INCLUDES
-#endif /* ACE_AIX_MINOR_VERS < 3 */
+#endif /* ACE_AIX_VERS < 403 */
 
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 
@@ -104,25 +104,25 @@
 // ACE_HAS_AIX_BROKEN_SOCKET_HEADER may be required if your OS patches are
 // not up to date.  On up-to-date 4.2+ systems, it should not be required.
 // 4.2+ has 4.4 BSD sendmsg/recvmsg
-#if (ACE_AIX_MINOR_VERS < 2)
+#if (ACE_AIX_VERS < 402)
 #  define ACE_HAS_AIX_BROKEN_SOCKET_HEADER
 #else
-#  if (ACE_AIX_MINOR_VERS == 2)
+#  if (ACE_AIX_VERS == 402)
 #    define ACE_HAS_SIZET_SOCKET_LEN
 #  else
 #    define ACE_HAS_SOCKLEN_T   
 #  endif
 #  define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
-#endif /* ACE_AIX_MINOR_VERS < 2 */
+#endif /* ACE_AIX_VERS < 402 */
 
 #define ACE_HAS_AIX_HI_RES_TIMER
 #define ACE_HAS_ALLOCA
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
-#if (ACE_AIX_MINOR_VERS < 3)
+#if (ACE_AIX_VERS < 403)
 #  define ACE_HAS_CHARPTR_DL
-#endif /* ACE_AIX_MINOR_VERS < 3 */
+#endif /* ACE_AIX_VERS < 403 */
 
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
@@ -141,7 +141,7 @@
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_IP_MULTICAST
 #define ACE_HAS_MSG
-#if (ACE_AIX_MINOR_VERS < 2)
+#if (ACE_AIX_VERS < 402)
 #  define ACE_LACKS_MSG_ACCRIGHTS
 #  define ACE_LACKS_RLIMIT
 #endif
@@ -154,9 +154,9 @@
 
 #define ACE_HAS_POSIX_TIME
 // ... but needs to include another header for it on 4.2+
-#if (ACE_AIX_MINOR_VERS >= 2)
+#if (ACE_AIX_VERS >= 402)
 #  define ACE_HAS_BROKEN_POSIX_TIME
-#endif /* ACE_AIX_MINOR_VERS > 2 */
+#endif /* ACE_AIX_VERS > 402 */
 // ... and needs another typedef
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_HAS_SELECT_H
@@ -165,21 +165,21 @@
 
 // Compiler/platform defines the sig_atomic_t typedef
 #define ACE_HAS_SIG_ATOMIC_T
-#if (ACE_AIX_MINOR_VERS >= 2)
+#if (ACE_AIX_VERS >= 402)
 #  define ACE_HAS_SIGINFO_T
 #  define ACE_LACKS_SIGINFO_H
-#endif /* ACE_AIX_MINOR_VERS >=2 */
-#if (ACE_AIX_MINOR_VERS >= 3)
+#endif /* ACE_AIX_VERS >= 402 */
+#if (ACE_AIX_VERS >= 403)
 #  define ACE_HAS_SIGTIMEDWAIT
 // it may exist in earlier revs, but I'm not sure and I don't have a
 // system to validate
 #  define ACE_HAS_P_READ_WRITE
-#endif /* ACE_AIX_MINOR_VERS >= 3 */
+#endif /* ACE_AIX_VERS >= 403 */
 
 #define ACE_HAS_SIGWAIT
-#if (ACE_AIX_MINOR_VERS >= 3)
+#if (ACE_AIX_VERS >= 403)
 #  define ACE_HAS_SIGTIMEDWAIT
-#endif /* ACE_AIX_MINOR_VERS >= 3 */
+#endif /* ACE_AIX_VERS >= 403 */
 #define ACE_HAS_SIN_LEN
 #define ACE_HAS_STRBUF_T
 
@@ -214,9 +214,9 @@
 
 #define ACE_HAS_UALARM
 
-#if (ACE_AIX_MINOR_VERS >= 2)
+#if (ACE_AIX_VERS >= 402)
 #  define ACE_HAS_UCONTEXT_T
-#endif /* ACE_AIX_MINOR_VERS >= 2 */
+#endif /* ACE_AIX_VERS >= 402 */
 
 #define ACE_HAS_UTIME
 
@@ -256,7 +256,7 @@
 
 #  define ACE_HAS_PTHREADS
 // 4.3 and up has 1003.1c standard; 4.2 has draft 7
-#  if (ACE_AIX_MINOR_VERS >= 3)
+#  if (ACE_AIX_VERS >= 403)
 #    define ACE_HAS_PTHREADS_STD
 #    define ACE_HAS_PTHREADS_UNIX98_EXT
 #  else
@@ -268,7 +268,7 @@
 // #define ACE_LACKS_CONDATTR_PSHARED
 // #define ACE_LACKS_MUTEXATTR_PSHARED
 #    define ACE_LACKS_SETSCHED
-#  endif /* ACE_AIX_MINOR_VERS >= 3 */
+#  endif /* ACE_AIX_VERS >= 403 */
 
 #  define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #  define ACE_HAS_SIGTHREADMASK
