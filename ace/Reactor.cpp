@@ -144,6 +144,9 @@ ACE_Reactor::run_reactor_event_loop (REACTOR_EVENT_HOOK eh)
 {
   ACE_TRACE ("ACE_Reactor::run_reactor_event_loop");
 
+  if (this->reactor_event_loop_done ())
+    return 0;
+
   while (1)
     {
       int result = this->implementation_->handle_events ();
@@ -163,6 +166,9 @@ int
 ACE_Reactor::run_alertable_reactor_event_loop (REACTOR_EVENT_HOOK eh)
 {
   ACE_TRACE ("ACE_Reactor::run_alertable_reactor_event_loop");
+
+  if (this->reactor_event_loop_done ())
+    return 0;
 
   while (1)
     {
@@ -185,11 +191,14 @@ ACE_Reactor::run_reactor_event_loop (ACE_Time_Value &tv,
 {
   ACE_TRACE ("ACE_Reactor::run_reactor_event_loop");
 
+  if (this->reactor_event_loop_done ())
+    return 0;
+
   while (1)
     {
       int result = this->implementation_->handle_events (tv);
 
-      if (eh != 0 && (*eh)(0))
+      if (eh != 0 && (*eh) (0))
         continue;
       else if (result == -1)
         {
@@ -199,15 +208,15 @@ ACE_Reactor::run_reactor_event_loop (ACE_Time_Value &tv,
         }
       else if (result == 0)
         {
-          // handle_events timed out without dispatching anything.
-          // Because of rounding and conversion errors and such, it could
-          // be that the wait loop (WFMO, select, etc.) timed out, but
-          // the timer queue said it wasn't quite ready to expire a
-          // timer. In this case, the ACE_Time_Value we passed into
-          // handle_events won't have quite been reduced to 0, and we
-          // need to go around again. If we are all the way to 0, just
-          // return, as the entire time the caller wanted to wait has been
-          // used up.
+          // The <handle_events> method timed out without dispatching
+          // anything.  Because of rounding and conversion errors and
+          // such, it could be that the wait loop (WFMO, select, etc.)
+          // timed out, but the timer queue said it wasn't quite ready
+          // to expire a timer. In this case, the ACE_Time_Value we
+          // passed into handle_events won't have quite been reduced
+          // to 0, and we need to go around again. If we are all the
+          // way to 0, just return, as the entire time the caller
+          // wanted to wait has been used up.
           if (tv.usec () > 0)
             continue;
           return 0;
@@ -223,6 +232,9 @@ ACE_Reactor::run_alertable_reactor_event_loop (ACE_Time_Value &tv,
                                                REACTOR_EVENT_HOOK eh)
 {
   ACE_TRACE ("ACE_Reactor::run_alertable_reactor_event_loop");
+
+  if (this->reactor_event_loop_done ())
+    return 0;
 
   for (;;)
     {
@@ -247,13 +259,6 @@ ACE_Reactor::end_reactor_event_loop (void)
   this->implementation_->deactivate (1);
 
   return 0;
-}
-
-int
-ACE_Reactor::reactor_event_loop_done (void)
-{
-  ACE_TRACE ("ACE_Reactor::reactor_event_loop_done");
-  return this->implementation_->deactivated ();
 }
 
 void

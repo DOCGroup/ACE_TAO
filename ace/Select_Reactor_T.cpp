@@ -1054,9 +1054,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_notification_handlers
   // enabled.  We'll handle all these threads and notifications, and
   // then break out to continue the event loop.
 
-  number_of_handlers_dispatched +=
-    this->notify_handler_->dispatch_notifications (number_of_active_handles,
-                                                   dispatch_set.rd_mask_);
+  int n = this->notify_handler_->dispatch_notifications (number_of_active_handles,
+                                                         dispatch_set.rd_mask_);
+  if (n == -1)
+    return -1;
+  else
+    number_of_handlers_dispatched += n;
+    
   return this->state_changed_ ? -1 : 0;
 }
 
@@ -1219,7 +1223,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
                (dispatch_set,
                 active_handle_count,
                 other_handlers_dispatched) == -1)
-        break; // State has changed, exit loop.
+        // State has changed or a serious failure has occured, so exit
+        // loop.
+        break; 
 
       // Finally, dispatch the I/O handlers.
       else if (this->dispatch_io_handlers
@@ -1231,7 +1237,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
     }
   while (active_handle_count > 0);
 
-  return io_handlers_dispatched + other_handlers_dispatched+signal_occurred;
+  return io_handlers_dispatched + other_handlers_dispatched + signal_occurred;
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int

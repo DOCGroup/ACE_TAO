@@ -318,7 +318,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (const ACE_WString &na
                   char [len + 1],
                   -1);
 
-  ACE_OS::strncpy (new_type, temp, len);
+  ACE_OS::strsncpy (new_type, temp, len);
   new_type[len] = '\0';  // Null terminate the string
   type = new_type;
   return 0;

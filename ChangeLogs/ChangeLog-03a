@@ -1,3 +1,62 @@
+Mon Nov  5 10:12:01 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS.cpp,
+	* ace/Local_Name_Space_T.cpp,
+	* ace/FILE_Addr.cpp,
+	* ace/Acceptor.cpp,
+	* ace/ACE.cpp:  Changed uses of strncpy() to ACE_OS::strsncpy().
+	  Thanks to Alain Decamps for these fixes.
+
+Sun Nov  4 12:11:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Reactor.cpp: Enhanced all the Reactor's event loop methods
+	  to first check and see if the Reactor's been deactivated and to
+ 	  bailout immediately in this case.  Thanks to Don Hinton for
+ 	  suggesting this.
+
+	* ace/Reactor.i: Moved the reactor_event_loop_done() method from 
+	  the *.cpp file into the *.i file and made inlineable.
+
+	* ace/Select_Reactor_T.cpp: Be more careful about error handling in the 
+	  dispatch_notification_handlers() method.  If a failure occurs,
+ 	  when dispatch_notifications() is called, return -1, rather than
+ 	  erroneously "incrementing" the count of the number of handlers
+ 	  dispatched.  Thanks to Don Hinton for reporting this.
+
+Sat Nov  3 11:15:43 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* The following fixes are from Joachim Achtzehnter <joachima@netacquire.com>:
+  
+	  In ace/config-pharlap.h we had to explicitly #undef
+ 	  ACE_HAS_WCHAR after the #include "ace/config-win32.h"
+ 	  directive. Without this change the resulting DLL depended on
+ 	  several wide character versions of Win32 system functions, such
+ 	  as _CreateMutexW. At least some of these dependencies were
+ 	  caused by ace/OS.i.
+
+	  In ace/Log_Msg.cpp we had to add !defined(ACE_HAS_PHARLAP) to a
+ 	  few more places in addition to the ones Bruce Trask had posted
+ 	  to avoid reference to the NT Eventlog functionality.
+
+	  At the top of ace/Log_Msg_NT_Event_Log.h and
+ 	  ace/Log_Msg_NT_Event_Log.cpp we added !defined(ACE_HAS_PHARLAP)
+ 	  to completely bypass the contents of these two files.
+
+	* ace/DEV_Addr.i (addr_to_string): 
+	* ace/Local_Tokens.i (name): 
+	* ace/Module.i (name): 
+	* ace/OS.i (asctime_r): 
+	* ace/SPIPE_Addr.i (addr_to_string): 
+	* ace/UNIX_Addr.i (addr_to_string): 
+	* ace/SString.i (rep): Changed uses of strncpy() to ACE_OS::strsncpy().
+	  Thanks to Alain Decamps for these fixes.
+
+Fri Nov  2 14:38:49 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Task.h (ACE_Task_Base): Clarify the meaning of the put()
+	  hook method.  Thanks to Tommy Svensson <tommysvensson@yahoo.com>
+	  for motivating this.
+
 Mon Nov  5 14:23:12 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ACE.cpp:
@@ -645,9 +704,10 @@ Wed Oct 10 06:16:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
         * examples/Reactor/WFMO_Reactor/test_apc.cpp (main):
         * examples/Reactor/WFMO_Reactor/test_abandoned.cpp (main): Don't
           use a global Event_Handler since this violates the design rules
-          for the ACE_Reactor.  Thanks to Heping He
-          <heping.he@riskmetrics.com> for reporting this and to Irfan for
-          suggesting where the problem arose.
+ 	  for the ACE_Reactor.  Thanks to Heping He
+ 	  <heping.he@riskmetrics.com> and Hartmut Quast
+ 	  <HartmutQuast@t-online.de> for reporting this and to Irfan for
+ 	  suggesting where the problem arose.
 
 Tue Oct  9 07:46:20 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 

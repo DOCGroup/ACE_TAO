@@ -944,9 +944,9 @@ ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::read_notify_pipe");
 
-  ssize_t n = 0;
+  ssize_t n = ACE::recv (handle, (char *) &buffer, sizeof buffer);
 
-  if ((n = ACE::recv (handle, (char *) &buffer, sizeof buffer)) > 0)
+  if (n > 0)
     {
       // Check to see if we've got a short read.
       if (n != sizeof buffer)
@@ -986,8 +986,7 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
   int result = 0;
   ACE_Notification_Buffer buffer;
 
-  while ((result = this->read_notify_pipe (handle,
-                                           buffer)) > 0)
+  while ((result = this->read_notify_pipe (handle, buffer)) > 0)
     {
       // Dispatch the buffer
       // NOTE: We count only if we made any dispatches ie. upcalls.

@@ -39,7 +39,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ACE_MT_SAFE */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_NT_Event_Log
 #elif !defined (ACE_LACKS_UNIX_SYSLOG) && !defined (ACE_HAS_WINCE)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_UNIX_Syslog
@@ -129,12 +129,14 @@ int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
     {
       ACE_NO_HEAP_CHECK;
 
+#if defined (WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
       // Allocate the ACE_Log_Msg_Backend instance.
       if (ACE_BIT_ENABLED (ACE_Log_Msg_Manager::log_backend_flags_, ACE_Log_Msg::SYSLOG))
         ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
                         ACE_LOG_MSG_SYSLOG_BACKEND,
                         -1);
       else
+#endif /* defined (WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP) */
         ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
                         ACE_Log_Msg_IPC,
                         -1);
