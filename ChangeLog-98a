@@ -1,3 +1,9 @@
+Sun Nov 30 17:36:35 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* ace/Synch.cpp (ACE_File_Lock): Fixed order of parameters in the
+ 	call to this->open() and too many arguments in call to
+ 	ACE_File_Lock::open().
+	
 Sun Nov 30 16:31:41 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/Synch.h: 
