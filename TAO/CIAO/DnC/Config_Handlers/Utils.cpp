@@ -34,8 +34,8 @@ CORBA::Short
 CIAO::Config_Handler::Utils::parse_short (DOMNodeIterator * iter)
 {
   char *temp (Config_Handler::Utils::parse_string (iter));
-  auto_ptr<char> cleanup_char (temp);
   CORBA::Short ret_val = ACE_OS::atoi (temp);
+  XMLString::release (&temp);
   return ret_val;
 }
 
@@ -43,8 +43,8 @@ CORBA::ULong
 CIAO::Config_Handler::Utils::parse_ulong (DOMNodeIterator * iter)
 {
   char *temp (Config_Handler::Utils::parse_string (iter));
-  auto_ptr<char> cleanup_char (temp);
   CORBA::ULong ret_val = ACE_OS::strtoul (temp, 0, 10);
+  XMLString::release (&temp);
   return ret_val;
 }
 
@@ -52,7 +52,6 @@ CORBA::Long
 CIAO::Config_Handler::Utils::parse_long (DOMNodeIterator * iter)
 {
   char *temp (Config_Handler::Utils::parse_string (iter));
-  auto_ptr<char> cleanup_char (temp);
   CORBA::ULong ret_val = ACE_OS::strtol (temp, 0, 10);
   return ret_val;
 }
@@ -61,8 +60,8 @@ CORBA::Double
 CIAO::Config_Handler::Utils::parse_double (DOMNodeIterator * iter)
 {
   char *temp (Config_Handler::Utils::parse_string (iter));
-  auto_ptr<char> cleanup_char (temp);
   CORBA::Double ret_val = ACE_OS::strtod (temp, 0);
+  XMLString::release (&temp);
   return ret_val;
 }
 
@@ -92,13 +91,13 @@ CIAO::Config_Handler::Utils::parse_char (DOMNodeIterator * iter)
 {
   DOMText * text = ACE_reinterpret_cast (DOMText *, iter->nextNode ());
   char * temp_string = XMLString::transcode (text->getNodeValue ());
-  auto_ptr<char> cleanup_char (temp_string);
 
   // Should be non-null
   ACE_ASSERT (temp_string != 0);
 
   // Return the first character in the node as char value
   char ret_char = temp_string [0];
+  XMLString::release (&temp_string);
   return ret_char;
 }
 

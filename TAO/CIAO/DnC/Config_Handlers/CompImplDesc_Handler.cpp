@@ -30,10 +30,10 @@ void CompImplDesc_Handler::process_ComponentImplementationDescription
 {
   //this->iter_->nextNode();
 
-  const char* root_node_name_ch = XMLString::transcode
+  char* root_node_name_ch = XMLString::transcode
     (this->doc_->getDocumentElement ()->getNodeName ());
   ACE_TString root_node_name (root_node_name_ch);
-  XMLString::release (root_node_name_ch);
+  XMLString::release (&root_node_name_ch);
 
   for (DOMNode* node = this->iter_->nextNode();
        node != 0;
