@@ -46,7 +46,7 @@ Logger_Factory_i::make_logger (const char *name,
   if (hash_map_.bind (name, result) == -1)
     {
       delete result;
-      TAO_THROW_RETURN (CORBA::UNKNOWN (),
+      ACE_THROW_RETURN (CORBA::UNKNOWN (),
                         Logger::_nil ());
     }
   else
