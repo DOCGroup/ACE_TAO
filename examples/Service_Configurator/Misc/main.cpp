@@ -43,7 +43,6 @@ main (int, ASYS_TCHAR *argv[])
   l_argv[4] = ASYS_TEXT ("-S");
   l_argv[5] = ASYS_TEXT ("dynamic Timer_Service_2 Service_Object * ./Timer:_make_Timer_Service_2() \"timer 2 10 $TRACE\"");
   l_argv[6] = 0;
-  l_argv[3] =  0;
 
   if (ACE_Service_Config::open (6, l_argv) == -1 && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
