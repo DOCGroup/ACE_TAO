@@ -159,7 +159,7 @@ module RtecEventChannelAdmin
    * Each consumer converse with the Event Channel via a different
    * object that implements the ProxyPushSupplier interface.  This is
    * a common idiom in CORBA, as it allows the identification of the
-   * remove consumer quickly.
+   * remove consumer efficiently.
    */
   interface ProxyPushSupplier : RtecEventComm::PushSupplier
   {
@@ -208,12 +208,12 @@ module RtecEventChannelAdmin
    * @interface ProxyPushConsumer
    *
    * @brief Interface used to implement the Abstract Session pattern
-   *   for the consumers.
+   *   for the suppliers.
    *
    * Each supplier converse with the Event Channel via a different
    * object that implements the ProxyPushConsumer interface.  This is
    * a common idiom in CORBA, as it allows identification of the
-   * remote supplier quickly.
+   * remote supplier efficiently.
    */
   interface ProxyPushConsumer : RtecEventComm::PushConsumer
   {
@@ -256,7 +256,7 @@ module RtecEventChannelAdmin
   /**
    * @class SupplierAdmin
    *
-   * @brief Implement an Abstract Factory to create ProxyPushSupplier
+   * @brief Implement an Abstract Factory to create ProxyPushConsumer
    * objects.
    */
   interface SupplierAdmin
