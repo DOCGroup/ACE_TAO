@@ -77,8 +77,9 @@ void ACE_OS::checkUnicodeFormat (FILE* fp)
       // select correct buffer type.
 
       // At this point, check if the file is Unicode or not.
-      WORD first_two_bytes;
-      size_t numRead = ACE_OS::fread(&first_two_bytes, sizeof(WORD), 1, fp);
+      ACE_UINT16 first_two_bytes;
+      size_t numRead =
+        ACE_OS::fread(&first_two_bytes, sizeof (first_two_bytes), 1, fp);
 
       if (numRead == 1)
         {
@@ -86,7 +87,11 @@ void ACE_OS::checkUnicodeFormat (FILE* fp)
               (first_two_bytes != 0xFEFF))   // not a big endian Unicode file
             {
               // set file pointer back to the beginning
+#if defined (ACE_WIN32)
               ACE_OS::fseek(fp, 0, FILE_BEGIN);
+#else
+              ACE_OS::fseek(fp, 0, SEEK_SET);
+#endif /* ACE_WIN32 */
             }
         }
       // if it is a Unicode file, file pointer will be right next to the first
@@ -423,6 +428,6 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
   ACE_UNUSED_ARG (format);
   ACE_NOTSUP_RETURN (-1);
 
-# endif /* ACE_HAS_VSWPRINTF */
+# endif /* XPG5 || ACE_HAS_DINKUM_STL */
 }
 #endif /* ACE_HAS_WCHAR */

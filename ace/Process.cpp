@@ -344,31 +344,56 @@ ACE_Process::spawn (ACE_Process_Options &options)
         // Child process executes the command.
         int result = 0;
 
+        // Wide-char builds not on Windows need narrow-char strings for
+        // exec() and environment variables. Don't need to worry about
+        // releasing any of the converted string memory since this
+        // process will either exec() or exit() shortly.
+# if defined (ACE_USES_WCHAR)
+        ACE_Wide_To_Ascii n_procname (options.process_name ());
+        const char *procname = n_procname.char_rep ();
+
+        wchar_t * const *wargv = options.command_line_argv ();
+        size_t vcount, i;
+        for (vcount = 0; wargv[vcount] != 0; ++vcount)
+          ;
+        char **procargv = new char *[vcount + 1];  // Need 0 at the end
+        procargv[vcount] = 0;
+        for (i = 0; i < vcount; ++i)
+          procargv[i] = ACE_Wide_To_Ascii::convert (wargv[i]);
+
+        wargv = options.env_argv ();
+        for (vcount = 0; wargv[vcount] != 0; ++vcount)
+          ;
+        char **procenv = new char *[vcount + 1];  // Need 0 at the end
+        procenv[vcount] = 0;
+        for (i = 0; i < vcount; ++i)
+          procenv[i] = ACE_Wide_To_Ascii::convert (wargv[i]);
+# else
+        const char *procname = options.process_name ();
+        char *const *procargv = options.command_line_argv ();
+        char *const *procenv = options.env_argv ();
+# endif /* ACE_USES_WCHAR */
+
         if (options.inherit_environment ())
           {
             // Add the new environment variables to the environment
             // context of the context before doing an <execvp>.
-            for (char *const *user_env = options.env_argv ();
-                 *user_env != 0;
-                 user_env++)
-              if (ACE_OS::putenv (*user_env) != 0)
+            for (size_t i = 0; procenv[i] != 0; i++)
+              if (ACE_OS::putenv (procenv[i]) != 0)
                 return ACE_INVALID_PID;
 
             // Now the forked process has both inherited variables and
             // the user's supplied variables.
-            result = ACE_OS::execvp (options.process_name (),
-                                     options.command_line_argv ());
+            result = ACE_OS::execvp (procname, procargv);
           }
         else
           {
-#if defined (ghs)
+# if defined (ghs)
             // GreenHills 1.8.8 (for VxWorks 5.3.x) can't compile this
             // code.  Processes aren't supported on VxWorks anyways.
             ACE_NOTSUP_RETURN (ACE_INVALID_PID);
-#else
-            result = ACE_OS::execve (options.process_name (),
-                                     options.command_line_argv (),
-                                     options.env_argv ());
+# else
+            result = ACE_OS::execve (procname, procargv, procenv);
 # endif /* ghs */
           }
         if (result == -1)

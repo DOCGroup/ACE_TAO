@@ -187,6 +187,25 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name,
                 ACE_LIB_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const wchar_t *name,
+                                                  int flags,
+                                                  int initial_value,
+                                                  u_short nsems,
+                                                  int perms)
+{
+  ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple(wchar_t)");
+  if (this->open (ACE_Wide_To_Ascii (name).char_rep (),
+                  flags,
+                  initial_value,
+                  nsems,
+                  perms) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_SV_Semaphore_Simple::~ACE_SV_Semaphore_Simple (void)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::~ACE_SV_Semaphore_Simple");

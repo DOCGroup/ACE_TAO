@@ -105,61 +105,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
   if (argv == 0 || argv[0] == 0)
     return;
 
-  size_t buf_len = 0;
-
-  // Determine the length of the buffer.
-
-  for (int i = 0; argv[i] != 0; i++)
-    {
-#if !defined (ACE_LACKS_ENV)
-      ACE_TCHAR *temp = 0;
-
-      // Account for environment variables.
-      if (this->substitute_env_args_
-	  && (argv[i][0] == '$'
-	  && (temp = ACE_OS::getenv (&argv[i][1])) != 0))
-	buf_len += ACE_OS::strlen (temp);
-      else
-#endif /* !ACE_LACKS_ENV */
-	buf_len += ACE_OS::strlen (argv[i]);
-
-      // Add one for the extra space between each string.
-      buf_len++;
-    }
-
-  // Step through all argv params and copy each one into buf; separate
-  // each param with white space.
-
-  ACE_NEW (this->buf_,
-           ACE_TCHAR[buf_len + 1]);
-
-  ACE_TCHAR *end = this->buf_;
-  int j;
-
-  for (j = 0; argv[j] != 0; j++)
-    {
-#if !defined (ACE_LACKS_ENV)
-      ACE_TCHAR *temp = 0;
-
-      // Account for environment variables.
-      if (this->substitute_env_args_
-	  && (argv[j][0] == '$'
-	  && (temp = ACE_OS::getenv (&argv[j][1])) != 0))
-	end = ACE_OS::strecpy (end, temp);
-      else
-#endif /* ACE_LACKS_ENV */
-	end = ACE_OS::strecpy (end, argv[j]);
-
-      // Replace the null char that strecpy copies with white space as
-      // a separator.
-      *(end - 1) = ACE_LIB_TEXT (' ');
-    }
-
-  // Remember how many arguments there are
-  this->argc_ = j;
-
-  // Null terminate the string.
-  *end = '\0';
+  this->argc_ = ACE_OS::argv_to_string (argv, this->buf_, substitute_env_args);
 }
 
 ACE_ARGV::ACE_ARGV (ACE_TCHAR *first_argv[],
@@ -182,10 +128,10 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *first_argv[],
   ACE_TCHAR *second_buf;
 
   // convert the first argv to a string
-  first_argc = this->argv_to_string (first_argv,first_buf);
+  first_argc = this->argv_to_string (first_argv, first_buf);
 
   // convert the second argv to a string
-  second_argc = this->argv_to_string (second_argv,second_buf);
+  second_argc = this->argv_to_string (second_argv, second_buf);
 
   // Add the number of arguments in both the argvs.
   this->argc_ = first_argc + second_argc;

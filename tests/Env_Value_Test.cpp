@@ -44,8 +44,15 @@ run_main (int argc, ACE_TCHAR* [])
 {
   ACE_UNUSED_ARG (argc);
 
+  // Only Win32 can set wide-char environment strings. So, for all
+  // others, use char string literals regardless of ACE_USES_WCHAR.
+#  if defined (ACE_WIN32)
   ACE_OS::putenv (ACE_TEXT ("TEST_VALUE_POSITIVE=10.2"));
   ACE_OS::putenv (ACE_TEXT ("TEST_VALUE_NEGATIVE=-10.2"));
+#  else
+  ACE_OS::putenv ("TEST_VALUE_POSITIVE=10.2");
+  ACE_OS::putenv ("TEST_VALUE_NEGATIVE=-10.2");
+#  endif /* ACE_WIN32 */
 #else  /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER  &&  ! ACE_LACKS_FORK */
 run_main (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
 {

@@ -67,6 +67,14 @@ public:
                            int initial_value = 1,
                            u_short nsems = 1,
                            int perms = ACE_DEFAULT_FILE_PERMS);
+#if defined (ACE_HAS_WCHAR)
+  ACE_SV_Semaphore_Simple (const wchar_t *name,
+                           int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+                           int initial_value = 1,
+                           u_short nsems = 1,
+                           int perms = ACE_DEFAULT_FILE_PERMS);
+#endif /* ACE_HAS_WCHAR */
+
   ~ACE_SV_Semaphore_Simple (void);
 
   int open (const char *name,
@@ -74,6 +82,14 @@ public:
             int initial_value = 1,
             u_short nsems = 1,
             int perms = ACE_DEFAULT_FILE_PERMS);
+
+#if defined (ACE_HAS_WCHAR)
+  int open (const wchar_t *name,
+            int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
+            int initial_value = 1,
+            u_short nsems = 1,
+            int perms = ACE_DEFAULT_FILE_PERMS);
+#endif /* ACE_HAS_WCHAR */
 
   /// Open or create one or more SV_Semaphores.  We return 0 if all is
   /// OK, else -1.

@@ -862,14 +862,15 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const ACE_TCHAR *backing_store_n
       // key.
 
       int segment_key;
-      int result = ::sscanf (backing_store_name,
+      int result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (backing_store_name),
                              "%d",
                              &segment_key);
 
       if (result == 0 || result == EOF)
         // The conversion to a number failed so hash with crc32
         // ACE::crc32 is also used in <SV_Semaphore_Simple>.
-        this->base_shm_key_ = (key_t) ACE::crc32 (backing_store_name);
+        this->base_shm_key_ =
+          (key_t) ACE::crc32 (ACE_TEXT_ALWAYS_CHAR (backing_store_name));
       else
         this->base_shm_key_ = segment_key;
 

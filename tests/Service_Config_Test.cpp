@@ -122,23 +122,29 @@ run_test (int argc, ACE_TCHAR *argv[])
 {
   ACE_ARGV new_argv;
 
-  const ACE_TCHAR svc_conf[] =
 #if defined (ACE_USES_WCHAR)
-    // When using full Unicode support, use the version of the Service
-    // Configurator file that is UTF-16 encoded.
-    //
-    // @@ Note: Some platforms may want other encoding (e.g. UTF-32).
-    //
-    //          iconv(1) found on Linux and Solaris, for example, can
-    //          be used to convert between encodings.
-    //
-    //          Byte ordering is also an issue, so we should be
-    //          generating this file on-the-fly from the UTF-8 encoded
-    //          file by using functions like iconv(1) or iconv(3).
+  // When using full Unicode support, use the version of the Service
+  // Configurator file appropriate to the platform.
+  // For example, Windows Unicode uses UTF-16.
+  //
+  //          iconv(1) found on Linux and Solaris, for example, can
+  //          be used to convert between encodings.
+  //
+  //          Byte ordering is also an issue, so we should be
+  //          generating this file on-the-fly from the UTF-8 encoded
+  //          file by using functions like iconv(1) or iconv(3).
+#  if defined (ACE_WIN32)
+  const ACE_TCHAR svc_conf[] =
     ACE_TEXT ("Service_Config_Test.UTF-16")
     ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
+#  else
+  const ACE_TCHAR svc_conf[] =
+    ACE_TEXT ("Service_Config_Test.WCHAR_T")
+    ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
+#  endif /* ACE_WIN32 */
 #else
     // ASCII (UTF-8) encoded Service Configurator file.
+  const ACE_TCHAR svc_conf[] =
     ACE_TEXT ("Service_Config_Test")
     ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
 #endif  /* ACE_USES_WCHAR */

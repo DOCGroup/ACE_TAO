@@ -174,7 +174,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_ASSERT (parent_synch->open (SEM_KEY_2,
                                   ACE_SV_Semaphore_Complex::ACE_CREATE,
                                   0) != -1);
-  switch (ACE_OS::fork ("SV_Shared_Memory_Test.cpp"))
+  switch (ACE_OS::fork (ACE_TEXT ("SV_Shared_Memory_Test.cpp")))
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,

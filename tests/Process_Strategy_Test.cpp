@@ -680,7 +680,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
 #if !defined (ACE_LACKS_FORK)
       // We're running the client and serve as separate processes.
-      pid_t pid = ACE::fork ("child",
+      pid_t pid = ACE::fork (ACE_TEXT ("child"),
                              1); // Avoid zombies.
 
       switch (pid)

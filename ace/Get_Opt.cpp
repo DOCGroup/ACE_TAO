@@ -118,7 +118,13 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
   ACE_NEW (this->last_option_, ACE_TString (ACE_LIB_TEXT ("")));
 
   // First check to see if POSIXLY_CORRECT was set.
-  if (ACE_OS::getenv (ACE_LIB_TEXT ("POSIXLY_CORRECT")) != 0)
+  // Win32 is the only platform capable of wide-char env var.
+#if defined (ACE_WIN32)
+  const ACE_TCHAR *env_check = ACE_LIB_TEXT ("POSIXLY_CORRECT");
+#else
+  const char *env_check = "POSIXLY_CORRECT";
+#endif
+  if (ACE_OS::getenv (env_check) != 0)
     this->ordering_ = REQUIRE_ORDER;
 
   // Now, check to see if any or the following were passed at
