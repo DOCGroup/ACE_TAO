@@ -1,8 +1,10 @@
 Fri Apr 28 21:32:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
+        * MessagingC.h:
         * MessagingC.i:
         * MessagingC.cpp:
         * MessagingS.cpp:
+        * diffs/MessagingC.h.diff:
         * diffs/MessagingC.i.diff:
         * diffs/MessagingC.cpp.diff:
         * diffs/MessagingS.cpp.diff:
