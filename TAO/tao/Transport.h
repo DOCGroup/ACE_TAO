@@ -212,11 +212,11 @@ class TAO_Export TAO_Transport
 {
 public:
 
-  /// default creator, requres the tag value be supplied.
+  /// Default creator, requires the tag value be supplied.
   TAO_Transport (CORBA::ULong tag,
                  TAO_ORB_Core *orb_core);
 
-  /// destructor
+  /// Destructor
   virtual ~TAO_Transport (void);
 
   /// Return the protocol tag.
@@ -256,8 +256,10 @@ public:
   /// Callback method to reactively drain the outgoing data queue
   int handle_output (void);
 
-  /// Get/Set the bidirectional flag
+  /// Get the bidirectional flag
   int bidirectional_flag (void) const;
+
+  /// Set the bidirectional flag
   void bidirectional_flag (int flag);
 
   /// Set/Get the Cache Map entry
@@ -296,7 +298,7 @@ public:
 
   /// Remove all messages from the outgoing queue.
   /**
-   * @todo: shouldn't this be automated?
+   * @todo shouldn't this be automated?
    */
   // void dequeue_all (void);
 
@@ -306,14 +308,14 @@ public:
    * Wait_On_Reactor strategy. The transport must register its event
    * handler with the ORB's Reactor.
    *
-   * @todo: I think this method is pretty much useless, the
+   * @todo I think this method is pretty much useless, the
    * connections are *always* registered with the Reactor, except in
    * thread-per-connection mode.  In that case putting the connection
    * in the Reactor would produce unpredictable results anyway.
    */
   virtual int register_handler (void);
 
-    /// Write the complete Message_Block chain to the connection.
+  /// Write the complete Message_Block chain to the connection.
   /**
    * This method serializes on handler_lock_, guaranteeing that only
    * thread can execute it on the same instance concurrently.
@@ -405,7 +407,7 @@ public:
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor) = 0;
 
-  /// Extracts the list of listen points from the <cdr> stream. The
+  /// Extracts the list of listen points from the @a cdr stream. The
   /// list would have the protocol specific details of the
   /// ListenPoints
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
@@ -434,7 +436,7 @@ public:
   /// Reactor.
   /**
    * Normally a concrete TAO_Transport object has-a ACE_Event_Handler
-   * member that function as an adapter between the ACE_Reactor
+   * member that functions as an adapter between the ACE_Reactor
    * framework and the TAO pluggable protocol framework.
    * In all the protocols implemented so far this role is fullfilled
    * by an instance of ACE_Svc_Handler.
@@ -465,7 +467,7 @@ public:
                                        TAO_Target_Specification &spec,
                                        TAO_OutputCDR &msg);
 
-  /// recache ourselves in the cache
+  /// Recache ourselves in the cache
   int recache_transport (TAO_Transport_Descriptor_Interface* desc);
 
   /// Callback to read incoming data
@@ -473,7 +475,7 @@ public:
    * The ACE_Event_Handler adapter invokes this method as part of its
    * handle_input() operation.
    *
-   * @todo: the method name is confusing! Calling it handle_input()
+   * @todo the method name is confusing! Calling it handle_input()
    * would probably make things easier to understand and follow!
    *
    * Once a complete message is read the Transport class delegates on
@@ -547,7 +549,7 @@ public:
                             ACE_Time_Value *max_time_wait = 0) = 0;
 
 
-  /// Sent the contents of <message_block>
+  /// Sent the contents of @a message_block
   /**
    * @param stub The object reference used for this operation, useful
    *             to obtain the current policies.
@@ -569,8 +571,8 @@ public:
 
 protected:
 
-  /// Called by the handle_input_i  (). This method is used to parse
-  /// message read by the handle_input_i () call. It also decides
+  /// Called by the handle_input_i(). This method is used to parse
+  /// message read by the handle_input_i() call. It also decides
   /// whether the message  needs consolidation before processing.
   int parse_consolidate_messages (ACE_Message_Block &bl,
                                   TAO_Resume_Handle &rh,
@@ -578,7 +580,7 @@ protected:
 
 
   /// Method does parsing of the message if we have a fresh message in
-  /// the <message_block> or just returns if we have read part of the
+  /// the @a message_block or just returns if we have read part of the
   /// previously stored message.
   int parse_incoming_messages (ACE_Message_Block &message_block);
 
@@ -599,7 +601,7 @@ protected:
   int consolidate_fragments (TAO_Queued_Data *qd,
                              TAO_Resume_Handle &rh);
 
- /// First consolidate the message queue.  If the message is still not
+  /// First consolidate the message queue.  If the message is still not
   /// complete, try to read from the handle again to make it
   /// complete. If these dont help put the message back in the queue
   /// and try to check the queue if we have message to process. (the
@@ -620,7 +622,7 @@ protected:
   int process_parsed_messages (TAO_Queued_Data *qd,
                                TAO_Resume_Handle &rh);
 
-  /// Make a queued data from the <incoming> message block
+  /// Make a queued data from the @a incoming message block
   TAO_Queued_Data *make_queued_data (ACE_Message_Block &incoming);
 
   /// Implement send_message_shared() assuming the handler_lock_ is
@@ -677,19 +679,15 @@ public:
   size_t sent_byte_count (void);
 
   /// CodeSet Negotiation - Get the char codeset translator factory
-  ///
   TAO_Codeset_Translator_Factory *char_translator (void) const;
 
   /// CodeSet Negotiation - Get the wchar codeset translator factory
-  ///
   TAO_Codeset_Translator_Factory *wchar_translator (void) const;
 
   /// CodeSet negotiation - Set the char codeset translator factory
-  ///
   void char_translator (TAO_Codeset_Translator_Factory *);
 
   /// CodeSet negotiation - Set the wchar codeset translator factory
-  ///
   void wchar_translator (TAO_Codeset_Translator_Factory *);
 
   /// Use the Transport's codeset factories to set the translator for input
@@ -697,7 +695,6 @@ public:
   void assign_translators (TAO_InputCDR *, TAO_OutputCDR *);
 
   /// Return true if the tcs has been set
-  ///
   CORBA::Boolean is_tcs_set() const;
 
   /// Set the state of the first_request_ flag to 0
@@ -760,7 +757,7 @@ private:
 
   /// Cleanup the queue.
   /**
-   * Exactly <byte_count> bytes have been sent, the queue must be
+   * Exactly @a byte_count bytes have been sent, the queue must be
    * cleaned up as potentially several messages have been completely
    * sent out.
    * It leaves on head_ the next message to send out.
@@ -783,8 +780,8 @@ private:
   int send_reply_message_i (const ACE_Message_Block *message_block,
                             ACE_Time_Value *max_wait_time);
 
-  /// A helper method used by <send_synchronous_message_i> and
-  /// <send_reply_message_i>. Reusable code that could be used by both
+  /// A helper method used by send_synchronous_message_i() and
+  /// send_reply_message_i(). Reusable code that could be used by both
   /// the methods.
   int send_synch_message_helper_i (TAO_Synch_Queued_Message &s,
                                    ACE_Time_Value *max_wait_time);
