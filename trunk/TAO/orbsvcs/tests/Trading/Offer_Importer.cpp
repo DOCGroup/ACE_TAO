@@ -223,15 +223,24 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
 				     CORBA::Environment& _env) const
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "  Offers in the sequence:\n"));
-  for (int length = offer_seq.length (), i = 0; i < length; i++)
-    {
-      TT_Info::dump_properties (offer_seq[i].properties);
-      ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
-    }
-
   TAO_TRY
     {
+      ACE_DEBUG ((LM_DEBUG, "  Offers in the sequence:\n"));
+      for (int length = offer_seq.length (), i = 0; i < length; i++)
+        {
+          // Call back to the exported object.
+          TAO_Trader_Test::Remote_Output_var remote_output =
+            TAO_Trader_Test::Remote_Output::_narrow (offer_seq[i].reference,
+                                                     TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          remote_output->confirm (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+          
+          TT_Info::dump_properties (offer_seq[i].properties);
+          ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
+        }
+      
       ACE_DEBUG ((LM_DEBUG, "  Offers in the iterator:\n"));
       if (! CORBA::is_nil (offer_iterator))
 	{
@@ -250,6 +259,15 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
 	      CosTrading::OfferSeq_var iter_offers (iter_offers_ptr);
 	      for (length = iter_offers->length (), i = 0; i < length; i++)
 		{
+                  // Call back to the exported object.
+                  TAO_Trader_Test::Remote_Output_var remote_output =
+                    TAO_Trader_Test::Remote_Output::_narrow (offer_seq[i].reference,
+                                                             TAO_TRY_ENV);
+                  TAO_CHECK_ENV;
+
+                  remote_output->confirm (TAO_TRY_ENV);
+                  TAO_CHECK_ENV;
+                  
 		  CosTrading::PropertySeq& props = iter_offers[i].properties;
 		  TT_Info::dump_properties (props);
 		  ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
