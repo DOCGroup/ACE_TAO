@@ -24,7 +24,7 @@ TAO_EC_ObserverStrategy::~TAO_EC_ObserverStrategy (void)
 
 RtecEventChannelAdmin::Observer_Handle
 TAO_EC_Null_ObserverStrategy::append_observer (
-       RtecEventChannelAdmin::Observer_ptr obs,
+       RtecEventChannelAdmin::Observer_ptr,
        CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -38,7 +38,7 @@ TAO_EC_Null_ObserverStrategy::append_observer (
 
 void
 TAO_EC_Null_ObserverStrategy::remove_observer (
-       RtecEventChannelAdmin::Observer_Handle handle,
+       RtecEventChannelAdmin::Observer_Handle,
        CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((
         CORBA::SystemException,

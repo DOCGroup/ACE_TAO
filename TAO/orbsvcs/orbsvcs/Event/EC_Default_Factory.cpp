@@ -504,7 +504,7 @@ TAO_EC_Default_Factory::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer *x
 }
 
 TAO_EC_Timeout_Generator*
-TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel *ec)
+TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel *)
 {
   if (this->timeout_ == 0)
     {

@@ -13,7 +13,7 @@ TAO_EC_MT_Dispatching::TAO_EC_MT_Dispatching (int nthreads,
                                               int thread_priority,
                                               int force_activate)
   :  nthreads_ (nthreads),
-     thread_creation_flags_ (thread_creation_flags_),
+     thread_creation_flags_ (thread_creation_flags),
      thread_priority_ (thread_priority),
      force_activate_ (force_activate),
      task_ (&this->thread_manager_),
@@ -28,7 +28,7 @@ TAO_EC_MT_Dispatching::activate (void)
 
   if (this->active_ != 0)
     return;
-  
+
   this->active_ = 1;
 
   if (this->task_.activate (this->thread_creation_flags_,
@@ -76,7 +76,7 @@ TAO_EC_MT_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
 void
 TAO_EC_MT_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                     RtecEventComm::EventSet& event,
-                                    TAO_EC_QOS_Info& qos_info,
+                                    TAO_EC_QOS_Info&,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
   // Double checked locking....

@@ -45,14 +45,14 @@ TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 template <class MAP_LOCK_TYPE> void
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 add_offer (CosTrading::OfferId id,
-           const CosTrading::Offer* offer)
+           const CosTrading::Offer* /* offer */)
 {
   this->offer_ids_.enqueue_tail (id);
 }
 
 template <class MAP_LOCK_TYPE> CORBA::ULong
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
-max_left (CORBA::Environment& TAO_IN_ENV)
+max_left (CORBA::Environment&)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::UnknownMaxLeft))
 {
@@ -63,7 +63,7 @@ template <class MAP_LOCK_TYPE> CORBA::Boolean
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 next_n (CORBA::ULong n,
         CosTrading::OfferSeq_out offers,
-        CORBA::Environment& TAO_IN_ENV)
+        CORBA::Environment& /* TAO_IN_ENV */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong ret_offers = 0;
