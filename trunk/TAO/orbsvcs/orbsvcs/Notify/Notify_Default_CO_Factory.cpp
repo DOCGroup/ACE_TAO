@@ -57,7 +57,7 @@ TAO_Notify_Default_CO_Factory::create_event_channel (TAO_Notify_EventChannelFact
 
 TAO_Notify_ConsumerAdmin_i*
 TAO_Notify_Default_CO_Factory::create_consumer_admin (TAO_Notify_EventChannel_i* event_channel
-                                               TAO_ENV_ARG_DECL)
+                                                      TAO_ENV_ARG_DECL)
 {
   TAO_Notify_ConsumerAdmin_i* consumer_admin_i;
   ACE_NEW_THROW_EX (consumer_admin_i,
@@ -70,8 +70,11 @@ TAO_Notify_Default_CO_Factory::create_consumer_admin (TAO_Notify_EventChannel_i*
                            event_channel->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      consumer_admin_i->set_qos (qos.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+      // Borland requires this cast
+      consumer_admin_i->set_qos (
+                     ACE_const_cast (const CosNotification::QoSProperties&,
+                                     qos.in ())
+                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -100,8 +103,11 @@ TAO_Notify_Default_CO_Factory::create_supplier_admin (TAO_Notify_EventChannel_i*
                            event_channel->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      supplier_admin_i->set_qos (qos.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+      // Borland requires this cast
+      supplier_admin_i->set_qos (
+                     ACE_const_cast (const CosNotification::QoSProperties&,
+                                     qos.in ())
+                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -140,7 +146,10 @@ TAO_Notify_Default_CO_Factory::create_struct_proxy_pushsupplier (TAO_Notify_Cons
                            parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      proxy->set_qos (qos.in ()
+      // Borland requires this cast
+      proxy->set_qos (
+               ACE_const_cast (const CosNotification::QoSProperties&,
+                               qos.in ())
                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -168,7 +177,10 @@ TAO_Notify_Default_CO_Factory::create_seq_proxy_pushsupplier (TAO_Notify_Consume
                            parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      proxy->set_qos (qos.in ()
+      // Borland requires this cast
+      proxy->set_qos (
+               ACE_const_cast (const CosNotification::QoSProperties&,
+                               qos.in ())
                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -196,7 +208,10 @@ TAO_Notify_Default_CO_Factory::create_proxy_pushsupplier (TAO_Notify_ConsumerAdm
                            parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      proxy->set_qos (qos.in ()
+      // Borland requires this cast
+      proxy->set_qos (
+               ACE_const_cast (const CosNotification::QoSProperties&,
+                               qos.in ())
                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -225,7 +240,10 @@ TAO_Notify_Default_CO_Factory::create_struct_proxy_pushconsumer (TAO_Notify_Supp
                            parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      proxy->set_qos (qos.in ()
+      // Borland requires this cast
+      proxy->set_qos (
+               ACE_const_cast (const CosNotification::QoSProperties&,
+                               qos.in ())
                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -253,8 +271,11 @@ TAO_Notify_Default_CO_Factory::create_proxy_pushconsumer (TAO_Notify_SupplierAdm
                            parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      proxy->set_qos (qos.in ()
-                      TAO_ENV_ARG_PARAMETER);
+      // Borland requires this cast
+      proxy->set_qos (
+               ACE_const_cast (const CosNotification::QoSProperties&,
+                               qos.in ())
+               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -281,8 +302,11 @@ TAO_Notify_Default_CO_Factory::create_seq_proxy_pushconsumer (TAO_Notify_Supplie
                            parent->get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      proxy->set_qos (qos.in ()
-                      TAO_ENV_ARG_PARAMETER);
+      // Borland requires this cast
+      proxy->set_qos (
+               ACE_const_cast (const CosNotification::QoSProperties&,
+                               qos.in ())
+               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
