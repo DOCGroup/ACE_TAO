@@ -65,19 +65,6 @@ public:
   virtual int post_process (be_decl *);
   // stuff to output after every member of the scope is handled
 
-  virtual int gen_raise_exception (be_type *,
-                                   const char *excep,
-                                   const char *status,
-                                   const char *env);
-  // helper that generates code for raising an exception
-
-  virtual int gen_check_exception (be_type *, const char *env);
-  // helper that generates code for checking for an exception
-
-  virtual int gen_check_interceptor_exception (be_type *, const char *env);
-  // helper that generates code for checking for an exception within
-  // an interceptor try block.
-
   virtual const char *compute_operation_name (be_operation *node);
   // Compute the servant operation name to invoke.  Notice that
   // this method _does_ include the double-quotes.

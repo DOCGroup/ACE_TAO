@@ -96,10 +96,6 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
       << "_tao_object_reference" << be_uidt << be_uidt_nl
       << ");" << be_uidt_nl;
 
-  // Declare a return type variable.
-  // AMH operations do not have return | OUT
-  *os << "_tao_server_request.argument_flag (0);" << be_nl;
-
   // Declare variables for arguments.
   be_visitor_context ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DECL_SS);
@@ -138,7 +134,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
   *os << be_nl << response_handler_name.c_str ()
       << "_var _tao_rh =" << be_idt_nl
       << "new " << response_handler_implementation_name.c_str ()
-      << ";" << be_uidt_nl;
+      << " (_tao_server_request);" << be_uidt_nl;
 
   // Make the upcall.
   *os << be_nl << "_tao_impl->"
@@ -191,22 +187,18 @@ be_visitor_amh_operation_ss::demarshal_params (be_operation *node)
 
       *os << be_uidt_nl << "))\n" << be_idt;
 
-      // Look into this in detail later
-      /*      // If marshaling fails, raise exception.
-              if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
-              "",
-              "ACE_TRY_ENV") == -1)
-              {
-              ACE_ERROR_RETURN ((LM_ERROR,
-              "(%N:%l) be_compiled_visitor_operation_ss::"
-              "gen_marshal_and invoke - "
-              "codegen for return var failed\n"),
-              -1);
-              }
-
-              *os << be_uidt << "\n";
-              */
-    };
+      // If marshaling fails, raise exception.
+      if (this->gen_raise_exception (0,
+                                     "CORBA::MARSHAL",
+                                     "",
+                                     "") == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) gen_raise_exception failed\n"),
+                            -1);
+        }
+      *os << be_uidt << "\n";
+    }
 
   return 0;
 }

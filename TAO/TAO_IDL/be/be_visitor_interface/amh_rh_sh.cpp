@@ -41,11 +41,17 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
 
   os->indent ();
 
-  // Generate the skeleton class name.
-  // this is AMH_intf_ResponseHandler
-  ACE_CString rh_base_class_name = node->local_name ();;
-  // and this is TAO_AMH_intf_ResponseHandler
+  // Generate the skeleton class name, use the AMH-node name as a
+  // basis, this is AMH_<InterfaceName>ResponseHandler...
+  ACE_CString rh_base_class_name = node->local_name ();
+  // ...and prepend either the "TAO_" prefix...
   ACE_CString rh_skel_class_name =  "TAO_";
+  if (!node->is_nested ())
+    {
+      // ...or the "POA_TAO_" prefix if we are in the global
+      // namespace....
+      rh_skel_class_name = "POA_TAO_";
+    }
   rh_skel_class_name += rh_base_class_name.c_str ();
 
   *os << "class " << rh_skel_class_name.c_str () << ";" << be_nl;
@@ -63,25 +69,14 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
   // Now generate the class definition
   *os << "class " << be_global->skel_export_macro ()
       << " " << rh_skel_class_name.c_str () << be_idt_nl
-      << ": public " << inherit_client_parent.c_str () << be_nl
-      << ", public " << inherit_tao_parent.c_str ();
-
-  long n_parents = node->n_inherits ();
-  for (int i = 0; i < n_parents; ++i)
-    {
-      *os << be_nl << ", public virtual "
-          << node->inherits ()[i]->name ();
-    }
+      << ": public " << inherit_tao_parent.c_str ()
+      << ", public " << inherit_client_parent.c_str () << be_nl;
 
   *os << be_uidt_nl << "{" << be_nl
-      << "protected:" << be_idt_nl
-      << rh_skel_class_name.c_str () << " (void);\n" << be_uidt_nl
-      << "public:" << be_idt_nl;
-
-  // No copy constructor for locality constraint interface.
-  *os << rh_skel_class_name.c_str () << " (const "
-      << rh_skel_class_name.c_str () << "& rhs);" << be_nl
-      << "virtual ~" << rh_skel_class_name.c_str () << " (void);\n\n";
+      << "public:" << be_idt_nl
+      << rh_skel_class_name.c_str () << " (TAO_ServerRequest &sr);" << be_nl
+      << "virtual ~" << rh_skel_class_name.c_str () << " (void);"
+      << be_nl;
 
   // Generate code for elements in the scope (e.g., operations).
   if (this->visit_scope (node) ==  -1)
@@ -96,4 +91,3 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
   *os << be_uidt_nl << "};\n\n";
   return 0;
 }
-

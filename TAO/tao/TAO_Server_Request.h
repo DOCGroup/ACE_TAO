@@ -38,13 +38,9 @@
 #include "PICurrent.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-// Added by Mayur 10/12
-#include "TAO_AMH_Response_Handler.h"
-// Mayur 10/12
-
-
 class TAO_Pluggable_Messaging;
 class TAO_Transport;
+class TAO_AMH_Response_Handler;
 
 /**
  * @class TAO_ServerRequest
@@ -57,6 +53,20 @@ class TAO_Transport;
 class TAO_Export TAO_ServerRequest
 {
 public:
+  /// Declare TAO_AMH_Response_Handler a friend
+  /**
+   * The TAO_AMH_Response_Handler class needs to copy part of the
+   * state in a TAO_ServerRequest, however, we do not want to expose
+   * that state as public members of this class, neither do we want to
+   * add modifiers to the TAO_AMH_Response_Handler class that would
+   * allow us (the TAO_ServerRequest class) to set the state.
+   *
+   * Lucky for us, C++ is a language for adult developers, and allow
+   * us to use the evil "friend" declaration.
+   *
+   */
+  friend class TAO_AMH_Response_Handler;
+
   // Constructors.
 
   TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
@@ -78,9 +88,6 @@ public:
 
   /// Destructor.
   virtual ~TAO_ServerRequest (void);
-
-  /// Create an AMH Handler with all necessary data copied into it
-  void instantiate_AMH_Handler (TAO_AMH_Response_Handler* response_handler);
 
   /**
    * @name Request attributes.

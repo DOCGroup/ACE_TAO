@@ -63,6 +63,19 @@ public:
 
   virtual const char *gen_environment_var (void);
   // generate the environment variable declaration
+
+  virtual int gen_raise_exception (be_type *,
+                                   const char *excep,
+                                   const char *status,
+                                   const char *env);
+  // helper that generates code for raising an exception
+
+  virtual int gen_check_exception (be_type *, const char *env);
+  // helper that generates code for checking for an exception
+
+  virtual int gen_check_interceptor_exception (be_type *, const char *env);
+  // helper that generates code for checking for an exception within
+  // an interceptor try block.
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_H_ */

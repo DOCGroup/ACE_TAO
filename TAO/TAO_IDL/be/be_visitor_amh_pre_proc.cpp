@@ -58,38 +58,46 @@ be_visitor_amh_pre_proc::visit_module (be_module *node)
 int
 be_visitor_amh_pre_proc::visit_interface (be_interface *node)
 {
-  if (!node->imported () && !node->is_local ())
+  // Do not generate AMH classes for any sort of implied IDL.
+  if (node->original_interface () != 0)
+    return 0;
+
+  // don't generate AMH classes for imported or local interfaces
+  // either...
+  // @@ Mayur, maybe we do want to insert the AMH node for imported
+  // interfaces, not because we want to generate code for them, but
+  // because the (imported-AMH-) node could be needed to generate a
+  // non-imported, AMH node, for example, for a derived interface.
+  if (node->imported () || node->is_local ())
+    return 0;
+
+  AST_Module *module =
+    AST_Module::narrow_from_scope (node->defined_in ());
+
+  if (module == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%N:%l) be_visitor_amh_pre_proc::"
+                       "visit_interface - module is null\n"),
+                      -1);
+
+  // Create the ResponseHandler class
+  be_interface *response_handler = this->create_response_handler (node);
+  if (response_handler == 0)
     {
-      AST_Module *module =
-        AST_Module::narrow_from_scope (node->defined_in ());
-
-      if (!module)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_amh_pre_proc::"
-                           "visit_interface - module is null\n"),
-                          -1);
-
-      // Create the ResponseHandler class
-      be_interface *response_handler = this->create_response_handler (node);
-      if (response_handler != 0)
-        {
-          response_handler->set_defined_in (node->defined_in ());
-
-          // Insert the response handler after the node.
-          module->be_add_interface (response_handler, node);
-
-          // Remember from whom we were cloned
-          response_handler->original_interface (node);
-        }
-      else
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_amh_pre_proc::"
-                             "visit_interface - "
-                             "creating the response handler failed\n"),
-                            -1);
-        }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_amh_pre_proc::"
+                         "visit_interface - "
+                         "creating the response handler failed\n"),
+                        -1);
     }
+  response_handler->set_defined_in (node->defined_in ());
+
+  // Insert the response handler after the node.
+  module->be_add_interface (response_handler, node);
+
+  // Remember from whom we were cloned
+  response_handler->original_interface (node);
+
   return 0;
 }
 
@@ -102,12 +110,18 @@ be_visitor_amh_pre_proc::create_response_handler (be_interface *node)
   class_name += "AMH_";
   class_name += node->local_name ();
   class_name += "ResponseHandler";
-  
-  UTL_ScopedName *amh_name = 
+
+  UTL_ScopedName *amh_name =
     ACE_dynamic_cast(UTL_ScopedName*,node->name ()->copy ());
   Identifier *local_name = amh_name->last_component ();
   local_name->replace_string (class_name.c_str ());
 
+  // @@ Mayur, you are not filling up the list of inherited classes,
+  // however, you *are* using that same list in the amh_rh_sh.cpp and
+  // amh_rh_sh.cpp file... you need to fill up the list, i.e. discover
+  // the inherited classes in the original interface, change their
+  // names and then use the symbol table to look up the
+  // AMH-response-handler nodes.
   be_interface *response_handler =
     new be_interface (amh_name,   // name
                       0,          // list of inherited

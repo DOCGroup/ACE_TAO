@@ -146,13 +146,14 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   this->this_method (node);
 
   // The _interface_repository_id method.
-  *os << "virtual const char* _interface_repository_id "
-      << "(void) const;\n\n";
+  *os << be_nl
+      << "virtual const char* _interface_repository_id "
+      << "(void) const;\n";
 
   if (this->visit_scope (node) ==  -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_sh::"
+                         "(%N:%l) be_visitor_amh_interface_sh::"
                          "visit_interface - "
                          "codegen for scope failed\n"),
                         -1);
@@ -374,5 +375,5 @@ be_visitor_amh_interface_sh::this_method (be_interface *node)
   // AMH one.
   *os << non_amh_name.c_str () << " *_this (" << be_idt << be_idt_nl
       << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-      << be_uidt_nl << ");\n" << be_uidt_nl;
+      << ");\n" << be_uidt;
 }
