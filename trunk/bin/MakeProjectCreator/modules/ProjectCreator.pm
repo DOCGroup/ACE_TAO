@@ -1169,7 +1169,7 @@ sub add_generated_files {
         $file =~ s/$wanted$//;
         foreach my $pf (@{$self->{'generated_exts'}->{$gentype}->{'pre_filename'}}) {
           foreach my $pe (@{$self->{'generated_exts'}->{$gentype}->{'pre_extension'}}) {
-            $self->list_generated_file($gentype, $tag, \@added, "$pf$file$pe");
+            $self->list_generated_file($gentype, $tag, \@added, "$pf$file$pe", $i);
           }
         }
       }
@@ -1632,12 +1632,62 @@ sub list_default_generated {
 }
 
 
+sub prepend_gendir {
+  my($self)    = shift;
+  my($created) = shift;
+  my($ofile)   = shift;
+  my($gentype) = shift;
+  my($key)     = undef;
+
+  foreach my $ext (@{$self->{'valid_components'}->{$gentype}}) {
+    my($e) = $ext;
+    $e =~ s/\\//g;
+    $key = "$ofile$e";
+    if (defined $self->{'flag_overrides'}->{$gentype}->{$key}) {
+      last;
+    }
+    else {
+      $key = undef;
+    }
+  }
+
+  if (defined $key) {
+    foreach my $ma (@{$self->{'matching_assignments'}->{$gentype}}) {
+      ##
+      ## When IDL_Files is a custom definition, change this to
+      ## if ($ma eq 'gendir') { -- CAE 1/27/2004
+      ##
+      if ($ma =~ /gendir/) {
+        if (defined $self->{'flag_overrides'}->{$gentype}->{$key}->{$ma}) {
+          return "$self->{'flag_overrides'}->{$gentype}->{$key}->{$ma}/" .
+                 basename($created);
+        }
+      }
+    }
+  }
+
+  ##
+  ## When IDL_Files is a custom definition, this elsif clause needs to
+  ## be removed completely. -- CAE 1/27/2004
+  ##
+  elsif ($gentype eq 'idl_files') {
+    my($gendir) = $self->get_assignment('idlgendir');
+    if (defined $gendir) {
+      return "$gendir/" . basename($created);
+    }
+  }
+
+  return $created;
+}
+
+
 sub list_generated_file {
   my($self)    = shift;
   my($gentype) = shift;
   my($tag)     = shift;
   my($array)   = shift;
   my($file)    = shift;
+  my($ofile)   = shift;
 
   if (defined $self->{'generated_exts'}->{$gentype}->{$tag}) {
     my(@gen)     = $self->get_component_list($gentype);
@@ -1668,6 +1718,9 @@ sub list_generated_file {
             my($created) = "$file$1";
             $created =~ s/\\//g;
             if (!$self->already_added($array, $created)) {
+              if (defined $ofile) {
+                $created = $self->prepend_gendir($created, $ofile, $gentype);
+              }
               push(@$array, $created);
             }
             last;

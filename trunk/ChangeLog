@@ -1,3 +1,13 @@
+Wed Jan 28 09:17:36 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Added custom build output inference that takes gendir settings
+          into account.  If a custom build file is listed, gendir is set and
+          the generated source isn't listed in the Source_Files list, then
+          the correct generated source files will be listed with the correct
+          path determined by gendir.
+
 Wed Jan 28 08:54:29 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
