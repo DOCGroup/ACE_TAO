@@ -112,6 +112,9 @@ be_visitor_root_sth::visit_module (be_module *node)
 
   // Generate the skeleton class name.
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+               << "// " __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   if (!node->is_nested ())
     {
       // If the line below is not true, we don't want to
