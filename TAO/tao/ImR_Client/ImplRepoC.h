@@ -850,7 +850,7 @@ namespace ImplementationRepository
 // Proxy Broker Factory function pointer declarations.
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:132
+// be\be_visitor_root/root.cpp:139
 
 extern TAO_IMR_Client_Export
 TAO::Collocation_Proxy_Broker *
@@ -1087,7 +1087,7 @@ TAO_IMR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Implemen
 TAO_IMR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::Administration_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
+// be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "ImplRepoC.inl"
