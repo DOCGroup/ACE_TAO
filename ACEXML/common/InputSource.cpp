@@ -32,10 +32,10 @@ ACEXML_InputSource::ACEXML_InputSource (const ACEXML_Char *systemId)
 
 ACEXML_InputSource::~ACEXML_InputSource (void)
 {
-  delete this->publicId_;
-  delete this->systemId_;
+  delete[] this->publicId_;
+  delete[] this->systemId_;
   delete this->charStream_;
-  delete this->encoding_;
+  delete[] this->encoding_;
 }
 
 ACEXML_CharStream *

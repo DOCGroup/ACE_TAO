@@ -19,10 +19,9 @@
  *
  * @brief ACEXML_Env
  *
- * ACEXML_Env is modeled after CORBA_Environment class.  It provides
- * a place holder for callees to propagate exceptions back to
- * callers.  ACEXML does not support native exceptions at this
- * moement.
+ * ACEXML_Env is modeled after CORBA_Environment class. It provides a place
+ * holder for callees to propagate exceptions back to callers. ACEXML does
+ * not support native exceptions at this moment.
  *
  * @sa ACEXML_Exception
  */
@@ -58,8 +57,8 @@ private:
 
 // = These macros are used to speed up programming.  I hope to
 // merge them with ACE_CHECK macros someday.
-#define ACEXML_CHECK if (xmlenv.exception ()) return;
-#define ACEXML_CHECK_RETURN(VAL) if (xmlenv.exception ()) return VAL;
+#define ACEXML_CHECK if (xmlenv.exception ()) return
+#define ACEXML_CHECK_RETURN(VAL) if (xmlenv.exception ()) return VAL
 
 #if defined (__ACEXML_INLINE__)
 # include "ACEXML/common/Env.i"

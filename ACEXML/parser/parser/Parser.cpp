@@ -15,17 +15,17 @@ ACEXML_Parser::simple_parsing_name_[] = { 'S', 'i', 'm', 'p', 'l', 'e', 0 };
 #endif /* __ACEXML_INLINE__ */
 
 /***
-TO-DO:
+    TO-DO:
 
-END-OF-LINE handling: x read quoted string
-                        ignore whitespace
-                        processing instruction
-                      x element contents
+    END-OF-LINE handling: x read quoted string
+    ignore whitespace
+    processing instruction
+    x element contents
 
-Figure out how to handle namespace here:
-and when to invoke start/endPrefixMapping?
+    Figure out how to handle namespace here:
+    and when to invoke start/endPrefixMapping?
 
-Make sure we are freezing the obstack in all cases.
+    Make sure we are freezing the obstack in all cases.
 
 ***/
 
@@ -38,6 +38,7 @@ ACEXML_Parser::ACEXML_Parser (void)
       doctype_ (0),
       dtd_system_ (0),
       dtd_public_ (0),
+      locator_(),
       simple_parsing_ (0)
 {
 }
@@ -79,10 +80,12 @@ ACEXML_Parser::setFeature (const ACEXML_Char *name,
   //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
   //                       ACEXML_SAXNotSupportedException))
 {
-  if (ACE_OS_String::strcmp (name, ACEXML_Parser::simple_parsing_name_) == 0)
+  if (ACE_OS_String::strcmp (name, ACEXML_Parser::simple_parsing_name_) == 0) {
     this->simple_parsing_ = (boolean_value == 0 ? 0 : 1);
-
+    return;
+  }
   xmlenv.exception (new ACEXML_SAXNotRecognizedException ());
+  return;
 }
 
 void
@@ -97,29 +100,59 @@ ACEXML_Parser::setProperty (const ACEXML_Char *name,
   ACE_UNUSED_ARG (value);
 
   xmlenv.exception (new ACEXML_SAXNotSupportedException ());
+  return;
 }
 
+void
+ACEXML_Parser::report_error (ACEXML_SAXParseException& exception,
+                             ACEXML_Env& xmlenv)
+{
+  if (this->error_handler_)
+    this->error_handler_->error (exception, xmlenv);
+  return;
+}
+
+void
+ACEXML_Parser::report_warning (ACEXML_SAXParseException& exception,
+                               ACEXML_Env& xmlenv)
+{
+  if (this->error_handler_)
+    this->error_handler_->warning (exception, xmlenv);
+  return;
+}
+
+void
+ACEXML_Parser::report_fatal_error (ACEXML_SAXParseException& exception,
+                                   ACEXML_Env& xmlenv)
+{
+  if (this->error_handler_)
+    this->error_handler_->fatalError (exception, xmlenv);
+  return;
+}
 
 void
 ACEXML_Parser::parse (ACEXML_InputSource *input,
                       ACEXML_Env &xmlenv)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  if (input == 0)
+  ACEXML_SAXParseException* exception = 0; // store the exception
+
+  if (input == 0 || (this->instream_ = input->getCharStream ())  == 0)
     {
-      xmlenv.exception (new ACEXML_SAXException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("No valid input source available")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return;
     }
 
-  // @@ Set up Locator.
-
-  if ((this->instream_ = input->getCharStream ()) == 0)
-    {
-      xmlenv.exception (new ACEXML_SAXException
-                        (ACE_LIB_TEXT ("No valid input source available")));
-      return;
-    }
+  // Set up Locator. At this point, the systemId and publicId are null. We
+  // can't do better, as we don't know anything about the InputSource
+  // currently, and according to the SAX spec, the parser should set up the
+  // locator before reporting any document events.
+  if (this->content_handler_)
+    this->content_handler_->setDocumentLocator (&this->locator_, xmlenv);
 
   if (this->simple_parsing_ == 0)
     {
@@ -129,7 +162,7 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
   // The nesting of events reported should be as follows:
   //    startDocument
   //       startDTD
-  //       ....
+  //         ....
   //       endDTD
   //       startElement
   //         ....
@@ -144,10 +177,12 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
     {
       if (this->skip_whitespace (0) != '<')
         {
-          xmlenv.exception (new ACEXML_SAXParseException
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
                             (ACE_LIB_TEXT ("Expecting '<'")));
+          xmlenv.exception (exception);
+          this->report_fatal_error(*exception, xmlenv);
           return;
-
         }
       ACEXML_Char fwd = this->peek ();
       switch (fwd)
@@ -167,15 +202,21 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
             {
               if (this->grok_comment () < 0)
                 {
-                  xmlenv.exception (new ACEXML_SAXParseException
+                  ACE_NEW_NORETURN (exception,
+                                    ACEXML_SAXParseException
                                     (ACE_LIB_TEXT ("Invalid comment")));
+                  xmlenv.exception (exception);
+                  this->report_fatal_error(*exception, xmlenv);
                   return;
                 }
             }
           else
             {
-              xmlenv.exception (new ACEXML_SAXParseException
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
                                 (ACE_LIB_TEXT ("Duplicate DOCTYPE definitions")));
+              xmlenv.exception (exception);
+              this->report_fatal_error(*exception, xmlenv);
               return;
             }
           break;
@@ -184,8 +225,11 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
           ACEXML_CHECK;
           break;
         case 0:
-          xmlenv.exception (new ACEXML_SAXParseException
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
                             (ACE_LIB_TEXT ("Unexpected EOF")));
+          xmlenv.exception (exception);
+          this->report_fatal_error(*exception, xmlenv);
           break;
         default:                // Root element begins
           prolog_done = 1;
@@ -199,6 +243,9 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
 
   this->content_handler_->endDocument (xmlenv);
   // ACEXML_CHECK;
+
+  // Reset the Locator held within the parser
+  this->locator_.reset();
 }
 
 void
@@ -248,7 +295,7 @@ ACEXML_Parser::skip_whitespace_count (ACEXML_Char *peeky)
   ACEXML_Char &forward = (peeky == 0 ? dummy : *peeky);
 
   for (;this->is_whitespace ((forward = this->peek ())); ++wscount)
-      this->get ();
+    this->get ();
 
   return wscount;
 }
@@ -257,14 +304,18 @@ void
 ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACEXML_SAXParseException* exception = 0;
   if (this->get () != '<' ||
       this->get () != '?' ||
       this->get () != 'x' ||
       this->get () != 'm' ||
       this->get () != 'l')
     {
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Unrecognized XML Decl ('<?xml' ?)")));
+      xmlenv.exception (exception);
+      this->report_fatal_error(*exception, xmlenv);
       return;
     }
 
@@ -280,8 +331,11 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
       this->skip_equal () != 0 ||
       this->get_quoted_string (astring) != 0)
     {
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Unrecognized XML Decl ('version'?)")));
+      xmlenv.exception (exception);
+      this->report_fatal_error(*exception, xmlenv);
       return;
     }
 
@@ -315,8 +369,11 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
                 {
                   if (seen_encoding)
                     {
-                      xmlenv.exception (new ACEXML_SAXParseException
+                      ACE_NEW_NORETURN (exception,
+                                        ACEXML_SAXParseException
                                         (ACE_LIB_TEXT ("Duplicate encoding defined")));
+                      xmlenv.exception (exception);
+                      this->report_fatal_error(*exception, xmlenv);
                       return;
                     }
                   else
@@ -328,8 +385,11 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
                 }
               else
                 {
-                  xmlenv.exception (new ACEXML_SAXParseException
+                  ACE_NEW_NORETURN (exception,
+                                    ACEXML_SAXParseException
                                     (ACE_LIB_TEXT ("Unrecognized XML Decl ('encoding'?)")));
+                  xmlenv.exception (exception);
+                  this->report_fatal_error(*exception, xmlenv);
                   return;
                 }
             }
@@ -359,25 +419,32 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
                       continue;
                     }
                 }
-              xmlenv.exception (new ACEXML_SAXParseException
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
                                 (ACE_LIB_TEXT ("Unrecognized XML Decl ('standalone'?)")));
+              xmlenv.exception (exception);
+              this->report_fatal_error(*exception, xmlenv);
               return;
             }
           else
             {
-              xmlenv.exception (new ACEXML_SAXParseException
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
                                 (ACE_LIB_TEXT ("Unrecognized XML Decl ('standalone'?)")));
+              xmlenv.exception (exception);
+              this->report_fatal_error(*exception, xmlenv);
               return;
             }
         }
-
-
       this->get ();  // consume '?'
 
       if (this->get() != '>')
         {
-          xmlenv.exception (new ACEXML_SAXParseException
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
                             (ACE_LIB_TEXT ("Unrecognized XML Decl ('>'?)")));
+          xmlenv.exception (exception);
+          this->report_fatal_error(*exception, xmlenv);
           return;
         }
       return;
@@ -396,12 +463,10 @@ ACEXML_Parser::grok_comment (void)
       this->get () == '-')      // and at least something not '-'.
     return -1;
 
-  while (state < 3)             // Waiting for the trailing three
-                                // character '-->'.  Notice that
-                                // according to the spec, '--->'
-                                // is not a valid closing comment
-                                // sequence.  But we'll let it pass
-                                // anyway.
+  while (state < 3)
+    // Waiting for the trailing three character '-->'. Notice that
+    // according to the spec, '--->' is not a valid closing comment
+    // sequence. But we'll let it pass anyway.
     {
       ACEXML_Char fwd = this->get ();
       if ((fwd == '-' && state < 2) ||
@@ -442,20 +507,28 @@ ACEXML_Parser::read_name (ACEXML_Char ch)
 int
 ACEXML_Parser::parse_processing_instruction (ACEXML_Env &xmlenv)
 {
+  ACEXML_SAXParseException* exception = 0;
+
   if (this->get () != '?')
     {                           // How did we get here?
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Internal error")));
+      xmlenv.exception (exception);
+      this->report_fatal_error(*exception, xmlenv);
       return -1;
     }
   const ACEXML_Char *pitarget = this->read_name ();
   ACEXML_Char *instruction = 0;
 
   if (ACE_OS_String::strcasecmp (ACE_LIB_TEXT ("xml"), pitarget) != 0)
-    {                           // Invalid PITarget name.
-      xmlenv.exception
-        (new ACEXML_SAXParseException
-         (ACE_LIB_TEXT ("PITarget name cannot start with 'xml'")));
+    {
+      // Invalid PITarget name.
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
+                        (ACE_LIB_TEXT ("PITarget name cannot start with 'xml'")));
+      xmlenv.exception (exception);
+      this->report_fatal_error(*exception, xmlenv);
       return -1;
     }
 
@@ -484,6 +557,8 @@ ACEXML_Parser::parse_processing_instruction (ACEXML_Env &xmlenv)
         case 0x0D:                // End-of-Line handling
           ch = (this->peek () == 0x0A ? this->get () : 0x0A);
           // Fall thru...
+        case 0x0A:
+          // Fall thru...
         default:
           if (state == 1)
             this->obstack_.grow ('?');
@@ -499,6 +574,8 @@ int
 ACEXML_Parser::parse_doctypedecl (ACEXML_Env &xmlenv)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACEXML_SAXParseException* exception = 0;
+
   if (this->get () != 'D' ||
       this->get () != 'O' ||
       this->get () != 'C' ||
@@ -507,16 +584,22 @@ ACEXML_Parser::parse_doctypedecl (ACEXML_Env &xmlenv)
       this->get () != 'P' ||
       this->get () != 'E')
     {
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Expecting keyword 'DOCTYPE'")));
+      xmlenv.exception (exception);
+      this->report_fatal_error(*exception, xmlenv);
       return -1;
     }
 
   ACEXML_Char nextch = this->skip_whitespace (0);
   if (nextch == 0)
     {
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Expecting a DOCTYPE name")));
+      xmlenv.exception (exception);
+      this->report_fatal_error(*exception, xmlenv);
       return -1;
     }
 
@@ -532,9 +615,9 @@ ACEXML_Parser::parse_doctypedecl (ACEXML_Env &xmlenv)
       if (xmlenv.exception () != 0)
         return -1;
       else if (this->dtd_public_ == 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("ACEXML Parser got external DTD id: SYSTEM %s\n"),
-                      this->dtd_system_));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("ACEXML Parser got external DTD id: SYSTEM %s\n"),
+                    this->dtd_system_));
       else
         ACE_DEBUG ((LM_DEBUG,
                     ACE_LIB_TEXT ("==> ACEXML Parser got DTD external id: PUBLIC %s %s\n"),
@@ -552,8 +635,11 @@ ACEXML_Parser::parse_doctypedecl (ACEXML_Env &xmlenv)
       // this is an XML document without a dectypedecl.
       return 0;
     case '0':
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Unexpected EOF")));
+      xmlenv.exception (exception);
+      this->report_fatal_error(*exception, xmlenv);
       return -1;
     default:
       break;
@@ -561,8 +647,11 @@ ACEXML_Parser::parse_doctypedecl (ACEXML_Env &xmlenv)
 
   if (this->skip_whitespace (0) != '>')
     {
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Internal error")));
+      xmlenv.exception (exception);
+      this->report_fatal_error(*exception, xmlenv);
       return -1;
     }
   return 0;
@@ -572,14 +661,19 @@ void
 ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACEXML_SAXParseException* exception = 0;
+
   // Parse STag.
 
   const ACEXML_Char *startname = this->read_name ();
 
   if (startname == 0)
     {
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Unexpected EOF")));
+      xmlenv.exception (exception);
+      this->report_fatal_error(*exception, xmlenv);
       return;
     }
 
@@ -587,8 +681,11 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
       this->doctype_ != 0 &&
       ACE_OS_String::strcmp (startname, this->doctype_) != 0)
     {
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Root element missing.")));
+      xmlenv.exception (exception);
+      this->report_fatal_error(*exception, xmlenv);
       return;
     }
 
@@ -605,27 +702,36 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
       switch (ch)
         {
         case 0:
-          xmlenv.exception (new ACEXML_SAXParseException
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
                             (ACE_LIB_TEXT ("Internal error")));
+          xmlenv.exception (exception);
+          this->report_fatal_error(*exception, xmlenv);
           return;
 
         case '/':
           if (this->get () != '>')
             {
-              xmlenv.exception (new ACEXML_SAXParseException
-                                (ACE_LIB_TEXT ("Expectint '>'")));
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
+                                (ACE_LIB_TEXT ("  Expecting '>'")));
+              xmlenv.exception (exception);
+              this->report_fatal_error(*exception, xmlenv);
               return;
             }
           else
             {
-              this->xml_namespace_.processName (startname, ns_uri, ns_lname, 0);
+              this->xml_namespace_.processName(startname, ns_uri, ns_lname, 0);
               this->content_handler_->startElement (ns_uri,
                                                     ns_lname,
                                                     startname,
                                                     &attributes,
                                                     xmlenv);
               ACEXML_CHECK;
-              this->content_handler_->endElement (ns_uri, ns_lname, startname, xmlenv);
+              this->content_handler_->endElement (ns_uri,
+                                                  ns_lname,
+                                                  startname,
+                                                  xmlenv);
               ACEXML_CHECK;
             }
           if (new_namespace != 0)
@@ -643,67 +749,68 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
           start_element_done = 1;
           break;
         default:
-          {
-            ACEXML_Char *attvalue = 0;
-            ACEXML_Char *attname = this->read_name (ch);
+          ACEXML_Char *attvalue = 0;
+          ACEXML_Char *attname = this->read_name (ch);
 
-            if (attname == 0 ||
-                this->skip_equal () != 0 ||
-                this->get_quoted_string (attvalue) != 0)
-              {
-                xmlenv.exception (new ACEXML_SAXParseException
-                                  (ACE_LIB_TEXT ("Error reading attribute")));
-                return;
-              }
+          if (attname == 0 ||
+              this->skip_equal () != 0 ||
+              this->get_quoted_string (attvalue) != 0)
+            {
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
+                                (ACE_LIB_TEXT ("Error reading attribute")));
+              xmlenv.exception (exception);
+              this->report_fatal_error(*exception, xmlenv);
+              return;
+            }
 
-            // Handling new namespace if any.  Notice that the order of namespace
-            // declaration does matter.
-            if (attname[0] == 'x' &&
-                attname[1] == 'm' &&
-                attname[2] == 'l' &&
-                attname[3] == 'n' &&
-                attname[4] == 's')
-              {
-                if (new_namespace == 0)
-                  {
-                    this->xml_namespace_.pushContext ();
-                    new_namespace = 1;
-                  }
+          // Handling new namespace if any. Notice that the order of
+          // namespace declaration does matter.
+          if (attname[0] == 'x' &&
+              attname[1] == 'm' &&
+              attname[2] == 'l' &&
+              attname[3] == 'n' &&
+              attname[4] == 's')
+            {
+              if (new_namespace == 0)
+                {
+                  this->xml_namespace_.pushContext ();
+                  new_namespace = 1;
+                }
 
-                ACE_Tokenizer ns_att (attname);
-                ns_att.delimiter_replace (':', 0);
-                ACEXML_Char *xmlns_prefix, *ns_name;
+              ACE_Tokenizer ns_att (attname);
+              ns_att.delimiter_replace (':', 0);
+              ACEXML_Char *xmlns_prefix, *ns_name;
 
-                xmlns_prefix = ns_att.next ();
-                ns_name = ns_att.next ();
+              xmlns_prefix = ns_att.next ();
+              ns_name = ns_att.next ();
 
-                // @@ xmlns_prefix is not used now.
-                ACE_UNUSED_ARG (xmlns_prefix);
-                if (ns_name == 0)
-                  {
-                    // @@ Check return value?
-                    this->xml_namespace_.declarePrefix (empty_string,
-                                                        attvalue);
-                  }
-                else
-                  {
-                    // @@ Check return value?
-                    this->xml_namespace_.declarePrefix (ns_name,
-                                                        attvalue);
-                  }
-              }
-            else
-              {
-                const ACEXML_Char *uri, *lName;
-                this->xml_namespace_.processName (attname, uri, lName, 1);
+              // @@ xmlns_prefix is not used now.
+              ACE_UNUSED_ARG (xmlns_prefix);
+              if (ns_name == 0)
+                {
+                  // @@ Check return value?
+                  this->xml_namespace_.declarePrefix (empty_string,
+                                                      attvalue);
+                }
+              else
+                {
+                  // @@ Check return value?
+                  this->xml_namespace_.declarePrefix (ns_name,
+                                                      attvalue);
+                }
+            }
+          else
+            {
+              const ACEXML_Char *uri, *lName;
+              this->xml_namespace_.processName (attname, uri, lName, 1);
 
-                attributes.addAttribute (uri,
-                                         lName,
-                                         attname,
-                                         default_attribute_type,
-                                         attvalue);
-              }
-          }
+              attributes.addAttribute (uri,
+                                       lName,
+                                       attname,
+                                       default_attribute_type,
+                                       attvalue);
+            }
           break;
         }
     }
@@ -713,148 +820,169 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
 
   // Parse element contents.
   while (1)
-  {
-    ch = this->get ();
+    {
+      ch = this->get ();
 
-    switch (ch)
-      {
-      case 0:
-        xmlenv.exception (new ACEXML_SAXParseException
-                          (ACE_LIB_TEXT ("Internal error")));
-        return;
-
-      case '<':
-        // Push out old 'characters' event.
-        if (cdata_length != 0)
-          {
-            cdata = this->obstack_.freeze ();
-            this->content_handler_->characters (cdata,
-                                                0,
-                                                cdata_length,
-                                                xmlenv);
-            ACEXML_CHECK;
-            cdata_length = 0;
-          }
-
-        switch (this->peek ())
-          {
-          case '!':             // a comment or a CDATA section.
-            this->get ();       // consume '!'
-            ch = this->peek ();
-            if (ch == '-')      // a comment
-              {
-                if (this->grok_comment () < 0)
-                  {
-                    xmlenv.exception
-                      (new ACEXML_SAXParseException
-                       (ACE_LIB_TEXT ("Error parsing comment")));
-                    return ;
-                  }
-              }
-            else if (ch == '[') // a CDATA section.
-              {
-                this->parse_cdata (xmlenv);
-                ACEXML_CHECK;
-              }
-            else
-              {
-                xmlenv.exception (new ACEXML_SAXParseException
-                                  (ACE_LIB_TEXT ("Unexpected character")));
-                return;
-              }
-            break;
-          case '?':             // a PI.
-            this->parse_processing_instruction (xmlenv);
-            ACEXML_CHECK;
-            break;
-          case '/':             // an ETag.
-            this->get ();       // consume '/'
-            endname = this->read_name ();
-            if (endname == 0 ||
-                ACE_OS_String::strcmp (startname, endname) != 0)
-              {
-                xmlenv.exception
-                  (new ACEXML_SAXParseException
-                   (ACE_LIB_TEXT ("Mismatched End-tag encountered")));
-                return ;
-              }
-            if (this->skip_whitespace (0) != '>')
-              {
-                xmlenv.exception
-                  (new ACEXML_SAXParseException
-                   (ACE_LIB_TEXT ("Expecting '>' in an end-tag")));
-                return;
-              }
-            this->content_handler_->endElement (ns_uri,
-                                                ns_lname,
-                                                endname,
-                                                xmlenv);
-            ACEXML_CHECK;
-
-            if (new_namespace != 0)
-              this->xml_namespace_.popContext ();
-            return;
-
-          default:              // a new nested element?
-            this->parse_element (0, xmlenv);
-            ACEXML_CHECK;
-            break;
-          }
-        break;
-      case '&':
+      switch (ch)
         {
-          const ACEXML_String *replace = 0;
-          ACEXML_String charval;
-          ACEXML_Char buffer[6];
+        case 0:
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
+                            (ACE_LIB_TEXT ("Internal error")));
+          xmlenv.exception (exception);
+          this->report_fatal_error(*exception, xmlenv);
+          return;
 
-          if (this->peek () == '#')
+        case '<':
+          // Push out old 'characters' event.
+          if (cdata_length != 0)
             {
-              if (this->parse_char_reference (buffer, 6) != 0)
+              cdata = this->obstack_.freeze ();
+              this->content_handler_->characters (cdata,
+                                                  0,
+                                                  cdata_length,
+                                                  xmlenv);
+              ACEXML_CHECK;
+              cdata_length = 0;
+            }
+
+          switch (this->peek ())
+            {
+            case '!':             // a comment or a CDATA section.
+              this->get ();       // consume '!'
+              ch = this->peek ();
+              if (ch == '-')      // a comment
                 {
-                  // not referring to any character exception?
+                  if (this->grok_comment () < 0)
+                    {
+                      ACE_NEW_NORETURN (exception,
+                                        ACEXML_SAXParseException
+                                        (ACE_LIB_TEXT ("Error parsing comment")));
+                      xmlenv.exception (exception);
+                      this->report_fatal_error(*exception, xmlenv);
+                      return;
+                    }
+                }
+              else if (ch == '[') // a CDATA section.
+                {
+                  this->parse_cdata (xmlenv);
+                  ACEXML_CHECK;
+                }
+              else
+                {
+                  ACE_NEW_NORETURN (exception,
+                                    ACEXML_SAXParseException
+                                    (ACE_LIB_TEXT ("Unexpected character")));
+                  xmlenv.exception (exception);
+                  this->report_fatal_error(*exception, xmlenv);
                   return;
                 }
-              charval.set (buffer, 0);
-              replace = &charval;
+              break;
+            case '?':             // a PI.
+              this->parse_processing_instruction (xmlenv);
+              ACEXML_CHECK;
+              break;
+            case '/':             // an ETag.
+              this->get ();       // consume '/'
+              endname = this->read_name ();
+              if (endname == 0 ||
+                  ACE_OS_String::strcmp (startname, endname) != 0)
+                {
+                  ACE_NEW_NORETURN (exception,
+                                    ACEXML_SAXParseException
+                                    (ACE_LIB_TEXT
+                                     ("Mismatched End-tag encountered")));
+                  xmlenv.exception (exception);
+                  this->report_fatal_error(*exception, xmlenv);
+                  return ;
+                }
+              if (this->skip_whitespace (0) != '>')
+                {
+                  ACE_NEW_NORETURN (exception,
+                                    ACEXML_SAXParseException
+                                    (ACE_LIB_TEXT
+                                     ("Expecting '>' in an end-tag")));
+                  xmlenv.exception (exception);
+                  this->report_fatal_error(*exception, xmlenv);
+                  return;
+                }
+              this->content_handler_->endElement (ns_uri,
+                                                  ns_lname,
+                                                  endname,
+                                                  xmlenv);
+              ACEXML_CHECK;
+
+              if (new_namespace != 0)
+                this->xml_namespace_.popContext ();
+              return;
+
+            default:              // a new nested element?
+              this->parse_element (0, xmlenv);
+              ACEXML_CHECK;
+              break;
             }
-          else
+          break;
+        case '&':
+          {
+            const ACEXML_String *replace = 0;
+            ACEXML_String charval;
+            ACEXML_Char buffer[6];
+
+            if (this->peek () == '#')
+              {
+                if (this->parse_char_reference (buffer, 6) != 0)
+                  {
+                    // not referring to any character exception?
+                    return;
+                  }
+                charval.set (buffer, 0);
+                replace = &charval;
+              }
+            else
               replace = this->parse_reference ();
 
-          if (replace == 0)
-            {
-              xmlenv.exception (new ACEXML_SAXParseException
-                                (ACE_LIB_TEXT ("Internal Error?")));
+            if (replace == 0)
+              {
+                ACE_NEW_NORETURN (exception,
+                                  ACEXML_SAXParseException
+                                  (ACE_LIB_TEXT
+                                   ("Internal Error?")));
+                xmlenv.exception (exception);
+                this->report_fatal_error(*exception, xmlenv);
+                return;
+              }
+            if (this->try_grow_cdata (replace->length (),
+                                      cdata_length, xmlenv) == 0)
+              {
+                cdata_length = replace->length ();
+                for (size_t i = 0; i < replace->length (); ++i)
+                  this->obstack_.grow ((*replace)[i]);
+              }
+            else
               return;
-            }
-          if (this->try_grow_cdata (replace->length (), cdata_length, xmlenv) == 0)
-            {
-              cdata_length = replace->length ();
-              for (size_t i = 0; i < replace->length (); ++i)
-                this->obstack_.grow ((*replace)[i]);
-            }
-          else
-            return;
-        }
-        break;
-      case 0x0D:                // End-of-Line handling
-        ch = (this->peek () == 0x0A ? this->get () : 0x0A);
-        // Fall thru...
-      default:
-        ++cdata_length;
-        cdata = this->obstack_.grow (ch);
-        if (cdata == 0)
-          {
-            cdata = this->obstack_.freeze ();
-            this->content_handler_->characters (cdata,
-                                                0,
-                                                cdata_length,
-                                                xmlenv);
-            ACEXML_CHECK;
-            this->obstack_.grow (ch);
-            cdata_length = 1;   // the missing char.
           }
-      }
-  }
+          break;
+        case 0x0D:                // End-of-Line handling
+          ch = (this->peek () == 0x0A ? this->get () : 0x0A);
+          // Fall thru...
+        case 0x0A:
+          // Fall thru...
+        default:
+          ++cdata_length;
+          cdata = this->obstack_.grow (ch);
+          if (cdata == 0)
+            {
+              cdata = this->obstack_.freeze ();
+              this->content_handler_->characters (cdata,
+                                                  0,
+                                                  cdata_length,
+                                                  xmlenv);
+              ACEXML_CHECK;
+              this->obstack_.grow (ch);
+              cdata_length = 1;   // the missing char.
+            }
+        }
+    }
 
 }
 
@@ -942,9 +1070,9 @@ ACEXML_Parser::parse_char_reference (ACEXML_Char *buf, size_t len)
 #elif 1                         // or UTF-8
           if ((clen = ACEXML_Transcoder::ucs42utf8 (sum, buf, len)) < 0)
             return -1;
-#elif 0                         // UCS 4, not likely
-          buf [0] = sum;
-          buf [1] = 0;
+          //  #elif 0                         // UCS 4, not likely
+          //            buf [0] = sum;
+          //            buf [1] = 0;
 #endif
           buf [clen] = 0;
           return 0;
@@ -953,15 +1081,15 @@ ACEXML_Parser::parse_char_reference (ACEXML_Char *buf, size_t len)
         }
       more_digit = 1;
     }
-  ACE_NOTREACHED (return -1;)
+  ACE_NOTREACHED (return -1);
 }
 
 const ACEXML_String *
 ACEXML_Parser::parse_reference (void)
 {
-  // @@ We'll use a temporary buffer here as the Obstack are most likely
-  // be in use when we come here.  This put a limit on the max length of
-  // a reference.
+  // @@ We'll use a temporary buffer here as the Obstack is most likely in
+  // use when we are here. This put a limit on the max length of a
+  // reference.
   ACEXML_Char ref[MAXPATHLEN];
 
   size_t loc = 0;
@@ -984,6 +1112,8 @@ ACEXML_Parser::parse_reference (void)
 int
 ACEXML_Parser::parse_cdata (ACEXML_Env &xmlenv)
 {
+  ACEXML_SAXParseException* exception = 0;
+
   if (this->get () != '[' ||
       this->get () != 'C' ||
       this->get () != 'D' ||
@@ -992,8 +1122,11 @@ ACEXML_Parser::parse_cdata (ACEXML_Env &xmlenv)
       this->get () != 'A' ||
       this->get () != '[')
     {
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("'[CDATA[' expected")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
 
@@ -1060,6 +1193,8 @@ ACEXML_Parser::parse_cdata (ACEXML_Env &xmlenv)
 int
 ACEXML_Parser::try_grow_cdata (size_t size, size_t &len, ACEXML_Env &xmlenv)
 {
+  ACEXML_SAXParseException* exception = 0;
+
   if (this->obstack_.request (size) != 0)
     {
       if (len != 0)
@@ -1067,8 +1202,12 @@ ACEXML_Parser::try_grow_cdata (size_t size, size_t &len, ACEXML_Env &xmlenv)
           ACEXML_Char *cdata = this->obstack_.freeze ();
           if (cdata == 0)
             {
-              xmlenv.exception (new ACEXML_SAXParseException
-                                (ACE_LIB_TEXT ("Internal Error growing CDATA buffer")));
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
+                                (ACE_LIB_TEXT
+                                 ("Internal Error growing CDATA buffer")));
+              xmlenv.exception (exception);
+              this->report_fatal_error (*exception, xmlenv);
               return -1;
             }
           this->content_handler_->characters (cdata,
@@ -1081,8 +1220,12 @@ ACEXML_Parser::try_grow_cdata (size_t size, size_t &len, ACEXML_Env &xmlenv)
             return 0;
         }
 
-      xmlenv.exception (new ACEXML_SAXParseException
-                        (ACE_LIB_TEXT ("Internal error, buffer overflowed")));
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
+                        (ACE_LIB_TEXT
+                         ("Internal Error, buffer overflowed")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
   return 0;
@@ -1103,7 +1246,7 @@ int
 ACEXML_Parser::get_quoted_string (ACEXML_Char *&str)
 {
   ACEXML_Char quote = this->get ();
-  if (quote != '\'' && quote != '"')  // Not a quoted string found.
+  if (quote != '\'' && quote != '"')  // Not a quoted string.
     return -1;
 
   while (1)
@@ -1125,20 +1268,19 @@ ACEXML_Parser::get_quoted_string (ACEXML_Char *&str)
       switch (ch)
         {
         case '&':
-
           if (this->peek () == '#')
             {
               if (this->parse_char_reference (buffer, 6) != 0)
                 {
-                  //                  xmlenv.exception (new ACEXML_SAXParseException
-                  //(ACE_LIB_TEXT ("CharRef does not resolves to a valid character")));
+                  //                    xmlenv.exception (new ACEXML_SAXParseException
+                  //                                      (ACE_LIB_TEXT ("CharRef does not resolves to a valid character")));
                   return -1;
                 }
               charval.set (buffer, 0);
               replace = &charval;
             }
           else
-              replace = this->parse_reference ();
+            replace = this->parse_reference ();
 
           if (replace == 0)
             {
@@ -1153,6 +1295,8 @@ ACEXML_Parser::get_quoted_string (ACEXML_Char *&str)
         case 0x0D:                // End-of-Line handling
           ch = (this->peek () == 0x0A ? this->get () : 0x0A);
           // Fall thru...
+        case 0x0A:
+          // Fall thru...
         default:
           this->obstack_.grow (ch);
           break;
@@ -1163,6 +1307,7 @@ ACEXML_Parser::get_quoted_string (ACEXML_Char *&str)
 int
 ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
 {
+  ACEXML_SAXParseException* exception = 0;
   ACEXML_Char nextch = this->skip_whitespace (0);
 
   do {
@@ -1193,8 +1338,11 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
                     break;
 
                   default:
-                    xmlenv.exception (new ACEXML_SAXParseException
+                    ACE_NEW_NORETURN (exception,
+                                      ACEXML_SAXParseException
                                       (ACE_LIB_TEXT ("Invalid keyword in decl spec")));
+                    xmlenv.exception (exception);
+                    this->report_fatal_error (*exception, xmlenv);
                     return -1;
                   }
                 break;
@@ -1212,18 +1360,27 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
               case '-':         // a comment.
                 if (this->grok_comment () < 0)
                   {
-                    xmlenv.exception (new ACEXML_SAXParseException
+                    ACE_NEW_NORETURN (exception,
+                                      ACEXML_SAXParseException
                                       (ACE_LIB_TEXT ("Error parsing comment")));
+                    xmlenv.exception (exception);
+                    this->report_fatal_error (*exception, xmlenv);
                     return -1;
                   }
                 break;
               case 0:
-                xmlenv.exception (new ACEXML_SAXParseException
+                ACE_NEW_NORETURN (exception,
+                                  ACEXML_SAXParseException
                                   (ACE_LIB_TEXT ("Unexpected EOF")));
+                xmlenv.exception (exception);
+                this->report_fatal_error (*exception, xmlenv);
                 return -1;
               default:
-                xmlenv.exception (new ACEXML_SAXParseException
+                ACE_NEW_NORETURN (exception,
+                                  ACEXML_SAXParseException
                                   (ACE_LIB_TEXT ("Invalid char. follows '<!' in markupdecl")));
+                xmlenv.exception (exception);
+                this->report_fatal_error (*exception, xmlenv);
                 return -1;
               }
             break;
@@ -1234,13 +1391,18 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
             break;
 
           case 0:
-            xmlenv.exception (new ACEXML_SAXParseException
+            ACE_NEW_NORETURN (exception,
+                              ACEXML_SAXParseException
                               (ACE_LIB_TEXT ("Unexpected EOF")));
+            xmlenv.exception (exception);
+            this->report_fatal_error (*exception, xmlenv);
             return -1;
-
           default:
-            xmlenv.exception (new ACEXML_SAXParseException
-                              (ACE_LIB_TEXT ("Invalid char. follow '<' in markupdecl")));
+            ACE_NEW_NORETURN (exception,
+                              ACEXML_SAXParseException
+                              (ACE_LIB_TEXT ("Invalid char. follows '<!' in markupdecl")));
+            xmlenv.exception (exception);
+            this->report_fatal_error (*exception, xmlenv);
             return -1;
           }
         break;
@@ -1254,13 +1416,19 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
       case 0:                   // This may not be an error if we decide
                                 // to generalize this function to handle both
                                 // internal and external DTD definitions.
-        xmlenv.exception (new ACEXML_SAXParseException
+        ACE_NEW_NORETURN (exception,
+                          ACEXML_SAXParseException
                           (ACE_LIB_TEXT ("Unexpected EOF")));
+        xmlenv.exception (exception);
+        this->report_fatal_error (*exception, xmlenv);
         return -1;
 
       default:
-        xmlenv.exception (new ACEXML_SAXParseException
+        ACE_NEW_NORETURN (exception,
+                          ACEXML_SAXParseException
                           (ACE_LIB_TEXT ("Expecting markupdecl or DecSep")));
+        xmlenv.exception (exception);
+        this->report_fatal_error (*exception, xmlenv);
         return -1;
       };
 
@@ -1273,12 +1441,13 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
 
   } while (1);
 
-  ACE_NOTREACHED (return -1;)
+  ACE_NOTREACHED (return -1);
 }
 
 int
 ACEXML_Parser::parse_element_decl (ACEXML_Env &xmlenv)
 {
+  ACEXML_SAXParseException* exception = 0;
   if (this->get () != 'L' ||
       this->get () != 'E' ||
       this->get () != 'M' ||
@@ -1287,16 +1456,22 @@ ACEXML_Parser::parse_element_decl (ACEXML_Env &xmlenv)
       this->get () != 'T' ||
       this->skip_whitespace_count () == 0)
     {
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Expecting keyword `ELEMENT'")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
 
   ACEXML_Char *element_name = this->read_name ();
   if (element_name == 0)
     {
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Error reading element name while defining ELEMENT.")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
 
@@ -1312,8 +1487,11 @@ ACEXML_Parser::parse_element_decl (ACEXML_Env &xmlenv)
           this->get () != 'T' ||
           this->get () != 'Y')
         {
-          xmlenv.exception (new ACEXML_SAXParseException
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
                             (ACE_LIB_TEXT ("Expecting keyword `EMPTY' in ELEMENT definition.")));
+          xmlenv.exception (exception);
+          this->report_fatal_error (*exception, xmlenv);
           return -1;
         }
       break;
@@ -1322,8 +1500,11 @@ ACEXML_Parser::parse_element_decl (ACEXML_Env &xmlenv)
           this->get () != 'N' ||
           this->get () != 'Y')
         {
-          xmlenv.exception (new ACEXML_SAXParseException
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
                             (ACE_LIB_TEXT ("Expecting keyword `ANY' in ELEMENT definition.")));
+          xmlenv.exception (exception);
+          this->report_fatal_error (*exception, xmlenv);
           return -1;
         }
       break;
@@ -1333,14 +1514,20 @@ ACEXML_Parser::parse_element_decl (ACEXML_Env &xmlenv)
         return -1;
       break;
     default:                    // error
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Error reading ELEMENT definition.")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
   if (this->skip_whitespace (0) != '>')
     {
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Expecting '>' in ELEMENT definition.")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
   return 0;
@@ -1349,6 +1536,8 @@ ACEXML_Parser::parse_element_decl (ACEXML_Env &xmlenv)
 int
 ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
 {
+  ACEXML_SAXParseException* exception = 0;
+
   ACEXML_Char nextch;
 
   if (this->get () != 'N' ||
@@ -1358,8 +1547,11 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
       this->get () != 'Y' ||
       this->skip_whitespace_count (&nextch) == 0)
     {
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Expecting keyword `ENTITY'")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
 
@@ -1370,8 +1562,11 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
       this->get ();             // consume the '%'
       if (this->skip_whitespace_count (&nextch) == 0)
         {
-          xmlenv.exception (new ACEXML_SAXParseException
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
                             (ACE_LIB_TEXT ("Can't use a reference when defining entity name")));
+          xmlenv.exception (exception);
+          this->report_fatal_error (*exception, xmlenv);
           return -1;
         }
     }
@@ -1379,8 +1574,11 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
   ACEXML_Char *entity_name = this->read_name ();
   if (entity_name == 0)
     {
-      xmlenv.exception (new ACEXML_SAXParseException
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
                         (ACE_LIB_TEXT ("Error reading ENTITY name.")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
 
@@ -1392,8 +1590,11 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
 
       if (this->get_quoted_string (entity_value) != 0)
         {
-          xmlenv.exception (new ACEXML_SAXParseException
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
                             (ACE_LIB_TEXT ("Error reading ENTITY value.")));
+          xmlenv.exception (exception);
+          this->report_fatal_error (*exception, xmlenv);
           return -1;
         }
 
@@ -1401,8 +1602,11 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
         {
           if (this->entities_.add_entity (entity_name, entity_value) != 0)
             {
-              xmlenv.exception (new ACEXML_SAXParseException
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
                                 (ACE_LIB_TEXT ("Error storing entity definition (duplicate definition?)")));
+              xmlenv.exception (exception);
+              this->report_fatal_error (*exception, xmlenv);
               return -1;
             }
         }
@@ -1423,8 +1627,11 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
 
       if (systemid == 0)
         {
-          xmlenv.exception (new ACEXML_SAXParseException
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
                             (ACE_LIB_TEXT ("Invalid ExternalID definition (system ID missing.)")));
+          xmlenv.exception (exception);
+          this->report_fatal_error (*exception, xmlenv);
           return -1;
         }
 
@@ -1433,8 +1640,11 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
         {
           if (is_GEDecl == 0)
             {
-              xmlenv.exception (new ACEXML_SAXParseException
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
                                 (ACE_LIB_TEXT ("Unexpecting keyword NDATA in PEDecl.")));
+              xmlenv.exception (exception);
+              this->report_fatal_error (*exception, xmlenv);
               return -1;
             }
 
@@ -1445,8 +1655,11 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
               this->get () != 'A' ||
               this->skip_whitespace_count (&nextch) == 0)
             {
-              xmlenv.exception (new ACEXML_SAXParseException
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
                                 (ACE_LIB_TEXT ("Expecting keyword NDATA.")));
+              xmlenv.exception (exception);
+              this->report_fatal_error (*exception, xmlenv);
               return -1;
             }
 
@@ -1480,8 +1693,11 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
   // End of ENTITY definition
   if (this->skip_whitespace (0) != '>')
     {
-      xmlenv.exception (new ACEXML_SAXParseException
-                        (ACE_LIB_TEXT ("Expecting end of ENTITY definition.")));
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
+                        (ACE_LIB_TEXT("Expecting end of ENTITY definition.")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
   return 0;
@@ -1490,6 +1706,8 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
 int
 ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
 {
+  ACEXML_SAXParseException* exception = 0;
+
   if (this->get () != 'A' ||
       this->get () != 'T' ||
       this->get () != 'T' ||
@@ -1499,16 +1717,22 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
       this->get () != 'T' ||
       this->skip_whitespace_count () == 0)
     {
-      xmlenv.exception (new ACEXML_SAXParseException
-                        (ACE_LIB_TEXT ("Expecting keyword `ATTLIST'")));
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
+                        (ACE_LIB_TEXT("Expecting keyword `ATTLIST'")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
 
   ACEXML_Char *element_name = this->read_name ();
   if (element_name == 0)
     {
-      xmlenv.exception (new ACEXML_SAXParseException
-                        (ACE_LIB_TEXT ("Error reading element name while defining ATTLIST.")));
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
+                        (ACE_LIB_TEXT("Error reading element name while defining ATTLIST.")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
 
@@ -1521,14 +1745,17 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
       ACEXML_Char *att_name = this->read_name (nextch);
       if (att_name == 0)
         {
-          xmlenv.exception (new ACEXML_SAXParseException
-                            (ACE_LIB_TEXT ("Error reading attribute name while defining ATTLIST.")));
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
+                            (ACE_LIB_TEXT("Error reading attribute name while defining ATTLIST.")));
+          xmlenv.exception (exception);
+          this->report_fatal_error (*exception, xmlenv);
           return -1;
         }
 
       /*
-      Parse AttType:
-      Possible keywords:
+        Parse AttType:
+        Possible keywords:
         CDATA                   // StringType
         ID                      // TokenizedType
         IDREF
@@ -1550,11 +1777,15 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
               this->get () != 'A' ||
               this->skip_whitespace_count () == 0)
             {
-              xmlenv.exception (new ACEXML_SAXParseException
-                                (ACE_LIB_TEXT ("Expecting keyword `CDATA' while defining ATTLIST.")));
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
+                                (ACE_LIB_TEXT("Expecting keyword `CDATA' while defining ATTLIST.")));
+              xmlenv.exception (exception);
+              this->report_fatal_error (*exception, xmlenv);
               return -1;
             }
-          // Else, we have successfully identified the type of the attribute as CDATA
+          // Else, we have successfully identified the type of the
+          // attribute as CDATA
           // @@ Set up validator appropriately here.
           break;
         case 'I':               // ID, IDREF, or, IDREFS
@@ -1589,8 +1820,11 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
                 }
             }
           // Admittedly, this error message is not precise enough
-          xmlenv.exception (new ACEXML_SAXParseException
-                            (ACE_LIB_TEXT ("Expecting keyword `ID', `IDREF', or `IDREFS' while defining ATTLIST.")));
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
+                            (ACE_LIB_TEXT("Expecting keyword `ID', `IDREF', or `IDREFS' while defining ATTLIST.")));
+          xmlenv.exception (exception);
+          this->report_fatal_error (*exception, xmlenv);
           return -1;
         case 'E':               // ENTITY or ENTITIES
           if (this->get () == 'N' &&
@@ -1620,15 +1854,21 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
                 }
             }
           // Admittedly, this error message is not precise enough
-          xmlenv.exception (new ACEXML_SAXParseException
-                            (ACE_LIB_TEXT ("Expecting keyword `ENTITY', or `ENTITIES' while defining ATTLIST.")));
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
+                            (ACE_LIB_TEXT("Expecting keyword `ENTITY', or `ENTITIES' while defining ATTLIST.")));
+          xmlenv.exception (exception);
+          this->report_fatal_error (*exception, xmlenv);
           return -1;
         case 'N':               // NMTOKEN, NMTOKENS, or, NOTATION
           nextch = this->get ();
           if (nextch != 'M' || nextch != 'O')
             {
-              xmlenv.exception (new ACEXML_SAXParseException
-                                (ACE_LIB_TEXT ("Expecting keyword `NMTOKEN', `NMTOKENS', or `NOTATION' while defining ATTLIST.")));
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
+                                (ACE_LIB_TEXT("Expecting keyword `NMTOKEN', `NMTOKENS', or `NOTATION' while defining ATTLIST.")));
+              xmlenv.exception (exception);
+              this->report_fatal_error (*exception, xmlenv);
               return -1;
             }
           if (nextch == 'M')
@@ -1654,8 +1894,11 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
                       break;
                     }
                 }
-              xmlenv.exception (new ACEXML_SAXParseException
-                                (ACE_LIB_TEXT ("Expecting keyword `NMTOKEN' or `NMTOKENS' while defining ATTLIST.")));
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
+                                (ACE_LIB_TEXT("Expecting keyword `NMTOKEN' or `NMTOKENS' while defining ATTLIST.")));
+              xmlenv.exception (exception);
+              this->report_fatal_error (*exception, xmlenv);
               return -1;
             }
           else                  // NOTATION
@@ -1668,15 +1911,21 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
                   this->get () != 'N' ||
                   this->skip_whitespace_count () == 0)
                 {
-                  xmlenv.exception (new ACEXML_SAXParseException
-                                    (ACE_LIB_TEXT ("Expecting keyword `NOTATION' while defining ATTLIST.")));
+                  ACE_NEW_NORETURN (exception,
+                                    ACEXML_SAXParseException
+                                    (ACE_LIB_TEXT("Expecting keyword `NOTATION' while defining ATTLIST.")));
+                  xmlenv.exception (exception);
+                  this->report_fatal_error (*exception, xmlenv);
                   return -1;
                 }
 
               if (this->get () != '(')
                 {
-                  xmlenv.exception (new ACEXML_SAXParseException
-                                    (ACE_LIB_TEXT ("Expecting `(' following NOTATION while defining ATTLIST.")));
+                  ACE_NEW_NORETURN (exception,
+                                    ACEXML_SAXParseException
+                                    (ACE_LIB_TEXT("Expecting `(' following NOTATION while defining ATTLIST.")));
+                  xmlenv.exception (exception);
+                  this->report_fatal_error (*exception, xmlenv);
                   return -1;
                 }
 
@@ -1686,8 +1935,11 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
                 ACEXML_Char *notation_name = this->read_name ();
                 if (notation_name == 0)
                   {
-                    xmlenv.exception (new ACEXML_SAXParseException
-                                      (ACE_LIB_TEXT ("Error reading NOTATION name while defining ATTLIST.")));
+                    ACE_NEW_NORETURN (exception,
+                                      ACEXML_SAXParseException
+                                      (ACE_LIB_TEXT("Error reading NOTATION name while defining ATTLIST.")));
+                    xmlenv.exception (exception);
+                    this->report_fatal_error (*exception, xmlenv);
                     return -1;
                   }
                 // @@ get another notation name, set up validator as such
@@ -1705,8 +1957,11 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
             ACEXML_Char *token_name = this->read_name (); // @@ need a special read_nmtoken?
             if (token_name == 0)
               {
-                xmlenv.exception (new ACEXML_SAXParseException
-                                  (ACE_LIB_TEXT ("Error reading enumerated nmtoken name while defining ATTLIST.")));
+                ACE_NEW_NORETURN (exception,
+                                  ACEXML_SAXParseException
+                                  (ACE_LIB_TEXT("Error reading enumerated nmtoken name while defining ATTLIST.")));
+                xmlenv.exception (exception);
+                this->report_fatal_error (*exception, xmlenv);
                 return -1;
               }
             // @@ get another nmtoken, set up validator as such
@@ -1718,15 +1973,18 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
           break;
         default:
           {
-            xmlenv.exception (new ACEXML_SAXParseException
-                              (ACE_LIB_TEXT ("Invalid Attribute Type while defining ATTLIST.")));
+            ACE_NEW_NORETURN (exception,
+                              ACEXML_SAXParseException
+                              (ACE_LIB_TEXT("Invalid Attribute Type while defining ATTLIST.")));
+            xmlenv.exception (exception);
+            this->report_fatal_error (*exception, xmlenv);
             return -1;
           }
-          ACE_NOTREACHED (break;)
+          ACE_NOTREACHED (break);
         }
 
       /*
-      Parse DefaultDecl:
+        Parse DefaultDecl:
         #REQUIRED
         #IMPLIED
         #FIXED
@@ -1748,8 +2006,11 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
                   this->get () != 'E' ||
                   this->get () != 'D')
                 {
-                  xmlenv.exception (new ACEXML_SAXParseException
-                                    (ACE_LIB_TEXT ("Expecting keyword `#REQUIRED' while defining ATTLIST.")));
+                  ACE_NEW_NORETURN (exception,
+                                    ACEXML_SAXParseException
+                                    (ACE_LIB_TEXT("Expecting keyword `#REQUIRED' while defining ATTLIST.")));
+                  xmlenv.exception (exception);
+                  this->report_fatal_error (*exception, xmlenv);
                   return -1;
                 }
               // We now know this attribute is required
@@ -1763,8 +2024,11 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
                   this->get () != 'E' ||
                   this->get () != 'D')
                 {
-                  xmlenv.exception (new ACEXML_SAXParseException
-                                    (ACE_LIB_TEXT ("Expecting keyword `#IMPLIED' while defining ATTLIST.")));
+                  ACE_NEW_NORETURN (exception,
+                                    ACEXML_SAXParseException
+                                    (ACE_LIB_TEXT("Expecting keyword `#IMPLIED' while defining ATTLIST.")));
+                  xmlenv.exception (exception);
+                  this->report_fatal_error (*exception, xmlenv);
                   return -1;
                 }
               // We now know this attribute is impleid.
@@ -1777,8 +2041,11 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
                   this->get () != 'D' ||
                   this->skip_whitespace_count () == 0)
                 {
-                  xmlenv.exception (new ACEXML_SAXParseException
-                                    (ACE_LIB_TEXT ("Expecting keyword `#FIXED' while defining ATTLIST.")));
+                  ACE_NEW_NORETURN (exception,
+                                    ACEXML_SAXParseException
+                                    (ACE_LIB_TEXT("Expecting keyword `#FIXED' while defining ATTLIST.")));
+                  xmlenv.exception (exception);
+                  this->report_fatal_error (*exception, xmlenv);
                   return -1;
                 }
               // We now know this attribute is fixed.
@@ -1786,8 +2053,11 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
               ACEXML_Char *fixed_attr;
               if (this->get_quoted_string (fixed_attr) != 0)
                 {
-                  xmlenv.exception (new ACEXML_SAXParseException
-                                    (ACE_LIB_TEXT ("Error parsing `#FIXED' attribute value while defining ATTLIST.")));
+                  ACE_NEW_NORETURN (exception,
+                                    ACEXML_SAXParseException
+                                    (ACE_LIB_TEXT("Error parsing `#FIXED' attribute value while defining ATTLIST.")));
+                  xmlenv.exception (exception);
+                  this->report_fatal_error (*exception, xmlenv);
                   return -1;
                 }
               // @@ set up validator
@@ -1801,8 +2071,11 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
           ACEXML_Char *fixed_attr;
           if (this->get_quoted_string (fixed_attr) != 0)
             {
-              xmlenv.exception (new ACEXML_SAXParseException
-                                (ACE_LIB_TEXT ("Error parsing `#FIXED' attribute value while defining ATTLIST.")));
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
+                                (ACE_LIB_TEXT("Error parsing `#FIXED' attribute value while defining ATTLIST.")));
+              xmlenv.exception (exception);
+              this->report_fatal_error (*exception, xmlenv);
               return -1;
             }
           // @@ set up validator
@@ -1811,7 +2084,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
           break;
         }
       this->skip_whitespace_count (&nextch);
-    };
+    }
 
   this->get ();                 // consume closing '>'
 
@@ -1821,6 +2094,8 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
 int
 ACEXML_Parser::parse_notation_decl (ACEXML_Env &xmlenv)
 {
+  ACEXML_SAXParseException* exception = 0;
+
   if (this->get () != 'N' ||
       this->get () != 'O' ||
       this->get () != 'T' ||
@@ -1831,16 +2106,22 @@ ACEXML_Parser::parse_notation_decl (ACEXML_Env &xmlenv)
       this->get () != 'N' ||
       this->skip_whitespace_count () == 0)
     {
-      xmlenv.exception (new ACEXML_SAXParseException
-                        (ACE_LIB_TEXT ("Expecting keyword `NOTATION'")));
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
+                        (ACE_LIB_TEXT("Expecting keyword `NOTATION'")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
 
   ACEXML_Char *notation = this->read_name ();
   if (notation == 0)
     {
-      xmlenv.exception (new ACEXML_SAXParseException
-                        (ACE_LIB_TEXT ("Invalid notation name.")));
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
+                        (ACE_LIB_TEXT("Invalid notation name.")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
 
@@ -1853,8 +2134,11 @@ ACEXML_Parser::parse_notation_decl (ACEXML_Env &xmlenv)
 
   if (this->get () != '>')
     {
-      xmlenv.exception (new ACEXML_SAXParseException
-                        (ACE_LIB_TEXT ("Expecting NOTATION closing '>'.")));
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
+                        (ACE_LIB_TEXT("Expecting NOTATION closing '>'.")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
 
@@ -1873,6 +2157,8 @@ ACEXML_Parser::parse_external_id_and_ref (ACEXML_Char *&publicId,
                                           ACEXML_Char *&systemId,
                                           ACEXML_Env &xmlenv)
 {
+  ACEXML_SAXParseException* exception = 0;
+
   publicId = systemId = 0;
   ACEXML_Char nextch = this->get ();
 
@@ -1886,16 +2172,23 @@ ACEXML_Parser::parse_external_id_and_ref (ACEXML_Char *&publicId,
           this->get () != 'M' ||
           this->skip_whitespace_count () == 0)
         {
-          xmlenv.exception (new ACEXML_SAXParseException
-                            (ACE_LIB_TEXT ("Expecting keyword 'SYSTEM'")));
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
+                            (ACE_LIB_TEXT("Expecting keyword 'SYSTEM'")));
+          xmlenv.exception (exception);
+          this->report_fatal_error (*exception, xmlenv);
           return -1;
         }
       if (this->get_quoted_string (systemId) != 0)
         {
-          xmlenv.exception (new ACEXML_SAXParseException
-                            (ACE_LIB_TEXT ("Error while parsing SYSTEM literal for SYSTEM id.")));
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
+                            (ACE_LIB_TEXT("Error while parsing SYSTEM literal for SYSTEM id.")));
+          xmlenv.exception (exception);
+          this->report_fatal_error (*exception, xmlenv);
           return -1;
         }
+      this->locator_.setSystemId (systemId);
       break;
     case 'P':                   // External PUBLIC id or previously defined PUBLIC id.
       if (this->get () != 'U' ||
@@ -1905,31 +2198,45 @@ ACEXML_Parser::parse_external_id_and_ref (ACEXML_Char *&publicId,
           this->get () != 'C' ||
           this->skip_whitespace_count () == 0)
         {
-          xmlenv.exception (new ACEXML_SAXParseException
-                            (ACE_LIB_TEXT ("Expecting keyword 'PUBLIC'")));
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
+                            (ACE_LIB_TEXT("Expecting keyword 'PUBLIC'")));
+          xmlenv.exception (exception);
+          this->report_fatal_error (*exception, xmlenv);
           return -1;
         }
       if (this->get_quoted_string (publicId) != 0)
         {
-          xmlenv.exception (new ACEXML_SAXParseException
-                            (ACE_LIB_TEXT ("Error while parsing public literal for PUBLIC id.")));
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
+                            (ACE_LIB_TEXT("Error while parsing public literal for PUBLIC id.")));
+          xmlenv.exception (exception);
+          this->report_fatal_error (*exception, xmlenv);
           return -1;
         }
+      this->locator_.setPublicId (publicId);
 
       this->skip_whitespace_count (&nextch);
       if (nextch == '\'' || nextch == '"') // not end of NOTATION yet.
         {
           if (this->get_quoted_string (systemId) != 0)
             {
-              xmlenv.exception (new ACEXML_SAXParseException
-                                (ACE_LIB_TEXT ("Error while parsing system literal for PUBLIC id.")));
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
+                                (ACE_LIB_TEXT("Error while parsing system literal for PUBLIC id.")));
+              xmlenv.exception (exception);
+              this->report_fatal_error (*exception, xmlenv);
               return -1;
             }
+          this->locator_.setSystemId (systemId);
         }
       break;
     default:
-      xmlenv.exception (new ACEXML_SAXParseException
-                        (ACE_LIB_TEXT ("Expecting either keyword `SYSTEM' or `PUBLIC'.")));
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
+                        (ACE_LIB_TEXT("Expecting either keyword `SYSTEM' or `PUBLIC'.")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
   return 0;
@@ -1938,6 +2245,8 @@ ACEXML_Parser::parse_external_id_and_ref (ACEXML_Char *&publicId,
 int
 ACEXML_Parser::parse_children_definition (ACEXML_Env &xmlenv)
 {
+  ACEXML_SAXParseException* exception = 0;
+
   this->get ();                 // consume the '('
 
   ACEXML_Char nextch;
@@ -1955,8 +2264,11 @@ ACEXML_Parser::parse_children_definition (ACEXML_Env &xmlenv)
           this->get () != 'T' ||
           this->get () != 'A')
         {
-          xmlenv.exception (new ACEXML_SAXParseException
-                            (ACE_LIB_TEXT ("Expecting keyword `#PCDATA' while defining an element.")));
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
+                            (ACE_LIB_TEXT("Expecting keyword `#PCDATA' while defining an element.")));
+          xmlenv.exception (exception);
+          this->report_fatal_error (*exception, xmlenv);
           return -1;
         }
 
@@ -1966,8 +2278,11 @@ ACEXML_Parser::parse_children_definition (ACEXML_Env &xmlenv)
         {
           if (this->get () != '|')
             {
-              xmlenv.exception (new ACEXML_SAXParseException
-                                (ACE_LIB_TEXT ("Expecting end of Mixed section while defining an element.")));
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException
+                                (ACE_LIB_TEXT("Expecting end of Mixed section while defining an element.")));
+              xmlenv.exception (exception);
+              this->report_fatal_error (*exception, xmlenv);
               return -1;
             }
           this->skip_whitespace_count ();
@@ -1983,8 +2298,11 @@ ACEXML_Parser::parse_children_definition (ACEXML_Env &xmlenv)
       if (this->get () != ')' ||
           (subelement_number && this->get () != '*'))
         {
-          xmlenv.exception (new ACEXML_SAXParseException
-                            (ACE_LIB_TEXT ("Expecting closing `)*' or ')' while defining an element.")));
+          ACE_NEW_NORETURN (exception,
+                            ACEXML_SAXParseException
+                            (ACE_LIB_TEXT("Expecting closing `)*' or ')' while defining an element.")));
+          xmlenv.exception (exception);
+          this->report_fatal_error (*exception, xmlenv);
           return -1;
         }
       // @@ close the element definition in the validator.
@@ -2002,12 +2320,17 @@ int
 ACEXML_Parser::parse_child (int skip_open_paren,
                             ACEXML_Env &xmlenv)
 {
+  ACEXML_SAXParseException* exception = 0;
+
   // Conditionally consume the open paren.
   if (skip_open_paren == 0 &&
       this->get () != '(')
     {
-      xmlenv.exception (new ACEXML_SAXParseException
-                        (ACE_LIB_TEXT ("Expecting opening `(' while defining an element.")));
+      ACE_NEW_NORETURN (exception,
+                        ACEXML_SAXParseException
+                        (ACE_LIB_TEXT("Expecting opening `(' while defining an element.")));
+      xmlenv.exception (exception);
+      this->report_fatal_error (*exception, xmlenv);
       return -1;
     }
 
@@ -2028,8 +2351,11 @@ ACEXML_Parser::parse_child (int skip_open_paren,
         ACEXML_Char *subelement = this->read_name ();
         if (subelement == 0)
           {
-            xmlenv.exception (new ACEXML_SAXParseException
-                              (ACE_LIB_TEXT ("Error reading sub-element name while defining an element.")));
+            ACE_NEW_NORETURN (exception,
+                              ACEXML_SAXParseException
+                              (ACE_LIB_TEXT(" Error reading sub-element name while defining an element.")));
+            xmlenv.exception (exception);
+            this->report_fatal_error (*exception, xmlenv);
             return -1;
           }
         // @@ Inform validator of the new element here.
@@ -2049,8 +2375,11 @@ ACEXML_Parser::parse_child (int skip_open_paren,
           case '|':
             break;
           default:
-            xmlenv.exception (new ACEXML_SAXParseException
-                              (ACE_LIB_TEXT ("Expecting `,', `|', or `)' while defining an element.")));
+            ACE_NEW_NORETURN (exception,
+                              ACEXML_SAXParseException
+                              (ACE_LIB_TEXT("Expecting `,', `|', or `)' while defining an element.")));
+            xmlenv.exception (exception);
+            this->report_fatal_error (*exception, xmlenv);
             return -1;
           }
         break;
@@ -2064,15 +2393,21 @@ ACEXML_Parser::parse_child (int skip_open_paren,
           case ',':
             break;
           default:
-            xmlenv.exception (new ACEXML_SAXParseException
-                              (ACE_LIB_TEXT ("Expecting `,', `|', or `)'while defining an element.")));
+            ACE_NEW_NORETURN (exception,
+                              ACEXML_SAXParseException
+                              (ACE_LIB_TEXT("Expecting `,', `|', or `)'while defining an element.")));
+            xmlenv.exception (exception);
+            this->report_fatal_error (*exception, xmlenv);
             return -1;
           }
       case ')':
         break;
       default:
-        xmlenv.exception (new ACEXML_SAXParseException
-                          (ACE_LIB_TEXT ("Expecting `,', `|', or `)' while defining an element.")));
+        ACE_NEW_NORETURN (exception,
+                          ACEXML_SAXParseException
+                          (ACE_LIB_TEXT("Expecting `,', `|', or `)' while defining an element.")));
+        xmlenv.exception (exception);
+        this->report_fatal_error (*exception, xmlenv);
         return -1;
       }
     this->get ();               // consume , | or )

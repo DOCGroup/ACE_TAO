@@ -8,14 +8,15 @@
 # include "Print_Handler.i"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_Print_Handler::ACEXML_Print_Handler (void)
+ACEXML_Print_Handler::ACEXML_Print_Handler (ACEXML_Char* fileName)
+  : fileName_(ACE::strnew (fileName))
 {
-  // no-op
+
 }
 
 ACEXML_Print_Handler::~ACEXML_Print_Handler (void)
 {
-  // no-op
+  delete[] this->fileName_;
 }
 
 void
@@ -95,11 +96,11 @@ ACEXML_Print_Handler::processingInstruction (const ACEXML_Char *target,
 }
 
 void
-ACEXML_Print_Handler::setDocumentLocator (ACEXML_Locator *,
+ACEXML_Print_Handler::setDocumentLocator (ACEXML_Locator * locator,
                                           ACEXML_Env &xmlenv)
 {
   ACE_UNUSED_ARG (xmlenv);
-
+  this->locator_ = locator;
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("* Event setDocumentLocator () ***************\n")));
 }
@@ -229,19 +230,27 @@ ACEXML_Print_Handler::resolveEntity (const ACEXML_Char *,
    * Receive notification of a recoverable error.
    */
 void
-ACEXML_Print_Handler::error (ACEXML_SAXParseException &,
-                             ACEXML_Env &)
+ACEXML_Print_Handler::error (ACEXML_SAXParseException & ex,
+                             ACEXML_Env & xmlenv)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  // No-op.
+  ACE_UNUSED_ARG (xmlenv);
+  ACE_DEBUG ((LM_DEBUG, "%s:%d:%d ", this->fileName_,
+              this->locator_->getLineNumber(),
+              this->locator_->getColumnNumber()));
+  ex.print();
 }
 
 void
-ACEXML_Print_Handler::fatalError (ACEXML_SAXParseException &,
-                                  ACEXML_Env &)
+ACEXML_Print_Handler::fatalError (ACEXML_SAXParseException& ex,
+                                  ACEXML_Env& xmlenv)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  // No-op.
+  ACE_UNUSED_ARG (xmlenv);
+  ACE_DEBUG ((LM_DEBUG, "%s:%d:%d ", this->fileName_,
+              this->locator_->getLineNumber(),
+              this->locator_->getColumnNumber()));
+  ex.print();
 }
 
 void

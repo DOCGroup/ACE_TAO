@@ -57,7 +57,7 @@ ACEXML_SAXException::ACEXML_SAXException (const ACEXML_SAXException &ex)
 
 ACEXML_SAXException::~ACEXML_SAXException (void)
 {
-  delete this->message_;
+  delete[] this->message_;
 }
 
 const ACEXML_Char *
@@ -112,7 +112,7 @@ ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_S
 
 ACEXML_SAXNotSupportedException::~ACEXML_SAXNotSupportedException (void)
 {
-  delete this->message_;
+  delete[] this->message_;
 }
 
 const ACEXML_Char *
@@ -170,7 +170,7 @@ ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (const ACEXML
 
 ACEXML_SAXNotRecognizedException::~ACEXML_SAXNotRecognizedException (void)
 {
-  delete this->message_;
+  delete[] this->message_;
 }
 
 const ACEXML_Char *

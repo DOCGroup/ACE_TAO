@@ -32,7 +32,7 @@ public:
   /// Default contructor.
   ACEXML_Exception (void);
 
-  /// Copu constructor.
+  /// Copy constructor.
   ACEXML_Exception (const ACEXML_Exception &ex);
 
   /// Destructor.
@@ -47,8 +47,7 @@ public:
   /// Dynamically create a copy of this exception.
   virtual ACEXML_Exception *duplicate (void) = 0;
 
-  /// Check whether this is an exception of type specify by
-  /// <name>.
+  /// Check whether this is an exception of type specified by <name>.
   virtual int is_a (const ACEXML_Char *name) = 0;
 
   /// Print out exception using ACE_DEBUG.
@@ -59,7 +58,7 @@ protected:
   /// type of an exception.
   static const ACEXML_Char *exception_name_;
 
-  /// A null string that we return when there's no exception occurred.
+  /// A null string that we return when there is no exception.
   static const ACEXML_Char *null_;
 };
 
