@@ -400,13 +400,13 @@ void ACE_DynScheduler::export(RT_Info& info, FILE* file)
                           "# begin calls\n%d\n",
                           info.entry_point.in (),
                           info.handle,
-                          info.worst_case_execution_time,
-                          info.typical_execution_time,
-                          info.cached_execution_time,
+                          ACE_U64_TO_U32 (info.worst_case_execution_time),
+                          ACE_U64_TO_U32 (info.typical_execution_time),
+                          ACE_U64_TO_U32 (info.cached_execution_time),
                           info.period,
                           info.criticality,
                           info.importance,
-                          info.quantum,
+                          ACE_U64_TO_U32 (info.quantum),
                           info.threads,
                           number_of_dependencies(info));
 
@@ -1550,13 +1550,15 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
                 entry_point.in (),
               link->entry ().dispatch_entry ().original_dispatch ()->dispatch_id (),
               link->entry ().dispatch_entry ().dispatch_id (),
-              link->entry ().arrival (),
-              link->entry ().deadline (),
-              link->entry ().start (), last_entry->stop (),
-              link->entry ().dispatch_entry ().task_entry ().rt_info ()->
-                worst_case_execution_time,
-              tmp,
-              link->entry ().deadline () - last_entry->stop ()) < 0)
+              ACE_U64_TO_U32 (link->entry ().arrival ()),
+              ACE_U64_TO_U32 (link->entry ().deadline ()),
+              ACE_U64_TO_U32 (link->entry ().start ()),
+              ACE_U64_TO_U32 (last_entry->stop ()),
+              ACE_U64_TO_U32 (link->entry ().dispatch_entry ().task_entry ().
+                rt_info ()->worst_case_execution_time),
+              ACE_U64_TO_U32 (tmp),
+              ACE_U64_TO_U32 (link->entry ().deadline () -
+                              last_entry->stop ())) < 0)
 
         {
           return UNABLE_TO_WRITE_SCHEDULE_FILE;
@@ -1569,13 +1571,15 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
               link->entry ().dispatch_entry ().task_entry ().rt_info ()->
                 entry_point.in (),
               link->entry ().dispatch_entry ().dispatch_id (),
-              link->entry ().arrival (),
-              link->entry ().deadline (),
-              link->entry ().start (), last_entry->stop (),
-              link->entry ().dispatch_entry ().task_entry ().rt_info ()->
-                worst_case_execution_time,
-              tmp,
-              link->entry ().deadline () - last_entry->stop ()) < 0)
+              ACE_U64_TO_U32 (link->entry ().arrival ()),
+              ACE_U64_TO_U32 (link->entry ().deadline ()),
+              ACE_U64_TO_U32 (link->entry ().start ()),
+              ACE_U64_TO_U32 (last_entry->stop ()),
+              ACE_U64_TO_U32 (link->entry ().dispatch_entry ().task_entry ().
+                rt_info ()->worst_case_execution_time),
+              ACE_U64_TO_U32 (tmp),
+              ACE_U64_TO_U32 (link->entry ().deadline () -
+                              last_entry->stop ())) < 0)
 
         {
           return UNABLE_TO_WRITE_SCHEDULE_FILE;
@@ -1634,8 +1638,8 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
               entry_point.in (),
             link->entry ().dispatch_entry ().original_dispatch ()->dispatch_id (),
             link->entry ().dispatch_entry ().dispatch_id (),
-            link->entry ().start (),
-            link->entry ().stop ()) < 0)
+            ACE_U64_TO_U32 (link->entry ().start ()),
+            ACE_U64_TO_U32 (link->entry ().stop ())) < 0)
       {
         return UNABLE_TO_WRITE_SCHEDULE_FILE;
       }
@@ -1647,8 +1651,8 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
             link->entry ().dispatch_entry ().task_entry ().rt_info ()->
               entry_point.in (),
             link->entry ().dispatch_entry ().dispatch_id (),
-            link->entry ().start (),
-            link->entry ().stop ()) < 0)
+            ACE_U64_TO_U32 (link->entry ().start ()),
+            ACE_U64_TO_U32 (link->entry ().stop ())) < 0)
       {
         return UNABLE_TO_WRITE_SCHEDULE_FILE;
       }
@@ -1751,7 +1755,7 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
     if (current_entry)
     {
       if (ACE_OS::fprintf (
-            file, "%-11s  %9lf  %9lf  %8lu  %8lu  %11lu  %11lu\n",
+            file, "%-11s  %9lf  %9lf  %8lu  %8lu  %11lu  %11u\n",
             current_entry->dispatch_entry ().task_entry ().rt_info ()->
               entry_point.in (),
                         ACE_static_cast (
@@ -1761,11 +1765,11 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
                           double,
                           ACE_UINT64_DBLCAST_ADAPTER(current_completion)),
             0.0,
-            current_entry->arrival (),
-            current_entry->deadline (),
-            current_last_entry->stop (),
-            current_entry->dispatch_entry ().task_entry ().rt_info ()->
-              worst_case_execution_time) < 0)
+            ACE_U64_TO_U32 (current_entry->arrival ()),
+            ACE_U64_TO_U32 (current_entry->deadline ()),
+            ACE_U64_TO_U32 (current_last_entry->stop ()),
+            ACE_U64_TO_U32 (current_entry->dispatch_entry ().task_entry ().
+              rt_info ()->worst_case_execution_time)) < 0)
       {
         return UNABLE_TO_WRITE_SCHEDULE_FILE;
       }
