@@ -280,7 +280,7 @@ ACE_INLINE const ACE_mutex_t &
 ACE_Process_Mutex::lock (void) const
 {
 // ACE_TRACE ("ACE_Process_Mutex::lock");
-  return this->lock_.lock ();
+  return this->lock_->lock ();
 }
 
 ACE_INLINE const ACE_sema_t &
