@@ -1,3 +1,13 @@
+Sat Jan  3 11:00:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+
+	  Fixed compile errors with Borland. Thanks to Johnny for
+	  reporting them.
+
 Sat Jan  3 11:55:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Smart_Proxies/Collocation/Coll_Test_Stubs.bor:
