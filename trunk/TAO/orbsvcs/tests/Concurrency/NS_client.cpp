@@ -111,7 +111,7 @@ CosNaming_Client::resolve_name (char *c, char *n)
       name.length (2);
       name[0].id = CORBA::string_dup (c);
       name[1].id = CORBA::string_dup (n);
-      CORBA::Object_var obj = this->naming_context_->resolve (name,
+      CORBA::Object_var obj = this->my_name_client_->resolve (name,
                                                               TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -141,7 +141,7 @@ CosNaming_Client::list_contents (void)
 
   TAO_TRY
     {
-      this->naming_context_->list (how_many, li, bi, TAO_TRY_ENV);
+      this->my_name_client_->list (how_many, li, bi, TAO_TRY_ENV);
 
       while (bi->next_one (b, TAO_TRY_ENV))
         {
@@ -178,17 +178,12 @@ CosNaming_Client::init (int argc, char **argv)
       this->orb_ = CORBA::ORB_init (argc, argv, "internet", TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      CORBA::Object_var naming_obj =
-        orb_->resolve_initial_references ("NameService");
-
-      if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          -1);
-
-      naming_context_ =  CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                                            TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      // Initialize the naming services
+      if (my_name_client_.init (orb_, argc_, argv_) != 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize "
+			   "the TAO_Naming_Client. \n"),
+			  -1);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)

@@ -62,9 +62,9 @@ private:
   CORBA::ORB_var orb_;
   // Our ORB.
 
-  CosNaming::NamingContext_var naming_context_;
-  // Our naming context.
-
+  TAO_Naming_Client my_name_client_;
+  // And our Naming Client!
+  
   int list_contents_;
   // Iterate through the naming service and list the contents.
 

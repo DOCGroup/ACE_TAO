@@ -21,6 +21,7 @@
 #include "tao/corba.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 
 #if !defined (_CC_NAMING_SERVICE_H_)
 #define _CC_NAMING_SERVICE_H_
@@ -68,15 +69,15 @@ private:
   int init_naming_service (void);
   // Function to initialize the naming service.
 
-  CosNaming::NamingContext_var naming_context_;
-  // Naming service object for this object.
-
   char *cc_factory_key_;
   // Key of factory obj ref.
 
   CORBA::ORB_var orb_;
   // Remember our orb.
 
+  TAO_Naming_Client my_name_client_;
+  // Name service wrapper class
+  
   CosConcurrencyControl::LockSetFactory_var factory_;
   // factory pointer for the lock set.
 

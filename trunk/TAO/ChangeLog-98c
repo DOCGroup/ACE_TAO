@@ -1,3 +1,10 @@
+Mon Aug 24 18:14:58 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/tests/Concurrency/CC_naming_service.{h,cpp} 
+	* orbsvcs/tests/Concurrency/NS_client.{h,cpp}
+ 	  Added TAO_Naming_Client code. This test doesn't appear to do
+	  anything, however. 
+
 Mon Aug 24 15:33:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/Event_Supplier/Makefile:
