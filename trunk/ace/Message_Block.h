@@ -655,9 +655,10 @@ public:
 
   virtual int update_priority (ACE_Message_Block & mb, 
                             const ACE_Time_Value & tv);
-  // dynamic priority evaluation function based on time to
-  // deadline: updates the dynamic priority bit field but
-  // does not alter the static priority bit field
+  // dynamic priority evaluation function based on laxity
+  // (time to deadline minus execution time): updates the
+  // dynamic priority bit field but does not alter the 
+  // static priority bit field
   
   int is_beyond_late (const ACE_Message_Block & mb,
                       const ACE_Time_Value & tv);
@@ -670,3 +671,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_MESSAGE_BLOCK_H */
+
