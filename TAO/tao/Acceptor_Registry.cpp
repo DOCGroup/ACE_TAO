@@ -98,8 +98,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
       // All TAO pluggable protocols are expected to have the ability
       // to create a default endpoint.
-
-      return this->open_default (orb_core, 0);
+      if (this->open_default (orb_core, 0) == -1)
+        ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
     }
 
   ACE_Auto_Basic_Array_Ptr <char> addr_str;
@@ -116,10 +116,11 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
       if (slot == iop.npos)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) Invalid endpoint specification: "
-                      "<%s>.\n",
-                      iop.c_str ()));
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        "(%P|%t) Invalid endpoint specification: "
+                        "<%s>.\n",
+                        iop.c_str ()));
 
           ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
         }
@@ -181,7 +182,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                                            ? 0 : options.c_str ())) == 0)
                     continue;
                   else
-                    return -1;  // Problem creating default server.
+                    ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
                 }
 
               char *last_addr = 0;
@@ -225,7 +226,13 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                         {
                           delete acceptor;
 
-                          return -1;
+                          if (TAO_debug_level > 0)
+                            ACE_ERROR ((LM_ERROR,
+                                        "TAO (%P|%t) unable to open acceptor "
+                                        "for <%s>%p\n",
+                                        iop.c_str (),""));
+
+                          ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
                         }
 
                       // add acceptor to list.
@@ -233,20 +240,24 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                         {
                           delete acceptor;
 
-                          ACE_ERROR_RETURN ((LM_ERROR,
-                                             "TAO (%P|%t) unable to add <%s> "
-                                             "to acceptor registry.\n",
-                                             address.c_str ()),
-                                            -1);
+                          if (TAO_debug_level > 0)
+                            ACE_ERROR ((LM_ERROR,
+                                        "TAO (%P|%t) unable to add <%s> "
+                                        "to acceptor registry.\n",
+                                        address.c_str ()));
+
+                          ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
                         }
                     }
                   else
                     {
-                      ACE_ERROR_RETURN ((LM_ERROR,
-                                         "TAO (%P|%t) unable to create "
-                                         "an acceptor for <%s>\n",
-                                         iop.c_str ()),
-                                        -1);
+                      if (TAO_debug_level > 0)
+                        ACE_ERROR ((LM_ERROR,
+                                    "TAO (%P|%t) unable to create "
+                                    "an acceptor for <%s>.\n",
+                                    iop.c_str ()));
+
+                      ACE_THROW_RETURN (CORBA::NO_MEMORY (), -1);
                     }
                 }
             }
@@ -256,10 +267,10 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
       if (found == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "TAO (%P|%t) no usable transport protocol "
-                             "was found\n"),
-                            -1);
+          ACE_ERROR ((LM_ERROR,
+                      "TAO (%P|%t) no usable transport protocol "
+                      "was found.\n"));
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
         }
     }
 
