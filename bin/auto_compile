@@ -30,10 +30,6 @@ use File::Copy;
 use FileHandle;
 require POSIX;
 
-# This is the module we will checkout, someday someone could define a
-# smaller module.
-$MODULE='ACE_wrappers';
-
 # This are the sub-directories (in the module) we really compile.
 
 # Find out the command name.
@@ -137,6 +133,12 @@ if ($#ARGS >= 4) {
 $LOG_URL  = "http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/";
 if ($#ARGS >= 5) {
   $LOG_URL = $ARGS[5];
+}
+# This is the module we will checkout unless a different one is on the
+# command line.
+$MODULE='ACE_wrappers';
+if ($#ARGS >= 6) {
+  $MODULE = $ARGS[6];
 }
 
 $ENV{'ACE_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD;
