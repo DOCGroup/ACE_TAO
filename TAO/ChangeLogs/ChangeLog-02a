@@ -1,3 +1,19 @@
+Thu Aug  3 14:07:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_visitor_argument/pre_invoke_cs.h:
+	* TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp:
+
+	  Out parameters must have memory allocated for them in the
+	  stub before invocation. If the return type of the operation
+	  is non-void, this is done with an ACE_NEW_RETURN macro. The
+	  third argument in this macro is the return value in case of
+	  error. It is always safe to return 0, except when the 
+	  return type of the opertion is enum. So a new function was
+	  added to class be_visitor_args_pre_invoke_cs to check for
+	  that. Then the appropriate return value can be generated
+	  if the function returns true. Thanks to Chris Hafey 
+	  <chris@stentor.com> for reporting this bug.
+
 Thu Aug 03 10:25:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Advanced/ch_18/README:
