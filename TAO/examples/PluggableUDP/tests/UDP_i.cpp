@@ -62,6 +62,7 @@ UDP_i::invoke (const char * client_name,
                               UDP::_nil (),
                               request_id,
                               ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
 
     }
@@ -104,4 +105,3 @@ template class ACE_Hash_Map_Entry<CORBA::String_var, int>;
 #pragma instantiate ACE_Hash_Map_Entry<CORBA::String_var, int>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
