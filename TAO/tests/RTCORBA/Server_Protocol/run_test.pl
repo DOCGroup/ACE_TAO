@@ -83,10 +83,12 @@ foreach $o (@server_opts) {
 
     my $args = "$o -o $iorfile";
 
+    print "Server Arguments: $args\n";
+
     unlink $iorfile;
-    
+
     $SV->Arguments ($args);
-    
+
     $SV->Spawn ();
 
     if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
@@ -98,14 +100,14 @@ foreach $o (@server_opts) {
     $CL->Arguments ("-k file://$iorfile -ORBdebuglevel 1");
 
     $client = $CL->SpawnWaitKill (60);
-    
+
     if ($client != 0) {
         print STDERR "ERROR: client returned $client\n";
         $status = 1;
     }
 
     $server = $SV->TerminateWaitKill (60);
-    
+
     if ($server != 0) {
         print STDERR "ERROR: server returned $server\n";
         $status = 1;
@@ -117,6 +119,6 @@ foreach $o (@server_opts) {
 unlink $iorfile;
 
 # Clean up SHMIOP files
-unlink glob ("server_shmiop_*");
+PerlACE::check_n_cleanup_files ("server_shmiop_*");
 
 exit $status;

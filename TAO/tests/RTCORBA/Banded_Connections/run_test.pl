@@ -78,6 +78,6 @@ unlink $iorfile1;
 unlink $iorfile2;
 
 # Clean up SHMIOP files
-unlink glob ("server_shmiop_*");
+PerlACE::check_n_cleanup_files ("server_shmiop_*");
 
 exit $status;
