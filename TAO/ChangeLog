@@ -1,3 +1,9 @@
+Mon Sep 15 16:03:25 MST 2003 Trevor Fields <fields_t@ociweb.com>
+
+        * tao/Utils/Utils.mpc:
+
+          Added missing dependency on PortableServer library.
+
 Mon Sep 15 13:22:37 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
         * orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.cpp:
