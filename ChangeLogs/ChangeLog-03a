@@ -1,3 +1,8 @@
+Wed Jul 05 13:19:52 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: Don't typedef pid_t for ACE_PSOS_DIAB_PPC - it's defined
+          in sys/types.h.
+
 Wed Jul 05 12:06:17 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: make the pSOS section adapt better to different pSOS
