@@ -231,5 +231,13 @@ SOURCE=.\Event\EC_Sched_Filter.i
 SOURCE=.\Event\EC_Sched_Filter_Builder.i
 # End Source File
 # End Group
+# Begin Group "Resource Files"
+
+# PROP Default_Filter "rc"
+# Begin Source File
+
+SOURCE=.\RTSchedEvent.rc
+# End Source File
+# End Group
 # End Target
 # End Project
