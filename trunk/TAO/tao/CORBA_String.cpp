@@ -1,8 +1,3 @@
-// -*- C++ -*-
-//
-// $Id$
-
-
 #include "tao/CORBA_String.h"
 
 #if !defined (__ACE_INLINE__)
@@ -10,7 +5,9 @@
 #endif /* ! __ACE_INLINE__ */
 
 
-ACE_RCSID(tao, CORBA_String, "$Id$")
+ACE_RCSID (tao,
+           CORBA_String,
+           "$Id$")
 
 
 // String utility support; this needs to be integrated with the ORB's
@@ -184,10 +181,18 @@ operator>> (istream &is, CORBA::WString_var &wsv)
   wsv = CORBA::wstring_alloc (len);
   is.seekg (0, ios::beg);
 
-  // Unformatted input is used to work around overloaded extraction
-  // operator (>>) ambiguities on some platforms.
-  is.read (wsv.inout (), len);
-  wsv[len] = 0;
+  for (CORBA::ULong i = 0; i < len; ++i)
+    {
+      CORBA::WChar wc = 0;
+
+      // Unformatted input is used to work around overloaded
+      // extraction operator (>>) ambiguities on some platforms.
+      is.read (ACE_reinterpret_cast (char *, &wc), sizeof (wc));
+
+      wsv[i] = wc;
+    }
+
+  wsv[len] = 0;  // NULL terminate
 
   return is;
 }
@@ -214,11 +219,19 @@ operator>> (istream &is, CORBA::WString_out &wso)
   CORBA::ULong len = is.tellg ();
   wso = CORBA::wstring_alloc (len);
   is.seekg (0, ios::beg);
-  
-  // Unformatted input is used to work around overloaded extraction
-  // operator (>>) ambiguities on some platforms.
-  is.read (wso.ptr (), len);
-  wso.ptr ()[len] = 0;
+
+  for (CORBA::ULong i = 0; i < len; ++i)
+    {
+      CORBA::WChar wc = 0;
+
+      // Unformatted input is used to work around overloaded
+      // extraction operator (>>) ambiguities on some platforms.
+      is.read (ACE_reinterpret_cast (char *, &wc), sizeof (wc));
+
+      wso.ptr ()[i] = wc;
+    }
+
+  wso.ptr ()[len] = 0;  // NULL terminate
 
   return is;
 }
