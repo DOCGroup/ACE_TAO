@@ -160,20 +160,23 @@ TAO_OutputCDR::throw_skel_exception (int error_num ACE_ENV_ARG_DECL)
     {
     case 0 :
       break;
+
     case EINVAL : // wchar from a GIOP 1.0
-      ACE_THROW (CORBA::MARSHAL(CORBA::OMGVMCID | 5, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA::MARSHAL (CORBA::OMGVMCID | 5, CORBA::COMPLETED_YES));
       ACE_NOTREACHED(break);
 
     case EACCES : // wchar but no codeset
-      ACE_THROW (CORBA::BAD_PARAM(CORBA::OMGVMCID | 23, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 23,
+                                   CORBA::COMPLETED_YES));
       ACE_NOTREACHED(break);
 
     case ERANGE : // untranslatable character
-      ACE_THROW (CORBA::DATA_CONVERSION(CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1,
+                                         CORBA::COMPLETED_YES));
       ACE_NOTREACHED(break);
 
     default :
-      ACE_THROW (CORBA::MARSHAL(0, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA::MARSHAL (0, CORBA::COMPLETED_YES));
 
     }
 }
