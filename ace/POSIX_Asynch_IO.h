@@ -111,7 +111,7 @@ protected:
   // this. But it doesnot provide the constness, so this may be
   // better.
 
-  // aiocb::aio_resultp.aio_return
+  u_long bytes_transferred_;
   // Bytes transferred by this operation.
 
   int success_;
@@ -120,7 +120,7 @@ protected:
   const void *completion_key_;
   // ACT associated with handle.
 
-  // aiocb::aio_resultp.aio_errno
+  u_long error_;
   // Error if operation failed.
 };
 
