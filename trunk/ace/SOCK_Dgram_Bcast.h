@@ -26,8 +26,11 @@
 
 class ACE_Export ACE_Bcast_Node
 {
+  // = TITLE
+  //   Linked list of broadcast interfaces.
 public:
-  ACE_Bcast_Node (ACE_INET_Addr &, ACE_Bcast_Node *);
+  ACE_Bcast_Node (ACE_INET_Addr &, 
+                  ACE_Bcast_Node *);
   ~ACE_Bcast_Node (void);
   // Default dtor.
 
