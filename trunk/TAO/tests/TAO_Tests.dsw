@@ -447,32 +447,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Bug_1551_Regression Client"=.\Bug_1551_Regression\client.dsp
-- Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Bug_1551_Regression Server"=.\Bug_1551_Regression\server.dsp
-- Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "CDR Basic Types"=.\CDR\basic_types.dsp - Package Owner=<4>
 
 Package=<5>
