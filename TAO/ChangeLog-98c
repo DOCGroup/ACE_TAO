@@ -1,3 +1,10 @@
+Wed Jan 06 13:49:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/try_macros.h: Reverted my previous change about not using
+	  catch (...) on TAO_CATCHANY for debug build.  This "feature" is
+	  turned on only when you define TAO_DONT_CATCH_DOT_DOT_DOT.
+	  Thanks to Irfan for persuading me.
+
 Wed Jan  6 13:44:29 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/Time_Service/Server_i.h (class Server_i): Addded the
