@@ -105,8 +105,8 @@ DSI_Simple_Server::test_method_impl (CORBA::ServerRequest_ptr request,
   request->arguments (list, ACE_TRY_ENV);
   ACE_CHECK;
 
-  CORBA::NamedValue_ptr nv;
-  this->orb_->create_named_value (nv, ACE_TRY_ENV);
+  CORBA::NamedValue_var nv;
+  this->orb_->create_named_value (nv.out (), ACE_TRY_ENV);
   ACE_CHECK;
 
   *nv->value () = CORBA::Any (CORBA::_tc_long);
