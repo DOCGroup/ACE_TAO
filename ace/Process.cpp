@@ -703,11 +703,11 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
 
   return 0; // Success.
 }
-#endif /* !ACE_HAS_WINCE */
 
-ACE_Process_Options::~ACE_Process_Options (void)
+
+void
+ACE_Process_Options::release_handles ()
 {
-#if !defined (ACE_HAS_WINCE)
   if (set_handles_called_)
     {
 #if defined (ACE_WIN32)
@@ -721,6 +721,14 @@ ACE_Process_Options::~ACE_Process_Options (void)
 #endif /* ACE_WIN32 */
       set_handles_called_ = 0;
     }
+}
+#endif /* !ACE_HAS_WINCE */
+
+
+ACE_Process_Options::~ACE_Process_Options (void)
+{
+#if !defined (ACE_HAS_WINCE)
+  release_handles();
   delete [] environment_buf_;
   delete [] environment_argv_;
 #endif /* !ACE_HAS_WINCE */
