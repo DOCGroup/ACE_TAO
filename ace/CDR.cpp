@@ -87,6 +87,20 @@ ACE_CDR::grow (ACE_Message_Block *mb, size_t minsize)
   return 0;
 }
 
+#if defined (NONNATIVE_LONGDOUBLE)
+int
+ACE_CDR::LongDouble::operator== (const ACE_CDR::LongDouble &rhs) const
+{
+  return ACE_OS::memcmp (this->ld, rhs.ld, 16) == 0;
+}
+
+int
+ACE_CDR::LongDouble::operator!= (const ACE_CDR::LongDouble &rhs) const
+{
+  return ACE_OS::memcmp (this->ld, rhs.ld, 16) != 0;
+}
+#endif /* NONNATIVE_LONGDOUBLE */
+
 // ****************************************************************
 // ****************************************************************
 // ****************************************************************
