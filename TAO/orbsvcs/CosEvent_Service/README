@@ -1,36 +1,34 @@
+                        CORBA COS Event Service
+                        -----------------------
 The CosEvent_Service is a COS compilant Event Service.
 
-The service is registered with the naming service with the name "CosEventService"
-It exposes the <EventChannel> interface which can be used by suppliers and consumers to send and receive events.
+The service is registered with the naming service with the name
+"CosEventService" .It exposes the <EventChannel> interface which can be
+used by suppliers and consumers to send and receive events.
 
 
 To run the Event Channel:
+------------------------
 1. you should have a running Naming Service.
    if not, start one at $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
 
-2. you should have a running Real Time Event Channel.
+2. if you want to use the -t option you should have a running
+   Real Time Event Channel.
    if not, start one at $TAO_ROOT/orbsvcs/Event_Service/Event_Service
 
-3. execute the CosEvent_Service. It takes the following parameters :
+3. execute the CosEvent_Service.
 
+Command line parameters:
+------------------------
       -n <COS Event Service name>
         specifies the name with which to register the Event Service.
 
-      -r <Real Time Event Service name>
+      -e <Real Time Event Service name>
         specifies the name with which to *look* for the RtEC.
 
-      -s <"global" | "local">
-        specifies if the scheduler is "local" or "global".
-                If the scheduler option is "global" then the naming service
-        is used to locate the a Scheduling service with the
-        name "ScheduleService".
-                if the scheduler is "local" then a new Scheduling service
-        is created and started.
-        The default option is "local".
-
-       -l
-        specifies that a local Real Time Event Channel (Rtec) should be created
-        and used.
+       -r
+        specifies that a local Real Time Event Channel (Rtec) should be
+        created and used.
         If you specify this option but Rtec is not already running, then the
         CosEvent_Service starts its own Rtec.
 
@@ -50,4 +48,6 @@ Event Channel based on event types and source ids.
         -p ["sourceID EventTypeID"]
         specifies a pair of sourceid and event type for the Supplier QOS.
 
-- Pradeep <pradeep@cs.wustl.edu>
+Author:
+-------
+Pradeep Gore <pradeep@cs.wustl.edu>

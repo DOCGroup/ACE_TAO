@@ -48,7 +48,7 @@ CosEvent_Service::init_ORB  (int argc, char *argv [],
 int
 CosEvent_Service::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "r:n:e:o:p:l");
+  ACE_Get_Opt get_opt (argc, argv, "t:n:e:o:p:r");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -59,11 +59,11 @@ CosEvent_Service::parse_args (int argc, char *argv [])
           this->service_name = get_opt.optarg;
           break;
 
-        case 'r':
+        case 't':
           this->rt_service_name = get_opt.optarg;
           break;
 
-        case 'l':
+        case 'r':
           this->remote_Rtec_ = 1;
           break;
 
@@ -84,8 +84,8 @@ CosEvent_Service::parse_args (int argc, char *argv [])
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       "\n\t-n <COS Event Service name>"
-                      "\n\t-r <RealTime Event Service name>"
-                      "\n\t-l" // creates the RtEC locally.
+                      "\n\t-t <RealTime Event Service name>"
+                      "\n\t-r" // creates the RtEC locally.
                       "\n\t-e [\"EventType_1, EventType_2...\"] for ConsumerQOS."
                       "\n\t-o [\"EventSourceID_1, [EventSourceID_2...\"] for ConsumerQOS."
                       "\n\t-p [\"Source, Event\" pairs] for SupplierQOS."
@@ -222,6 +222,10 @@ CosEvent_Service::resolve_naming_service (CORBA::Environment &ACE_TRY_ENV)
     this->orb_->resolve_initial_references ("NameService",
                                             ACE_TRY_ENV);
   ACE_CHECK;
+
+  // Need to check return value for errors.
+  if (CORBA::is_nil (naming_obj.in ()))
+    ACE_THROW (CORBA::UNKNOWN ());
 
   this->naming_ =
     CosNaming::NamingContext::_narrow (naming_obj.in (),
