@@ -778,7 +778,7 @@ protected:
                                   CORBA_Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::ServantAlreadyActive,
-                   PortableServer::POA::ObjectAlreadyActive,
+                     PortableServer::POA::ObjectAlreadyActive,
                      PortableServer::POA::WrongPolicy));
 
   void deactivate_all_objects_i (CORBA::Boolean etherealize_objects,

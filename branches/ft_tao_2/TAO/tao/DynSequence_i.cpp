@@ -193,11 +193,14 @@ TAO_DynSequence_i::set_elements (const CORBA_AnySeq& value,
     this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
+  CORBA::TypeCode_var value_tc;
+
   for (CORBA::ULong i = 0; i < length; i++)
     {
       // Check each arg element for type match.
-      CORBA::Boolean equal = value[i].type ()->equal (element_type.in (),
-                                                      ACE_TRY_ENV);
+      value_tc = value[i].type ();
+      CORBA::Boolean equal = value_tc->equal (element_type.in (),
+                                              ACE_TRY_ENV);
       ACE_CHECK;
 
       if (equal)
@@ -283,7 +286,8 @@ void
 TAO_DynSequence_i::from_any (const CORBA_Any& any,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Boolean equal = this->type_.in ()->equal (any.type (),
+  CORBA::TypeCode_var tc = any.type ();
+  CORBA::Boolean equal = this->type_.in ()->equal (tc.in (),
                                                    ACE_TRY_ENV);
   ACE_CHECK;
 

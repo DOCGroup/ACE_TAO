@@ -64,11 +64,14 @@ public:
   virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC (());
 
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void set_time_value (ACE_Time_Value &time_value);
   // Change the CORBA representation to the ACE representation.
@@ -113,14 +116,18 @@ public:
   // = The Messaging::SyncScopePolicy methods.
 
   virtual Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   void get_synchronization (Messaging::SyncScope &synchronization) const;
 
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 

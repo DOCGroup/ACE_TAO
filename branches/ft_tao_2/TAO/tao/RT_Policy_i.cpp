@@ -34,26 +34,28 @@ TAO_PriorityModelPolicy::~TAO_PriorityModelPolicy (void)
 
 RTCORBA::PriorityModel
 TAO_PriorityModelPolicy::priority_model (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->priority_model_;
 }
 
 RTCORBA::Priority
 TAO_PriorityModelPolicy::server_priority (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->server_priority_;
 }
 
 CORBA::PolicyType
 TAO_PriorityModelPolicy::policy_type (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIORITY_MODEL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_PriorityModelPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityModelPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -66,6 +68,7 @@ TAO_PriorityModelPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void TAO_PriorityModelPolicy::destroy (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -130,12 +133,14 @@ TAO_ThreadpoolPolicy::threadpool (CORBA::Environment &)
 
 CORBA::PolicyType
 TAO_ThreadpoolPolicy::policy_type (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::THREADPOOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_ThreadpoolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ThreadpoolPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -148,6 +153,7 @@ TAO_ThreadpoolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void TAO_ThreadpoolPolicy::destroy (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -170,12 +176,14 @@ TAO_PrivateConnectionPolicy::~TAO_PrivateConnectionPolicy (void)
 
 CORBA::PolicyType
 TAO_PrivateConnectionPolicy::policy_type (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIVATE_CONNECTION_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_PrivateConnectionPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PrivateConnectionPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -189,6 +197,7 @@ TAO_PrivateConnectionPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_PrivateConnectionPolicy::destroy (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -229,12 +238,14 @@ TAO_PriorityBandedConnectionPolicy::priority_bands (CORBA::Environment &ACE_TRY_
 
 CORBA::PolicyType
 TAO_PriorityBandedConnectionPolicy::policy_type (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_PriorityBandedConnectionPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityBandedConnectionPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -247,6 +258,7 @@ TAO_PriorityBandedConnectionPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void TAO_PriorityBandedConnectionPolicy::destroy (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -431,12 +443,14 @@ TAO_ServerProtocolPolicy::protocols (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::PolicyType
 TAO_ServerProtocolPolicy::policy_type (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::SERVER_PROTOCOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_ServerProtocolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ServerProtocolPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -450,6 +464,7 @@ TAO_ServerProtocolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_ServerProtocolPolicy::destroy (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -490,12 +505,14 @@ TAO_ClientProtocolPolicy::protocols (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::PolicyType
 TAO_ClientProtocolPolicy::policy_type (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_ClientProtocolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ClientProtocolPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -509,6 +526,7 @@ TAO_ClientProtocolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_ClientProtocolPolicy::destroy (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
