@@ -183,7 +183,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   *os << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & server_request," << be_nl
-      << "void * servant_upcall," << be_nl
+      << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
       << "void * servant" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
