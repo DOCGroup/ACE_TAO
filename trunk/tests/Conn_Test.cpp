@@ -17,7 +17,9 @@
 //     cache connections on the client.
 //
 // = AUTHOR
-//    Doug Schmidt, Chris Cleeland, and Irfan Pyarali
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>, 
+//    Chris Cleeland <cleeland@cs.wustl.edu>, 
+//    and Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -33,6 +35,123 @@
 #include "Conn_Test.h"
 
 ACE_RCSID(tests, Conn_Test, "$Id$")
+
+#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>
+#define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class CACHED_CONNECT_STRATEGY;
+template class REFCOUNTED_HASH_RECYCLABLE_ADDR;
+template class ACE_NOOP_Creation_Strategy<Svc_Handler>;
+template class ACE_Concurrency_Strategy<Svc_Handler>;
+template class ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Creation_Strategy<Svc_Handler>;
+template class ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *>;
+template class ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
+template class ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
+
+template class ACE_Reverse_Lock<ACE_SYNCH_MUTEX>;
+template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >;
+
+#if defined (ACE_HAS_THREADS)
+template class ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
+#endif /* ACE_HAS_THREADS */
+
+template class ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
+template class ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>;
+template class ACE_Oneshot_Acceptor<Svc_Handler, LOCK_SOCK_ACCEPTOR>;
+template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>;
+template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_NOOP_Concurrency_Strategy<Svc_Handler>;
+template class ACE_Recycling_Strategy<Svc_Handler>;
+template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Svc_Tuple<Svc_Handler>;
+template class ACE_Auto_Basic_Array_Ptr<pid_t>;
+
+#if defined (__BORLANDC__)
+// Borland C++ doesn't link with these instantiations in the ACE library.
+template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
+template class ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>;
+template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
+#endif /* defined (__BORLANDC__) */
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate CACHED_CONNECT_STRATEGY
+#pragma instantiate REFCOUNTED_HASH_RECYCLABLE_ADDR
+#pragma instantiate ACE_NOOP_Creation_Strategy<Svc_Handler>
+#pragma instantiate ACE_Concurrency_Strategy<Svc_Handler>
+#pragma instantiate ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Creation_Strategy<Svc_Handler>
+#pragma instantiate ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *>
+#pragma instantiate ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>
+#pragma instantiate ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>
+
+#pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >
+
+#if defined (ACE_HAS_THREADS)
+#pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
+#endif /* ACE_HAS_THREADS */
+
+#pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>
+#pragma instantiate ACE_Oneshot_Acceptor<Svc_Handler, LOCK_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>
+#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_NOOP_Concurrency_Strategy<Svc_Handler>
+#pragma instantiate ACE_Recycling_Strategy<Svc_Handler>
+#pragma instantiate ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Svc_Tuple<Svc_Handler>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<pid_t>
+
+#if defined (__BORLANDC__)
+// Borland C++ doesn't link with these instantiations in the ACE library.
+#pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
+#pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>
+#pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
+#endif /* defined (__BORLANDC__) */
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
@@ -749,120 +868,3 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_END_TEST;
   return status;
 }
-
-#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>
-#define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class CACHED_CONNECT_STRATEGY;
-template class REFCOUNTED_HASH_RECYCLABLE_ADDR;
-template class ACE_NOOP_Creation_Strategy<Svc_Handler>;
-template class ACE_Concurrency_Strategy<Svc_Handler>;
-template class ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Creation_Strategy<Svc_Handler>;
-template class ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *>;
-template class ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
-template class ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
-
-template class ACE_Reverse_Lock<ACE_SYNCH_MUTEX>;
-template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >;
-
-#if defined (ACE_HAS_THREADS)
-template class ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>;
-#endif /* ACE_HAS_THREADS */
-
-template class ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>;
-template class ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>;
-template class ACE_Oneshot_Acceptor<Svc_Handler, LOCK_SOCK_ACCEPTOR>;
-template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>;
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_NOOP_Concurrency_Strategy<Svc_Handler>;
-template class ACE_Recycling_Strategy<Svc_Handler>;
-template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Svc_Tuple<Svc_Handler>;
-template class ACE_Auto_Basic_Array_Ptr<pid_t>;
-
-#if defined (__BORLANDC__)
-// Borland C++ doesn't link with these instantiations in the ACE library.
-template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
-template class ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>;
-template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
-#endif /* defined (__BORLANDC__) */
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate CACHED_CONNECT_STRATEGY
-#pragma instantiate REFCOUNTED_HASH_RECYCLABLE_ADDR
-#pragma instantiate ACE_NOOP_Creation_Strategy<Svc_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<Svc_Handler>
-#pragma instantiate ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Creation_Strategy<Svc_Handler>
-#pragma instantiate ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *>
-#pragma instantiate ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>
-#pragma instantiate ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>
-
-#pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >
-
-#if defined (ACE_HAS_THREADS)
-#pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Null_Mutex>
-#endif /* ACE_HAS_THREADS */
-
-#pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>
-#pragma instantiate ACE_Oneshot_Acceptor<Svc_Handler, LOCK_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_NOOP_Concurrency_Strategy<Svc_Handler>
-#pragma instantiate ACE_Recycling_Strategy<Svc_Handler>
-#pragma instantiate ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate ACE_Svc_Tuple<Svc_Handler>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<pid_t>
-
-#if defined (__BORLANDC__)
-// Borland C++ doesn't link with these instantiations in the ACE library.
-#pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
-#pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>
-#pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
-#endif /* defined (__BORLANDC__) */
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

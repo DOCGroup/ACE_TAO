@@ -14,14 +14,11 @@
 
 ACE_RCSID(EC_Custom_Marshal, ECM_Supplier, "$Id$")
 
-int
-main (int argc, char *argv [])
-{
-  ECMS_Driver driver;
-  return driver.run (argc, argv);
-}
-
-// ****************************************************************
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_PushSupplier_Adapter<Test_Supplier>;
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_PushSupplier_Adapter<Test_Supplier>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ECMS_Driver::ECMS_Driver (void)
   : n_suppliers_ (1),
@@ -184,7 +181,7 @@ ECMS_Driver::run (int argc, char* argv[])
 
 int
 ECMS_Driver::supplier_task (Test_Supplier *supplier,
-                       void* /* cookie */)
+                            void* /* cookie */)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -204,7 +201,7 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
       for (CORBA::ULong j = 0; j < n; ++j)
         {
           info.trajectory[j].x = j;
-          info.trajectory[j].y = j*j;
+          info.trajectory[j].y = j * j;
           other.inventory.bind (j, j + 1);
         }
 
@@ -287,7 +284,7 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
 
 void
 ECMS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
-                           CORBA::Environment &ACE_TRY_ENV)
+                                CORBA::Environment &ACE_TRY_ENV)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -413,8 +410,6 @@ ECMS_Driver::parse_args (int argc, char *argv [])
   return 0;
 }
 
-// ****************************************************************
-
 Test_Supplier::Test_Supplier (ECMS_Driver *driver)
   :  driver_ (driver),
      supplier_ (this)
@@ -498,10 +493,9 @@ Test_Supplier::consumer_proxy (void)
   return this->consumer_proxy_.in ();
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_PushSupplier_Adapter<Test_Supplier>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_PushSupplier_Adapter<Test_Supplier>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+int
+main (int argc, char *argv [])
+{
+  ECMS_Driver driver;
+  return driver.run (argc, argv);
+}

@@ -20,6 +20,82 @@ ACE_RCSID(Event, Event_Channel, "$Id$")
 
 #include "tao/Timeprobe.h"
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Atomic_Op<ACE_ES_MUTEX, int>;
+template class ACE_Map_Entry<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT>;
+template class ACE_Map_Entry<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT>;
+template class ACE_Map_Entry<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry>;
+template class ACE_Map_Manager<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>;
+template class ACE_Map_Manager<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>;
+template class ACE_Map_Manager<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>;
+template class ACE_Map_Iterator_Base<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>;
+template class ACE_Map_Iterator_Base<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>;
+template class ACE_Map_Iterator_Base<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>;
+template class ACE_Map_Iterator<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>;
+template class ACE_Map_Iterator<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>;
+template class ACE_Map_Reverse_Iterator<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>;
+template class ACE_Map_Iterator<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>;
+template class ACE_Map_Reverse_Iterator<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>;
+template class ACE_Map_Reverse_Iterator<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>;
+template class ACE_Node<ACE_ES_Consumer_Rep *>;
+template class ACE_Node<ACE_Push_Consumer_Proxy *>;
+template class ACE_Node<ACE_Push_Supplier_Proxy *>;
+template class ACE_Unbounded_Set<ACE_ES_Consumer_Rep *>;
+template class ACE_Unbounded_Set<ACE_Push_Consumer_Proxy *>;
+template class ACE_Unbounded_Set<ACE_Push_Supplier_Proxy *>;
+template class ACE_Unbounded_Set_Iterator<ACE_ES_Consumer_Rep *>;
+template class ACE_Unbounded_Set_Iterator<ACE_Push_Consumer_Proxy *>;
+template class ACE_Unbounded_Set_Iterator<ACE_Push_Supplier_Proxy *>;
+
+template class ACE_Auto_Basic_Ptr<ACE_Push_Supplier_Proxy>;
+template class ACE_Auto_Basic_Ptr<ACE_Push_Consumer_Proxy>;
+template class auto_ptr<ACE_Push_Supplier_Proxy>;
+template class auto_ptr<ACE_Push_Consumer_Proxy>;
+
+template class ACE_Array<TAO_EC_Event>;
+template class ACE_Array_Base<TAO_EC_Event>;
+template class ACE_Array_Iterator<TAO_EC_Event>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Atomic_Op<ACE_ES_MUTEX, int>
+#pragma instantiate ACE_Map_Entry<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT>
+#pragma instantiate ACE_Map_Entry<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT>
+#pragma instantiate ACE_Map_Entry<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry>
+#pragma instantiate ACE_Map_Manager<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Manager<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Manager<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Iterator_Base<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Iterator<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Iterator<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Reverse_Iterator<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>
+#pragma instantiate ACE_Node<ACE_ES_Consumer_Rep *>
+#pragma instantiate ACE_Node<ACE_Push_Consumer_Proxy *>
+#pragma instantiate ACE_Node<ACE_Push_Supplier_Proxy *>
+#pragma instantiate ACE_Unbounded_Set<ACE_ES_Consumer_Rep *>
+#pragma instantiate ACE_Unbounded_Set<ACE_Push_Consumer_Proxy *>
+#pragma instantiate ACE_Unbounded_Set<ACE_Push_Supplier_Proxy *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_ES_Consumer_Rep *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Push_Consumer_Proxy *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Push_Supplier_Proxy *>
+
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Push_Supplier_Proxy>
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Push_Consumer_Proxy>
+#pragma instantiate auto_ptr<ACE_Push_Supplier_Proxy>
+#pragma instantiate auto_ptr<ACE_Push_Consumer_Proxy>
+
+#pragma instantiate ACE_Array<TAO_EC_Event>
+#pragma instantiate ACE_Array_Base<TAO_EC_Event>
+#pragma instantiate ACE_Array_Iterator<TAO_EC_Event>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Event_Channel_Timeprobe_Description[] =
@@ -81,8 +157,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Event_Channel_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-// ************************************************************
-
 static RtecScheduler::Preemption_Priority_t
 Preemption_Priority (RtecScheduler::Scheduler_ptr scheduler,
                      RtecScheduler::handle_t rtinfo,
@@ -123,23 +197,21 @@ IntervalToPriority (RtecScheduler::Time interval)
   return ACE_Scheduler_MIN_PREEMPTION_PRIORITY;
 }
 
-// ************************************************************
-
 class TAO_ORBSVCS_Export Shutdown_Consumer : public ACE_ES_Dispatch_Request
-// = TITLE
-//    Shutdown Consumer command
-//
-// = DESCRIPTION
-//    This command object is sent through the system when a consumer
-//    disconnects.  When the Dispatching Module dequeues this request,
-//    it calls execute which execute calls back to the Consumer
-//    Module.  At that point, the Consumer Module can tell the rest of
-//    the system that the consumer has disconnected and delete the
-//    consumer proxy.  This allows all events queued for the consumer
-//    to be flushed to the consumer proxy (which will drop them).
-//    Events can be queued in the ReactorEx (in a dispatch set), or in
-//    the Dispatching Module.
 {
+  // = TITLE
+  //    Shutdown Consumer command
+  //
+  // = DESCRIPTION
+  //    This command object is sent through the system when a consumer
+  //    disconnects.  When the Dispatching Module dequeues this request,
+  //    it calls execute which execute calls back to the Consumer
+  //    Module.  At that point, the Consumer Module can tell the rest of
+  //    the system that the consumer has disconnected and delete the
+  //    consumer proxy.  This allows all events queued for the consumer
+  //    to be flushed to the consumer proxy (which will drop them).
+  //    Events can be queued in the ReactorEx (in a dispatch set), or in
+  //    the Dispatching Module.
 public:
   // When executed, tells <consumer_module> that <consumer> has shut
   // down.
@@ -147,68 +219,66 @@ public:
                      ACE_Push_Consumer_Proxy *consumer,
                      RtecScheduler::Scheduler_ptr scheduler)
     : consumer_module_ (consumer_module)
-    {
-      consumer_ = consumer;
+  {
+    consumer_ = consumer;
 
-      // Set rt_info_ to the lowest priority rt_info in consumer_.
-      // This is so the dispatching module can query us as a dispatch
-      // request to get the appropriate preemption priority.
-      ACE_ES_Dependency_Iterator iter (consumer->qos ().dependencies);
+    // Set rt_info_ to the lowest priority rt_info in consumer_.
+    // This is so the dispatching module can query us as a dispatch
+    // request to get the appropriate preemption priority.
+    ACE_ES_Dependency_Iterator iter (consumer->qos ().dependencies);
 
-      RtecScheduler::Preemption_Priority_t p =
-        ACE_Scheduler_MIN_PREEMPTION_PRIORITY;
-      while (iter.advance_dependency () == 0)
-        {
-          ACE_DECLARE_NEW_CORBA_ENV;
-          ACE_TRY
-            {
-              RtecEventComm::EventType &type = (*iter).event.header.type;
+    RtecScheduler::Preemption_Priority_t p =
+      ACE_Scheduler_MIN_PREEMPTION_PRIORITY;
+    while (iter.advance_dependency () == 0)
+      {
+        ACE_DECLARE_NEW_CORBA_ENV;
+        ACE_TRY
+          {
+            RtecEventComm::EventType &type = (*iter).event.header.type;
 
-              if (type != ACE_ES_GLOBAL_DESIGNATOR &&
-                  type != ACE_ES_CONJUNCTION_DESIGNATOR &&
-                  type != ACE_ES_DISJUNCTION_DESIGNATOR)
-                {
-                  RtecScheduler::Preemption_Priority_t q =
-                    ::Preemption_Priority (scheduler, (*iter).rt_info,
-                                           ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
-                  if (rt_info_ == 0 || q < p)
-                    {
-                      this->rt_info_ = ((*iter).rt_info);
-                      p = q;
-                    }
-                }
-            }
-          ACE_CATCHANY
-            {
-              // Ignore exceptions...
-            }
-          ACE_ENDTRY;
-        }
-    }
+            if (type != ACE_ES_GLOBAL_DESIGNATOR &&
+                type != ACE_ES_CONJUNCTION_DESIGNATOR &&
+                type != ACE_ES_DISJUNCTION_DESIGNATOR)
+              {
+                RtecScheduler::Preemption_Priority_t q =
+                  ::Preemption_Priority (scheduler, (*iter).rt_info,
+                                         ACE_TRY_ENV);
+                ACE_TRY_CHECK;
+                if (rt_info_ == 0 || q < p)
+                  {
+                    this->rt_info_ = ((*iter).rt_info);
+                    p = q;
+                  }
+              }
+          }
+        ACE_CATCHANY
+          {
+            // Ignore exceptions...
+          }
+        ACE_ENDTRY;
+      }
+  }
 
   // Report to the consumer module that consumer_ has shutdown.
   virtual int execute (u_long &command_action)
-    {
-      consumer_module_->shutdown_request (this);
-      command_action = ACE_RT_Task_Command::RELEASE;
-      return 0;
-    }
+  {
+    consumer_module_->shutdown_request (this);
+    command_action = ACE_RT_Task_Command::RELEASE;
+    return 0;
+  }
 
 #if 0
   // @@ Memory allocators
   void *operator new (size_t /* nbytes */)
-    { return ::new char[sizeof (Shutdown_Consumer)]; }
+  { return ::new char[sizeof (Shutdown_Consumer)]; }
 
   void operator delete (void *buf)
-    { ::delete [] ACE_static_cast(char*,buf); }
+  { ::delete [] ACE_static_cast(char*,buf); }
 #endif /* 0 */
 
   // The module that we report to.
   ACE_ES_Consumer_Module *consumer_module_;
 };
-
-// ************************************************************
 
 class TAO_ORBSVCS_Export Shutdown_Channel : public ACE_ES_Dispatch_Request
 {
@@ -238,16 +308,14 @@ public:
   ACE_EventChannel *channel_;
 };
 
-// ************************************************************
-
 class TAO_ORBSVCS_Export Flush_Queue_ACT : public ACE_Command_Base
-// = TITLE
-//    Flush Queue Asynchronous Completion Token
-//
-// = DESCRIPTION
-//    Carries a single dispatch request through the ReactorEx.
-//    Deletes itself when execute is called.
 {
+  // = TITLE
+  //    Flush Queue Asynchronous Completion Token
+  //
+  // = DESCRIPTION
+  //    Carries a single dispatch request through the ReactorEx.
+  //    Deletes itself when execute is called.
 public:
   Flush_Queue_ACT (ACE_ES_Dispatch_Request *request,
                    ACE_ES_Dispatching_Module *dispatching_module) :
@@ -255,30 +323,28 @@ public:
     dispatching_module_ (dispatching_module) { }
 
   virtual int execute (void* /* arg = 0 */)
-    {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
-        {
-          ACE_ES_Dispatch_Request *request = request_;
-          dispatching_module_->push (request, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          delete this;
-        }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Flush_Queue_ACT::execute, "
-                               "unexpected exception");
-        }
-      ACE_ENDTRY;
-      return 0;
-    }
+  {
+    ACE_DECLARE_NEW_CORBA_ENV;
+    ACE_TRY
+      {
+        ACE_ES_Dispatch_Request *request = request_;
+        dispatching_module_->push (request, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+        delete this;
+      }
+    ACE_CATCHANY
+      {
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "Flush_Queue_ACT::execute, "
+                             "unexpected exception");
+      }
+    ACE_ENDTRY;
+    return 0;
+  }
 
   ACE_ES_Dispatch_Request *request_;
   ACE_ES_Dispatching_Module *dispatching_module_;
 };
-
-// ************************************************************
 
 void
 dump_event (const RtecEventComm::Event &event)
@@ -291,8 +357,6 @@ dump_event (const RtecEventComm::Event &event)
               // The divide-by-1 is for ACE_U_LongLong support.
               ORBSVCS_Time::to_hrtime (event.header.creation_time) / 1));
 }
-
-// ************************************************************
 
 ACE_Push_Supplier_Proxy::ACE_Push_Supplier_Proxy (ACE_ES_Supplier_Module *sm)
   : supplier_module_ (sm),
@@ -401,8 +465,6 @@ ACE_Push_Supplier_Proxy::shutdown (void)
   ACE_ENDTRY;
 }
 
-// ************************************************************
-
 ACE_Push_Consumer_Proxy::ACE_Push_Consumer_Proxy (ACE_ES_Consumer_Module *cm)
   : push_consumer_ (0),
     consumer_module_ (cm)
@@ -498,8 +560,6 @@ ACE_Push_Consumer_Proxy::shutdown (void)
     }
   ACE_ENDTRY;
 }
-
-// ************************************************************
 
 ACE_EventChannel::ACE_EventChannel (RtecScheduler::Scheduler_ptr scheduler,
                                     CORBA::Boolean activate_threads,
@@ -906,8 +966,6 @@ ACE_EventChannel::schedule_timer (RtecScheduler::handle_t rt_info,
                                                 tv_interval);
 }
 
-// ****************************************************************
-
 ACE_EventChannel::Observer_Entry::Observer_Entry (void)
   :  handle (0)
 {
@@ -920,9 +978,6 @@ ACE_EventChannel::Observer_Entry::Observer_Entry (RtecEventChannelAdmin::Observe
 {
 }
 
-
-// ****************************************************************
-
 ACE_ES_Disjunction_Group::~ACE_ES_Disjunction_Group (void)
 {
 }
@@ -930,8 +985,6 @@ ACE_ES_Disjunction_Group::~ACE_ES_Disjunction_Group (void)
 ACE_ES_Conjunction_Group::~ACE_ES_Conjunction_Group (void)
 {
 }
-
-// ************************************************************
 
 ACE_ES_Subscription_Info::~ACE_ES_Subscription_Info (void)
 {
@@ -1069,7 +1122,6 @@ ACE_ES_Subscription_Info::remove (SourceID_Map &source_subscribers,
   return 0;
 }
 
-
 void
 ACE_ES_Subscription_Info::append_subscribers (Subscriber_Set &dest,
                                               Subscriber_Set &src)
@@ -1177,8 +1229,6 @@ ACE_ES_Subscription_Info::insert_or_fail (Subscriber_Map &type_map,
   consumer->_duplicate ();
   return 0;
 }
-
-// ************************************************************
 
 ACE_ES_Consumer_Module::ACE_ES_Consumer_Module (ACE_EventChannel* channel)
   :  lock_ (),
@@ -1547,8 +1597,6 @@ ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos)
   // ACE_DEBUG ((LM_DEBUG, "EC (%t) Consumer::fill_qos - %d\n", cc));
 }
 
-// ************************************************************
-
 ACE_ES_Correlation_Module::ACE_ES_Correlation_Module (ACE_EventChannel *channel)
   : channel_ (channel),
     up_ (0),
@@ -1717,8 +1765,6 @@ ACE_ES_Correlation_Module::shutdown (void)
   // We'll opt to just forward this message for now.
   up_->shutdown ();
 }
-
-// ************************************************************
 
 ACE_ES_Consumer_Correlation::ACE_ES_Consumer_Correlation (void) :
   correlation_module_ (0),
@@ -2265,9 +2311,6 @@ ACE_ES_Consumer_Correlation::correlate (ACE_ES_Consumer_Rep *cr,
    return request;
 }
 
-
-// ************************************************************
-
 ACE_ES_Consumer_Rep::~ACE_ES_Consumer_Rep (void)
 {
 }
@@ -2278,8 +2321,6 @@ ACE_ES_Consumer_Rep::execute (void* /* arg */)
   ACE_ERROR ((LM_ERROR, "Warning!  ACE_ES_Consumer_Rep::execute called.\n"));
   return -1;
 }
-
-// ************************************************************
 
 int
 ACE_ES_Consumer_Rep_Timeout::execute (void* /* arg */)
@@ -2307,8 +2348,6 @@ ACE_ES_Consumer_Rep_Timeout::execute (void* /* arg */)
     }
   return 0;
 }
-
-// ************************************************************
 
 ACE_ES_Subscription_Module::ACE_ES_Subscription_Module (ACE_EventChannel *channel)
   : channel_ (channel),
@@ -3256,8 +3295,6 @@ ACE_ES_Subscription_Module::shutdown (void)
   up_->shutdown ();
 }
 
-// ************************************************************
-
 ACE_ES_Supplier_Module::ACE_ES_Supplier_Module (ACE_EventChannel *channel) :
   all_suppliers_ (),
   lock_ (),
@@ -3483,81 +3520,3 @@ ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::SupplierQOS& s_qos)
     }
   pub.length (sc);
 }
-
-// ************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Atomic_Op<ACE_ES_MUTEX, int>;
-template class ACE_Map_Entry<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT>;
-template class ACE_Map_Entry<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT>;
-template class ACE_Map_Entry<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry>;
-template class ACE_Map_Manager<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>;
-template class ACE_Map_Manager<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>;
-template class ACE_Map_Manager<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>;
-template class ACE_Map_Iterator_Base<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>;
-template class ACE_Map_Iterator_Base<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>;
-template class ACE_Map_Iterator<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>;
-template class ACE_Map_Iterator<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>;
-template class ACE_Map_Reverse_Iterator<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>;
-template class ACE_Map_Reverse_Iterator<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>;
-template class ACE_Node<ACE_ES_Consumer_Rep *>;
-template class ACE_Node<ACE_Push_Consumer_Proxy *>;
-template class ACE_Node<ACE_Push_Supplier_Proxy *>;
-template class ACE_Unbounded_Set<ACE_ES_Consumer_Rep *>;
-template class ACE_Unbounded_Set<ACE_Push_Consumer_Proxy *>;
-template class ACE_Unbounded_Set<ACE_Push_Supplier_Proxy *>;
-template class ACE_Unbounded_Set_Iterator<ACE_ES_Consumer_Rep *>;
-template class ACE_Unbounded_Set_Iterator<ACE_Push_Consumer_Proxy *>;
-template class ACE_Unbounded_Set_Iterator<ACE_Push_Supplier_Proxy *>;
-
-template class ACE_Auto_Basic_Ptr<ACE_Push_Supplier_Proxy>;
-template class ACE_Auto_Basic_Ptr<ACE_Push_Consumer_Proxy>;
-template class auto_ptr<ACE_Push_Supplier_Proxy>;
-template class auto_ptr<ACE_Push_Consumer_Proxy>;
-
-template class ACE_Array<TAO_EC_Event>;
-template class ACE_Array_Base<TAO_EC_Event>;
-template class ACE_Array_Iterator<TAO_EC_Event>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Atomic_Op<ACE_ES_MUTEX, int>
-#pragma instantiate ACE_Map_Entry<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT>
-#pragma instantiate ACE_Map_Entry<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT>
-#pragma instantiate ACE_Map_Entry<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry>
-#pragma instantiate ACE_Map_Manager<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>
-#pragma instantiate ACE_Map_Manager<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>
-#pragma instantiate ACE_Map_Manager<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>
-#pragma instantiate ACE_Map_Iterator_Base<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>
-#pragma instantiate ACE_Map_Iterator<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>
-#pragma instantiate ACE_Map_Iterator<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>
-#pragma instantiate ACE_Map_Reverse_Iterator<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry, ACE_Null_Mutex>
-#pragma instantiate ACE_Node<ACE_ES_Consumer_Rep *>
-#pragma instantiate ACE_Node<ACE_Push_Consumer_Proxy *>
-#pragma instantiate ACE_Node<ACE_Push_Supplier_Proxy *>
-#pragma instantiate ACE_Unbounded_Set<ACE_ES_Consumer_Rep *>
-#pragma instantiate ACE_Unbounded_Set<ACE_Push_Consumer_Proxy *>
-#pragma instantiate ACE_Unbounded_Set<ACE_Push_Supplier_Proxy *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_ES_Consumer_Rep *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Push_Consumer_Proxy *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Push_Supplier_Proxy *>
-
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Push_Supplier_Proxy>
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Push_Consumer_Proxy>
-#pragma instantiate auto_ptr<ACE_Push_Supplier_Proxy>
-#pragma instantiate auto_ptr<ACE_Push_Consumer_Proxy>
-
-#pragma instantiate ACE_Array<TAO_EC_Event>
-#pragma instantiate ACE_Array_Base<TAO_EC_Event>
-#pragma instantiate ACE_Array_Iterator<TAO_EC_Event>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -50,6 +50,38 @@
 
 ACE_RCSID(tests, Process_Strategy_Test, "$Id$")
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Accept_Strategy<Counting_Service, ACE_SOCK_ACCEPTOR>;
+template class ACE_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>;
+template class ACE_Creation_Strategy<Counting_Service>;
+template class ACE_Concurrency_Strategy<Counting_Service>;
+template class ACE_Guard<ACE_File_Lock>;
+template class ACE_Singleton<Options, ACE_Null_Mutex>;
+template class ACE_Process_Strategy<Counting_Service>;
+template class ACE_Thread_Strategy<Counting_Service>;
+template class ACE_Reactive_Strategy<Counting_Service>;
+template class ACE_Read_Guard<ACE_File_Lock>;
+template class ACE_Scheduling_Strategy<Counting_Service>;
+template class ACE_Strategy_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Write_Guard<ACE_File_Lock>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Accept_Strategy<Counting_Service, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Creation_Strategy<Counting_Service>
+#pragma instantiate ACE_Concurrency_Strategy<Counting_Service>
+#pragma instantiate ACE_Guard<ACE_File_Lock>
+#pragma instantiate ACE_Singleton<Options, ACE_Null_Mutex>
+#pragma instantiate ACE_Process_Strategy<Counting_Service>
+#pragma instantiate ACE_Thread_Strategy<Counting_Service>
+#pragma instantiate ACE_Reactive_Strategy<Counting_Service>
+#pragma instantiate ACE_Read_Guard<ACE_File_Lock>
+#pragma instantiate ACE_Scheduling_Strategy<Counting_Service>
+#pragma instantiate ACE_Strategy_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Write_Guard<ACE_File_Lock>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
@@ -681,35 +713,3 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_END_TEST;
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Accept_Strategy<Counting_Service, ACE_SOCK_ACCEPTOR>;
-template class ACE_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>;
-template class ACE_Creation_Strategy<Counting_Service>;
-template class ACE_Concurrency_Strategy<Counting_Service>;
-template class ACE_Guard<ACE_File_Lock>;
-template class ACE_Singleton<Options, ACE_Null_Mutex>;
-template class ACE_Process_Strategy<Counting_Service>;
-template class ACE_Thread_Strategy<Counting_Service>;
-template class ACE_Reactive_Strategy<Counting_Service>;
-template class ACE_Read_Guard<ACE_File_Lock>;
-template class ACE_Scheduling_Strategy<Counting_Service>;
-template class ACE_Strategy_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>;
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Write_Guard<ACE_File_Lock>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Accept_Strategy<Counting_Service, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<Counting_Service>
-#pragma instantiate ACE_Concurrency_Strategy<Counting_Service>
-#pragma instantiate ACE_Guard<ACE_File_Lock>
-#pragma instantiate ACE_Singleton<Options, ACE_Null_Mutex>
-#pragma instantiate ACE_Process_Strategy<Counting_Service>
-#pragma instantiate ACE_Thread_Strategy<Counting_Service>
-#pragma instantiate ACE_Reactive_Strategy<Counting_Service>
-#pragma instantiate ACE_Read_Guard<ACE_File_Lock>
-#pragma instantiate ACE_Scheduling_Strategy<Counting_Service>
-#pragma instantiate ACE_Strategy_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate ACE_Write_Guard<ACE_File_Lock>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
