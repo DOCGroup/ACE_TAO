@@ -1,3 +1,12 @@
+Thu Feb 19 11:42:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+        
+          Fixed mistakes in code generation for attributes.
+          Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for
+          reporting the problem.
+
 Thu Feb 19 09:36:57 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
