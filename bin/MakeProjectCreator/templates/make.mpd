@@ -136,18 +136,22 @@ $(LIB): $(OBJS)
 <%if(exename)%>
 INSTARGET = $(BIN)
 install:
-	@echo "Installing $(INSTARGET) -> <%install%>/$(INSTARGET)"
-	@-test -d "<%install%>" || mkdir -p "<%install%>" 2> /dev/null || true
-	@$(RM) "<%install%>/$(INSTARGET)"
-	@ln -s "$(PWD)/$(INSTARGET)" "<%install%>"
+	@if [ "<%install%>" != "." ]; then \
+	echo "Installing $(INSTARGET) -> <%install%>/$(INSTARGET)"; \
+	-test -d "<%install%>" || mkdir -p "<%install%>" 2> /dev/null || true; \
+	$(RM) "<%install%>/$(INSTARGET)"; \
+	ln -s "$(PWD)/$(INSTARGET)" "<%install%>"; \
+	fi
 
 <%endif%>
 <%else%>
 <%if(!exename)%>
 install:
-	@-test -d "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>" || mkdir -p "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>" 2> /dev/null || true
-	@$(RM) "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>/$(INSTARGET)"
-	@ln -s "$(PWD)/$(INSTARGET)" "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
+	@if [ "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>" != "." ]; then \
+	test -d "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>" || mkdir -p "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>" 2> /dev/null || true; \
+	$(RM) "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>/$(INSTARGET)"; \
+	ln -s "$(PWD)/$(INSTARGET)" "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"; \
+	fi
 
 <%endif%>
 <%endif%>
