@@ -394,12 +394,12 @@ make: *** [libACE.so] Error 8
       V6.1-022 or later.<p>
 
       NOTE: if you use Digital UNIX 4.0f or later, you <strong>must</strong>
-      use <code>ace/config-osf1.h</code> instead of
-      <code>ace/config-osf1-4.0.h</code>.  <code>ace/config-osf1.h</code>
+      use <code>ace/config-tru64.h</code> instead of
+      <code>ace/config-osf1-4.0.h</code>.  <code>ace/config-tru64.h</code>
       can be used for all supported compilers on any version of
-      Digital UNIX after and include 4.0.  And, with 4.0f and later, you
-      <strong>must</strong> use
-      <code>include/makeinclude/platform_osf1_cxx.GNU</code> instead of
+      Digital UNIX after and include 4.0.  And, with 4.0f and later when
+      using Digital CXX, you <strong>must</strong> use
+      <code>include/makeinclude/platform_tru64_cxx.GNU</code> instead of
       <code>include/makeinclude/platform_osf1_4.0.GNU</code>.
 
       GNU gcc 2.7.2.1 compiles without problems. All tests run
