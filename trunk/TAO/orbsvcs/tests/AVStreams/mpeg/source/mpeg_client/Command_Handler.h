@@ -1,5 +1,5 @@
-/* -*- C++ -*- */
-/* $Id$ */
+// $Id$
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -58,9 +58,23 @@
 #include "ace/SOCK_Connector.h"
 #include "mpeg_shared/Audio_ControlC.h"
 #include "orbsvcs/AV/AVStreams_i.h"
+#include "ace/High_Res_Timer.h"
+#include "ace/Acceptor.h"
+
 
 
 class Command_Handler;
+
+class Gui_Acceptor
+:public ACE_Acceptor <Command_Handler, ACE_SOCK_ACCEPTOR> 
+{
+public:
+  Gui_Acceptor (Command_Handler *);
+
+  virtual int make_svc_handler (Command_Handler *&sh);
+private:
+  Command_Handler *command_handler_;
+};
 
 class Video_Client_StreamEndPoint
   :public virtual TAO_Client_StreamEndPoint
@@ -250,7 +264,8 @@ private:
 };
   
 class Command_Handler 
-  : public virtual ACE_Event_Handler
+  : public virtual ACE_Event_Handler,
+    public virtual ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
   // = TITLE
   //   Defines the event handler class for the client commands
@@ -260,6 +275,9 @@ class Command_Handler
   //   it will receive commands from the GUI
 
 public:
+
+  Command_Handler (void);
+  // Default constructor
 
   Command_Handler (ACE_HANDLE command_handle);
   // Construct this handler with a control (UNIX) handle
@@ -272,6 +290,22 @@ public:
 
   int run (void);
   // Run the ORB event loop
+
+  virtual int open (void *);
+  // Perform the work of the SVC_HANDLER. Called by the acceptor
+  // when a new connection shows up
+
+
+  virtual int close (u_long);
+  // Called if ACE_Svc_Handler is closed down unexpectedly.
+
+  int handle_timeout (const ACE_Time_Value &,
+                                  const void *arg);
+  // handle the timeout 
+
+
+  void stop_timer (void);
+  // stop the internal timer
 
   void set_video_data_handle (ACE_HANDLE data_fd);
   // sets the data handle (UDP) of the command handler
@@ -304,6 +338,9 @@ public:
   int init_av (void);
   // Initialize both the audio and video
   
+  int init_java_av (void);
+  // initialize both the audio and video reading the iors from java GUI thru a socket.
+
   int init_video_channel (char *phostname,char *videofile);
   // Initializes the video channel by bind the client and server video
   // mmdevices together and gets the video control object.
@@ -363,6 +400,8 @@ private:
   int busy_;
   // flag to indicate the state of the command handler
 
+  char *audio_mmdevice_ior_;
+
   ACE_SOCK_Dgram video_dgram_;
   // UDP socket on which to send/recv data
   
@@ -410,6 +449,11 @@ private:
 
   TAO_StreamCtrl audio_streamctrl_;
   // audio stream controller
+
+  ACE_High_Res_Timer timer_;
+  // timer to record the time taken for the play sequence.
+
+  Gui_Acceptor acceptor_;
 };
 
 

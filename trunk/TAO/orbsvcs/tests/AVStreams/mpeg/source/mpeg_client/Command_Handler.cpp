@@ -3,10 +3,41 @@
 #include "Command_Handler.h"
 #include "ctr.cpp"
 
-const char *TAO_AV_ORB_ARGUMENTS = "-ORBobjrefstyle URL";
+
+#define JAVA_CONTROL_PORT 6676
+
+
+Gui_Acceptor::Gui_Acceptor (Command_Handler *handler)
+  :command_handler_ (handler)
+{
+}
+
+int
+Gui_Acceptor::make_svc_handler (Command_Handler *&handler)
+{
+  handler = this->command_handler_;
+  return 0;
+}
+
+Command_Handler::Command_Handler (void)
+  :busy_ (0),
+   audio_mmdevice_ior_ (0),
+   video_data_handle_ (-1),
+   audio_data_handle_ (-1),
+   command_handle_ (-1),
+   video_control_ (0),
+   video_reactive_strategy_ (&orb_manager_,this),
+   video_client_mmdevice_ (&video_reactive_strategy_),
+   audio_control_ (0),
+   audio_reactive_strategy_ (&orb_manager_,this),
+   audio_client_mmdevice_ (&audio_reactive_strategy_),
+   acceptor_ (this)
+{
+}
 
 Command_Handler::Command_Handler (ACE_HANDLE command_handle)
   :busy_ (0),
+   audio_mmdevice_ior_ (0),
    video_data_handle_ (-1),
    audio_data_handle_ (-1),
    command_handle_ (command_handle),
@@ -15,7 +46,8 @@ Command_Handler::Command_Handler (ACE_HANDLE command_handle)
    video_client_mmdevice_ (&video_reactive_strategy_),
    audio_control_ (0),
    audio_reactive_strategy_ (&orb_manager_,this),
-   audio_client_mmdevice_ (&audio_reactive_strategy_)
+   audio_client_mmdevice_ (&audio_reactive_strategy_),
+   acceptor_ (this)
 {
 }
 
@@ -64,6 +96,13 @@ Command_Handler::init (int argc,
 int
 Command_Handler::run (void)
 {
+  ACE_INET_Addr acceptor_addr (JAVA_CONTROL_PORT);
+
+  if (this->acceptor_.open (acceptor_addr,
+                            TAO_ORB_Core_instance ()->reactor ()) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "acceptor open"), -1);
+    }
   TAO_TRY
     {
       this->orb_manager_.run (TAO_TRY_ENV);
@@ -77,12 +116,57 @@ Command_Handler::run (void)
   TAO_ENDTRY;
 }
 
+int
+Command_Handler::open (void *)
+{
+  // Java Gui connects to us
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Command_Handler::open ()\n"));
+ 
+  javaSocket = this->peer ().get_handle ();
+  if (TAO_ORB_Core_instance ()->reactor ()->register_handler (this->peer ().get_handle (),
+                                                              this,
+                                                              ACE_Event_Handler::READ_MASK) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t) Unable to register handler in open ()"),-1);
+  return 0;
+}  
+
+int
+Command_Handler::close (u_long)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t)Command_Handler::close called \n"));
+  return 0;
+}
+
+
+int
+Command_Handler::handle_timeout (const ACE_Time_Value &,
+                                  const void *arg)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t)Command_Handler::handle_timeout called \n"));
+  return 0;
+}
+
 
 int
 Command_Handler::resolve_audio_reference (void)
 {
   TAO_TRY
     {
+      if (this->audio_mmdevice_ior_ != 0)
+        {
+          CORBA::Object_var mmdevice_obj = this->orb_manager_.orb ()->string_to_object (this->audio_mmdevice_ior_,
+                                                                                        TAO_TRY_ENV);
+          if (CORBA::is_nil (mmdevice_obj) == CORBA::B_FALSE)
+            {
+              this->audio_server_mmdevice_ = AVStreams::MMDevice::_narrow (mmdevice_obj.in (),
+                                                                           TAO_TRY_ENV);
+            }
+          delete this->audio_mmdevice_ior_;
+          this->audio_mmdevice_ior_ = 0;
+          return 0;
+        }
       CORBA::Object_var naming_obj =
         this->orb_manager_.orb ()->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
@@ -182,7 +266,7 @@ Command_Handler::get_handle (void) const
 int
 Command_Handler::handle_input (ACE_HANDLE fd)
 {
-  cerr << "(" << getpid () << " Command_Handler::handle_input:busy_ = " << this->busy_ << endl;
+  //  cerr << "(" << getpid () << " Command_Handler::handle_input:busy_ = " << this->busy_ << endl;
   unsigned char cmd;
   int val;
   
@@ -207,13 +291,15 @@ Command_Handler::handle_input (ACE_HANDLE fd)
         {
           switch (cmd)
             {
+            case CmdJINIT:
+              ACE_DEBUG ((LM_DEBUG,"(%P|%t) command_handler:CmdJINIT received from GUI\n"));
             case CmdINIT:
               ACE_DEBUG ((LM_DEBUG,"(%P|%t) command_handler:CmdINIT received\n"));
               if (this->init_av () == -1)
                 {
                   ACE_DEBUG ((LM_DEBUG,"(%P|%t) init_av failed\n"));
-                  TAO_ORB_Core_instance ()->orb ()->shutdown ();
-                  return -1;
+                  // TAO_ORB_Core_instance ()->orb ()->shutdown ();
+                  //return -1;
                 }
               //              cerr << "init_av done\n";
               // automatic experiment code zapped :-)
@@ -277,7 +363,7 @@ Command_Handler::handle_input (ACE_HANDLE fd)
           return -1;
         }
       TAO_ENDTRY;
-      cerr << "returning from Command_Handler::handle_input \n";
+      //      cerr << "returning from Command_Handler::handle_input \n";
     }
   return 0;
 }
@@ -439,6 +525,151 @@ Command_Handler::init_av (void)
   return 0;
 }
 
+int 
+Command_Handler::init_java_av (void)
+{
+  cerr << "inside init_av \n";
+  int i, j;
+
+  /* try to stop and close previous playing */
+  if (audioSocket >= 0 || videoSocket >= 0)
+    {
+      //      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
+      // this may have to be taken care of afterwards.
+      unsigned char tmp = CmdCLOSE;
+      int result = 
+        this->stop_playing();
+      if (result < 0)
+        return result;
+    
+      if (audioSocket >= 0)
+        {
+          if (ABpid > 0) {
+            kill(ABpid, SIGUSR1);
+            ABpid = -1;
+          }
+          usleep(10000);
+        }
+    
+      if (videoSocket >= 0)
+        {
+          if (VBpid > 0) {
+            kill(VBpid, SIGUSR1);
+            VBpid = -1;
+          }
+          usleep(10000);
+          this->close ();
+          videoSocket = -1;
+          while ((!VBbufEmpty()) || !VDbufEmpty()) {
+            while (VDpeekMsg() != NULL) {
+              VDreclaimMsg(VDgetMsg());
+            }
+            usleep(10000);
+          }
+          usleep(10000);
+        }
+    }
+
+  int result;
+  /* read in video/audio files */
+  // set the vf and af to 0 , very important.
+
+  vh [0] = 0;
+  vf [0]= 0;
+  ah [0] = 0;
+  af [0]=0;
+  
+  NewCmd(CmdINIT);
+  i = 0;
+  result = javaCmdRead((char*)&i, 4);
+  ACE_NEW_RETURN (this->audio_mmdevice_ior_,
+                  char [i],
+                  -1);
+  result = javaCmdRead (this->audio_mmdevice_ior_,i);
+  result = javaCmdRead((char*)&i, 4);
+  result = javaCmdRead(af, i);
+  af[i] = 0;
+  /*
+    fprintf(stderr, "INIT: vh-%s, vf-%s, ah-%s, af-%s\n", vh, vf, ah, af);
+  */
+
+  shared->live = 0;
+  shared->audioMaxPktSize = !shared->config.audioConn;
+  shared->videoMaxPktSize = !shared->config.videoConn;
+  
+  if (af[0] != 0)
+    {
+      if (init_audio_channel(ah, af))
+        {
+          audioSocket = -1;
+          shared->totalSamples = 0;
+        }
+      else
+        {      
+          ACE_DEBUG ((LM_DEBUG,"(%P|%t) Initialized audio\n"));
+          shared->nextSample = 0;
+          if (shared->config.maxSPS < shared->audioPara.samplesPerSecond)
+            shared->config.maxSPS < shared->audioPara.samplesPerSecond;
+        }
+    }
+  else
+    {
+      shared->totalSamples = 0;
+      audioSocket = -1;
+    }
+  if (vf[0] != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t) Initializing video\n"));
+      if (this->init_video_channel(vh, vf))
+        {
+          shared->totalFrames = 0;      /* disable video channel */
+          videoSocket = -1;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s %d\n",
+                      __FILE__,__LINE__));
+          shared->nextFrame = 1;
+          shared->nextGroup = 0;
+          shared->currentFrame = shared->currentGroup = shared->currentDisplay = 0;
+          if (shared->config.maxFPS < shared->framesPerSecond)
+            shared->config.maxFPS = shared->framesPerSecond;
+        }
+    }
+  else
+    {
+      videoSocket = -1;
+      shared->totalFrames = 0;  /* disable video channel */
+    }
+  if (audioSocket < 0 && videoSocket < 0)  /* none of video/audio channels is setup */
+    {
+      unsigned char tmp = CmdFAIL;
+      CmdWrite(&tmp, 1);
+      /*
+        fprintf(stderr, "CTR initialization failed.\n");
+      */
+      return -1;
+    }
+  else
+    {
+      unsigned char tmp = CmdDONE;
+      set_speed();
+      if (videoSocket >= 0)
+        wait_display();
+      CmdWrite(&tmp, 1);
+      if (videoSocket < 0)
+        {
+          tmp = CmdVPclearScreen;
+          CmdWrite(&tmp, 1);
+        }
+      return 0;
+    }
+  cerr << "returning from init_av \n";
+  return 0;
+}
+
+
 int
 Command_Handler::init_audio_channel (char *phostname, char *audiofile)
 {
@@ -561,6 +792,16 @@ Command_Handler::init_audio_channel (char *phostname, char *audiofile)
 }
 
 void
+Command_Handler::stop_timer (void)
+{
+  ACE_Time_Value tv;
+  this->timer_.stop ();
+  this->timer_.elapsed_time (tv);
+  tv.dump ();
+  //  this->timer_.dump ();
+}
+
+void
 Command_Handler::set_video_data_handle (ACE_HANDLE data_fd)
 {
   videoSocket = this->video_data_handle_= data_fd;
@@ -569,6 +810,7 @@ Command_Handler::set_video_data_handle (ACE_HANDLE data_fd)
 void
 Command_Handler::set_video_control (Video_Control_ptr video_control)
 {
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Setting the video control\n"));
   this->video_control_ = video_control;
 }
 
@@ -581,6 +823,7 @@ Command_Handler::set_audio_data_handle (ACE_HANDLE data_fd)
 void
 Command_Handler::set_audio_control (Audio_Control_ptr audio_control)
 {
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) setting the audio control\n"));
   this->audio_control_ = audio_control;
 }
 
@@ -1060,6 +1303,7 @@ Command_Handler::play (int auto_exp,
   int cmdstarted = 0;
   int stuffsamples = 0;
   
+  this->timer_.start ();
   fprintf (stderr, "CTR: PLAY . . .\n");
  
   this->stop_playing ();
@@ -1737,6 +1981,7 @@ Client_Sig_Handler::register_handler (void)
   this->sig_set.sig_add (SIGALRM);  
   this->sig_set.sig_add (SIGUSR1);
   this->sig_set.sig_add (SIGUSR2);  
+  this->sig_set.sig_add (SIGSEGV);
 
   // Register the signal handler object to catch the signals.
   if (TAO_ORB_Core_instance ()->reactor ()->register_handler (sig_set, 
@@ -1788,6 +2033,9 @@ Client_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 
   switch (signum)
     {
+    case SIGSEGV:
+      ::remove_all_semaphores ();
+      exit (0);
     case SIGALRM:
       // Handle the timeout
       this->TimerHandler (signum);
@@ -1911,6 +2159,7 @@ Client_Sig_Handler::stop_timer(void)
   
   fprintf(stderr, "CTR: timer stopped.\n");
   
+  this->command_handler_->stop_timer ();
   /*
   usleep(200000);
   */
@@ -2630,6 +2879,7 @@ CORBA::Boolean
 Video_Client_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl,
                                    CORBA::Environment &env)
 {
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_Client_VDev::set_media_ctrl ()\n"));
   this->video_control_ = Video_Control::_narrow (media_ctrl,
                                                  env);
 
@@ -2660,6 +2910,7 @@ CORBA::Boolean
 Audio_Client_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl,
                                    CORBA::Environment &env)
 {
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_Client_VDev::set_media_ctrl ()\n"));
   this->audio_control_ = Audio_Control::_narrow (media_ctrl,
                                                  env);
 
