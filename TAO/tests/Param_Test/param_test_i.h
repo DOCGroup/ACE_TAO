@@ -178,6 +178,13 @@ public:
                       CORBA::Environment &env);
   // test for nested structs
 
+  virtual Param_Test::Recursive_Struct *
+    test_recursive_struct (const Param_Test::Recursive_Struct &rs1,
+                           Param_Test::Recursive_Struct &rs2,
+                           Param_Test::Recursive_Struct_out rs3,
+                           CORBA::Environment &env);
+  // test for recursive structs
+
   virtual Param_Test::Objref_Struct *
   test_objref_struct (const Param_Test::Objref_Struct &s1,
                       Param_Test::Objref_Struct &s2,
