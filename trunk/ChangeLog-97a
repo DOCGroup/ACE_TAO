@@ -1,5 +1,15 @@
 Wed May 21 16:15:48 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/{config-irix6.2*.h,README}: removed ACE_LACKS_IOSTREAM_SETGET
+	  because tests won't build with it.
+
+	* ace/IOStream.h: removed "const" from PUT_PROT of
+	  u_char * and void *.  This should allow the IOStream test
+	  and examples to build and run on Irix platforms.  Thanks
+	  to Torbjorn Lindgren <tl@funcom.com> and Amos Shapira
+	  <amos@dsi.co.il> for reporting this, and to James Hu for
+	  helping fix it.
+
 	* ace/{OS.cpp,Sched_Params.cp} (Solaris only): use 0 min priority
 	  again, with workaround in ACE_OS::thr_create to not use
 	  ::pthread_attr_setschedparam () if the priority is 0.  Instead,
