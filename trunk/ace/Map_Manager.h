@@ -68,6 +68,14 @@ public:
 
   size_t prev_;
   // Keeps track of the previous entry.
+
+#if defined (ACE_HAS_LAZY_MAP_MANAGER)
+
+  int free_;
+  // Is this entry free?
+
+#endif /* ACE_HAS_LAZY_MAP_MANAGER */
+
 };
 
 // Forward decl.
@@ -326,6 +334,16 @@ protected:
 
   void move_from_occupied_list_to_free_list (size_t slot);
   // Move from occupied list to free list.
+
+#if defined (ACE_HAS_LAZY_MAP_MANAGER)
+
+  void move_all_free_slots_from_occupied_list (void);
+  // In the case of lazy map managers, the movement of free slots from
+  // the occupied list to the free list is delayed until we run out of
+  // free slots in the free list. This function goes through the
+  // entire occupied list, moving free slots to the free list.
+
+#endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
   void shared_move (size_t slot,
                     ACE_Map_Entry<EXT_ID, INT_ID> &current_list,
