@@ -1,3 +1,12 @@
+Tue Feb 24 15:07:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/test.{mdp,mak}: Added Env_Value_Test and OrdMultiSet_Test
+	  into the workspace.
+
+	  Removed all odbc libraries from all projects.  We don't really
+	  need them to run ACE.  Thanks to gonzo@ing.puc.cl (Gonzalo
+	  A. Diethelm) for pointing this out.
+
 Tue Feb 24 07:14:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Asynch_Acceptor.cpp (handle_accept): Update the
