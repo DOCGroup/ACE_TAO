@@ -2,6 +2,8 @@
 
 #include "GPS_exec.h"
 
+#include "ace/OS_NS_time.h"
+
 #define DISPLACEMENT 256
 
 /// Default constructor.

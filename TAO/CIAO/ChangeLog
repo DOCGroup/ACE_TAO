@@ -1,3 +1,15 @@
+Tue Jan  6 11:23:29 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/OEP/BasicSP/EC/client.cpp:
+        * examples/OEP/BasicSP/EC/controller.cpp:
+        
+          Replaced occurrences of cerr with ACE_ERROR_RETURN.
+        
+        * examples/OEP/Display/GPS/GPS_exec.cpp:
+        * examples/OEP/Display/GPS/GPS_tracing_exec.cpp:
+        
+          Added #include of ace/OS_NS_time.h.
+
 Tue Jan  6 10:16:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tools/Assembly_Deployer/Assembly_Manager.cpp:
