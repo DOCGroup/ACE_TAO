@@ -1,18 +1,20 @@
 // $Id$
 
-#include "Kokyu_EC.h"
-#include <orbsvcs/Sched/Reconfig_Scheduler.h>
-#include <orbsvcs/Runtime_Scheduler.h>
-#include <orbsvcs/Event_Service_Constants.h>
-#include <orbsvcs/Event_Utilities.h>
-#include <orbsvcs/Scheduler_Factory.h>
-#include <orbsvcs/Event/EC_Event_Channel.h>
-#include <orbsvcs/Event/EC_Default_Factory.h>
-#include <orbsvcs/Event/EC_Kokyu_Factory.h>
-#include <ace/OS_NS_strings.h> //for ACE_OS::strcasecmp
-#include <ace/OS_NS_sys_time.h> // for ACE_OS::gettimeofday
-
+#include "orbsvcs/Sched/Reconfig_Scheduler.h"
+#include "orbsvcs/Runtime_Scheduler.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event/EC_Kokyu_Factory.h"
+#include "ace/OS_NS_strings.h" //for ACE_OS::strcasecmp
+#include "ace/OS_NS_sys_time.h" // for ACE_OS::gettimeofday
 #include <sstream>
+
+#include "Kokyu/Dispatch_Deferrer.h"
+
+#include "Kokyu_EC.h"
 
 namespace {
 
@@ -562,3 +564,71 @@ Kokyu_EC::add_consumer(
   //ACE_DEBUG((LM_DEBUG,"Kokyu_EC add_consumer() DONE\n"));
 
 } //add_consumer()
+
+//*************************************************************
+
+Reactor_Task::Reactor_Task (void)
+  : initialized_(0)
+    , react_(0)
+{
+}
+
+Reactor_Task::~Reactor_Task (void)
+{
+}
+
+int
+Reactor_Task::initialize(void)
+{
+  /*
+  //We need to set the ACE_Reactor::instance() to be the ORB
+  //reactor so Kokyu's RG implementation can use it w/o creating
+  //an extra thread to run the reactor event loop. I hope this
+  //doesn't screw something else up!
+  //use Select_Reactor explicitly?
+  ACE_Reactor *reactor; //TODO: how clean up reactor and stop thread?
+  ACE_NEW_RETURN(reactor,
+                 ACE_Reactor,
+                 -1);
+  reactor->open(ACE_Select_Reactor_Impl::DEFAULT_SIZE);
+  ACE_Reactor::instance(reactor);
+
+  this->react_ = reactor;
+  */
+  //this->react_ = ACE_Reactor::instance();
+  this->react_ = Kokyu::Dispatch_Deferrer::Singleton_Reactor::instance();
+  //assume reactor is already opened!
+
+  this->initialized_ = 1;
+
+  return 0;
+} //initialize()
+
+ACE_Reactor *
+Reactor_Task::reactor(void)
+{
+  return this->react_;
+}
+
+/// Process the events in the queue.
+int
+Reactor_Task::svc (void)
+{
+  ACE_DEBUG((LM_DEBUG,"Reactor_Task (%P|%t) svc(): ENTER\n"));
+
+  if (!this->initialized_)
+    {
+      this->initialize();
+    }
+
+  this->react_->owner(ACE_Thread::self()); //set this thread as owner
+
+  int err = this->react_->run_reactor_event_loop();
+  if (err < 0)
+    {
+      ACE_DEBUG((LM_ERROR,"Reactor_Task (%t) error running Reactor event loop\n"));
+    }
+
+  ACE_DEBUG((LM_DEBUG,"Reactor_Task (%P|%t) svc(): LEAVE\n"));
+  return 0;
+} //svc()
