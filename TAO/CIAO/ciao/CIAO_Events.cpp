@@ -14,6 +14,8 @@
 
 #include "CIAO_Events.h"
 
+/// Initialize the RTEventService object. Will eventually be moved to a separate init ()
+/// method so exceptions can be handled properly.
 CIAO_Events::RTEventService::RTEventService (CORBA::ORB_ptr orb, RtecEventChannelAdmin::EventChannel_ptr ec) :
   orb_ (CORBA::ORB::_duplicate (orb)),
   rt_event_channel_ (RtecEventChannelAdmin::EventChannel::_duplicate (ec)),
@@ -31,6 +33,7 @@ CIAO_Events::RTEventService::RTEventService (CORBA::ORB_ptr orb, RtecEventChanne
   ACE_CHECK;
 }
 
+/// Connect a supplier to the RT event channel.
 void CIAO_Events::RTEventService::connect_event_supplier (
     CIAO_Events::Supplier_Config_ptr supplier_config
     ACE_ENV_ARG_DECL)
@@ -63,6 +66,7 @@ void CIAO_Events::RTEventService::connect_event_supplier (
 
 }
 
+/// Connect a consumer to the RT event channel.
 CIAO_Events::EventServiceInfo CIAO_Events::RTEventService::connect_event_consumer (
     CIAO_Events::Consumer_Config_ptr consumer_config
     ACE_ENV_ARG_DECL)
@@ -149,6 +153,7 @@ void CIAO_Events::RTEventService::push_event (
 	ACE_CHECK;
 }
 
+/// Nothing to do here.
 void CIAO_Events::DirectEventService::connect_event_supplier (
         CIAO_Events::Supplier_Config_ptr supplier_config
         ACE_ENV_ARG_DECL)
@@ -157,6 +162,7 @@ void CIAO_Events::DirectEventService::connect_event_supplier (
 {
 }
 
+/// Add a consumer to the map.
 CIAO_Events::EventServiceInfo CIAO_Events::DirectEventService::connect_event_consumer (
         CIAO_Events::Consumer_Config_ptr consumer_config
         ACE_ENV_ARG_DECL)
@@ -196,6 +202,7 @@ void CIAO_Events::DirectEventService::disconnect_event_supplier (
 {
 }
 
+/// Iterate through the map, pushing the event to each consumer.
 void CIAO_Events::DirectEventService::push_event (
         Components::EventBase *ev
         ACE_ENV_ARG_DECL)
@@ -409,6 +416,7 @@ RtecEventChannelAdmin::SupplierQOS * CIAO_Events::Direct_Supplier_Config::get_rt
   return 0;
 }
 
+/// Initialize the Events_Manager
 CIAO_Events::Events_Manager::Events_Manager (CORBA::ORB_ptr orb) :
   orb_ (CORBA::ORB::_duplicate (orb)),
   rt_event_channel_ (RtecEventChannelAdmin::EventChannel::_nil ())

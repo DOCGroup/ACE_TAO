@@ -2,6 +2,8 @@ Tue Sep 23 21:35:17 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * ciao/CIAO_Events.h:
         * ciao/CIAO_Events.cpp:
+        * ciao/Container_Base.h:
+        * ciao/Container_Base.cpp:
         * ciao/CIAO_Events.idl:
 
           Added comments.
@@ -14,7 +16,7 @@ Mon Sep 22 20:52:02 2003  George Edwards <g.edwards@vanderbilt.edu>
         * ciao/CIAO_Events.cpp:
         * ciao/CIAO_Events.idl:
 
-          Modified files:
+        Modified files:
 
         * ciao/Container_Base.cpp:
         * ciao/Container_Base.h:

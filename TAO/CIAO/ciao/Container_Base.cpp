@@ -32,6 +32,7 @@ CIAO::Container::_ciao_the_ORB ()
   return this->orb_.in ();
 }
 
+/// Events_Manager creates the appropriate servant for Consumer_Config.
 CIAO_Events::Consumer_Config_ptr CIAO::Container::_ciao_create_event_consumer_config (
         const char * service_type
         ACE_ENV_ARG_DECL)
@@ -41,6 +42,7 @@ CIAO_Events::Consumer_Config_ptr CIAO::Container::_ciao_create_event_consumer_co
   return this->events_manager_.create_consumer_config (service_type);
 }
 
+/// Events_Manager creates the appropriate servant for Supplier_Config
 CIAO_Events::Supplier_Config_ptr CIAO::Container::_ciao_create_event_supplier_config (
         const char * service_type
         ACE_ENV_ARG_DECL)
@@ -50,80 +52,8 @@ CIAO_Events::Supplier_Config_ptr CIAO::Container::_ciao_create_event_supplier_co
   return this->events_manager_.create_supplier_config (service_type);
 }
 
-/*
-::Components::Cookie * CIAO::Container::_ciao_specify_event_service (
-    const char * event_name,
-    const char * publisher_name,
-    const char * service_name
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-    CORBA::SystemException))
-{
 
-  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_specify_event_service\n"));
-
-  CIAO_EventServiceInfo service_info;
-
-  if (ACE_OS::strcmp (service_name, "EC") == 0)
-  {
-    service_info.type = EC;
-    if (this->event_service_ == 0)
-      {
-        ACE_NEW_RETURN (this->event_service_, CIAO_EventService, 0);
-      }
-    service_info.service = this->event_service_;
-  }
-  else if (ACE_OS::strcmp (service_name, "RTEC") == 0)
-  {
-    service_info.type = RTEC;
-    if (this->rt_event_service_ == 0)
-      {
-        ACE_NEW_RETURN (this->rt_event_service_, CIAO_RTEventService (this->orb_.in ()), 0);
-      }
-    service_info.service = this->rt_event_service_;
-  }
-  else if (ACE_OS::strcmp (service_name, "NS") == 0)
-  {
-    service_info.type = NS;
-    if (this->notify_service_ == 0)
-      {
-        ACE_NEW_RETURN (this->notify_service_, CIAO_NotificationService, 0);
-      }
-    service_info.service = this->notify_service_;
-  }
-  else if (ACE_OS::strcmp (service_name, "RTNS") == 0)
-  {
-    service_info.type = RTNS;
-    if (this->rt_notify_service_ == 0)
-      {
-        ACE_NEW_RETURN (this->rt_notify_service_, CIAO_RTNotificationService, 0);
-      }
-    service_info.service = this->rt_notify_service_;
-  }
-  else if (ACE_OS::strcmp (service_name, "DIRECT") == 0)
-  {
-    service_info.type = DIRECT;
-    if (this->direct_event_service_ == 0)
-      {
-        ACE_NEW_RETURN (this->direct_event_service_, CIAO_DirectEventService, 0);
-      }
-    service_info.service = this->direct_event_service_;
-  }
-
-  service_info.service->specify_event_service (service_info,
-                                               event_name,
-                                               publisher_name
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  ACE_Active_Map_Manager_Key key;
-  this->event_info_map_.bind (service_info, key);
-  ::CIAO::Map_Key_Cookie * return_cookie;
-  ACE_NEW_RETURN (return_cookie, ::CIAO::Map_Key_Cookie (key), 0);
-  return return_cookie;
-}
-*/
-
+/// Connect up an event sink.
 void CIAO::Container::_ciao_connect_event_consumer (
     CIAO_Events::Consumer_Config_ptr consumer_config
     ACE_ENV_ARG_DECL)
@@ -133,59 +63,25 @@ void CIAO::Container::_ciao_connect_event_consumer (
 
   ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_connect_event_consumer\n"));
 
+  // Look up the supplier's event service implementation.
   CIAO_Events::EventServiceBase * event_service = 0;
-
   if (this->event_service_map_.find (consumer_config->get_supplier_id (), event_service) != 0)
     {
       ACE_THROW (
       ::Components::InvalidConnection ());
     }
 
+  /// Connect to the supplier's event service implementation
   CIAO_Events::EventServiceInfo service_info =
     event_service->connect_event_consumer (consumer_config ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  /// Save the consumer's disconnect info in a map.
   this->event_info_map_.bind (consumer_config->get_consumer_id (),
                               service_info);
-
-  /*
-
-  CIAO_EventServiceInfo service_info;
-  ACE_Active_Map_Manager_Key key;
-
-  if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == -1)
-    {
-      ACE_THROW_RETURN (
-      ::Components::InvalidConnection (),
-      0);
-    }
-
-  if (this->event_info_map_.find (key, service_info) != 0)
-    {
-      ACE_THROW_RETURN (
-      ::Components::InvalidConnection (),
-      0);
-    }
-
-  if (CORBA::is_nil (consumer))
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
-    }
-
-  service_info.service->connect_event_consumer (consumer, service_info ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  ACE_Active_Map_Manager_Key new_key;
-  this->event_info_map_.bind (service_info, new_key);
-  ::CIAO::Map_Key_Cookie * return_cookie;
-  ACE_NEW_RETURN (return_cookie, ::CIAO::Map_Key_Cookie (new_key), 0);
-  return return_cookie;
-
-  */
-
 }
 
-
+/// Connect up an event source.
 void CIAO::Container::_ciao_connect_event_supplier (
     CIAO_Events::Supplier_Config_ptr supplier_config
     ACE_ENV_ARG_DECL)
@@ -195,43 +91,18 @@ void CIAO::Container::_ciao_connect_event_supplier (
 
   ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_connect_event_supplier\n"));
 
+  /// Use Events_Manager factory method to create the appropriate implementation of
+  /// EventServiceBase
   CIAO_Events::EventServiceBase * event_service =
     this->events_manager_.create_supplier (supplier_config);
 
+  /// Connect the supplier
   event_service->connect_event_supplier (supplier_config ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  /// Save a pointer to the event service implementation in a map.
   this->event_service_map_.bind (supplier_config->get_supplier_id (),
                                  event_service);
-
-  /*
-  CIAO_EventServiceInfo service_info;
-  ACE_Active_Map_Manager_Key key;
-
-  if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == -1)
-    {
-      ACE_THROW_RETURN (
-      ::Components::InvalidConnection (),
-      0);
-    }
-
-  if (this->event_info_map_.find (key, service_info) != 0)
-    {
-      ACE_THROW_RETURN (
-      ::Components::InvalidConnection (),
-      0);
-    }
-
-  service_info.service->connect_event_supplier (service_info ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  ACE_Active_Map_Manager_Key new_key;
-  this->event_info_map_.bind (service_info, new_key);
-  ::CIAO::Map_Key_Cookie * return_cookie;
-  ACE_NEW_RETURN (return_cookie, ::CIAO::Map_Key_Cookie (new_key), 0);
-  return return_cookie;
-  */
-
 }
 
 void CIAO::Container::_ciao_disconnect_event_consumer
@@ -286,8 +157,8 @@ void CIAO::Container::_ciao_push_event (Components::EventBase *ev,
 
   ACE_DEBUG ((LM_DEBUG, "CIAO::Container::_ciao_push_event\n"));
 
+  /// Pushing an event requires a map lookup.
   CIAO_Events::EventServiceBase * event_service;
-
   if (this->event_service_map_.find (connection_id, event_service) != 0)
     {
       ACE_THROW (
