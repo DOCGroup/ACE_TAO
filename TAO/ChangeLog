@@ -1,3 +1,10 @@
+Fri Oct 18 15:40:11 2002  Priyanka Gontla  <pgontla@ociweb.com>
+
+	* orbsvcs/ImplRepo_Service/ImR_Activator.bor: 
+	  Corrected the NAME of the executable. 
+	  Thanks to Christian Barheine <cbarheine@sympatec.com>
+	  for finding the problem and also for the patch.
+	
 Fri Oct 18 10:30:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/AMH/Sink_Server/Base_Server.cpp: Fixed a warning with
