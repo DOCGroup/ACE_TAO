@@ -47,9 +47,8 @@ private:
   short id_;
 };
 
-
-My_Test_Object::My_Test_Object (CORBA::Short id = 0) 
-    : id_ (id)
+My_Test_Object::My_Test_Object (CORBA::Short id)
+  : id_ (id)
 {
 }
 
@@ -63,13 +62,11 @@ My_Test_Object::id (CORBA::Environment &_env)
   return id_;
 }
 
-
 void
 My_Test_Object::id (CORBA::Short id, CORBA::Environment &_env)
 {
   id_ = id;
 }
-
 
 // Constructor.
 
