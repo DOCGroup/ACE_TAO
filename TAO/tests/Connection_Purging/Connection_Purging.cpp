@@ -274,7 +274,8 @@ setup_client_orb (CORBA::ORB_out client_orb,
   ACE_ENDTRY;
 }
 
-void
+//void
+int
 invoke_remote_calls (CORBA::ORB_ptr client_orb)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -316,7 +317,8 @@ invoke_remote_calls (CORBA::ORB_ptr client_orb)
                     }
                   ACE_CATCHANY
                     {
-                      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "invoke_remote_calls::Exception!");
+                      if (debug)
+                        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "invoke_remote_calls::Expected Exception!");
 
                       if (debug)
                         ACE_DEBUG ((LM_DEBUG, "Trying again...invoke_remote_calls::iteration %d\n", i));
@@ -332,7 +334,7 @@ invoke_remote_calls (CORBA::ORB_ptr client_orb)
                 }
 
               if (invoke_exception == 1)
-                ACE_ASSERT (0);
+                  return -1;
             }
         }
     }
@@ -342,6 +344,7 @@ invoke_remote_calls (CORBA::ORB_ptr client_orb)
       ACE_ASSERT (0);
     }
   ACE_ENDTRY;
+  return 0;
 }
 
 void
@@ -426,7 +429,14 @@ main (int argc,
   result = handle_gobbler.consume_handles (keep_handles_available);
   ACE_ASSERT (result == 0);
 
-  invoke_remote_calls (client_orb.in ());
+  result = invoke_remote_calls (client_orb.in ());
+  if (result == 0)
+    ACE_DEBUG ((LM_DEBUG, "Test succeeds!\n"));
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, "Test failure!\n"));
+      ACE_ASSERT (0);
+    }
   //orbs_shutdown ();
 
   return 0;
