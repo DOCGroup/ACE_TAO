@@ -1,3 +1,8 @@
+Tue Jan 05 14:21:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/TAO_Internal.cpp (open_services): Added insertion of
+	  default static service objects of TAO.  I forgot to do that.
+
 Tue Jan  5 13:06:12 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
         * examples/Simple/bank/Client_i.cpp (withdraw): Removed the
