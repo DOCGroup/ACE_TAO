@@ -45,7 +45,7 @@ Thu Aug  8 13:35:27 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
           Added part of the example IDL file above to the tests.
 
-        * tao/sequence.h:
+        * tao/Sequence.h:
 
           Made the release() method public as required by the spec.
           Thanks to Tommy Andreasen <tommy.andreasen@radiometer.dk>
