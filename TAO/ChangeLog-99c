@@ -1,3 +1,15 @@
+Tue May 25 11:03:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	  Fixed errors in fragment size computation, thanks to J. Russell
+	  Noseworthy <rnosewor@objectsciences.com> for catching this up
+	  and providing a fix.
+
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+	  Fixed several uses of T_var in calls to _duplicate(), old g++
+	  needs you to call the .in() method explicitly. Thanks to Irfan
+	  for catching this one.
+
 Tue May 25 10:06:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Request.cpp: Moved the #endif for TAO_HAS_MINIMUM_CORBA

@@ -166,7 +166,7 @@ TAO_EC_Basic_ObserverStrategy::connected (
       {
         Observer_Entry& entry = (*i).int_id_;
         copy[j++] =
-          RtecEventChannelAdmin::Observer::_duplicate (entry.observer);
+          RtecEventChannelAdmin::Observer::_duplicate (entry.observer.in ());
       }
   }
 
@@ -208,7 +208,7 @@ TAO_EC_Basic_ObserverStrategy::disconnected (
       {
         Observer_Entry& entry = (*i).int_id_;
         copy[j++] =
-          RtecEventChannelAdmin::Observer::_duplicate (entry.observer);
+          RtecEventChannelAdmin::Observer::_duplicate (entry.observer.in ());
       }
   }
 
@@ -250,7 +250,7 @@ TAO_EC_Basic_ObserverStrategy::connected (
       {
         Observer_Entry& entry = (*i).int_id_;
         copy[j++] =
-          RtecEventChannelAdmin::Observer::_duplicate (entry.observer);
+          RtecEventChannelAdmin::Observer::_duplicate (entry.observer.in ());
       }
   }
 
@@ -292,7 +292,7 @@ TAO_EC_Basic_ObserverStrategy::disconnected (
       {
         Observer_Entry& entry = (*i).int_id_;
         copy[j++] =
-          RtecEventChannelAdmin::Observer::_duplicate (entry.observer);
+          RtecEventChannelAdmin::Observer::_duplicate (entry.observer.in ());
       }
   }
 
