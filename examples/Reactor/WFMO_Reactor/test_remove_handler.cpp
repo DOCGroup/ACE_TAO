@@ -12,13 +12,7 @@
 //    Tests the ReactorEx's ability to handle simultaneous events.  If
 //    you pass anything on the command-line, then each handler
 //    requests to be removed from the ReactorEx after each event.
-//    This has a funky effect on the order in which handlers are
-//    serviced.  So, if no parameters are passed in, the handlers
-//    should be serviced 1 through MAXIMUM_WAIT_OBJECTS.  If handlers
-//    to request to be removed as signals occur, they will be serviced
-//    1, MAX, MAX-1, ..., 2.  This is because of a ReactorEx
-//    bookkeeping optimization.
-//
+//    
 // = AUTHOR
 //    Tim Harrison
 // 
@@ -43,8 +37,9 @@ public:
     : event_number_ (event_number),
       close_down_ (close_down)
     {
-      ACE_Service_Config::reactorEx ()->register_handler (this,
-							  this->event_.handle ());
+      if (ACE_Service_Config::reactorEx ()->register_handler (this,
+							      this->event_.handle ()) == -1)
+	ACE_ERROR ((LM_ERROR, "%p\tevent handler %d cannot be added to ReactorEx\n", "", event_number_));
       this->event_.signal ();
     }
 
@@ -60,7 +55,7 @@ public:
 
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
     {
-      //      ACE_DEBUG ((LM_DEBUG, "event handler %d closed.\n", event_number_));
+      ACE_DEBUG ((LM_DEBUG, "event handler %d closed.\n", event_number_));
       delete this;
       return 0;
     }
@@ -86,9 +81,21 @@ main (int argc, char *argv[])
 {
   int close_down = argc > 1 ? 1 : 0;
 
-  for (int i = 0; i < ACE_ReactorEx::DEFAULT_SIZE; i++)
+  for (int i = 1; i <= ACE_ReactorEx::DEFAULT_SIZE; i++)
     new Event_Handler (i, close_down);
 
-  ACE_Service_Config::reactorEx ()->handle_events ();
-  return 42;
+  int result = 0;
+  ACE_Time_Value time (1);
+  while (1)
+    {
+      result = ACE_Service_Config::reactorEx ()->handle_events (time);
+      if (result == 0 && errno == ETIME)
+	{
+	  ACE_DEBUG ((LM_DEBUG, "No more work left: timing out\n"));
+	  break;
+	}
+      if (result == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);	
+    }	
+  return 0;
 }

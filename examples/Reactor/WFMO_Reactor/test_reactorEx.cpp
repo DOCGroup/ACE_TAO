@@ -368,15 +368,13 @@ STDIN_Handler::svc (void)
 void
 STDIN_Handler::register_thread_exit_hook (void)
 {
-  ACE_hthread_t handle;
-
   // Get a real handle to our thread.
-  ACE_Service_Config::thr_mgr ()->thr_self (handle);
+  ACE_Service_Config::thr_mgr ()->thr_self (this->thr_handle_);
 
   // Register ourselves to get called back when our thread exits.
 
   if (ACE_Service_Config::reactorEx ()->
-      register_handler (this, handle) == -1)
+      register_handler (this, this->thr_handle_) == -1)
     ACE_ERROR ((LM_ERROR, "Exit_Hook Register failed.\n"));
 
   // We're in another thread, so we need to notify the ReactorEx so
