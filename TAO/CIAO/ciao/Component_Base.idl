@@ -16,11 +16,9 @@
 //  import ::CosNotification
 //  import ::CosNotifyChannelAdmin
 
-#include <CORBA.pidl>
 #include <SecurityLevel2.idl>
 #include <CosPersistentState.idl>
-#include <PortableServer/PortableServer.pidl>
-#include <IFR_Client/Interface.pidl>
+#include <tao/IFR_Client/Interface.pidl>
 #include <CosNotification.idl>
 #include <CosNotifyChannelAdmin.idl>
 
