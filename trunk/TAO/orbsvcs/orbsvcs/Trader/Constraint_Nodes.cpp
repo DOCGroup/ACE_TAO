@@ -1,15 +1,15 @@
 // =====================================================================
 // $Id$
-// 
-// = LIBRARY 
+//
+// = LIBRARY
 //    Lookup
-//  
+//
 // = FILENAME
 //    Constraint_Nodes.cpp
-// 
-// = AUTHOR 
-//    Seth Widoff <sbw1@cs.wustl.edu> 
-//   
+//
+// = AUTHOR
+//    Seth Widoff <sbw1@cs.wustl.edu>
+//
 // =====================================================================
 
 
@@ -228,7 +228,7 @@ TAO_Unary_Constraint::~TAO_Unary_Constraint (void)
   delete operand_;
 }
 
-  
+
 int
 TAO_Unary_Constraint::accept (TAO_Constraint_Visitor* visitor)
 {
@@ -279,7 +279,7 @@ TAO_Property_Constraint::~TAO_Property_Constraint (void)
 {
   CORBA::string_free (this->name_);
 }
-  
+
 int
 TAO_Property_Constraint::accept(TAO_Constraint_Visitor* visitor)
 {
@@ -353,7 +353,7 @@ TAO_Literal_Constraint (CORBA::Any* any)
       {
 	char* s;
 	any_ref >>= s;
-	this->op_.str_ = s;
+	this->op_.str_ = CORBA::string_dup (s);
       }
       break;
     case TAO_SEQUENCE:
@@ -417,7 +417,7 @@ TAO_Literal_Constraint::operator CORBA::Boolean (void) const
 TAO_Literal_Constraint::operator CORBA::ULong (void) const
 {
   CORBA::ULong return_value = (CORBA::ULong)0;
-  
+
   if (this->type_ == TAO_UNSIGNED)
     return_value = this->op_.uinteger_;
   else if (this->type_ == TAO_SIGNED)
@@ -430,7 +430,7 @@ TAO_Literal_Constraint::operator CORBA::ULong (void) const
        MAX_UNSIGNED_INTEGER :
        (CORBA::ULong)this->op_.double_)
       : 0;
-  
+
   return return_value;
 }
 
@@ -460,7 +460,7 @@ TAO_Literal_Constraint::operator CORBA::Long (void) const
 TAO_Literal_Constraint::operator CORBA::Double (void) const
 {
   CORBA::Double return_value = (CORBA::Double)0.0;
-  
+
   if (this->type_ == TAO_DOUBLE)
     return_value = this->op_.double_;
   else if (this->type_ == TAO_SIGNED)
@@ -489,7 +489,7 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
   TAO_Expression_Type return_value = TAO_UNKNOWN;
   CORBA::TCKind kind = type->kind (env);
   TAO_CHECK_ENV_RETURN (env, return_value);
-  
+
   switch (kind)
     {
     case CORBA::tk_ushort:
@@ -519,7 +519,7 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
 	TAO_CHECK_ENV_RETURN (env, return_value);
 	CORBA::TCKind kind = typecode->kind (env);
 	TAO_CHECK_ENV_RETURN (env, return_value);
-	
+
 	if (kind == CORBA::tk_sequence)
 	  return_value = TAO_SEQUENCE;
       }
@@ -629,7 +629,7 @@ operator<= (const TAO_Literal_Constraint& left,
   int return_value = 0;
   TAO_Expression_Type widest_type =
     TAO_Literal_Constraint::widest_type(left, right);
-  
+
   switch (widest_type)
     {
     case TAO_STRING:
@@ -645,7 +645,7 @@ operator<= (const TAO_Literal_Constraint& left,
       return_value = (CORBA::ULong)left <= (CORBA::ULong)right;
       break;
     }
-  
+
   return return_value;
 }
 
@@ -721,7 +721,7 @@ operator== (const TAO_String_Manager& left,
 			     (const char*) right) == 0;
   return result;
 }
- 
+
 
 TAO_Literal_Constraint
 operator+ (const TAO_Literal_Constraint& left,
@@ -776,7 +776,7 @@ operator- (const TAO_Literal_Constraint& left,
 	CORBA::ULong result = (CORBA::ULong)left - (CORBA::ULong)right;
 	return TAO_Literal_Constraint((CORBA::ULong)result);
       }
-    default: 
+    default:
       return TAO_Literal_Constraint((CORBA::Long)0);
     }
 }
@@ -784,7 +784,7 @@ operator- (const TAO_Literal_Constraint& left,
 TAO_Literal_Constraint
 operator* (const TAO_Literal_Constraint& left,
 	   const TAO_Literal_Constraint& right)
-{  
+{
   TAO_Expression_Type widest_type =
     TAO_Literal_Constraint::widest_type(left, right);
 
@@ -807,7 +807,7 @@ operator* (const TAO_Literal_Constraint& left,
       }
     default:
       return TAO_Literal_Constraint((CORBA::Long)0);
-    }  
+    }
 }
 
 TAO_Literal_Constraint
@@ -836,7 +836,7 @@ operator/ (const TAO_Literal_Constraint& left,
       }
     default:
       return TAO_Literal_Constraint((CORBA::Long)0);
-    }  
+    }
 }
 
 TAO_Literal_Constraint
@@ -861,7 +861,7 @@ operator- (const TAO_Literal_Constraint& operand)
       }
     default:
       return TAO_Literal_Constraint((CORBA::Long)0);
-    }  
+    }
 }
 
 TAO_Expression_Type
