@@ -18,5 +18,5 @@
 
 
 # if !defined (PACE_HAS_INLINE)
-# include "pace/sys/termios.inl"
+# include "termios.inl"
 # endif /* !PACE_HAS_INLINE */

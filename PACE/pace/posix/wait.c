@@ -18,5 +18,5 @@
 
 
 # if !defined (PACE_HAS_INLINE)
-# include "pace/wait.inl"
+# include "wait.inl"
 # endif /* PACE_HAS_INLINE */
