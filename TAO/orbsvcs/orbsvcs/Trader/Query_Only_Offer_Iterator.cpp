@@ -14,10 +14,8 @@
 //    Seth Widoff <sbw1@cs.wustl.edu>
 // 
 // ============================================================================
-#define ACE_BUILD_DLL
 
 #include "Query_Only_Offer_Iterator.h"
-#include <iostream.h>
 
 TAO_Query_Only_Offer_Iterator::
 TAO_Query_Only_Offer_Iterator(const TAO_Property_Filter& pfilter)
@@ -27,7 +25,6 @@ TAO_Query_Only_Offer_Iterator(const TAO_Property_Filter& pfilter)
 
 TAO_Query_Only_Offer_Iterator::~TAO_Query_Only_Offer_Iterator(void)
 {
-  //  cerr << "In iterator destructor now" << endl;
 }
 
 void
