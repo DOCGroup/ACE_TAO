@@ -102,6 +102,7 @@ TAO/tests/Portable_Interceptors/Dynamic/run_test.pl: !MINIMUM !DISABLE_INTERCEPT
 TAO/tests/Portable_Interceptors/IORInterceptor/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/ForwardRequest/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/Service_Context_Manipulation/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/Portable_Interceptors/Request_Interceptor_Flow/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Object_Loader/run_test.pl: !STATIC
 
 TAO/examples/POA/Adapter_Activator/run_test.pl: !MINIMUM !SUNCC5_1
