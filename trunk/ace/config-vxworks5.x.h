@@ -185,7 +185,7 @@
 #define ACE_LACKS_WCSTOD
 #define ACE_LACKS_WCSTOL
 #define ACE_LACKS_WCSTOUL
-
+#define ACE_LACKS_WCSDUP
 
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
