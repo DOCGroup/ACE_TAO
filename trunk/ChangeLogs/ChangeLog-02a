@@ -1,3 +1,15 @@
+Sun May 12 23:20:06 2002  Alex Libman <AlexL@rumblegroup.com>
+
+	* tests/TP_Reactor_Test.{h,cpp}:
+	  Improved flow-control in full-duplex mode by increasing the
+	  window size, total_send - total_recv to achieve max performance
+	  from TCP/IP
+
+	  Improved static info which includes the number of bytes
+	  sent/recv and the number of read/write operations. This allows
+	  to see distribution of I/O operations between handlers. Would be
+	  useful for TP_Reactor's future improvements.
+
 Sun May 12 10:11:07 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Message_Queue_T.cpp: Updated all the enqueue*() and
