@@ -34,7 +34,7 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
         )
   , thr_mgr_ (tm)
 {
-  ACE_OS_TRACE ("Ace_Thread_Adapter::Ace_Thread_Adapter");
+  ACE_OS_TRACE ("ACE_Thread_Adapter::ACE_Thread_Adapter");
 }
 
 ACE_Thread_Adapter::~ACE_Thread_Adapter (void)

@@ -739,7 +739,7 @@ int
 ACE_Select_Reactor_Notify::dispatch_notifications (int &number_of_active_handles,
                                                    ACE_Handle_Set &rd_mask)
 {
-  ACE_TRACE ("ACE_Select_Reactor_Notify::handle_notification");
+  ACE_TRACE ("ACE_Select_Reactor_Notify::dispatch_notifications");
 
   ACE_HANDLE read_handle =
     this->notification_pipe_.read_handle ();

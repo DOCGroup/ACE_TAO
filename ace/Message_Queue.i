@@ -75,7 +75,7 @@ ACE_Message_Queue_Vx::message_bytes (void)
 ACE_INLINE size_t
 ACE_Message_Queue_Vx::message_length (void)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_length");
+  ACE_TRACE ("ACE_Message_Queue_Vx::message_length");
   ACE_NOTSUP_RETURN ((size_t) -1);
 }
 
@@ -91,14 +91,14 @@ ACE_Message_Queue_Vx::message_count (void)
 ACE_INLINE void
 ACE_Message_Queue_Vx::message_bytes (size_t)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes");
+  ACE_TRACE ("ACE_Message_Queue_Vx::message_bytes");
   ACE_NOTSUP;
 }
 
 ACE_INLINE void
 ACE_Message_Queue_Vx::message_length (size_t)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_length");
+  ACE_TRACE ("ACE_Message_Queue_Vx::message_length");
   ACE_NOTSUP;
 }
 
@@ -148,7 +148,7 @@ ACE_Message_Queue_NT::message_bytes (void)
 ACE_INLINE size_t
 ACE_Message_Queue_NT::message_length (void)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_length");
+  ACE_TRACE ("ACE_Message_Queue_NT::message_length");
   // Accessing to size_t must be atomic.
   return this->cur_length_;
 }
@@ -164,7 +164,7 @@ ACE_Message_Queue_NT::message_count (void)
 ACE_INLINE void
 ACE_Message_Queue_NT::message_bytes (size_t new_value)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes");
+  ACE_TRACE ("ACE_Message_Queue_NT::message_bytes");
   ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->lock_);
 
   this->cur_bytes_ = new_value;
@@ -173,7 +173,7 @@ ACE_Message_Queue_NT::message_bytes (size_t new_value)
 ACE_INLINE void
 ACE_Message_Queue_NT::message_length (size_t new_value)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_length");
+  ACE_TRACE ("ACE_Message_Queue_NT::message_length");
   ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->lock_);
 
   this->cur_length_ = new_value;
@@ -189,7 +189,7 @@ ACE_Message_Queue_NT::max_threads (void)
 ACE_INLINE int
 ACE_Message_Queue_NT::deactivated (void)
 {
-  ACE_TRACE ("ACE_Message_Queue_NT::ceactivated");
+  ACE_TRACE ("ACE_Message_Queue_NT::deactivated");
   // Accessing to int must be atomic.
   return this->deactivated_;
 }

@@ -90,7 +90,7 @@ ACE_SOCK_Dgram::recv (iovec buffers[],
                       ACE_OVERLAPPED *overlapped,
                       ACE_OVERLAPPED_COMPLETION_FUNC func) const
 {
-  ACE_TRACE ("ACE_SOCK_IO::recv");
+  ACE_TRACE ("ACE_SOCK_Dgram::recv");
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int addr_len = addr.get_size ();
 

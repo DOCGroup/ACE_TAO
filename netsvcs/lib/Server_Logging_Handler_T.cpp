@@ -197,7 +197,7 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::scheduling_strategy (void)
 template<class SLH, class LMR, class SST> int
 ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::init (int argc, char *argv[])
 {
-  ACE_TRACE ("ACE_Server_Logging_Acceptor<SLH, LMR, SST>::init");
+  ACE_TRACE ("ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::init");
 
   // Use the options hook to parse the command line arguments and set
   // options.
@@ -239,7 +239,7 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::init (int argc, char *argv[])
 template<class SLH, class LMR, class SST> int
 ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::parse_args (int argc, char *argv[])
 {
-  ACE_TRACE ("ACE_Server_Logging_Acceptor<SLH, LMR, SST>::parse_args");
+  ACE_TRACE ("ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::parse_args");
 
   this->service_port_ = ACE_DEFAULT_SERVER_PORT;
 

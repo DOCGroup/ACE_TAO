@@ -38,7 +38,7 @@ ACE_DEV_Addr::get_addr (void) const
 ACE_INLINE int
 ACE_DEV_Addr::operator == (const ACE_DEV_Addr &sap) const
 {
-  ACE_TRACE ("ACE_DEV_Addr::operator=");
+  ACE_TRACE ("ACE_DEV_Addr::operator ==");
 
   return ACE_OS::strcmp (this->devname_, sap.devname_) == 0;
 }
@@ -48,7 +48,7 @@ ACE_DEV_Addr::operator == (const ACE_DEV_Addr &sap) const
 ACE_INLINE int
 ACE_DEV_Addr::operator != (const ACE_DEV_Addr &sap) const
 {
-  ACE_TRACE ("ACE_DEV_Addr::operator!=");
+  ACE_TRACE ("ACE_DEV_Addr::operator !=");
 
   return !((*this) == sap);	// This is lazy, of course... ;-).
 }

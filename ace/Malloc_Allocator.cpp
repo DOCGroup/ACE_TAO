@@ -125,7 +125,7 @@ ACE_Allocator::ACE_Allocator (void)
 void
 ACE_Static_Allocator_Base::dump (void) const
 {
-  ACE_TRACE ("ACE_Static_Base_Allocator::dump");
+  ACE_TRACE ("ACE_Static_Allocator_Base::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\noffset_ = %d"), this->offset_));
@@ -148,7 +148,7 @@ ACE_Malloc_Stats::ACE_Malloc_Stats (void)
 void
 ACE_Malloc_Stats::dump (void) const
 {
-  ACE_TRACE ("ACE_Malloc_Stats::print");
+  ACE_TRACE ("ACE_Malloc_Stats::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   int nblocks = this->nblocks_.value ();

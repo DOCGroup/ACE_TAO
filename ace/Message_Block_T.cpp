@@ -18,7 +18,7 @@ ACE_Locked_Data_Block<L>::~ACE_Locked_Data_Block (void)
 template<class ACE_LOCK> ACE_Data_Block *
 ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags mask) const
 {
-  ACE_TRACE ("ACE_Data_Block::clone");
+  ACE_TRACE ("ACE_Locked_Data_Block::clone_nocopy");
 
   // You always want to clear this one to prevent memory leaks but you
   // might add some others later.

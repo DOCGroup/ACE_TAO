@@ -469,7 +469,7 @@ ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)
 template <class T> int
 ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
 {
-  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_tail");
+  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_head");
 
   ACE_Node<T> *temp;
 
@@ -490,7 +490,7 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
 template <class T> int
 ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
 {
-  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_head");
+  //   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_tail");
 
   ACE_Node<T> *temp;
 
@@ -1724,7 +1724,7 @@ ACE_Unbounded_Set<T>::size (void) const
 template <class T> int
 ACE_Unbounded_Set<T>::insert_tail (const T &item)
 {
-  // ACE_TRACE ("ACE_Unbounded_Queue<T>::insert_tail");
+  // ACE_TRACE ("ACE_Unbounded_Set<T>::insert_tail");
   ACE_Node<T> *temp;
 
   // Insert <item> into the old dummy node location.
@@ -1873,7 +1873,7 @@ ACE_Unbounded_Set<T>::operator= (const ACE_Unbounded_Set<T> &us)
 template <class T> int
 ACE_Unbounded_Set<T>::find (const T &item) const
 {
-  // ACE_TRACE ("ACE_Unbounded_Stack<T>::find");
+  // ACE_TRACE ("ACE_Unbounded_Set<T>::find");
   // Set <item> into the dummy node.
   this->head_->item_ = item;
 
@@ -2254,7 +2254,7 @@ template <class T> int
 ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
                                       ACE_DNode<T> **new_position)
 {
-  // ACE_TRACE ("ACE_Unbounded_Queue<T>::insert_tail");
+  // ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert_from");
 
   // create a new node
   ACE_DNode<T> *temp;

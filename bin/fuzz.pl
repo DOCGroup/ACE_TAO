@@ -588,7 +588,11 @@ sub check_for_bad_ace_trace()
                     $class = $1;
                     $function = $2;
                 }
-                elsif (m/^([^\s^\(]*) \(/i) {
+                elsif (m/^([^\s^\(^\#]*) \(/i) {
+                    $class = "";
+                    $function = $1;
+                }
+                elsif (m/^(operator.*) \(/i) {
                     $class = "";
                     $function = $1;
                 }

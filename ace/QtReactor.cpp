@@ -283,7 +283,7 @@ ACE_QtReactor::register_handler_i (const ACE_Handle_Set &handles,
 int ACE_QtReactor::remove_handler_i (ACE_HANDLE handle ,
                                      ACE_Reactor_Mask mask   )
 {
-  ACE_TRACE ("ACE_XtReactor::remove_handler_i");
+  ACE_TRACE ("ACE_QtReactor::remove_handler_i");
 
   QSocketNotifier *qsock_notifier = 0;
 
@@ -366,7 +366,7 @@ ACE_QtReactor::schedule_timer (ACE_Event_Handler *handler,
                                const ACE_Time_Value &delta_time,
                                const ACE_Time_Value &interval)
 {
-  ACE_TRACE ("ACE_XtReactor::schedule_timer");
+  ACE_TRACE ("ACE_QtReactor::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, 
                             ace_mon, 
                             this->token_, 
@@ -389,7 +389,7 @@ int
 ACE_QtReactor::cancel_timer (ACE_Event_Handler *handler,
                              int dont_call_handle_close)
 {
-  ACE_TRACE ("ACE_XtReactor::cancel_timer");
+  ACE_TRACE ("ACE_QtReactor::cancel_timer");
 
   if (ACE_Select_Reactor::cancel_timer (handler, 
                                         dont_call_handle_close ) == -1 ) 
@@ -405,7 +405,7 @@ int ACE_QtReactor::cancel_timer (long  timer_id,
                                  const void **arg,
                                  int dont_call_handle_close )
 {
-  ACE_TRACE( "ACE_XtReactor::cancel_timer" ) ;
+  ACE_TRACE( "ACE_QtReactor::cancel_timer" ) ;
 
   if (ACE_Select_Reactor::cancel_timer (timer_id, 
                                         arg, 

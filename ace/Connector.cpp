@@ -416,7 +416,7 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
                                        int flags,
                                        int perms)
 {
-  ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::connect");
+  ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::connect_i");
 
   // If the user hasn't supplied us with a <SVC_HANDLER> we'll use the
   // factory method to create one.  Otherwise, things will remain as
@@ -737,7 +737,7 @@ ACE_Connector<SH, PR_CO_2>::~ACE_Connector (void)
 template <class SH, PR_CO_1> int
 ACE_Strategy_Connector<SH, PR_CO_2>::open (ACE_Reactor *r, int flags)
 {
-  ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::open");
+  ACE_TRACE ("ACE_Strategy_Connector<SH, PR_CO_2>::open");
   return this->open (r, 0, 0, 0, flags);
 }
 
@@ -749,7 +749,7 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
    int flags)
 {
-  ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::open");
+  ACE_TRACE ("ACE_Strategy_Connector<SH, PR_CO_2>::open");
 
   this->reactor (r);
 
@@ -839,7 +839,7 @@ ACE_Strategy_Connector<SH, PR_CO_2>::ACE_Strategy_Connector
       concurrency_strategy_ (0),
       delete_concurrency_strategy_ (0)
 {
-  ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::ACE_Connector");
+  ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::ACE_Strategy_Connector");
 
   if (this->open (reactor, cre_s, conn_s, con_s, flags) == -1)
     ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_Strategy_Connector::ACE_Strategy_Connector")));

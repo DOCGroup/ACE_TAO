@@ -95,7 +95,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                                          int reuse_addr,
                                          ACE_Protocol_Info *protocolinfo)
 {
-  ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe_ifs");
+  ACE_TRACE ("ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs");
 #if defined (ACE_WIN32)
   // Windows NT's winsock has trouble with multicast subscribes in the
   // presence of multiple network interfaces when the IP address is
@@ -202,7 +202,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
                                      u_long flags,
                                      ACE_QoS_Session *qos_session)
 {
-  ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe");
+  ACE_TRACE ("ACE_SOCK_Dgram_Mcast_QoS::subscribe");
 
   if (this->open (mcast_addr,
                   qos_params,

@@ -683,7 +683,7 @@ ACE_WString::char_rep (void) const
 ACE_USHORT16 *
 ACE_WString::ushort_rep (void) const
 {
-  ACE_TRACE ("ACE_WString::char_rep");
+  ACE_TRACE ("ACE_WString::ushort_rep");
   if (this->len_ <= 0)
     return 0;
   else

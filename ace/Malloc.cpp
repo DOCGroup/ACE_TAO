@@ -25,7 +25,7 @@ int ACE_Allocator::delete_allocator_ = 0;
 void
 ACE_Control_Block::ACE_Malloc_Header::dump (void) const
 {
-  ACE_TRACE ("ACE_Malloc_Header::dump");
+  ACE_TRACE ("ACE_Control_Block::ACE_Malloc_Header::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nnext_block = %x"), (ACE_Malloc_Header *) this->next_block_));
@@ -94,7 +94,7 @@ ACE_Control_Block::dump (void) const
 
 ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (void)
 {
-  ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
+  ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::ACE_Name_Node");
 }
 
 ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
@@ -106,7 +106,7 @@ ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
     next_ (next),
     prev_ (0)
 {
-  ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
+  ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::ACE_Name_Node");
   char *n = this->name_;
   ACE_OS::strcpy (n, name);
   if (next != 0)
@@ -115,7 +115,7 @@ ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
 
 ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
 {
-  ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
+  ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::ACE_Name_Node");
 #if !defined (ACE_PSOS)
   ACE_ASSERT (!"not implemented!");
 #endif /* ! ACE_PSOS */
@@ -145,7 +145,7 @@ ACE_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header (void)
 void
 ACE_Control_Block::ACE_Name_Node::dump (void) const
 {
-  ACE_TRACE ("ACE_Name_Node");
+  ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("pointer = %x"), (const char *) this->pointer_));

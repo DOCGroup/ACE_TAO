@@ -92,7 +92,7 @@ ACE_Auto_Basic_Array_Ptr<X>::release (void)
 template<class X> ACE_INLINE void
 ACE_Auto_Basic_Array_Ptr<X>::reset (X *p)
 {
-  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::reset");
+  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::reset");
   if (this->get () != p)
     delete [] this->get ();
   this->p_ = p;

@@ -1,3 +1,88 @@
+Sat Mar  3 16:47:53 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/fuzz.pl:
+
+          Changed the detection pattern a bit to pick up
+          stuff like:
+
+          void
+          operator < (...)
+
+          better.
+
+        * ace/Auto_Ptr.i:
+        * ace/Base_Thread_Adapter.cpp:
+        * ace/Based_Pointer_T.i:
+        * ace/Connector.cpp:
+        * ace/Containers_T.cpp:
+        * ace/DEV_Addr.i:
+        * ace/Dynamic.i:
+        * ace/FILE.cpp:
+        * ace/Flag_Manip.i:
+        * ace/Handle_Set.i:
+        * ace/Hash_Map_Manager_T.cpp:
+        * ace/Lib_Find.cpp:
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Local_Tokens.cpp:
+        * ace/MEM_Addr.i:
+        * ace/Malloc.cpp:
+        * ace/Malloc_Allocator.cpp:
+        * ace/Malloc_T.cpp:
+        * ace/Memory_Pool.cpp:
+        * ace/Message_Block.cpp:
+        * ace/Message_Block.i:
+        * ace/Message_Block_T.cpp:
+        * ace/Message_Queue.i:
+        * ace/Message_Queue_T.cpp:
+        * ace/Message_Queue_T.i:
+        * ace/Naming_Context.cpp:
+        * ace/OS.cpp:
+        * ace/OS.i:
+        * ace/PI_Malloc.cpp:
+        * ace/POSIX_Asynch_IO.cpp:
+        * ace/Process_Manager.cpp:
+        * ace/QtReactor.cpp:
+        * ace/RB_Tree.i:
+        * ace/RW_Process_Mutex.cpp:
+        * ace/Reactor.cpp:
+        * ace/Remote_Name_Space.cpp:
+        * ace/Remote_Tokens.cpp:
+        * ace/SOCK_Dgram.i:
+        * ace/SString.cpp:
+        * ace/SUN_Proactor.cpp:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Select_Reactor_T.cpp:
+        * ace/Service_Object.i:
+        * ace/Service_Repository.cpp:
+        * ace/Signal.cpp:
+        * ace/Signal.i:
+        * ace/Svc_Handler.cpp:
+        * ace/Synch.cpp:
+        * ace/Synch_T.cpp:
+        * ace/Thread_Adapter.cpp:
+        * ace/Thread_Manager.cpp:
+        * ace/Timer_Heap_T.cpp:
+        * ace/TkReactor.cpp:
+        * ace/Token.cpp:
+        * ace/Token_Manager.cpp:
+        * ace/CLASSIX/CLASSIX_CO_Acceptor.i:
+        * ace/CLASSIX/CLASSIX_Select_Reactor.cpp:
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
+        * netsvcs/ACE-netsvcs.html:
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+        * netsvcs/lib/Token_Handler.cpp:
+
+          Fixed bad ACE_TRACE and ACE_OS_TRACE's. (fuzz errors)
+
+        * docs/ACE-categories.html:
+        * docs/ACE-porting.html:
+        * docs/ACE-subsets.html:
+        * docs/tutorials/new-tutorials.html:
+
+          Changed references to 
+          http://www.cs.wustl.edu/~schmidt/ACE_wrappers/* to
+          relative paths instead (Fixes the last of the fuzz errors).
+
 Fri Mar 2 20:08  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* include/makeinclude/platform_qnx_rtp_gcc.GNU:
