@@ -754,6 +754,9 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   if (this->log_priority_enabled (log_priority) == 0)
     return 0;
 
+  // Logging is a benign activity, so don't inadvertently smash errno.
+  ACE_Errno_Guard guard (errno);
+
   ACE_Log_Record log_record (log_priority,
                              ACE_OS::gettimeofday (),
                              this->getpid ());
