@@ -77,6 +77,7 @@ int
 main (int argc, char *argv[])
 {
   parse_args (argc, argv);
+
   if (child_process)
     {      
       ACE_APPEND_LOG ("Pipe_Test-children");      

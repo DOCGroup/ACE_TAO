@@ -17,6 +17,7 @@
 #include <iostream.h>
 #include <fstream.h>
 
+#if !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 class KEY
 // ============================================================================
 // = TITLE
@@ -38,6 +39,9 @@ public:
 private:
   size_t value_;
 };
+#else
+typedef size_t KEY;
+#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
 #if defined (ACE_WIN32)
 
