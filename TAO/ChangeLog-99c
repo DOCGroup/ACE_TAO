@@ -1,3 +1,8 @@
+Wed Apr 28 18:05:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs[_static].dsp: Fixed dependencies of some
+	  idl files.
+
 Wed Apr 28 15:21:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/TAO.cpp (deactivate_under_child_poa and deactivate): Changed
