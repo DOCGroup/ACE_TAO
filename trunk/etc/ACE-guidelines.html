@@ -271,6 +271,29 @@ to Graham for providing the OSE tools!<p>
         <pre>
         return ACE_static_cast(size_t, this-&gt;count_) &gt; that-&gt;size_;
         </pre><p>
+
+    <li>In general, if instances of a class should not be copied,
+        then a private copy constructor and assignment operator should
+        be declared for the class, but not implemented.  For example:
+
+        <pre>
+        // Disallow copying by not implementing the following . . .
+        ACE_Object_Manager (const ACE_Object_Manager &);
+        ACE_Object_Manager &operator= (const ACE_Object_Manager &);
+        </pre><p>
+
+        If the class is a template class, then the
+        <code>ACE_UNIMPLEMENTED_FUNC</code> macro should be used:
+
+        <pre>
+        // = Disallow copying...
+        ACE_UNIMPLEMENTED_FUNC (ACE_TSS (const ACE_TSS<TYPE> &))
+        ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS<TYPE> &))
+        </pre><p>
+
+        <code>ACE_UNIMPLEMENTED_FUNC</code> can be used with non-template
+        classes as well.  Though for consistency and maximum safety, it
+        should be avoided for non-template classes.<p>
   </ul>
 
   <li><strong>I/O</strong><p>
