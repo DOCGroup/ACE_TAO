@@ -94,6 +94,24 @@ template class ACE_Server_Logging_Handler<Null_Synch_Static_Receiver>;
   template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
 
   template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_SYNCH>;
+
+  // added . . .
+  template class ACE_Server_Logging_Acceptor_T<ACE_Server_Logging_Handler<Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex> >, Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex>, ACE_Schedule_All_Reactive_Strategy<ACE_Server_Logging_Handler<Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex> > > >;
+  template class ACE_Server_Logging_Acceptor_T<ACE_Server_Logging_Handler<Static_Log_Message_Receiver<ACE_Null_Mutex, ACE_Null_Condition_Mutex> >, Static_Log_Message_Receiver<ACE_Null_Mutex, ACE_Null_Condition_Mutex>, ACE_Schedule_All_Reactive_Strategy<ACE_Server_Logging_Handler<Static_Log_Message_Receiver<ACE_Null_Mutex, ACE_Null_Condition_Mutex> > > >;
+  template class ACE_Server_Logging_Acceptor_T<ACE_Thr_Server_Logging_Handler<Static_Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex> >, Static_Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex>, ACE_Schedule_All_Threaded_Strategy<ACE_Thr_Server_Logging_Handler<Static_Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex> > > >;
+  template class ACE_Server_Logging_Handler<Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex> >;
+  template class ACE_Server_Logging_Handler<Static_Log_Message_Receiver<ACE_Null_Mutex, ACE_Null_Condition_Mutex> >;
+  template class ACE_Server_Logging_Handler<Static_Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex> >;
+  template class ACE_Server_Logging_Handler_T<ACE_TLI_Stream, ACE_INET_Addr, ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>, ACE_Thread_Mutex, ACE_Condition_Thread_Mutex, Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex> >;
+  template class ACE_Server_Logging_Handler_T<ACE_TLI_Stream, ACE_INET_Addr, ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>, ACE_Thread_Mutex, ACE_Condition_Thread_Mutex, Static_Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex> >;
+  template class ACE_Server_Logging_Handler_T<ACE_TLI_Stream, ACE_INET_Addr, unsigned long, ACE_Null_Mutex, ACE_Null_Condition_Mutex, Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex> >;
+  template class ACE_Server_Logging_Handler_T<ACE_TLI_Stream, ACE_INET_Addr, unsigned long, ACE_Null_Mutex, ACE_Null_Condition_Mutex, Static_Log_Message_Receiver<ACE_Null_Mutex, ACE_Null_Condition_Mutex> >;
+  template class ACE_Server_Logging_Handler_T<ACE_TLI_Stream, ACE_INET_Addr, unsigned long, ACE_Null_Mutex, ACE_Null_Condition_Mutex, Static_Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex> >;
+  template class ACE_Thr_Server_Logging_Handler<Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex> >;
+  template class ACE_Thr_Server_Logging_Handler<Static_Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex> >;
+  template class Log_Message_Receiver<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex>;
+  // end of added specializations
+
   #if defined (ACE_HAS_TLI)
     template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_NULL_SYNCH>;
     // else LOGGING_PEER_STREAM is ACE_SOCK_STREAM,
