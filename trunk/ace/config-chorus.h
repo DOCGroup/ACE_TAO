@@ -24,6 +24,7 @@
 
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
+#undef ACE_HAS_ANSI_CASTS
 #elif defined (ghs)
 # define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 # define ACE_HAS_TANDEM_SIGNALS
@@ -55,7 +56,7 @@
 #define ACE_LACKS_GETSERVBYNAME
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_LONGLONG_T
-#define ACE_LACKS_SYSV_SHMEM
+//#define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_SYSV_MSG_H
 #define ACE_LACKS_KEY_T
 #define ACE_LACKS_EXEC
@@ -73,7 +74,7 @@
 #define ACE_HAS_LONG_MAP_FAILED
 
 // Platforms lacks UNIX domain sockets.
-#define ACE_LACKS_UNIX_DOMAIN_SOCKETS
+//#define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_UTSNAME_T
 //#define ACE_LACKS_SETSCHED
 

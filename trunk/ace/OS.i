@@ -564,7 +564,7 @@ ACE_INLINE gid_t
 ACE_OS::getgid (void)
 {
   // ACE_TRACE ("ACE_OS::getgid");
-# if defined (VXWORKS)
+# if defined (VXWORKS) || defined(CHORUS)
   // getgid() is not supported:  just one group anyways
   return 0;
 # else
@@ -594,7 +594,7 @@ ACE_INLINE uid_t
 ACE_OS::getuid (void)
 {
   // ACE_TRACE ("ACE_OS::getuid");
-# if defined (VXWORKS)
+# if defined (VXWORKS) || defined(CHORUS)
   // getuid() is not supported:  just one user anyways
   return 0;
 # else
@@ -5041,7 +5041,7 @@ ACE_OS::signal (int signum, ACE_SignalHandler func)
   if (signum == 0)
     return 0;
   else
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_UNIX_SIGNALS)
 # if !defined (ACE_HAS_TANDEM_SIGNALS) && !defined (ACE_HAS_LYNXOS_SIGNALS)
     return ::signal (signum, func);
 # else
@@ -8650,7 +8650,7 @@ ACE_INLINE pid_t
 ACE_OS::wait (int *stat_loc)
 {
   // ACE_TRACE ("ACE_OS::wait");
-#if defined (ACE_WIN32) || defined (VXWORKS)
+#if defined (ACE_WIN32) || defined (VXWORKS) || defined(CHORUS)
   ACE_UNUSED_ARG (stat_loc);
 
   ACE_NOTSUP_RETURN (0);
@@ -8671,7 +8671,7 @@ ACE_INLINE pid_t
 ACE_OS::waitpid (pid_t pid, int *stat_loc, int options)
 {
   // ACE_TRACE ("ACE_OS::waitpid");
-#if defined (ACE_WIN32) || defined (VXWORKS)
+#if defined (ACE_WIN32) || defined (VXWORKS) || defined(CHORUS)
   ACE_UNUSED_ARG (pid);
   ACE_UNUSED_ARG (stat_loc);
   ACE_UNUSED_ARG (options);

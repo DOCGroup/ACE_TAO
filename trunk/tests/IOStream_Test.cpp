@@ -112,11 +112,19 @@ operator>> (ACE_SOCK_IOStream & stream, qchar *buf)
   // if we don't have a quote, append until we see space
   if (c != '"')
     for (*buf++ = c;
+#ifdef CHORUS
+         stream.get(c) && !isspace(c);
+#else
          (void *) stream.get(c) && !isspace(c);
+#endif
          *buf++ = c)
       continue;
   else
+#ifdef CHORUS
+    for (; stream.get(c) && c != '"'; *buf++ = c)
+#else
     for (; (void *) stream.get(c) && c != '"'; *buf++ = c)
+#endif
       if (c == '\\')
         {
           stream.get(c);
