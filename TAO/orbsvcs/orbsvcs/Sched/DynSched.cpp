@@ -686,13 +686,13 @@ ACE_DynScheduler::status_t
 ACE_DynScheduler::schedule (
   ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, lock_, ACE_DynScheduler::FAILED);
+
   RtecScheduler::Anomaly_Severity severity = RtecScheduler::ANOMALY_NONE;
   RtecScheduler::Anomaly_Severity temp_severity = RtecScheduler::ANOMALY_NONE;
   status_t temp_status = SUCCEEDED;
   Scheduling_Anomaly *anomaly = 0;
   ACE_CString unresolved_locals (""), unresolved_remotes ("");
-
-  ACE_Guard<LOCK> ace_mon (lock_);
 
   if (up_to_date_)
   {
