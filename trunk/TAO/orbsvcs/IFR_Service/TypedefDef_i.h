@@ -58,6 +58,13 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
+
+  virtual IR::Contained::Description *describe_i (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From Contained_i's pure virtual function.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

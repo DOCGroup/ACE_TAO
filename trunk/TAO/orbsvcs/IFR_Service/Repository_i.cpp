@@ -22,25 +22,30 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
     extension_ (CORBA::string_dup ("TAO_IFR_name_extension")),
     lock_ (0)
 {
-
-  if (OPTIONS::instance ()->enable_locking ())
-    {
-      ACE_NEW (this->lock_,
-               ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ());
-    }
-  else
-    {
-      ACE_NEW (this->lock_,
-               ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> ());
-    }
-
   ACE_TRY_NEW_ENV
     {
+      // Create the appropriate lock.
+      if (OPTIONS::instance ()->enable_locking ())
+        {
+          ACE_NEW_THROW_EX (this->lock_,
+                            ACE_Lock_Adapter<ACE_SYNCH_MUTEX> (),
+                            CORBA::NO_MEMORY ());
+        }
+      else
+        {
+          ACE_NEW_THROW_EX (this->lock_,
+                            ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
+                            CORBA::NO_MEMORY ());
+        }
+      ACE_TRY_CHECK;
+
+      // Create the servant factory.
       ACE_NEW_THROW_EX (this->servant_factory_,
                         IFR_Servant_Factory (this),
                         CORBA::NO_MEMORY ());
       ACE_TRY_CHECK;
 
+      // Resolve and narrow the TypeCodeFactory.
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("TypeCodeFactory",
                                                 ACE_TRY_ENV);
@@ -81,11 +86,6 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
                                "root",
                                1, // Will create if IFR is not persistent.
                                this->root_key_);
-
-  this->config_->open_section (this->root_key_,
-                               "defns",
-                               1, // Will create if IFR is not persistent.
-                               this->named_objs_key_);
 
   this->config_->open_section (this->root_key_,
                                "repo_ids",
@@ -214,12 +214,6 @@ TAO_Repository_i::~TAO_Repository_i (void)
   delete this->lock_;
 }
 
-ACE_Lock &
-TAO_Repository_i::lock (void)
-{
-  return *this->lock_;
-}
-
 IR::DefinitionKind
 TAO_Repository_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -237,6 +231,17 @@ TAO_Repository_i::destroy (CORBA::Environment &ACE_TRY_ENV)
 IR::Contained_ptr
 TAO_Repository_i::lookup_id (const char *search_id,
                              CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (IR::Contained::_nil ());
+
+  return this->lookup_id_i (search_id,
+                            ACE_TRY_ENV);
+}
+
+IR::Contained_ptr
+TAO_Repository_i::lookup_id_i (const char *search_id,
+                               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString path;
@@ -275,6 +280,17 @@ TAO_Repository_i::get_canonical_typecode (CORBA::TypeCode_ptr tc,
                                           CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
+
+  return this->get_canonical_typecode_i (tc,
+                                         ACE_TRY_ENV);
+}
+
+CORBA::TypeCode_ptr
+TAO_Repository_i::get_canonical_typecode_i (CORBA::TypeCode_ptr tc,
+                                            CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
   CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
@@ -294,8 +310,8 @@ TAO_Repository_i::get_canonical_typecode (CORBA::TypeCode_ptr tc,
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
       CORBA::TypeCode_var canon_ctype =
-        this->get_canonical_typecode (ctype.in (),
-                                      ACE_TRY_ENV);
+        this->get_canonical_typecode_i (ctype.in (),
+                                        ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
       return this->tc_factory ()->create_array_tc (length,
@@ -311,8 +327,8 @@ TAO_Repository_i::get_canonical_typecode (CORBA::TypeCode_ptr tc,
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
       CORBA::TypeCode_var canon_ctype =
-        this->get_canonical_typecode (ctype.in (),
-                                      ACE_TRY_ENV);
+        this->get_canonical_typecode_i (ctype.in (),
+                                        ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
       return this->tc_factory ()->create_sequence_tc (length,
@@ -358,7 +374,7 @@ TAO_Repository_i::get_canonical_typecode (CORBA::TypeCode_ptr tc,
           TAO_ExceptionDef_i impl (this,
                                    key);
 
-          return impl.type (ACE_TRY_ENV);
+          return impl.type_i (ACE_TRY_ENV);
         }
       else
         {
@@ -369,7 +385,7 @@ TAO_Repository_i::get_canonical_typecode (CORBA::TypeCode_ptr tc,
 
           auto_ptr<TAO_IDLType_i> safety (impl);
 
-          return impl->type (ACE_TRY_ENV);
+          return impl->type_i (ACE_TRY_ENV);
         }
     }
   }
@@ -397,6 +413,17 @@ TAO_Repository_i::get_primitive (IR::PrimitiveKind kind,
 IR::StringDef_ptr
 TAO_Repository_i::create_string (CORBA::ULong bound,
                                  CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD_RETURN (IR::StringDef::_nil ());
+
+  return this->create_string_i (bound,
+                                ACE_TRY_ENV);
+}
+
+IR::StringDef_ptr
+TAO_Repository_i::create_string_i (CORBA::ULong bound,
+                                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int count = 0;
@@ -447,6 +474,17 @@ TAO_Repository_i::create_wstring (CORBA::ULong bound,
                                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_IFR_WRITE_GUARD_RETURN (IR::WstringDef::_nil ());
+
+  return this->create_wstring_i (bound,
+                                 ACE_TRY_ENV);
+}
+
+IR::WstringDef_ptr
+TAO_Repository_i::create_wstring_i (CORBA::ULong bound,
+                                    CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
   u_int count = 0;
   this->config_->get_integer_value (this->wstrings_key_,
                                     "count",
@@ -494,6 +532,19 @@ IR::SequenceDef_ptr
 TAO_Repository_i::create_sequence (CORBA::ULong bound,
                                    IR::IDLType_ptr element_type,
                                    CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD_RETURN (IR::SequenceDef::_nil ());
+
+  return this->create_sequence_i (bound,
+                                  element_type,
+                                  ACE_TRY_ENV);
+}
+
+IR::SequenceDef_ptr
+TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
+                                     IR::IDLType_ptr element_type,
+                                     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid =
@@ -561,6 +612,19 @@ TAO_Repository_i::create_array (CORBA::ULong length,
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_IFR_WRITE_GUARD_RETURN (IR::ArrayDef::_nil ());
+
+  return this->create_array_i (length,
+                               element_type,
+                               ACE_TRY_ENV);
+}
+
+IR::ArrayDef_ptr
+TAO_Repository_i::create_array_i (CORBA::ULong length,
+                                  IR::IDLType_ptr element_type,
+                                  CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
   PortableServer::ObjectId_var oid =
     this->ir_poa_->reference_to_id (element_type,
                                     ACE_TRY_ENV);
@@ -621,9 +685,22 @@ TAO_Repository_i::create_array (CORBA::ULong length,
 }
 
 IR::FixedDef_ptr
-TAO_Repository_i::create_fixed (CORBA::UShort /* digits */,
-                                CORBA::Short /* scale */,
+TAO_Repository_i::create_fixed (CORBA::UShort digits,
+                                CORBA::Short scale,
                                 CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD_RETURN (IR::FixedDef::_nil ());
+
+  return this->create_fixed_i (digits,
+                               scale,
+                               ACE_TRY_ENV);
+}
+
+IR::FixedDef_ptr
+TAO_Repository_i::create_fixed_i (CORBA::UShort /* digits */,
+                                  CORBA::Short /* scale */,
+                                  CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), IR::FixedDef::_nil ());
@@ -672,12 +749,6 @@ TAO_Repository_i::root_key (void) const
 }
 
 ACE_Configuration_Section_Key
-TAO_Repository_i::named_objs_key (void) const
-{
-  return this->named_objs_key_;
-}
-
-ACE_Configuration_Section_Key
 TAO_Repository_i::repo_ids_key (void) const
 {
   return this->repo_ids_key_;
@@ -720,9 +791,15 @@ TAO_Repository_i::sequences_key (void) const
 }
 
 const char *
-TAO_Repository_i::extension (void)
+TAO_Repository_i::extension (void) const
 {
   return this->extension_.in ();
+}
+
+ACE_Lock &
+TAO_Repository_i::lock (void) const
+{
+  return *this->lock_;
 }
 
 const char *TAO_Repository_i::TAO_IFR_primitive_kinds[] =

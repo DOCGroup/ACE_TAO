@@ -65,7 +65,20 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry and its contents.
 
+  virtual void destroy_i (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual CORBA::TypeCode_ptr type (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From IDLType_i's pure virtual function.
+
+  virtual CORBA::TypeCode_ptr type_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -78,7 +91,20 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  IR::StructMemberSeq *members_i (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual void members (
+      const IR::StructMemberSeq &members,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void members_i (
       const IR::StructMemberSeq &members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()

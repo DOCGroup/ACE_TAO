@@ -30,6 +30,15 @@ CORBA::TypeCode_ptr
 TAO_NativeDef_i::type (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
+
+  return this->type_i (ACE_TRY_ENV);
+}
+
+CORBA::TypeCode_ptr 
+TAO_NativeDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "id",

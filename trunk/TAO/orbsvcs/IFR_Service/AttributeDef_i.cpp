@@ -34,6 +34,15 @@ IR::Contained::Description *
 TAO_AttributeDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_IFR_READ_GUARD_RETURN (0);
+
+  return this->describe_i (ACE_TRY_ENV);
+}
+
+IR::Contained::Description *
+TAO_AttributeDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
   IR::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
                     IR::Contained::Description,
@@ -55,6 +64,15 @@ CORBA::TypeCode_ptr
 TAO_AttributeDef_i::type (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
+
+  return this->type_i (ACE_TRY_ENV);
+}
+
+CORBA::TypeCode_ptr 
+TAO_AttributeDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
   ACE_TString type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "type_path",
@@ -73,11 +91,20 @@ TAO_AttributeDef_i::type (CORBA::Environment &ACE_TRY_ENV)
 
   auto_ptr<TAO_IDLType_i> safety (impl);
 
-  return impl->type (ACE_TRY_ENV);
+  return impl->type_i (ACE_TRY_ENV);
 }
 
 IR::IDLType_ptr 
 TAO_AttributeDef_i::type_def (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (IR::IDLType::_nil ());
+
+  return this->type_def_i (ACE_TRY_ENV);
+}
+
+IR::IDLType_ptr 
+TAO_AttributeDef_i::type_def_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString type_path;
@@ -117,6 +144,17 @@ TAO_AttributeDef_i::type_def (IR::IDLType_ptr type_def,
                               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_IFR_WRITE_GUARD;
+
+  this->type_def_i (type_def,
+                    ACE_TRY_ENV);
+}
+
+void 
+TAO_AttributeDef_i::type_def_i (IR::IDLType_ptr type_def,
+                                CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
   PortableServer::ObjectId_var oid = 
     this->repo_->ir_poa ()->reference_to_id (type_def,
                                              ACE_TRY_ENV);
@@ -131,7 +169,16 @@ TAO_AttributeDef_i::type_def (IR::IDLType_ptr type_def,
 }
 
 IR::AttributeMode 
-TAO_AttributeDef_i::mode (CORBA::Environment &)
+TAO_AttributeDef_i::mode (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (0);
+
+  return this->mode_i (ACE_TRY_ENV);
+}
+
+IR::AttributeMode 
+TAO_AttributeDef_i::mode_i (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int mode = 0;
@@ -144,7 +191,18 @@ TAO_AttributeDef_i::mode (CORBA::Environment &)
 
 void 
 TAO_AttributeDef_i::mode (IR::AttributeMode mode,
-                          CORBA::Environment &)
+                          CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD;
+
+  this->mode_i (mode,
+                ACE_TRY_ENV);
+}
+
+void 
+TAO_AttributeDef_i::mode_i (IR::AttributeMode mode,
+                            CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
@@ -158,10 +216,10 @@ TAO_AttributeDef_i::make_description (CORBA::Environment &ACE_TRY_ENV)
 {
   IR::AttributeDescription ad;
 
-  ad.name = this->name (ACE_TRY_ENV);
+  ad.name = this->name_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (ad);
 
-  ad.id = this->id (ACE_TRY_ENV);
+  ad.id = this->id_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (ad);
 
   ACE_TString container_id;
@@ -172,13 +230,13 @@ TAO_AttributeDef_i::make_description (CORBA::Environment &ACE_TRY_ENV)
 
   ad.defined_in = container_id.c_str ();
 
-  ad.version = this->version (ACE_TRY_ENV);
+  ad.version = this->version_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (ad);
 
-  ad.type = this->type (ACE_TRY_ENV);
+  ad.type = this->type_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (ad);
 
-  ad.mode = this->mode (ACE_TRY_ENV);
+  ad.mode = this->mode_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (ad);
 
   ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
@@ -263,7 +321,7 @@ TAO_AttributeDef_i::make_description (CORBA::Environment &ACE_TRY_ENV)
       TAO_ExceptionDef_i impl (this->repo_,
                                key);
 
-      get_ed.type = impl.type (ACE_TRY_ENV);
+      get_ed.type = impl.type_i (ACE_TRY_ENV);
       ACE_CHECK_RETURN (ad);
 
       get_ed_seq[i] = get_ed;
@@ -347,7 +405,7 @@ TAO_AttributeDef_i::make_description (CORBA::Environment &ACE_TRY_ENV)
       TAO_ExceptionDef_i impl (this->repo_,
                                key);
 
-      put_ed.type = impl.type (ACE_TRY_ENV);
+      put_ed.type = impl.type_i (ACE_TRY_ENV);
       ACE_CHECK_RETURN (ad);
 
       put_ed_seq[i] = put_ed;
@@ -377,33 +435,46 @@ TAO_AttributeDef_i::get_exceptions (CORBA::Environment &ACE_TRY_ENV)
   // This section may not have been created.
   if (status == 0)
     {
+      ACE_TString get_except_path;
+      ACE_Configuration_Section_Key dummy;
+
       while (this->repo_->config ()->enumerate_values (get_excepts_key,
-                                                       index,
+                                                       index++,
                                                        field_name,
                                                        type)
               == 0)
         {
-          ACE_TString get_except_path;
           this->repo_->config ()->get_string_value (get_excepts_key,
                                                     field_name.c_str (),
                                                     get_except_path);
 
-          path_queue.enqueue_tail (get_except_path);
-          ++index;
+          // This exception may have been destroyed
+          status =
+            this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                                 get_except_path,
+                                                 dummy,
+                                                 0);
+
+          if (status == 0)
+            {
+              path_queue.enqueue_tail (get_except_path);
+            }
         }
     }
 
+  size_t size = path_queue.size ();
+
   IR::ExceptionDefSeq *get_ed_seq = 0;
   ACE_NEW_THROW_EX (get_ed_seq,
-                    IR::ExceptionDefSeq (index),
+                    IR::ExceptionDefSeq (size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  get_ed_seq->length (index);
+  get_ed_seq->length (size);
 
   IR::ExceptionDefSeq_var retval = get_ed_seq;
 
-  for (CORBA::ULong i = 0; i < (CORBA::ULong) index; ++i)
+  for (CORBA::ULong i = 0; i < size; ++i)
     {
       ACE_TString path;
       path_queue.dequeue_head (path);
@@ -441,33 +512,46 @@ TAO_AttributeDef_i::put_exceptions (CORBA::Environment &ACE_TRY_ENV)
   // This section may not have been created.
   if (status == 0)
     {
+      ACE_TString put_except_path;
+      ACE_Configuration_Section_Key dummy;
+
       while (this->repo_->config ()->enumerate_values (put_excepts_key,
-                                                       index,
+                                                       index++,
                                                        field_name,
                                                        type)
               == 0)
         {
-          ACE_TString put_except_path;
           this->repo_->config ()->get_string_value (put_excepts_key,
                                                     field_name.c_str (),
                                                     put_except_path);
 
-          path_queue.enqueue_tail (put_except_path);
-          ++index;
+          // This exception may have been destroyed
+          status =
+            this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                                 put_except_path,
+                                                 dummy,
+                                                 0);
+
+          if (status == 0)
+            {
+              path_queue.enqueue_tail (put_except_path);
+            }
         }
     }
 
+  size_t size = path_queue.size ();
+
   IR::ExceptionDefSeq *put_ed_seq = 0;
   ACE_NEW_THROW_EX (put_ed_seq,
-                    IR::ExceptionDefSeq (index),
+                    IR::ExceptionDefSeq (size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  put_ed_seq->length (index);
+  put_ed_seq->length (size);
 
   IR::ExceptionDefSeq_var retval = put_ed_seq;
 
-  for (CORBA::ULong i = 0; i < (CORBA::ULong) index; ++i)
+  for (CORBA::ULong i = 0; i < size; ++i)
     {
       ACE_TString path;
       path_queue.dequeue_head (path);

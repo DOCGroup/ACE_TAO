@@ -63,13 +63,34 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // May not be called on a primitive kind - raises BAD_INV_ORDER.
 
+  virtual void destroy_i (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Must implement this here because it's pure virtual in the
+  // base class.
+
   virtual CORBA::TypeCode_ptr type (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From IDLType_i's pure virtual function.
+
+  virtual CORBA::TypeCode_ptr type_i (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual IR::PrimitiveKind kind (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  IR::PrimitiveKind kind_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )

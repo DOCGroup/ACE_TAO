@@ -30,6 +30,15 @@ void
 TAO_ArrayDef_i::destroy (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_IFR_WRITE_GUARD;
+
+  this->destroy_i (ACE_TRY_ENV);
+}
+
+void 
+TAO_ArrayDef_i::destroy_i (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
   // Only if it is (w)string, fixed, array or sequence.
   this->destroy_element_type (ACE_TRY_ENV);
   ACE_CHECK;
@@ -48,8 +57,17 @@ CORBA::TypeCode_ptr
 TAO_ArrayDef_i::type (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
+
+  return this->type_i (ACE_TRY_ENV);
+}
+
+CORBA::TypeCode_ptr 
+TAO_ArrayDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
   CORBA::TypeCode_var element_typecode =
-    this->element_type (ACE_TRY_ENV);
+    this->element_type_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   CORBA::ULong length = this->length (ACE_TRY_ENV);
@@ -63,7 +81,16 @@ TAO_ArrayDef_i::type (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::ULong 
-TAO_ArrayDef_i::length (CORBA::Environment &)
+TAO_ArrayDef_i::length (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (0);
+
+  return this->length_i (ACE_TRY_ENV);
+}
+
+CORBA::ULong 
+TAO_ArrayDef_i::length_i (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int length = 0;
@@ -76,7 +103,18 @@ TAO_ArrayDef_i::length (CORBA::Environment &)
 
 void 
 TAO_ArrayDef_i::length (CORBA::ULong length,
-                        CORBA::Environment &)
+                        CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD;
+
+  this->length_i (length,
+                  ACE_TRY_ENV);
+}
+
+void 
+TAO_ArrayDef_i::length_i (CORBA::ULong length,
+                          CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
@@ -86,6 +124,15 @@ TAO_ArrayDef_i::length (CORBA::ULong length,
 
 CORBA::TypeCode_ptr 
 TAO_ArrayDef_i::element_type (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
+
+  return this->element_type_i (ACE_TRY_ENV);
+}
+
+CORBA::TypeCode_ptr 
+TAO_ArrayDef_i::element_type_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString element_path;
@@ -106,11 +153,20 @@ TAO_ArrayDef_i::element_type (CORBA::Environment &ACE_TRY_ENV)
 
   auto_ptr<TAO_IDLType_i> safety (impl);
 
-  return impl->type (ACE_TRY_ENV);
+  return impl->type_i (ACE_TRY_ENV);
 }
 
 IR::IDLType_ptr 
 TAO_ArrayDef_i::element_type_def (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (IR::IDLType::_nil ());
+
+  return this->element_type_def_i (ACE_TRY_ENV);
+}
+
+IR::IDLType_ptr 
+TAO_ArrayDef_i::element_type_def_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString element_path;
@@ -145,6 +201,17 @@ TAO_ArrayDef_i::element_type_def (CORBA::Environment &ACE_TRY_ENV)
 void 
 TAO_ArrayDef_i::element_type_def (IR::IDLType_ptr element_type_def,
                                   CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD;
+
+  this->element_type_def_i (element_type_def,
+                            ACE_TRY_ENV);
+}
+
+void 
+TAO_ArrayDef_i::element_type_def_i (IR::IDLType_ptr element_type_def,
+                                    CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->destroy_element_type (ACE_TRY_ENV);
@@ -205,7 +272,7 @@ TAO_ArrayDef_i::destroy_element_type (
 
       auto_ptr<TAO_IDLType_i> safety (impl);
 
-      impl->destroy (ACE_TRY_ENV);
+      impl->destroy_i (ACE_TRY_ENV);
       ACE_CHECK;
       break;
     }

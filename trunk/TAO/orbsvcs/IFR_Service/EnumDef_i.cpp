@@ -31,6 +31,15 @@ CORBA::TypeCode_ptr
 TAO_EnumDef_i::type (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
+
+  return this->type_i (ACE_TRY_ENV);
+}
+
+CORBA::TypeCode_ptr 
+TAO_EnumDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "id",
@@ -41,7 +50,7 @@ TAO_EnumDef_i::type (CORBA::Environment &ACE_TRY_ENV)
                                             "name",
                                             name);
 
-  IR::EnumMemberSeq_var members = this->members (ACE_TRY_ENV);
+  IR::EnumMemberSeq_var members = this->members_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return this->repo_->tc_factory ()->create_enum_tc (id.c_str (),
@@ -52,6 +61,15 @@ TAO_EnumDef_i::type (CORBA::Environment &ACE_TRY_ENV)
 
 IR::EnumMemberSeq *
 TAO_EnumDef_i::members (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (0);
+
+  return this->members_i (ACE_TRY_ENV);
+}
+
+IR::EnumMemberSeq *
+TAO_EnumDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int count = 0;
@@ -89,7 +107,18 @@ TAO_EnumDef_i::members (CORBA::Environment &ACE_TRY_ENV)
 
 void 
 TAO_EnumDef_i::members (const IR::EnumMemberSeq &members,
-                        CORBA::Environment &)
+                        CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD;
+
+  this->members_i (members,
+                   ACE_TRY_ENV);
+}
+
+void 
+TAO_EnumDef_i::members_i (const IR::EnumMemberSeq &members,
+                          CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_section (this->section_key_,

@@ -27,14 +27,32 @@ TAO_PrimaryKeyDef_i::def_kind (CORBA::Environment &)
 }
 
 void 
-TAO_PrimaryKeyDef_i::destroy (CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_PrimaryKeyDef_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD;
+
+  this->destroy_i (ACE_TRY_ENV);
+}
+
+void 
+TAO_PrimaryKeyDef_i::destroy_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }
 
 IR::Contained::Description *
-TAO_PrimaryKeyDef_i::describe (CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_PrimaryKeyDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (0);
+
+  return this->describe_i (ACE_TRY_ENV);
+}
+
+IR::Contained::Description *
+TAO_PrimaryKeyDef_i::describe_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -42,8 +60,19 @@ TAO_PrimaryKeyDef_i::describe (CORBA::Environment & /* ACE_TRY_ENV */)
 }
 
 CORBA::Boolean 
-TAO_PrimaryKeyDef_i::is_a (const char * /* primary_key_id */,
-                           CORBA::Environment & /* ACE_TRY_ENV */ )
+TAO_PrimaryKeyDef_i::is_a (const char *primary_key_id,
+                           CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (0);
+
+  return this->is_a_i (primary_key_id,
+                       ACE_TRY_ENV);
+}
+
+CORBA::Boolean 
+TAO_PrimaryKeyDef_i::is_a_i (const char * /* primary_key_id */,
+                             CORBA::Environment & /* ACE_TRY_ENV */ )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -51,7 +80,16 @@ TAO_PrimaryKeyDef_i::is_a (const char * /* primary_key_id */,
 }
 
 IR::ValueDef_ptr 
-TAO_PrimaryKeyDef_i::primary_key (CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_PrimaryKeyDef_i::primary_key (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (IR::ValueDef::_nil ());
+
+  return this->primary_key_i (ACE_TRY_ENV);
+}
+
+IR::ValueDef_ptr 
+TAO_PrimaryKeyDef_i::primary_key_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO

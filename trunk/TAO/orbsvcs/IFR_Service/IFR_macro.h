@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // $Id$
 
 #ifndef TAO_IFR_MACROS_H
@@ -12,7 +13,7 @@
   ACE_WRITE_GUARD_THROW_EX (ACE_Lock, \
                             monitor, \
                             this->repo_->lock (), \
-                            CORBA::TRANSIENT ( \
+                            CORBA::INTERNAL ( \
                               CORBA_SystemException::_tao_minor_code ( \
                                 TAO_GUARD_FAILURE, \
                                 0), \
@@ -23,29 +24,18 @@
   ACE_WRITE_GUARD_THROW_EX (ACE_Lock, \
                             monitor, \
                             this->repo_->lock (), \
-                            CORBA::SystemException ( \
+                            CORBA::INTERNAL ( \
                               CORBA_SystemException::_tao_minor_code ( \
                                 TAO_GUARD_FAILURE, \
                                 0), \
                               CORBA::COMPLETED_NO)); \
   ACE_CHECK_RETURN (RETURN)
 
-#define TAO_IFR_READ_GUARD \
-  ACE_READ_GUARD_THROW_EX (ACE_Lock, \
-                           monitor, \
-                           this->repo_->lock (), \
-                           CORBA::SystemException ( \
-                             CORBA_SystemException::_tao_minor_code ( \
-                               TAO_GUARD_FAILURE, \
-                               0), \
-                             CORBA::COMPLETED_NO)); \
-  ACE_CHECK
-
 #define TAO_IFR_READ_GUARD_RETURN(RETURN) \
   ACE_READ_GUARD_THROW_EX (ACE_Lock, \
                            monitor, \
                            this->repo_->lock (), \
-                           CORBA::TRANSIENT ( \
+                           CORBA::INTERNAL ( \
                              CORBA_SystemException::_tao_minor_code ( \
                                TAO_GUARD_FAILURE, \
                                0), \
