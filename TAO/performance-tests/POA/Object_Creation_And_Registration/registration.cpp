@@ -290,7 +290,7 @@ child_poa_testing (PortableServer::POA_ptr root_poa,
     for (i = 0; i < iterations; i++)
       {
         ACE_OS::sprintf (id_buffer,
-                         "%ul",
+                         "%ld",
                          i);
 
         object_ids[i] =
