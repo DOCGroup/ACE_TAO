@@ -316,6 +316,14 @@ ACE_Connector<SH, PR_CO_2>::handle_output (ACE_HANDLE handle)
   return 0;
 }
 
+template <class SH, PR_CO_1> int
+ACE_Connector<SH, PR_CO_2>::handle_exception (ACE_HANDLE h)
+{
+  ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::handle_exception");
+
+  return this->handle_output (h);
+}
+
 // Initiate connection to peer.  
 
 template <class SH, PR_CO_1> int
@@ -411,13 +419,18 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::create_AST");
   AST *ast;
 
-  ACE_NEW_RETURN (ast, AST (sh, this->get_handle (), synch_options.arg ()), -1);
+  ACE_NEW_RETURN (ast, AST (sh, this->get_handle (), synch_options.arg (), -1), -1);
 
   // Register this with the reactor for both reading and writing
   // events.
+  ACE_Reactor_Mask mask = ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK;
+
+#if defined (ACE_WIN32)
+  mask |= ACE_Event_Handler::EXCEPT_MASK;
+#endif /* ACE_WIN32 */
+
   if (this->reactor ()->register_handler (this, 
-					  ACE_Event_Handler::READ_MASK 
-					  | ACE_Event_Handler::WRITE_MASK) == -1)
+					  mask) == -1)
     goto fail1;
 
   // Bind ACE_Svc_Tuple with the ACE_HANDLE we're trying to connect.
