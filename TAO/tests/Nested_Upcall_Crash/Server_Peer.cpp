@@ -68,7 +68,7 @@ Server_Peer::callme(Test::Peer_ptr callback,
 }
 
 void
-Server_Peer::crash(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_Peer::crash(ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ACE_THROW(CORBA::NO_IMPLEMENT ());
