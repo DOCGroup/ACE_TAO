@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 MAKEFILE = Makefile
-LIB	 = libACE.a
+LIB      = libACE.a
 SHLIB	 = libACE.so
 
 FILES	 = ACE \
@@ -67,6 +67,8 @@ FILES	 = ACE \
 	   Reactor \
 	   ReactorEx \
 	   Read_Buffer \
+	   Registry \
+	   Registry_Name_Space \
 	   Remote_Name_Space \
 	   Remote_Tokens \
 	   SOCK \
@@ -84,6 +86,7 @@ FILES	 = ACE \
 	   SPIPE_Connector \
 	   SPIPE_Stream \
 	   SString \
+	   Scheduling_Params \
 	   Service_Config \
 	   Service_Manager \
 	   Service_Object \
@@ -93,6 +96,7 @@ FILES	 = ACE \
 	   Shared_Memory_SV \
 	   Shared_Object \
 	   Signal \
+	   Strategies \
 	   SV_Message \
 	   SV_Message_Queue \
 	   SV_Semaphore_Complex \
@@ -101,14 +105,17 @@ FILES	 = ACE \
 	   Synch \
 	   Synch_Options \
 	   System_Time \
+	   Task \
 	   TLI \
 	   TLI_Acceptor \
 	   TLI_Connector \
 	   TLI_Stream \
 	   Thread \
 	   Thread_Manager \
+	   Thread_Priority \
 	   Time_Request_Reply \
-	   Time_Value \
+	   Timer_Heap \
+	   Timer_List \
 	   Timer_Queue \
 	   Token \
 	   Token_Collection \
@@ -131,6 +138,8 @@ TEMPLATE_FILES = \
 	   Dynamic_Service \
 	   Event_Handler_T \
 	   Future \
+	   Hash_Map_Manager \
+	   IOStream \
 	   Local_Name_Space_T \
 	   Local_Tokens_T \
 	   Malloc_T \
@@ -140,12 +149,12 @@ TEMPLATE_FILES = \
 	   Set \
 	   Singleton \
 	   Stack \
-	   Strategies \
+	   Strategies_T \
 	   Stream \
 	   Stream_Modules \
 	   Svc_Handler \
 	   Synch_T \
-	   Task \
+	   Task_T \
 	   Typed_SV_Message \
 	   Typed_SV_Message_Queue
 
@@ -174,16 +183,21 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 
 Svc_Conf_y.cpp: Svc_Conf.y
 	$(YACC) -d Svc_Conf.y
-	sed -e "s/char *getenv/char *ace_foo/g" -e "s/= getenv/= ACE_OS::getenv/g" -e "s/yyerrlab://g" -e "s/yynewerror://g" -e "s/yy/ace_yy/g" < y.tab.c > /tmp/$@
+	sed -e "s/char \*getenv/char *ace_foo/g" -e "s/= getenv/= ACE_OS::getenv/g" -e "s/yyerrlab://g" -e "s/yynewerror://g" -e "s/yy/ace_yy/g" < y.tab.c > /tmp/$@
 	cp /tmp/$@ $@
-	$(RM) -f /tmp/$@
-	sed -e "s/yy/ace_yy/g" < y.tab.h >> /tmp/$@
-	cp /tmp/$@ Svc_Conf_Tokens.h 
-	$(RM) -f /tmp/$@
+	$(RM) -f /tmp/$@ y.tab.c
+	mv y.tab.h Svc_Conf_Tokens.h 
 
 Svc_Conf_l.cpp: Svc_Conf.l
 	$(LEX) -t -I Svc_Conf.l > $@
-	sed -e "s/unistd/stdio/g" -e "s/yy/ace_yy/g" -e "s/free( ptr );/free( ACE_MALLOC_T (ptr) );/g" -e "s/realloc( ptr, size );/realloc( ACE_MALLOC_T (ptr), size );/g" < $@ > /tmp/$@
+	echo '#include "ace/config.h"' > /tmp/$@
+	echo '#if defined (ACE_HAS_TERM_IOCTLS) /* to avoid conflict with sys/termios.h ECHO */' >> /tmp/$@
+	echo '#undef ACE_HAS_TERM_IOCTLS' >> /tmp/$@
+	echo '#endif /* ACE_HAS_TERM_IOCTLS */' >> /tmp/$@
+	echo '#if defined (HPUX) || defined (VXWORKS)' >> /tmp/$@
+	echo '#include "ace/OS.h"' >> /tmp/$@
+	echo '#endif /* HPUX || VXWORKS */' >> /tmp/$@
+	sed -e "s/unistd/stdio/g" -e "s/yy/ace_yy/g" -e "s/free( ptr );/free( ACE_MALLOC_T (ptr) );/g" -e "s/realloc( ptr, size );/realloc( ACE_MALLOC_T (ptr), size );/g" -e "s@#include <@#include /**/ <@" < $@ >> /tmp/$@
 	cp /tmp/$@ $@
 	$(RM) -f /tmp/$@
 
@@ -197,14 +211,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
  $(WRAPPER_ROOT)/ace/Thread_Manager.h \
@@ -215,16 +229,12 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Event_Handler.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
@@ -235,116 +245,47 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
- $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i
 .obj/Activation_Queue.o .shobj/Activation_Queue.so: Activation_Queue.cpp \
  $(WRAPPER_ROOT)/ace/Activation_Queue.h \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
  $(WRAPPER_ROOT)/ace/Message_Queue.h \
  $(WRAPPER_ROOT)/ace/Message_Block.h \
  $(WRAPPER_ROOT)/ace/Malloc.h \
  $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
  $(WRAPPER_ROOT)/ace/Memory_Pool.h \
- $(WRAPPER_ROOT)/ace/Event_Handler.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.cpp \
- $(WRAPPER_ROOT)/ace/Message_Queue.i \
- $(WRAPPER_ROOT)/ace/Method_Object.h
-.obj/Addr.o .shobj/Addr.so: Addr.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/Addr.h \
- $(WRAPPER_ROOT)/ace/Addr.i
-.obj/ARGV.o .shobj/ARGV.so: ARGV.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/ARGV.h \
- $(WRAPPER_ROOT)/ace/ARGV.i
-.obj/CORBA_Handler.o .shobj/CORBA_Handler.so: CORBA_Handler.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/CORBA_Handler.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
- $(WRAPPER_ROOT)/ace/Event_Handler.h \
  $(WRAPPER_ROOT)/ace/Thread_Manager.h \
  $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
- $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
- $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -357,43 +298,126 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Method_Object.h
+.obj/Addr.o .shobj/Addr.so: Addr.cpp \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Addr.i
+.obj/ARGV.o .shobj/ARGV.so: ARGV.cpp \
+ $(WRAPPER_ROOT)/ace/ARGV.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/ARGV.i
+.obj/CORBA_Handler.o .shobj/CORBA_Handler.so: CORBA_Handler.cpp \
+ $(WRAPPER_ROOT)/ace/CORBA_Handler.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/CORBA_Handler.i
 .obj/CORBA_Ref.o .shobj/CORBA_Ref.so: CORBA_Ref.cpp \
  $(WRAPPER_ROOT)/ace/CORBA_Ref.h \
  $(WRAPPER_ROOT)/ace/CORBA_Ref.i
-.obj/DEV.o .shobj/DEV.so: DEV.cpp \
- $(WRAPPER_ROOT)/ace/DEV.h \
+.obj/DEV.o .shobj/DEV.so: DEV.cpp $(WRAPPER_ROOT)/ace/DEV.h \
  $(WRAPPER_ROOT)/ace/IO_SAP.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IO_SAP.i \
  $(WRAPPER_ROOT)/ace/DEV_Addr.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/DEV.i
 .obj/DEV_Addr.o .shobj/DEV_Addr.so: DEV_Addr.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/DEV_Addr.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
- $(WRAPPER_ROOT)/ace/DEV_Addr.i
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/DEV_Addr.i \
+ $(WRAPPER_ROOT)/ace/SString.h
 .obj/DEV_Connector.o .shobj/DEV_Connector.so: DEV_Connector.cpp \
  $(WRAPPER_ROOT)/ace/DEV_Connector.h \
  $(WRAPPER_ROOT)/ace/DEV_IO.h \
@@ -401,14 +425,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/IO_SAP.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IO_SAP.i \
  $(WRAPPER_ROOT)/ace/DEV_Addr.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
@@ -421,14 +445,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/IO_SAP.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IO_SAP.i \
  $(WRAPPER_ROOT)/ace/DEV_Addr.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
@@ -439,49 +463,46 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
- $(WRAPPER_ROOT)/ace/Dump_T.h \
- $(WRAPPER_ROOT)/ace/Dump_T.cpp
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Dump_T.h
 .obj/Dynamic.o .shobj/Dynamic.so: Dynamic.cpp \
  $(WRAPPER_ROOT)/ace/Dynamic.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Dynamic.i
 .obj/Event_Handler.o .shobj/Event_Handler.so: Event_Handler.cpp \
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Message_Block.h \
  $(WRAPPER_ROOT)/ace/Malloc.h \
  $(WRAPPER_ROOT)/ace/Malloc_T.h \
@@ -491,16 +512,9 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
  $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/Event_Handler.i
 .obj/FIFO.o .shobj/FIFO.so: FIFO.cpp \
@@ -508,14 +522,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/FIFO.i
 .obj/FIFO_Recv.o .shobj/FIFO_Recv.so: FIFO_Recv.cpp \
@@ -524,14 +538,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/FIFO_Recv.i
 .obj/FIFO_Recv_Msg.o .shobj/FIFO_Recv_Msg.so: FIFO_Recv_Msg.cpp \
@@ -541,14 +555,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/FIFO_Recv.i \
  $(WRAPPER_ROOT)/ace/FIFO_Recv_Msg.i
@@ -558,14 +572,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/FIFO_Send.i
 .obj/FIFO_Send_Msg.o .shobj/FIFO_Send_Msg.so: FIFO_Send_Msg.cpp \
@@ -575,14 +589,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/FIFO_Send.i \
  $(WRAPPER_ROOT)/ace/FIFO_Send_Msg.i
@@ -591,32 +605,33 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/IO_SAP.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IO_SAP.i \
  $(WRAPPER_ROOT)/ace/FILE_Addr.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/FILE.i
 .obj/FILE_Addr.o .shobj/FILE_Addr.so: FILE_Addr.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/FILE_Addr.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
- $(WRAPPER_ROOT)/ace/FILE_Addr.i
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/FILE_Addr.i \
+ $(WRAPPER_ROOT)/ace/SString.h
 .obj/FILE_Connector.o .shobj/FILE_Connector.so: FILE_Connector.cpp \
  $(WRAPPER_ROOT)/ace/FILE_Connector.h \
  $(WRAPPER_ROOT)/ace/FILE_IO.h \
@@ -624,14 +639,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/IO_SAP.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IO_SAP.i \
  $(WRAPPER_ROOT)/ace/FILE_Addr.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
@@ -644,145 +659,130 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/IO_SAP.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IO_SAP.i \
  $(WRAPPER_ROOT)/ace/FILE_Addr.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/FILE.i \
  $(WRAPPER_ROOT)/ace/FILE_IO.i
 .obj/Get_Opt.o .shobj/Get_Opt.so: Get_Opt.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Get_Opt.i
 .obj/Handle_Set.o .shobj/Handle_Set.so: Handle_Set.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Handle_Set.i
 .obj/High_Res_Timer.o .shobj/High_Res_Timer.so: High_Res_Timer.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/High_Res_Timer.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/High_Res_Timer.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/High_Res_Timer.i
 .obj/INET_Addr.o .shobj/INET_Addr.so: INET_Addr.cpp \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/INET_Addr.i
 .obj/IO_Cntl_Msg.o .shobj/IO_Cntl_Msg.so: IO_Cntl_Msg.cpp
 .obj/IO_SAP.o .shobj/IO_SAP.so: IO_SAP.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/IO_SAP.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/IO_SAP.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IO_SAP.i
 .obj/IPC_SAP.o .shobj/IPC_SAP.so: IPC_SAP.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i
 .obj/Local_Name_Space.o .shobj/Local_Name_Space.so: Local_Name_Space.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Local_Name_Space.h \
- $(WRAPPER_ROOT)/ace/Map_Manager.h \
- $(WRAPPER_ROOT)/ace/Map_Manager.cpp \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
- $(WRAPPER_ROOT)/ace/Event_Handler.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Service_Config.h \
- $(WRAPPER_ROOT)/ace/Service_Object.h \
- $(WRAPPER_ROOT)/ace/Shared_Object.h \
- $(WRAPPER_ROOT)/ace/Thread_Manager.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -795,9 +795,18 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
- $(WRAPPER_ROOT)/ace/Map_Manager.i \
  $(WRAPPER_ROOT)/ace/SString.h \
  $(WRAPPER_ROOT)/ace/Local_Name_Space_T.h \
  $(WRAPPER_ROOT)/ace/Name_Space.h \
@@ -807,19 +816,19 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/Synch_Options.h \
  $(WRAPPER_ROOT)/ace/Name_Request_Reply.h \
  $(WRAPPER_ROOT)/ace/Naming_Context.h \
- $(WRAPPER_ROOT)/ace/Local_Name_Space_T.cpp
+ $(WRAPPER_ROOT)/ace/Hash_Map_Manager.h
 .obj/Local_Tokens.o .shobj/Local_Tokens.so: Local_Tokens.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Local_Tokens.h \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -827,88 +836,46 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
  $(WRAPPER_ROOT)/ace/Stack.h \
- $(WRAPPER_ROOT)/ace/Stack.cpp \
- $(WRAPPER_ROOT)/ace/Stack.i \
  $(WRAPPER_ROOT)/ace/Synch_Options.h \
  $(WRAPPER_ROOT)/ace/Map_Manager.h \
- $(WRAPPER_ROOT)/ace/Map_Manager.cpp \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
- $(WRAPPER_ROOT)/ace/Event_Handler.h \
- $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Service_Config.h \
- $(WRAPPER_ROOT)/ace/Service_Object.h \
- $(WRAPPER_ROOT)/ace/Shared_Object.h \
- $(WRAPPER_ROOT)/ace/Thread_Manager.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
- $(WRAPPER_ROOT)/ace/Reactor.h \
- $(WRAPPER_ROOT)/ace/Handle_Set.h \
- $(WRAPPER_ROOT)/ace/Pipe.h \
- $(WRAPPER_ROOT)/ace/Pipe.i \
- $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
- $(WRAPPER_ROOT)/ace/SOCK_IO.h \
- $(WRAPPER_ROOT)/ace/SOCK.h \
- $(WRAPPER_ROOT)/ace/Addr.h \
- $(WRAPPER_ROOT)/ace/IPC_SAP.h \
- $(WRAPPER_ROOT)/ace/IPC_SAP.i \
- $(WRAPPER_ROOT)/ace/SOCK.i \
- $(WRAPPER_ROOT)/ace/SOCK_IO.i \
- $(WRAPPER_ROOT)/ace/INET_Addr.h \
- $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
- $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
- $(WRAPPER_ROOT)/ace/Map_Manager.i \
  $(WRAPPER_ROOT)/ace/Token_Manager.h \
  $(WRAPPER_ROOT)/ace/Local_Tokens.i
 .obj/LSOCK.o .shobj/LSOCK.so: LSOCK.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/LSOCK.h \
  $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/LSOCK.i
 .obj/LSOCK_Acceptor.o .shobj/LSOCK_Acceptor.so: LSOCK_Acceptor.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Acceptor.h \
  $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/SOCK_IO.h \
  $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
@@ -916,6 +883,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/UNIX_Addr.h \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/LSOCK.h \
@@ -928,14 +896,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
@@ -954,14 +922,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
@@ -969,12 +937,13 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/UNIX_Addr.h \
  $(WRAPPER_ROOT)/ace/LSOCK.h \
  $(WRAPPER_ROOT)/ace/LSOCK.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/UNIX_Addr.h \
  $(WRAPPER_ROOT)/ace/LSOCK_Connector.i
 .obj/LSOCK_Dgram.o .shobj/LSOCK_Dgram.so: LSOCK_Dgram.cpp \
  $(WRAPPER_ROOT)/ace/LSOCK_Dgram.h \
@@ -982,14 +951,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
@@ -999,20 +968,20 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/LSOCK.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Dgram.i
 .obj/LSOCK_Stream.o .shobj/LSOCK_Stream.so: LSOCK_Stream.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/SOCK_IO.h \
  $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
@@ -1020,6 +989,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/UNIX_Addr.h \
  $(WRAPPER_ROOT)/ace/LSOCK.h \
  $(WRAPPER_ROOT)/ace/LSOCK.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.i
@@ -1027,14 +997,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/OS.i \
- $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Thread.h \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1042,8 +1012,9 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/FIFO_Send_Msg.h \
  $(WRAPPER_ROOT)/ace/FIFO_Send.h \
  $(WRAPPER_ROOT)/ace/FIFO.h \
@@ -1052,28 +1023,28 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/FIFO_Send.i \
  $(WRAPPER_ROOT)/ace/FIFO_Send_Msg.i
 .obj/Log_Record.o .shobj/Log_Record.so: Log_Record.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i
 .obj/Malloc.o .shobj/Malloc.so: Malloc.cpp \
  $(WRAPPER_ROOT)/ace/Malloc.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Malloc_T.h \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1081,44 +1052,37 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/Malloc.i
 .obj/Mem_Map.o .shobj/Mem_Map.so: Mem_Map.cpp \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Mem_Map.i
 .obj/Memory_Pool.o .shobj/Memory_Pool.so: Memory_Pool.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Synch.h \
@@ -1127,26 +1091,21 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/Memory_Pool.i
 .obj/Message_Block.o .shobj/Message_Block.so: Message_Block.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Malloc.h \
  $(WRAPPER_ROOT)/ace/Malloc_T.h \
  $(WRAPPER_ROOT)/ace/Synch.h \
@@ -1155,38 +1114,66 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Message_Block.i
 .obj/Method_Object.o .shobj/Method_Object.so: Method_Object.cpp \
  $(WRAPPER_ROOT)/ace/Method_Object.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h
-.obj/Name_Proxy.o .shobj/Name_Proxy.so: Name_Proxy.cpp \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Record.i
+.obj/Name_Proxy.o .shobj/Name_Proxy.so: Name_Proxy.cpp \
  $(WRAPPER_ROOT)/ace/Name_Proxy.h \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -1197,6 +1184,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
@@ -1210,62 +1198,57 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
+ $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/Proactor.h \
  $(WRAPPER_ROOT)/ace/Message_Block.h \
  $(WRAPPER_ROOT)/ace/Malloc.h \
  $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
  $(WRAPPER_ROOT)/ace/Memory_Pool.h \
- $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
  $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
- $(WRAPPER_ROOT)/ace/Reactor.h \
- $(WRAPPER_ROOT)/ace/Handle_Set.h \
- $(WRAPPER_ROOT)/ace/Pipe.h \
- $(WRAPPER_ROOT)/ace/Pipe.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Synch_Options.h \
  $(WRAPPER_ROOT)/ace/Name_Request_Reply.h \
  $(WRAPPER_ROOT)/ace/SString.h
 .obj/Name_Request_Reply.o .shobj/Name_Request_Reply.so: Name_Request_Reply.cpp \
+ $(WRAPPER_ROOT)/ace/Name_Request_Reply.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/Name_Request_Reply.h \
  $(WRAPPER_ROOT)/ace/SString.h
 .obj/Name_Space.o .shobj/Name_Space.so: Name_Space.cpp \
  $(WRAPPER_ROOT)/ace/Name_Space.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/SString.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
  $(WRAPPER_ROOT)/ace/Name_Proxy.h \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
@@ -1278,6 +1261,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
@@ -1291,46 +1275,42 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/Proactor.h \
  $(WRAPPER_ROOT)/ace/Message_Block.h \
  $(WRAPPER_ROOT)/ace/Malloc.h \
  $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
  $(WRAPPER_ROOT)/ace/Memory_Pool.h \
- $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
  $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
- $(WRAPPER_ROOT)/ace/Reactor.h \
- $(WRAPPER_ROOT)/ace/Handle_Set.h \
- $(WRAPPER_ROOT)/ace/Pipe.h \
- $(WRAPPER_ROOT)/ace/Pipe.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Synch_Options.h \
  $(WRAPPER_ROOT)/ace/Name_Request_Reply.h
 .obj/Naming_Context.o .shobj/Naming_Context.so: Naming_Context.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Naming_Context.h \
  $(WRAPPER_ROOT)/ace/SString.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
@@ -1346,6 +1326,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Thread_Manager.h \
@@ -1356,61 +1337,57 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/Proactor.h \
  $(WRAPPER_ROOT)/ace/Message_Block.h \
  $(WRAPPER_ROOT)/ace/Malloc.h \
  $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
  $(WRAPPER_ROOT)/ace/Memory_Pool.h \
- $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
  $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
- $(WRAPPER_ROOT)/ace/Reactor.h \
- $(WRAPPER_ROOT)/ace/Handle_Set.h \
- $(WRAPPER_ROOT)/ace/Pipe.h \
- $(WRAPPER_ROOT)/ace/Pipe.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Synch_Options.h \
  $(WRAPPER_ROOT)/ace/Name_Request_Reply.h \
  $(WRAPPER_ROOT)/ace/Name_Space.h \
  $(WRAPPER_ROOT)/ace/Remote_Name_Space.h \
  $(WRAPPER_ROOT)/ace/Local_Name_Space.h \
- $(WRAPPER_ROOT)/ace/Map_Manager.h \
- $(WRAPPER_ROOT)/ace/Map_Manager.cpp \
- $(WRAPPER_ROOT)/ace/Map_Manager.i \
  $(WRAPPER_ROOT)/ace/Local_Name_Space_T.h \
- $(WRAPPER_ROOT)/ace/Local_Name_Space_T.cpp
+ $(WRAPPER_ROOT)/ace/Hash_Map_Manager.h \
+ $(WRAPPER_ROOT)/ace/Registry_Name_Space.h
 .obj/Obstack.o .shobj/Obstack.so: Obstack.cpp \
  $(WRAPPER_ROOT)/ace/Obstack.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i
-.obj/OS.o .shobj/OS.so: OS.cpp \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/ARGV.h \
+ $(WRAPPER_ROOT)/ace/ACE.i
+.obj/OS.o .shobj/OS.so: OS.cpp $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/Scheduling_Params.h \
+ $(WRAPPER_ROOT)/ace/Thread_Priority.h \
  $(WRAPPER_ROOT)/ace/OS.i
 .obj/Parse_Node.o .shobj/Parse_Node.so: Parse_Node.cpp \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
@@ -1418,14 +1395,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
  $(WRAPPER_ROOT)/ace/Thread_Manager.h \
  $(WRAPPER_ROOT)/ace/Thread.h \
@@ -1435,26 +1412,13 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -1467,43 +1431,41 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Service_Repository.h \
  $(WRAPPER_ROOT)/ace/Service_Record.h \
  $(WRAPPER_ROOT)/ace/Stream.h \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
  $(WRAPPER_ROOT)/ace/Module.h \
  $(WRAPPER_ROOT)/ace/Task.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.cpp \
- $(WRAPPER_ROOT)/ace/Message_Queue.i \
- $(WRAPPER_ROOT)/ace/Task.cpp \
- $(WRAPPER_ROOT)/ace/Task.i \
- $(WRAPPER_ROOT)/ace/Module.cpp \
- $(WRAPPER_ROOT)/ace/Stream_Modules.h \
- $(WRAPPER_ROOT)/ace/Stream_Modules.cpp \
- $(WRAPPER_ROOT)/ace/Stream_Modules.i \
- $(WRAPPER_ROOT)/ace/Module.i \
- $(WRAPPER_ROOT)/ace/Stream.cpp \
- $(WRAPPER_ROOT)/ace/Stream.i \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
  $(WRAPPER_ROOT)/ace/Parse_Node.h \
  $(WRAPPER_ROOT)/ace/Parse_Node.i
 .obj/Pipe.o .shobj/Pipe.so: Pipe.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/SOCK_IO.h \
  $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
@@ -1511,6 +1473,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/Pipe.h \
@@ -1518,16 +1481,16 @@ Svc_Conf_l.cpp: Svc_Conf.l
 .obj/Proactor.o .shobj/Proactor.so: Proactor.cpp \
  $(WRAPPER_ROOT)/ace/Proactor.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
  $(WRAPPER_ROOT)/ace/Malloc.h \
  $(WRAPPER_ROOT)/ace/Malloc_T.h \
  $(WRAPPER_ROOT)/ace/Synch.h \
@@ -1536,139 +1499,63 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Timer_List.h \
  $(WRAPPER_ROOT)/ace/Proactor.i
 .obj/Process.o .shobj/Process.so: Process.cpp \
  $(WRAPPER_ROOT)/ace/Process.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ARGV.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Svc_Handler.h \
- $(WRAPPER_ROOT)/ace/Synch_Options.h \
- $(WRAPPER_ROOT)/ace/Task.h \
- $(WRAPPER_ROOT)/ace/Service_Object.h \
- $(WRAPPER_ROOT)/ace/Shared_Object.h \
- $(WRAPPER_ROOT)/ace/Event_Handler.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Synch.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
- $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
- $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.cpp \
- $(WRAPPER_ROOT)/ace/Message_Queue.i \
- $(WRAPPER_ROOT)/ace/Thread_Manager.h \
- $(WRAPPER_ROOT)/ace/Task.cpp \
- $(WRAPPER_ROOT)/ace/Module.h \
- $(WRAPPER_ROOT)/ace/Module.cpp \
- $(WRAPPER_ROOT)/ace/Stream_Modules.h \
- $(WRAPPER_ROOT)/ace/Stream_Modules.cpp \
- $(WRAPPER_ROOT)/ace/Stream_Modules.i \
- $(WRAPPER_ROOT)/ace/Module.i \
- $(WRAPPER_ROOT)/ace/Service_Config.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
- $(WRAPPER_ROOT)/ace/Reactor.h \
- $(WRAPPER_ROOT)/ace/Handle_Set.h \
- $(WRAPPER_ROOT)/ace/Pipe.h \
- $(WRAPPER_ROOT)/ace/Pipe.i \
- $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
- $(WRAPPER_ROOT)/ace/SOCK_IO.h \
- $(WRAPPER_ROOT)/ace/SOCK.h \
- $(WRAPPER_ROOT)/ace/Addr.h \
- $(WRAPPER_ROOT)/ace/IPC_SAP.h \
- $(WRAPPER_ROOT)/ace/IPC_SAP.i \
- $(WRAPPER_ROOT)/ace/SOCK.i \
- $(WRAPPER_ROOT)/ace/SOCK_IO.i \
- $(WRAPPER_ROOT)/ace/INET_Addr.h \
- $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
- $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
- $(WRAPPER_ROOT)/ace/Task.i \
- $(WRAPPER_ROOT)/ace/Svc_Handler.cpp \
- $(WRAPPER_ROOT)/ace/Dynamic.h \
- $(WRAPPER_ROOT)/ace/Svc_Handler.i \
- $(WRAPPER_ROOT)/ace/Acceptor.h \
- $(WRAPPER_ROOT)/ace/Strategies.h \
- $(WRAPPER_ROOT)/ace/Strategies.cpp \
- $(WRAPPER_ROOT)/ace/Acceptor.i \
- $(WRAPPER_ROOT)/ace/Acceptor.cpp \
- $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
+ $(WRAPPER_ROOT)/ace/ARGV.h \
+ $(WRAPPER_ROOT)/ace/SString.h \
  $(WRAPPER_ROOT)/ace/Process.i
 .obj/Process_Manager.o .shobj/Process_Manager.so: Process_Manager.cpp
 .obj/Profile_Timer.o .shobj/Profile_Timer.so: Profile_Timer.cpp \
  $(WRAPPER_ROOT)/ace/Profile_Timer.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/Profile_Timer.i
 .obj/Reactor.o .shobj/Reactor.so: Reactor.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
  $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/SOCK_IO.h \
@@ -1680,91 +1567,60 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
+ $(WRAPPER_ROOT)/ace/Timer_List.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Event_Handler.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
  $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
+ $(WRAPPER_ROOT)/ace/Thread.h \
  $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/Reactor.i
 .obj/ReactorEx.o .shobj/ReactorEx.so: ReactorEx.cpp \
  $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/Token.h
-.obj/Read_Buffer.o .shobj/Read_Buffer.so: Read_Buffer.cpp \
- $(WRAPPER_ROOT)/ace/Read_Buffer.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
  $(WRAPPER_ROOT)/ace/Malloc.h \
  $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Synch.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
- $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
  $(WRAPPER_ROOT)/ace/Memory_Pool.h \
- $(WRAPPER_ROOT)/ace/Event_Handler.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Read_Buffer.i \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
  $(WRAPPER_ROOT)/ace/Thread_Manager.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -1777,24 +1633,103 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
- $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
-.obj/Remote_Name_Space.o .shobj/Remote_Name_Space.so: Remote_Name_Space.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Timer_List.h
+.obj/Read_Buffer.o .shobj/Read_Buffer.so: Read_Buffer.cpp \
+ $(WRAPPER_ROOT)/ace/Read_Buffer.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/Read_Buffer.i \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
+.obj/Registry.o .shobj/Registry.so: Registry.cpp \
+ $(WRAPPER_ROOT)/ace/Registry.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Record.i
+.obj/Registry_Name_Space.o .shobj/Registry_Name_Space.so: Registry_Name_Space.cpp \
+ $(WRAPPER_ROOT)/ace/Registry_Name_Space.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Record.i
+.obj/Remote_Name_Space.o .shobj/Remote_Name_Space.so: Remote_Name_Space.cpp \
  $(WRAPPER_ROOT)/ace/Remote_Name_Space.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/SString.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
  $(WRAPPER_ROOT)/ace/Name_Proxy.h \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
@@ -1807,6 +1742,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
@@ -1820,43 +1756,41 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/Proactor.h \
  $(WRAPPER_ROOT)/ace/Message_Block.h \
  $(WRAPPER_ROOT)/ace/Malloc.h \
  $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
  $(WRAPPER_ROOT)/ace/Memory_Pool.h \
- $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
  $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
- $(WRAPPER_ROOT)/ace/Reactor.h \
- $(WRAPPER_ROOT)/ace/Handle_Set.h \
- $(WRAPPER_ROOT)/ace/Pipe.h \
- $(WRAPPER_ROOT)/ace/Pipe.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Synch_Options.h \
  $(WRAPPER_ROOT)/ace/Name_Request_Reply.h \
  $(WRAPPER_ROOT)/ace/Name_Space.h
 .obj/Remote_Tokens.o .shobj/Remote_Tokens.so: Remote_Tokens.cpp \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/Remote_Tokens.h \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -1867,6 +1801,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/Synch_Options.h \
  $(WRAPPER_ROOT)/ace/Local_Tokens.h \
@@ -1876,59 +1811,24 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Synch_T.cpp \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Synch_T.i \
- $(WRAPPER_ROOT)/ace/Stack.h \
- $(WRAPPER_ROOT)/ace/Stack.cpp \
- $(WRAPPER_ROOT)/ace/Stack.i \
- $(WRAPPER_ROOT)/ace/Map_Manager.h \
- $(WRAPPER_ROOT)/ace/Map_Manager.cpp \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.cpp \
- $(WRAPPER_ROOT)/ace/Malloc_T.i \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
- $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Set.cpp \
- $(WRAPPER_ROOT)/ace/Set.i \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Service_Config.h \
- $(WRAPPER_ROOT)/ace/Service_Object.h \
- $(WRAPPER_ROOT)/ace/Shared_Object.h \
- $(WRAPPER_ROOT)/ace/Thread_Manager.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
- $(WRAPPER_ROOT)/ace/Reactor.h \
- $(WRAPPER_ROOT)/ace/Handle_Set.h \
- $(WRAPPER_ROOT)/ace/Pipe.h \
- $(WRAPPER_ROOT)/ace/Pipe.i \
- $(WRAPPER_ROOT)/ace/Reactor.i \
- $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
- $(WRAPPER_ROOT)/ace/Map_Manager.i \
+ $(WRAPPER_ROOT)/ace/Stack.h \
+ $(WRAPPER_ROOT)/ace/Map_Manager.h \
  $(WRAPPER_ROOT)/ace/Token_Request_Reply.h \
  $(WRAPPER_ROOT)/ace/Singleton.h \
- $(WRAPPER_ROOT)/ace/Singleton.cpp \
- $(WRAPPER_ROOT)/ace/Singleton.i \
  $(WRAPPER_ROOT)/ace/Remote_Tokens.i
 .obj/SOCK.o .shobj/SOCK.so: SOCK.cpp \
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
@@ -1940,14 +1840,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
@@ -1955,6 +1855,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Acceptor.i
 .obj/SOCK_CODgram.o .shobj/SOCK_CODgram.so: SOCK_CODgram.cpp \
  $(WRAPPER_ROOT)/ace/SOCK_CODgram.h \
@@ -1962,14 +1863,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
@@ -1983,14 +1884,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
@@ -1998,6 +1899,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/Handle_Set.h
 .obj/SOCK_Dgram.o .shobj/SOCK_Dgram.so: SOCK_Dgram.cpp \
@@ -2005,14 +1907,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
@@ -2023,14 +1925,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.h \
  $(WRAPPER_ROOT)/ace/SOCK.h \
@@ -2044,14 +1946,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
@@ -2063,14 +1965,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
@@ -2079,6 +1981,2469 @@ Svc_Conf_l.cpp: Svc_Conf.l
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram_Mcast.i
 .obj/SOCK_Stream.o .shobj/SOCK_Stream.so: SOCK_Stream.cpp \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i
+.obj/SPIPE.o .shobj/SPIPE.so: SPIPE.cpp \
+ $(WRAPPER_ROOT)/ace/SPIPE.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SPIPE_Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/SPIPE.i
+.obj/SPIPE_Acceptor.o .shobj/SPIPE_Acceptor.so: SPIPE_Acceptor.cpp \
+ $(WRAPPER_ROOT)/ace/SPIPE_Acceptor.h \
+ $(WRAPPER_ROOT)/ace/SPIPE_Stream.h \
+ $(WRAPPER_ROOT)/ace/SPIPE.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SPIPE_Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/SPIPE.i \
+ $(WRAPPER_ROOT)/ace/SPIPE_Stream.i
+.obj/SPIPE_Addr.o .shobj/SPIPE_Addr.so: SPIPE_Addr.cpp \
+ $(WRAPPER_ROOT)/ace/SPIPE_Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/SPIPE_Addr.i \
+ $(WRAPPER_ROOT)/ace/SString.h
+.obj/SPIPE_Connector.o .shobj/SPIPE_Connector.so: SPIPE_Connector.cpp \
+ $(WRAPPER_ROOT)/ace/SPIPE_Connector.h \
+ $(WRAPPER_ROOT)/ace/SPIPE_Stream.h \
+ $(WRAPPER_ROOT)/ace/SPIPE.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SPIPE_Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/SPIPE.i \
+ $(WRAPPER_ROOT)/ace/SPIPE_Stream.i \
+ $(WRAPPER_ROOT)/ace/SPIPE_Connector.i
+.obj/SPIPE_Stream.o .shobj/SPIPE_Stream.so: SPIPE_Stream.cpp \
+ $(WRAPPER_ROOT)/ace/SPIPE_Stream.h \
+ $(WRAPPER_ROOT)/ace/SPIPE.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SPIPE_Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/SPIPE.i \
+ $(WRAPPER_ROOT)/ace/SPIPE_Stream.i
+.obj/SString.o .shobj/SString.so: SString.cpp \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/SString.h \
+ $(WRAPPER_ROOT)/ace/SString.i
+.obj/Scheduling_Params.o .shobj/Scheduling_Params.so: Scheduling_Params.cpp \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Scheduling_Params.h \
+ $(WRAPPER_ROOT)/ace/Thread_Priority.h \
+ $(WRAPPER_ROOT)/ace/Scheduling_Params.i
+.obj/Service_Config.o .shobj/Service_Config.so: Service_Config.cpp \
+ $(WRAPPER_ROOT)/ace/Svc_Conf.h \
+ $(WRAPPER_ROOT)/ace/Obstack.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Parse_Node.h \
+ $(WRAPPER_ROOT)/ace/Service_Record.h \
+ $(WRAPPER_ROOT)/ace/Stream.h \
+ $(WRAPPER_ROOT)/ace/Module.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/ARGV.h \
+ $(WRAPPER_ROOT)/ace/Service_Manager.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
+ $(WRAPPER_ROOT)/ace/Service_Repository.h \
+ $(WRAPPER_ROOT)/ace/Auto_Ptr.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.i
+.obj/Service_Manager.o .shobj/Service_Manager.so: Service_Manager.cpp \
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Service_Repository.h \
+ $(WRAPPER_ROOT)/ace/Service_Record.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Stream.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Module.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/acPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Service_Manager.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
+ $(WRAPPER_ROOT)/ace/Service_Manager.i
+.obj/Service_Object.o .shobj/Service_Object.so: Service_Object.cpp \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.i
+.obj/Service_Record.o .shobj/Service_Record.so: Service_Record.cpp \
+ $(WRAPPER_ROOT)/ace/Service_Record.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Stream.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Module.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Service_Record.i
+.obj/Service_Repository.o .shobj/Service_Repository.so: Service_Repository.cpp \
+ $(WRAPPER_ROOT)/ace/Service_Repository.h \
+ $(WRAPPER_ROOT)/ace/Service_Record.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Stream.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Module.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Service_Repository.i
+.obj/Shared_Memory_MM.o .shobj/Shared_Memory_MM.so: Shared_Memory_MM.cpp \
+ $(WRAPPER_ROOT)/ace/Shared_Memory_MM.h \
+ $(WRAPPER_ROOT)/ace/Shared_Memory.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/Shared_Memory_MM.i
+.obj/Shared_Memory_SV.o .shobj/Shared_Memory_SV.so: Shared_Memory_SV.cpp \
+ $(WRAPPER_ROOT)/ace/Shared_Memory_SV.h \
+ $(WRAPPER_ROOT)/ace/Shared_Memory.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/SV_Shared_Memory.h \
+ $(WRAPPER_ROOT)/ace/Shared_Memory_SV.i
+.obj/Shared_Object.o .shobj/Shared_Object.so: Shared_Object.cpp \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Shared_Object.i
+.obj/Signal.o .shobj/Signal.so: Signal.cpp \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Signal.i
+.obj/Strategies.o .shobj/Strategies.so: Strategies.cpp \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
+.obj/SV_Message.o .shobj/SV_Message.so: SV_Message.cpp \
+ $(WRAPPER_ROOT)/ace/SV_Message.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/SV_Message.i
+.obj/SV_Message_Queue.o .shobj/SV_Message_Queue.so: SV_Message_Queue.cpp \
+ $(WRAPPER_ROOT)/ace/SV_Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/SV_Message.h \
+ $(WRAPPER_ROOT)/ace/SV_Message_Queue.i
+.obj/SV_Semaphore_Complex.o .shobj/SV_Semaphore_Complex.so: SV_Semaphore_Complex.cpp \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i
+.obj/SV_Semaphore_Simple.o .shobj/SV_Semaphore_Simple.so: SV_Semaphore_Simple.cpp \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i
+.obj/SV_Shared_Memory.o .shobj/SV_Shared_Memory.so: SV_Shared_Memory.cpp \
+ $(WRAPPER_ROOT)/ace/SV_Shared_Memory.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/SV_Shared_Memory.i
+.obj/Synch.o .shobj/Synch.so: Synch.cpp \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Synch.i
+.obj/Synch_Options.o .shobj/Synch_Options.so: Synch_Options.cpp \
+ $(WRAPPER_ROOT)/ace/Synch_Options.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i
+.obj/System_Time.o .shobj/System_Time.so: System_Time.cpp \
+ $(WRAPPER_ROOT)/ace/System_Time.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h
+.obj/Task.o .shobj/Task.so: Task.cpp \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Module.h \
+ $(WRAPPER_ROOT)/ace/Task.i
+.obj/TLI.o .shobj/TLI.so: TLI.cpp $(WRAPPER_ROOT)/ace/TLI.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/TLI.i
+.obj/TLI_Acceptor.o .shobj/TLI_Acceptor.so: TLI_Acceptor.cpp \
+ $(WRAPPER_ROOT)/ace/TLI_Acceptor.h \
+ $(WRAPPER_ROOT)/ace/TLI.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/TLI.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/TLI_Stream.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/TLI_Stream.i \
+ $(WRAPPER_ROOT)/ace/TLI_Acceptor.i
+.obj/TLI_Connector.o .shobj/TLI_Connector.so: TLI_Connector.cpp \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/TLI_Connector.h \
+ $(WRAPPER_ROOT)/ace/TLI_Stream.h \
+ $(WRAPPER_ROOT)/ace/TLI.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/TLI.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/TLI_Stream.i \
+ $(WRAPPER_ROOT)/ace/TLI_Connector.i
+.obj/TLI_Stream.o .shobj/TLI_Stream.so: TLI_Stream.cpp \
+ $(WRAPPER_ROOT)/ace/TLI_Stream.h \
+ $(WRAPPER_ROOT)/ace/TLI.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/TLI.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/TLI_Stream.i
+.obj/Thread.o .shobj/Thread.so: Thread.cpp \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Thread.i
+.obj/Thread_Manager.o .shobj/Thread_Manager.so: Thread_Manager.cpp \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.i
+.obj/Thread_Priority.o .shobj/Thread_Priority.so: Thread_Priority.cpp \
+ $(WRAPPER_ROOT)/ace/Thread_Priority.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/Thread_Priority.i
+.obj/Time_Request_Reply.o .shobj/Time_Request_Reply.so: Time_Request_Reply.cpp \
+ $(WRAPPER_ROOT)/ace/Time_Request_Reply.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/SString.h
+.obj/Timer_Heap.o .shobj/Timer_Heap.so: Timer_Heap.cpp \
+ $(WRAPPER_ROOT)/ace/Timer_Heap.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Set.h
+.obj/Timer_List.o .shobj/Timer_List.so: Timer_List.cpp \
+ $(WRAPPER_ROOT)/ace/Timer_List.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h
+.obj/Timer_Queue.o .shobj/Timer_Queue.so: Timer_Queue.cpp \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.i
+.obj/Token.o .shobj/Token.so: Token.cpp \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Token.i
+.obj/Token_Collection.o .shobj/Token_Collection.so: Token_Collection.cpp \
+ $(WRAPPER_ROOT)/ace/Token_Collection.h \
+ $(WRAPPER_ROOT)/ace/Map_Manager.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Local_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Stack.h \
+ $(WRAPPER_ROOT)/ace/Synch_Options.h \
+ $(WRAPPER_ROOT)/ace/SString.h \
+ $(WRAPPER_ROOT)/ace/Token_Collection.i
+.obj/Token_Invariants.o .shobj/Token_Invariants.so: Token_Invariants.cpp \
+ $(WRAPPER_ROOT)/ace/Token_Invariants.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Map_Manager.h \
+ $(WRAPPER_ROOT)/ace/Local_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Stack.h \
+ $(WRAPPER_ROOT)/ace/Synch_Options.h \
+ $(WRAPPER_ROOT)/ace/Token_Invariants.i
+.obj/Token_Manager.o .shobj/Token_Manager.so: Token_Manager.cpp \
+ $(WRAPPER_ROOT)/ace/Token_Manager.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Map_Manager.h \
+ $(WRAPPER_ROOT)/ace/Local_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Stack.h \
+ $(WRAPPER_ROOT)/ace/Synch_Options.h \
+ $(WRAPPER_ROOT)/ace/Token_Manager.i
+.obj/Token_Request_Reply.o .shobj/Token_Request_Reply.so: Token_Request_Reply.cpp \
+ $(WRAPPER_ROOT)/ace/Token_Request_Reply.h \
+ $(WRAPPER_ROOT)/ace/Local_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Stack.h \
+ $(WRAPPER_ROOT)/ace/Synch_Options.h \
+ $(WRAPPER_ROOT)/ace/Map_Manager.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token_Request_Reply.i
+.obj/Trace.o .shobj/Trace.so: Trace.cpp \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Trace.i
+.obj/TTY_IO.o .shobj/TTY_IO.so: TTY_IO.cpp \
+ $(WRAPPER_ROOT)/ace/TTY_IO.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/DEV_Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/DEV_Connector.h \
+ $(WRAPPER_ROOT)/ace/DEV_IO.h \
+ $(WRAPPER_ROOT)/ace/DEV.h \
+ $(WRAPPER_ROOT)/ace/IO_SAP.h \
+ $(WRAPPER_ROOT)/ace/IO_SAP.i \
+ $(WRAPPER_ROOT)/ace/DEV.i \
+ $(WRAPPER_ROOT)/ace/DEV_IO.i \
+ $(WRAPPER_ROOT)/ace/DEV_Connector.i
+.obj/UNIX_Addr.o .shobj/UNIX_Addr.so: UNIX_Addr.cpp \
+ $(WRAPPER_ROOT)/ace/UNIX_Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/UNIX_Addr.i
+.obj/UPIPE_Acceptor.o .shobj/UPIPE_Acceptor.so: UPIPE_Acceptor.cpp \
+ $(WRAPPER_ROOT)/ace/UPIPE_Acceptor.h \
+ $(WRAPPER_ROOT)/ace/UPIPE_Stream.h \
+ $(WRAPPER_ROOT)/ace/Stream.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Module.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/SPIPE.h \
+ $(WRAPPER_ROOT)/ace/SPIPE_Addr.h \
+ $(WRAPPER_ROOT)/ace/SPIPE.i \
+ $(WRAPPER_ROOT)/ace/UPIPE_Addr.h \
+ $(WRAPPER_ROOT)/ace/SPIPE_Acceptor.h \
+ $(WRAPPER_ROOT)/ace/SPIPE_Stream.h \
+ $(WRAPPER_ROOT)/ace/SPIPE_Stream.i \
+ $(WRAPPER_ROOT)/ace/UPIPE_Acceptor.i
+.obj/UPIPE_Connector.o .shobj/UPIPE_Connector.so: UPIPE_Connector.cpp \
+ $(WRAPPER_ROOT)/ace/UPIPE_Connector.h \
+ $(WRAPPER_ROOT)/ace/UPIPE_Stream.h \
+ $(WRAPPER_ROOT)/ace/Stream.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Module.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/SPIPE.h \
+ $(WRAPPER_ROOT)/ace/SPIPE_Addr.h \
+ $(WRAPPER_ROOT)/ace/SPIPE.i \
+ $(WRAPPER_ROOT)/ace/UPIPE_Addr.h \
+ $(WRAPPER_ROOT)/ace/SPIPE_Stream.h \
+ $(WRAPPER_ROOT)/ace/SPIPE_Stream.i \
+ $(WRAPPER_ROOT)/ace/UPIPE_Connector.i
+.obj/UPIPE_Stream.o .shobj/UPIPE_Stream.so: UPIPE_Stream.cpp \
+ $(WRAPPER_ROOT)/ace/UPIPE_Stream.h \
+ $(WRAPPER_ROOT)/ace/Stream.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Module.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/SPIPE.h \
+ $(WRAPPER_ROOT)/ace/SPIPE_Addr.h \
+ $(WRAPPER_ROOT)/ace/SPIPE.i \
+ $(WRAPPER_ROOT)/ace/UPIPE_Addr.h \
+ $(WRAPPER_ROOT)/ace/UPIPE_Stream.i
+.obj/XtReactor.o .shobj/XtReactor.so: XtReactor.cpp \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
+ $(WRAPPER_ROOT)/ace/XtReactor.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i
+.obj/Svc_Conf_l.o .shobj/Svc_Conf_l.so: Svc_Conf_l.cpp \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf.h \
+ $(WRAPPER_ROOT)/ace/Obstack.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Parse_Node.h \
+ $(WRAPPER_ROOT)/ace/Service_Record.h \
+ $(WRAPPER_ROOT)/ace/Stream.h \
+ $(WRAPPER_ROOT)/ace/Module.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h
+.obj/Svc_Conf_y.o .shobj/Svc_Conf_y.so: Svc_Conf_y.cpp \
+ $(WRAPPER_ROOT)/ace/ARGV.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Svc_Conf.h \
+ $(WRAPPER_ROOT)/ace/Obstack.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Parse_Node.h \
+ $(WRAPPER_ROOT)/ace/Service_Record.h \
+ $(WRAPPER_ROOT)/ace/Stream.h \
+ $(WRAPPER_ROOT)/ace/Module.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h
+.obj/Acceptor.o .shobj/Acceptor.so: Acceptor.cpp \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Acceptor.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Svc_Handler.h \
+ $(WRAPPER_ROOT)/ace/Synch_Options.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Acceptor.i
+.obj/Auto_Ptr.o .shobj/Auto_Ptr.so: Auto_Ptr.cpp \
+ $(WRAPPER_ROOT)/ace/Auto_Ptr.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Auto_Ptr.i
+.obj/Connector.o .shobj/Connector.so: Connector.cpp \
+ $(WRAPPER_ROOT)/ace/Connector.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Mana.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Map_Manager.h \
+ $(WRAPPER_ROOT)/ace/Svc_Handler.h \
+ $(WRAPPER_ROOT)/ace/Synch_Options.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Connector.i
+.obj/Dump_T.o .shobj/Dump_T.so: Dump_T.cpp \
+ $(WRAPPER_ROOT)/ace/Dump_T.h \
+ $(WRAPPER_ROOT)/ace/Dump.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h
+.obj/Dynamic_Service.o .shobj/Dynamic_Service.so: Dynamic_Service.cpp \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Service_Repository.h \
+ $(WRAPPER_ROOT)/ace/Service_Record.h \
+ $(WRAPPER_ROOT)/ace/Stream.h \
+ $(WRAPPER_ROOT)/ace/Module.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Dynamic_Service.h
+.obj/Event_Handler_T.o .shobj/Event_Handler_T.so: Event_Handler_T.cpp \
+ $(WRAPPER_ROOT)/ace/Event_Handler_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i
+.obj/Future.o .shobj/Future.so: Future.cpp \
+ $(WRAPPER_ROOT)/ace/Future.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h
+.obj/Hash_Map_Manager.o .shobj/Hash_Map_Manager.so: Hash_Map_Manager.cpp \
+ $(WRAPPER_ROOT)/ace/Hash_Map_Manager.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
+.obj/IOStream.o .shobj/IOStream.so: IOStream.cpp \
+ $(WRAPPER_ROOT)/ace/IOStream.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Log_Record.i
+.obj/Local_Name_Space_T.o .shobj/Local_Name_Space_T.so: Local_Name_Space_T.cpp \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Local_Name_Space.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/SString.h \
+ $(WRAPPER_ROOT)/ace/Local_Name_Space_T.h \
+ $(WRAPPER_ROOT)/ace/Name_Space.h \
+ $(WRAPPER_ROOT)/ace/Name_Proxy.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
+ $(WRAPPER_ROOT)/ace/Synch_Options.h \
+ $(WRAPPER_ROOT)/ace/Name_Request_Reply.h \
+ $(WRAPPER_ROOT)/ace/Naming_Context.h \
+ $(WRAPPER_ROOT)/ace/Hash_Map_Manager.h
+.obj/Local_Tokens_T.o .shobj/Local_Tokens_T.so: Local_Tokens_T.cpp \
+ $(WRAPPER_ROOT)/ace/Local_Tokens_T.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Local_Tokens_T.i
+.obj/Malloc_T.o .shobj/Malloc_T.so: Malloc_T.cpp \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.i
+.obj/Map_Manager.o .shobj/Map_Manager.so: Map_Manager.cpp \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_RO/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Map_Manager.h \
+ $(WRAPPER_ROOT)/ace/Map_Manager.i
+.obj/Message_Queue.o .shobj/Message_Queue.so: Message_Queue.cpp \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.i
+.obj/Module.o .shobj/Module.so: Module.cpp \
+ $(WRAPPER_ROOT)/ace/Module.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Stream_Modules.h \
+ $(WRAPPER_ROOT)/ace/Module.i
+.obj/Set.o .shobj/Set.so: Set.cpp $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Set.i
+.obj/Singleton.o .shobj/Singleton.so: Singleton.cpp \
+ $(WRAPPER_ROOT)/ace/Singleton.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Singleton.i
+.obj/Stack.o .shobj/Stack.so: Stack.cpp \
+ $(WRAPPER_ROOT)/ace/Stack.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Stack.i
+.obj/Strategies_T.o .shobj/Strategies_T.so: Strategies_T.cpp \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h
+.obj/Stream.o .shobj/Stream.so: Stream.cpp \
+ $(WRAPPER_ROOT)/ace/Stream.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Module.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Stream_Modules.h \
+ $(WRAPPER_ROOT)/ace/Stream.i
+.obj/Stream_Modules.o .shobj/Stream_Modules.so: Stream_Modules.cpp \
+ $(WRAPPER_ROOT)/ace/Stream_Modules.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Stream_Modules.i
+.obj/Svc_Handler.o .shobj/Svc_Handler.so: Svc_Handler.cpp \
+ $(WRAPPER_ROOT)/ace/Svc_Handler.h \
+ $(WRAPPER_ROOT)/ace/Synch_Options.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Dynamic.h \
+ $(WRAPPER_ROOT)/ace/Svc_Handler.i
+.obj/Synch_T.o .shobj/Synch_T.so: Synch_T.cpp \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.i
+.obj/Task_T.o .shobj/Task_T.so: Task_T.cpp \
+ $(WRAPPER_ROOT)/ace/Task_T.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Signal.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
+ $(WRAPPER_ROOT)/ace/Service_Config.h \
+ $(WRAPPER_ROOT)/ace/Service_Object.h \
+ $(WRAPPER_ROOT)/ace/Shared_Object.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Reactor.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Pipe.h \
+ $(WRAPPER_ROOT)/ace/Pipe.i \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.h \
+ $(WRAPPER_ROOT)/ace/SOCK.h \
+ $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.h \
+ $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/SOCK.i \
+ $(WRAPPER_ROOT)/ace/SOCK_IO.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(WRAPPER_ROOT)/ace/Task.h \
+ $(WRAPPER_ROOT)/ace/Module.h \
+ $(WRAPPER_ROOT)/ace/Task_T.i
+.obj/Typed_SV_Message.o .shobj/Typed_SV_Message.so: Typed_SV_Message.cpp \
+ $(WRAPPER_ROOT)/ace/Typed_SV_Message.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Typed_SV_Message.i
+.obj/Typed_SV_Message_Queue.o .shobj/Typed_SV_Message_Queue.so: Typed_SV_Message_Queue.cpp \
+ $(WRAPPER_ROOT)/ace/Typed_SV_Message.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Typed_SV_Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/SV_Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/SV_Message.h \
+ $(WRAPPER_ROOT)/ace/SV_Message_Queue.i \
+ $(WRAPPER_ROOT)/ace/Typed_SV_Message_Queue.i
+ $(WRAPPER_ROOT)/ace/SV_Message_Queue.i \
+ $(WRAPPER_ROOT)/ace/Typed_SV_Message_Queue.i
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/Typed_SV_Message.i
