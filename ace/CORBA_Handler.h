@@ -73,12 +73,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  void reactor (ACE_Reactor *);
-  // Set the reactor instance.
-
-  ACE_Reactor *reactor (void) ;
-  // Get the reactor instance.
-
 protected:
   ACE_CORBA_Handler (void);
   // Make this into an "abstract" class...
@@ -97,9 +91,6 @@ protected:
                               const char *marker_name = 0);
   // Register <service_name> by doing a "putit" to register
   // <service_name> using the <marker_name> with orbixd.
-
-  ACE_Reactor *reactor_;
-  // Event demultiplexor used by ACE_ST_CORBA_Handler
 
   ssize_t reference_count_;
   // Keep track of the number of active CORBA_Handlers.

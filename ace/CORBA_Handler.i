@@ -22,22 +22,6 @@ ACE_ST_CORBA_Handler::iterations (size_t i)
   this->iterations_ = i;
 }
 
-/* static */
-ACE_INLINE void
-ACE_CORBA_Handler::reactor (ACE_Reactor *reactor)
-{
-  ACE_TRACE ("ACE_CORBA_Handler::reactor");
-  this->reactor_ = reactor;
-}
-
-/* static */
-ACE_INLINE ACE_Reactor *
-ACE_CORBA_Handler::reactor (void)
-{
-  ACE_TRACE ("ACE_CORBA_Handler::reactor");
-  return this->reactor_;
-}
-
 #if defined (ACE_HAS_MT_ORBIX) && (ACE_HAS_MT_ORBIX != 0)
 ACE_INLINE void
 ACE_MT_CORBA_Handler::thr_mgr (ACE_Thread_Manager *tm) 
