@@ -675,6 +675,26 @@ ACE_WFMO_Reactor::open (size_t size,
 }
 
 int
+ACE_WFMO_Reactor::set_sig_handler (ACE_Sig_Handler *signal_handler)
+{
+  if (this->signal_handler_ != 0 && this->delete_signal_handler_ != 0)
+    delete this->signal_handler_;
+  this->signal_handler_ = signal_handler;
+  this->delete_signal_handler_ = 0;
+  return 0;
+}
+
+int
+ACE_WFMO_Reactor::set_timer_queue (ACE_Timer_Queue *timer_queue)
+{
+  if (this->timer_queue_ != 0 && this->delete_timer_queue_ != 0)
+    delete this->timer_queue_;
+  this->timer_queue_ = timer_queue;
+  this->delete_timer_queue_ = 0;
+  return 0;
+}
+
+int
 ACE_WFMO_Reactor::close (void)
 {
   // This GUARD is necessary since we are updating shared state.
