@@ -2,7 +2,7 @@
 #include "ADD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
-#include "Prop_Handler.h"
+#include "Property_Handler.h"
 #include "Req_Handler.h"
 #include "RDD_Handler.h"
 
@@ -14,77 +14,95 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-
-    ADD_Handler::ADD_Handler (void)
-    {
-    }
-
-    ADD_Handler::~ADD_Handler (void)
-    {
-    }
-
-
     void
-    ADD_Handler::get_ArtifactDeploymentDescription (
-        Deployment::ArtifactDeploymentDescription& add,
-        ArtifactDeploymentDescription& desc)
+    ADD_Handler::artifact_deployment_descr (
+        const ArtifactDeploymentDescription &src,
+        Deployment::ArtifactDeploymentDescription &dest)
     {
-      add.name=
-        CORBA::string_dup (desc.name ().c_str ());
+      dest.name =
+        CORBA::string_dup (src.name ().c_str ());
 
-      add.source.length (add.source.length () + 1);
+      dest.node =
+        CORBA::string_dup (src.node ().c_str ());
 
-      add.source[add.source.length () - 1]=
-        CORBA::string_dup (desc.source ().c_str ());
+      ArtifactDeploymentDescription::location_const_iterator end =
+        src.end_location ();
 
-      if (desc.node_p ())
-       {
-         add.node=
-           CORBA::string_dup (desc.node ().c_str ());
-       }
-
-      for (ArtifactDeploymentDescription::location_iterator
-           item (desc.begin_location ());
-           item != desc.end_location ();
-           ++item)
+      for (ArtifactDeploymentDescription::location_const_iterator
+           start = src.begin_location ();
+           start != end;
+           ++start)
         {
-          add.location.length (
-              add.location.length () + 1);
-          add.location[add.location.length () - 1] =
-            CORBA::string_dup (item->c_str ());
+          CORBA::ULong l =
+            dest.location.length ();
+
+          dest.location.length (l + 1);
+
+          dest.location[l] = start->c_str ();
         }
 
-      if (desc.execParameter_p ())
+      ArtifactDeploymentDescription::source_const_iterator sce =
+        src.end_source ();
+
+      for (ArtifactDeploymentDescription::source_const_iterator
+           scb = src.begin_source ();
+           scb != sce;
+           ++scb)
         {
-          Prop_Handler handler;
+          CORBA::ULong l =
+            dest.location.length ();
 
-          add.execParameter.length (
-            add.execParameter.length () + 1);
+          dest.location.length (l + 1);
 
-          handler.get_Property (
-            add.execParameter[add.execParameter.length () - 1],
-            desc.execParameter ());
+          dest.location[l] = scb->c_str ();
         }
 
-      if (desc.deployRequirement_p ())
+      // @@TODO: See this loop is repeated
+      ArtifactDeploymentDescription::execParameter_const_iterator adce =
+        src.end_execParameter ();
+
+      for (ArtifactDeploymentDescription::execParameter_const_iterator adcb =
+             src.begin_execParameter ();
+           adcb != adce;
+           ++adcb)
+        {
+          CORBA::ULong len =
+            dest.execParameter.length ();
+
+          dest.execParameter.length (len + 1);
+
+          Property_Handler::get_property ((*adcb),
+                                          dest.execParameter[len]);
+        }
+
+#if 0
+      // @@ MAJO: Don't know how to handle this.
+      if (src.id_p ())
+        {
+
+        }
+
+      // @@ MAJO: Don't know how to handle this.
+      if (src.deployRequirement_p ())
         {
           Req_Handler handler;
           add.deployRequirement.length (
             add.deployRequirement.length () + 1);
           handler.get_Requirement (
             add.deployRequirement[add.deployRequirement.length () - 1],
-            desc.deployRequirement ());
+            src.deployRequirement ());
         }
 
-      if (desc.deployedResource_p ())
+      if (src.deployedResource_p ())
         {
           RDD_Handler handler;
           add.deployedResource.length (
             add.deployedResource.length () + 1);
           handler.get_ResourceDeploymentDescription (
             add.deployedResource[add.deployedResource.length () - 1],
-            desc.deployedResource ());
+            src.deployedResource ());
         }
+#endif /* if 0*/
     }
 
   }

@@ -8,8 +8,8 @@
  */
 //================================================
 
-#ifndef CPD_HANDLER_H
-#define CPD_HANDLER_H
+#ifndef CIAO_CONFIG_HANDLERS_CPD_HANDLER_H
+#define CIAO_CONFIG_HANDLERS_CPD_HANDLER_H
 
 #include /**/ "ace/pre.h"
 
@@ -42,20 +42,16 @@ namespace CIAO{
 
     public:
 
-      CPD_Handler (void);
-      virtual ~CPD_Handler (void);
-
-      ///This method maps the values from the
-      ///XSC object <ComponentInterfaceDescription> to
-      ///the CORBA IDL type <Deployment::ComponentInterfaceDescription>.
-      void
-      get_ComponentPortDescription (
-        Deployment::ComponentPortDescription& toconfig,
-        ComponentPortDescription& desc);
-       };
+      /// Maps the values from the XSC object
+      /// <ComponentInterfaceDescription> to the CORBA IDL type
+      /// <Deployment::ComponentInterfaceDescription>.
+     static void component_port_description (
+       ::Deployment::ComponentPortDescription& toconfig,
+       ComponentPortDescription& desc);
+   };
 
  }
 }
 
 #include /**/ "ace/post.h"
-#endif /* CPD_HANDLER_H */
+#endif /* CIAO_CONFIG_HANDLERS_CPD_HANDLER_H*/

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Any_Handler.h"
+#include "Basic_Deployment_Data.hpp"
 #include "tao/Any.h"
 
 namespace CIAO
@@ -28,21 +29,18 @@ namespace CIAO
 
       if (value.short_p ())
         {
-          CORBA::Short val = value.short_ ();
-
-          toconfig <<= val;
+          toconfig <<=
+            static_cast<CORBA::Short> (value.short_ ());
         }
       else if (value.ushort_p ())
         {
-          CORBA::UShort val = value.ushort ();
-
-          toconfig <<= val;
+          toconfig <<=
+            static_cast<CORBA::UShort> (value.ushort ());
         }
       else if (value.long_p ())
         {
-          CORBA::Long val = value.long_ ();
-
-          toconfig <<= val;
+          toconfig <<=
+            static_cast <CORBA::Long> (value.long_ ());
         }
       else if (value.ulong_p ())
         {
