@@ -10,10 +10,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/WIN32_Proactor.i"
-#endif /* __ACE_INLINE__ */
-
 class ACE_Export ACE_WIN32_Wakeup_Completion : public ACE_WIN32_Asynch_Result
 {
   // = TITLE
