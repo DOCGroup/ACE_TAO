@@ -2836,6 +2836,14 @@ TAO_POA::ort_adapter_factory_name (const char *name)
     name;
 }
 
+CORBA::Policy_ptr
+TAO_POA::get_policy (CORBA::PolicyType policy
+                     ACE_ENV_ARG_DECL)
+{
+  return this->policies_.get_policy (policy ACE_ENV_ARG_PARAMETER);
+}
+
+
 const char *
 TAO_POA::ort_adapter_factory_name (void)
 {

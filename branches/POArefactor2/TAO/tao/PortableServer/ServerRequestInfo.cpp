@@ -415,34 +415,21 @@ TAO_ServerRequestInfo::get_server_policy (CORBA::PolicyType type
 {
   if (this->servant_upcall_ != 0)
     {
-      TAO_POA_Policy_Set &policies =
-        this->servant_upcall_->poa ().policies ();
+      CORBA::Policy_var policy =
+        this->servant_upcall_->poa ().get_policy (type ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-      // @@ This brain damaged implementation exists due to the fact
-      //    neither TAO_POA nor TAO_POA_Policy_Set exposes any methods
-      //    useful for retrieving a given Policy in the POA's
-      //    PolicyList.  So, I use the lame interfaces for now.
-      //          -Ossama
-      const CORBA::ULong num_policies = policies.num_policies ();
-      for (CORBA::ULong i = 0; i < num_policies; ++i)
+      if (!CORBA::is_nil (policy.in ()))
         {
-          // @@ This incurs at least two locks per loop iteration due
-          //    to the reference counting found within the policy
-          //    object reference!!!
-          CORBA::Policy_var policy = policies.get_policy_by_index (i);
-
-          const CORBA::PolicyType ptype =
-            policy->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-          if (ptype == type)
-            return policy._retn ();
+          return policy._retn ();
         }
-
-      // No policy matching the given PolicyType was found.
-      ACE_THROW_RETURN (CORBA::INV_POLICY (CORBA::OMGVMCID | 3,
-                                           CORBA::COMPLETED_NO),
-                        CORBA::Policy::_nil ());
+      else
+        {
+          // No policy matching the given PolicyType was found.
+          ACE_THROW_RETURN (CORBA::INV_POLICY (CORBA::OMGVMCID | 3,
+                                               CORBA::COMPLETED_NO),
+                            CORBA::Policy::_nil ());
+        }
     }
 
   // @@ Technically, we shouldn't be throwing this exception since

@@ -63,6 +63,10 @@ public:
 
   TAO_Policy_Set &policies (void);
 
+  /// Obtain a single policy.
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
+                                ACE_ENV_ARG_DECL);
+
 protected:
   TAO_Policy_Set impl_;
 };

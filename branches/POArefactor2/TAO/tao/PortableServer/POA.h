@@ -350,6 +350,9 @@ public:
   /// Accessor for POA policies.
   TAO_POA_Policy_Set &policies (void);
 
+  /// Get the set policy of the given type.
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy ACE_ENV_ARG_DECL);
+
   /// This method gives the policies that are exposed to the client.
   /// These policies are shipped within the IOR.
   virtual CORBA::PolicyList *client_exposed_policies (

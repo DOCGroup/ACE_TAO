@@ -102,7 +102,6 @@ public:
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Set operator=(const TAO_Policy_Set&))
-//  ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Set(const TAO_Policy_Set&))
 
   /// Remove and destroy all the policy objects owned by this policy
   /// manager.

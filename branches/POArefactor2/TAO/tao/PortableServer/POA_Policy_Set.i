@@ -39,6 +39,13 @@ TAO_POA_Policy_Set::merge_policy (const CORBA::Policy_ptr policy
   ACE_CHECK;
 }
 
+ACE_INLINE CORBA::Policy_ptr
+TAO_POA_Policy_Set::get_policy (CORBA::PolicyType policy
+                                ACE_ENV_ARG_DECL)
+{
+  return this->impl_.get_policy (policy ACE_ENV_ARG_PARAMETER);
+}
+
 ACE_INLINE TAO_Policy_Set &
 TAO_POA_Policy_Set::policies (void)
 {
