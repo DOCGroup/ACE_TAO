@@ -165,6 +165,14 @@ SOURCE=.\FT_CORBAS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\FaultTolerance\FT_Endpoint_Selector_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_Invocation_Endpoint_Selectors.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\FaultTolerance\FT_IOGR_Property.cpp
 # End Source File
 # Begin Source File
@@ -201,6 +209,14 @@ SOURCE=.\FT_CORBAS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\FaultTolerance\FT_Endpoint_Selector_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_Invocation_Endpoint_Selectors.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\FaultTolerance\FT_IOGR_Property.h
 # End Source File
 # Begin Source File
@@ -234,6 +250,10 @@ SOURCE=.\FT_CORBAC.i
 # Begin Source File
 
 SOURCE=.\FT_CORBAS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_Invocation_Endpoint_Selectors.inl
 # End Source File
 # Begin Source File
 
