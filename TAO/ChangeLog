@@ -1,3 +1,9 @@
+Fri Dec 26 00:15:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/FT_App/FT_App.mpc:
+	  
+	  Do not build if minimum_corba is enabled.
+
 Thu Dec 25 23:55:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FTORB_Utils.bor:
