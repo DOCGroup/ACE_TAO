@@ -38,12 +38,14 @@ ACE_Message_Queue<ACE_SYNCH_2>::dump (void) const
 
 template <ACE_SYNCH_1>
 ACE_Message_Queue<ACE_SYNCH_2>::ACE_Message_Queue (size_t hwm, 
-						   size_t lwm)
+						   size_t lwm,
+						   ACE_Notification_Strategy *ns)
   : notempty_cond_ (this->lock_),
     notfull_cond_ (this->lock_)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::ACE_Message_Queue");
-  if (this->open (hwm, lwm) == -1)
+
+  if (this->open (hwm, lwm, ns) == -1)
     ACE_ERROR ((LM_ERROR, "open"));
 }
 
@@ -51,9 +53,8 @@ template <ACE_SYNCH_1>
 ACE_Message_Queue<ACE_SYNCH_2>::~ACE_Message_Queue (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::~ACE_Message_Queue");
-  if (this->head_ != 0)
-    if (this->close () == -1)
-      ACE_ERROR ((LM_ERROR, "close"));
+  if (this->head_ != 0 && this->close () == -1)
+    ACE_ERROR ((LM_ERROR, "close"));
 }
   
 // Don't bother locking since if someone calls this function more than
@@ -61,16 +62,20 @@ ACE_Message_Queue<ACE_SYNCH_2>::~ACE_Message_Queue (void)
 // concurrency control!
 
 template <ACE_SYNCH_1> int 
-ACE_Message_Queue<ACE_SYNCH_2>::open (size_t hwm, size_t lwm)
+ACE_Message_Queue<ACE_SYNCH_2>::open (size_t hwm, 
+				      size_t lwm,
+				      ACE_Notification_Strategy *ns)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::open");
   this->high_water_mark_ = hwm;
   this->low_water_mark_  = lwm;
-  this->deactivated_	 = 0;
-  this->cur_bytes_	= 0;
-  this->cur_count_	= 0;
-  this->tail_	        = 0;
-  this->head_	        = 0;
+  this->deactivated_ = 0;
+  this->cur_bytes_ = 0;
+  this->cur_count_ = 0;
+  this->tail_ = 0;
+  this->head_ = 0;
+
+  this->notification_strategy_ = ns;
   return 0;
 }
 
@@ -129,6 +134,9 @@ ACE_Message_Queue<ACE_SYNCH_2>::close (void)
       this->head_ = this->head_->next ();
       delete temp;
     }
+
+  if (this->delete_notification_strategy_)
+    delete this->delete_notification_strategy_;
 
   return res;
 }
@@ -370,29 +378,40 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head (ACE_Message_Block *new_item,
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
-  if (this->deactivated_)
-    {
-      errno = ESHUTDOWN;
-      return -1;
-    }
+  int queue_count;
+  {
+    if (this->deactivated_)
+      {
+	errno = ESHUTDOWN;
+	return -1;
+      }
 
-  // Wait while the queue is full 
+    // Wait while the queue is full 
 
-  while (this->is_full_i ())
+    while (this->is_full_i ())
+      {
+	if (this->notfull_cond_.wait (tv) == -1)
+	  {
+	    if (errno == ETIME)
+	      errno = EWOULDBLOCK;
+	    return -1;
+	  }
+	if (this->deactivated_)
+	  {
+	    errno = ESHUTDOWN;
+	    return -1;
+	  }
+      }
+
+    queue_count = this->enqueue_head_i (new_item);
+  }
+  if (queue_count == -1)
+    return -1;
+  else
     {
-      if (this->notfull_cond_.wait (tv) == -1)
-	{
-	  if (errno == ETIME)
-	    errno = EWOULDBLOCK;
-	  return -1;
-	}
-      if (this->deactivated_)
-	{
-	  errno = ESHUTDOWN;
-	  return -1;
-	}
+      this->notify ();
+      return queue_count;
     }
-  return this->enqueue_head_i (new_item);
 }
 
 // Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
@@ -400,37 +419,48 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head (ACE_Message_Block *new_item,
 // -1 on failure, else the number of items still on the queue.
 
 template <ACE_SYNCH_1> int 
-ACE_Message_Queue<ACE_SYNCH_2>::enqueue (ACE_Message_Block *new_item, 
-					 ACE_Time_Value *tv)
+ACE_Message_Queue<ACE_SYNCH_2>::enqueue_prio (ACE_Message_Block *new_item, 
+					      ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue");
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  int queue_count;
 
-  if (this->deactivated_)
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+
+    if (this->deactivated_)
+      {
+	errno = ESHUTDOWN;
+	return -1;
+      }
+
+    // Wait while the queue is full 
+
+    while (this->is_full_i ())
+      {
+	if (this->notfull_cond_.wait (tv) == -1)
+	  {
+	    if (errno == ETIME)
+	      errno = EWOULDBLOCK;
+	    return -1;
+	  }
+	if (this->deactivated_)
+	  {
+	    errno = ESHUTDOWN;
+	    return -1;
+	  }
+      }
+
+    queue_count = this->enqueue_i (new_item);
+  }
+  if (queue_count == -1)
+    return -1;
+  else
     {
-      errno = ESHUTDOWN;
-      return -1;
+      this->notify ();
+      return queue_count;
     }
-
-  // Wait while the queue is full 
-
-  while (this->is_full_i ())
-    {
-      if (this->notfull_cond_.wait (tv) == -1)
-	{
-	  if (errno == ETIME)
-	    errno = EWOULDBLOCK;
-	  return -1;
-	}
-      if (this->deactivated_)
-	{
-	  errno = ESHUTDOWN;
-	  return -1;
-	}
-    }
-
-  return this->enqueue_i (new_item);
 }
 
 // Block indefinitely waiting for an item to arrive,
@@ -441,31 +471,42 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail (ACE_Message_Block *new_item,
 					      ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
-  if (this->deactivated_)
+  int queue_count;
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+
+    if (this->deactivated_)
+      {
+	errno = ESHUTDOWN;
+	return -1;
+      }
+
+    // Wait while the queue is full 
+
+    while (this->is_full_i ())
+      {
+	if (this->notfull_cond_.wait (tv) == -1)
+	  {
+	    if (errno == ETIME)
+	      errno = EWOULDBLOCK;
+	    return -1;
+	  }
+	if (this->deactivated_)
+	  {
+	    errno = ESHUTDOWN;
+	    return -1;
+	  }
+      }
+    queue_count = this->enqueue_tail_i (new_item);
+  }
+  if (queue_count == -1)
+    return -1;
+  else
     {
-      errno = ESHUTDOWN;
-      return -1;
+      this->notify ();
+      return queue_count;
     }
-
-  // Wait while the queue is full 
-
-  while (this->is_full_i ())
-    {
-      if (this->notfull_cond_.wait (tv) == -1)
-	{
-	  if (errno == ETIME)
-	    errno = EWOULDBLOCK;
-	  return -1;
-	}
-      if (this->deactivated_)
-	{
-	  errno = ESHUTDOWN;
-	  return -1;
-	}
-    }
-  return this->enqueue_tail_i (new_item);
 }
 
 // Remove an item from the front of the queue.  If TV == 0 block 
@@ -503,6 +544,18 @@ ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head (ACE_Message_Block *&first_item,
     }
 
   return this->dequeue_head_i (first_item);
+}
+
+template <ACE_SYNCH_1> int
+ACE_Message_Queue<ACE_SYNCH_2>::notify (void)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head");
+
+  // By default, don't do anything.
+  if (this->notification_strategy_ == 0)
+    return 0;
+  else
+    return this->notification_strategy_->notify ();
 }
 
 #endif /* ACE_MESSAGE_QUEUE_C */

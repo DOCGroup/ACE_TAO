@@ -9,30 +9,6 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Reactor)
 
-struct ACE_Notification_Buffer
-{
-  ACE_Notification_Buffer (void);
-
-  ACE_Notification_Buffer (ACE_Event_Handler *eh,
-			   ACE_Reactor_Mask mask);
-
-  ACE_Event_Handler *eh_;
-  // Pointer to the Event_Handler that will be dispatched 
-  // by the main event loop.
-  
-  ACE_Reactor_Mask mask_;
-  // Mask that indicates which method to call.
-};
-
-ACE_Notification_Buffer::ACE_Notification_Buffer (void) {}
-
-ACE_Notification_Buffer::ACE_Notification_Buffer (ACE_Event_Handler *eh,
-						  ACE_Reactor_Mask mask)
-  : eh_ (eh), 
-    mask_ (mask)
-{
-}
-
 // Performs sanity checking on the ACE_HANDLE.
 
 int
@@ -586,7 +562,8 @@ ACE_Notification_Handler::notify (ACE_Event_Handler *eh,
 			 sizeof buffer);
   if (n == -1)
     return -1;
-  return 0;
+  else
+    return 0;
 }
 
 // Handles pending threads (if any) that are waiting to unblock the

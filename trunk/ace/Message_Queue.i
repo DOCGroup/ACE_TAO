@@ -3,6 +3,22 @@
 
 // Message_Queue.i
 
+template <ACE_SYNCH_1> ACE_INLINE ACE_Notification_Strategy *
+ACE_Message_Queue<ACE_SYNCH_2>::notification_strategy (void)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::notification_strategy");
+
+  return this->notification_strategy_;
+}
+
+template <ACE_SYNCH_1> ACE_INLINE void
+ACE_Message_Queue<ACE_SYNCH_2>::notification_strategy (ACE_Notification_Strategy *s)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::notification_strategy");
+
+  this->notification_strategy_ = s;
+}
+
 // Check if queue is empty (does not hold locks). 
 
 template <ACE_SYNCH_1> ACE_INLINE int

@@ -1786,7 +1786,7 @@ typedef LPCTSTR ACE_DL_TYPE;
 #endif /* ACE_HAS_CHARPTR_DL */
 
 #if !defined (ACE_HAS_SIGINFO_T)
-struct siginfo_t
+struct ACE_Export siginfo_t
 {
   siginfo_t (ACE_HANDLE handle);
 

@@ -93,8 +93,12 @@ public: // Should be protected:
   ACE_Module<ACE_SYNCH_2> *module (void) const;
   // Return the Task's Module if there is one, else returns 0.
 
-  int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL); /* Flush the queue */
-  // Special routines corresponding to certain message types.
+  int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL); 
+  // Flush the queue.  Note that if this conflicts with the C++
+  // iostream flush() function, just rewrite the iostream function as
+  // ::flush().
+
+  // = Special routines corresponding to certain message types.
 
   void water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds, size_t);
   // Manipulate watermarks.

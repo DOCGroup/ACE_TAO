@@ -19,6 +19,7 @@
 
 #include "ace/Message_Block.h"
 #include "ace/Time_Value.h"
+#include "ace/Strategies.h"
 #include "ace/IO_Cntl_Msg.h"
 
 // Forward decl.
@@ -64,15 +65,19 @@ public:
 
   // = Initialization and termination methods.
   ACE_Message_Queue (size_t hwm = DEFAULT_HWM, 
-		     size_t lwm = DEFAULT_LWM);
+		     size_t lwm = DEFAULT_LWM, 
+		     ACE_Notification_Strategy * = 0);
+
   // Create a message queue with all the defaults.
-  int open (size_t hwm = DEFAULT_HWM, size_t lwm = DEFAULT_LWM);
+  int open (size_t hwm = DEFAULT_HWM, 
+	    size_t lwm = DEFAULT_LWM,
+	    ACE_Notification_Strategy * = 0);
   // Create a message queue with all the defaults.
 
   int close (void);
   // Close down the message queue and release all resources.
 
-  ~ACE_Message_Queue (void);
+  virtual ~ACE_Message_Queue (void);
   // Close down the message queue and release all resources.
 
   int peek_dequeue_head (ACE_Message_Block *&first_item, 
@@ -83,7 +88,7 @@ public:
 
   // = For all the following three routines if tv == 0, the caller will block until action is possible, else will wait until the absolute time specified in *tv elapses).  Calls will return, however, when queue is closed, deactivated, when a signal occurs, or if the time specified in tv elapses, (in which case errno = EWOULDBLOCK).
 
-  int enqueue (ACE_Message_Block *new_item, ACE_Time_Value *tv = 0);
+  int enqueue_prio (ACE_Message_Block *new_item, ACE_Time_Value *tv = 0);
   // Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
   // accordance with its <msg_priority> (0 is lowest priority).  FIFO
   // order is maintained when messages of the same priority are
@@ -144,6 +149,20 @@ public:
   // before the call and WAS_ACTIVE if queue was active before the
   // call.
 
+  virtual int notify (void);
+  // This hook is automatically invoked by <enqueue_head>,
+  // <enqueue_tail>, and <enqueue_prio> when a new item is inserted
+  // into the queue.  Subclasses can override this method to perform
+  // specific notification strategies (e.g., signaling events for a
+  // <ReactorEx>, notifying a <Reactor>, etc.).  In a multi-threaded
+  // application with concurrent consumers, there is no guarantee that
+  // the queue will be still be non-empty by the time the notification
+  // occurs.
+
+  // = Get/set the notification strategy for the <Message_Queue>
+  ACE_Notification_Strategy *notification_strategy (void);
+  void notification_strategy (ACE_Notification_Strategy *s);
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -151,7 +170,9 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  // = Routines that actually do the enqueueing and dequeueing (these assume that locks are held by the corresponding public methods).
+  // = Routines that actually do the enqueueing and dequeueing.
+  // These routines assume that locks are held by the corresponding
+  // public methods.
 
   int enqueue_i (ACE_Message_Block *new_item);
   // Enqueue an <ACE_Message_Block *> in accordance with its priority.
@@ -198,6 +219,9 @@ protected:
 
   int deactivated_; 
   // Indicates that the queue is inactive.
+
+  ACE_Notification_Strategy *notification_strategy_;
+  // The notification strategy used when a new message is enqueued.
 
   // = Synchronization primitives for controlling concurrent access.
   ACE_SYNCH_MUTEX lock_;

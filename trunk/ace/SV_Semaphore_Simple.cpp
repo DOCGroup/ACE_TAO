@@ -154,8 +154,15 @@ ACE_SV_Semaphore_Simple::open (const char *name,
 			       int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::open");
-  return this->open (this->name_2_key (name), 
-		     flags, initial_value, n, perms);
+
+  key_t key;
+  
+  if (name == 0)
+    key = ACE_DEFAULT_SEM_KEY;
+  else 
+    key = this->name_2_key (name);
+
+  return this->open (key, flags, initial_value, n, perms);
 }
 
 ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name, 
@@ -176,3 +183,23 @@ ACE_SV_Semaphore_Simple::~ACE_SV_Semaphore_Simple (void)
   this->close ();
 }
 
+ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (void)
+{
+  ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
+  this->init ();
+}
+
+// Remove all SV_Semaphores associated with a particular key.  This
+// call is intended to be called from a server, for example, when it
+// is being shut down, as we do an IPC_RMID on the ACE_SV_Semaphore,
+// regardless of whether other processes may be using it or not.  Most
+// other processes should use close() below.
+     
+int 
+ACE_SV_Semaphore_Simple::remove (void) const
+{
+  ACE_TRACE ("ACE_SV_Semaphore_Simple::remove");
+  int result = this->control (IPC_RMID);
+  ((ACE_SV_Semaphore_Simple *) this)->init ();
+  return result;
+}

@@ -181,3 +181,16 @@ ACE_Event_Handler::proactor (void) const
 
   return this->proactor_;
 }
+
+ACE_Notification_Buffer::ACE_Notification_Buffer (void) 
+{
+  ACE_TRACE ("ACE_Notification_Buffer::ACE_Notification_Buffer");
+}
+
+ACE_Notification_Buffer::ACE_Notification_Buffer (ACE_Event_Handler *eh,
+						  ACE_Reactor_Mask mask)
+  : eh_ (eh), 
+    mask_ (mask)
+{
+  ACE_TRACE ("ACE_Notification_Buffer::ACE_Notification_Buffer");
+}

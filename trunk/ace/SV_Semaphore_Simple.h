@@ -119,11 +119,11 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  key_t	 key_;
-  int	 internal_id_;
-  int	 sem_number_;
+  key_t key_;
+  int internal_id_;
+  int sem_number_;
 
-  int	 init (key_t k = ACE_INVALID_SEM_KEY, int i = -1);
+  int init (key_t k = ACE_INVALID_SEM_KEY, int i = -1);
   key_t	 name_2_key (const char *name);
   // Convert name to key This function is used internally to create
   // keys for the semaphores. A valid name contains letters and

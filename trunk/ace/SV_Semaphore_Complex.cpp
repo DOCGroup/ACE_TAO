@@ -138,7 +138,7 @@ ACE_SV_Semaphore_Complex::open (key_t k,
   
       // Decrement the process counter. We don't need a lock to do this. 
       if (ACE_OS::semop (this->internal_id_, 
-		   &ACE_SV_Semaphore_Complex::op_open_[0], 1) < 0)
+			 &ACE_SV_Semaphore_Complex::op_open_[0], 1) < 0)
 	return this->init ();
       return 0;
     }
@@ -219,8 +219,15 @@ ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (const char *name,
 						    int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex");
-  if (this->open (ACE_SV_Semaphore_Simple::name_2_key (name), 
-		  flags, initial_value, nsems, perms) == -1)
+
+  key_t key;
+  
+  if (name == 0)
+    key = ACE_DEFAULT_SEM_KEY;
+  else 
+    key = this->name_2_key (name);
+
+  if (this->open (key, flags, initial_value, nsems, perms) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_SV_Semaphore_Complex"));
 }
 
@@ -236,4 +243,3 @@ ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (void)
   ACE_TRACE ("ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex");
   this->init ();
 }
-

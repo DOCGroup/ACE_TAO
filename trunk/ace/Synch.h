@@ -967,7 +967,7 @@ public:
 			    LPCTSTR = 0, void * = 0): mutex_ (m) {}
   ~ACE_Null_Condition_Mutex (void) {}
   int remove (void) { return 0; }
-  int wait (ACE_Time_Value * = 0) { return 0; }
+  int wait (ACE_Time_Value * = 0) { errno = ETIME; return -1; }
   int signal (void) { return 0; }
   int broadcast (void) { return 0; }
   ACE_Null_Mutex &mutex (void) { return this->mutex_; }
