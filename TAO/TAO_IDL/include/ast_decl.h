@@ -123,11 +123,12 @@ public:
       , NT_enum                                 // Denotes an enumeration
       , NT_enum_val                             // Denotes an enum. value
       , NT_string                               // Denotes an IDL string
+      , NT_wstring                              // Denotes an IDL wstring
       , NT_array                                // Denotes an IDL array
       , NT_sequence                             // Denotes an IDL sequence
       , NT_typedef                              // Denotes a typedef
       , NT_pre_defined                          // Denotes a predefined type
-        , NT_native                             // Denotes a native type
+      , NT_native                               // Denotes a native type
                                                 // dependent on the programming
                                                 // language
   };
