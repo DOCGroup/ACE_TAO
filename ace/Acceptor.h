@@ -253,15 +253,15 @@ public:
    * with the Reactor and listen for connection requests at the
    * designated <local_addr>.
    */
-  int open (const ACE_PEER_ACCEPTOR_ADDR &,
-            ACE_Reactor * = ACE_Reactor::instance (),
-            ACE_Creation_Strategy<SVC_HANDLER> * = 0,
-            ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> * = 0,
-            ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
-            ACE_Scheduling_Strategy<SVC_HANDLER> * = 0,
-            const ACE_TCHAR *service_name = 0,
-            const ACE_TCHAR *service_description = 0,
-            int use_select = 1);
+  virtual int open (const ACE_PEER_ACCEPTOR_ADDR &,
+                    ACE_Reactor * = ACE_Reactor::instance (),
+                    ACE_Creation_Strategy<SVC_HANDLER> * = 0,
+                    ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> * =0,
+                    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
+                    ACE_Scheduling_Strategy<SVC_HANDLER> * = 0,
+                    const ACE_TCHAR *service_name = 0,
+                    const ACE_TCHAR *service_description = 0,
+                    int use_select = 1);
 
   /// Close down the Strategy_Acceptor's resources.
   virtual ~ACE_Strategy_Acceptor (void);
