@@ -1,14 +1,19 @@
 Tue Jan  5 13:06:12 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* examples/Simple/bank/Client_i.cpp (withdraw): Removed the
-	cast and used the .in () method instead. This would probably
-	fix the error on DU cxx.
+        * examples/Simple/bank/Client_i.cpp (withdraw): Removed the
+          cast and used the .in () method instead. This would probably
+          fix the error on DU cxx.
 
 Tue Jan 05 07:57:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simple/bank/Client_i.cpp (withdraw): added in ()
           dereference of except->reason.  Thanks to Andy for figuring
           out how to get this to compile now.
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp,client.cpp,
+          MT_Cubit/Task_Client.cpp: removed VxWorks #ifdefs that disabled
+          ORB shutdown, because it no longer causes a MemPartFree with
+          last night's remove () fixes to ace/Synch.
 
 Tue Jan 05 04:51:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
