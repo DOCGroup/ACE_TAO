@@ -1,3 +1,7 @@
+Thu Apr 26 07:48:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/MEM_IO.h (ACE_MEM_IO): Some cosmetic fixes.
+
 Thu Apr 26 07:38:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-memserver.cpp: Fixed a compile
