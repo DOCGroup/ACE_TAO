@@ -5,6 +5,9 @@ Mon Aug  9 20:13:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  the generation of the reopened_modules.idl was adjusted to
 	  create a stamp file.
 
+	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+	  Fixed warning under NT.
+
 Mon Aug 09 19:11:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests\InterOp-Naming\{server,client}.dsp: Changed the executable
