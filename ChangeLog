@@ -1,3 +1,10 @@
+Sun May  9 13:20:22 UTC 2004  Johnny WIllemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Files with extension dsp and dsw and the GNUmakefile* files
+          shouldn't be in the repo, so added these to the noncvs file
+          check
+
 Sun May  9 12:59:11 UTC 2004  Johnny WIllemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
