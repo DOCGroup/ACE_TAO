@@ -128,8 +128,7 @@ endif # ! LN_S
 
 $(INSBIN)/%$(VAR) \
 $(INSINC)/ace% \
-$(INSLIB)/%$(VAR).a \
-$(INSLIB)/%$(VAR).$(SOEXT)$(ACE_LDSO_Version_Number) \
+$(INSLIB)/% \
 $(INSMAN)/man1/% \
 $(INSMAN)/man2/% \
 $(INSMAN)/man3/% \
