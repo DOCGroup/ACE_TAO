@@ -1,3 +1,8 @@
+Fri Jun 30 16:51:48 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/CDR_Array_Test.cpp: Add template type specifiers to copy
+          ctor and operator= to satisfy IBM C/C++.
+
 Fri Jun 30 10:59:23 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU:
