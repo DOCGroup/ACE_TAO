@@ -1,3 +1,9 @@
+Wed Mar 18 02:08:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Param_Test/client.cpp (~Param_Test_Client): Removed
+	  releasing of the Param_Test pointer.  It is owned by the Driver
+	  class. 
+
 Tue Mar 17 23:28:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/poa.h (POA): Changed the LOCATION_RESULT enum from protected
