@@ -1,3 +1,8 @@
+Mon Sep 13 10:02:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/ORB_Internals.html:
+	  Added new web page that will describe the ORB internals.
+
 Mon Sep 13 08:34:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Sequence_T.h:
