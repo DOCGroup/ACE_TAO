@@ -137,7 +137,8 @@ Mon Oct 18 23:46:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 Mon Oct 18 23:13:55 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Web_Crawler/URL_Visitor.cpp: Updated some broken
-	  template instantiations.
+	  template instantiations.  Thanks to Bruce Alderson
+ 	  <balderso@triant.com> for reporting this.
 
 Mon Oct 18 21:32:29 1999  Ossama Othman  <othman@cs.wustl.edu>
 
