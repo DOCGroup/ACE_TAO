@@ -6,6 +6,9 @@ ACE_RCSID (LoadBalancing,
            "$Id$")
 
 
+#include "tao/debug.h"
+
+
 // The number of different object groups to support.
 #ifndef TAO_LB_ORF_GROUP_TABLE_SIZE
 const size_t TAO_LB_ORF_GROUP_TABLE_SIZE = 16;
@@ -40,8 +43,8 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
   ACE_NEW (this->registered_members_,
            CORBA::Boolean[len]);
 
-  ACE_ASSERT (this->registered_members != 0);
-  ACE_OS::memset (this->registered_members,
+  ACE_ASSERT (this->registered_members_ != 0);
+  ACE_OS::memset (this->registered_members_,
                   0,
                   len * sizeof (CORBA::Boolean));
 }
@@ -110,13 +113,13 @@ TAO_LB_ObjectReferenceFactory::make_object (
     {
       // Be careful not to attempt duplicate registrations on
       // subsequent object reference creation calls.
-      if (!this->registered_member_[index])
+      if (!this->registered_members_[index])
         {
           ACE_TRY
             {
               this->lm_->register_load_alert (object_group.in (),
                                               this->location_,
-                                              load_alert.in ()
+                                              this->load_alert_.in ()
                                               ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
@@ -161,7 +164,7 @@ TAO_LB_ObjectReferenceFactory::make_object (
           ACE_ENDTRY;
           ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-          this->registered_member_[index] = 1;
+          this->registered_members_[index] = 1;
         }
 
       // Return the object group reference instead.
@@ -182,26 +185,31 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
 {
   if (this->load_managed_object (repository_id, index))
     {
-      if (this->table_.find (repository_id, object_group) != 0)
+      PortableGroup::ObjectGroup_var group;
+      if (this->table_.find (repository_id, group) != 0)
         {
-          PortableGroup::ObjectGroup_var group;
-
           if (ACE_OS::strcasecmp (this->object_groups_[index].in (),
                                   "CREATE") == 0)
             {
               const PortableGroup::Criteria criteria;
+              PortableGroup::GenericFactory::FactoryCreationId_var fcid;
+
               group =
                 this->lm_->create_object (repository_id,
                                           criteria,
-                                          factory_creation_id.out ()
+                                          fcid.out ()
                                           ACE_ENV_ARG_PARAMETER);
               ACE_CHECK_RETURN (0);
+
+              const CORBA::ULong len = this->fcids_.size ();
+              this->fcids_.size (len + 1); // Incremental growth.  Yuck!
+              this->fcids_[len] = fcid;
             }
           else
             {
               group =
-                orb->string_to_object (this->object_groups_[index].in ()
-                                       ACE_ENV_ARG_PARAMETER);
+                this->orb_->string_to_object (this->object_groups_[index].in ()
+                                              ACE_ENV_ARG_PARAMETER);
               ACE_CHECK_RETURN (0);
             }
 
@@ -216,7 +224,7 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
               ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
             }
 
-         object_group == group;
+         object_group = group;
        }
 
       return 1;

@@ -368,6 +368,7 @@ public:
   /// created with the appropriate policies to support ServantLocators
   /// (i.e. for the MemberLocator).
   void init (ACE_Reactor * reactor,
+             CORBA::ORB_ptr orb,
              PortableServer::POA_ptr root_poa
              ACE_ENV_ARG_DECL);
 
@@ -377,7 +378,7 @@ protected:
   /**
    * Destructor is protected to enforce correct memory management
    * through reference counting.
-   */ 
+   */
   ~TAO_LB_LoadManager (void);
 
 private:

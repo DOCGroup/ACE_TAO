@@ -128,12 +128,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Initalize the LoadManager servant.
       lm->init (orb->orb_core ()->reactor (),
+                orb.in (),
                 root_poa.in ()
                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CosLoadBalancing::LoadManager_var load_manager =
-        lm->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableGroup::Properties props (1);
@@ -160,8 +157,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             -1);
         }
 
-      load_manager->set_default_properties (props
-                                            ACE_ENV_ARG_PARAMETER);
+      lm->set_default_properties (props
+                                  ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CosLoadBalancing::LoadManager_var load_manager =
+        lm->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var str =
@@ -182,7 +183,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO Load Balancer");
+                           "TAO Load Manager");
 
       return -1;
     }

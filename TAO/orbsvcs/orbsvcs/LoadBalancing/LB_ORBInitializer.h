@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "LB_LoadAlert.h"
+
 #include "tao/LocalObject.h"
 #include "tao/PortableInterceptorC.h"
 
@@ -88,6 +90,14 @@ private:
 
   /// Location at which the LoadBalancing component resides.
   CORBA::String_var location_;
+
+  /// The CosLoadBalancing::LoadAlert servant to be used at this
+  /// location.
+  /**
+   * This is the servant supplied with TAO's Load Balancer.  It is
+   * used out of convencience.
+   */
+  TAO_LB_LoadAlert load_alert_;
 
 };
 

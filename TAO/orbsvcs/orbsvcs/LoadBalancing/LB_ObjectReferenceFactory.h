@@ -28,6 +28,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#include "orbsvcs/CosLoadBalancingC.h"
 
 #include "ace/Array_Base.h"
 
@@ -93,6 +94,17 @@ protected:
    */
   ~TAO_LB_ObjectReferenceFactory (void);
 
+  /// Retrieve the object group reference for objects with the given
+  /// RepositoryId.
+  CORBA::Boolean find_object_group (const char * repository_id,
+                                    CORBA::ULong & index,
+                                    PortableGroup::ObjectGroup_out object_group
+                                    ACE_ENV_ARG_DECL);
+
+  /// Determine if object with given RepositoryId is load managed.
+  CORBA::Boolean load_managed_object (const char * repository_id,
+                                      CORBA::ULong & i);
+
 private:
 
   /// The old ObjectReferenceFactory used to create object references.
@@ -144,7 +156,7 @@ private:
   CosLoadBalancing::LoadManager_var lm_;
 
   /// Reference to the LoadAlert object for this location.
-  CosLoadBalancing::LoadAlert_ptr load_alert_;
+  CosLoadBalancing::LoadAlert_var load_alert_;
 
   /// Array of flags that denotes whether or not an object group
   /// member of a given RepositoryId has been registered with the
