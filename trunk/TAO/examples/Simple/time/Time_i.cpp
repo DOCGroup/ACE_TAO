@@ -5,7 +5,6 @@
 ACE_RCSID(Time, Time_i, "$Id$")
 
 // Constructor
-
 Time_i::Time_i (void)
 {
   // no-op
@@ -36,7 +35,8 @@ Time_i::time (CORBA::Environment &)
 
 // Shutdown.
 
-void Time_i::shutdown (CORBA::Environment &)
+void 
+Time_i::shutdown (CORBA::Environment & )
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s\n",
