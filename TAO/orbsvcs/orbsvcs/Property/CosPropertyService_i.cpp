@@ -1143,6 +1143,11 @@ void
 TAO_PropertySet::define_property (const char *property_name,
                                       const CORBA::Any &property_value,
                                       CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CosPropertyService::InvalidPropertyName,
+                   CosPropertyService::ConflictingProperty,
+                   CosPropertyService::UnsupportedTypeCode,
+                   CosPropertyService::UnsupportedProperty,
+                   CosPropertyService::ReadOnlyProperty))
 {
   // Check the name's validity.
   if (property_name == 0)
