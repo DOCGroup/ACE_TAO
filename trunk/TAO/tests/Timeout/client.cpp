@@ -75,7 +75,9 @@ send_echo (CORBA::ORB_ptr orb,
       ACE_Time_Value tv (max_timeout / 1000,
                          (max_timeout % 1000) * 1000);
 
-      // This is a non-standard TAO call.
+      // This is a non-standard TAO call that's used to give the
+      // client ORB a chance to cleanup the reply that's come back
+      // from the server.
       orb->run (tv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
