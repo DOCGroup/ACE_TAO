@@ -1,3 +1,9 @@
+Fri Jun  2 10:57:04 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+
+          Removed the ACE_INLINE from the Client::func method definition.
+
 Fri Jun 02 02:23:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Sync_Strategies.cpp (TAO_Delayed_Buffering_Sync_Strategy::send):
