@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+MSG_COUNT=1000
+# The number of messages to send.
+MSG_INTERVAL=50000
+# The interval between the messages.
+
+/bin/rm -f NameService.ior NameService.pid EC1.pid EC2.pid EC.pid
+
+../../Naming_Service/Naming_Service -ORBport 20000 \
+    -o NameService.ior -p NameService.pid &
+sleep 2
+NameService=`cat NameService.ior`
+export NameService
+
+HOST=`hostname`
+./EC_Multiple -ORBport 20010 -ORBhost $HOST -ORBpreconnect ${HOST}:20020 \
+    -l EC1 -r EC2 -s RUNTIME1 -o RUNTIME2 \
+    -a 1 -b 2 -c 3 -p EC1.pid -m $MSG_COUNT -i $MSG_INTERVAL > LATENCY1.log 2>&1 &
+./EC_Multiple -ORBport 20020 -ORBhost $HOST -ORBpreconnect ${HOST}:20010 \
+    -l EC2 -r EC1 -s RUNTIME2 -o RUNTIME1 \
+    -a 4 -b 3 -c 2 -p EC2.pid -m $MSG_COUNT -i $MSG_INTERVAL > LATENCY2.log 2>&1 &
+sleep 2
+wait `cat EC1.pid`
+wait `cat EC2.pid`
+
+kill `cat NameService.pid`
