@@ -1,3 +1,8 @@
+Thu Sep 10 16:50:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Makefile: 
+	  The test programs were not linking against ACE.
+
 Tue Sep  8 12:45:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/test.cpp: Added #include "ace/OS.h" so that the ACE_RCSID
