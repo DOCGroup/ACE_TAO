@@ -202,7 +202,6 @@ main (int argc, char *argv [])
       ACE_TRY_CHECK;
 
       // Output the IOR to the <ior_output_file>
-      char *ior_output_file = "test.ior";
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
