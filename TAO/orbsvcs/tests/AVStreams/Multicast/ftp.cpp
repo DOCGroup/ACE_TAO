@@ -233,30 +233,20 @@ Client::init (int argc,char **argv)
 
   // Increase the debug_level so that we can see the output
   //  TAO_debug_level++;
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  this->parse_args (this->argc_, this->argv_);
+  
+  if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       " (%P|%t) Unable to initialize "
+                       "the TAO_Naming_Client. \n"),
+                      -1);
+  
+  this->fp_ = ACE_OS::fopen (this->filename_,"r");
+  if (this->fp_ != 0)
     {
-      this->parse_args (this->argc_, this->argv_);
-      
-      if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
-                          -1);
-      
-      this->fp_ = ACE_OS::fopen (this->filename_,"r");
-      if (this->fp_ != 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
-        }
+      ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Client::init");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  
   return 0;
 }
 

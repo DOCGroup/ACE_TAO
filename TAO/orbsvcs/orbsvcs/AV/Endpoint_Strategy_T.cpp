@@ -422,8 +422,8 @@ TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_with_poa 
 // initializes the orb, and activates the objects
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
-TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects (int argc,
-                                                                                 char **argv,
+TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects (int /*argc*/,
+                                                                                 char **/*argv*/,
                                                                                  CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
