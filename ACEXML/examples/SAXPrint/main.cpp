@@ -8,7 +8,7 @@
 #include "ace/Get_Opt.h"
 
 static ACE_TCHAR *test_string =
-ACE_TEXT ("<?xml version='1.0'?> <ACE_Svc_Conf> <static id=\"ACE_Service_Manager\"> <params>-d</params> <params>-p 4911</params> </static> <dynamic id=\"Test_Task\" type=\"service_object\"> &#65; &amp; <initializer path=\"CCM_App\" init='_make_Test_Task'> <params>-p 3000</params> </initializer> </dynamic> </ACE_Svc_Conf>");
+ACE_TEXT ("<?xml version='1.0'?> <ACE_Svc_Conf> <static id=\"ACE_Service_Manager\" params='-d -p 4911'/> <dynamic id=\"Test_Task\" type=\"service_object\"> &#65; &amp; <initializer path=\"CCM_App\" init='_make_Test_Task' params='-p 3000'/> </dynamic> </ACE_Svc_Conf>");
 
 
 int

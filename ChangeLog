@@ -1,3 +1,21 @@
+Mon Feb 11 16:56:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * XML/examples/test_docs/svcconf.dtd: Updated the DTD again.
+	  The <streamdef> tag also needed an "id" attribute.
+
+        * XML/examples/SAXPrint/main.cpp:
+        * XML/examples/SAXPrint/svc.conf.xml: Modified the sample XML to
+	  conform to the updated svcconf.dtd.
+
+        * XML/examples/svcconf/README:
+        * XML/examples/svcconf/Svcconf.dsp:
+        * XML/examples/svcconf/Svcconf.dsw:
+        * XML/examples/svcconf/Svcconf_Handler.cpp:
+        * XML/examples/svcconf/Svcconf_Handler.h:
+        * XML/examples/svcconf/Svcconf_Handler.i:
+        * XML/examples/svcconf/main.cpp: New example to test out
+	  svc.conf.xml parsing.  Not finished.
+
 Mon Feb 11 10:52:24 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* XML/examples/test_docs/svcconf.dtd: Simplied the svc.conf.dtd by
