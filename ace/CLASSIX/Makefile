@@ -25,13 +25,9 @@ FILES    = \
         CLASSIX_CO_Connector  	\
         CLASSIX_CLD_Connector
 
-
-TEMPLATE_FILES =
-
 DEFS    = $(addsuffix .h,$(FILES)) Svc_Conf_Tokens.h
 DEFS    += $(addsuffix .i,$(FILES))
 LSRC    = $(addsuffix .cpp,$(FILES))
-LSRC2   = $(addsuffix .cpp,$(TEMPLATE_FILES))
 
 BUILD   = $(VLIB)
 
@@ -40,14 +36,6 @@ BUILD   = $(VLIB)
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-ifneq ($(GHS),)
-  ifeq ($(CPU),86)
-    FILES += gethrtime
-    LSRC += gethrtime.cpp
-  endif # 86
-endif # GHS
-
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
