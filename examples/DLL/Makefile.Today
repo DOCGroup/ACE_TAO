@@ -10,13 +10,8 @@
 
 
 
-SHLIB	= libToday.$(SOEXT) 
-	 
-
-FILES 	= Today 
-
-
-
+SHLIB	= libToday.$(SOEXT)
+FILES 	= Today
 LSRC	= $(addsuffix .cpp,$(FILES))
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
@@ -42,6 +37,3 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
-
-
-
