@@ -68,7 +68,7 @@ to Graham for providing the OSE tools!<p>
         <pre>
         // $<!-- -->Id$
         </pre>
-        It's not necessary to fill in the fields of the keyword string,
+        It is not necessary to fill in the fields of the keyword string,
         or modify them when you edit a file that already has one.  CVS
         does that automatically when you checkout or update the file.<p>
 
@@ -171,7 +171,7 @@ to Graham for providing the OSE tools!<p>
             ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
             </pre><p>
 
-        <strong>NOTE:</strong> It's very important to ensure than an
+        <strong>NOTE:</strong> It is very important to ensure than an
         inline function will not be used before its definition is seen.
         Therefore, the inline functions in the .i file should be arranged
         properly.  Some compilers, such as <code>g++</code> with the
@@ -202,7 +202,7 @@ to Graham for providing the OSE tools!<p>
         in some cases, template instantiation, the virtual destructor
         should <strong>not be inline</strong>.  (Actually, any non-pure
         virtual function could be made non-inline for this purpose.  But,
-        for convenience, if its performance is not critical, it's usually
+        for convenience, if its performance is not critical, it is usually
         easiest just to make the virtual destructor non-inline.)<p>
   </ul>
 
@@ -245,8 +245,17 @@ to Graham for providing the OSE tools!<p>
       <em>never</em> spawn threads.  Because order of construction of
       statics across files is not defined by the language, it is usually
       assumed that only one thread exists during static construction.
-      This allows statics suchs as locks to be safely created.  We don't
+      This allows statics suchs as locks to be safely created.  We do not
       want to violate this assumption.<p>
+
+  <li>Do not use run-time type identification (RTTI).  Some platforms
+      do not support it.<p>
+
+  <li>Do not use exception handling.  Some platforms do not support it.
+      And, it imposes an execution speed penalty.<p>
+
+  <li>Avoid using STL in our applications.  Some platforms do not
+      support it yet.<p>
 </ul><p>
 
 
