@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL_ORIG_MESSAGING_POLICYVALUEC_H_
 #define _TAO_IDL_ORIG_MESSAGING_POLICYVALUEC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "IOP_IORC.h"
 
@@ -64,7 +64,7 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_ch.cpp:63
 
 namespace TAO
@@ -79,42 +79,42 @@ namespace TAO
 
 namespace Messaging
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
-  
+
   struct PolicyValue;
-  
+
   typedef
     TAO_Var_Var_T<
         PolicyValue
       >
     PolicyValue_var;
-  
+
   typedef
     TAO_Out_T<
         PolicyValue,
         PolicyValue_var
       >
     PolicyValue_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export PolicyValue
   {
     typedef PolicyValue_var _var_type;
-    
+
     static void _tao_any_destructor (void *);
     CORBA::PolicyType ptype;
-    
-    
+
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_MESSAGING_POLICYVALUE__TAO_SEQ_CORBA_OCTET__CH_)
 #define _MESSAGING_POLICYVALUE__TAO_SEQ_CORBA_OCTET__CH_
-    
+
     class TAO_Export _tao_seq_CORBA_Octet_
       : public
           TAO_Unbounded_Sequence<
@@ -127,15 +127,15 @@ namespace Messaging
       _tao_seq_CORBA_Octet_ (
           CORBA::ULong max,
           CORBA::ULong length,
-          CORBA::Octet* buffer, 
+          CORBA::Octet* buffer,
           CORBA::Boolean release = 0
         );
       _tao_seq_CORBA_Octet_ (const _tao_seq_CORBA_Octet_ &);
       ~_tao_seq_CORBA_Octet_ (void);
-      
+
       static void _tao_any_destructor (void *);
-      
-      
+
+
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       _tao_seq_CORBA_Octet_ (
@@ -147,34 +147,34 @@ namespace Messaging
     };
 
 #endif /* end #if !defined */
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_field/field_ch.cpp:453
-    
+
     typedef _tao_seq_CORBA_Octet_ _pvalue_seq;
     _tao_seq_CORBA_Octet_ pvalue;
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyValue;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_MESSAGING_POLICYVALUESEQ_CH_)
 #define _MESSAGING_POLICYVALUESEQ_CH_
-  
+
   class PolicyValueSeq;
-  
+
   typedef
     TAO_VarSeq_Var_T<
         PolicyValueSeq,
         PolicyValue
       >
     PolicyValueSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         PolicyValueSeq,
@@ -182,7 +182,7 @@ namespace Messaging
         PolicyValue
       >
     PolicyValueSeq_out;
-  
+
   class TAO_Export PolicyValueSeq
     : public
         TAO_Unbounded_Sequence<
@@ -195,32 +195,32 @@ namespace Messaging
     PolicyValueSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        PolicyValue* buffer, 
+        PolicyValue* buffer,
         CORBA::Boolean release = 0
       );
     PolicyValueSeq (const PolicyValueSeq &);
     ~PolicyValueSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef PolicyValueSeq_var _var_type;
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyValueSeq;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const IOP::ComponentId TAG_POLICIES = 2U;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const IOP::ServiceId INVOCATION_POLICIES = 2U;
 
 // TAO_IDL - Generated from
@@ -317,6 +317,5 @@ TAO_Export CORBA::Boolean operator>> (
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
-

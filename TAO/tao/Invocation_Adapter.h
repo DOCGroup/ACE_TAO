@@ -12,7 +12,7 @@
 #ifndef TAO_INVOCATION_ADAPTER_H
 #define TAO_INVOCATION_ADAPTER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -242,5 +242,5 @@ namespace TAO
 } // End namespace TAO
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_INVOCATION_ADAPTER_H*/

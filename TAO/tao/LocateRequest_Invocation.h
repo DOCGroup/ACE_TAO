@@ -14,7 +14,7 @@
 #ifndef TAO_LOCATEREQUEST_INVOCATION_H
 #define TAO_LOCATEREQUEST_INVOCATION_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -34,7 +34,7 @@ namespace TAO
 {
   class Profile_Transport_Resolver;
 
-  class TAO_Export LocateRequest_Invocation 
+  class TAO_Export LocateRequest_Invocation
     : protected Synch_Twoway_Invocation
   {
   public:

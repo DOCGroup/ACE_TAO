@@ -2,11 +2,11 @@
 
 //=============================================================================
 /**
- *  @file    Basic_Arguments.h
+ *  @file    DII_Arguments.h
  *
  *  $Id$
  *
- *  @authors Jeff Parsons
+ *  @authors Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -14,7 +14,7 @@
 #ifndef TAO_DII_ARGUMENTS_H
 #define TAO_DII_ARGUMENTS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Argument.h"
 
@@ -93,6 +93,6 @@ namespace TAO
 # include "DII_Arguments.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_DII_ARGUMENTS_H */

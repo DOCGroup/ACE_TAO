@@ -13,7 +13,7 @@
 #ifndef TAO_MANAGED_TYPES_H
 #define TAO_MANAGED_TYPES_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/TAO_Export.h"
 

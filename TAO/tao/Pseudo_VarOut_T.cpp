@@ -14,7 +14,6 @@ ACE_RCSID (tao,
            "$Id$")
 
 template <typename T>
-ACE_INLINE
 TAO_Pseudo_Var_T<T> &
 TAO_Pseudo_Var_T<T>::operator= (const TAO_Pseudo_Var_T<T> & p)
 {

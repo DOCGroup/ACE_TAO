@@ -14,7 +14,7 @@
 #ifndef TAO_BASIC_ARGUMENTS_H
 #define TAO_BASIC_ARGUMENTS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Basic_Argument_T.h"
 
@@ -44,7 +44,7 @@ namespace TAO
 
   /**
    *
-   * @brief Specializations for basic stub arg types, 
+   * @brief Specializations for basic stub arg types,
    *  except (w)char/boolean/octet.
    *
    */
@@ -104,6 +104,6 @@ namespace TAO
   };
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_BASIC_ARGUMENTS_H */

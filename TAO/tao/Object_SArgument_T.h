@@ -14,7 +14,7 @@
 #ifndef TAO_OBJECT_SARGUMENT_T_H
 #define TAO_OBJECT_SARGUMENT_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/Argument.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -151,7 +151,6 @@ namespace TAO
 #pragma implementation ("Object_SArgument_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_OBJECT_SARGUMENT_T_H */
-

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Basic_SArgument_T.h
+ *  @file    Fixed_Size_SArgument_T.h
  *
  *  $Id$
  *
@@ -14,7 +14,7 @@
 #ifndef TAO_FIXED_SIZE_SARGUMENT_T_H
 #define TAO_FIXED_SIZE_SARGUMENT_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/Argument.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -145,6 +145,6 @@ namespace TAO
 #pragma implementation ("Fixed_Size_SArgument_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_FIXED_SIZE_SARGUMENT_T_H */

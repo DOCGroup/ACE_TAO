@@ -14,7 +14,7 @@
 #ifndef TAO_BD_STRING_SARGUMENT_T_H
 #define TAO_BD_STRING_SARGUMENT_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/CDR_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -31,10 +31,10 @@ namespace TAO
    * @brief Template class for IN skeleton bd (w)string argument.
    *
    */
-  template<typename S, 
-           typename S_var, 
-           typename to_S, 
-           typename from_S, 
+  template<typename S,
+           typename S_var,
+           typename to_S,
+           typename from_S,
            size_t BOUND>
   class In_BD_String_SArgument_T : public Argument
   {
@@ -57,10 +57,10 @@ namespace TAO
    * @brief Template class for INOUT skeleton bd (w)string argument.
    *
    */
-  template<typename S, 
-           typename S_var, 
-           typename to_S, 
-           typename from_S, 
+  template<typename S,
+           typename S_var,
+           typename to_S,
+           typename from_S,
            size_t BOUND>
   class Inout_BD_String_SArgument_T : public Argument
   {
@@ -84,11 +84,11 @@ namespace TAO
    * @brief Template class for INOUT skeleton bd (w)string argument.
    *
    */
-  template<typename S, 
+  template<typename S,
            typename S_var,
            typename S_out,
-           typename to_S, 
-           typename from_S, 
+           typename to_S,
+           typename from_S,
            size_t BOUND>
   class Out_BD_String_SArgument_T : public Argument
   {
@@ -111,10 +111,10 @@ namespace TAO
    * @brief Template class for return skeleton value of bd (w)string.
    *
    */
-  template<typename S, 
-           typename S_var, 
-           typename to_S, 
-           typename from_S, 
+  template<typename S,
+           typename S_var,
+           typename to_S,
+           typename from_S,
            size_t BOUND>
   class Ret_BD_String_SArgument_T : public Argument
   {
@@ -137,11 +137,11 @@ namespace TAO
    * @brief Template class for skeleton argument traits of bounded (w)strings.
    *
    */
-  template<typename T, 
-           typename T_var, 
-           typename T_out, 
-           typename to_T, 
-           typename from_T, 
+  template<typename T,
+           typename T_var,
+           typename T_out,
+           typename to_T,
+           typename from_T,
            size_t BOUND>
   struct BD_String_SArg_Traits_T
   {
@@ -181,7 +181,7 @@ namespace TAO
 
   template<size_t BOUND>
   class BD_StringS_Arg_Traits
-    : public BD_String_SArg_Traits_T<CORBA::Char, 
+    : public BD_String_SArg_Traits_T<CORBA::Char,
                                      CORBA::String_var,
                                      CORBA::String_out,
                                      ACE_InputCDR::to_string,
@@ -192,7 +192,7 @@ namespace TAO
 
   template<size_t BOUND>
   class BD_WString_SArg_Traits
-    : public BD_String_SArg_Traits_T<CORBA::WChar, 
+    : public BD_String_SArg_Traits_T<CORBA::WChar,
                                      CORBA::WString_var,
                                      CORBA::WString_out,
                                      ACE_InputCDR::to_wstring,
@@ -214,7 +214,6 @@ namespace TAO
 #pragma implementation ("BD_String_SArgument_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_BD_STRING_SARGUMENT_T_H */
-

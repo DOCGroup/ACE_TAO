@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Basic_Argument_T.h
+ *  @file    Argument.h
  *
  *  $Id$
  *
@@ -14,7 +14,7 @@
 #ifndef TAO_ARGUMENT_H
 #define TAO_ARGUMENT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -56,6 +56,6 @@ namespace TAO
 
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_ARGUMENT_H */

@@ -13,28 +13,41 @@
 
 #ifndef TAO_INVOCATION_UTILS_H
 #define TAO_INVOCATION_UTILS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
+
 #include "ace/config-all.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 namespace TAO
 {
   enum Invocation_Status
     {
+      /// Initial state of the FSM in the invocation class.
       TAO_INVOKE_START,
-      /// The request must be restarted, a temporary failure has ocurred.
+      /// The request must be restarted, a temporary failure has
+      /// occured.
       TAO_INVOKE_RESTART,
-      /// invoke() call successful.
+      /// invoke() call successful. Final state of the FSM.
       TAO_INVOKE_SUCCESS,
+      /// Received a user exception from the remote object, and this
+      /// is one of the final states.
       TAO_INVOKE_USER_EXCEPTION,
+      /// Received a system exception from the remote object or the
+      /// PI and it is one of the final states
       TAO_INVOKE_SYSTEM_EXCEPTION,
+      /// Invocation failed. It is a final state.
       TAO_INVOKE_FAILURE
     };
 
   /// Enums for invocation types
   enum Invocation_Type {
+    /// A simple oneway invocation
     TAO_ONEWAY_INVOCATION,
-    TAO_TWOWAY_INVOCATION,
-    TAO_LOCATEREQUEST_INVOCATION
+    /// A simple twoway invocation
+    TAO_TWOWAY_INVOCATION
   };
 
   /// Enum for invocation modes
@@ -48,11 +61,11 @@ namespace TAO
     /// replies.
     /// @NOTE: This is not supported in TAO now
     TAO_ASYNCHRONOUS_POLLER_INVOCATION,
-    ///
+    /// Types of DII
     TAO_DII_INVOCATION,
     TAO_DII_DEFERRED_INVOCATION
   };
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_INVOCATION_BASE_H*/

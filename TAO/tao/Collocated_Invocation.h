@@ -13,7 +13,7 @@
 #ifndef TAO_COLLOCATED_INVOCATION_H
 #define TAO_COLLOCATED_INVOCATION_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/TAO_Export.h"
 
@@ -60,5 +60,6 @@ namespace TAO
 
   };
 }
-#include "ace/post.h"
+
+#include /**/ "ace/post.h"
 #endif /*TAO_COLLOCATED_INVOCATION_H*/

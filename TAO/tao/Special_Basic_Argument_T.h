@@ -14,7 +14,7 @@
 #ifndef TAO_SPECIAL_BASIC_ARGUMENT_T_H
 #define TAO_SPECIAL_BASIC_ARGUMENT_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -159,6 +159,6 @@ namespace TAO
 #pragma implementation ("Special_Basic_Argument_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_SPECIAL_BASIC_ARGUMENT_T_H */

@@ -14,7 +14,7 @@
 #ifndef TAO_PROFILE_TRANSPORT_RESOLVER_H
 #define TAO_PROFILE_TRANSPORT_RESOLVER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -167,6 +167,6 @@ namespace TAO
 # include "Profile_Transport_Resolver.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /*TAO_PROFILE_TRANSPORT_RESOLVER_H*/

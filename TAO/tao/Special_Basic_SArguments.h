@@ -14,7 +14,7 @@
 #ifndef TAO_SPECIAL_BASIC_SARGUMENTS_H
 #define TAO_SPECIAL_BASIC_SARGUMENTS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/CDR_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -41,7 +41,7 @@ namespace TAO
   };
 
   template<>
-  class TAO_Export SArg_Traits<ACE_InputCDR::to_wchar> 
+  class TAO_Export SArg_Traits<ACE_InputCDR::to_wchar>
     : public Special_Basic_SArg_Traits_T<CORBA::WChar,
                                          ACE_InputCDR::to_wchar,
                                          ACE_OutputCDR::from_wchar>
@@ -49,7 +49,7 @@ namespace TAO
   };
 
   template<>
-  class TAO_Export SArg_Traits<ACE_InputCDR::to_octet> 
+  class TAO_Export SArg_Traits<ACE_InputCDR::to_octet>
     : public Special_Basic_SArg_Traits_T<CORBA::Octet,
                                          ACE_InputCDR::to_octet,
                                          ACE_OutputCDR::from_octet>
@@ -57,7 +57,7 @@ namespace TAO
   };
 
   template<>
-  class TAO_Export SArg_Traits<ACE_InputCDR::to_boolean> 
+  class TAO_Export SArg_Traits<ACE_InputCDR::to_boolean>
     : public Special_Basic_SArg_Traits_T<CORBA::Boolean,
                                          ACE_InputCDR::to_boolean,
                                          ACE_OutputCDR::from_boolean>
@@ -65,7 +65,6 @@ namespace TAO
   };
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_SPECIAL_BASIC_SARGUMENTS_H */
-

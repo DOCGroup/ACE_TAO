@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL_ORIG_CONV_FRAMEC_H_
 #define _TAO_IDL_ORIG_CONV_FRAMEC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/CDR.h"
 
@@ -70,53 +70,53 @@
 
 namespace CONV_FRAME
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
-  
+
   typedef CORBA::ULong CodeSetId;
   typedef CORBA::ULong_out CodeSetId_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetId;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
-  
+
   struct CodeSetComponent;
-  
+
   typedef
     TAO_Var_Var_T<
         CodeSetComponent
       >
     CodeSetComponent_var;
-  
+
   typedef
     TAO_Out_T<
         CodeSetComponent,
         CodeSetComponent_var
       >
     CodeSetComponent_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export CodeSetComponent
   {
     typedef CodeSetComponent_var _var_type;
-    
-    
+
+
     CONV_FRAME::CodeSetId native_code_set;
-    
-    
+
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CONV_FRAME_CODESETCOMPONENT__TAO_SEQ_CONV_FRAME_CODESETID__CH_)
 #define _CONV_FRAME_CODESETCOMPONENT__TAO_SEQ_CONV_FRAME_CODESETID__CH_
-    
+
     class TAO_Export _tao_seq_CONV_FRAME_CodeSetId_
       : public
           TAO_Unbounded_Sequence<
@@ -129,94 +129,94 @@ namespace CONV_FRAME
       _tao_seq_CONV_FRAME_CodeSetId_ (
           CORBA::ULong max,
           CORBA::ULong length,
-          CORBA::ULong* buffer, 
+          CORBA::ULong* buffer,
           CORBA::Boolean release = 0
         );
       _tao_seq_CONV_FRAME_CodeSetId_ (const _tao_seq_CONV_FRAME_CodeSetId_ &);
       ~_tao_seq_CONV_FRAME_CodeSetId_ (void);
-      
-      
+
+
     };
 
 #endif /* end #if !defined */
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_field/field_ch.cpp:453
-    
+
     typedef _tao_seq_CONV_FRAME_CodeSetId_ _conversion_code_sets_seq;
     _tao_seq_CONV_FRAME_CodeSetId_ conversion_code_sets;
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetComponent;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
-  
+
   struct CodeSetComponentInfo;
-  
+
   typedef
     TAO_Var_Var_T<
         CodeSetComponentInfo
       >
     CodeSetComponentInfo_var;
-  
+
   typedef
     TAO_Out_T<
         CodeSetComponentInfo,
         CodeSetComponentInfo_var
       >
     CodeSetComponentInfo_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export CodeSetComponentInfo
   {
     typedef CodeSetComponentInfo_var _var_type;
-    
-    
+
+
     CONV_FRAME::CodeSetComponent ForCharData;
     CONV_FRAME::CodeSetComponent ForWcharData;
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetComponentInfo;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
-  
+
   struct CodeSetContext;
-  
+
   typedef
     TAO_Fixed_Var_T<
         CodeSetContext
       >
     CodeSetContext_var;
-  
+
   typedef
     CodeSetContext &
     CodeSetContext_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export CodeSetContext
   {
     typedef CodeSetContext_var _var_type;
-    
-    
+
+
     CONV_FRAME::CodeSetId char_data;
     CONV_FRAME::CodeSetId wchar_data;
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetContext;
 
 // TAO_IDL - Generated from
@@ -292,6 +292,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CONV_FRAME::CodeSetContext
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
-

@@ -2,12 +2,11 @@
 
 //=============================================================================
 /**
- *  @file    Stub.h
+ *  @file    Exception_Data.h
  *
  *  $Id$
  *
- *  @author  Portions Copyright 1994-1995 by Sun Microsystems Inc.
- *  @author  Portions Copyright 1997-2002 by Washington University
+ *  @author  balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
 
