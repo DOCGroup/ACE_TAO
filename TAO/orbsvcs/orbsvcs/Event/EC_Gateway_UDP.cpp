@@ -3,6 +3,7 @@
 #include "orbsvcs/Event/EC_Gateway_UDP.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Time_Utilities.h"
+#include "ace/Reactor.h"
 
 #if !defined(__ACE_INLINE__)
 #include "EC_Gateway_UDP.i"

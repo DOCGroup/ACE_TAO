@@ -19,10 +19,11 @@
 
 #ifndef NOTIFY_DEFAULT_EMO_FACTORY_H
 #define NOTIFY_DEFAULT_EMO_FACTORY_H
-
 #include "ace/pre.h"
-#include "Notify_Event_Manager_Objects_Factory.h"
+
 #include "notify_export.h"
+#include "Notify_Event_Manager_Objects_Factory.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

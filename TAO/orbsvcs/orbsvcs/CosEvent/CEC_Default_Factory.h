@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "CEC_Defaults.h"
+#include "ace/Service_Config.h"
 
 class TAO_Event_Export TAO_CEC_Default_Factory : public TAO_CEC_Factory
 {
