@@ -1,6 +1,6 @@
 // $Id$
 
-#include "testC.h"
+#include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS.h"
 #include "ace/Task.h"
