@@ -1,5 +1,4 @@
-// Asynch_IO.cpp
-// $Id: Asynch_IO,v
+// $Id$
 
 #define ACE_BUILD_DLL
 #include "ace/Asynch_IO.h"
@@ -18,10 +17,10 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_Asynch_Result::ACE_Asynch_Result (ACE_Handler &handler,
-				      const void* act,
-				      ACE_HANDLE event,
-				      u_long offset,
-				      u_long offset_high)
+                                      const void* act,
+                                      ACE_HANDLE event,
+                                      u_long offset,
+                                      u_long offset_high)
   : handler_ (handler),
     act_ (act),
     bytes_transferred_ (0),
@@ -97,9 +96,9 @@ ACE_Asynch_Operation::ACE_Asynch_Operation (void)
 
 int
 ACE_Asynch_Operation::open (ACE_Handler &handler,
-			    ACE_HANDLE handle,
-			    const void *completion_key,
-			    ACE_Proactor *proactor)
+                            ACE_HANDLE handle,
+                            const void *completion_key,
+                            ACE_Proactor *proactor)
 {
   this->proactor_ = proactor;
   this->handler_ = &handler;
@@ -121,7 +120,7 @@ ACE_Asynch_Operation::open (ACE_Handler &handler,
       // <handler->proactor> is zero
       this->proactor_ = this->handler_->proactor ();
       if (this->proactor_ == 0)
-	this->proactor_ = ACE_Proactor::instance();
+        this->proactor_ = ACE_Proactor::instance();
     }
 
 #if !defined (ACE_HAS_AIO_CALLS)
@@ -157,19 +156,19 @@ ACE_Asynch_Read_Stream::ACE_Asynch_Read_Stream (void)
 
 int
 ACE_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
-			      u_long bytes_to_read,
-			      const void *act)
+                              u_long bytes_to_read,
+                              const void *act)
 {
   // Create the Asynch_Result
   Result *result = 0;
   ACE_NEW_RETURN (result,
-		  Result (*this->handler_,
-			  this->handle_,
-			  message_block,
-			  bytes_to_read,
-			  act,
-			  this->proactor_->get_handle ()),
-		  -1);
+                  Result (*this->handler_,
+                          this->handle_,
+                          message_block,
+                          bytes_to_read,
+                          act,
+                          this->proactor_->get_handle ()),
+                  -1);
 
   return this->shared_read (result);
 }
@@ -222,10 +221,10 @@ ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
 
   // Initiate the read
   int initiate_result = ::ReadFile (result->handle (),
-				    result->message_block ().wr_ptr (),
-				    result->bytes_to_read (),
-				    &bytes_read,
-				    result);
+                                    result->message_block ().wr_ptr (),
+                                    result->bytes_to_read (),
+                                    &bytes_read,
+                                    result);
   if (initiate_result == 1)
     // Immediate success: the OVERLAPPED will still get queued.
     return 1;
@@ -254,11 +253,11 @@ ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
 // ************************************************************
 
 ACE_Asynch_Read_Stream::Result::Result (ACE_Handler &handler,
-					ACE_HANDLE handle,
-					ACE_Message_Block &message_block,
-					u_long bytes_to_read,
-					const void* act,
-					ACE_HANDLE event)
+                                        ACE_HANDLE handle,
+                                        ACE_Message_Block &message_block,
+                                        u_long bytes_to_read,
+                                        const void* act,
+                                        ACE_HANDLE event)
   : ACE_Asynch_Result (handler, act, event),
     bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
@@ -286,9 +285,9 @@ ACE_Asynch_Read_Stream::Result::handle (void) const
 
 void
 ACE_Asynch_Read_Stream::Result::complete(u_long bytes_transferred,
-					  int success,
-					  const void *completion_key,
-					  u_long error)
+                                          int success,
+                                          const void *completion_key,
+                                          u_long error)
 {
   // Copy the data which was returned by GetQueuedCompletionStatus
   this->bytes_transferred_ = bytes_transferred;
@@ -311,18 +310,18 @@ ACE_Asynch_Write_Stream::ACE_Asynch_Write_Stream (void)
 
 int
 ACE_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
-				u_long bytes_to_write,
-				const void *act)
+                                u_long bytes_to_write,
+                                const void *act)
 {
   Result *result = 0;
   ACE_NEW_RETURN (result,
-		  Result (*this->handler_,
-			  this->handle_,
-			  message_block,
-			  bytes_to_write,
-			  act,
-			  this->proactor_->get_handle ()),
-		  -1);
+                  Result (*this->handler_,
+                          this->handle_,
+                          message_block,
+                          bytes_to_write,
+                          act,
+                          this->proactor_->get_handle ()),
+                  -1);
 
   return this->shared_write (result);
 }
@@ -338,10 +337,10 @@ ACE_Asynch_Write_Stream::shared_write (ACE_Asynch_Write_Stream::Result *result)
 
   // Initiate the write
   int initiate_result = ::WriteFile (result->handle (),
-				     result->message_block ().rd_ptr (),
-				     result->bytes_to_write (),
-				     &bytes_written,
-				     result);
+                                     result->message_block ().rd_ptr (),
+                                     result->bytes_to_write (),
+                                     &bytes_written,
+                                     result);
   if (initiate_result == 1)
     // Immediate success: the OVERLAPPED will still get queued.
     return 1;
@@ -370,11 +369,11 @@ ACE_Asynch_Write_Stream::shared_write (ACE_Asynch_Write_Stream::Result *result)
 // ************************************************************
 
 ACE_Asynch_Write_Stream::Result::Result (ACE_Handler &handler,
-					 ACE_HANDLE handle,
-					 ACE_Message_Block &message_block,
-					 u_long bytes_to_write,
-					 const void* act,
-					 ACE_HANDLE event)
+                                         ACE_HANDLE handle,
+                                         ACE_Message_Block &message_block,
+                                         u_long bytes_to_write,
+                                         const void* act,
+                                         ACE_HANDLE event)
   : ACE_Asynch_Result (handler, act, event),
     bytes_to_write_ (bytes_to_write),
     message_block_ (message_block),
@@ -402,9 +401,9 @@ ACE_Asynch_Write_Stream::Result::handle (void) const
 
 void
 ACE_Asynch_Write_Stream::Result::complete (u_long bytes_transferred,
-					   int success,
-					   const void *completion_key,
-					   u_long error)
+                                           int success,
+                                           const void *completion_key,
+                                           u_long error)
 {
   // Copy the data which was returned by GetQueuedCompletionStatus
   this->bytes_transferred_ = bytes_transferred;
@@ -423,22 +422,22 @@ ACE_Asynch_Write_Stream::Result::complete (u_long bytes_transferred,
 
 int
 ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
-			    u_long bytes_to_read,
-			    u_long offset,
-			    u_long offset_high,
-			    const void *act)
+                            u_long bytes_to_read,
+                            u_long offset,
+                            u_long offset_high,
+                            const void *act)
 {
   Result *result = 0;
   ACE_NEW_RETURN (result,
-		  Result (*this->handler_,
-			  this->handle_,
-			  message_block,
-			  bytes_to_read,
-			  act,
-			  offset,
-			  offset_high,
-			  this->proactor_->get_handle ()),
-		  -1);
+                  Result (*this->handler_,
+                          this->handle_,
+                          message_block,
+                          bytes_to_read,
+                          act,
+                          offset,
+                          offset_high,
+                          this->proactor_->get_handle ()),
+                  -1);
 
   return this->shared_read (result);
 }
@@ -446,13 +445,13 @@ ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
 // ************************************************************
 
 ACE_Asynch_Read_File::Result::Result (ACE_Handler &handler,
-				      ACE_HANDLE handle,
-				      ACE_Message_Block &message_block,
-				      u_long bytes_to_read,
-				      const void* act,
-				      u_long offset,
-				      u_long offset_high,
-				      ACE_HANDLE event)
+                                      ACE_HANDLE handle,
+                                      ACE_Message_Block &message_block,
+                                      u_long bytes_to_read,
+                                      const void* act,
+                                      u_long offset,
+                                      u_long offset_high,
+                                      ACE_HANDLE event)
   : ACE_Asynch_Read_Stream::Result (handler, handle, message_block, bytes_to_read, act, event)
 {
   this->Offset = offset;
@@ -461,9 +460,9 @@ ACE_Asynch_Read_File::Result::Result (ACE_Handler &handler,
 
 void
 ACE_Asynch_Read_File::Result::complete (u_long bytes_transferred,
-					int success,
-					const void *completion_key,
-					u_long error)
+                                        int success,
+                                        const void *completion_key,
+                                        u_long error)
 {
   ACE_DEBUG ((LM_DEBUG, "ACE_Asynch_Read_File::Result::complete\n"));
 
@@ -484,22 +483,22 @@ ACE_Asynch_Read_File::Result::complete (u_long bytes_transferred,
 
 int
 ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
-			      u_long bytes_to_write,
-			      u_long offset,
-			      u_long offset_high,
-			      const void *act)
+                              u_long bytes_to_write,
+                              u_long offset,
+                              u_long offset_high,
+                              const void *act)
 {
   Result *result = 0;
   ACE_NEW_RETURN (result,
-		  Result (*this->handler_,
-			  this->handle_,
-			  message_block,
-			  bytes_to_write,
-			  act,
-			  offset,
-			  offset_high,
-			  this->proactor_->get_handle ()),
-		  -1);
+                  Result (*this->handler_,
+                          this->handle_,
+                          message_block,
+                          bytes_to_write,
+                          act,
+                          offset,
+                          offset_high,
+                          this->proactor_->get_handle ()),
+                  -1);
 
   return this->shared_write (result);
 }
@@ -507,13 +506,13 @@ ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
 // ************************************************************
 
 ACE_Asynch_Write_File::Result::Result (ACE_Handler &handler,
-				       ACE_HANDLE handle,
-				       ACE_Message_Block &message_block,
-				       u_long bytes_to_write,
-				       const void* act,
-				       u_long offset,
-				       u_long offset_high,
-				       ACE_HANDLE event)
+                                       ACE_HANDLE handle,
+                                       ACE_Message_Block &message_block,
+                                       u_long bytes_to_write,
+                                       const void* act,
+                                       u_long offset,
+                                       u_long offset_high,
+                                       ACE_HANDLE event)
   : ACE_Asynch_Write_Stream::Result (handler, handle, message_block, bytes_to_write, act, event)
 {
   this->Offset = offset;
@@ -522,9 +521,9 @@ ACE_Asynch_Write_File::Result::Result (ACE_Handler &handler,
 
 void
 ACE_Asynch_Write_File::Result::complete (u_long bytes_transferred,
-					 int success,
-					 const void *completion_key,
-					 u_long error)
+                                         int success,
+                                         const void *completion_key,
+                                         u_long error)
 {
   // Copy the data which was returned by GetQueuedCompletionStatus
   this->bytes_transferred_ = bytes_transferred;
@@ -547,9 +546,9 @@ ACE_Asynch_Accept::ACE_Asynch_Accept (void)
 
 int
 ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
-			   u_long bytes_to_read,
-			   ACE_HANDLE accept_handle,
-			   const void *act)
+                           u_long bytes_to_read,
+                           ACE_HANDLE accept_handle,
+                           const void *act)
 {
 #if defined (ACE_HAS_AIO_CALLS)
   ACE_UNUSED_ARG (message_block);
@@ -573,37 +572,37 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
   if (accept_handle == ACE_INVALID_HANDLE)
     {
       accept_handle = ACE_OS::socket (PF_INET,
-				      SOCK_STREAM,
-				      0);
+                                      SOCK_STREAM,
+                                      0);
       if (accept_handle == ACE_INVALID_HANDLE)
-	ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_OS::socket")), -1);
+        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_OS::socket")), -1);
       else
-	// Remember to close the socket down if failures occur.
-	close_accept_handle = 1;
+        // Remember to close the socket down if failures occur.
+        close_accept_handle = 1;
     }
 
   Result *result = 0;
   ACE_NEW_RETURN (result,
-		  Result (*this->handler_,
-			  this->handle_,
-			  accept_handle,
-			  message_block,
-			  bytes_to_read,
-			  act,
-			  this->proactor_->get_handle ()),
-		  -1);
+                  Result (*this->handler_,
+                          this->handle_,
+                          accept_handle,
+                          message_block,
+                          bytes_to_read,
+                          act,
+                          this->proactor_->get_handle ()),
+                  -1);
 
   u_long bytes_read;
 
   // Initiate the accept
   int initiate_result = ::AcceptEx ((SOCKET) result->listen_handle (),
-				    (SOCKET) result->accept_handle (),
-				    result->message_block ().wr_ptr (),
-				    result->bytes_to_read (),
-				    address_size,
-				    address_size,
-				    &bytes_read,
-				    result);
+                                    (SOCKET) result->accept_handle (),
+                                    result->message_block ().wr_ptr (),
+                                    result->bytes_to_read (),
+                                    address_size,
+                                    address_size,
+                                    &bytes_read,
+                                    result);
   if (initiate_result == 1)
     // Immediate success: the OVERLAPPED will still get queued.
     return 1;
@@ -622,8 +621,8 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
       // queued.
 
       if (close_accept_handle == 1)
-	// Close the newly created socket
-	ACE_OS::closesocket (accept_handle);
+        // Close the newly created socket
+        ACE_OS::closesocket (accept_handle);
 
       // Cleanup dynamically allocated Asynch_Result
       delete result;
@@ -663,12 +662,12 @@ ACE_Asynch_Accept::Result::accept_handle (void) const
 }
 
 ACE_Asynch_Accept::Result::Result (ACE_Handler &handler,
-				   ACE_HANDLE listen_handle,
-				   ACE_HANDLE accept_handle,
-				   ACE_Message_Block &message_block,
-				   u_long bytes_to_read,
-				   const void* act,
-				   ACE_HANDLE event)
+                                   ACE_HANDLE listen_handle,
+                                   ACE_HANDLE accept_handle,
+                                   ACE_Message_Block &message_block,
+                                   u_long bytes_to_read,
+                                   const void* act,
+                                   ACE_HANDLE event)
   : ACE_Asynch_Result (handler, act, event),
     bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
@@ -679,9 +678,9 @@ ACE_Asynch_Accept::Result::Result (ACE_Handler &handler,
 
 void
 ACE_Asynch_Accept::Result::complete (u_long bytes_transferred,
-				     int success,
-				     const void *completion_key,
-				     u_long error)
+                                     int success,
+                                     const void *completion_key,
+                                     u_long error)
 {
   // Copy the data which was returned by GetQueuedCompletionStatus
   this->bytes_transferred_ = bytes_transferred;
@@ -704,13 +703,13 @@ ACE_Asynch_Transmit_File::ACE_Asynch_Transmit_File (void)
 
 int
 ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
-					 Header_And_Trailer *header_and_trailer,
-					 u_long bytes_to_write,
-					 u_long offset,
-					 u_long offset_high,
-					 u_long bytes_per_send,
-					 u_long flags,
-					 const void *act)
+                                         Header_And_Trailer *header_and_trailer,
+                                         u_long bytes_to_write,
+                                         u_long offset,
+                                         u_long offset_high,
+                                         u_long bytes_per_send,
+                                         u_long flags,
+                                         const void *act)
 {
 #if defined (ACE_HAS_AIO_CALLS)
   ACE_UNUSED_ARG (file);
@@ -727,18 +726,18 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   Result *result = 0;
   ACE_NEW_RETURN (result,
-		  Result (*this->handler_,
-			  this->handle_,
-			  file,
-			  header_and_trailer,
-			  bytes_to_write,
-			  offset,
-			  offset_high,
-			  bytes_per_send,
-			  flags,
-			  act,
-			  this->proactor_->get_handle ()),
-		  -1);
+                  Result (*this->handler_,
+                          this->handle_,
+                          file,
+                          header_and_trailer,
+                          bytes_to_write,
+                          offset,
+                          offset_high,
+                          bytes_per_send,
+                          flags,
+                          act,
+                          this->proactor_->get_handle ()),
+                  -1);
 
   ACE_LPTRANSMIT_FILE_BUFFERS transmit_buffers = 0;
   if (result->header_and_trailer () != 0)
@@ -746,12 +745,12 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
   // Initiate the transmit file
   int initiate_result = ::TransmitFile ((SOCKET) result->socket (),
-					result->file (),
-					result->bytes_to_write (),
-					result->bytes_per_send (),
-					result,
-					transmit_buffers,
-					result->flags ());
+                                        result->file (),
+                                        result->bytes_to_write (),
+                                        result->bytes_per_send (),
+                                        result,
+                                        transmit_buffers,
+                                        result->flags ());
   if (initiate_result == 1)
     // Immediate success: the OVERLAPPED will still get queued.
     return 1;
@@ -819,16 +818,16 @@ ACE_Asynch_Transmit_File::Result::flags (void) const
 }
 
 ACE_Asynch_Transmit_File::Result::Result (ACE_Handler &handler,
-					  ACE_HANDLE socket,
-					  ACE_HANDLE file,
-					  Header_And_Trailer *header_and_trailer,
-					  u_long bytes_to_write,
-					  u_long offset,
-					  u_long offset_high,
-					  u_long bytes_per_send,
-					  u_long flags,
-					  const void *act,
-					  ACE_HANDLE event)
+                                          ACE_HANDLE socket,
+                                          ACE_HANDLE file,
+                                          Header_And_Trailer *header_and_trailer,
+                                          u_long bytes_to_write,
+                                          u_long offset,
+                                          u_long offset_high,
+                                          u_long bytes_per_send,
+                                          u_long flags,
+                                          const void *act,
+                                          ACE_HANDLE event)
   : ACE_Asynch_Result (handler, act, event, offset, offset_high),
     socket_ (socket),
     file_ (file),
@@ -841,9 +840,9 @@ ACE_Asynch_Transmit_File::Result::Result (ACE_Handler &handler,
 
 void
 ACE_Asynch_Transmit_File::Result::complete (u_long bytes_transferred,
-					    int success,
-					    const void *completion_key,
-					    u_long error)
+                                            int success,
+                                            const void *completion_key,
+                                            u_long error)
 {
   // Copy the data which was returned by GetQueuedCompletionStatus
   this->bytes_transferred_ = bytes_transferred;
@@ -874,9 +873,9 @@ ACE_Asynch_Transmit_File::Result::complete (u_long bytes_transferred,
 // ************************************************************
 
 ACE_Asynch_Transmit_File::Header_And_Trailer::Header_And_Trailer (ACE_Message_Block *header,
-								  u_long header_bytes,
-								  ACE_Message_Block *trailer,
-								  u_long trailer_bytes)
+                                                                  u_long header_bytes,
+                                                                  ACE_Message_Block *trailer,
+                                                                  u_long trailer_bytes)
   : header_ (header),
     header_bytes_ (header_bytes),
     trailer_ (trailer),
@@ -886,9 +885,9 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::Header_And_Trailer (ACE_Message_Bl
 
 void
 ACE_Asynch_Transmit_File::Header_And_Trailer::header_and_trailer (ACE_Message_Block *header,
-								  u_long header_bytes,
-								  ACE_Message_Block *trailer,
-								  u_long trailer_bytes)
+                                                                  u_long header_bytes,
+                                                                  ACE_Message_Block *trailer,
+                                                                  u_long trailer_bytes)
 {
   this->header (header);
   this->header_bytes (header_bytes);
@@ -956,27 +955,27 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
 
       // If header is valid, set the fields
       if (this->header_ != 0)
-	{
-	  this->transmit_buffers_.Head = this->header_->rd_ptr ();
-	  this->transmit_buffers_.HeadLength = this->header_bytes_;
-	}
+        {
+          this->transmit_buffers_.Head = this->header_->rd_ptr ();
+          this->transmit_buffers_.HeadLength = this->header_bytes_;
+        }
       else
-	{
-	  this->transmit_buffers_.Head = 0;
-	  this->transmit_buffers_.HeadLength = 0;
-	}
+        {
+          this->transmit_buffers_.Head = 0;
+          this->transmit_buffers_.HeadLength = 0;
+        }
 
       // If trailer is valid, set the fields
       if (this->trailer_ != 0)
-	{
-	  this->transmit_buffers_.Tail = this->trailer_->rd_ptr ();
-	  this->transmit_buffers_.TailLength = this->trailer_bytes_;
-	}
+        {
+          this->transmit_buffers_.Tail = this->trailer_->rd_ptr ();
+          this->transmit_buffers_.TailLength = this->trailer_bytes_;
+        }
       else
-	{
-	  this->transmit_buffers_.Tail = 0;
-	  this->transmit_buffers_.TailLength = 0;
-	}
+        {
+          this->transmit_buffers_.Tail = 0;
+          this->transmit_buffers_.TailLength = 0;
+        }
 
       // Return the transmit buffers
       return &this->transmit_buffers_;
@@ -1045,7 +1044,7 @@ ACE_Handler::handle_notify (const ACE_Asynch_Notify::Result &result)
 
 void
 ACE_Handler::handle_time_out (const ACE_Time_Value &tv,
-			      const void *act)
+                              const void *act)
 {
   ACE_UNUSED_ARG (tv);
   ACE_UNUSED_ARG (act);
@@ -1081,7 +1080,7 @@ ACE_Service_Handler::~ACE_Service_Handler (void)
 
 void
 ACE_Service_Handler::addresses (const ACE_INET_Addr &remote_address,
-				const ACE_INET_Addr &local_address)
+                                const ACE_INET_Addr &local_address)
 {
   // Default behavior is to print out the addresses.
   ASYS_TCHAR local_address_buf[BUFSIZ], remote_address_buf[BUFSIZ];
