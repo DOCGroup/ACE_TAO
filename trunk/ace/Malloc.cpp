@@ -51,6 +51,11 @@ ACE_Name_Node::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+ACE_Allocator::~ACE_Allocator (void)
+{
+  ACE_TRACE ("ACE_Allocator::~ACE_Allocator");
+}
+
 #if defined (ACE_MALLOC_STATS)
 ACE_Malloc_Stats::ACE_Malloc_Stats (void)
   : nblocks_ (0), 
@@ -77,15 +82,9 @@ ACE_Malloc_Stats::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-ACE_Allocator::~ACE_Allocator (void)
-{
-}
-
-
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #endif /* ACE_MALLOC_STATS */
-
 #endif /* ACE_MALLOC_C */
