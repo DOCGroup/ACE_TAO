@@ -1060,6 +1060,10 @@ SOURCE=.\arg_shifter.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Argument.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_Invocation.h
 # End Source File
 # Begin Source File
@@ -1073,6 +1077,10 @@ SOURCE=.\Asynch_Reply_Dispatcher_Base.h
 # Begin Source File
 
 SOURCE=.\Base_Transport_Property.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Argument_T.h
 # End Source File
 # Begin Source File
 
@@ -1785,6 +1793,10 @@ SOURCE=.\ServicesC.h
 # Begin Source File
 
 SOURCE=.\singletons.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_Argument_T.h
 # End Source File
 # Begin Source File
 
@@ -2595,6 +2607,11 @@ SOURCE=.\Array_VarOut_T.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Codeset_Translator_Factory_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
@@ -2621,6 +2638,11 @@ SOURCE=.\Seq_Var_T.cpp
 # Begin Source File
 
 SOURCE=.\Sequence_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_Argument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
