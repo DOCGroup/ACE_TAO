@@ -22,11 +22,11 @@
 class ACE_Export ACE_Thread
 {
   // = TITLE
-  //   Provides a wrapper for threads.
+  //     Provides a wrapper for threads.
   //
   // = DESCRIPTION
-  //   This class provides a common interface that is mapped onto
-  //   either POSIX Pthreads, Solaris threads, or Win32 threads.
+  //     This class provides a common interface that is mapped onto
+  //     either POSIX Pthreads, Solaris threads, or Win32 threads.
 
 public:
   static int spawn (ACE_THR_FUNC func, 
@@ -77,9 +77,13 @@ public:
   // spawned (if this doesn't equal the number requested then
   // something has gone wrong and <errno> will explain...).
 
+  static int join (const ACE_Thread_ID &,
+		   void **status = 0);
+  // Wait for one or more threads to exit.
+
   static int join (ACE_thread_t,
 		   ACE_thread_t *,
-		   void ** = 0);
+		   void **status = 0);
   // Wait for one or more threads to exit.
 
   static int join (ACE_hthread_t, 
@@ -92,7 +96,7 @@ public:
   static int suspend (ACE_hthread_t);
   // Suspend the execution of a particular thread.
 
-  static int getprio (ACE_hthread_t, int *prio);
+  static int getprio (ACE_hthread_t, int &prio);
   // Get the priority of a particular thread.
 
   static int setprio (ACE_hthread_t, int prio);
