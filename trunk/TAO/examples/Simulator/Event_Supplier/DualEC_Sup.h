@@ -74,7 +74,7 @@ public:
   // here is really something going on,
   // here we deliver the messages
 
-  void load_schedule_data (ACE_Unbounded_Queue<Schedule_Viewer_Data *> &schedule_data);
+  void load_schedule_data ();
   // Load the scheduling information into memory
 
 
@@ -90,8 +90,11 @@ private:
   static void * run_orb (void *);
   // Run the orb event loop.
 
-  static void * run_event_thread (void *arg);
-  // Run event generation thread.
+  static void * run_nav_thread (void *arg);
+  // Run navigation event generation thread.
+
+  static void * run_weap_thread (void *arg);
+  // Run weapons event generation thread.
 
   int create_schedulers (void);
   // Create two scheduling service instances, registers
@@ -101,12 +104,8 @@ private:
   // Create two event service instances, registers
   // them with the Naming Service.
 
-  void insert_event_data (CORBA::Any &data,
-                          ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *> &schedule_iter,
-                          int &data_is_nav);
-  // just a helper to put all the information into the CORBA::Any
-
   unsigned int get_options (int argc, char *argv []);
+  // Get command line options.
 
   // POA client references.
   PortableServer::POA_var root_POA_var_;
@@ -145,9 +144,6 @@ private:
   DOVE_Supplier * weapons_Supplier;
   DOVE_Supplier * navigation_Supplier;
 
-  // Queue of schedule simulation data
-  ACE_Unbounded_Queue<Schedule_Viewer_Data *> schedule_data_;
-
   // Data for registering RT_Infos
   ACE_Scheduler_Factory::POD_RT_Info rt_info_data_hi_;
   ACE_Scheduler_Factory::POD_RT_Info rt_info_data_lo_;
@@ -160,9 +156,9 @@ private:
   RtecScheduler::Config_Info_Set_var configs_lo_;
   RtecScheduler::Scheduling_Anomaly_Set_var anomalies_lo_;
 
-  // Data structures.
-  Navigation navigation_;
-  Weapons weapons_;
+  // Queues to store event carried data structures.
+  ACE_Unbounded_Queue<Navigation *> navigation_data_;
+  ACE_Unbounded_Queue<Weapons *> weapons_data_;
 
   int argc_;
   char **argv_;
@@ -174,7 +170,8 @@ private:
   int suppress_priority_;
   const char * hi_schedule_file_name_;
   const char * lo_schedule_file_name_;
-  int event_thread_count_;
+  CORBA::Long nav_roll_;
+  CORBA::Long nav_pitch_;
 };
 
 #endif /* DUALEC_SUP_H */

@@ -282,7 +282,7 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
           }
         else
           {
-            navigation_.criticality = ONE_HZ_PERIOD;
+            navigation_.deadline_time = ONE_HZ_PERIOD;
           }
 
         navigation_.position_latitude = ACE_OS::rand() % 90;
@@ -324,11 +324,11 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
         if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
             (strcmp((*sched_data)->operation_name, "low_10") == 0))
           {
-            navigation_.deadline_time = TEN_HZ_PERIOD;
+            weapons_.deadline_time = TEN_HZ_PERIOD;
           }
         else
           {
-            navigation_.criticality = FIVE_HZ_PERIOD;
+            weapons_.deadline_time = FIVE_HZ_PERIOD;
           }
 
 
