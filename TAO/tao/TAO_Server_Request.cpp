@@ -86,7 +86,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
                                       CORBA::ULong request_id,
                                       CORBA::Boolean response_expected,
                                       CORBA::Boolean deferred_reply,
-                                      TAO::ObjectKey &object_key,
+                                      TAO_ObjectKey &object_key,
                                       const char *operation,
                                       TAO_OutputCDR &output,
                                       TAO_Transport *transport,
@@ -185,7 +185,6 @@ TAO_ServerRequest::init_reply (void)
                       ACE_TEXT ("encoding forwarded objref failed\n")));
         }
     }
-  this->transport_->assign_translators (0,this->outgoing_);
 }
 
 void
@@ -281,6 +280,8 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
         }
 
       // Create a new output CDR stream
+
+#if 0
 #if defined(ACE_HAS_PURIFY)
       // Only inititialize the buffer if we're compiling with Purify.
       // Otherwise, there is no real need to do so, especially since
@@ -298,9 +299,11 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
                             this->orb_core_->output_cdr_msgblock_allocator (),
                             this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                             TAO_DEF_GIOP_MAJOR,
-                            TAO_DEF_GIOP_MINOR);
+                            TAO_DEF_GIOP_MINOR,
+                            this->orb_core_->to_iso8859 (),
+                            this->orb_core_->to_unicode ());*/
+#endif /* 0 */
 
-      this->transport_->assign_translators(0,&output);
       // Make the reply message
       if (this->mesg_base_->generate_exception_reply (*this->outgoing_,
                                                       reply_params,

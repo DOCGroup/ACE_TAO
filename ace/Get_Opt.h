@@ -149,11 +149,10 @@ public:
    *                         Any leading ordering characters override both
    *                         the @a ordering argument and any effect of the
    *                         @c POSIXLY_CORRECT environment variable.
-   * @param long_only     Optional. If non-zero, then long options can be
-   *                      specified using a single '-' on the command line.
-   *                      If the token is not a long option, it is processed
-   *                      as usual, that is, as a short option or set of
-   *                      short options.
+   * @param long_only     Optional. If non-zero, then all options are treated
+   *                      as long options.  If a long option is not
+   *                      recognized, the class tries to find a matching
+   *                      short option.
    *
    * Multiple short options can be combined as long as only the last
    * one can takes an argument. For example, if @a optstring is defined as

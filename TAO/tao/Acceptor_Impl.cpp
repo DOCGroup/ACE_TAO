@@ -31,7 +31,6 @@
 #include "tao/Connector_Registry.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
-#include "tao/Transport.h"
 
 #include "ace/Object_Manager.h"
 
@@ -39,9 +38,7 @@
 #include "tao/Acceptor_Impl.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Acceptor_Impl,
-           "$Id$")
+ACE_RCSID(tao, Acceptor_Impl, "$Id$")
 
 
 ////////////////////////////////////////////////////////////////////////////////

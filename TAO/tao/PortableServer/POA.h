@@ -26,7 +26,7 @@
 // Object Adapter
 #include "Object_Adapter.h"
 
-// POAManager
+// POA Manager
 #include "POAManager.h"
 
 // POA Policy Set
@@ -41,14 +41,11 @@
 // Local Object
 #include "tao/LocalObject.h"
 
-// Portable Interceptor
-#include "tao/PortableInterceptorC.h"
-
 // Map
-#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Hash_Map_Manager.h"
 
-// ACE_Array_Base
-#include "ace/Array_Base.h"
+// Vector
+#include "ace/Containers.h"
 
 // Locking
 #include "ace/Synch.h"
@@ -477,17 +474,13 @@ public:
 
   CORBA::Boolean cleanup_in_progress (void);
 
-  static int parse_ir_object_key (const TAO::ObjectKey &object_key,
-                                  PortableServer::ObjectId &user_id);
-  // Calls protected static method used when POACurrent is not appropriate.
-
   TAO_Object_Adapter &object_adapter (void);
 
   ACE_Lock &lock (void);
 
   /// Create the correct stub, properly initialized with the
   /// attributes and policies attached to the current POA.
-  TAO_Stub* key_to_stub (const TAO::ObjectKey &key,
+  TAO_Stub* key_to_stub (const TAO_ObjectKey &key,
                          const char *type_id,
                          CORBA::Short priority
                          ACE_ENV_ARG_DECL);
@@ -624,7 +617,7 @@ protected:
                                           &user_id
                                           ACE_ENV_ARG_DECL);
 
-  CORBA::Object_ptr key_to_object (const TAO::ObjectKey &key,
+  CORBA::Object_ptr key_to_object (const TAO_ObjectKey &key,
                                    const char *type_id,
                                    TAO_ServantBase *servant,
                                    CORBA::Boolean collocated,
@@ -633,13 +626,13 @@ protected:
   // Wrapper for the ORB's key_to_object that will alter the object pointer
   // if the ImplRepo is used.
 
-  virtual TAO_Stub* key_to_stub_i (const TAO::ObjectKey &key,
+  virtual TAO_Stub* key_to_stub_i (const TAO_ObjectKey &key,
                                    const char *type_id,
                                    CORBA::Short priority
                                    ACE_ENV_ARG_DECL);
   // Like key_to_stub() but assume that the ORB is not shutting down.
 
-  TAO_Stub *create_stub_object (const TAO::ObjectKey &object_key,
+  TAO_Stub *create_stub_object (const TAO_ObjectKey &object_key,
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *filter,
@@ -769,11 +762,11 @@ protected:
 
   void set_id (void);
 
-  TAO::ObjectKey *create_object_key (const PortableServer::ObjectId &id);
+  TAO_ObjectKey *create_object_key (const PortableServer::ObjectId &id);
 
   int is_poa_generated_id (const PortableServer::ObjectId &id);
 
-  static int parse_key (const TAO::ObjectKey &key,
+  static int parse_key (const TAO_ObjectKey &key,
                         TAO_Object_Adapter::poa_name &poa_system_name,
                         PortableServer::ObjectId &system_id,
                         CORBA::Boolean &is_root,
@@ -900,7 +893,7 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+  typedef ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>
   CHILDREN;
 
   CHILDREN children_;

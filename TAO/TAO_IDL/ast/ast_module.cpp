@@ -169,25 +169,6 @@ AST_Module::fe_add_module (AST_Module *t)
   AST_Decl *d;
   AST_Module *m = 0;
 
-  UTL_Scope *scope = t->defined_in ();
-  const char *prefix_holder = 0;
-
-  // If our prefix is empty, we check to see if an ancestor has one.
-  while (ACE_OS::strcmp (t->prefix (), "") == 0 && scope != 0)
-    {
-      AST_Decl *parent = ScopeAsDecl (scope);
-      prefix_holder = parent->prefix ();
-
-      // We have reached global scope.
-      if (prefix_holder == 0)
-        {
-          break;
-        }
-
-      t->prefix (ACE_const_cast (char *, prefix_holder));
-      scope = parent->defined_in ();
-    }
-
   // Already defined and cannot be redefined? Or already used?
   if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
@@ -214,11 +195,11 @@ AST_Module::fe_add_module (AST_Module *t)
         }
 
       const char *prev_prefix = d->prefix ();
-      const char *this_prefix = t->prefix ();
+      const char *this_prefix = this->prefix ();
 
       if (ACE_OS::strcmp (this_prefix, "") == 0)
         {
-          t->prefix (ACE_const_cast (char *, prev_prefix));
+          this->prefix (ACE_const_cast (char *, prev_prefix));
         }
       else
         {
@@ -1727,12 +1708,6 @@ AST_Module::look_in_previous (Identifier *e)
     }
 
   return retval;
-}
-
-ACE_Unbounded_Set<AST_Decl *> &
-AST_Module::previous (void)
-{
-  return this->previous_;
 }
 
 void

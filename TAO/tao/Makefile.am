@@ -93,7 +93,7 @@ ORB_CORE_FILES = \
   DLL_Parser.cpp \
   FILE_Parser.cpp \
   Object.cpp \
-  ObjectIdListC.cpp \
+  ObjectIDList.cpp \
   ORB.cpp \
   corbafwd.cpp \
   Policy_ForwardC.cpp \
@@ -115,6 +115,7 @@ ORB_CORE_FILES = \
   DynamicInterface_Adapter.cpp \
   Object_KeyC.cpp \
   IFR_Client_Adapter.cpp \
+  IFR_TypeCodes.cpp \
   Invocation.cpp \
   Interceptor.cpp \
   InterceptorC.cpp \
@@ -237,7 +238,6 @@ TEMPLATE_FILES = \
   IOPS_T.cpp \
   PollableS_T.cpp \
   Sequence_T.cpp \
-  Any_T.cpp \
   TAOS_T.cpp \
   TimeBaseS_T.cpp \
   TAO_Singleton.cpp
@@ -320,7 +320,7 @@ HEADER_FILES = \
   ORB_Core.h \
   ORB_Table.h \
   Object.h \
-  ObjectIdListC.h \
+  ObjectIDList.h \
   Object_Adapter.h \
   Object_KeyC.h \
   Operation_Table.h \
@@ -458,7 +458,7 @@ INLINE_FILES = \
   ORB_Core.i \
   ORB_Table.inl \
   Object.i \
-  ObjectIdListC.i \
+  ObjectIDList.i \
   Object_Adapter.i \
   Object_KeyC.i \
   POA.i \

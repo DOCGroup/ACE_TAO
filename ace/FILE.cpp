@@ -34,13 +34,8 @@ int
 ACE_FILE::close (void)
 {
   ACE_TRACE ("ACE_FILE::close");
-  int result = 0;
-
-  if (this->get_handle () != ACE_INVALID_HANDLE)
-    {
-      result = ACE_OS::close (this->get_handle ());
-      this->set_handle (ACE_INVALID_HANDLE);
-    }
+  int result = ACE_OS::close (this->get_handle ());
+  this->set_handle (ACE_INVALID_HANDLE);
   return result;
 }
 

@@ -13,15 +13,6 @@ package Parser;
 use strict;
 use FileHandle;
 
-use StringProcessor;
-
-use vars qw(@ISA);
-@ISA = qw(StringProcessor);
-
-# ************************************************************
-# Data Section
-# ************************************************************
-
 my($cwd) = Cwd::getcwd();
 
 # ************************************************************
@@ -30,9 +21,8 @@ my($cwd) = Cwd::getcwd();
 
 sub new {
   my($class)  = shift;
-  my($self)   = $class->SUPER::new();
-
-  $self->{'line_number'} = 0;
+  my($self)   = bless {'line_number' => 0,
+                      }, $class;
   return $self;
 }
 
@@ -72,14 +62,24 @@ sub strip_line {
 }
 
 
-sub collect_line {
-  my($self) = shift;
-  my($fh)   = shift;
-  my($lref) = shift;
-  my($line) = shift;
+sub process_special {
+  my($self)   = shift;
+  my($line)   = shift;
+  my($length) = length($line);
 
-  $$lref = $self->strip_line($line);
-  return $self->parse_line($fh, $$lref);
+  for(my $i = 0; $i < $length; $i++) {
+    my($ch) = substr($line, $i, 1);
+    if ($ch eq "\\" && $i + 1 < $length) {
+      substr($line, $i, 1) = '';
+      $length--;
+    }
+    elsif ($ch eq '"') {
+      substr($line, $i, 1) = '';
+      $length--;
+      $i--;
+    }
+  }
+  return $line;
 }
 
 
@@ -92,9 +92,10 @@ sub read_file {
 
   $self->{'line_number'} = 0;
   if (open($ih, $input)) {
-    my($line) = "";
     while(<$ih>) {
-      ($status, $errorString) = $self->collect_line($ih, \$line, $_);
+      my($line) = $self->strip_line($_);
+
+      ($status, $errorString) = $self->parse_line($ih, $line);
 
       if (!$status) {
         last;
@@ -120,6 +121,44 @@ sub line_number {
   }
 
   return $self->{'line_number'};
+}
+
+
+sub create_array {
+  my($self)   = shift;
+  my($line)   = shift;
+  my(@array)  = ();
+  my($length) = length($line);
+  my($prev)   = 0;
+  my($double) = 0;
+
+  for(my $i = 0; $i <= $length; $i++) {
+    my($ch) = substr($line, $i, 1);
+    if (!$double && ($ch eq '' || $ch =~ /\s/)) {
+      my($val) = substr($line, $prev, $i - $prev);
+      $val =~ s/^\s+//;
+      $val =~ s/\s+$//;
+      if ($val =~ /^\"(.*)\"$/) {
+        $val = $1;
+      }
+      push(@array, $val);
+      for(; $i < $length; $i++) {
+        if (substr($line, $i, 1) !~ /\s/) {
+          $i--;
+          last;
+        }
+      }
+      $prev = $i + 1;
+    }
+    elsif ($double && $ch eq "\\" && $i + 1 < $length) {
+      substr($line, $i, 1) = '';
+      $length--;
+    }
+    elsif ($ch eq '"') {
+      $double ^= 1;
+    }
+  }
+  return \@array;
 }
 
 

@@ -20,8 +20,8 @@
 
 #include "be_visitor_typecode/typecode_defn.h"
 
-ACE_RCSID (be_visitor_exception,
-           exception_cs,
+ACE_RCSID (be_visitor_exception, 
+           exception_cs, 
            "$Id$")
 
 // ***************************************************************************
@@ -65,7 +65,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   // Default constructor.
   *os << node->name () << "::" << node->local_name ()
       << " (void)" << be_idt_nl;
-  *os << ": CORBA::UserException (" << be_idt << be_idt << be_idt_nl
+  *os << ": CORBA_UserException (" << be_idt << be_idt << be_idt_nl
       << "\"" << node->repoID () << "\"," << be_nl
       << "\"" << node->local_name () << "\"" << be_uidt_nl
       << ")" << be_uidt << be_uidt << be_uidt_nl;
@@ -81,13 +81,14 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   // Copy constructor.
   *os << node->name () << "::" << node->local_name () << " (const ::"
       << node->name () << " &_tao_excp)" << be_idt_nl;
-  *os << ": CORBA::UserException (" << be_idt << be_idt << be_idt_nl
+  *os << ": CORBA_UserException (" << be_idt << be_idt << be_idt_nl
       << "_tao_excp._rep_id ()," << be_nl
       << "_tao_excp._name ()" << be_uidt_nl
       << ")" << be_uidt << be_uidt << be_uidt_nl;
   *os << "{";
 
   be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
 
   if (node->nmembers () > 0)
     {
@@ -114,11 +115,12 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << node->name () << "::operator= (const ::"
       << node->name () << " &_tao_excp)" << be_nl
       << "{" << be_idt_nl
-      << "this->ACE_NESTED_CLASS (CORBA, UserException)::operator= "
+      << "this->CORBA_UserException::operator= "
       << "(_tao_excp);";
 
   // Assign each individual member.
   ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
   be_visitor_exception_ctor_assign visitor (&ctx);
 
   if (node->accept (&visitor) == -1)
@@ -130,7 +132,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                         -1);
     }
 
-  *os << be_nl
+  *os << be_nl 
       << "return *this;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -182,7 +184,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << ");" << be_uidt_nl
       << "return result;" << be_uidt_nl
       << "}" << be_nl << be_nl;
-
+  
   *os << "void " << node->name () << "::_raise (void)" << be_nl
       << "{" << be_idt_nl
       << "TAO_RAISE (*this);" << be_uidt_nl
@@ -294,7 +296,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                             -1);
         }
 
-      *os << "  : CORBA::UserException ("
+      *os << "  : CORBA_UserException (" 
           << be_idt << be_idt << be_idt << be_idt_nl
           << "\"" << node->repoID () << "\"," << be_nl
           << "\"" << node->local_name () << "\"" << be_uidt_nl
@@ -303,6 +305,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
       // Assign each individual member. We need yet another state.
       ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
 
       // Indicate that the special ctor is being generated.
       ctx.exception (1);
@@ -334,6 +337,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   if (be_global->tc_support ())
     {
       ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
       ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
       be_visitor_typecode_defn visitor (&ctx);
 

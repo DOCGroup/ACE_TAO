@@ -94,7 +94,6 @@ SOURCE=.\Event_Types_impl.cpp
 # Begin Source File
 
 SOURCE=.\Event_TypesC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

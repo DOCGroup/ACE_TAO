@@ -33,7 +33,6 @@ sub new {
   my($addtemp)  = shift;
   my($addproj)  = shift;
   my($progress) = shift;
-  my($toplevel) = shift;
   my($type)     = shift;
   my($self)     = Parser::new($class);
 
@@ -49,32 +48,8 @@ sub new {
   $self->{'progress'}      = $progress;
   $self->{'addtemp'}       = $addtemp;
   $self->{'addproj'}       = $addproj;
-  $self->{'toplevel'}      = $toplevel;
-  $self->{'files_written'} = [];
 
   return $self;
-}
-
-
-sub collect_line {
-  my($self)        = shift;
-  my($fh)          = shift;
-  my($lref)        = shift;
-  my($line)        = shift;
-  my($status)      = 1;
-  my($errorString) = '';
-
-  $$lref .= $self->strip_line($line);
-
-  if ($$lref =~ /\\$/) {
-    $$lref =~ s/\\$/ /;
-  }
-  else {
-    ($status, $errorString) = $self->parse_line($fh, $$lref);
-    $$lref = "";
-  }
-
-  return $status, $errorString;
 }
 
 
@@ -116,9 +91,6 @@ sub generate {
   my($self)   = shift;
   my($input)  = shift;
   my($status) = 1;
-
-  ## Reset the files_written array between processing each file
-  $self->{'files_written'}  = [];
 
   ## Allow subclasses to reset values before
   ## each call to generate().
@@ -356,7 +328,7 @@ sub transform_file_name {
   my($self) = shift;
   my($name) = shift;
 
-  $name =~ s/[\s\/\\]/_/g;
+  $name =~ s/\s/_/g;
   return $name;
 }
 
@@ -385,66 +357,9 @@ sub get_addproj {
 }
 
 
-sub get_toplevel {
-  my($self) = shift;
-  return $self->{'toplevel'};
-}
-
-
-sub add_file_written {
-  my($self) = shift;
-  my($file) = shift;
-
-  foreach my $written (@{$self->{'files_written'}}) {
-    if ($written eq $file) {
-      print "WARNING: $file has been overwritten by a " .
-            "$self->{'grammar_type'} with a duplicate name.\n";
-      last;
-    }
-  }
-  push(@{$self->{'files_written'}}, $file);
-}
-
-
-sub get_files_written {
-  my($self) = shift;
-  return $self->{'files_written'};
-}
-
-
-sub extension_recursive_input_list {
-  my($self)  = shift;
-  my($dir)   = shift;
-  my($ext)   = shift;
-  my($fh)    = new FileHandle();
-  my(@files) = ();
-
-  if (opendir($fh, $dir)) {
-    foreach my $file (grep(!/^\.\.?$/, readdir($fh))) {
-      my($full) = ($dir ne '.' ? "$dir/" : '') . $file;
-      if (-d $full) {
-        push(@files, $self->extension_recursive_input_list($full, $ext));
-      }
-      elsif ($full =~ /$ext$/) {
-        push(@files, $full);
-      }
-    }
-    closedir($fh);
-  }
-
-  return @files;
-}
-
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
-
-sub generate_recursive_input_list {
-  #my($self) = shift;
-  #my($dir)  = shift;
-  return ();
-}
-
 
 sub crlf {
   #my($self) = shift;

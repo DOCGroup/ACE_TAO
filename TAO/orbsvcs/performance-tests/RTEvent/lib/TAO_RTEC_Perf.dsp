@@ -119,7 +119,6 @@ SOURCE=.\EC_Destroyer.cpp
 # Begin Source File
 
 SOURCE=.\Federated_TestC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

@@ -96,7 +96,6 @@ SOURCE=.\client.cpp
 # Begin Source File
 
 SOURCE=.\testC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -128,7 +127,7 @@ SOURCE=.\test.idl
 
 !IF  "$(CFG)" == "POA Forwarding Client - Win32 Release"
 
-USERDEP__TEST_="..\..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__FOO_I="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\test.idl
 InputName=test
@@ -167,7 +166,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "POA Forwarding Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"	
+USERDEP__FOO_I="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\test.idl
 InputName=test

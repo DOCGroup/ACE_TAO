@@ -14,7 +14,7 @@ CFLAGS = \
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
-        $(CORE_BINDIR)\Test_Server_Module$(LIB_DECORATOR).lib
+	$(CORE_BINDIR)\Test_Server_Module$(LIB_DECORATOR)
 
 CPPDIR = .
 

@@ -94,15 +94,6 @@ SOURCE=.\ami_test_i.cpp
 # Begin Source File
 
 SOURCE=.\ami_testC.cpp
-
-!IF  "$(CFG)" == "AMI_Test_Server - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "AMI_Test_Server - Win32 Debug"
-
-# ADD CPP /GR
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 

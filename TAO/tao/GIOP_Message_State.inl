@@ -33,22 +33,29 @@ TAO_GIOP_Message_State::reset (void)
   this->missing_data_ = 0;
 }
 
-#if 0
-ACE_INLINE int
-TAO_GIOP_Message_State::message_fragmented (void)
+ACE_INLINE const TAO_GIOP_Message_Version &
+TAO_GIOP_Message_State::giop_version () const
 {
-  if (this->more_fragments)
-    return 1;
-
-  return 0;
+  return this->giop_version_;
 }
 
-
-
-ACE_INLINE CORBA::Boolean
-TAO_GIOP_Message_State::header_received (void) const
+ACE_INLINE CORBA::Octet
+TAO_GIOP_Message_State::more_fragments () const
 {
-  return this->message_size != 0;
+  return this->more_fragments_;
 }
 
-#endif
+ACE_INLINE CORBA::Octet
+TAO_GIOP_Message_State::message_type () const
+{
+  return this->message_type_;
+}
+
+ACE_INLINE void
+TAO_GIOP_Message_State::set_payload_size_from_buffer (const char *rd_ptr)
+{
+  // Move the read pointer
+  rd_ptr += TAO_GIOP_MESSAGE_SIZE_OFFSET;
+
+  this->message_size_ =  this->read_ulong (rd_ptr);
+}

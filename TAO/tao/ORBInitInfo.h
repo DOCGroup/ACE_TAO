@@ -52,10 +52,15 @@ typedef TAO_ORBInitInfo *TAO_ORBInitInfo_ptr;
  * This class encapsulates the data passed to ORBInitializers during
  * ORB initialization.
  */
-class TAO_Export TAO_ORBInitInfo
-  : public virtual PortableInterceptor::ORBInitInfo,
-    public virtual TAO_Local_RefCounted_Object
+class TAO_Export TAO_ORBInitInfo :
+  public virtual PortableInterceptor::ORBInitInfo,
+  public virtual TAO_Local_RefCounted_Object
 {
+  friend CORBA::ORB_ptr CORBA::ORB_init (int &,
+                                         char *argv[],
+                                         const char *,
+                                         CORBA_Environment &);
+
 public:
 
   /// Constructor.
@@ -186,23 +191,10 @@ public:
    * @note Only use this method if you know what you are doing.
    */
   TAO_ORB_Core *orb_core (void) const;
-
-  /// Invalidate this ORBInitInfo instance.
-  /**
-   * @note This method is only meant to be called by the
-   *       CORBA::ORB_init() function.
-   */
-  void invalidate (void);
-
-  /// Return the number of allocated slots in for the PICurrent
-  /// object.
-  PortableInterceptor::SlotId slot_count (void) const;
   //@}
 
   /**
    * @name Reference Related Methods
-   *
-   * TAO_ORBInitInfo-specific methods and types.
    */
   //@{
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -234,8 +226,8 @@ public:
 
 protected:
 
-  /// Destructor is protected to enforce proper memory management
-  /// through the reference counting mechanism.
+  /// Destructor is protected to force instantiation on the heap since
+  /// ORBInitInfo is reference counted.
   ~TAO_ORBInitInfo (void);
 
   /// Check if this ORBInitInfo instance is valid.  Once post_init()
@@ -266,9 +258,6 @@ private:
   /// Reference to the CodecFactory returned by
   /// ORBInitInfo::codec_factory().
   IOP::CodecFactory_var codec_factory_;
-
-  /// The number of allocated slots.
-  PortableInterceptor::SlotId slot_count_;
 
 };
 

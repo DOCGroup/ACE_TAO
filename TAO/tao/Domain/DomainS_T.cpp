@@ -19,11 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:777
-
-#ifndef _TAO_IDL_ORIG_DOMAINS_T_CPP_
-#define _TAO_IDL_ORIG_DOMAINS_T_CPP_
+#ifndef _TAO_IDL_DOMAINS_T_CPP_
+#define _TAO_IDL_DOMAINS_T_CPP_
 
 #include "DomainS_T.h"
 

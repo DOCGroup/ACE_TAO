@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,7 +13,6 @@
 
 #ifndef TAO_IFR_CLIENT_ADAPTER_IMPL_H
 #define TAO_IFR_CLIENT_ADAPTER_IMPL_H
-
 #include "ace/pre.h"
 
 #include "tao/IFR_Client_Adapter.h"
@@ -42,25 +41,25 @@ public:
 
   virtual CORBA::Boolean interfacedef_cdr_insert (
       TAO_OutputCDR &cdr,
-      CORBA::InterfaceDef_ptr object_type
+      CORBA_InterfaceDef_ptr object_type
     );
 
   virtual void interfacedef_any_insert (
-      CORBA::Any &any,
-      CORBA::InterfaceDef_ptr object_type
+      CORBA_Any &any,
+      CORBA_InterfaceDef_ptr object_type
     );
 
   virtual void dispose (
-      CORBA::InterfaceDef_ptr orphan
+      CORBA_InterfaceDef_ptr orphan
     );
 
-  virtual CORBA::InterfaceDef_ptr get_interface (
+  virtual CORBA_InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
       const char *repo_id
       ACE_ENV_ARG_DECL
     );
 
-  virtual CORBA::InterfaceDef_ptr get_interface_remote (
+  virtual CORBA_InterfaceDef_ptr get_interface_remote (
       const CORBA::Object_ptr target
       ACE_ENV_ARG_DECL
     );
@@ -89,5 +88,4 @@ TAO_Requires_IFR_Client_Initializer =
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 #include "ace/post.h"
-
 #endif /* TAO_IFR_CLIENT_ADAPTER_IMPL_H */

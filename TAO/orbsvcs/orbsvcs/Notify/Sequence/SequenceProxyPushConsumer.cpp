@@ -8,8 +8,10 @@
 
 ACE_RCSID(Notify, TAO_NS_SequenceProxyPushConsumer, "$id$")
 
+#include "ace/Refcounted_Auto_Ptr.h"
 #include "tao/debug.h"
 #include "SequencePushSupplier.h"
+#include "../Admin.h"
 #include "../AdminProperties.h"
 #include "../Structured/StructuredEvent.h"
 
@@ -38,10 +40,7 @@ TAO_NS_SequenceProxyPushConsumer::destroy (ACE_ENV_SINGLE_ARG_DECL)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "In TAO_NS_SequenceProxyPushConsumer::destroy \n"));
 
-  if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
-    return;
-
-  ACE_CHECK;
+  this->inherited::destroy (this ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::ProxyType

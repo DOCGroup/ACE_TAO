@@ -22,7 +22,6 @@
 #include "Endpoint_Selector_Factory.h"
 #include "Invocation_Endpoint_Selectors.h"
 #include "TAOC.h"
-#include "Codeset_Manager.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -123,7 +122,9 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                  orb_core->output_cdr_msgblock_allocator (),
                  orb_core->orb_params ()->cdr_memcpy_tradeoff (),
                  TAO_DEF_GIOP_MAJOR,
-                 TAO_DEF_GIOP_MINOR),
+                 TAO_DEF_GIOP_MINOR,
+                 orb_core->to_iso8859 (),
+                 orb_core->to_unicode ()),
     orb_core_ (orb_core),
     transport_ (0),
     endpoint_selector_ (0),
@@ -181,7 +182,7 @@ TAO_GIOP_Invocation::start (ACE_ENV_SINGLE_ARG_DECL)
   if (this->stub_ == 0)
     {
       ACE_THROW (CORBA::INTERNAL (
-                   CORBA::SystemException::_tao_minor_code (
+                   CORBA_SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                 CORBA::COMPLETED_NO));
@@ -247,7 +248,7 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
   if (conn_reg == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (
-                        CORBA::SystemException::_tao_minor_code (
+                        CORBA_SystemException::_tao_minor_code (
                           TAO_DEFAULT_MINOR_CODE,
                           EINVAL),
                         CORBA::COMPLETED_NO),
@@ -290,7 +291,7 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
       if (!is_conn_timeout)
         {
           ACE_THROW_RETURN (CORBA::TIMEOUT (
-              CORBA::SystemException::_tao_minor_code (
+              CORBA_SystemException::_tao_minor_code (
                 TAO_TIMEOUT_CONNECT_MINOR_CODE,
                 errno),
               CORBA::COMPLETED_NO),
@@ -307,9 +308,6 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
 
       // Set the giop version of the out stream
       this->out_stream_.set_version (version.major, version.minor);
-
-      this->orb_core_->codeset_manager()->
-        set_tcs(*this->profile_,*this->transport_);
 
       if (result == -1)
         {
@@ -400,8 +398,6 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags
     {
       ACE_THROW (CORBA::MARSHAL ());
     }
-
-  this->transport_->assign_translators (0, &this->out_stream_);
 }
 
 // Send request.
@@ -445,7 +441,7 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean write_semantics
         {
           ACE_THROW_RETURN (
               CORBA::TIMEOUT (
-                  CORBA::SystemException::_tao_minor_code (
+                  CORBA_SystemException::_tao_minor_code (
                       TAO_TIMEOUT_SEND_MINOR_CODE,
                       errno
                     ),
@@ -695,10 +691,9 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
     {
       // Just unbind the dispatcher before we take any action.
       (void) dispatch_guard.unbind_dispatcher ();
-      return
-        this->orb_core_->service_raise_comm_failure (this,
-                                                     this->profile_
-                                                     ACE_ENV_ARG_PARAMETER);
+      return this->orb_core_->service_raise_comm_failure (this,
+                                                          this->profile_
+                                                          ACE_ENV_ARG_PARAMETER);
     }
   // @@ Alex: the old version of this had some error handling code,
   //    like:  this->profile_->reset_hint ()
@@ -777,7 +772,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
 #if defined (TAO_HAS_EXCEPTIONS)
         // Without this, the call to create_system_exception() above
         // causes a memory leak. On platforms without native exceptions,
-        // the CORBA::Environment class manages the memory.
+        // the CORBA_Environment class manages the memory.
         auto_ptr<CORBA::SystemException> safety (ex);
 #endif
 
@@ -855,7 +850,7 @@ TAO_GIOP_Synch_Invocation::validate_error (TAO_Bind_Dispatcher_Guard &guard
       // Just a timeout, don't close the connection or
       // anything...
       ACE_THROW_RETURN (CORBA::TIMEOUT (
-              CORBA::SystemException::_tao_minor_code (
+              CORBA_SystemException::_tao_minor_code (
                   TAO_TIMEOUT_SEND_MINOR_CODE,
                   errno),
               CORBA::COMPLETED_NO),

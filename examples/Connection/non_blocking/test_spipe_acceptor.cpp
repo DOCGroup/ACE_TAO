@@ -1,14 +1,12 @@
+// $Id$
+
+// ACE_SPIPE Server.
+
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/SPIPE_Addr.h"
-#include "ace/Service_Config.h"
-
 #include "CPP-acceptor.h"
 
-
-ACE_RCSID (non_blocking,
-           test_spipe_acceptor,
-           "$Id$")
-
+ACE_RCSID(non_blocking, test_spipe_acceptor, "$Id$")
 
 #if !defined (ACE_WIN32)
 typedef Svc_Handler<ACE_SPIPE_STREAM> SVC_HANDLER;
@@ -54,3 +52,4 @@ main (int, char *[])
                     -1);
 }
 #endif /* !ACE_WIN32 */
+

@@ -43,38 +43,39 @@ class TAO_IFRService_Export TAO_FactoryDef_i : public virtual TAO_OperationDef_i
   //    Represents the definition of a factory operation in a home.
   //
 public:
-  TAO_FactoryDef_i (TAO_Repository_i *repo);
+  TAO_FactoryDef_i (TAO_Repository_i *repo,
+                    ACE_Configuration_Section_Key section_key);
   // Constructor
 
   virtual ~TAO_FactoryDef_i (void);
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
   virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
   virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Contained::Description *describe (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+  virtual CORBA_Contained::Description *describe (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA::Contained::Description *describe_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+  virtual CORBA_Contained::Description *describe_i (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 };
@@ -84,7 +85,6 @@ public:
 #endif /* _MSC_VER */
 
 #endif /* TAO_FACTORYDEF_I_H */
-
 
 
 

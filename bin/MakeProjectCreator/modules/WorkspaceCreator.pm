@@ -24,8 +24,6 @@ use vars qw(@ISA);
 # Data Section
 # ************************************************************
 
-my($wsext) = 'mwc';
-
 # ************************************************************
 # Subroutine Section
 # ************************************************************
@@ -42,11 +40,10 @@ sub new {
   my($addtemp)   = shift;
   my($addproj)   = shift;
   my($progress)  = shift;
-  my($toplevel)  = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $relative,
                                 $addtemp, $addproj,
-                                $progress, $toplevel, 'workspace');
+                                $progress, 'workspace');
   my($typecheck) = $self->{'type_check'};
 
   $self->{'workspace_name'} = undef;
@@ -85,7 +82,7 @@ sub parse_line {
           ## Generate the project files
           my($gstat, $generator) = $self->generate_project_files();
           if ($gstat) {
-            $self->write_workspace($generator, 1);
+            $self->write_workspace($generator);
           }
           else {
             $errorString = 'ERROR: Unable to ' .
@@ -107,12 +104,12 @@ sub parse_line {
         if (defined $parents) {
           foreach my $parent (@$parents) {
             ## Read in the parent onto ourself
-            my($file) = $self->search_include_path("$parent.$wsext");
+            my($file) = $self->search_include_path("$parent.mwc");
 
             if (defined $file) {
               my($rp) = $self->{'reading_parent'};
               push(@$rp, 1);
-              $self->parse_file("$parent.$wsext");
+              $self->parse_file("$parent.mwc");
               pop(@$rp);
               if (!$status) {
                 $errorString = "ERROR: Invalid parent: $parent";
@@ -176,7 +173,7 @@ sub generate_default_components {
   my($self)  = shift;
   my($files) = shift;
   my($pjf)   = $self->{'project_files'};
-  my(@exts)  = ('\\.mpc');
+  my(@exts)  = ("\\.mpc");
   if (defined $$pjf[0]) {
     ## If we have files, then process directories
     my(@built) = ();
@@ -233,31 +230,23 @@ sub get_workspace_name {
 sub write_workspace {
   my($self)      = shift;
   my($generator) = shift;
-  my($addfile)   = shift;
   my($status)    = 1;
+  my($fh)        = new FileHandle();
+  my($name)      = $self->transform_file_name($self->workspace_file_name());
+  my($dir)       = dirname($name);
 
-  if ($self->get_toplevel()) {
-    my($fh)   = new FileHandle();
-    my($name) = $self->transform_file_name($self->workspace_file_name());
-    my($dir)  = dirname($name);
-
-    if ($dir ne '.') {
-      mkpath($dir, 0, 0777);
-    }
-    if (open($fh, ">$name")) {
-      $self->pre_workspace($fh);
-      $self->write_comps($fh, $generator);
-      $self->post_workspace($fh);
-      close($fh);
-
-      if ($addfile) {
-        $self->add_file_written($name);
-      }
-    }
-    else {
-      print STDERR "ERROR: Unable to open $name for output\n";
-      $status = 0;
-    }
+  if ($dir ne '.') {
+    mkpath($dir, 0, 0777);
+  }
+  if (open($fh, ">$name")) {
+    $self->pre_workspace($fh);
+    $self->write_comps($fh, $generator);
+    $self->post_workspace($fh);
+    close($fh);
+  }
+  else {
+    print STDERR "ERROR: Unable to open $name for output\n";
+    $status = 0;
   }
 
   return $status;
@@ -321,7 +310,7 @@ sub generate_project_files {
         $self->{'project_info'} = \%perpi;
 
         ## Write our per project workspace
-        $self->write_workspace($generator);
+        $self->write_workspace();
 
         ## Reset our project information to empty
         $self->{'projects'}     = [];
@@ -428,9 +417,6 @@ sub project_creator {
 
   $str =~ s/Workspace/Project/;
   $str =~ s/=HASH.*//;
-
-  ## For the toplevel parameter, we always pass 1 since the workspace
-  ## creator always wants the ProjectCreator to generate projects.
   return $str->new($self->get_global_cfg(),
                    $self->get_include_path(),
                    $self->get_template_override(),
@@ -440,8 +426,7 @@ sub project_creator {
                    $self->get_relative(),
                    $self->get_addtemp(),
                    $self->get_addproj(),
-                   $self->get_progress_callback(),
-                   1);
+                   $self->get_progress_callback());
 }
 
 
@@ -450,31 +435,6 @@ sub sort_files {
   return 0;
 }
 
-
-sub get_modified_workspace_name {
-  my($self) = shift;
-  my($name) = shift;
-  my($ext)  = shift;
-
-  if (!defined $self->{'previous_workspace_name'}) {
-    $self->{'previous_workspace_name'} = $self->get_workspace_name();
-  }
-  elsif ($self->{'previous_workspace_name'} ne $self->get_workspace_name()) {
-    $self->{'previous_workspace_name'} = $self->get_workspace_name();        
-    $self->{'current_workspace_name'} =
-                          "$name.$self->{'previous_workspace_name'}$ext";
-  }
-
-  return (defined $self->{'current_workspace_name'} ?
-                  $self->{'current_workspace_name'} : "$name$ext");
-}
-
-
-sub generate_recursive_input_list {
-  my($self) = shift;
-  my($dir)  = shift;
-  return $self->extension_recursive_input_list($dir, $wsext);
-}
 
 # ************************************************************
 # Virtual Methods To Be Overridden

@@ -6,9 +6,7 @@
 #include "PortableGroup_ORBInitializer.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (PortableGroup, 
-           PortableGroup_Loader, 
-           "$Id$")
+ACE_RCSID(PortableGroup, PortableGroup_Loader, "$Id$")
 
 TAO_PortableGroup_Loader::TAO_PortableGroup_Loader (void)
 {
@@ -31,7 +29,7 @@ TAO_PortableGroup_Loader::init (int /*argc*/,
       ACE_NEW_THROW_EX (temp_orb_initializer,
                         TAO_PortableGroup_ORBInitializer (),
                         CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
+                          CORBA_SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));

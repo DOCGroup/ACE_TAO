@@ -52,11 +52,11 @@ public:
   ~TAO_DynStruct_i (void);
   // Destructor.
 
-  void init (CORBA::TypeCode_ptr tc
+  void init (CORBA_TypeCode_ptr tc
              ACE_ENV_ARG_DECL);
   // Initialize using just a TypeCode.
 
-  void init (const CORBA::Any& any
+  void init (const CORBA_Any& any
              ACE_ENV_ARG_DECL);
   // Initialize using an Any.
 
@@ -167,11 +167,6 @@ private:
   // Check if the typecode is acceptable.
   void check_typecode (CORBA::TypeCode_ptr tc
                        ACE_ENV_ARG_DECL);
-
-  // Code common to the constructor from an Any arg and the member
-  // function from_any().
-  void set_from_any (const CORBA::Any &any
-                     ACE_ENV_ARG_DECL);
 
   // Called by both versions of init().
   void init_common (void);

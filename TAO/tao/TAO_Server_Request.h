@@ -79,7 +79,7 @@ public:
                      CORBA::ULong request_id,
                      CORBA::Boolean response_expected,
                      CORBA::Boolean deferred_flag,
-                     TAO::ObjectKey &object_key,
+                     TAO_ObjectKey &object_key,
                      const char *operation,
                      TAO_OutputCDR &output,
                      TAO_Transport *transport,
@@ -140,7 +140,7 @@ public:
 
   // CORBA::Principal_ptr principal (void) const;
 
-  TAO::ObjectKey &object_key (void);
+  TAO_ObjectKey &object_key (void);
 
   /**
    * @todo This two methods should go away.
@@ -184,10 +184,10 @@ public:
   /**
    * @note Deprecated in CORBA 2.4
    */
-  // void requesting_principal (CORBA::Principal_ptr principal);
+  // void requesting_principal (CORBA_Principal_ptr principal);
 
   /// Set the requesting principal
-  void requesting_principal (const CORBA::OctetSeq & principal);
+  void requesting_principal (const CORBA_OctetSeq & principal);
 
   /// Return the reference to the tagged profile
   TAO_Tagged_Profile &profile (void);
@@ -273,7 +273,7 @@ private:
   TAO_Tagged_Profile profile_;
 
   /// Identifies the requester.
-  CORBA::OctetSeq_var requesting_principal_;
+  CORBA_OctetSeq_var requesting_principal_;
 
   /// Did we get passed to a CORBA::ServerRequest?
   CORBA::Boolean is_dsi_;

@@ -21,7 +21,6 @@
 // "ace/OS.h" is overkill.  "ace/Basic_Types.h" is enough.  In
 // particular, it is needed for the definition of ACE_LITTLE_ENDIAN.
 #include "ace/Basic_Types.h"
-#include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -96,14 +95,6 @@ const size_t TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE = 64;
 const size_t TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
-// The default size of TAO's ValueFactory table, i.e. the
-// one used as the underlying implementation for the
-// CORBA::ORB::register_value_factory() method.
-#if !defined (TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE)
-const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
-#endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
-
-
 // The default size of TAO's server active object map.
 #if !defined (TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE)
 # if defined (TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE)
@@ -141,6 +132,25 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #if !defined (TAO_MAXBUFSIZE)
 #define TAO_MAXBUFSIZE 1024
 #endif /* TAO_MAXBUFSIZE */
+
+/*!
+
+  The number of times the transport will try to re-read before
+  returning control to the reactor when it has an uncompleted
+  message (see TAO_Transport::handle_input_i()).
+
+  The idea behind re-reading is that more data may have arrived
+  while the transport was busy deciding what to do with the bytes
+  it got, so we should probably try to re-read.
+
+  This value shouldn't be too large, lest the transport starve
+  out other transports while trying to complete its message.
+
+  When choosing a value, think of the type of this as 'unsigned int'.
+ */
+#if !defined(TAO_MAX_TRANSPORT_REREAD_ATTEMPTS)
+#define TAO_MAX_TRANSPORT_REREAD_ATTEMPTS 2
+#endif
 
 // This controls the alignment for TAO structs.  It supports built-in
 // types up to and including 16 bytes (128 bits) in size.

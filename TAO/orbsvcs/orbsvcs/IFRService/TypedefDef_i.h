@@ -46,19 +46,20 @@ class TAO_IFRService_Export TAO_TypedefDef_i : public virtual TAO_Contained_i,
   //    struct, union, enum, alias, native, and valuebox.
   //
 public:
-  TAO_TypedefDef_i (TAO_Repository_i *repo);
+  TAO_TypedefDef_i (TAO_Repository_i *repo,
+                    ACE_Configuration_Section_Key section_key);
   // Constructor
 
   virtual ~TAO_TypedefDef_i (void);
   // Destructor
 
-  virtual CORBA::Contained::Description *describe (
+  virtual CORBA_Contained::Description *describe (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA::Contained::Description *describe_i (
+  virtual CORBA_Contained::Description *describe_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -70,3 +71,4 @@ public:
 #endif /* _MSC_VER */
 
 #endif /* TAO_TYPEDEFDEF_I_H */
+

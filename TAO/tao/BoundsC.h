@@ -19,9 +19,6 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
-
 #ifndef _TAO_IDL_ORIG_BOUNDSC_H_
 #define _TAO_IDL_ORIG_BOUNDSC_H_
 
@@ -59,15 +56,9 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
-
 TAO_NAMESPACE  CORBA
 {
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
-
 #if !defined (_CORBA_BOUNDS_CH_)
 #define _CORBA_BOUNDS_CH_
   
@@ -80,9 +71,9 @@ TAO_NAMESPACE  CORBA
     ~Bounds (void);
 
     Bounds &operator= (const Bounds &);
-    
-    static void _tao_any_destructor (void *);
-    
+
+    static void _tao_any_destructor (void*);
+
     static Bounds *_downcast (CORBA::Exception *);
     static CORBA::Exception *_alloc (void);
 
@@ -100,51 +91,32 @@ TAO_NAMESPACE  CORBA
         ACE_ENV_ARG_DECL_NOT_USED
       );
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
     
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Bounds;
 
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Bounds;
+  
+  
 #endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
-
+  
+  
 }
 TAO_NAMESPACE_CLOSE // module CORBA
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const CORBA::Bounds &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, CORBA::Bounds*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Bounds *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::Bounds *&);
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
-
 #ifndef __ACE_INLINE__
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ch.cpp:52
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::Bounds &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Bounds &);
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
 
 #if defined (__ACE_INLINE__)
 #include "BoundsC.i"
@@ -160,4 +132,3 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Bounds &);
 
 #include "ace/post.h"
 #endif /* ifndef */
-

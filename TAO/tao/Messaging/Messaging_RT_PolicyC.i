@@ -19,19 +19,12 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___CI_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___CI_
 
-ACE_INLINE
-CORBA::Boolean
-Messaging::RelativeRoundtripTimeoutPolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
 
 #endif /* end #if !defined */
 

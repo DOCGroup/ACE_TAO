@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 ACE_INLINE TAO_ORB_Core *
@@ -80,7 +79,7 @@ return this->requesting_principal_.ptr ();
 }
 */
 
-ACE_INLINE TAO::ObjectKey &
+ACE_INLINE TAO_ObjectKey &
 TAO_ServerRequest::object_key (void)
 {
   return this->profile_.object_key ();
@@ -129,7 +128,7 @@ TAO_ServerRequest::request_id (CORBA::ULong req)
 }
 
 ACE_INLINE void
-TAO_ServerRequest::requesting_principal (const CORBA::OctetSeq &principal)
+TAO_ServerRequest::requesting_principal (const CORBA_OctetSeq &principal)
 {
   this->requesting_principal_ = principal;
 }

@@ -3,6 +3,7 @@
 
 #include "IFR_Service.h"
 #include "orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h"
+#include "orbsvcs/orbsvcs/IFRService/Servant_Locator.h"
 #include "orbsvcs/orbsvcs/IFRService/Options.h"
 #include "orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h"
 #include "orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h"

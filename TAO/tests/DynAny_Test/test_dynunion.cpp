@@ -75,7 +75,7 @@ Test_DynUnion::run_test (void)
 
       tu._d (DynAnyTests::TE_SECOND);
       tu.tc (data.m_typecode2);
-      CORBA::Any in_any1;
+      CORBA_Any in_any1;
       in_any1 <<= tu;
       DynamicAny::DynAny_var dp1 =
         dynany_factory->create_dyn_any (in_any1
@@ -107,7 +107,7 @@ Test_DynUnion::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
-      CORBA::Any_var out_any1 = fa1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA_Any_var out_any1 = fa1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       DynamicAny::DynAny_var ftc1_base =
         dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_union
@@ -136,59 +136,6 @@ Test_DynUnion::run_test (void)
       ACE_TRY_CHECK;
 
       if (s_out2.in ()->equal (data.m_typecode1))
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                     "++ OK ++\n"));
-        }
-      else
-        {
-          ++this->error_count_;
-        }
-
-      ACE_DEBUG ((LM_DEBUG,
-                 "testing: constructor(TypeCode alias)/from_any/to_any\n"));
-
-      CORBA::Any_var out_any2 = fa1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CORBA::TypeCode_var s_out3;
-
-      ACE_TRY_EX (bad_kind)
-        {
-          DynamicAny::DynAny_var ftc2_base =
-            dynany_factory->create_dyn_any_from_type_code
-            (DynAnyTests::_tc_test_union_alias ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (bad_kind);
-          DynamicAny::DynUnion_var ftc2 =
-            DynamicAny::DynUnion::_narrow (ftc2_base.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (bad_kind);
-
-          if (CORBA::is_nil (ftc2.in ()))
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "DynUnion::_narrow() returned nil\n"),
-                                -1);
-            }
-
-          ftc2->from_any (out_any2.in ()
-                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (bad_kind);
-          ftc2->seek (1
-                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (bad_kind);
-          s_out3 = ftc2->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (bad_kind);
-        }
-      ACE_CATCH (CORBA::TypeCode::BadKind, ex)
-        {
-          // Failed to create
-        }
-      ACE_ENDTRY;
-      ACE_TRY_CHECK;
-
-      if ( ! CORBA::is_nil (s_out3.in ()) &&
-           s_out3.in ()->equal (data.m_typecode1))
         {
           ACE_DEBUG ((LM_DEBUG,
                      "++ OK ++\n"));
@@ -278,22 +225,6 @@ Test_DynUnion::run_test (void)
       ACE_TRY_CHECK;
       ftc1->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG,
-                 "testing: create_dyn_any with _default()\n"));
-      DynAnyTests::test_implicit_def test_implicit_def_union;
-      CORBA::Any any_union;
-
-      test_implicit_def_union._default();
-      ACE_TRY_CHECK;
-      any_union <<= test_implicit_def_union;
-      ACE_TRY_CHECK;
-
-      DynamicAny::DynAny_var da_union =
-        dynany_factory->create_dyn_any(any_union);
-      ACE_TRY_CHECK;
-
-      // if we get here the create_dyn_any worked.
     }
   ACE_CATCHANY
     {

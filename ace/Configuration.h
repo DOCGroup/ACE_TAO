@@ -601,9 +601,8 @@ typedef ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId,
                                 ACE_Equal_To<ACE_Configuration_ExtId>,
                                 ACE_Null_Mutex>
         SUBSECTION_HASH;
-
-// Deprecated typedef.  Use the SUBSECTION_HASH::ENTRY trait instead.
-typedef SUBSECTION_HASH::ENTRY SUBSECTION_ENTRY;
+typedef ACE_Hash_Map_Entry<ACE_Configuration_ExtId, int>
+        SUBSECTION_ENTRY;
 
 /**
  * @class ACE_Configuration_Value_IntId
@@ -663,9 +662,9 @@ typedef ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId,
                                 ACE_Equal_To<ACE_Configuration_ExtId>,
                                 ACE_Null_Mutex>
         VALUE_HASH;
-
-// Deprecated typedef.  Use the VALUE_HASH::ENTRY trait instead.
-typedef VALUE_HASH::ENTRY VALUE_ENTRY;
+typedef ACE_Hash_Map_Entry<ACE_Configuration_ExtId,
+                           ACE_Configuration_Value_IntId>
+        VALUE_ENTRY;
 
 /**
  * @class ACE_Configuration_Section_IntId
@@ -712,9 +711,9 @@ typedef ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId,
                                 ACE_Equal_To<ACE_Configuration_ExtId>,
                                 ACE_Null_Mutex>
         SECTION_HASH;
-
-// Deprecated typedef.  Use the SECTION_HASH::ENTRY trait instead.
-typedef SECTION_HASH::ENTRY SECTION_ENTRY;
+typedef ACE_Hash_Map_Entry<ACE_Configuration_ExtId,
+                           ACE_Configuration_Section_IntId>
+        SECTION_ENTRY;
 
 /**
  * @class ACE_Configuration_Section_Key_Heap

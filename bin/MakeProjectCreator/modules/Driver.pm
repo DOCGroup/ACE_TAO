@@ -13,18 +13,12 @@ package Driver;
 use strict;
 use File::Basename;
 
-use StringProcessor;
-
-use vars qw(@ISA);
-@ISA = qw(StringProcessor);
-
 # ************************************************************
 # Data Section
 # ************************************************************
 
 my($index)    = 0;
-my(@progress) = ('|', '/', '-', '\\');
-my($cmdenv)   = 'MPC_COMMANDLINE';
+my(@progress) = ("|", "/", "-", "\\");
 
 # ************************************************************
 # Subroutine Section
@@ -35,14 +29,14 @@ sub new {
   my($path)     = shift;
   my($name)     = shift;
   my(@creators) = @_;
-  my($self)     = $class->SUPER::new();
-
-  $self->{'path'}     = $path;
-  $self->{'name'}     = $name;
-  $self->{'version'}  = 1.4;
-  $self->{'types'}    = {};
-  $self->{'creators'} = \@creators;
-  $self->{'default'}  = $creators[0];
+  my($self)     = bless {'path'     => $path,
+                         'name'     => $name,
+                         'version'  => 1.2,
+                         'types'    => {},
+                         'creators' => \@creators,
+                         'signif'   => 3,
+                         'default'  => $creators[0],
+                        }, $class;
 
   return $self;
 }
@@ -56,31 +50,28 @@ sub usageAndExit {
   if (defined $line) {
     print STDERR "$line\n";
   }
-  my($spaces) = (' ' x (length($base) + 8));
+  my($spaces) = (" " x (length($base) + 8));
   print STDERR "$base v$self->{'version'}\n" .
-               "Usage: $base [-global <file>] [-include <directory>] [-recurse]\n" .
+               "Usage: $base [-global <file>] [-include <directory>]\n" .
                $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>]\n" .
                $spaces . "[-template <file>] " .
                "[-dynamic_only] [-static_only]\n" .
-               $spaces . "[-relative NAME=VAR] [-noreldefs] [-notoplevel]\n" .
+               $spaces . "[-relative NAME=VAR] [-noreldefs]\n" .
                $spaces . "[-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-type <";
 
   my(@keys) = sort keys %{$self->{'types'}};
   for(my $i = 0; $i <= $#keys; $i++) {
-    print STDERR $keys[$i];
+    print STDERR "$keys[$i]";
     if ($i != $#keys) {
-      print STDERR ' | ';
-    }
-    if ((($i + 1) % 6) == 0) {
-      print STDERR "\n$spaces        ";
+      print STDERR " | ";
     }
   }
   print STDERR ">]\n" .
                $spaces . "[files]\n\n";
 
-  my($default) = $self->extractType($self->{'default'});
+  my($default) = lc(substr($self->{'default'}, 0, $self->{'signif'}));
   print STDERR
 "       -global         Specifies the global input file.  Values stored\n" .
 "                       within this file are applied to all projects.\n" .
@@ -93,14 +84,10 @@ sub usageAndExit {
 "       -template       Specifies the template name (with no extension).\n" .
 "       -dynamic_only   Specifies that only dynamic projects will be generated.\n" .
 "       -static_only    Specifies that only static projects will be generated.\n" .
-"       -recurse        Recurse from the current directory and generate from\n" .
-"                       all found input files.\n" .
 "       -relative       Any \$() variable in an mpc that is matched to NAME\n" .
 "                       is replaced by VAR only if VAR can be made into a\n" .
 "                       relative path based on the current working directory.\n" .
 "       -noreldefs      Do not try to generate default relative definitions.\n" .
-"       -notoplevel     Do not generate the top level target file.  Files\n" .
-"                       are still process, but no top level file is created.\n" .
 "       -value_template This option allows modification of a template input\n" .
 "                       name value pair.  Use += to add VAL to the NAME's\n" .
 "                       value.  Use -= to subtract and = to override the value.\n" .
@@ -125,8 +112,7 @@ sub completion_command {
   my($self) = shift;
   my($str)  = "complete $self->{'name'} " .
               "'c/-/(global include type template relative " .
-              "ti dynamic_only static_only noreldefs notoplevel " .
-              "value_template value_project)/' " .
+              "ti dynamic_only static_only noreldefs)/' " .
               "'c/dll:/f/' 'c/dll_exe:/f/' 'c/lib_exe:/f/' 'c/lib:/f/' " .
               "'n/-ti/(dll lib dll_exe lib_exe)/:' 'n/-type/(";
 
@@ -154,10 +140,9 @@ sub run {
   my(%ti)         = ();
   my($dynamic)    = 1;
   my($static)     = 1;
+  my($signif)     = $self->{'signif'};
   my(%relative)   = ();
   my($reldefs)    = 1;
-  my($toplevel)   = 1;
-  my($recurse)    = 0;
   my(%addtemp)    = ();
   my(%addproj)    = ();
 
@@ -165,18 +150,10 @@ sub run {
   ## the type tags and project creators
   my($creators) = $self->{'creators'};
   foreach my $creator (@$creators) {
-    my($tag) = $self->extractType($creator);
+    my($tag) = lc(substr($creator, 0, $signif));
     $self->{'types'}->{$tag} = $creator;
   }
 
-  ## Before we process the arguments, we will prepend the $cmdenv
-  ## environment variable.
-  if (defined $ENV{$cmdenv}) {
-    my($envargs) = $self->create_array($ENV{$cmdenv});
-    unshift(@args, @$envargs);
-  }
-
-  ## Process the command line arguments
   for(my $i = 0; $i <= $#args; $i++) {
     my($arg) = $args[$i];
     if ($arg eq '-complete') {
@@ -186,22 +163,13 @@ sub run {
     elsif ($arg eq '-type') {
       $i++;
       if (!defined $args[$i]) {
-        $self->usageAndExit('-type requires an argument');
+        $self->usageAndExit("-type requires an argument");
       }
 
-      my($type) = lc($args[$i]);
+      my($type) = lc(substr($args[$i], 0, $signif));
       if (defined $self->{'types'}->{$type}) {
-        my($call)  = $self->{'types'}->{$type};
-        my($found) = 0;
-        foreach my $generator (@generators) {
-          if ($generator eq $call) {
-            $found = 1;
-            last;
-          }
-        }
-        if (!$found) {
-          push(@generators, $call);
-        }
+        my($call) = $self->{'types'}->{$type};
+        push(@generators, $call);
       }
       else {
         $self->usageAndExit("Invalid type: $args[$i]");
@@ -211,38 +179,32 @@ sub run {
       $i++;
       $global = $args[$i];
       if (!defined $global) {
-        $self->usageAndExit('-global requires a file name argument');
+        $self->usageAndExit("-global requires a file name argument");
       }
     }
     elsif ($arg eq '-include') {
       $i++;
       my($include) = $args[$i];
       if (!defined $include) {
-        $self->usageAndExit('-include requires a directory argument');
+        $self->usageAndExit("-include requires a directory argument");
       }
       push(@include, $include);
     }
     elsif ($arg eq '-noreldefs') {
       $reldefs = 0;
     }
-    elsif ($arg eq '-notoplevel') {
-      $toplevel = 0;
-    }
-    elsif ($arg eq '-recurse') {
-      $recurse = 1;
-    }
     elsif ($arg eq '-template') {
       $i++;
       $template = $args[$i];
       if (!defined $template) {
-        $self->usageAndExit('-template requires a file name argument');
+        $self->usageAndExit("-template requires a file name argument");
       }
     }
     elsif ($arg eq '-relative') {
       $i++;
       my($rel) = $args[$i];
       if (!defined $rel) {
-        $self->usageAndExit('-relative requires a variable assignment argument');
+        $self->usageAndExit("-relative requires a variable assignment argument");
       }
       else {
         if ($rel =~ /(\w+)\s*=\s*(.*)/) {
@@ -253,7 +215,7 @@ sub run {
           $relative{$name} = $val;
         }
         else {
-          $self->usageAndExit('Invalid option to -relative');
+          $self->usageAndExit("Invalid option to -relative");
         }
       }
     }
@@ -261,7 +223,7 @@ sub run {
       $i++;
       my($tmpi) = $args[$i];
       if (!defined $tmpi) {
-        $self->usageAndExit('-ti requires a template input argument');
+        $self->usageAndExit("-ti requires a template input argument");
       }
       else {
         if ($tmpi =~ /(dll|lib|dll_exe|lib_exe):(.*)/) {
@@ -278,7 +240,7 @@ sub run {
       $i++;
       my($value) = $args[$i];
       if (!defined $value) {
-        $self->usageAndExit('-value_template requires a variable assignment argument');
+        $self->usageAndExit("-value_template requires a variable assignment argument");
       }
       else {
         if ($value =~ /(\w+)\s*([\-+]?=)\s*(.*)/) {
@@ -287,10 +249,10 @@ sub run {
           my($val)  = $3;
           $val =~ s/^\s+//;
           $val =~ s/\s+$//;
-          if ($op eq '+=') {
+          if ($op eq "+=") {
             $op = 1;
           }
-          elsif ($op eq '-=') {
+          elsif ($op eq "-=") {
             $op = -1;
           }
           else {
@@ -299,7 +261,7 @@ sub run {
           $addtemp{$name} = [$op, $val];
         }
         else {
-          $self->usageAndExit('Invalid option to -value_template');
+          $self->usageAndExit("Invalid option to -value_template");
         }
       }
     }
@@ -307,7 +269,7 @@ sub run {
       $i++;
       my($value) = $args[$i];
       if (!defined $value) {
-        $self->usageAndExit('-value_project requires a variable assignment argument');
+        $self->usageAndExit("-value_project requires a variable assignment argument");
       }
       else {
         if ($value =~ /(\w+)\s*([\-+]?=)\s*(.*)/) {
@@ -316,10 +278,10 @@ sub run {
           my($val)  = $3;
           $val =~ s/^\s+//;
           $val =~ s/\s+$//;
-          if ($op eq '+=') {
+          if ($op eq "+=") {
             $op = 1;
           }
-          elsif ($op eq '-=') {
+          elsif ($op eq "-=") {
             $op = -1;
           }
           else {
@@ -328,7 +290,7 @@ sub run {
           $addproj{$name} = [$op, $val];
         }
         else {
-          $self->usageAndExit('Invalid option to -value_project');
+          $self->usageAndExit("Invalid option to -value_project");
         }
       }
     }
@@ -348,54 +310,19 @@ sub run {
     }
   }
 
-  ## Set up a hash that we can use to keep track of what
-  ## has been 'required'
-  my(%loaded) = ();
-
-  ## Set up the default generator, if no type is selected
+  ## Set up default values
+  if (!defined $input[0]) {
+    push(@input, "");
+  }
   if (!defined $generators[0]) {
     push(@generators, $self->{'default'});
   }
-
-  if ($recurse) {
-    if (defined $input[0]) {
-      ## This is an error.
-      ## -recurse was used and input files were specified.
-      $self->usageAndExit('No files should be ' .
-                          'specified when using -recurse');
-    }
-    else {
-      ## We have to load at least one generator here in order
-      ## to call the generate_recursive_input_list virtual function.
-      my($name) = $generators[0];
-      if (!$loaded{$name}) {
-        require "$name.pm";
-        $loaded{$name} = 1;
-      }
-
-      ## Generate the recursive input list
-      my($generator) = $name->new();
-      @input = $generator->generate_recursive_input_list('.');
-
-      ## If no files were found above, then we issue a warning
-      ## that we are going to use the default input
-      if (!defined $input[0]) {
-        print "WARNING: No files were found using the -recurse option.\n" .
-              "         Using the default input.\n";
-      }
-    }
-  }
-
-  ## Set up default values
-  if (!defined $input[0]) {
-    push(@input, '');
-  }
   if (!defined $global) {
-    $global = $self->{'path'} . '/config/global.mpb';
+    $global = $self->{'path'} . "/config/global.mpb";
   }
   ## Always add the default include paths
-  unshift(@include, $self->{'path'} . '/templates');
-  unshift(@include, $self->{'path'} . '/config');
+  unshift(@include, $self->{'path'} . "/templates");
+  unshift(@include, $self->{'path'} . "/config");
 
   if ($reldefs) {
     if (!defined $relative{'ACE_ROOT'} && defined $ENV{ACE_ROOT}) {
@@ -409,18 +336,14 @@ sub run {
         $relative{'TAO_ROOT'} = "$relative{ACE_ROOT}/TAO";
       }
     }
-    if (!defined $relative{'CIAO_ROOT'}) {
-      if (defined $ENV{CIAO_ROOT}) {
-        $relative{'CIAO_ROOT'} = $ENV{CIAO_ROOT};
-      }
-      else {
-        $relative{'CIAO_ROOT'} = "$relative{ACE_ROOT}/TAO/CIAO";
-      }
-    }
   }
 
   ## Set up un-buffered output for the progress callback
   $| = 1;
+
+  ## Set up a hash that we can use to keep track of what
+  ## has been 'required'
+  my(%loaded) = ();
 
   ## Save the original directory outside of the loop
   ## to avoid calling it multiple times.
@@ -431,6 +354,10 @@ sub run {
     ## To correctly reference any pathnames in the input file, chdir to
     ## its directory if there's any directory component to the specified path.
     my($base) = basename($file);
+    if ($base ne $file) {
+      chdir(dirname($file));
+      $file = $base;
+    }
     foreach my $name (@generators) {
       if (!$loaded{$name}) {
         require "$name.pm";
@@ -439,31 +366,17 @@ sub run {
       my($generator) = $name->new($global, \@include, $template,
                                   \%ti, $dynamic, $static, \%relative,
                                   \%addtemp, \%addproj,
-                                  (-t 1 ? \&progress : undef),
-                                  $toplevel);
-      if ($base ne $file) {
-        my($dir) = dirname($file);
-        if (!$generator->cd($dir)) {
-          print STDERR "ERROR: Unable to change to directory: $dir\n";
-          $status++;
-          last;
-        }
-        $file = $base;
-      }
-      print 'Generating output using ' .
-            ($file eq '' ? 'default input' : $file) . "\n";
-      print 'Start Time: ' . scalar(localtime(time())) . "\n";
+                                  (-t 1 ? \&progress : undef));
+      print "Generating output using " .
+            ($file eq "" ? "default input" : $file) . "\n";
+      print "Start Time: " . scalar(localtime(time())) . "\n";
       if (!$generator->generate($file)) {
-        print STDERR "ERROR: Unable to process: $file\n";
+        print STDERR "Unable to process: $file\n";
         $status++;
-        last;
       }
-      print '  End Time: ' . scalar(localtime(time())) . "\n";
-      $generator->cd($orig_dir);
+      print "  End Time: " . scalar(localtime(time())) . "\n";
     }
-    if ($status) {
-      last;
-    }
+    chdir($orig_dir);
   }
 
   return $status;

@@ -19,9 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:56
+// be/be_visitor_valuetype/valuetype_ci.cpp:58
 
 ACE_INLINE
 Messaging::ExceptionHolder::ExceptionHolder (void)
@@ -38,7 +37,7 @@ Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_MESSAGING_REPLYHANDLER___CI_)
 #define _MESSAGING_REPLYHANDLER___CI_
@@ -49,42 +48,34 @@ Messaging::ReplyHandler::ReplyHandler (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant)
+  : CORBA_Object (objref, _tao_collocated, servant)
 {
   this->Messaging_ReplyHandler_setup_collocation (_tao_collocated);
 }
 
-ACE_INLINE
-CORBA::Boolean
-Messaging::ReplyHandler::marshal (TAO_OutputCDR &cdr)
-{
-  return (cdr << this);
-}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:712
+// be/be_valuetype.cpp:714
 
 #if defined (__ACE_INLINE__)
-
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Messaging::ExceptionHolder *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Messaging::ExceptionHolder *);
 }
 TAO_NAMESPACE_CLOSE
-
 #endif /*__ACE_INLINE__*/
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+// be/be_visitor_valuetype/cdr_op_ci.cpp:60
 
 TAO_Messaging_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder *);
 TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ExceptionHolder *&);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_Messaging_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -95,5 +86,4 @@ TAO_Messaging_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     Messaging::ReplyHandler_ptr &
   );
-
 

@@ -36,15 +36,6 @@ project(Service Config DLL) : acelib {
   }
 }
 
-project(ACE Test) : aceexe {
-  exename = ACE_Test
-  Source_Files {
-    ACE_Test.cpp
-  }
-  Header_Files {
-  }
-}
-
 project(Aio Platform Test) : aceexe {
   exename = Aio_Platform_Test
   Source_Files {
@@ -752,15 +743,6 @@ project(Recursive Condition Test) : aceexe {
   exename = Recursive_Condition_Test
   Source_Files {
     Recursive_Condition_Test.cpp
-  }
-  Header_Files {
-  }
-}
-
-project(Recursive Condition Bug Test) : aceexe {
-  exename = Recursive_Condition_Bug_Test
-  Source_Files {
-    Recursive_Condition_Bug_Test.cpp
   }
   Header_Files {
   }

@@ -44,7 +44,8 @@ public:
   //    Represents an OMG IDL native definition.
   //
 public:
-  TAO_NativeDef_i (TAO_Repository_i *repo);
+  TAO_NativeDef_i (TAO_Repository_i *repo,
+                   ACE_Configuration_Section_Key section_key);
   // Constructor
 
   virtual ~TAO_NativeDef_i (void);

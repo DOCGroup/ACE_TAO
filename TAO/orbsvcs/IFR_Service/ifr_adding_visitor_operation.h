@@ -1,6 +1,6 @@
 // $Id$
 
-/* -*- C++ -*- */
+/* -*- c++ -*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -50,7 +50,7 @@ public:
   // Visit argument.
 
 private:
-  CORBA::ParDescriptionSeq params_;
+  CORBA_ParDescriptionSeq params_;
   // Holder for the operation parameter info passed to the
   // interface repository method create_operation().
 
@@ -59,3 +59,4 @@ private:
 };
 
 #endif /* TAO_IFR_ADDING_VISITOR_OPERATION_H */
+

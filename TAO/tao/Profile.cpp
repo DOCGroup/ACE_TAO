@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "Profile.h"
 #include "Object_KeyC.h"
 
@@ -12,9 +13,8 @@
 #include "Profile.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Profile,
-           "$Id$")
+ACE_RCSID(tao, Profile, "$Id$")
+
 
 // ****************************************************************
 
@@ -36,10 +36,7 @@ TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component
   // ----------------------------------------------------------------
 
   // Add the given tagged component to this profile.
-  //
-  // Note that multiple tagged profiles with the same tag value may be
-  // added, unless the tagged component is known to be unique by TAO.
-  this->tagged_components_.set_component (component);
+  this->tagged_components ().set_component (component);
 }
 
 void
@@ -66,8 +63,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
 
   // This loop iterates through CORBA::PolicyList to convert
   // each CORBA::Policy into a CORBA::PolicyValue
-  const size_t plen = policy_list->length ();
-  for (size_t i = 0; i < plen; ++i)
+  for (size_t i = 0; i < policy_list->length (); ++i)
     {
       TAO_OutputCDR out_CDR;
       policy_value_seq[i].ptype =
@@ -82,7 +78,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
 
       buf = policy_value_seq[i].pvalue.get_buffer ();
 
-      // Copy the CDR buffer data into the octet sequence buffer.
+      // Copy the CDR buffer data into the sequence<octect> buffer.
 
       for (const ACE_Message_Block *iterator = out_CDR.begin ();
            iterator != 0;
@@ -281,7 +277,7 @@ TAO_Profile::verify_orb_configuration (ACE_ENV_SINGLE_ARG_DECL)
       // @todo: We need the proper minor code as soon as the spec is
       //        updated.
       ACE_THROW (CORBA::BAD_PARAM (
-                   CORBA::SystemException::_tao_minor_code (
+                   CORBA_SystemException::_tao_minor_code (
                       TAO_DEFAULT_MINOR_CODE,
                       EINVAL),
                    CORBA::COMPLETED_NO));
@@ -310,7 +306,7 @@ TAO_Profile::verify_profile_version (ACE_ENV_SINGLE_ARG_DECL)
       // @todo: We need the proper minor code as soon as the spec is
       //        updated.
       ACE_THROW (CORBA::BAD_PARAM (
-                   CORBA::SystemException::_tao_minor_code (
+                   CORBA_SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
@@ -340,7 +336,7 @@ TAO_Profile::addressing_mode (CORBA::Short addr
 
     default:
       ACE_THROW (CORBA::BAD_PARAM (
-             CORBA::SystemException::_tao_minor_code (
+             CORBA_SystemException::_tao_minor_code (
                TAO_DEFAULT_MINOR_CODE,
                EINVAL),
              CORBA::COMPLETED_NO));
@@ -354,8 +350,7 @@ TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag,
                                           TAO_ORB_Core *orb_core)
   : TAO_Profile (tag,
                  orb_core,
-                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
-                                           TAO_DEF_GIOP_MINOR)),
+                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     tagged_profile_ ()
 {
 }
@@ -413,15 +408,15 @@ TAO_Unknown_Profile::encode_endpoints (void)
   return 0;
 }
 
-const TAO::ObjectKey &
+const TAO_ObjectKey &
 TAO_Unknown_Profile::object_key (void) const
 {
   // @@ TODO this is wrong, but the function is deprecated anyway....
-  static TAO::ObjectKey empty_key;
+  static TAO_ObjectKey empty_key;
   return empty_key;
 }
 
-TAO::ObjectKey *
+TAO_ObjectKey *
 TAO_Unknown_Profile::_key (void) const
 {
   return 0;

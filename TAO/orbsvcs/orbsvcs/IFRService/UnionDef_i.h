@@ -45,7 +45,8 @@ class TAO_IFRService_Export TAO_UnionDef_i : public virtual TAO_TypedefDef_i,
   //    Represents an OMG IDL union definition.
   //
 public:
-  TAO_UnionDef_i (TAO_Repository_i *repo);
+  TAO_UnionDef_i (TAO_Repository_i *repo,
+                  ACE_Configuration_Section_Key section_key);
   // Constructor
 
   virtual ~TAO_UnionDef_i (void);
@@ -90,46 +91,46 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::IDLType_ptr discriminator_type_def (
+  virtual CORBA_IDLType_ptr discriminator_type_def (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::IDLType_ptr discriminator_type_def_i (
+  CORBA_IDLType_ptr discriminator_type_def_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void discriminator_type_def (
-      CORBA::IDLType_ptr discriminator_type_def
+      CORBA_IDLType_ptr discriminator_type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void discriminator_type_def_i (
-      CORBA::IDLType_ptr discriminator_type_def
+      CORBA_IDLType_ptr discriminator_type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::UnionMemberSeq *members (
+  virtual CORBA_UnionMemberSeq *members (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::UnionMemberSeq *members_i (
+  CORBA_UnionMemberSeq *members_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void members (
-      const CORBA::UnionMemberSeq &members
+      const CORBA_UnionMemberSeq &members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void members_i (
-      const CORBA::UnionMemberSeq &members
+      const CORBA_UnionMemberSeq &members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -137,7 +138,7 @@ public:
 private:
   void fetch_label (
       const ACE_Configuration_Section_Key member_key,
-      CORBA::UnionMember &member
+      CORBA_UnionMember &member
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -149,3 +150,5 @@ private:
 #endif /* _MSC_VER */
 
 #endif /* TAO_UNIONDEF_I_H */
+
+

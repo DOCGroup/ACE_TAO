@@ -50,18 +50,18 @@ TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Collocation/run_test.pl: !MINIMUM !ST !Linux
-TAO/tests/RTCORBA/Destroy_Thread_Pool/run_test.pl: !MINIMUM !ST !Linux
+TAO/tests/RTCORBA/Destroy_Thread_Pool/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Linear_Priority/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: !MINIMUM !ST !Linux
-TAO/tests/RTCORBA/ORB_init/run_test.pl: !MINIMUM !ST
-TAO/tests/RTCORBA/Persistent_IOR/run_test.pl: !MINIMUM !ST !Linux
+TAO/tests/RTCORBA/ORB_init/run_test.pl: !MINIMUM
+TAO/tests/RTCORBA/Persistent_IOR/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Policy_Combinations/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/Private_Connection/run_test.pl:  !MINIMUM !ST
 TAO/tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:  !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/RTMutex/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Server_Declared/run_test.pl: !MINIMUM !ST !Linux
-TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !MINIMUM !ST
+TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Thread_Pool/run_test.pl: !MINIMUM !ST !Linux
 
 
@@ -228,4 +228,3 @@ TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !STATIC !SUNCC5_1
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 
 TAO/tests/Two_Objects/run_test.pl: !ST
-TAO/examples/RTCORBA/Activity/run_test.pl: !MINIMUM

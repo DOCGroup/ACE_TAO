@@ -8,9 +8,7 @@
 # include "tao/Tagged_Components.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Tagged_Components,
-           "$Id$")
+ACE_RCSID(tao, Tagged_Components, "$Id$")
 
 
 void

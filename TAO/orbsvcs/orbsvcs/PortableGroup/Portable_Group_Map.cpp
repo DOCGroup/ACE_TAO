@@ -1,12 +1,14 @@
+// This may look like C, but it's really -*- C++ -*-
+//
 // $Id$
 
 #include "Portable_Group_Map.h"
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Server_Request.h"
 
-ACE_RCSID (PortableGroup,
-           Portable_Group_Map,
-           "$Id$")
+//#if !defined (__ACE_INLINE__)
+//# include "Portable_Group_Map.i"
+//#endif /* __ACE_INLINE__ */
 
 
 /// Constructor.
@@ -40,11 +42,9 @@ TAO_Portable_Group_Map::~TAO_Portable_Group_Map (void)
 
 
 void
-TAO_Portable_Group_Map::add_groupid_objectkey_pair (
-    PortableGroup::TagGroupTaggedComponent *group_id,
-    const TAO::ObjectKey &key
-    ACE_ENV_ARG_DECL
-  )
+TAO_Portable_Group_Map::add_groupid_objectkey_pair (PortableGroup::TagGroupTaggedComponent *group_id,
+                                                    const TAO_ObjectKey &key
+                                                    ACE_ENV_ARG_DECL)
 {
   Map_Entry *new_entry;
 
@@ -95,7 +95,7 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
 
 void
 TAO_Portable_Group_Map::remove_groupid_objectkey_pair (const PortableGroup::TagGroupTaggedComponent* /*group_id*/,
-                                                       const TAO::ObjectKey &/*key*/
+                                                       const TAO_ObjectKey &/*key*/
                                                        ACE_ENV_ARG_DECL_NOT_USED)
 {
 

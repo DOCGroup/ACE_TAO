@@ -44,13 +44,13 @@ public:
   CORBA::Boolean unmarshall_object_key (TAO_InputCDR &cdr);
 
   /// Return the object key
-  TAO::ObjectKey &object_key (void);
+  TAO_ObjectKey &object_key (void);
 
   /// Save the object key
-  void object_key (TAO::ObjectKey &object_key);
+  void object_key (TAO_ObjectKey &object_key);
 
   /// Return a const object key
-  const TAO::ObjectKey &object_key (void) const;
+  const TAO_ObjectKey &object_key (void) const;
 
   /// get the tagged_profile
   const IOP::TaggedProfile &tagged_profile (void) const;
@@ -92,7 +92,7 @@ private:
   CORBA::Boolean object_key_extracted_;
 
   /// The object key
-  TAO::ObjectKey object_key_;
+  TAO_ObjectKey object_key_;
 
   /// The Tagged profile. This class would have the Tagged Profile
   IOP::TaggedProfile profile_;

@@ -98,7 +98,6 @@ SOURCE=.\PP_Test_Server.cpp
 # Begin Source File
 
 SOURCE=.\PP_TestC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

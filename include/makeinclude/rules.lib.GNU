@@ -59,7 +59,10 @@ ifeq (1,$(ace_lib_prelink))
         #### to lib files, for example.
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $? $(LDFLAGS) $(ACE_NUL_STDERR)
 endif # ace_lib_prelink
-	echo $(TMPINCDIR:%=%/*.o) $? | xargs $(AR) $(ARFLAGS) $@;
+	$(AR) $(ARFLAGS) $@ $?
+ifdef TMPINCDIR
+	  find $(TMPINCDIR) -name "*.o" -type f | xargs $(AR) $(ARFLAGS) $@;
+endif
 ifdef ibmcxx_build
 # This is required to get AIX IBM C/C++ to instantiate and compile the needed
 # templates.

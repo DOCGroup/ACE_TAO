@@ -179,7 +179,6 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\CosEventChannelFactoryC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

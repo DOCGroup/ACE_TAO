@@ -886,7 +886,7 @@ UTL_Scope::fe_add_predefined_type (AST_PredefinedType *)
 AST_Module *
 UTL_Scope::fe_add_module (AST_Module *)
 {
-  return 0;
+  return NULL;
 }
 
 AST_Interface *

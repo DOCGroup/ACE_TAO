@@ -95,6 +95,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
   // The discriminant type may have to be defined here if it was an enum
   // declaration inside of the union statement.
 
+  ctx.state (TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CH);
   be_visitor_union_discriminant_ch ud_visitor (&ctx);
 
   if (bt->accept (&ud_visitor) == -1)
@@ -186,6 +187,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
   if (be_global->tc_support ())
     {
       ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
       be_visitor_typecode_decl tc_visitor (&ctx);
 
       if (node->accept (&tc_visitor) == -1)

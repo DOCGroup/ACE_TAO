@@ -23,6 +23,7 @@
 #include "orbsvcs/CosNotificationC.h"
 #include "Peer.h"
 #include "Event.h"
+#include "Types.h"
 
 class TAO_NS_ProxySupplier;
 class TAO_NS_Proxy;

@@ -18,13 +18,13 @@ verify_data (Foo::Bar *original, Foo::Bar *extracted)
 	      "--------\n"
 	      "%d\n"
 	      "%d\n"
-//		"%Lu\n"
+//		"%Ld\n"
 	      "%s\n\n"
 	      "Extracted\n"
 	      "---------\n"
 	      "%d\n"
 	      "%d\n"
-//		"%Lu\n"
+//		"%Ld\n"
 	      "%s\n\n",
 	      original->A,
 	      original->B,
@@ -86,9 +86,9 @@ main (int argc, char *argv[])
       // ----------------------------------------------------------
 
       // Test values to be placed in the test structure.
-      const CORBA::Long A = 1010;
-      const CORBA::Long B = -3427;
-      const CORBA::ULongLong C = ACE_UINT64_LITERAL (2001);
+      CORBA::Long A = 1010;
+      CORBA::Long B = -3427;
+      CORBA::LongLong C = 3427;
       const char D[] = "I'm Batman.";
 
       // Create the structure to be encoded.

@@ -1,5 +1,7 @@
+// Service_Repository.cpp
+// $Id$
+
 #include "ace/Service_Repository.h"
-#include "ace/Service_Types.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 
@@ -7,9 +9,7 @@
 #include "ace/Service_Repository.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           Service_Repository,
-           "$Id$")
+ACE_RCSID(ace, Service_Repository, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository)
 

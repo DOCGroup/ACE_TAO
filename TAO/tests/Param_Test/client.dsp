@@ -178,7 +178,6 @@ SOURCE=.\options.cpp
 # Begin Source File
 
 SOURCE=.\param_testC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

@@ -4,7 +4,6 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "ace/Get_Opt.h"
-#include "../check_supported_priorities.cpp"
 
 class Test_i : public POA_Test
 {
@@ -150,10 +149,6 @@ main (int argc, char *argv[])
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
         return 1;
-        
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
 
       // RootPOA.
       CORBA::Object_var object =

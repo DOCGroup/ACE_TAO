@@ -253,14 +253,6 @@ SOURCE=.\Codecs.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Codeset_Registry.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Codeset_Registry_db.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Configuration.cpp
 # End Source File
 # Begin Source File
@@ -1246,10 +1238,6 @@ SOURCE=.\Cleanup_Strategies_T.h
 # Begin Source File
 
 SOURCE=.\Codecs.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Codeset_Registry.h
 # End Source File
 # Begin Source File
 
@@ -2442,10 +2430,6 @@ SOURCE=.\CDR_Stream.i
 # Begin Source File
 
 SOURCE=.\Cleanup_Strategies_T.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Codeset_Registry.inl
 # End Source File
 # Begin Source File
 

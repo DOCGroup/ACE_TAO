@@ -19,7 +19,7 @@ module Foo
   {
     long A;
     long B;
-    unsigned long long C;
+    long long C;
     string D;
   };
 

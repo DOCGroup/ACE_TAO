@@ -90,7 +90,6 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\GridC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

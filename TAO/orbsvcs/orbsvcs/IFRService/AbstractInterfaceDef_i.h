@@ -34,8 +34,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IFRService_Export TAO_AbstractInterfaceDef_i 
-	: public virtual TAO_InterfaceDef_i
+class TAO_IFRService_Export TAO_AbstractInterfaceDef_i : public virtual TAO_InterfaceDef_i
 {
   // = TITLE
   //    TAO_AbstractInterfaceDef_i
@@ -44,28 +43,29 @@ class TAO_IFRService_Export TAO_AbstractInterfaceDef_i
   //    Represents an abstract interface definition.
   //
 public:
-  TAO_AbstractInterfaceDef_i (TAO_Repository_i *repo);
+  TAO_AbstractInterfaceDef_i (TAO_Repository_i *repo,
+                              ACE_Configuration_Section_Key section_key);
   // Constructor
 
   virtual ~TAO_AbstractInterfaceDef_i (void);
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
   virtual CORBA::Boolean is_a (
       const char *interface_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean is_a_i (
       const char *interface_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

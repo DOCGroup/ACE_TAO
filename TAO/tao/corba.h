@@ -36,7 +36,7 @@
 // The definitions are included in the same order as they are declared
 // in corbafwd.h
 #include "tao/Typecode.h"
-#include "tao/Any_T.h"
+#include "tao/Any.h"
 
 #include "tao/Environment.h"
 #include "tao/Exception.h"
@@ -47,7 +47,6 @@
 #include "tao/LocalObject.h"
 #include "tao/Principal.h"
 #include "tao/ORB.h"
-#include "tao/varbase.h"
 
 #include "tao/CurrentC.h"
 #include "tao/BoundsC.h"
@@ -55,7 +54,7 @@
 #include "tao/ValueFactory.h"
 #include "tao/AbstractBase.h"
 #include "tao/PolicyC.h"
-#include "tao/ServicesC.h"
+#include "tao/Services.h"
 #include "tao/DomainC.h"
 #include "tao/WrongTransactionC.h"
 
@@ -66,7 +65,7 @@
 #include "tao/Sequence.h"
 #include "tao/Managed_Types.h"
 #include "tao/Object_KeyC.h"
-#include "tao/ObjectIdListC.h"
+#include "tao/ObjectIDList.h"
 
 #include "tao/Remote_Object_Proxy_Impl.h"
 
@@ -76,6 +75,14 @@
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/PortableInterceptorC.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+#if !defined (ACE_NESTED_CLASS)
+#if defined (ACE_WIN32)
+#define ACE_NESTED_CLASS(SCOPE,CLASS) CLASS
+#else /* !ACE_WIN32 */
+#define ACE_NESTED_CLASS(SCOPE,CLASS) SCOPE::CLASS
+#endif /* ACE_WIN32 */
+#endif /* ACE_NESTED_CLASS */
 
 #include "ace/post.h"
 #endif /* TAO_MASTER_CORBA_H */

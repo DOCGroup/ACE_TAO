@@ -34,7 +34,7 @@ class activity_Export Thread_Task : public Periodic_Task
   Thread_Task (void);
 
   /// Activate thread(s).
-  virtual int activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *priority_mapping);
+  virtual int activate_task (ACE_Barrier* barrier);
 
  protected:
 

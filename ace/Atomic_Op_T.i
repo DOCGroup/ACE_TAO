@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 //
@@ -144,7 +143,7 @@ template <class ACE_LOCK, class TYPE> ACE_INLINE void
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator= (const TYPE &rhs)
 {
 // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator=");
-  ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_);
+  ACE_GUARD (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_);
   this->value_ = rhs;
 }
 

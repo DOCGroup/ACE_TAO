@@ -22,13 +22,8 @@ main (int argc, char *argv[])
         }
       else
         {
-           int status = client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-           ACE_TRY_CHECK;
-
-           if (status == -1)
-           {
-              return 1;
-           }
+          client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -41,3 +36,4 @@ main (int argc, char *argv[])
 
   return 0;
 }
+

@@ -9,17 +9,17 @@ TAO_String_Hash_Key::TAO_String_Hash_Key (void)
 }
 
 TAO_String_Hash_Key::TAO_String_Hash_Key (char * name)
-  : CORBA::String_var (name)
+  : CORBA_String_var (name)
 {
 }
 
 TAO_String_Hash_Key::TAO_String_Hash_Key (const char * name)
-  : CORBA::String_var (name)
+  : CORBA_String_var (name)
 {
 }
 
 TAO_String_Hash_Key::TAO_String_Hash_Key (const CORBA::String_var &src)
-  : CORBA::String_var (src)
+  : CORBA_String_var (src)
 {
 }
 
@@ -42,6 +42,10 @@ TAO_String_Hash_Key::hash (void) const
 {
   u_long ret = ACE::hash_pjw (this->in ());
   return ret;
+}
+
+TAO_String_Hash_Key::~TAO_String_Hash_Key (void)
+{
 }
 
 // TAO_Sequence_Extracter_Base
@@ -99,7 +103,7 @@ template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CORBA::TypeCode *, A
 template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, CORBA::TypeCode *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CORBA::TypeCode *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CORBA::TypeCode *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,CORBA::TypeCode*>;
+template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,CORBA_TypeCode*>;
 
 template class ACE_Hash<TAO_String_Hash_Key>;
 template class ACE_Equal_To<TAO_String_Hash_Key>;
@@ -115,7 +119,7 @@ template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,int>;
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, CORBA::TypeCode *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CORBA::TypeCode *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CORBA::TypeCode *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,CORBA::TypeCode*>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,CORBA_TypeCode*>
 
 #pragma instantiate ACE_Hash<TAO_String_Hash_Key>
 #pragma instantiate ACE_Equal_To<TAO_String_Hash_Key>

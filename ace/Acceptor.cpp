@@ -1,5 +1,7 @@
-#ifndef ACE_ACCEPTOR_CPP
-#define ACE_ACCEPTOR_CPP
+// $Id$
+
+#ifndef ACE_ACCEPTOR_C
+#define ACE_ACCEPTOR_C
 
 #include "ace/ACE.h"
 
@@ -9,13 +11,9 @@
 
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
-#include "ace/Svc_Handler.h"
 #include "ace/WFMO_Reactor.h"
 
-
-ACE_RCSID (ace,
-           Acceptor,
-           "$Id$")
+ACE_RCSID(ace, Acceptor, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Acceptor)
 
@@ -1210,4 +1208,4 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::operator ACE_PEER_ACCEPT
   return (ACE_PEER_ACCEPTOR &) this->peer_acceptor_;
 }
 
-#endif /* ACE_ACCEPTOR_CPP */
+#endif /* ACE_ACCEPTOR_C */

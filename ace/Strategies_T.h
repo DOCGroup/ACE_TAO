@@ -15,25 +15,23 @@
 
 #include "ace/pre.h"
 
-#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Service_Config.h"
 #include "ace/Reactor.h"
+#include "ace/Synch_Options.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Connection_Recycling_Strategy.h"
 #include "ace/Refcountable.h"
 #include "ace/Hashable.h"
 #include "ace/Recyclable.h"
 
-
 // Needed for broken linkers that can't grok long symbols.
 #define ACE_Refcounted_Hash_Recyclable ARHR
-
-
-class ACE_Service_Repository;
 
 /**
  * @class ACE_Recycling_Strategy
@@ -940,14 +938,15 @@ public:
   virtual int cleanup_hint (const void *recycling_act,
                             void **act_holder = 0);
 
-  // = Traits for managing the map
+  // = Typedefs for managing the map
   typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
           REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
-  typedef ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Null_Mutex>
+  typedef ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex>
           CONNECTION_MAP;
-
-  typedef ACE_TYPENAME CONNECTION_MAP::ITERATOR CONNECTION_MAP_ITERATOR;
-  typedef ACE_TYPENAME CONNECTION_MAP::ENTRY CONNECTION_MAP_ENTRY;
+  typedef ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex>
+          CONNECTION_MAP_ITERATOR;
+  typedef ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *>
+          CONNECTION_MAP_ENTRY;
 
   typedef ACE_Reverse_Lock<MUTEX> REVERSE_MUTEX;
 
@@ -968,8 +967,8 @@ protected:
                               int perms);
 
   /// Find an idle handle.
-  int find (REFCOUNTED_HASH_RECYCLABLE_ADDRESS &search_addr,
-            CONNECTION_MAP_ENTRY *&entry);
+  int find (ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> &search_addr,
+            ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry);
 
   /// Remove from cache (non-locking version).
   virtual int purge_i (const void *recycling_act);
@@ -996,7 +995,7 @@ protected:
                     int reuse_addr,
                     int flags,
                     int perms,
-                    CONNECTION_MAP_ENTRY *&entry,
+                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry,
                     int &found);
 
   int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
@@ -1006,18 +1005,17 @@ protected:
                                     int reuse_addr,
                                     int flags,
                                     int perms,
-                                    CONNECTION_MAP_ENTRY *&entry,
+                                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry,
                                     int &found);
 
-  virtual int connect_svc_handler_i (
-    SVC_HANDLER *&sh,
-    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-    ACE_Time_Value *timeout,
-    const ACE_PEER_CONNECTOR_ADDR &local_addr,
-    int reuse_addr,
-    int flags,
-    int perms,
-    int &found);
+  virtual int connect_svc_handler_i (SVC_HANDLER *&sh,
+                                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                     ACE_Time_Value *timeout,
+                                     const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                     int reuse_addr,
+                                     int flags,
+                                     int perms,
+                                     int &found);
 
   /// Table that maintains the cache of connected <SVC_HANDLER>s.
   CONNECTION_MAP connection_map_;

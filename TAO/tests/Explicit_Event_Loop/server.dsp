@@ -94,7 +94,6 @@ SOURCE=.\server.cpp
 # Begin Source File
 
 SOURCE=.\timeC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

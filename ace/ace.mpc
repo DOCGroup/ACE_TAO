@@ -100,11 +100,11 @@ project : acelib, core {
     }
 
     Demux {
+      Dev_Poll_Reactor.cpp
       Event_Handler.cpp
       FlReactor.cpp
       Msg_WFMO_Reactor.cpp
       POSIX_Proactor.cpp
-      POSIX_CB_Proactor.cpp
       WIN32_Proactor.cpp
       Priority_Reactor.cpp
       Proactor.cpp
@@ -112,7 +112,6 @@ project : acelib, core {
       Select_Reactor.cpp
       Select_Reactor_Base.cpp
       SUN_Proactor.cpp
-      Dev_Poll_Reactor.cpp
       TP_Reactor.cpp
       TkReactor.cpp
       WFMO_Reactor.cpp
@@ -217,15 +216,12 @@ project : acelib, core {
       Svc_Conf_l.cpp
       Svc_Conf_y.cpp
       Svc_Conf_Lexer_Guard.cpp
-      XML_Svc_Conf.cpp
     }
 
     Streams {
       CDR_Base.cpp
       CDR_Stream.cpp
       Codeset_IBM1047.cpp
-      Codeset_Registry.cpp
-      Codeset_Registry_db.cpp
       Message_Queue.cpp
       Reactor_Notification_Strategy.cpp
       Task.cpp
@@ -296,7 +292,6 @@ project : acelib, core {
       Unbounded_Set.cpp
       Unbounded_Queue.cpp
       Asynch_Acceptor.cpp
-      Asynch_Connector.cpp
       Auto_IncDec_T.cpp
       Auto_Ptr.cpp
       Based_Pointer_T.cpp
@@ -359,33 +354,12 @@ project : acelib, core {
     }
   }
 
-  Inline_Files {
-    ace_wchar.inl
-  }
-
   Header_Files {
-    ACE_Export.h
-    ace_wchar.h
     config-all.h
     config-win32-common.h
     config-win32-msvc.h
     config-win32.h
     config.h
-    Default_Constants.h
-    Global_Macros.h
-    Log_Priority.h
-    Malloc_Base.h
-    Min_Max.h
-    OS_Export.h
-    post.h
-    pre.h
-    Proactor_Impl.h
-    Reactor_Impl.h
-    streams.h
-    Svc_Conf.h
-    Svc_Conf_Tokens.h
-    UPIPE_Addr.h
-    Version.h
   }
 
   Documentation_Files {

@@ -12,9 +12,8 @@
 # include "DII_Invocation.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (DynamicInterface,
-           DII_Invocation,
-           "$Id$")
+ACE_RCSID(DynamicInterface, DII_Invocation, "$Id$")
+
 
 int
 TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions
@@ -64,17 +63,14 @@ TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions
               continue;
             }
 
-          CORBA::Any any;
-          TAO::Unknown_IDL_Type *unk = 0;
-          ACE_NEW_RETURN (unk,
-                          TAO::Unknown_IDL_Type (
-                              tcp,
-                              this->inp_stream ().start (),
-                              this->inp_stream ().byte_order ()
-                            ),
-                          TAO_INVOKE_EXCEPTION);
+          const ACE_Message_Block* cdr = this->inp_stream ().start ();
 
-          ACE_THROW_RETURN (CORBA::UnknownUserException (any),
+          CORBA_Any any (tcp,
+                         0,
+                         this->inp_stream ().byte_order (),
+                         cdr);
+
+          ACE_THROW_RETURN (CORBA_UnknownUserException (any),
                             TAO_INVOKE_EXCEPTION);
         }
 

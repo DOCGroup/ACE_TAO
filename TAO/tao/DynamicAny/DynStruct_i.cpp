@@ -5,10 +5,9 @@
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
 
-ACE_RCSID (DynamicAny,
-           DynStruct_i,
-           "$Id$")
+ACE_RCSID(DynamicAny, DynStruct_i, "$Id$")
 
+// Constructors and destructor.
 
 TAO_DynStruct_i::TAO_DynStruct_i (void)
 {
@@ -46,7 +45,7 @@ TAO_DynStruct_i::init_common (void)
 }
 
 void
-TAO_DynStruct_i::init (const CORBA::Any& any
+TAO_DynStruct_i::init (const CORBA_Any& any
                        ACE_ENV_ARG_DECL)
 {
   CORBA::TypeCode_var tc = any.type ();
@@ -56,25 +55,8 @@ TAO_DynStruct_i::init (const CORBA::Any& any
 
   this->type_ = tc;
 
-  this->set_from_any (any
-                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-}
-
-
-// This code is common to from_any() and the init() overload that takes
-// an Any argument.
-void
-TAO_DynStruct_i::set_from_any (const CORBA::Any & any
-                               ACE_ENV_ARG_DECL)
-{
-  // member_type() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
-    TAO_DynAnyFactory::strip_alias (any.type ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  CORBA::ULong numfields = unaliased_tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  // Member_count works with aliased type codes.
+  CORBA::ULong numfields = this->type_->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Resize the array.
@@ -89,7 +71,7 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any
                     any._tao_byte_order ());
 
   // If we have an exception type, unmarshal the repository ID.
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (any.type ()
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (this->type_.in ()
                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -99,6 +81,12 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any
       cdr >> str.out ();
     }
 
+  // member_type() does not work with aliased type codes.
+  CORBA::TypeCode_var unaliased_tc =
+    TAO_DynAnyFactory::strip_alias (this->type_.in ()
+                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   for (CORBA::ULong i = 0; i < numfields; i++)
     {
       CORBA::TypeCode_var field_tc =
@@ -106,13 +94,11 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::Any field_any;
-      TAO::Unknown_IDL_Type *unk = 0;
-      ACE_NEW (unk,
-               TAO::Unknown_IDL_Type (field_tc.in (),
-                                      cdr.start (),
-                                      cdr.byte_order ()));
-      field_any.replace (unk);
+      // This Any constructor is a TAO extension.
+      CORBA_Any field_any (field_tc.in (),
+                           0,
+                           cdr.byte_order (),
+                           cdr.start ());
 
       // This recursive step will call the correct constructor
       // based on the type of field_any.
@@ -130,7 +116,7 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any
 }
 
 void
-TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc
+TAO_DynStruct_i::init (CORBA_TypeCode_ptr tc
                        ACE_ENV_ARG_DECL)
 {
   this->check_typecode (tc
@@ -149,15 +135,10 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc
 
   CORBA::TypeCode_var mtype;
 
-  // member_type() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
-  TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-
   for (CORBA::ULong i = 0; i < numfields; i++)
     {
-      mtype = unaliased_tc->member_type (i
-                                         ACE_ENV_ARG_PARAMETER);
+      mtype = tc->member_type (i
+                               ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // Recursively initialize each member.
@@ -234,14 +215,10 @@ TAO_DynStruct_i::current_member_name (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  // member_name() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
-    TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  // Member_name works with aliased type codes.
   const char *name =
-    unaliased_tc->member_name (this->current_position_
-                               ACE_ENV_ARG_PARAMETER);
+    this->type_->member_name (this->current_position_
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return CORBA::string_dup (name);
@@ -275,14 +252,9 @@ TAO_DynStruct_i::current_member_kind (ACE_ENV_SINGLE_ARG_DECL)
                         CORBA::tk_null);
     }
 
-  // member_type() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
-    TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::tk_null);
   CORBA::TypeCode_var tc =
-  unaliased_tc->member_type (this->current_position_
-                                  ACE_ENV_ARG_PARAMETER);
+    this->type_.in ()->member_type (this->current_position_
+                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::tk_null);
 
   CORBA::TCKind retval = TAO_DynAnyFactory::unalias (tc.in ()
@@ -315,25 +287,12 @@ TAO_DynStruct_i::get_members (ACE_ENV_SINGLE_ARG_DECL)
 
   DynamicAny::NameValuePairSeq_var safe_retval = members;
   CORBA::Any_var temp;
-  CORBA::TypeCode_var unaliased_tc;
-  
-  if (this->type_->kind_ == CORBA::tk_alias)
-    { 
-      unaliased_tc =
-        TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-    }
-  else
-    {
-      unaliased_tc = CORBA::TypeCode::_duplicate (this->type_.in ());
-    }
 
   // Assign name and value to each pearl on the string.
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
       safe_retval[i].id =
-        CORBA::string_dup (unaliased_tc->member_name (i));
+        CORBA::string_dup (this->type_.in ()->member_name (i));
 
       temp = this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -429,17 +388,11 @@ TAO_DynStruct_i::get_members_as_dyn_any (ACE_ENV_SINGLE_ARG_DECL)
 
   DynamicAny::NameDynAnyPairSeq_var safe_retval = members;
 
-  // member_name() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
-    TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
   // Assign name and value to each pearl on the string.
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
       safe_retval[i].id =
-      CORBA::string_dup (unaliased_tc->member_name (i));
+        CORBA::string_dup (this->type_.in ()->member_name (i));
 
       // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
       // Set the flag so the caller can't destroy.
@@ -522,7 +475,7 @@ TAO_DynStruct_i::set_members_as_dyn_any (
 // ****************************************************************
 
 void
-TAO_DynStruct_i::from_any (const CORBA::Any & any
+TAO_DynStruct_i::from_any (const CORBA_Any & any
                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -534,6 +487,7 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
     {
       ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
     }
+
   CORBA::TypeCode_var tc = any.type ();
   CORBA::Boolean equivalent = this->type_->equivalent (tc.in ()
                                                        ACE_ENV_ARG_PARAMETER);
@@ -565,13 +519,11 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
                                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
-          CORBA::Any field_any;
-          TAO::Unknown_IDL_Type *unk = 0;
-          ACE_NEW (unk,
-                   TAO::Unknown_IDL_Type (field_tc.in (),
-                                          cdr.start (),
-                                          cdr.byte_order ()));
-          field_any.replace (unk);
+          // This Any constructor is a TAO extension.
+          CORBA_Any field_any (field_tc.in (),
+                               0,
+                               cdr.byte_order (),
+                               cdr.start ());
 
           this->da_members_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
@@ -592,7 +544,7 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
     }
   else
     {
-      ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+      ACE_THROW (DynamicAny::DynAny::InvalidValue ());
     }
 }
 
@@ -622,11 +574,11 @@ TAO_DynStruct_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
-      CORBA::TypeCode_var field_tc = this->da_members_[i]->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA_TypeCode_var field_tc = this->da_members_[i]->type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // Recursive step.
-      CORBA::Any_var field_any = this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA_Any_var field_any = this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       ACE_Message_Block *field_mb = field_any->_tao_get_cdr ();
@@ -643,21 +595,15 @@ TAO_DynStruct_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA::Any_ptr retval = 0;
+  CORBA_Any_ptr retval = 0;
   ACE_NEW_THROW_EX (retval,
-                    CORBA::Any,
+                    CORBA_Any (this->type_.in (),
+                               0,
+                               in_cdr.byte_order (),
+                               in_cdr.start ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  TAO::Unknown_IDL_Type *unk = 0;
-  ACE_NEW_THROW_EX (unk,
-                    TAO::Unknown_IDL_Type (this->type_.in (),
-                                           in_cdr.start (),
-                                           in_cdr.byte_order ()),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
-
-  retval->replace (unk);
   return retval;
 }
 

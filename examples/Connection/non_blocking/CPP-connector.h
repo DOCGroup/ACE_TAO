@@ -11,7 +11,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Connector.h"
-#include "ace/Svc_Handler.h"
 
 template <ACE_PEER_STREAM_1>
 class Peer_Handler : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH>

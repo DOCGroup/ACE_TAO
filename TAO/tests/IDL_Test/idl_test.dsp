@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR- /GX /O2 /I "../../../" /I "../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../../" /I "../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -67,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR- /GX /Zi /Od /I "../../../" /I "../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../../" /I "../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -90,7 +90,6 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\anonymousC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -99,7 +98,6 @@ SOURCE=.\anonymousS.cpp
 # Begin Source File
 
 SOURCE=.\arrayC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -108,7 +106,6 @@ SOURCE=.\arrayS.cpp
 # Begin Source File
 
 SOURCE=.\constantsC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -117,7 +114,6 @@ SOURCE=.\constantsS.cpp
 # Begin Source File
 
 SOURCE=.\enum_in_structC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -126,7 +122,6 @@ SOURCE=.\enum_in_structS.cpp
 # Begin Source File
 
 SOURCE=.\fullC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -135,7 +130,6 @@ SOURCE=.\fullS.cpp
 # Begin Source File
 
 SOURCE=.\fwdC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -144,7 +138,6 @@ SOURCE=.\fwdS.cpp
 # Begin Source File
 
 SOURCE=.\generic_objectC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -153,7 +146,6 @@ SOURCE=.\generic_objectS.cpp
 # Begin Source File
 
 SOURCE=.\gperfC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -162,7 +154,6 @@ SOURCE=.\gperfS.cpp
 # Begin Source File
 
 SOURCE=.\includedC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -171,7 +162,6 @@ SOURCE=.\includedS.cpp
 # Begin Source File
 
 SOURCE=.\includingC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -180,7 +170,6 @@ SOURCE=.\includingS.cpp
 # Begin Source File
 
 SOURCE=.\interfaceC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -189,7 +178,6 @@ SOURCE=.\interfaceS.cpp
 # Begin Source File
 
 SOURCE=.\keywordsC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -202,7 +190,6 @@ SOURCE=.\main.cpp
 # Begin Source File
 
 SOURCE=.\nested_scopeC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -211,7 +198,6 @@ SOURCE=.\nested_scopeS.cpp
 # Begin Source File
 
 SOURCE=.\paramsC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -220,7 +206,6 @@ SOURCE=.\paramsS.cpp
 # Begin Source File
 
 SOURCE=.\pragmaC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -229,7 +214,6 @@ SOURCE=.\pragmaS.cpp
 # Begin Source File
 
 SOURCE=.\reopen_include1C.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -238,7 +222,6 @@ SOURCE=.\reopen_include1S.cpp
 # Begin Source File
 
 SOURCE=.\reopen_include2C.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -247,7 +230,6 @@ SOURCE=.\reopen_include2S.cpp
 # Begin Source File
 
 SOURCE=.\reopened_modulesC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -256,12 +238,10 @@ SOURCE=.\reopened_modulesS.cpp
 # Begin Source File
 
 SOURCE=.\repo_id_modC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\sequenceC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -270,7 +250,6 @@ SOURCE=.\sequenceS.cpp
 # Begin Source File
 
 SOURCE=.\typedefC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -279,7 +258,6 @@ SOURCE=.\typedefS.cpp
 # Begin Source File
 
 SOURCE=.\unionC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

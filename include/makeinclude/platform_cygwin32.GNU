@@ -1,4 +1,5 @@
 # $Id$
+
 #
 # This file should allow to build ACE for cygwin32 with cygwin tools.
 #
@@ -16,14 +17,15 @@ TCPU = pentiumpro
 #TCPU = i386
 
 cygwin32 = 1
-
-ifeq (,$(threads))
-  threads = 0
-endif
+optimize = 0
 
 # Cygwin doesn't allow to add the version number of ACE to the dll name
 # because fe ace.dll.5.2.3 isn't a valid dll name
 SONAME=
 SOVERSION=
+
+# Add --enable-auto-import to the linker flags. This will result in the
+# linker doing auto-import without giving warnings about it.
+LDFLAGS += --enable-auto-import
 
 include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU

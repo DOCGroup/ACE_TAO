@@ -138,7 +138,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (node->has_mixed_parentage ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl << be_nl 
           << "void" << be_nl
           << "CORBA::release (" << node->name () << "_ptr p)" << be_nl
           << "{" << be_idt_nl
@@ -153,16 +153,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "return CORBA::is_nil (obj);" << be_uidt_nl
           << "}";
     }
-
-  *os << be_nl << be_nl
-      << "CORBA::Boolean" << be_nl
-      << "tao_" << node->flat_name () << "_marshal (" << be_idt << be_idt_nl
-      << node->name () << "_ptr p," << be_nl
-      << "TAO_OutputCDR &strm" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "return p->marshal (strm);" << be_uidt_nl
-      << "}";
 
   // Generate the _var class.
   if (node->gen_var_impl () == -1)
@@ -218,6 +208,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
         }
 
       ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_BROKER_CS);
       be_visitor_interface_remote_proxy_broker_cs irpb_visitor (&ctx);
 
       if (node->accept (&irpb_visitor) == -1)
@@ -235,8 +226,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (node->is_local ())
     {
-      *os << be_nl << be_nl
-          << node->name () << "::" << node->local_name ()
+      *os << be_nl << be_nl 
+          << node->name () << "::" << node->local_name () 
           << " (void)" << be_nl
           << "{}";
     }
@@ -244,7 +235,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (! node->is_abstract () && ! node->is_local ())
     {
        // Generate the destructor and default constructor.
-      *os << be_nl << be_nl
+      *os << be_nl << be_nl 
           << node->name () << "::" << node->local_name ()
           << " (int collocated)" << be_nl
           << "{" << be_idt_nl
@@ -253,7 +244,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << be_uidt << "}";
 
       // Collocation setup method.
-      *os << be_nl << be_nl
+      *os << be_nl << be_nl 
           << "void" << be_nl
           << node->name () << "::" << node->flat_name ()
           << "_setup_collocation (int collocated)" << be_nl
@@ -325,8 +316,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << "void" << be_nl
           << node->name () << "::_add_ref (void)" << be_nl
           << "{" << be_idt_nl
-          << "this->ACE_NESTED_CLASS (CORBA, Object)::_add_ref ();"
-          << be_uidt_nl
+          << "this->CORBA_Object::_add_ref ();" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
@@ -506,7 +496,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_cs::"
                              "visit_interface - "
-                             "_is_a method codegen failed\n"),
+                             "_is_a method codegen failed\n"), 
                             -1);
         }
 
@@ -548,8 +538,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
         }
       else
         {
-          *os << "return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a ("
-              << be_idt << be_idt_nl
+          *os << "return this->CORBA_Object::_is_a (" << be_idt << be_idt_nl
               << "value" << be_nl
               << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl;
@@ -627,24 +616,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "\";" << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
-      << "CORBA::Boolean" << be_nl;
-
-  if (node->is_local ())
-    {
-      *os << node->name () << "::marshal (TAO_OutputCDR &)" << be_nl
-          << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
-          << "}";
-    }
-  else
-    {
-      *os << node->name () << "::marshal (TAO_OutputCDR &cdr)" << be_nl
-          << "{" << be_idt_nl
-          << "return (cdr << this);" << be_uidt_nl
-          << "}";
-    }
-
   // Generate code for the elements of the interface.
   if (this->visit_scope (node) == -1)
     {
@@ -678,6 +649,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (be_global->tc_support ())
     {
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
       ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
       be_visitor_typecode_defn tc_visitor (&ctx);
 

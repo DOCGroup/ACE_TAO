@@ -396,6 +396,10 @@ Client::reset_policies (ACE_ENV_SINGLE_ARG_DECL)
 int
 main (int argc, char **argv)
 {
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities ();
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
@@ -411,10 +415,6 @@ main (int argc, char **argv)
         orb->resolve_initial_references ("RTORB"
                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
 
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in ()

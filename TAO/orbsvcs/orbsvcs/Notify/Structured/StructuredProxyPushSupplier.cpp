@@ -5,6 +5,12 @@
 #include "tao/debug.h"
 
 #include "StructuredPushConsumer.h"
+#include "../Event_Manager.h"
+#include "../Proxy.h"
+#include "../Admin.h"
+#include "../EventChannel.h"
+#include "../EventChannelFactory.h"
+#include "../Notify_Service.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "StructuredProxyPushSupplier.inl"
@@ -26,10 +32,7 @@ TAO_NS_StructuredProxyPushSupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "In TAO_NS_StructuredProxyPushConsumer::destroy \n"));
 
-  if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
-    return;
-
-  ACE_CHECK;
+  this->inherited::destroy (this ACE_ENV_ARG_PARAMETER);
 }
 
 void

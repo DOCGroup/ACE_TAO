@@ -24,8 +24,8 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub workspace_file_name {
-  my($self) = shift;
-  return $self->get_modified_workspace_name('Makefile', '.bor');
+  #my($self) = shift;
+  return 'Makefile.bor';
 }
 
 
@@ -77,6 +77,8 @@ sub write_comps {
         }
       }
 
+      ## These commands will work.  In practicality, only the
+      ## default configuration can be built at the top level.
       print $fh ($chdir ? "\t\@cd $dir$crlf" : '') .
                 "\t\$(MAKE) -\$(MAKEFLAGS) \$(MAKE_FLAGS) -f " . basename($project) . " $target$crlf" .
                 ($chdir ? "\t\@cd " . ('../' x $back) . $crlf : '');
@@ -84,9 +86,10 @@ sub write_comps {
   }
 
   # Generate a convenient rule for regenerating the workspace.
+  my($cmd) = "perl $0 " . join(" ", @ARGV);
   print $fh $crlf .
             "regenerate:$crlf" .
-            "\t$^X $0 @ARGV$crlf";
+            "\t$cmd$crlf";
 }
 
 

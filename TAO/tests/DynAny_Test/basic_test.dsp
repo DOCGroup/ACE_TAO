@@ -90,7 +90,6 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\da_testsC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

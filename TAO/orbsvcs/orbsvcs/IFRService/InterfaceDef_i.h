@@ -47,140 +47,142 @@ class TAO_IFRService_Export TAO_InterfaceDef_i : public virtual TAO_Container_i,
   //    Represents an interface definition.
   //
 public:
-  TAO_InterfaceDef_i (TAO_Repository_i *repo);
+  TAO_InterfaceDef_i (TAO_Repository_i *repo,
+                      ACE_Configuration_Section_Key section_key);
   // Constructor
 
   virtual ~TAO_InterfaceDef_i (void);
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
   virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
+  // Remove the repository entry.
 
   virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Contained::Description *describe (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+  virtual CORBA_Contained::Description *describe (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA::Contained::Description *describe_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+  virtual CORBA_Contained::Description *describe_i (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
-  virtual CORBA::InterfaceDefSeq *base_interfaces (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+  virtual CORBA_InterfaceDefSeq *base_interfaces (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::InterfaceDefSeq *base_interfaces_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+  CORBA_InterfaceDefSeq *base_interfaces_i (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void base_interfaces (
-      const CORBA::InterfaceDefSeq &base_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
+      const CORBA_InterfaceDefSeq &base_interfaces
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void base_interfaces_i (
-      const CORBA::InterfaceDefSeq &base_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
+      const CORBA_InterfaceDefSeq &base_interfaces
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean is_a (
       const char *interface_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean is_a_i (
       const char *interface_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::InterfaceDef::FullInterfaceDescription *describe_interface (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+  virtual CORBA_InterfaceDef::FullInterfaceDescription *describe_interface (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::InterfaceDef::FullInterfaceDescription *describe_interface_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-    )
+  CORBA_InterfaceDef::FullInterfaceDescription *describe_interface_i (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::AttributeDef_ptr create_attribute (
+  virtual CORBA_AttributeDef_ptr create_attribute (
       const char *id,
       const char *name,
       const char *version,
-      CORBA::IDLType_ptr type,
+      CORBA_IDLType_ptr type,
       CORBA::AttributeMode mode
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::AttributeDef_ptr create_attribute_i (
+  CORBA_AttributeDef_ptr create_attribute_i (
       const char *id,
       const char *name,
       const char *version,
-      CORBA::IDLType_ptr type,
+      CORBA_IDLType_ptr type,
       CORBA::AttributeMode mode
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::OperationDef_ptr create_operation (
+  virtual CORBA_OperationDef_ptr create_operation (
       const char *id,
       const char *name,
       const char *version,
-      CORBA::IDLType_ptr result,
+      CORBA_IDLType_ptr result,
       CORBA::OperationMode mode,
-      const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions,
-      const CORBA::ContextIdSeq &contexts
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
+      const CORBA_ParDescriptionSeq &params,
+      const CORBA_ExceptionDefSeq &exceptions,
+      const CORBA_ContextIdSeq &contexts
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::OperationDef_ptr create_operation_i (
+  CORBA_OperationDef_ptr create_operation_i (
       const char *id,
       const char *name,
       const char *version,
-      CORBA::IDLType_ptr result,
+      CORBA_IDLType_ptr result,
       CORBA::OperationMode mode,
-      const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions,
-      const CORBA::ContextIdSeq &contexts
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
+      const CORBA_ParDescriptionSeq &params,
+      const CORBA_ExceptionDefSeq &exceptions,
+      const CORBA_ContextIdSeq &contexts
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void interface_contents (
@@ -188,16 +190,29 @@ public:
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Gathers the attributes and operations of all the ancestors.
-  
-  static int name_clash (const char *name);
-  // Called from TAO_IFR_Service_Utils::name_exists() when we
-  // are in a list of supported interfaces.
 
 private:
+  void destroy_special (
+      const char *sub_section
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Removed the repo ids of our attributes and operations from
+  // the flat repo ids section of the repository.
+
+  void create_attr_ops (const char *id,
+                        const char *name,
+                        const char *version,
+                        CORBA_IDLType_ptr type,
+                        CORBA::AttributeMode mode
+                        ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Create set and/or get operations for an attribute.
+
   void base_interfaces_recursive (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue
@@ -217,9 +232,8 @@ private:
   // Depth-first traversal of the inheritance tree to get all the
   // operations.
 
-  void check_inherited (const char *name,
-                        CORBA::DefinitionKind kind
-                        ACE_ENV_ARG_DECL)
+  CORBA::Boolean check_inherited_attrs (const char *name
+                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // When creating a new attribute, check for a clash with an inherited
   // attribute name.
@@ -230,3 +244,4 @@ private:
 #endif /* _MSC_VER */
 
 #endif /* TAO_INTERFACEDEF_I_H */
+

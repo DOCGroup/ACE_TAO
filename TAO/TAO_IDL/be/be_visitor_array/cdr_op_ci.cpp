@@ -44,23 +44,25 @@ be_visitor_array_cdr_op_ci::~be_visitor_array_cdr_op_ci (void)
 int
 be_visitor_array_cdr_op_ci::visit_array (be_array *node)
 {
-  if (this->ctx_->alias ())
-    {
-      // We are here because we are visiting base type 
-      // of the array node which is itself an
-      // array, i.e., this is a case of array of array.
-      return this->visit_node (node);
-    }
-
-  if (node->cli_inline_cdr_op_gen () 
-      || node->imported ()
-      || node->is_local ())
+  if (node->is_local ())
     {
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  if (this->ctx_->alias ())
+    {
+      // We are here because the base type of the array node is itself an
+      // array, i.e., this is a case of array of array.
+      return this->visit_node (node);
+    }
+
+  if (node->cli_inline_cdr_op_gen () || node->imported ())
+    {
+      return 0;
+    }
+
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  TAO_OutStream *os = this->ctx_->stream ();
 
   if (!bt)
     {
@@ -105,18 +107,21 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
       {
         case AST_Decl::NT_enum:
           {
+            ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
             be_visitor_enum_cdr_op_ci ec_visitor (&ctx);
             status = bt->accept (&ec_visitor);
             break;
           }
         case AST_Decl::NT_struct:
           {
+            ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
             be_visitor_structure_cdr_op_ci sc_visitor (&ctx);
             status = bt->accept (&sc_visitor);
             break;
           }
         case AST_Decl::NT_union:
           {
+            ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
             be_visitor_union_cdr_op_ci uc_visitor (&ctx);
             status = bt->accept (&uc_visitor);
             break;
@@ -551,7 +556,6 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
   TAO_OutStream *os = this->ctx_->stream ();
   unsigned long i;
   be_array *node = this->ctx_->be_node_as_array ();
-  AST_Decl::NodeType nt = bt->node_type ();
 
   if (!node)
     {
@@ -613,7 +617,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
 
       // Handle the array of array case, where we need to pass the
       // forany type.
-      if (nt == AST_Decl::NT_array)
+      if (bt->node_type () == AST_Decl::NT_array)
         {
           *os << bt->name () << "_forany tmp ("
               << bt->name () << "_alloc ());" << be_nl;
@@ -633,7 +637,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
           *os << "_tao_marshal_flag = (strm >> ";
           *os << "_tao_array ";
 
-          for (i = 0; i < ndims; ++i)
+          for (i = 0; i < node->n_dims (); i++)
             {
               *os << "[i" << i << "]";
             }
@@ -644,6 +648,8 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
               // handled in a special way.
               case AST_Decl::NT_string:
               case AST_Decl::NT_wstring:
+              case AST_Decl::NT_interface:
+              case AST_Decl::NT_interface_fwd:
               case AST_Decl::NT_valuetype:
               case AST_Decl::NT_valuetype_fwd:
                 *os << ".out ()";
@@ -685,7 +691,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
 
       // Handle the array of array case, where we need to pass the
       // forany type.
-      if (nt == AST_Decl::NT_array)
+      if (bt->node_type () == AST_Decl::NT_array)
         {
           *os << bt->name () << "_var tmp_var ("
               << bt->name () << "_dup (_tao_array";
@@ -698,34 +704,6 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
           *os << "));" << be_nl;
           *os << bt->name () << "_forany tmp (tmp_var.inout ());" << be_nl;
           *os << "_tao_marshal_flag = (strm << tmp);";
-        }
-      else if (nt == AST_Decl::NT_interface 
-               || nt == AST_Decl::NT_interface_fwd)
-        {
-          *os << "_tao_marshal_flag = " << be_idt_nl;
-
-          if (bt->is_defined ())
-            {    
-              *os << "_tao_array";
-
-              for (i = 0; i < ndims; ++i)
-                {
-                  *os << "[i" << i << "]";
-                }
-
-              *os << ".in ()->marshal (strm);" << be_uidt;
-            }
-          else
-            {
-              *os << "tao_" << bt->flat_name () << "_marshal (_tao_array";
-              
-              for (i = 0; i < ndims; ++i)
-                {
-                  *os << "[i" << i << "]";
-                }
-
-              *os << ".in (), strm);" << be_uidt;
-            }
         }
       else
         {
@@ -743,6 +721,8 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
               // handled in a special way.
               case AST_Decl::NT_string:
               case AST_Decl::NT_wstring:
+              case AST_Decl::NT_interface:
+              case AST_Decl::NT_interface_fwd:
               case AST_Decl::NT_valuetype:
               case AST_Decl::NT_valuetype_fwd:
                 *os << ".in ()";

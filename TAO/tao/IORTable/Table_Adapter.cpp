@@ -12,9 +12,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Object.h"
 
-ACE_RCSID (IORTable, 
-           Table_Adapter, 
-           "$Id$")
+ACE_RCSID(IORTable, Table_Adapter, "$Id$")
 
 TAO_Table_Adapter::TAO_Table_Adapter (TAO_ORB_Core *orb_core)
   :  orb_core_ (orb_core)
@@ -55,14 +53,14 @@ TAO_Table_Adapter::priority (void) const
 }
 
 int
-TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
+TAO_Table_Adapter::dispatch (TAO_ObjectKey &key,
                              TAO_ServerRequest &,
                              CORBA::Object_out forward_to
                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var object_key;
-  TAO::ObjectKey::encode_sequence_to_string (object_key.out (),
+  TAO_ObjectKey::encode_sequence_to_string (object_key.out (),
                                             key);
   ACE_TRY
     {
@@ -99,7 +97,7 @@ CORBA::Object_ptr
 TAO_Table_Adapter::create_collocated_object (TAO_Stub *stub,
                                              const TAO_MProfile &)
 {
-  return new CORBA::Object (stub);
+  return new CORBA_Object (stub);
 }
 
 // ****************************************************************

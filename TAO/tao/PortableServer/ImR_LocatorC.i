@@ -19,9 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_LOCATOR___CI_)
 #define _IMPLEMENTATIONREPOSITORY_LOCATOR___CI_
@@ -32,22 +31,16 @@ ImplementationRepository::Locator::Locator (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant)
+  : CORBA_Object (objref, _tao_collocated, servant)
 {
   this->ImplementationRepository_Locator_setup_collocation (_tao_collocated);
 }
 
-ACE_INLINE
-CORBA::Boolean
-ImplementationRepository::Locator::marshal (TAO_OutputCDR &cdr)
-{
-  return (cdr << this);
-}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -58,3 +51,4 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     ImplementationRepository::Locator_ptr &
   );
+

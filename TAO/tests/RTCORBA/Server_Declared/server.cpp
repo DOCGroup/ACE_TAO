@@ -205,6 +205,10 @@ create_object (RTPortableServer::POA_ptr poa,
 int
 main (int argc, char *argv[])
 {
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities ();
+
   ACE_TRY_NEW_ENV
     {
       // ORB.
@@ -215,10 +219,6 @@ main (int argc, char *argv[])
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
         return 1;
-
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
 
       // RTORB.
       CORBA::Object_var object =

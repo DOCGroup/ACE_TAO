@@ -98,7 +98,6 @@ SOURCE=.\Collocation_Tester.cpp
 # Begin Source File
 
 SOURCE=.\MultipleC.cpp
-# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

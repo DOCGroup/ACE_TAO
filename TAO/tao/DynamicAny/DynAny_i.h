@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "DynCommon.h"
-#include "tao/Any_T.h"
+#include "tao/Any.h"
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)
@@ -52,11 +52,11 @@ public:
   ~TAO_DynAny_i (void);
 
   /// Initialize using just a TypeCode
-  void init (CORBA::TypeCode_ptr tc
+  void init (CORBA_TypeCode_ptr tc
              ACE_ENV_ARG_DECL);
 
   /// Initialize using an Any.
-  void init (const CORBA::Any& any
+  void init (const CORBA_Any& any
              ACE_ENV_ARG_DECL);
 
   // = LocalObject methods.

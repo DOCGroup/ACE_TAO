@@ -98,7 +98,6 @@ SOURCE=.\Identity_Server.cpp
 # Begin Source File
 
 SOURCE=.\IdentityC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -107,7 +106,6 @@ SOURCE=.\IdentityS.cpp
 # Begin Source File
 
 SOURCE=.\Load_BalancerC.cpp
-# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

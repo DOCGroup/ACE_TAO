@@ -74,7 +74,7 @@ public:
   virtual int open (void *args = 0);
   // Initializer.
 
-  virtual int shutdown (void);
+  virtual int close (u_long flags = 0);
   // Terminator.
 
   virtual ~Prime_Scheduler (void);
@@ -224,7 +224,7 @@ int
 Method_Request_end::call (void)
 {
   // Shut down the scheduler.
-  this->scheduler_->shutdown ();
+  this->scheduler_->close ();
   return -1;
 }
 
@@ -268,10 +268,10 @@ Prime_Scheduler::open (void *)
 // close
 
 int
-Prime_Scheduler::shutdown (void)
+Prime_Scheduler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Prime_Scheduler %s shutdown\n"),
+              ACE_TEXT ("(%t) Prime_Scheduler %s close\n"),
               this->name_));
   task_count--;
   return 0;
@@ -500,8 +500,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                     (u_int) resulta,
                     (u_int) resultb,
                     (u_int) resultc,
-                    (u_int) resultd,
-                    (u_int) resulte));
+                    (u_int) resulte,
+                    (u_int) resultd));
 
         const ACE_TCHAR *name;
         fname.get (name);
@@ -526,7 +526,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   helmut->end ();
   matias->end ();
 
-  ACE_Thread_Manager::instance ()->wait ();
+  ACE_OS::sleep (2);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) task_count %d future_count %d ")
@@ -628,6 +628,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   }
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("No it did not crash the program.\n")));
+
+  ACE_OS::sleep (5);
 
   delete andres;
   delete peter;

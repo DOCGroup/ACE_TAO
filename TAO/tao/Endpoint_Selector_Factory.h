@@ -20,14 +20,11 @@
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Service_Object.h"
-#include "ace/CORBA_macros.h"
-
 
 class TAO_GIOP_Invocation;
 class TAO_Invocation_Endpoint_Selector;

@@ -12,7 +12,6 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
-#include "tao/Wait_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Connection_Handler.i"

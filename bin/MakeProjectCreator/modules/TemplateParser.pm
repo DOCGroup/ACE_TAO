@@ -62,7 +62,6 @@ sub new {
   $self->{'foreach'}  = {};
   $self->{'foreach'}->{'count'}      = -1;
   $self->{'foreach'}->{'nested'}     = 0;
-  $self->{'foreach'}->{'name'}       = [];
   $self->{'foreach'}->{'names'}      = [];
   $self->{'foreach'}->{'text'}       = [];
   $self->{'foreach'}->{'scope'}      = [];
@@ -232,12 +231,10 @@ sub relative {
       if ($cwd =~ /[a-z]:[\/\\]/) {
         substr($cwd, 0, 1) = uc(substr($cwd, 0, 1));
       }
-
       while(substr($value, $start) =~ /(\$\(([^)]+)\))/) {
         my($whole)  = $1;
         my($name)   = $2;
         my($val)    = $$rel{$name};
-
         if (defined $val) {
           if ($^O eq 'cygwin' && !$fixed &&
               $cwd !~ /[A-Za-z]:/ && $val =~ /[A-Za-z]:/) {
@@ -257,15 +254,14 @@ sub relative {
           }
 
           if (index($cwd, $val) == 0) {
-            my($count)   = 0;
-            my($current) = $cwd;
-            substr($current, 0, length($val)) = '';
-            while($current =~ /^\\/) {
-              $current =~ s/^\///;
+            my($count) = 0;
+            substr($cwd, 0, length($val)) = '';
+            while($cwd =~ /^\\/) {
+              $cwd =~ s/^\///;
             }
-            my($length) = length($current);
+            my($length) = length($cwd);
             for(my $i = 0; $i < $length; ++$i) {
-              if (substr($current, $i, 1) eq '/') {
+              if (substr($cwd, $i, 1) eq '/') {
                 ++$count;
               }
             }
@@ -275,7 +271,6 @@ sub relative {
               $val = $self->slash_to_backslash($val);
             }
             substr($value, $start) =~ s/\$\([^)]+\)/$val/;
-            $whole = $val;
           }
         }
         $start += length($whole);
@@ -375,7 +370,7 @@ sub process_foreach {
   my($errorString) = '';
   my(@values) = ();
   my($names)  = $self->create_array($self->{'foreach'}->{'names'}->[$index]);
-  my($name)   = $self->{'foreach'}->{'name'}->[$index];
+  my($name)   = undef;
 
   foreach my $n (@$names) {
     my($vals) = $self->get_value($n);
@@ -387,7 +382,6 @@ sub process_foreach {
     }
     if (!defined $name) {
       $name = $n;
-      $name =~ s/s$//;
     }
   }
 
@@ -395,8 +389,10 @@ sub process_foreach {
   $self->{'foreach'}->{'text'}->[$index] = '';
 
   if (defined $values[0]) {
+    my($inner) = $name;
     my($scope) = $self->{'foreach'}->{'scope'}->[$index];
 
+    $inner =~ s/s$//;
     $$scope{'forlast'}     = 0;
     $$scope{'fornotlast'}  = 1;
     $$scope{'forfirst'}    = 1;
@@ -420,10 +416,10 @@ sub process_foreach {
       }
       ## We don't use adjust_value here because these names
       ## are generated from a foreach and should not be adjusted.
-      $$scope{$name} = $value;
+      $$scope{$inner} = $value;
 
       ## A tiny hack for VC7
-      if ($name eq 'configuration') {
+      if ($inner eq 'configuration') {
         $self->{'prjc'}->update_project_info($self, 1,
                                              ['configuration', 'platform'],
                                              '|');
@@ -566,21 +562,10 @@ sub handle_foreach {
 
   push(@{$self->{'lstack'}}, $self->line_number());
   if (!$self->{'if_skip'}) {
-    my($vname) = undef;
-    if ($val =~ /([^,]+),(.*)/) {
-      $vname = $1;
-      $val   = $2;
-      $vname =~ s/^\s+//;
-      $vname =~ s/\s+$//;
-      $val   =~ s/^\s+//;
-      $val   =~ s/\s+$//;
-    }
-
     push(@{$self->{'sstack'}}, $name);
     ++$self->{'foreach'}->{'count'};
 
     my($index) = $self->{'foreach'}->{'count'};
-    $self->{'foreach'}->{'name'}->[$index]  = $vname;
     $self->{'foreach'}->{'names'}->[$index] = $val;
     $self->{'foreach'}->{'text'}->[$index]  = '';
     $self->{'foreach'}->{'scope'}->[$index] = {};

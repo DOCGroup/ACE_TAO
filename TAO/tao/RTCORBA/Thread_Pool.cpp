@@ -1,8 +1,8 @@
+// $Id$
+
 #include "Thread_Pool.h"
 
-ACE_RCSID (RTCORBA,
-           Thread_Pool,
-           "$Id$")
+ACE_RCSID(tao, Thread_Pool, "$Id$")
 
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
@@ -17,9 +17,7 @@ ACE_RCSID (RTCORBA,
 # include "Thread_Pool.i"
 #endif /* ! __ACE_INLINE__ */
 
-
-TAO_RT_New_Leader_Generator::TAO_RT_New_Leader_Generator (
-  TAO_Thread_Lane &lane)
+TAO_RT_New_Leader_Generator::TAO_RT_New_Leader_Generator (TAO_Thread_Lane &lane)
   : lane_ (lane)
 {
 }
@@ -53,8 +51,7 @@ TAO_RT_New_Leader_Generator::no_leaders_available (void)
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO Process %P Pool %d Lane %d Thread %t\n")
-                    ACE_TEXT ("Current number of threads = %d; ")
-                    ACE_TEXT ("static threads = %d; dynamic threads = %d\n")
+                    ACE_TEXT ("Current number of threads = %d; static threads = %d; dynamic threads = %d\n")
                     ACE_TEXT ("No leaders available; creating new leader!\n"),
                     this->lane_.pool ().id (),
                     this->lane_.id (),
@@ -161,15 +158,9 @@ TAO_Thread_Lane::validate_and_map_priority (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW (CORBA::BAD_PARAM ());
 
   // Check that the priority is in bounds.
-  if (this->lane_priority_ < RTCORBA::minPriority
-           // The line below will always be false unless the value of
-           // RTCORBA::maxPriority, which is now assigned the value of
-           // 32767, is changed in RTCORBA.pidl.
-//      || this->lane_priority_ > RTCORBA::maxPriority
-     )
-    {
-      ACE_THROW (CORBA::BAD_PARAM ());
-    }
+  if (this->lane_priority_ < RTCORBA::minPriority ||
+      this->lane_priority_ > RTCORBA::maxPriority)
+    ACE_THROW (CORBA::BAD_PARAM ());
 
   CORBA::ORB_ptr orb =
     this->pool_.manager ().orb_core ().orb ();
@@ -220,7 +211,7 @@ TAO_Thread_Lane::open (ACE_ENV_SINGLE_ARG_DECL)
 
   if (result == -1)
     ACE_THROW (CORBA::INTERNAL (
-                 CORBA::SystemException::_tao_minor_code (
+                 CORBA_SystemException::_tao_minor_code (
                    TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                    0),
                  CORBA::COMPLETED_NO));
@@ -613,7 +604,7 @@ TAO_Thread_Pool::number_of_lanes (void) const
     mon, \
     this->lock_, \
     CORBA::INTERNAL ( \
-      CORBA::SystemException::_tao_minor_code ( \
+      CORBA_SystemException::_tao_minor_code ( \
         TAO_GUARD_FAILURE, \
         0), \
       CORBA::COMPLETED_NO));

@@ -1,5 +1,3 @@
-// "$Id$"
-
 #include "ImR_Activator_i.h"
 
 #include "Locator.h"
@@ -194,8 +192,8 @@ ImR_Activator_i::activate_server_with_startup (const char *server,
       // Make sure the activation allows us to start it up.
       if (activation == ImplementationRepository::MANUAL && check_startup)
         ACE_THROW_RETURN (CORBA::TRANSIENT (
-            CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE,
-                                                     0),
+            CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE,
+                                                    0),
             CORBA::COMPLETED_NO),
           0);
 
@@ -730,7 +728,7 @@ ImR_Activator_i::server_is_running (const char *server,
     orb->orb_core ()->lane_resources ().acceptor_registry ();
 
   TAO_MProfile mp;
-  TAO::ObjectKey objkey;
+  TAO_ObjectKey objkey;
 
   // Use a default acceptor filter, all the profiles in the ImR are valid, no
   // matter what the server has.
@@ -947,6 +945,7 @@ ImR_Activator_i::init (ACE_ENV_SINGLE_ARG_DECL)
 
       // register this activator (with the name of the hostname where
       // this instance is being run) with the locator.
+#if defined (ACE_WIN32)
       struct hostent *hinfo = ACE_OS::gethostbyname (hostname);
       char full_hostname[BUFSIZ];
       ACE_OS::strcpy (full_hostname, hinfo->h_name);
@@ -955,6 +954,12 @@ ImR_Activator_i::init (ACE_ENV_SINGLE_ARG_DECL)
         locator->register_activator (full_hostname,
                                      imr_obj.in ()
                                      ACE_ENV_ARG_PARAMETER);
+#else
+      CORBA::ULong reg_act =
+        locator->register_activator (hostname,
+                                     imr_obj.in ()
+                                     ACE_ENV_ARG_PARAMETER);
+#endif /* ACE_WIN32 */
       ACE_TRY_CHECK;
 
       if (reg_act == 1)

@@ -36,8 +36,7 @@ TAO_IFR_Service_Loader::init (int argc,
   ACE_TRY
     {
       // Copy command line parameter.
-      ACE_Argv_Type_Converter command_line (argc, 
-                                            argv);
+      ACE_Argv_Type_Converter command_line(argc, argv);
 
       // Initialize the ORB
       CORBA::ORB_var orb =

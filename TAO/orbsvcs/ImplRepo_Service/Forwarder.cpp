@@ -91,8 +91,8 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
       TAO_POA_Current *tao_current =
         ACE_dynamic_cast (TAO_POA_Current*, this->poa_current_var_.in ());
       TAO_POA_Current_Impl *impl = tao_current->implementation ();
-      TAO::ObjectKey::encode_sequence_to_string (key_str,
-                                                 impl->object_key ());
+      TAO_ObjectKey::encode_sequence_to_string (key_str,
+                                                impl->object_key ());
 
       // Append the key_string to the IOR that is received from the
       // activate_server_with_startup function call.
@@ -113,7 +113,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Forwarder exception");
       ACE_TRY_THROW (CORBA::TRANSIENT (
-          CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
+          CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
           CORBA::COMPLETED_NO));
     }
   ACE_ENDTRY;

@@ -165,7 +165,6 @@ SOURCE=.\IORTable.cpp
 # Begin Source File
 
 SOURCE=.\IORTableC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

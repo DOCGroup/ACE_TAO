@@ -94,7 +94,6 @@ SOURCE=.\Foo_i.cpp
 # Begin Source File
 
 SOURCE=.\FooC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

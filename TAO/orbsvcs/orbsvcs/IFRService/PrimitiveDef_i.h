@@ -43,7 +43,8 @@ class TAO_IFRService_Export TAO_PrimitiveDef_i : public virtual TAO_IDLType_i
   //    Represents any of the OMG IDL primitive types
   //
 public:
-  TAO_PrimitiveDef_i (TAO_Repository_i *repo);
+  TAO_PrimitiveDef_i (TAO_Repository_i *repo,
+                      ACE_Configuration_Section_Key section_key);
   // Constructor.
 
   virtual ~TAO_PrimitiveDef_i (void);

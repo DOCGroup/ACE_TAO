@@ -94,7 +94,6 @@ SOURCE=.\Event_Comm_i.cpp
 # Begin Source File
 
 SOURCE=.\Event_CommC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

@@ -9,14 +9,13 @@ script was started.  It looks for .mpc files and generates a project or
 projects for each one found.
 
 
-Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
+Usage: mwc.pl [-global <file>] [-include <directory>]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>]
               [-template <file>] [-dynamic_only] [-static_only]
-              [-relative NAME=VAR] [-noreldefs] [-notoplevel]
+              [-relative NAME=VAR] [-noreldefs]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
-              [-type <borland | em3 | ghs | gnu | make | nmake |
-                      va4 | vc6 | vc7>]
+              [-type <bor | em3 | ghs | gnu | nma | va4 | vc6 | vc7>]
               [files]
 
        -global         Specifies the global input file.  Values stored
@@ -30,14 +29,10 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
        -template       Specifies the template name (with no extension).
        -dynamic_only   Specifies that only dynamic projects will be generated.
        -static_only    Specifies that only static projects will be generated.
-       -recurse        Recurse from the current directory and generate from
-                       all found input files.
        -relative       Any $() variable in an mpc that is matched to NAME
                        is replaced by VAR only if VAR can be made into a
                        relative path based on the current working directory.
        -noreldefs      Do not try to generate default relative definitions.
-       -notoplevel     Do not generate the top level target file.  Files
-                       are still process, but no top level file is created.
        -value_template This option allows modification of a template input
                        name value pair.  Use += to add VAL to the NAME's
                        value.  Use -= to subtract and = to override the value.
@@ -83,10 +78,6 @@ files.  This currently only applies to the vc6 type.
 The -noreldefs option says not to generate default relative definitions for
 ACE_ROOT and TAO_ROOT (which would come from environment variables).
 
-The -notoplevel option tells mwc.pl to generate all projects for a
-workspace, but do not generate the top level workspace file.  For mpc.pl, it
-says process the mpc files, but do not generate the project files.
-
 The -type option can be used multiple times on the same command line to
 generate projects of different types per mpc file.  The default type is
 always gnu.  NOTE: The -ti option overrides the template input file for all
@@ -102,14 +93,13 @@ file) is not provided, the project creator will attempt to create a default
 project in the directory from which the script was started.
 
 
-Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
+Usage: mpc.pl [-global <file>] [-include <directory>]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>]
               [-template <file>] [-dynamic_only] [-static_only]
-              [-relative NAME=VAR] [-noreldefs] [-notoplevel]
+              [-relative NAME=VAR] [-noreldefs]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
-              [-type <borland | em3 | ghs | gnu | make | nmake |
-                      va4 | vc6 | vc7>]
+              [-type <bor | em3 | ghs | gnu | nma | va4 | vc6 | vc7>]
               [files]
 
        -global         Specifies the global input file.  Values stored
@@ -123,14 +113,10 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
        -template       Specifies the template name (with no extension).
        -dynamic_only   Specifies that only dynamic projects will be generated.
        -static_only    Specifies that only static projects will be generated.
-       -recurse        Recurse from the current directory and generate from
-                       all found input files.
        -relative       Any $() variable in an mpc that is matched to NAME
                        is replaced by VAR only if VAR can be made into a
                        relative path based on the current working directory.
        -noreldefs      Do not try to generate default relative definitions.
-       -notoplevel     Do not generate the top level target file.  Files
-                       are still process, but no top level file is created.
        -value_template This option allows modification of a template input
                        name value pair.  Use += to add VAL to the NAME's
                        value.  Use -= to subtract and = to override the value.

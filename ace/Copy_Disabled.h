@@ -57,4 +57,4 @@ private:
 
 #include "ace/post.h"
 
-#endif /* ACE_COPY_DISABLED_H */
+#endif /* ACE_FUNCTOR_H */

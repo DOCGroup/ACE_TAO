@@ -45,7 +45,8 @@ class TAO_IFRService_Export TAO_ExceptionDef_i : public virtual TAO_Contained_i,
   //    Represents an exception definition.
   //
 public:
-  TAO_ExceptionDef_i (TAO_Repository_i *repo);
+  TAO_ExceptionDef_i (TAO_Repository_i *repo,
+                      ACE_Configuration_Section_Key section_key);
   // Constructor
 
   virtual ~TAO_ExceptionDef_i (void);
@@ -69,13 +70,13 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
-  virtual CORBA::Contained::Description *describe (
+  virtual CORBA_Contained::Description *describe (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA::Contained::Description *describe_i (
+  virtual CORBA_Contained::Description *describe_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -91,24 +92,24 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::StructMemberSeq *members (
+  virtual CORBA_StructMemberSeq *members (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::StructMemberSeq *members_i (
+  CORBA_StructMemberSeq *members_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void members (
-      const CORBA::StructMemberSeq & members
+      const CORBA_StructMemberSeq & members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void members_i (
-      const CORBA::StructMemberSeq & members
+      const CORBA_StructMemberSeq & members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -119,3 +120,4 @@ public:
 #endif /* _MSC_VER */
 
 #endif /* TAO_EXCEPTIONDEF_I_H */
+

@@ -63,13 +63,11 @@
 
 module CORBA
 {
-// These are pulled in from #includes.
-/*
   typedef string Identifier;
   typedef string RepositoryId;
   typedef short ValueModifier;
-*/
-  local interface TypeCodeFactory
+
+  local interface TypeCodeFactory  // PIDL
   {
     TypeCode create_struct_tc (
         in RepositoryId id,
@@ -162,7 +160,6 @@ module CORBA
         in RepositoryId id,
         in Identifier name
       );
-
     TypeCode create_component_tc (
         in RepositoryId id,
         in Identifier name
@@ -172,15 +169,8 @@ module CORBA
         in RepositoryId id,
         in Identifier name
       );
-
-    TypeCode create_event_tc (
-        in RepositoryId id,
-        in Identifier name,
-        in ValueModifier type_modifier,
-        in TypeCode concrete_base,
-        in ValueMemberSeq members
-      );
   };
 };
 
+#pragma prefix ""
 #endif // _TYPECODEFACTORY_IDL_

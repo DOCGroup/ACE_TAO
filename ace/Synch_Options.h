@@ -21,8 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Time_Value.h"
-
+#include "ace/OS.h"
 
 /**
  * @class ACE_Synch_Options
@@ -77,7 +76,7 @@ public:
 
   // = Initialization methods.
   /// Initialize the Synch_Options based on parameters.
-  ACE_Synch_Options (unsigned long options = 0,
+  ACE_Synch_Options (u_long options = 0,
                      const ACE_Time_Value &timeout = ACE_Time_Value::zero,
                      const void *arg = 0);
 
@@ -85,15 +84,15 @@ public:
   ~ACE_Synch_Options (void);
 
   /// Initialize the Synch_Options based on parameters.
-  void set (unsigned long options = 0,
+  void set (u_long options = 0,
             const ACE_Time_Value &timeout = ACE_Time_Value::zero,
             const void *arg = 0);
 
   /// Get method for determining which options are enabled.
-  int operator[] (unsigned long option) const;
+  int operator[] (u_long option) const;
 
   /// Set method for enabling certain options.
-  void operator= (unsigned long option);
+  void operator= (u_long option);
 
   /// Returns the "magic cookie" argument.
   const void *arg (void) const;
@@ -136,7 +135,7 @@ public:
 
 private:
   /// Keeps track of the enabled options.
-  unsigned long options_;
+  u_long options_;
 
   /// Amount of time to wait for timeouts.
   ACE_Time_Value timeout_;

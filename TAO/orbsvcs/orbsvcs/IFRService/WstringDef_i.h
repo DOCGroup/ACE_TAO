@@ -44,7 +44,8 @@ class TAO_IFRService_Export TAO_WstringDef_i : public virtual TAO_IDLType_i
   //    are included in PrimitiveDef).
   //
 public:
-  TAO_WstringDef_i (TAO_Repository_i *repo);
+  TAO_WstringDef_i (TAO_Repository_i *repo,
+                    ACE_Configuration_Section_Key section_key);
   // Constructor.
 
   virtual ~TAO_WstringDef_i (void);

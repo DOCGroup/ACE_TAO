@@ -21,6 +21,7 @@
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "../ProxyConsumer_T.h"
+#include "../Destroy_Callback.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -35,7 +36,7 @@
  * @brief CosNotifyChannelAdmin::StructuredProxyPushConsumer implementation.
  *
  */
-class TAO_Notify_Export TAO_NS_StructuredProxyPushConsumer : public virtual TAO_NS_ProxyConsumer_T <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>
+class TAO_Notify_Export TAO_NS_StructuredProxyPushConsumer : public virtual TAO_NS_ProxyConsumer_T <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>, public TAO_NS_Destroy_Callback
 {
   friend class TAO_NS_Builder;
 
@@ -46,7 +47,7 @@ public:
   /// Destructor
   ~TAO_NS_StructuredProxyPushConsumer ();
 
-  /// Release
+  /// TAO_NS_Destroy_Callback methods
   virtual void release (void);
 
   /// Destroy this object.

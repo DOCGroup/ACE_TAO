@@ -22,13 +22,13 @@ TAO_GIOP_Locate_Request_Header::request_id (void)
   return this->request_id_;
 }
 
-ACE_INLINE const TAO::ObjectKey &
+ACE_INLINE const TAO_ObjectKey &
 TAO_GIOP_Locate_Request_Header::object_key (void) const
 {
   return this->profile_.object_key ();
 }
 
-ACE_INLINE TAO::ObjectKey &
+ACE_INLINE TAO_ObjectKey &
 TAO_GIOP_Locate_Request_Header::object_key (void)
 {
   return this->profile_.object_key ();

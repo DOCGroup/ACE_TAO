@@ -1,16 +1,16 @@
-#ifndef ACE_CONNECTOR_CPP
-#define ACE_CONNECTOR_CPP
+// Connector.cpp
+// $Id$
+
+#ifndef ACE_CONNECTOR_C
+#define ACE_CONNECTOR_C
 
 #include "ace/Connector.h"
-#include "ace/Svc_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID (ace,
-           Connector,
-           "$Id$")
+ACE_RCSID(ace, Connector, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Connector)
 

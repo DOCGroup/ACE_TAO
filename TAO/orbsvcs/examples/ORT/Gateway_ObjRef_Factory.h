@@ -20,7 +20,7 @@
 #include "GatewayS.h"
 
 class Gateway_ObjRef_Factory
-  : public CORBA::DefaultValueRefCountBase,
+  : public CORBA_DefaultValueRefCountBase,
     public virtual PortableInterceptor::ObjectReferenceFactory
 {
 

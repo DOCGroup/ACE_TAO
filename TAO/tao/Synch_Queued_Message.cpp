@@ -1,10 +1,7 @@
-// "$Id$"
-
 #include "Synch_Queued_Message.h"
 #include "debug.h"
 #include "ace/Malloc_T.h"
 #include "ace/Log_Msg.h"
-#include "ace/Message_Block.h"
 
 
 ACE_RCSID (tao,

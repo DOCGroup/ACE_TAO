@@ -29,11 +29,10 @@
 
 #include "PortableInterceptorC.h"
 #include "StringSeqC.h"
+#include "Service_Context.h"
 #include "PICurrent.h"
 
-
 class TAO_GIOP_Invocation;
-class TAO_Service_Context;
 
 /**
  * @class TAO_ClientRequestInfo_i
@@ -228,6 +227,7 @@ protected:
   /// Setup thread scope and request scope
   /// PortableInterceptor::Current objects.
   void setup_picurrent (void);
+  
 
   /// Helper method to get the request and response service contexts.
   IOP::ServiceContext *get_service_context_i (

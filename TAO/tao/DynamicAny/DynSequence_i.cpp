@@ -5,10 +5,9 @@
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
 
-ACE_RCSID (DynamicAny,
-           DynSequence_i,
-           "$Id$")
+ACE_RCSID(DynamicAny, DynSequence_i, "$Id$")
 
+// Constructors and destructor.
 
 TAO_DynSequence_i::TAO_DynSequence_i (void)
 {
@@ -71,13 +70,11 @@ TAO_DynSequence_i::init (const CORBA::Any& any
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      CORBA::Any field_any;
-      TAO::Unknown_IDL_Type *unk = 0;
-      ACE_NEW (unk,
-               TAO::Unknown_IDL_Type (field_tc.in (),
-                                      cdr.start (),
-                                      cdr.byte_order ()));
-      field_any.replace (unk);
+      // This Any constructor is a TAO extension.
+      CORBA::Any field_any (field_tc.in (),
+                            0,
+                            cdr.byte_order (),
+                            cdr.start ());
 
       // This recursive step will call the correct constructor
       // based on the type of field_any.
@@ -95,7 +92,7 @@ TAO_DynSequence_i::init (const CORBA::Any& any
 }
 
 void
-TAO_DynSequence_i::init (CORBA::TypeCode_ptr tc
+TAO_DynSequence_i::init (CORBA_TypeCode_ptr tc
                          ACE_ENV_ARG_DECL)
 {
   CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc
@@ -163,20 +160,20 @@ TAO_DynSequence_i::get_element_type (ACE_ENV_SINGLE_ARG_DECL)
 
   // Strip away aliases (if any) on top of the outer type.
   CORBA::TCKind kind = element_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
 
   while (kind != CORBA::tk_sequence)
     {
       element_type = element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+      ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
 
       kind = element_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+      ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
     }
 
   // Return the content type.
   CORBA::TypeCode_ptr retval = element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
 
   return retval;
 }
@@ -589,13 +586,11 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
 
       for (CORBA::ULong i = 0; i < arg_length; ++i)
         {
-          CORBA::Any field_any;
-          TAO::Unknown_IDL_Type *unk = 0;
-          ACE_NEW (unk,
-                   TAO::Unknown_IDL_Type (field_tc.in (),
-                                          cdr.start (),
-                                          cdr.byte_order ()));
-          field_any.replace (unk);
+          // This Any constructor is a TAO extension.
+          CORBA::Any field_any (field_tc.in (),
+                                0,
+                                cdr.byte_order (),
+                                cdr.start ());
 
           if (i < this->component_count_)
             {
@@ -655,8 +650,7 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   out_cdr.write_ulong (this->component_count_);
 
-  CORBA::TypeCode_var field_tc =
-    this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA_TypeCode_var field_tc = this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
@@ -682,19 +676,13 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Any_ptr retval = 0;
   ACE_NEW_THROW_EX (retval,
-                    CORBA::Any,
+                    CORBA::Any (this->type_.in (),
+                                0,
+                                in_cdr.byte_order (),
+                                in_cdr.start ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  TAO::Unknown_IDL_Type *unk = 0;
-  ACE_NEW_THROW_EX (unk,
-                    TAO::Unknown_IDL_Type (this->type_.in (),
-                                           in_cdr.start (),
-                                           in_cdr.byte_order ()),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
-
-  retval->replace (unk);
   return retval;
 }
 

@@ -98,7 +98,6 @@ SOURCE=.\Multiple_Impl.cpp
 # Begin Source File
 
 SOURCE=.\MultipleC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

@@ -78,8 +78,7 @@ TAO_LB_CPU_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 
   // Obtain the number of processors each time a load is computed.
   // The idea is to take into account the processor failures that can
-  // occur on platforms that continue running with the remaining
-  // processors.
+  // on platforms that continue running with the remaining processors.
   //
   // @@ Is this a realistic scenario?  Perhaps we should just cache
   //    the number of processors and assume that any processor failure

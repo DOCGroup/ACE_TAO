@@ -177,7 +177,6 @@ SOURCE=.\BiDirPolicy_Validator.cpp
 # Begin Source File
 
 SOURCE=.\BiDirPolicyC.cpp
-# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

@@ -94,7 +94,6 @@ SOURCE=.\Load_Balancer_i.cpp
 # Begin Source File
 
 SOURCE=.\Load_BalancerC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

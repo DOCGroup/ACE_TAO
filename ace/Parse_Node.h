@@ -16,7 +16,7 @@
 
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "ace/DLL.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,12 +24,13 @@
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
-#include "ace/DLL.h"
+#include "ace/Service_Types.h"
+
 
 
 /// Forward declarations.
 class ACE_Service_Config;
-class ACE_Service_Type;
+
 
 /**
  * @class ACE_Parse_Node

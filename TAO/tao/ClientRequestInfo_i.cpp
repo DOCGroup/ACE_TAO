@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 #include "ClientRequestInfo_i.h"
 #include "Invocation.h"
 #include "Stub.h"
@@ -202,7 +204,7 @@ TAO_ClientRequestInfo_i::get_effective_component (
 
   IOP::MultipleComponentProfile &components = ecs.components ();
 
-  const CORBA::ULong len = components.length ();
+  CORBA::ULong len = components.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       if (components[i].tag == id)
@@ -250,7 +252,7 @@ TAO_ClientRequestInfo_i::get_effective_components (
   IOP::TaggedComponentSeq *tagged_components = 0;
   IOP::TaggedComponentSeq_var safe_tagged_components;
 
-  const CORBA::ULong len = components.length ();
+  CORBA::ULong len = components.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       if (components[i].tag == id)
@@ -271,7 +273,7 @@ TAO_ClientRequestInfo_i::get_effective_components (
               safe_tagged_components = tagged_components;
             }
 
-          const CORBA::ULong old_len = safe_tagged_components->length ();
+          CORBA::ULong old_len = safe_tagged_components->length ();
           safe_tagged_components->length (old_len + 1);
 
           safe_tagged_components[old_len] = components[i];  // Deep copy
@@ -293,7 +295,7 @@ TAO_ClientRequestInfo_i::get_effective_components (
 
 CORBA::Policy_ptr
 TAO_ClientRequestInfo_i::get_request_policy (CORBA::PolicyType type
-                                             ACE_ENV_ARG_DECL)
+                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Do we need to look anywhere else for the request policies?
@@ -499,12 +501,10 @@ TAO_ClientRequestInfo_i::reply_status (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ == -1)
-    {
-      // A reply hasn't been received yet.
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        -1);
-    }
+    // A reply hasn't been received yet.
+    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
+                                            CORBA::COMPLETED_NO),
+                      -1);
 
   return this->reply_status_;
 }
@@ -514,11 +514,9 @@ TAO_ClientRequestInfo_i::forward_reference (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ != PortableInterceptor::LOCATION_FORWARD)
-    {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        CORBA::Object::_nil ());
-    }
+    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
+                                            CORBA::COMPLETED_NO),
+                      CORBA::Object::_nil ());
 
   // TAO_GIOP_Invocation::forward_reference() already duplicates the
   // reference before returning it so there is no need to duplicate it
@@ -548,7 +546,7 @@ TAO_ClientRequestInfo_i::get_request_service_context (
 
   return this->get_service_context_i (service_context_list,
                                       id
-                                      ACE_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 
@@ -564,7 +562,7 @@ TAO_ClientRequestInfo_i::get_reply_service_context (
 
   return this->get_service_context_i (service_context_list,
                                       id
-                                      ACE_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 IOP::ServiceContext *

@@ -75,7 +75,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 #include "ast_interface.h"
-#include "ast_module.h"
 #include "ast_array.h"
 #include "ast_field.h"
 #include "ast_structure.h"
@@ -271,26 +270,47 @@ AST_Decl::set_prefix_with_typeprefix_r (char *value,
   // This will recursively catch all previous openings of a module.
   if (this->node_type () == AST_Decl::NT_module)
     {
-      AST_Decl **d = 0;
-      AST_Module *m = AST_Module::narrow_from_decl (this);
+      AST_Decl *d = DeclAsScope (this)->lookup_by_name (this->name (),
+                                                        I_TRUE);
 
-      for (ACE_Unbounded_Set_Iterator<AST_Decl *> iter (m->previous ());
-           !iter.done ();
-           iter.advance ())
+      if (d != this)
         {
-          iter.next (d);
-
-          if ((*d)->node_type () == AST_Decl::NT_pre_defined)
-            {
-              continue;
-            }
-
-          (*d)->set_prefix_with_typeprefix_r (value,
-                                              appeared_in);
+          d->set_prefix_with_typeprefix_r (value,
+                                           appeared_in);
         }
     }
 
   this->compute_repoID ();
+  UTL_Scope *s = DeclAsScope (this);
+
+  if (s != 0)
+    {
+      AST_Decl *d = 0;
+      AST_Decl *prefix_scope = 0;
+
+      for (UTL_ScopeActiveIterator i (s, UTL_Scope::IK_decls); 
+           !i.is_done (); 
+           i.next ())
+        {
+          d = i.item ();
+          prefix_scope = ScopeAsDecl (d->prefix_scope ());
+
+          // This will let a prefix set in an inner scope override one set in
+          // an outer scope, even if the outer scope typeprefix directive
+          // appears later in the IDL file.
+          if (d->typeid_set_ 
+              || prefix_scope != 0
+                 && prefix_scope->has_ancestor (ScopeAsDecl (appeared_in)) != 0)
+            {
+              continue;
+            }
+          else
+            {
+              d->set_prefix_with_typeprefix_r (value,
+                                               appeared_in);
+            }
+        }
+    }
 }
 
 // Protected operations.
@@ -401,15 +421,8 @@ AST_Decl::compute_repoID (void)
   while (ACE_OS::strcmp (prefix, "") == 0 && scope != 0)
     {
       AST_Decl *parent = ScopeAsDecl (scope);
-
-      if (parent->node_type () == AST_Decl::NT_root
-          && parent->imported ())
-        {
-          break;
-        }
-
       prefix = parent->prefix ();
-      scope = parent->defined_in ();
+      scope = ScopeAsDecl (scope)->defined_in ();
     }
 
   // in the first loop compute the total length
@@ -423,7 +436,7 @@ AST_Decl::compute_repoID (void)
     {
       AST_Decl *parent = ScopeAsDecl (scope);
       version = parent->version ();
-      scope = parent->defined_in ();
+      scope = ScopeAsDecl (scope)->defined_in ();
     }
 
   if (version != 0)

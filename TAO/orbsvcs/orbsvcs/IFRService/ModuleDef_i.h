@@ -45,7 +45,8 @@ class TAO_IFRService_Export TAO_ModuleDef_i : public virtual TAO_Container_i,
   //    Represents a module definition.
   //
 public:
-  TAO_ModuleDef_i (TAO_Repository_i *repo);
+  TAO_ModuleDef_i (TAO_Repository_i *repo,
+                   ACE_Configuration_Section_Key section_key);
   // Constructor
 
   virtual ~TAO_ModuleDef_i (void);
@@ -69,13 +70,13 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
-  virtual CORBA::Contained::Description *describe (
+  virtual CORBA_Contained::Description *describe (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA::Contained::Description *describe_i (
+  virtual CORBA_Contained::Description *describe_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -87,3 +88,4 @@ public:
 #endif /* _MSC_VER */
 
 #endif /* TAO_MODULEDEF_I_H */
+

@@ -20,7 +20,6 @@
 
 #include "tao/corbafwd.h"
 #include "ace/Service_Object.h"
-#include "ace/CORBA_macros.h"
 
 /**
  * @class TAO_Collocation_Resolver

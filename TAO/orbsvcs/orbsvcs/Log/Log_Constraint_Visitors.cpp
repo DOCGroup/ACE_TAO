@@ -27,7 +27,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   ACE_NEW (value, CORBA::Any);
 
 #if defined (ACE_LACKS_LONGLONG_T)
-  *value <<= ACE_U64_TO_U32 (this->rec_.id);
+  *value <<= ACE_U64_TO_U32 (this->rec_.id)
 #else
   *value <<= ACE_static_cast (ACE_UINT32, (this->rec_.id));
 #endif
@@ -194,17 +194,9 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
                     {
                       TAO_OutputCDR cdr;
                       cdr.write_ulong ((CORBA::ULong) disc_val);
-
-                      TAO::Unknown_IDL_Type *unk = 0;
-                      ACE_NEW_RETURN (unk,
-                                      TAO::Unknown_IDL_Type (
-                                          disc_tc.in (),
-                                          cdr.begin (),
-                                          TAO_ENCAP_BYTE_ORDER
-                                        ),
-                                      -1);
-
-                      disc_any.replace (unk);
+                      disc_any._tao_replace (disc_tc.in (),
+                                             TAO_ENCAP_BYTE_ORDER,
+                                             cdr.begin ());
                       break;
                     }
                   // @@@ (JP) I don't think ETCL handles 64-bit

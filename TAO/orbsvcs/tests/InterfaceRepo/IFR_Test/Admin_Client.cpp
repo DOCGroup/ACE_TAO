@@ -942,8 +942,7 @@ Admin_Client::struct_test (ACE_ENV_SINGLE_ARG_DECL)
       ACE_ASSERT (!ACE_OS::strcmp (str.in (), members[i].name));
     }
 
-  CORBA::Contained::Description_var desc = 
-    svar->describe (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Contained::Description_var desc = svar->describe (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::TypeDescription *td;
@@ -1153,7 +1152,7 @@ Admin_Client::struct_test (ACE_ENV_SINGLE_ARG_DECL)
       // Can't use ACE_ASSERT here because we don't know the order
       // of the results of the search.
     }
-    
+
   CORBA::Container::DescriptionSeq_var cont_desc =
     this->repo_->describe_contents (CORBA::dk_all,
                                     0,
@@ -1319,13 +1318,10 @@ Admin_Client::union_test (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
   TAO_OutputCDR maker2;
   maker2.write_ulong (3);  // THREE
-  TAO::Unknown_IDL_Type *impl2 = 0;
-  ACE_NEW (impl2,
-           TAO::Unknown_IDL_Type (d_type.in (),
-                                  maker2.begin (),
-                                  TAO_ENCAP_BYTE_ORDER));
-  CORBA::Any any2;
-  any2.replace (impl2);
+  CORBA::Any any2 (d_type.in (),
+                   0,
+                   TAO_ENCAP_BYTE_ORDER,
+                   maker2.begin ());
   u_members[0].label = any2;
 
   u_members[1].name = CORBA::string_dup ("longval");
@@ -1335,13 +1331,10 @@ Admin_Client::union_test (ACE_ENV_SINGLE_ARG_DECL)
   u_members[1].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
   TAO_OutputCDR maker0;
   maker0.write_ulong (2);  // TWO
-  TAO::Unknown_IDL_Type *impl0 = 0;
-  ACE_NEW (impl0,
-           TAO::Unknown_IDL_Type (d_type.in (),
-                                  maker0.begin (),
-                                  TAO_ENCAP_BYTE_ORDER));
-  CORBA::Any any0;
-  any0.replace (impl0);
+  CORBA::Any any0 (d_type.in (),
+                   0,
+                   TAO_ENCAP_BYTE_ORDER,
+                   maker0.begin ());
   u_members[1].label = any0;
 
   u_members[2].name = CORBA::string_dup ("structval");
@@ -1350,13 +1343,10 @@ Admin_Client::union_test (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_OutputCDR maker1;
   maker1.write_ulong (0); // ZERO
-  TAO::Unknown_IDL_Type *impl1 = 0;
-  ACE_NEW (impl1,
-           TAO::Unknown_IDL_Type (d_type.in (),
-                                  maker1.begin (),
-                                  TAO_ENCAP_BYTE_ORDER));
-  CORBA::Any any1;
-  any1.replace (impl1);
+  CORBA::Any any1 (d_type.in (),
+                   0,
+                   TAO_ENCAP_BYTE_ORDER,
+                   maker1.begin ());
   u_members[2].label = any1;
 
   u_members[3].name = CORBA::string_dup ("stringval");
@@ -2318,9 +2308,9 @@ Admin_Client::interface_test (ACE_ENV_SINGLE_ARG_DECL)
                 ACE_TEXT ("operations::length: %d\n"),
                 length));
 
-  ACE_ASSERT (length == 1);
+  ACE_ASSERT (length == 4);
 
-  length = fifd->operations[0].contexts.length ();
+  length = fifd->operations[3].contexts.length ();
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
@@ -2332,7 +2322,7 @@ Admin_Client::interface_test (ACE_ENV_SINGLE_ARG_DECL)
 
   for (i = 0; i < length; i++)
     {
-      tmp = fifd->operations[0].contexts[i];
+      tmp = fifd->operations[3].contexts[i];
 
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG,
@@ -2344,7 +2334,7 @@ Admin_Client::interface_test (ACE_ENV_SINGLE_ARG_DECL)
       ACE_ASSERT (!ACE_OS::strcmp (tmp, contexts[i]));
     }
 
-  length = fifd->operations[0].exceptions.length ();
+  length = fifd->operations[3].exceptions.length ();
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
@@ -2356,7 +2346,7 @@ Admin_Client::interface_test (ACE_ENV_SINGLE_ARG_DECL)
 
   for (i = 0; i < length; i++)
     {
-      const char *tmp = fifd->operations[0].exceptions[i].name;
+      const char *tmp = fifd->operations[3].exceptions[i].name;
 
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG,
@@ -2457,7 +2447,7 @@ Admin_Client::interface_test (ACE_ENV_SINGLE_ARG_DECL)
                 ACE_TEXT ("\nInterfaceDef::contents::length: %d\n"),
                 length));
 
-  ACE_ASSERT (length == 3);
+  ACE_ASSERT (length == 6);
 
   for (i = 0; i < length; i++)
     {

@@ -1,4 +1,5 @@
 project {
-  dllout = .
-  libout = .
+  defaultlibs = ACE
+  dllout      = $(ACE_ROOT)/bin
+  libout      = .
 }

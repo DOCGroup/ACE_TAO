@@ -7,9 +7,7 @@
 #include "tao/Stub.h"
 
 
-ACE_RCSID (tao, 
-           TAO_ThruPOA_Object_Proxy_Impl, 
-           "$Id$")
+ACE_RCSID(tao, TAO_ThruPOA_Object_Proxy_Impl, "$Id$")
 
 TAO_ThruPOA_Object_Proxy_Impl::TAO_ThruPOA_Object_Proxy_Impl (void)
 {
@@ -88,7 +86,7 @@ TAO_ThruPOA_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target
   return _tao_retval;
 }
 
-CORBA::InterfaceDef_ptr
+CORBA_InterfaceDef_ptr
 TAO_ThruPOA_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target
                                                ACE_ENV_ARG_DECL)
 {

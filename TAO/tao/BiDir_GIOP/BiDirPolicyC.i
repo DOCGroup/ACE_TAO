@@ -20,18 +20,52 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
 #if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY___CI_)
 #define _BIDIRPOLICY_BIDIRECTIONALPOLICY___CI_
 
-ACE_INLINE
-CORBA::Boolean
-BiDirPolicy::BidirectionalPolicy::marshal (TAO_OutputCDR &)
+ACE_INLINE BiDirPolicy::BidirectionalPolicy_ptr
+tao_BiDirPolicy_BidirectionalPolicy_duplicate (
+    BiDirPolicy::BidirectionalPolicy_ptr p
+  )
 {
-  return 0;
+  return BiDirPolicy::BidirectionalPolicy::_duplicate (p);
 }
+
+ACE_INLINE void
+tao_BiDirPolicy_BidirectionalPolicy_release (
+    BiDirPolicy::BidirectionalPolicy_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+ACE_INLINE BiDirPolicy::BidirectionalPolicy_ptr
+tao_BiDirPolicy_BidirectionalPolicy_nil (
+    void
+  )
+{
+  return BiDirPolicy::BidirectionalPolicy::_nil ();
+}
+
+ACE_INLINE BiDirPolicy::BidirectionalPolicy_ptr
+tao_BiDirPolicy_BidirectionalPolicy_narrow (
+    CORBA::Object *p
+    ACE_ENV_ARG_DECL
+  )
+{
+  return BiDirPolicy::BidirectionalPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
+}
+
+ACE_INLINE CORBA::Object *
+tao_BiDirPolicy_BidirectionalPolicy_upcast (
+    void *src
+  )
+{
+  BiDirPolicy::BidirectionalPolicy **tmp =
+    ACE_static_cast (BiDirPolicy::BidirectionalPolicy **, src);
+  return *tmp;
+}
+
 
 #endif /* end #if !defined */
 

@@ -3,7 +3,6 @@
 #include "testC.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "ace/Get_Opt.h"
-#include "../check_supported_priorities.cpp"
 
 const char *ior1 = "file://test1.ior";
 const char *ior2 = "file://test2.ior";
@@ -64,10 +63,6 @@ main (int argc, char *argv[])
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
         return 1;
-        
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
 
       // RTORB.
       CORBA::Object_var object =

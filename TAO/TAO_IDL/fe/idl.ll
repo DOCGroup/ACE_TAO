@@ -202,12 +202,9 @@ oneway		return IDL_ONEWAY;
   // regular expression is to handle EBCDIC, as well as ASCII.
 
   TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
-  const TAO_IDL_CPP_Keyword_Entry *entry = 0;
-  if (!idl_global->preserve_cpp_keywords())
-    {
-      entry = cpp_key_tbl.lookup (ace_yytext,
-                         ACE_OS::strlen (ace_yytext));
-    }  
+  const TAO_IDL_CPP_Keyword_Entry *entry =
+    cpp_key_tbl.lookup (ace_yytext,
+                        ACE_OS::strlen (ace_yytext));
   if (entry)
     yylval.strval = ACE_OS::strdup (entry->mapping_);
   else
@@ -761,77 +758,66 @@ idl_atof(char *s)
 static char
 idl_escape_reader(
     char *str
-  )
+)
 {
-  if (str[0] != '\\') 
-    {
-	    return str[0];
+    if (str[0] != '\\') {
+	return str[0];
     }
 
-  switch (str[1]) 
-  {
-    case 'n':
-      return '\n';
-    case 't':
-      return '\t';
-    case 'v':
-      return '\v';
-    case 'b':
-      return '\b';
-    case 'r':
-      return '\r';
-    case 'f':
-      return '\f';
-    case 'a':
-      return '\a';
-    case '\\':
-      return '\\';
-    case '\?':
-      return '?';
-    case '\'':
-      return '\'';
-    case '"':
-      return '"';
-    case 'x':
-      {
-        int i;
-
-        // hex value
-        for (i = 2; str[i] != '\0' && isxdigit (str[i]); ++i) 
-          {
-	     continue;
-	  }
-
-        char save = str[i];
-        str[i] = '\0';
-        char out = (char)idl_atoui(&str[2], 16);
-        str[i] = save;
-        return out;
-      }
-      ACE_NOTREACHED (break;)
-    default:
-      // check for octal value
-      if (str[1] >= '0' && str[1] <= '7') 
-        {
- 	  int i;
-
-	  for (i = 1; str[i] >= '0' && str[i] <= '7'; ++i) 
-            {
-	      continue;
+    switch (str[1]) {
+      case 'n':
+	return '\n';
+      case 't':
+	return '\t';
+      case 'v':
+	return '\v';
+      case 'b':
+	return '\b';
+      case 'r':
+	return '\r';
+      case 'f':
+	return '\f';
+      case 'a':
+	return '\a';
+      case '\\':
+	return '\\';
+      case '\?':
+	return '?';
+      case '\'':
+	return '\'';
+      case '"':
+	return '"';
+      case 'x':
+	{
+	    int i;
+	    // hex value
+	    for (i = 2; str[i] != '\0' && isxdigit(str[i]); i++) {
+		continue;
 	    }
-
-	  char save = str[i];
-	  str[i] = '\0';
-	  char out = (char)idl_atoui(&str[1], 8);
-	  str[i] = save;
-	  return out;
-	} 
-      else 
-        {
+	    char save = str[i];
+	    str[i] = '\0';
+	    char out = (char)idl_atoui(&str[2], 16);
+	    str[i] = save;
+	    return out;
+	}
+	ACE_NOTREACHED (break;)
+      default:
+	// check for octal value
+	if (str[1] >= '0' && str[1] <= '7') {
+ 	    int i;
+	    for (i = 1; str[i] >= '0' && str[i] <= '7'; i++) {
+		continue;
+	    }
+	    char save = str[i];
+	    str[i] = '\0';
+	    char out = (char)idl_atoui(&str[1], 8);
+	    str[i] = save;
+	    return out;
+	} else {
 	  return str[1] - 'a';
 	}
-      ACE_NOTREACHED  (break;)
-  }
+	ACE_NOTREACHED  (break;)
+    }
 }
 /*
  * Convert escaped hex digits into a wchar

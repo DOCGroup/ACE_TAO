@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/Token_Manager.h"
 #include "ace/Object_Manager.h"
 
@@ -7,9 +9,7 @@
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
-ACE_RCSID (ace,
-           Token_Manager,
-           "$Id$")
+ACE_RCSID(ace, Token_Manager, "$Id$")
 
 // singleton token manager
 ACE_Token_Manager *ACE_Token_Manager::token_manager_ = 0;
@@ -23,16 +23,16 @@ ACE_Token_Manager::~ACE_Token_Manager ()
 {
   ACE_TRACE ("ACE_Token_Manager::~ACE_Token_Manager");
 
-  COLLECTION::ITERATOR iterator (collection_);
+  COLLECTION_ITERATOR iterator (collection_);
 
-  for (COLLECTION::ENTRY *temp = 0;
+  for (COLLECTION_ENTRY *temp = 0;
        iterator.next (temp) != 0;
        iterator.advance ())
     {
       // @ should I be doing an unbind here?
       delete temp->int_id_;
       // The ext_id_'s delete themselves when the array of
-      // COLLECTION::ENTRYs goes away.
+      // COLLECTION_ENTRYs goes away.
     }
 }
 
@@ -119,8 +119,8 @@ ACE_Token_Manager::check_deadlock (ACE_Token_Proxy *proxy)
 
   // Whether or not we detect deadlock, we have to unmark all tokens
   // for the next time.
-  COLLECTION::ITERATOR iterator (collection_);
-  for (COLLECTION::ENTRY *temp = 0;
+  COLLECTION_ITERATOR iterator (collection_);
+  for (COLLECTION_ENTRY *temp = 0;
        iterator.next (temp) != 0;
        iterator.advance ())
       temp->int_id_->visit (0);
@@ -193,8 +193,8 @@ ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
 ACE_Tokens *
 ACE_Token_Manager::token_waiting_for (const ACE_TCHAR *client_id)
 {
-  COLLECTION::ITERATOR iterator (collection_);
-  for (COLLECTION::ENTRY *temp = 0;
+  COLLECTION_ITERATOR iterator (collection_);
+  for (COLLECTION_ENTRY *temp = 0;
        iterator.next (temp) != 0;
        iterator.advance ())
     {

@@ -98,7 +98,6 @@ SOURCE=.\DualEC_Sup.cpp
 # Begin Source File
 
 SOURCE=.\NavWeapC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

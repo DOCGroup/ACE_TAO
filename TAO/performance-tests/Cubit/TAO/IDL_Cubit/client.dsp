@@ -156,7 +156,6 @@ SOURCE=.\Cubit_Client.cpp
 # Begin Source File
 
 SOURCE=.\cubitC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

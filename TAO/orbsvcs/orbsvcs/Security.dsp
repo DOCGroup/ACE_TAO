@@ -128,17 +128,14 @@ SOURCE=.\Security\Security_PolicyFactory.cpp
 # Begin Source File
 
 SOURCE=.\SecurityC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\SecurityLevel1C.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\SecurityLevel2C.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -151,7 +148,6 @@ SOURCE=.\Security\SecurityManager.cpp
 # Begin Source File
 
 SOURCE=.\SecurityReplaceableC.cpp
-# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -491,7 +487,6 @@ SOURCE=.\SecurityReplaceable.idl
 !IF  "$(CFG)" == "Security - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SECURITY="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\SecurityReplaceable.idl
 InputName=SecurityReplaceable
@@ -530,7 +525,6 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Security - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SECURITY="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\SecurityReplaceable.idl
 InputName=SecurityReplaceable

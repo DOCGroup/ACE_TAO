@@ -4,8 +4,6 @@
 
 #include "ace/LSOCK_Acceptor.h"
 #include "ace/Log_Msg.h"
-#include "ace/Service_Config.h"
-
 
 #if defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 int
@@ -23,9 +21,7 @@ main (int, char *argv[])
 #include "ace/UNIX_Addr.h"
 #include "CPP-acceptor.h"
 
-ACE_RCSID (non_blocking,
-           test_lsock_acceptor,
-           "$Id$")
+ACE_RCSID(non_blocking, test_lsock_acceptor, "$Id$")
 
 typedef Svc_Handler<ACE_LSOCK_STREAM> SVC_HANDLER;
 typedef IPC_Server<SVC_HANDLER, ACE_LSOCK_ACCEPTOR> IPC_SERVER;

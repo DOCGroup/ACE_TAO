@@ -139,15 +139,9 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
       ACE_CHECK;
 
       // Check that the priority is in bounds.
-      if (priority < RTCORBA::minPriority 
-               // The line below will always be false unless the value of
-               // RTCORBA::maxPriority, which is now assigned the value of
-               // 32767, is changed in RTCORBA.pidl.
-//          || priority > RTCORBA::maxPriority
-         )
-        {
-          ACE_THROW (PortableServer::POA::InvalidPolicy ());
-        }
+      if (priority < RTCORBA::minPriority ||
+          priority > RTCORBA::maxPriority)
+        ACE_THROW (PortableServer::POA::InvalidPolicy ());
     }
   else
     // If priority model was not specified, then we better not have a
@@ -200,16 +194,10 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
           //  2a. low is not < RTCORBA::minPriority
           //  2b. low is not > high
           //  2c. high is not > RTCORBA::maxPriority
-          if (bands[i].low < RTCORBA::minPriority 
-              || bands[i].low > bands[i].high
-                   // The line below will always be false unless the value of
-                   // RTCORBA::maxPriority, which is now assigned the value of
-                   // 32767, is changed in RTCORBA.pidl.
-//              || bands[i].high > RTCORBA::maxPriority
-             )
-            {
-              ACE_THROW (PortableServer::POA::InvalidPolicy ());
-            }
+          if (bands[i].low < RTCORBA::minPriority ||
+              bands[i].low > bands[i].high ||
+              bands[i].high > RTCORBA::maxPriority)
+            ACE_THROW (PortableServer::POA::InvalidPolicy ());
         }
 
       // Check 3.

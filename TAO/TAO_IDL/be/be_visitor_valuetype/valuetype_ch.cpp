@@ -151,7 +151,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   ** This is where we diverge for an ExceptionHolder ValueType.
   ** This is how we proceed:
   ** 1) Identify it is an AMH_ExceptionHolder class.
-  ** 2) Inherit from CORBA::DefaultValueBaseRef i.e. provide a CONCRETE
+  ** 2) Inherit from CORBA_DefaultValueBaseRef i.e. provide a CONCRETE
   **    implementation for this ValueType!  This is because the alternative
   **    design of deriving a concrete-exception-holder class that the IDL
   **    compiler again has to generate is superflous, unnecessary, more
@@ -199,7 +199,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           *os << "," << be_nl;
         }
 
-      *os << "public virtual CORBA::DefaultValueRefCountBase";
+      *os << "public virtual CORBA_DefaultValueRefCountBase";
     }
 
   if (node->node_type () == AST_Decl::NT_eventtype)
@@ -427,6 +427,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   // Generate the _init -related declarations.
   be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_VALUETYPE_INIT_CH);
   be_visitor_valuetype_init_ch visitor (&ctx);
 
   if (visitor.visit_valuetype (node) == -1)
@@ -442,6 +443,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (be_global->tc_support ())
     {
       be_visitor_context ctx (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
       be_visitor_typecode_decl visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -486,6 +488,7 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
 
   // Grab the right visitor to generate the return type.
   be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_CH);
   be_visitor_operation_rettype or_visitor (&ctx);
 
   if (bt->accept (&or_visitor) == -1)
@@ -529,6 +532,7 @@ be_visitor_valuetype_ch::visit_field (be_field *node)
     }
 
   be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_FIELD_OBV_CH);
   be_visitor_valuetype_field_ch visitor (&ctx);
 
   if (vt->opt_accessor ())

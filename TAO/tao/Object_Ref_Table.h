@@ -25,7 +25,6 @@
 #include "ace/Synch.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Functor.h"
-#include "ace/CORBA_macros.h"
 
 
 /**

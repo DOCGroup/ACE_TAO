@@ -1,4 +1,5 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
+
 
 //=============================================================================
 /**
@@ -6,7 +7,8 @@
  *
  *  $Id$
  *
-    IIOP implementation of PP Framework Endpoint interface.
+ *   IIOP implementation of PP Framework Endpoint interface.
+ *
  *
  *  @author  Marina Spivak <marina@cs.wustl.edu>
  */
@@ -15,7 +17,6 @@
 
 #ifndef TAO_IIOP_ENDPOINT_H
 #define TAO_IIOP_ENDPOINT_H
-
 #include "ace/pre.h"
 
 #include "tao/Endpoint.h"
@@ -24,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CORBA_String.h"
+#include "tao/ORB.h"
 
 #include "ace/INET_Addr.h"
 
@@ -42,7 +43,6 @@ class TAO_Export TAO_IIOP_Endpoint : public TAO_Endpoint
 {
 public:
 
-  // @todo Lose these friends!
   friend class TAO_IIOP_Profile;
   friend class TAO_SSLIOP_Profile;
 
@@ -81,10 +81,12 @@ public:
 
   /// Return true if this endpoint is equivalent to <other_endpoint>.  Two
   /// endpoints are equivalent iff their port and host are the same.
-  virtual CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
+  CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
   /// Return a hash value for this object.
-  virtual CORBA::ULong hash (void);
+  CORBA::ULong hash (void);
+
+  // Allocates memory and returns a copy of <this>
 
   // = IIOP_Endpoint-specific methods.
 
@@ -105,8 +107,8 @@ public:
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);
 
-  ///
   //TAO_IIOP_Connection_Handler *&hint (void);
+  // Access to our <hint_>.
 
 private:
 
@@ -122,17 +124,15 @@ private:
 
   /// Cached instance of <ACE_INET_Addr> for use in making
   /// invocations, etc.
-  mutable ACE_INET_Addr object_addr_;
+  ACE_INET_Addr object_addr_;
 
   /// Flag to indicate if the address has been resolved and set.
-  mutable int object_addr_set_;
+  int object_addr_set_;
 
   /// IIOP Endpoints can be stringed into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_IIOP_Endpoint *next_;
-
 };
-
 
 #if defined (__ACE_INLINE__)
 # include "tao/IIOP_Endpoint.i"

@@ -161,7 +161,6 @@ SOURCE=.\DynamicAny.cpp
 # Begin Source File
 
 SOURCE=.\DynamicAnyC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

@@ -90,7 +90,6 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\ConsumerC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -99,7 +98,6 @@ SOURCE=.\ConsumerS.cpp
 # Begin Source File
 
 SOURCE=.\NotifierC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

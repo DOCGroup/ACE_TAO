@@ -24,19 +24,16 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Exception.h"
+#include "Transport_Descriptor_Interface.h"
 #include "Transport_Cache_Manager.h"
 #include "Transport_Timer.h"
 #include "Incoming_Message_Queue.h"
 #include "Synch_Refcountable.h"
 
-#include "CONV_FRAMEC.h"
-#include "Codeset_Translator_Factory.h"
-
 class TAO_ORB_Core;
 class TAO_Target_Specification;
 class TAO_Operation_Details;
 class TAO_Transport_Mux_Strategy;
-class TAO_Transport_Descriptor_Interface;
 class TAO_Wait_Strategy;
 class TAO_Connection_Handler;
 class TAO_Pluggable_Messaging;
@@ -44,6 +41,7 @@ class TAO_Pluggable_Messaging;
 class TAO_Queued_Message;
 class TAO_Synch_Queued_Message;
 class TAO_Resume_Handle;
+
 
 
 /**
@@ -219,6 +217,9 @@ public:
   TAO_Transport (CORBA::ULong tag,
                  TAO_ORB_Core *orb_core);
 
+  /// destructor
+  virtual ~TAO_Transport (void);
+
   // Maintain reference counting with these
   static TAO_Transport* _duplicate (TAO_Transport* transport);
   static void release (TAO_Transport* transport);
@@ -374,6 +375,8 @@ public:
                 size_t len,
                 const ACE_Time_Value *timeout = 0);
 
+
+
   /**
    * @name Control connection lifecycle
    *
@@ -418,14 +421,6 @@ public:
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
 protected:
-
-  /// Destructor
-  /**
-   * Protected destructor to enforce proper memory management through
-   * the reference counting mechanism.
-   */
-  virtual ~TAO_Transport (void);
-
   /** @name Template methods
    *
    * The Transport class uses the Template Method Pattern to implement
@@ -560,6 +555,7 @@ public:
   virtual int handle_input_i (TAO_Resume_Handle &rh,
                               ACE_Time_Value *max_wait_time = 0,
                               int block = 0);
+  void try_to_complete (ACE_Time_Value *max_wait_time);
 
 
   enum
@@ -636,9 +632,9 @@ public:
    *             block, used in the implementation of timeouts.
    */
   virtual int send_message_shared (TAO_Stub *stub,
-                                   int message_semantics,
-                                   const ACE_Message_Block *message_block,
-                                   ACE_Time_Value *max_wait_time);
+                                                       int message_semantics,
+                                                               const ACE_Message_Block *message_block,
+                                                                   ACE_Time_Value *max_wait_time);
 
 
 protected:
@@ -654,63 +650,12 @@ protected:
    */
   virtual int register_handler_i (void) = 0;
 
-  /// Called by the handle_input_i  (). This method is used to parse
-  /// message read by the handle_input_i () call. It also decides
-  /// whether the message  needs consolidation before processing.
-  int parse_consolidate_messages (ACE_Message_Block &bl,
-                                  TAO_Resume_Handle &rh,
-                                  ACE_Time_Value *time = 0);
-
-
-  /// Method does parsing of the message if we have a fresh message in
-  /// the <message_block> or just returns if we have read part of the
-  /// previously stored message.
-  int parse_incoming_messages (ACE_Message_Block &message_block);
-
-  /// Return if we have any missing data in the queue of messages
-  /// or determine if we have more information left out in the
-  /// presently read message to make it complete.
-  size_t missing_data (ACE_Message_Block &message_block);
-
-  /// Consolidate the currently read message or consolidate the last
-  /// message in the queue. The consolidation of the last message in
-  /// the queue is done by calling consolidate_message_queue ().
-  virtual int consolidate_message (ACE_Message_Block &incoming,
-                                   ssize_t missing_data,
-                                   TAO_Resume_Handle &rh,
-                                   ACE_Time_Value *max_wait_time);
-
-  /// @@Bala: Docu???
-  int consolidate_fragments (TAO_Queued_Data *qd,
-                             TAO_Resume_Handle &rh);
-
-
-
-  /// First consolidate the message queue.  If the message is still not
-  /// complete, try to read from the handle again to make it
-  /// complete. If these dont help put the message back in the queue
-  /// and try to check the queue if we have message to process. (the
-  /// thread  needs to do some work anyway :-))
-  int consolidate_message_queue (ACE_Message_Block &incoming,
-                                 ssize_t missing_data,
-                                 TAO_Resume_Handle &rh,
-                                 ACE_Time_Value *max_wait_time);
-
-  /// Called by parse_consolidate_message () if we have more messages
-  /// in one read. Queue up the messages and try to process one of
-  /// them, atleast at the head of them.
-  int consolidate_extra_messages (ACE_Message_Block &incoming,
-                                  TAO_Resume_Handle &rh);
-
   /// Process the message by sending it to the higher layers of the
   /// ORB.
   int process_parsed_messages (TAO_Queued_Data *qd,
                                TAO_Resume_Handle &rh);
 
-  /// Make a queued data from the <incoming> message block
-  TAO_Queued_Data *make_queued_data (ACE_Message_Block &incoming);
-
-    /// Implement send_message_shared() assuming the handler_lock_ is
+  /// Implement send_message_shared() assuming the handler_lock_ is
   /// held.
   int send_message_shared_i (TAO_Stub *stub,
                              int message_semantics,
@@ -768,38 +713,34 @@ public:
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void* act);
 
-  /// CodeSet Negotiation - Get the char codeset translator factory
-  ///
-  TAO_Codeset_Translator_Factory *char_translator (void) const;
 
-  /// CodeSet Negotiation - Get the wchar codeset translator factory
-  ///
-  TAO_Codeset_Translator_Factory *wchar_translator (void) const;
+  /*!
+    \name Incoming Queue Methods
+  */
+  //@{
+  /*!
+    \brief Queue up \a queueable_message as a completely-received incoming message.
 
-  /// CodeSet negotiation - Set the char codeset translator factory
-  ///
-  void char_translator (TAO_Codeset_Translator_Factory *);
+    This method queues up a completely-received queueable GIOP message
+    (i.e., it must be dynamically-allocated).  It does not assemble a
+    complete GIOP message; that should be done prior to calling this
+    message, and is currently done in handle_input_i.
 
-  /// CodeSet negotiation - Set the wchar codeset translator factory
-  ///
-  void wchar_translator (TAO_Codeset_Translator_Factory *);
+    This does, however, assure that a completely-received GIOP
+    FRAGMENT gets associated with any previously-received related
+    fragments.  It does this through collaboration with the messaging
+    object (since fragment reassembly is protocol specific).
 
-  /// Inform the transport that wchar marshalling is allowed even if there is
-  /// no tranlator. It could be true that no translator is used because the
-  /// NCS-W for both sides match. But it is also true that no translator is
-  /// available because the other side did not define a codeset for wchars.
-  void wchar_allowed (CORBA::Boolean );
+    \param queueable_message instance as returned by one of the TAO_Queued_Data::make_*_message that's been completely received
 
-  /// Use the Transport's codeset factories to set the translator for input
-  /// and output CDRs.
-  void assign_translators (TAO_InputCDR *, TAO_OutputCDR *);
+    \return 0 successfully enqueued \a queueable_message
 
-  /// Return true if the tcs has been set
-  ///
-  CORBA::Boolean is_tcs_set() const;
+    \return -1 failed to enqueue \a queueable_message
+    \todo How do we indicate \em what may have failed?
+   */
+  int enqueue_incoming_message (TAO_Queued_Data *queueable_message);
+  //@}
 
-  /// Set the state of the first_request_ flag to 0
-  void first_request_sent();
 private:
 
   /// Helper method that returns the Transport Cache Manager.
@@ -976,8 +917,11 @@ protected:
   TAO_Queued_Message *head_;
   TAO_Queued_Message *tail_;
 
-  /// Queue of the incoming messages..
+  /// Queue of the completely-received incoming messages..
   TAO_Incoming_Message_Queue incoming_message_queue_;
+
+  /// Place to hold a partially-received (waiting-to-be-completed) message
+  TAO_Queued_Data * uncompleted_message_;
 
   /// The queue will start draining no later than <queing_deadline_>
   /// *if* the deadline is
@@ -993,7 +937,7 @@ protected:
   /// resources (such as a connection handler) get serialized.
   /**
    * This is an <code>ACE_Lock</code> that gets initialized from
-   * @c TAO_ORB_Core::resource_factory()->create_cached_connection_lock().
+   * <code>TAO_ORB_Core::resource_factory()->create_cached_connection_lock ()</code>.
    * This way, one can use a lock appropriate for the type of system, i.e.,
    * a null lock for single-threaded systems, and a real lock for
    * multi-threaded systems.
@@ -1002,7 +946,8 @@ protected:
 
   /// A unique identifier for the transport.
   /**
-   * This never *never* changes over the lifespan, so we don't have to worry
+   * This never *never*
+   * changes over the lifespan, so we don't have to worry
    * about locking it.
    *
    * HINT: Protocol-specific transports that use connection handler
@@ -1012,26 +957,6 @@ protected:
 
   /// Used by the LRU, LFU and FIFO Connection Purging Strategies.
   unsigned long purging_order_;
-
-private:
-  /// Additional member values required to support codeset translation
-  TAO_Codeset_Translator_Factory *char_translator_;
-  TAO_Codeset_Translator_Factory *wchar_translator_;
-
-  /// The tcs_set_ flag indicates that negotiation has occured and so the
-  /// translators are correct, since a null translator is valid if both ends
-  /// are using the same codeset, whatever that codeset might be.
-  CORBA::Boolean tcs_set_;
-  /// First_request_ is true until the first request is sent or received. This
-  /// is necessary since codeset context information is necessary only on the
-  /// first request. After that, the translators are fixed for the life of the
-  /// connection.
-  CORBA::Boolean first_request_;
-  /// Wchar data is only permitted when both sides explicitly declare a wchar
-  /// codeset and a translator exists on one side or the other to convert
-  /// between them. Again, this is necessary since a null wchar_translator is
-  /// perfectly valid.
-  CORBA::Boolean wchar_allowed_;
 };
 
 /**

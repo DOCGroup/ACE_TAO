@@ -18,6 +18,7 @@
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
+
 ACE_INLINE void POA_CORBA::ConstructionPolicy::_get_policy_type_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -33,10 +34,6 @@ ACE_INLINE void POA_CORBA::ConstructionPolicy::_get_policy_type_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
-
 ACE_INLINE void POA_CORBA::ConstructionPolicy::copy_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -52,10 +49,6 @@ ACE_INLINE void POA_CORBA::ConstructionPolicy::copy_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
-
 ACE_INLINE void POA_CORBA::ConstructionPolicy::destroy_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -71,4 +64,3 @@ ACE_INLINE void POA_CORBA::ConstructionPolicy::destroy_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
-

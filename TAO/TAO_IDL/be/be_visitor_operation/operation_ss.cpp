@@ -149,6 +149,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // Declare a return type variable.
   be_visitor_context ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS);
   be_visitor_operation_rettype_vardecl_ss ord_visitor (&ctx);
 
   // Do we have any arguments in the operation that needs marshalling?
@@ -296,6 +297,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // Make the upcall and assign to the return val.
   ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS);
   be_visitor_operation_rettype_assign_ss ora_visitor (&ctx);
 
   if (bt->accept (&ora_visitor) == -1)
@@ -377,6 +379,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       // causing any problems.
       // Generate the return type mapping (same as in the header file)
       ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
       be_visitor_operation_rettype oro_visitor (&ctx);
 
       if (bt->accept (&oro_visitor) == -1)
@@ -609,15 +612,23 @@ be_visitor_operation_ss::gen_demarshal_params (be_operation *node,
                             -1);
         }
 
-      *os << be_nl << "))" << be_nl;
+      *os << be_uidt_nl << "))" << be_nl;
 
-      // If marshaling fails, raise exception (codesetting has minor codes)
-      *os << "{" << be_idt_nl << be_nl
-          << "TAO_InputCDR::throw_skel_exception (errno ACE_ENV_ARG_PARAMETER);" << be_nl
-          << "ACE_CHECK;" << be_uidt_nl
-          << "}" << be_nl;
+      // If marshaling fails, raise exception.
+      int status = this->gen_raise_exception (0,
+                                              "CORBA::MARSHAL",
+                                              "");
 
-      *os << be_uidt << be_uidt;
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_ss::"
+                             "gen_marshal_and invoke - "
+                             "codegen for return var failed\n"),
+                            -1);
+        }
+
+      *os << be_uidt;
     };
 
   return 0;
@@ -677,7 +688,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
                         -1);
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl << be_nl 
       << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
       << be_nl << be_nl;
   *os << "if (!(" << be_idt << be_idt;
@@ -686,6 +697,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
     {
       // Demarshal the return val and each inout and out argument.
       ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_MARSHAL_SS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
       be_visitor_operation_rettype_marshal_ss orm_visitor (&ctx);
 
@@ -725,15 +737,23 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
         }
     }
 
-  *os << be_nl << "))" << be_nl;
+  *os << be_uidt_nl << "))" << be_nl;
 
-  // If marshaling fails, raise exception (codesetting has minor codes)
-  *os << "{" << be_idt_nl << be_nl
-      << "TAO_OutputCDR::throw_skel_exception (errno ACE_ENV_ARG_PARAMETER);" << be_nl
-      << "ACE_CHECK;" << be_uidt_nl
-      << "}" << be_nl;
+  // If marshaling fails, raise exception.
+  int status = this->gen_raise_exception (0,
+                                          "CORBA::MARSHAL",
+                                          "");
 
-  *os << be_uidt << be_uidt;
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_ss::"
+                         "gen_marshal_params - "
+                         "codegen for raising exception failed\n"),
+                        -1);
+    }
+
+  *os << be_uidt;
 
   return 0;
 }

@@ -174,6 +174,7 @@ be_visitor_field_cdr_op_ci::visit_array (be_array *node)
       ctx.node (node);
 
       // First generate the  declaration.
+      ctx.state (TAO_CodeGen::TAO_ARRAY_CDR_OP_CI);
       be_visitor_array_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -244,6 +245,7 @@ be_visitor_field_cdr_op_ci::visit_enum (be_enum *node)
       ctx.node (node);
 
       // Generate the typcode for enums.
+      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
       be_visitor_enum_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -261,7 +263,7 @@ be_visitor_field_cdr_op_ci::visit_enum (be_enum *node)
 
 // Visit interface type.
 int
-be_visitor_field_cdr_op_ci::visit_interface (be_interface *node)
+be_visitor_field_cdr_op_ci::visit_interface (be_interface *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_field *f = this->ctx_->be_node_as_field ();
@@ -284,16 +286,7 @@ be_visitor_field_cdr_op_ci::visit_interface (be_interface *node)
 
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      if (node->is_defined ())
-        {
-          *os << "_tao_aggregate." << f->local_name () 
-              << ".in ()->marshal (strm)";
-        }
-      else
-        {
-          *os << "tao_" << node->flat_name () << "_marshal ("
-              << "_tao_aggregate." << f->local_name () << ".in (), strm)";
-        }
+      *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
 
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
@@ -314,7 +307,7 @@ be_visitor_field_cdr_op_ci::visit_interface (be_interface *node)
 
 // Visit interface forward type.
 int
-be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -339,16 +332,7 @@ be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
 
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      if (node->is_defined ())
-        {
-          *os << "_tao_aggregate." << f->local_name () 
-              << ".in ()->marshal (strm)";
-        }
-      else
-        {
-          *os << "tao_" << node->flat_name () << "_marshal ("
-              << "_tao_aggregate." << f->local_name () << ".in (), strm)";
-        }
+      *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
 
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
@@ -616,6 +600,7 @@ be_visitor_field_cdr_op_ci::visit_sequence (be_sequence *node)
       ctx.node (node);
 
       // Generate the inline code for structs.
+      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CI);
       be_visitor_sequence_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -732,6 +717,7 @@ be_visitor_field_cdr_op_ci::visit_structure (be_structure *node)
       ctx.node (node);
 
       // Generate the inline code for structs.
+      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
       be_visitor_structure_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -827,6 +813,7 @@ be_visitor_field_cdr_op_ci::visit_union (be_union *node)
       ctx.node (node);
 
       // Generate the inline code for union.
+      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
       be_visitor_union_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

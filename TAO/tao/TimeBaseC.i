@@ -19,16 +19,12 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
-
 // *************************************************************
 // Inline operations for class TimeBase::UtcT_var
 // *************************************************************
 
 ACE_INLINE
-TimeBase::UtcT_var::UtcT_var (void)
+TimeBase::UtcT_var::UtcT_var (void) // default constructor
   : ptr_ (0)
 {}
 
@@ -38,19 +34,15 @@ TimeBase::UtcT_var::UtcT_var (UtcT *p)
 {}
 
 ACE_INLINE
-TimeBase::UtcT_var::UtcT_var (const ::TimeBase::UtcT_var &p)
+TimeBase::UtcT_var::UtcT_var (const ::TimeBase::UtcT_var &p) // copy constructor
 {
   if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::TimeBase::UtcT (*p.ptr_));
-    }
+    ACE_NEW (this->ptr_, ::TimeBase::UtcT (*p.ptr_));
   else
-    {
-      this->ptr_ = 0;
-    }
+    this->ptr_ = 0;
 }
 
-// Fixed-size types only.
+// fixed-size types only
 ACE_INLINE
 TimeBase::UtcT_var::UtcT_var (const ::TimeBase::UtcT &p)
 {
@@ -58,39 +50,33 @@ TimeBase::UtcT_var::UtcT_var (const ::TimeBase::UtcT &p)
 }
 
 ACE_INLINE
-TimeBase::UtcT_var::~UtcT_var (void)
+TimeBase::UtcT_var::~UtcT_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE
-TimeBase::UtcT_var &
-TimeBase::UtcT_var::operator= (UtcT *_tao_struct_var)
+ACE_INLINE TimeBase::UtcT_var &
+TimeBase::UtcT_var::operator= (UtcT *p)
 {
   delete this->ptr_;
-  this->ptr_ = _tao_struct_var;
+  this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE
-::TimeBase::UtcT_var &
-TimeBase::UtcT_var::operator= (const ::TimeBase::UtcT_var &_tao_struct_var)
+ACE_INLINE ::TimeBase::UtcT_var &
+TimeBase::UtcT_var::operator= (const ::TimeBase::UtcT_var &p)
 {
-  if (this != &_tao_struct_var)
+  if (this != &p)
     {
-      if (_tao_struct_var.ptr_ == 0)
+      if (p.ptr_ == 0)
         {
           delete this->ptr_;
           this->ptr_ = 0;
         }
       else
         {
-          UtcT *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              UtcT (*_tao_struct_var.ptr_),
-              *this
-            );
+          UtcT *deep_copy =
+            new UtcT (*p.ptr_);
           
           if (deep_copy != 0)
             {
@@ -112,13 +98,8 @@ TimeBase::UtcT_var::operator= (const ::TimeBase::UtcT &p)
   if (this->ptr_ != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (
-        this->ptr_,
-        ::TimeBase::UtcT (p),
-        *this
-      );
+    ACE_NEW_RETURN (this->ptr_, ::TimeBase::UtcT (p), *this);
   }
-  
   return *this;
 }
 
@@ -183,15 +164,12 @@ TimeBase::UtcT_var::ptr (void) const
   return this->ptr_;
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
-
 // *************************************************************
 // Inline operations for class TimeBase::IntervalT_var
 // *************************************************************
 
 ACE_INLINE
-TimeBase::IntervalT_var::IntervalT_var (void)
+TimeBase::IntervalT_var::IntervalT_var (void) // default constructor
   : ptr_ (0)
 {}
 
@@ -201,19 +179,15 @@ TimeBase::IntervalT_var::IntervalT_var (IntervalT *p)
 {}
 
 ACE_INLINE
-TimeBase::IntervalT_var::IntervalT_var (const ::TimeBase::IntervalT_var &p)
+TimeBase::IntervalT_var::IntervalT_var (const ::TimeBase::IntervalT_var &p) // copy constructor
 {
   if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::TimeBase::IntervalT (*p.ptr_));
-    }
+    ACE_NEW (this->ptr_, ::TimeBase::IntervalT (*p.ptr_));
   else
-    {
-      this->ptr_ = 0;
-    }
+    this->ptr_ = 0;
 }
 
-// Fixed-size types only.
+// fixed-size types only
 ACE_INLINE
 TimeBase::IntervalT_var::IntervalT_var (const ::TimeBase::IntervalT &p)
 {
@@ -221,39 +195,33 @@ TimeBase::IntervalT_var::IntervalT_var (const ::TimeBase::IntervalT &p)
 }
 
 ACE_INLINE
-TimeBase::IntervalT_var::~IntervalT_var (void)
+TimeBase::IntervalT_var::~IntervalT_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE
-TimeBase::IntervalT_var &
-TimeBase::IntervalT_var::operator= (IntervalT *_tao_struct_var)
+ACE_INLINE TimeBase::IntervalT_var &
+TimeBase::IntervalT_var::operator= (IntervalT *p)
 {
   delete this->ptr_;
-  this->ptr_ = _tao_struct_var;
+  this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE
-::TimeBase::IntervalT_var &
-TimeBase::IntervalT_var::operator= (const ::TimeBase::IntervalT_var &_tao_struct_var)
+ACE_INLINE ::TimeBase::IntervalT_var &
+TimeBase::IntervalT_var::operator= (const ::TimeBase::IntervalT_var &p)
 {
-  if (this != &_tao_struct_var)
+  if (this != &p)
     {
-      if (_tao_struct_var.ptr_ == 0)
+      if (p.ptr_ == 0)
         {
           delete this->ptr_;
           this->ptr_ = 0;
         }
       else
         {
-          IntervalT *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              IntervalT (*_tao_struct_var.ptr_),
-              *this
-            );
+          IntervalT *deep_copy =
+            new IntervalT (*p.ptr_);
           
           if (deep_copy != 0)
             {
@@ -275,13 +243,8 @@ TimeBase::IntervalT_var::operator= (const ::TimeBase::IntervalT &p)
   if (this->ptr_ != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (
-        this->ptr_,
-        ::TimeBase::IntervalT (p),
-        *this
-      );
+    ACE_NEW_RETURN (this->ptr_, ::TimeBase::IntervalT (p), *this);
   }
-  
   return *this;
 }
 
@@ -346,89 +309,55 @@ TimeBase::IntervalT_var::ptr (void) const
   return this->ptr_;
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
-
-ACE_INLINE
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const TimeBase::UtcT &_tao_aggregate
-  )
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TimeBase::UtcT &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.time) &&
     (strm << _tao_aggregate.inacclo) &&
     (strm << _tao_aggregate.inacchi) &&
     (strm << _tao_aggregate.tdf)
-   )
-    {
-      return 1;
-    }
+  )
+    return 1;
   else
-    {
-      return 0;
-    }
+    return 0;
+  
 }
 
-ACE_INLINE
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    TimeBase::UtcT &_tao_aggregate
-  )
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TimeBase::UtcT &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.time) &&
     (strm >> _tao_aggregate.inacclo) &&
     (strm >> _tao_aggregate.inacchi) &&
     (strm >> _tao_aggregate.tdf)
-   )
-    {
-      return 1;
-    }
+  )
+    return 1;
   else
-    {
-      return 0;
-    }
+    return 0;
+  
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
-
-ACE_INLINE
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const TimeBase::IntervalT &_tao_aggregate
-  )
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TimeBase::IntervalT &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.lower_bound) &&
     (strm << _tao_aggregate.upper_bound)
-   )
-    {
-      return 1;
-    }
+  )
+    return 1;
   else
-    {
-      return 0;
-    }
+    return 0;
+  
 }
 
-ACE_INLINE
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    TimeBase::IntervalT &_tao_aggregate
-  )
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TimeBase::IntervalT &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.lower_bound) &&
     (strm >> _tao_aggregate.upper_bound)
-   )
-    {
-      return 1;
-    }
+  )
+    return 1;
   else
-    {
-      return 0;
-    }
+    return 0;
+  
 }
 

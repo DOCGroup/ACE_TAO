@@ -171,6 +171,7 @@ be_visitor_component_cs::visit_component (be_component *node)
     }
 
   ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_BROKER_CS);
   be_visitor_interface_remote_proxy_broker_cs irpb_visitor (&ctx);
 
   if (node->accept (&irpb_visitor) == -1)
@@ -315,7 +316,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl
-      << "return this->Object::_is_a (" << be_idt << be_idt_nl
+      << "return this->CORBA_Object::_is_a (" << be_idt << be_idt_nl
       << "value" << be_nl
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
@@ -418,6 +419,7 @@ be_visitor_component_cs::visit_component (be_component *node)
 
   if (be_global->tc_support ())
     {
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
       ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
       be_visitor_typecode_defn tc_visitor (&ctx);
 
@@ -516,3 +518,4 @@ be_visitor_component_cs::gen_unchecked_narrow (be_component *node,
 
   *os << "}" << be_nl << be_nl;
 }
+

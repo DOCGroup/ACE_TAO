@@ -20,7 +20,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
+// be/be_codegen.cpp:314
 
 
 #include "ImplRepoC.h"
@@ -45,7 +45,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
+// be/be_visitor_interface/interface_cs.cpp:61
 
 int ImplementationRepository::ServerObject::_tao_class_id = 0;
 
@@ -92,17 +92,8 @@ tao_ImplementationRepository_ServerObject_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_ImplementationRepository_ServerObject_marshal (
-    ImplementationRepository::ServerObject_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
+// be/be_interface.cpp:721
 
 // *************************************************************
 // ImplementationRepository::ServerObject_var
@@ -228,7 +219,7 @@ ImplementationRepository::ServerObject_var::tao_upcast (void *src)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
+// be/be_interface.cpp:1030
 
 // *************************************************************
 // ImplementationRepository::ServerObject_out
@@ -290,12 +281,12 @@ ImplementationRepository::ServerObject_out::operator-> (void)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_cs.cpp:56
+// be/be_visitor_interface/interceptors_cs.cpp:56
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:76
+// be/be_visitor_operation/interceptors_cs.cpp:76
 
 class TAO_ClientRequestInfo_ImplementationRepository_ServerObject_ping : public TAO_ClientRequestInfo_i
 {
@@ -320,7 +311,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // be/be_visitor_operation/interceptors_cs.cpp:378
   
   TAO_ClientRequestInfo_ImplementationRepository_ServerObject_ping::TAO_ClientRequestInfo_ImplementationRepository_ServerObject_ping (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -370,7 +361,7 @@ TAO_ClientRequestInfo_ImplementationRepository_ServerObject_ping::result (ACE_EN
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:76
+// be/be_visitor_operation/interceptors_cs.cpp:76
 
 class TAO_ClientRequestInfo_ImplementationRepository_ServerObject_shutdown : public TAO_ClientRequestInfo_i
 {
@@ -395,7 +386,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // be/be_visitor_operation/interceptors_cs.cpp:378
   
   TAO_ClientRequestInfo_ImplementationRepository_ServerObject_shutdown::TAO_ClientRequestInfo_ImplementationRepository_ServerObject_shutdown (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -447,7 +438,7 @@ TAO_ClientRequestInfo_ImplementationRepository_ServerObject_shutdown::result (AC
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/remote_proxy_impl_cs.cpp:31
+// be/be_visitor_interface/remote_proxy_impl_cs.cpp:31
 
 ///////////////////////////////////////////////////////////////////////
 //                Base & Remote Proxy  Implementation. 
@@ -462,10 +453,10 @@ ImplementationRepository::_TAO_ServerObject_Remote_Proxy_Impl::_TAO_ServerObject
 // Remote Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/remote_proxy_impl_cs.cpp:63
+// be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_ServerObject_Remote_Proxy_Impl::ping (
-    CORBA::Object *_collocated_tao_target_
+    CORBA_Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -639,10 +630,10 @@ void ImplementationRepository::_TAO_ServerObject_Remote_Proxy_Impl::ping (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/remote_proxy_impl_cs.cpp:63
+// be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_ServerObject_Remote_Proxy_Impl::shutdown (
-    CORBA::Object *_collocated_tao_target_
+    CORBA_Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -820,7 +811,7 @@ void ImplementationRepository::_TAO_ServerObject_Remote_Proxy_Impl::shutdown (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/remote_proxy_broker_cs.cpp:31
+// be/be_visitor_interface/remote_proxy_broker_cs.cpp:31
 
 ///////////////////////////////////////////////////////////////////////
 //           Remote & Base  Proxy Broker Implementation
@@ -868,7 +859,7 @@ ImplementationRepository::_TAO_ServerObject_Remote_Proxy_Broker::select_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// be/be_visitor_interface/interface_cs.cpp:225
 
 ImplementationRepository::ServerObject::ServerObject (int collocated)
 {
@@ -1025,7 +1016,7 @@ ImplementationRepository::ServerObject::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->CORBA_Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -1069,7 +1060,7 @@ const char* ImplementationRepository::ServerObject::_interface_repository_id (vo
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:80
+// be/be_visitor_operation/operation_cs.cpp:80
 
 void ImplementationRepository::ServerObject::ping (
     ACE_ENV_SINGLE_ARG_DECL
@@ -1089,7 +1080,7 @@ void ImplementationRepository::ServerObject::ping (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:80
+// be/be_visitor_operation/operation_cs.cpp:80
 
 void ImplementationRepository::ServerObject::shutdown (
     ACE_ENV_SINGLE_ARG_DECL
@@ -1109,7 +1100,7 @@ void ImplementationRepository::ServerObject::shutdown (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_ServerObject[] =
 {
@@ -1127,12 +1118,12 @@ static const CORBA::Long _oc_ImplementationRepository_ServerObject[] =
   ACE_NTOHL (0x626a6563), 
   ACE_NTOHL (0x743a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:ImplementationRepository/ServerObject:1.0
-    13,
+  13,
   ACE_NTOHL (0x53657276), 
   ACE_NTOHL (0x65724f62), 
   ACE_NTOHL (0x6a656374), 
   ACE_NTOHL (0x0),  // name = ServerObject
-  };
+};
 
 static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_ServerObject (
     CORBA::tk_objref,
@@ -1152,10 +1143,10 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
+// be/be_visitor_exception/exception_cs.cpp:63
 
 ImplementationRepository::AlreadyRegistered::AlreadyRegistered (void)
-  : CORBA::UserException (
+  : CORBA_UserException (
         "IDL:ImplementationRepository/AlreadyRegistered:1.0",
         "AlreadyRegistered"
       )
@@ -1167,7 +1158,7 @@ ImplementationRepository::AlreadyRegistered::~AlreadyRegistered (void)
 }
 
 ImplementationRepository::AlreadyRegistered::AlreadyRegistered (const ::ImplementationRepository::AlreadyRegistered &_tao_excp)
-  : CORBA::UserException (
+  : CORBA_UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -1177,7 +1168,7 @@ ImplementationRepository::AlreadyRegistered::AlreadyRegistered (const ::Implemen
 ImplementationRepository::AlreadyRegistered&
 ImplementationRepository::AlreadyRegistered::operator= (const ::ImplementationRepository::AlreadyRegistered &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->CORBA_UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -1257,7 +1248,7 @@ CORBA::TypeCode_ptr ImplementationRepository::AlreadyRegistered::_type (void) co
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_AlreadyRegistered[] =
 {
@@ -1276,14 +1267,14 @@ static const CORBA::Long _oc_ImplementationRepository_AlreadyRegistered[] =
   ACE_NTOHL (0x73746572), 
   ACE_NTOHL (0x65643a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:ImplementationRepository/AlreadyRegistered:1.0
-    18,
+  18,
   ACE_NTOHL (0x416c7265), 
   ACE_NTOHL (0x61647952), 
   ACE_NTOHL (0x65676973), 
   ACE_NTOHL (0x74657265), 
   ACE_NTOHL (0x64000000),  // name = AlreadyRegistered
   0, // member count
-  };
+};
 
 static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_AlreadyRegistered (
     CORBA::tk_except,
@@ -1303,10 +1294,10 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
+// be/be_visitor_exception/exception_cs.cpp:63
 
 ImplementationRepository::CannotActivate::CannotActivate (void)
-  : CORBA::UserException (
+  : CORBA_UserException (
         "IDL:ImplementationRepository/CannotActivate:1.0",
         "CannotActivate"
       )
@@ -1318,7 +1309,7 @@ ImplementationRepository::CannotActivate::~CannotActivate (void)
 }
 
 ImplementationRepository::CannotActivate::CannotActivate (const ::ImplementationRepository::CannotActivate &_tao_excp)
-  : CORBA::UserException (
+  : CORBA_UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -1329,7 +1320,7 @@ ImplementationRepository::CannotActivate::CannotActivate (const ::Implementation
 ImplementationRepository::CannotActivate&
 ImplementationRepository::CannotActivate::operator= (const ::ImplementationRepository::CannotActivate &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->CORBA_UserException::operator= (_tao_excp);
   this->reason = CORBA::string_dup (_tao_excp.reason.in ());
   return *this;
 }
@@ -1406,11 +1397,11 @@ void ImplementationRepository::CannotActivate::_tao_decode (
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ctor.cpp:66
+// be/be_visitor_exception/exception_ctor.cpp:66
 
 ImplementationRepository::CannotActivate::CannotActivate (
     const char * _tao_reason
-  )  : CORBA::UserException (
+  )  : CORBA_UserException (
         "IDL:ImplementationRepository/CannotActivate:1.0",
         "CannotActivate"
       )
@@ -1425,7 +1416,7 @@ CORBA::TypeCode_ptr ImplementationRepository::CannotActivate::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_CannotActivate[] =
 {
@@ -1443,16 +1434,16 @@ static const CORBA::Long _oc_ImplementationRepository_CannotActivate[] =
   ACE_NTOHL (0x63746976), 
   ACE_NTOHL (0x6174653a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:ImplementationRepository/CannotActivate:1.0
-    15,
+  15,
   ACE_NTOHL (0x43616e6e), 
   ACE_NTOHL (0x6f744163), 
   ACE_NTOHL (0x74697661), 
   ACE_NTOHL (0x74650000),  // name = CannotActivate
   1, // member count
-    7,
+  7,
   ACE_NTOHL (0x72656173), 
   ACE_NTOHL (0x6f6e0000),  // name = reason
-    CORBA::tk_string, 
+  CORBA::tk_string, 
   0U, // string length
 };
 
@@ -1474,10 +1465,10 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
+// be/be_visitor_exception/exception_cs.cpp:63
 
 ImplementationRepository::NotFound::NotFound (void)
-  : CORBA::UserException (
+  : CORBA_UserException (
         "IDL:ImplementationRepository/NotFound:1.0",
         "NotFound"
       )
@@ -1489,7 +1480,7 @@ ImplementationRepository::NotFound::~NotFound (void)
 }
 
 ImplementationRepository::NotFound::NotFound (const ::ImplementationRepository::NotFound &_tao_excp)
-  : CORBA::UserException (
+  : CORBA_UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -1499,7 +1490,7 @@ ImplementationRepository::NotFound::NotFound (const ::ImplementationRepository::
 ImplementationRepository::NotFound&
 ImplementationRepository::NotFound::operator= (const ::ImplementationRepository::NotFound &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->CORBA_UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -1579,7 +1570,7 @@ CORBA::TypeCode_ptr ImplementationRepository::NotFound::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_NotFound[] =
 {
@@ -1596,12 +1587,12 @@ static const CORBA::Long _oc_ImplementationRepository_NotFound[] =
   ACE_NTOHL (0x466f756e), 
   ACE_NTOHL (0x643a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:ImplementationRepository/NotFound:1.0
-    9,
+  9,
   ACE_NTOHL (0x4e6f7446), 
   ACE_NTOHL (0x6f756e64), 
   ACE_NTOHL (0x0),  // name = NotFound
   0, // member count
-  };
+};
 
 static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_NotFound (
     CORBA::tk_except,
@@ -1621,7 +1612,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_EnvironmentVariable[] =
 {
@@ -1641,22 +1632,22 @@ static const CORBA::Long _oc_ImplementationRepository_EnvironmentVariable[] =
   ACE_NTOHL (0x61626c65), 
   ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/EnvironmentVariable:1.0
-    20,
+  20,
   ACE_NTOHL (0x456e7669), 
   ACE_NTOHL (0x726f6e6d), 
   ACE_NTOHL (0x656e7456), 
   ACE_NTOHL (0x61726961), 
   ACE_NTOHL (0x626c6500),  // name = EnvironmentVariable
   2, // member count
-    5,
+  5,
   ACE_NTOHL (0x6e616d65), 
   ACE_NTOHL (0x0),  // name = name
-    CORBA::tk_string, 
+  CORBA::tk_string, 
   0U, // string length
   6,
   ACE_NTOHL (0x76616c75), 
   ACE_NTOHL (0x65000000),  // name = value
-    CORBA::tk_string, 
+  CORBA::tk_string, 
   0U, // string length
 };
 
@@ -1678,7 +1669,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// be/be_visitor_structure/structure_cs.cpp:67
 
 void ImplementationRepository::EnvironmentVariable::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -1687,7 +1678,7 @@ void ImplementationRepository::EnvironmentVariable::_tao_any_destructor (void *_
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_Address[] =
 {
@@ -1704,10 +1695,10 @@ static const CORBA::Long _oc_ImplementationRepository_Address[] =
   ACE_NTOHL (0x72657373), 
   ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/Address:1.0
-    8,
+  8,
   ACE_NTOHL (0x41646472), 
   ACE_NTOHL (0x65737300),  // name = Address
-    CORBA::tk_string, 
+  CORBA::tk_string, 
   0U, // string length
 };
 
@@ -1729,7 +1720,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_cs.cpp:101
+// be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:101
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
@@ -1788,7 +1779,7 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Envir
 #define _IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CS_
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
+// be/be_visitor_sequence/sequence_cs.cpp:250
 
 // *************************************************************
 // ImplementationRepository::EnvironmentList
@@ -1850,7 +1841,7 @@ void ImplementationRepository::EnvironmentList::_tao_any_destructor (void *_tao_
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_EnvironmentList[] =
 {
@@ -1869,12 +1860,12 @@ static const CORBA::Long _oc_ImplementationRepository_EnvironmentList[] =
   ACE_NTOHL (0x4c697374), 
   ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/EnvironmentList:1.0
-    16,
+  16,
   ACE_NTOHL (0x456e7669), 
   ACE_NTOHL (0x726f6e6d), 
   ACE_NTOHL (0x656e744c), 
   ACE_NTOHL (0x69737400),  // name = EnvironmentList
-    CORBA::tk_sequence, // typecode kind
+  CORBA::tk_sequence, // typecode kind
   148, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_struct, // typecode kind
@@ -1895,22 +1886,22 @@ static const CORBA::Long _oc_ImplementationRepository_EnvironmentList[] =
       ACE_NTOHL (0x61626c65), 
       ACE_NTOHL (0x3a312e30), 
       ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/EnvironmentVariable:1.0
-            20,
+      20,
       ACE_NTOHL (0x456e7669), 
       ACE_NTOHL (0x726f6e6d), 
       ACE_NTOHL (0x656e7456), 
       ACE_NTOHL (0x61726961), 
       ACE_NTOHL (0x626c6500),  // name = EnvironmentVariable
       2, // member count
-            5,
+      5,
       ACE_NTOHL (0x6e616d65), 
       ACE_NTOHL (0x0),  // name = name
-            CORBA::tk_string, 
+      CORBA::tk_string, 
       0U, // string length
       6,
       ACE_NTOHL (0x76616c75), 
       ACE_NTOHL (0x65000000),  // name = value
-            CORBA::tk_string, 
+      CORBA::tk_string, 
       0U, // string length
 
     0U,
@@ -1935,7 +1926,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_ActivationMode[] =
 {
@@ -1953,27 +1944,27 @@ static const CORBA::Long _oc_ImplementationRepository_ActivationMode[] =
   ACE_NTOHL (0x696f6e4d), 
   ACE_NTOHL (0x6f64653a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:ImplementationRepository/ActivationMode:1.0
-  15,
+15,
   ACE_NTOHL (0x41637469), 
   ACE_NTOHL (0x76617469), 
   ACE_NTOHL (0x6f6e4d6f), 
   ACE_NTOHL (0x64650000),  // name = ActivationMode
   4, // member count
-  7,
+7,
   ACE_NTOHL (0x4e4f524d), 
   ACE_NTOHL (0x414c0000),  // name = NORMAL
-  7,
+7,
   ACE_NTOHL (0x4d414e55), 
   ACE_NTOHL (0x414c0000),  // name = MANUAL
-  11,
+11,
   ACE_NTOHL (0x5045525f), 
   ACE_NTOHL (0x434c4945), 
   ACE_NTOHL (0x4e540000),  // name = PER_CLIENT
-  11,
+11,
   ACE_NTOHL (0x4155544f), 
   ACE_NTOHL (0x5f535441), 
   ACE_NTOHL (0x52540000),  // name = AUTO_START
-  };
+};
 
 static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_ActivationMode (
     CORBA::tk_enum,
@@ -1993,7 +1984,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_StartupOptions[] =
 {
@@ -2011,24 +2002,24 @@ static const CORBA::Long _oc_ImplementationRepository_StartupOptions[] =
   ACE_NTOHL (0x4f707469), 
   ACE_NTOHL (0x6f6e733a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:ImplementationRepository/StartupOptions:1.0
-    15,
+  15,
   ACE_NTOHL (0x53746172), 
   ACE_NTOHL (0x7475704f), 
   ACE_NTOHL (0x7074696f), 
   ACE_NTOHL (0x6e730000),  // name = StartupOptions
   5, // member count
-    13,
+  13,
   ACE_NTOHL (0x636f6d6d), 
   ACE_NTOHL (0x616e645f), 
   ACE_NTOHL (0x6c696e65), 
   ACE_NTOHL (0x0),  // name = command_line
-    CORBA::tk_string, 
+  CORBA::tk_string, 
   0U, // string length
   12,
   ACE_NTOHL (0x656e7669), 
   ACE_NTOHL (0x726f6e6d), 
   ACE_NTOHL (0x656e7400),  // name = environment
-    CORBA::tk_alias, // typecode kind for typedefs
+  CORBA::tk_alias, // typecode kind for typedefs
   236, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     49,
@@ -2045,12 +2036,12 @@ static const CORBA::Long _oc_ImplementationRepository_StartupOptions[] =
     ACE_NTOHL (0x4c697374), 
     ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/EnvironmentList:1.0
-        16,
+    16,
     ACE_NTOHL (0x456e7669), 
     ACE_NTOHL (0x726f6e6d), 
     ACE_NTOHL (0x656e744c), 
     ACE_NTOHL (0x69737400),  // name = EnvironmentList
-        CORBA::tk_sequence, // typecode kind
+    CORBA::tk_sequence, // typecode kind
     148, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       CORBA::tk_struct, // typecode kind
@@ -2071,22 +2062,22 @@ static const CORBA::Long _oc_ImplementationRepository_StartupOptions[] =
         ACE_NTOHL (0x61626c65), 
         ACE_NTOHL (0x3a312e30), 
         ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/EnvironmentVariable:1.0
-                20,
+        20,
         ACE_NTOHL (0x456e7669), 
         ACE_NTOHL (0x726f6e6d), 
         ACE_NTOHL (0x656e7456), 
         ACE_NTOHL (0x61726961), 
         ACE_NTOHL (0x626c6500),  // name = EnvironmentVariable
         2, // member count
-                5,
+        5,
         ACE_NTOHL (0x6e616d65), 
         ACE_NTOHL (0x0),  // name = name
-                CORBA::tk_string, 
+        CORBA::tk_string, 
         0U, // string length
         6,
         ACE_NTOHL (0x76616c75), 
         ACE_NTOHL (0x65000000),  // name = value
-                CORBA::tk_string, 
+        CORBA::tk_string, 
         0U, // string length
 
       0U,
@@ -2098,13 +2089,13 @@ static const CORBA::Long _oc_ImplementationRepository_StartupOptions[] =
   ACE_NTOHL (0x64697265), 
   ACE_NTOHL (0x63746f72), 
   ACE_NTOHL (0x79000000),  // name = working_directory
-    CORBA::tk_string, 
+  CORBA::tk_string, 
   0U, // string length
   11,
   ACE_NTOHL (0x61637469), 
   ACE_NTOHL (0x76617469), 
   ACE_NTOHL (0x6f6e0000),  // name = activation
-    CORBA::tk_enum, // typecode kind
+  CORBA::tk_enum, // typecode kind
   136, // encapsulation length
 TAO_ENCAP_BYTE_ORDER, // byte order
     48,
@@ -2120,32 +2111,32 @@ TAO_ENCAP_BYTE_ORDER, // byte order
     ACE_NTOHL (0x696f6e4d), 
     ACE_NTOHL (0x6f64653a), 
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:ImplementationRepository/ActivationMode:1.0
-    15,
+15,
     ACE_NTOHL (0x41637469), 
     ACE_NTOHL (0x76617469), 
     ACE_NTOHL (0x6f6e4d6f), 
     ACE_NTOHL (0x64650000),  // name = ActivationMode
     4, // member count
-    7,
+7,
     ACE_NTOHL (0x4e4f524d), 
     ACE_NTOHL (0x414c0000),  // name = NORMAL
-    7,
+7,
     ACE_NTOHL (0x4d414e55), 
     ACE_NTOHL (0x414c0000),  // name = MANUAL
-    11,
+11,
     ACE_NTOHL (0x5045525f), 
     ACE_NTOHL (0x434c4945), 
     ACE_NTOHL (0x4e540000),  // name = PER_CLIENT
-    11,
+11,
     ACE_NTOHL (0x4155544f), 
     ACE_NTOHL (0x5f535441), 
     ACE_NTOHL (0x52540000),  // name = AUTO_START
-    
+
   9,
   ACE_NTOHL (0x6c6f6361), 
   ACE_NTOHL (0x74696f6e), 
   ACE_NTOHL (0x0),  // name = location
-    CORBA::tk_string, 
+  CORBA::tk_string, 
   0U, // string length
 };
 
@@ -2167,7 +2158,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// be/be_visitor_structure/structure_cs.cpp:67
 
 void ImplementationRepository::StartupOptions::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -2176,7 +2167,7 @@ void ImplementationRepository::StartupOptions::_tao_any_destructor (void *_tao_v
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_ServerInformation[] =
 {
@@ -2195,29 +2186,29 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformation[] =
   ACE_NTOHL (0x6d617469), 
   ACE_NTOHL (0x6f6e3a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:ImplementationRepository/ServerInformation:1.0
-    18,
+  18,
   ACE_NTOHL (0x53657276), 
   ACE_NTOHL (0x6572496e), 
   ACE_NTOHL (0x666f726d), 
   ACE_NTOHL (0x6174696f), 
   ACE_NTOHL (0x6e000000),  // name = ServerInformation
   4, // member count
-    15,
+  15,
   ACE_NTOHL (0x6c6f6769), 
   ACE_NTOHL (0x63616c5f), 
   ACE_NTOHL (0x73657276), 
   ACE_NTOHL (0x65720000),  // name = logical_server
-    CORBA::tk_string, 
+  CORBA::tk_string, 
   0U, // string length
   7,
   ACE_NTOHL (0x73657276), 
   ACE_NTOHL (0x65720000),  // name = server
-    CORBA::tk_string, 
+  CORBA::tk_string, 
   0U, // string length
   8,
   ACE_NTOHL (0x73746172), 
   ACE_NTOHL (0x74757000),  // name = startup
-    CORBA::tk_struct, // typecode kind
+  CORBA::tk_struct, // typecode kind
   584, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     48,
@@ -2233,24 +2224,24 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformation[] =
     ACE_NTOHL (0x4f707469), 
     ACE_NTOHL (0x6f6e733a), 
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:ImplementationRepository/StartupOptions:1.0
-        15,
+    15,
     ACE_NTOHL (0x53746172), 
     ACE_NTOHL (0x7475704f), 
     ACE_NTOHL (0x7074696f), 
     ACE_NTOHL (0x6e730000),  // name = StartupOptions
     5, // member count
-        13,
+    13,
     ACE_NTOHL (0x636f6d6d), 
     ACE_NTOHL (0x616e645f), 
     ACE_NTOHL (0x6c696e65), 
     ACE_NTOHL (0x0),  // name = command_line
-        CORBA::tk_string, 
+    CORBA::tk_string, 
     0U, // string length
     12,
     ACE_NTOHL (0x656e7669), 
     ACE_NTOHL (0x726f6e6d), 
     ACE_NTOHL (0x656e7400),  // name = environment
-        CORBA::tk_alias, // typecode kind for typedefs
+    CORBA::tk_alias, // typecode kind for typedefs
     236, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       49,
@@ -2267,12 +2258,12 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformation[] =
       ACE_NTOHL (0x4c697374), 
       ACE_NTOHL (0x3a312e30), 
       ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/EnvironmentList:1.0
-            16,
+      16,
       ACE_NTOHL (0x456e7669), 
       ACE_NTOHL (0x726f6e6d), 
       ACE_NTOHL (0x656e744c), 
       ACE_NTOHL (0x69737400),  // name = EnvironmentList
-            CORBA::tk_sequence, // typecode kind
+      CORBA::tk_sequence, // typecode kind
       148, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         CORBA::tk_struct, // typecode kind
@@ -2293,22 +2284,22 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformation[] =
           ACE_NTOHL (0x61626c65), 
           ACE_NTOHL (0x3a312e30), 
           ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/EnvironmentVariable:1.0
-                    20,
+          20,
           ACE_NTOHL (0x456e7669), 
           ACE_NTOHL (0x726f6e6d), 
           ACE_NTOHL (0x656e7456), 
           ACE_NTOHL (0x61726961), 
           ACE_NTOHL (0x626c6500),  // name = EnvironmentVariable
           2, // member count
-                    5,
+          5,
           ACE_NTOHL (0x6e616d65), 
           ACE_NTOHL (0x0),  // name = name
-                    CORBA::tk_string, 
+          CORBA::tk_string, 
           0U, // string length
           6,
           ACE_NTOHL (0x76616c75), 
           ACE_NTOHL (0x65000000),  // name = value
-                    CORBA::tk_string, 
+          CORBA::tk_string, 
           0U, // string length
 
         0U,
@@ -2320,13 +2311,13 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformation[] =
     ACE_NTOHL (0x64697265), 
     ACE_NTOHL (0x63746f72), 
     ACE_NTOHL (0x79000000),  // name = working_directory
-        CORBA::tk_string, 
+    CORBA::tk_string, 
     0U, // string length
     11,
     ACE_NTOHL (0x61637469), 
     ACE_NTOHL (0x76617469), 
     ACE_NTOHL (0x6f6e0000),  // name = activation
-        CORBA::tk_enum, // typecode kind
+    CORBA::tk_enum, // typecode kind
     136, // encapsulation length
 TAO_ENCAP_BYTE_ORDER, // byte order
       48,
@@ -2342,39 +2333,39 @@ TAO_ENCAP_BYTE_ORDER, // byte order
       ACE_NTOHL (0x696f6e4d), 
       ACE_NTOHL (0x6f64653a), 
       ACE_NTOHL (0x312e3000),  // repository ID = IDL:ImplementationRepository/ActivationMode:1.0
-      15,
+15,
       ACE_NTOHL (0x41637469), 
       ACE_NTOHL (0x76617469), 
       ACE_NTOHL (0x6f6e4d6f), 
       ACE_NTOHL (0x64650000),  // name = ActivationMode
       4, // member count
-      7,
+7,
       ACE_NTOHL (0x4e4f524d), 
       ACE_NTOHL (0x414c0000),  // name = NORMAL
-      7,
+7,
       ACE_NTOHL (0x4d414e55), 
       ACE_NTOHL (0x414c0000),  // name = MANUAL
-      11,
+11,
       ACE_NTOHL (0x5045525f), 
       ACE_NTOHL (0x434c4945), 
       ACE_NTOHL (0x4e540000),  // name = PER_CLIENT
-      11,
+11,
       ACE_NTOHL (0x4155544f), 
       ACE_NTOHL (0x5f535441), 
       ACE_NTOHL (0x52540000),  // name = AUTO_START
-      
+
     9,
     ACE_NTOHL (0x6c6f6361), 
     ACE_NTOHL (0x74696f6e), 
     ACE_NTOHL (0x0),  // name = location
-        CORBA::tk_string, 
+    CORBA::tk_string, 
     0U, // string length
 
   9,
   ACE_NTOHL (0x6c6f6361), 
   ACE_NTOHL (0x74696f6e), 
   ACE_NTOHL (0x0),  // name = location
-    CORBA::tk_alias, // typecode kind for typedefs
+  CORBA::tk_alias, // typecode kind for typedefs
   72, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     41,
@@ -2389,10 +2380,10 @@ TAO_ENCAP_BYTE_ORDER, // byte order
     ACE_NTOHL (0x72657373), 
     ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/Address:1.0
-        8,
+    8,
     ACE_NTOHL (0x41646472), 
     ACE_NTOHL (0x65737300),  // name = Address
-        CORBA::tk_string, 
+    CORBA::tk_string, 
     0U, // string length
 
 };
@@ -2415,7 +2406,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// be/be_visitor_structure/structure_cs.cpp:67
 
 void ImplementationRepository::ServerInformation::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -2424,7 +2415,7 @@ void ImplementationRepository::ServerInformation::_tao_any_destructor (void *_ta
 }
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_cs.cpp:101
+// be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:101
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
@@ -2483,7 +2474,7 @@ ImplementationRepository::_TAO_Unbounded_Sequence_ImplementationRepository_Serve
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CS_
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
+// be/be_visitor_sequence/sequence_cs.cpp:250
 
 // *************************************************************
 // ImplementationRepository::ServerInformationList
@@ -2545,7 +2536,7 @@ void ImplementationRepository::ServerInformationList::_tao_any_destructor (void 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_ServerInformationList[] =
 {
@@ -2565,14 +2556,14 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformationList[] =
   ACE_NTOHL (0x6f6e4c69), 
   ACE_NTOHL (0x73743a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:ImplementationRepository/ServerInformationList:1.0
-    22,
+  22,
   ACE_NTOHL (0x53657276), 
   ACE_NTOHL (0x6572496e), 
   ACE_NTOHL (0x666f726d), 
   ACE_NTOHL (0x6174696f), 
   ACE_NTOHL (0x6e4c6973), 
   ACE_NTOHL (0x74000000),  // name = ServerInformationList
-    CORBA::tk_sequence, // typecode kind
+  CORBA::tk_sequence, // typecode kind
   852, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_struct, // typecode kind
@@ -2592,29 +2583,29 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformationList[] =
       ACE_NTOHL (0x6d617469), 
       ACE_NTOHL (0x6f6e3a31), 
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:ImplementationRepository/ServerInformation:1.0
-            18,
+      18,
       ACE_NTOHL (0x53657276), 
       ACE_NTOHL (0x6572496e), 
       ACE_NTOHL (0x666f726d), 
       ACE_NTOHL (0x6174696f), 
       ACE_NTOHL (0x6e000000),  // name = ServerInformation
       4, // member count
-            15,
+      15,
       ACE_NTOHL (0x6c6f6769), 
       ACE_NTOHL (0x63616c5f), 
       ACE_NTOHL (0x73657276), 
       ACE_NTOHL (0x65720000),  // name = logical_server
-            CORBA::tk_string, 
+      CORBA::tk_string, 
       0U, // string length
       7,
       ACE_NTOHL (0x73657276), 
       ACE_NTOHL (0x65720000),  // name = server
-            CORBA::tk_string, 
+      CORBA::tk_string, 
       0U, // string length
       8,
       ACE_NTOHL (0x73746172), 
       ACE_NTOHL (0x74757000),  // name = startup
-            CORBA::tk_struct, // typecode kind
+      CORBA::tk_struct, // typecode kind
       584, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         48,
@@ -2630,24 +2621,24 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformationList[] =
         ACE_NTOHL (0x4f707469), 
         ACE_NTOHL (0x6f6e733a), 
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:ImplementationRepository/StartupOptions:1.0
-                15,
+        15,
         ACE_NTOHL (0x53746172), 
         ACE_NTOHL (0x7475704f), 
         ACE_NTOHL (0x7074696f), 
         ACE_NTOHL (0x6e730000),  // name = StartupOptions
         5, // member count
-                13,
+        13,
         ACE_NTOHL (0x636f6d6d), 
         ACE_NTOHL (0x616e645f), 
         ACE_NTOHL (0x6c696e65), 
         ACE_NTOHL (0x0),  // name = command_line
-                CORBA::tk_string, 
+        CORBA::tk_string, 
         0U, // string length
         12,
         ACE_NTOHL (0x656e7669), 
         ACE_NTOHL (0x726f6e6d), 
         ACE_NTOHL (0x656e7400),  // name = environment
-                CORBA::tk_alias, // typecode kind for typedefs
+        CORBA::tk_alias, // typecode kind for typedefs
         236, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           49,
@@ -2664,12 +2655,12 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformationList[] =
           ACE_NTOHL (0x4c697374), 
           ACE_NTOHL (0x3a312e30), 
           ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/EnvironmentList:1.0
-                    16,
+          16,
           ACE_NTOHL (0x456e7669), 
           ACE_NTOHL (0x726f6e6d), 
           ACE_NTOHL (0x656e744c), 
           ACE_NTOHL (0x69737400),  // name = EnvironmentList
-                    CORBA::tk_sequence, // typecode kind
+          CORBA::tk_sequence, // typecode kind
           148, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             CORBA::tk_struct, // typecode kind
@@ -2690,22 +2681,22 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformationList[] =
               ACE_NTOHL (0x61626c65), 
               ACE_NTOHL (0x3a312e30), 
               ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/EnvironmentVariable:1.0
-                            20,
+              20,
               ACE_NTOHL (0x456e7669), 
               ACE_NTOHL (0x726f6e6d), 
               ACE_NTOHL (0x656e7456), 
               ACE_NTOHL (0x61726961), 
               ACE_NTOHL (0x626c6500),  // name = EnvironmentVariable
               2, // member count
-                            5,
+              5,
               ACE_NTOHL (0x6e616d65), 
               ACE_NTOHL (0x0),  // name = name
-                            CORBA::tk_string, 
+              CORBA::tk_string, 
               0U, // string length
               6,
               ACE_NTOHL (0x76616c75), 
               ACE_NTOHL (0x65000000),  // name = value
-                            CORBA::tk_string, 
+              CORBA::tk_string, 
               0U, // string length
 
             0U,
@@ -2717,13 +2708,13 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformationList[] =
         ACE_NTOHL (0x64697265), 
         ACE_NTOHL (0x63746f72), 
         ACE_NTOHL (0x79000000),  // name = working_directory
-                CORBA::tk_string, 
+        CORBA::tk_string, 
         0U, // string length
         11,
         ACE_NTOHL (0x61637469), 
         ACE_NTOHL (0x76617469), 
         ACE_NTOHL (0x6f6e0000),  // name = activation
-                CORBA::tk_enum, // typecode kind
+        CORBA::tk_enum, // typecode kind
         136, // encapsulation length
 TAO_ENCAP_BYTE_ORDER, // byte order
           48,
@@ -2739,39 +2730,39 @@ TAO_ENCAP_BYTE_ORDER, // byte order
           ACE_NTOHL (0x696f6e4d), 
           ACE_NTOHL (0x6f64653a), 
           ACE_NTOHL (0x312e3000),  // repository ID = IDL:ImplementationRepository/ActivationMode:1.0
-          15,
+15,
           ACE_NTOHL (0x41637469), 
           ACE_NTOHL (0x76617469), 
           ACE_NTOHL (0x6f6e4d6f), 
           ACE_NTOHL (0x64650000),  // name = ActivationMode
           4, // member count
-          7,
+7,
           ACE_NTOHL (0x4e4f524d), 
           ACE_NTOHL (0x414c0000),  // name = NORMAL
-          7,
+7,
           ACE_NTOHL (0x4d414e55), 
           ACE_NTOHL (0x414c0000),  // name = MANUAL
-          11,
+11,
           ACE_NTOHL (0x5045525f), 
           ACE_NTOHL (0x434c4945), 
           ACE_NTOHL (0x4e540000),  // name = PER_CLIENT
-          11,
+11,
           ACE_NTOHL (0x4155544f), 
           ACE_NTOHL (0x5f535441), 
           ACE_NTOHL (0x52540000),  // name = AUTO_START
-          
+
         9,
         ACE_NTOHL (0x6c6f6361), 
         ACE_NTOHL (0x74696f6e), 
         ACE_NTOHL (0x0),  // name = location
-                CORBA::tk_string, 
+        CORBA::tk_string, 
         0U, // string length
 
       9,
       ACE_NTOHL (0x6c6f6361), 
       ACE_NTOHL (0x74696f6e), 
       ACE_NTOHL (0x0),  // name = location
-            CORBA::tk_alias, // typecode kind for typedefs
+      CORBA::tk_alias, // typecode kind for typedefs
       72, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         41,
@@ -2786,10 +2777,10 @@ TAO_ENCAP_BYTE_ORDER, // byte order
         ACE_NTOHL (0x72657373), 
         ACE_NTOHL (0x3a312e30), 
         ACE_NTOHL (0x0),  // repository ID = IDL:ImplementationRepository/Address:1.0
-                8,
+        8,
         ACE_NTOHL (0x41646472), 
         ACE_NTOHL (0x65737300),  // name = Address
-                CORBA::tk_string, 
+        CORBA::tk_string, 
         0U, // string length
 
 
@@ -2815,7 +2806,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
+// be/be_visitor_interface/interface_cs.cpp:61
 
 int ImplementationRepository::Administration::_tao_class_id = 0;
 
@@ -2862,17 +2853,8 @@ tao_ImplementationRepository_Administration_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_ImplementationRepository_Administration_marshal (
-    ImplementationRepository::Administration_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
+// be/be_interface.cpp:721
 
 // *************************************************************
 // ImplementationRepository::Administration_var
@@ -2998,7 +2980,7 @@ ImplementationRepository::Administration_var::tao_upcast (void *src)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
+// be/be_interface.cpp:1030
 
 // *************************************************************
 // ImplementationRepository::Administration_out
@@ -3060,12 +3042,12 @@ ImplementationRepository::Administration_out::operator-> (void)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_cs.cpp:56
+// be/be_visitor_interface/interceptors_cs.cpp:56
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:76
+// be/be_visitor_operation/interceptors_cs.cpp:76
 
 class TAO_ClientRequestInfo_ImplementationRepository_Administration_activate_server : public TAO_ClientRequestInfo_i
 {
@@ -3092,7 +3074,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // be/be_visitor_operation/interceptors_cs.cpp:378
   
   TAO_ClientRequestInfo_ImplementationRepository_Administration_activate_server::TAO_ClientRequestInfo_ImplementationRepository_Administration_activate_server (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -3168,7 +3150,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_activate_server::r
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:76
+// be/be_visitor_operation/interceptors_cs.cpp:76
 
 class TAO_ClientRequestInfo_ImplementationRepository_Administration_activate_server_with_startup : public TAO_ClientRequestInfo_i
 {
@@ -3201,7 +3183,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // be/be_visitor_operation/interceptors_cs.cpp:378
   
   TAO_ClientRequestInfo_ImplementationRepository_Administration_activate_server_with_startup::TAO_ClientRequestInfo_ImplementationRepository_Administration_activate_server_with_startup (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -3291,7 +3273,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_activate_server_wi
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:76
+// be/be_visitor_operation/interceptors_cs.cpp:76
 
 class TAO_ClientRequestInfo_ImplementationRepository_Administration_register_server : public TAO_ClientRequestInfo_i
 {
@@ -3320,7 +3302,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // be/be_visitor_operation/interceptors_cs.cpp:378
   
   TAO_ClientRequestInfo_ImplementationRepository_Administration_register_server::TAO_ClientRequestInfo_ImplementationRepository_Administration_register_server (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -3401,7 +3383,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_register_server::r
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:76
+// be/be_visitor_operation/interceptors_cs.cpp:76
 
 class TAO_ClientRequestInfo_ImplementationRepository_Administration_reregister_server : public TAO_ClientRequestInfo_i
 {
@@ -3430,7 +3412,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // be/be_visitor_operation/interceptors_cs.cpp:378
   
   TAO_ClientRequestInfo_ImplementationRepository_Administration_reregister_server::TAO_ClientRequestInfo_ImplementationRepository_Administration_reregister_server (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -3496,7 +3478,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_reregister_server:
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:76
+// be/be_visitor_operation/interceptors_cs.cpp:76
 
 class TAO_ClientRequestInfo_ImplementationRepository_Administration_remove_server : public TAO_ClientRequestInfo_i
 {
@@ -3523,7 +3505,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // be/be_visitor_operation/interceptors_cs.cpp:378
   
   TAO_ClientRequestInfo_ImplementationRepository_Administration_remove_server::TAO_ClientRequestInfo_ImplementationRepository_Administration_remove_server (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -3598,7 +3580,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_remove_server::res
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:76
+// be/be_visitor_operation/interceptors_cs.cpp:76
 
 class TAO_ClientRequestInfo_ImplementationRepository_Administration_shutdown_server : public TAO_ClientRequestInfo_i
 {
@@ -3625,7 +3607,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // be/be_visitor_operation/interceptors_cs.cpp:378
   
   TAO_ClientRequestInfo_ImplementationRepository_Administration_shutdown_server::TAO_ClientRequestInfo_ImplementationRepository_Administration_shutdown_server (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -3700,7 +3682,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_shutdown_server::r
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:76
+// be/be_visitor_operation/interceptors_cs.cpp:76
 
 class TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_running : public TAO_ClientRequestInfo_i
 {
@@ -3735,7 +3717,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // be/be_visitor_operation/interceptors_cs.cpp:378
   
   TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_running::TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_running (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -3830,7 +3812,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_running:
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:76
+// be/be_visitor_operation/interceptors_cs.cpp:76
 
 class TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_shutting_down : public TAO_ClientRequestInfo_i
 {
@@ -3857,7 +3839,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // be/be_visitor_operation/interceptors_cs.cpp:378
   
   TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_shutting_down::TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_shutting_down (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -3932,7 +3914,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_shutting
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:76
+// be/be_visitor_operation/interceptors_cs.cpp:76
 
 class TAO_ClientRequestInfo_ImplementationRepository_Administration_find : public TAO_ClientRequestInfo_i
 {
@@ -3959,7 +3941,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // be/be_visitor_operation/interceptors_cs.cpp:378
   
   TAO_ClientRequestInfo_ImplementationRepository_Administration_find::TAO_ClientRequestInfo_ImplementationRepository_Administration_find (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -4034,7 +4016,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_find::result (ACE_
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:76
+// be/be_visitor_operation/interceptors_cs.cpp:76
 
 class TAO_ClientRequestInfo_ImplementationRepository_Administration_list : public TAO_ClientRequestInfo_i
 {
@@ -4063,7 +4045,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // be/be_visitor_operation/interceptors_cs.cpp:378
   
   TAO_ClientRequestInfo_ImplementationRepository_Administration_list::TAO_ClientRequestInfo_ImplementationRepository_Administration_list (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -4128,7 +4110,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_list::result (ACE_
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/remote_proxy_impl_cs.cpp:31
+// be/be_visitor_interface/remote_proxy_impl_cs.cpp:31
 
 ///////////////////////////////////////////////////////////////////////
 //                Base & Remote Proxy  Implementation. 
@@ -4143,10 +4125,10 @@ ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::_TAO_Administra
 // Remote Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/remote_proxy_impl_cs.cpp:63
+// be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::activate_server (
-    CORBA::Object *_collocated_tao_target_,
+    CORBA_Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -4348,10 +4330,10 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/remote_proxy_impl_cs.cpp:63
+// be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 char * ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::activate_server_with_startup (
-    CORBA::Object *_collocated_tao_target_,
+    CORBA_Object *_collocated_tao_target_,
     const char * server,
     CORBA::Long check_startup
     ACE_ENV_ARG_DECL
@@ -4580,10 +4562,10 @@ CORBA::String_var _tao_retval;
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/remote_proxy_impl_cs.cpp:63
+// be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::register_server (
-    CORBA::Object *_collocated_tao_target_,
+    CORBA_Object *_collocated_tao_target_,
     const char * server,
     const ImplementationRepository::StartupOptions & options
     ACE_ENV_ARG_DECL
@@ -4783,10 +4765,10 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/remote_proxy_impl_cs.cpp:63
+// be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::reregister_server (
-    CORBA::Object *_collocated_tao_target_,
+    CORBA_Object *_collocated_tao_target_,
     const char * server,
     const ImplementationRepository::StartupOptions & options
     ACE_ENV_ARG_DECL
@@ -4977,10 +4959,10 @@ void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::reregister
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/remote_proxy_impl_cs.cpp:63
+// be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::remove_server (
-    CORBA::Object *_collocated_tao_target_,
+    CORBA_Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -5177,10 +5159,10 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/remote_proxy_impl_cs.cpp:63
+// be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::shutdown_server (
-    CORBA::Object *_collocated_tao_target_,
+    CORBA_Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -5377,10 +5359,10 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/remote_proxy_impl_cs.cpp:63
+// be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 char * ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::server_is_running (
-    CORBA::Object *_collocated_tao_target_,
+    CORBA_Object *_collocated_tao_target_,
     const char * server,
     const char * addr,
     ImplementationRepository::ServerObject_ptr server_object
@@ -5607,10 +5589,10 @@ CORBA::String_var _tao_retval;
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/remote_proxy_impl_cs.cpp:63
+// be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::server_is_shutting_down (
-    CORBA::Object *_collocated_tao_target_,
+    CORBA_Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -5807,10 +5789,10 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/remote_proxy_impl_cs.cpp:63
+// be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::find (
-    CORBA::Object *_collocated_tao_target_,
+    CORBA_Object *_collocated_tao_target_,
     const char * server,
     ImplementationRepository::ServerInformation_out info
     ACE_ENV_ARG_DECL
@@ -6025,10 +6007,10 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/remote_proxy_impl_cs.cpp:63
+// be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::list (
-    CORBA::Object *_collocated_tao_target_,
+    CORBA_Object *_collocated_tao_target_,
     CORBA::ULong how_many,
     ImplementationRepository::ServerInformationList_out server_list,
     ImplementationRepository::ServerInformationIterator_out server_iterator
@@ -6241,7 +6223,7 @@ void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::list (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/remote_proxy_broker_cs.cpp:31
+// be/be_visitor_interface/remote_proxy_broker_cs.cpp:31
 
 ///////////////////////////////////////////////////////////////////////
 //           Remote & Base  Proxy Broker Implementation
@@ -6289,7 +6271,7 @@ ImplementationRepository::_TAO_Administration_Remote_Proxy_Broker::select_proxy 
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// be/be_visitor_interface/interface_cs.cpp:225
 
 ImplementationRepository::Administration::Administration (int collocated)
 {
@@ -6446,7 +6428,7 @@ ImplementationRepository::Administration::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->CORBA_Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -6490,7 +6472,7 @@ const char* ImplementationRepository::Administration::_interface_repository_id (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:80
+// be/be_visitor_operation/operation_cs.cpp:80
 
 void ImplementationRepository::Administration::activate_server (
     const char * server
@@ -6514,7 +6496,7 @@ void ImplementationRepository::Administration::activate_server (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:80
+// be/be_visitor_operation/operation_cs.cpp:80
 
 char * ImplementationRepository::Administration::activate_server_with_startup (
     const char * server,
@@ -6540,7 +6522,7 @@ char * ImplementationRepository::Administration::activate_server_with_startup (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:80
+// be/be_visitor_operation/operation_cs.cpp:80
 
 void ImplementationRepository::Administration::register_server (
     const char * server,
@@ -6565,7 +6547,7 @@ void ImplementationRepository::Administration::register_server (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:80
+// be/be_visitor_operation/operation_cs.cpp:80
 
 void ImplementationRepository::Administration::reregister_server (
     const char * server,
@@ -6589,7 +6571,7 @@ void ImplementationRepository::Administration::reregister_server (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:80
+// be/be_visitor_operation/operation_cs.cpp:80
 
 void ImplementationRepository::Administration::remove_server (
     const char * server
@@ -6612,7 +6594,7 @@ void ImplementationRepository::Administration::remove_server (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:80
+// be/be_visitor_operation/operation_cs.cpp:80
 
 void ImplementationRepository::Administration::shutdown_server (
     const char * server
@@ -6635,7 +6617,7 @@ void ImplementationRepository::Administration::shutdown_server (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:80
+// be/be_visitor_operation/operation_cs.cpp:80
 
 char * ImplementationRepository::Administration::server_is_running (
     const char * server,
@@ -6662,7 +6644,7 @@ char * ImplementationRepository::Administration::server_is_running (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:80
+// be/be_visitor_operation/operation_cs.cpp:80
 
 void ImplementationRepository::Administration::server_is_shutting_down (
     const char * server
@@ -6685,7 +6667,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:80
+// be/be_visitor_operation/operation_cs.cpp:80
 
 void ImplementationRepository::Administration::find (
     const char * server,
@@ -6710,7 +6692,7 @@ void ImplementationRepository::Administration::find (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:80
+// be/be_visitor_operation/operation_cs.cpp:80
 
 void ImplementationRepository::Administration::list (
     CORBA::ULong how_many,
@@ -6736,7 +6718,7 @@ void ImplementationRepository::Administration::list (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_Administration[] =
 {
@@ -6754,12 +6736,12 @@ static const CORBA::Long _oc_ImplementationRepository_Administration[] =
   ACE_NTOHL (0x74726174), 
   ACE_NTOHL (0x696f6e3a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:ImplementationRepository/Administration:1.0
-    15,
+  15,
   ACE_NTOHL (0x41646d69), 
   ACE_NTOHL (0x6e697374), 
   ACE_NTOHL (0x72617469), 
   ACE_NTOHL (0x6f6e0000),  // name = Administration
-  };
+};
 
 static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_Administration (
     CORBA::tk_objref,
@@ -6779,7 +6761,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
+// be/be_visitor_interface/interface_cs.cpp:61
 
 int ImplementationRepository::ServerInformationIterator::_tao_class_id = 0;
 
@@ -6826,17 +6808,8 @@ tao_ImplementationRepository_ServerInformationIterator_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_ImplementationRepository_ServerInformationIterator_marshal (
-    ImplementationRepository::ServerInformationIterator_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
+// be/be_interface.cpp:721
 
 // *************************************************************
 // ImplementationRepository::ServerInformationIterator_var
@@ -6962,7 +6935,7 @@ ImplementationRepository::ServerInformationIterator_var::tao_upcast (void *src)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
+// be/be_interface.cpp:1030
 
 // *************************************************************
 // ImplementationRepository::ServerInformationIterator_out
@@ -7024,12 +6997,12 @@ ImplementationRepository::ServerInformationIterator_out::operator-> (void)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interceptors_cs.cpp:56
+// be/be_visitor_interface/interceptors_cs.cpp:56
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:76
+// be/be_visitor_operation/interceptors_cs.cpp:76
 
 class TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_next_n : public TAO_ClientRequestInfo_i
 {
@@ -7060,7 +7033,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // be/be_visitor_operation/interceptors_cs.cpp:378
   
   TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_next_n::TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_next_n (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -7128,7 +7101,7 @@ TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_next_n:
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:76
+// be/be_visitor_operation/interceptors_cs.cpp:76
 
 class TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_destroy : public TAO_ClientRequestInfo_i
 {
@@ -7153,7 +7126,7 @@ public:
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/interceptors_cs.cpp:378
+  // be/be_visitor_operation/interceptors_cs.cpp:378
   
   TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_destroy::TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_destroy (
       TAO_GIOP_Invocation *_tao_invocation,
@@ -7205,7 +7178,7 @@ TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_destroy
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/remote_proxy_impl_cs.cpp:31
+// be/be_visitor_interface/remote_proxy_impl_cs.cpp:31
 
 ///////////////////////////////////////////////////////////////////////
 //                Base & Remote Proxy  Implementation. 
@@ -7220,10 +7193,10 @@ ImplementationRepository::_TAO_ServerInformationIterator_Remote_Proxy_Impl::_TAO
 // Remote Implementation of the IDL interface methods
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/remote_proxy_impl_cs.cpp:63
+// be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 CORBA::Boolean ImplementationRepository::_TAO_ServerInformationIterator_Remote_Proxy_Impl::next_n (
-    CORBA::Object *_collocated_tao_target_,
+    CORBA_Object *_collocated_tao_target_,
     CORBA::ULong how_many,
     ImplementationRepository::ServerInformationList_out server_list
     ACE_ENV_ARG_DECL
@@ -7442,10 +7415,10 @@ CORBA::Boolean ImplementationRepository::_TAO_ServerInformationIterator_Remote_P
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/remote_proxy_impl_cs.cpp:63
+// be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_ServerInformationIterator_Remote_Proxy_Impl::destroy (
-    CORBA::Object *_collocated_tao_target_
+    CORBA_Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -7623,7 +7596,7 @@ void ImplementationRepository::_TAO_ServerInformationIterator_Remote_Proxy_Impl:
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/remote_proxy_broker_cs.cpp:31
+// be/be_visitor_interface/remote_proxy_broker_cs.cpp:31
 
 ///////////////////////////////////////////////////////////////////////
 //           Remote & Base  Proxy Broker Implementation
@@ -7671,7 +7644,7 @@ ImplementationRepository::_TAO_ServerInformationIterator_Remote_Proxy_Broker::se
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// be/be_visitor_interface/interface_cs.cpp:225
 
 ImplementationRepository::ServerInformationIterator::ServerInformationIterator (int collocated)
 {
@@ -7828,7 +7801,7 @@ ImplementationRepository::ServerInformationIterator::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->CORBA_Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -7872,7 +7845,7 @@ const char* ImplementationRepository::ServerInformationIterator::_interface_repo
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:80
+// be/be_visitor_operation/operation_cs.cpp:80
 
 CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
     CORBA::ULong how_many,
@@ -7896,7 +7869,7 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:80
+// be/be_visitor_operation/operation_cs.cpp:80
 
 void ImplementationRepository::ServerInformationIterator::destroy (
     ACE_ENV_SINGLE_ARG_DECL
@@ -7916,7 +7889,7 @@ void ImplementationRepository::ServerInformationIterator::destroy (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_ServerInformationIterator[] =
 {
@@ -7937,7 +7910,7 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformationIterator[
   ACE_NTOHL (0x65726174), 
   ACE_NTOHL (0x6f723a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:ImplementationRepository/ServerInformationIterator:1.0
-    26,
+  26,
   ACE_NTOHL (0x53657276), 
   ACE_NTOHL (0x6572496e), 
   ACE_NTOHL (0x666f726d), 
@@ -7945,7 +7918,7 @@ static const CORBA::Long _oc_ImplementationRepository_ServerInformationIterator[
   ACE_NTOHL (0x6e497465), 
   ACE_NTOHL (0x7261746f), 
   ACE_NTOHL (0x72000000),  // name = ServerInformationIterator
-  };
+};
 
 static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_ServerInformationIterator (
     CORBA::tk_objref,
@@ -7965,9 +7938,9 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:52
+// be/be_visitor_interface/any_op_cs.cpp:52
 
-// Copying insertion.
+// Copying version.
 void
 operator<<= (
     CORBA::Any &_tao_any,
@@ -7979,19 +7952,26 @@ operator<<= (
   _tao_any <<= &_tao_objptr;
 }
 
-// Non-copying insertion.
+// Non-copying version.
 void
 operator<<= (
     CORBA::Any &_tao_any,
     ImplementationRepository::ServerObject_ptr *_tao_elem
   )
 {
-  TAO::Any_Impl_T<ImplementationRepository::ServerObject>::insert (
-      _tao_any,
-      ImplementationRepository::ServerObject::_tao_any_destructor,
-      ImplementationRepository::_tc_ServerObject,
-      *_tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerObject, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          *_tao_elem,
+          ImplementationRepository::ServerObject::_tao_any_destructor
+        );
+    }
 }
 
 CORBA::Boolean
@@ -8000,26 +7980,60 @@ operator>>= (
     ImplementationRepository::ServerObject_ptr &_tao_elem
   )
 {
-  return
-    TAO::Any_Impl_T<ImplementationRepository::ServerObject>::extract (
-        _tao_any,
-        ImplementationRepository::ServerObject::_tao_any_destructor,
-        ImplementationRepository::_tc_ServerObject,
-        _tao_elem
+  ACE_TRY_NEW_ENV
+  {
+    _tao_elem = ImplementationRepository::ServerObject::_nil ();
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean _tao_result =
+      type->equivalent (
+          ImplementationRepository::_tc_ServerObject
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (!_tao_result)
+      {
+        return 0; // not equivalent
+      }
+    
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
       );
+    
+    if (stream >> _tao_elem)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_ServerObject,
+            1,
+            _tao_elem,
+            ImplementationRepository::ServerObject::_tao_any_destructor
+          );
+        
+        return 1;
+      }
+  }
+  ACE_CATCHANY
+  {
+    _tao_elem = ImplementationRepository::ServerObject::_nil ();
+    return 0;
+  }
+  ACE_ENDTRY;
+  
+  _tao_elem = ImplementationRepository::ServerObject::_nil ();
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<ImplementationRepository::ServerObject,ImplementationRepository::ServerObject_var>;
-  template class TAO::Any_Impl_T<ImplementationRepository::ServerObject>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<ImplementationRepository::ServerObject, ImplementationRepository::ServerObject_var>
-# pragma instantiate TAO::Any_Impl_T<ImplementationRepository::ServerObject>
+# pragma instantiate TAO_Object_Manager<ImplementationRepository::ServerObject,ImplementationRepository::ServerObject_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_cs.cpp:54
+// be/be_visitor_exception/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -8027,12 +8041,16 @@ void operator<<= (
     const ImplementationRepository::AlreadyRegistered &_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::AlreadyRegistered>::insert_copy (
-      _tao_any,
-      ImplementationRepository::AlreadyRegistered::_tao_any_destructor,
-      ImplementationRepository::_tc_AlreadyRegistered,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_AlreadyRegistered,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
 // Non-copying insertion.
@@ -8041,22 +8059,28 @@ void operator<<= (
     ImplementationRepository::AlreadyRegistered *_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::AlreadyRegistered>::insert (
-      _tao_any,
-      ImplementationRepository::AlreadyRegistered::_tao_any_destructor,
-      ImplementationRepository::_tc_AlreadyRegistered,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_AlreadyRegistered,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::AlreadyRegistered::_tao_any_destructor
+        );
+    }
 }
 
 // Extraction to non-const pointer (deprecated).
 CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    ImplementationRepository::AlreadyRegistered *&_tao_elem
+    const CORBA::Any &_tao_any,ImplementationRepository::AlreadyRegistered *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const ImplementationRepository::AlreadyRegistered *&,
+  return _tao_any >>= ACE_const_cast(
+      const ImplementationRepository::AlreadyRegistered*&,
       _tao_elem
     );
 }
@@ -8067,24 +8091,85 @@ CORBA::Boolean operator>>= (
     const ImplementationRepository::AlreadyRegistered *&_tao_elem
   )
 {
-  return
-    TAO::Any_Dual_Impl_T<ImplementationRepository::AlreadyRegistered>::extract (
-        _tao_any,
-        ImplementationRepository::AlreadyRegistered::_tao_any_destructor,
-        ImplementationRepository::_tc_AlreadyRegistered,
-        _tao_elem
-      );
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean _tao_result =
+      type->equivalent (
+          ImplementationRepository::_tc_AlreadyRegistered
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (_tao_result == 0)
+      {
+        return 0; // not equivalent
+      }
+    
+    if (_tao_any.any_owns_data ())
+      {
+        _tao_elem = (ImplementationRepository::AlreadyRegistered *)_tao_any.value ();
+        return 1;
+      }
+    else
+      {
+        ImplementationRepository::AlreadyRegistered *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::AlreadyRegistered,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        CORBA::String_var interface_repository_id;
+        
+        if (!(stream >> interface_repository_id.out ()))
+          {
+            return 0;
+          }
+        
+        if (ACE_OS::strcmp (
+                interface_repository_id.in (),
+                "IDL:ImplementationRepository/AlreadyRegistered:1.0")
+              )
+          {
+            return 0;
+          }
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::_tc_AlreadyRegistered,
+                1,
+                tmp,
+                ImplementationRepository::AlreadyRegistered::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
+      }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  
+  return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<ImplementationRepository::AlreadyRegistered>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<ImplementationRepository::AlreadyRegistered>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_cs.cpp:54
+// be/be_visitor_exception/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -8092,12 +8177,16 @@ void operator<<= (
     const ImplementationRepository::CannotActivate &_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::CannotActivate>::insert_copy (
-      _tao_any,
-      ImplementationRepository::CannotActivate::_tao_any_destructor,
-      ImplementationRepository::_tc_CannotActivate,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_CannotActivate,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
 // Non-copying insertion.
@@ -8106,22 +8195,28 @@ void operator<<= (
     ImplementationRepository::CannotActivate *_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::CannotActivate>::insert (
-      _tao_any,
-      ImplementationRepository::CannotActivate::_tao_any_destructor,
-      ImplementationRepository::_tc_CannotActivate,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_CannotActivate,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::CannotActivate::_tao_any_destructor
+        );
+    }
 }
 
 // Extraction to non-const pointer (deprecated).
 CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    ImplementationRepository::CannotActivate *&_tao_elem
+    const CORBA::Any &_tao_any,ImplementationRepository::CannotActivate *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const ImplementationRepository::CannotActivate *&,
+  return _tao_any >>= ACE_const_cast(
+      const ImplementationRepository::CannotActivate*&,
       _tao_elem
     );
 }
@@ -8132,24 +8227,85 @@ CORBA::Boolean operator>>= (
     const ImplementationRepository::CannotActivate *&_tao_elem
   )
 {
-  return
-    TAO::Any_Dual_Impl_T<ImplementationRepository::CannotActivate>::extract (
-        _tao_any,
-        ImplementationRepository::CannotActivate::_tao_any_destructor,
-        ImplementationRepository::_tc_CannotActivate,
-        _tao_elem
-      );
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean _tao_result =
+      type->equivalent (
+          ImplementationRepository::_tc_CannotActivate
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (_tao_result == 0)
+      {
+        return 0; // not equivalent
+      }
+    
+    if (_tao_any.any_owns_data ())
+      {
+        _tao_elem = (ImplementationRepository::CannotActivate *)_tao_any.value ();
+        return 1;
+      }
+    else
+      {
+        ImplementationRepository::CannotActivate *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::CannotActivate,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        CORBA::String_var interface_repository_id;
+        
+        if (!(stream >> interface_repository_id.out ()))
+          {
+            return 0;
+          }
+        
+        if (ACE_OS::strcmp (
+                interface_repository_id.in (),
+                "IDL:ImplementationRepository/CannotActivate:1.0")
+              )
+          {
+            return 0;
+          }
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::_tc_CannotActivate,
+                1,
+                tmp,
+                ImplementationRepository::CannotActivate::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
+      }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  
+  return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<ImplementationRepository::CannotActivate>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<ImplementationRepository::CannotActivate>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_cs.cpp:54
+// be/be_visitor_exception/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -8157,12 +8313,16 @@ void operator<<= (
     const ImplementationRepository::NotFound &_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::NotFound>::insert_copy (
-      _tao_any,
-      ImplementationRepository::NotFound::_tao_any_destructor,
-      ImplementationRepository::_tc_NotFound,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_NotFound,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
 // Non-copying insertion.
@@ -8171,22 +8331,28 @@ void operator<<= (
     ImplementationRepository::NotFound *_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::NotFound>::insert (
-      _tao_any,
-      ImplementationRepository::NotFound::_tao_any_destructor,
-      ImplementationRepository::_tc_NotFound,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_NotFound,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::NotFound::_tao_any_destructor
+        );
+    }
 }
 
 // Extraction to non-const pointer (deprecated).
 CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    ImplementationRepository::NotFound *&_tao_elem
+    const CORBA::Any &_tao_any,ImplementationRepository::NotFound *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const ImplementationRepository::NotFound *&,
+  return _tao_any >>= ACE_const_cast(
+      const ImplementationRepository::NotFound*&,
       _tao_elem
     );
 }
@@ -8197,24 +8363,85 @@ CORBA::Boolean operator>>= (
     const ImplementationRepository::NotFound *&_tao_elem
   )
 {
-  return
-    TAO::Any_Dual_Impl_T<ImplementationRepository::NotFound>::extract (
-        _tao_any,
-        ImplementationRepository::NotFound::_tao_any_destructor,
-        ImplementationRepository::_tc_NotFound,
-        _tao_elem
-      );
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean _tao_result =
+      type->equivalent (
+          ImplementationRepository::_tc_NotFound
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (_tao_result == 0)
+      {
+        return 0; // not equivalent
+      }
+    
+    if (_tao_any.any_owns_data ())
+      {
+        _tao_elem = (ImplementationRepository::NotFound *)_tao_any.value ();
+        return 1;
+      }
+    else
+      {
+        ImplementationRepository::NotFound *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::NotFound,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        CORBA::String_var interface_repository_id;
+        
+        if (!(stream >> interface_repository_id.out ()))
+          {
+            return 0;
+          }
+        
+        if (ACE_OS::strcmp (
+                interface_repository_id.in (),
+                "IDL:ImplementationRepository/NotFound:1.0")
+              )
+          {
+            return 0;
+          }
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::_tc_NotFound,
+                1,
+                tmp,
+                ImplementationRepository::NotFound::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
+      }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  
+  return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<ImplementationRepository::NotFound>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<ImplementationRepository::NotFound>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -8222,12 +8449,16 @@ void operator<<= (
     const ImplementationRepository::EnvironmentVariable &_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::EnvironmentVariable>::insert_copy (
-      _tao_any,
-      ImplementationRepository::EnvironmentVariable::_tao_any_destructor,
-      ImplementationRepository::_tc_EnvironmentVariable,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_EnvironmentVariable,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
 // Non-copying insertion.
@@ -8236,12 +8467,19 @@ void operator<<= (
     ImplementationRepository::EnvironmentVariable *_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::EnvironmentVariable>::insert (
-      _tao_any,
-      ImplementationRepository::EnvironmentVariable::_tao_any_destructor,
-      ImplementationRepository::_tc_EnvironmentVariable,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_EnvironmentVariable,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::EnvironmentVariable::_tao_any_destructor
+        );
+    }
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -8262,24 +8500,75 @@ CORBA::Boolean operator>>= (
     const ImplementationRepository::EnvironmentVariable *&_tao_elem
   )
 {
-  return
-    TAO::Any_Dual_Impl_T<ImplementationRepository::EnvironmentVariable>::extract (
-        _tao_any,
-        ImplementationRepository::EnvironmentVariable::_tao_any_destructor,
-        ImplementationRepository::_tc_EnvironmentVariable,
-        _tao_elem
-      );
+  _tao_elem = 0;
+  
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean _tao_result =
+      type->equivalent (
+          ImplementationRepository::_tc_EnvironmentVariable
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (_tao_result == 0)
+      {
+        return 0; // not equivalent
+      }
+    
+    if (_tao_any.any_owns_data ())
+      {
+        _tao_elem = ACE_static_cast (
+            const ImplementationRepository::EnvironmentVariable*,
+            _tao_any.value ()
+          );
+        
+        return 1;
+      }
+    else
+      {
+        ImplementationRepository::EnvironmentVariable *tmp;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::EnvironmentVariable,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::_tc_EnvironmentVariable,
+                1,
+                ACE_static_cast (void *, tmp),
+                ImplementationRepository::EnvironmentVariable::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
+      }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  
+  return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<ImplementationRepository::EnvironmentVariable>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<ImplementationRepository::EnvironmentVariable>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -8287,12 +8576,16 @@ void operator<<= (
     const ImplementationRepository::EnvironmentList &_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::EnvironmentList>::insert_copy (
-      _tao_any,
-      ImplementationRepository::EnvironmentList::_tao_any_destructor,
-      ImplementationRepository::_tc_EnvironmentList,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_EnvironmentList,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
 // Non-copying insertion.
@@ -8301,12 +8594,19 @@ void operator<<= (
     ImplementationRepository::EnvironmentList *_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::EnvironmentList>::insert (
-      _tao_any,
-      ImplementationRepository::EnvironmentList::_tao_any_destructor,
-      ImplementationRepository::_tc_EnvironmentList,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_EnvironmentList,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::EnvironmentList::_tao_any_destructor
+        );
+    }
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -8315,8 +8615,8 @@ CORBA::Boolean operator>>= (
     ImplementationRepository::EnvironmentList *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const ImplementationRepository::EnvironmentList *&,
+  return _tao_any >>= ACE_const_cast(
+      const ImplementationRepository::EnvironmentList*&,
       _tao_elem
     );
 }
@@ -8327,52 +8627,118 @@ CORBA::Boolean operator>>= (
     const ImplementationRepository::EnvironmentList *&_tao_elem
   )
 {
-  return
-    TAO::Any_Dual_Impl_T<ImplementationRepository::EnvironmentList>::extract (
-        _tao_any,
-        ImplementationRepository::EnvironmentList::_tao_any_destructor,
-        ImplementationRepository::_tc_EnvironmentList,
-        _tao_elem
-      );
+  _tao_elem = 0;
+  
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean _tao_result =
+      type->equivalent (
+          ImplementationRepository::_tc_EnvironmentList
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (!_tao_result)
+      {
+        return 0; // not equivalent
+      }
+    
+    if (_tao_any.any_owns_data ())
+      {
+        _tao_elem = ACE_static_cast(
+            const ImplementationRepository::EnvironmentList*,
+            _tao_any.value ()
+          );
+        
+        return 1;
+      }
+    else
+      {
+        ImplementationRepository::EnvironmentList *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::EnvironmentList,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::_tc_EnvironmentList,
+                1,
+                ACE_static_cast (void *, tmp),
+                ImplementationRepository::EnvironmentList::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
+      }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  
+  return 0;
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_enum/any_op_cs.cpp:52
+// be/be_visitor_enum/any_op_cs.cpp:52
 
-void operator<<= (
-    CORBA::Any &_tao_any,
-    ImplementationRepository::ActivationMode _tao_elem
-  )
+void operator<<= (CORBA::Any &_tao_any, ImplementationRepository::ActivationMode _tao_elem)
 {
-  TAO::Any_Basic_Impl_T<ImplementationRepository::ActivationMode>::insert (
-      _tao_any,
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (
       ImplementationRepository::_tc_ActivationMode,
-      _tao_elem
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin ()
     );
 }
 
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    ImplementationRepository::ActivationMode &_tao_elem
-  )
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository::ActivationMode &_tao_elem)
 {
-  return
-    TAO::Any_Basic_Impl_T<ImplementationRepository::ActivationMode>::extract (
-        _tao_any,
-        ImplementationRepository::_tc_ActivationMode,
-        _tao_elem 
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean _tao_result = type->equivalent (ImplementationRepository::_tc_ActivationMode ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+    
+    if (!_tao_result)
+      return 0; // not equivalent
+    
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
       );
+    if (stream >> _tao_elem)
+    {
+      return 1;
+    }
+  }
+  ACE_CATCHANY
+  {
+    return 0;
+  }
+  ACE_ENDTRY;
+  return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Basic_Impl_T<ImplementationRepository::ActivationMode>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Basic_Impl_T<ImplementationRepository::ActivationMode>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -8380,12 +8746,16 @@ void operator<<= (
     const ImplementationRepository::StartupOptions &_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::StartupOptions>::insert_copy (
-      _tao_any,
-      ImplementationRepository::StartupOptions::_tao_any_destructor,
-      ImplementationRepository::_tc_StartupOptions,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_StartupOptions,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
 // Non-copying insertion.
@@ -8394,12 +8764,19 @@ void operator<<= (
     ImplementationRepository::StartupOptions *_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::StartupOptions>::insert (
-      _tao_any,
-      ImplementationRepository::StartupOptions::_tao_any_destructor,
-      ImplementationRepository::_tc_StartupOptions,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_StartupOptions,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::StartupOptions::_tao_any_destructor
+        );
+    }
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -8420,24 +8797,75 @@ CORBA::Boolean operator>>= (
     const ImplementationRepository::StartupOptions *&_tao_elem
   )
 {
-  return
-    TAO::Any_Dual_Impl_T<ImplementationRepository::StartupOptions>::extract (
-        _tao_any,
-        ImplementationRepository::StartupOptions::_tao_any_destructor,
-        ImplementationRepository::_tc_StartupOptions,
-        _tao_elem
-      );
+  _tao_elem = 0;
+  
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean _tao_result =
+      type->equivalent (
+          ImplementationRepository::_tc_StartupOptions
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (_tao_result == 0)
+      {
+        return 0; // not equivalent
+      }
+    
+    if (_tao_any.any_owns_data ())
+      {
+        _tao_elem = ACE_static_cast (
+            const ImplementationRepository::StartupOptions*,
+            _tao_any.value ()
+          );
+        
+        return 1;
+      }
+    else
+      {
+        ImplementationRepository::StartupOptions *tmp;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::StartupOptions,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::_tc_StartupOptions,
+                1,
+                ACE_static_cast (void *, tmp),
+                ImplementationRepository::StartupOptions::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
+      }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  
+  return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<ImplementationRepository::StartupOptions>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<ImplementationRepository::StartupOptions>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -8445,12 +8873,16 @@ void operator<<= (
     const ImplementationRepository::ServerInformation &_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::ServerInformation>::insert_copy (
-      _tao_any,
-      ImplementationRepository::ServerInformation::_tao_any_destructor,
-      ImplementationRepository::_tc_ServerInformation,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerInformation,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
 // Non-copying insertion.
@@ -8459,12 +8891,19 @@ void operator<<= (
     ImplementationRepository::ServerInformation *_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::ServerInformation>::insert (
-      _tao_any,
-      ImplementationRepository::ServerInformation::_tao_any_destructor,
-      ImplementationRepository::_tc_ServerInformation,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerInformation,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::ServerInformation::_tao_any_destructor
+        );
+    }
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -8485,24 +8924,75 @@ CORBA::Boolean operator>>= (
     const ImplementationRepository::ServerInformation *&_tao_elem
   )
 {
-  return
-    TAO::Any_Dual_Impl_T<ImplementationRepository::ServerInformation>::extract (
-        _tao_any,
-        ImplementationRepository::ServerInformation::_tao_any_destructor,
-        ImplementationRepository::_tc_ServerInformation,
-        _tao_elem
-      );
+  _tao_elem = 0;
+  
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean _tao_result =
+      type->equivalent (
+          ImplementationRepository::_tc_ServerInformation
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (_tao_result == 0)
+      {
+        return 0; // not equivalent
+      }
+    
+    if (_tao_any.any_owns_data ())
+      {
+        _tao_elem = ACE_static_cast (
+            const ImplementationRepository::ServerInformation*,
+            _tao_any.value ()
+          );
+        
+        return 1;
+      }
+    else
+      {
+        ImplementationRepository::ServerInformation *tmp;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::ServerInformation,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::_tc_ServerInformation,
+                1,
+                ACE_static_cast (void *, tmp),
+                ImplementationRepository::ServerInformation::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
+      }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  
+  return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<ImplementationRepository::ServerInformation>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<ImplementationRepository::ServerInformation>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -8510,12 +9000,16 @@ void operator<<= (
     const ImplementationRepository::ServerInformationList &_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::ServerInformationList>::insert_copy (
-      _tao_any,
-      ImplementationRepository::ServerInformationList::_tao_any_destructor,
-      ImplementationRepository::_tc_ServerInformationList,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerInformationList,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
 // Non-copying insertion.
@@ -8524,12 +9018,19 @@ void operator<<= (
     ImplementationRepository::ServerInformationList *_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<ImplementationRepository::ServerInformationList>::insert (
-      _tao_any,
-      ImplementationRepository::ServerInformationList::_tao_any_destructor,
-      ImplementationRepository::_tc_ServerInformationList,
-      _tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerInformationList,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          ImplementationRepository::ServerInformationList::_tao_any_destructor
+        );
+    }
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -8538,8 +9039,8 @@ CORBA::Boolean operator>>= (
     ImplementationRepository::ServerInformationList *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const ImplementationRepository::ServerInformationList *&,
+  return _tao_any >>= ACE_const_cast(
+      const ImplementationRepository::ServerInformationList*&,
       _tao_elem
     );
 }
@@ -8550,19 +9051,77 @@ CORBA::Boolean operator>>= (
     const ImplementationRepository::ServerInformationList *&_tao_elem
   )
 {
-  return
-    TAO::Any_Dual_Impl_T<ImplementationRepository::ServerInformationList>::extract (
-        _tao_any,
-        ImplementationRepository::ServerInformationList::_tao_any_destructor,
-        ImplementationRepository::_tc_ServerInformationList,
-        _tao_elem
-      );
+  _tao_elem = 0;
+  
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean _tao_result =
+      type->equivalent (
+          ImplementationRepository::_tc_ServerInformationList
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (!_tao_result)
+      {
+        return 0; // not equivalent
+      }
+    
+    if (_tao_any.any_owns_data ())
+      {
+        _tao_elem = ACE_static_cast(
+            const ImplementationRepository::ServerInformationList*,
+            _tao_any.value ()
+          );
+        
+        return 1;
+      }
+    else
+      {
+        ImplementationRepository::ServerInformationList *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            ImplementationRepository::ServerInformationList,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                ImplementationRepository::_tc_ServerInformationList,
+                1,
+                ACE_static_cast (void *, tmp),
+                ImplementationRepository::ServerInformationList::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
+      }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  
+  return 0;
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:52
+// be/be_visitor_interface/any_op_cs.cpp:52
 
-// Copying insertion.
+// Copying version.
 void
 operator<<= (
     CORBA::Any &_tao_any,
@@ -8574,19 +9133,26 @@ operator<<= (
   _tao_any <<= &_tao_objptr;
 }
 
-// Non-copying insertion.
+// Non-copying version.
 void
 operator<<= (
     CORBA::Any &_tao_any,
     ImplementationRepository::Administration_ptr *_tao_elem
   )
 {
-  TAO::Any_Impl_T<ImplementationRepository::Administration>::insert (
-      _tao_any,
-      ImplementationRepository::Administration::_tao_any_destructor,
-      ImplementationRepository::_tc_Administration,
-      *_tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_Administration, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          *_tao_elem,
+          ImplementationRepository::Administration::_tao_any_destructor
+        );
+    }
 }
 
 CORBA::Boolean
@@ -8595,28 +9161,62 @@ operator>>= (
     ImplementationRepository::Administration_ptr &_tao_elem
   )
 {
-  return
-    TAO::Any_Impl_T<ImplementationRepository::Administration>::extract (
-        _tao_any,
-        ImplementationRepository::Administration::_tao_any_destructor,
-        ImplementationRepository::_tc_Administration,
-        _tao_elem
+  ACE_TRY_NEW_ENV
+  {
+    _tao_elem = ImplementationRepository::Administration::_nil ();
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean _tao_result =
+      type->equivalent (
+          ImplementationRepository::_tc_Administration
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (!_tao_result)
+      {
+        return 0; // not equivalent
+      }
+    
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
       );
+    
+    if (stream >> _tao_elem)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_Administration,
+            1,
+            _tao_elem,
+            ImplementationRepository::Administration::_tao_any_destructor
+          );
+        
+        return 1;
+      }
+  }
+  ACE_CATCHANY
+  {
+    _tao_elem = ImplementationRepository::Administration::_nil ();
+    return 0;
+  }
+  ACE_ENDTRY;
+  
+  _tao_elem = ImplementationRepository::Administration::_nil ();
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<ImplementationRepository::Administration,ImplementationRepository::Administration_var>;
-  template class TAO::Any_Impl_T<ImplementationRepository::Administration>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<ImplementationRepository::Administration, ImplementationRepository::Administration_var>
-# pragma instantiate TAO::Any_Impl_T<ImplementationRepository::Administration>
+# pragma instantiate TAO_Object_Manager<ImplementationRepository::Administration,ImplementationRepository::Administration_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:52
+// be/be_visitor_interface/any_op_cs.cpp:52
 
-// Copying insertion.
+// Copying version.
 void
 operator<<= (
     CORBA::Any &_tao_any,
@@ -8628,19 +9228,26 @@ operator<<= (
   _tao_any <<= &_tao_objptr;
 }
 
-// Non-copying insertion.
+// Non-copying version.
 void
 operator<<= (
     CORBA::Any &_tao_any,
     ImplementationRepository::ServerInformationIterator_ptr *_tao_elem
   )
 {
-  TAO::Any_Impl_T<ImplementationRepository::ServerInformationIterator>::insert (
-      _tao_any,
-      ImplementationRepository::ServerInformationIterator::_tao_any_destructor,
-      ImplementationRepository::_tc_ServerInformationIterator,
-      *_tao_elem
-    );
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          ImplementationRepository::_tc_ServerInformationIterator, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          *_tao_elem,
+          ImplementationRepository::ServerInformationIterator::_tao_any_destructor
+        );
+    }
 }
 
 CORBA::Boolean
@@ -8649,26 +9256,60 @@ operator>>= (
     ImplementationRepository::ServerInformationIterator_ptr &_tao_elem
   )
 {
-  return
-    TAO::Any_Impl_T<ImplementationRepository::ServerInformationIterator>::extract (
-        _tao_any,
-        ImplementationRepository::ServerInformationIterator::_tao_any_destructor,
-        ImplementationRepository::_tc_ServerInformationIterator,
-        _tao_elem
+  ACE_TRY_NEW_ENV
+  {
+    _tao_elem = ImplementationRepository::ServerInformationIterator::_nil ();
+    CORBA::TypeCode_var type = _tao_any.type ();
+    
+    CORBA::Boolean _tao_result =
+      type->equivalent (
+          ImplementationRepository::_tc_ServerInformationIterator
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_TRY_CHECK;
+    
+    if (!_tao_result)
+      {
+        return 0; // not equivalent
+      }
+    
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
       );
+    
+    if (stream >> _tao_elem)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            ImplementationRepository::_tc_ServerInformationIterator,
+            1,
+            _tao_elem,
+            ImplementationRepository::ServerInformationIterator::_tao_any_destructor
+          );
+        
+        return 1;
+      }
+  }
+  ACE_CATCHANY
+  {
+    _tao_elem = ImplementationRepository::ServerInformationIterator::_nil ();
+    return 0;
+  }
+  ACE_ENDTRY;
+  
+  _tao_elem = ImplementationRepository::ServerInformationIterator::_nil ();
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<ImplementationRepository::ServerInformationIterator,ImplementationRepository::ServerInformationIterator_var>;
-  template class TAO::Any_Impl_T<ImplementationRepository::ServerInformationIterator>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<ImplementationRepository::ServerInformationIterator, ImplementationRepository::ServerInformationIterator_var>
-# pragma instantiate TAO::Any_Impl_T<ImplementationRepository::ServerInformationIterator>
+# pragma instantiate TAO_Object_Manager<ImplementationRepository::ServerInformationIterator,ImplementationRepository::ServerInformationIterator_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
+// be/be_visitor_interface/cdr_op_cs.cpp:63
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -8711,7 +9352,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
+// be/be_visitor_sequence/cdr_op_cs.cpp:103
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -8777,7 +9418,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
+// be/be_visitor_sequence/cdr_op_cs.cpp:103
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -8843,7 +9484,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
+// be/be_visitor_interface/cdr_op_cs.cpp:63
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -8886,7 +9527,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
+// be/be_visitor_interface/cdr_op_cs.cpp:63
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -8927,3 +9568,4 @@ CORBA::Boolean operator>> (
   ACE_ENDTRY;
   return 0;
 }
+

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -12,20 +12,13 @@
 
 #ifndef ACE_SERVICE_REPOSITORY_H
 #define ACE_SERVICE_REPOSITORY_H
-
 #include "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#include "ace/Service_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Default_Constants.h"
-#include "ace/Synch.h"
-
-
-class ACE_Service_Type;
 
 #define ACE_Component_Repository ACE_Service_Repository
 /**
@@ -207,5 +200,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-
 #endif /* _SERVICE_REPOSITORY_H */

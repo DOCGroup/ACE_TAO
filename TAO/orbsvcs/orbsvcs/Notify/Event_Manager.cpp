@@ -9,10 +9,21 @@
 
 ACE_RCSID(RT_Notify, TAO_NS_Event_Manager, "$Id$")
 
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
+
+#include "EventTypeSeq.h"
+#include "Event.h"
+#include "Peer.h"
+#include "Consumer.h"
 #include "ProxyConsumer.h"
 #include "ProxySupplier.h"
-#include "Consumer_Map.h"
-#include "Supplier_Map.h"
+#include "Proxy.h"
+#include "Admin.h"
+#include "EventChannel.h"
+#include "EventChannelFactory.h"
+#include "Notify_Service.h"
+#include "Event_Map_T.h"
 
 TAO_NS_Event_Manager::TAO_NS_Event_Manager (void)
   :consumer_map_ (0), supplier_map_ (0)
@@ -206,7 +217,11 @@ template class ACE_Hash_Map_Manager_Ex<TAO_NS_EventType, TAO_NS_Event_Map_Entry_
 template class ACE_Hash_Map_Manager_Ex<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxySupplier> *, ACE_Hash<TAO_NS_EventType>, ACE_Equal_To<TAO_NS_EventType>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxySupplier> *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxyConsumer> *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<ACE_CString, CORBA::Any, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, CORBA_Any, ACE_Null_Mutex>;
+
+template class TAO_NS_Object_Find_Worker_T<TAO_NS_Proxy>;
+template class TAO_NS_Object_Find_Worker_T<TAO_NS_Admin>;
+template class TAO_NS_Object_Find_Worker_T<TAO_NS_EventChannel>;
 
 template class ACE_Unbounded_Set<TAO_NS_EventType>;
 template class ACE_Unbounded_Set_Const_Iterator<TAO_NS_EventType>;
@@ -218,8 +233,7 @@ template class TAO_ESF_Worker<TAO_NS_ProxyConsumer>;
 template class TAO_ESF_Worker<TAO_NS_Proxy>;
 template class TAO_ESF_Worker<TAO_NS_Consumer>;
 template class TAO_ESF_Worker<TAO_NS_Peer>;
-template class TAO_ESF_Worker<TAO_NS_SupplierAdmin>;
-template class TAO_ESF_Worker<TAO_NS_ConsumerAdmin>;
+template class TAO_ESF_Worker<TAO_NS_Admin>;
 template class TAO_ESF_Worker<TAO_NS_EventChannel>;
 
 template class ACE_Refcounted_Auto_Ptr<TAO_NS_Event, TAO_SYNCH_MUTEX>;
@@ -227,8 +241,7 @@ template class ACE_Unbounded_Queue_Iterator<ACE_Refcounted_Auto_Ptr<TAO_NS_Event
 
 template class ACE_Node<ACE_Refcounted_Auto_Ptr<TAO_NS_Event, TAO_SYNCH_MUTEX > >;
 template class ACE_Node<TAO_NS_Supplier *>;
-template class ACE_Node<TAO_NS_SupplierAdmin *>;
-template class ACE_Node<TAO_NS_ConsumerAdmin *>;
+template class ACE_Node<TAO_NS_Admin *>;
 template class ACE_Node<TAO_NS_EventChannel *>;
 template class ACE_Node<TAO_NS_ProxyConsumer *>;
 template class ACE_Node<TAO_NS_EventType>;
@@ -238,7 +251,7 @@ template class ACE_Node<TAO_NS_Proxy *>;
 template class ACE_Node<TAO_NS_Consumer *>;
 
 template class ACE_Hash_Map_Entry<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxyConsumer> *>;
-template class ACE_Hash_Map_Entry<ACE_CString, CORBA::Any>;
+template class ACE_Hash_Map_Entry<ACE_CString, CORBA_Any>;
 template class ACE_Hash_Map_Entry<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxySupplier> *>;
 
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxySupplier> *, ACE_Hash<TAO_NS_EventType>, ACE_Equal_To<TAO_NS_EventType>, ACE_Null_Mutex>;
@@ -250,11 +263,15 @@ template class ACE_Hash_Map_Iterator_Ex<TAO_NS_EventType, TAO_NS_Event_Map_Entry
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxySupplier> *, ACE_Hash<TAO_NS_EventType>, ACE_Equal_To<TAO_NS_EventType>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxyConsumer> *, ACE_Hash<TAO_NS_EventType>, ACE_Equal_To<TAO_NS_EventType>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, CORBA_Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, CORBA_Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, CORBA_Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA_Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>;
+
+template class TAO_ESF_Shutdown_Proxy<TAO_NS_EventChannel>;
+template class TAO_ESF_Shutdown_Proxy<TAO_NS_Admin>;
+template class TAO_ESF_Shutdown_Proxy<TAO_NS_Proxy>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -271,7 +288,11 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Has
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxySupplier> *, ACE_Hash<TAO_NS_EventType>, ACE_Equal_To<TAO_NS_EventType>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxySupplier> *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxyConsumer> *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, CORBA::Any, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, CORBA_Any, ACE_Null_Mutex>
+
+#pragma instantiate TAO_NS_Object_Find_Worker_T<TAO_NS_Proxy>
+#pragma instantiate TAO_NS_Object_Find_Worker_T<TAO_NS_Admin>
+#pragma instantiate TAO_NS_Object_Find_Worker_T<TAO_NS_EventChannel>
 
 #pragma instantiate ACE_Unbounded_Set<TAO_NS_EventType>
 #pragma instantiate ACE_Unbounded_Set_Const_Iterator<TAO_NS_EventType>
@@ -283,8 +304,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Has
 #pragma instantiate TAO_ESF_Worker<TAO_NS_Proxy>
 #pragma instantiate TAO_ESF_Worker<TAO_NS_Consumer>
 #pragma instantiate TAO_ESF_Worker<TAO_NS_Peer>
-#pragma instantiate TAO_ESF_Worker<TAO_NS_ConsumerAdmin>
-#pragma instantiate TAO_ESF_Worker<TAO_NS_SupplierAdmin>
+#pragma instantiate TAO_ESF_Worker<TAO_NS_Admin>
 #pragma instantiate TAO_ESF_Worker<TAO_NS_EventChannel>
 
 #pragma instantiate ACE_Refcounted_Auto_Ptr<TAO_NS_Event, TAO_SYNCH_MUTEX>
@@ -292,8 +312,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Has
 
 #pragma instantiate ACE_Node<ACE_Refcounted_Auto_Ptr<TAO_NS_Event, TAO_SYNCH_MUTEX > >
 #pragma instantiate ACE_Node<TAO_NS_Supplier *>
-#pragma instantiate ACE_Node<TAO_NS_SupplierAdmin *>
-#pragma instantiate ACE_Node<TAO_NS_ConsumerAdmin *>
+#pragma instantiate ACE_Node<TAO_NS_Admin *>
 #pragma instantiate ACE_Node<TAO_NS_EventChannel *>
 #pragma instantiate ACE_Node<TAO_NS_ProxyConsumer *>
 #pragma instantiate ACE_Node<TAO_NS_EventType>
@@ -303,7 +322,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Has
 #pragma instantiate ACE_Node<TAO_NS_Consumer *>
 
 #pragma instantiate ACE_Hash_Map_Entry<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxyConsumer> *>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, CORBA::Any>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, CORBA_Any>
 #pragma instantiate ACE_Hash_Map_Entry<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxySupplier> *>
 
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxySupplier> *, ACE_Hash<TAO_NS_EventType>, ACE_Equal_To<TAO_NS_EventType>, ACE_Null_Mutex>
@@ -315,9 +334,14 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Has
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxySupplier> *, ACE_Hash<TAO_NS_EventType>, ACE_Equal_To<TAO_NS_EventType>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_NS_EventType, TAO_NS_Event_Map_Entry_T<TAO_NS_ProxyConsumer> *, ACE_Hash<TAO_NS_EventType>, ACE_Equal_To<TAO_NS_EventType>, ACE_Null_Mutex>
 
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, CORBA_Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>
 
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA::Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, CORBA_Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, CORBA_Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, CORBA_Any, ACE_Hash<ACE_CString >, ACE_Equal_To<ACE_CString >, ACE_Null_Mutex>
+
+#pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_NS_EventChannel>
+#pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_NS_Admin>
+#pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_NS_Proxy>
+
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

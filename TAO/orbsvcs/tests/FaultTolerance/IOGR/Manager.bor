@@ -24,8 +24,7 @@ CFLAGS = \
 	$(TAO_NAMING_CFLAGS) \
 	$(TAO_EVENT_CFLAGS) \
 	$(TAO_NOTIFY_CFLAGS) \
-        $(TAO_FTORB_CFLAGS) \
-        $(TAO_MESSAGING_CFLAGS)
+        $(TAO_FTORB_CFLAGS)
 
 CPPDIR = .;FaultTolerance
 
@@ -40,12 +39,12 @@ LIBFILES = \
 	$(TAO_NAMING_LIB) \
 	$(TAO_EVENT_LIB) \
 	$(TAO_NOTIFY_LIB) \
-        $(TAO_FTORB_LIB) \
-        $(TAO_MESSAGING_LIB)
+        $(TAO_FTORB_LIB)
 
 all: idl_src_files
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
 
 #
 # IDL Build rules

@@ -19,14 +19,14 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:604
 
-#ifndef _TAO_IDL_ORIG_IMR_LOCATORS_T_H_
-#define _TAO_IDL_ORIG_IMR_LOCATORS_T_H_
+// TAO_IDL - Generated from
+// be/be_codegen.cpp:597
+
+#ifndef _TAO_IDL_IMR_LOCATORS_T_H_
+#define _TAO_IDL_IMR_LOCATORS_T_H_
 
 #include "ace/pre.h"
-
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -34,16 +34,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
-
 #if defined (ACE_HAS_USING_KEYWORD)
 TAO_NAMESPACE  POA_ImplementationRepository
 {
-  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
+  // be/be_visitor_interface/tie_sh.cpp:89
   
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -54,13 +49,9 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // the T& ctor
     Locator_tie (T &t, PortableServer::POA_ptr poa);
     // ctor taking a POA
-    Locator_tie (T *tp, CORBA::Boolean release = 1);
+    Locator_tie (T *tp, CORBA::Boolean release=1);
     // ctor taking pointer and an ownership flag
-    Locator_tie (
-        T *tp,
-        PortableServer::POA_ptr poa,
-        CORBA::Boolean release = 1
-      );
+    Locator_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release=1);
     // ctor with T*, ownership flag and a POA
     ~Locator_tie (void);
     // dtor
@@ -70,7 +61,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // return the underlying object
     void _tied_object (T &obj);
     // set the underlying object
-    void _tied_object (T *obj, CORBA::Boolean release = 1);
+    void _tied_object (T *obj, CORBA::Boolean release=1);
     // set the underlying object and the ownership flag
     CORBA::Boolean _is_owner (void);
     // do we own it
@@ -81,10 +72,6 @@ TAO_NAMESPACE  POA_ImplementationRepository
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
-    
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
     void activate_server_in_location (
         const char * server,
         const char * location
@@ -96,10 +83,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::CannotActivate
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    void remove_server_in_location (
+        void remove_server_in_location (
         const char * server,
         const char * location
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -109,10 +93,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::NotFound
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    void shutdown_server_in_location (
+        void shutdown_server_in_location (
         const char * server,
         const char * location
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -122,10 +103,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::NotFound
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    void server_is_shutting_down_in_location (
+        void server_is_shutting_down_in_location (
         const char * server,
         const char * location
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -135,10 +113,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::NotFound
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    CORBA::ULong register_activator (
+        CORBA::ULong register_activator (
         const char * location,
         CORBA::Object_ptr object_ref
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -148,10 +123,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::AlreadyRegistered
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    CORBA::ULong unregister_activator (
+        CORBA::ULong unregister_activator (
         const char * location,
         CORBA::Object_ptr object_ref
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -161,10 +133,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::NotFound
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    void activate_server (
+        void activate_server (
         const char * server
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -174,10 +143,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::CannotActivate
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    char * activate_server_with_startup (
+        char * activate_server_with_startup (
         const char * server,
         CORBA::Long check_startup
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -188,10 +154,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::CannotActivate
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    void register_server (
+        void register_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -201,10 +164,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::AlreadyRegistered
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    void reregister_server (
+        void reregister_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -213,10 +173,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         CORBA::SystemException
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    void remove_server (
+        void remove_server (
         const char * server
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -225,10 +182,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::NotFound
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    void shutdown_server (
+        void shutdown_server (
         const char * server
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -237,10 +191,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::NotFound
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    char * server_is_running (
+        char * server_is_running (
         const char * server,
         const char * addr,
         ImplementationRepository::ServerObject_ptr server_object
@@ -251,10 +202,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::NotFound
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    void server_is_shutting_down (
+        void server_is_shutting_down (
         const char * server
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -263,10 +211,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::NotFound
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    void find (
+        void find (
         const char * server,
         ImplementationRepository::ServerInformation_out info
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -276,10 +221,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         , ImplementationRepository::NotFound
       ));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
-    
-    void list (
+        void list (
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list,
         ImplementationRepository::ServerInformationIterator_out server_iterator
@@ -288,8 +230,8 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-  
-  private:
+    
+      private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
@@ -298,20 +240,25 @@ TAO_NAMESPACE  POA_ImplementationRepository
     Locator_tie (const Locator_tie &);
     void operator= (const Locator_tie &);
   };
+
 }
 TAO_NAMESPACE_CLOSE // module ImplementationRepository
 #endif /* ACE_HAS_USING_KEYWORD */
 
+
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1141
+// be/be_codegen.cpp:1135
+
 
 #if defined (__ACE_INLINE__)
 #include "ImR_LocatorS_T.i"
 #endif /* defined INLINE */
 
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ImR_LocatorS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
+
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("ImR_LocatorS_T.cpp")

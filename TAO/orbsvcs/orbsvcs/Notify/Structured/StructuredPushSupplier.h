@@ -21,6 +21,7 @@
 
 #include "orbsvcs/CosNotifyCommC.h"
 #include "../Supplier.h"
+#include "../Destroy_Callback.h"
 
 class TAO_NS_ProxyConsumer;
 
@@ -42,7 +43,7 @@ public:
   /// Init
   void init (CosNotifyComm::StructuredPushSupplier_ptr push_supplier ACE_ENV_ARG_DECL);
 
-  /// Release
+  /// TAO_NS_Destroy_Callback methods
   virtual void release (void);
 
 protected:

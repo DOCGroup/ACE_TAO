@@ -98,7 +98,6 @@ SOURCE=.\local_server.cpp
 # Begin Source File
 
 SOURCE=.\MT_Client_TestC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

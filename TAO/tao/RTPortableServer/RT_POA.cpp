@@ -130,15 +130,9 @@ void
 TAO_RT_POA::validate_priority (RTCORBA::Priority priority
                                ACE_ENV_ARG_DECL)
 {
-  if (priority < RTCORBA::minPriority 
-           // The line below will always be false unless the value of
-           // RTCORBA::maxPriority, which is now assigned the value of
-           // 32767, is changed in RTCORBA.pidl.
-//      || priority > RTCORBA::maxPriority
-     )
-    {
-      ACE_THROW (CORBA::BAD_PARAM ());
-    }
+  if (priority < RTCORBA::minPriority ||
+      priority > RTCORBA::maxPriority)
+    ACE_THROW (CORBA::BAD_PARAM ());
 
   // If this POA is using a thread pool with lanes, make sure the
   // priority matches one of the thread lanes.  Note that in this
@@ -229,7 +223,7 @@ TAO_RT_POA::validate_policies (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 TAO_Stub *
-TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
+TAO_RT_POA::key_to_stub_i (const TAO_ObjectKey &object_key,
                            const char *type_id,
                            CORBA::Short priority
                            ACE_ENV_ARG_DECL)
@@ -324,7 +318,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
 }
 
 TAO_Stub *
-TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
+TAO_RT_POA::create_stub_object (const TAO_ObjectKey &object_key,
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *filter,

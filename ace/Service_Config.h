@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-//====================================================================
+//=============================================================================
 /**
  *  @file    Service_Config.h
  *
@@ -8,7 +8,7 @@
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
-//====================================================================
+//=============================================================================
 
 #ifndef ACE_SERVICE_CONFIG_H
 #define ACE_SERVICE_CONFIG_H
@@ -21,18 +21,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Service_Types.h"
+#include "ace/Signal.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/SString.h"
 #include "ace/XML_Svc_Conf.h"
 
-
 // Forward decl.
-class ACE_Service_Object;
-class ACE_Service_Type;
-class ACE_Service_Type_Impl;
 class ACE_Service_Repository;
-class ACE_Sig_Adapter;
 class ACE_Allocator;
 class ACE_Reactor;
 class ACE_Thread_Manager;

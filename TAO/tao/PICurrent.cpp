@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 #include "PICurrent.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -17,8 +19,8 @@ ACE_RCSID (tao,
 #include "debug.h"
 
 
-TAO_PICurrent::TAO_PICurrent (void)
-  : orb_core_ (0),
+TAO_PICurrent::TAO_PICurrent (TAO_ORB_Core *orb_core)
+  : orb_core_ (orb_core),
     slot_count_ (0)
 {
 }
@@ -81,6 +83,14 @@ TAO_PICurrent::set_slot (PortableInterceptor::SlotId id,
   ACE_CHECK;
 }
 
+PortableInterceptor::SlotId
+TAO_PICurrent::allocate_slot_id (void)
+{
+  // No need to acquire a lock.  This only gets called during ORB
+  // initialization.  ORB initialization is already atomic.
+  return this->slot_count_++;
+}
+
 TAO_PICurrent_Impl *
 TAO_PICurrent::tsc (void)
 {
@@ -131,7 +141,7 @@ TAO_PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
       ACE_NEW_THROW_EX (any,
                         CORBA::Any,
                         CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
+                          CORBA_SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
@@ -143,7 +153,7 @@ TAO_PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
   ACE_NEW_THROW_EX (any,
                     CORBA::Any (table[id]), // Make a copy.
                     CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
+                      CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));

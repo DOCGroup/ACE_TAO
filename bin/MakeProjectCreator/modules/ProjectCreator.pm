@@ -26,10 +26,10 @@ use vars qw(@ISA);
 # Data Section
 # ************************************************************
 
-my($BaseClassExtension)      = 'mpb';
-my($ProjectCreatorExtension) = 'mpc';
-my($TemplateExtension)       = 'mpd';
-my($TemplateInputExtension)  = 'mpt';
+my($BaseClassExtension)      = "mpb";
+my($ProjectCreatorExtension) = "mpc";
+my($TemplateExtension)       = "mpd";
+my($TemplateInputExtension)  = "mpt";
 
 ## Valid names for assignments within a project
 my(%validNames) = ('exename'         => 1,
@@ -82,14 +82,14 @@ sub new {
   my($addtemp)   = shift;
   my($addproj)   = shift;
   my($progress)  = shift;
-  my($toplevel)  = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $relative,
                                 $addtemp, $addproj,
-                                $progress, $toplevel, 'project');
+                                $progress, 'project');
 
   $self->{$self->{'type_check'}}   = 0;
   $self->{'global_assign'}         = {};
+  $self->{'files_written'}         = [];
   $self->{'project_info'}          = [];
   $self->{'reading_global'}        = 0;
   $self->{'reading_parent'}        = [];
@@ -103,7 +103,6 @@ sub new {
   $self->{'want_dynamic_projects'} = $dynamic;
   $self->{'want_static_projects'}  = $static;
   $self->{'flag_overrides'}        = {};
-  $self->{'special_supplied'}      = {};
 
   ## Set up the verbatim constructs
   $self->{'verbatim'} = {};
@@ -217,7 +216,6 @@ sub parse_line {
         $self->{'idl_defaulted'}    = 0;
         $self->{'flag_overrides'}   = {};
         $self->{'source_defaulted'} = 0;
-        $self->{'special_supplied'} = {};
       }
       else {
         ## Project Beginning
@@ -372,13 +370,6 @@ sub parse_components {
   }
   if (!defined $$comps{$current}) {
     $$comps{$current} = [];
-  }
-
-  foreach my $special (@specialComponents) {
-    if ($special eq $tag) {
-      $self->{'special_supplied'}->{$tag} = 1;
-      last;
-    }
   }
 
   while(<$fh>) {
@@ -717,7 +708,8 @@ sub add_idl_generated {
 
 
 sub generate_default_target_names {
-  my($self) = shift;
+  my($self)   = shift;
+  my($base)   = shift;
 
   if (!$self->exe_target()) {
     my($sharedname) = $self->get_assignment('sharedname');
@@ -731,83 +723,52 @@ sub generate_default_target_names {
       $self->process_assignment('sharedname', $staticname);
       $sharedname = $staticname;
     }
-
-    ## If it's neither an exe or library target, we will search
-    ## through the source files for a main()
-    if (!$self->lib_target()) {
-      my($fh)      = new FileHandle();
-      my($exename) = undef;
-      foreach my $file ($self->get_component_list('source_files')) {
-        if (open($fh, $file)) {
-          while(<$fh>) {
-            ## Remove c++ comments (ignore c style comments for now)
-            $_ =~ s/\/\/.*//;
-
-            ## Check for main
-            if (/(main|ACE_MAIN|ACE_WMAIN|ACE_TMAIN)\s*\(/) {
-              ## If we found a main, set the exename to the basename
-              ## of the cpp file with the extension removed
-              $exename = basename($file);
-              $exename =~ s/\.[^\.]+$//;
-              last;
-            }
-          }
-          close($fh);
-        }
-
-        ## Set the exename assignment
-        if (defined $exename) {
-          $self->process_assignment('exename', $exename);
-          last;
-        }
-      }
+    if (!defined $sharedname) {
+      $self->process_assignment('sharedname', $base);
+    }
+    if (!defined $staticname) {
+      $self->process_assignment('staticname', $base);
     }
   }
 }
 
 
 sub generate_default_pch_filenames {
-  my($self)  = shift;
-  my($files) = shift;
-  my($pname) = $self->get_assignment('project_name');
+  my($self)   = shift;
+  my($files)  = shift;
+  my($vc)     = $self->{'valid_components'};
+  my($gc)     = $$vc{'header_files'};
+  my($found)  = 0;
 
   if (!defined $self->get_assignment('pch_header')) {
-    my($count)    = 0;
-    my($matching) = undef;
     foreach my $file (@$files) {
-      foreach my $ext (@{$self->{'valid_components'}->{'header_files'}}) {
+      foreach my $ext (@$gc) {
         if ($file =~ /(.*_pch$ext)/) {
           $self->process_assignment('pch_header', $1);
-          ++$count;
-          if ($file =~ /$pname/) {
-            $matching = $file;
-          }
+          $found = 1;
           last;
         }
       }
-    }
-    if ($count > 1 && defined $matching) {
-      $self->process_assignment('pch_header', $matching);
+      if ($found) {
+        last;
+      }
     }
   }
 
   if (!defined $self->get_assignment('pch_source')) {
-    my($count)    = 0;
-    my($matching) = undef;
+    $gc    = $$vc{'source_files'};
+    $found = 0;
     foreach my $file (@$files) {
-      foreach my $ext (@{$self->{'valid_components'}->{'source_files'}}) {
+      foreach my $ext (@$gc) {
         if ($file =~ /(.*_pch$ext)/) {
           $self->process_assignment('pch_source', $1);
-          ++$count;
-          if ($file =~ /$pname/) {
-            $matching = $file;
-          }
+          $found = 1;
           last;
         }
       }
-    }
-    if ($count > 1 && defined $matching) {
-      $self->process_assignment('pch_source', $matching);
+      if ($found) {
+        last;
+      }
     }
   }
 }
@@ -996,36 +957,6 @@ sub generate_default_components {
 }
 
 
-sub remove_duplicated_files {
-  my($self)   = shift;
-  my($dest)   = shift;
-  my($source) = shift;
-  my($names)  = $self->{$dest};
-  my(@slist)  = $self->get_component_list($source);
-
-  ## Find out which source files are listed
-  foreach my $name (keys %$names) {
-    my($comps) = $$names{$name};
-    foreach my $key (keys %$comps) {
-      my($array) = $$comps{$key};
-      my($count) = scalar(@$array);
-      for(my $i = 0; $i < $count; ++$i) {
-        foreach my $sfile (@slist) {
-          ## Is the source file is in the component array?
-          if ($$array[$i] eq $sfile) {
-            ## Remove the element and fix the index and count
-            splice(@$array, $i, 1);
-            --$count;
-            --$i;
-            last;
-          }
-        }
-      }
-    }
-  }
-}
-
-
 sub generated_source_extensions {
   my($self) = shift;
   my($tag)  = shift;
@@ -1198,12 +1129,15 @@ sub add_source_corresponding_component_files {
 
 
 sub generate_defaults {
-  my($self) = shift;
+  my($self)   = shift;
+  my($base)   = $self->base_directory();
 
   ## Generate default project name
   if (!defined $self->get_assignment('project_name')) {
-    $self->process_assignment('project_name', $self->base_directory());
+    $self->process_assignment('project_name', $base);
   }
+
+  $self->generate_default_target_names($base);
 
   my(@files) = $self->generate_default_file_list();
   $self->generate_default_pch_filenames(\@files);
@@ -1211,10 +1145,6 @@ sub generate_defaults {
   ## Generate default components, but @specialComponents
   ## are skipped in the initial default components generation
   $self->generate_default_components(\@files);
-
-  ## Remove source files that are also listed in the template files
-  ## If we do not do this, then generated projects can be invalid.
-  $self->remove_duplicated_files('source_files', 'template_files');
 
   ## Generate the default idl generated list of source files
   ## only if we defaulted the idl file list
@@ -1229,24 +1159,19 @@ sub generate_defaults {
   ## Now, if the @specialComponents are still empty
   ## then take any file that matches the components extension
   foreach my $tag (@specialComponents) {
-    if (!$self->{'special_supplied'}->{$tag}) {
-      my($names) = $self->{$tag};
-      if (defined $names) {
-        foreach my $name (keys %$names) {
-          my($comps) = $$names{$name};
-          foreach my $comp (keys %$comps) {
-            my($array) = $$comps{$comp};
-            if (!defined $$array[0] || $self->{'source_defaulted'}) {
-              $self->generate_default_components(\@files, $tag);
-            }
+    my($names) = $self->{$tag};
+    if (defined $names) {
+      foreach my $name (keys %$names) {
+        my($comps) = $$names{$name};
+        foreach my $comp (keys %$comps) {
+          my($array) = $$comps{$comp};
+          if (!defined $$array[0] || $self->{'source_defaulted'}) {
+            $self->generate_default_components(\@files, $tag);
           }
         }
       }
     }
   }
-
-  ## Generate default target names after all source files are added
-  $self->generate_default_target_names();
 }
 
 
@@ -1310,12 +1235,18 @@ sub write_output_file {
   my($name)     = shift;
   my($status)   = 0;
   my($error)    = '';
+  my($dir)      = dirname($name);
+  my($fh)       = new FileHandle();
   my($tover)    = $self->get_template_override();
   my($template) = (defined $tover ? $tover : $self->get_template()) .
                   ".$TemplateExtension";
   my($tfile)    = $self->search_include_path($template);
 
   if (defined $tfile) {
+    if ($dir ne '.') {
+      mkpath($dir, 0, 0777);
+    }
+
     ## Read in the template values for the
     ## specific target and project type
     ($status, $error) = $self->read_template_input();
@@ -1329,27 +1260,18 @@ sub write_output_file {
       ($status, $error) = $tp->parse_file($tfile);
 
       if ($status) {
-        if ($self->get_toplevel()) {
-          my($fh)  = new FileHandle();
-          my($dir) = dirname($name);
-
-          if ($dir ne '.') {
-            mkpath($dir, 0, 0777);
+        if (open($fh, ">$name")) {
+          my($lines) = $tp->get_lines();
+          foreach my $line (@$lines) {
+            print $fh $line;
           }
-
-          if (open($fh, ">$name")) {
-            my($lines) = $tp->get_lines();
-            foreach my $line (@$lines) {
-              print $fh $line;
-            }
-            close($fh);
-
-            $self->add_file_written($name);
-          }
-          else {
-            $error = "ERROR: Unable to open $name for output.";
-            $status = 0;
-          }
+          close($fh);
+          my($fw) = $self->{'files_written'};
+          push(@$fw, $name);
+        }
+        else {
+          $error = "ERROR: Unable to open $name for output.";
+          $status = 0;
         }
       }
     }
@@ -1404,6 +1326,12 @@ sub write_project {
 }
 
 
+sub get_files_written {
+  my($self) = shift;
+  return $self->{'files_written'};
+}
+
+
 sub get_project_info {
   my($self) = shift;
   return $self->{'project_info'};
@@ -1439,7 +1367,8 @@ sub set_component_extensions {
 
 sub reset_values {
   my($self) = shift;
-  $self->{'project_info'} = [];
+  $self->{'files_written'}  = [];
+  $self->{'project_info'}   = [];
 }
 
 
@@ -1505,7 +1434,8 @@ sub update_project_info {
 sub get_verbatim {
   my($self)   = shift;
   my($marker) = shift;
-  my($type)   = $self->extractType("$self");
+  my($type)   = lc(substr("$self", 0, 3));  ## This number corresponds to
+                                            ## signif in Driver.pm
   my($str)    = undef;
   my($thash)  = $self->{'verbatim'}->{$type};
 
@@ -1526,13 +1456,6 @@ sub get_verbatim {
   return $str;
 }
 
-
-sub generate_recursive_input_list {
-  my($self) = shift;
-  my($dir)  = shift;
-  return $self->extension_recursive_input_list($dir,
-                                               $ProjectCreatorExtension);
-}
 
 # ************************************************************
 # Virtual Methods To Be Overridden
@@ -1562,15 +1485,6 @@ sub translate_value {
   my($self) = shift;
   my($key)  = shift;
   my($val)  = shift;
-
-  if ($key eq 'depends' && $val ne '') {
-    my($arr) = $self->create_array($val);
-    $val = '';
-    foreach my $entry (@$arr) {
-      $val .= '"' . $self->project_file_name($entry) . '" ';
-    }
-    $val =~ s/\s+$//;
-  }
   return $val;
 }
 

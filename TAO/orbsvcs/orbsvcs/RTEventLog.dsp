@@ -98,7 +98,6 @@ SOURCE=.\Log\RTEventLog_i.cpp
 # Begin Source File
 
 SOURCE=.\RTEventLogAdminC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -167,7 +166,6 @@ SOURCE=.\RTEventLogAdmin.idl
 !IF  "$(CFG)" == "RTEventLog - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTEVE="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RTEventLogAdmin.idl
 InputName=RTEventLogAdmin
@@ -206,7 +204,6 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "RTEventLog - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTEVE="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\RTEventLogAdmin.idl
 InputName=RTEventLogAdmin

@@ -104,7 +104,6 @@ SOURCE=.\TT_Info.cpp
 # Begin Source File
 
 SOURCE=.\TTestC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 

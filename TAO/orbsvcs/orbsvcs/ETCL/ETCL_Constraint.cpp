@@ -6,7 +6,6 @@
 #include "ETCL_y.h"
 #include "tao/Any.h"
 #include "tao/Managed_Types.h"
-#include "tao/Environment.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "ETCL_Constraint.inl"
@@ -39,7 +38,8 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
   CORBA::TypeCode_var type = any_ref.type ();
   CORBA::TCKind corba_type = CORBA::tk_null;
 
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       corba_type = type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -108,7 +108,7 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
       break;
     case TAO_ETCL_BOOLEAN:
       {
-        CORBA::Any::to_boolean tmp (this->op_.bool_);
+        CORBA_Any::to_boolean tmp (this->op_.bool_);
         (*any) >>= tmp;
       }
       break;
@@ -306,7 +306,8 @@ TAO_ETCL_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
   TAO_Literal_Type return_value = TAO_UNKNOWN;
   CORBA::TCKind kind = CORBA::tk_null;
 
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       kind = type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

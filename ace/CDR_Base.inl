@@ -149,6 +149,15 @@ ACE_CDR::swap_16 (const char* orig, char* target)
   swap_8 (orig, target + 8);
 }
 
+ACE_INLINE void
+ACE_CDR::mb_align (ACE_Message_Block *mb)
+{
+  char *start = ACE_ptr_align_binary (mb->base (),
+                                      ACE_CDR::MAX_ALIGNMENT);
+  mb->rd_ptr (start);
+  mb->wr_ptr (start);
+}
+
 ACE_INLINE size_t
 ACE_CDR::first_size (size_t minsize)
 {

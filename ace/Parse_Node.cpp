@@ -4,7 +4,6 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
-#include "ace/Service_Types.h"
 #include "ace/Task.h"
 
 #if !defined (__ACE_INLINE__)

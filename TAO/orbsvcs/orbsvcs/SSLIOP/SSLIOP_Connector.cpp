@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 #include "SSLIOP_Connector.h"
 #include "SSLIOP_Credentials.h"
 #include "SSLIOP_Profile.h"
@@ -15,14 +17,11 @@
 #include "tao/Stub.h"
 #include "tao/Transport_Connector.h"
 #include "tao/Blocked_Connect_Strategy.h"
-#include "tao/Wait_Strategy.h"
 #include "ace/Auto_Ptr.h"
-
 
 ACE_RCSID (TAO_SSLIOP,
            SSLIOP_Connector,
            "$Id$")
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -334,7 +333,7 @@ TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   if (ACE_BIT_DISABLED (ssl_component.target_supports,
                         Security::NoProtection))
     ACE_THROW_RETURN (CORBA::NO_PERMISSION (
-                        CORBA::SystemException::_tao_minor_code (
+                        CORBA_SystemException::_tao_minor_code (
                           TAO_DEFAULT_MINOR_CODE,
                           EPERM),
                         CORBA::COMPLETED_NO),
@@ -378,7 +377,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   if (ACE_BIT_ENABLED (ssl_component.target_requires,
                        Security::NoProtection))
     ACE_THROW_RETURN (CORBA::NO_PERMISSION (
-                        CORBA::SystemException::_tao_minor_code (
+                        CORBA_SystemException::_tao_minor_code (
                           TAO_DEFAULT_MINOR_CODE,
                           EPERM),
                         CORBA::COMPLETED_NO),

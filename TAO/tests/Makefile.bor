@@ -4,7 +4,6 @@
 
 DIRS = \
         AMH_Exceptions \
-        AMH_Oneway \
         AMI \
         AMI_Buffering \
         AMI_Timeouts \
@@ -23,7 +22,6 @@ DIRS = \
 	CDR \
 	Client_Leaks \
 	Codec \
-	CodeSets \
 	Collocation \
 	Connect_Strategy_Test \
 	Connection_Purging \

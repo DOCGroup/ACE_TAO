@@ -4,13 +4,17 @@
 #include "Object_Adapter.h"
 #include "tao/Object.h"
 
-ACE_RCSID (PortableServer,
-           TAO_Direct_Object_Proxy_Impl,
-           "$Id$")
+ACE_RCSID(tao, TAO_Direct_Object_Proxy_Impl, "$Id$")
+
+TAO_Direct_Object_Proxy_Impl::TAO_Direct_Object_Proxy_Impl (void)
+{
+  // No-op
+}
 
 
 TAO_Direct_Object_Proxy_Impl::~TAO_Direct_Object_Proxy_Impl (void)
 {
+  // No-op
 }
 
 CORBA::Boolean
@@ -34,50 +38,46 @@ TAO_Direct_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target
   ACE_TRY
     {
       if (target->_servant () != 0)
-        return target->_servant ()->_non_existent (
-          ACE_ENV_SINGLE_ARG_PARAMETER);
+        return target->_servant ()->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       // @@ Maybe we want to change this exception...
-      ACE_TRY_THROW (CORBA::INV_OBJREF ());
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
       _tao_retval = 1;
     }
+  ACE_CATCHANY
+    {
+      ACE_RE_THROW;
+    }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return _tao_retval;
 }
 
-CORBA::InterfaceDef_ptr
+CORBA_InterfaceDef_ptr
 TAO_Direct_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target
                                               ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       if (target->_servant () != 0)
-        {
-          // CORBA::InterfaceDef_var not available.
-          CORBA::InterfaceDef_ptr r =
-            target->_servant ()->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+        return target->_servant ()->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-          return r;
-        }
+      // @@ Maybe we want to change this exception...
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
-      // Ignore this exception.
+    }
+  ACE_CATCHANY
+    {
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);  // CORBA::InterfaceDef::_nil() not
-                         // available.
 
-  // @@ Maybe we want to change this exception...
-  ACE_THROW_RETURN (CORBA::INV_OBJREF (),
-                    0);  // CORBA::InterfaceDef::_nil() not
-                         // available.
+  return 0;
 }
 
 CORBA::Object_ptr
@@ -87,23 +87,20 @@ TAO_Direct_Object_Proxy_Impl::_get_component (const CORBA::Object_ptr target
   ACE_TRY
     {
       if (target->_servant () != 0)
-        {
-          CORBA::Object_var r =
-            target->_servant ()->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+        return target->_servant ()->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-          return r._retn ();
-        }
+      // @@ Maybe we want to change this exception...
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
-      // Ignore this exception.
+    }
+  ACE_CATCHANY
+    {
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  // @@ Maybe we want to change this exception...
-  ACE_THROW_RETURN (CORBA::INV_OBJREF (), CORBA::Object::_nil ());
+  return 0;
 }
-
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

@@ -173,21 +173,6 @@ SOURCE=.\Default_Acceptor_Filter.cpp
 # Begin Source File
 
 SOURCE=.\Default_ORTC.cpp
-
-!IF  "$(CFG)" == "PortableServer - Win32 Release"
-
-# ADD CPP /GR
-
-!ELSEIF  "$(CFG)" == "PortableServer - Win32 Debug"
-
-# ADD CPP /GR
-
-!ELSEIF  "$(CFG)" == "PortableServer - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "PortableServer - Win32 MFC Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -208,7 +193,6 @@ SOURCE=.\ImplRepo_i.cpp
 # Begin Source File
 
 SOURCE=.\ImplRepoC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -217,7 +201,6 @@ SOURCE=.\ImplRepoS.cpp
 # Begin Source File
 
 SOURCE=.\ImR_ActivatorC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -226,7 +209,6 @@ SOURCE=.\ImR_ActivatorS.cpp
 # Begin Source File
 
 SOURCE=.\ImR_LocatorC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -299,21 +281,6 @@ SOURCE=.\PortableServer_PolicyFactory.cpp
 # Begin Source File
 
 SOURCE=.\PortableServerC.cpp
-
-!IF  "$(CFG)" == "PortableServer - Win32 Release"
-
-# ADD CPP /GR
-
-!ELSEIF  "$(CFG)" == "PortableServer - Win32 Debug"
-
-# ADD CPP /GR
-
-!ELSEIF  "$(CFG)" == "PortableServer - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "PortableServer - Win32 MFC Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 

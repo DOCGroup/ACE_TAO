@@ -31,8 +31,8 @@ sub crlf {
 
 
 sub workspace_file_name {
-  my($self) = shift;
-  return $self->get_modified_workspace_name('Makefile', '');
+  #my($self) = shift;
+  return 'Makefile';
 }
 
 
@@ -89,24 +89,11 @@ sub write_comps {
   my($pjs)      = $self->get_project_info();
   my(@list)     = $self->sort_dependencies($projects, $pjs);
   my($crlf)     = $self->crlf();
-  my($default)  = 'Win32 Debug';
 
-  ## Determine the default configuration
-  foreach my $project (keys %$pjs) {
-    my($name, $deps, $pguid, @cfgs) = @{$pjs->{$project}};
-    @cfgs = sort @cfgs;
-    if (defined $cfgs[0]) {
-      $default = $cfgs[0];
-      $default =~ s/(.*)\|(.*)/$2 $1/;
-      last;
-    }
-  }
-  
-  ## Print out the content
   print $fh '!IF "$(CFG)" == ""' . $crlf .
-            'CFG=' . $default . $crlf .
+            'CFG=Win32 Debug' . $crlf .
             '!MESSAGE No configuration specified. ' .
-            'Defaulting to ' . $default . '.' . $crlf .
+            'Defaulting to Win32 Debug.' . $crlf .
             '!ENDIF' . $crlf . $crlf .
             'ALL:' . $crlf;
   $self->write_project_targets($fh, 'CFG="$(CFG)"', \@list);

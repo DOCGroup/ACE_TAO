@@ -5,9 +5,6 @@
 #include "ace/Synch.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Service_Config.h"
-#include "ace/Arg_Shifter.h"
-#include "ace/Get_Opt.h"
-#include "ace/Argv_Type_Converter.h"
 #include "tao/ORB_Core.h"
 
 #include "Thread_Task.h"
@@ -72,13 +69,11 @@ int
 Activity::init (int& argc, char *argv []
                 ACE_ENV_ARG_DECL)
 {
-  // Copy command line parameter.
-  ACE_Argv_Type_Converter command_line(argc, argv);
-
-  this->orb_ = CORBA::ORB_init (command_line.get_argc(),
-                                command_line.get_ASCII_argv(),
-                                ""
-                                ACE_ENV_ARG_PARAMETER);
+  this->orb_ =
+    CORBA::ORB_init (argc,
+                     argv,
+                     ""
+                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->init_sched ();
@@ -119,16 +114,6 @@ Activity::init (int& argc, char *argv []
 
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-
-  object = this->orb_->resolve_initial_references ("PriorityMappingManager"
-                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  RTCORBA::PriorityMappingManager_var mapping_manager =
-    RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  this->priority_mapping_ = mapping_manager->mapping ();
 
   return 0;
 }
@@ -294,15 +279,15 @@ Activity::activate_schedule (ACE_ENV_SINGLE_ARG_DECL)
         } /*  if (TAO_debug_level > 0) */
 
       task->job (job.in ());
-      task->activate_task (this->barrier_, this->priority_mapping_);
+      task->activate_task (barrier_);
       active_task_count_++;
 
       ACE_DEBUG ((LM_DEBUG, "Job %s scheduled\n", task->job ()));
     }
 
-  ACE_DEBUG ((LM_DEBUG, "(%P,%t) Waiting for tasks to synch...\n"));
+  ACE_DEBUG ((LM_DEBUG, "Waiting for tasks to synch..."));
   barrier_->wait ();
-  ACE_DEBUG ((LM_DEBUG, "(%P,%t) Tasks have synched...\n"));
+  ACE_DEBUG ((LM_DEBUG, "Tasks have synched..."));
 }
 
 void
@@ -459,11 +444,8 @@ Activity::run (int argc, char *argv[] ACE_ENV_ARG_DECL)
   this->activate_job_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->activate_schedule (ACE_ENV_SINGLE_ARG_PARAMETER);
+   this->activate_schedule (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-
-  this->create_started_flag_file (argc, argv);
-
 
   orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -471,37 +453,6 @@ Activity::run (int argc, char *argv[] ACE_ENV_ARG_DECL)
   orb_->destroy ();
 
   ACE_Thread_Manager::instance ()->wait ();
-}
-
-void
-Activity::create_started_flag_file (int argc, char *argv[])
-{
-  ACE_Arg_Shifter arg_shifter (argc, argv);
-
-  const ACE_TCHAR* current_arg = 0;
-
-  while (arg_shifter.is_anything_left ())
-    {
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-Started_Flag"))))
-        {
-          FILE *file = ACE_OS::fopen (current_arg, ACE_LIB_TEXT("w"));
-
-          if (file == 0)
-            ACE_ERROR ((LM_ERROR,
-                        "Unable to open %s for writing: %p\n",
-                        current_arg));
-
-          ACE_OS::fprintf (file, "ignore");
-
-          ACE_OS::fclose (file);
-
-          arg_shifter.consume_arg ();
-        }
-      else
-        {
-          arg_shifter.ignore_arg ();
-        }
-    }
 }
 
 int

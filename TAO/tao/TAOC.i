@@ -19,16 +19,12 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
-
 // *************************************************************
 // Inline operations for class TAO::BufferingConstraint_var
 // *************************************************************
 
 ACE_INLINE
-TAO::BufferingConstraint_var::BufferingConstraint_var (void)
+TAO::BufferingConstraint_var::BufferingConstraint_var (void) // default constructor
   : ptr_ (0)
 {}
 
@@ -38,19 +34,15 @@ TAO::BufferingConstraint_var::BufferingConstraint_var (BufferingConstraint *p)
 {}
 
 ACE_INLINE
-TAO::BufferingConstraint_var::BufferingConstraint_var (const ::TAO::BufferingConstraint_var &p)
+TAO::BufferingConstraint_var::BufferingConstraint_var (const ::TAO::BufferingConstraint_var &p) // copy constructor
 {
   if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::TAO::BufferingConstraint (*p.ptr_));
-    }
+    ACE_NEW (this->ptr_, ::TAO::BufferingConstraint (*p.ptr_));
   else
-    {
-      this->ptr_ = 0;
-    }
+    this->ptr_ = 0;
 }
 
-// Fixed-size types only.
+// fixed-size types only
 ACE_INLINE
 TAO::BufferingConstraint_var::BufferingConstraint_var (const ::TAO::BufferingConstraint &p)
 {
@@ -58,39 +50,33 @@ TAO::BufferingConstraint_var::BufferingConstraint_var (const ::TAO::BufferingCon
 }
 
 ACE_INLINE
-TAO::BufferingConstraint_var::~BufferingConstraint_var (void)
+TAO::BufferingConstraint_var::~BufferingConstraint_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE
-TAO::BufferingConstraint_var &
-TAO::BufferingConstraint_var::operator= (BufferingConstraint *_tao_struct_var)
+ACE_INLINE TAO::BufferingConstraint_var &
+TAO::BufferingConstraint_var::operator= (BufferingConstraint *p)
 {
   delete this->ptr_;
-  this->ptr_ = _tao_struct_var;
+  this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE
-::TAO::BufferingConstraint_var &
-TAO::BufferingConstraint_var::operator= (const ::TAO::BufferingConstraint_var &_tao_struct_var)
+ACE_INLINE ::TAO::BufferingConstraint_var &
+TAO::BufferingConstraint_var::operator= (const ::TAO::BufferingConstraint_var &p)
 {
-  if (this != &_tao_struct_var)
+  if (this != &p)
     {
-      if (_tao_struct_var.ptr_ == 0)
+      if (p.ptr_ == 0)
         {
           delete this->ptr_;
           this->ptr_ = 0;
         }
       else
         {
-          BufferingConstraint *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              BufferingConstraint (*_tao_struct_var.ptr_),
-              *this
-            );
+          BufferingConstraint *deep_copy =
+            new BufferingConstraint (*p.ptr_);
           
           if (deep_copy != 0)
             {
@@ -112,13 +98,8 @@ TAO::BufferingConstraint_var::operator= (const ::TAO::BufferingConstraint &p)
   if (this->ptr_ != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (
-        this->ptr_,
-        ::TAO::BufferingConstraint (p),
-        *this
-      );
+    ACE_NEW_RETURN (this->ptr_, ::TAO::BufferingConstraint (p), *this);
   }
-  
   return *this;
 }
 
@@ -183,63 +164,38 @@ TAO::BufferingConstraint_var::ptr (void) const
   return this->ptr_;
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY___CI_)
 #define _TAO_BUFFERINGCONSTRAINTPOLICY___CI_
 
-ACE_INLINE
-CORBA::Boolean
-TAO::BufferingConstraintPolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
-
-ACE_INLINE
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const TAO::BufferingConstraint &_tao_aggregate
-  )
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO::BufferingConstraint &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.mode) &&
     (strm << _tao_aggregate.timeout) &&
     (strm << _tao_aggregate.message_count) &&
     (strm << _tao_aggregate.message_bytes)
-   )
-    {
-      return 1;
-    }
+  )
+    return 1;
   else
-    {
-      return 0;
-    }
+    return 0;
+  
 }
 
-ACE_INLINE
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    TAO::BufferingConstraint &_tao_aggregate
-  )
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO::BufferingConstraint &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.mode) &&
     (strm >> _tao_aggregate.timeout) &&
     (strm >> _tao_aggregate.message_count) &&
     (strm >> _tao_aggregate.message_bytes)
-   )
-    {
-      return 1;
-    }
+  )
+    return 1;
   else
-    {
-      return 0;
-    }
+    return 0;
+  
 }
 

@@ -116,7 +116,7 @@ TAO_PersistStore::log (DsLogAdmin::LogRecord &rec)
   // Get the size of the actual data in the ACE_Message_Block.
   data.mb_size = mb->length ();
 
-  // Store the first chunk of persistent data.
+  // Store the first chunk of persistent data.  
   // Get the kind of the CORBA::Any stored in the record.
   data.id = rec.id;
   data.time = rec.time;
@@ -159,7 +159,7 @@ TAO_PersistStore::retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec)
   ACE_OS::lseek (this->read_persistent_file_, 0, SEEK_SET);
 
   while (ACE_OS::read (this->write_persistent_file_,
-                       (void*) &data,
+                       (void*) &data, 
                        sizeof (PersistentData)) > 0)
   {
     tc = new CORBA::TypeCode (data.kind);
@@ -184,14 +184,7 @@ TAO_PersistStore::retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec)
 
       rec.id = id;
       rec.time = data.time;
-
-      TAO::Unknown_IDL_Type *unk = 0;
-      ACE_NEW_RETURN (unk,
-                      TAO::Unknown_IDL_Type (tc.in (),
-                                             &mb2,
-                                             data.byte_order),
-                      -1);
-      rec.info.replace (unk);
+      rec.info = CORBA::Any (tc.in (), 0, data.byte_order, &mb2);
 
       retval = 1;
       break;
@@ -204,9 +197,9 @@ TAO_PersistStore::retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec)
 unsigned short
 TAO_PersistStore::get_percentage_full (void)
 {
-  // If the log size is unlimited, return 0.
+  // If the log size is unlimited, return 0
   if (this->max_size_ == 0)
     return 0;
 
-  return (100U * this->current_size_ / this->max_size_);
+  return (100*this->current_size_/this->max_size_);
 }

@@ -20,9 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Method_Request.h"
-#include "Refcountable.h"
-
-class TAO_NS_ProxySupplier;
+#include "Types.h"
 
 /**
  * @class TAO_NS_Method_Request_Dispatch_No_Filtering

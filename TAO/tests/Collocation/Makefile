@@ -22,12 +22,11 @@ MKLIST = \
 	Makefile.test
 
 all debug profile optimize install deinstall clean realclean clobber depend idl_stubs:
-%.mkfile: %
-	@echo $(MAKE) -f $< $(MKFILE_TARGET)
-	@$(MAKE) -f $< $(MKFILE_TARGET)
-
-all debug profile optimize install deinstall clean realclean clobber depend idl_stubs :
-ifneq ($(MKLIST),)
-	@echo $(MAKE) -f $(MAKEFILE) MKFILE_TARGET=$@ $(addsuffix .mkfile, $(MKLIST))
-	@$(MAKE) -f $(MAKEFILE) MKFILE_TARGET=$@ $(addsuffix .mkfile, $(MKLIST))
-endif
+ifeq (Windows,$(findstring Windows,$(OS)))
+	@cmd /c "FOR /D %m IN ($(MKLIST)) DO $(MAKE) -f %m MAKEFILE=$$m $(@:.nested=)"
+else  # ! Windows
+	@for m in $(MKLIST); do \
+	echo $$m; \
+        $(MAKE) -f $$m MAKEFILE=$$m $(@:.nested=); \
+        done
+endif # ! Windows

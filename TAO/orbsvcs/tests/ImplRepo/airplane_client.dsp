@@ -102,7 +102,6 @@ SOURCE=.\airplane_client_i.cpp
 # Begin Source File
 
 SOURCE=.\AirplaneC.cpp
-# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

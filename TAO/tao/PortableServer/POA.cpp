@@ -318,22 +318,8 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     {
       int temp = this->use_imr_;
       this->use_imr_ = 0;
-      ACE_TRY
-        {
-          this->imr_notify_startup (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          this->poa_manager_.remove_poa (this);
-          this->object_adapter ().unbind_poa (this,
-                                              this->folded_name_,
-                                              this->system_name_.in ());
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
+      this->imr_notify_startup (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-
       this->use_imr_ = temp;
     }
 
@@ -916,7 +902,7 @@ TAO_POA::adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (names,
                     PortableInterceptor::AdapterName (len),
                     CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
+                      CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
@@ -1729,7 +1715,7 @@ TAO_POA::check_poa_manager_state (ACE_ENV_SINGLE_ARG_DECL)
       // exception.)
       ACE_THROW (
         CORBA::TRANSIENT (
-          CORBA::SystemException::_tao_minor_code (
+          CORBA_SystemException::_tao_minor_code (
             TAO_POA_DISCARDING,
             1),
           CORBA::COMPLETED_NO));
@@ -1749,7 +1735,7 @@ TAO_POA::check_poa_manager_state (ACE_ENV_SINGLE_ARG_DECL)
       // Since there is no queuing in TAO, we immediately raise a
       // TRANSIENT exception.
       ACE_THROW (CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (
+        CORBA_SystemException::_tao_minor_code (
           TAO_POA_HOLDING,
           1),
         CORBA::COMPLETED_NO));
@@ -1770,7 +1756,7 @@ TAO_POA::check_poa_manager_state (ACE_ENV_SINGLE_ARG_DECL)
       // OBJ_ADAPTER system exception, with standard minor code 1, to
       // indicate that the object implementation is unavailable.
       ACE_THROW (CORBA::OBJ_ADAPTER (
-        CORBA::SystemException::_tao_minor_code (
+        CORBA_SystemException::_tao_minor_code (
           TAO_POA_INACTIVE,
           1),
         CORBA::COMPLETED_NO));
@@ -2150,7 +2136,7 @@ TAO_POA::reference_to_servant_i (CORBA::Object_ptr reference
   int result = -1;
   if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
     {
-      TAO::ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+      TAO_ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // If the object reference was not created by this POA, the
@@ -2279,7 +2265,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference
   // POA on which the operation is being performed.  If the object
   // reference was not created by this POA, the WrongAdapter exception
   // is raised.
-  TAO::ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  TAO_ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   PortableServer::ObjectId system_id;
@@ -2443,7 +2429,7 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id
                                                                            priority) == 0)
     {
       // Create object key.
-      TAO::ObjectKey_var key = this->create_object_key (system_id.in ());
+      TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
 
       // Ask the ORB to create you a reference
       return this->key_to_object (key.in (),
@@ -2804,7 +2790,7 @@ TAO_POA::locate_servant_i (const char *operation,
 
 /* static */
 int
-TAO_POA::parse_key (const TAO::ObjectKey &key,
+TAO_POA::parse_key (const TAO_ObjectKey &key,
                     TAO_Object_Adapter::poa_name &poa_system_name,
                     PortableServer::ObjectId &system_id,
                     CORBA::Boolean &is_root,
@@ -2940,7 +2926,7 @@ TAO_POA::parse_key (const TAO::ObjectKey &key,
   return 0;
 }
 
-TAO::ObjectKey *
+TAO_ObjectKey *
 TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 {
   // Calculate the space required for the key.
@@ -2949,7 +2935,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
     id.length ();
 
   // Create the buffer for the key.
-  CORBA::Octet *buffer = TAO::ObjectKey::allocbuf (buffer_size);
+  CORBA::Octet *buffer = TAO_ObjectKey::allocbuf (buffer_size);
 
   // First copy the POA id into the key.
   ACE_OS::memcpy (&buffer[0],
@@ -2963,9 +2949,9 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 
   // Create the key, giving the ownership of the buffer to the
   // sequence.
-  TAO::ObjectKey *key = 0;
+  TAO_ObjectKey *key = 0;
   ACE_NEW_RETURN (key,
-                  TAO::ObjectKey (buffer_size,
+                  TAO_ObjectKey (buffer_size,
                                  buffer_size,
                                  buffer,
                                  1),
@@ -3261,25 +3247,6 @@ TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
   return string;
 }
 
-int
-TAO_POA::parse_ir_object_key (const TAO::ObjectKey &object_key,
-                              PortableServer::ObjectId &user_id)
-{
-  TAO_Object_Adapter::poa_name poa_system_name;
-  CORBA::Boolean is_root = 0;
-  CORBA::Boolean is_persistent = 0;
-  CORBA::Boolean is_system_id = 0;
-  TAO_Temporary_Creation_Time poa_creation_time;
-
-  return TAO_POA::parse_key (object_key,
-                             poa_system_name,
-                             user_id,
-                             is_root,
-                             is_persistent,
-                             is_system_id,
-                             poa_creation_time);
-}
-
 TAO_Object_Adapter &
 TAO_POA::object_adapter (void)
 {
@@ -3392,7 +3359,7 @@ TAO_POA::invoke_key_to_object (const char *intf,
     }
 
   // Create object key.
-  TAO::ObjectKey_var key = this->create_object_key (system_id.in ());
+  TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
 
   CORBA::Object_var object = 0;
 
@@ -3445,7 +3412,7 @@ TAO_POA::invoke_key_to_object (const char *intf,
 }
 
 CORBA::Object_ptr
-TAO_POA::key_to_object (const TAO::ObjectKey &key,
+TAO_POA::key_to_object (const TAO_ObjectKey &key,
                         const char *type_id,
                         TAO_ServantBase *servant,
                         CORBA::Boolean collocated,
@@ -3515,7 +3482,7 @@ TAO_POA::key_to_object (const TAO::ObjectKey &key,
       // Add the key.
 
       CORBA::String_var key_str;
-      TAO::ObjectKey::encode_sequence_to_string (key_str.inout (), key);
+      TAO_ObjectKey::encode_sequence_to_string (key_str.inout (), key);
 
       ior += key_str.in ();
 
@@ -3557,8 +3524,8 @@ orbkey:
   else
     {
       ACE_NEW_THROW_EX (tmp,
-                        CORBA::Object (data,
-                                       collocated),
+                        CORBA_Object (data,
+                                      collocated),
                         CORBA::INTERNAL ());
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
@@ -3572,7 +3539,7 @@ orbkey:
 }
 
 TAO_Stub *
-TAO_POA::key_to_stub (const TAO::ObjectKey &key,
+TAO_POA::key_to_stub (const TAO_ObjectKey &key,
                       const char *type_id,
                       CORBA::Short priority
                       ACE_ENV_ARG_DECL)
@@ -3587,7 +3554,7 @@ TAO_POA::key_to_stub (const TAO::ObjectKey &key,
 }
 
 TAO_Stub *
-TAO_POA::key_to_stub_i (const TAO::ObjectKey &key,
+TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
                         const char *type_id,
                         CORBA::Short priority
                         ACE_ENV_ARG_DECL)
@@ -3618,7 +3585,7 @@ TAO_POA::establish_components (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (tao_info,
                     TAO_IORInfo (this),
                     CORBA::NO_MEMORY (
-                       CORBA::SystemException::_tao_minor_code (
+                       CORBA_SystemException::_tao_minor_code (
                           TAO_DEFAULT_MINOR_CODE,
                           ENOMEM),
                        CORBA::COMPLETED_NO));
@@ -3759,7 +3726,7 @@ save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
 }
 
 TAO_Stub *
-TAO_POA::create_stub_object (const TAO::ObjectKey &object_key,
+TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
                              const char *type_id,
                              CORBA::PolicyList *policy_list,
                              TAO_Acceptor_Filter *filter,
@@ -3979,7 +3946,7 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CATCHANY
     {
       ACE_TRY_THROW (CORBA::TRANSIENT (
-          CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
+          CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
           CORBA::COMPLETED_NO));
     }
   ACE_ENDTRY;
@@ -4032,7 +3999,7 @@ TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa
   if (!this->guard_.locked ())
     ACE_THROW (
       CORBA::INTERNAL (
-        CORBA::SystemException::_tao_minor_code (
+        CORBA_SystemException::_tao_minor_code (
           TAO_GUARD_FAILURE,
           0),
         CORBA::COMPLETED_NO));
@@ -4047,7 +4014,7 @@ TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa
       poa.cleanup_in_progress ())
     ACE_THROW (
       CORBA::BAD_INV_ORDER (
-        CORBA::SystemException::_tao_minor_code (
+        CORBA_SystemException::_tao_minor_code (
           TAO_POA_BEING_DESTROYED,
           0),
         CORBA::COMPLETED_NO));

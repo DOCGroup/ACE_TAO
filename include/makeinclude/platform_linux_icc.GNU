@@ -54,26 +54,12 @@ PLATFORM_WX_LDFLAGS =
 PLATFORM_AIO_SUPPORT := \
        $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
 
-#
-# Intel compiler comes in two flavors with different binaries. The first, 
-# icc, is for IA32 platforms and the second, ecc, is for IA64 platforms. 
-# They share most options except those influencing target machine code 
-# generation, therefore we should pick sensible defaults for both
-# depending on system architecture.
-#
-SYSARCH := $(shell uname -m)
-
 ifeq ($(insure),1)
 CC  = insure
 CXX = insure
 else
-  ifeq ($(SYSARCH),ia64)
-    CC  = ecc
-    CXX = ecc
-  else
-    CC  = icc
-    CXX = icc
-  endif
+CC  = icc
+CXX = icc
 endif
 
 CFLAGS  += -w1
@@ -99,11 +85,7 @@ PLATFORM_QT_CPPFLAGS=-I$(QTDIR)/include
 PLATFORM_QT_LIBS=-lqt
 PLATFORM_QT_LDFLAGS=-L$(QTDIR)/lib
 
-OCFLAGS += -O3
-ifneq ($(SYSARCH),ia64)
-  OCFLAGS += -axK
-endif
-
+OCFLAGS += -O3 -axK
 PIC     = -KPIC
 AR      = ar
 ARFLAGS = rsuv

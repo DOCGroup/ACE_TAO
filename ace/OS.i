@@ -1049,11 +1049,13 @@ ACE_OS::abort (void)
 #endif /* !ACE_HAS_WINCE */
 }
 
+#if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
 ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
 {
   return ACE_SPRINTF_ADAPTER (::vsprintf (buffer, format, argptr));
 }
+#endif /* ACE_HAS_WINCE */
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
@@ -2628,7 +2630,7 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   // it. Remember how many times, and reacquire it that many more times when
   // the condition is signaled.
   state.relock_count_ = 0;
-  while (m->LockCount > 0 && m->RecursionCount > 1)
+  while (m->LockCount > 0)
     {
       // This may fail if the current thread doesn't own the mutex. If it
       // does fail, it'll be on the first try, so don't worry about resetting
@@ -5667,11 +5669,16 @@ ACE_INLINE ACE_TCHAR *
 ACE_OS::fgets (ACE_TCHAR *buf, int size, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fgets");
-#if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+#if defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (size);
+  ACE_UNUSED_ARG (fp);
+  ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::fgetws (buf, size, fp), wchar_t *, 0);
 #else /* ACE_WIN32 */
   ACE_OSCALL_RETURN (::fgets (buf, size, fp), char *, 0);
-#endif /* ACE_WIN32 && ACE_USES_WCHAR */
+#endif /* ACE_HAS_WINCE */
 }
 
 #if !defined (ACE_WIN32)
@@ -5699,6 +5706,7 @@ ACE_OS::freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream)
 ACE_INLINE int
 ACE_OS::fflush (FILE *fp)
 {
+#if !defined (ACE_HAS_WINCE)
   ACE_OS_TRACE ("ACE_OS::fflush");
 #if defined (VXWORKS)
   if (fp == 0)
@@ -5709,6 +5717,11 @@ ACE_OS::fflush (FILE *fp)
 #endif /* VXWORKS */
 
   ACE_OSCALL_RETURN (::fflush (fp), int, -1);
+#else
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL(::FlushFileBuffers (fp),
+                                         ace_result_),
+                        int, -1);
+#endif /* !ACE_HAS_WINCE */
 }
 
 ACE_INLINE size_t
@@ -6571,9 +6584,11 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
 
   ACE_Errno_Guard error (errno);
   *data = ::TlsGetValue (key);
+#    if !defined (ACE_HAS_WINCE)
   if (*data == 0 && (error = ::GetLastError ()) != NO_ERROR)
     return -1;
   else
+#    endif /* ACE_HAS_WINCE */
     return 0;
 #   endif /* ACE_HAS_STHREADS */
 #  else
@@ -6703,9 +6718,12 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 
   ACE_Errno_Guard error (errno);
   *data = ::TlsGetValue (key);
+#   if !defined (ACE_HAS_WINCE)
   if (*data == 0 && (error = ::GetLastError ()) != NO_ERROR)
+
     return -1;
   else
+#   endif /* ACE_HAS_WINCE */
     return 0;
 # elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
   ACE_hthread_t tid;
@@ -7272,10 +7290,9 @@ ACE_OS::thr_setconcurrency (int hint)
 }
 
 ACE_INLINE int
-ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio, int thr_policy)
+ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
 {
   ACE_OS_TRACE ("ACE_OS::thr_setprio");
-  ACE_UNUSED_ARG(thr_policy);
 #if defined (ACE_HAS_THREADS)
 # if (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
 
@@ -7295,24 +7312,15 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio, int thr_policy)
   int policy = 0;
   int result;
 
-  ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_id, &policy, &param), result);
-  if (result != 0)
-    result = -1;
-
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_id, &policy, &param),
+                                result), // not sure if use of result here is cool, cjc
+              int, -1, result);
   if (result == -1)
     return result; // error in pthread_getschedparam
-
-  /* if thr_policy is -1, we don't want to use it for pthread_setschedparam().
-     Instead, use policy which was obtained from pthread_getschedparam() */
-  if (thr_policy == -1)
-    thr_policy = policy;
-
   param.sched_priority = prio;
-  ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, thr_policy, &param), result);
-  if (result != 0)
-    result = -1;
-
-  return result; 
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, policy, &param),
+                                       result),
+                     int, -1);
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
 # elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setprio (thr_id, prio),

@@ -10,7 +10,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/Protocols_Hooks.h"
-#include "tao/Codeset_Manager.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -18,9 +17,8 @@
 #include "DIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,    
-           DIOP_Acceptor, 
-           "$Id$")
+ACE_RCSID(tao, DIOP_Acceptor, "$Id$")
+
 
 TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_UDP_PROFILE),
@@ -52,7 +50,7 @@ TAO_DIOP_Acceptor::~TAO_DIOP_Acceptor (void)
 //    2) For V1.[1,2] there are tagged components
 
 int
-TAO_DIOP_Acceptor::create_profile (const TAO::ObjectKey & object_key,
+TAO_DIOP_Acceptor::create_profile (const TAO_ObjectKey & object_key,
                                    TAO_MProfile &mprofile,
                                    CORBA::Short priority)
 {
@@ -73,7 +71,7 @@ TAO_DIOP_Acceptor::create_profile (const TAO::ObjectKey & object_key,
 }
 
 int
-TAO_DIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
+TAO_DIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
                                        TAO_MProfile &mprofile,
                                        CORBA::Short priority)
 {
@@ -113,15 +111,19 @@ TAO_DIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
 
       pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
 
-      this->orb_core_->codeset_manager()->
-        set_codeset(pfile->tagged_components());
+      CONV_FRAME::CodeSetComponentInfo code_set_info;
+      code_set_info.ForCharData.native_code_set  =
+        TAO_DEFAULT_CHAR_CODESET_ID;
+      code_set_info.ForWcharData.native_code_set =
+        TAO_DEFAULT_WCHAR_CODESET_ID;
+      pfile->tagged_components ().set_code_sets (code_set_info);
     }
 
   return 0;
 }
 
 int
-TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
+TAO_DIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
                                           TAO_MProfile &mprofile,
                                           CORBA::Short priority)
 {
@@ -166,8 +168,13 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
           && (this->version_.major >= 1 && this->version_.minor >= 1))
         {
           iiop_profile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
-          this->orb_core_->codeset_manager()->
-            set_codeset(iiop_profile->tagged_components());
+
+          CONV_FRAME::CodeSetComponentInfo code_set_info;
+          code_set_info.ForCharData.native_code_set  =
+            TAO_DEFAULT_CHAR_CODESET_ID;
+          code_set_info.ForWcharData.native_code_set =
+            TAO_DEFAULT_WCHAR_CODESET_ID;
+          iiop_profile->tagged_components ().set_code_sets (code_set_info);
         }
 
       index = 1;
@@ -609,7 +616,7 @@ TAO_DIOP_Acceptor::endpoint_count (void)
 
 int
 TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
-                               TAO::ObjectKey &object_key)
+                               TAO_ObjectKey &object_key)
 {
   // Create the decoding stream from the encapsulation in the buffer,
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)

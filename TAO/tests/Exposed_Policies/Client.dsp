@@ -94,7 +94,6 @@ SOURCE=.\client.cpp
 # Begin Source File
 
 SOURCE=.\CounterC.cpp
-# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -174,7 +173,6 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Exposed_Policies Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COUNT="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\Counter.idl
 InputName=Counter
