@@ -323,6 +323,14 @@ public:
   /// Asynch_Transmit_File.
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
 
+  /// Create the correct implementation class for doing
+  /// Asynch_Read_Dgram.
+  virtual ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram (void);
+
+  /// Create the correct implementation class for doing
+  /// Asynch_Write_Dgram.
+  virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram (void);
+
   // = Factory methods for the results
 
   // Note that the user does not have to use or know about these
@@ -371,6 +379,29 @@ public:
                                                                               ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                               int priority = 0,
                                                                               int signal_number = ACE_SIGRTMIN);
+
+  /// Create the correct implementation class for ACE_Asynch_Read_Dgram::Result.
+  virtual ACE_Asynch_Read_Dgram_Result_Impl *create_asynch_read_dgram_result (ACE_Handler &handler,
+                                                                              ACE_HANDLE handle,
+                                                                              ACE_Message_Block *message_block,
+                                                                              size_t bytes_to_read,
+                                                                              int flags,
+                                                                              int protocol_family,
+                                                                              const void* act,
+                                                                              ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                                              int priority = 0,
+                                                                              int signal_number = ACE_SIGRTMIN);
+  
+  /// Create the correct implementation class for ACE_Asynch_Write_Dgram::Result.
+  virtual ACE_Asynch_Write_Dgram_Result_Impl *create_asynch_write_dgram_result (ACE_Handler &handler,
+                                                                                ACE_HANDLE handle,
+                                                                                ACE_Message_Block *message_block,
+                                                                                size_t bytes_to_write,
+                                                                                int flags,
+                                                                                const void* act,
+                                                                                ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                                                int priority = 0,
+                                                                                int signal_number = ACE_SIGRTMIN);
 
   /// Create the correct implementation class for ACE_Asynch_Accept::Result.
   virtual ACE_Asynch_Accept_Result_Impl *create_asynch_accept_result (ACE_Handler &handler,

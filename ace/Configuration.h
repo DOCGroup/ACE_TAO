@@ -6,13 +6,23 @@
  *
  *  $Id$
  *
- *  @author Chris Hafey <chris@stentorsoft.com>
+ *  @author Chris Hafey <chafey@stentor.com>
  *
  *  The ACE configuration API provides a portable abstraction for
- *  program configuration.  The API supports a tree based hierarchy
- *  of configuration sections.  Each section contains other sections
- *  or values.  Values may contain string, unsigned integer and
- *  binary data.
+ *  program configuration similar to the Microsoft Windows registry.  
+ *  The API supports a tree based hierarchy of configuration sections.  Each 
+ *  section contains other sections or values.  Values may contain string, 
+ *  unsigned integer and binary data.
+ *
+ *  Note: these classes are not thread safe, if multiple threads use these
+ *  classes, you are responsible for serializing access.
+ *
+ *  For examples of using this class, see:
+ *   1) The test code in ACE_Wrappers/test
+ *   2) wxConfigViewer, a Windows like Registry Editor for ACE_Configuration
+ *   3) TAO's IFR, it makes extensive use of ACE_Configuration
+ *
+ *  @todo Templatize this class with an ACE_LOCK to provide thread safety
  *
  */
 //=============================================================================
@@ -48,12 +58,6 @@
  *
  * Implementations subclass this base class to represent a
  * section key.
- *
- * @todo
- *  - Add locking for thread safety.
- *  - Need to investigate what happens if memory mapped file gets mapped to
- *    a location different than it was created with.
- *  - Replace unsigned int with a type that is fixed accross platforms.
  *
  */
 class ACE_Export ACE_Section_Key_Internal
@@ -237,7 +241,9 @@ public:
    * Expands <path_in> to <key_out> from <key>.  If create is true,
    * the subsections are created.  Returns 0 on success, non zero on
    * error The path consists of sections separated by the backslash
-   * '\'.
+   * '\' or forward slash '/'.  
+   * Returns 0 on success, -1 if <create) is 0 and the path refers 
+   * a nonexistant section
    */
   int expand_path (const ACE_Configuration_Section_Key& key,
                    const ACE_TString& path_in,
@@ -627,6 +633,10 @@ protected:
  * This class uses ACE's Allocators to manage a memory
  * representation of a configuraiton database. A persistent heap
  * may be used to store configurations persistently
+ *
+ * @todo
+ *  - Need to investigate what happens if memory mapped file gets mapped to
+ *    a location different than it was created with.
  */
 class ACE_Export ACE_Configuration_Heap : public ACE_Configuration
 {

@@ -9,9 +9,9 @@
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ *  @author Roger Tragin <rtragin@cuseeme.com>
  */
 //=============================================================================
-
 
 #ifndef ACE_POSIX_PROACTOR_H
 #define ACE_POSIX_PROACTOR_H
@@ -144,6 +144,31 @@ public:
    int priority = 0,
    int signal_number = ACE_SIGRTMIN);
 
+
+  virtual ACE_Asynch_Read_Dgram_Result_Impl *create_asynch_read_dgram_result(ACE_Handler &handler,
+                                                                            ACE_HANDLE handle,
+                                                                            ACE_Message_Block *message_block,
+                                                                            size_t bytes_to_read,
+                                                                            int flags,
+                                                                            int protocol_family,
+                                                                            const void* act,
+                                                                            ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                                            int priority = 0,
+                                                                            int signal_number = ACE_SIGRTMIN); 
+	 
+  virtual ACE_Asynch_Write_Dgram_Result_Impl *create_asynch_write_dgram_result	 
+                                                                            (ACE_Handler &handler,
+                                                                            ACE_HANDLE handle,
+                                                                            ACE_Message_Block *message_block,
+                                                                            size_t bytes_to_write,
+                                                                            int flags,
+                                                                            const void* act,
+                                                                            ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                                            int priority = 0,
+                                                                            int signal_number = ACE_SIGRTMIN);
+											 
+  
+
   virtual ACE_Asynch_Accept_Result_Impl *create_asynch_accept_result
   (ACE_Handler &handler,
    ACE_HANDLE listen_handle,
@@ -270,6 +295,10 @@ public:
   virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void);
 
   virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void);
+
+  virtual ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram (void);
+
+  virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram (void);
 
   virtual ACE_Asynch_Read_File_Impl *create_asynch_read_file (void);
 
@@ -441,6 +470,10 @@ public:
   virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void);
 
   virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void);
+
+  virtual ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram (void);
+
+  virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram (void);
 
   virtual ACE_Asynch_Read_File_Impl *create_asynch_read_file (void);
 
