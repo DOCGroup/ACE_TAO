@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 //$Id$
 
 #include "tao/GIOP_Message_Lite.h"
@@ -17,7 +19,9 @@
 # include "tao/GIOP_Message_Lite.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, GIOP_Message_Lite, "$Id$")
+ACE_RCSID (tao,
+           GIOP_Message_Lite,
+           "$Id$")
 
 static const size_t TAO_GIOP_LITE_HEADER_LEN = 5;
 static const size_t TAO_GIOP_LITE_MESSAGE_SIZE_OFFSET = 0;
@@ -692,13 +696,12 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                              transport,
                              this->orb_core_);
 
-  CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
-
   CORBA::ULong request_id = 0;
   CORBA::Boolean response_required = 0;
 
   int parse_error = 0;
 
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       parse_error =
@@ -736,7 +739,15 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
           this->generate_reply_header (output,
                                        reply_params);
 
-          output << forward_to.in ();
+          if (!(output << forward_to.in ()))
+            {
+              if (TAO_debug_level > 0)
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("TAO (%P|%t) ERROR: Unable to marshal ")
+                            ACE_TEXT ("forward reference.\n")));
+
+              return -1;
+            }
 
           int result = transport->send_message (output);
           if (result == -1)
@@ -748,7 +759,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: ")
                               ACE_TEXT ("cannot send reply\n"),
-                              ACE_TEXT ("TAO_GIOP::process_server_message")));
+                              ACE_TEXT ("TAO_GIOP_Message_Lite::process_request")));
                 }
             }
           return result;
@@ -773,7 +784,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: ")
                               ACE_TEXT ("cannot send exception\n"),
-                              ACE_TEXT ("process_connector_request ()")));
+                              ACE_TEXT ("process_request ()")));
                   ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                        "TAO: ");
                 }
@@ -832,7 +843,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: ")
                               ACE_TEXT ("cannot send exception\n"),
-                              ACE_TEXT ("process_connector_request ()")));
+                              ACE_TEXT ("process_request ()")));
                   ACE_PRINT_EXCEPTION (exception, "TAO: ");
                 }
             }
@@ -972,7 +983,7 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
       status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) TAO_GIOP::process_server_locate - ")
+                    ACE_TEXT ("TAO (%P|%t) TAO_GIOP_Message_Lite::process_locate_request - ")
                     ACE_TEXT ("CORBA exception raised\n")));
     }
 #if defined (TAO_HAS_EXCEPTIONS)
@@ -982,7 +993,7 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
       status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) TAO_GIOP::process_server_locate - ")
+                    ACE_TEXT ("TAO (%P|%t) TAO_GIOP_Message_Lite::process_locate_request - ")
                     ACE_TEXT ("C++ exception raised\n")));
     }
 #endif /* TAO_HAS_EXCEPTIONS */
@@ -1024,7 +1035,7 @@ TAO_GIOP_Message_Lite::make_send_locate_reply (
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO: (%P|%t) %p: cannot send reply\n"),
-                      ACE_TEXT ("TAO_GIOP::process_server_message")));
+                      ACE_TEXT ("TAO_GIOP_Message_Lite::make_send_locate_reply")));
         }
     }
 

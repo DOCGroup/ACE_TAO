@@ -578,27 +578,42 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   if (mp.profile_count () != profile_count)
     {
       // @@ This occurs when profile creation fails when decoding the
-      //    profile from the IOR.  Such a problem occurred when, for
-      //    example, hostname lookup failed when binding the
-      //    ACE_INET_Addr to the IIOP profile in being created.
-
+      //    profile from the IOR.
       ACE_ERROR_RETURN ((LM_ERROR,
                          "TAO (%P|%t) ERROR: Could not create all "
                          "profiles while extracting object\n"
-                         "TAO (%P|%t) reference from the CDR stream.\n"
-                         "TAO (%P|%t) ERROR: This may be due to an address "
-                         "resolution problem (e.g. DNS).\n"),
+                         "TAO (%P|%t) ERROR: reference from the "
+                         "CDR stream.\n"),
                         0);
     }
 
   // Ownership of type_hint is given to TAO_Stub
   // TAO_Stub will make a copy of mp!
 
-  TAO_Stub *objdata = orb_core->create_stub (type_hint.in (),
-                                             mp,
-                                             orb_core,
-                                             TAO_default_environment ());
-  // @@ RTCORBA_Subsetting FIX THIS!!  ACE_CHECK_RETURN (0);
+  TAO_Stub *objdata = 0;
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      objdata = orb_core->create_stub (type_hint.in (),
+                                       mp,
+                                       orb_core,
+                                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             ACE_TEXT ("TAO (%P|%t) ERROR creating stub ")
+                             ACE_TEXT ("object when demarshaling object ")
+                             ACE_TEXT ("reference.\n"));
+
+      return 0;
+
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
 
   TAO_Stub_Auto_Ptr safe_objdata (objdata);
 
