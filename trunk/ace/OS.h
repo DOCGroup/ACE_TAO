@@ -3873,6 +3873,9 @@ public:
   // = A set of wrappers for non-UNICODE string operations.
   static int strcasecmp (const char *s,
                          const char *t);
+  static int strncasecmp (const char *s,
+                          const char *t,
+                          size_t len);
   static char *strcat (char *s,
                        const char *t);
   static char *strchr (const char *s,
@@ -3881,6 +3884,9 @@ public:
                         int c);
   static int strcmp (const char *s,
                      const char *t);
+  static int strncmp (const char *s,
+                      const char *t,
+                      size_t len);
   static char *strcpy (char *s,
                        const char *t);
   static char *strpbrk (const char *s1,
@@ -3891,9 +3897,6 @@ public:
                        const char *t);
   static char *strdup (const char *s);
   static size_t strlen (const char *s);
-  static int strncmp (const char *s,
-                      const char *t,
-                      size_t len);
   static char *strncpy (char *s,
                         const char *t,
                         size_t len);
@@ -3925,16 +3928,19 @@ public:
                            wint_t c);
   static int strcmp (const wchar_t *s,
                      const wchar_t *t);
+  static int strncmp (const wchar_t *s,
+                      const wchar_t *t,
+                      size_t len);
   static wchar_t *strcpy (wchar_t *s,
                           const wchar_t *t);
   static int strcasecmp (const wchar_t *s, 
                          const wchar_t *t);
+  static int strncasecmp (const wchar_t *s,
+                          const wchar_t *t,
+                          size_t len);
   static wchar_t *strpbrk (const wchar_t *s1,
                            const wchar_t *s2);
   static size_t strlen (const wchar_t *s);
-  static int strncmp (const wchar_t *s,
-                      const wchar_t *t,
-                      size_t len);
   static wchar_t *strncpy (wchar_t *s,
                            const wchar_t *t,
                            size_t len);
