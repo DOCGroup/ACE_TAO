@@ -1,3 +1,11 @@
+Wed Apr 30 13:29:46 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * tests\temp\assembly\assembly.dsw:
+        * tests\temp\assembly\client.dsp:
+        * tests\temp\assembly\server.dsp:
+
+          Files removed to prevent errors in the msvc 6 builds.
+
 Tue Apr 29 16:53:17 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* README: Added XML_Helpers to the list of "tools" that need to
