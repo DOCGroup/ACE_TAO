@@ -196,17 +196,30 @@ ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::dump (void) const
 
 template <class ACE_SELECT_REACTOR_MUTEX>
 ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::ACE_Select_Reactor_Token_T
-  (ACE_Select_Reactor_Impl &r)
+  (ACE_Select_Reactor_Impl &r,
+   int s_queue)
     : select_reactor_ (&r)
 {
   ACE_TRACE ("ACE_Select_Reactor_Token_T::ACE_Select_Reactor_Token");
+
+#if defined (ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION)
+  ACE_UNUSED_ARG (s_queue);
+#else
+  this->queueing_strategy (s_queue);
+#endif
 }
 
 template <class ACE_SELECT_REACTOR_MUTEX>
-ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::ACE_Select_Reactor_Token_T (void)
+ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::ACE_Select_Reactor_Token_T (int s_queue)
   : select_reactor_ (0)
 {
   ACE_TRACE ("ACE_Select_Reactor_Token_T::ACE_Select_Reactor_Token");
+
+#if defined (ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION)
+  ACE_UNUSED_ARG (s_queue);
+#else
+  this->queueing_strategy (s_queue);
+#endif
 }
 
 template <class ACE_SELECT_REACTOR_MUTEX>
@@ -515,8 +528,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
    ACE_Timer_Queue *tq,
    int disable_notify_pipe,
    ACE_Reactor_Notify *notify,
-   int mask_signals)
-    : token_ (*this),
+   int mask_signals,
+   int s_queue)
+    : token_ (*this, s_queue),
       lock_adapter_ (token_),
       deactivated_ (0),
       mask_signals_ (mask_signals)
@@ -566,8 +580,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
    ACE_Timer_Queue *tq,
    int disable_notify_pipe,
    ACE_Reactor_Notify *notify,
-   int mask_signals)
-    : token_ (*this),
+   int mask_signals,
+   int s_queue)
+    : token_ (*this, s_queue),
       lock_adapter_ (token_),
       deactivated_ (0),
       mask_signals_ (mask_signals)

@@ -165,7 +165,8 @@ ACE_Token::ACE_Token (const ACE_TCHAR *name, void *any)
     in_use_ (0),
     waiters_ (0),
     nesting_level_ (0),
-    attributes_ (USYNC_THREAD)
+    attributes_ (USYNC_THREAD),
+    queueing_strategy_ (FIFO)
 {
 //  ACE_TRACE ("ACE_Token::ACE_Token");
 }
@@ -231,7 +232,7 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
   ACE_Token::ACE_Token_Queue_Entry my_entry (this->lock_,
                                              thr_id,
                                              this->attributes_);
-  queue->insert_entry (my_entry);
+  queue->insert_entry (my_entry, this->queueing_strategy_);
   this->waiters_++;
 
   // Execute appropriate <sleep_hook> callback.  (@@ should these
@@ -383,7 +384,10 @@ ACE_Token::renew (int requeue_position,
                                              this->owner_);
 
   this_threads_queue->insert_entry (my_entry,
-                                    requeue_position);
+                                    // if requeue_position == 0 then we want to go next,
+                                    // otherwise use the queueing strategy, which might also
+                                    // happen to be 0.
+                                    requeue_position == 0 ? 0 : this->queueing_strategy_);
   this->waiters_++;
 
   // Remember nesting level...

@@ -170,7 +170,8 @@ public:
   /// Initialize <ACE_TP_Reactor> with the default size.
   ACE_TP_Reactor (ACE_Sig_Handler * = 0,
                   ACE_Timer_Queue * = 0,
-                  int mask_signals = 1);
+                  int mask_signals = 1,
+                  int s_queue = ACE_Select_Reactor_Token::FIFO);
 
   /**
    * Initialize the <ACE_TP_Reactor> to manage
@@ -184,7 +185,8 @@ public:
                   int restart = 0,
                   ACE_Sig_Handler * = 0,
                   ACE_Timer_Queue * = 0,
-                  int mask_signals = 1);
+                  int mask_signals = 1,
+                  int s_queue = ACE_Select_Reactor_Token::FIFO);
 
   // = Event loop drivers.
 
