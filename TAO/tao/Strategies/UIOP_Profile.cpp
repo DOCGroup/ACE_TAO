@@ -101,6 +101,43 @@ void
 TAO_UIOP_Profile::parse_string_i (const char *string
                                   ACE_ENV_ARG_DECL)
 {
+  if (!string || !*string)
+    {
+      ACE_THROW (CORBA::INV_OBJREF (
+                   CORBA::SystemException::_tao_minor_code (
+                     0,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
+    }
+
+  // Remove the "N.n@" version prefix, if it exists, and verify the
+  // version is one that we accept.
+
+  // Check for version
+  if (isdigit (string [0]) &&
+      string[1] == '.' &&
+      isdigit (string [2]) &&
+      string[3] == '@')
+    {
+      // @@ This may fail for non-ascii character sets [but take that
+      // with a grain of salt]
+      this->version_.set_version ((char) (string [0] - '0'),
+                                  (char) (string [2] - '0'));
+      string += 4;
+      // Skip over the "N.n@"
+    }
+
+  if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
+      this->version_.minor  > TAO_DEF_GIOP_MINOR)
+    {
+      ACE_THROW (CORBA::INV_OBJREF (
+                   CORBA::SystemException::_tao_minor_code (
+                     0,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
+    }
+
+
   // Pull off the "rendezvous point" part of the objref
   // Copy the string because we are going to modify it...
   CORBA::String_var copy (string);

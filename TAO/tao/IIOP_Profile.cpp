@@ -136,7 +136,15 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
 
   if (cp_pos == ior)
     {
-      // No hostname specified!  It is required by the spec.
+      // No hostname, however one is required by the spec when specifying a port.
+      // See formal-04-03-01, section 13.6.10.3
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_ERROR,
+                   ACE_LIB_TEXT ("\nTAO (%P|%t) IIOP_Profile: ")
+                   ACE_LIB_TEXT ("Host address may be omited only when no port has been specified.\n")));
+        }
+          
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,

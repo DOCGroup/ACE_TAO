@@ -105,7 +105,37 @@ TAO_UIOP_Connector::close (void)
   return this->base_connector_.close ();
 }
 
+TAO_Profile *
+TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len
+                                   ACE_ENV_ARG_DECL)
+{
+  if (this->check_prefix (str) != 0)
+    return 0;
 
+  const char *separator = ACE_OS::strchr (str,'|');
+  if (separator == 0)
+    {
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) TAO_UIOP_CONNECTOR::corbaloc_scan error: "
+                    "explicit terminating charactor '|' is missing from <%s>",
+                    str));
+      return 0;
+    }
+  if (*(separator+1) != ',' && *(separator+1) != '/')
+    {
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) TAO_UIOP_CONNECTOR::corbaloc_scan warning: "
+                    "terminating charactor '|' should be followed by a ','"
+                    "or a '/' in <%s>",
+                    str));
+    }
+  len = (separator - str) + 1;
+  return this->make_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+               
 int
 TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {

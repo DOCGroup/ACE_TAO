@@ -18,7 +18,7 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
-static const char prefix_[] = "iiop";
+static const char *prefix_[] = {"iiop", "ssliop"};
 
 namespace TAO
 {
@@ -44,13 +44,18 @@ int
 TAO::SSLIOP::Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
   // Check for the proper prefix for this protocol.
-  return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_) == 0);
+  return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_[0]) == 0)
+     || (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_[1]) == 0);
 }
 
 const char *
 TAO::SSLIOP::Protocol_Factory::prefix (void) const
 {
-  return ::prefix_;
+   // Note: This method doesn't seem to be used anywhere. Moreover,
+   // keeping it may make things more confusing - a Factory can 
+   // well be handling multiple protocol prefixes, not just one!
+   // Shouldn't it be deprecated?
+  return ::prefix_[0];
 }
 
 char

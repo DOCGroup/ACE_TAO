@@ -36,6 +36,30 @@ TAO_Connector::~TAO_Connector (void)
   delete this->active_connect_strategy_;
 }
 
+TAO_Profile *
+TAO_Connector::corbaloc_scan (const char *str,
+                              size_t &len
+                              ACE_ENV_ARG_DECL)
+{
+  if (this->check_prefix (str) != 0)
+    return 0;
+  const char *comma_pos = ACE_OS::strchr (str,',');
+  const char *slash_pos = ACE_OS::strchr (str,'/');
+  if (comma_pos == 0 && slash_pos == 0)
+    {
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("(%P|%t) TAO_CONNECTOR::corbaloc_scan warning: ")
+                    ACE_TEXT("supplied string contains no comma or slash: %s\n"),
+                    str));
+      len = ACE_OS::strlen (str);
+    }
+  else if (comma_pos == 0 || comma_pos > slash_pos)
+    len = (slash_pos - str);
+  else len = comma_pos - str;
+  return this->make_profile(ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
 int
 TAO_Connector::make_mprofile (const char *string,
                               TAO_MProfile &mprofile
