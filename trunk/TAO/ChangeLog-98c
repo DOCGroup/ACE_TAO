@@ -1,3 +1,12 @@
+1998-06-17  Torben Worm  <tworm@cumbia.cs.wustl.edu>
+
+	* orbsvcs/tests/Concurrency/CC_client.{h,cpp}
+	  orbsvcs/tests/Concurrency/CC_command.l
+	  orbsvcs/tests/Concurrency/CC_command.y
+	  orbsvcs/tests/Concurrency/Makefile
+	  Now using yacc. Now patching the generated files like SVC
+	  in order to make them more portable. Patching not used yet.
+
 Wed Jun 17 11:46:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/Makefile: suppressed some warnings from DEC cxx.
