@@ -58,33 +58,6 @@ namespace TAO
       Request_Processing_Strategy::strategy_init (poa);
     }
 
-    TAO_Active_Object_Map*
-    AOM_Only_Request_Processing_Strategy::get_aom() const
-    {
-      return 0;
-      //todo
-      //return this->poa_->active_policy_strategies().servant_retention_strategy()->get_aom ();
-    }
-
-    void
-    AOM_Only_Request_Processing_Strategy::set_user_id (
-      const PortableServer::ObjectId &system_id,
-      TAO::Portable_Server::Servant_Upcall &servant_upcall,
-      TAO::Portable_Server::POA_Current_Impl &poa_current_impl
-      ACE_ENV_ARG_DECL)
-    {
-      PortableServer::ObjectId object_id;
-      if (this->get_aom ()->
-          find_user_id_using_system_id (system_id,
-                                        object_id) != 0)
-        {
-          ACE_THROW (CORBA::OBJ_ADAPTER ());
-        }
-
-      poa_current_impl.object_id (object_id);
-      servant_upcall.user_id (&object_id);
-    }
-
     PortableServer::ServantManager_ptr
     AOM_Only_Request_Processing_Strategy::get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -131,7 +104,10 @@ namespace TAO
       PortableServer::Servant &servant
       ACE_ENV_ARG_DECL)
     {
-        return TAO_SERVANT_NOT_FOUND;
+      ACE_UNUSED_ARG (system_id);
+      ACE_UNUSED_ARG (servant);
+
+      return TAO_SERVANT_NOT_FOUND;
     }
 
     PortableServer::Servant
@@ -142,6 +118,12 @@ namespace TAO
                         int &wait_occurred_restart_call
                         ACE_ENV_ARG_DECL)
     {
+      ACE_UNUSED_ARG (operation);
+      ACE_UNUSED_ARG (system_id);
+      ACE_UNUSED_ARG (servant_upcall);
+      ACE_UNUSED_ARG (poa_current_impl);
+      ACE_UNUSED_ARG (wait_occurred_restart_call);
+
       // If the USE_ACTIVE_OBJECT_MAP_ONLY policy is in effect, the POA raises
       // the OBJECT_NOT_EXIST system exception.
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
@@ -151,19 +133,6 @@ namespace TAO
     Default_Servant_Request_Processing_Strategy::~Default_Servant_Request_Processing_Strategy (void)
     {
       this->default_servant_ = 0;
-    }
-
-    void
-    Default_Servant_Request_Processing_Strategy::set_user_id (
-      const PortableServer::ObjectId &system_id,
-      TAO::Portable_Server::Servant_Upcall &servant_upcall,
-      TAO::Portable_Server::POA_Current_Impl &poa_current_impl
-      ACE_ENV_ARG_DECL)
-    {
-      // Just replace the object id in the POA Current with the system id
-      poa_current_impl.replace_object_id (system_id);
-
-      servant_upcall.user_id (&system_id);
     }
 
     PortableServer::ServantManager_ptr
@@ -311,34 +280,6 @@ namespace TAO
     {
       Request_Processing_Strategy::strategy_init (poa);
     }
-
-    void
-    Servant_Activator_Request_Processing_Strategy::set_user_id (
-      const PortableServer::ObjectId &system_id,
-      TAO::Portable_Server::Servant_Upcall &servant_upcall,
-      TAO::Portable_Server::POA_Current_Impl &poa_current_impl
-      ACE_ENV_ARG_DECL)
-    {
-      PortableServer::ObjectId object_id;
-      if (this->get_aom ()->
-          find_user_id_using_system_id (system_id,
-                                        object_id) != 0)
-        {
-          ACE_THROW (CORBA::OBJ_ADAPTER ());
-        }
-
-      poa_current_impl.object_id (object_id);
-      servant_upcall.user_id (&object_id);
-    }
-
-    TAO_Active_Object_Map*
-    Servant_Activator_Request_Processing_Strategy::get_aom() const
-    {
-      return 0;
-      // todo
-      //return this->poa_->active_policy_strategies().servant_retention_strategy()->get_aom ();
-    }
-
 
     PortableServer::ServantManager_ptr
     Servant_Activator_Request_Processing_Strategy::get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
@@ -553,19 +494,6 @@ namespace TAO
 
     Servant_Locator_Request_Processing_Strategy::~Servant_Locator_Request_Processing_Strategy (void)
     {
-    }
-
-    void
-    Servant_Locator_Request_Processing_Strategy::set_user_id (
-      const PortableServer::ObjectId &system_id,
-      TAO::Portable_Server::Servant_Upcall &servant_upcall,
-      TAO::Portable_Server::POA_Current_Impl &poa_current_impl
-      ACE_ENV_ARG_DECL)
-    {
-      // Just replace the object id in the POA Current with the system id
-      poa_current_impl.replace_object_id (system_id);
-
-      servant_upcall.user_id (&system_id);
     }
 
     PortableServer::ServantManager_ptr

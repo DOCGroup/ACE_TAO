@@ -1,3 +1,13 @@
+Mon Nov  1 19:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Request_Processing_Strategy.{h,cpp}:
+          Removed set_user_id and get_aom methods from the classes in this
+          file, it are nice methods, but should be here, everything in these
+          methods is already handled in the servant_retiontion strategy
+
+        * tao/PortableServer/Servant_Retention_Strategy.cpp:
+          Fixed unused argument warning
+
 Mon Nov  1 18:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Retention_Strategy.cpp:

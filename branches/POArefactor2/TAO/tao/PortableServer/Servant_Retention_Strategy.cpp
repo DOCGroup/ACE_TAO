@@ -1244,6 +1244,8 @@ namespace TAO
       CORBA::Object_ptr reference
       ACE_ENV_ARG_DECL)
     {
+      // @Johnny, shouldn't we check here whether reference belongs to this POA?
+
        // Always try the request processing strategy
        PortableServer::Servant servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
        ACE_CHECK_RETURN (0);
