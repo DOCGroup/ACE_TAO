@@ -175,8 +175,13 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 
   // Take into account the time to complete the basic TCP handshake
   // and the SSL handshake.
-  ACE_Time_Value timeout_copy (*timeout);  // Need a scribblable copy
-  ACE_Countdown_Time countdown (&timeout_copy);
+  ACE_Time_Value time_copy;
+  ACE_Countdown_Time countdown (&time_copy);
+  if (timeout != 0)
+    {
+      time_copy += *timeout;
+      countdown.start ();
+    }
 
   if (this->connector_.connect (new_stream.peer (),
                                 remote_sap,
@@ -191,9 +196,16 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
 
-  (void) countdown.update ();
+  // If using a timeout, update the countdown timer to reflect the time
+  // spent on the connect itself, then pass the remaining time to
+  // ssl_connect to bound the time on the handshake.
+  if (timeout != 0)
+    {
+      countdown.update ();
+      timeout = &time_copy;
+    }
 
-  return this->ssl_connect (new_stream, &timeout_copy);
+  return this->ssl_connect (new_stream, timeout);
 }
 
 int
@@ -214,8 +226,13 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 
   // Take into account the time to complete the basic TCP handshake
   // and the SSL handshake.
-  ACE_Time_Value timeout_copy (*timeout);  // Need a scribblable copy
-  ACE_Countdown_Time countdown (&timeout_copy);
+  ACE_Time_Value time_copy;
+  ACE_Countdown_Time countdown (&time_copy);
+  if (timeout != 0)
+    {
+      time_copy += *timeout;
+      countdown.start ();
+    }
 
   if (this->connector_.connect (new_stream.peer (),
                                 remote_sap,
@@ -233,9 +250,16 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
 
-  (void) countdown.update ();
+  // If using a timeout, update the countdown timer to reflect the time
+  // spent on the connect itself, then pass the remaining time to
+  // ssl_connect to bound the time on the handshake.
+  if (timeout != 0)
+    {
+      countdown.update ();
+      timeout = &time_copy;
+    }
 
-  return this->ssl_connect (new_stream, &timeout_copy);
+  return this->ssl_connect (new_stream, timeout);
 }
 
 // Try to complete a non-blocking connection.
@@ -249,8 +273,13 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
 
   // Take into account the time to complete the basic TCP handshake
   // and the SSL handshake.
-  ACE_Time_Value timeout_copy (*tv);  // Need a scribblable copy
-  ACE_Countdown_Time countdown (&timeout_copy);
+  ACE_Time_Value time_copy;
+  ACE_Countdown_Time countdown (&time_copy);
+  if (tv != 0)
+    {
+      time_copy += *tv;
+      countdown.start ();
+    }
 
   if (this->connector_.complete (new_stream.peer (),
                                  remote_sap,
@@ -259,9 +288,16 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
 
-  (void) countdown.update ();
+  // If using a timeout, update the countdown timer to reflect the time
+  // spent on the connect itself, then pass the remaining time to
+  // ssl_connect to bound the time on the handshake.
+  if (tv != 0)
+    {
+      countdown.update ();
+      tv = &time_copy;
+    }
 
-  return this->ssl_connect (new_stream, &timeout_copy);
+  return this->ssl_connect (new_stream, tv);
 }
 
 
