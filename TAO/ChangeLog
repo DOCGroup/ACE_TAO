@@ -1,3 +1,11 @@
+Thu Feb 24 17:34:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_interface.cpp (gen_skel_helper):
+
+	  Fixed order of "servant_upcall" and "servant" arguments passed
+	  to "_skel" function corresponding to virtual base class.  The
+	  order was inadvertently swapped during skeleton-refactor merge.
+
 Thu Feb 24 16:07:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Concurrency_Service/Makefile.am:

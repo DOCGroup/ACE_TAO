@@ -1946,9 +1946,9 @@ be_interface::gen_skel_helper (be_interface *derived,
                   *os << "static void" << be_nl
                       << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest &req, " << be_nl
-                      << "void *obj," << be_nl
-                      << "void *context" << be_nl
+                      << "TAO_ServerRequest & server_request, " << be_nl
+                      << "void * servant_upcall," << be_nl
+                      << "void * servant" << be_nl
                       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
                       << ");" << be_uidt;
                 }
@@ -1960,22 +1960,24 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << derived->full_skel_name () << "::"
                       << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest &req," << be_nl
-                      << "void *obj," << be_nl
-                      << "void *context" << be_nl
+                      << "TAO_ServerRequest & server_request," << be_nl
+                      << "void * servant_upcall," << be_nl
+                      << "void * servant" << be_nl
                       << "ACE_ENV_ARG_DECL" << be_uidt_nl
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
+
                   *os << ancestor->full_skel_name ()
-                      << "_ptr impl = static_cast <"
+                      << " * const impl = static_cast<"
                       << derived->full_skel_name ()
-                      << "_ptr> (obj);" << be_nl;
+                      << " *> (servant);" << be_nl;
+
                   *os << ancestor->full_skel_name ()
                       << "::" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "req," << be_nl
-                      << "impl," << be_nl
-                      << "context" << be_nl
+                      << "server_request," << be_nl
+                      << "servant_upcall," << be_nl
+                      << "impl" << be_nl
                       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}";
@@ -1998,9 +2000,9 @@ be_interface::gen_skel_helper (be_interface *derived,
                   *os << "static void" << be_nl
                       << "_get_" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest &req," << be_nl
-                      << "void *obj," << be_nl
-                      << "void *context" << be_nl
+                      << "TAO_ServerRequest & server_request," << be_nl
+                      << "void * servant_upcall," << be_nl
+                      << "void * servant" << be_nl
                       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
                       << ");" << be_uidt;
                 }
@@ -2012,22 +2014,24 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << derived->full_skel_name () << "::_get_"
                       << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest &req," << be_nl
-                      << "void *obj," << be_nl
-                      << "void *context" << be_nl
+                      << "TAO_ServerRequest & server_request," << be_nl
+                      << "void * servant_upcall," << be_nl
+                      << "void * servant" << be_nl
                       << "ACE_ENV_ARG_DECL" << be_uidt_nl
                       << ")" << be_uidt_nl
-                      << "{" << be_idt_nl
-                      << ancestor->full_skel_name ()
-                      << "_ptr impl = static_cast <"
+                      << "{" << be_idt_nl;
+
+                  *os << ancestor->full_skel_name ()
+                      << " * const impl = static_cast<"
                       << derived->full_skel_name ()
-                      << "_ptr> (obj);" << be_nl;
+                      << " *> (servant);" << be_nl;
+
                   *os << ancestor->full_skel_name ()
                       << "::_get_" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "req," << be_nl
-                      << "impl," << be_nl
-                      << "context" << be_nl
+                      << "server_request," << be_nl
+                      << "servant_upcall," << be_nl
+                      << "impl" << be_nl
                       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}";
@@ -2044,9 +2048,9 @@ be_interface::gen_skel_helper (be_interface *derived,
                       *os << "static void" << be_nl
                           << "_set_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
-                          << "TAO_ServerRequest &req," << be_nl
-                          << "void *obj," << be_nl
-                          << "void *context" << be_nl
+                          << "TAO_ServerRequest & server_request," << be_nl
+                          << "void * servant_upcall," << be_nl
+                          << "void * servant" << be_nl
                           << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
                           << ");" << be_uidt;
                     }
@@ -2059,22 +2063,24 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << derived->full_skel_name ()
                           << "::_set_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
-                          << "TAO_ServerRequest &req," << be_nl
-                          << "void *obj," << be_nl
-                          << "void *context" << be_nl
+                          << "TAO_ServerRequest & server_request," << be_nl
+                          << "void * servant_upcall," << be_nl
+                          << "void * servant" << be_nl
                           << "ACE_ENV_ARG_DECL" << be_uidt_nl
                           << ")" << be_uidt_nl
-                          << "{" << be_idt_nl
-                          << ancestor->full_skel_name ()
-                          << "_ptr impl = static_cast <"
+                          << "{" << be_idt_nl;
+
+                      *os << ancestor->full_skel_name ()
+                          << " * const impl = static_cast<"
                           << derived->full_skel_name ()
-                          << "_ptr> (obj);" << be_nl;
+                          << " *> (servant);" << be_nl;
+
                       *os << ancestor->full_skel_name ()
                           << "::_set_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
-                          << "req," << be_nl
-                          << "impl," << be_nl
-                          << "context" << be_nl
+                          << "server_request," << be_nl
+                          << "servant_upcall," << be_nl
+                          << "impl" << be_nl
                           << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                           << ");" << be_uidt << be_uidt_nl
                           << "}";
