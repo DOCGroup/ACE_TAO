@@ -1,3 +1,9 @@
+Thu May 10 16:55:20 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_run_tests.lst:
+          Add the new Latency and Throughput tests to the nightly
+          regression testsuite.
+
 Thu May 10 18:37:41 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/POSIX_Asynch_IO.cpp (ACE_POSIX_Asynch_Result ctor): Added
@@ -57,9 +63,9 @@ Thu May 10 18:37:41 2001  Steve Huston  <shuston@riverace.com>
 
 Thu May 10 16:12:02 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/ACE.cpp (timestamp): The abbreviation of thursday should be
-	  "Thu" not "Thr".  Thanks to Munagala Ramanath
- 	  <amberarrow@yahoo.com> for pointing this out.
+        * ace/ACE.cpp (timestamp): The abbreviation of thursday should be
+          "Thu" not "Thr".  Thanks to Munagala Ramanath
+          <amberarrow@yahoo.com> for pointing this out.
 
 Thu May 10 10:06:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -287,23 +293,23 @@ Wed May 02 05:40:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Wed May  2 06:31:46 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Makefile: Make it possible to set where the QTDIR is located.
-	  Thanks to Thomas Groth <groth.th@nord-com.net> for this
- 	  enhancement.
+        * ace/Makefile: Make it possible to set where the QTDIR is located.
+          Thanks to Thomas Groth <groth.th@nord-com.net> for this
+          enhancement.
 
 Tue May  1 21:38:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * ace/Process.cpp (spawn): When an application running with user
-	  ID=0 (i.e. root) spawns a new process using
- 	  ACE_Process_Manager::spawn(), which in turn calls
- 	  ACE_Process::spawn() and tries to set a user ID and a group ID
- 	  for the new process different from root/other, the call to
- 	  setreuid() succeedes but the call to setregid() made thereafter
- 	  fails, because the process has no longer UID=0 and thus it
- 	  cannot change to a different group.  To fix this, it was
- 	  necessary to swap the order of the calls to setreuid() and
- 	  setregid().  Thanks to Ramiro Penataro <penataro@ll.iac.es> for
- 	  reporting this.
+          ID=0 (i.e. root) spawns a new process using
+          ACE_Process_Manager::spawn(), which in turn calls
+          ACE_Process::spawn() and tries to set a user ID and a group ID
+          for the new process different from root/other, the call to
+          setreuid() succeedes but the call to setregid() made thereafter
+          fails, because the process has no longer UID=0 and thus it
+          cannot change to a different group.  To fix this, it was
+          necessary to swap the order of the calls to setreuid() and
+          setregid().  Thanks to Ramiro Penataro <penataro@ll.iac.es> for
+          reporting this.
 
 Tue May  1 11:05:48 2001  Ossama Othman  <ossama@uci.edu>
 
