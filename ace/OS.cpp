@@ -15,6 +15,30 @@
 #include "ace/OS.i"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+#include "ace/Synch.h"
+#include "ace/Set.h"
+
+#if defined (ACE_MT_SAFE)
+
+// This is lock defines a monitor that is shared by all threads
+// calling certain ACE_OS methods.
+static ACE_Thread_Mutex ace_os_monitor_lock;
+
+#if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+int 
+ACE_OS::netdb_acquire (void)
+{
+  return ace_os_monitor_lock.acquire ();
+}
+
+int 
+ACE_OS::netdb_release (void)
+{
+  return ace_os_monitor_lock.release ();
+}
+#endif /* defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
+#endif /* defined (ACE_MT_SAFE) */
+
 // Static constant representing `zero-time'.
 const ACE_Time_Value ACE_Time_Value::zero;
 
@@ -664,30 +688,6 @@ DllMain (HINSTANCE, // DLL module handle
 
   return TRUE;
 }
-
-#include "ace/Synch.h"
-#include "ace/Set.h"
-
-#if defined (ACE_MT_SAFE)
-
-// This is lock defines a monitor that is shared by all threads
-// calling certain ACE_OS methods.
-static ACE_Thread_Mutex ace_os_monitor_lock;
-
-#if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
-int 
-ACE_OS::netdb_acquire (void)
-{
-  return ace_os_monitor_lock.acquire ();
-}
-
-int 
-ACE_OS::netdb_release (void)
-{
-  return ace_os_monitor_lock.release ();
-}
-#endif /* defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
-#endif /* defined (ACE_MT_SAFE) */
 
 class ACE_TSS_Ref
   // = TITLE
@@ -2316,7 +2316,7 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 ssize_t 
 ACE_OS::pread (ACE_HANDLE handle, 
 	       void *buf,  
-	       size_t nbyte,
+	       size_t nbytes,
 	       off_t offset)
 {
 #if defined (ACE_HAS_P_READ_WRITE)
@@ -2332,7 +2332,7 @@ ACE_OS::pread (ACE_HANDLE handle,
   
   DWORD bytes_written; // This is set to 0 byte WriteFile.
   
-  if (::ReadFile (handle, buf, nbyte, &bytes_written, &overlapped))
+  if (::ReadFile (handle, buf, nbytes, &bytes_written, &overlapped))
     return (ssize_t) bytes_written;
   else if (::GetLastError () == ERROR_IO_PENDING)
     if (::GetOverlappedResult (handle, &overlapped, &bytes_written, TRUE) == TRUE)
@@ -2340,7 +2340,7 @@ ACE_OS::pread (ACE_HANDLE handle,
   
   return -1;
 #else
-  return ::pread (handle, buf, nbyte, offset);
+  return ::pread (handle, buf, nbytes, offset);
 #endif /* ACE_WIN32 */  
 #elif defined (ACE_HAS_THREADS)
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_os_monitor_lock, -1);
@@ -2352,7 +2352,7 @@ ACE_OS::pread (ACE_HANDLE handle,
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (nbyte);
+  ACE_UNUSED_ARG (nbytes);
   ACE_UNUSED_ARG (offset);
   ACE_NOTSUP_RETURN (-1);  
 #endif /* ACE_HAD_P_READ_WRITE */
@@ -2361,7 +2361,7 @@ ACE_OS::pread (ACE_HANDLE handle,
 ssize_t 
 ACE_OS::pwrite (ACE_HANDLE handle, 
 		const void *buf,  
-		size_t nbyte,
+		size_t nbytes,
 		off_t offset)
 {
 #if defined (ACE_HAS_P_READ_WRITE)
@@ -2377,7 +2377,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 
   DWORD bytes_written; // This is set to 0 byte WriteFile.
 
-  if (::WriteFile (handle, buf, nbyte, &bytes_written, &overlapped))
+  if (::WriteFile (handle, buf, nbytes, &bytes_written, &overlapped))
     return (ssize_t) bytes_written;
   else if (::GetLastError () == ERROR_IO_PENDING)
     if (::GetOverlappedResult (handle, &overlapped, &bytes_written, TRUE) == TRUE)
@@ -2385,7 +2385,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   
   return -1;
 #else
-  return ::pwrite (handle, buf, nbyte, offset);
+  return ::pwrite (handle, buf, nbytes, offset);
 #endif /* ACE_WIN32 */  
 #elif defined (ACE_HAS_THREADS)
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_os_monitor_lock, -1);
@@ -2397,7 +2397,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (nbyte);
+  ACE_UNUSED_ARG (nbytes);
   ACE_UNUSED_ARG (offset);
   ACE_NOTSUP_RETURN (-1);  
 #endif /* ACE_HAD_P_READ_WRITE */
