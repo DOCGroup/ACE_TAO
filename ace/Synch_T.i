@@ -290,14 +290,12 @@ ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::tryacquire (void)
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::release (void)
 {
-  switch (this->acquire_method_)
-    {
-    case ACE_READ:
-      return this->lock_.acquire_read ();
-    case ACE_WRITE:
-      return this->lock_.acquire_write ();
-    }
-  return this->lock_.acquire ();
+  if (this->acquire_method_ == ACE_READ)
+    return this->lock_.acquire_read ();
+  else if (this->acquire_method_ == ACE_WRITE)
+    return this->lock_.acquire_write ();
+  else
+    return this->lock_.acquire ();
 }
 
 // Release the lock.
