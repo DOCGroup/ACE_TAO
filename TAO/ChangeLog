@@ -1,3 +1,16 @@
+Tue Nov  4 16:23:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/corbafwd.h:
+
+	  #included the files where the contents of this file have been
+	  moved. This is necessary for backward compatibility. Lots of
+	  application code might still be using this.
+	
+	* tao/corbafwd.cpp (ACE_RCSID): 
+
+	  Emptied the contents since they are no longer needed. They are
+	  just around for backward compatibility.
+
 Tue Nov  4 16:22:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
