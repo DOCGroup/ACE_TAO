@@ -1,8 +1,10 @@
 Mon Feb 18 08:53:14 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
-        * TOA_IDL/tao_idl_static.dsp:
+        * TAO_IDL/tao_idl_static.dsp:
+        * TAO_IDL/driver/drv_init.cpp:
 
-          Made some changes to the project settings. Thanks to Joe Hayes
+          Made some changes to the project settings, and added an error message
+          if no valid preprocessor path is set on Windows. Thanks to Joe Hayes
           <Joe.Hayes@lmco.com> for reporting the problem.
 
 Sun Feb 17 11:52:36 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
