@@ -1,0 +1,77 @@
+$Id$
+
+This is a simple example based that shows how to use the persistent
+memory. The example is a derivative with a slight variation of the
+Grid example in $TAO_ROOT/Simple/grid. 
+
+The server hosts the Grid servant.  A client comes along and sets
+some values in the grid. These values are written out by the server in
+to a Memory map file. The servant is then brought down. A new server
+is started again which reads from the same meory map file. A new
+client by name persistent_grid is started which reads the value from
+the locations, where the client stored the values. The values are
+printed for clarity purposes.
+
+server:
+-------
+
+server [-d debug] -o <ior_output_file> -m <memory_pool>
+
+Options:
+-------
+-o    Outputs the ior to the file
+      The ior is the reference using which the client can interact with
+      the target server object.
+-m    Name of the memory pool. 
+
+
+When the server is started, you should see as the first line of output
+something that looks like
+
+	iiop:1.0//danzon.cs.wustl.edu:10015/P35ad159600081a38/child_poa/server
+	(-ORBobjrefstyle url)
+or
+	IOR:000000000000001649444c3a43756269745...
+	(-ORBobjrefstyle ior)
+
+client:
+-------
+
+client [-d] [-x] [-f <Server_ior_file>] [-k file://<ior_output_file>]
+       [-w] [-h] [-v]
+
+Options:
+-------
+-d    Debug flag
+-x    Tells the server to shutdown at the end of the test.
+-f    Reads the server ior from the file
+-k    IOR or The IOR can also be given in the format like file://[file.ior]
+      with the full path
+
+-w    Width of the grid
+-h    Height of the grid
+-v    Value that needs to be the starting point for storage. The value
+      that is stored will be this value + location id. 
+
+persistent_client:
+-----------------
+persistent_client [-d] [-x] [-f <Server_ior_file>] [-k file://<ior_output_file>]
+       [-w] [-h] [-v]
+
+Options:
+-------
+-d    Debug flag
+-x    Tells the server to shutdown at the end of the test.
+-f    Reads the server ior from the file
+-k    IOR or The IOR can also be given in the format like file://[file.ior]
+      with the full path
+
+-w    Width of the grid from where the values are to be read
+-h    Height of the grid from the where the values are to be read
+
+run_test.pl:
+------------
+
+This perl script runs the server then the client. It shuts down the
+server and restarts the server. It then starts the persistent_client
+to read the values from the memory mapped file.
