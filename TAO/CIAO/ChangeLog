@@ -1,3 +1,15 @@
+Sat Mar 19 15:22:54 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/DAM_Map.cpp:
+        * DAnCE/ExecutionManager/DAM_Map.h:
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h:
+        * DAnCE/ExecutionManager/Execution_Manager.cpp:
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h:
+
+          Fixed some more compiler errors.
+
 Sat Mar 19 15:06:37 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/ExecutionManager/DAM_Map.cpp:
