@@ -1,3 +1,21 @@
+Fri Mar  9 16:06:29 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile:
+        * tests/Crashed_Callback/Makefile:
+        * tests/Crashed_Callback/Test.idl:
+        * tests/Crashed_Callback/run_test.pl:
+        * tests/Crashed_Callback/Crashed_Callback.h:
+        * tests/Crashed_Callback/Crashed_Callback.cpp:
+        * tests/Crashed_Callback/Service.h:
+        * tests/Crashed_Callback/Service.cpp:
+        * tests/Crashed_Callback/client.cpp:
+        * tests/Crashed_Callback/server.cpp:
+          New regression test.  Verify that the ORB does raise an
+          exception when a callback interface dies.  This was reported by
+          Jody Hagins <jody@atdesk.com>.
+          It does work TAO-1.1.13 but it failed on TAO-1.1.12, we add the
+          regression to avoid future problems.
+
 Fri Mar  9 16:38:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/be_produce.cpp:
@@ -23,10 +41,10 @@ Fri Mar  9 16:38:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
           variable. Thanks to Carlos for showing me the error in
           trying to piggyback exception propagation onto the
           propagation of the visit_* methods' error codes.
-          
+
         * orbsvcs/IFR_Service/drv_preproc_ifr.cpp:
-        
-          Made change corresponding to Darrell's below. 
+
+          Made change corresponding to Darrell's below.
 
 Fri Mar 09 14:40:37 2001  Carlos O'Ryan  <coryan@uci.edu>
 
