@@ -1,3 +1,49 @@
+Fri Aug  7 21:39:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/releasenotes/TODO.html: 
+	  Update the notes.
+
+	* docs/releasenotes/index.html: 
+	  Added a pointer to the TODO list.
+
+	* orbsvcs/tests/EC_Throughput/run_test.pl: 
+	  We need to wait for the NamingService and the EventService after
+	  killing them. We also need a pause after starting up the
+	  consumer.
+
+	* tao/CDR.cpp: 
+	* tao/CDR.h: 
+	* tao/CDR.i: 
+	  The OutputCDR class receives allocators for the buffers and the
+	  data blocks.
+
+	* tao/Connect.cpp: 
+	  Minimize the number of calls to TAO_ORB_Core_instance() in the
+	  upcall.
+
+	* tao/IIOP_Object.cpp: 
+	  Use the ORB_Core allocators for the outgoing CDR stream.
+
+	* tao/Invocation.cpp: 
+	* tao/Invocation.h: 
+	* tao/Invocation.i: 
+	  Receive the ORB_Core as an argument to minimize calls to
+	  TAO_ORB_Core_instance.
+	  Use allocators for the outgoing stream.
+
+	* tao/ORB_Core.cpp: 
+	* tao/ORB_Core.h: 
+	* tao/ORB_Core.i: 
+	  Added TSS allocators for the outgoing stream.
+
+	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
+	  Fixed problems with Timeprobe registrations.
+	  Also made the <-x> option functional when -v or -o is used.
+
+	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
+	  Enabled GPERF support in the IDL compiler again.
+
 Fri Aug  7 18:00:22 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* Param_Test/bd_short_seq.{h,cpp}:

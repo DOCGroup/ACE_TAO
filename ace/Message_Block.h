@@ -116,7 +116,8 @@ public:
                      ACE_Lock *locking_strategy = 0,
                      u_long priority = 0,
                      const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
-                     const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time);
+                     const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time,
+		     ACE_Allocator *data_block_allocator = 0);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
@@ -127,6 +128,9 @@ public:
   // counting) from race conditions.  Note that the <size> of the
   // <Message_Block> will be <size>, but the <length> will be 0 until
   // <wr_ptr> is set.
+  // The <data_block_allocator> is use to allocate the data blocks
+  // while the <allocator_strategy> is used to allocate the buffers
+  // contained by those.
 
   int init (const char *data,
             size_t size = 0);
@@ -143,7 +147,8 @@ public:
             ACE_Lock *locking_strategy = 0,
             u_long priority = 0,
             const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
-            const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time);
+            const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time,
+	    ACE_Allocator *data_block_allocator = 0);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
@@ -154,6 +159,9 @@ public:
   // counting) from race conditions.  Note that the <size> of the
   // <Message_Block> will be <size>, but the <length> will be 0 until
   // <wr_ptr> is set.
+  // The <data_block_allocator> is use to allocate the data blocks
+  // while the <allocator_strategy> is used to allocate the buffers
+  // contained by those.
 
   virtual ~ACE_Message_Block (void);
   // Delete all the resources held in the message.
@@ -334,7 +342,8 @@ private:
                      u_long priority,
                      const ACE_Time_Value & execution_time,
                      const ACE_Time_Value & deadline_time,
-                     ACE_Data_Block *db);
+                     ACE_Data_Block *db,
+		     ACE_Allocator *data_block_allocator);
   // Perform the actual initialization.
 
   ACE_Message_Block *release_i (ACE_Lock *lock);
@@ -350,7 +359,8 @@ private:
               u_long priority,
               const ACE_Time_Value & execution_time,
               const ACE_Time_Value & deadline_time,
-              ACE_Data_Block *db);
+              ACE_Data_Block *db,
+	      ACE_Allocator *data_block_allocator);
   // Perform the actual initialization.
 
   char *rd_ptr_;
@@ -409,7 +419,8 @@ public:
                   const char *msg_data,
                   ACE_Allocator *allocator_strategy,
                   ACE_Lock *locking_strategy,
-                  ACE_Message_Block::Message_Flags flags);
+                  ACE_Message_Block::Message_Flags flags,
+		  ACE_Allocator *data_block_allocator);
   // Initialize.
 
   virtual ~ACE_Data_Block (void);
@@ -476,6 +487,9 @@ public:
   int reference_count (void) const;
   // Get the current reference count.
 
+  ACE_Allocator *data_block_allocator (void);
+  // Get the allocator used to create this object
+
 private:
   ACE_Data_Block *release_i (void);
   // Internal release implementation
@@ -512,6 +526,9 @@ private:
   // deep copies (i.e., <clone>).  Note that this pointer value is
   // shared by all owners of the <Data_Block>'s data, i.e., all the
   // <ACE_Message_Block>s.
+
+  ACE_Allocator *data_block_allocator_;
+  // The allocator use to destroy ourselves.
 
   // = Disallow these operations.
   ACE_Data_Block &operator= (const ACE_Data_Block &);

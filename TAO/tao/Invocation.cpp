@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/corba.h"
+
 #include "tao/Timeprobe.h"
 
 #if !defined (__ACE_INLINE__)
@@ -17,12 +18,12 @@ ACE_RCSID(tao, Invocation, "$Id$")
   "GIOP_Invocation::start - leave",
   "GIOP_Invocation::start - connect",
   "GIOP_Invocation::start - start_msg",
-  "GIOP_Invocation::start - request_hdr",
+  "GIOP_Invocation::start - request_hdr"
 };
 
 enum
 {
-  TAO_GIOP_INVOCATION_START_ENTER,
+  TAO_GIOP_INVOCATION_START_ENTER = 1000,
   TAO_GIOP_INVOCATION_START_LEAVE,
   TAO_GIOP_INVOCATION_START_CONNECT,
   TAO_GIOP_INVOCATION_START_START_MSG,
@@ -53,11 +54,17 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
 // restructuring an ORB core in terms of asynchrony.
 
 TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
-                                          const char *operation)
+                                          const char *operation,
+					  TAO_ORB_Core* orb_core)
   : data_ (data),
     opname_ (operation),
     my_request_id_ (0),
-    out_stream_ (buffer, sizeof buffer) /* CDR::DEFAULT_BUFSIZE */
+    out_stream_ (buffer, sizeof buffer, /* CDR::DEFAULT_BUFSIZE */
+		 TAO_ENCAP_BYTE_ORDER,
+		 TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
+		 orb_core->cdr_buffer_allocator (),
+		 orb_core->data_block_allocator ()),
+    orb_core_ (orb_core)
 {
   // @@ TODO The comments here are scary, can someone please give me a
   // warm fuzzy feeling about this (coryan).
@@ -91,7 +98,7 @@ TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 void
 TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
                             TAO_GIOP::Message_Type message_type,
-                            CORBA::Environment &env)
+			    CORBA::Environment &env)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_START_ENTER);
 
@@ -123,7 +130,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
   // Get a pointer to the connector, which might be in thread-specific
   // storage, depending on the concurrency model.
-  TAO_CONNECTOR *con = TAO_ORB_Core_instance ()->connector ();
+  TAO_CONNECTOR *con = this->orb_core_->connector ();
 
   // Determine the object key and the address to which we'll need a
   // connection.
@@ -154,9 +161,9 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   // Establish the connection and get back a
   // <Client_Connection_Handler>.
 #if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
-  if (TAO_ORB_Core_instance ()->arl_same_port_connect ())
+  if (this->orb_core_->arl_same_port_connect ())
     {
-      ACE_INET_Addr local_addr (TAO_ORB_Core_instance ()->orb_params ()->addr ());
+      ACE_INET_Addr local_addr (this->orb_core_->orb_params ()->addr ());
       local_addr.set_port_number (server_addr_p->get_port_number ());
 
       // Set the local port number to use.
@@ -472,7 +479,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
                                                      this->inp_stream_);
 
-  TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->data_->handler ());
+  this->orb_core_->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
 
   switch (m)
@@ -738,7 +745,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
                                                      this->inp_stream_);
 
-  TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->data_->handler ());
+  this->orb_core_->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
 
   switch (m)
@@ -1008,7 +1015,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
                                                      this->inp_stream_);
 
-  TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->data_->handler ());
+  this->orb_core_->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
 
   switch (m)
