@@ -96,7 +96,11 @@ int
 main (int argc, char ** argv)
 {
   TAO_TRY
-    {
+    {      
+      // Make sure we've got plenty of socket handles.  This call will use
+      // the default maximum.
+      ACE::set_handle_limit ();
+
       CORBA::ORB_var orb = CORBA::ORB_init (argc, 
 					    argv, 
 					    "internet", 
