@@ -1,3 +1,13 @@
+Tue Jan  5 16:14:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/config-irix6.x-common.h: 
+	  Added ACE_TIMER_SKEW definition.
+
+	* ace/FILE.cpp: 
+	  Fixed the seek() prototype, is was declared as taking a "off_t"
+	  argument, but is was defined with a "long" argument,
+	  unfortunately in most platforms this was not a problem.
+
 Tue Jan 05 13:15:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Service_Config.i (open): Be sure to pass down the
