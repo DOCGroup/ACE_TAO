@@ -2147,8 +2147,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
           // Generate the static method corresponding to this method.
           *os << "static void" << be_nl
               << "_get_" << d->local_name () << " (" << be_idt << be_idt_nl
-              << "CORBA::Object_ptr obj, " << be_nl
-              << "CORBA::Object_out obj_forward," << be_nl
+              << "TAO_Abstract_ServantBase *servant, " << be_nl
               << "TAO::Argument ** args," << be_nl
               << "int num_args" << be_nl
               << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
@@ -2167,8 +2166,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
               // this method.
               *os << "static void" << be_nl
                   << "_set_" << d->local_name () << " (" << be_idt << be_idt_nl
-                  << "CORBA::Object_ptr obj, " << be_nl
-                  << "CORBA::Object_out obj_forward," << be_nl
+                  << "TAO_Abstract_ServantBase *servant, " << be_nl
                   << "TAO::Argument ** args," << be_nl
                   << "int num_args" << be_nl
                   << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
