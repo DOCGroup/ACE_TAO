@@ -234,42 +234,6 @@ Video_Global::first_packet_send_to_network (int timeToUse)
             count = 0;
             msg = msghd;
             targetTime = get_usec ();
-            // send the header seperately first
-            segsize = sizeof (*msg);
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) Sending the header, of size %d\n",
-                        segsize));
-            // loop until the packet is written successfully
-            while (write (this->videoSocket, 
-                          (char *)msg,
-                          segsize) == -1)
-              {
-                if (errno == EINTR)
-                  continue;
-                if (errno == ENOBUFS) {
-                  if (resent) {
-                    perror ("Warning, pkt discarded because");
-                    sent = -1;
-                    break;
-                  }
-                  else {
-                    resent = 1;
-                    perror ("VS to sleep 5ms");
-                    usleep (5000);
-                    continue;
-                  }
-                }
-                if (errno != EPIPE) {
-                  fprintf (stderr, "VS error on send this->packet %d of size %d ",
-                           this->msgsn-1, min (size, this->msgsize)+sizeof (*msg));
-                  perror ("");
-                }
-                exit (errno != EPIPE);
-              }
-            // increment the counters appropriately
-            size -= segsize;
-            offset += segsize;
-          
           }
         else {
 #if 0
@@ -292,11 +256,48 @@ Video_Global::first_packet_send_to_network (int timeToUse)
         msg->msgsn = htonl (this->msgsn++);
         msg->msgOffset = htonl (offset);
         msg->msgSize = htonl (min (size, this->msgsize));
+        // send the header seperately first
+        segsize = sizeof (*msg);
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Sending the header, of size %d\n",
+                    segsize));
+          
+        while (write (this->videoSocket, 
+                      (char *)msg,
+                      segsize) == -1)
+          {
+            if (errno == EINTR)
+              continue;
+            if (errno == ENOBUFS) {
+              if (resent) {
+                perror ("Warning, pkt discarded because");
+                sent = -1;
+                break;
+              }
+              else {
+                resent = 1;
+                perror ("VS to sleep 5ms");
+                usleep (5000);
+                continue;
+              }
+            }
+            if (errno != EPIPE) {
+              fprintf (stderr, "VS error on send this->packet %d of size %d ",
+                       this->msgsn-1, min (size, this->msgsize)+sizeof (*msg));
+              perror ("");
+            }
+            exit (errno != EPIPE);
+          }
 
-        segsize = min (size, this->msgsize)+sizeof (*msg);
+
+        //        segsize = min (size, this->msgsize)+sizeof (*msg);
+        segsize = min (size, this->msgsize);
+
         if (this->conn_tag != 0) { /* this->packet stream */
           cerr << "sending " << segsize  << " on fd = " << this->videoSocket << endl;
-          while ((sentsize = write (this->videoSocket, (char *)msg, segsize)) == -1) {
+          while ((sentsize = write (this->videoSocket, 
+                                    (char *)msg + sizeof (*msg), 
+                                    segsize)) == -1) {
             if (errno == EINTR)
               continue;
             if (errno == ENOBUFS) {
