@@ -204,6 +204,15 @@ TAO_Connection_Handler::decr_refcount (void)
   return 0;
 }
 
+void
+TAO_Connection_Handler::connection_close_wait (void)
+{
+  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSE_WAIT);
+}
+
+
+
 int
 TAO_Connection_Handler::handle_close_eh (
     ACE_HANDLE handle, unsigned long reactor_mask, ACE_Event_Handler * eh)
@@ -241,6 +250,14 @@ int
 TAO_Connection_Handler::handle_output_eh (
     ACE_HANDLE, ACE_Event_Handler * eh)
 {
+  // We are going to use the transport object to write data. Just make
+  // sure that we have transport objects to proceed. This  is
+  // perfectly valid assert
+  ACE_ASSERT (this->transport () != 0);
+
+  // Let the transport that it is going to be used
+  (void) this->transport ()->update_transport ();
+
   // Instantiate the resume handle here.. This will automatically
   // resume the handle once data is written..
   TAO_Resume_Handle resume_handle (this->orb_core (),
@@ -269,6 +286,15 @@ int
 TAO_Connection_Handler::handle_input_eh (
     ACE_HANDLE h, ACE_Event_Handler * eh)
 {
+  // We are going to use the transport object to read data. Just make
+  // sure that we have transport objects to proceed. This  is
+  // perfectly valid assert
+  ACE_ASSERT (this->transport () != 0);
+
+  // Let the transport know that it is used
+  (void) this->transport ()->update_transport ();
+
+
   // Increase the reference count on the upcall that have passed us.
   //
   // REFCNT: Matches decr_refcount() in this function...
@@ -281,7 +307,7 @@ TAO_Connection_Handler::handle_input_eh (
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Connection_Handler[%d]::handle_input, "
                   "handle = %d/%d, refcount = %d\n",
-                  this->transport()->id(), handle, h, refcount));
+                  this->transport ()->id (), handle, h, refcount));
     }
 
   TAO_Resume_Handle resume_handle (this->orb_core (), eh->get_handle ());
@@ -297,6 +323,7 @@ TAO_Connection_Handler::handle_input_eh (
       return return_value;
     }
 
+
   return_value = this->transport ()->handle_input_i (resume_handle);
 
   this->pos_io_hook(return_value);
@@ -311,7 +338,7 @@ TAO_Connection_Handler::handle_input_eh (
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) Connection_Handler[%d]::handle_input, "
                   "handle = %d/%d, refcount = %d, retval = %d\n",
-                  this->transport()->id(), handle, h, refcount, return_value));
+                  this->transport()->id (), handle, h, refcount, return_value));
     }
 
   if (return_value == -1 || refcount == 0)

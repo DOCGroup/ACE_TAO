@@ -24,9 +24,48 @@ TAO_Transport_Cache_Manager::cache_transport (
   TAO_Cache_ExtId ext_id (prop);
   TAO_Cache_IntId int_id (transport);
 
-  return this->bind (ext_id,
-                     int_id);
+  int retval = 0;
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                              guard,
+                              *this->cache_lock_,
+                              -1));
 
+    // Do as the semantics of this method dictates
+    int_id.recycle_state (ACE_RECYCLABLE_BUSY);
+
+    retval = this->bind_i (ext_id,
+                           int_id);
+  }
+
+  return retval;
+}
+
+ACE_INLINE int
+TAO_Transport_Cache_Manager::cache_idle_transport (
+    TAO_Transport_Descriptor_Interface *prop,
+    TAO_Transport *transport)
+{
+  // Compose the ExternId & Intid
+  TAO_Cache_ExtId ext_id (prop);
+  TAO_Cache_IntId int_id (transport);
+
+  int retval = 0;
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                              guard,
+                              *this->cache_lock_,
+                              -1));
+
+    // Do as the semantics of this method dictates
+    int_id.recycle_state (ACE_RECYCLABLE_IDLE_AND_PURGABLE);
+    retval = this->bind_i (ext_id,
+                           int_id);
+
+
+  }
+
+  return retval;
 }
 
 ACE_INLINE int
@@ -83,6 +122,8 @@ TAO_Transport_Cache_Manager::make_idle (HASH_MAP_ENTRY *&entry)
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
   return this->make_idle_i (entry);
 }
+
+
 
 
 ACE_INLINE int

@@ -631,9 +631,9 @@ public:
    *             block, used in the implementation of timeouts.
    */
   virtual int send_message_shared (TAO_Stub *stub,
-					               int message_semantics,
-							       const ACE_Message_Block *message_block,
-								   ACE_Time_Value *max_wait_time);
+                                                       int message_semantics,
+                                                               const ACE_Message_Block *message_block,
+                                                                   ACE_Time_Value *max_wait_time);
 
 
 protected:
@@ -739,6 +739,9 @@ public:
 
   /// Cache management
   int make_idle (void);
+
+  /// Cache management
+  int update_transport (void);
 
   /// The timeout callback, invoked when any of the timers related to
   /// this transport expire.

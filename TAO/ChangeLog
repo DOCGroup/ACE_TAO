@@ -1,3 +1,59 @@
+Fri Nov 29 11:16:28 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	This set of fixes are for fixing BUG 1247. Please see 
+
+	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1247
+	for more details. The problem is that the server side connections
+	never got purged. The cache manager was designed to purge
+        connections in the client and server end.
+
+	* tao/Transport_Cache_Manager.h:
+	* tao/Transport_Cache_Manager.cpp:
+	* tao/transport_cache_manager.inl: Added two new methods,
+	  cache_idle_transport () and update_entry (). The former
+	  caches the transport and puts it in the idle and purgable
+	  state. The latter is useful to update the purge policy
+	  information.
+
+	* tao/Transport.h:
+	* tao/Transport.cpp: Added a new method update_transport () which
+	  in turn calls the TAO_Transport_Cache_Manager::update_entry ()
+	  to update the purging policy information. 
+
+	  In close_connection_shared (), the connection handler is set in
+	  a temporary state before waiting on the LF for connection
+	  closure. 
+	  
+	* tao/Connection_Handler.cpp (TAO_Connection_Handler): 
+	* tao/Connection_Handler.h: Added a new method
+	  connection_close_wait () to set the connection handler in a
+	  a state which is an intermediate state between SUCESS and
+	  CONNECTION_CLOSED. 
+
+	  Added a call to update transport information in handle_output_eh
+	  () and handle_input_eh (). This is needed for the following
+	  reasons
+
+	    . A connection could be cached by a server thread and the
+	      connection would be continously used to receive requests. In 
+	      such cases the cache and purging policies should be updated
+	      to ensure that actively used connections are not purged. 
+
+	    . In BiDirectional cases, a client thread could cache the
+	      connection, but the connection could be actively used by a
+	      server thread. An update is needed to avoid purging the
+	      connections abruptly.
+
+	* tao/IIOP_Connection_Handler.cpp: Cache and idle the transport in
+	  add_transport_to_cache () instead of just caching and leaving
+	  the transport in busy state.
+
+	* tao/LF_Event.h:
+	* tao/LF_CH_Event.h:
+	* tao/LF_CH_Event.cpp: Added a new temporary state in the path
+	  from LFS_SUCCESS to LFS_CONNECTION_CLOSED.
+	   
+
 Fri Nov 29 09:56:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/OBV/Any/client.cpp:
