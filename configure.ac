@@ -4507,7 +4507,9 @@ if test "$ace_user_enable_reentrant_funcs" = yes; then
   int status = getpwnam_r (name, pwent, buffer, buflen, &result);
                  ]])],
                  [
-                  AC_DEFINE([ACE_HAS_POSIX_GETPWNAM_R])
+                  if test "$ace_user_enable_reentrant_funcs" = yes; then
+                    AC_DEFINE([ACE_HAS_POSIX_GETPWNAM_R])
+                  fi
                  ],
                  [
                   dnl Nothing to do!
