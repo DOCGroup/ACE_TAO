@@ -1,3 +1,82 @@
+Tue Mar  6 18:32:34 PST 2001 Mayur Deshpande  <mayur@balar.ece.uci.edu>
+
+	* docs/tutorials/Quoter/Makefile (Repository): 
+	  Top level Makefiel that recursively makes all tutorials in the subdirectories.
+
+	* docs/tutorials/Quoter/RT_Event_Service/Makefile (Repository): 
+	  Updated LDLIBS section
+
+	* docs/tutorials/Quoter/On_Demand_Activation/Stock_i.h (Repository): 
+	* docs/tutorials/Quoter/On_Demand_Activation/Stock_i.cpp (Repository): 
+	  Copied from ../Simple/Server
+	
+	* docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.cpp (Repository): 
+	  Handled 'dangling else' condition.
+
+	* docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.h (Repository): 
+	  Included PortableServer header file
+
+	* docs/tutorials/Quoter/On_Demand_Activation/Makefile (Repository): 
+	  Makefile to make the new self-contained Tutorial.
+
+	* docs/tutorials/Quoter/On_Demand_Activation/Handler_i.h (Repository): 
+	* docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp (Repository): 
+	* docs/tutorials/Quoter/On_Demand_Activation/Quoter.idl (Repository): 
+	* docs/tutorials/Quoter/On_Demand_Activation/client.cpp (Repository): 
+	  Copied from ../AMI
+	
+	* docs/tutorials/Quoter/Naming_Service/Stock_i.h (Repository): 
+	* docs/tutorials/Quoter/Naming_Service/Stock_i.cpp (Repository): 
+	* docs/tutorials/Quoter/Naming_Service/Stock_Factory_i.h (Repository): 
+	* docs/tutorials/Quoter/Naming_Service/Stock_Factory_i.cpp (Repository): 
+	  Copied from ../Server.
+	* docs/tutorials/Quoter/Event_Service/Makefile (Message): 
+  	  Makefile to make the self-contained AMI tutorial.
+
+	* docs/tutorials/Quoter/Event_Service/ec.conf (Message): 
+	  Works better with defaults (no need for an ec.conf file actually).
+
+	* docs/tutorials/Quoter/AMI/Makefile (Message): 
+	  Makefile to make the self-contained AMI tutorial.
+
+	* docs/tutorials/Quoter/idl/quoter_common_export.h (Repository): 
+	  For exporting DLL symbols.
+
+	* docs/tutorials/Quoter/idl/Quoter.idl (Repository): 
+	  The mother of all Quoter.idl file.
+
+	* docs/tutorials/Quoter/idl/Makefile (Repository): 
+	  Most of the IDL generated files were common to many tutoroals (especially 
+	  in the Simple directory), so the IDL file was moved into a separate directory,
+	  the necessary files generated and stored in a library, Quoter_Common, to be
+	  used by others.
+
+	* docs/tutorials/Quoter/Simple/Server/Stock_i.h (Repository): 
+	  Modified to take into account the new Quoter_Common library. 
+
+	* docs/tutorials/Quoter/Simple/Server/Makefile (Repository): 
+	  Makefile to make the new self-contained Server tutorial.
+	  
+	* docs/tutorials/Quoter/Simple/Persistent (Repository): 
+	  Copied Stock_Facory_i* and Stock_i* files from ../Server and client.cpp from 
+	  ../Client to make Impl-Repo self-sufficient.
+
+	* docs/tutorials/Quoter/Simple/Persistent/Makefile :
+	  Makefile to make the new self-contained Persistent tutorial.
+
+	* docs/tutorials/Quoter/Simple/Impl-Repo :
+	  Copied Stock_Facory_i* and Stock_i* files from ../Server and client.cpp from 
+	  ../Client to make Impl-Repo self-sufficient.
+
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Makefile :
+	  Makefile to make the new self-contained ImprovedServer directory.
+
+	* docs/tutorials/Quoter/Simple/Impl-Repo/index.html : 
+	  Corrected path to ImplRepo_Service.
+	
+	* docs/tutorials/Quoter/Simple/Client/Makefile : 
+	  Makefile making use of the Common_Quoter library and 'idl' files.	
+
 Tue Mar  6 17:56:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * utils/wxNamingViewer/pch.h:
@@ -1829,6 +1908,7 @@ Mon Feb 26 20:01:06 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 
 
+>>>>>>> 1.2717
 Mon Feb 26 19:05:57 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
