@@ -248,7 +248,7 @@ ACE_Message_Block::total_length (void) const
 size_t
 ACE_Message_Block::total_capacity (void) const
 {
-  ACE_TRACE ("ACE_Message_Block::total_size");
+  ACE_TRACE ("ACE_Message_Block::total_capacity");
 
   size_t size = 0;
 

@@ -6,7 +6,7 @@
 ASYS_INLINE int
 ACE_Flag_Manip::get_flags (ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE::get_flags");
+  ACE_TRACE ("ACE_Flag_Manip::get_flags");
 
 #if defined (ACE_LACKS_FCNTL)
   // ACE_OS::fcntl is not supported, e.g., on VxWorks.  It

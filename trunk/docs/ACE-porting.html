@@ -30,11 +30,11 @@ straightforward to port TAO, as well.<P>
 <H4>Create a <CODE>config.h</CODE> Header File for the Target OS Platform</H4>
 
 A <CODE>config-*.h</CODE> header file exists in <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/">$ACE_ROOT/ace</A>
+HREF="../ace/">$ACE_ROOT/ace</A>
 for each platform to which ACE has been ported.  This file contains
 the portability macros for each particular configuration of ACE.  A
 complete description of the existent macros can be found in the <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/README">$ACE_ROOT/ace/README</A>
+HREF="../ace/README">$ACE_ROOT/ace/README</A>
 file. <P>
 
 Currently, you must edit this file by hand to port it to new OS
@@ -57,7 +57,7 @@ how ACE has been ported to other operating systems in the
 
 Optional features in pthreads are covered by <CODE>ACE_HAS_*</CODE>
 and/or <CODE>ACE_LACKS_*</CODE> macros, which are described in the <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/README">$ACE_ROOT/ace/README</A>
+HREF="../ace/README">$ACE_ROOT/ace/README</A>
 file.  Particular platform features, such as DCE pthreads calls that
 end in <CODE>_np</CODE>, should be bracketed by platform defines
 rather than by inventing more <CODE>ACE_HAS_*</CODE> or
@@ -90,12 +90,10 @@ After porting the <CODE>ACE_OS</CODE> class, the next step is to port
 all of the ACE C++ wrapper components, such as sockets, threads,
 synchronization mechanisms.  A full list of the categories and classes
 can be found in the <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-categories">$ACE_ROOT/ACE-categories</a>
+HREF="ACE-categories.html">$ACE_ROOT/ACE-categories</a>
 file.  It is easiest to concentrate on porting one category at the
-time.  The ACE release contain a <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/tests/README">one-button
-test suite</A> in the <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/tests/">$ACE_ROOT/tests/</A>
+time.  The ACE release contain a <A HREF="../tests/README">one-button
+test suite</A> in the <A HREF="../tests/">$ACE_ROOT/tests/</A>
 directory.  These tests can be used to validate the correctness of the
 various ACE C++ wrappers as they are ported. <P>
 
@@ -114,7 +112,7 @@ platform-dependent code is localized in the lower layers of ACE. <P>
 
 After porting and successfully testing all the ACE framework
 components, it also should be relatively easy to port and <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/TAO-INSTALL.html">install</A>
+HREF="../TAO/TAO-INSTALL.html">install</A>
 TAO because all of its platform-dependent code is localized in ACE.
 Typically, the only problems that arise when porting TAO is bugs with
 C++ compilers. <P>

@@ -37,7 +37,7 @@ ACE_Service_Repository::ACE_Service_Repository (void)
 ACE_Service_Repository *
 ACE_Service_Repository::instance (int size /* = ACE_Service_Repository::DEFAULT_SIZE */)
 {
-  ACE_TRACE ("ACE_Service_Config::instance");
+  ACE_TRACE ("ACE_Service_Repository::instance");
 
   if (ACE_Service_Repository::svc_rep_ == 0)
     {

@@ -581,7 +581,7 @@ ACE_Process_Manager::remove (pid_t pid)
 int
 ACE_Process_Manager::remove_proc (size_t i)
 {
-  ACE_TRACE ("ACE_Process_Manager::remove");
+  ACE_TRACE ("ACE_Process_Manager::remove_proc");
 
   // If there's an exit_notify_ <Event_Handler> for this pid, call its
   // <handle_close> method.

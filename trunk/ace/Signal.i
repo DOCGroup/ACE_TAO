@@ -165,7 +165,7 @@ ACE_Sig_Action::sigaction (void)
 ACE_INLINE void
 ACE_Sig_Action::sigaction (ACE_SignalHandler handler)
 {
-  ACE_TRACE ("ACE_Sig_Action::handler");
+  ACE_TRACE ("ACE_Sig_Action::sigaction");
   this->sa_.sa_sigaction = (void (*)()) ACE_SignalHandlerV (handler);
 }
 #endif /* 0 */

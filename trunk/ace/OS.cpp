@@ -1578,9 +1578,9 @@ ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info) const
 // Check for inequality.
 ACE_SPECIAL_INLINE
 int
-ACE_TSS_Ref::operator!= (const ACE_TSS_Ref &tss_ref) const
+ACE_TSS_Ref::operator != (const ACE_TSS_Ref &tss_ref) const
 {
-  ACE_OS_TRACE ("ACE_TSS_Ref::operator==");
+  ACE_OS_TRACE ("ACE_TSS_Ref::operator !=");
 
   return !(*this == tss_ref);
 }
@@ -1634,9 +1634,9 @@ ACE_TSS_Info::operator== (const ACE_TSS_Info &info) const
 
 // Check for inequality.
 int
-ACE_TSS_Info::operator!= (const ACE_TSS_Info &info) const
+ACE_TSS_Info::operator != (const ACE_TSS_Info &info) const
 {
-  ACE_OS_TRACE ("ACE_TSS_Info::operator==");
+  ACE_OS_TRACE ("ACE_TSS_Info::operator !=");
 
   return !(*this == info);
 }
@@ -4482,7 +4482,7 @@ ACE_OS::write_n (ACE_HANDLE handle,
 int
 ACE_OS::writev_emulation (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 {
-  ACE_OS_TRACE ("::writev");
+  ACE_OS_TRACE ("ACE_OS::writev_emulation");
 
   size_t length = 0;
   int i;
@@ -4530,7 +4530,7 @@ ACE_OS::readv_emulation (ACE_HANDLE handle,
                          ACE_READV_TYPE *iov,
                          int n)
 {
-  ACE_OS_TRACE ("readv");
+  ACE_OS_TRACE ("ACE_OS::readv_emulation");
 
   ssize_t length = 0;
   int i;

@@ -83,7 +83,7 @@ ACE_Allocator_Adapter<MALLOC>::~ACE_Allocator_Adapter (void)
 template <class MALLOC> void
 ACE_Allocator_Adapter<MALLOC>::print_stats (void) const
 {
-  ACE_TRACE ("ACE_Allocator_Adaptor<MALLOC>::print_stats");
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::print_stats");
   this->allocator_.print_stats ();
 }
 #endif /* ACE_HAS_MALLOC_STATS */
@@ -91,7 +91,7 @@ ACE_Allocator_Adapter<MALLOC>::print_stats (void) const
 template <class MALLOC> void
 ACE_Allocator_Adapter<MALLOC>::dump (void) const
 {
-  ACE_TRACE ("ACE_Malloc<MALLOC>::dump");
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::dump");
   this->allocator_.dump ();
 }
 
@@ -743,7 +743,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_LIFO_It
     guard_ (malloc_.lock_),
     name_ (name != 0 ? ACE_OS::strdup (name) : 0)
 {
-  ACE_TRACE ("ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_LIFO_Iterator");
+  ACE_TRACE ("ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_LIFO_Iterator_T");
   // Cheap trick to make code simple.
   // @@ Doug, this looks like trouble...
   NAME_NODE temp;

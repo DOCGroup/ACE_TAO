@@ -187,7 +187,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::renew (void)
 template <class ACE_SELECT_REACTOR_MUTEX> void
 ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::dump (void) const
 {
-  ACE_TRACE ("ACE_Select_Reactor_Token::dump");
+  ACE_TRACE ("ACE_Select_Reactor_Token_T::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
@@ -199,20 +199,20 @@ ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::ACE_Select_Reactor_Token_T
   (ACE_Select_Reactor_Impl &r)
     : select_reactor_ (&r)
 {
-  ACE_TRACE ("ACE_Select_Reactor_Token::ACE_Select_Reactor_Token");
+  ACE_TRACE ("ACE_Select_Reactor_Token_T::ACE_Select_Reactor_Token");
 }
 
 template <class ACE_SELECT_REACTOR_MUTEX>
 ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::ACE_Select_Reactor_Token_T (void)
   : select_reactor_ (0)
 {
-  ACE_TRACE ("ACE_Select_Reactor_Token::ACE_Select_Reactor_Token");
+  ACE_TRACE ("ACE_Select_Reactor_Token_T::ACE_Select_Reactor_Token");
 }
 
 template <class ACE_SELECT_REACTOR_MUTEX>
 ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::~ACE_Select_Reactor_Token_T (void)
 {
-  ACE_TRACE ("ACE_Select_Reactor_Token::~ACE_Select_Reactor_Token");
+  ACE_TRACE ("ACE_Select_Reactor_Token_T::~ACE_Select_Reactor_Token_T");
 }
 
 template <class ACE_SELECT_REACTOR_MUTEX> ACE_Select_Reactor_Impl &
@@ -233,7 +233,7 @@ ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::select_reactor
 template <class ACE_SELECT_REACTOR_MUTEX> void
 ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::sleep_hook (void)
 {
-  ACE_TRACE ("ACE_Select_Reactor_Token::sleep_hook");
+  ACE_TRACE ("ACE_Select_Reactor_Token_T::sleep_hook");
   if (this->select_reactor_->notify () == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
@@ -869,7 +869,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_i (ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE_Select_Reactor_T::resume");
+  ACE_TRACE ("ACE_Select_Reactor_T::resume_i");
   if (this->handler_rep_.find (handle) == 0)
     return -1;
 

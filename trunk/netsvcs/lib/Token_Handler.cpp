@@ -331,7 +331,7 @@ ACE_Token_Handler::get_proxy (void)
 ACE_Token_Proxy *
 ACE_Token_Handler::create_proxy (void)
 {
-  ACE_TRACE ("ACE_Token_Handler::new_proxy");
+  ACE_TRACE ("ACE_Token_Handler::create_proxy");
 
   ACE_Token_Proxy *proxy;
 

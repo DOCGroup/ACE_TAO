@@ -82,6 +82,6 @@ ACE_Service_Type::active (int turnon)
 ACE_INLINE int
 ACE_Service_Type::fini_called (void) const
 {
-  ACE_TRACE ("ACE_Service_TYpe::fini_called");
+  ACE_TRACE ("ACE_Service_Type::fini_called");
   return this->fini_already_called_;
 }

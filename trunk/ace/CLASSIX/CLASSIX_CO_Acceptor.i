@@ -7,7 +7,7 @@ ACE_CLASSIX_CO_Acceptor::ACE_CLASSIX_CO_Acceptor (ACE_Reactor* theReactor)
     : port_    (0),
       reactor_ (theReactor)
 {
-  ACE_TRACE ("ACE_CLASSIX_Acceptor::ACE_CLASSIX_Acceptor");
+  ACE_TRACE ("ACE_CLASSIX_CO_Acceptor::ACE_CLASSIX_CO_Acceptor");
 }
 
 ACE_INLINE

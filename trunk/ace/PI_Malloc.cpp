@@ -27,7 +27,7 @@ ACE_RCSID(ace, PI_Malloc, "$Id$")
 void
 ACE_PI_Control_Block::ACE_Malloc_Header::dump (void) const
 {
-  ACE_TRACE ("ACE_Malloc_Header::dump");
+  ACE_TRACE ("ACE_PI_Control_Block::ACE_Malloc_Header::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nnext_block = %x"), (ACE_Malloc_Header *) this->next_block_));
@@ -38,7 +38,7 @@ ACE_PI_Control_Block::ACE_Malloc_Header::dump (void) const
 void
 ACE_PI_Control_Block::print_alignment_info (void)
 {
-  ACE_TRACE ("ACE_Control_Block::print_alignment_info");
+  ACE_TRACE ("ACE_PI_Control_Block::ACE_Control_Block::print_alignment_info");
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("Start ---> ACE_PI_Control_Block::print_alignment_info:\n")));
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("Sizeof ptr: %d\n")
@@ -72,7 +72,7 @@ ACE_PI_Control_Block::print_alignment_info (void)
 void
 ACE_PI_Control_Block::dump (void) const
 {
-  ACE_TRACE ("ACE_Control_Block::dump");
+  ACE_TRACE ("ACE_PI_Control_Block::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("Name Node:\n")));
@@ -96,7 +96,7 @@ ACE_PI_Control_Block::dump (void) const
 
 ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (void)
 {
-  ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
+  ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node");
 }
 
 ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
@@ -108,7 +108,7 @@ ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
     next_ (next),
     prev_ (0)
 {
-  ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
+  ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node");
   char *n = this->name_;
   ACE_OS::strcpy (n, name);
   if (next != 0)
@@ -117,7 +117,7 @@ ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
 
 ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
 {
-  ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
+  ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node");
   ACE_ASSERT (0); // not implemented!
 }
 
@@ -143,7 +143,7 @@ ACE_PI_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header (void)
 void
 ACE_PI_Control_Block::ACE_Name_Node::dump (void) const
 {
-  ACE_TRACE ("ACE_Name_Node");
+  ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("pointer = %x"), (const char *) this->pointer_));

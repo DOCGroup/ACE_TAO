@@ -22,7 +22,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_Iterator_T (ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &heap)
   : timer_heap_ (heap)
 {
-  ACE_TRACE ("ACE_Timer_Heap_Iterator::ACE_Timer_Heap_Iterator");
+  ACE_TRACE ("ACE_Timer_Heap_Iterator_T::ACE_Timer_Heap_Iterator");
   this->first();
 }
 
@@ -161,7 +161,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (FUNCTOR *upcall_fun
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Heap_T (void)
 {
-  ACE_TRACE ("ACE_Timer_Heap::~ACE_Timer_Heap");
+  ACE_TRACE ("ACE_Timer_Heap_T::~ACE_Timer_Heap_T");
 
   delete iterator_;
 
@@ -193,7 +193,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Heap_T (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::pop_freelist (void)
 {
-  ACE_TRACE ("ACE_Timer_Heap::pop_freelist");
+  ACE_TRACE ("ACE_Timer_Heap_T::pop_freelist");
 
   // We need to truncate this to <int> for backwards compatibility.
   int new_id = ACE_static_cast (int,
@@ -210,7 +210,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::pop_freelist (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::push_freelist (int old_id)
 {
-  ACE_TRACE ("ACE_Timer_Heap::push_freelist");
+  ACE_TRACE ("ACE_Timer_Heap_T::push_freelist");
 
   // The freelist values in the <timer_ids_> are negative, so we need
   // to negate them to get the next freelist "pointer."
@@ -221,7 +221,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::push_freelist (int old_id)
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::timer_id (void)
 {
-  ACE_TRACE ("ACE_Timer_Heap::timer_id");
+  ACE_TRACE ("ACE_Timer_Heap_T::timer_id");
 
   // Return the next item off the freelist and use it as the timer id.
   return this->pop_freelist ();
@@ -232,7 +232,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::timer_id (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::is_empty (void) const
 {
-  ACE_TRACE ("ACE_Timer_Heap::is_empty");
+  ACE_TRACE ("ACE_Timer_Heap_T::is_empty");
   return this->cur_size_ == 0;
 }
 
@@ -248,14 +248,14 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::iter (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK> const ACE_Time_Value &
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::earliest_time (void) const
 {
-  ACE_TRACE ("ACE_Timer_Heap::earliest_time");
+  ACE_TRACE ("ACE_Timer_Heap_T::earliest_time");
   return this->heap_[0]->get_timer_value ();
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
 {
-  ACE_TRACE ("ACE_Timer_Heap::dump");
+  ACE_TRACE ("ACE_Timer_Heap_T::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmax_size_ = %d"), this->max_size_));
@@ -501,7 +501,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reschedule (ACE_Timer_Node_T<TYPE> *expired)
 {
-  ACE_TRACE ("ACE_Timer_Heap::reschedule");
+  ACE_TRACE ("ACE_Timer_Heap_T::reschedule");
 
   // If we are rescheduling then we have freed our timer id so we need
   // to reacquire it.  NOTE: we rely on the fact that we will get the
@@ -565,7 +565,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
                                                      const ACE_Time_Value &future_time,
                                                      const ACE_Time_Value &interval)
 {
-  ACE_TRACE ("ACE_Timer_Heap::schedule");
+  ACE_TRACE ("ACE_Timer_Heap_T::schedule");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
@@ -602,7 +602,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
                                                    const void **act,
                                                    int dont_call)
 {
-  ACE_TRACE ("ACE_Timer_Heap::cancel");
+  ACE_TRACE ("ACE_Timer_Heap_T::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   // Locate the ACE_Timer_Node that corresponds to the timer_id.
@@ -682,7 +682,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
                                                    int dont_call)
 {
-  ACE_TRACE ("ACE_Timer_Heap::cancel");
+  ACE_TRACE ("ACE_Timer_Heap_T::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   int number_of_cancellations = 0;

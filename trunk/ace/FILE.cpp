@@ -91,7 +91,7 @@ ACE_FILE::position (long offset, int startpos)
 off_t
 ACE_FILE::tell (void)
 {
-  ACE_TRACE ("ACE_FILE::position");
+  ACE_TRACE ("ACE_FILE::tell");
   return ACE_OS::lseek (this->get_handle (), 0, SEEK_CUR);
 }
 
