@@ -1,3 +1,10 @@
+Tue Oct 31 10:54:42 2000 Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Process.i:
+
+          Changed the CREATE_UNICODE_ENVIRONMENT section to be only
+          in ACE_WIN32 environments.
+
 Tue Oct 31 11:35:31 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/config-sunos5.5.h: 
