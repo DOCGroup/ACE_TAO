@@ -52,7 +52,7 @@ COLLOCATION_OBJS = cubitC.o \
 
 BIN = server \
       client \
-      collocation_test
+      collocation/collocation_test
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
@@ -85,7 +85,7 @@ server:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 client:	$(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-collocation_test: $(addprefix $(VDIR),$(COLLOCATION_OBJS))
+collocation/collocation_test: $(addprefix $(VDIR),$(COLLOCATION_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
