@@ -1,3 +1,9 @@
+Thu Jan 22 18:18:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/Event_Service/GPlot_File.{h,cpp}: Shuffled template
+	  instantiations and typedef's for ACE_Map_Manager around to
+	  eliminate compilation errors from g++.
+
 Thu Jan 22 16:32:56 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/nvlist.cpp (is_nil): Fixed some return lines that were
