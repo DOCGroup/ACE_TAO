@@ -41,13 +41,6 @@ CORBA_ORB::AddRef (void)
   return refcount_++;
 }
 
-ACE_INLINE
-TAO_ORB_Parameters *
-CORBA_ORB::params(void)
-{
-  return &params_;
-}
-
 ACE_INLINE CORBA::Boolean
 CORBA_ORB::work_pending (void)
 {

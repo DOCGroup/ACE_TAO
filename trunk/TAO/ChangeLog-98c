@@ -1,3 +1,25 @@
+Fri Oct 31 13:46:04 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* docs/Options.html: Updated to specify new TAO_Resource_Factory
+ 	service and its options.
+
+	* docs/releasenotes/orbcore.html: Updated to reflect recent work.
+
+	* tao/orb_core.*: Added the acceptor and related members and
+ 	methods from CORBA_ORB.  Made TAO_Resource_Factory a Service
+ 	Object so that it can be loaded via the Service Configurator.  The
+ 	option to change its resources between global and thread-specific
+ 	is "-ORBresources global" and "-ORBresources tss", respectively.
+
+	* tao/orbobj.*: Moved the acceptor and related members and methods
+ 	to TAO_ORB_Core.
+
+	* tests/.../svc.conf: Added Resource Factory as a service.
+
+	* tests/Cubit/TAO/{DII_Cubit,MT_Cubit}/cubitS.cpp,
+ 	tests/Thruput_test/ttcpS.cpp, tao/poa.cpp: Changed acceses that
+ 	used to go to CORBA_ORB::params() to go to TAO_ORB_Core::params().
+
 Fri Oct 31 08:39:54 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL Compiler - Intermediate commit of all improved features.

@@ -97,7 +97,7 @@ CORBA_POA::create (CORBA::OctetSeq &key,
 
   IIOP::Version ver (IIOP::MY_MAJOR, IIOP::MY_MINOR);
   // Cast below de-warns on Sun's C++
-  const ACE_INET_Addr& addr = orb_->params ()->addr ();
+  const ACE_INET_Addr& addr = TAO_ORB_Core_instance ()->orb_params ()->addr ();
   CORBA::String h = (char*)addr.get_host_name ();
 
   data = new IIOP_Object (id, IIOP::ProfileBody (ver,
