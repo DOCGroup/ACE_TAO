@@ -164,7 +164,8 @@ ACE_HAS_AUTOMATIC_INIT_FINI             Compiler/platform correctly
 ACE_HAS_BIG_FD_SET                      Compiler/platform has typedef
                                         u_long fdmask (e.g., Linux and
                                         SCO).
-ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR      Compiler can't handle calling destructor
+ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
+                                        Compiler handle explicit calling of  template destructor correctly.
                                         explicitly using "normal" syntax, see
                                         "ace/OS.h" for details.
 ACE_HAS_BROKEN_NAMESPACES               Compiler/platform doesn't
