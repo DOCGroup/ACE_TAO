@@ -1,15 +1,32 @@
+Sat Feb 12 21:06:56 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/Basic/Bitmask.cpp:
+        * orbsvcs/tests/Event/Basic/Complex.cpp:
+        * orbsvcs/tests/Event/Basic/Negation.cpp:
+          Removed last hardcoded expected counts.  Use the count from the
+          suppliers to predict the number of received events.
+
+        * orbsvcs/tests/Event/Basic/Timeout.cpp:
+          Use dump_results() to show the results.  The test can fail under
+          heavy system load because some timers can be missed.
+
+Sat Feb 12 20:57:29 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/Basic/Bitmask.cpp:
+        * orbsvcs/tests/Event/Basic/Negation.cpp:
+
 Sat Feb 12 15:58:54 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsp:
         * orbsvcs/orbsvcs/orbsvcs_static.dsp:
           Add the new files to the MSVC projects.
 
-	* orbsvcs/tests/CosEvent/CosEvent.dsw:
-	* orbsvcs/tests/CosEvent/Basic/Disconnect.dsp:
-	* orbsvcs/tests/CosEvent/Basic/Shutdown.dsp:
-	* orbsvcs/tests/Event/Event.dsw:
-	  Add workspaces for the new CosEvent tests, and update the Event
-	  tests workspace.
+        * orbsvcs/tests/CosEvent/CosEvent.dsw:
+        * orbsvcs/tests/CosEvent/Basic/Disconnect.dsp:
+        * orbsvcs/tests/CosEvent/Basic/Shutdown.dsp:
+        * orbsvcs/tests/Event/Event.dsw:
+          Add workspaces for the new CosEvent tests, and update the Event
+          tests workspace.
 
 Sat Feb 12 13:37:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
