@@ -1,3 +1,24 @@
+Fri Apr 13 18:49:32 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Reactive_Flushing_Strategy.h:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Add timeout to the flush_message() operation.
+
+        * tao/Transport.cpp:
+          Use the new timeout of flush_message() to implement timeouts
+          for twoways blocked during writes.
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.cpp:
+          Add method to insert message at the head of the queue.
+
+        * tao/Synch_Queued_Message.h:
+        * tao/Synch_Queued_Message.cpp:
+          Add accessor to obtain the current message block.
+
 Thu Apr 12 20:15:22 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Sync_Strategies.h:

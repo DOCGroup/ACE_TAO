@@ -23,7 +23,8 @@ TAO_Reactive_Flushing_Strategy::cancel_output (TAO_Transport *transport)
 
 int
 TAO_Reactive_Flushing_Strategy::flush_message (TAO_Transport *transport,
-                                               TAO_Queued_Message *msg)
+                                               TAO_Queued_Message *msg,
+                                               ACE_Time_Value *max_wait_time)
 {
   int result = 0;
 
@@ -35,7 +36,7 @@ TAO_Reactive_Flushing_Strategy::flush_message (TAO_Transport *transport,
 
       while (!msg->all_data_sent () && result >= 0)
         {
-          result = orb_core->run (0, 1, ACE_TRY_ENV);
+          result = orb_core->run (max_wait_time, 1, ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
     }

@@ -117,13 +117,13 @@ public:
   virtual void remove_from_list (TAO_Queued_Message *&head,
                                  TAO_Queued_Message *&tail);
 
-  /// Insert the current element after position.
-  /**
-   * If position is null then we assume that we are inserting the
-   * current element into an empty list.
-   */
+  /// Insert the current element at the tail of the queue.
   virtual void push_back (TAO_Queued_Message *&head,
                           TAO_Queued_Message *&tail);
+
+  /// Insert the current element at the head of the queue.
+  virtual void push_front (TAO_Queued_Message *&head,
+                           TAO_Queued_Message *&tail);
   //@}
 
   /** @name Template Methods
