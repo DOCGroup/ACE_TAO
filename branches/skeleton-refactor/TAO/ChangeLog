@@ -30,7 +30,7 @@ Wed Oct 20 03:00:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  No longer any need to generate per-operation ServerRequestInfo
 	  classes.
-	
+
 	* TAO_IDL/be/be_visitor_operation.cpp:
 	* TAO_IDL/be_include/be_visitor_operation.h:
 
