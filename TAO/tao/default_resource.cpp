@@ -67,7 +67,9 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
 
   this->parser_names_count_ = 0;
 
-  for (int curarg = 0; curarg < argc; ++curarg)
+  int curarg = 0;
+
+  for (curarg = 0; curarg < argc; ++curarg)
   {
     // Parse thro' and find the number of Parsers to be loaded.
     if (ACE_OS::strcasecmp (argv[curarg],
@@ -85,7 +87,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
       }
   }
 
-  for (int curarg = 0; curarg < argc; curarg++)
+  for (curarg = 0; curarg < argc; curarg++)
     if (ACE_OS::strcasecmp (argv[curarg],
                             "-ORBResources") == 0)
       {
@@ -352,6 +354,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
             this->add_to_ior_parser_names (argv[curarg]);
           }
       }
+
   return 0;
 }
 

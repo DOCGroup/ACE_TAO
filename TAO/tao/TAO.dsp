@@ -727,6 +727,25 @@ SOURCE=.\DLL_ORB.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DLL_Parser.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\DomainC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -842,6 +861,25 @@ SOURCE=.\Exception.cpp
 # Begin Source File
 
 SOURCE=.\Exclusive_TMS.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\FILE_Parser.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -1316,6 +1354,25 @@ SOURCE=.\IOPS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOR_Parser.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Leader_Follower.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -1659,6 +1716,25 @@ SOURCE=.\ORB_Table.cpp
 # Begin Source File
 
 SOURCE=.\params.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Parser_Registry.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3214,6 +3290,10 @@ SOURCE=.\DLL_ORB.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DLL_Parser.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DomainC.h
 # End Source File
 # Begin Source File
@@ -3239,6 +3319,10 @@ SOURCE=.\Exception.h
 # Begin Source File
 
 SOURCE=.\Exclusive_TMS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FILE_Parser.h
 # End Source File
 # Begin Source File
 
@@ -3326,6 +3410,10 @@ SOURCE=.\IOPS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOR_Parser.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Leader_Follower.h
 # End Source File
 # Begin Source File
@@ -3407,6 +3495,10 @@ SOURCE=.\orbconf.h
 # Begin Source File
 
 SOURCE=.\params.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Parser_Registry.h
 # End Source File
 # Begin Source File
 
@@ -3794,6 +3886,10 @@ SOURCE=.\DLL_ORB.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\DLL_Parser.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\DomainC.i
 # End Source File
 # Begin Source File
@@ -3815,6 +3911,10 @@ SOURCE=.\Environment.i
 # Begin Source File
 
 SOURCE=.\Exception.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\FILE_Parser.i
 # End Source File
 # Begin Source File
 
@@ -3875,6 +3975,10 @@ SOURCE=.\IOPC.i
 # Begin Source File
 
 SOURCE=.\IOPS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOR_Parser.i
 # End Source File
 # Begin Source File
 
@@ -3947,6 +4051,10 @@ SOURCE=.\ORB_Table.inl
 # Begin Source File
 
 SOURCE=.\params.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Parser_Registry.i
 # End Source File
 # Begin Source File
 
