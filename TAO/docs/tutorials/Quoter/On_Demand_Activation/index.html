@@ -77,8 +77,7 @@
         virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid, 
                                                    PortableServer::POA_ptr poa, 
                                                    const char * operation, 
-                                                   void * & cookie,
-                                                   CORBA::Environment&)
+                                                   void * & cookie)
           throw (CORBA::SystemException, PortableServer::ForwardRequest);
   
         // Postinvoke function
@@ -86,8 +85,7 @@
                                  PortableServer::POA_ptr poa,
                                  const char * operation, 
                                  void * cookie, 
-                                 PortableServer::Servant servant,
-                                 CORBA::Environment&)
+                                 PortableServer::Servant servant)
           throw (CORBA::SystemException);
 
        private:
@@ -97,8 +95,8 @@
     <P>In the implementation of the <CODE>preinvoke</CODE> operation, we check if
       the object ID is valid and then check for the servant we want to
       create and create adn return the requested servant.
-    </P>
-    <P>
+    <PRE>
+    <PRE>
      PortableServer::Servant
      Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid, 
                                                  PortableServer::POA_ptr poa, 
@@ -271,7 +269,7 @@
     <address><a href="mailto:pgontla@ece.uci.edu">Priyanka Gontla</a></address>
     <!-- Created: Mon May  1 11:08:56 PDT 2000 -->
     <!-- hhmts start -->
-Last modified: Tue May  2 11:41:26 PDT 2000
+Last modified: Thu May  4 17:25:01 PDT 2000
 <!-- hhmts end -->
   </body>
 </html>
