@@ -20,7 +20,8 @@ DIRS  = \
   PICurrent \
   Bug_1559 \
   Collocated \
-  AMI
+  AMI \
+  ORB_Shutdown
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

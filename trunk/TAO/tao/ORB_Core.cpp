@@ -633,7 +633,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                                  pos - current_arg);
           ACE_CString IOR (ACE_TEXT_ALWAYS_CHAR(pos + 1));
           if (this->init_ref_map_.bind (object_id, IOR) != 0)
-            {              
+            {
               ACE_ERROR ((LM_ERROR,
                           ACE_LIB_TEXT ("Cannot store ORBInitRef ")
                           ACE_LIB_TEXT ("argument '%s'\n"),
@@ -1964,10 +1964,6 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
       if (wait_for_completion != 0)
         tm->wait ();
 
-      // Invoke Interceptor::destroy() on all registered interceptors.
-      this->destroy_interceptors (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       // Explicitly destroy the object reference table since it
       // contains references to objects, which themselves may contain
       // reference to this ORB.
@@ -2009,6 +2005,10 @@ TAO_ORB_Core::destroy (ACE_ENV_SINGLE_ARG_DECL)
   // Shutdown the ORB and block until the shutdown is complete.
   this->shutdown (1
                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Invoke Interceptor::destroy() on all registered interceptors.
+  this->destroy_interceptors (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Now remove it from the ORB table so that it's ORBid may be
