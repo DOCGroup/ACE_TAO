@@ -5,7 +5,10 @@
 #include "tao/RTScheduling/RTScheduler.h"
 //#include "FP_Scheduler.h"
 #include "ace/Task.h"
+#include "DT_Creator.h"
 
+class Task_Stats;
+class DT_Creator;
 
 class Thread_Task : public ACE_Task <ACE_SYNCH>
 {
@@ -13,7 +16,8 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
 
   Thread_Task (int importance,
 	       int start_time,
-	       int load);
+	       int load,
+	       DT_Creator *dt_creator);
   
   int perform_task (int times);
 
@@ -37,6 +41,7 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
   int count_;
   ACE_Barrier* barrier_;
   int importance_;
+  DT_Creator *dt_creator_;
 };
 
 #endif /* THREAD_TASK_H */
