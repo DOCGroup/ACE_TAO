@@ -48,9 +48,9 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
     }
   else
     {
-      (void) ACE_OS::strncpy (this->filename_,
-                              sa.filename_,
-                              sa.get_size ());
+      (void) ACE_OS::strsncpy (this->filename_,
+                               sa.filename_,
+                               sa.get_size ());
 
       this->base_set (sa.get_type (),
                       sa.get_size ());
@@ -95,7 +95,7 @@ ACE_FILE_Addr::ACE_FILE_Addr (const ACE_TCHAR *filename)
 int
 ACE_FILE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 {
-  ACE_OS::strncpy (s, this->filename_, len);
+  ACE_OS::strsncpy (s, this->filename_, len);
   return 0;
 }
 

@@ -225,7 +225,7 @@ IorHandler::getString (char *readPtr, int givenLen)
 }
 
 void
-IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
+IorHandler::interpretIor (char *thisIor, struct IOR_Manager *thisIorInfo)
 {
   int numCharsToSkip;
   int validTypeId = 0;

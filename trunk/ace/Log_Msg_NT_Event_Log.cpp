@@ -2,7 +2,7 @@
 
 #include "ace/config-all.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 
 #include "ace/Log_Msg_NT_Event_Log.h"
 #include "ace/Log_Msg.h"
