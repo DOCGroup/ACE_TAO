@@ -279,13 +279,13 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
 //             ACE_ERROR ((LM_ERROR,
 //                      "(%t|%T): release_cond.wait timed out \n"));
 //             }
-             cur_time = ACE_OS::gettimeofday ();
 #ifdef MY_KOKYU_DSRT_LOGGING
+           cur_time = ACE_OS::gettimeofday ();
            ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T): And Current time is set in the map and %d, %d.\n",cur_time.sec(), cur_time.usec() ));
 #endif
 
-             this->release_map_.rebind(qos.task_id_, cur_time);
+             this->release_map_.rebind(qos.task_id_, proper_t);
 /*DTTIME:
   Release time on the server side. please record the guid in your DSUI_EVENT_LOG
 */
