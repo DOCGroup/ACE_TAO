@@ -2637,21 +2637,6 @@ not apply.  See the comments at the top of the script itself for usage
 information.
 
 <P><hr align=left width="50%"><P>
-<H4><A NAME="corba">Building CORBA Versions of ACE</A></H4>
-
-Note that if you are compiling with IONA's Orbix implementation of
-CORBA or Visigenix's implementation of CORBA, you'll also need to set
-ORBIX_ROOT to point to the root of the Orbix source tree and
-ORBELINE_ROOT to point to the root of the ORBeline source tree.  Since
-many platforms don't have these CORBA tools the default for ACE does
-*not* incorporate them.  Thus, if you are compiling with Orbix or
-ORBeline, make sure that you set up
-$ACE_ROOT/include/makeinclude/platform_macros.GNU and
-$ACE_ROOT/ace/config.h to use the config* and platform*
-files that have "-orbix" in them!
-
-
-<P><hr align=left width="50%"><P>
 <H4><A NAME="mvs">Additional Build Tips for MVS</A></H4>
 
 For all intents and purpose, MVS OpenEdition (OE) is another flavor of
@@ -2731,7 +2716,6 @@ fast             Enable -fast option, e.g., with Sun C++.
 inline           Enable ACE inlining.  Some platforms enable inlining by
                    default, others do not.
 optimize         Enable optimization; see OCFLAGS and OCCFLAGS.
-orbix            Enable use of Orbix.
 pace             Enable PACE as the underpinnings of ACE_OS.
 probe            Enable ACE_Timeprobes.
 profile          Enable profiling; see PCFLAGS and PCCFLAGS.
