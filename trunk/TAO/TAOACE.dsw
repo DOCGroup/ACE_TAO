@@ -24,16 +24,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ACE DLL
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ORB Services DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
     End Project Dependency
 }}}
 
@@ -48,7 +39,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ACE DLL
+    Project_Dep_Name gperf
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
@@ -84,9 +75,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ACE dynamic library
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name gperf
     End Project Dependency
     Begin Project Dependency
@@ -105,13 +93,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ACE dynamic library
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name gperf_lib
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ACE DLL
     End Project Dependency
 }}}
 
@@ -125,9 +107,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name ACE dynamic library
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ACE DLL
     End Project Dependency
