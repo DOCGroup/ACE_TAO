@@ -80,13 +80,18 @@ SenderImpl::SenderExec_i::SenderExec_i (void)
         CORBA::PolicyManager::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("PolicyCurrent");
+        this->orb_->resolve_initial_references ("PolicyCurrent"
+                                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       this->policy_current_ =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
       object =
-    this->orb_->resolve_initial_references ("NetworkPriorityMappingManager");
+        this->orb_->resolve_initial_references ("NetworkPriorityMappingManager"
+                                                ACE_ENV_ARG_PARAMETER);
+
+      ACE_TRY_CHECK;
 
       RTCORBA::NetworkPriorityMappingManager_var mapping_manager =
         RTCORBA::NetworkPriorityMappingManager::_narrow (object.in ());
