@@ -245,7 +245,7 @@ public:
                         CORBA::Flags flags,
                         CORBA::ExceptionList &exceptions,
                         CORBA_Environment &TAO_IN_ENV =
-                              CORBA::default_environment ());
+                              TAO_default_environment ());
   // Dynamic invocations use a more costly "varargs" calling
   // convention; it's got the same input data as the (static)
   // stub-oriented one, but the data is represented somewhat
@@ -270,7 +270,7 @@ public:
   CORBA::Policy_ptr get_policy (
       CORBA::PolicyType type,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
 
   POA_Messaging::RelativeRoundtripTimeoutPolicy*
@@ -279,23 +279,23 @@ public:
   CORBA::Policy_ptr get_client_policy (
       CORBA::PolicyType type,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   TAO_Stub* set_policy_overrides (
       const CORBA::PolicyList & policies,
       CORBA::SetOverrideType set_add,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   CORBA::PolicyList * get_policy_overrides (
       const CORBA::PolicyTypeSeq & types,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
   CORBA::Boolean validate_connection (
       CORBA::PolicyList_out inconsistent_policies,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
+        TAO_default_environment ()
     );
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
@@ -303,7 +303,7 @@ public:
   // All objref representations carry around a type ID.
 
   CORBA::ULong hash (CORBA::ULong maximum,
-          CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+          CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // All objref representations know how to hash themselves and
   // compare themselves for equivalence to others.  It's easily
   // possible to have two objrefs that are distinct copies of data
@@ -312,7 +312,7 @@ public:
 
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
                                 CORBA_Environment &TAO_IN_ENV =
-                                      CORBA::default_environment ());
+                                      TAO_default_environment ());
   // Implement the is_equivalent() method for the CORBA::Object
 
   // Our Constructors ...
@@ -405,7 +405,7 @@ protected:
   void put_params (TAO_GIOP_Invocation &call,
                    CORBA::NVList_ptr args,
                    CORBA_Environment &TAO_IN_ENV =
-                         CORBA::default_environment ());
+                         TAO_default_environment ());
   // Helper method to factor out common code in dynamic oneway
   // vs. twoway invocations.
 

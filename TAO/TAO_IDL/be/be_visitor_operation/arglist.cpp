@@ -71,7 +71,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
       os->indent ();
       *os << "CORBA::Environment &ACE_TRY_ENV";
       *os << " = " << be_idt_nl
-	        << "CORBA::default_environment ()"
+	        << "TAO_default_environment ()"
 	        << be_uidt;
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:

@@ -57,14 +57,14 @@ public:
     virtual ~Current (void);
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id,
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+        CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
     virtual void* _downcast (
         const char* logical_type_id
       );
 
-    virtual void _dispatch (CORBA::ServerRequest &_tao_req, void *_tao_context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual void _dispatch (CORBA::ServerRequest &_tao_req, void *_tao_context, CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
 
-    ACE_CORBA_1(Current) *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    ACE_CORBA_1(Current) *_this (CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
     virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -84,7 +84,7 @@ public:
     Current_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
         const char *logical_type_id,
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+        CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()
       );
 
   private:
@@ -105,22 +105,22 @@ public:
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id,
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+        CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
 
     virtual void* _downcast (
         const char* logical_type_id
       );
 
     virtual CORBA::PolicyType policy_type (
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+        CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()
        ) = 0;
 
     virtual CORBA::Policy_ptr copy (
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+        CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()
        ) = 0;
 
     virtual void destroy (
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+        CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()
        ) = 0;
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
@@ -128,21 +128,21 @@ public:
         CORBA::ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+        CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()
       );
 
     static void copy_skel (
         CORBA::ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+        CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()
       );
 
     static void destroy_skel (
         CORBA::ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+        CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()
       );
 
     static void _is_a_skel (
@@ -150,7 +150,7 @@ public:
         void *obj,
         void *context,
         CORBA_Environment &TAO_IN_ENV =
-          CORBA::default_environment ()
+          TAO_default_environment ()
       );
 
     static void _non_existent_skel (
@@ -166,12 +166,12 @@ public:
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
         CORBA_Environment &TAO_IN_ENV =
-          CORBA::default_environment ()
+          TAO_default_environment ()
       );
 
     CORBA_Policy_ptr _this (
         CORBA_Environment &TAO_IN_ENV =
-          CORBA::default_environment ());
+          TAO_default_environment ());
     virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -191,16 +191,16 @@ public:
     Policy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
         const char *logical_type_id,
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+        CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()
       );
     virtual CORBA::PolicyType policy_type (
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+        CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()
        );
     virtual CORBA::Policy_ptr copy (
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+        CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()
        );
     virtual void destroy (
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+        CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()
        );
 
   private:
@@ -353,8 +353,8 @@ public:
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
       );
 
     virtual void* _downcast (
@@ -365,42 +365,42 @@ public:
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
       );
 
         static void _non_existent_skel (
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
       );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
       );
 
     CORBA::DomainManager *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
       );
 
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Policy_ptr get_domain_policy (
       CORBA::PolicyType policy_type,
-      CORBA::Environment &ACE_TRY_ENV = 
-        CORBA::default_environment ()
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
     ) = 0;
     static void get_domain_policy_skel (
-      CORBA::ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &_tao_env = 
-        CORBA::default_environment ()
+      CORBA::ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_context,
+      CORBA::Environment &_tao_env =
+        TAO_default_environment ()
     );
 
   };
@@ -415,10 +415,10 @@ public:
     DomainManager_ptr _get_servant (void) const;
         virtual CORBA::Policy_ptr get_domain_policy (
         CORBA::PolicyType policy_type,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
       );
-  
+
   private:
     DomainManager_ptr servant_;
   };
@@ -1756,8 +1756,8 @@ private:
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
       );
 
     virtual void* _downcast (
@@ -1768,43 +1768,43 @@ private:
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
       );
 
         static void _non_existent_skel (
         CORBA::ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
       );
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
       );
 
     CORBA::ConstructionPolicy *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
       );
 
     virtual const char* _interface_repository_id (void) const;
     virtual void make_domain_manager (
       CORBA::InterfaceDef_ptr object_type,
       CORBA::Boolean constr_policy,
-      CORBA::Environment &ACE_TRY_ENV = 
-        CORBA::default_environment ()
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
     ) = 0;
   static void make_domain_manager_skel (
-      CORBA::ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &_tao_env = 
-        CORBA::default_environment ()
+      CORBA::ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_context,
+      CORBA::Environment &_tao_env =
+        TAO_default_environment ()
     );
 
   };
@@ -1821,15 +1821,15 @@ private:
         virtual void make_domain_manager (
         CORBA::InterfaceDef_ptr object_type,
         CORBA::Boolean constr_policy,
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
       );
     virtual CORBA::Boolean _is_a (
         const char *logical_type_id,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-  
+
   private:
     ConstructionPolicy_ptr servant_;
   };

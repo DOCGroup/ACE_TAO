@@ -1687,7 +1687,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "void *obj," << be_nl
                       << "void *context," << be_nl
                       << "CORBA::Environment &env =" << be_idt_nl
-                      << "CORBA::default_environment ()"
+                      << "TAO_default_environment ()"
                       << be_uidt << be_uidt_nl
                       << ");" << be_uidt << "\n\n";
                 }
@@ -1738,7 +1738,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "void *obj," << be_nl
                       << "void *context," << be_nl
                       << "CORBA::Environment &env =" << be_idt_nl
-                      << "CORBA::default_environment ()"
+                      << "TAO_default_environment ()"
                       << be_uidt << be_uidt_nl
                       << ");" << be_uidt << "\n\n";
                 }
@@ -1785,7 +1785,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "void *obj," << be_nl
                           << "void *context," << be_nl
                           << "CORBA::Environment &env = " << be_idt_nl
-                          << "CORBA::default_environment ()"
+                          << "TAO_default_environment ()"
                           << be_uidt << be_uidt_nl
                           << ");" << be_uidt << "\n\n";
                     }

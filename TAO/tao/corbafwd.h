@@ -350,6 +350,11 @@ typedef void (*TAO_Skeleton)(
 template <class T> class TAO_Unbounded_Sequence;
 template <class T> class TAO_Unbounded_Object_Sequence;
 
+// Provide a simple function to access the TSS default environment.
+// We tried with CORBA_Environment::default_environment (),
+// CORBA::default_environment() and others.
+extern TAO_Export CORBA_Environment& TAO_default_environment (void);
+
 TAO_NAMESPACE CORBA
 {
   // = TITLE
@@ -888,6 +893,7 @@ TAO_NAMESPACE CORBA
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA_Environment& default_environment (void);
   // Obtain the thread-specific default environment.
+  // This is obsolete and only left here for backwards compatibility.
 
 };  // end of class (namespace) CORBA
 

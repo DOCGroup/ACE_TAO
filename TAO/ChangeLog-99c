@@ -1,3 +1,73 @@
+Thu Jun  3 15:16:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	* tao/corbafwd.i:
+	* tao/ORB_Core.cpp:
+	  Some compilers get extremely confused with
+	  CORBA::default_environment() as a default parameter. But they
+	  are happy with a function outside the CORBA namespace, for
+	  example: TAO_default_environment
+	  We added the function above and made the
+	  CORBA::default_environment() just a thin wrapper.
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+	  The IDL compiler generates TAO_default_environment now.
+
+	* tao/Any.h:
+	* tao/CDR.h:
+	* tao/CDR_Interpreter.h:
+	* tao/Context.h:
+	* tao/CurrentC.h:
+	* tao/DomainC.h:
+	* tao/Exception.h:
+	* tao/Forwarding_Servant.h:
+	* tao/GIOP.h:
+	* tao/GIOP.cpp:
+	* tao/GIOP_Server_Request.h:
+	* tao/IIOP_Connect.h:
+	* tao/Invocation.h:
+	* tao/Marshal.h:
+	* tao/Messaging_Policy_i.h:
+	* tao/NVList.h:
+	* tao/ORB.cpp:
+	* tao/ORB.h:
+	* tao/ORB_Core.h:
+	* tao/Object.h:
+	* tao/POA.h:
+	* tao/POAC.h:
+	* tao/POAManager.h:
+	* tao/POAS.h:
+	* tao/POA_CORBA.h:
+	* tao/PolicyC.h:
+	* tao/Policy_Manager.h:
+	* tao/PollableC.h:
+	* tao/Request.h:
+	* tao/Sequence.h:
+	* tao/Sequence_T.h:
+	* tao/Servant_Base.h:
+	* tao/Server_Request.h:
+	* tao/Stub.h:
+	* tao/TAO.h:
+	* tao/Typecode.h:
+	* tao/UIOP_Connect.h:
+	* tao/varout.h:
+	* orbsvcs/CosEvent_Service/CosEvent_Service.h:
+	* orbsvcs/Time_Service/IR_Helper.h:
+	* orbsvcs/orbsvcs/Event/EC_Command.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+	  Replaced all uses of CORBA::default_environment() with
+	  TAO_default_environment()
+
 Thu Jun 03 14:54:23 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/poa_T.*: Removed unused files.

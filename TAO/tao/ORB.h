@@ -370,7 +370,7 @@ public:
   virtual CORBA::Object_ptr string_to_object (
                                               const char *str,
                                               CORBA_Environment &ACE_TRY_ENV =
-                                              CORBA::default_environment ());
+                                              TAO_default_environment ());
   // Turn a string-ified object reference back into an object pointer.
   // Typically these strings are created using <object_to_string()>,
   // but not necessarily locally.
@@ -378,7 +378,7 @@ public:
   virtual CORBA::String object_to_string (
                                           CORBA::Object_ptr obj,
                                           CORBA_Environment &ACE_TRY_ENV =
-                                          CORBA::default_environment ());
+                                          TAO_default_environment ());
   // Turn an object reference into a string.  Each type of ORB,
   // e.g. an IIOP ORB, must implement this.  This can be used by
   // servers to publish their whereabouts to clients.  The output of
@@ -392,12 +392,12 @@ public:
                                                   const char *repository_id,
                                                   CORBA::ValueFactory_ptr factory,
                                                   CORBA_Environment &ACE_TRY_ENV =
-                                                  CORBA::default_environment () );
+                                                  TAO_default_environment () );
   void unregister_value_factory (const char * repository_id,
                                  CORBA_Environment &ACE_TRY_ENV =
-                                 CORBA::default_environment () );
+                                 TAO_default_environment () );
   CORBA::ValueFactory_ptr lookup_value_factory (const char *repository_id,
-                                                CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment () );
+                                                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment () );
 #endif /* TAO_HAS_VALUETYPE */
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -413,50 +413,50 @@ public:
   void create_list (CORBA::Long count,
                     CORBA::NVList_ptr &new_list,
                     CORBA_Environment &ACE_TRY_ENV =
-                    CORBA::default_environment ());
+                    TAO_default_environment ());
 
   // The following are not implemented and just throw
   // CORBA::NO_IMPLEMENT.
 
   void create_named_value (CORBA::NamedValue_ptr &nmval,
                            CORBA_Environment &ACE_TRY_ENV =
-                           CORBA::default_environment ());
+                           TAO_default_environment ());
 
   void create_exception_list (CORBA::ExceptionList_ptr &exclist,
                               CORBA_Environment &ACE_TRY_ENV =
-                              CORBA::default_environment ());
+                              TAO_default_environment ());
 
   void create_context_list (CORBA::ContextList_ptr &ctxtlist,
                             CORBA_Environment &ACE_TRY_ENV =
-                            CORBA::default_environment ());
+                            TAO_default_environment ());
 
   void get_default_context (CORBA::Context_ptr &ctx,
                             CORBA_Environment &ACE_TRY_ENV =
-                            CORBA::default_environment ());
+                            TAO_default_environment ());
 
   void create_environment (CORBA::Environment_ptr &new_env,
                            CORBA_Environment &ACE_TRY_ENV =
-                           CORBA::default_environment ());
+                           TAO_default_environment ());
 
   CORBA::Boolean get_service_information (CORBA::ServiceType service_type,
                                           CORBA::ServiceInformation_out service_information,
                                           CORBA::Environment &ACE_TRY_ENV =
-                                          CORBA::default_environment ());
+                                          TAO_default_environment ());
 
   void send_multiple_requests_oneway (const CORBA_ORB_RequestSeq req,
                                       CORBA_Environment &ACE_TRY_ENV =
-                                      CORBA::default_environment ());
+                                      TAO_default_environment ());
 
   void send_multiple_requests_deferred (const CORBA_ORB_RequestSeq req,
                                         CORBA_Environment &ACE_TRY_ENV =
-                                        CORBA::default_environment ());
+                                        TAO_default_environment ());
 
   void get_next_response (CORBA_Request_ptr &req,
                           CORBA_Environment &ACE_TRY_ENV =
-                          CORBA::default_environment ());
+                          TAO_default_environment ());
 
   CORBA::Boolean poll_next_response (CORBA_Environment &ACE_TRY_ENV =
-                                     CORBA::default_environment ());
+                                     TAO_default_environment ());
 
   // = New Things from the POA Specification
   //
@@ -515,7 +515,7 @@ public:
   // is returned.
 
   void shutdown (CORBA::Boolean wait_for_completion = 0,
-                 CORBA::Environment &ACE_TRY_ENV = CORBA::default_environment ());
+                 CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // This operation instructs the ORB to shut down. Shutting down the
   // ORB causes all Object Adapters to be shut down. If
   // <wait_for_completion> parameter is TRUE, this operation blocks
@@ -528,12 +528,12 @@ public:
 
   CORBA_Object_ptr resolve_initial_references (const char *name,
                                                CORBA_Environment &TAO_IN_ENV =
-                                               CORBA::default_environment ());
+                                               TAO_default_environment ());
 
   CORBA_Object_ptr resolve_initial_references (const char *name,
                                                ACE_Time_Value *timeout,
                                                CORBA_Environment &TAO_IN_ENV =
-                                               CORBA::default_environment ());
+                                               TAO_default_environment ());
   // This method acts as a mini-bootstrapping Naming Service, which is
   // provided by the ORB for certain well-known object references.
   // TAO supports the "NameService", "TradingService", "RootPOA", and
@@ -549,13 +549,13 @@ public:
 
   // Unimplemented function - throws CORBA::NO_IMPLEMENT.
   CORBA_ORB_ObjectIdList_ptr list_initial_services (CORBA_Environment &TAO_IN_ENV =
-                                                    CORBA::default_environment ());
+                                                    TAO_default_environment ());
 
 #if defined(TAO_HAS_CORBA_MESSAGING)
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any& val,
                                    CORBA_Environment &ACE_TRY_ENV =
-                                       CORBA::default_environment ())
+                                       TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException, CORBA::PolicyError));
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
@@ -585,13 +585,13 @@ public:
 
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                 const char *type_id,
-                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                                CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // Makes sure that the ORB is open and then creates an IIOP object
   // based on the endpoint.
 
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
                                   const char *type_id,
-                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                                  CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // Convert key into an object reference.  Return Object_ptr as out
   // parameter.  Errors will come through the environment.
   //
@@ -615,7 +615,7 @@ public:
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.
 
-  static void init_orb_globals (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  static void init_orb_globals (CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // Initialize the ORB globals correctly, i.e., only when they
   // haven't been initialized yet.
 

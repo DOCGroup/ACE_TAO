@@ -244,11 +244,11 @@ be_visitor_union_branch_private_ch::visit_predefined_type (be_predefined_type *n
       // check if we are dealing with a CORBA::Object
       if (!ACE_OS::strcmp (bt->local_name ()->get_string (), "Object"))
         {
-          *os << "TAO_Object_Field_T<CORBA::Object> *" << ub->local_name () 
+          *os << "TAO_Object_Field_T<CORBA::Object> *" << ub->local_name ()
               << "_;\n";
         }
       else
-        *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name () 
+        *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
             << "_;\n";
     }
   else if (node->pt () == AST_PredefinedType::PT_any)

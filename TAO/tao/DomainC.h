@@ -35,14 +35,14 @@ public:
   CORBA_DomainManager_var (CORBA_DomainManager_ptr);
   CORBA_DomainManager_var (const CORBA_DomainManager_var &); // copy constructor
   ~CORBA_DomainManager_var (void); // destructor
-    
+
   CORBA_DomainManager_var &operator= (CORBA_DomainManager_ptr);
   CORBA_DomainManager_var &operator= (const CORBA_DomainManager_var &);
   CORBA_DomainManager_ptr operator-> (void) const;
-    
+
   operator const CORBA_DomainManager_ptr &() const;
   operator CORBA_DomainManager_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   CORBA_DomainManager_ptr in (void) const;
   CORBA_DomainManager_ptr &inout (void);
   CORBA_DomainManager_ptr &out (void);
@@ -65,7 +65,7 @@ public:
   operator CORBA_DomainManager_ptr &();
   CORBA_DomainManager_ptr &ptr (void);
   CORBA_DomainManager_ptr operator-> (void);
-    
+
 private:
   CORBA_DomainManager_ptr &ptr_;
 };
@@ -82,32 +82,32 @@ public:
   static CORBA_DomainManager_ptr _duplicate (CORBA_DomainManager_ptr obj);
   static CORBA_DomainManager_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
-        CORBA::default_environment ()
+      CORBA::Environment &env =
+        TAO_default_environment ()
     );
   static CORBA_DomainManager_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
-        CORBA::default_environment ()
+      CORBA::Environment &env =
+        TAO_default_environment ()
     );
   static CORBA_DomainManager_ptr _nil (void);
 
   virtual CORBA::Policy_ptr get_domain_policy (
       CORBA::PolicyType policy_type,
-      CORBA::Environment &ACE_TRY_ENV = 
-        CORBA::default_environment ()
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
     );
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
-        CORBA::default_environment ()
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
+        TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   CORBA_DomainManager (void);
-  CORBA_DomainManager (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  CORBA_DomainManager (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~CORBA_DomainManager (void);
@@ -119,16 +119,16 @@ private:
 // *************************************************************
 // DomainManagerList
 // *************************************************************
-  
+
 class TAO_Export CORBA_DomainManagerList : public TAO_Unbounded_Object_Sequence<CORBA_DomainManager>
 {
 public:
   CORBA_DomainManagerList (void); // default ctor
   CORBA_DomainManagerList (CORBA::ULong max); // uses max size
   CORBA_DomainManagerList (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    CORBA_DomainManager_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA_DomainManager_ptr *buffer,
     CORBA::Boolean release=0
   );
   CORBA_DomainManagerList (const CORBA_DomainManagerList &); // copy ctor
@@ -148,18 +148,18 @@ public:
   CORBA_DomainManagerList_var (CORBA_DomainManagerList *);
   CORBA_DomainManagerList_var (const CORBA_DomainManagerList_var &); // copy constructor
   ~CORBA_DomainManagerList_var (void); // destructor
-    
+
   CORBA_DomainManagerList_var &operator= (CORBA_DomainManagerList *);
   CORBA_DomainManagerList_var &operator= (const CORBA_DomainManagerList_var &);
   CORBA_DomainManagerList *operator-> (void);
   const CORBA_DomainManagerList *operator-> (void) const;
-    
+
   operator const CORBA_DomainManagerList &() const;
   operator CORBA_DomainManagerList &();
   operator CORBA_DomainManagerList &() const;
-    
+
   TAO_Object_Manager<CORBA_DomainManager> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const CORBA_DomainManagerList &in (void) const;
   CORBA_DomainManagerList &inout (void);
   CORBA_DomainManagerList *&out (void);
@@ -181,9 +181,9 @@ public:
   operator CORBA_DomainManagerList *&();
   CORBA_DomainManagerList *&ptr (void);
   CORBA_DomainManagerList *operator-> (void);
-    
+
   TAO_Object_Manager<CORBA_DomainManager> operator[] (CORBA::ULong index);
-    
+
 private:
   CORBA_DomainManagerList *&ptr_;
   // assignment from T_var not allowed
@@ -193,7 +193,7 @@ private:
 // *************************************************************
 // ConstructionPolicy
 // *************************************************************
-  
+
 #if ! defined (TAO_HAS_MINIMUM_CORBA)
 
 class TAO_Export CORBA_ConstructionPolicy_var
@@ -203,14 +203,14 @@ public:
   CORBA_ConstructionPolicy_var (CORBA_ConstructionPolicy_ptr);
   CORBA_ConstructionPolicy_var (const CORBA_ConstructionPolicy_var &); // copy constructor
   ~CORBA_ConstructionPolicy_var (void); // destructor
-    
+
   CORBA_ConstructionPolicy_var &operator= (CORBA_ConstructionPolicy_ptr);
   CORBA_ConstructionPolicy_var &operator= (const CORBA_ConstructionPolicy_var &);
   CORBA_ConstructionPolicy_ptr operator-> (void) const;
-    
+
   operator const CORBA_ConstructionPolicy_ptr &() const;
   operator CORBA_ConstructionPolicy_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   CORBA_ConstructionPolicy_ptr in (void) const;
   CORBA_ConstructionPolicy_ptr &inout (void);
   CORBA_ConstructionPolicy_ptr &out (void);
@@ -233,7 +233,7 @@ public:
   operator CORBA_ConstructionPolicy_ptr &();
   CORBA_ConstructionPolicy_ptr &ptr (void);
   CORBA_ConstructionPolicy_ptr operator-> (void);
-    
+
 private:
   CORBA_ConstructionPolicy_ptr &ptr_;
 };
@@ -250,33 +250,33 @@ public:
   static CORBA_ConstructionPolicy_ptr _duplicate (CORBA_ConstructionPolicy_ptr obj);
   static CORBA_ConstructionPolicy_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
-        CORBA::default_environment ()
+      CORBA::Environment &env =
+        TAO_default_environment ()
     );
   static CORBA_ConstructionPolicy_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
-        CORBA::default_environment ()
+      CORBA::Environment &env =
+        TAO_default_environment ()
     );
   static CORBA_ConstructionPolicy_ptr _nil (void);
 
   virtual void make_domain_manager (
       CORBA::InterfaceDef_ptr object_type,
       CORBA::Boolean constr_policy,
-      CORBA::Environment &ACE_TRY_ENV = 
-        CORBA::default_environment ()
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
     );
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
-        CORBA::default_environment ()
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
+        TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   CORBA_ConstructionPolicy (void);
-  CORBA_ConstructionPolicy (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  CORBA_ConstructionPolicy (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~CORBA_ConstructionPolicy (void);
@@ -286,16 +286,16 @@ private:
 };
 
 // Any operators for interface CORBA_ConstructionPolicy
-void TAO_Export operator<<= (CORBA::Any &, 
+void TAO_Export operator<<= (CORBA::Any &,
                              CORBA_ConstructionPolicy_ptr);
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, 
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &,
                                        CORBA_ConstructionPolicy *&);
 
 #ifndef __ACE_INLINE__
 
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, 
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &,
                                       const CORBA_ConstructionPolicy_ptr );
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, 
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &,
                                       CORBA_ConstructionPolicy_ptr &);
 
 #endif /* __ACE_INLINE__ */
@@ -306,28 +306,28 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &,
 
 
 // Any operators for interface CORBA_DomainManager
-void TAO_Export operator<<= (CORBA::Any &, 
+void TAO_Export operator<<= (CORBA::Any &,
                              CORBA_DomainManager_ptr);
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, 
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &,
                                        CORBA_DomainManager *&);
 
 // Any operators for interface CORBA_DomainManagerList
-void TAO_Export operator<<= (CORBA::Any &, 
+void TAO_Export operator<<= (CORBA::Any &,
                              const CORBA_DomainManagerList &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, 
+void TAO_Export operator<<= (CORBA::Any &,
                              CORBA_DomainManagerList*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, 
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &,
                                        CORBA_DomainManagerList *&);
 
 #ifndef __ACE_INLINE__
 
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, 
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &,
                                       const CORBA_DomainManager_ptr );
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, 
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &,
                                       CORBA_DomainManager_ptr &);
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, 
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &,
                                       const CORBA_DomainManagerList &);
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, 
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &,
                                       CORBA_DomainManagerList &);
 #endif /* __ACE_INLINE__ */
 
