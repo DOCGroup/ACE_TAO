@@ -2,6 +2,8 @@
 
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/os_include/os_netdb.h"
 
 #if defined (ACE_HAS_SYS_LOADAVG_H)
 # include <sys/loadavg.h>
