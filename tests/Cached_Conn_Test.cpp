@@ -288,7 +288,6 @@ int main (int argc, ASYS_TCHAR *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("Cached_Conn_Test"));
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
-
   
   // Obtain the <number of servers> to connect to. Also the purge
   // percentage using which the entries in the connection cache of
