@@ -2,12 +2,16 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl BMCLOSEDED_EXEC
+// This file is generated automatically by generate_export_file.pl -s BMCLOSEDED_EXEC
 // ------------------------------
 #ifndef BMCLOSEDED_EXEC_EXPORT_H
 #define BMCLOSEDED_EXEC_EXPORT_H
 
 #include "ace/config-all.h"
+
+#if defined (ACE_AS_STATIC_LIBS) && !defined (BMCLOSEDED_EXEC_HAS_DLL)
+#  define BMCLOSEDED_EXEC_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && BMCLOSEDED_EXEC_HAS_DLL */
 
 #if !defined (BMCLOSEDED_EXEC_HAS_DLL)
 #  define BMCLOSEDED_EXEC_HAS_DLL 1
@@ -42,7 +46,11 @@
 #if (BMCLOSEDED_EXEC_NTRACE == 1)
 #  define BMCLOSEDED_EXEC_TRACE(X)
 #else /* (BMCLOSEDED_EXEC_NTRACE == 1) */
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
 #  define BMCLOSEDED_EXEC_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Trace.h"
 #endif /* (BMCLOSEDED_EXEC_NTRACE == 1) */
 
 #endif /* BMCLOSEDED_EXEC_EXPORT_H */

@@ -2,12 +2,16 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl EC_EXEC
+// This file is generated automatically by generate_export_file.pl -s EC_EXEC
 // ------------------------------
 #ifndef EC_EXEC_EXPORT_H
 #define EC_EXEC_EXPORT_H
 
 #include "ace/config-all.h"
+
+#if defined (ACE_AS_STATIC_LIBS) && !defined (EC_EXEC_HAS_DLL)
+#  define EC_EXEC_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && EC_EXEC_HAS_DLL */
 
 #if !defined (EC_EXEC_HAS_DLL)
 #  define EC_EXEC_HAS_DLL 1
@@ -42,7 +46,11 @@
 #if (EC_EXEC_NTRACE == 1)
 #  define EC_EXEC_TRACE(X)
 #else /* (EC_EXEC_NTRACE == 1) */
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
 #  define EC_EXEC_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Trace.h"
 #endif /* (EC_EXEC_NTRACE == 1) */
 
 #endif /* EC_EXEC_EXPORT_H */

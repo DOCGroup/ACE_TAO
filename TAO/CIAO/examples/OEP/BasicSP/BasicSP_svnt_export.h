@@ -2,12 +2,16 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl BASICSP_SVNT
+// This file is generated automatically by generate_export_file.pl -s BASICSP_SVNT
 // ------------------------------
 #ifndef BASICSP_SVNT_EXPORT_H
 #define BASICSP_SVNT_EXPORT_H
 
 #include "ace/config-all.h"
+
+#if defined (ACE_AS_STATIC_LIBS) && !defined (BASICSP_SVNT_HAS_DLL)
+#  define BASICSP_SVNT_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && BASICSP_SVNT_HAS_DLL */
 
 #if !defined (BASICSP_SVNT_HAS_DLL)
 #  define BASICSP_SVNT_HAS_DLL 1
@@ -42,7 +46,11 @@
 #if (BASICSP_SVNT_NTRACE == 1)
 #  define BASICSP_SVNT_TRACE(X)
 #else /* (BASICSP_SVNT_NTRACE == 1) */
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
 #  define BASICSP_SVNT_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Trace.h"
 #endif /* (BASICSP_SVNT_NTRACE == 1) */
 
 #endif /* BASICSP_SVNT_EXPORT_H */
