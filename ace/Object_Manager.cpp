@@ -496,7 +496,7 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   ACE_Service_Config::close ();
 
   // Close the main thread's TSS, including its Log_Msg instance.
-  ACE_OS::cleanup_tss ();
+  ACE_OS::cleanup_tss (1 /* main thread */);
 
   // Close down Winsock (no-op on other platforms).
   ACE_OS::socket_fini ();
