@@ -41,41 +41,61 @@ END_MESSAGE_MAP()
 static void *
 spawn_my_orb_thread (void *)
 {
-  // Initialization arguments for the ORB
-  const char *orb_name = "";
+  ACE_TRY_NEW_ENV
+    {
+      // Initialization arguments for the ORB
+      const char *orb_name = "";
 
-  CORBA::ORB_var the_orb =
-    CORBA::ORB_init (__argc,
-                     __argv,
-                     orb_name);
-	
-  CORBA::Object_var orb_obj =
-    the_orb->resolve_initial_references ("RootPOA");
+      CORBA::ORB_var the_orb =
+        CORBA::ORB_init (__argc,
+                         __argv,
+                         orb_name,
+                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+	    
+      CORBA::Object_var orb_obj =
+        the_orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  PortableServer::POA_var the_root_poa =
-    PortableServer::POA::_narrow (orb_obj.in ());
+      PortableServer::POA_var the_root_poa =
+        PortableServer::POA::_narrow (orb_obj.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  PortableServer::POAManager_var the_poa_manager =
-    the_root_poa->the_POAManager ();
+      PortableServer::POAManager_var the_poa_manager =
+        the_root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  the_poa_manager->activate ();
+      the_poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Initializing the NamingService
-  W32_Test_Impl myservant;
-  W32_Test_Interface_var orb_servant =
-    myservant._this();
+      // Initializing the NamingService
+      W32_Test_Impl myservant;
+      W32_Test_Interface_var orb_servant =
+        myservant._this (ACE_TRY_CHECK);
+      ACE_TRY_CHECK;
 
-  CORBA::String_var ior =
-    the_orb->object_to_string (orb_servant.in ());
+      CORBA::String_var ior =
+        the_orb->object_to_string (orb_servant.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  FILE *output_file = ACE_OS::fopen ("ior.txt",
-                                    "w");
-  ACE_OS::fprintf (output_file,
-                   "%s",
-                   ior.in ());
-  ACE_OS::fclose (output_file);
+      FILE *output_file = ACE_OS::fopen ("ior.txt",
+                                        "w");
+      ACE_OS::fprintf (output_file,
+                       "%s",
+                       ior.in ());
+      ACE_OS::fclose (output_file);
 
-  the_orb->run ();
+      the_orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Catched exception:");
+      return 0;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
 
   return 0;
 }
@@ -92,21 +112,36 @@ CServerApp::CServerApp()
 
 CServerApp::~CServerApp()
 {
-  CORBA::ORB_var the_shutdown_orb;
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::ORB_var the_shutdown_orb;
 
-  int argc = 0;
-  char **argv = 0;
-  const char *orb_name = "";
+      int argc = 0;
+      char **argv = 0;
+      const char *orb_name = "";
 
-  // Retrieving a reference to the ORB used inside the thread
-  the_shutdown_orb =
-    CORBA::ORB_init (argc,
-                     argv,
-                     orb_name);	
+      // Retrieving a reference to the ORB used inside the thread
+      the_shutdown_orb =
+        CORBA::ORB_init (argc,
+                         argv,
+                         orb_name,
+                         ACE_TRY_ENV);	
+      ACE_TRY_CHECK;
 
-  the_shutdown_orb->shutdown ();
-	
-  ACE_Thread_Manager::instance ()->wait ();
+      the_shutdown_orb->shutdown (0, // wait_for_completion
+                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+	    
+      ACE_Thread_Manager::instance ()->wait ();
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Catched exception:");
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+
 
   ACE::fini ();
 }

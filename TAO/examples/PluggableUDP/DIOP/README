@@ -54,6 +54,46 @@ Issues:
 
 - Remove commented out code from DIOP_* files.
 
+Limitations:
+
+- No preconnections are supported.
+
+- Only single threaded servers are supported as we cache parts of a UDP
+  packet. If we would allow multiple threads this buffer could be corrupted.
+
+- No thread-per connection is supported.
+
+- Requests from multiple clients are received on the same socket.
+
+
+Disclaimer:
+
+  This UDP Pluggable Protocol has been developed for Siemens base station
+  software. We assumed certain requriements, which do not fit everybody, so
+  be careful applying this pluggable protocol to your application. 
+
+  The assumptions we had:
+
+  - Almost 100% reliable UDP communication as we use IP over ATM
+
+       (Even if it would be less reliable you can manage it by using one-way
+	   request operations and one-way response operations in combination with
+	   application level timeouts.)
+  
+  - TCP got ruled out as it behaves to sluggish on sudden disconnections, we
+    needed to be able to plug & play CPU cards without impacting any ORB
+	communicating to that CPU.
+
+	   (This is the main reason why we do not keep any state in the client side
+	    of the Pluggable Protocol)
+
+  - As we use a special hardware configuration we defined that every GIOP message
+    (and therefore every IDL signature) message is shorter than 4kB, which is the
+	maximum length of a UDP packet anyway.
+	  
+	   (Support for fragmentation, as GIOP 1.2 supports it might help, this is
+	    a future option)
+
 
 Appendix:
 
