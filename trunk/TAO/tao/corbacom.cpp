@@ -16,7 +16,7 @@
 // String utility support; this can need to be integrated with the
 // ORB's own memory allocation subsystem.
 
-CORBA_String
+ACE_Svc_Export CORBA_String
 CORBA_string_alloc (CORBA_ULong len)
 {
   return new CORBA_Char [(size_t)(len + 1)];
@@ -39,7 +39,7 @@ CORBA_string_dup (const CORBA_Char *const str)
   return CORBA_string_copy(str);
 }
 
-void
+ACE_Svc_Export void
 CORBA_string_free (CORBA_Char *const str)
 {
   delete str;

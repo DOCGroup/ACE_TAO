@@ -101,10 +101,11 @@ struct CORBA_LongDouble
 typedef char CORBA_Char;
 typedef CORBA_Char *CORBA_String;
 
-CORBA_String CORBA_string_alloc (CORBA_ULong len);
+ACE_Svc_Export CORBA_String CORBA_string_alloc (CORBA_ULong len);
 CORBA_String CORBA_string_copy (const CORBA_Char *const);
 CORBA_String CORBA_string_dup (const CORBA_Char *const);
-void CORBA_string_free (CORBA_Char *const);
+ACE_Svc_Export void CORBA_string_free (CORBA_Char *const);
+
 
 class CORBA_String_var
   // = TITLE
