@@ -3,7 +3,7 @@
 #ifndef CIAO_SWAPPING_SERVANT_IMPL_T_C
 #define CIAO_SWAPPING_SERVANT_IMPL_T_C
 
-#include "Swapping_Servant_Impl_T.h"
+#include "Swapping_Servant_Home_Impl_T.h"
 
 namespace CIAO
 {
@@ -15,18 +15,18 @@ namespace CIAO
             typename COMP_EXEC,
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
-  Swapping_Servant_Impl<BASE_SKEL,
+  Swapping_Servant_Home_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
                     COMP_VAR,
                     COMP_EXEC,
                     COMP_EXEC_VAR,
-                    COMP_SVNT>::Swapping_Servant_Impl (
+                    COMP_SVNT>::Swapping_Servant_Home_Impl (
       EXEC * exe,
       SWapping_Container * c
     )
-    : Swapping_Servant_Impl_Base (c),
+    : Swapping_Servant_Home_Impl_Base (c),
       activator_ (),
       executor_ (EXEC::_duplicate (exe))
   {
@@ -40,14 +40,14 @@ namespace CIAO
             typename COMP_EXEC,
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
-  Swapping_Servant_Impl<BASE_SKEL,
+  Swapping_Servant_Home_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
                     COMP_VAR,
                     COMP_EXEC,
                     COMP_EXEC_VAR,
-                    COMP_SVNT>::~Swapping_Servant_Impl (void)
+                    COMP_SVNT>::~Swapping_Servant_Home_Impl (void)
   {
   }
 
@@ -62,7 +62,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   void
-  Swapping_Servant_Impl<BASE_SKEL,
+  Swapping_Servant_Home_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
@@ -103,7 +103,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   Components::CCMObject_ptr
-  Swapping_Servant_Impl<BASE_SKEL,
+  Swapping_Servant_Home_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
@@ -130,7 +130,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   COMP *
-  Swapping_Servant_Impl<BASE_SKEL,
+  Swapping_Servant_Home_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
@@ -173,7 +173,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   COMP *
-  Swapping_Servant_Impl<BASE_SKEL,
+  Swapping_Servant_Home_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
@@ -226,7 +226,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   void
-  Swapping_Servant_Impl<BASE_SKEL,
+  Swapping_Servant_Home_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,

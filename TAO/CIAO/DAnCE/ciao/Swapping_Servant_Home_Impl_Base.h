@@ -10,8 +10,8 @@
 //=============================================================================
 
 
-#ifndef CIAO_SWAPPING_SERVANT_IMPL_BASE_H
-#define CIAO_SWAPPING_SERVANT_IMPL_BASE_H
+#ifndef CIAO_SWAPPING_SERVANT_HOME_IMPL_BASE_H
+#define CIAO_SWAPPING_SERVANT_HOME_IMPL_BASE_H
 
 #include /**/ "ace/pre.h"
 
@@ -48,7 +48,6 @@ namespace CIAO
     virtual ~Swapping_Servant_Home_Impl_Base (void);
 
     // Operations for CCMHome interface.
-
     virtual ::CORBA::IRObject_ptr
     get_component_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -64,4 +63,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 
-#endif /* CIAO_SWAPPING_SERVANT_IMPL_BASE_H */
+#endif /* CIAO_SWAPPING_SERVANT_HOME_IMPL_BASE_H */
