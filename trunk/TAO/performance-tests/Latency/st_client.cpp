@@ -12,6 +12,38 @@
 
 ACE_RCSID(Latency, st_client, "$Id$")
 
+//#define USING_QUANTIFY 1
+
+#if defined (USING_QUANTIFY)
+
+#if defined (ACE_WIN32)
+
+#include "pure.h"
+
+#else /* !ACE_WIN32 */
+
+#include "quantify.h"
+
+inline int QuantifyClearData ()
+{
+  return quantify_clear_data ();
+}
+
+inline int QuantifyStartRecordingData ()
+{
+  return quantify_start_recording_data ();
+}
+
+inline int QuantifyStopRecordingData ()
+{
+  return quantify_stop_recording_data ();
+}
+
+#endif /* ACE_WIN32 */
+
+#endif /* USING_QUANTIFY */
+
+
 const char *ior = "file://test.ior";
 int niterations = 100;
 int period = -1;
@@ -116,6 +148,13 @@ main (int argc, char *argv[])
 
       ACE_Sample_History history (niterations);
 
+#if defined (USING_QUANTIFY)
+  // Reset Quantify data recording; whatever happened in the past is
+  // not relevant to this test.
+  QuantifyClearData ();
+  QuantifyStartRecordingData ();
+#endif /* USING_QUANTIFY */
+
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
       for (int i = 0; i < niterations; ++i)
         {
@@ -133,6 +172,13 @@ main (int argc, char *argv[])
 	      ACE_OS::sleep (tv);
 	    }
         }
+
+#if defined (USING_QUANTIFY)
+  // Stop recording data here; whatever happens after this in the test
+  // is not relevant to this test.
+  QuantifyStopRecordingData ();
+#endif /* USING_QUANTIFY */
+
       ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));
