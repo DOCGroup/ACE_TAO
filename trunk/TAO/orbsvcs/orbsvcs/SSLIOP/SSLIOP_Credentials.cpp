@@ -11,6 +11,9 @@ ACE_RCSID (TAO_SSLIOP,
 
 #include "SSLIOP_X509.h"
 
+#if !defined (__ACE_INLINE__)
+# include "SSLIOP_Credentials.inl"
+#endif /* __ACE_INLINE__ */
 
 // SSLIOP does not support delegation, nor does it support detection
 // of replayed or misordered GIOP messages.
@@ -37,7 +40,6 @@ TAO_SSLIOP_Credentials::TAO_SSLIOP_Credentials (X509 *cert)
 
 TAO_SSLIOP_Credentials::~TAO_SSLIOP_Credentials (void)
 {
-  TAO_SSLIOP_X509::release (this->x509_);
 }
 
 SecurityLevel2::Credentials_ptr
@@ -46,7 +48,7 @@ TAO_SSLIOP_Credentials::copy (TAO_ENV_SINGLE_ARG_DECL)
 {
   TAO_SSLIOP_Credentials *c = 0;
   ACE_NEW_THROW_EX (c,
-                    TAO_SSLIOP_Credentials (this->x509_),
+                    TAO_SSLIOP_Credentials (this->x509_.in ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -61,8 +63,6 @@ void
 TAO_SSLIOP_Credentials::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_SSLIOP_X509::release (this->x509_);
-  this->x509_ = 0;
 }
 
 Security::InvocationCredentialsType
@@ -271,10 +271,10 @@ TAO_SSLIOP_Credentials::is_valid (
 #if 0
   // The pointer to the underlying X509 structure should only be zero
   // if destroy() was called on this Credentials object.
-  if (this->x509_ == 0)
+  if (this->x509_.in () == 0)
     ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 
-  const ASN1_UTCTIME *expiration = X509_get_notAfter (this->x509_);
+  const ASN1_UTCTIME *expiration = X509_get_notAfter (this->x509_.in ());
 
   // @todo Fill in expiry_time.
 
@@ -381,4 +381,300 @@ TAO_SSLIOP_Credentials::refresh (const CORBA::Any & /* refresh_data */
 
   return 1;
 #endif  /* 0 */
+}
+
+TAO_SSLIOP_Credentials_ptr
+TAO_SSLIOP_Credentials::_narrow (CORBA::Object_ptr obj
+                                 TAO_ENV_ARG_DECL)
+{
+  return TAO_SSLIOP_Credentials::_unchecked_narrow (obj
+                                                    TAO_ENV_ARG_PARAMETER);
+}
+  
+TAO_SSLIOP_Credentials_ptr
+TAO_SSLIOP_Credentials::_unchecked_narrow (CORBA::Object_ptr obj
+                                           TAO_ENV_ARG_DECL_NOT_USED)
+{
+  if (CORBA::is_nil (obj))
+    return TAO_SSLIOP_Credentials::_nil ();
+  return
+        ACE_reinterpret_cast
+          (
+            TAO_SSLIOP_Credentials_ptr,
+              obj->_tao_QueryInterface
+                (
+                  ACE_reinterpret_cast
+                    (
+                      ptr_arith_t,
+                      &TAO_SSLIOP_Credentials::_tao_class_id
+                    )
+                )
+          );
+}
+
+TAO_SSLIOP_Credentials_ptr
+TAO_SSLIOP_Credentials::_duplicate (TAO_SSLIOP_Credentials_ptr obj)
+{
+  if (!CORBA::is_nil (obj))
+    obj->_add_ref ();
+
+  return obj;
+}
+
+void *
+TAO_SSLIOP_Credentials::_tao_QueryInterface (ptr_arith_t type)
+{
+  void *retv = 0;
+  if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &TAO_SSLIOP_Credentials::_tao_class_id))
+    retv = ACE_reinterpret_cast (void*, this);
+  else if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &::SecurityLevel2::Credentials::_tao_class_id))
+    retv = ACE_reinterpret_cast
+      (
+        void *,
+        ACE_static_cast
+          (
+            SecurityLevel2::Credentials_ptr,
+            this
+          )
+      );
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
+    retv = ACE_reinterpret_cast (void *,
+      ACE_static_cast (CORBA::Object_ptr, this));
+    
+  if (retv)
+    this->_add_ref ();
+  return retv;
+}
+
+// -----------------------------------------------------------
+
+int TAO_SSLIOP_Credentials::_tao_class_id = 0;
+
+TAO_SSLIOP_Credentials_ptr
+tao_TAO_SSLIOP_Credentials_duplicate (
+    TAO_SSLIOP_Credentials_ptr p
+  )
+{
+  return TAO_SSLIOP_Credentials::_duplicate (p);
+}
+
+void
+tao_TAO_SSLIOP_Credentials_release (
+    TAO_SSLIOP_Credentials_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+TAO_SSLIOP_Credentials_ptr
+tao_TAO_SSLIOP_Credentials_nil (
+    void
+  )
+{
+  return TAO_SSLIOP_Credentials::_nil ();
+}
+
+TAO_SSLIOP_Credentials_ptr
+tao_TAO_SSLIOP_Credentials_narrow (
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
+  )
+{
+  return TAO_SSLIOP_Credentials::_narrow (p TAO_ENV_ARG_PARAMETER);
+}
+
+CORBA::Object *
+tao_TAO_SSLIOP_Credentials_upcast (
+    void *src
+  )
+{
+  TAO_SSLIOP_Credentials **tmp =
+    ACE_static_cast (TAO_SSLIOP_Credentials **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Operations for class TAO_SSLIOP_Credentials_var
+// *************************************************************
+
+TAO_SSLIOP_Credentials_var::TAO_SSLIOP_Credentials_var (void) // default constructor
+  : ptr_ (TAO_SSLIOP_Credentials::_nil ())
+{}
+
+::TAO_SSLIOP_Credentials_ptr
+TAO_SSLIOP_Credentials_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+TAO_SSLIOP_Credentials_var::TAO_SSLIOP_Credentials_var (const ::TAO_SSLIOP_Credentials_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (TAO_SSLIOP_Credentials::_duplicate (p.ptr ()))
+{}
+
+TAO_SSLIOP_Credentials_var::~TAO_SSLIOP_Credentials_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+TAO_SSLIOP_Credentials_var &
+TAO_SSLIOP_Credentials_var::operator= (TAO_SSLIOP_Credentials_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+TAO_SSLIOP_Credentials_var &
+TAO_SSLIOP_Credentials_var::operator= (const ::TAO_SSLIOP_Credentials_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::TAO_SSLIOP_Credentials::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+TAO_SSLIOP_Credentials_var::operator const ::TAO_SSLIOP_Credentials_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+TAO_SSLIOP_Credentials_var::operator ::TAO_SSLIOP_Credentials_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::TAO_SSLIOP_Credentials_ptr
+TAO_SSLIOP_Credentials_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::TAO_SSLIOP_Credentials_ptr
+TAO_SSLIOP_Credentials_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::TAO_SSLIOP_Credentials_ptr &
+TAO_SSLIOP_Credentials_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::TAO_SSLIOP_Credentials_ptr &
+TAO_SSLIOP_Credentials_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::TAO_SSLIOP_Credentials::_nil ();
+  return this->ptr_;
+}
+
+::TAO_SSLIOP_Credentials_ptr
+TAO_SSLIOP_Credentials_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::TAO_SSLIOP_Credentials_ptr val = this->ptr_;
+  this->ptr_ = ::TAO_SSLIOP_Credentials::_nil ();
+  return val;
+}
+
+::TAO_SSLIOP_Credentials_ptr
+TAO_SSLIOP_Credentials_var::tao_duplicate (TAO_SSLIOP_Credentials_ptr p)
+{
+  return ::TAO_SSLIOP_Credentials::_duplicate (p);
+}
+
+void
+TAO_SSLIOP_Credentials_var::tao_release (TAO_SSLIOP_Credentials_ptr p)
+{
+  CORBA::release (p);
+}
+
+::TAO_SSLIOP_Credentials_ptr
+TAO_SSLIOP_Credentials_var::tao_nil (void)
+{
+  return ::TAO_SSLIOP_Credentials::_nil ();
+}
+
+::TAO_SSLIOP_Credentials_ptr
+TAO_SSLIOP_Credentials_var::tao_narrow (
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
+  )
+{
+  return ::TAO_SSLIOP_Credentials::_narrow (p TAO_ENV_ARG_PARAMETER);
+}
+
+CORBA::Object *
+TAO_SSLIOP_Credentials_var::tao_upcast (void *src)
+{
+  TAO_SSLIOP_Credentials **tmp =
+    ACE_static_cast (TAO_SSLIOP_Credentials **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Operations for class TAO_SSLIOP_Credentials_out
+// *************************************************************
+
+TAO_SSLIOP_Credentials_out::TAO_SSLIOP_Credentials_out (TAO_SSLIOP_Credentials_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::TAO_SSLIOP_Credentials::_nil ();
+}
+
+TAO_SSLIOP_Credentials_out::TAO_SSLIOP_Credentials_out (TAO_SSLIOP_Credentials_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::TAO_SSLIOP_Credentials::_nil ();
+}
+
+TAO_SSLIOP_Credentials_out::TAO_SSLIOP_Credentials_out (const ::TAO_SSLIOP_Credentials_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (TAO_SSLIOP_Credentials_out &, p).ptr_)
+{}
+
+::TAO_SSLIOP_Credentials_out &
+TAO_SSLIOP_Credentials_out::operator= (const ::TAO_SSLIOP_Credentials_out &p)
+{
+  this->ptr_ = ACE_const_cast (TAO_SSLIOP_Credentials_out&, p).ptr_;
+  return *this;
+}
+
+TAO_SSLIOP_Credentials_out &
+TAO_SSLIOP_Credentials_out::operator= (const ::TAO_SSLIOP_Credentials_var &p)
+{
+  this->ptr_ = ::TAO_SSLIOP_Credentials::_duplicate (p.ptr ());
+  return *this;
+}
+
+TAO_SSLIOP_Credentials_out &
+TAO_SSLIOP_Credentials_out::operator= (TAO_SSLIOP_Credentials_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+TAO_SSLIOP_Credentials_out::operator ::TAO_SSLIOP_Credentials_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::TAO_SSLIOP_Credentials_ptr &
+TAO_SSLIOP_Credentials_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::TAO_SSLIOP_Credentials_ptr
+TAO_SSLIOP_Credentials_out::operator-> (void)
+{
+  return this->ptr_;
 }

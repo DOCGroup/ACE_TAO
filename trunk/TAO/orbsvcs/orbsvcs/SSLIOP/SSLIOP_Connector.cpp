@@ -1,10 +1,10 @@
 // -*- C++ -*-
-//
-// $Id$
 
 #include "SSLIOP_Connector.h"
+#include "SSLIOP_Credentials.h"
 #include "SSLIOP_Profile.h"
 #include "SSLIOP_Util.h"
+#include "SSLIOP_X509.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -37,6 +37,7 @@ template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_SSLIOP_Connection_Ha
 template class ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_SSLIOP_Connection_Handler>*>;
 template class ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_SSLIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
 template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_SSLIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
+template class ACE_Auto_Basic_Ptr<TAO_SSLIOP_Connection_Handler>;
 template class ACE_Auto_Basic_Array_Ptr<TAO_SSLIOP_Connection_Handler*>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -56,6 +57,7 @@ template class ACE_Auto_Basic_Array_Ptr<TAO_SSLIOP_Connection_Handler*>;
 #pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_SSLIOP_Connection_Handler>*>
 #pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_SSLIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_SSLIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_SSLIOP_Connection_Handler>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_SSLIOP_Connection_Handler*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -434,7 +436,9 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
           return -1;
         }
-        
+
+      ACE_Auto_Basic_Ptr<TAO_SSLIOP_Connection_Handler>
+        safe_handler (svc_handler);
 
       // Setup the establishment of trust connection properties, if
       // any.
@@ -478,6 +482,8 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
           ACE_THROW_RETURN (CORBA::INV_POLICY (), -1);
         }
+
+      svc_handler = safe_handler.release ();
 
       // @@ This needs to change in the next round when we implement
       //    a policy that will not allow new connections when a
@@ -546,6 +552,56 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   // No need to _duplicate and release since base_transport
   // is going out of scope.  transport now has control of base_transport.
   transport = base_transport;
+
+  return 0;
+}
+
+int
+TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
+                                            SSL *ssl
+                                            TAO_ENV_ARG_DECL)
+{
+  // Check if the user overrode the default invocation credentials.
+  CORBA::Policy_var policy =
+    stub->get_policy (Security::SecInvocationCredentialsPolicy
+                      TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  SecurityLevel2::InvocationCredentialsPolicy_var creds_policy =
+    SecurityLevel2::InvocationCredentialsPolicy::_narrow (
+      policy.in ()
+      TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  // Set the Credentials (X.509 certificates) to be used for this
+  // invocation.
+  if (!CORBA::is_nil (creds_policy.in ()))
+    {
+      SecurityLevel2::CredentialsList_var creds_list =
+        creds_policy->creds (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      if (creds_list->length () > 0)
+        {
+          // Only use the first credential.  All others are supposed
+          // to be used for delegation but SSLIOP in CSIv1 does not
+          // support delegation.  (Compare to CSIv2.)
+          SecurityLevel2::Credentials_ptr credentials =
+            creds_list[(CORBA::ULong) 0];
+
+          TAO_SSLIOP_Credentials_var ssliop_credentials =
+            TAO_SSLIOP_Credentials::_narrow (credentials
+                                             TAO_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+
+          if (!CORBA::is_nil (ssliop_credentials.in ()))
+            {
+              TAO_SSLIOP_X509_var x509 = ssliop_credentials->x509 ();
+              if (::SSL_use_certificate (ssl, x509.in ()) != 1)
+                return -1;
+            }
+        }
+    }
 
   return 0;
 }

@@ -88,6 +88,13 @@ protected:
                       TAO_Transport_Descriptor_Interface *desc
                       TAO_ENV_ARG_DECL);
 
+  /// Retrieve SSLIOP credentials from the policy overrides list and
+  /// set up the underlying SSL connection to use the X.509
+  /// certificates stored within them.
+  int retrieve_credentials (TAO_Stub *stub,
+                            SSL *ssl
+                            TAO_ENV_ARG_DECL);
+
 public:
 
 
