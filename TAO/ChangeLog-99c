@@ -1,3 +1,9 @@
+Fri Mar 26 11:39:44 1999  Steve Huston  <shuston@riverace.com>
+
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Generator.h: Replaced forward
+          declaration of TAO_EC_Timeout_Filter with include EC_Timeout_Filter.h
+          so static_cast knows the complete type.
+
 Fri Mar 26 09:26:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Time_Utilities.*: replace static zero
