@@ -1,76 +1,81 @@
+Sat Mar 18 07:30:20 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/LifeCycle_Service/Factory_Trader.cpp: changed
+          _ptr's to *'s.
+
 Sat Mar 18 05:34:48 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/*.h:
-	* orbsvcs/orbsvcs/*.h: Applied alignment preserving code.
+        * tao/*.h:
+        * orbsvcs/orbsvcs/*.h: Applied alignment preserving code.
 
-	* TAO_IDL/be/be_args.cpp:
-	* TAO_IDL/be/be_codegen.cpp:
-	* TAO_IDL/include/idl_global.h:
-	* TAO_IDL/util/utl_global.cpp: Added new compiler flags
-	  -Wb,pre_include and -Wb,post_include.  They specify the names of
-	  include files that will be included at the beginning and ending
-	  of the generated header files.  Currently used to include
-	  "ace/pre.h" and "ace/post.h."
+        * TAO_IDL/be/be_args.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp: Added new compiler flags
+          -Wb,pre_include and -Wb,post_include.  They specify the names of
+          include files that will be included at the beginning and ending
+          of the generated header files.  Currently used to include
+          "ace/pre.h" and "ace/post.h."
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	* orbsvcs/orbsvcs/Makefile:
-	* orbsvcs/orbsvcs/Makefile.bor: Added the new tao_idl options to the
-	  tao_idl compiler flags in the orbsvcs makefiles.  Too bad
-	  Darrell is going to removed orbsvcs.dsp and orbsvcs_static.dsp. ;-)
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Makefile.bor: Added the new tao_idl options to the
+          tao_idl compiler flags in the orbsvcs makefiles.  Too bad
+          Darrell is going to removed orbsvcs.dsp and orbsvcs_static.dsp. ;-)
 
-	  Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
-	  providing the patches.
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
+          providing the patches.
 
 Sat Mar 18 01:33:47 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp: Changed to
-	  use TAO_Notify_EventType::get_native to access the EventType.
-	  Thanks to Darrell for pointing this out.
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp: Changed to
+          use TAO_Notify_EventType::get_native to access the EventType.
+          Thanks to Darrell for pointing this out.
 
-	* orbsvcs/orbsvcs/Notify/Notify_Types.h: Undid my previous hack.
+        * orbsvcs/orbsvcs/Notify/Notify_Types.h: Undid my previous hack.
 
 Fri Mar 17 23:39:52 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_Types.h (class
-	  TAO_Notify_EventType): Hacked the class by adding
+        * orbsvcs/orbsvcs/Notify/Notify_Types.h (class
+          TAO_Notify_EventType): Hacked the class by adding
 
-	     friend class TAO_Notify_ConsumerAdmin_i;
+             friend class TAO_Notify_ConsumerAdmin_i;
 
-	  so that orbsvcs would compile.
+          so that orbsvcs would compile.
 
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp (federated_query):
-	  Changed _ptr's to *'s.
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp (federated_query):
+          Changed _ptr's to *'s.
 
 Fri Mar 17 14:20:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/GIOP_Assorted_Headers.h:
-	* tao/GIOP_Message_Accept_State.h:
-	* tao/GIOP_Message_Base.h:
-	* tao/GIOP_Message_Base.i:
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Connectors.h:
-	* tao/GIOP_Message_Connectors.cpp:
-	* tao/GIOP_Server_Request.h:
-	* tao/Pluggable_Messaging.h:
-	* tao/Pluggable_Messaging_Utils.h:
-	* tao/Pluggable_Messaging_Utils.i:
-	* tao/Pluggable_Messaging_Utils.cpp:
-	* tao/operation_details.h:
-	* tao/target_identifier.h:
-	* tao/target_identifier.i:
-	* tao/target_identifier.cpp:
-	  Made an overall review of Bala's coding style and basic
-	  design. Left many @@ comments for him.
+        * tao/GIOP_Assorted_Headers.h:
+        * tao/GIOP_Message_Accept_State.h:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.i:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Connectors.h:
+        * tao/GIOP_Message_Connectors.cpp:
+        * tao/GIOP_Server_Request.h:
+        * tao/Pluggable_Messaging.h:
+        * tao/Pluggable_Messaging_Utils.h:
+        * tao/Pluggable_Messaging_Utils.i:
+        * tao/Pluggable_Messaging_Utils.cpp:
+        * tao/operation_details.h:
+        * tao/target_identifier.h:
+        * tao/target_identifier.i:
+        * tao/target_identifier.cpp:
+          Made an overall review of Bala's coding style and basic
+          design. Left many @@ comments for him.
 
 Fri Mar 17 14:17:00 2000  Shawn Hannan  <hannan@cs.wustl.edu>
 
-	* orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
-	* orbsvcs/tests/Property/client.cpp: Changed _ptr's to *'s.
+        * orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
+        * orbsvcs/tests/Property/client.cpp: Changed _ptr's to *'s.
 
 Fri Mar 17 13:04:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Lite.cpp: Fixed a couple of errors in old g++.
+        * tao/GIOP_Message_Lite.cpp: Fixed a couple of errors in old g++.
 
 Fri Mar 17 13:01:58 2000  David L. Levine  <levine@cs.wustl.edu>
 
