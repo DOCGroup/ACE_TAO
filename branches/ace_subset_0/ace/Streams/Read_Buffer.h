@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Malloc.h"
+#include "ace/Memory/Malloc.h"
 
 /**
  * @class ACE_Read_Buffer
@@ -107,7 +107,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "ace/Read_Buffer.i"
+# include "ace/Streams/Read_Buffer.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -1,14 +1,15 @@
 // $Id$
 
-#include "ace/Read_Buffer.h"
-#include "ace/Service_Config.h"
+#include "ace/Streams/Read_Buffer.h"
+#include "ace/Svcconf/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Read_Buffer.i"
+#include "ace/Streams/Read_Buffer.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Read_Buffer, "$Id$")
 
+#ifdef ACE_SUBSET_0
 void
 ACE_Read_Buffer::dump (void) const
 {
@@ -20,6 +21,7 @@ ACE_Read_Buffer::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nallocator_ = %x"), this->allocator_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
                                   int close_on_delete,

@@ -1,10 +1,10 @@
 // $Id$
 
-#include "ace/CDR_Stream.h"
-#include "ace/SString.h"
+#include "ace/Streams/CDR_Stream.h"
+#include "ace/Utils/SString.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ace/CDR_Stream.i"
+# include "ace/Streams/CDR_Stream.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(ace, CDR_Stream, "$Id$")

@@ -79,11 +79,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Typed_SV_Message.i"
+#include "ace/Streams/Typed_SV_Message.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Typed_SV_Message.cpp"
+#include "ace/Streams/Typed_SV_Message.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

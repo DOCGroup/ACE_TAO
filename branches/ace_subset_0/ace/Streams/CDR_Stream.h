@@ -35,14 +35,14 @@
 
 #include "ace/pre.h"
 
-#include "ace/CDR_Base.h"
+#include "ace/Streams/CDR_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
-#include "ace/Message_Block.h"
+#include "ace/Utils/SString.h"
+#include "ace/Utils/Message_Block.h"
 
 class ACE_Char_Codeset_Translator;
 class ACE_WChar_Codeset_Translator;
@@ -1047,7 +1047,7 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
 
 
 #if defined (__ACE_INLINE__)
-# include "ace/CDR_Stream.i"
+# include "ace/Streams/CDR_Stream.i"
 #else /* __ACE_INLINE__ */
 
 // Not used by CORBA or TAO

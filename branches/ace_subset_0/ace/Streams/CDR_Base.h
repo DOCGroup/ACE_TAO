@@ -36,8 +36,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE	*/
 
-#include "ace/Basic_Types.h"
-#include "ace/Message_Block.h"
+#include "ace/OS/Basic_Types.h"
+#include "ace/Utils/Message_Block.h"
 
 /**
  * @class ACE_CDR
@@ -282,7 +282,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-# include "ace/CDR_Base.inl"
+# include "ace/Streams/CDR_Base.inl"
 #endif	/* __ACE_INLINE__ */
 
 

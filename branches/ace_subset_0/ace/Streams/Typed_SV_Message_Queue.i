@@ -3,7 +3,7 @@
 
 // Typed_SV_Message_Queue.i
 
-#include "ace/SV_Message_Queue.h"
+#include "ace/IPC/SV_Message_Queue.h"
 
 template <class T> ACE_INLINE int 
 ACE_Typed_SV_Message_Queue<T>::open (key_t external_id, 

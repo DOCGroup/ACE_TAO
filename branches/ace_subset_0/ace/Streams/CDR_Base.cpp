@@ -2,11 +2,11 @@
 //
 // $Id$
 
-#include "ace/CDR_Base.h"
-#include "ace/Message_Block.h"
+#include "ace/Streams/CDR_Base.h"
+#include "ace/Utils/Message_Block.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ace/CDR_Base.inl"
+# include "ace/Streams/CDR_Base.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(ace, CDR_Base, "$Id$")
