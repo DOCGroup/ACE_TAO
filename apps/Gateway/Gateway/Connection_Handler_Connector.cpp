@@ -58,9 +58,11 @@ Connection_Handler_Connector::initiate_connection (Connection_Handler *connectio
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Connector_Base<Connection_Handler>;
 template class ACE_Connector<Connection_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_NonBlocking_Connect_Handler<Connection_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Connector_Base<Connection_Handler>
 #pragma instantiate ACE_Connector<Connection_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_NonBlocking_Connect_Handler<Connection_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

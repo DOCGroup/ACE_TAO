@@ -235,10 +235,12 @@ HTTP_Connector::parseurl (const char *url,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Connector_Base<HTTP_Handler>;
 template class ACE_Connector<HTTP_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_NonBlocking_Connect_Handler<HTTP_Handler>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Connector_Base<HTTP_Handler>
 #pragma instantiate ACE_Connector<HTTP_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_NonBlocking_Connect_Handler<HTTP_Handler>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
