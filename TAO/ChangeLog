@@ -1,3 +1,9 @@
+Wed Jul  3 14:04:57 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+	  Fixed generation of valuetype arguments, somehow the
+	  ACE_ENV_[SINGLE_]ARG_DECL code was lost.
+
 Wed Jul  3 12:28:23 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:

@@ -97,6 +97,11 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
     {
       // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
       // whether the operation node has parameters.
+      char const * env_decl = "ACE_ENV_ARG_DECL";
+      if(node->argument_count() == 0)
+        env_decl = "ACE_ENV_SINGLE_ARG_DECL";
+      *os << env_decl;
+
       if (!amh_valuetype)
         {
           switch (this->ctx_->state ())
