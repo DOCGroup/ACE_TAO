@@ -3,7 +3,9 @@ Tue Jul 18 23:09:19 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp 
 	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.cpp 
 	  use shorter paths in #include directive.
-	
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
+	  updated dependencies.
+  	
 Tue Jul 18 21:39:39 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	Modified Files:
