@@ -1,3 +1,9 @@
+Tue Apr 24 17:54:00 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Makefile:
+          Add 'Timer' to the default list of ACE components, without many
+          a test, application or example do not compile.
+
 Tue Apr 24 16:39:29 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
