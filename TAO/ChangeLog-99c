@@ -1,3 +1,12 @@
+Fri Oct  8 19:55:31 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/MProfile/server.cpp:
+	* tests/MProfile/client.cpp:
+	* tests/MProfile/README: The server is made persistent. The client
+	  now makes the calls in a loop. At the end of the loop the
+	  primary is shutdown. They were made this way to help me with the
+	  DOORS stuff.
+	  
 Fri Oct  8 19:30:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Asynch_Invocation.{h,i,cpp}:
