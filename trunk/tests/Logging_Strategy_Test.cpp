@@ -39,6 +39,7 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Service_Config.h"
+#include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 
 #if defined (ACE_AS_STATIC_LIBS) || \

@@ -6,6 +6,7 @@
 // do).
 
 #include "ace/Service_Config.h"
+#include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
 

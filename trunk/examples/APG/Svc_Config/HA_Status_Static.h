@@ -16,6 +16,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Service_Object.h"
 #include "ace/Svc_Handler.h"
+#include "ace/Service_Config.h"
 
 class ClientHandler :
       public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>

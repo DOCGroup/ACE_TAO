@@ -1,6 +1,8 @@
 // $Id$
 
 #include "ace/Service_Config.h"
+#include "ace/Reactor.h"
+#include "ace/Event_Handler.h"
 #include "ace/FIFO_Recv_Msg.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
