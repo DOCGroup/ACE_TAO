@@ -45,6 +45,16 @@ Sat Apr 05 13:11:04 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/config-win32.h and config-win32-common.h: new, consolidated
 	  Win32 config files.  Thanks, again, Matthias!
 
+	* ace/OS.h (ACE_UNUSED_ARG): determine whether we're building
+	  on an Irix platform by looking for ACE_HAS_IRIX_GETTIMEOFDAY
+	  instead of ACE_HAS_IRIX62_THREADS.
+
+	* ace/Log_Msg.cpp: VxWorks (only!) change: no longer strdups
+	  program_name and local_host to avoid memory leaks.  Instead,
+	  the addresses of these are copied by ACE_Log_Msg.  So, only
+	  strings in the text segment should be passed to its functions!
+	  Again, this change is for VxWorks only.
+
 Fri Apr 04 12:28:40 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-mvs.h: removed ACE_HAS_IP_MULTICAST because MVS
