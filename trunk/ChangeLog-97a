@@ -1,3 +1,13 @@
+Sat Jun 14 03:53:13 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
+
+	* performance-tests/Synch-Benchmarks/pipe_proc_test.cpp (class
+ 	  Pipe_Proc_Test): Changed the type of pipe_handles[] from int to
+ 	  ACE_HANDLE.
+
+	* performance-tests/Synch-Benchmarks/sysvsema_test.cpp: When
+ 	  creating the semaphore, explicitly cast the key value to (key_t)
+ 	  since NT couldn't handle the conversion.
+
 Fri Jun 13 19:32:03 1997  Steve Huston <shuston@riverace.com>
 
 	* ace/ACE.cpp: Fixed count_interfaces to compile on non-SVR4

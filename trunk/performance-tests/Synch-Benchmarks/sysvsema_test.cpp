@@ -15,7 +15,7 @@ private:
   static ACE_SV_Semaphore_Simple sema;
 };
 
-ACE_SV_Semaphore_Simple SYSVSema_Test::sema (1234, ACE_SV_Semaphore_Simple::ACE_CREATE, 1);
+ACE_SV_Semaphore_Simple SYSVSema_Test::sema ((key_t) 1234);
 
 int
 SYSVSema_Test::svc (void)
