@@ -15,7 +15,7 @@
 extern int buffer;
 extern int synch_count;
 
-#if defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
 
 typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> MT_INT;
 
@@ -38,7 +38,7 @@ private:
   int thr_id_;
   static MT_INT thread_id_;
 };
-#endif /* ACE_HAS_PTHREADS */
+#endif /* ACE_HAS_PTHREADS || VXWORKS */
 
 class Benchmark : public ACE_Service_Object
   // TITLE
@@ -64,10 +64,10 @@ protected:
   static sig_atomic_t done_;
   // Keeps track if we are finished or not.
 
-#if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_DCETHREADS)
+#if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_DCETHREADS) || defined (VXWORKS)
   ACE_TSS <Thr_ID> id_;
   // Keeps track of our "virtual" thread id...
-#endif /* ACE_HAS_PTHREADS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_DCETHREADS || VXWORKS */
 };
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_BENCHMARK_H */
