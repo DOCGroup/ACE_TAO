@@ -315,14 +315,9 @@ TAO_ServerRequestInfo::server_id (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->servant_upcall_ != 0)
-    {
-      // Fill in later
-      char *server_id =
-        ACE_const_cast (char *,
-                        this->server_request_.orb_core ()->server_id ());
+    return
+      CORBA::string_dup (this->server_request_.orb_core ()->server_id ());
 
-      return server_id;
-    }
 
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                           CORBA::COMPLETED_NO),
@@ -334,14 +329,8 @@ TAO_ServerRequestInfo::orb_id (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->servant_upcall_ != 0)
-    {
-      // Fill in later
-      char *orbid =
-        ACE_const_cast (char *,
-                        this->server_request_.orb_core ()->orbid ());
-
-      return orbid;
-    }
+    return
+      CORBA::string_dup (this->server_request_.orb_core ()->orbid ());
 
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                           CORBA::COMPLETED_NO),
