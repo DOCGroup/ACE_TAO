@@ -7,6 +7,9 @@
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_Memory.h"
 #include "ace/os_include/os_netdb.h"
 
 // This function is pretty much a no-op that just sets up the

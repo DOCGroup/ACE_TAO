@@ -6,6 +6,7 @@
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdlib.h"
 
 // This function is used to merge the LOGIN_NAME from server HOST_NAME
 // into the userids kept on the client's side.  Note that we must
