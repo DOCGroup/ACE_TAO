@@ -67,7 +67,7 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
   TAO_UIOP_Connect_Creation_Strategy *connect_creation_strategy = 0;
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_UIOP_Connect_Creation_Strategy
-                  (this->orb_core_->thr_mgr (),
+                  (this->orb_core ()->thr_mgr (),
                    this->orb_core (),
                    &(this->uiop_properties_),
                    this->lite_flag_),
@@ -338,7 +338,7 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
   TAO_Profile *pfile;
   ACE_NEW_RETURN (pfile,
-                  TAO_UIOP_Profile (this->orb_core_),
+                  TAO_UIOP_Profile (this->orb_core ()),
                   0);
 
   int r = pfile->decode (cdr);
@@ -363,7 +363,7 @@ TAO_UIOP_Connector::make_profile (const char *endpoint,
 
   ACE_NEW_THROW_EX (profile,
                     TAO_UIOP_Profile (endpoint,
-                                      this->orb_core_,
+                                      this->orb_core (),
                                       ACE_TRY_ENV),
                     CORBA::NO_MEMORY ());
 
@@ -427,7 +427,7 @@ TAO_UIOP_Connector::init_uiop_properties (void)
 
   // Check ORB-level override for tcp properties.
   TAO_ClientProtocolPolicy *client_protocols =
-    this->orb_core_->policy_manager ()->client_protocol ();
+    this->orb_core ()->policy_manager ()->client_protocol ();
   CORBA::Object_var auto_release = client_protocols;
   RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
     RTCORBA::UnixDomainProtocolProperties::_nil ();
@@ -453,7 +453,7 @@ TAO_UIOP_Connector::init_uiop_properties (void)
       // No tcp properties in ORB-level override.  Use ORB defaults.
       // Orb defaults should never be null - they were initialized by
       // the ORB_Core.
-      client_protocols = this->orb_core_->default_client_protocol ();
+      client_protocols = this->orb_core ()->default_client_protocol ();
       auto_release = client_protocols;
       RTCORBA::ProtocolList & protocols = client_protocols->protocols_rep ();
       for (CORBA::ULong j = 0; j < protocols.length (); ++j)
@@ -479,9 +479,9 @@ TAO_UIOP_Connector::init_uiop_properties (void)
   // Without RTCORBA, protocol configuration properties come from ORB
   // options.
   this->uiop_properties_.send_buffer_size =
-    this->orb_core_->orb_params ()->sock_sndbuf_size ();
+    this->orb_core ()->orb_params ()->sock_sndbuf_size ();
   this->uiop_properties_.recv_buffer_size =
-    this->orb_core_->orb_params ()->sock_rcvbuf_size ();
+    this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
