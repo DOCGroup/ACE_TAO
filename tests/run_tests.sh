@@ -17,7 +17,13 @@ usage="usage: $0 <target>"
 IFS="|"
 tmp=/tmp
 compilation_log="log/compilations.log"
-LD_LIBRARY_PATH=../netsvcs/lib:$LD_LIBRARY_PATH
+LD_LIBRARY_PATH=$ACE_ROOT/ace:${LD_LIBRARY_PATH:-/usr/lib}
+export LD_LIBRARY_PATH
+
+if [ -x /bin/uname -a `uname -s` = 'HP-UX' ]; then
+  SHLIB_PATH=$ACE_ROOT/ace:${SHLIB_PATH:-/usr/lib}
+  export SHLIB_PATH
+fi
 
 ####
 #### Process command line arguments.
@@ -160,7 +166,7 @@ run Dynamic_Priority_Test               # tests ACE_ACE_Message_Queue, ACE_Dynam
 run Recursive_Mutex_Test                # tests ACE_Service_Config, ACE_Recursive_Thread_Mutex
 
 # Time_Service_Test: UNICOS fails dlopen() - no shared libs on UNICOS
-if [ -f ../netsvcs/server/main ]; then
+if [ -f ../netsvcs/servers/main ]; then
   test $chorus || test $LynxOS || test $Unicos || run Time_Service_Test # tests libnetsvcs
 fi
 # Tokens_Test: UNICOS fails dlopen() - no shared libs on UNICOS
