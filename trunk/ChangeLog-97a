@@ -1,3 +1,12 @@
+Mon Jan 13 22:24:09 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h: Added #undefs of sigemptyset and sigfillset on Linux
+	  when __OPTIMIZE__ is enabled.  Yes, the system header on Linux
+	  really #defines them when optimizing!  Thanks to an anonymous
+	  ACE user for pointing this out.
+
+	* tests/tests_config.h: Dropped ACE_MAX_ITERATIONS back to 10.
+
 Mon Jan 13 00:17:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/LSOCK_Stream.h: Added a new typedef for PEER_ADDR that is
@@ -63,10 +72,10 @@ Sun Jan 12 18:20:49 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/ACE.cpp: initialize ACE::pagesize_ to 0.
 
 	* ace/config-irix*.h and config-win*.h: removed ACE_PAGE_SIZE
-	  definition because these platforms no longer use it
+	  definition because these platforms no longer use it.
 
-	* tests/UNIX*.conf and Win32server.config:  replace net_svcs
-	  with netsvcs
+	* tests/UNIX*.conf and Win32server.conf:  replaced net_svcs
+	  with netsvcs.
 
 Sat Jan 11 15:11:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
