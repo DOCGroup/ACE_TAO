@@ -332,10 +332,12 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
       prevp = this->cb_ptr_->freep_;
       currp = prevp->next_block_;
     }
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
   ACE_SEH_EXCEPT (this->memory_pool_.seh_selector (GetExceptionInformation ()))
     {
       currp = prevp->next_block_;
     }
+#endif
 
   // Search the freelist to locate a block of the appropriate size.
 
