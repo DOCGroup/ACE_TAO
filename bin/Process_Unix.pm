@@ -3,7 +3,7 @@ package Process;
 
 $EXE_EXT = "";
 
-use POSIX ":sys_wait_h";
+use POSIX "sys_wait_h";
 
 sub Create
 {
@@ -63,8 +63,8 @@ sub TimedWait
   my $self = shift;
   my $maxtime = shift;
   while ($maxtime-- != 0) {
-    waitpid ($self->[0], WNOHANG);
-    if ($? != -1) {
+    my $pid = waitpid ($self->[0], &WNOHANG);
+    if ($pid != 0 && $? != -1) {
       return $?;
     }
     sleep 1;

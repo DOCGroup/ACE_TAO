@@ -1,3 +1,8 @@
+Fri Jun 11 20:04:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/Process_Unix.pm:
+	  Fixed problems on TimedWait().
+
 Fri Jun 11 15:28:44 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Need to add #include <signal.h> before <pthread.h>
