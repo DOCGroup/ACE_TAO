@@ -3,6 +3,10 @@ Fri Mar  5 12:15:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Trader/Trader.cpp: 
 	  Removed some repeated template instantiations.
 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	  Removed some template instantiations that belong in
+	  Trader/Trader.cpp
+
 Thu Mar 04 21:04:59 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader: Removed TAO_Hashable_ULong as all the

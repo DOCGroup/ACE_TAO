@@ -314,7 +314,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
             {
               for (u_int j=0;j<b_feps.length ();j++)
                 {
-                  AVStreams::FlowEndPoint_ptr fep_a = 
+                  AVStreams::FlowEndPoint_ptr fep_a =
                     AVStreams::FlowEndPoint::_narrow (a_feps [i],TAO_TRY_ENV);
                   TAO_CHECK_ENV;
                   AVStreams::FlowEndPoint_ptr fep_b =
@@ -326,7 +326,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                                                    TAO_TRY_ENV) == 1)
                         {
                           // assume that flow names are same so that we
-                          // can use either of them. 
+                          // can use either of them.
                           CORBA::Object_ptr flow_connection_obj;
                           AVStreams::FlowConnection_ptr flow_connection;
                           if ((flow_connection_obj
@@ -513,7 +513,7 @@ TAO_StreamEndPoint::set_protocol_restriction (const AVStreams::protocolSpec &the
                                               CORBA::Environment &env)
 {
   CORBA::Any protocol_restriction_any;
-  
+
   protocol_restriction_any <<= the_pspec;
   this->define_property ("ProtocolRestriction",
                          protocol_restriction_any,
@@ -561,7 +561,7 @@ TAO_StreamEndPoint::add_fep (CORBA::Object_ptr the_fep,
   char *flow_name = 0;
   ACE_NEW_RETURN (flow_name,char [BUFSIZ],0);
   CORBA::Any_ptr flow_name_any;
-  AVStreams::FlowEndPoint_ptr fep = 
+  AVStreams::FlowEndPoint_ptr fep =
     AVStreams::FlowEndPoint::_narrow (the_fep,env);
   TAO_CHECK_ENV_RETURN (env,0);
   TAO_TRY
@@ -799,7 +799,7 @@ TAO_VDev::TAO_VDev (void)
 }
 
 // StreamCtrl will call this to give us a reference to itself, and to
-// our peer vdev.. 
+// our peer vdev..
 CORBA::Boolean
 TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
                     AVStreams::VDev_ptr the_peer_dev,
@@ -809,7 +809,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
 {
   ACE_UNUSED_ARG (the_qos);
   ACE_UNUSED_ARG (the_spec);
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) TAO_VDev::set_peer: called"));
 
@@ -1073,7 +1073,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr the_fdev,
   char *flow_name = 0;
   ACE_NEW_RETURN (flow_name,char [BUFSIZ],0);
   CORBA::Any_ptr flow_name_any;
-  AVStreams::FDev_ptr fdev = 
+  AVStreams::FDev_ptr fdev =
     AVStreams::FDev::_narrow (the_fdev,env);
   TAO_CHECK_ENV_RETURN (env,0);
   TAO_TRY
@@ -1154,7 +1154,7 @@ TAO_MMDevice::~TAO_MMDevice (void)
 }
 
 //------------------------------------------------------------------
-// TAO_FlowConnection 
+// TAO_FlowConnection
 //------------------------------------------------------------------
 
 // default constructor.
@@ -1187,7 +1187,7 @@ TAO_FlowConnection::destroy (CORBA::Environment &env)
 }
 
 // modify the QoS for this flow.
-CORBA::Boolean 
+CORBA::Boolean
 TAO_FlowConnection::modify_QoS (AVStreams::QoS & new_qos,
                                 CORBA::Environment &env)
 {
@@ -1197,7 +1197,7 @@ TAO_FlowConnection::modify_QoS (AVStreams::QoS & new_qos,
 }
 
 // use the specified flow protocol for this flow.
-CORBA::Boolean 
+CORBA::Boolean
 TAO_FlowConnection::use_flow_protocol (const char * fp_name,
                                        const CORBA::Any & fp_settings,
                                        CORBA::Environment &env)
@@ -1208,7 +1208,7 @@ TAO_FlowConnection::use_flow_protocol (const char * fp_name,
   return 1;
 }
 
-void 
+void
 TAO_FlowConnection::push_event (const AVStreams::streamEvent & the_event,
                                 CORBA::Environment &env)
 {
@@ -1216,7 +1216,7 @@ TAO_FlowConnection::push_event (const AVStreams::streamEvent & the_event,
   ACE_UNUSED_ARG (env);
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_FlowConnection::connect_devs (AVStreams::FDev_ptr a_party,
                                   AVStreams::FDev_ptr b_party,
                                   AVStreams::QoS & the_qos,
@@ -1229,8 +1229,8 @@ TAO_FlowConnection::connect_devs (AVStreams::FDev_ptr a_party,
   return 0;
 }
 
-// connect the producer and the consumer 
-CORBA::Boolean 
+// connect the producer and the consumer
+CORBA::Boolean
 TAO_FlowConnection::connect (AVStreams::FlowProducer_ptr flow_producer,
                              AVStreams::FlowConsumer_ptr flow_consumer,
                              AVStreams::QoS & the_qos,
@@ -1244,20 +1244,20 @@ TAO_FlowConnection::connect (AVStreams::FlowProducer_ptr flow_producer,
                              the_qos,
                              env);
   TAO_CHECK_ENV_RETURN (env,0);
-  
+
   this->consumer_->set_peer (this->_this (env),
                              this->producer_,
                              the_qos,
                              env);
   TAO_CHECK_ENV_RETURN (env,0);
-  
-  char *consumer_address = 
+
+  char *consumer_address =
     this->consumer_->go_to_listen (the_qos,
                                    0,// false for is_mcast
                                    this->producer_,
                                    this->fp_name_,
                                    env);
-  
+
   TAO_CHECK_ENV_RETURN (env,0);
   this->producer_->connect_to_peer (the_qos,
                                     consumer_address,
@@ -1275,7 +1275,7 @@ TAO_FlowConnection::disconnect (CORBA::Environment &env)
   return  0;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr flow_producer,
                                   AVStreams::QoS & the_qos,
                                   CORBA::Environment &env)
@@ -1284,9 +1284,9 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr flow_producer,
   ACE_UNUSED_ARG (env);
   this->producer_ = flow_producer;
   return 1;
-} 
+}
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_FlowConnection::add_consumer (AVStreams::FlowConsumer_ptr flow_consumer,
                                   AVStreams::QoS & the_qos,
                                   CORBA::Environment &env)
@@ -1295,9 +1295,9 @@ TAO_FlowConnection::add_consumer (AVStreams::FlowConsumer_ptr flow_consumer,
   ACE_UNUSED_ARG (env);
   this->consumer_ = flow_consumer;
   return 1;
-} 
+}
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_FlowConnection::drop (AVStreams::FlowEndPoint_ptr target,
                           CORBA::Environment &env)
 {
@@ -1307,7 +1307,7 @@ TAO_FlowConnection::drop (AVStreams::FlowEndPoint_ptr target,
 }
 
 // -----------------------------------------------------------------
-// TAO_FlowEndPoint 
+// TAO_FlowEndPoint
 // -----------------------------------------------------------------
 
 //default constructor.
@@ -1391,7 +1391,7 @@ TAO_FlowEndPoint::get_connected_fep (CORBA::Environment &env)
   return this->peer_fep_;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_FlowEndPoint::use_flow_protocol (const char * fp_name,
                                      const CORBA::Any & fp_settings,
                                      CORBA::Environment &env)
@@ -1431,7 +1431,7 @@ TAO_FlowEndPoint::set_dev_params (const CosPropertyService::Properties & new_set
                          DevParams_property,
                          env);
   TAO_CHECK_ENV_PRINT_RETURN_VOID (env,"TAO_FlowEndPoint::set_dev_params");
-  
+
 }
 
 void
@@ -1462,9 +1462,9 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep,
   if (format_ptr != 0)
     *format_ptr >>= my_format;
   else
-    // property is not defined 
+    // property is not defined
     ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t) TAO_FlowEndPoint::is_fep_compatible"),0);
-    
+
   // get my peer's format value
 
   format_ptr = peer_fep->get_property_value ("Format",
@@ -1473,7 +1473,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep,
   if (format_ptr != 0)
     *format_ptr >>= peer_format;
   else
-    // property is not defined 
+    // property is not defined
     ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t) TAO_FlowEndPoint::is_fep_compatible"),0);
 
   // can we use strcmp??
@@ -1482,7 +1482,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep,
   // since formats are same, check for a common protocol
   CORBA::Any* AvailableProtocols_ptr;
   AVStreams::protocolSpec *my_protocolSpec,*peer_protocolSpec;
-  
+
   AvailableProtocols_ptr = this->get_property_value ("AvailableProtocols",
                                                      env);
   TAO_CHECK_ENV_PRINT_RETURN (env,"TAO_FlowEndPoint::is_fep_compatible",0);
@@ -1490,7 +1490,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep,
     *AvailableProtocols_ptr >>= my_protocolSpec;
   else
     ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t) TAO_FlowEndPoint::is_fep_compatible"),0);
-  
+
   AvailableProtocols_ptr = peer_fep->get_property_value ("AvailableProtocols",
                                                                env);
   TAO_CHECK_ENV_PRINT_RETURN (env,"TAO_FlowEndPoint::AvailableProtocols",0);
@@ -1515,7 +1515,7 @@ TAO_FlowEndPoint::set_peer (AVStreams::FlowConnection_ptr the_fc,
   return 1;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_FlowEndPoint::set_Mcast_peer (AVStreams::FlowConnection_ptr the_fc,
                                   AVStreams::MCastConfigIf_ptr a_mcastconfigif,
                                   AVStreams::QoS & the_qos,
@@ -1624,7 +1624,7 @@ TAO_FlowConsumer::TAO_FlowConsumer (void)
 {
 }
 
-char * 
+char *
 TAO_FlowConsumer::go_to_listen (AVStreams::QoS & the_qos,
                                CORBA::Boolean is_mcast,
                                AVStreams::FlowProducer_ptr peer,
@@ -1634,7 +1634,7 @@ TAO_FlowConsumer::go_to_listen (AVStreams::QoS & the_qos,
   return this->handle_go_to_listen (the_qos,is_mcast,peer,flowProtocol,env);
 }
 
-char * 
+char *
 TAO_FlowConsumer::handle_go_to_listen (AVStreams::QoS & the_qos,
                                CORBA::Boolean is_mcast,
                                AVStreams::FlowProducer_ptr peer,
@@ -1774,8 +1774,6 @@ TAO_FDev::destroy (AVStreams::FlowEndPoint_ptr the_ep,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,CORBA::Object_ptr>;
-template class ACE_Hash<TAO_String_Hash_Key>;
-template class ACE_Equal_To<TAO_String_Hash_Key>;
 template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CORBA::Object_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>;
@@ -1785,8 +1783,6 @@ template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,CORBA::Object_p
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CORBA::Object_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,CORBA::Object_ptr>
-#pragma instantiate ACE_Hash<TAO_String_Hash_Key>
-#pragma instantiate ACE_Equal_To<TAO_String_Hash_Key>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CORBA::Object_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>
