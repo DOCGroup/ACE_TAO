@@ -1,6 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
+#include "ace/config-all.h"    /* Need ACE_TRACE */
+
 ACE_INLINE int
 ACE_OS::last_error (void)
 {
