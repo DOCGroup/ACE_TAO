@@ -26,7 +26,7 @@ Thu Nov 14 16:40:06 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Fixed problem where CosLoadBalancing::LocationNotFound exception
 	  was propagated to the client, and interpreted as a
-	  CORBA::UNKNOWN exception.  If a loads at the supplied location
+	  CORBA::UNKNOWN exception.  If loads at the supplied location
 	  are not available continue the loop and attempt to retrieve
 	  loads from the next location.
 
