@@ -1,3 +1,11 @@
+Tue Dec 12 23:33:07 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h: 
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp: 
+        * orbsvcs/orbsvcs/Makefile.av:
+			
+	  Fixed compile problems.	
+
 Tue Dec 12 15:58:03 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* docs/INS.html:
