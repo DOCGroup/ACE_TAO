@@ -55,7 +55,7 @@ AccountManager_i::open (const char *name,
       if (hash_map_.find (name, result) != 0)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
-		      "\nOpening a new Account for %s with balance %f\n",
+		      "(%P|%t) Opening a new Account for %s with balance %f\n",
 		      name,
 		      initial_balance));
 
