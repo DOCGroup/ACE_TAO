@@ -38,13 +38,13 @@ public:
   // ctor
 
   CORBA::Long instance_count (CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void destroy (CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   PortableServer::POA_ptr _default_POA (CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   PortableServer::POA_var poa_;

@@ -45,8 +45,8 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: testC.h testC.i testC.cpp testS.h testS.i testS.cpp testS_T.h testS_T.i testS_T.cpp
 
-Etherealization:	$(addprefix $(VDIR),$(SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
+Etherealization: $(addprefix $(VDIR),$(SVR_OBJS))
+		$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) testC.* testS.* testS_T.*

@@ -1,3 +1,13 @@
+Sun May 20 10:43:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/OctetSeq/test_i.{h,cpp}:
+	* tests/MT_Server/test_i.{h,cpp}:
+	* tests/Nested_Event_Loop/test_i.{h,cpp}:
+	* tests/Leader_Followers/test_i.{h,cpp}
+	* tests/Object_Loader/Test_i.{h,cpp}:
+	* tests/Single_Read/test_i.{h,cpp}: Fixed compile errors in Forte
+	  update 1.
+
 Sat May 19 20:37:00 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
 	* tests/Connection_Purging/server.dsp: Fixed an error on Win32

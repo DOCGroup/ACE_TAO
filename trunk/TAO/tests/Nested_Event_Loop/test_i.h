@@ -39,15 +39,15 @@ public:
   void loop (CORBA::ULong event_loop_depth,
              CORBA::ULong event_loop_iterations,
              CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void oneway_no_op (const act &act_for_iterations,
                      const act &act_for_flag,
                      CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void twoway_no_op (CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   server_var remote_partner_;
