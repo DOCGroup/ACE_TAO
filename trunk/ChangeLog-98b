@@ -7,7 +7,9 @@ Tue Oct 20 07:09:31 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.2.x.h: Added ACE_HAS_GPERF.
 
-        * tests/tests.(mak mdp): Fixed to build clean.
+        * tests/tests.(mak mdp): Fixed to build clean; Added:
+          DLList_Test, High_Res_Timer_Test, Dynamic_Priority_Test,
+          Thread_Pool_Reactor_Test, Upgradable_RW_Test, MT_Reactor_Timer_Test.
 
 Mon Oct 19 21:40:56 1998  David L. Levine  <levine@cs.wustl.edu>
 
