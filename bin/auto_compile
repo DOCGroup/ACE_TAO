@@ -84,7 +84,11 @@ sub mydie {
 	|| die "cannot open email pipe on error: $msg\n";
     print MAIL 'The following error is brought to you by: ', "\n";
     print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
-    print MAIL "\n", @msg, "\n";
+    print MAIL "\n";
+    local $m;
+    foreach $m (@msg) { 
+	print MAIL $m, "\n";
+    }
     print MAIL "\nPlease check log files for more info\n";
     close(MAIL)
 	|| die "cannot close email pipe on error: $msg\n";
