@@ -1,3 +1,10 @@
+Fri May  2 08:45:09 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Only create a project if source files or idl files are found or
+          listed.
+
 Thu May  1 12:55:13 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/VC6WorkspaceCreator.pm:
