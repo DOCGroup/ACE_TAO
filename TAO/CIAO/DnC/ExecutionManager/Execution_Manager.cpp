@@ -139,8 +139,6 @@ main (int argc, char *argv[])
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CIAO::Server_init (orb.in ());
-
       if (parse_args (argc, argv) != 0)
         return -1;
 
