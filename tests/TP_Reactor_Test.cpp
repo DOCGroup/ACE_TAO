@@ -10,11 +10,11 @@
 //
 // = DESCRIPTION
 //    This program illustrates how the <ACE_TP_Reactor> can be used to
-//    implement an application that does various operations.  
+//    implement an application that does various operations.
 //
 // = AUTHOR
 //      Alexander Libman <alibman@baltimore.com>
-// 
+//
 // ============================================================================
 
 #include "test_config.h"
@@ -116,9 +116,9 @@ MyTask::create_reactor (void)
                     monitor,
                     this->lock_,
                     -1);
-  
+
   ACE_ASSERT (this->my_reactor_ == 0);
-  
+
   ACE_TP_Reactor * pImpl = 0;
 
   ACE_NEW_RETURN (pImpl,ACE_TP_Reactor, -1);
@@ -126,10 +126,10 @@ MyTask::create_reactor (void)
   ACE_NEW_RETURN (my_reactor_,
                    ACE_Reactor (pImpl ,1),
                    -1);
-  
-  ACE_DEBUG ((LM_DEBUG, 
+
+  ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%t) Create TP_Reactor\n")));
- 
+
   ACE_Reactor::instance (this->my_reactor_);
 
   this->reactor (my_reactor_);
@@ -145,18 +145,18 @@ MyTask::delete_reactor (void)
                     this->lock_,
                     -1);
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%t) Delete TP_Reactor\n")));
 
   ACE_Reactor::instance ((ACE_Reactor *) 0);
   delete this->my_reactor_;
   this->my_reactor_ = 0;
   this->reactor (0);
-  
+
   return 0;
 }
 
-int 
+int
 MyTask::start (size_t num_threads)
 {
   if (this->create_reactor () == -1)
@@ -164,7 +164,7 @@ MyTask::start (size_t num_threads)
                        ACE_TEXT ("%p.\n"),
                        ACE_TEXT ("unable to create reactor")),
                       -1);
- 
+
   if (this->activate (THR_NEW_LWP, num_threads) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p.\n"),
@@ -193,7 +193,7 @@ MyTask::stop (void)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p.\n"),
                 ACE_TEXT ("unable to stop thread pool")));
-    
+
   if (this->delete_reactor () == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p.\n"),
@@ -227,7 +227,7 @@ class Receiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
 {
   friend class Acceptor;
 public:
- 
+
   Receiver (Acceptor * acceptor=0, int index=-1);
 
   ~Receiver (void);
@@ -285,8 +285,8 @@ Acceptor::Acceptor (void)
   : ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR> ((ACE_Reactor *) 0),
     sessions_ (0)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_); 
-  
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
+
   for (int i = 0; i < MAX_RECEIVERS; ++i)
      this->list_receivers_[i] =0;
 }
@@ -297,14 +297,14 @@ Acceptor::~Acceptor (void)
   stop ();
 }
 
-void 
+void
 Acceptor::stop (void)
 {
   // this method can be called only after reactor event loop id done
   // in all threads
 
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_); 
-  
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
+
   for (int i = 0; i < MAX_RECEIVERS; ++i)
     {
       delete this->list_receivers_[i];
@@ -312,34 +312,34 @@ Acceptor::stop (void)
     }
 }
 
-void 
+void
 Acceptor::on_new_receiver (Receiver &rcvr)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
   this->sessions_++;
   this->list_receivers_[ rcvr.index_] = & rcvr;
-  ACE_DEBUG ((LM_DEBUG, 
-              "Receiver::CTOR sessions_=%d\n", 
+  ACE_DEBUG ((LM_DEBUG,
+              "Receiver::CTOR sessions_=%d\n",
               this->sessions_));
 }
 
-void 
+void
 Acceptor::on_delete_receiver (Receiver &rcvr)
 {
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
   this->sessions_--;
-  if (rcvr.index_ >= 0 
-     && rcvr.index_ < MAX_RECEIVERS 
+  if (rcvr.index_ >= 0
+     && rcvr.index_ < MAX_RECEIVERS
      && this->list_receivers_[ rcvr.index_] == & rcvr)
     this->list_receivers_[ rcvr.index_] = 0;
 
-  ACE_DEBUG ((LM_DEBUG, 
-              "Receiver::~DTOR sessions_=%d\n", 
+  ACE_DEBUG ((LM_DEBUG,
+              "Receiver::~DTOR sessions_=%d\n",
               this->sessions_));
 }
 
-int 
+int
 Acceptor::start (const ACE_INET_Addr &addr)
 {
   if (ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>
@@ -352,8 +352,8 @@ Acceptor::start (const ACE_INET_Addr &addr)
                       0);
   return 1;
 }
- 
-int 
+
+int
 Acceptor::make_svc_handler (Receiver *&sh)
 {
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
@@ -382,7 +382,7 @@ Receiver::Receiver (Acceptor * acceptor, int index)
   if (acceptor_ != 0)
     acceptor_->on_new_receiver (*this);
 }
- 
+
 
 Receiver::~Receiver (void)
 {
@@ -404,7 +404,7 @@ Receiver::~Receiver (void)
     }
 }
 
-int 
+int
 Receiver::check_destroy (void)
 {
   if (flg_mask_ == ACE_Event_Handler::NULL_MASK)
@@ -413,26 +413,26 @@ Receiver::check_destroy (void)
   return 0;
 }
 
-int 
+int
 Receiver::open (void *pVoid)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   ACE_Reactor *TPReactor = ACE_Reactor::instance ();
 
   this->reactor (TPReactor);
 
   flg_mask_ = ACE_Event_Handler::NULL_MASK ;
- 
+
   if (TPReactor->register_handler (this, flg_mask_) == -1)
     return -1;
-	
+
   initiate_io (ACE_Event_Handler::READ_MASK);
 
   return check_destroy ();
 }
 
-int 
+int
 Receiver::initiate_io (ACE_Reactor_Mask mask)
 {
   if (ACE_BIT_ENABLED (flg_mask_, mask))
@@ -445,7 +445,7 @@ Receiver::initiate_io (ACE_Reactor_Mask mask)
   return 0;
 }
 
-int 
+int
 Receiver::terminate_io (ACE_Reactor_Mask mask)
 {
   if (ACE_BIT_DISABLED (flg_mask_, mask))
@@ -458,12 +458,12 @@ Receiver::terminate_io (ACE_Reactor_Mask mask)
   return 0;
 }
 
-int 
+int
 Receiver::handle_close (ACE_HANDLE h, ACE_Reactor_Mask mask)
 {
   ACE_Reactor * TPReactor = ACE_Reactor::instance ();
 
-  TPReactor->remove_handler (this, 
+  TPReactor->remove_handler (this,
                              ACE_Event_Handler::ALL_EVENTS_MASK |
                              ACE_Event_Handler::DONT_CALL);  // Don't call handle_close
 
@@ -473,11 +473,11 @@ Receiver::handle_close (ACE_HANDLE h, ACE_Reactor_Mask mask)
 
   return 0;
 }
-  
-int 
+
+int
 Receiver::handle_input (ACE_HANDLE h)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb,
@@ -488,12 +488,12 @@ Receiver::handle_input (ACE_HANDLE h)
   ssize_t res = this->peer ().recv (mb->rd_ptr (), BUFSIZ-1);
 
   if (res >= 0)
-    mb->wr_ptr (res);  
+    mb->wr_ptr (res);
   else
     err = errno ;
 
   mb->wr_ptr ()[0] = '\0';
-  
+
   if (loglevel == 0 || res <= 0 || err!= 0)
     {
       ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_input () SessionId=%d****\n", index_));
@@ -504,7 +504,7 @@ Receiver::handle_input (ACE_HANDLE h)
       ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", mb->rd_ptr ()));
       ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
     }
-  
+
   if (err == EWOULDBLOCK)
     {
       err=0;
@@ -521,7 +521,7 @@ Receiver::handle_input (ACE_HANDLE h)
   ACE_Time_Value tv = ACE_Time_Value::zero;
 
   int qcount = this->putq (mb, & tv);
-  
+
   if (qcount <= 0)  // failed to putq
     {
       ACE_Message_Block::release (mb);
@@ -532,14 +532,14 @@ Receiver::handle_input (ACE_HANDLE h)
 
   if (duplex == 0)      // half-duplex , stop read
     rc = this->terminate_io (ACE_Event_Handler::READ_MASK);
-  else                     // full duplex 
+  else                     // full duplex
     {
       if (qcount >= 2)   // flow control, stop read
         rc = this->terminate_io (ACE_Event_Handler::READ_MASK);
       else
         rc = this->initiate_io (ACE_Event_Handler::READ_MASK);
     }
-  
+
   if (rc == -1)
     return -1;
 
@@ -550,10 +550,10 @@ Receiver::handle_input (ACE_HANDLE h)
   return check_destroy ();
 }
 
-int 
+int
 Receiver::handle_output (ACE_HANDLE h)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   ACE_Time_Value tv = ACE_Time_Value::zero;
   ACE_Message_Block *mb = 0;
@@ -564,11 +564,11 @@ Receiver::handle_output (ACE_HANDLE h)
 
   int     qcount = this->getq (mb, &tv);
 
-  if (mb != 0)  // qcount >= 0)   
+  if (mb != 0)  // qcount >= 0)
     {
       bytes = mb->length ();
       res = this->peer ().send (mb->rd_ptr (), bytes);
-    
+
       if (res < 0)
         err = errno ;
 
@@ -597,18 +597,18 @@ Receiver::handle_output (ACE_HANDLE h)
       if (this->initiate_io (ACE_Event_Handler::READ_MASK) != 0)
         return -1;
     }
- 
+
   return check_destroy ();
 }
 
 // *******************************************
-//   Sender 
+//   Sender
 // *******************************************
 
 class Connector;
 
 class Sender : public ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>
-{ 
+{
   friend class Connector;
 
 public:
@@ -672,8 +672,8 @@ Connector::Connector ()
   : ACE_Connector<Sender,ACE_SOCK_CONNECTOR> ((ACE_Reactor *) 0),
     sessions_ (0)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_); 
-  
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
+
   for (int i = 0; i < MAX_SENDERS; ++i)
      this->list_senders_[i] = 0;
 }
@@ -684,15 +684,15 @@ Connector::~Connector ()
   stop ();
 }
 
-void 
+void
 Connector::stop ()
 {
   // this method can be called only
   // after reactor event loop id done
   // in all threads
 
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_); 
-  
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
+
   for (int i = 0; i < MAX_SENDERS; ++i)
     {
       delete this->list_senders_[i];
@@ -700,34 +700,34 @@ Connector::stop ()
     }
 }
 
-void 
+void
 Connector::on_new_sender (Sender & sndr)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
   this->sessions_++;
   this->list_senders_[ sndr.index_] = &sndr;
-  ACE_DEBUG ((LM_DEBUG, 
-              "Sender::CTOR sessions_=%d\n", 
+  ACE_DEBUG ((LM_DEBUG,
+              "Sender::CTOR sessions_=%d\n",
               this->sessions_));
 }
 
-void 
+void
 Connector::on_delete_sender (Sender & sndr)
 {
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
   this->sessions_--;
-  if (sndr.index_ >= 0 
+  if (sndr.index_ >= 0
      && sndr.index_ < MAX_SENDERS
      && this->list_senders_[ sndr.index_] == &sndr)
     this->list_senders_[ sndr.index_] = 0;
 
-  ACE_DEBUG ((LM_DEBUG, 
-              "Sender::~DTOR sessions_=%d\n", 
+  ACE_DEBUG ((LM_DEBUG,
+              "Sender::~DTOR sessions_=%d\n",
               this->sessions_));
 }
 
-int 
+int
 Connector::start (const ACE_INET_Addr & addr, int num)
 {
 
@@ -757,8 +757,8 @@ Connector::start (const ACE_INET_Addr & addr, int num)
 
   return rc;
 }
- 
-int 
+
+int
 Connector::make_svc_handler (Sender * & sh)
 {
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
@@ -790,7 +790,7 @@ Sender::Sender (Connector* connector, int index)
 
   ACE_OS::sprintf (send_buf_ ,data);
 }
- 
+
 
 Sender::~Sender (void)
 {
@@ -812,7 +812,7 @@ Sender::~Sender (void)
     }
 }
 
-int 
+int
 Sender::check_destroy (void)
 {
   if (flg_mask_ == ACE_Event_Handler::NULL_MASK)
@@ -823,17 +823,17 @@ Sender::check_destroy (void)
 
 int Sender::open (void * pVoid)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   ACE_Reactor * TPReactor = ACE_Reactor::instance ();
 
   this->reactor (TPReactor);
 
   flg_mask_ = ACE_Event_Handler::NULL_MASK ;
- 
+
   if (TPReactor->register_handler (this,flg_mask_) == -1)
     return -1;
-	
+
   if (this->initiate_write () == -1)
     return -1;
 
@@ -843,29 +843,29 @@ int Sender::open (void * pVoid)
   return check_destroy ();
 }
 
-int 
+int
 Sender::initiate_write (void)
 {
   if (this->msg_queue ()->message_count () < 2) // flow control
     {
       int nbytes = ACE_OS::strlen (send_buf_);
-  
+
       ACE_Message_Block *mb = 0;
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (nbytes+8),
                       -1);
-  
+
       mb->init (send_buf_, nbytes);
       mb->rd_ptr (mb->base ());
       mb->wr_ptr (mb->base ());
       mb->wr_ptr (nbytes);
-  
+
       ACE_Time_Value tv = ACE_Time_Value::zero;
 
       int qcount =this->putq (mb, & tv);
 
       if (qcount <= 0)
-        { 
+        {
           ACE_Message_Block::release (mb);
           return -1;
         }
@@ -874,7 +874,7 @@ Sender::initiate_write (void)
   return initiate_io (ACE_Event_Handler::WRITE_MASK);
 }
 
-int 
+int
 Sender::initiate_io (ACE_Reactor_Mask mask)
 {
   if (ACE_BIT_ENABLED (flg_mask_, mask))
@@ -887,7 +887,7 @@ Sender::initiate_io (ACE_Reactor_Mask mask)
   return 0;
 }
 
-int 
+int
 Sender::terminate_io (ACE_Reactor_Mask mask)
 {
   if (ACE_BIT_DISABLED (flg_mask_, mask))
@@ -905,7 +905,7 @@ Sender::handle_close (ACE_HANDLE h , ACE_Reactor_Mask mask)
 {
   ACE_Reactor * TPReactor = ACE_Reactor::instance ();
 
-  TPReactor->remove_handler (this, 
+  TPReactor->remove_handler (this,
                              ACE_Event_Handler::ALL_EVENTS_MASK |
                              ACE_Event_Handler::DONT_CALL);  // Don't call handle_close
   this->reactor (0);
@@ -913,11 +913,11 @@ Sender::handle_close (ACE_HANDLE h , ACE_Reactor_Mask mask)
 
   return 0;
 }
-  
+
 int
 Sender::handle_input (ACE_HANDLE h)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb,
@@ -929,12 +929,12 @@ Sender::handle_input (ACE_HANDLE h)
                                     BUFSIZ-1);
 
   if (res >= 0)
-    mb->wr_ptr (res);  
+    mb->wr_ptr (res);
   else
     err = errno ;
 
   mb->wr_ptr ()[0] = '\0';
-  
+
   if (loglevel == 0 || res <= 0 || err!= 0)
     {
       ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_input () SessionId=%d****\n", index_));
@@ -945,7 +945,7 @@ Sender::handle_input (ACE_HANDLE h)
       ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", mb->rd_ptr ()));
       ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
     }
-  
+
 
   ACE_Message_Block::release (mb);
 
@@ -964,7 +964,7 @@ Sender::handle_input (ACE_HANDLE h)
   if (duplex != 0)  // full duplex, continue read
     rc = initiate_io (ACE_Event_Handler::READ_MASK);
   else
-    rc = terminate_io (ACE_Event_Handler::READ_MASK); 
+    rc = terminate_io (ACE_Event_Handler::READ_MASK);
 
   if (rc != 0)
     return -1 ;
@@ -972,14 +972,14 @@ Sender::handle_input (ACE_HANDLE h)
   rc = initiate_write ();
   if (rc != 0)
     return -1;
- 
+
   return check_destroy ();
 }
 
 int
 Sender::handle_output (ACE_HANDLE h)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   ACE_Time_Value tv = ACE_Time_Value::zero;
   ACE_Message_Block *mb = 0;
@@ -994,7 +994,7 @@ Sender::handle_output (ACE_HANDLE h)
     {
       bytes = mb->length ();
       res = this->peer ().send (mb->rd_ptr (), bytes);
-    
+
       if (res < 0)
         err = errno ;
 
@@ -1031,7 +1031,7 @@ Sender::handle_output (ACE_HANDLE h)
   rc = initiate_io (ACE_Event_Handler::READ_MASK);
   if (rc == -1)
     return -1;
-    
+
   return check_destroy ();
 }
 
@@ -1113,7 +1113,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 's':     // number of senders
           senders = ACE_OS::atoi (get_opt.optarg);
-          if (senders > MAX_SENDERS) 
+          if (senders > MAX_SENDERS)
             senders = MAX_SENDERS;
           break;
         case 'u':
@@ -1126,7 +1126,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("TP_Reactor_Test"));
 
@@ -1155,7 +1155,7 @@ main (int argc, char *argv[])
 
           rc += connector.start (ACE_INET_Addr (port, host),
                                  senders);
-         
+
         }
 
       if (rc > 0)
@@ -1181,7 +1181,7 @@ main (int argc, char *argv[])
   return 0;
 }
 
-static int 
+static int
 disable_signal (int sigmin, int sigmax)
 {
 #ifndef ACE_WIN32
@@ -1193,37 +1193,37 @@ disable_signal (int sigmin, int sigmax)
 
   for (int i = sigmin; i <= sigmax; i++)
     sigaddset (&signal_set, i);
-	
+
   //  Put the <signal_set>.
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
     ACE_ERROR ((LM_ERROR,
                 "Error: (%P | %t):%p\n",
                 "pthread_sigmask failed"));
 #endif /* ACE_WIN32 */
-	
-  return 1; 
+
+  return 1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Svc_Tuple<Sender>;
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >;          
-template class ACE_Map_Entry<int, ACE_Svc_Tuple<Sender> * >;                                 
-template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >;         
-template class ACE_Map_Reverse_Iterator<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >; 
-template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >;    
-template class ACE_Connector<Sender,ACE_SOCK_CONNECTOR>;                                     
-template class ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>;                                       
-template class ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>;                                     
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >;
+template class ACE_Map_Entry<int, ACE_Svc_Tuple<Sender> * >;
+template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >;
+template class ACE_Map_Reverse_Iterator<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >;
+template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >;
+template class ACE_Connector<Sender,ACE_SOCK_CONNECTOR>;
+template class ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Svc_Tuple<Sender>
 #pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >
-#pragma instantiate ACE_Map_Entry<int, ACE_Svc_Tuple<Sender> * >          
+#pragma instantiate ACE_Map_Entry<int, ACE_Svc_Tuple<Sender> * >
 #pragma instantiate ACE_Map_Iterator<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >
 #pragma instantiate ACE_Map_Reverse_Iterator<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >
-#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >   
+#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >
 #pragma instantiate ACE_Connector<Sender,ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>
