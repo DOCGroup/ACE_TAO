@@ -894,7 +894,6 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                            idl_bool in_parent)
 {
   AST_Decl *d;
-  this->matched = I_FALSE;
   UTL_Scope *t = NULL;
 
   // Empty name? error
