@@ -95,7 +95,7 @@ Thu Aug 28 08:43:21 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Moved "Environment.h" include to the header file.  Some code in
 	  NVList.i requires the CORBA::Environment class declaration.
-	  Fixes builds emulated exceptions are used.
+	  Fixes builds where emulated exceptions are used.
 
 Thu Aug 28 08:21:24 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
