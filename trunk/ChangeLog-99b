@@ -9,6 +9,8 @@ Fri Jan 22 16:10:35 1999  Steve Huston  <shuston@riverace.com>
         * ace/OS.i (ACE_OS::sema_init): Always init s->name_ to 0, else it
           might be non-zero (and junk) when deleted.
 
+        * ace/config-hpux11.h: Added an overrideable ACE_TIMER_SKEW of 10 msec.
+
 Fri Jan 22 15:07:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Containers_T.cpp: Yikes, don't delete the fixed stack since
