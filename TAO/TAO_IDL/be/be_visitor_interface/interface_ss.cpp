@@ -360,7 +360,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "if (" << be_idt << be_idt_nl;
+      << "return" << be_idt_nl
+      << "(" << be_idt_nl;
 
   if (node->traverse_inheritance_graph (be_interface::is_a_helper, os) == -1)
     {
@@ -372,7 +373,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-      << "(char *)value," << be_nl
+      << "value," << be_nl
       << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
       << ")";
 
@@ -386,14 +387,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   *os << be_uidt << be_uidt_nl
-      << " )" << be_nl
-      << "{" << be_idt_nl
-      << "return 1;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // the downcast method.

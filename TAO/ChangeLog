@@ -1,3 +1,26 @@
+Mon Jan 31 16:06:28 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        
+          - In the generated _nil() method for interfaces, changed
+            the C-style cast of 0 to the *_ptr type to a C++-style
+            static_cast<>.
+            
+          - In the generated _is_a() method for the skeleton, removed
+            the unnecessary cast to char* on the first argument
+            passed to ACE_OS::strcmp().
+            
+          - Also in the generated _is_a() method for the skeleton,
+            changed the 'if (...) return 1 else return 0;' style
+            to just 'return (...)' since the expression (..)
+            already evaluates to the required boolean return type.
+            
+          Thanks to Johnny Willemsen <jwillemsen@rememedy.nl> for
+          suggesting the first two of the above changes.
+
 Mon Jan 31 15:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.h:
