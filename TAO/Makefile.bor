@@ -47,8 +47,20 @@ DIRS = \
         orbsvcs\tests \
 	utils
 
+!elif $(BUILD) == nightlybuild
+
+DIRS = \
+	tao \
+	TAO_IDL	\
+	orbsvcs	\
+	examples \
+	tests \
+        performance-tests \
+        orbsvcs\tests \
+	utils
+
 !else
-!error Please set your BUILD variable to one of	"minimal", "typical" or	"all".
+!error Please set your BUILD variable to one of	"minimal", "typical", "NIGHTLYBUILD", or "all".
 !endif
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
