@@ -55,8 +55,6 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
     if (ACE_OS::strcasecmp (argv[curarg],
                             "-ORBResources") == 0)
       {
-        ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) The -ORBResources option "
-                    "has been moved to the ORB parameters\n"));
         curarg++;
         if (curarg < argc)
           {
