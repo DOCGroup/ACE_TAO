@@ -14,6 +14,6 @@ project(client): messaging, strategies {
 
   Source_Files {
     Callback_i.cpp
-    server.cpp
+    client.cpp
   }
 }
