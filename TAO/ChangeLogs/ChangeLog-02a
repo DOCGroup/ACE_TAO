@@ -1,3 +1,15 @@
+Fri Mar  9 14:07:06 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Jeff and I have been chatting about why "tao_idl -E" doesn't
+          work too well on Windows, and it was narrowed down to a system ()
+          call that used "cat".  I could not let this travesty of platform
+          independence continue to reside in our very own tao_idl compiler!
+
+          Um, yeah, so I changed that bit of code to read in the file and
+          print it out via ACE_DEBUG.
+
 Fri Mar  9 15:40:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
         * tests/AMI/client.cpp:
