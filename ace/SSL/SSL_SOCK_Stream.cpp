@@ -109,7 +109,7 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
 
   if (timeout == 0)
-    return this->send (buf, len);
+    return this->send (buf, len, flags);
 
   int val = 0;
   if (ACE::enter_send_timedwait (this->get_handle (),
@@ -117,7 +117,7 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
                                  val) == -1)
     return -1;
 
-  ssize_t bytes_transferred = this->send (buf, len);
+  ssize_t bytes_transferred = this->send (buf, len, flags);
 
   ACE::restore_non_blocking_mode (this->get_handle (), val);
 
