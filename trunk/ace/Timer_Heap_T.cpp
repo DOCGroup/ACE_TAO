@@ -456,7 +456,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::reschedule (ACE_Timer_Node_T<TYPE> *expir
 template <class TYPE, class FUNCTOR, class LOCK> ACE_Timer_Node_T<TYPE> *
 ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::alloc_node (void)
 {
-  ACE_Timer_Node *temp;
+  ACE_Timer_Node_T<TYPE> *temp;
 
   // Only allocate a node if we are *not* using the preallocated heap.
   if (this->preallocated_nodes_ == 0)
