@@ -1,7 +1,8 @@
 Tue Oct  6 13:01:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_sunsoft.cpp: 
-	  Fixed some problems with char and octet constants.
+	* TAO_IDL/be/be_sunsoft.cpp: Fixed some problems with char and
+ 	  octet constants.  Thanks to Anders W. Tell
+ 	  <anderst@toolsmiths.se> for reporting this.
 
 Tue Oct 06 11:23:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
