@@ -1227,18 +1227,18 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 	// unmarshaling error, and handle appropriately
 
 #ifdef	DEBUG
-	if (debug_level >= 3) 
+	if (TAO_debug_level >= 3) 
 	  {
             ACE_DEBUG((LM_DEBUG, "(%P|%t) %sRequest ID %#lx from FD %d",
                        req.response_expected ? "" : "Oneway ",
                        req.request_id, peer.get_handle ()));
-	    if (debug_level >= 4) 
+	    if (TAO_debug_level >= 4) 
 	      {
-		ACE_HEX_DUMP((LM_DEBUG, req.object_key.buffer,
+		ACE_HEX_DUMP((LM_DEBUG, (char*)req.object_key.buffer,
 			     req.object_key.length, "(%P|%t) object key"));
-		ACE_DEBUG((LM_DEBUG, "(%P|%t) opname '%s'", req.operation);
+		ACE_DEBUG((LM_DEBUG, "(%P|%t) opname '%s'", req.operation));
 		if (req.requesting_principal) 
-		  ACE_HEX_DUMP((LM_DEBUG, req.requesting_principal->id.buffer,
+		  ACE_HEX_DUMP((LM_DEBUG, (char*)req.requesting_principal->id.buffer,
 			       req.requesting_principal->id.length,
                                "(%P|%t) client principal"));
 		else
