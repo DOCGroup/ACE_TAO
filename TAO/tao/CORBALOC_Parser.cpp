@@ -54,7 +54,7 @@ TAO_CORBALOC_Parser::parse_string_count_helper (const char * &corbaloc_name,
             {
               ACE_ERROR((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) Invalid Syntax\n")));
-              
+
               ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID |
                                            TAO_OMG_MINOR_BAD_PARAM_10,
                                            CORBA::COMPLETED_NO));
@@ -141,7 +141,7 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
     {
       // The case where the protocol to be used is explicitly
       // specified.
- 
+
       // Allocate memory for the end_point.
       end_point = CORBA::string_alloc (addr_list_length +
                                        1 + // For the seperator
@@ -153,7 +153,7 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
 
       // Form the End_Point
 
-      // Example: 
+      // Example:
       // prot_name.c_str () = iiop
       ACE_OS::strcpy (end_point,
                       prot_name.c_str ());;
@@ -176,7 +176,7 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
       // Example:
       // The End_point will now be of the form
       // 'iiop://1.0@doc.ece.uci.edu:12345'
-      
+
     }
 
   if (ACE_OS::strncmp (cloc_name_ptr,
@@ -311,7 +311,7 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
 
   CORBA::Object_var obj = orb->orb_core ()->create_object (data);
 
-  if (!CORBA::is_nil (obj))
+  if (!CORBA::is_nil (obj.in ()))
     {
       /// All is well, so release the stub object from its
       /// auto_ptr.
