@@ -1,3 +1,9 @@
+Wed Oct 27 11:59:43 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+
+          Increase the timeout for the collocated multi-threaded test.
+
 Wed Oct 27 09:35:24 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
