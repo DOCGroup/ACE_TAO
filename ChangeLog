@@ -1,3 +1,13 @@
+Sun Apr 13 23:00:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * bin/generate_compile_stats.sh:
+        
+          Modified script to pull date directly from build log,
+          only harvest build time for individual objects, dynamically
+          rollup objects into composite objects--libs or executables--
+          based on link steps in build log, and dynamically generate
+          html pages for composite objects.        
+        
 Fri Apr 11 18:05:00 2003  Roy Pollock  <rpollock@ghs.com>
 
         * ace/config-integritySCA.h
