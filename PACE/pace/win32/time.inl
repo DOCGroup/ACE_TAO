@@ -259,7 +259,7 @@ PACE_INLINE
 void
 pace_tzset ()
 {
-  ::_tzset ();
+  _tzset ();
   return;
 }
 #endif /* PACE_HAS_POSIX_CLS_UOF */
