@@ -251,7 +251,7 @@ public:
   int preFrame;
 
   // fast video play locals
-  FFpara fast_para;
+  Video_Control::FFpara fast_para;
   Video_Control::PLAYpara play_para;
   int fast_preGroup;
   int fast_preHeader;
@@ -280,7 +280,7 @@ public:
   int stat_stream (void);
   int stat_sent (void);
   int init_play (Video_Control::PLAYpara para);
-  int init_fast_play (void);
+  CORBA::Boolean init_fast_play (const Video_Control::FFpara &para);
   int init_video (void);
 };
 

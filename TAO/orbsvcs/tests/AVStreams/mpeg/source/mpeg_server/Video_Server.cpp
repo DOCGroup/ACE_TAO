@@ -195,10 +195,13 @@ int
 Video_Control_Handler::handle_input (ACE_HANDLE handle)
 {
   if (this->state_->handle_input (handle) != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Removing the Video_Control_Handler from TAO Reactor\n"));
     return TAO_ORB_Core_instance ()->reactor ()-> remove_handler (this,
                                                                   ACE_Event_Handler::READ_MASK);
-  else
-    return 0;
+    }
+  return 0;
   // state pattern
 }
 
@@ -224,16 +227,14 @@ Video_Control_Handler::stat_stream (CORBA::Char_out ch,
                               CORBA::Long_out size,
                               CORBA::Environment&)
 {
-  this->state_->stat_stream (ch,size);
-  return 0;
+  return this->state_->stat_stream (ch,size);
 }
 
 
 CORBA::Boolean 
 Video_Control_Handler::close (CORBA::Environment&)
 {
-  this->state_->close ();
-  return 0;
+  return this->state_->close ();
 }
 
 
@@ -242,8 +243,7 @@ Video_Control_Handler::stat_sent (CORBA::Environment&)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Video_Control_Handler::stat_sent ()\n"));
-  this->state_->stat_sent ();
-  return 0;
+  return this->state_->stat_sent ();
 }
 
 
@@ -251,8 +251,8 @@ CORBA::Boolean
 Video_Control_Handler::fast_forward (const Video_Control::FFpara &para,
                                CORBA::Environment&)
 {
-  this->state_->fast_forward (para);
-  return 0;
+  return this->state_->fast_forward (para);
+
 }
 
 
@@ -260,8 +260,8 @@ CORBA::Boolean
 Video_Control_Handler::fast_backward (const Video_Control::FFpara &para,
                                 CORBA::Environment&)
 {
-  this->state_->fast_backward (para);
-  return 0;
+  return this->state_->fast_backward (para);
+
 }
 
 
@@ -269,8 +269,7 @@ CORBA::Boolean
 Video_Control_Handler::step (const Video_Control::STEPpara &para,
                        CORBA::Environment&)
 {
-  this->state_->step (para);
-  return 0;
+  return this->state_->step (para);
 }
 
 
@@ -279,8 +278,7 @@ Video_Control_Handler::play (const Video_Control::PLAYpara &para,
                        CORBA::Long_out vts,
                        CORBA::Environment&)
 {
-  this->state_->play (para,vts);
-  return 0;
+  return this->state_->play (para,vts);
 }
 
 
@@ -288,8 +286,7 @@ CORBA::Boolean
 Video_Control_Handler::position (const Video_Control::POSITIONpara &para,
                            CORBA::Environment&)
 {
-  this->state_->position (para);
-  return 0;
+  return this->state_->position (para);
 }
 
 
@@ -306,8 +303,7 @@ CORBA::Boolean
 Video_Control_Handler::stop (CORBA::Long cmdsn,
                        CORBA::Environment&)
 {
-  this->state_->stop (cmdsn);
-  return 0;
+  return this->state_->stop (cmdsn);
 }
 
 // Changes the state of the video control handler from the current

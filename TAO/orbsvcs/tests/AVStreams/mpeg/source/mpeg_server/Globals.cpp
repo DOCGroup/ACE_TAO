@@ -1546,13 +1546,15 @@ Video_Global::step_video ()
 int
 Video_Global::fast_forward (void)
 {
-  return this->init_fast_play ();
+  //  return this->init_fast_play ()
+  return 0;
 }
 
 int
 Video_Global::fast_backward (void)
 {
-  return this->init_fast_play ();
+//  return this->init_fast_play ();
+  return 0;
 }
 
 int
@@ -1660,34 +1662,29 @@ Video_Global::init_play (Video_Control::PLAYpara para)
   return 0;
 }
 
-int
-Video_Global::init_fast_play (void)
+CORBA::Boolean
+Video_Global::init_fast_play (const Video_Control::FFpara &ff_para )
 {
+  // save the parameters for future reference
+  this->fast_para = ff_para;
   int result;
  
-  result = CmdRead ((char *)&this->fast_para, sizeof (this->fast_para));
-  if (result != 0)
-    return result;
-#ifdef NeedByteOrderConversion
-  this->fast_para.sn = ntohl (this->fast_para.sn);
-  this->fast_para.nextGroup = ntohl (this->fast_para.nextGroup);
-  this->fast_para.usecPerFrame = ntohl (this->fast_para.usecPerFrame);
-  this->fast_para.framesPerSecond = ntohl (this->fast_para.framesPerSecond);
-  this->fast_para.VStimeAdvance = ntohl (this->fast_para.VStimeAdvance);
-#endif
+  //  result = CmdRead ((char *)&this->ff_para, sizeof (this->ff_para));
+  // if (result != 0)
+  //  return result;
 
   if (this->live_source) return 0;
  
-  this->VStimeAdvance = this->fast_para.VStimeAdvance;
+  this->VStimeAdvance = ff_para.VStimeAdvance;
   /*
     fprintf (stderr, "this->VStimeAdvance from client: %d\n", this->VStimeAdvance);
     */
-  CheckGroupRange (this->fast_para.nextGroup);
-  this->cmdsn = this->fast_para.sn;
-  Video_Timer_Global::timerGroup = this->fast_para.nextGroup;
+  CheckGroupRange (ff_para.nextGroup);
+  this->cmdsn = ff_para.sn;
+  Video_Timer_Global::timerGroup = ff_para.nextGroup;
   Video_Timer_Global::timerFrame = 0;
   Video_Timer_Global::timerHeader = this->gopTable[Video_Timer_Global::timerGroup].systemHeader;
-  this->currentUPF = this->fast_para.usecPerFrame;
+  this->currentUPF = ff_para.usecPerFrame;
   Video_Timer_Global::StartTimer ();
 
   fast_play_send ();
@@ -1889,9 +1886,9 @@ Video_Timer_Global::StopTimer (void)
   val.it_interval.tv_usec = val.it_value.tv_usec = 0;
   setitimer (ITIMER_REAL, &val, NULL);
   timerOn = 0;
-  /*
+  
   fprintf (stderr, "VS: timer stopped.\n");
-  */
+  
 }
 
 void
