@@ -21,8 +21,9 @@ module CORBA
   struct NamedValue
   {
     Identifier name;
-    any value;
-    Flags flags;
+    any argument;
+    long len;
+    Flags arg_modes;
   };
 
   enum exception_type
