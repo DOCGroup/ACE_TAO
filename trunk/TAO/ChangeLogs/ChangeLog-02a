@@ -1,3 +1,62 @@
+Thu Jan 31 13:26:33 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/be/be_global.cpp:
+	* TAO_IDL/be/be_visitor_argument/arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/invoke_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/post_invoke_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+	* TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_assign_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_return_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+	* TAO_IDL/be_include/be_global.h:
+	* TAO_IDL/be_include/be_visitor_argument/arglist.h:
+	* TAO_IDL/be_include/be_visitor_argument/invoke_cs.h:
+	* TAO_IDL/be_include/be_visitor_argument/marshal_ss.h:
+	* TAO_IDL/be_include/be_visitor_argument/post_invoke_cs.h:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_arglist.h:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_ch.h:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_result.h:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_sh.h:
+	* TAO_IDL/be_include/be_visitor_argument/upcall_ss.h:
+	* TAO_IDL/be_include/be_visitor_argument/vardecl_ss.h:
+	* TAO_IDL/be_include/be_visitor_field/field_ch.h:
+	* TAO_IDL/be_include/be_visitor_module/module.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_info_rettype.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_result.h:
+	* TAO_IDL/be_include/be_visitor_operation/rettype.h:
+	* TAO_IDL/be_include/be_visitor_operation/rettype_assign_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/rettype_marshal_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/rettype_return_cs.h:
+	* TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_cs.h:
+	* TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_ss.h:
+	* TAO_IDL/be_include/be_visitor_root/root.h:
+	* TAO_IDL/be_include/be_visitor_union_branch/public_ch.h:
+	* TAO_IDL/driver/drv_args.cpp:
+	* TAO_IDL/fe/fe_interface_header.cpp:
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO_IDL/include/fe_interface_header.h:
+	* TAO_IDL/include/idl.h:
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/util/utl_global.cpp:
+
+	  Removed all uses of IDL_HAS_VALUETYPE, since it's just defined
+	  in idl.h and checked in dozens of places.
+
 Thu Jan 31 13:18:39 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.dsp:
