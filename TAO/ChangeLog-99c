@@ -1,3 +1,9 @@
+Thu Mar  4 15:14:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp: 
+	  Fixed minor warnings.
+
 Thu Mar  4 12:43:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Filter.i:
