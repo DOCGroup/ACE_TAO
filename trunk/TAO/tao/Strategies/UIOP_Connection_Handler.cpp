@@ -82,8 +82,8 @@ TAO_UIOP_Connection_Handler::open (void*)
   TAO_Protocols_Hooks *tph =
     this->orb_core ()->get_protocols_hooks ();
 
-  // @@ fix me
-  bool client = 0;
+  bool client =
+    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;;
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -106,6 +106,7 @@ TAO_UIOP_Connection_Handler::open (void*)
     }
   ACE_CATCHANY
     {
+      return -1;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);

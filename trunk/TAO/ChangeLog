@@ -1,3 +1,47 @@
+Mon Oct 11 17:11:19 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao/RTCORBA/RT_Stub.cpp (effective_client_protocol): 
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp (endpoint_from_profile): 
+	* tao/RTCORBA/RT_Endpoint_Utils.cpp (policy): 
+	* tao/Sync_Strategies.cpp (buffering_constraints_reached): 
+
+	  Added expection handling code.
+	
+	* tao/ORB_Core.cpp (get_policy_including_current): 
+
+	  Added missing env.
+
+	* tao/Policy_Manager.h (PolicyManager):
+	* tao/RTCORBA/RT_Stub.h (TAO_RT_Stub): 
+	* tao/Stub.h (TAO_Stub):
+
+	  Removed default values for environment variables in
+	  get_policy(), get_cached_policy(), set_policy_overrides(),
+	  get_policy_overrides(), effective_priority_banded_connection()
+	  and effective_client_protocol().
+
+	* tao/ORB_Core.cpp (default_buffering_constraint): 
+
+	  Removed this method since it is no longer used or needed.
+
+	* tao/Strategies/DIOP_Connection_Handler.cpp (open):
+	* tao/Strategies/SCIOP_Connection_Handler.cpp (open):
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp (open):
+	* tao/Strategies/UIOP_Connection_Handler.cpp (open):
+	* tao/IIOP_Connection_Handler.cpp (open): 
+
+	  Added return -1 in case of exceptions.  Also figure out the
+	  <client> variable using the correct information.
+
+	* tao/RTCORBA/RT_Policy_i.h (TAO_Protocol_Properties_Factory): 
+	* tests/Exposed_Policies/Policy_Tester.cpp (create_objects): 
+
+	  Reverted change Bala made on:
+
+	  Fri Oct  1 17:25:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	  The correct change is to fix the test code in Policy_Tester.cpp.
+
 Mon Oct 11 14:42:46 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * tao/Codeset_Manager.cpp:

@@ -56,7 +56,6 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                                    bool &has_timeout,
                                    ACE_Time_Value &time_value)
 {
-
   ACE_TRY_NEW_ENV
     {
       CORBA::Policy_var policy = 0;

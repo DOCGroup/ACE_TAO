@@ -197,7 +197,6 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   // If the priority model policy is not set.
   if (priority_model_policy.ptr () == 0)
     {
-
       // Bands without priority model do not make sense.
       if (bands_policy.ptr () != 0)
         {
@@ -341,7 +340,9 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
             rt_transport_descriptor (ep);
 
           CORBA::Policy_var private_connection_policy =
-            rt_stub->get_cached_policy (TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION);
+            rt_stub->get_cached_policy (TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION
+                                        ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
 
           if (!CORBA::is_nil (private_connection_policy.in ()))
             {
@@ -366,7 +367,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
             r.try_connect (&rt_transport_descriptor,
                            val
                            ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          ACE_CHECK_RETURN (0);
 
           // Check if the invocation has completed.
           if (status == true)
