@@ -1,4 +1,23 @@
-Sun Aug  1 10:03:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Sun Aug  1 15:58:39 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Memory_Pool.cpp: If the base_addr is 0 for the
+	  ACE_MMAP_Memory_Pool_Options, then we will disable the
+ 	  "use_fixed_addr" option since it's going to cause big trouble to
+ 	  mmap() at location 0!  Plus, when 0 is used it's intended as an
+ 	  indication that the application wants the OS to choose the
+ 	  appropriate mapping.  This minor change in semantics works
+ 	  particularly well with the new
+ 	  ACE_HAS_POSITION_INDEPENDENT_MALLOC feature, because we can now
+ 	  let the OS choose the mapping location with out fear of begin
+ 	  mapped to a different location!
+  
+	* ace  /Memory_Pool.cpp: Conditionally include
+	  ace/Based_Pointer_Repository.h when
+ 	  ACE_HAS_POSITION_INDEPENDENT_MALLOC is defined.
+
+	* ace/config-sunos5.5.h: Enabled the
+	  ACE_HAS_POSITION_INDEPENDENT_MALLOC macro by default.  Let's see
+ 	  whether this breaks lots of stuff ;-).
 
 	* ace/OS.h: Moved the definition of ACE_IPPROTO_TCP down 
 	  further in this file so that the IPPROTO_TCP macro would be
