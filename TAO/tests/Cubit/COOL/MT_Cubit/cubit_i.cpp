@@ -5,9 +5,25 @@
 
 ACE_RCSID(MT_Cubit, cubit_impl, "$Id$")
 
+Cubit_Impl::Cubit_Impl (Task_State *ts)
+  :ts_ (ts),
+   util_started_ (0)
+{
+}
+
 CORBA::Octet Cubit_Impl:: cube_octet (CORBA::Octet o, CORBA::Environment &IT_env) 
 {
   //  ACE_DEBUG ((LM_DEBUG, "octet cubed is %d\n", o*o*o));
+  if (ts_->run_server_utilization_test_ == 1 && 
+      ts_->utilization_task_started_ == 0 && 
+      this->util_started_ == 0 )
+    {
+      this->util_started_ = 1;
+      ts_->barrier_->wait ();
+    }
+  
+  ts_->loop_count_++;
+
   return (CORBA::Octet) (o * o * o); 
 }
 
