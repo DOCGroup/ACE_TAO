@@ -7,9 +7,7 @@ CORBA_Environment::exception (void) const
   return this->exception_;
 }
 
-// *************************************************************
 // Inline operations for class CORBA_Environment_var
-// *************************************************************
 
 ACE_INLINE
 CORBA_Environment_var::CORBA_Environment_var (void)
@@ -85,9 +83,7 @@ CORBA_Environment_var::_retn (void)
   return val;
 }
 
-// *************************************************************
 // Inline operations for class CORBA_Environment_out
-// *************************************************************
 
 ACE_INLINE
 CORBA_Environment_out::CORBA_Environment_out (CORBA_Environment_ptr &p)

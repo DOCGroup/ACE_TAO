@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 // =========================================================================
 //
 // = LIBRARY
@@ -30,7 +31,6 @@ class TAO_Export TAO_DynAny_i : public POA_CORBA::DynAny
   //
   // = DESCRIPTION
   //    Implementation of the basic Dynamic Any datatype.
-  //
 public:
   TAO_DynAny_i (CORBA_TypeCode_ptr tc);
   // constructor with TypeCode argument
@@ -41,11 +41,11 @@ public:
   ~TAO_DynAny_i (void);
   // destructor
 
-  // Functions common to all Dynamic Any types
+  // = Functions common to all Dynamic Any types
 
   void assign (CORBA_DynAny_ptr dyn_any,
                CORBA::Environment &ACE_TRY_ENV);
-  // Sets the value of the receiver to the value of the argument
+  // Sets the value of the receiver to the value of the argument.
 
   CORBA_DynAny_ptr copy (CORBA::Environment &ACE_TRY_ENV);
   // Creates a copy
@@ -69,9 +69,9 @@ public:
   CORBA::Boolean next (CORBA::Environment &);
   // Returns next component, again here there is only one
 
-  CORBA::Boolean seek (CORBA::Long index,
+  CORBA::Boolean seek (CORBA::Long slot,
                        CORBA::Environment &);
-  // In this class, returns true only for index of 0
+  // In this class, returns true only for slot of 0
 
   void rewind (CORBA::Environment &);
   // Makes first component the current one
@@ -111,67 +111,45 @@ public:
   void insert_any (const CORBA::Any& value,
                    CORBA::Environment &ACE_TRY_ENV);
   CORBA::Boolean get_boolean (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Octet get_octet (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Char get_char (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Short get_short (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::UShort get_ushort (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Long get_long (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::ULong get_ulong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Float get_float (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Double get_double (CORBA::Environment &ACE_TRY_ENV);
-
-  char * get_string (CORBA::Environment &ACE_TRY_ENV);
-
+  char *get_string (CORBA::Environment &ACE_TRY_ENV);
   CORBA::Object_ptr get_reference (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::TypeCode_ptr get_typecode (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::LongLong get_longlong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::ULongLong get_ulonglong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::WChar get_wchar (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Any_ptr get_any (CORBA::Environment &ACE_TRY_ENV);
 
-// The ORB DynAny-factory functions will call these so we don't need to
-// keep an orb pointer in each DynAny object.
+  // The ORB DynAny-factory functions will call these so we don't need
+  // to keep an orb pointer in each DynAny object.
 
   static CORBA_DynAny_ptr create_dyn_any (const CORBA_Any& any,
                                           CORBA::Environment &ACE_TRY_ENV);
-
   static CORBA_DynAny_ptr create_basic_dyn_any (CORBA_TypeCode_ptr tc,
                                                 CORBA::Environment &ACE_TRY_ENV);
-
   static CORBA_DynStruct_ptr create_dyn_struct (CORBA_TypeCode_ptr tc,
                                                 CORBA::Environment &ACE_TRY_ENV);
-
   static CORBA_DynSequence_ptr create_dyn_sequence (CORBA_TypeCode_ptr tc,
                                                     CORBA::Environment &ACE_TRY_ENV);
-
   static CORBA_DynArray_ptr create_dyn_array (CORBA_TypeCode_ptr tc,
                                               CORBA::Environment &ACE_TRY_ENV);
-
   static CORBA_DynUnion_ptr create_dyn_union (CORBA_TypeCode_ptr tc,
                                               CORBA::Environment &ACE_TRY_ENV);
-
   static CORBA_DynEnum_ptr create_dyn_enum (CORBA_TypeCode_ptr tc,
                                             CORBA::Environment &ACE_TRY_ENV);
 
-  // And an extra generic one (not required in the spec)
-  // that calls one of the above passing a typecode.
-  // Comes in handy in implementing some versions of current_component().
   static CORBA_DynAny_ptr create_dyn_any (CORBA_TypeCode_ptr tc,
                                           CORBA::Environment &ACE_TRY_ENV);
-
+  // And an extra generic one (not required in the spec) that calls
+  // one of the above passing a typecode.  Comes in handy in
+  // implementing some versions of current_component().
 
   static CORBA::TCKind unalias (CORBA_TypeCode_ptr tc,
                                 CORBA::Environment &ACE_TRY_ENV);

@@ -208,11 +208,11 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
                       char[num_connections],
                       -1);
 
-      size_t index = 0;
+      size_t slot = 0;
 
       // Fill in the remote address array
-      while (dests.pop (remote_addrs[index]) == 0)
-        handlers[index++] = 0;
+      while (dests.pop (remote_addrs[slot]) == 0)
+        handlers[slot++] = 0;
 
       // Finally, try to connect.
       this->base_connector_.connect_n (num_connections,
@@ -221,20 +221,20 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
                                        failures);
       // Loop over all the failures and set the handlers that
       // succeeded to idle state.
-      for (index = 0;
-           index < num_connections;
-           ++index)
+      for (slot = 0;
+           slot < num_connections;
+           ++slot)
         {
-          if (!failures[index])
+          if (!failures[slot])
             {
-              handlers[index]->idle ();
+              handlers[slot]->idle ();
               ++successes;
 
               if (TAO_debug_level > 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "TAO (%P|%t) Preconnection <%s> succeeded.\n",
-                              remote_addrs[index].get_path_name ()));
+                              remote_addrs[slot].get_path_name ()));
                 }
             }
           else
@@ -243,7 +243,7 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "TAO (%P|%t) Preconnection <%s> failed.\n",
-                              remote_addrs[index].get_path_name ()));
+                              remote_addrs[slot].get_path_name ()));
                 }
             }
         }

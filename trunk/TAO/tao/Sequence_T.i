@@ -295,11 +295,11 @@ TAO_Unbounded_Object_Sequence (CORBA::ULong maximum,
 }
 
 template <class T> ACE_INLINE TAO_Object_Manager<T>
-TAO_Unbounded_Object_Sequence<T>::operator[] (CORBA::ULong index) const
+TAO_Unbounded_Object_Sequence<T>::operator[] (CORBA::ULong slot) const
 {
-  ACE_ASSERT (index < this->maximum_);
+  ACE_ASSERT (slot < this->maximum_);
   T ** const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<T> (tmp + index, this->release_);
+  return TAO_Object_Manager<T> (tmp + slot, this->release_);
 }
 
 // *************************************************************
@@ -322,11 +322,11 @@ TAO_Bounded_Object_Sequence (CORBA::ULong length,
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE TAO_Object_Manager<T>
-TAO_Bounded_Object_Sequence<T, MAX>::operator[] (CORBA::ULong index) const
+TAO_Bounded_Object_Sequence<T, MAX>::operator[] (CORBA::ULong slot) const
 {
-  ACE_ASSERT (index < this->maximum_);
+  ACE_ASSERT (slot < this->maximum_);
   T **const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<T> (tmp + index, this->release_);
+  return TAO_Object_Manager<T> (tmp + slot, this->release_);
 }
 
 // *************************************************************
@@ -350,11 +350,11 @@ TAO_Unbounded_Pseudo_Sequence (CORBA::ULong maximum,
 }
 
 template <class T> ACE_INLINE TAO_Object_Manager<T>
-TAO_Unbounded_Pseudo_Sequence<T>::operator[] (CORBA::ULong index) const
+TAO_Unbounded_Pseudo_Sequence<T>::operator[] (CORBA::ULong slot) const
 {
-  ACE_ASSERT (index < this->maximum_);
+  ACE_ASSERT (slot < this->maximum_);
   T ** const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<T> (tmp + index, this->release_);
+  return TAO_Object_Manager<T> (tmp + slot, this->release_);
 }
 
 // *************************************************************
@@ -377,11 +377,11 @@ TAO_Bounded_Pseudo_Sequence (CORBA::ULong length,
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE TAO_Object_Manager<T>
-TAO_Bounded_Pseudo_Sequence<T, MAX>::operator[] (CORBA::ULong index) const
+TAO_Bounded_Pseudo_Sequence<T, MAX>::operator[] (CORBA::ULong slot) const
 {
-  ACE_ASSERT (index < this->maximum_);
+  ACE_ASSERT (slot < this->maximum_);
   T **const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<T> (tmp + index, this->release_);
+  return TAO_Object_Manager<T> (tmp + slot, this->release_);
 }
 
 // *************************************************************

@@ -1,3 +1,9 @@
+Sat Jun  5 23:34:21 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* ace/Containers_T: Changed all uses of "index" to "slot" to avoid
+ 	  conflicts with broken C++ compilers that define macros named
+ 	  "index."
+
 Sat Jun  5 22:57:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.h:

@@ -148,7 +148,7 @@ TAO_NAMESPACE PortableServer{
     operator const _tao_seq_Octet &() const;
     operator _tao_seq_Octet &();
     operator _tao_seq_Octet &() const;
-    CORBA::Octet &operator[] (CORBA::ULong index);
+    CORBA::Octet &operator[] (CORBA::ULong slot);
     // in, inout, out, _retn
     const _tao_seq_Octet &in (void) const;
     _tao_seq_Octet &inout (void);
@@ -176,7 +176,7 @@ TAO_NAMESPACE PortableServer{
     operator _tao_seq_Octet *&();
     _tao_seq_Octet *&ptr (void);
     _tao_seq_Octet *operator-> (void);
-    CORBA::Octet &operator[] (CORBA::ULong index);
+    CORBA::Octet &operator[] (CORBA::ULong slot);
 
   private:
     _tao_seq_Octet *&ptr_;
@@ -1790,7 +1790,7 @@ TAO_NAMESPACE PortableServer{
           CORBA::UShort _tao_index
         );
 
-      CORBA::UShort index;
+      CORBA::UShort slot;
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);

@@ -553,12 +553,12 @@ POA_CORBA::_tao_collocated_DynAny::next (
 
 CORBA::Boolean
 POA_CORBA::_tao_collocated_DynAny::seek (
-    CORBA::Long index,
+    CORBA::Long slot,
     CORBA::Environment &_tao_environment
    )
 {
   return this->servant_->seek (
-    index,
+    slot,
     _tao_environment
   );
 }

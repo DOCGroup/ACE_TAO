@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ====================================================================
 //
 // = LIBRARY
@@ -20,7 +21,6 @@
 #include "tao/DynArray_i.h"
 #include "tao/InconsistentTypeCodeC.h"
 
-//////////////////////////////////////////////////////////////////////
 // Constructors and destructor
 
 TAO_DynArray_i::TAO_DynArray_i (const CORBA_Any& any)
@@ -32,13 +32,12 @@ TAO_DynArray_i::TAO_DynArray_i (const CORBA_Any& any)
   CORBA::TypeCode_ptr tc = this->type_.in ();
 
   // The type will be correct if this constructor called from a
-  // factory function, but it could also be called by the
-  // user, so.....
+  // factory function, but it could also be called by the user,
+  // so.....
   if (TAO_DynAny_i::unalias (tc, env) == CORBA::tk_array)
     {
       CORBA::ULong numfields = this->get_arg_length (any.type (),
                                                      env);
-
       // Resize the array.
       this->da_members_.size (numfields);
 
@@ -47,7 +46,8 @@ TAO_DynArray_i::TAO_DynArray_i (const CORBA_Any& any)
 
       TAO_InputCDR cdr (mb);
 
-      CORBA::TypeCode_ptr field_tc = this->get_element_type (env);
+      CORBA::TypeCode_ptr field_tc =
+        this->get_element_type (env);
 
       for (CORBA::ULong i = 0; i < numfields; i++)
         {
@@ -79,17 +79,14 @@ TAO_DynArray_i::TAO_DynArray_i (CORBA_TypeCode_ptr tc)
 
   // Need to check if called by user.
   if (TAO_DynAny_i::unalias (tc,
-                             env)
-        == CORBA::tk_array)
+                             env) == CORBA::tk_array)
     {
       CORBA::ULong numfields = this->get_arg_length (tc,
                                                      env);
-
       // Resize the array.
       this->da_members_.size (numfields);
 
       for (CORBA::ULong i = 0; i < numfields; i++)
-
         // With a typecode arg, we just create the top level.
         this->da_members_[i] = 0;
     }
@@ -101,7 +98,6 @@ TAO_DynArray_i::~TAO_DynArray_i (void)
 {
 }
 
-///////////////////////////////////////////////////////////////////////
 // Functions specific to DynArray
 
 CORBA_AnySeq_ptr
@@ -146,7 +142,8 @@ TAO_DynArray_i::set_elements (const CORBA_AnySeq& value,
       return;
     }
 
-  CORBA::TypeCode_ptr element_type = this->get_element_type (env);
+  CORBA::TypeCode_ptr element_type =
+    this->get_element_type (env);
 
   for (CORBA::ULong i = 0; i < length; i++)
     {
@@ -169,7 +166,6 @@ TAO_DynArray_i::set_elements (const CORBA_AnySeq& value,
     }
 }
 
-//////////////////////////////////////////////////////////////////////
 // Common functions
 
 void
@@ -197,7 +193,9 @@ void
 TAO_DynArray_i::destroy (CORBA::Environment &env)
 {
   // Do a deep destroy
-  for (CORBA::ULong i = 0; i < this->da_members_.size (); i++)
+  for (CORBA::ULong i = 0;
+       i < this->da_members_.size ();
+       i++)
     if (!CORBA::is_nil (this->da_members_[i].in ()))
       this->da_members_[i]->destroy (env);
 
@@ -209,7 +207,8 @@ void
 TAO_DynArray_i::from_any (const CORBA_Any& any,
                           CORBA::Environment &env)
 {
-  if (this->type_.in ()->equal (any.type (), env))
+  if (this->type_.in ()->equal (any.type (),
+                                env))
     {
       // Get the CDR stream of the argument.
       ACE_Message_Block* mb = any._tao_get_cdr ();
@@ -218,7 +217,6 @@ TAO_DynArray_i::from_any (const CORBA_Any& any,
       CORBA::ULong length = this->da_members_.size ();
       CORBA::ULong arg_length = this->get_arg_length (any.type (),
                                                       env);
-
       if (length != arg_length)
         {
           env.exception (new CORBA_DynAny::Invalid);
@@ -256,7 +254,9 @@ TAO_DynArray_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 
   CORBA_TypeCode_ptr field_tc = this->get_element_type (ACE_TRY_ENV);
 
-  for (CORBA::ULong i = 0; i < this->da_members_.size (); i++)
+  for (CORBA::ULong i = 0;
+       i < this->da_members_.size ();
+       i++)
     {
       // Each component must have been initialized.
       if (!this->da_members_[i].in ())
@@ -266,7 +266,8 @@ TAO_DynArray_i::to_any (CORBA::Environment& ACE_TRY_ENV)
         }
 
       // Recursive step
-      CORBA_Any_var field_any = this->da_members_[i]->to_any (ACE_TRY_ENV);
+      CORBA_Any_var field_any =
+        this->da_members_[i]->to_any (ACE_TRY_ENV);
 
       ACE_Message_Block* field_mb = field_any->_tao_get_cdr ();
 
@@ -279,7 +280,7 @@ TAO_DynArray_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA_Any* retval;
+  CORBA_Any *retval;
   ACE_NEW_THROW_EX (retval,
                     CORBA_Any (this->type (ACE_TRY_ENV),
                                0,
@@ -296,7 +297,9 @@ TAO_DynArray_i::type (CORBA::Environment &)
 }
 
 // If the DynAny has been initialized but this component has not, the
-// first call to current_component will create the pointer and return it.
+// first call to current_component will create the pointer and return
+// it.
+
 CORBA_DynAny_ptr
 TAO_DynArray_i::current_component (CORBA::Environment &env)
 {
@@ -307,7 +310,6 @@ TAO_DynArray_i::current_component (CORBA::Environment &env)
     this->da_members_[this->index_] =
       TAO_DynAny_i::create_dyn_any (this->get_element_type (env),
                                     env);
-
   return this->da_members_[this->index_].in ();
 }
 
@@ -324,13 +326,13 @@ TAO_DynArray_i::next (CORBA::Environment &)
 }
 
 CORBA::Boolean
-TAO_DynArray_i::seek (CORBA::Long index,
+TAO_DynArray_i::seek (CORBA::Long slot,
                       CORBA::Environment &)
 {
-  if (index < 0 || index >= (CORBA::Long) this->da_members_.size ())
+  if (slot < 0 || slot >= (CORBA::Long) this->da_members_.size ())
     return 0;
 
-  this->index_ = index;
+  this->index_ = slot;
   return 1;
 }
 
@@ -340,15 +342,13 @@ TAO_DynArray_i::rewind (CORBA::Environment &)
   this->index_ = 0;
 }
 
-////////////////////////////////////////////////////////////////////////
-// The insert-primitive and get-primitive functions are required
-// by the spec of all types of DynAny, although if the top level
-// members aren't primitive types, these functions aren't too helpful.
-// Also, while not mentioned in the spec, the example code seems to
-// indicate that next() is called in the body of each of these, and
-// it has been so implemented here.
+// The insert-primitive and get-primitive functions are required by
+// the spec of all types of DynAny, although if the top level members
+// aren't primitive types, these functions aren't too helpful.  Also,
+// while not mentioned in the spec, the example code seems to indicate
+// that next() is called in the body of each of these, and it has been
+// so implemented here.
 
-////////////////////////////////////////////////////////////////////////
 // Insert functions
 
 void
@@ -575,7 +575,6 @@ TAO_DynArray_i::insert_any (const CORBA::Any& value,
     env.exception (new CORBA_DynAny::InvalidValue);
 }
 
-///////////////////////////////////////////////////////////////
 // Get functions
 
 // If the current component has not been intialized, these
@@ -938,7 +937,6 @@ TAO_DynArray_i::get_any (CORBA::Environment &env)
   return val;
 }
 
-/////////////////////////////////////////////////////////////////////////////////
 // Private utility function.
 
 CORBA::TypeCode_ptr

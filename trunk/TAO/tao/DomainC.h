@@ -158,7 +158,7 @@ public:
   operator CORBA_DomainManagerList &();
   operator CORBA_DomainManagerList &() const;
 
-  TAO_Object_Manager<CORBA_DomainManager> operator[] (CORBA::ULong index);
+  TAO_Object_Manager<CORBA_DomainManager> operator[] (CORBA::ULong slot);
   // in, inout, out, _retn
   const CORBA_DomainManagerList &in (void) const;
   CORBA_DomainManagerList &inout (void);
@@ -182,7 +182,7 @@ public:
   CORBA_DomainManagerList *&ptr (void);
   CORBA_DomainManagerList *operator-> (void);
 
-  TAO_Object_Manager<CORBA_DomainManager> operator[] (CORBA::ULong index);
+  TAO_Object_Manager<CORBA_DomainManager> operator[] (CORBA::ULong slot);
 
 private:
   CORBA_DomainManagerList *&ptr_;

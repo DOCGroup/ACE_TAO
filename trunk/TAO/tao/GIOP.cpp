@@ -133,12 +133,11 @@ TAO_GIOP::dump_msg (const char *label,
 {
   if (TAO_debug_level >= 5)
     {
-      const char* message_name = "UNKNOWN MESSAGE";
-      unsigned long index = ptr[7];
-      if (index < sizeof (names)/sizeof(names[0]))
-        {
-          message_name = names [index];
-        }
+      const char *message_name = "UNKNOWN MESSAGE";
+      // @@ Carlos, where does the magic number '7' come from?!
+      u_long slot = ptr[7];
+      if (slot < sizeof (names)/sizeof(names[0]))
+        message_name = names [slot];
       ACE_DEBUG ((LM_DEBUG,
                   "%s GIOP v%c.%c msg, %d data bytes, %s endian, %s",
                   label,

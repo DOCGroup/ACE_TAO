@@ -294,7 +294,7 @@ public:
   operator const CORBA_PolicyTypeSeq &() const;
   operator CORBA_PolicyTypeSeq &();
   operator CORBA_PolicyTypeSeq &() const;
-  CORBA::PolicyType &operator[] (CORBA::ULong index);
+  CORBA::PolicyType &operator[] (CORBA::ULong slot);
   // in, inout, out, _retn
   const CORBA_PolicyTypeSeq &in (void) const;
   CORBA_PolicyTypeSeq &inout (void);
@@ -317,7 +317,7 @@ public:
   operator CORBA_PolicyTypeSeq *&();
   CORBA_PolicyTypeSeq *&ptr (void);
   CORBA_PolicyTypeSeq *operator-> (void);
-  CORBA::PolicyType &operator[] (CORBA::ULong index);
+  CORBA::PolicyType &operator[] (CORBA::ULong slot);
 
 private:
   CORBA_PolicyTypeSeq *&ptr_;

@@ -34,11 +34,8 @@ TAO_Acceptor_Registry::endpoint_count (void)
   int count = 0;
   TAO_AcceptorSetItor end = this->end ();
 
-
   for (TAO_AcceptorSetItor i = this->begin (); i != end; ++i)
-    {
-      count += (*i)->endpoint_count ();
-    }
+    count += (*i)->endpoint_count ();
 
   return count;
 }
@@ -50,10 +47,9 @@ TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
   TAO_AcceptorSetItor end = this->end ();
 
   for (TAO_AcceptorSetItor i = this->begin (); i != end; ++i)
-    {
-      if ((*i)->create_mprofile (object_key, mprofile) == -1)
-        return -1;
-    }
+    if ((*i)->create_mprofile (object_key,
+                               mprofile) == -1)
+      return -1;
 
   return 0;
 }
@@ -62,10 +58,10 @@ int
 TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
 {
   // @@ Fred&Ossama: we should optimize this: we loop over the
-  //    profiles here and in the ORB::is_collocated() method, maybe we
-  //    should return the index of the profile that matched?
-  //    What happens if the address matches but the object key does
-  //    not? Should we keep on searching in the ORB loop?
+  // profiles here and in the ORB::is_collocated() method, maybe we
+  // should return the index of the profile that matched?  What
+  // happens if the address matches but the object key does not?
+  // Should we keep on searching in the ORB loop?
 
   TAO_AcceptorSetItor end = this->end ();
 
@@ -75,7 +71,8 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
            j != mprofile.profile_count ();
            ++j)
         {
-          const TAO_Profile* profile = mprofile.get_profile (j);
+          const TAO_Profile *profile = mprofile.get_profile (j);
+
           if ((*i)->tag () == profile->tag ()
               && (*i)->is_collocated (profile))
             return 1;
@@ -87,7 +84,6 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
 int
 TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
 {
-
   // protocol_factories is in the following form
   //   IOP1://addr1,addr2,...,addrN/;IOP2://addr1,...addrM/;...
 
@@ -116,19 +112,18 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
     {
       ACE_CString iop = (*endpoint);
 
-      int indx = iop.find ("://", 0);
-      if (indx == iop.npos)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) Invalid endpoint epecification: "
-                             "<%s>.\n",
-                             iop.c_str ()),
-                            -1);
-        }
+      int slot = iop.find ("://", 0);
+      if (slot == iop.npos)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) Invalid endpoint epecification: "
+                           "<%s>.\n",
+                           iop.c_str ()),
+                          -1);
+      ACE_CString prefix = iop.substring (0, slot);
 
-      ACE_CString prefix = iop.substring (0, indx);
-
-      if (indx == ACE_static_cast (int, iop.length () - 3))
+      // @@ Fred, please document where the major number "3" comes
+      // from.
+      if (slot == ACE_static_cast (int, iop.length () - 3))
         {
           // Protocol was specified without an endpoint.  According to
           // the "iioploc" spec, this is valid.  As such, we extend
@@ -140,14 +135,20 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
           continue;
         }
 
-      ACE_CString addrs  = iop.substring (indx + 3);
+      // @@ Fred, please document where the major number "3" comes
+      // from.
+      ACE_CString addrs  = iop.substring (slot + 3);
 
       if (addrs [addrs.length () - 1] == '/')
-        addrs [addrs.length () - 1] = '\0'; // get rid of trailing /
+        // Get rid of trailing '/'.
+        addrs [addrs.length () - 1] = '\0'; 
 
       char *last_addr=0;
       addr_str.reset (addrs.rep ());
-      for (char *astr = ACE_OS::strtok_r (addr_str.get (), ",", &last_addr);
+
+      for (char *astr = ACE_OS::strtok_r (addr_str.get (),
+                                          ",",
+                                          &last_addr);
            astr != 0 ;
            astr = ACE_OS::strtok_r (0,
                                     ",",
@@ -157,8 +158,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
 
           // Now get the list of avaliable protocol factories.
           TAO_ProtocolFactorySetItor end =
-                          orb_core->protocol_factories ()->end ();
-
+            orb_core->protocol_factories ()->end ();
 
           for (TAO_ProtocolFactorySetItor factory =
                  orb_core->protocol_factories ()->begin ();
@@ -171,40 +171,38 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
                     (*factory)->factory ()->make_acceptor ();
                   if (acceptor != 0)
                     {
-                      // Check if an "N.n@" version prefix was specified.
+                      // Check if an "N.n@" version prefix was
+                      // specified.
                       // @@ For now, we just drop the version prefix.
-                      //    At some point in the future it may become
-                      //    useful.
+                      // At some point in the future it may become
+                      // useful.
                       const char *temp_iop = address.c_str ();
-                      if (isdigit (temp_iop[0]) &&
-                          temp_iop[1] == '.' &&
-                          isdigit (temp_iop[2]) &&
-                          temp_iop[3] == '@')
+                      if (isdigit (temp_iop[0]) 
+                          && temp_iop[1] == '.' 
+                          && isdigit (temp_iop[2]) 
+                          && temp_iop[3] == '@')
                         address = address.substring (4);
 
                       // add acceptor to list.
                       this->acceptors_.insert (acceptor);
 
-                      if (acceptor->open (orb_core, address) == -1)
+                      if (acceptor->open (orb_core,
+                                          address) == -1)
                         return -1;
-
                       break;
                     }
                   else
-                    {
-                      ACE_ERROR_RETURN ((LM_ERROR,
-                                         "(%P|%t) Unable to create an "
-                                         "acceptor for <%s>\n",
-                                         iop.c_str ()),
-                                        -1);
-                    }
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "(%P|%t) Unable to create an "
+                                       "acceptor for <%s>\n",
+                                       iop.c_str ()),
+                                      -1);
                 }
               else
                 continue;
             }
         }
     }
-
   return 0;
 }
 
@@ -212,11 +210,14 @@ int
 TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                                      ACE_CString *protocol_prefix)
 {
-  // No endpoints were specified, we let each protocol pick its
-  // own default...
+  // No endpoints were specified, we let each protocol pick its own
+  // default...
 
   TAO_ProtocolFactorySetItor end =
     orb_core->protocol_factories ()->end ();
+
+  // @@ Fred, there should be more comments in this method so that
+  // people can tell what's going on...  Can you please fix it?
 
   for (TAO_ProtocolFactorySetItor i =
          orb_core->protocol_factories ()->begin ();
@@ -236,12 +237,12 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                             "TAO (%P|%t) Unable to match protocol prefix "
                             "for <%s>\n",
                             protocol_prefix->c_str ()));
-
               continue;
             }
         }
 
-      TAO_Acceptor *acceptor = (*i)->factory ()->make_acceptor ();
+      TAO_Acceptor *acceptor =
+        (*i)->factory ()->make_acceptor ();
 
       if (acceptor == 0)
         {
@@ -283,28 +284,28 @@ TAO_Acceptor_Registry::close_all (void)
   TAO_AcceptorSetItor end =
                 this->acceptors_.end ();
 
-  for (TAO_AcceptorSetItor i = this->acceptors_.begin (); i != end; ++i)
+  for (TAO_AcceptorSetItor i = this->acceptors_.begin ();
+       i != end;
+       ++i)
     {
       if (*i == 0)
         continue;
+
       (*i)->close ();
 
       delete *i;
     }
+
   this->acceptors_.reset ();
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
 template class ACE_Node<TAO_Acceptor*>;
 template class ACE_Unbounded_Set<TAO_Acceptor*>;
 template class ACE_Unbounded_Set_Iterator<TAO_Acceptor*>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
 #pragma instantiate ACE_Node<TAO_Acceptor*>
 #pragma instantiate ACE_Unbounded_Set<TAO_Acceptor*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Acceptor*>
-
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -30,38 +30,37 @@ class TAO_Export CORBA_Context
   //   CORBA_Context
   //
   // = DESCRIPTION
-  //   TAO's minimal implementation of the Context interface.
-  //   Since Contexts are inherently un-typesafe, there use
-  //   is deprecated and the feature may eventaully disappear
-  //   from CORBA. It is implemented only to make the arg list
-  //   of CORBA_Object::_create_request() compliant. The only
-  //   (pointer) value that should be passed is 0.
+  //   TAO's minimal implementation of the Context interface.  Since
+  //   Contexts are inherently un-typesafe, there use is deprecated
+  //   and the feature may eventaully disappear from CORBA. It is
+  //   implemented only to make the arg list of
+  //   CORBA_Object::_create_request() compliant. The only (pointer)
+  //   value that should be passed is 0.
   //
 public:
-  // Default ctor and dtor.
+  // = Initialization and termination methods.
   CORBA_Context (void);
-  ~CORBA_Context (void);
+  // Constructor.
 
-  // Pseudo object methods
-  static CORBA_Context* _duplicate (CORBA_Context*);
-  static CORBA_Context* _nil (void);
+  ~CORBA_Context (void);
+  // Destructor.
+
+  // = Pseudo-object methods
+  static CORBA_Context *_duplicate (CORBA_Context*);
+  static CORBA_Context *_nil (void);
 
   // = Reference counting.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
-// All the spec-required functions below will just throw
-// a CORBA::NO_IMPLEMENT exception and do nothing else.
+  // = All the spec-required functions below will just throw a
+  //   CORBA::NO_IMPLEMENT exception and do nothing else.
 
-  const char *context_name (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) const;
+  const char *context_name (CORBA::Environment &ACE_TRY_ENV =
+                            TAO_default_environment ()) const;
 
-  CORBA_Context_ptr parent (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) const;
+  CORBA_Context_ptr parent (CORBA::Environment &ACE_TRY_ENV =
+                            TAO_default_environment ()) const;
 
   void create_child (const char *child_ctx_name,
                      CORBA_Context_out child_ctx,
@@ -96,10 +95,10 @@ public:
 
 private:
   CORBA::ULong refcount_;
-  // reference counting
+  // Reference counting.
 
   ACE_SYNCH_MUTEX refcount_lock_;
-  // protect the reference count
+  // Protect the reference count.
 };
 
 typedef CORBA_Context* CORBA_Context_ptr;
@@ -113,11 +112,9 @@ class TAO_Export CORBA_Context_var
   //   As any other pseudo object Context must have a T_var class,
   //   the interface an semantics are specified in the CORBA spec.
   //
-  // = NOTE
-  //   We use CORBA_Context_ptr as the _ptr type instead of
-  //   CORBA::Context_ptr, this is an attempt to reduced the cyclic
+  //   We use <CORBA_Context_ptr> as the _ptr type instead of
+  //   <CORBA::Context_ptr> in an attempt to reduced the cyclic
   //   dependencies in TAO.
-  //
 public:
   CORBA_Context_var (void);
   CORBA_Context_var (CORBA_Context_ptr);
@@ -150,11 +147,9 @@ class TAO_Export CORBA_Context_out
   //   As any other pseudo object Context must have a T_out class,
   //   the interface an semantics are specified in the CORBA spec.
   //
-  // = NOTE
-  //   We use CORBA_Context_ptr as the _ptr type instead of
-  //   CORBA::Context_ptr, this is an attempt to reduced the cyclic
+  //   We use <CORBA_Context_ptr> as the _ptr type instead of
+  //   <CORBA::Context_ptr> in an attempt to reduced the cyclic
   //   dependencies in TAO.
-  //
 public:
   CORBA_Context_out (CORBA_Context_ptr &);
   CORBA_Context_out (CORBA_Context_var &);
@@ -179,10 +174,10 @@ class CORBA_ContextList
   //   Maintains a list of strings for Contexts.
 public:
   CORBA_ContextList (void);
-  // constructor
+  // Constructor.
 
   CORBA_ContextList (CORBA::ULong len,
-                     char* *ctx_list);
+                     char **ctx_list);
   // Constructor - initialize given a length and an array of
   // strings.
 
@@ -192,6 +187,7 @@ public:
   CORBA::ULong count ();
   // return the number of elements
 
+  // @@ Jeff, can you please comment these methods?
   CORBA_ContextList_ptr _duplicate (void);
 
   void _destroy (void);
@@ -199,20 +195,20 @@ public:
   static CORBA_ContextList_ptr _nil ();
 
   void add (char *ctx);
-  // add a string to the list
+  // Add a string to the list.
 
   void add_consume (char *ctx);
-  // add and consume a string to the list
+  // Add and consume a string to the list.
 
-  char *item (CORBA::ULong index,
+  char *item (CORBA::ULong slot,
               CORBA_Environment &ACE_TRY_ENV =
                 TAO_default_environment ());
-  // return the typecode at index i. Raises the "Bounds" exception
+  // Return the typecode at slot i. Raises the "Bounds" exception.
 
-  void remove (CORBA::ULong index,
+  void remove (CORBA::ULong slot,
                CORBA_Environment &ACE_TRY_ENV =
                 TAO_default_environment ());
-  // remove the typecode at index i. Raises the "Bounds" exception
+  // remove the typecode at slot i. Raises the "Bounds" exception
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::ContextList_ptr _ptr_type;
@@ -221,7 +217,7 @@ public:
   // Useful for template programming.
 
 private:
-  // not allowed
+  // Not allowed.
   CORBA_ContextList (const CORBA_ContextList &);
   CORBA_ContextList &operator= (const CORBA_ContextList &);
 
@@ -229,7 +225,7 @@ private:
   // Reference counter.
 
   ACE_Unbounded_Queue<char *> ctx_list_;
-  // internal list of typecodes
+  // Internal list of typecodes.
 };
 
 class TAO_Export CORBA_ContextList_var
@@ -291,5 +287,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
 #endif /* TAO_CONTEXT_H */

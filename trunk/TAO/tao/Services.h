@@ -85,7 +85,7 @@ struct TAO_Export CORBA_ServiceDetail
       operator const _tao_seq_Octet &() const;
       operator _tao_seq_Octet &();
       operator _tao_seq_Octet &() const;
-      CORBA::Octet &operator[] (CORBA::ULong index);
+      CORBA::Octet &operator[] (CORBA::ULong slot);
       // in, inout, out, _retn
       const _tao_seq_Octet &in (void) const;
       _tao_seq_Octet &inout (void);
@@ -114,7 +114,7 @@ struct TAO_Export CORBA_ServiceDetail
       operator _tao_seq_Octet *&();
       _tao_seq_Octet *&ptr (void);
       _tao_seq_Octet *operator-> (void);
-      CORBA::Octet &operator[] (CORBA::ULong index);
+      CORBA::Octet &operator[] (CORBA::ULong slot);
 
     private:
       _tao_seq_Octet *&ptr_;
@@ -274,7 +274,7 @@ struct  CORBA_ServiceInformation
       operator const _tao_seq_ServiceOption &() const;
       operator _tao_seq_ServiceOption &();
       operator _tao_seq_ServiceOption &() const;
-      CORBA::ServiceOption &operator[] (CORBA::ULong index);
+      CORBA::ServiceOption &operator[] (CORBA::ULong slot);
       // in, inout, out, _retn
       const _tao_seq_ServiceOption &in (void) const;
       _tao_seq_ServiceOption &inout (void);
@@ -304,8 +304,7 @@ struct  CORBA_ServiceInformation
       operator _tao_seq_ServiceOption *&();
       _tao_seq_ServiceOption *&ptr (void);
       _tao_seq_ServiceOption *operator-> (void);
-      CORBA::ServiceOption &operator[] (CORBA::ULong index);
-
+      CORBA::ServiceOption &operator[] (CORBA::ULong slot);
     private:
       _tao_seq_ServiceOption *&ptr_;
       // assignment from T_var not allowed
@@ -413,7 +412,7 @@ struct  CORBA_ServiceInformation
       operator const _tao_seq_ServiceDetail &() const;
       operator _tao_seq_ServiceDetail &();
       operator _tao_seq_ServiceDetail &() const;
-      CORBA_ServiceDetail &operator[] (CORBA::ULong index);
+      CORBA_ServiceDetail &operator[] (CORBA::ULong slot);
       // in, inout, out, _retn
       const _tao_seq_ServiceDetail &in (void) const;
       _tao_seq_ServiceDetail &inout (void);
@@ -443,7 +442,7 @@ struct  CORBA_ServiceInformation
       operator _tao_seq_ServiceDetail *&();
       _tao_seq_ServiceDetail *&ptr (void);
       _tao_seq_ServiceDetail *operator-> (void);
-      CORBA_ServiceDetail &operator[] (CORBA::ULong index);
+      CORBA_ServiceDetail &operator[] (CORBA::ULong slot);
 
     private:
       _tao_seq_ServiceDetail *&ptr_;

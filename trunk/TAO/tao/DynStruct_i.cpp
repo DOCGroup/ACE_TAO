@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ====================================================================
 //
 // = LIBRARY
@@ -20,7 +21,6 @@
 #include "tao/DynStruct_i.h"
 #include "tao/InconsistentTypeCodeC.h"
 
-//////////////////////////////////////////////////////////////////////
 // Constructors and destructor
 
 TAO_DynStruct_i::TAO_DynStruct_i (const CORBA_Any& any)
@@ -31,17 +31,19 @@ TAO_DynStruct_i::TAO_DynStruct_i (const CORBA_Any& any)
   CORBA::Environment env;
 
   // The type will be correct if this constructor called from a
-  // factory function, but it could also be called by the
-  // user, so.....
-  if (TAO_DynAny_i::unalias (this->type_.in (), env) == CORBA::tk_struct)
+  // factory function, but it could also be called by the user,
+  // so.....
+  if (TAO_DynAny_i::unalias (this->type_.in (),
+                             env) == CORBA::tk_struct)
     {
-      CORBA::ULong numfields = this->type_.in ()->member_count (env);
+      CORBA::ULong numfields =
+        this->type_.in ()->member_count (env);
 
       // Resize the array.
       this->da_members_.size (numfields);
 
       // Get the CDR stream of the argument.
-      ACE_Message_Block* mb = any._tao_get_cdr ();
+      ACE_Message_Block *mb = any._tao_get_cdr ();
 
       TAO_InputCDR cdr (mb);
 
@@ -98,7 +100,6 @@ TAO_DynStruct_i::~TAO_DynStruct_i (void)
 {
 }
 
-//////////////////////////////////////////////////////////////////////////
 // Functions specific to DynStruct
 
 CORBA::FieldName
@@ -225,7 +226,9 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
       ACE_Message_Block* mb = any._tao_get_cdr ();
       TAO_InputCDR cdr (mb);
 
-      for (CORBA::ULong i = 0; i < this->da_members_.size (); i++)
+      for (CORBA::ULong i = 0;
+           i < this->da_members_.size ();
+           i++)
         {
           CORBA::TypeCode_ptr field_tc =
             this->type_.in ()->member_type (i,
@@ -256,7 +259,9 @@ TAO_DynStruct_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 {
   TAO_OutputCDR out_cdr;
 
-  for (CORBA::ULong i = 0; i < this->da_members_.size (); i++)
+  for (CORBA::ULong i = 0;
+       i < this->da_members_.size ();
+       i++)
     {
       // Each component must have been initialied.
       if (!this->da_members_[i].in ())
@@ -265,12 +270,14 @@ TAO_DynStruct_i::to_any (CORBA::Environment& ACE_TRY_ENV)
           return 0;
         }
 
-      CORBA_TypeCode_ptr field_tc = this->da_members_[i]->type (ACE_TRY_ENV);
+      CORBA_TypeCode_ptr field_tc =
+        this->da_members_[i]->type (ACE_TRY_ENV);
 
       // Recursive step
-      CORBA_Any_var field_any = this->da_members_[i]->to_any (ACE_TRY_ENV);
+      CORBA_Any_var field_any =
+        this->da_members_[i]->to_any (ACE_TRY_ENV);
 
-      ACE_Message_Block* field_mb = field_any->_tao_get_cdr ();
+      ACE_Message_Block *field_mb = field_any->_tao_get_cdr ();
 
       TAO_InputCDR field_cdr (field_mb);
 
@@ -281,7 +288,7 @@ TAO_DynStruct_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA_Any* retval;
+  CORBA_Any *retval;
   ACE_NEW_THROW_EX (retval,
                     CORBA_Any (this->type (ACE_TRY_ENV),
                                0,
@@ -297,18 +304,18 @@ TAO_DynStruct_i::type (CORBA::Environment &)
   return this->type_.in ();
 }
 
-// If this component hasn't been initialized yet, the first call
-// to current_component will create the pointer and return it.
+// If this component hasn't been initialized yet, the first call to
+// current_component will create the pointer and return it.
+
 CORBA_DynAny_ptr
 TAO_DynStruct_i::current_component (CORBA::Environment &env)
 {
   if (!this->da_members_[this->index_].in ())
     this->da_members_[this->index_] =
-      TAO_DynAny_i::create_dyn_any (
-        this->type_.in ()->member_type (this->index_,
-                                        env),
-        env
-      );
+      TAO_DynAny_i::create_dyn_any 
+        (this->type_.in ()->member_type (this->index_,
+                                         env),
+         env);
 
   return this->da_members_[this->index_].in ();
 }
@@ -324,13 +331,14 @@ TAO_DynStruct_i::next (CORBA::Environment &)
 }
 
 CORBA::Boolean
-TAO_DynStruct_i::seek (CORBA::Long index,
+TAO_DynStruct_i::seek (CORBA::Long slot,
                        CORBA::Environment &)
 {
-  if (index < 0 || index >= (CORBA::Long) this->da_members_.size ())
+  if (slot < 0 
+      || slot >= (CORBA::Long) this->da_members_.size ())
     return 0;
 
-  this->index_ = index;
+  this->index_ = slot;
   return 1;
 }
 
@@ -340,7 +348,6 @@ TAO_DynStruct_i::rewind (CORBA::Environment &)
   this->index_ = 0;
 }
 
-//////////////////////////////////////////////////////////////////////////
 // The insert-primitive and get-primitive functions are required
 // by the spec of all types of DynAny, although if the top level
 // members aren't primitive types, these functions aren't too helpful.
@@ -348,7 +355,6 @@ TAO_DynStruct_i::rewind (CORBA::Environment &)
 // indicate that next() is called in the body of each of these, and
 // it has been so implemented here.
 
-/////////////////////////////////////////////////////////////////////////////
 // Insert functions
 
 void
@@ -357,7 +363,7 @@ TAO_DynStruct_i::insert_boolean (CORBA::Boolean value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_boolean)
+      == CORBA::tk_boolean)
     {
       this->current_component (env)->insert_boolean (value,
                                                      env);
@@ -373,7 +379,7 @@ TAO_DynStruct_i::insert_octet (CORBA::Octet value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_octet)
+      == CORBA::tk_octet)
     {
       this->current_component (env)->insert_octet (value,
                                                    env);
@@ -389,7 +395,7 @@ TAO_DynStruct_i::insert_char (CORBA::Char value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_char)
+      == CORBA::tk_char)
     {
       this->current_component (env)->insert_char (value,
                                                   env);
@@ -405,7 +411,7 @@ TAO_DynStruct_i::insert_short (CORBA::Short value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_short)
+      == CORBA::tk_short)
     {
       this->current_component (env)->insert_short (value,
                                                    env);
@@ -421,7 +427,7 @@ TAO_DynStruct_i::insert_ushort (CORBA::UShort value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_ushort)
+      == CORBA::tk_ushort)
     {
       this->current_component (env)->insert_ushort (value,
                                                     env);
@@ -437,7 +443,7 @@ TAO_DynStruct_i::insert_long (CORBA::Long value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_long)
+      == CORBA::tk_long)
     {
       this->current_component (env)->insert_long (value,
                                                   env);
@@ -453,7 +459,7 @@ TAO_DynStruct_i::insert_ulong (CORBA::ULong value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_long)
+      == CORBA::tk_long)
     {
       this->current_component (env)->insert_ulong (value,
                                                    env);
@@ -469,7 +475,7 @@ TAO_DynStruct_i::insert_float (CORBA::Float value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_float)
+      == CORBA::tk_float)
     {
       this->current_component (env)->insert_float (value,
                                                    env);
@@ -485,7 +491,7 @@ TAO_DynStruct_i::insert_double (CORBA::Double value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_double)
+      == CORBA::tk_double)
     {
       this->current_component (env)->insert_double (value,
                                                     env);
@@ -501,7 +507,7 @@ TAO_DynStruct_i::insert_string (const char * value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_string)
+      == CORBA::tk_string)
     {
       this->current_component (env)->insert_string (value,
                                                     env);
@@ -517,7 +523,7 @@ TAO_DynStruct_i::insert_reference (CORBA::Object_ptr value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_objref)
+      == CORBA::tk_objref)
     {
       this->current_component (env)->insert_reference (value,
                                                        env);
@@ -533,7 +539,7 @@ TAO_DynStruct_i::insert_typecode (CORBA::TypeCode_ptr value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_TypeCode)
+      == CORBA::tk_TypeCode)
     {
       this->current_component (env)->insert_typecode (value,
                                                       env);
@@ -549,7 +555,7 @@ TAO_DynStruct_i::insert_longlong (CORBA::LongLong value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_longlong)
+      == CORBA::tk_longlong)
     {
       this->current_component (env)->insert_longlong (value,
                                                       env);
@@ -565,7 +571,7 @@ TAO_DynStruct_i::insert_ulonglong (CORBA::ULongLong value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_ulonglong)
+      == CORBA::tk_ulonglong)
     {
       this->current_component (env)->insert_ulonglong (value,
                                                        env);
@@ -581,7 +587,7 @@ TAO_DynStruct_i::insert_wchar (CORBA::WChar value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_wchar)
+      == CORBA::tk_wchar)
     {
       this->current_component (env)->insert_wchar (value,
                                                    env);
@@ -597,7 +603,7 @@ TAO_DynStruct_i::insert_any (const CORBA::Any& value,
 {
   if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->index_),
                              env)
-    == CORBA::tk_any)
+      == CORBA::tk_any)
     {
       this->current_component (env)->insert_any (value,
                                                  env);
@@ -607,24 +613,24 @@ TAO_DynStruct_i::insert_any (const CORBA::Any& value,
     env.exception (new CORBA_DynAny::InvalidValue);
 }
 
-///////////////////////////////////////////////////////////////////
 // Get functions
 
-// If the current component has not been intialized, these
-// raise Invalid, which is not required by the spec, but which
-// seems like a courteous thing to do.
+// If the current component has not been intialized, these raise
+// Invalid, which is not required by the spec, but which seems like a
+// courteous thing to do.
 
 CORBA::Boolean
 TAO_DynStruct_i::get_boolean (CORBA::Environment &env)
 {
   CORBA::Boolean val = 0;;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_boolean)
+          == CORBA::tk_boolean)
         {
           val = dp->get_boolean (env);
           this->next (env);
@@ -642,13 +648,14 @@ CORBA::Octet
 TAO_DynStruct_i::get_octet (CORBA::Environment &env)
 {
   CORBA::Octet val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp = 
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_octet)
+          == CORBA::tk_octet)
         {
           val = dp->get_octet (env);
           this->next (env);
@@ -666,13 +673,14 @@ CORBA::Char
 TAO_DynStruct_i::get_char (CORBA::Environment &env)
 {
   CORBA::Char val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_char)
+          == CORBA::tk_char)
         {
           val = dp->get_char (env);
           this->next (env);
@@ -690,13 +698,14 @@ CORBA::Short
 TAO_DynStruct_i::get_short (CORBA::Environment &env)
 {
   CORBA::Short val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_short)
+          == CORBA::tk_short)
         {
           val = dp->get_short (env);
           this->next (env);
@@ -714,13 +723,14 @@ CORBA::UShort
 TAO_DynStruct_i::get_ushort (CORBA::Environment &env)
 {
   CORBA::UShort val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_ushort)
+          == CORBA::tk_ushort)
         {
           val = dp->get_ushort (env);
           this->next (env);
@@ -738,13 +748,14 @@ CORBA::Long
 TAO_DynStruct_i::get_long (CORBA::Environment &env)
 {
   CORBA::Long val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_long)
+          == CORBA::tk_long)
         {
           val = dp->get_long (env);
           this->next (env);
@@ -762,13 +773,14 @@ CORBA::ULong
 TAO_DynStruct_i::get_ulong (CORBA::Environment &env)
 {
   CORBA::ULong val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_ulong)
+          == CORBA::tk_ulong)
         {
           val = dp->get_ulong (env);
           this->next (env);
@@ -786,13 +798,14 @@ CORBA::Float
 TAO_DynStruct_i::get_float (CORBA::Environment &env)
 {
   CORBA::Float val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_float)
+          == CORBA::tk_float)
         {
           val = dp->get_float (env);
           this->next (env);
@@ -810,13 +823,14 @@ CORBA::Double
 TAO_DynStruct_i::get_double (CORBA::Environment &env)
 {
   CORBA::Double val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_double)
+          == CORBA::tk_double)
         {
           val = dp->get_double (env);
           this->next (env);
@@ -834,13 +848,14 @@ char *
 TAO_DynStruct_i::get_string (CORBA::Environment &env)
 {
   CORBA::Char *val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_string)
+          == CORBA::tk_string)
         {
           val = dp->get_string (env);
           this->next (env);
@@ -858,13 +873,14 @@ CORBA::Object_ptr
 TAO_DynStruct_i::get_reference (CORBA::Environment &env)
 {
   CORBA_Object_ptr val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_objref)
+          == CORBA::tk_objref)
         {
           val = dp->get_reference (env);
           this->next (env);
@@ -882,13 +898,14 @@ CORBA::TypeCode_ptr
 TAO_DynStruct_i::get_typecode (CORBA::Environment &env)
 {
   CORBA_TypeCode_ptr val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_TypeCode)
+          == CORBA::tk_TypeCode)
         {
           val = dp->get_typecode (env);
           this->next (env);
@@ -934,13 +951,14 @@ CORBA::ULongLong
 TAO_DynStruct_i::get_ulonglong (CORBA::Environment &env)
 {
   CORBA::ULongLong val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_ulonglong)
+          == CORBA::tk_ulonglong)
         {
           val = dp->get_ulonglong (env);
           this->next (env);
@@ -958,13 +976,14 @@ CORBA::WChar
 TAO_DynStruct_i::get_wchar (CORBA::Environment &env)
 {
   CORBA::WChar val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_wchar)
+          == CORBA::tk_wchar)
         {
           val = dp->get_wchar (env);
           this->next (env);
@@ -982,13 +1001,14 @@ CORBA::Any_ptr
 TAO_DynStruct_i::get_any (CORBA::Environment &env)
 {
   CORBA_Any_ptr val = 0;
-  CORBA_DynAny_ptr dp = this->da_members_[this->index_].in ();
+  CORBA_DynAny_ptr dp =
+    this->da_members_[this->index_].in ();
 
   if (dp)
     {
       if (TAO_DynAny_i::unalias (dp->type (env),
                                  env)
-        == CORBA::tk_any)
+          == CORBA::tk_any)
         {
           val = dp->get_any (env);
           this->next (env);
