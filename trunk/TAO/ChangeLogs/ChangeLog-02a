@@ -1,3 +1,11 @@
+Thu Mar  2 09:24:16 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Object.h:
+	* tao/Object.i:
+	  Add a static _unchecked_narrow() method to CORBA::Object, it is
+	  useful when writing generic templates.  Thanks to Andreas
+	  Geisler <andreas.geisler@erls.siemens.de> for pointing this out.
+
 Thu Mar  2 09:09:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Exception.h:
