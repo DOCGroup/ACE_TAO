@@ -11,7 +11,7 @@
 //    HTTP_Helpers.h
 //
 // = AUTHOR
-//    James, please add the appropriate attribution here.
+//    James Hu
 // 
 // ============================================================================
 
@@ -29,7 +29,7 @@ public:
   static time_t HTTP_mktime (const char *httpdate);
 
   // Create today's date
-  static const char *HTTP_date (char *const date_string, int date_length);
+  static const char *HTTP_date (void);
 
   static int HTTP_month (const char *month);
   static const char *HTTP_month (int month);
@@ -47,12 +47,9 @@ private:
   static const char *const months_[12];
   static char const *alphabet_;
 
-#if !defined (ACE_HAS_REENTRANT_LIBC)
-#if defined (ACE_HAS_THREADS)  
+  static char *date_string_;
   static ACE_Thread_Mutex mutex_;
-#endif /* ACE_HAS_THREADS */
-#endif /* NOT ACE_HAS_REENTRANT_LIBC */
-
+  // Use this sometimes (e.g. HTTP_date)
 };
 
 // Design around the Singleton pattern
@@ -96,7 +93,7 @@ public:
   };
 
 private:
-  // James, please add comments.
+  // Singleton pattern is afoot here.
   static const char *Reason[MAX_STATUS_CODE + 1];
   static int instance_;
   static ACE_SYNCH_MUTEX lock_;

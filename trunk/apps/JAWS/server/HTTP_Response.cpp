@@ -331,9 +331,7 @@ HTTP_Response::build_headers (void)
                         this->request_.status (),
                         this->request_.status_string ());
 
-      // James, please document where the 40 comes from.
-      char date[40];
-      const char *date_ptr = HTTP_Helper::HTTP_date (date, sizeof(date)-1);
+      const char *date_ptr = HTTP_Helper::HTTP_date ();
 
       if (date_ptr != 0)
 	HTTP_HEADER_LENGTH +=
