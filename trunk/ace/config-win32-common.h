@@ -255,11 +255,6 @@ typedef unsigned __int64 ACE_UINT64;
         #if !defined(_DLL)
                 #error You must link against (Debug) Multithreaded DLL run-time libraries.
         #endif /* !_DLL */
-#else /* ACE_HAS_DLL && ACE_HAS_DLL != 0 */
-        #if defined(_DLL)
-                #error You cannot link against (Debug) Multithreaded DLL run-time libraries.
-                #error Link against Single Threaded or Multithreaded (static) run-time libraries.
-        #endif  /* _DLL */
 #endif  /* ACE_HAS_DLL && ACE_HAS_DLL != 0 */
 
 // We are using STL's min and max (in algobase.h).  Therefore the
