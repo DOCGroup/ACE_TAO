@@ -1,3 +1,11 @@
+Fri Jul 26 07:38:48 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/PSS/Makefile (PSDL_l.cpp): 
+	  Updated to run the other two makefiles in the directory.
+
+	* orbsvcs/PSS/PSDL_Scope.cpp (check_identifier): 
+	  Fixed uninitialized warning.
+
 Fri Jul 26 08:08:47 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * performance-tests/Callback/Callback.mpc:
