@@ -1,3 +1,9 @@
+Wed Mar 10 08:52:59 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_chorus.GNU: fixed
+          exceptions=1 support.  Thanks to Wei Chang for
+          reporting this.
+
 Tue Mar 09 21:54:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * netsvcs/Makefile,netsvcs/clients/Makefile: updated
