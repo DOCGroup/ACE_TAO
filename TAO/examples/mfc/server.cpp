@@ -38,7 +38,7 @@ END_MESSAGE_MAP()
 
 
 // Thread-Function!
-static void *
+static unsigned long
 spawn_my_orb_thread (void *)
 {
   ACE_TRY_NEW_ENV

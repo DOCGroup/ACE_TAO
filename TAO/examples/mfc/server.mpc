@@ -2,8 +2,10 @@
 // $Id$
 
 project(MFC Server): namingexe, mfc {
+  exename    = server
   pch_header = StdAfx.h
   pch_source = StdAfx.cpp
+  idlflags  += -Wb,pch_include=StdAfx.h
 
   Source_Files {
     MainFrm.cpp
