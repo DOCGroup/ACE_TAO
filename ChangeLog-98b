@@ -3,6 +3,13 @@ Tue Aug 25 07:42:40 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Memory_Pool.cpp: changed ACE_Auto_Basic_Array_Ptr<char *>
           template instantiation to ACE_Auto_Basic_Array_Ptr<char>.
 
+        * examples/IPC_SAP/UPIPE_SAP/ex3.cpp (consumer): changed
+          ACE_Auto_Basic_Ptr <char> to ACE_Auto_Basic_Array_Ptr <char>.
+
+        * examples/IPC_SAP/UPIPE_SAP/ex{2,3}.cpp: removed explicit
+          ACE_Auto_Basic_Array_Ptr <char> instantiation because it's
+          now in libACE.
+
 Tue Aug 25 05:23:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/Message_Queue_Notifications_Test.dsp: Fixed something....
