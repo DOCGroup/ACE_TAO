@@ -25,11 +25,13 @@ class ACE_Export ACE_Addr
   //     Defines the base class for the "address family independent"
   //     address format.
 public:
-  // = Initialization method.
-
+  // = Initialization and termination methods.
   ACE_Addr (int type = -1,
             int size = -1);
   // Initializes instance variables. 
+
+  virtual ~ACE_Addr (void);
+  // Destructor.
 
   // = Get/set the size of the address. 
 
