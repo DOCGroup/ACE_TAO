@@ -22,14 +22,14 @@ ACE_Time_Value timer_interval(1,0);
 CORBA::ORB_var orb;
 auto_ptr<TAO_FTRTEC::FTEC_Gateway> gateway;
 int NUM_ITERATIONS = 100;
+FtRtecEventChannelAdmin::EventChannel_var channel;
+int use_gateway = 1;
 
-RtecEventChannelAdmin::EventChannel_ptr
-get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
+
+int parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 {
-    FtRtecEventChannelAdmin::EventChannel_var channel;
     ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:hi:k:nt:?"));
     int opt;
-    int use_gateway = 1;
 
     while ((opt = get_opt ()) != EOF)
     {
@@ -55,22 +55,26 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
         use_gateway = 0;
         break;
       case 't':
-        timer_interval.set(atof(get_opt.opt_arg ()));
+        timer_interval.set(1.0/ACE_OS::atoi(get_opt.opt_arg ()));
       case 'h':
       case '?':
         ACE_DEBUG((LM_DEBUG,
                    ACE_LIB_TEXT("Usage: %s ")
                    ACE_LIB_TEXT("-i ftrt_eventchannel_ior\n")
                    ACE_LIB_TEXT("-n       do not use gateway\n")
-                   ACE_LIB_TEXT("-t time  Time interval in seconds between events (default 1.0)\n")
+                   ACE_LIB_TEXT("-f event_frequency  in HZ (default 1 HZ)\n")
                    ACE_LIB_TEXT("\n"),
                       argv[0]));
-        return 0;
+        return -1;
 
       }
     }
+    return 0;
+}
 
-
+RtecEventChannelAdmin::EventChannel_ptr
+get_event_channel(ACE_ENV_SINGLE_ARG_DECL)
+{
     if (CORBA::is_nil(channel.in()))
     {
       /// Find the FTRTEC from the Naming Service
@@ -108,9 +112,12 @@ int main(int argc, ACE_TCHAR** argv)
                           ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
+    if (parse_args(argc, argv ACE_ENV_ARG_PARAMETER) == -1) 
+      return -1;
+    ACE_TRY_CHECK;
 
     RtecEventChannelAdmin::EventChannel_var channel
-      = get_event_channel(argc, argv ACE_ENV_ARG_PARAMETER);
+      = get_event_channel(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
 

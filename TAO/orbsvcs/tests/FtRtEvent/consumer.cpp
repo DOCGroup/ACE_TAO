@@ -119,7 +119,7 @@ int main(int argc, ACE_TCHAR** argv)
     mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    PushConsumer_impl push_consumer_impl(orb.in());
+    PushConsumer_impl push_consumer_impl(orb.in(), NUM_ITERATIONS);
 
     RtecEventChannelAdmin::ConsumerQOS qos;
     qos.is_gateway = 1;
