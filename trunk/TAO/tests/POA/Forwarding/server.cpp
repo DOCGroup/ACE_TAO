@@ -47,12 +47,18 @@ read_ior (char *filename, const unsigned int foo_number)
     {
       second_foo_forward_to_IOR_ = ior_buffer.read ();
       if (second_foo_forward_to_IOR_ == 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "Unable to allocate memory to read ior: %p\n"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Unable to allocate memory to read ior: %p\n"),
+			                     -1);
     }
   
-  ACE_DEBUG ((LM_DEBUG, "read ior from the file\n"));  
+  if (foo_number == 1)
+    ACE_DEBUG ((LM_DEBUG, "POA approach: Read ior: %s\n",
+                first_foo_forward_to_IOR_));  
+  else if (foo_number == 2)
+    ACE_DEBUG ((LM_DEBUG, "Locator approach: Read ior: %s\n",
+                second_foo_forward_to_IOR_));  
+
   return 0;
 }
 
@@ -136,11 +142,7 @@ get_forward_reference (char *IOR,
   if (IOR != 0)
     {
       forward_location_var = orb->string_to_object (IOR, env);
-      
-      ACE_DEBUG ((LM_DEBUG,
-                  "\nFound IOR is:<%s>\n",
-                  IOR));
-      
+            
       if (env.exception () != 0)
         {
           env.print_exception ("ORB::string_to_object");
@@ -148,7 +150,7 @@ get_forward_reference (char *IOR,
         }
       
       if (CORBA::is_nil(forward_location_var.in()))      
-        ACE_DEBUG ((LM_DEBUG,"Forward_to location is wrong\n"));
+        ACE_DEBUG ((LM_DEBUG,"Error: Forward_to location is wrong\n"));
     }
 }
 
@@ -361,7 +363,7 @@ main (int argc, char **argv)
     }
   
   ACE_DEBUG ((LM_DEBUG,
-              "The first foo IOR is: <%s>\n",
+              "POA approach: Own IOR: %s\n",
               first_foo_ior.in ()));
   
   if (first_foo_ior_output_file_)
@@ -371,7 +373,7 @@ main (int argc, char **argv)
                        first_foo_ior.in ());
       ACE_OS::fclose (first_foo_ior_output_file_);
       
-      ACE_DEBUG ((LM_DEBUG, "wrote ior of the first foo to the file\n"));
+      ACE_DEBUG ((LM_DEBUG, "POA approach: Wrote IOR to a file.\n"));
     }
   
   
@@ -436,7 +438,7 @@ main (int argc, char **argv)
   
 
   ACE_DEBUG ((LM_DEBUG,
-              "The second foo IOR is: <%s>\n",
+              "Locator approach: Own IOR: %s\n",
               second_foo_ior.in ()));
   
   
@@ -447,7 +449,7 @@ main (int argc, char **argv)
                        second_foo_ior.in ());
       ACE_OS::fclose (second_foo_ior_output_file_);
 
-      ACE_DEBUG ((LM_DEBUG, "wrote ior of the second foo to the file\n"));
+      ACE_DEBUG ((LM_DEBUG, "Locator approach: Wrote IOR to a file.\n"));
     }
   
   // end of the activation of the second foo object

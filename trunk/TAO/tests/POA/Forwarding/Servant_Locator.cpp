@@ -59,15 +59,12 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
         servant = new MySecondFooServant (this,
                                           127);
 
-        ACE_DEBUG ((LM_DEBUG,"MyFooServantLocator::preinvoke: Created a new servant.\n"));
-
-        // Return the servant as the cookie , used as a check when
+         // Return the servant as the cookie , used as a check when
         // postinvoke is called on this MyFooServantLocator.
         // cookie = servant;
       }
-      else
-        ACE_DEBUG ((LM_DEBUG,"MyFooServantLocator::preinvoke: Reused old servant.\n"));
-
+      // reuse the old servant
+       
       return servant;
     }
     else

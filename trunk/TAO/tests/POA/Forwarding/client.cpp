@@ -34,7 +34,7 @@ read_ior (char *filename)
   
   if (f_handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Unable to open %s for writing: %p\n",
+		       "Unable to open %s for reading: %p\n",
 		       filename),
 		      -1);
   ACE_Read_Buffer ior_buffer (f_handle_);
