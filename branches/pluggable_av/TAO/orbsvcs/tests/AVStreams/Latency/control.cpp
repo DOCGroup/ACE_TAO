@@ -12,11 +12,14 @@ const char *ping_ior = "file://ping.ior";
 const char *pong_ior = "file://pong.ior";
 const char *ping_address = "224.9.9.2:12345";
 const char *pong_address = "224.9.9.2:23456";
+const char *protocol = "UDP";
+
+int milliseconds = 30000;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:g:s:r:");
+  ACE_Get_Opt get_opts (argc, argv, "f:g:s:r:t:p:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -30,12 +33,20 @@ parse_args (int argc, char *argv[])
         pong_ior = get_opts.optarg;
         break;
 
-      case 's':
+      case 'r':
         ping_address = get_opts.optarg;
         break;
 
-      case 'r':
+      case 's':
         pong_address = get_opts.optarg;
+        break;
+
+      case 't':
+        milliseconds = ACE_OS::atoi (get_opts.optarg);
+        break;
+
+      case 'p':
+        protocol = get_opts.optarg;
         break;
 
       case '?':
@@ -46,6 +57,8 @@ parse_args (int argc, char *argv[])
                            "-g <ping_ior> "
                            "-s <ping_address> "
                            "-r <pong_address> "
+                           "-t <milliseconds> "
+                           "-p protocols "
                            "\n",
                            argv [0]),
                           -1);
@@ -63,6 +76,8 @@ int main (int argc, char *argv[])
       TAO_AV_Core *av_core = TAO_AV_CORE::instance ();
       av_core->init (argc, argv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      parse_args (argc, argv);
 
       TAO_ORB_Manager* orb_manager =
         av_core->orb_manager ();
@@ -94,7 +109,7 @@ int main (int argc, char *argv[])
                                        "IN",
                                        "UNS:ping",
                                        "",
-                                       "UDP",
+                                       protocol,
                                        &ping_addr);
       flow_spec[0] = CORBA::string_dup (ping.entry_to_string ());
 
@@ -104,12 +119,12 @@ int main (int argc, char *argv[])
                                        "OUT",
                                        "UNS:pong",
                                        "",
-                                       "UDP",
+                                       protocol,
                                        &pong_addr);
       flow_spec[1] = CORBA::string_dup (pong.entry_to_string ());
 
       TAO_StreamCtrl stream_control_impl;
-      
+
       AVStreams::StreamCtrl_var stream_control =
         stream_control_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -142,7 +157,7 @@ int main (int argc, char *argv[])
       stream_control->start (flow_spec, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_Time_Value tv (10, 0);
+      ACE_Time_Value tv (0, milliseconds * 1000);
       if (orb->run (tv) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
@@ -151,8 +166,8 @@ int main (int argc, char *argv[])
       stream_control->stop (flow_spec, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      root_poa->destroy (1, 1, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      // root_poa->destroy (1, 1, ACE_TRY_ENV);
+      // ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
