@@ -158,26 +158,6 @@ namespace CORBA
 namespace TAO
 {
 
-#if !defined (_CORBA_TYPECODE__TRAITS_CH_)
-#define _CORBA_TYPECODE__TRAITS_CH_
-
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Export Objref_Traits< ::CORBA::TypeCode>
-  {
-    static ::CORBA::TypeCode_ptr duplicate (
-        ::CORBA::TypeCode_ptr
-      );
-    static void release (
-        ::CORBA::TypeCode_ptr
-      );
-    static ::CORBA::TypeCode_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::CORBA::TypeCode_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
 }
 
 // Workaround for a Visual Studio .NET bug where this class is not

@@ -556,6 +556,22 @@ namespace TAO
   {
   };
 
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Export Objref_Traits< ::CORBA::TypeCode>
+  {
+    static ::CORBA::TypeCode_ptr duplicate (
+        ::CORBA::TypeCode_ptr
+      );
+    static void release (
+        ::CORBA::TypeCode_ptr
+      );
+    static ::CORBA::TypeCode_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::TypeCode_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
   /**
    * @class TC_Private_State
    *
