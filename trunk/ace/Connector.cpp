@@ -421,14 +421,8 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
 
   ACE_NEW_RETURN (ast, AST (sh, this->get_handle (), synch_options.arg (), -1), -1);
 
-  // Register this with the reactor for both reading and writing
-  // events.
-  ACE_Reactor_Mask mask = ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK;
-
-#if defined (ACE_WIN32)
-  // Win32 has some screwy semantics here...
-  mask |= ACE_Event_Handler::EXCEPT_MASK;
-#endif /* ACE_WIN32 */
+  // Register this with the reactor for connection events.
+  ACE_Reactor_Mask mask = ACE_Event_Handler::CONNECT_MASK;
 
   // Bind ACE_Svc_Tuple with the ACE_HANDLE we're trying to connect.
   if (this->handler_map_.bind (this->get_handle (), ast) == -1)
