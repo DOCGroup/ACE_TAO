@@ -1,3 +1,9 @@
+Sun Jun 24 16:48:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB_Core.h: 
+	* tao/ORB_Core.i: Provided accessor for the locks that are used to
+	  lock the data blocks during reference counting.
+
 Sun Jun 24 10:09:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Oneways_Invoking_Twoways/client.dsp:
