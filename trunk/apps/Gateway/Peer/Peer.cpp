@@ -1,24 +1,5 @@
 // $Id$
 
-// These classes process Supplier/Consumer events sent from the gateway
-// (gatewayd) to its various peers (peerd).  These classes works as
-// follows:
-//
-// 1. Gateway_Acceptor creates a listener endpoint and waits passively
-//    for gatewayd to connect with it.
-//
-// 2. When gatewayd connects, Peer_Acceptor creates an
-//    Peer_Handler object that sends/receives events from
-//    gatewayd.
-//
-// 3. The Peer_Handler waits for gatewayd to inform it of its supplier
-//    ID, which is prepended to all outgoing events sent from peerd.
-//
-// 4. Once the supplier ID is set, peerd periodically sends events to
-//    gatewayd.  Peerd also receives and "processes" events
-//    forwarded to it from gatewayd.  In this program, peerd
-//    "processes" events by writing them to stdout.
-
 #define ACE_BUILD_SVC_DLL
 
 #include "ace/Get_Opt.h"
@@ -538,44 +519,6 @@ Peer_Handler::handle_close (ACE_HANDLE,
     }
   return 0;
 }
-
-// A factory class that accept connections from gatewayd and
-// dynamically creates a new Peer object to do the dirty work.
-
-class ACE_Svc_Export Peer_Acceptor : public ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
-{
-public:
-  // = Initialization and termination methods.
-  Peer_Acceptor (void);
-  // Create the Peer.
-
-  virtual int init (int argc, char *argv[]);
-  // Initialize the acceptor.
-
-  virtual int info (char **, size_t) const;
-  // Return info about this service.
-
-  virtual int fini (void);
-  // Perform termination.
-
-  virtual int make_svc_handler (Peer_Handler *&);
-  // Factory method that creates the Peer_Handler once.
-
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
-  // Handle various signals (e.g., SIGPIPE, SIGINT, and SIGQUIT)
-
-  void parse_args (int argc, char *argv[]);
-  // Parse the command-line arguments.
-
-private:
-  Peer_Handler *peer_handler_;
-  // Pointer to memory allocated exactly once.
-
-  ACE_INET_Addr addr_;
-  // Our addr.
-
-  typedef ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR> inherited;
-};
 
 Peer_Acceptor::Peer_Acceptor (void)
   : addr_ (ACE_DEFAULT_PEER_SERVER_PORT)

@@ -1,8 +1,42 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (PEER)
-#define PEER
+// ============================================================================
+//
+// = LIBRARY
+//    gateway
+//
+// = FILENAME
+//    Peer.h
+//
+// = DESCRIPTION
+//    These classes process Supplier/Consumer events sent from the
+//    gateway (gatewayd) to its various peers (peerd).  The general
+//    collaboration works as follows:
+//
+//    1. <Peer_Acceptor> creates a listener endpoint and waits
+//       passively for gatewayd to connect with it.
+//
+//    2. When a gatewayd connects, <Peer_Acceptor> creates an
+//       <Peer_Handler> object that sends/receives events from
+//       gatewayd on that connection.
+//  
+//    3. The <Peer_Handler> waits for gatewayd to inform it of its
+//       supplier ID, which is prepended to all subsequent outgoing
+//       events sent from peerd.
+//
+//    4. Once the supplier ID is set, peerd periodically sends events
+//       to gatewayd.  Peerd also receives and "processes" events
+//       forwarded to it from gatewayd.  In this program, peerd
+//       "processes" the events sent to it by writing them to stdout.
+//
+// = AUTHOR
+//    Douglas C. Schmidt
+//
+// ============================================================================
+
+#if !defined (PEER_H)
+#define PEER_H
 
 #include "ace/OS.h"
 #include "ace/INET_Addr.h"
@@ -13,10 +47,10 @@
 
 ACE_SVC_FACTORY_DECLARE (Peer_Acceptor)
 
-// Handle Peer events arriving as events.
-
 class ACE_Svc_Export Peer_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
+  // = TITLE
+  //     Handle Peer events arriving from a Gateway.
 public:
   // = Initialization and termination methods.
   Peer_Handler (void);
@@ -70,7 +104,8 @@ protected:
   // Receive a event from stdin and send it to the gateway.
 
   int (Peer_Handler::*do_action_) (void);
-  // Pointer-to-member-function for the current action to run in this state.
+  // Pointer-to-member-function for the current action to run in this
+  // state.
 
   int await_supplier_id (void);
   // Action that receives the route id.
@@ -79,11 +114,50 @@ protected:
   // Action that receives events.
 
   ACE_Message_Block *msg_frag_;
-  // Keep track of event fragment to handle non-blocking recv's from gateway.
+  // Keep track of event fragment to handle non-blocking recv's from
+  // gateway.
 
   size_t total_bytes_;
   // The total number of bytes sent/received to the gateway.
 };
 
-#endif /* PEER */
+class ACE_Svc_Export Peer_Acceptor : public ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
+{
+  // = TITLE
+  //   A factory class that accept connections from gatewayd and
+  //   dynamically creates a new <Peer_Handler> object to do the work.
+public:
+  // = Initialization and termination methods.
+  Peer_Acceptor (void);
+  // Create the Peer.
+
+  virtual int init (int argc, char *argv[]);
+  // Initialize the acceptor.
+
+  virtual int info (char **, size_t) const;
+  // Return info about this service.
+
+  virtual int fini (void);
+  // Perform termination.
+
+  virtual int make_svc_handler (Peer_Handler *&);
+  // Factory method that creates the Peer_Handler once.
+
+  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  // Handle various signals (e.g., SIGPIPE, SIGINT, and SIGQUIT)
+
+  void parse_args (int argc, char *argv[]);
+  // Parse the command-line arguments.
+
+private:
+  Peer_Handler *peer_handler_;
+  // Pointer to memory allocated exactly once.
+
+  ACE_INET_Addr addr_;
+  // Our addr.
+
+  typedef ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR> inherited;
+};
+
+#endif /* PEER_H */
 
