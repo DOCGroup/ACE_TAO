@@ -92,9 +92,9 @@ Thu Oct 14 15:42:09 1999  Marina Spivak  <marina@cs.wustl.edu>
 	  Added missing range checks.
 
 	* tao/Linear_Priority_Mapping.cpp:
-	  Fixed the formula in the <to_CORBA> method.  Thanks to Dennis Noll
-	  <Dennis.Noll@MW.Boeing.com> for reporting one of the problems.  Also added
-	  range checking.
+	  Fixed the formula in the <to_CORBA> method.  Thanks to Dennis
+	  Noll <Dennis.Noll@MW.Boeing.com> for reporting one of the
+ 	  problems.  Also added range checking.
 
 	* tao/Object.cpp:
 	  Fixed the warning for unused argument in case minimum_tao=1.
