@@ -681,7 +681,10 @@ TAO_InputCDR::skip (CORBA::TypeCode_ptr tc,
   TAO_Marshal_Object *mobj =
     this->factory_->make_marshal_object (tc, env);
 
-  TAO_CHECK_CONDITION_ENV_RETURN (env, || mobj == 0, CORBA::TypeCode::TRAVERSE_STOP);
+  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
+  
+  if (mobj == 0)
+    return CORBA::TypeCode::TRAVERSE_STOP;
 
   return mobj->skip (tc, this, env);
 }
@@ -1141,7 +1144,10 @@ TAO_OutputCDR::append (CORBA::TypeCode_ptr tc,
   TAO_Marshal_Object *mobj =
     this->factory_->make_marshal_object (tc, env);
 
-  TAO_CHECK_CONDITION_ENV_RETURN (env, || mobj == 0, CORBA::TypeCode::TRAVERSE_STOP);
+  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
+  
+  if (mobj == 0)
+    return CORBA::TypeCode::TRAVERSE_STOP;
 
   return mobj->append (tc, src, this, env);
 }
