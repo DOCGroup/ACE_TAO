@@ -12,8 +12,8 @@ endif
 
 .SUFFIXES:	S.h C.h S.i C.i S.cpp C.cpp
 
-%S.h %C.h %S.i %C.i %S.cpp %C.cpp:	$(TAO_IDL) %.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $?
+%S.h %C.h %S.i %C.i %S.cpp %C.cpp:	%.idl $(TAO_IDL)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 
 ifeq ($(findstring g++,$(CXX)),g++)
   CCFLAGS += -Wno-unused
