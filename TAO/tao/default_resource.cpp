@@ -28,7 +28,9 @@
 # include "tao/default_resource.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, default_resource, "$Id$")
+ACE_RCSID (tao,
+           default_resource,
+           "$Id$")
 
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : use_tss_resources_ (0),
@@ -65,11 +67,11 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory (void)
        ++i)
     CORBA::string_free (this->parser_names_[i]);
 
-  delete []this->parser_names_;
+  delete [] this->parser_names_;
 }
 
 int
-TAO_Default_Resource_Factory::init (int argc, char **argv)
+TAO_Default_Resource_Factory::init (int argc, char *argv[])
 {
   ACE_TRACE ("TAO_Default_Resource_Factory::init");
 
@@ -100,8 +102,9 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
     if (curarg == (argc-1) && this->parser_names_count_ != 0)
       {
         // This is the last loop..
-        this->parser_names_ =
-          new char *[this->parser_names_count_];
+        ACE_NEW_RETURN (this->parser_names_,
+                        char *[this->parser_names_count_],
+                        -1);
 
         for (int i = 0;
              i < this->parser_names_count_;
@@ -919,13 +922,61 @@ TAO_Default_Resource_Factory::disable_factory (void)
 
 // ****************************************************************
 
+// Notice that the Service Configurator/Repository will not deallocate
+// the *payload* object, i.e. the default resource factory.  The
+// TAO_Singleton_Manager will deallocate it.  This is necessary since
+// the ORB Core requires that a resource factory exist as it is being
+// finalized.  Resource factories that are statically or dynamically
+// loaded (i.e. registered with the Service Repository) should
+// generally enable the ACE_Service_Type::DELETE_OBJ service
+// descriptor flag.
 ACE_STATIC_SVC_DEFINE (TAO_Default_Resource_Factory,
                        ACE_TEXT ("Resource_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Default_Resource_Factory),
-                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       ACE_Service_Type::DELETE_THIS
+                       /* | ACE_Service_Type::DELETE_OBJ */ /* SEE ABOVE */,
                        0)
-ACE_FACTORY_DEFINE (TAO, TAO_Default_Resource_Factory)
+
+// @@ See below for an explanation of why this macro is not used for
+//    the TAO_Default_Resource_Factory.
+// ACE_FACTORY_DEFINE (TAO, TAO_Default_Resource_Factory)
+
+
+// A custom factory definition is used instead of the commonly used
+// one created by the ACE_FACTORY_DEFINE macro below.  This is
+// necessary to get around dynamic unloading issues.  The default
+// resource factory must exist long enough for the ORB to make the
+// resource factory reclaim the reactor, for example.  The easiest
+// (and probably best) way to do that is register the
+// TAO_Default_Resource_Factory for destruction with the
+// TAO_Singleton_Manager.
+extern "C" ACE_Service_Object *
+_make_TAO_Default_Resource_Factory (ACE_Service_Object_Exterminator *gobbler)
+{
+  // The TAO_Singleton_Manager will "gobble" the payload
+  // (TAO_Default_Resource_Factory) object.  Set the gobbler function
+  // invoked by the Service_Type implementation to be to be nil.
+  *gobbler = 0;
+
+  TAO_Default_Resource_Factory *rf = 0;
+  ACE_NEW_RETURN (rf,
+                  TAO_Default_Resource_Factory,
+                  0);
+
+  // Register for destruction with the TAO_Singleton_Manager.
+  //
+  // Note that the instance of the TAO_Default_Resource_Factory just
+  // created is not a Singleton.  The TAO_Singleton_Manager is useful
+  // for more than just Singleton managment.
+  if (TAO_Singleton_Manager::at_exit (rf) != 0)
+    {
+      delete rf;
+      return 0;
+    }
+
+  return rf;
+}
 
 // ****************************************************************
 

@@ -37,25 +37,47 @@ class TAO_LF_Strategy;
  * factory can return resource instances which are, e.g., global,
  * stored in thread-specific storage, stored in shared memory,
  * etc.
+ *
+ * @note The default resource factory also inherits from ACE_Cleanup
+ *       so that it may be registered for destruction with the
+ *       TAO_Singleton_Manager.  This generally only necessary for
+ *       default resource factory since it may be created during ORB
+ *       initialization, and it must exist long enough for the ORB
+ *       Core to make some calls on it during ORB Core finalization.
+ *       Resource factories that are statically or dynamically loaded
+ *       (i.e. registered with the Service Repository) before the ORB
+ *       is initialized need not inherit from ACE_Cleanup, nor is it
+ *       necessary for them to register with the
+ *       TAO_Singleton_Manager.
  */
-class TAO_Export TAO_Default_Resource_Factory : public TAO_Resource_Factory
+class TAO_Export TAO_Default_Resource_Factory
+  : public TAO_Resource_Factory,
+    public ACE_Cleanup
 {
 public:
-  // = Initialization and termination methods.
+
   /// Constructor.
   TAO_Default_Resource_Factory (void);
 
   /// Destructor.
   virtual ~TAO_Default_Resource_Factory (void);
 
-  // = Service Configurator hooks.
+  /**
+   * @name Service Configurator Hooks
+   */
+  //@{
   /// Dynamic linking hook
-  virtual int init (int argc, char* argv[]);
+  virtual int init (int argc, char *argv[]);
 
   /// Parse svc.conf arguments
   int parse_args (int argc, char* argv[]);
+  //@}
 
-  /// = Member Accessors
+  /**
+   * @name Member Accessors
+   */
+  //@{
+
   int get_parser_names (char **&names,
                         int &number_of_names);
   enum
@@ -102,7 +124,10 @@ public:
 
   virtual void disable_factory (void);
 
+  //@}
+
 protected:
+
   /// Obtain the reactor implementation
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
 
@@ -113,6 +138,7 @@ protected:
                                   const char* option_value);
 
 protected:
+
   /// Flag indicating whether resources should be global or
   /// thread-specific.
   int use_tss_resources_;
