@@ -1,3 +1,24 @@
+Fri Jul 16 11:06:07 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	* tests/AMI/README
+	* tests/AMI/client.conf
+	* tests/AMI/client.cpp
+	* tests/AMI/client.muxed.conf
+	* tests/AMI/run_test.pl
+	* tests/AMI/server.cpp
+	* tests/AMI/simple-client.cpp
+	* tests/AMI/test-handC.cpp
+	* tests/AMI/test.idl
+	* tests/AMI/test_i.cpp
+	* tests/AMI/test_i.h : Latest and the greates AMI test. Got it to
+	  work with MT as well as ST configuration. MUXED as well as
+	  EXCLUSIVE configuation. 
+  	  run_test.pl is not set up yet. 
+          There are some minor fixes needed for the TAO IDL compiler to
+	  generate correct AMI code. Right now, once the TAO IDL compiler
+	  generates the files, rewrite testC.cpp by test-handC.cpp which
+	  has the hand crafted correct code for AMI.
+
 Thu Jul 15 20:48:48 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
   
 	* tao/Client_Strategy_Factory.cpp
