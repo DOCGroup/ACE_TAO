@@ -23,7 +23,7 @@ public:
 
   // = Accessor methods.
   ACE_TCHAR *program_name (void);
-  const char *slave_name (void);
+  const ACE_TCHAR *slave_name (void);
   int debug (void);
   int exec_slave (void);
   size_t iteration_count (void);

@@ -99,17 +99,18 @@ Options::child (void)
 void
 Options::print_usage_and_die (void)
 {
-  ACE_ERROR ((LM_ERROR, ACE_TEXT ("usage: %n"
-       "\n[-d] (run in debugging mode)\n"
-       "[-e] (use exec(2) in addition to fork(2))\n"
-       "[-l] (use C++ new operator rather than sbrk(2)\n"
-       "[-L max_msg_size]\n"
-       "[-m] (use mmap rather than SysV shared memory)\n"
-       "[-p] (use processes rather than threads)\n"
-       "[-s] (use SysV shared memory rather than mmap)\n"
-       "[-t number of threads or processes to spawn]\n"
-       "[-T] (enable tracking)\n"
-       "[-n iteration_count]\n")));
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("usage: %n")
+              ACE_TEXT ("\n[-d] (run in debugging mode)\n")
+              ACE_TEXT ("[-e] (use exec(2) in addition to fork(2))\n")
+              ACE_TEXT ("[-l] (use C++ new operator rather than sbrk(2)\n")
+              ACE_TEXT ("[-L max_msg_size]\n")
+              ACE_TEXT ("[-m] (use mmap rather than SysV shared memory)\n")
+              ACE_TEXT ("[-p] (use processes rather than threads)\n")
+              ACE_TEXT ("[-s] (use SysV shared memory rather than mmap)\n")
+              ACE_TEXT ("[-t number of threads or processes to spawn]\n")
+              ACE_TEXT ("[-T] (enable tracking)\n")
+              ACE_TEXT ("[-n iteration_count]\n")));
   ACE_OS::exit (1);
   /* NOTREACHED */
 }
