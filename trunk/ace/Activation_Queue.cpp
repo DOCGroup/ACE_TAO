@@ -57,7 +57,7 @@ ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
     {
       // Get the next <Method_Request>.
       ACE_Method_Request *mo =
-        ACE_reinterpret_case (ACE_Method_Request *,
+        ACE_reinterpret_cast (ACE_Method_Request *,
                               mb->base ());
 
       // Delete the message block.

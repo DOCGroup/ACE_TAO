@@ -147,7 +147,7 @@ DEP_CPP_FUTUR=\
 	"..\ace\Message_Queue.cpp"\
 	"..\ace\Message_Queue.h"\
 	"..\ace\Message_Queue.i"\
-	"..\ace\Method_Object.h"\
+	"..\ace\Method_Request.h"\
 	"..\ace\Module.cpp"\
 	"..\ace\Module.h"\
 	"..\ace\Module.i"\
