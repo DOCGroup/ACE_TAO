@@ -80,7 +80,7 @@ process_refs(DOMNode*& node,
 {
   CORBA::ULong i (seq.length ());
   seq.length (i + 1);
-  seq[i] = 0;
+  seq[i] = index;
   if (node->hasAttributes())
     {
       DOMNamedNodeMap* named_node_map = node->getAttributes ();
@@ -95,8 +95,9 @@ process_refs(DOMNode*& node,
             (attribute_node->getNodeValue ());
           if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
             {
-              index = index + 1;
+              //index = index + 1;
               idref_map.bind (index, aceattrnodevalue);
+              ACE_DEBUG ((LM_DEBUG, "temp seq is %d \n", index));
             }
         }
     }
@@ -108,6 +109,7 @@ process_ref(DOMNode*& node,
             int& index,
             IDREF_MAP& idref_map)
 {
+  ref = index;
   if (node->hasAttributes ())
     {
       DOMNamedNodeMap* named_node_map = node->getAttributes ();
@@ -122,8 +124,9 @@ process_ref(DOMNode*& node,
             (attribute_node->getNodeValue ());
           if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
             {
-              index = index + 1;
+              //index = index + 1;
               idref_map.bind (index, aceattrnodevalue);
+              ACE_DEBUG ((LM_DEBUG, "temp alone  is %d \n", index));
             }
         }
     }

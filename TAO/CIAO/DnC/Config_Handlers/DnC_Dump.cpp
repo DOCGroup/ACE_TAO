@@ -514,7 +514,7 @@ namespace Deployment
                                     encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
-          ACE_DEBUG ((LM_DEBUG, "Any value: %l \n", temp));
+          ACE_DEBUG ((LM_DEBUG, "Any value: %d \n", temp));
         }
         break;
 
@@ -899,11 +899,176 @@ namespace Deployment
 
   void DnC_Dump::dump(const Deployment::DeploymentPlan &plan)
   {
-    Dump_Obj dump_obj("DeploymentPlan");
-    dump ("label", plan.label);
-    dump ("UUID", plan.UUID);
+    ACE_DEBUG ((LM_DEBUG,
+                "========================================================\n"));
+    Dump_Obj dump_obj("              DEPLOYMENT PLAN");
+    ACE_DEBUG ((LM_DEBUG,
+                "===================================-====================\n"));
+    ACE_DEBUG ((LM_DEBUG, "UUID: %s \n", plan.UUID.in ()));
+    ACE_DEBUG ((LM_DEBUG, "Label: %s \n", plan.label.in ()));
+    //dump ("label", plan.label);
+    //dump ("UUID", plan.UUID);
     ACE_DEBUG ((LM_DEBUG, "%srealizes:\n", Dump_Obj::indent()));
     dump (plan.realizes);
+    for (CORBA::ULong i = 0; i < plan.implementation.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "\nMonolithicImplementation %d: \n", i + 1));
+        ACE_DEBUG ((LM_DEBUG, "     Name: %s \n",
+                    plan.implementation[i].name.in ()));
+        for (CORBA::ULong j = 0; j < plan.implementation[i].source.length ();
+             ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     Source: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Address: %s \n",
+                        plan.implementation[i].source[j].in ()));
+          }
+        for (CORBA::ULong j = 0; 
+             j < plan.implementation[i].artifactRef.length (); ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     Artifact: %d: \n", j + 1));
+            int value = plan.implementation[i].artifactRef[j];
+            ACE_DEBUG ((LM_DEBUG, "       Name: %s \n",
+                        plan.artifact[value].name.in ()));
+          }
+        for (CORBA::ULong j = 0; 
+             j < plan.implementation[i].execParameter.length (); ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     ExecParameter: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Name: %s \n",
+                        plan.implementation[i].execParameter[j].name.in ()));
+            dump (plan.implementation[i].execParameter[j].value);
+          }
+      }
+    for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "\nInstanceDescription %d: \n", i + 1));
+        ACE_DEBUG ((LM_DEBUG, "     Name: %s \n",
+                    plan.instance[i].name.in ()));
+        ACE_DEBUG ((LM_DEBUG, "     Node: %s \n",
+                    plan.instance[i].node.in ()));
+        for (CORBA::ULong j = 0; j < plan.instance[i].source.length ();
+             ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     Source: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Address: %s \n",
+                        plan.instance[i].source[j].in ()));
+          }
+        /*
+        int value = plan.instance[i].implementationRef;
+        ACE_DEBUG ((LM_DEBUG, "     Implementation: %s \n",
+                    plan.implementation[value].name.in ()));
+        */
+        for (CORBA::ULong j = 0; 
+             j < plan.instance[i].configProperty.length (); ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     ConfigProperty: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Name: %s \n",
+                        plan.instance[i].configProperty[j].name.in ()));
+            dump (plan.instance[i].configProperty[j].value);
+          }
+      }
+    for (CORBA::ULong i = 0; i < plan.connection.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "\nPlanConnection %d: \n", i + 1));
+        ACE_DEBUG ((LM_DEBUG, "     Name: %s \n",
+                    plan.connection[i].name.in ()));
+        for (CORBA::ULong j = 0; j < plan.connection[i].source.length ();
+             ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     Source: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Address: %s \n",
+                        plan.connection[i].source[j].in ()));
+          }
+        for (CORBA::ULong j = 0; 
+             j < plan.connection[i].internalEndpoint.length ();
+             ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     Connection: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Portname: %s \n",
+                        plan.connection[i].
+                        internalEndpoint[j].portName.in ()));
+            /*
+            int value = plan.connection[i].internalEndpoint[j].instanceRef;
+            ACE_DEBUG ((LM_DEBUG, "       Instance: %s \n",
+                    plan.instance[value].name.in ()));
+            */
+            ACE_DEBUG ((LM_DEBUG, "       PortKind: \n"));
+            switch (plan.connection[i].internalEndpoint[j].kind)
+              {
+                case Facet: 
+                  ACE_DEBUG ((LM_DEBUG, "          Facet\n"));
+                  break;
+
+                case SimplexReceptacle: 
+                  ACE_DEBUG ((LM_DEBUG, "          SimplexReceptacle\n"));
+                  break;
+
+                case MultiplexReceptacle:
+                  ACE_DEBUG ((LM_DEBUG, "          MultiplexReceptacle\n"));
+                  break;
+
+                case EventEmitter:
+                  ACE_DEBUG ((LM_DEBUG, "          EventEmitter\n"));
+                  break;
+
+                case EventPublisher:
+                  ACE_DEBUG ((LM_DEBUG, "          EventPublisher\n"));
+                  break;
+
+                case EventConsumer:
+                  ACE_DEBUG ((LM_DEBUG, "          EventConsumer\n"));
+                  break;
+
+              }
+          }
+      }
+    for (CORBA::ULong i = 0; i < plan.artifact.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "\nArtifactDescription %d: \n", i + 1));
+        ACE_DEBUG ((LM_DEBUG, "     Name: %s \n",
+                    plan.artifact[i].name.in ()));
+        ACE_DEBUG ((LM_DEBUG, "     Node: %s \n",
+                    plan.artifact[i].node.in ()));
+        for (CORBA::ULong j = 0; j < plan.artifact[i].source.length ();
+             ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     Source: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Address: %s \n",
+                        plan.artifact[i].source[j].in ()));
+          }
+        for (CORBA::ULong j = 0; j < plan.artifact[i].location.length ();
+             ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     Location: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Address: %s \n",
+                        plan.artifact[i].location[j].in ()));
+          }
+        for (CORBA::ULong j = 0; 
+             j < plan.artifact[i].execParameter.length (); ++j)
+          {
+            ACE_DEBUG ((LM_DEBUG, "     ExecParameter: %d: \n", j + 1));
+            ACE_DEBUG ((LM_DEBUG, "       Name: %s \n",
+                        plan.artifact[i].execParameter[j].name.in ()));
+            dump (plan.artifact[i].execParameter[j].value);
+          }
+      }
+    for (CORBA::ULong i = 0; i < plan.externalProperty.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "\nPlanProperty %d: \n", i + 1));
+        ACE_DEBUG ((LM_DEBUG, "     Name: %s \n",
+                    plan.externalProperty[i].name.in ()));
+      }
+    for (CORBA::ULong i = 0; i < plan.dependsOn.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "\nImplementationDependency %d: \n", i + 1));
+      }
+    for (CORBA::ULong i = 0; i < plan.infoProperty.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "\nExternalProperty %d: \n", i + 1));
+        ACE_DEBUG ((LM_DEBUG, "     Name: %s \n",
+                    plan.infoProperty[i].name.in ()));
+      }
+    /*
     dump_sequence ("implementation", plan.implementation);
     dump_sequence ("instance", plan.instance);
     dump_sequence ("connection", plan.connection);
@@ -911,6 +1076,7 @@ namespace Deployment
     dump_sequence ("dependsOn", plan.dependsOn);
     dump_sequence ("artifact", plan.artifact);
     dump_sequence ("infoProperty", plan.infoProperty);
+    */
   }
 
   void DnC_Dump::dump(const Deployment::MonolithicDeploymentDescription &mdd)
