@@ -11,7 +11,7 @@
 //
 // = AUTHOR
 //    Douglas C.Schmidt <schmidt@cs.wustl.edu>
-//
+//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
 // ============================================================================
 
 #ifndef _URL_VISITOR_H
@@ -226,6 +226,57 @@ protected:
   // Make the appropriate <URL_Visitation_Strategy_Factory>.
 };
 
+typedef int ATTRIBUTES;
+typedef ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH> 
+        Client_Svc_Handler;
+typedef ACE_Pair<Client_Svc_Handler *, ATTRIBUTES>
+        CACHED_HANDLER;
+typedef ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
+        ACE_ADDR;
+typedef ACE_Hash<ACE_ADDR> H_KEY;
+typedef ACE_Equal_To<ACE_ADDR> C_KEYS;
+
+typedef ACE_Hash_Map_Manager_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+        HASH_MAP;
+typedef ACE_Hash_Map_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+        HASH_MAP_ITERATOR;
+typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+        HASH_MAP_REVERSE_ITERATOR;
+
+typedef ACE_Recyclable_Handler_Cleanup_Strategy<ACE_ADDR, CACHED_HANDLER, HASH_MAP>
+        CLEANUP_STRATEGY;
+typedef ACE_Recyclable_Handler_Caching_Utility<ACE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>
+        CACHING_UTILITY;
+
+typedef ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
+        LRU_CACHING_STRATEGY;
+
+//#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+
+typedef LRU_CACHING_STRATEGY
+        CACHING_STRATEGY;
+
+//#else
+
+//typedef ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LRU_CACHING_STRATEGY>
+//      LRU_CACHING_STRATEGY_ADAPTER;
+//typedef ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
+//      CACHING_STRATEGY;
+
+//#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+
+
+typedef ACE_Strategy_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>
+        STRATEGY_CONNECTOR;
+
+typedef ACE_NOOP_Creation_Strategy<Client_Svc_Handler>
+        NULL_CREATION_STRATEGY;
+
+typedef ACE_NOOP_Concurrency_Strategy<Client_Svc_Handler>
+        NULL_ACTIVATION_STRATEGY;
+
+typedef ACE_Cached_Connect_Strategy_Ex<Client_Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>
+        CACHED_CONNECT_STRATEGY;
 
 class URL_Validation_Visitor : public URL_Visitor
 {
@@ -256,6 +307,10 @@ public:
   
   URL_CACHE &url_cache (void);
   // Returns a reference to the URL cache.
+
+
+  /*
+
 
   typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> 
           Svc_Handler;
@@ -297,7 +352,7 @@ public:
           LRU;
   typedef ACE_Cached_Connect_Strategy_Ex<Svc_Handler,ACE_SOCK_CONNECTOR, LRU,int, ACE_SYNCH_NULL_MUTEX>
           CACHED_CONNECT_STRATEGY;
-
+  */
 protected:
   virtual ~URL_Validation_Visitor (void);
   virtual URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &);
@@ -316,9 +371,11 @@ protected:
 
   // Configure the Strategy Connector with a strategy that caches
   // connection.
-  CACHED_CONNECT_STRATEGY caching_connect_strategy_;
+  CACHED_CONNECT_STRATEGY *caching_connect_strategy_;
 
-  STRAT_CONNECTOR *strat_connector_;  
+  STRATEGY_CONNECTOR *strat_connector_;  
+
+  CACHING_STRATEGY caching_strategy_;
 };
 
 

@@ -229,12 +229,206 @@ URL_Validation_Visitation_Strategy_Factory::destroy (void)
   return 0;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  // The explicit instantiations are necessary with g++ 2.91.66
+  // with -frepo, because it misses some of them.
+
+template class ACE_Equal_To<ACE_URL_Addr>;
+template class ACE_Hash<ACE_URL_Addr>;
+
+template class ACE_Hash_Map_Manager<ACE_URL_Addr, URL_Status, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_URL_Addr, URL_Status, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_URL_Addr, URL_Status, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_URL_Addr, URL_Status>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_URL_Addr, URL_Status, ACE_Hash<ACE_URL_Addr>, ACE_Equal_To<ACE_URL_Addr>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_URL_Addr, URL_Status, ACE_Hash<ACE_URL_Addr>, ACE_Equal_To<ACE_URL_Addr>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_URL_Addr, URL_Status, ACE_Hash<ACE_URL_Addr>, ACE_Equal_To<ACE_URL_Addr>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_URL_Addr, URL_Status, ACE_Hash<ACE_URL_Addr>, ACE_Equal_To<ACE_URL_Addr>, ACE_Null_Mutex>;
+
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
+template class ACE_NOOP_Creation_Strategy<Client_Svc_Handler>;
+template class ACE_Concurrency_Strategy<Client_Svc_Handler>;
+template class ACE_Connect_Strategy<Client_Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Creation_Strategy<Client_Svc_Handler>;
+template class ACE_Hash_Map_Entry<ACE_ADDR, Client_Svc_Handler *>;
+template class ACE_Hash<ACE_ADDR>;
+template class ACE_Equal_To<ACE_ADDR>;
+template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *>;
+template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_NOOP_Concurrency_Strategy<Client_Svc_Handler>;
+template class ACE_Recycling_Strategy<Client_Svc_Handler>;
+template class ACE_Strategy_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Svc_Tuple<Client_Svc_Handler>;
+
+
+template class ACE_Pair<Client_Svc_Handler *, ATTRIBUTES>;
+template class ACE_Reference_Pair<ACE_ADDR, Client_Svc_Handler *>;
+template class ACE_Hash_Map_Entry<ACE_ADDR, CACHED_HANDLER>;
+
+template class ACE_Hash_Map_Manager<ACE_ADDR, Client_Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_ADDR, Client_Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_ADDR, Client_Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_ADDR, Client_Svc_Handler *, H_KEY,  C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
+
+template class ACE_Hash_Map_Manager<ACE_ADDR, CACHED_HANDLER, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_ADDR, CACHED_HANDLER, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_ADDR, CACHED_HANDLER, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Bucket_Iterator<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Bucket_Iterator<ACE_ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
+
+// = Caching_Strategy
+template class ACE_Hash_Cache_Map_Manager<ACE_ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, CACHING_STRATEGY, ATTRIBUTES>;
+
+template class ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
+
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+
+//template class ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
+// template class ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
+// template class ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
+// template class ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>;
+
+// template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LRU_CACHING_STRATEGY>;
+// template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LFU_CACHING_STRATEGY>;
+// template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, FIFO_CACHING_STRATEGY>;
+// template class ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, NULL_CACHING_STRATEGY>;
+
+template class ACE_Cache_Map_Manager<ACE_ADDR, Client_Svc_Handler *, HASH_MAP, HASH_MAP_ITERATOR, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
+template class ACE_Cache_Map_Iterator<ACE_ADDR, Client_Svc_Handler *, HASH_MAP_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
+template class ACE_Cache_Map_Reverse_Iterator<ACE_ADDR, Client_Svc_Handler *, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>;
+
+#else
+
+template class ACE_Cache_Map_Manager<ACE_ADDR, Client_Svc_Handler *, HASH_MAP, CACHING_STRATEGY, ATTRIBUTES>;
+
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+
+template class ACE_Cached_Connect_Strategy_Ex<Client_Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Cached_Connect_Strategy<Client_Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>;
+
+template class ACE_Cleanup_Strategy<ACE_ADDR, CACHED_HANDLER, HASH_MAP>;
+template class ACE_Recyclable_Handler_Cleanup_Strategy<ACE_ADDR, CACHED_HANDLER, HASH_MAP>;
+template class ACE_Recyclable_Handler_Caching_Utility<ACE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>;
+
+template class ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Equal_To<ACE_URL_Addr>
+#pragma instantiate ACE_Hash<ACE_URL_Addr>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_URL_Addr, URL_Status, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_URL_Addr, URL_Status, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_URL_Addr, URL_Status, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_URL_Addr, URL_Status>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_URL_Addr, URL_Status, ACE_Hash<ACE_URL_Addr>, ACE_Equal_To<ACE_URL_Addr>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_URL_Addr, URL_Status, ACE_Hash<ACE_URL_Addr>, ACE_Equal_To<ACE_URL_Addr>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_URL_Addr, URL_Status, ACE_Hash<ACE_URL_Addr>, ACE_Equal_To<ACE_URL_Addr>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_URL_Addr, URL_Status, ACE_Hash<ACE_URL_Addr>, ACE_Equal_To<ACE_URL_Addr>, ACE_Null_Mutex>
+
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
+#pragma instantiate ACE_NOOP_Creation_Strategy<Client_Svc_Handler>
+#pragma instantiate ACE_Concurrency_Strategy<Client_Svc_Handler>
+#pragma instantiate ACE_Connect_Strategy<Client_Svc_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Creation_Strategy<Client_Svc_Handler>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_ADDR, Client_Svc_Handler *>
+#pragma instantiate ACE_Hash<ACE_ADDR>
+#pragma instantiate ACE_Equal_To<ACE_ADDR>
+#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *>
+#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_NOOP_Concurrency_Strategy<Client_Svc_Handler>
+#pragma instantiate ACE_Recycling_Strategy<Client_Svc_Handler>
+#pragma instantiate ACE_Strategy_Connector<Client_Svc_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Svc_Tuple<Client_Svc_Handler>
+
+#pragma instantiate ACE_Pair<Client_Svc_Handler *, ATTRIBUTES>
+#pragma instantiate ACE_Reference_Pair<ACE_ADDR, Client_Svc_Handler *>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_ADDR, CACHED_HANDLER>
+
+#pragma instantiate ACE_Hash_Map_Manager<ACE_ADDR, Client_Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_ADDR, Client_Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_ADDR, Client_Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_ADDR, Client_Svc_Handler *, H_KEY,  C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
+
+#pragma instantiate ACE_Hash_Map_Manager<ACE_ADDR, CACHED_HANDLER, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_ADDR, CACHED_HANDLER, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_ADDR, CACHED_HANDLER, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Bucket_Iterator<ACE_ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Bucket_Iterator<ACE_ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
+
+// = Caching_Strategy
+#pragma instantiate ACE_Hash_Cache_Map_Manager<ACE_ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, CACHING_STRATEGY, ATTRIBUTES>
+
+#pragma instantiate ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
+
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+
+// #pragma instantiate ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
+// #pragma instantiate ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
+// #pragma instantiate ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
+// #pragma instantiate ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
+
+// #pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LRU_CACHING_STRATEGY>
+// #pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, LFU_CACHING_STRATEGY>
+// #pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, FIFO_CACHING_STRATEGY>
+// #pragma instantiate ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, NULL_CACHING_STRATEGY>
+
+#pragma instantiate ACE_Cache_Map_Manager<ACE_ADDR, Client_Svc_Handler *, HASH_MAP, HASH_MAP_ITERATOR, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
+#pragma instantiate ACE_Cache_Map_Iterator<ACE_ADDR, Client_Svc_Handler *, HASH_MAP_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
+#pragma instantiate ACE_Cache_Map_Reverse_Iterator<ACE_ADDR, Client_Svc_Handler *, HASH_MAP_REVERSE_ITERATOR, CACHING_STRATEGY, ATTRIBUTES>
+
+#else
+
+#pragma instantiate ACE_Cache_Map_Manager<ACE_ADDR, Client_Svc_Handler *, HASH_MAP, CACHING_STRATEGY, ATTRIBUTES>
+
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+
+#pragma instantiate ACE_Cached_Connect_Strategy_Ex<Client_Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Cached_Connect_Strategy<Client_Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>
+
+#pragma instantiate ACE_Cleanup_Strategy<ACE_ADDR, CACHED_HANDLER, HASH_MAP>
+#pragma instantiate ACE_Recyclable_Handler_Cleanup_Strategy<ACE_ADDR, CACHED_HANDLER, HASH_MAP>
+#pragma instantiate ACE_Recyclable_Handler_Caching_Utility<ACE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>
+
+#pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+
 URL_Validation_Visitor::URL_Validation_Visitor (void)
 {
+  ACE_NEW (this->caching_connect_strategy_, 
+           CACHED_CONNECT_STRATEGY (this->caching_strategy_));
   ACE_NEW (this->strat_connector_,
-           STRAT_CONNECTOR(0,
+           STRATEGY_CONNECTOR(0,
                            &creation_strategy_,
-                           &caching_connect_strategy_,
+                           caching_connect_strategy_,
                            &activation_strategy_));
   if (strat_connector_ == 0)
     ACE_ERROR ((LM_ERROR,
@@ -246,6 +440,7 @@ URL_Validation_Visitor::URL_Validation_Visitor (void)
 
 URL_Validation_Visitor::~URL_Validation_Visitor (void)
 {
+  delete this->caching_connect_strategy_;
   delete this->strat_connector_;
   this->strat_connector_ = 0;
 }
@@ -527,6 +722,9 @@ URL_Download_Visitor::visit (HTTP_URL &http_url)
   return 0;
 }
 
+/*
+
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>;
 template class ACE_Reference_Pair<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> * >;
@@ -658,3 +856,4 @@ template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<ACE_Svc_Handle
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> > *, ACE_SYNCH_RW_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
