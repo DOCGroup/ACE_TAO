@@ -250,7 +250,7 @@ be_visitor_typecode_defn::gen_nested_namespace_end (be_module *node)
       if (ACE_OS::strcmp (i.item ()->get_string (), "") != 0)
         {
           // Leave the outermost root scope.
-          *os << "TAO_NAMESPACE_END";
+          *os << be_nl << "TAO_NAMESPACE_END";
         }
     }
 
@@ -409,7 +409,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
       // Flat name generation.
       *os << node->flat_name ();
 
-      *os << be_uidt_nl << ")" << be_uidt_nl;
+      *os << be_uidt_nl << ")" << be_uidt;
 
       if (this->gen_nested_namespace_end (module) == -1)
         {
