@@ -39,7 +39,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 # Local modifications to variables imported by includes above.
-DCFLAGS = -g
 LDFLAGS += -L$(PBHOME)/lib
 CPPFLAGS += -I$(PBHOME)/include
 

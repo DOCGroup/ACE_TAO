@@ -46,7 +46,6 @@ include $(TAO_ROOT)/taoconfig.mk
 # Local modifications to variables imported by includes above.
 #LDFLAGS    += -L../../../proto/lib
 #CPPFLAGS   += -I../../../proto/include -DUSE_ACE_EVENT_HANDLING -DDEBUG
-DCFLAGS = -g
 OCFLAGS = 
 
 svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))

@@ -61,7 +61,6 @@ FILES   = $(IDL_FILES) \
 	  Offer_Exporter \
 	  Offer_Importer
 
-DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(STL_ROOT)/lib
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 

@@ -40,7 +40,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-DCFLAGS = -g
 
 .PRECIOUS: FileC.h FileC.i FileC.cpp FileS.h FileS.i FileS.cpp
 
