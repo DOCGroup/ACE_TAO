@@ -1,3 +1,9 @@
+Tue Mar  9 08:25:15 2004  Olli Savia  <ops@iki.fi>
+
+	* ace/config-lynxos.h
+          Readded ALIGNBYTES and ALIGN macros. LSOCK.cpp uses these
+	  which I missed due to macro expansion. 
+
 Mon Mar  8 18:03:41 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Timer_Queue_Adapters.i (activate): Remove erroneous
