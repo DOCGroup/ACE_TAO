@@ -248,7 +248,7 @@ Solution</A>
 
 <P>
 We use the Acceptor pattern&nbsp;[<A
- HREF="pluggable_protocols.html#Schmidt:97c">1</A>] to accept the connections. As
+ HREF="#Schmidt:97c">1</A>] to accept the connections. As
 with the Connector pattern, an Acceptor decouples the connection establishment
 from the processing performed on that connection. However, in the Acceptor pattern,
 the connection is accepted <I>passively</I>, rather than being initiated <I>actively</I>.
@@ -260,7 +260,7 @@ Applying the solution to TAO</A>
 </H3>
 
 <P>
-Figure&nbsp;<A HREF="pluggable_protocols.html#server">1</A> illustrates how TAO's pluggable protocols framework leverages
+Figure&nbsp;<A HREF="#server">1</A> illustrates how TAO's pluggable protocols framework leverages
 the design presented in Section&nbsp;<A HREF="#design:transparent"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
  SRC="cross_ref_motif.png"></A>. The concrete ACE
 <TT>Service Handler</TT> created by the ACE <TT>Acceptor</TT> is responsible
@@ -809,10 +809,10 @@ Solution</A>
 
 <P>
 We use the Connector pattern&nbsp;[<A
- HREF="pluggable_protocols.html#Schmidt:97c">1</A>] to actively establish a connection
+ HREF="#Schmidt:97c">1</A>] to actively establish a connection
 to a remote object. This pattern decouples the connection establishment from
 the processing performed after the connection is successful. As before, the
-<TT>Connector Registry</TT> shown in Figure&nbsp;<A HREF="pluggable_protocols.html#e2e">2</A> is used
+<TT>Connector Registry</TT> shown in Figure&nbsp;<A HREF="#e2e">2</A> is used
 
 <P></P>
 <DIV ALIGN="CENTER"><A NAME="e2e"></A><A NAME="184"></A>
@@ -856,7 +856,7 @@ for the ACE implementation of the Connector pattern. Thus, they are typically
 lightweight objects that simply delegate to a corresponding ACE component.
 
 <P>
-Figure&nbsp;<A HREF="pluggable_protocols.html#client">3</A> shows the base classes and their relations for IIOP.
+Figure&nbsp;<A HREF="#client">3</A> shows the base classes and their relations for IIOP.
 
 <P></P>
 <DIV ALIGN="CENTER"><A NAME="client"></A><A NAME="688"></A>
@@ -1607,7 +1607,7 @@ The <TT>Protocol_Factory</TT> Object</A>
 
 <P>
 TAO's uses the ACE's Service Configurator implementation&nbsp;[<A
- HREF="pluggable_protocols.html#Schmidt:94k">2</A>]
+ HREF="#Schmidt:94k">2</A>]
 to dynamically load pluggable protocol factories. A <TT>Protocol_Factory</TT>
 is responsible for creating the <TT>Acceptor</TT> and <TT>Connector</TT> for
 the given pluggable protocol. TAO iterates through the list of loaded <TT>Protocol
@@ -1968,7 +1968,7 @@ be possible to isolate them from the details of the ORB messaging implementation
 Care must be taken, however, because not all ORB Messaging protocols can be
 used with all transport protocols, <I>i.e.</I>, some mechanism is needed to
 ensure only semantically compatible protocols are configured&nbsp;[<A
- HREF="pluggable_protocols.html#Johnson:95a">3</A>].
+ HREF="#Johnson:95a">3</A>].
 
 <P></P>
 <DIV ALIGN="CENTER"><A NAME="iop_client"></A><A NAME="700"></A>
@@ -2000,7 +2000,7 @@ Solution</A>
 
 <P>
 Use the Layers architecture pattern&nbsp;[<A
- HREF="pluggable_protocols.html#Buschmann:95b">4</A>], which decomposes
+ HREF="#Buschmann:95b">4</A>], which decomposes
 the system into groups of components, each one at a different level of abstraction.<A NAME="tex2html5"
  HREF="#foot549"><SUP>1</SUP></A> For the client, the ORB uses a particular ORB messaging protocol to send a
 request. This ORB messaging protocol delegates part of the work to the transport
@@ -2047,15 +2047,15 @@ Applying the solution in TAO</A>
 </H3>
 
 <P>
-As shown in Figure&nbsp;<A HREF="pluggable_protocols.html#iop_client">4</A>, TAO implements the messaging protocol
+As shown in Figure&nbsp;<A HREF="#iop_client">4</A>, TAO implements the messaging protocol
 and the transport protocol in separate components. The client ORB uses the current
 profile to find the right transport and ORB messaging implementations. The creation
 and initialization of these classes is controlled by the <TT>Connector</TT>
-(described in Section&nbsp;<A HREF="pluggable_protocols.html#design:connect">2.2</A>), with each <TT>Connector</TT> instance
+(described in Section&nbsp;<A HREF="#design:connect">2.2</A>), with each <TT>Connector</TT> instance
 handling a particular ORB messaging/transport tuple.
 
 <P>
-Figure&nbsp;<A HREF="pluggable_protocols.html#iop_server">5</A> illustrates how the server's implementation uses the
+Figure&nbsp;<A HREF="#iop_server">5</A> illustrates how the server's implementation uses the
 same transport classes, but with a different relationship. In particular, the
 transport class calls back the messaging class when data is received from the
 IPC mechanism. As with the client, a factory, in this case the <TT>Acceptor</TT>,
@@ -3014,7 +3014,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:othman@cs.wustl.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Thu Dec 16 19:05:58 CST 1999
+Last modified: Thu Dec 16 19:07:50 CST 1999
 <!-- hhmts end -->
 </BODY>
 </HTML>
