@@ -11,61 +11,30 @@
 #include "Baseline_Test.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Synch_Benchmarks, Benchmark_Baseline, "$Id$")
+ACE_RCSID(Synch_Benchmarks, Baseline_Test, "$Id$")
 
-Baseline_Options baseline_options;
+Baseline_Test_Options baseline_options;
 // Static Baseline Options holds the test configuration information
 // and the test statistics.
 
-Benchmark_Baseline_Test_Base::Benchmark_Baseline_Test_Base (void)
-  : Benchmark_Base (Benchmark_Base::BASELINE)
+Baseline_Test_Base::Baseline_Test_Base (void)
+  : multiply_factor_ (0),
+    iteration_ (0),
+    Benchmark_Base (Benchmark_Base::BASELINE)
 {
 }
 
 int
-Benchmark_Baseline_Test_Base::init (int argc, char *argv[])
+Baseline_Test_Base::init (int argc, char *argv[])
 {
-  return baseline_options.parse_test_args (argc, argv);
-}
-
-Baseline_Options::Baseline_Options (void)
-  : test_try_lock_ (0),
-    multiply_factor_ (10),
-    iteration_ (10000)
-{
+  return this->parse_args (argc, argv);
 }
 
 int
-Baseline_Options::parse_method_args (int argc, char *argv[])
+Baseline_Test_Base::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, "t");
-  char c;
-
-  while ((c = getopt ()) != -1)
-    switch (c)
-      {
-      case 't':
-        this->test_try_lock_ = 1;
-        break;
-
-      default:
-        ACE_ERROR ((LM_ERROR, "Invalid arguemnt %c used.\n", c));
-        break;
-      }
-  return 0;
-}
-
-int
-Baseline_Options::parse_test_args (int argc, char *argv[])
-{
-  this->total_iteration_ = 0;
-  this->real_ = 0;
-  this->system_ = 0;
-  this->user_ = 0;
-  // Start a new test, reset statistic info.
-
-  ACE_Get_Opt getopt (argc, argv, "m:i:");
-  char c;
+  ACE_Get_Opt getopt (argc, argv, "m:i:", 0);
+  int c;
 
   while ((c = getopt ()) != -1)
     switch (c)
@@ -101,7 +70,59 @@ Baseline_Options::parse_test_args (int argc, char *argv[])
   return 0;
 }
 
-Benchmark_Baseline::Benchmark_Baseline (void)
+Baseline_Test_Options::Baseline_Test_Options (void)
+  : test_try_lock_ (0),
+    verbose_ (0),
+    multiply_factor_ (10),
+    iteration_ (10000)
+{
+}
+
+int
+Baseline_Test_Options::parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt getopt (argc, argv, "tv", 0);
+  int c;
+
+  while ((c = getopt ()) != -1)
+    switch (c)
+      {
+      case 't':
+        this->test_try_lock_ = 1;
+        break;
+
+      case 'v':
+        this->verbose_ = 1;
+        break;
+
+      default:
+        ACE_ERROR ((LM_ERROR, "Invalid arguemnt %c used.\n", c));
+        break;
+      }
+  return 0;
+}
+
+int
+Baseline_Test_Options::reset_params (size_t multiply, size_t iteration)
+{
+  this->total_iteration_ = 0;
+  this->real_ = 0;
+  this->system_ = 0;
+  this->user_ = 0;
+  // Start a new test, reset statistic info.
+
+  this->multiply_factor_ = multiply;
+  this->iteration_ = iteration;
+  return 0;
+}
+
+void
+Baseline_Test_Options::print_result (void)
+{
+  ACE_DEBUG ((LM_DEBUG, "Baseline_Test_Options::print_result (void)\n"));
+}
+
+Baseline_Test::Baseline_Test (void)
   : current_test_ (0),
     get_lock_ (2),
     let_go_lock_ (2)
@@ -111,59 +132,69 @@ Benchmark_Baseline::Benchmark_Baseline (void)
 // Initialize and run the benchmarks tests.
 
 int
-Benchmark_Baseline::init (int argc, char **argv)
+Baseline_Test::init (int argc, char **argv)
 {
-  return baseline_options.parse_method_args (argc, argv);
+  return baseline_options.parse_args (argc, argv);
 }
 
 int
-Benchmark_Baseline::pre_run_test (Benchmark_Base *bb)
+Baseline_Test::pre_run_test (Benchmark_Base *bb)
 {
-  this->current_test_ = (Benchmark_Baseline_Test_Base *) bb;
+  this->current_test_ = (Baseline_Test_Base *) bb;
+  baseline_options.reset_params (this->current_test_->multiply_factor (),
+                                 this->current_test_->iteration ());
 
   if (baseline_options.test_try_lock ())
     {
       ACE_Thread_Manager::instance ()->spawn
-        (ACE_THR_FUNC (Benchmark_Baseline::hold_lock),
+        (ACE_THR_FUNC (Baseline_Test::hold_lock),
          (void *) this);
 
       this->get_lock_.wait ();
       // Wait until the lock is held by the spawning thread.
     }
+
+  ACE_DEBUG ((LM_DEBUG, "Pre_run_test\n"));
+
   return 0;
 }
 
 int
-Benchmark_Baseline::run_test (void)
+Baseline_Test::run_test (void)
 {
-  return -1;
+  ACE_DEBUG ((LM_DEBUG, "calling Baseline_Test::run_test\n"));
+  return 0;
 }
 
 int
-Benchmark_Baseline::post_run_test (void)
+Baseline_Test::post_run_test (void)
 {
   if (baseline_options.test_try_lock ())
-    // Release the lock we hold.
-    this->let_go_lock_.wait ();
+    {
+      // Release the lock we hold.
+      this->let_go_lock_.wait ();
 
-  ACE_Thread_Manager::instance ()->wait ();
+      ACE_Thread_Manager::instance ()->wait ();
+    }
+
+  baseline_options.print_result ();
 
   return 0;
 }
 
 int
-Benchmark_Baseline::valid_test_object (Benchmark_Base *bb)
+Baseline_Test::valid_test_object (Benchmark_Base *bb)
 {
   return (bb->benchmark_type () == Benchmark_Base::BASELINE);
 }
 
 void *
-Benchmark_Baseline::hold_lock (void *arg)
+Baseline_Test::hold_lock (void *arg)
 {
-  Benchmark_Baseline *this_test = (Benchmark_Baseline *) arg;
+  Baseline_Test *this_test = (Baseline_Test *) arg;
 
   ACE_UNUSED_ARG (this_test);
   return 0;
 }
 
-ACE_SVC_FACTORY_DEFINE (Benchmark_Baseline)
+ACE_SVC_FACTORY_DEFINE (Baseline_Test)

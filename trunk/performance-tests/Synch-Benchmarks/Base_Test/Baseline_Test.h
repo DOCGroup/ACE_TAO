@@ -8,13 +8,16 @@
 
 #include "Synch_Lib/Benchmark_Base.h"
 
-class ACE_Svc_Export Benchmark_Baseline_Test_Base : public Benchmark_Base
+class ACE_Svc_Export Baseline_Test_Base : public Benchmark_Base
 {
   // = TITLE
   //     This class identifies itself as Benmarking Performance Test class.
 public:
   virtual int init (int argc, char *argv[]);
   // Standard initializing method for Baseline Test.
+
+  int parse_args (int argc, char *argv[]);
+  // Parsing the svc.conf file arguments.
 
   virtual int acquire () = 0;
   virtual int release () = 0;
@@ -24,21 +27,35 @@ public:
   virtual int test_try_lock () = 0;
   // Real test methods.
 
+  size_t multiply_factor (void);
+  size_t iteration (void);
+  // Access methods.
+
 protected:
-  Benchmark_Baseline_Test_Base (void);
+  Baseline_Test_Base (void);
+
+  size_t multiply_factor_;
+  // Number of operations before yielding to other threads.
+
+  size_t iteration_;
+  // Total number of operations.  <iterations_> <= <multiply_factor_> * n
 };
 
-class ACE_Svc_Export Baseline_Options
+class ACE_Svc_Export Baseline_Test_Options
 {
+  // = TITLE
+  //    This class holds the global settings for Baseline Test.
 public:
-  Baseline_Options (void);
+  friend class Baseline_Test;
+
+  Baseline_Test_Options (void);
   // ctor.
 
-  int parse_method_args (int argc, char *argv[]);
-  // Parse and set the Benchmark_Baseline options and flags.
+  int parse_args (int argc, char *argv[]);
+  // Parse and set the Baseline_Test options and flags.
 
-  int parse_test_args (int argc, char *argv[]);
-  // Parse and set the
+  int reset_params (size_t mulply_factor, size_t iteration);
+  // Reset test parameters for next round.
 
   int test_try_lock (void);
   // Return test configuration.
@@ -55,13 +72,16 @@ public:
   size_t iteration (void);
   // Return <iteration_>.
 
-  size_t print_result (void);
+  void print_result (void);
   // Print out the result.
 
 private:
   int test_try_lock_;
   // A flag indicates whether we are testing try_lock or lock and
   // release.
+
+  int verbose_;
+  // Print out the result in verbose mode.
 
   size_t multiply_factor_;
   // Number loop before performing thread yield.
@@ -79,13 +99,13 @@ private:
   // Profile timer result.
 };
 
-extern Baseline_Options baseline_options;
+extern Baseline_Test_Options baseline_options;
 
-class ACE_Svc_Export Benchmark_Baseline : public Benchmark_Method_Base
+class ACE_Svc_Export Baseline_Test : public Benchmark_Method_Base
 {
 public:
-  Benchmark_Baseline (void);
-  int init (int argc, char **argv);
+  Baseline_Test (void);
+  virtual int init (int argc, char *argv[]);
   virtual int pre_run_test (Benchmark_Base *bp);
   virtual int run_test (void);
   virtual int post_run_test (void);
@@ -96,12 +116,12 @@ public:
   // we test the performance of try lock.
 
 private:
-  Benchmark_Baseline_Test_Base *current_test_;
+  Baseline_Test_Base *current_test_;
   ACE_Barrier get_lock_;
   ACE_Barrier let_go_lock_;
 };
 
-ACE_SVC_FACTORY_DECLARE (Benchmark_Baseline)
+ACE_SVC_FACTORY_DECLARE (Baseline_Test)
 
 #if defined (__ACE_INLINE__)
 #include "Baseline_Test.i"

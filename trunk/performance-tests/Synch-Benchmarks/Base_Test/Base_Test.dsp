@@ -94,6 +94,10 @@ LINK32=link.exe
 
 SOURCE=.\Baseline_Test.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\mutex_test.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
