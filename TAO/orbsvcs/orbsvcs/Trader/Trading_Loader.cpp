@@ -454,7 +454,15 @@ TAO_Trading_Loader::parse_args (int &argc, char *argv [])
 ACE_FACTORY_DEFINE (TAO_Trading, TAO_Trading_Loader)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
 template class ACE_Dynamic_Service<TAO_Trading_Loader>;
+template class auto_ptr<TAO_Trader_Factory::TAO_TRADER>;
+template class ACE_Auto_Basic_Ptr<TAO_Trader_Factory::TAO_TRADER>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
 #pragma instantiate ACE_Dynamic_Service<TAO_Trading_Loader>
+#pragma instantiate auto_ptr<TAO_Trader_Factory::TAO_TRADER>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Trader_Factory::TAO_TRADER>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,3 +1,31 @@
+Thu Nov  9 17:54:21 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+        * orbsvcs/tests/Event/Performance/Latency.cpp:
+        * orbsvcs/tests/Event/Performance/Latency_Server.cpp:
+        * tests/Exposed_Policies/client.cpp:
+        * tests/Exposed_Policies/server.cpp:
+        * tests/ORB_destroy/ORB_destroy.cpp:
+        * tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+        * tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+          Fixed warnings and errors in a variety of platforms and/or
+          configurations.  For example: unused variables (or variables not
+          used in release builds), files that could not compile in minimum
+          CORBA builds, and explicit template instantiations for inline=0
+          builds.
+
+        * utils/catior/Makefile:
+        * utils/catior/catior.cpp:
+          Updated to use the new TAO_Strategies library.
+
+        * tao/Makefile:
+          Add missing files to the TEMPLATE_FILES list.
+
+        * release.chk:
+          Removed obsolete file.
+
 Thu Nov  9 17:49:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/TAO_Static.dsp:
@@ -6,18 +34,18 @@ Thu Nov  9 17:49:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Nov  9 16:22:12 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/InterOp-Naming/Makefile: 
-	  Corrected a typo.
+        * tests/InterOp-Naming/Makefile:
+          Corrected a typo.
 
 Thu Nov  9 15:56:31 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Strategies/advanced_resource.i: 
-	  Added the missing $Id: string
-	
+        * tao/Strategies/advanced_resource.i:
+          Added the missing $Id: string
+
 Thu Nov  9 14:59:09 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Strategies/uiop_endpoints.i: 
-	  Corrected TAO_Export to TAO_Strategies_Export.
+        * tao/Strategies/uiop_endpoints.i:
+          Corrected TAO_Export to TAO_Strategies_Export.
 
 Thu Nov  9 14:07:40 2000  Darrell Brunsch <brunsch@uci.edu>
 

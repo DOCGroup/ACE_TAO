@@ -49,6 +49,7 @@ main (int argc, char *argv [])
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+#if (TAO_HAS_MESSAGING == 1)
       CORBA::Object_var manager_object =
         orb->resolve_initial_references ("ORBPolicyManager",
                                          ACE_TRY_ENV);
@@ -73,6 +74,11 @@ main (int argc, char *argv [])
                                             CORBA::SET_OVERRIDE,
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
+#else
+      ACE_DEBUG ((LM_DEBUG,
+                  "CORBA Messaging disabled in this condiguration,"
+                  " test may not be optimally configured\n"));
+#endif /* TAO_HAS_MESSAGING */
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");

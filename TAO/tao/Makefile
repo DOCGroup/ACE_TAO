@@ -224,7 +224,16 @@ ORB_CORE_FILES = \
 DYNAMIC_ANY_FILES =
 
 TEMPLATE_FILES = \
-  TAO_Singleton
+  Acceptor_Impl \
+  CONV_FRAMES_T \
+  GIOPS_T \
+  IOPS_T \
+  PollableS_T \
+  RTCORBAS_T \
+  Sequence_T \
+  TAOS_T \
+  TAO_Singleton \
+  TimeBaseS_T
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
