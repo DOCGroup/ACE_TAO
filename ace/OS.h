@@ -1401,7 +1401,12 @@ typedef const struct msghdr ACE_SENDMSG_TYPE;
 typedef unsigned int ACE_RANDR_TYPE;
 extern "C" int rand_r (ACE_RANDR_TYPE seed);
 #else
+# if defined (__hpux)
+// HP-UX's stdlib.h (long *) doesn't match that man page (unsigned int *)
+typedef long *ACE_RANDR_TYPE;
+# else
 typedef unsigned int *ACE_RANDR_TYPE;
+# endif /* __hpux */
 #endif /* ACE_HAS_BROKEN_RANDR */
 
 #if defined (ACE_HAS_UTIME)
