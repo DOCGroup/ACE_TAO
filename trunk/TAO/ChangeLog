@@ -1,3 +1,18 @@
+Fri Jun 11 23:46:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+       * utils/IOR-parser/IOR-parser.mpc:
+       * utils/IOR-parser/Orbix.IOR:
+       * utils/IOR-parser/README:
+       * utils/IOR-parser/Tao.IOR:
+       * utils/IOR-parser/TaoSimple.IOR:
+       * utils/IOR-parser/VisiBroker.IOR:
+       * utils/IOR-parser/ior-handler.cpp:
+       * utils/IOR-parser/ior-handler.h:
+       * utils/IOR-parser/ior-parser.cpp:
+
+	  Removed these files from the repo. The utility is outdated and
+	  is superceeded by catior utility.
+
 Fri Jun 11 21:47:12 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * interop-tests/wchar/interop_wchar.mpc:
