@@ -1,3 +1,12 @@
+Wed Aug 05 00:10:27 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.i (strnstr (both Unicode and Multibyte versions)): 
+	* ace/SString.cpp (strstr): 
+	  Fixed "off by one error" in searching algorithm.  Thanks to
+ 	  Byron Harris <harris_b@ociweb.com> for pointing this out.
+
+	* tests/SString_Test.cpp (main): Added new test cases.
+
 Tue Aug  4 21:56:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/TSS_Test.cpp:

@@ -1263,7 +1263,7 @@ ACE_INLINE const char *
 ACE_OS::strnstr (const char *s, const char *t, size_t len)
 {
   size_t t_len = ::strlen (t);
-  for (size_t i = 0; i < len - t_len; i++)
+  for (size_t i = 0; i <= len - t_len; i++)
     if (::memcmp (s + i, t, t_len) == 0)
       return s + i;
 
@@ -9115,7 +9115,7 @@ ACE_INLINE const wchar_t *
 ACE_OS::strnstr (const wchar_t *s, const wchar_t *t, size_t len)
 {
   size_t t_len = ACE_OS::strlen (t);
-  for (size_t i = 0; i < len - t_len; i++)
+  for (size_t i = 0; i <= len - t_len; i++)
     if (::memcmp (s + i, t, t_len * sizeof (wchar_t)) == 0)
       return s + i;
 

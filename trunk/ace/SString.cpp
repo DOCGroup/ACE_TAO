@@ -876,7 +876,7 @@ ACE_WString::strstr (const ACE_USHORT16 *s1, const ACE_USHORT16 *s2)
 
   size_t len = len1 - len2;
 
-  for (size_t i = 0; i < len; i++)
+  for (size_t i = 0; i <= len; i++)
     {
       size_t j;
 
