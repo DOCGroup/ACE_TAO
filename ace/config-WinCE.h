@@ -3,13 +3,39 @@
 #if ! defined (ACE_CONFIG_WINCE_H)
 #define ACE_CONFIG_WINCE_H
 
+// Only DLL version is supported on CE.
+#if defined (ACE_HAS_DLL)
+# undef ACE_HAS_DLL
+#endif /* ACE_HAS_DLL */
+#define ACE_HAS_DLL 1
+
+// CE is not NT.
+#if defined (ACE_HAS_WINNT4)
+# undef ACE_HAS_WINNT4
+#endif /* ACE_HAS_WINNT4 */
 #define ACE_HAS_WINNT4 0
+
+// You must use MFC with ACE on CE.
+#if defined (ACE_HAS_MFC)
+# undef ACE_HAS_MFC
+#endif /* ACE_HAS_MFC */
 #define ACE_HAS_MFC 1
+
+// So is UNICODE.
+#if defined (ACE_HAS_UNICODE)
+# undef ACE_HAS_UNICODE
+#endif /* ACE_HAS_UNICODE */
 #define ACE_HAS_UNICODE
+#define ACE_HAS_MOSTLY_UNICODE_APIS
+
 #define ACE_USES_WINCE_SEMA_SIMULATION
-// #define ACE_HAS_NON_STATIC_OBJECT_MANAGER
+
+#if defined (ACE_HAS_STRICT)
+# undef ACE_HAS_STRICT
+#endif /* ACE_HAS_STRICT */
 #define ACE_HAS_STRICT 1
 
+// SH3 cross-compiler can't handle inline functions correctly (along with other bugs.)
 #if defined (SH3) && defined (DEBUG)
 #define ACE_LACKS_INLINE_FUNCTIONS
 #endif /* SH3 && _DEBUG */
@@ -94,11 +120,11 @@
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_MKTEMP
 #define ACE_LACKS_STRRCHR
-#define ACE_HAS_MOSTLY_UNICODE_APIS
 
-// temporary workspace
+// @@ Followings are used to keep existing programs happy.
+
 #define  FILE  void             // Try to map FILE* to HANDLE
-#define ostream FILE                  // Fake a ostream for now.
+#define ostream FILE
 #if !defined (BUFSIZ)
 #  define BUFSIZ   1024
 #endif /* BUFSIZ */
