@@ -46,7 +46,7 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include <XMLSchema/Types.hpp>
+#include "XMLSchema/Types.hpp"
 
 namespace CIAO
 {
