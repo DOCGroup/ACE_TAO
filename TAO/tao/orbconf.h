@@ -169,23 +169,6 @@
 # define TAO_PURGE_PERCENT 20
 #endif /* TAO_PURGE_PERCENT */
 
-// MINIMUM_CONNECTION_CACHING_STRATEGY support is disabled by default if TAO is not
-// configured for minimum CORBA.  If TAO is configured for minimum
-// CORBA, then MINIMUM_CONNECTION_CACHING_STRATEGY will be enabled by default.
-// To explicitly enable MINIMUM_CONNECTION_CACHING_STRATEGY support uncomment the following
-// #define TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY 1
-// To explicitly disable MINIMUM_CONNECTION_CACHING_STRATEGY support uncomment the following
-// #define TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY 0
-
-// Default MINIMUM_CONNECTION_CACHING_STRATEGY settings
-#if !defined (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY)
-#  if (TAO_HAS_MINIMUM_CORBA == 1)
-#    define TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY 1
-#  else
-#    define TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY 0
-#  endif  /* TAO_HAS_MINIMUM_CORBA */
-#endif  /* !TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY */
-
 // This deals with platforms that support namespaces vs platforms that
 // don't.  @@ MSVC's namespace implementation is somehow broken.
 // The following macros are required to deal with the most bizarre and insane
@@ -813,6 +796,23 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #   define TAO_HAS_INTERCEPTORS 1
 # endif /* TAO_HAS_MINIMUM_CORBA */
 #endif
+
+// MINIMUM_CONNECTION_CACHING_STRATEGY support is disabled by default if TAO is not
+// configured for minimum CORBA.  If TAO is configured for minimum
+// CORBA, then MINIMUM_CONNECTION_CACHING_STRATEGY will be enabled by default.
+// To explicitly enable MINIMUM_CONNECTION_CACHING_STRATEGY support uncomment the following
+// #define TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY 1
+// To explicitly disable MINIMUM_CONNECTION_CACHING_STRATEGY support uncomment the following
+// #define TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY 0
+
+// Default MINIMUM_CONNECTION_CACHING_STRATEGY settings
+#if !defined (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY)
+#  if (TAO_HAS_MINIMUM_CORBA == 1)
+#    define TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY 1
+#  else
+#    define TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY 0
+#  endif  /* TAO_HAS_MINIMUM_CORBA */
+#endif  /* !TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY */
 
 // Define the policy types as literals, so they can be used in switch
 // statements
