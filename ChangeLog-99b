@@ -1,3 +1,10 @@
+Sat Jun 26 12:45:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Hash_Map_Manager_T.h: Fixed the programming style a bit.
+
+	* ace/Arg_Shifter.cpp (ACE_Arg_Shifter): Reformatted this
+	  stuff a bit.
+
 Sat Jun 26 08:40:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Proactor.cpp: fixed template instantiation pragmas
