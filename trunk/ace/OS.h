@@ -295,7 +295,9 @@ typedef struct timespec
 
 #if !defined (ACE_HAS_CLOCK_GETTIME) && !defined (_CLOCKID_T)
 typedef int clockid_t;
+#if !defined (CLOCK_REALTIME)
 #define	CLOCK_REALTIME 0
+#endif /* CLOCK_REALTIME */
 #endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T */
 
 // #if (!defined (timespec) && !defined (m88k))
@@ -1693,6 +1695,7 @@ extern "C" {
 }
 #if defined (VXWORKS)
 #include /**/ <sys/times.h>
+#include /**/ <netinet/tcp.h>
 #else
 #include /**/ <sys/uio.h>
 #include /**/ <sys/ipc.h>
