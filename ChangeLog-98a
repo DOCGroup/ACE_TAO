@@ -1,3 +1,8 @@
+Sun Jan 04 07:43:10 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-vxworks5.x-g++.h: removed
+          ACE_HAS_TEMPLATE_SPECIALIZATION.
+
 Sat Jan  3 22:25:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* apps/Gateway/Gateway: Changed the name of the ACE_Event_Channel
@@ -15,7 +20,7 @@ Sat Jan  3 22:25:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  that the Supplier_Handler and Consumer_Handler work atop
  	  *connections*.  The previous naming scheme was too abstract for
  	  its own good.
-	  
+
 Sat Jan 03 14:16:40 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/Map_Manager.cpp (ACE_Map[_Reverse]_Iterator): Fixed the
