@@ -1,3 +1,9 @@
+Tue May  6 17:02:54 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* ace/OS.{h,i}: Added strftime ().  Also, enhanced strcasecmp
+	  implementation to account for lexicographical ordering for
+	  mismatches.
+
 Tue May 06 14:36:03 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* netsvcs/lib/*.cpp: removed break statements after ACE_RETURNs to avoid unreachable
