@@ -30,6 +30,7 @@ template <class T> class ACE_Unbounded_Set_Ex_Iterator;
 template <class T> class ACE_Unbounded_Set_Ex_Const_Iterator;
 template <class T> class ACE_Unbounded_Queue;
 template <class T> class ACE_Unbounded_Queue_Iterator;
+template <class T> class ACE_Unbounded_Queue_Const_Iterator;
 template <class T> class ACE_Unbounded_Stack;
 template <class T> class ACE_Unbounded_Stack_Iterator;
 

@@ -87,6 +87,10 @@ endif
 VSHOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(LSRC))))
 VSHOBJS1 = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(LSRC))))
 
+ifneq ($(IDL_SRC),)
+  $(VLOBJS) $(VSHOBJS) $(VSHOBJS1): $(IDL_SRC)
+endif
+
 ifdef static_libs
   LIB_INSTALL += $(VLIB:%=$(INSLIB)/%)
   CLEANUP_INSTALL += $(CLEANUP_VLIB:%=$(INSLIB)/%)
