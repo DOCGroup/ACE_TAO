@@ -389,7 +389,7 @@ private:
 class CORBA_ExceptionList;
 typedef CORBA_ExceptionList *CORBA_ExceptionList_ptr;
 
-class CORBA_ExceptionList
+class TAO_Export CORBA_ExceptionList
 {
   // = TITLE
   //   ExceptionList definition taken from CORBA v2.2 Feb 1998
