@@ -28,6 +28,7 @@ public RTScheduling::Current,
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void rt_current (RTCORBA::Current_ptr rt_current);
   
   virtual void begin_scheduling_segment
     (const char * name,

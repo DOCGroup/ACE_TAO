@@ -49,6 +49,7 @@ TAO_RTScheduler_Initializer::pre_init (
                                     current
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
 }
 
 void
@@ -57,6 +58,34 @@ TAO_RTScheduler_Initializer::post_init (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
+  CORBA::Object_ptr rt_current_obj = info->resolve_initial_reference ("RT_Current"
+								      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  
+  RTCORBA::Current_var rt_current = RTCORBA::Current::_narrow (rt_current_obj.in ()
+							       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  if (CORBA::is_nil (rt_current.in ()))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "(%P|%t) TAO_RTScheduler_Initializer::post_init \n"
+		  "(%P|%t) Unable to narrow to RTCORBA::Current\n"));
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+  
+  CORBA::Object_ptr rtscheduler_current_obj = info->resolve_initial_reference ("RTScheduler_Current");
+  TAO_RTScheduler_Current_var rtscheduler_current = TAO_RTScheduler_Current::_narrow (rtscheduler_current_obj);
+  
+  if (CORBA::is_nil (rtscheduler_current.in ()))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "(%P|%t) TAO_RTScheduler_Initializer::post_init \n"
+		  "(%P|%t) Unable to narrow to TAO_RTScheduler::Current\n"));
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+  
+  rtscheduler_current->rt_current (rt_current.in ());
 }
 
