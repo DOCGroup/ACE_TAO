@@ -1,3 +1,16 @@
+Sun Jun  8 11:12:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbwsvcs/orbsvcs/IFRService/EventPortDef_i.cpp:
+        * orbwsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp:
+        * orbwsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
+        * orbwsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
+        * orbwsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+        * orbwsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+        * orbwsvcs/orbsvcs/IFRService/OperationDef_i.h:
+        * orbwsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+
+	  Errors caught from the checkin below by gcc 3.2.
+
 Sun Jun  8 10:10:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.cpp (get_protocols_hooks): Fixed a small problem in

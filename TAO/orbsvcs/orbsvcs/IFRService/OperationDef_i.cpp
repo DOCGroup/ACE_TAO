@@ -629,14 +629,14 @@ TAO_OperationDef_i::exceptions_i (const CORBA::ExceptionDefSeq &exceptions
 void
 TAO_OperationDef_i::make_description (
     CORBA::OperationDescription &od
-    ACE_ENV_SINGLE_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   od.name = this->name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (od);
+  ACE_CHECK;
 
   od.id = this->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (od);
+  ACE_CHECK;
 
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -646,23 +646,23 @@ TAO_OperationDef_i::make_description (
   od.defined_in = container_id.c_str ();
 
   od.version = this->version_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (od);
+  ACE_CHECK;
 
   od.result = this->result_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (od);
+  ACE_CHECK;
 
   od.mode = this->mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (od);
+  ACE_CHECK;
 
   CORBA::ContextIdSeq_var cid_seq = 
     this->contexts_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (od);
+  ACE_CHECK;
 
   od.contexts = cid_seq.in ();
 
   CORBA::ParDescriptionSeq_var pd_seq = 
     this->params_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (od);
+  ACE_CHECK;
 
   od.parameters = pd_seq.in ();
 
@@ -746,7 +746,7 @@ TAO_OperationDef_i::make_description (
           impl.section_key (type_key);
 
           od.exceptions[i].type = impl.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (od);
+          ACE_CHECK;
         }
     }
   else
@@ -756,7 +756,7 @@ TAO_OperationDef_i::make_description (
 }
 
 CORBA::TypeCode_ptr 
-TAO_OperationDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+TAO_OperationDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->result_i (ACE_ENV_SINGLE_ARG_PARAMETER);

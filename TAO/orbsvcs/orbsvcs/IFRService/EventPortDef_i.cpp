@@ -100,7 +100,7 @@ TAO_EventPortDef_i::is_a (
 CORBA::Boolean 
 TAO_EventPortDef_i::is_a_i (
     const char *event_id
-    ACE_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

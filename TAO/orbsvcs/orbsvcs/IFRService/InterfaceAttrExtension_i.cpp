@@ -43,7 +43,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface (
 
 CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
 TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -128,7 +128,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
       op.section_key (key);
 
       op.make_description (fifd->operations[i]
-                           ACE_ENV_SINGLE_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
