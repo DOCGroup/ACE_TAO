@@ -1,3 +1,9 @@
+Fri Aug 28 13:14:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Service_Configurator/Misc/main.cpp: Made the file CE
+ 	  friendly.  Added "-y" to service configurator so we can still
+ 	  test static services.
+
 Fri Aug 28 13:45:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU: added HOST_OS
