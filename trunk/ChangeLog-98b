@@ -1,3 +1,13 @@
+Tue Oct 27 02:04:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (cond_timedwait): When emulating cv, there're chances
+	  that the "wait for being signaled" function times out and return
+	  an error.  In this rare case, we must also signal the
+	  broadcasting thread to bail out of cond_broadcast to avoid
+	  deadlock since we are no longer waiting on the cv anymore.
+	  Thanks to Detlef Becker <Detlef.Becker@med.siemens.de> for
+	  noticing the problem and providing the patch.
+
 Mon Oct 26 20:59:15 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Synch_T.{i,cpp} (ACE_Lock_Adapter): unlined the
