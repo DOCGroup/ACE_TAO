@@ -102,8 +102,22 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
 
   *os << "ACE_INLINE" << be_nl
       << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
-      << "TAO_InputCDR &strm," << be_nl
-      << node->name () << " &_tao_aggregate" << be_uidt_nl
+      << "TAO_InputCDR &";
+
+  if (! node->is_local ())
+    {
+      *os << "strm";
+    }
+
+  *os << "," << be_nl 
+      << node->name () << " &";
+      
+  if (! node->is_local ())
+    {
+      *os << "_tao_aggregate";
+    }
+    
+  *os << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
