@@ -1,0 +1,26 @@
+//
+// $Id$
+//
+
+module Test
+{
+  typedef sequence<octet> Payload;
+
+  /// An interface to test the SYNC_NONE semantics
+  interface Blocking_Sync_None
+  {
+    /// Receives a potentially big payload, and then
+    /// blocks for a user specified time.
+    /**
+     * If SYNC_NONE is implemented correctly multiple calls to this
+     * method should not block.  However, if the semantics are wrong
+     * the method will block for as long as the previous request sleep
+     * time is.
+     */
+    oneway void slow_operation (in Payload the_payload,
+                                in unsigned long sleep_microseconds);
+
+    /// Shutdown the server
+    void shutdown ();
+  };
+};

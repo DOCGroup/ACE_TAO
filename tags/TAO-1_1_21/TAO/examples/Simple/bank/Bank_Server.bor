@@ -1,0 +1,31 @@
+
+#
+# Makefile for building the Bank example
+#
+
+NAME = server
+
+OBJFILES = \
+	$(OBJDIR)\BankC.obj \
+	$(OBJDIR)\BankS.obj \
+	$(OBJDIR)\Account_i.obj \
+	$(OBJDIR)\AccountManager_i.obj \
+	$(OBJDIR)\Simple_util.obj \
+	$(OBJDIR)\server.obj
+
+IDLFILES = \
+        $(IDLDIR)\Bank.idl
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\BankC.cpp $(IDLDIR)\BankS.cpp: $(IDLDIR)\Bank.idl
+	$(TAO_IDL) $**
+
