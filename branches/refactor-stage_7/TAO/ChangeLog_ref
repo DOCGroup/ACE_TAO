@@ -4,7 +4,7 @@ Thu Sep 11 15:25:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Abstract_Servant_Base.h:
 	* tao/PortableServer/POA.cpp:
 	* tao/PortableServer/Servant_Base.cpp:
-	* tao/PortableServer/Servant_Base.h: Fixed some siple compiler
+	* tao/PortableServer/Servant_Base.h: Fixed some simple compiler
 	  errors from g++.
 
 Thu Sep 11 13:43:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
