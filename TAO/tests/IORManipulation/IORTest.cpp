@@ -14,6 +14,7 @@
 
 #include "tao/corbafwd.h"
 #include "tao/ORB.h"
+#include "tao/Environment.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 
 
