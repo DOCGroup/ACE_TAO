@@ -8,8 +8,6 @@ MAKEFILE = Makefile
 LIBNAME  = libavdemo
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-BIN = main
-
 IDL_SRCS= Video_Repository
 
 IDL_FILES = \
@@ -37,13 +35,23 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 CPPFLAGS +=  -I$(JAVA_ROOT)/include-old -I$(JAVA_ROOT)/include-old/solaris \
 	    -I$(TAO_ROOT)/orbsvcs -I$(MPEG_ROOT) -I$(TAO_ROOT) $(TSS_ORB_FLAG) -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
-BUILD	= TAO_VR.module $(VSHLIB) $(VLIB) $(VBIN) 
-
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
+  BUILD := TAO_VR.module $(BUILD)
+  BIN = main
+else  # ! AV
+  BUILD =
+  override INSTALL =
+endif # ! AV
+
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU

@@ -4,10 +4,9 @@
 #
 #----------------------------------------------------------------------------
 
-MAKEFILE = Makefile
-BIN = vcr
-
-BUILD = $(BIN)
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
@@ -16,14 +15,9 @@ FILES= vcr
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
-
 LIBS 	+= -lTAO -lACE -lorbsvcs
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
 CPPFLAGS += -I$(MPEG_ROOT)
-
-ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
-endif
 
 
 #----------------------------------------------------------------------------
@@ -31,6 +25,14 @@ endif
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
+  BIN = vcr
+endif # AV
+
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU

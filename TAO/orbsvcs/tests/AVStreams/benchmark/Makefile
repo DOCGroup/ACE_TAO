@@ -15,8 +15,6 @@ SERVER_OBJS = server.o child.o
 CLIENT_OBJS = client.o
 CHILD_OBJS = child.o
 
-BIN = server client #child
-BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 ifndef TAO_ROOT
@@ -33,6 +31,14 @@ LSRC	= $(addsuffix .cpp,$(FILES))
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
+  BIN = server client #child
+endif # AV
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
