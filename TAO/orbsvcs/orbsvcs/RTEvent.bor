@@ -43,6 +43,7 @@ OBJFILES = \
 	$(OBJDIR)\EC_Filter_Builder.obj \
 	$(OBJDIR)\EC_Group_Scheduling.obj \
 	$(OBJDIR)\EC_Gateway.obj \
+   $(OBJDIR)\EC_Gateway_IIOP.obj \
    $(OBJDIR)\ECG_UDP_Out_Endpoint.obj \
 	$(OBJDIR)\ECG_Mcast_EH.obj \
 	$(OBJDIR)\ECG_UDP_Sender.obj \
