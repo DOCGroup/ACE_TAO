@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+./latency.pl -k LOCAL -r 100 EC1.log EC2.log >local.log
+tail +3 local.log | sort -n > local.data
+./latency.pl -k REMOTE -r 1000 EC1.log EC2.log >remote.log
+tail +3 remote.log | sort -n > remote.data
+
+gnuplot <<_EOF_
+set grid xtics ytics
+set terminal pbm color
+set output "local.pbm"
+plot 'local.data' w i
+set terminal x11
+plot 'local.data' w i
+pause 5
+
+set terminal pbm color
+set output "remote.pbm"
+plot 'remote.data' w i
+set terminal x11
+plot 'remote.data' w i
+pause 5
+
+_EOF_
+

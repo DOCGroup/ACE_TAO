@@ -48,9 +48,10 @@ public:
   // Setup the variables needed for a config run, using the
   // NamingContext to locate a Scheduler.
 
-  static int use_config (CORBA::ORB_ptr orb);
-  // Setup the variable needed for a config run, using an environment
-  // variable to locate a Scheduler.
+  static int use_config (CosNaming::NamingContext_ptr naming,
+			 const char* name);
+  // Setup the variables needed for a config run, using the
+  // NamingContext to locate a Scheduler.
 
   static int use_runtime (int entry_count,
                           POD_RT_Info rt_info[]);
