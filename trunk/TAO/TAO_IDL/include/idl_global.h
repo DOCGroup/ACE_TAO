@@ -195,6 +195,7 @@ public:
     , PS_DeclsCommaSeen		// Seen ',' in declarators list
     , PS_DeclsDeclSeen		// Seen complete decl in decls list
     , PS_NativeSeen             // Seen a native declaration
+    , PS_PragmaPrefixSyntax     // Could not parse the #pragma prefix
   };
 
   // Constructor

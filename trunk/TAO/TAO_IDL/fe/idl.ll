@@ -338,27 +338,32 @@ idl_parse_line_and_file(char *buf)
 static void
 idl_store_pragma(char *buf)
 {
-  char *cp = buf + 1;
-  while(*cp != 'p')
-    cp++;
-  while(*cp != ' ' && *cp != '\t')
-    cp++;
-  while(*cp == ' ' || *cp == '\t')
-    cp++;
-  char pragma[80];
-  char *pp = pragma;
-  while(*cp != '\n') {
-    *pp++ = *cp++;
-  }
-  *pp = 0;
-  if (strcmp(pragma, "import") == 0) {
+  char *sp = buf + 1;
+  // Remove all the blanks between the '#' and the 'pragma'
+  if (*sp != 'p')
+    {
+      while (*sp != 'p')
+        ++sp;
+      char *tp = buf + 1;
+      while (*sp != '\n')
+        {
+          *tp = *sp;
+	  ++tp; ++sp;
+        }
+    }
+  
+  if (ACE_OS::strstr(buf + 8, "import") != 0) {
     idl_global->set_import(I_TRUE);
     return;
   }
-  if (strcmp(pragma, "include") == 0) {
+  if (ACE_OS::strstr(buf + 8, "include") != 0) {
     idl_global->set_import(I_FALSE);
     return;
   }
+  // Remove the final '\n'
+  while (*sp != '\n')
+    ++sp;
+  *sp = '\0';
   UTL_StrList *p = idl_global->pragmas();
   if (p == NULL)
     idl_global->set_pragmas(new UTL_StrList(new String(buf), NULL));

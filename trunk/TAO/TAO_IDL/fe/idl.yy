@@ -326,6 +326,12 @@ module	: IDL_MODULE
 	    /*
 	     * Finished with this module - pop it from the scope stack
 	     */
+	    UTL_Scope* s = idl_global->scopes()->top();
+	    AST_Module* m = AST_Module::narrow_from_scope (s);
+	    UTL_StrList *p = m->pragmas ();
+	    if (p != 0)
+		p = (UTL_StrList*)p->copy ();
+	    idl_global->set_pragmas (p);
 	    idl_global->scopes()->pop();
 	  }
 	  ;
@@ -434,6 +440,12 @@ interface :
 	  /*
 	   * Done with this interface - pop it off the scopes stack
 	   */
+	  UTL_Scope* s = idl_global->scopes()->top();
+	  AST_Interface* m = AST_Interface::narrow_from_scope (s);
+	  UTL_StrList *p = m->pragmas ();
+	  if (p != 0)
+		p = (UTL_StrList*)p->copy ();
+	  idl_global->set_pragmas (p);
 	  idl_global->scopes()->pop();
 	}
 	;
@@ -1185,14 +1197,14 @@ struct_type :
 	  /*
 	   * Done with this struct. Pop its scope off the scopes stack
 	   */
-	  if (idl_global->scopes()->top() == NULL)
-	    $$ = NULL;
-	  else {
-	    $$ =
+          $$ =
 	      AST_Structure::narrow_from_scope(
 				   idl_global->scopes()->top_non_null());
-	    idl_global->scopes()->pop();
-	  }
+	   UTL_StrList *p = $$->pragmas ();
+	   if (p != 0)
+	     p = (UTL_StrList*)p->copy ();
+	  idl_global->set_pragmas (p);
+          idl_global->scopes()->pop();
 	}
 	;
 
@@ -1320,14 +1332,14 @@ union_type :
 	  /*
 	   * Done with this union. Pop its scope from the scopes stack
 	   */
-	  if (idl_global->scopes()->top() == NULL)
-	    $$ = NULL;
-	  else {
-	    $$ =
-	      AST_Union::narrow_from_scope(
+	  $$ =
+	     AST_Union::narrow_from_scope(
 				idl_global->scopes()->top_non_null());
-	    idl_global->scopes()->pop();
-	  }
+	  UTL_StrList *p = $$->pragmas ();
+	  if (p != 0)
+	     p = (UTL_StrList*)p->copy ();
+	  idl_global->set_pragmas (p);
+	  idl_global->scopes()->pop();
 	}
 	;
 

@@ -28,6 +28,8 @@
 
 #include "CosNaming.idl"
 
+#pragma prefix "omg.org"
+
 module CosLifeCycle
 {
   // = TITLE

@@ -5,6 +5,8 @@
 #ifndef COS_TIME_BASE_IDL
 #define COS_TIME_BASE_IDL
 
+#pragma prefix "omg.org"
+
 module TimeBase {
   // = TITLE
   //   COS Time Service basic types.

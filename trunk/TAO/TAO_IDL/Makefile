@@ -204,6 +204,29 @@ lex.yy.cpp.target:
 		    -e "s@ECHO@TAO_YY_ECHO@" \
 		    -e 's/\$$Hea''der.*\$$/$$I''d$$/' > fe/lex.yy.cpp
 
+fe/y.tab.cpp:	fe/idl.yy
+	@echo "WARNING: Potentially outdated fe/y.tab.cpp"
+	@echo "         either touch(1) the file or explicitly"
+	@echo "         generate it using:"
+	@echo "    make y.tab"
+
+.PHONY: y.tab
+
+y.tab: fe/idl.yy
+		$(YACC) -d fe/idl.yy
+		sed -e "s/char \*getenv/char *ace_foo/g" \
+		    -e "s/= getenv/= ACE_OS::getenv/g" \
+		    -e "s/yynewerror://g" \
+		    -e "s/yy/tao_yy/g" \
+		    -e "s/YY/TAO_YY/g" \
+		    -e "s/y\.tab\.c/y.tab.cpp/g" < y.tab.c > /tmp/$(USER).Y
+		sed -e "s/yy/tao_yy/g" \
+		    -e "s/YY/TAO_YY/g" < y.tab.h > /tmp/$(USER).YH
+		cp /tmp/$(USER).Y fe/y.tab.cpp
+		cp /tmp/$(USER).YH fe/y.tab.h
+		$(RM) -f /tmp/$(USER).Y /tmp/$(USER).YH y.tab.c y.tab.h
+
+
 tags:
 	rm -f TAGS
 	etags -C tao_idl.cpp include/*.h be_include/*.h be_include/be_visitor_*/*.h \
