@@ -1,3 +1,15 @@
+Mon Jan 17 23:08:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Clarify that we're checking whether the second argument to
+	  gettimeofday() is a _struct_ timezone *.
+
+	* m4/platform.m4:
+
+	  Fixed ACE_VAR_TIMEZONE macro to avoid false positive on systems
+	  with the timezone() function.
+
 Sun Jan 16 23:26:58 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/config_h.m4:

@@ -5789,7 +5789,7 @@ if test "$ace_cv_lib_voidptr_gettimeofday" = no; then
 ACE_CONVERT_WARNINGS_TO_ERRORS(
 [
 dnl Check for old OSF1 style gettimeofday()
-  AC_CACHE_CHECK([if gettimeofday() takes a timezone * second argument],
+  AC_CACHE_CHECK([if gettimeofday() takes a struct timezone * second argument],
     [ace_cv_lib_timezone_gettimeofday],
     [
      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
