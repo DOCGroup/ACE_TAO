@@ -20,7 +20,7 @@
 # include "SHMIOP_Connection_Handler.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(Strategies, SHMIOP_Connect, "$Id$")
+ACE_RCSID(Strategies, SHMIOP_Connection_Handler, "$Id$")
 
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SHMIOP_SVC_HANDLER (t, 0 , 0),
@@ -221,14 +221,9 @@ TAO_SHMIOP_Connection_Handler::fetch_handle (void)
 }
 
 int
-TAO_SHMIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                             const void *)
+TAO_SHMIOP_Connection_Handler::handle_output (ACE_HANDLE)
 {
-  // Cannot deal with errors, and therefore they are ignored.
-  if (this->transport ()->handle_output () == -1)
-    return -1;
-
-  return 0;
+  return this->transport ()->handle_output ();
 }
 
 int

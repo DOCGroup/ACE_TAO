@@ -1,3 +1,37 @@
+Tue Apr 24 12:48:19 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+	  Fixed dead-lock in the timeout management.
+
+	* docs/Options.html:
+	  Documented new option to control the flushing strategy (blocking
+	  vs. reactive)
+
+	* tao/Asynch_Queued_Message.cpp:
+	  Fixed warnings about unused variable.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.h:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.h:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+	  Removed unused handle_timeout() methods.  The code has been
+	  factored out into the TAO_Transport_Timer class.
+
+	* tao/Transport_Timer.h:
+	* tao/Asynch_Timeout_Handler.h:
+	* tao/Synch_Queued_Message.cpp:
+	  Cosmetic fixes
+
+        * examples/Buffered_Oneways/test.idl:
+	  Made shutdown operation a twoway.
+
 Tue Apr 24 11:59:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/LongWrites/Sender.h:

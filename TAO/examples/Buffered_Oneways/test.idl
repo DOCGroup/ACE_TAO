@@ -6,5 +6,5 @@ interface test
 {
   oneway void method (in unsigned long request_number);
 
-  oneway void shutdown ();
+  void shutdown ();
 };

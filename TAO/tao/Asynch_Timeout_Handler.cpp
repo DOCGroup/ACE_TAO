@@ -45,7 +45,7 @@ TAO_Asynch_Timeout_Handler::schedule_timer (TAO_Transport_Mux_Strategy *tms,
                                          max_wait_time);
 }
 
-int 
+int
 TAO_Asynch_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
                                             const void *)
 {

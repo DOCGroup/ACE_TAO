@@ -144,20 +144,6 @@ TAO_Transport::handle_output ()
 
       flushing_strategy->cancel_output (this);
 
-      if (this->flush_timer_id_ != -1)
-        {
-          ACE_Event_Handler *eh = this->event_handler_i ();
-          if (eh != 0)
-            {
-              ACE_Reactor *reactor = eh->reactor ();
-              if (reactor != 0)
-                {
-                  (void) reactor->cancel_timer (this->flush_timer_id_);
-                }
-            }
-          this->current_deadline_ = ACE_Time_Value::zero;
-          this->flush_timer_id_ = -1;
-        }
       return 0;
     }
 
@@ -747,24 +733,6 @@ TAO_Transport::generate_request_header (
   return 0;
 }
 
-
-long
-TAO_Transport::register_for_timer_event (const void* arg,
-                                         const ACE_Time_Value &delay,
-                                         const ACE_Time_Value &interval)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->handler_lock_,
-                            -1));
-
-  ACE_Event_Handler *eh = this->event_handler_i ();
-  if (eh == 0)
-    return -1;
-
-  return this->orb_core_->reactor ()->schedule_timer (eh, arg, delay, interval);
-}
-
 int
 TAO_Transport::queue_is_empty (void)
 {
@@ -846,6 +814,13 @@ int
 TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
                                const void *act)
 {
+  if (TAO_debug_level > 6)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - TAO_Transport::handle_timeout, "
+                  "timer expired\n"));
+    }
+
   /// This is the only legal ACT in the current configuration....
   if (act != &this->current_deadline_)
     return -1;
@@ -935,9 +910,6 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
 int
 TAO_Transport::drain_queue_i (void)
 {
-  if (this->head_ == 0)
-    return 1;
-
   // This is the vector used to send data, it must be declared outside
   // the loop because after the loop there may still be data to be
   // sent
@@ -995,7 +967,22 @@ TAO_Transport::drain_queue_i (void)
     }
 
   if (this->head_ == 0)
-    return 1;
+    {
+      if (this->flush_timer_pending ())
+        {
+          ACE_Event_Handler *eh = this->event_handler_i ();
+          if (eh != 0)
+            {
+              ACE_Reactor *reactor = eh->reactor ();
+              if (reactor != 0)
+                {
+                  (void) reactor->cancel_timer (this->flush_timer_id_);
+                }
+            }
+          this->reset_flush_timer ();
+        }
+      return 1;
+    }
 
   return 0;
 }
@@ -1064,11 +1051,6 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
   // ... set the new timer, also cancel any previous timers ...
   if (set_timer)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                                guard,
-                                *this->handler_lock_,
-                                -1));
-
       ACE_Event_Handler *eh = this->event_handler_i ();
       if (eh != 0)
         {

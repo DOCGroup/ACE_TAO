@@ -68,7 +68,7 @@ TAO_Synch_Queued_Message::bytes_transferred (size_t &byte_count)
   while (this->current_block_ != 0 && byte_count > 0)
     {
       size_t l = this->current_block_->length ();
-          
+
       if (byte_count < l)
         {
           this->current_block_->rd_ptr (byte_count);
