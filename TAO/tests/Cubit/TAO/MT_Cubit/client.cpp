@@ -41,12 +41,17 @@ initialize (void)
 int
 do_priority_inversion_test (Task_State &ts)
 {
-  u_int i;
+  u_int i, j;
 
   // stores the total number of context switches incurred by the
   // program while making CORBA requests
   u_int context_switch = 0;
-
+  double util_task_duration = 0.0;
+  double total_latency = 0.0;
+  double total_latency_low = 0.0;
+  double total_latency_high = 0.0;
+  double total_util_task_duration = 0.0;
+  
   // Create the clients.
   Client high_priority_client (&ts);
   Client low_priority_client (&ts);
@@ -55,6 +60,24 @@ do_priority_inversion_test (Task_State &ts)
   ACE_Thread_Manager thr_mgr;
 
   Util_Thread util_thread (&ts, &thr_mgr);
+
+  ACE_High_Res_Timer timer_;
+  // Elapsed time will be in microseconds.
+  ACE_Time_Value delta_t;
+  // Store the time in secs.
+  timer_.start ();
+
+  ACE::is_prime (CUBIT_ARBIT_NUMBER,
+		 2,
+		 CUBIT_ARBIT_NUMBER / 2);
+
+  timer_.stop (); 
+  timer_.elapsed_time (delta_t);
+  
+  util_task_duration = delta_t.sec () + (double)delta_t.usec () / ACE_ONE_SECOND_IN_USECS;
+  
+  printf ("Utilization Computation time is %f secs\n", util_task_duration);
+
 
   // The minimum priority thread is the utilization thread.
   ACE_Sched_Priority priority =
@@ -211,6 +234,27 @@ do_priority_inversion_test (Task_State &ts)
 
   // This will wait for the utilization thread to finish.
   thr_mgr.wait ();
+
+  // This loop visits each client.  start_count_ is the number of clients.
+  for (j = 1; j < ts.start_count_; j ++)
+      for (i = 0; i < ts.loop_count_; i ++)
+	  total_latency_low += ts.global_jitter_array_[j][i];
+
+  for (i = 0; i < ts.loop_count_; i ++)
+    total_latency_high += ts.global_jitter_array_[0][i];
+
+  total_latency = total_latency_low + 
+    total_latency_high + 
+    total_util_task_duration;
+
+  total_util_task_duration = util_task_duration * util_thread.get_number_of_computations ();
+
+  printf ("\t%% Low Priority CPU utilization: %f %%\n"
+	  "\t%% High Priority CPU utilization: %f %%\n"
+	  "\t%% IDLE time: %f %%\n",
+	  (total_latency_low/total_latency)*100,
+	  (total_latency_high/total_latency)*100,
+	  (total_util_task_duration/total_latency)*100 );
 
 #if defined (ACE_LACKS_FLOATING_POINT)
   ACE_DEBUG ((LM_DEBUG,
