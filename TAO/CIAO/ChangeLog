@@ -3,7 +3,15 @@ Sun Jan 23 01:49:51 2005  Marek Brudka  <mbrudka@aster.pl>
 	* examples/OEP/Display/NavDisplayGUI_exec/README (Module):
 	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc (Module):
 	Changes related with separation of GUI reactors.
-	The additional information is avalaible in ChangeLog at REACTOR_SEPARATION branch.
+	The additional information is avalaible in ChangeLog at REACTOR_SEPARATION branch (below).
+
+Mon Dec  6 00:39:19 2004  Marek Brudka  <mbrudka@aster.pl>
+
+        * examples/OEP/Display/NavDisplayGUI_exec/README (Module):
+	Remove reference to ACE_HAS_QT.
+
+	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc (Module):
+	Removed deprecated qt_moc base project.
 
 Fri Jan 21 17:27:12 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
