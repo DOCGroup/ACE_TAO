@@ -1,3 +1,11 @@
+Sun Feb 29 17:07:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/tests/Miop/McastHello/Makefile:
+	* orbsvcs/tests/Security/Big_Request/Makefile:
+	* orbsvcs/tests/ior_corbaname/Makefile:
+
+	  These makefiles needed some special attention.
+
 Sun Feb 29 16:46:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Makefile*:
