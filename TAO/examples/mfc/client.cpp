@@ -2,6 +2,7 @@
 
 #include "tao\corba.h"
 #include "W32_TestC.h"
+#include "tao\PortableServer\POA.h"
 
 int
 main (int argc, char *argv[])
@@ -31,7 +32,7 @@ main (int argc, char *argv[])
 
   cout << "Narrowing the IOR!" << endl;
 
-  W32_Test_Interface_var mycall = 
+  W32_Test_Interface_var mycall =
     W32_Test_Interface::_narrow (orb_obj.in ());
 
   cout << "Sending the Request!" << endl;

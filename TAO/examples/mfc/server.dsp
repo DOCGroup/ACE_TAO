@@ -2,7 +2,7 @@
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
-# TARGTYPE "Win32 MFC (x86) Application" 0x0101
+# TARGTYPE "Win32 (x86) Application" 0x0101
 
 CFG=server - Win32 MFC Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
@@ -17,8 +17,8 @@ CFG=server - Win32 MFC Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "server - Win32 MFC Release" (based on "Win32 MFC (x86) Application")
-!MESSAGE "server - Win32 MFC Debug" (based on "Win32 MFC (x86) Application")
+!MESSAGE "server - Win32 MFC Release" (based on "Win32 (x86) Application")
+!MESSAGE "server - Win32 MFC Debug" (based on "Win32 (x86) Application")
 !MESSAGE 
 
 # Begin Project
@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
-# ADD LINK32 acemfc.lib TAOmfc.lib TAO_CosNaming.lib /nologo /subsystem:windows /machine:I386 /libpath:"../../../ace" /libpath:"../../tao" /libpath:"../../orbsvcs/orbsvcs"
+# ADD LINK32 acemfc.lib TAOmfc.lib TAO_CosNamingmfc.lib TAO_PortableServermfc.lib /nologo /subsystem:windows /machine:I386 /libpath:"../../../ace" /libpath:"../../tao" /libpath:"../../orbsvcs/orbsvcs" /libpath:"../../tao/PortableServer"
 
 !ELSEIF  "$(CFG)" == "server - Win32 MFC Debug"
 
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 acemfcd.lib TAOmfcd.lib TAO_CosNamingd.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"../../../ace" /libpath:"../../tao" /libpath:"../../orbsvcs/orbsvcs"
+# ADD LINK32 acemfcd.lib TAOmfcd.lib TAO_CosNamingmfcd.lib TAO_PortableServermfcd.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"../../../ace" /libpath:"../../tao" /libpath:"../../orbsvcs/orbsvcs" /libpath:"../../tao/PortableServer"
 
 !ENDIF 
 
