@@ -1,3 +1,8 @@
+Thu Jul 25 08:01:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Stack_Recursion/Server_Task.cpp: Fixed a compile error in
+	  g++ builds. 
+
 Wed Jul 24 13:49:02 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.idl:
