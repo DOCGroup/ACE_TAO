@@ -97,7 +97,7 @@ A complete list of all modifications to TAO is available in the <a href="http://
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:parsons@cs.wustl.edu">
 Jeff Parsons</a>
-<p>Current status: (As of June 12, 1999.)
+<p>Current status: (As of August 2, 1999.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
@@ -106,8 +106,11 @@ C++ mapping for CORBA 2.3 (Document ptc/98-09-03).</li>
 <li>
 IDL compiler is now able to generate code that support native C++
 exceptions on the stubs and skeletons. With this strict mapping, the
-CORBA::Environment parameter is no longer generated. Use the -Ge flag
-to get this functionality.
+CORBA::Environment parameter is no longer generated.
+The default behavior is to generate code without the extra parameter
+	on plaforms with native exceptions and with the extra
+	parameter in platforms without native exceptions.
+	Use the -Ge flag to override the defaults.
 </li>
 
 <li>
@@ -161,28 +164,6 @@ stubs, skeletons and the various header files. Please refer to the <a href="http
 compiler options</a> for details.</li>
 
 <li>
-Added partial native C++ exception support:</li>
-
-<ul>
-<li>
-The ORB can be configured to catch native C++ exceptions thrown on the
-server side and transmit them to the client side. On the client side exceptions
-received from the wire are thrown using native C++ exceptions also.</li>
-
-<li>
-To facilitate portability between the standard and alternative C++ mapping
-the <tt>CORBA::Environment</tt> has a default value. The IDL compiler generates
-code using that default value and the TAO library methods also have the
-default.</li>
-
-<li>
-Some macros are provided to facilitate portability between platforms with
-and without macros.</li>
-</ul>
-There is still some work to do, mainly provide complete support for the
-standard mapping, i.e. remove the <tt>CORBA::Environment</tt> argument
-completely.
-<li>
 Verified support for the "long long" and "unsigned long long" datatypes.
 On platforms that do not support 64 bit longs we provided <i>partial</i>
 emulation through ACE_U_LongLong.</li>
@@ -195,17 +176,6 @@ GNU's Perfect Hash Function Generator written by Dr.Douglas
 C. Schmidt.  Right now, GPERF works only on Solaris. Any work on
 porting GPERF to other platforms will be highly
 appreciated.</L1></li>
-
-<li>
-Significantly improved the support for unions. The default case is yet
-to be handled.</li>
-
-<li>
-Added support for TIE classes. If the interfaces are defined inside modules,
-then the TIE class and its code gets generated inside a conditional macro.
-For platforms that support namespaces, this macro will allow these TIE
-classes else they get commented out. The reason to do this is because nested
-templates have problems on most compilers.</li>
 
 <li>
 The &lt;&lt;= and >>= operators for user-defined types are now generated.</li>
@@ -273,30 +243,11 @@ are -GI [ h | s | b | e | c ]</li>
 
 <p><br>Known bugs/unimplemented constructs:
 <ul>
-<li>
-Generation of Managed types must somehow be moved to the ORB Core</li>
-
-<li>
-We need support for ``TIEs'' (i.e., the object form of the Adapter pattern).</li>
-
-<li>
-IDL is case-insensitive. However, it looks like our front-end is case-sensitive.
-Thanks to Anil Gopinath (anil@ittc.ukans.edu) for pointing this out.</li>
+<LI>At this point there are no known problems with the IDL compiler
+</LI>
 </ul>
 Future work:
 <ul>
-<li>
-Need to relocate the various libraries used by the IDL compiler out of
-the ACE directory. Having them here can cause problems when working with
-multiple versions of TAO and a single version of ACE.</li>
-
-<li>
-Fix bugs in the SunSoft IDL front-end we've uncovered. These primarily
-include support for Unions.</li>
-
-<li>
-Use <a href="http://www.cs.utah.edu/projects/flux/flick/">Flick</a> (from
-the University of Utah) to generate compiled stubs.</li>
 
 <p>Goal is to measure the code size of the interpretive stubs generated
 by TAO IDL compiler <i>vs</i> code size of compiled stubs. Then compare
@@ -599,14 +550,6 @@ Complete support for multiple profiles.</li><p>
 Future Work:
 <ul>
 <li>
-Verify all of TAO's regression tests still work. This will be followed
-by performing a suite of tests to compare performance of with the unmodified
-TAO distribution. Also, we'll extensively retest TAO using Purify and
-Quantify.
-</li><p>
-
-<li>
-In parallel, we will add support for multiple profiles.</li><p>
 
 <li>
 Long term work will include adding support for pluggable ORB protocols,
