@@ -1,3 +1,19 @@
+Wed Dec 20 09:34:20 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/CORBALOC_Parser.h : 
+	* tao/CORBALOC_Parser.cpp : 
+
+	  Instead of declaring CORBA::ORB orb_ and TAO_MProfile mprofile_
+	  as private variables, declared them in the implementation and
+	  accrdingly changed the signatures of the methods using these
+	  variables. This way the MProfile will be cleaned automatically
+	  when it goes out of scope. Previosuly, the new mprofile was
+	  added to the already existing mprofile which was never cleaned 
+	  causing a problem.
+
+	  Thanks to Russell Carter <rcarter@consys.com> for reporting this
+	  problem.
+	
 Tue Dec 19 19:31:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/Strategies/strategies_export.h:
