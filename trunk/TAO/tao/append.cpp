@@ -446,7 +446,8 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr  tc,
                 case CORBA::tk_enum:
                   {
                     CORBA::Long l;
-                    TAO_InputCDR stream (member_label->_tao_get_cdr ());
+                    TAO_InputCDR stream (member_label->_tao_get_cdr (),
+                                         member_label->_tao_byte_order ());
                     (void)stream.decode (discrim_tc, &l, 0, ACE_TRY_ENV);
                     if (l == *(CORBA::Long *) &discrim_val)
                       discrim_matched = 1;

@@ -113,7 +113,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Bounds *&_tao_ele
     else
     {
       ACE_NEW_RETURN (_tao_elem, CORBA::Bounds, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (CORBA::_tc_Bounds, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {

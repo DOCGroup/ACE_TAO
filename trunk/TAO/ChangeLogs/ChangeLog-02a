@@ -1,44 +1,113 @@
+Sat Feb 19 14:23:38 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Any.h:
+        * tao/Any.i:
+        * tao/Any.cpp:
+          The Any structure keeps a byte_order field to determine what is
+          the byte order in its internal CDR stream.
+	  This fixes [BUGID:431]
+
+        * tao/CDR.h:
+        * tao/CDR.cpp:
+          Move the CDR extraction and insertion operators for Any into the
+          Any.cpp file.
+          Analogous changes for the TypeCode operators.
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+          Generate code that uses the new byte_order field in Anys
+
+        * tao/Typecode.h:
+        * tao/Typecode.cpp:
+          Moved the CDR extraction and insertion operators for TypeCode
+          into the Typecode.cpp file.
+
+        * tao/BoundsC.cpp:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CurrentC.cpp:
+        * tao/DomainC.cpp:
+        * tao/DynArray_i.cpp:
+        * tao/DynEnum_i.cpp:
+        * tao/DynSequence_i.cpp:
+        * tao/DynStruct_i.cpp:
+        * tao/DynUnion_i.cpp:
+        * tao/GIOPC.cpp:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/IOPC.cpp:
+        * tao/IORC.cpp:
+        * tao/ImplRepoC.cpp:
+        * tao/InterceptorC.cpp:
+        * tao/InterfaceC.cpp:
+        * tao/Invocation.cpp:
+        * tao/MessagingC.cpp:
+        * tao/NVList.cpp:
+        * tao/ObjectIDList.cpp:
+        * tao/POAC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.cpp:
+        * tao/Services.cpp:
+        * tao/TAOC.cpp:
+        * tao/TimeBaseC.cpp:
+        * tao/append.cpp:
+        * tao/decode.cpp:
+        * tao/deep_free.cpp:
+        * tao/encode.cpp:
+        * tao/skip.cpp:
+          Use the new byte_order field in Any.
+
+        * tests/IDL_Test/Makefile:
+          Updated dependencies.
+
+        * tests/Param_Test/complex_any.cpp:
+          The test was not checking the return value for some >>=
+          operators.
+
 Sat Feb 19 15:34:49 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 1.0.14 released.
 
 Fri Feb 18 19:21:25 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* docs/releasenotes/index.html:
-	  Removed IDL compiler item about relaxing the rule in IDL of 
-	  defining forward declared interfaces in the same
-	  file (until it gets implemented) and added one about the
-	  new command line option -Sc to suppress generation of
-	  tie classes.
+        * docs/releasenotes/index.html:
+          Removed IDL compiler item about relaxing the rule in IDL of
+          defining forward declared interfaces in the same
+          file (until it gets implemented) and added one about the
+          new command line option -Sc to suppress generation of
+          tie classes.
 
 Fri Feb 18 19:05:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/include/idl_global.h:
-	* TAO_IDL/util/utl_global.cpp:
-	* TAO_IDL/driver/drv_args.cpp:
-	* TAO_IDL/be/be_visitor_root/root.cpp:
-	* TAO_IDL/be/be_visitor_root/root_sh.cpp:
-	* TAO_IDL/be/be_visitor_root/root_si.cpp:
-	* TAO_IDL/be/be_visitor_root/root_ss.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_si.cpp:
-	  Added command line option -Sc to suppress generation
-	  of tie classes and *S_T.* files. A question about this
-	  was sent in by Alex Hornby <alex@anvil.co.uk>, which
-	  prompted the implementation.
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_si.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+          Added command line option -Sc to suppress generation
+          of tie classes and *S_T.* files. A question about this
+          was sent in by Alex Hornby <alex@anvil.co.uk>, which
+          prompted the implementation.
 
 Fri Feb 18 13:53:43 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp: 
-	  Make argv buffers bigger, so they can handle more options.
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
+          Make argv buffers bigger, so they can handle more options.
 
 Fri Feb 18 12:53:13 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/vs.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/as.cpp: 
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/vs.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/as.cpp:
 
-	  Fixed compile errors on Redhat Linux. Thanks to 
-	  Alex Luk <fluk7@ie.cuhk.edu.hk> for reporting this.
+          Fixed compile errors on Redhat Linux. Thanks to
+          Alex Luk <fluk7@ie.cuhk.edu.hk> for reporting this.
 
 Fri Feb 18 10:44:33 2000  Carlos O'Ryan  <coryan@uci.edu>
 

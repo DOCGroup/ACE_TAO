@@ -876,7 +876,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_Pollable_ptr &_tao
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_Pollable, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                         _tao_any._tao_byte_order ());
     CORBA::Object_var _tao_obj_var;
     ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
     if (stream.decode (CORBA::_tc_Pollable, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
@@ -934,7 +935,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DIIPollable_ptr &
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_DIIPollable, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                         _tao_any._tao_byte_order ());
     CORBA::Object_var _tao_obj_var;
     ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
     if (stream.decode (CORBA::_tc_DIIPollable, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
@@ -992,7 +994,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_PollableSet_ptr &_
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_PollableSet, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                         _tao_any._tao_byte_order ());
     CORBA::Object_var _tao_obj_var;
     ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
     if (stream.decode (CORBA::_tc_PollableSet, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
@@ -1068,7 +1071,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_PollableSet::NoPos
     else
     {
       ACE_NEW_RETURN (_tao_elem, CORBA_PollableSet::NoPossiblePollable, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (CORBA_PollableSet::_tc_NoPossiblePollable, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -1135,7 +1139,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_PollableSet::Unkno
     else
     {
       ACE_NEW_RETURN (_tao_elem, CORBA_PollableSet::UnknownPollable, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (CORBA_PollableSet::_tc_UnknownPollable, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {

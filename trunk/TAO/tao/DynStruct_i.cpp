@@ -51,7 +51,8 @@ TAO_DynStruct_i::TAO_DynStruct_i (const CORBA_Any& any)
           // Get the CDR stream of the argument.
           ACE_Message_Block *mb = any._tao_get_cdr ();
 
-          TAO_InputCDR cdr (mb);
+          TAO_InputCDR cdr (mb,
+                            any._tao_byte_order ());
 
           for (CORBA::ULong i = 0; i < numfields; i++)
             {
@@ -62,8 +63,9 @@ TAO_DynStruct_i::TAO_DynStruct_i (const CORBA_Any& any)
 
               // This Any constructor is a TAO extension.
               CORBA_Any field_any (field_tc.in (),
-                                  0,
-                                  cdr.start ());
+                                   0,
+                                   cdr.byte_order (),
+                                   cdr.start ());
 
               // This recursive step will call the correct constructor
               // based on the type of field_any.
@@ -300,18 +302,19 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
     {
       // Get the CDR stream of the argument.
       ACE_Message_Block* mb = any._tao_get_cdr ();
-      TAO_InputCDR cdr (mb);
+      TAO_InputCDR cdr (mb,
+                        any._tao_byte_order ());
 
       // If we have an exception type, unmarshal the repository ID.
-	    CORBA::TCKind kind = TAO_DynAny_i::unalias (this->type_.in (),
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (this->type_.in (),
                                                   ACE_TRY_ENV);
-	    ACE_CHECK;
+      ACE_CHECK;
 
-	    if (kind == CORBA::tk_except) 
+      if (kind == CORBA::tk_except)
         {
-	        CORBA::String_var str;
-	        cdr >> str.out();
-	      }
+          CORBA::String_var str;
+          cdr >> str.out();
+        }
 
       for (CORBA::ULong i = 0;
            i < this->da_members_.size ();
@@ -325,6 +328,7 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
           // This Any constructor is a TAO extension.
           CORBA_Any field_any (field_tc.in (),
                                0,
+                               cdr.byte_order (),
                                cdr.start ());
 
           if (!CORBA::is_nil (this->da_members_[i].in ()))
@@ -358,7 +362,7 @@ TAO_DynStruct_i::to_any (CORBA::Environment& ACE_TRY_ENV)
                                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  if (kind == CORBA::tk_except) 
+  if (kind == CORBA::tk_except)
     {
       out_cdr << this->type_->id ();
     }
@@ -385,7 +389,8 @@ TAO_DynStruct_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 
       ACE_Message_Block *field_mb = field_any->_tao_get_cdr ();
 
-      TAO_InputCDR field_cdr (field_mb);
+      TAO_InputCDR field_cdr (field_mb,
+                              field_any->_tao_byte_order ());
 
       out_cdr.append (field_tc,
                       &field_cdr,
@@ -403,6 +408,7 @@ TAO_DynStruct_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   ACE_NEW_THROW_EX (retval,
                     CORBA_Any (tc,
                                0,
+                               in_cdr.byte_order (),
                                in_cdr.start ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
@@ -536,7 +542,7 @@ void
 TAO_DynStruct_i::insert_char (CORBA::Char value,
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  
+
   CORBA::TypeCode_var tc = this->type_.in ()->member_type (this->current_index_);
   CORBA::TCKind kind =
     TAO_DynAny_i::unalias (tc.in (), ACE_TRY_ENV);

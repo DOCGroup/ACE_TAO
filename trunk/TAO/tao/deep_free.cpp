@@ -95,11 +95,11 @@ DEEP_FREE (CORBA::TypeCode_ptr  param,
       retval = TAO_Marshal_Sequence::deep_free (param, source, dest, ACE_TRY_ENV);
       // @@ (JP) This takes care of a memory leak we had for recursive unions
       // and unions that contain an anonymous sequence. For unions that contain
-      // typedef'd sequences and other cases where the union member is a 
+      // typedef'd sequences and other cases where the union member is a
       // pointer, we still have leaks. These are not so easy to fix for all
       // cases. What we need is Carlos' _tao_destroy() method in the stubs.
-      delete ACE_reinterpret_cast (TAO_Base_Sequence *, 
-                                   ACE_const_cast (void *, 
+      delete ACE_reinterpret_cast (TAO_Base_Sequence *,
+                                   ACE_const_cast (void *,
                                                    source));
       break;
     case CORBA::tk_array:
@@ -186,7 +186,7 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
     }
 
   // In case this hasn't been done yet.
-  source = ptr_align_binary (source, 
+  source = ptr_align_binary (source,
                              tc->alignment (ACE_TRY_ENV));
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
@@ -368,6 +368,8 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
       CORBA::TypeCode_var type = member_label->type ();
       switch (type->kind (ACE_TRY_ENV))
         {
+          // @@ This is not going to work, it assumes that the CDR
+          // stream is in the same byte order.
         case CORBA::tk_short:
           if (*(CORBA::Short *)member_label->_tao_get_cdr ()->base () ==
               *(CORBA::Short *)discrim_val)

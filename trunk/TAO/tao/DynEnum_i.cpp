@@ -42,7 +42,8 @@ TAO_DynEnum_i::TAO_DynEnum_i (const CORBA_Any &any)
           // Get the CDR stream of the argument.
           ACE_Message_Block* mb = any._tao_get_cdr ();
 
-          TAO_InputCDR cdr (mb);
+          TAO_InputCDR cdr (mb,
+                            any._tao_byte_order ());
 
           cdr.read_ulong (this->value_);
         }
@@ -216,7 +217,8 @@ TAO_DynEnum_i::from_any (const CORBA_Any& any,
       // Get the CDR stream of the argument.
       ACE_Message_Block* mb = any._tao_get_cdr ();
 
-      TAO_InputCDR cdr (mb);
+      TAO_InputCDR cdr (mb,
+                        any._tao_byte_order ());
 
       cdr.read_ulong (this->value_);
     }
@@ -237,6 +239,7 @@ TAO_DynEnum_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   ACE_NEW_THROW_EX (retval,
                     CORBA_Any (this->type_.in (),
                                0,
+                               TAO_ENCAP_BYTE_ORDER,
                                out_cdr.begin ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
