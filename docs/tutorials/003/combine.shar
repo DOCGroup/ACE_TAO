@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/003'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -11,10 +11,10 @@
 # This shar contains:
 # length mode       name
 # ------ ---------- ------------------------------------------
-#    607 -rw-rw-r-- hdr
+#    590 -rw-rw-r-- hdr
 #     18 -rw-rw-r-- bodies
-#   1155 -rw-rw-r-- page01.pre
-#    447 -rw-rw-r-- page01.pst
+#   1208 -rw-rw-r-- page01.pre
+#    434 -rw-rw-r-- page01.pst
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -61,7 +61,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh04727; then
+if mkdir _sh32347; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -91,19 +91,19 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0117142499 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'hdr:' 'MD5 check failed'
-91fd92d4f4daf6d2c38ccda9486b10ee  hdr
+6999fd3c50ab0c7fea97b644e7281f09  hdr
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hdr'`"
-    test 607 -eq "$shar_count" ||
-    $echo 'hdr:' 'original size' '607,' 'current size' "$shar_count!"
+    test 590 -eq "$shar_count" ||
+    $echo 'hdr:' 'original size' '590,' 'current size' "$shar_count!"
   fi
 fi
 # ============= bodies ==============
@@ -145,37 +145,37 @@ X
 Kirthika says, "Here's an one paragraph abstract for a one page client app:"
 X
 <UL>
-X				The server is an Stream object of ACE_SOCK_Stream type. The
-X				ACE_Sock_Connector does the job of actively making a connection with the
-X				listening server. It does so using the server_host_address and port
-X				number which are stored in the ACE_INET_Addr object.Once the
-X				connection has been established, the client begins its interaction
-X				with the server and bombards it with messages.
-X				Note: send_n() call is used since this call sees to the issues of
-X				network buffering and reliably gets the data across to the server.
-X				Also, a timeout value is set to provide fault tolerance if the server
-X				ever dies before the transaction is completed. The server calls a
-X				close() method
-X				once it reads in zero bytes during the Event_Handler::handle_input()
-X				call. This
-X				proves that the client has severed its connection. The server then
-X				shuts down.
+X        The server is an Stream object of ACE_SOCK_Stream type. The
+X        ACE_Sock_Connector does the job of actively making a connection with the
+X        listening server. It does so using the server_host_address and port
+X        number which are stored in the ACE_INET_Addr object.Once the
+X        connection has been established, the client begins its interaction
+X        with the server and bombards it with messages.
+X        Note: send_n() call is used since this call sees to the issues of
+X        network buffering and reliably gets the data across to the server.
+X        Also, a timeout value is set to provide fault tolerance if the server
+X        ever dies before the transaction is completed. The server calls a
+X        close() method
+X        once it reads in zero bytes during the Event_Handler::handle_input()
+X        call. This
+X        proves that the client has severed its connection. The server then
+X        shuts down.
 </UL>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0117142499 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-c35cf15b292804d248dee8e4cc6feec5  page01.pre
+a141752492580c57f849e42ff287e276  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 1155 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '1155,' 'current size' "$shar_count!"
+    test 1208 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '1208,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page01.pst ==============
@@ -198,20 +198,20 @@ settings</A>.
 X
 <P>
 SHAR_EOF
-  $shar_touch -am 0117142499 'page01.pst' &&
+  $shar_touch -am 03191459100 'page01.pst' &&
   chmod 0664 'page01.pst' ||
   $echo 'restore of' 'page01.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pst:' 'MD5 check failed'
-9c3589ed1d86da267d589599f914141e  page01.pst
+4f24418c514b6359350769103a4ed617  page01.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pst'`"
-    test 447 -eq "$shar_count" ||
-    $echo 'page01.pst:' 'original size' '447,' 'current size' "$shar_count!"
+    test 434 -eq "$shar_count" ||
+    $echo 'page01.pst:' 'original size' '434,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh04727
+rm -fr _sh32347
 exit 0

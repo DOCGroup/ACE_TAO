@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/017'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,13 +13,13 @@
 # ------ ---------- ------------------------------------------
 #    422 -rw-rw-r-- hdr
 #     65 -rw-rw-r-- bodies
-#   1397 -rw-rw-r-- page01.pre
+#   1393 -rw-rw-r-- page01.pre
 #    420 -rw-rw-r-- page02.pre
-#    739 -rw-rw-r-- page03.pre
+#    736 -rw-rw-r-- page03.pre
 #    479 -rw-rw-r-- page04.pre
 #    375 -rw-rw-r-- page05.pre
 #    374 -rw-rw-r-- page06.pre
-#    217 -rw-rw-r-- page05.pst
+#    216 -rw-rw-r-- page05.pst
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -66,7 +66,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh05177; then
+if mkdir _sh00331; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -93,7 +93,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 1110144198 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -147,17 +147,17 @@ The ACE_Barrier implements the barrier synchronization pattern.
 That's nice.  What does it mean?
 <P>
 What it means is that you can use the ACE_Barrier to cause a set of
-threads to all wait at a specific point in your application.  In other 
+threads to all wait at a specific point in your application.  In other
 words:  the threads reach a barrier that none can pass until all are
 present.
 <P>
-This would typically be used in scientific applications where a set of 
-threads are all working in parallel on some great computation but they 
+This would typically be used in scientific applications where a set of
+threads are all working in parallel on some great computation but they
 have to synch and summarize before continuing to the next stage of calculation.  With
 proper use of ACE_Barrier, the threads can easily synch before
 continuing.
 <P>
-In this tutorial I'll create a simple wrapper for the ACE_Barrier.  In 
+In this tutorial I'll create a simple wrapper for the ACE_Barrier.  In
 reality, the ACE_Barrier is so easy that a wrapper isn't really
 needed.  I created the wrapper anyway though just because I wanted to.
 <P>
@@ -177,19 +177,19 @@ threads respectively
 which illustrate the use of the barrier pattern.
 </ul>
 SHAR_EOF
-  $shar_touch -am 0214142599 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-2c9cb9ca7f82997142a59a9324d5fe17  page01.pre
+6d94644272d64ed997ae76b98475d84e  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 1397 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '1397,' 'current size' "$shar_count!"
+    test 1393 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '1393,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -208,7 +208,7 @@ to get the idea of how to use a Barrier without getting hung up in
 application-level details.
 <HR>
 SHAR_EOF
-  $shar_touch -am 1110144198 'page02.pre' &&
+  $shar_touch -am 03191459100 'page02.pre' &&
   chmod 0664 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -232,30 +232,30 @@ else
 The Barrier class used by the test task is a simple wrapper around
 ACE_Barrier.  One of the things about ACE_Barrier is that you have to
 tell it how many threads it will be managing.  Since that number
-usually isn't known when you create your Task derivative, you have to 
+usually isn't known when you create your Task derivative, you have to
 dynamically allocate the ACE_Barrier.  My Barrier wrapper takes care
 of that for you and even provides for a clean way to delete the
 ACE_Barrier instance if you want to save a few bytes.
 <P>
 An interesting extension of this Barrier class would be to wrap it up
-in a smart pointer.  You could then have the Barrier destructor invoke 
-wait() as a now-protected method.  The result would allow you to treat 
+in a smart pointer.  You could then have the Barrier destructor invoke
+wait() as a now-protected method.  The result would allow you to treat
 the Barrier object almost as a "synchronization guard".
 <HR>
 SHAR_EOF
-  $shar_touch -am 1110144198 'page03.pre' &&
+  $shar_touch -am 03191459100 'page03.pre' &&
   chmod 0664 'page03.pre' ||
   $echo 'restore of' 'page03.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page03.pre:' 'MD5 check failed'
-6fc63f76eb4ac94dd6a8b45393613e7c  page03.pre
+4d6cead716800d7625b2a903d0df1b34  page03.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pre'`"
-    test 739 -eq "$shar_count" ||
-    $echo 'page03.pre:' 'original size' '739,' 'current size' "$shar_count!"
+    test 736 -eq "$shar_count" ||
+    $echo 'page03.pre:' 'original size' '736,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page04.pre ==============
@@ -273,7 +273,7 @@ thread to safely change the count but that would require more complex
 locking that is just a bit more than what I wanted to present here.
 <HR>
 SHAR_EOF
-  $shar_touch -am 1110144198 'page04.pre' &&
+  $shar_touch -am 03191459100 'page04.pre' &&
   chmod 0664 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -305,7 +305,7 @@ enhancements will gladly be integrated into the Tutorial.
 <LI><A HREF="Barrier_i.cpp">Barrier_i.cpp</A>
 </UL>
 SHAR_EOF
-  $shar_touch -am 1110144198 'page05.pre' &&
+  $shar_touch -am 03191459100 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -335,7 +335,7 @@ stabilizes and then we recalibrate and move on.
 The source is <A HREF="barrier2.cpp">here</A>.
 <HR>
 SHAR_EOF
-  $shar_touch -am 0224165499 'page06.pre' &&
+  $shar_touch -am 03191459100 'page06.pre' &&
   chmod 0664 'page06.pre' ||
   $echo 'restore of' 'page06.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -357,24 +357,24 @@ else
   $echo 'x -' extracting 'page05.pst' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page05.pst' &&
 <HR>
-Before we call it a wrap though, there's one more thing I want to show 
+Before we call it a wrap though, there's one more thing I want to show
 you.  Remember the comments around Barrier::threads()?  On the next
 page, I'll show you how to synch up when the number of threads changes.
 SHAR_EOF
-  $shar_touch -am 0224165199 'page05.pst' &&
+  $shar_touch -am 03191459100 'page05.pst' &&
   chmod 0664 'page05.pst' ||
   $echo 'restore of' 'page05.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page05.pst:' 'MD5 check failed'
-2a706afa6c518293090c04e08eaf8992  page05.pst
+4f18e2b82827f498992bd11b36c4ca09  page05.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pst'`"
-    test 217 -eq "$shar_count" ||
-    $echo 'page05.pst:' 'original size' '217,' 'current size' "$shar_count!"
+    test 216 -eq "$shar_count" ||
+    $echo 'page05.pst:' 'original size' '216,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh05177
+rm -fr _sh00331
 exit 0

@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/009'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,7 +13,7 @@
 # ------ ---------- ------------------------------------------
 #    520 -rw-rw-r-- hdr
 #     59 -rw-rw-r-- bodies
-#   2185 -rw-rw-r-- page01.pre
+#   2184 -rw-rw-r-- page01.pre
 #    188 -rw-rw-r-- page02.pre
 #    296 -rw-rw-r-- page03.pre
 #    301 -rw-rw-r-- page04.pre
@@ -66,7 +66,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh04903; then
+if mkdir _sh32524; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -95,7 +95,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0121195099 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -175,7 +175,7 @@ decides on replying to the client depending on the signature. The only
 changes from the previous tutorial are in the addition of an extra
 signature matching portion on the server side and providing timeout
 values on the client side which allows the send() and recv() calls to
-return on a timeout if the target party fails to respond. 
+return on a timeout if the target party fails to respond.
 <P>
 This feature of discrimnation depending on the client signature could be
 used for security reasons or version confirmation by the server.
@@ -185,19 +185,19 @@ server versions will be running on different hosts since you can only have
 one server listening at the well-known address on a given host.</FONT>
 X
 SHAR_EOF
-  $shar_touch -am 0121195099 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-c6367380deb11b98c346d35794fac6cd  page01.pre
+fa884a9f35740c89bf25c5eed9ba1ebd  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 2185 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '2185,' 'current size' "$shar_count!"
+    test 2184 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2184,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -213,7 +213,7 @@ X
 <P>
 <HR WIDTH="100%"><TT></TT>
 SHAR_EOF
-  $shar_touch -am 0121195099 'page02.pre' &&
+  $shar_touch -am 03191459100 'page02.pre' &&
   chmod 0664 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -243,7 +243,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0121194999 'page03.pre' &&
+  $shar_touch -am 03191459100 'page03.pre' &&
   chmod 0664 'page03.pre' ||
   $echo 'restore of' 'page03.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -273,7 +273,7 @@ X
 <P>
 <HR WIDTH="100%"><TT></TT>
 SHAR_EOF
-  $shar_touch -am 0121195099 'page04.pre' &&
+  $shar_touch -am 03191459100 'page04.pre' &&
   chmod 0664 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -323,7 +323,7 @@ X
 </UL>
 X
 SHAR_EOF
-  $shar_touch -am 0121194999 'page05.pre' &&
+  $shar_touch -am 03191459100 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -349,7 +349,7 @@ X
 <P>Let's move on and see what changes the clients require...
 X
 SHAR_EOF
-  $shar_touch -am 0121195099 'page02.pst' &&
+  $shar_touch -am 03191459100 'page02.pst' &&
   chmod 0664 'page02.pst' ||
   $echo 'restore of' 'page02.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -375,7 +375,7 @@ X
 <P>On the next page, we see that the directed_client gets similar upgrades.
 X
 SHAR_EOF
-  $shar_touch -am 0121195099 'page03.pst' &&
+  $shar_touch -am 03191459100 'page03.pst' &&
   chmod 0664 'page03.pst' ||
   $echo 'restore of' 'page03.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -390,5 +390,5 @@ SHAR_EOF
     $echo 'page03.pst:' 'original size' '96,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh04903
+rm -fr _sh32524
 exit 0

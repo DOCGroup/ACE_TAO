@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/020'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,13 +13,13 @@
 # ------ ---------- ------------------------------------------
 #    426 -rw-rw-r-- hdr
 #     69 -rw-rw-r-- bodies
-#   1396 -rw-rw-r-- page01.pre
+#   1394 -rw-rw-r-- page01.pre
 #    524 -rw-rw-r-- page02.pre
 #    115 -rw-rw-r-- page03.pre
-#    411 -rw-rw-r-- page04.pre
+#    410 -rw-rw-r-- page04.pre
 #    102 -rw-rw-r-- page05.pre
 #    371 -rw-rw-r-- page06.pre
-#    132 -rw-rw-r-- page02.pst
+#    131 -rw-rw-r-- page02.pst
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -66,7 +66,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh05260; then
+if mkdir _sh00417; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -93,7 +93,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 1228173698 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -148,14 +148,14 @@ X      The cool thing about doing it this way is that we gain
 X      persistence of memory even across reboots.  I wonder if you
 X      could memory map a file that's mounted via NFS?
 X    <p>
-X      Like the shared memory tutorial, this one is also very basic and 
+X      Like the shared memory tutorial, this one is also very basic and
 X      primitive.  I'm assuming you've read that one, so I'll just hit
 X      the high points this time through..
 <P>
 Kirthika's abstract:
 <UL>
 Here, the ACE_Shared_Memory_MM class has been used to provide
-persistence of the contents of the shared memory resource used by 
+persistence of the contents of the shared memory resource used by
 the server and client. A memory_map which is really a file mapped onto
 memory appears like an array which can be
 easily manipulated  while actually the data is stored in a file thus
@@ -173,19 +173,19 @@ For that we need to go ahead -- to the next tutorial!
 X
 </UL>
 SHAR_EOF
-  $shar_touch -am 0403170599 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-8f2683c077c043b2d5fe5f6b39c506c5  page01.pre
+abcb95607715bae0a3e648672ec2c2bd  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 1396 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '1396,' 'current size' "$shar_count!"
+    test 1394 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '1394,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -206,7 +206,7 @@ X      causes unpleasant things to happen.  I'd recommend that you
 X      don't do that!
 <hr>
 SHAR_EOF
-  $shar_touch -am 1228174498 'page02.pre' &&
+  $shar_touch -am 03191459100 'page02.pre' &&
   chmod 0664 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -231,7 +231,7 @@ There's no important difference between this and the SV client.  Is
 X      everybody thinking "template" here?
 <hr>
 SHAR_EOF
-  $shar_touch -am 1228174598 'page03.pre' &&
+  $shar_touch -am 03191459100 'page03.pre' &&
   chmod 0664 'page03.pre' ||
   $echo 'restore of' 'page03.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -256,25 +256,25 @@ I wanted to show placement new again & prove that you can use it with
 X      a memory mapped file just as easily as with a shared memory
 X      segment.
 X    <p>
-Imagine if you had an object that contained an image & then you mapped 
+Imagine if you had an object that contained an image & then you mapped
 X      that to a file...  Instead of a bunch of jpg files laying
 X      around, you would actually have objects instead.  Save the
 X      image?  No problem, it's already there!
 <hr>
 SHAR_EOF
-  $shar_touch -am 1228175398 'page04.pre' &&
+  $shar_touch -am 03191459100 'page04.pre' &&
   chmod 0664 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page04.pre:' 'MD5 check failed'
-22e02b4170bdf5e6cd8894b8983c737a  page04.pre
+e774cae1bab0348030a224b6d2836d50  page04.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pre'`"
-    test 411 -eq "$shar_count" ||
-    $echo 'page04.pre:' 'original size' '411,' 'current size' "$shar_count!"
+    test 410 -eq "$shar_count" ||
+    $echo 'page04.pre:' 'original size' '410,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page05.pre ==============
@@ -287,7 +287,7 @@ The mmap.h where we define stuff that needs to be shared between the
 X      apps at compile-time.
 <hr>
 SHAR_EOF
-  $shar_touch -am 1228175198 'page05.pre' &&
+  $shar_touch -am 03191459100 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -320,7 +320,7 @@ X      <li><A HREF="mmap.cpp">mmap.cpp</A>
 X      <li><A HREF="Makefile">Makefile</A>
 X    </ul>
 SHAR_EOF
-  $shar_touch -am 1228175498 'page06.pre' &&
+  $shar_touch -am 03191459100 'page06.pre' &&
   chmod 0664 'page06.pre' ||
   $echo 'restore of' 'page06.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -342,23 +342,23 @@ else
   $echo 'x -' extracting 'page02.pst' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page02.pst' &&
 <HR>
-BTW:  In ACE 4.6.7 and prior there is a bug that prevents the remove() 
+BTW:  In ACE 4.6.7 and prior there is a bug that prevents the remove()
 X      method from actually removing the physical file.
 SHAR_EOF
-  $shar_touch -am 1228175398 'page02.pst' &&
+  $shar_touch -am 03191459100 'page02.pst' &&
   chmod 0664 'page02.pst' ||
   $echo 'restore of' 'page02.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page02.pst:' 'MD5 check failed'
-10ea86cd7f1b8484868846bd8761e582  page02.pst
+6c619eb19adbe3a79b5e6d2bf8b0e6d0  page02.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pst'`"
-    test 132 -eq "$shar_count" ||
-    $echo 'page02.pst:' 'original size' '132,' 'current size' "$shar_count!"
+    test 131 -eq "$shar_count" ||
+    $echo 'page02.pst:' 'original size' '131,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh05260
+rm -fr _sh00417
 exit 0

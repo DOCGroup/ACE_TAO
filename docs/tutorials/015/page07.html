@@ -78,7 +78,7 @@ int <font color=#008888>Server::run</font>(void)
         <font color=#008888>ACE_Reactor::instance</font>()->handle_events (&timeout);
     }
 
-        <font color=red>// Close the acceptor when we're done.  This may be handled by </font>
+        <font color=red>// Close the acceptor when we're done.  This may be handled by</font>
         <font color=red>// the framework but it's good practice to be explicit about things.</font>
     acceptor_.close();
 
@@ -99,3 +99,4 @@ int <font color=#008888>Server::close</font>(void)
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page08.html">Continue This Tutorial</A>]</CENTER>
+

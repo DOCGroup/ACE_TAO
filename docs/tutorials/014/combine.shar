@@ -3,8 +3,8 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-02-10 22:17 EST by <jcej@chiroptera.tragus.org>.
-# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/014'.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
+# Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/014'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
 #
@@ -13,11 +13,11 @@
 # ------ ---------- ------------------------------------------
 #    414 -rw-r--r-- hdr
 #     44 -rw-r--r-- bodies
-#   2609 -rw-r--r-- page01.pre
-#    231 -rw-r--r-- page02.pre
-#    651 -rw-r--r-- page03.pre
-#    439 -rw-r--r-- page04.pre
-#   1079 -rw-r--r-- page05.pre
+#   2605 -rw-r--r-- page01.pre
+#    233 -rw-r--r-- page02.pre
+#    657 -rw-r--r-- page03.pre
+#    443 -rw-r--r-- page04.pre
+#   1091 -rw-r--r-- page05.pre
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -64,7 +64,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh28285; then
+if mkdir _sh32692; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -91,7 +91,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 1012190598 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0644 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -145,7 +145,7 @@ that you would like to link together.
 X
 <p>An intermediate class you we will deal with is the <b>ACE_Module</b>.
 X
-<p>The basic plan is to wrap your <b>Task</b> into a <b>Module</b>, push 
+<p>The basic plan is to wrap your <b>Task</b> into a <b>Module</b>, push
 the <b>Module</b> onto the <b>Stream</b>.  Do this for each <b>Task</b>,
 X and then inject <b>Message_Block</b>s into the <b>Stream</b>.
 X
@@ -155,7 +155,7 @@ X
 <p>If you are not already familiar with <b>Message_Block</b>s and <b>Message_Queue</b>s,
 I highly suggest that you check out <A HREF="../#MQ">Tutorials 10-13</A>.
 X
-<p>Streams can be used for both downstream and upstream movement of messages.  Used 
+<p>Streams can be used for both downstream and upstream movement of messages.  Used
 this way mirrors closely the way System V STREAMS work.  But you don't have to use them
 bidirectionally.  In this tutorial, we only use one direction of the Stream.  Down.
 X
@@ -187,28 +187,28 @@ Then the other modules are pushed from the Tail-end into the Stream.
 This is because we are interested in writing and not reading.
 (Picture this to be a FIFO (queue) with head and tail nodes such
 that the nodes are removed from the front and put into the queue from
-the back) 
+the back)
 <P>
 Each module then opens up the task which spawns threads and begins to
 shove messgaes down the stream. Once we have got all the messages into
-the stream, our job is completed and we shut down the Stream. 
+the stream, our job is completed and we shut down the Stream.
 <P>
 A simple way to wade down the stream...;)
 </ul>
 SHAR_EOF
-  $shar_touch -am 0210221599 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0644 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-23c8c084825939056b1c9226d4ab54c1  page01.pre
+b0f801c8c6ba2ddcdf8caf89cb672698  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 2609 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '2609,' 'current size' "$shar_count!"
+    test 2605 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2605,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -219,24 +219,24 @@ else
   sed 's/^X//' << 'SHAR_EOF' > 'page02.pre' &&
 <P>
 You find pretty soon that anytime you work with ACE_Task&lt;&gt; you
-X	  have to create a derivative.  The Task.h header simply provides
-X	  that derivative with the overrides we'll need in our application.
+X    have to create a derivative.  The Task.h header simply provides
+X    that derivative with the overrides we'll need in our application.
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 1012190598 'page02.pre' &&
+  $shar_touch -am 03191459100 'page02.pre' &&
   chmod 0644 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page02.pre:' 'MD5 check failed'
-4568ed757f3dbc1cebb7dc10d4768894  page02.pre
+af6ee3bfc7543c3b536d5c0ff4b70dd5  page02.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
-    test 231 -eq "$shar_count" ||
-    $echo 'page02.pre:' 'original size' '231,' 'current size' "$shar_count!"
+    test 233 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '233,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page03.pre ==============
@@ -247,33 +247,33 @@ else
   sed 's/^X//' << 'SHAR_EOF' > 'page03.pre' &&
 <P>
 Before we get to main() let's take a look at the Task implementation.
-X	  While we've overridden several methods, the real work is done in 
-X	  the close() and svc() methods.
+X    While we've overridden several methods, the real work is done in
+X    the close() and svc() methods.
 <P>
 Notice how close() figures out if it is being called by the shutdown
-X	  of the ACE_Stream or by the exit of svc().  The magic here is
-X	  provided by the <i>flags</i> parameter.  By handling the stream
-X	  shutdown in this way, we don't have to do anything strange in
-X	  svc().  We also don't end up with extra hangup messages in the
-X	  queue when the dust all settles down.
+X    of the ACE_Stream or by the exit of svc().  The magic here is
+X    provided by the <i>flags</i> parameter.  By handling the stream
+X    shutdown in this way, we don't have to do anything strange in
+X    svc().  We also don't end up with extra hangup messages in the
+X    queue when the dust all settles down.
 <P>
 Like our other tutorials, svc() looks for a hangup and processes data.
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 1012190598 'page03.pre' &&
+  $shar_touch -am 03191459100 'page03.pre' &&
   chmod 0644 'page03.pre' ||
   $echo 'restore of' 'page03.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page03.pre:' 'MD5 check failed'
-5c35812c1251ef1e8214fa9d9a18d496  page03.pre
+3403e1bdb202945fc7da5ee1197b4771  page03.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pre'`"
-    test 651 -eq "$shar_count" ||
-    $echo 'page03.pre:' 'original size' '651,' 'current size' "$shar_count!"
+    test 657 -eq "$shar_count" ||
+    $echo 'page03.pre:' 'original size' '657,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page04.pre ==============
@@ -283,30 +283,30 @@ else
   $echo 'x -' extracting 'page04.pre' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page04.pre' &&
 <P>
-As stated in the comments below, the default action of the task at the 
-X	  stream tail is to treat any received data as an error.  In our
-X	  implementation it will often happen that data gets through to
-X	  the tail.  How, then, do we handle this without creating an
-X	  error condition?  Simple:  Create a custom Task for use as the
-X	  stream tail that doesn't consider it an error to receive data.
+As stated in the comments below, the default action of the task at the
+X    stream tail is to treat any received data as an error.  In our
+X    implementation it will often happen that data gets through to
+X    the tail.  How, then, do we handle this without creating an
+X    error condition?  Simple:  Create a custom Task for use as the
+X    stream tail that doesn't consider it an error to receive data.
 <P>
 Read on...
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 1012190598 'page04.pre' &&
+  $shar_touch -am 03191459100 'page04.pre' &&
   chmod 0644 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page04.pre:' 'MD5 check failed'
-c6eaa0dbd1216734dcf83f5283d433f3  page04.pre
+6a3e4f0f1c99fe05cfd1b36b1a1030ed  page04.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pre'`"
-    test 439 -eq "$shar_count" ||
-    $echo 'page04.pre:' 'original size' '439,' 'current size' "$shar_count!"
+    test 443 -eq "$shar_count" ||
+    $echo 'page04.pre:' 'original size' '443,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page05.pre ==============
@@ -316,42 +316,42 @@ else
   $echo 'x -' extracting 'page05.pre' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page05.pre' &&
 <P>
-Now we come to main().  In the previous task-chain tutorial 
-X	  every thread pool had to have the same number of threads.  This
-X	  time around, we leverage the construction method of ACE_Stream
-X	  and ACE_Module to customize the thread-pool size in each
-X	  ACE_Task of the stream.
+Now we come to main().  In the previous task-chain tutorial
+X    every thread pool had to have the same number of threads.  This
+X    time around, we leverage the construction method of ACE_Stream
+X    and ACE_Module to customize the thread-pool size in each
+X    ACE_Task of the stream.
 <P>
 Remember EndTask from the previous page?  We create one here and push
-X	  it into the stream to take care of cleaning up the messages.
-X	  Technically, we could have replaced the default Tail task
-X	  created by the ACE framework but it seems to make more sense to
-X	  just push our "tail" onto the stream like the other tasks.  The
-X	  caveat to this method is that you must be sure you don't push()
-X	  any other Modules behind the EndTask!
+X    it into the stream to take care of cleaning up the messages.
+X    Technically, we could have replaced the default Tail task
+X    created by the ACE framework but it seems to make more sense to
+X    just push our "tail" onto the stream like the other tasks.  The
+X    caveat to this method is that you must be sure you don't push()
+X    any other Modules behind the EndTask!
 <P>
 Once the stream of modules containing tasks is all setup then we can
-X	  put() some data into the stream for processing.  The clever use
-X	  of Task::close() makes shutting downt the stream easier than
-X	  ever.  No messing with hangup messages at the application level, 
-X	  just close() when you're done!  What could be simpler?
+X    put() some data into the stream for processing.  The clever use
+X    of Task::close() makes shutting downt the stream easier than
+X    ever.  No messing with hangup messages at the application level,
+X    just close() when you're done!  What could be simpler?
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 1012190598 'page05.pre' &&
+  $shar_touch -am 03191459100 'page05.pre' &&
   chmod 0644 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page05.pre:' 'MD5 check failed'
-e1c3ef1d521db6daf9e432fb5582607d  page05.pre
+737e85703d52fe5eefbed872ef22ed7f  page05.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pre'`"
-    test 1079 -eq "$shar_count" ||
-    $echo 'page05.pre:' 'original size' '1079,' 'current size' "$shar_count!"
+    test 1091 -eq "$shar_count" ||
+    $echo 'page05.pre:' 'original size' '1091,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh28285
+rm -fr _sh32692
 exit 0

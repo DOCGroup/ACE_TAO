@@ -13,13 +13,13 @@
 
 <P>
 <HR WIDTH="100%">
-	  Everything common the server & client is kept here.  In
-	  particular, the Constants class where we keep the names &
-	  semaphore keys.
-	<p>
-	  The Allocator class is just a thin wrapper around
-	  ACE_Malloc&lt;&gt; that moves some of the details out of the
-	  application logic.
+    Everything common the server & client is kept here.  In
+    particular, the Constants class where we keep the names &
+    semaphore keys.
+  <p>
+    The Allocator class is just a thin wrapper around
+    ACE_Malloc&lt;&gt; that moves some of the details out of the
+    application logic.
 <hr>
 <PRE>
 
@@ -81,7 +81,7 @@ public:
 
   <font color=red>// The name assigned to the memory pool by the server is needed</font>
   <font color=red>// by the client.  Without it, the pool cannot be found.</font>
-  <font color=red>// Likewise, the name the server will bind() to the region of the </font>
+  <font color=red>// Likewise, the name the server will bind() to the region of the</font>
   <font color=red>// pool must be available to the client.</font>
   static const char *PoolName;
   static const char *RegionName;
@@ -108,3 +108,4 @@ public:
         do other things on your platform.
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page05.html">Continue This Tutorial</A>]</CENTER>
+

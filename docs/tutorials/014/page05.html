@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -13,25 +14,25 @@
 <P>
 <HR WIDTH="100%">
 <P>
-Now we come to main().  In the previous task-chain tutorial 
-	  every thread pool had to have the same number of threads.  This
-	  time around, we leverage the construction method of ACE_Stream
-	  and ACE_Module to customize the thread-pool size in each
-	  ACE_Task of the stream.
+Now we come to main().  In the previous task-chain tutorial
+    every thread pool had to have the same number of threads.  This
+    time around, we leverage the construction method of ACE_Stream
+    and ACE_Module to customize the thread-pool size in each
+    ACE_Task of the stream.
 <P>
 Remember EndTask from the previous page?  We create one here and push
-	  it into the stream to take care of cleaning up the messages.
-	  Technically, we could have replaced the default Tail task
-	  created by the ACE framework but it seems to make more sense to
-	  just push our "tail" onto the stream like the other tasks.  The
-	  caveat to this method is that you must be sure you don't push()
-	  any other Modules behind the EndTask!
+    it into the stream to take care of cleaning up the messages.
+    Technically, we could have replaced the default Tail task
+    created by the ACE framework but it seems to make more sense to
+    just push our "tail" onto the stream like the other tasks.  The
+    caveat to this method is that you must be sure you don't push()
+    any other Modules behind the EndTask!
 <P>
 Once the stream of modules containing tasks is all setup then we can
-	  put() some data into the stream for processing.  The clever use
-	  of Task::close() makes shutting downt the stream easier than
-	  ever.  No messing with hangup messages at the application level, 
-	  just close() when you're done!  What could be simpler?
+    put() some data into the stream for processing.  The clever use
+    of Task::close() makes shutting downt the stream easier than
+    ever.  No messing with hangup messages at the application level,
+    just close() when you're done!  What could be simpler?
 <P>
 <HR WIDTH="100%">
 <PRE>
@@ -206,3 +207,4 @@ int main(int argc, char *argv[])
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] </CENTER>
+

@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/019'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,10 +13,10 @@
 # ------ ---------- ------------------------------------------
 #    409 -rw-rw-r-- hdr
 #     71 -rw-rw-r-- bodies
-#   2010 -rw-rw-r-- page01.pre
-#    563 -rw-rw-r-- page02.pre
-#    219 -rw-rw-r-- page03.pre
-#    676 -rw-rw-r-- page04.pre
+#   2006 -rw-rw-r-- page01.pre
+#    562 -rw-rw-r-- page02.pre
+#    217 -rw-rw-r-- page03.pre
+#    674 -rw-rw-r-- page04.pre
 #    178 -rw-rw-r-- page05.pre
 #    401 -rw-rw-r-- page06.pre
 #
@@ -65,7 +65,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh05234; then
+if mkdir _sh00389; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -92,7 +92,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 1220184898 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -153,13 +153,13 @@ X      efficiently.
 X    <p>
 X      Along the way, we'll have to come up with some sort of
 X      coordination betweent the processes.  That is the most
-X      difficult part of a shared memory system.  In the tutorial we're 
+X      difficult part of a shared memory system.  In the tutorial we're
 X      just going to take a simplistic approach (eg -- busy loop) but
 X      real-world applications will need to take a serious look at
 X      process-level synch mechanisms such as ACE_*_Semaphore.
 X    <P>
 X      Caveat:  I've barely begun to use shared memory
-X      myself.  This tutorial and the next are very simple-minded and 
+X      myself.  This tutorial and the next are very simple-minded and
 X      primitive.  Anyone who wants to provide more realistic
 X      replacements is encouraged to drop me a note
 X      (<A HREF="mailto:jcej@lads.com">jcej@lads.com</A>).
@@ -177,27 +177,27 @@ and using it on demand.
 The server has a string of alphabets from a-z which are converted to
 uppercase
 by the client proving that the same memory locations are being shared
-between 
+between
 the two processes. The syncronisation between the server and client is
-done 
+done
 using the ACE_OS::sleep () instead of a semaphore/mutexes with the aim
 of keeping our first dive into shared memory usage simple and easy to
 fathom.
 </UL>
 SHAR_EOF
-  $shar_touch -am 0403170299 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-5679e782c6b5d10a12a894cee1d88bc0  page01.pre
+a039d9160f8f35867c38c73ced65aaef  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 2010 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '2010,' 'current size' "$shar_count!"
+    test 2006 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2006,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -210,26 +210,26 @@ We'll first take a look at the server side.  As usual with
 co-operating applications, you need the server up and running first.
 In the case of shared memory applications, the server will create the
 shared memory segment.  In this example, it will also remove the
-segment when done.  It is important to realize though that the segment 
+segment when done.  It is important to realize though that the segment
 can be created external to your application and can persist beyond
 it's lifetime.  In fact, you can use shared memory to create a layer
 of persistence between application instances (at least, until the
 machine comes down.)
 <HR>
 SHAR_EOF
-  $shar_touch -am 0403170299 'page02.pre' &&
+  $shar_touch -am 03191459100 'page02.pre' &&
   chmod 0664 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page02.pre:' 'MD5 check failed'
-e6c9fee2eb20324a2f0504fb1c687ddd  page02.pre
+c879cf850b3141d673c5c56e98a80e16  page02.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
-    test 563 -eq "$shar_count" ||
-    $echo 'page02.pre:' 'original size' '563,' 'current size' "$shar_count!"
+    test 562 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '562,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page03.pre ==============
@@ -238,24 +238,24 @@ if test -f 'page03.pre' && test "$first_param" != -c; then
 else
   $echo 'x -' extracting 'page03.pre' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page03.pre' &&
-The client app looks much like the server.  We could have included the 
-CREATE flag with no ill effects but note the use of close() instead of 
+The client app looks much like the server.  We could have included the
+CREATE flag with no ill effects but note the use of close() instead of
 remove().  Picking the correct detachment method is rather important!
 <HR>
 SHAR_EOF
-  $shar_touch -am 1228160398 'page03.pre' &&
+  $shar_touch -am 03191459100 'page03.pre' &&
   chmod 0664 'page03.pre' ||
   $echo 'restore of' 'page03.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page03.pre:' 'MD5 check failed'
-d7658702d31436f5124bf4dbec330e69  page03.pre
+a244be660bba913fe08d218180cefca5  page03.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pre'`"
-    test 219 -eq "$shar_count" ||
-    $echo 'page03.pre:' 'original size' '219,' 'current size' "$shar_count!"
+    test 217 -eq "$shar_count" ||
+    $echo 'page03.pre:' 'original size' '217,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page04.pre ==============
@@ -264,7 +264,7 @@ if test -f 'page04.pre' && test "$first_param" != -c; then
 else
   $echo 'x -' extracting 'page04.pre' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page04.pre' &&
-X      Before we move on to shmem.h, I want to show a different approach.  In 
+X      Before we move on to shmem.h, I want to show a different approach.  In
 X      this new client/server pair, I use placement new to stuff an object
 X      (instead of a blob of bytes) into the shared memory segment.
 X    <P>
@@ -273,26 +273,26 @@ X      most important ones all deal with pointers:
 X    <ul>
 X      <li>Be sure your pointers point into the shared memory and not
 X        local process memory.
-X      <li>Only in very special cases will objects with virtual methods 
+X      <li>Only in very special cases will objects with virtual methods
 X        work (because of the VTable pointers).
 X    </ul>
 <P>
 That's not to say you shouldn't try...  Just try carefully and test a lot!
 X    <HR>
 SHAR_EOF
-  $shar_touch -am 1228160798 'page04.pre' &&
+  $shar_touch -am 03191459100 'page04.pre' &&
   chmod 0664 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page04.pre:' 'MD5 check failed'
-f34318496f39858e4ddadebe5647dfd2  page04.pre
+721c4a100d908d9d62c9d98950ace482  page04.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pre'`"
-    test 676 -eq "$shar_count" ||
-    $echo 'page04.pre:' 'original size' '676,' 'current size' "$shar_count!"
+    test 674 -eq "$shar_count" ||
+    $echo 'page04.pre:' 'original size' '674,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page05.pre ==============
@@ -306,7 +306,7 @@ X      placement-new client and server so that the SharedData object
 X      would have some relevance.
 X    <HR>
 SHAR_EOF
-  $shar_touch -am 1228162198 'page05.pre' &&
+  $shar_touch -am 03191459100 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -339,7 +339,7 @@ X      <li><A HREF="shmem.cpp">shmem.cpp</A>
 X      <li><A HREF="Makefile">Makefile</A>
 X    </ul>
 SHAR_EOF
-  $shar_touch -am 1228162998 'page06.pre' &&
+  $shar_touch -am 03191459100 'page06.pre' &&
   chmod 0664 'page06.pre' ||
   $echo 'restore of' 'page06.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -354,5 +354,5 @@ SHAR_EOF
     $echo 'page06.pre:' 'original size' '401,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh05234
+rm -fr _sh00389
 exit 0

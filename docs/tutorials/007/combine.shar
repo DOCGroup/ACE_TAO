@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/007'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,15 +13,15 @@
 # ------ ---------- ------------------------------------------
 #    576 -rw-rw-r-- hdr
 #    123 -rw-rw-r-- bodies
-#   3386 -rw-rw-r-- page01.pre
+#   3383 -rw-rw-r-- page01.pre
 #     87 -rw-rw-r-- page02.pre
 #    120 -rw-rw-r-- page03.pre
 #    171 -rw-rw-r-- page04.pre
 #    105 -rw-rw-r-- page05.pre
 #    160 -rw-rw-r-- page06.pre
 #    340 -rw-rw-r-- page07.pre
-#    378 -rw-rw-r-- page08.pre
-#   2071 -rw-rw-r-- page09.pre
+#    377 -rw-rw-r-- page08.pre
+#   2070 -rw-rw-r-- page09.pre
 #    173 -rw-rw-r-- page02.pst
 #    116 -rw-rw-r-- page03.pst
 #    106 -rw-rw-r-- page04.pst
@@ -74,7 +74,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh04829; then
+if mkdir _sh32447; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -101,7 +101,7 @@ X
 <CENTER><B><FONT SIZE=+2>Creating a thread-pool server</FONT></B></CENTER>
 <HR>
 SHAR_EOF
-  $shar_touch -am 0121152699 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -205,7 +205,7 @@ threads in the pool. Also, the ACE_Guard class has been used to provide
 thread-safe counter-incrementation and destruction of the Message_Blocks
 of the thread-pool. This class guards the critical section region by
 acquiring the mutex lock on creation and releasing it as soon as it goes
-out of scope. 
+out of scope.
 <P>
 Note: a sleep period before all the threads in the pool exit is
 necessary for complete destruction of the thread pool.
@@ -215,24 +215,24 @@ thread-pool strategy and how it can be managed using the ACE_Task class,
 which provides an OO approach to thread-creation and implementation.
 </UL>
 <font size=-1>* The additions to this tutorial make use of
-ACE_Message_Queue which is discussed in depth in 
-<A HREF="../010/page01.html">Tutorial 10</A>.  Feel free to read ahead 
+ACE_Message_Queue which is discussed in depth in
+<A HREF="../010/page01.html">Tutorial 10</A>.  Feel free to read ahead
 if you get lost in the message queue stuff.
 </font>
 SHAR_EOF
-  $shar_touch -am 0124153799 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-b38f0bc755d9398afbf71fd8261fdb9b  page01.pre
+0bd3a7ce4fbd16691109b32892c3a864  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 3386 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '3386,' 'current size' "$shar_count!"
+    test 3383 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '3383,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -245,7 +245,7 @@ else
 <BR>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0121152699 'page02.pre' &&
+  $shar_touch -am 03191459100 'page02.pre' &&
   chmod 0664 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -272,7 +272,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0121152699 'page03.pre' &&
+  $shar_touch -am 03191459100 'page03.pre' &&
   chmod 0664 'page03.pre' ||
   $echo 'restore of' 'page03.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -300,7 +300,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0121152699 'page04.pre' &&
+  $shar_touch -am 03191459100 'page04.pre' &&
   chmod 0664 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -328,7 +328,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0121152699 'page05.pre' &&
+  $shar_touch -am 03191459100 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -357,7 +357,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0121152699 'page06.pre' &&
+  $shar_touch -am 03191459100 'page06.pre' &&
   chmod 0664 'page06.pre' ||
   $echo 'restore of' 'page06.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -387,7 +387,7 @@ X
 <HR WIDTH="100%"><FONT FACE="Arial,Helvetica"></FONT>
 X
 SHAR_EOF
-  $shar_touch -am 0121152699 'page07.pre' &&
+  $shar_touch -am 03191459100 'page07.pre' &&
   chmod 0664 'page07.pre' ||
   $echo 'restore of' 'page07.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -414,24 +414,24 @@ where we have the Thread_Pool object implementation.
 <P>
 Remember back in <A HREF="../006/page01.html">Tutorial 6</A> when I
 X      was talking about <i>THR_NEW_LWP</i>?  Look closely and you'll
-X      see it here.  It's bitwise OR'd with <i>THR_DETACHED</i> just to 
+X      see it here.  It's bitwise OR'd with <i>THR_DETACHED</i> just to
 X      keep things interesting.
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0921222899 'page08.pre' &&
+  $shar_touch -am 03191459100 'page08.pre' &&
   chmod 0664 'page08.pre' ||
   $echo 'restore of' 'page08.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page08.pre:' 'MD5 check failed'
-57908face42dc1aeef042433e6877213  page08.pre
+09c4d5adcd767080e64649a01bd0957c  page08.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page08.pre'`"
-    test 378 -eq "$shar_count" ||
-    $echo 'page08.pre:' 'original size' '378,' 'current size' "$shar_count!"
+    test 377 -eq "$shar_count" ||
+    $echo 'page08.pre:' 'original size' '377,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page09.pre ==============
@@ -482,7 +482,7 @@ X
 <HR WIDTH="100%">
 <P>
 <center><h2>Danger, Warning!</h2></center>
-Now that I've gone through all of this to create a thread pool server, 
+Now that I've gone through all of this to create a thread pool server,
 I have to point out that this isn't exactly the best or safest way to
 do so.  The biggest danger we face with this approach is the
 possibility of an event handler existing in the thread pool's message
@@ -502,19 +502,19 @@ setup but results in a cleaner implementation.  Again, I've not had
 time to develop a Tutorial on the TP_Reactor but would welcome any
 contributions.
 SHAR_EOF
-  $shar_touch -am 0121152599 'page09.pre' &&
+  $shar_touch -am 03191459100 'page09.pre' &&
   chmod 0664 'page09.pre' ||
   $echo 'restore of' 'page09.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page09.pre:' 'MD5 check failed'
-74f66ca26c13797dcf3f8c3132bfe580  page09.pre
+8649089f4b28456c033dede0e32276a8  page09.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page09.pre'`"
-    test 2071 -eq "$shar_count" ||
-    $echo 'page09.pre:' 'original size' '2071,' 'current size' "$shar_count!"
+    test 2070 -eq "$shar_count" ||
+    $echo 'page09.pre:' 'original size' '2070,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pst ==============
@@ -530,7 +530,7 @@ on the stuff I don't change.&nbsp; Let's take a look at client_acceptor.h.
 X
 <P>
 SHAR_EOF
-  $shar_touch -am 0121152899 'page02.pst' &&
+  $shar_touch -am 03191459100 'page02.pst' &&
   chmod 0664 'page02.pst' ||
   $echo 'restore of' 'page02.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -557,7 +557,7 @@ X
 are informational.
 X
 SHAR_EOF
-  $shar_touch -am 0121152699 'page03.pst' &&
+  $shar_touch -am 03191459100 'page03.pst' &&
   chmod 0664 'page03.pst' ||
   $echo 'restore of' 'page03.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -584,7 +584,7 @@ X
 X
 <P>
 SHAR_EOF
-  $shar_touch -am 0121152699 'page04.pst' &&
+  $shar_touch -am 03191459100 'page04.pst' &&
   chmod 0664 'page04.pst' ||
   $echo 'restore of' 'page04.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -612,7 +612,7 @@ the thread pool.&nbsp; That's a good thing! You don't want to go turning
 your application upside down just because you changed thread models.
 X
 SHAR_EOF
-  $shar_touch -am 0121152899 'page05.pst' &&
+  $shar_touch -am 03191459100 'page05.pst' &&
   chmod 0664 'page05.pst' ||
   $echo 'restore of' 'page05.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -640,7 +640,7 @@ to do work and when to enqueue itself.&nbsp; Beyond that, we're still about
 the same.
 X
 SHAR_EOF
-  $shar_touch -am 0121152699 'page06.pst' &&
+  $shar_touch -am 03191459100 'page06.pst' &&
   chmod 0664 'page06.pst' ||
   $echo 'restore of' 'page06.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -666,7 +666,7 @@ X
 <P>Well, that doesn't look too complex.&nbsp; What about the implementation?
 X
 SHAR_EOF
-  $shar_touch -am 0121152699 'page07.pst' &&
+  $shar_touch -am 03191459100 'page07.pst' &&
   chmod 0664 'page07.pst' ||
   $echo 'restore of' 'page07.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -681,5 +681,5 @@ SHAR_EOF
     $echo 'page07.pst:' 'original size' '97,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh04829
+rm -fr _sh32447
 exit 0

@@ -180,6 +180,8 @@ int
 Client_Handler::process (char *rdbuf,
                          int rdbuf_len)
 {
+    ssize_t bytes_read = -1;
+
   /* Using the buffer provided for us, we read the data from the
      client. If there is a read error (eg -- recv() returns -1) then
      it's a pretty good bet that the connection is gone.  Likewise, if
@@ -190,7 +192,7 @@ Client_Handler::process (char *rdbuf,
 
      On the other hand, if we got some data then we can display it in
      a debug message for everyone to see.  */
-  switch (this->peer ().recv (rdbuf, rdbuf_len))
+    switch ( (bytes_read = this->peer ().recv (rdbuf, rdbuf_len)) )
     {
     case -1: // Complain and leave
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -203,6 +205,8 @@ Client_Handler::process (char *rdbuf,
                          this->get_handle ()),
                         -1);
     default: // Show the data
+        // NULL-terminate the string before printing it.
+      rdbuf[bytes_read] = 0;
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) from client: %s",
                   rdbuf));

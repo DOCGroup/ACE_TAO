@@ -71,10 +71,11 @@ main (int argc, char *argv[])
                           argc > 1 ? argv[1] : default_signature))
         {
           <font color=red>/* If the client didn't say something we like then log it
-            *and move on.  /
+           * and move on.
+           */</font>
           ACE_DEBUG ((LM_DEBUG,
-		      "<font color=green>(%P|%t) Client query does not match our signature (%s).  Response not sent.\n</font>",
-		      argc > 1 ? argv[1] : default_signature));
+          "<font color=green>(%P|%t) Client query does not match our signature (%s).  Response not sent.\n</font>",
+          argc > 1 ? argv[1] : default_signature));
         }
       else
         {
@@ -108,3 +109,4 @@ main (int argc, char *argv[])
 
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page03.html">Continue This Tutorial</A>]</CENTER>
+

@@ -105,10 +105,14 @@ Test_T&lt;MUTEX>::send (ACE_Message_Block *message)
 {
   <font color=red>// If no message was provided, create a hangup message.</font>
   if (message == 0)
+  {
+    <font color=#008888>ACE_Message_Block::ACE_Message_Type</font> mb_hangup =
+        <font color=#008888>ACE_Message_Block::MB_HANGUP</font> ;
+
     ACE_NEW_RETURN (message,
-                    ACE_Message_Block (0,
-                                       <font color=#008888>ACE_Message_Block::MB_HANGUP</font>),
+                    ACE_Message_Block (0, mb_hangup),
                     -1);
+  }
 
   <font color=red>// Use the duplicate() method when sending the message.  For this</font>
   <font color=red>// simple application, that may be overkill but it's a good habit.</font>
@@ -222,3 +226,4 @@ Test_T&lt;MUTEX>::svc (void)
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page05.html">Continue This Tutorial</A>]</CENTER>
+

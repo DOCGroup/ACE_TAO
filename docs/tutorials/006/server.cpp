@@ -36,6 +36,9 @@ static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 int
 main (int argc, char *argv[])
 {
+  ACE_UNUSED_ARG(argc);
+  ACE_UNUSED_ARG(argv);
+
   /* In our earlier servers, we used a global pointer to get to the
     reactor. I've never really liked that idea, so I've moved it into
     main() this time. When we get to the Client_Handler object you'll

@@ -2,6 +2,7 @@
 // $Id$
 
 #include "Protocol_Task.h"
+#include "ace/ACE.h"
 
 // Construct the object and remember the thread count.
 Protocol_Task::Protocol_Task(void)
@@ -23,6 +24,7 @@ int Protocol_Task::open(void *arg)
 
 int Protocol_Task::close(u_long flags)
 {
+    ACE_UNUSED_ARG(flags);
     return 0;
 }
 
@@ -63,11 +65,15 @@ int Protocol_Task::process(ACE_Message_Block * message, ACE_Time_Value *timeout)
 int Protocol_Task::send(ACE_Message_Block *message,
                         ACE_Time_Value *timeout)
 {
+    ACE_UNUSED_ARG(message);
+    ACE_UNUSED_ARG(timeout);
     return -1;
 }
 
 int Protocol_Task::recv(ACE_Message_Block * message,
                         ACE_Time_Value *timeout)
 {
+    ACE_UNUSED_ARG(message);
+    ACE_UNUSED_ARG(timeout);
     return -1;
 }

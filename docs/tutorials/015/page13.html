@@ -24,6 +24,7 @@ only need one or two additional to do any real work.
 <font color=red>// $Id$</font>
 
 <font color=blue>#include</font> "<font color=green>Protocol_Task.h</font>"
+<font color=blue>#include</font> "<A HREF="../../../ace/ACE.h">ace/ACE.h</A>"
 
 <font color=red>// Construct the object and remember the thread count.</font>
 <font color=#008888>Protocol_Task::Protocol_Task</font>(void)
@@ -45,6 +46,7 @@ int <font color=#008888>Protocol_Task::open</font>(void *arg)
 
 int <font color=#008888>Protocol_Task::close</font>(u_long flags)
 {
+    ACE_UNUSED_ARG(flags);
     return 0;
 }
 
@@ -85,14 +87,19 @@ int <font color=#008888>Protocol_Task::process</font>(ACE_Message_Block * messag
 int <font color=#008888>Protocol_Task::send</font>(ACE_Message_Block *message,
                         ACE_Time_Value *timeout)
 {
+    ACE_UNUSED_ARG(message);
+    ACE_UNUSED_ARG(timeout);
     return -1;
 }
 
 int <font color=#008888>Protocol_Task::recv</font>(ACE_Message_Block * message,
                         ACE_Time_Value *timeout)
 {
+    ACE_UNUSED_ARG(message);
+    ACE_UNUSED_ARG(timeout);
     return -1;
 }
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page14.html">Continue This Tutorial</A>]</CENTER>
+

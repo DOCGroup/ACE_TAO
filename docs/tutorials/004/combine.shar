@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/004'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,8 +13,8 @@
 # ------ ---------- ------------------------------------------
 #    591 -rw-rw-r-- hdr
 #     18 -rw-rw-r-- bodies
-#    702 -rw-rw-r-- page01.pre
-#    961 -rw-rw-r-- page01.pst
+#    701 -rw-rw-r-- page01.pre
+#    959 -rw-rw-r-- page01.pst
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -61,7 +61,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh04745; then
+if mkdir _sh32365; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -91,7 +91,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0117142999 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -147,25 +147,25 @@ Kirthika says:
 <UL>
 The cool thing about this "cooler" client is how we use a C++ trick for
 streaming incoming data by using the operator<<() method. Also the
-Connector portion is wrapped in the open() method which now takes in the 
+Connector portion is wrapped in the open() method which now takes in the
 server hostname and port. The result is a cleaner looking client which
 successfully interacts with the server when connection is established.
 </UL>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0124114799 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-b1fef664f58233e14943041ed2765830  page01.pre
+c0f522e5dbdca1211121476939bb2eaf  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 702 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '702,' 'current size' "$shar_count!"
+    test 701 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '701,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page01.pst ==============
@@ -180,9 +180,9 @@ X
 so hard to create an object that makes sending data much more "natural"
 than the typical send() or send_n() invocation.  You can even build
 up arbitrary objects and do some neat tricks with C++ templates to stream
-their data out as well.  (We may go into that a little later.) 
+their data out as well.  (We may go into that a little later.)
 Of course, writting the full implementation such that these streams are
-interchangable with the standard C++ ostreams is quite a bit more difficult. 
+interchangable with the standard C++ ostreams is quite a bit more difficult.
 In addition, there are a lot of optimizations that this client would benefit
 from!
 X
@@ -197,20 +197,20 @@ settings</A>.
 X
 <P>
 SHAR_EOF
-  $shar_touch -am 0124114999 'page01.pst' &&
+  $shar_touch -am 03191459100 'page01.pst' &&
   chmod 0664 'page01.pst' ||
   $echo 'restore of' 'page01.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pst:' 'MD5 check failed'
-63a7bcf418c9dd35d92caa17a6a4af7b  page01.pst
+82999856145d3dfa74ebbda7e98eb4b2  page01.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pst'`"
-    test 961 -eq "$shar_count" ||
-    $echo 'page01.pst:' 'original size' '961,' 'current size' "$shar_count!"
+    test 959 -eq "$shar_count" ||
+    $echo 'page01.pst:' 'original size' '959,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh04745
+rm -fr _sh32365
 exit 0

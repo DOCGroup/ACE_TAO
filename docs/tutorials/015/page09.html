@@ -52,7 +52,7 @@ public:
 protected:
 
         <font color=red>// recv() is invoked after received data has been fully</font>
-        <font color=red>// processed by the protocol rules.  Data processing typically </font>
+        <font color=red>// processed by the protocol rules.  Data processing typically</font>
         <font color=red>// done in handle_input() can then be done here.</font>
      int recv(ACE_Message_Block * message,
               ACE_Time_Value *timeout = 0);
@@ -102,7 +102,7 @@ int <font color=#008888>Handler::open</font> (void *)
         ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>(%P|%t) Cannot open the protocol stream.\n</font>"), -1);
     }
 
-        <font color=red>// Now that we know the client is valid and that the stream is </font>
+        <font color=red>// Now that we know the client is valid and that the stream is</font>
         <font color=red>// ready for business we can register with the gloabl reactor</font>
         <font color=red>// instance.  Here again is an opportunity for improvement if</font>
         <font color=red>// we expect to have mulitple Server object instances.</font>
@@ -134,7 +134,7 @@ int <font color=#008888>Handler::close</font> (u_long)
     return 0;
 }
 
-int <font color=#008888>Handler::handle_close</font>(ACE_HANDLE, ACE_Reactor_Mask _mask)
+int <font color=#008888>Handler::handle_close</font>(ACE_HANDLE, ACE_Reactor_Mask)
 {
     this->destroy();
     return 0;
@@ -224,3 +224,4 @@ we do here's the list of server files if you want to review:
 <P>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page10.html">Continue This Tutorial</A>]</CENTER>
+
