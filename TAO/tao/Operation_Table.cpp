@@ -26,20 +26,17 @@ ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>::hash (co
 
 TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry *db,
 						    CORBA::ULong dbsize,
-						    CORBA::ULong hashtblsize)
+						    CORBA::ULong hashtblsize,
+                                                    ACE_Allocator *alloc)
+  : hash_ (hashtblsize, alloc);
 {
-  if (hashtblsize > 0)
-    this->hash_.open (hashtblsize);
-  // Otherwise, some default is chosen by the ACE_Hash_Map_Manager
-  // class
-
   // The job of the constructor is to go thru each entry of the
   // database and bind the operation name to its corresponding
   // skeleton.
 
-  for (CORBA::ULong i=0; i < dbsize; i++)
+  for (CORBA::ULong i = 0; i < dbsize; i++)
     // @@ (ASG): what happens if bind fails ???
-    (void)this->bind (db[i].opname_, db[i].skel_ptr_);
+    (void) this->bind (db[i].opname_, db[i].skel_ptr_);
 }
 
 TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable (void)
