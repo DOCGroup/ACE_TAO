@@ -4,8 +4,8 @@ Wed Mar  8 17:26:22 2000  Ossama Othman  <ossama@uci.edu>
 
 	  Fixed memory leaks related to lack of deallocation of variables
 	  that were initialized with static strings, and then
-	  reinitialized them with a string that were dynamically
-	  allocated.  [Bug 334]
+	  reinitialized with strings that were dynamically allocated.
+	  [Bug 334]
 
 Tue Feb 22 18:25:02 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
