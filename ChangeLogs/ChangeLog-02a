@@ -1,11 +1,20 @@
+Wed Oct 10 16:56:18 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/SOCK_Dgram_Mcast.cpp:
+	  Reverted the following change as it ended up with some problems
+	  for multicast services.
+
+          Fri Oct  5 14:40:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+
 Wed Oct 10 06:16:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
         * ace/Activation_Queue.{h,cpp}: Added support for two ACE_Allocator that
 	  will control how the message blocks and data blocks are
  	  allocated.  Thanks to Gil Rapaport <grapaport@comgates.co.il>
- 	  for contributing this.	
-  
-	* examples/Reactor/WFMO_Reactor/test_apc.cpp (main): 
+ 	  for contributing this.
+
+	* examples/Reactor/WFMO_Reactor/test_apc.cpp (main):
 	* examples/Reactor/WFMO_Reactor/test_abandoned.cpp (main): Don't
 	  use a global Event_Handler since this violates the design rules
  	  for the ACE_Reactor.  Thanks to Heping He
