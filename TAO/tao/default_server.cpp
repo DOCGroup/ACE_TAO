@@ -54,7 +54,7 @@ TAO_Default_Server_Strategy_Factory::create_poa_lock (void)
                       0);
       break;
     }
-  
+
   return the_lock;// Just to make sure we return something
 }
 
@@ -78,8 +78,25 @@ TAO_Default_Server_Strategy_Factory::create_poa_mgr_lock (void)
                       0);
       break;
     }
-  
+
   // Just to make sure we return something.
+  return the_lock;
+}
+
+ACE_Lock *
+TAO_Default_Server_Strategy_Factory::create_servant_lock (void)
+{
+  ACE_Lock *the_lock = 0;
+
+  if (this->concurrency_strategy_ == &this->reactive_strategy_)
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<ACE_Null_Mutex> (),
+                      0);
+  else
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<ACE_Thread_Mutex> (),
+                      0);
+
   return the_lock;
 }
 
@@ -138,7 +155,7 @@ void
 TAO_Default_Server_Strategy_Factory::tokenize (char *flag_string)
 {
   char *lasts = 0;
-  
+
   for (char *flag = ACE_OS::strtok_r (flag_string, "|", &lasts);
        flag != 0;
        flag = ACE_OS::strtok_r (0, "|", &lasts))
