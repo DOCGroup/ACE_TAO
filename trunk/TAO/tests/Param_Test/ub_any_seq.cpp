@@ -107,7 +107,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
           break;
         case 1:
           {
-            char *str = gen->gen_string ();
+            CORBA::String_var str = gen->gen_string ();
             if (TAO_debug_level > 0)
               ACE_DEBUG ((LM_DEBUG,
                           "setting string = %s\n", str));
@@ -174,7 +174,7 @@ Test_AnySeq::reset_parameters (void)
           break;
         case 1:
           {
-            char *str = gen->gen_string ();
+            CORBA::String_var str = gen->gen_string ();
             this->in_[i] <<= str;
             this->inout_[i] <<= str;
           }

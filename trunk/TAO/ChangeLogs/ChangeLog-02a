@@ -1,103 +1,118 @@
+Sun Mar 18 12:34:44 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Sequence.i:
+          Fixed memory leak on bounded sequences.  This changed fixed
+          many a problem in Param_Test, but not all of them.
+
+        * tests/Param_Test/ub_any_seq.cpp:
+          Use CORBA::String_var to automatically deallocate memory
+          returned by the random string generation utility.
+
+        * orbsvcs/examples/CosEC/Simple/Makefile:
+        * orbsvcs/examples/Log/Client/Makefile:
+        * orbsvcs/examples/Notify/Filter/Makefile:
+          More QNX related fixes.
+
 Sun Mar 18 12:22:08 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (pre_init):
+        * orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (pre_init):
 
-	  Corrected debugging message to display "pre_init()" instead of
-	  "post_init()."
+          Corrected debugging message to display "pre_init()" instead of
+          "post_init()."
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp (TAO_SSLIOP_Current):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.inl (tss_slot):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp (TAO_SSLIOP_Current):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.inl (tss_slot):
 
-	  Added method to set the TSS slot ID assigned to the
-	  "SSLIOPCurrent" object.  The constructor no longer accepts a TSS
-	  slot ID parameter.
+          Added method to set the TSS slot ID assigned to the
+          "SSLIOPCurrent" object.  The constructor no longer accepts a TSS
+          slot ID parameter.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp (post_init):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp (post_init):
 
-	  Moved call to "this->get_tss_slot_id()" from the pre_init()
-	  method to the post_init() method.  This was necessary to get
-	  around "order of initialization" restrictions imposed by the
-	  PortableInterceptor::ORBInitInfo object,
-	  i.e. resolve_initial_references() cannot be called from within
-	  pre_init().
+          Moved call to "this->get_tss_slot_id()" from the pre_init()
+          method to the post_init() method.  This was necessary to get
+          around "order of initialization" restrictions imposed by the
+          PortableInterceptor::ORBInitInfo object,
+          i.e. resolve_initial_references() cannot be called from within
+          pre_init().
 
 Sun Mar 18 13:24:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Cache_Entries.inl: Fixed a warning with Tru64 builds. 
+        * tao/Cache_Entries.inl: Fixed a warning with Tru64 builds.
 
 Sun Mar 18 10:40:32 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Static.dsp:
+        * tao/TAO_Static.dsp:
 
-	  Removed apparently incorrect references to
-	  Transport_Connection_Property.cpp.  Whoever updated this file
-	  didn't do any testing.  Strike one, whoever you are!
+          Removed apparently incorrect references to
+          Transport_Connection_Property.cpp.  Whoever updated this file
+          didn't do any testing.  Strike one, whoever you are!
 
-	  Added missing files `Base_Transport_Property.*' to this project
-	  file.
+          Added missing files `Base_Transport_Property.*' to this project
+          file.
 
 Sun Mar 18 08:53:34 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Security/Security_Current_Impl.h:
+        * orbsvcs/orbsvcs/Security/Security_Current_Impl.h:
 
-	  Export the TAO_Security_Current_Impl class on MS Windows
-	  builds.  Fixes a link-time "unresolved symbol" error.
+          Export the TAO_Security_Current_Impl class on MS Windows
+          builds.  Fixes a link-time "unresolved symbol" error.
 
-	* orbsvcs/orbsvcs/Makefile.SSLIOP: 
-	* orbsvcs/orbsvcs/SSLIOP.bor:
-	* orbsvcs/orbsvcs/SSLIOP.dsp:
+        * orbsvcs/orbsvcs/Makefile.SSLIOP:
+        * orbsvcs/orbsvcs/SSLIOP.bor:
+        * orbsvcs/orbsvcs/SSLIOP.dsp:
 
-	  Don't bother compiling SSLIOPS.cpp.  It is empty since
-	  SSLIOP.idl does not define remote interfaces.
+          Don't bother compiling SSLIOPS.cpp.  It is empty since
+          SSLIOP.idl does not define remote interfaces.
 
 Sat Mar 17 19:36:02 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/PluggableUDP/tests/{client,server}.cpp: Changed "true" to 1 
-	  and "false" to 0 to work on compiler platforms that don't
- 	  support bool.  Thanks to Craig Rodrigues for suggesting this
- 	  fix.
+        * examples/PluggableUDP/tests/{client,server}.cpp: Changed "true" to 1
+          and "false" to 0 to work on compiler platforms that don't
+          support bool.  Thanks to Craig Rodrigues for suggesting this
+          fix.
 
 Sun Mar 18 02:43:41 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Security.dsp:
-	* orbsvcs/orbsvcs/Security.bor:
+        * orbsvcs/orbsvcs/Security.dsp:
+        * orbsvcs/orbsvcs/Security.bor:
 
-	  Added new Security Level 1 related files to the source lists in
-	  these files.
+          Added new Security Level 1 related files to the source lists in
+          these files.
 
 Sun Mar 18 01:53:42 2001  Ossama Othman  <ossama@uci.edu>
 
-	* Security/Security_Current.cpp:
-	* Security/Security_Current.h:
-	* Security/Security_Current.inl:
-	* Security/Security_Current_Impl.cpp:
-	* Security/Security_Current_Impl.h:
-	* Security/Security_ORBInitializer.cpp:
-	* Security/Security_ORBInitializer.h:
+        * Security/Security_Current.cpp:
+        * Security/Security_Current.h:
+        * Security/Security_Current.inl:
+        * Security/Security_Current_Impl.cpp:
+        * Security/Security_Current_Impl.h:
+        * Security/Security_ORBInitializer.cpp:
+        * Security/Security_ORBInitializer.h:
 
-	  New Security Level 1 implementation.
+          New Security Level 1 implementation.
 
-	* SSLIOP/SSLIOP_Connection_Handler.cpp:
-	* SSLIOP/SSLIOP_Current.cpp:
-	* SSLIOP/SSLIOP_Current.inl:
-	* SSLIOP/SSLIOP_Current_Impl.cpp:
-	* SSLIOP/SSLIOP_Current_Impl.h:
-	* SSLIOP/SSLIOP_Factory.cpp:
-	* SSLIOP/SSLIOP_Factory.h:
-	* SSLIOP/SSLIOP_ORBInitializer.cpp:
-	* SSLIOP/SSLIOP_ORBInitializer.h:
+        * SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * SSLIOP/SSLIOP_Current.cpp:
+        * SSLIOP/SSLIOP_Current.inl:
+        * SSLIOP/SSLIOP_Current_Impl.cpp:
+        * SSLIOP/SSLIOP_Current_Impl.h:
+        * SSLIOP/SSLIOP_Factory.cpp:
+        * SSLIOP/SSLIOP_Factory.h:
+        * SSLIOP/SSLIOP_ORBInitializer.cpp:
+        * SSLIOP/SSLIOP_ORBInitializer.h:
 
-	  Updates to support Security Level 1 (via SSLIOP security
-	  mechanism).
+          Updates to support Security Level 1 (via SSLIOP security
+          mechanism).
 
-	* Makefile.Security:
+        * Makefile.Security:
 
-	  Added new Security Level 1 implementation to the source list.
+          Added new Security Level 1 implementation to the source list.
 
-	* Makefile.SSLIOP:
+        * Makefile.SSLIOP:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Sat Mar 17 14:33:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
