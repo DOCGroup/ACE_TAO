@@ -3764,6 +3764,7 @@ public:
 		     const char *t);
   static char *strcpy (char *s,
 		       const char *t);
+  static char *strpbrk (const char *s1, const char *s2);
   static size_t strspn(const char *s1,
 		       const char *s2);
   static char *strstr (const char *s,
