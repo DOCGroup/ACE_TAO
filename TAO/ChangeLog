@@ -1,3 +1,15 @@
+Tue Aug 17 11:40:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        
+          Added generation of '\n' as the very last thing that
+          happens in each generated file, to make absolutely
+          sure every file ends with a newline (required by CVS
+          and some compilers). Thanks to 
+          Markus Stenberg <markus.stenberg@conformiq.com> for
+          reporting the problem in *S.inl when -Sp (suppression
+          of thru-POA collocation code) is in effect.
+
 Mon Aug 16 23:56:21 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/FtRtEvent.mpc:
