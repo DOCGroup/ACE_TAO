@@ -1,3 +1,11 @@
+Wed Oct 20 00:28:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp (start_client_header): 
+	  When compiling IDL with the -in option the include of
+ 	  ace/streams.h was still using "" instead of <>, which caused
+ 	  issues with make dependency generators.  Thanks to Chris 
+	  Kohlhoff <chris@kohlhoff.com> for this fix.
+
 Tue Oct 19 19:15:06 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* docs/releasenotes/index.html:
