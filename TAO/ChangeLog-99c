@@ -1,3 +1,11 @@
+Thu May 20 11:06:25 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
+	  Fixed a bug in parsing QOS parameters - thanks to Paul Calabrese
+	  <calabrese_p@ociweb.com> for reporting this and providing a fix.
+	* orbsvcs/orbsvcs/CosEC_Utility_Methods_T.cpp:
+	  removed an extra ";"
+
 Wed May 19 18:14:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
