@@ -13281,7 +13281,7 @@ Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
         * ace/ACE: Added a simple dirname() wrapper method.
 
         * ace/SString: The set(const char *, size_t, int = 1) and
-          set(const char *, size_t) methods were inherently ambiguous.
+          set(const char *, int) methods were inherently ambiguous.
           I've fixed this by changing removing the default parameters.
           Thanks to Irfan for suggesting this fix.
 
