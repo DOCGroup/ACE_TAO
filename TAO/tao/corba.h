@@ -218,11 +218,7 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/Any.i"
 #include "tao/Stub.i"
 #include "tao/Object.i"
-#endif /* 0 */
-
 #include "tao/ORB.i"
-
-#if 0 /* These are now #included by their .h/.cpp files. */
 #include "tao/Marshal.i"
 #endif /* 0 */
 
