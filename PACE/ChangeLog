@@ -1,3 +1,7 @@
+Sat Jul 29 09:39:24 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/mqueue_test.c: added $Id$.
+
 Sat Jul 29 09:31:59 2000  David L. Levine <levine@cs.wustl.edu>
 
         * tests/mqueue_test.c: got it to compile cleanly on OSF1,
