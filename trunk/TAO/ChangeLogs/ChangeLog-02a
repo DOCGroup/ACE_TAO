@@ -1,3 +1,9 @@
+Sun Apr  2 12:43:59 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/examples/Notify/Filter/Makefile:
+	* orbsvcs/examples/Notify/Subscribe/Makefile:
+	  Add more missing libraries to the LDLIBS macro
+
 Sun Apr  2 12:14:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile.ETCL:
