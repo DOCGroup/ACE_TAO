@@ -1,10 +1,10 @@
 //$Id$
 
-project (Config_Handlers) : acelib, ciao_deployment_stub {
+project (XSC_Config_Handlers) : acelib, ciao_deployment_stub {
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
-  requires += exceptions dummy_label
+  requires += exceptions 
   includes += $(XERCESCROOT)/include  .
   libpaths += $(XERCESCROOT)/lib
   libs     += xerces-c
@@ -62,7 +62,7 @@ project (XSC_Config_Handlers_Tests) : ciao_deployment_stub {
   
   // requires += dummy_label
   exename = test
-  after    += Config_Handlers
+  after    += XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
   requires += exceptions
