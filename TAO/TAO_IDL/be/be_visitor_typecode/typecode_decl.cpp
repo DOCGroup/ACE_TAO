@@ -46,8 +46,8 @@ be_visitor_typecode_decl::visit_type (be_type *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Generate the typecode decl.
-  char *prefix = 0;
-  char *postfix = 0;
+  const char *prefix = 0;
+  const char *postfix = 0;
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DECL)
     {

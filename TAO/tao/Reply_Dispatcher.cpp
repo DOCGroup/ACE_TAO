@@ -2,6 +2,7 @@
 
 #include "tao/Reply_Dispatcher.h"
 #include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Reply_Dispatcher.i"
@@ -29,13 +30,15 @@ TAO_Reply_Dispatcher::message_state (void) const
 // {
 //   return reply_received_;
 // }
- 
+
 // *********************************************************************
 
 // Constructor.
-TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (void)
+TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core)
   : message_state_ (0),
-    reply_cdr_ (0)
+    reply_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
+                TAO_ENCAP_BYTE_ORDER,
+                orb_core)
 {
 }
 
@@ -64,16 +67,9 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   TAO_GIOP_ServiceContext* context_list = reply_ctx.get_buffer (1);
   this->reply_ctx_.replace (max, len, context_list, 1);
 
-  // @@ Unnecessary copying should be avoided here (Alex).
-  // @@ Carlos: I am confused about implementing this one. In the
-  //    MUXED TMS, this mess state is going to get deleted, as soon as
-  //    we return from here. So we need to save the CDR. But in the
-  //    Exclusive case, the message state will be there. So, how do we
-  //    correctly own the CDR here? (Alex).
-  ACE_NEW_RETURN (this->reply_cdr_,
-                  TAO_InputCDR (message_state->cdr.steal_contents ()),
-                  0);
-  
+  // Steal the buffer so that no copying is done.
+  this->reply_cdr_.reset (message_state->cdr.steal_contents (),
+                          message_state->cdr.byte_order ());
   return 0;
 }
 
@@ -84,9 +80,9 @@ TAO_Synch_Reply_Dispatcher::message_state (void) const
 }
 
 TAO_InputCDR &
-TAO_Synch_Reply_Dispatcher::reply_cdr (void) const
+TAO_Synch_Reply_Dispatcher::reply_cdr (void)
 {
-  return *this->reply_cdr_;
+  return this->reply_cdr_;
 }
 
 
@@ -113,7 +109,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
                                              TAO_GIOP_Message_State *message_state)
 {
   // this->reply_received_ = 1;
-  
+
   this->reply_status_ = reply_status;
   this->version_ = version;
   this->message_state_ = message_state;
@@ -130,18 +126,18 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
       ACE_DEBUG ((LM_DEBUG,
                   "(%P | %t):TAO_Asynch_Reply_Dispatcher::dispatch_reply:\n"));
     }
-  
+
   ACE_DECLARE_NEW_CORBA_ENV;
-  
+
   // Call the Reply Handler's skeleton.
   reply_handler_skel_ (message_state_->cdr,
                        reply_handler_,
                        ACE_TRY_ENV);
-  
-  // This was dynamically allocated. Now the job is done. Commit 
-  // suicide here.  
+
+  // This was dynamically allocated. Now the job is done. Commit
+  // suicide here.
   delete this;
-                                  
+
   return 0;
 }
 

@@ -139,7 +139,7 @@ Client::svc (void)
           // If we are using a global ORB this is a nop, otherwise it
           // initializes the ORB resources for this thread.
           int argc = 0;
-          char* argv[] = { "" };
+          const char* argv[] = { "" };
           CORBA::ORB_var orb =
             CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
           ACE_TRY_CHECK;

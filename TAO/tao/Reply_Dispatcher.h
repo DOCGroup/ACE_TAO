@@ -49,7 +49,7 @@ public:
   // Dispatch the reply.
 
   virtual TAO_GIOP_Message_State *message_state (void) const;
-  // Get the Message State into which the reply has been read. 
+  // Get the Message State into which the reply has been read.
 
   // virtual int reply_received (void) const;
   // Return the reply received flag.
@@ -71,7 +71,7 @@ class TAO_Export TAO_Synch_Reply_Dispatcher : public TAO_Reply_Dispatcher
   //
 
 public:
-  TAO_Synch_Reply_Dispatcher (void);
+  TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core);
   // Constructor.
 
   virtual ~TAO_Synch_Reply_Dispatcher (void);
@@ -97,7 +97,7 @@ public:
   virtual TAO_GIOP_Message_State *message_state (void) const;
   // Return the message state of this invocation.
 
-  virtual TAO_InputCDR &reply_cdr (void) const;
+  virtual TAO_InputCDR &reply_cdr (void);
   // Return the reply CDR.
 
 private:
@@ -115,11 +115,8 @@ private:
   // @@ Carlos : message_state should go away. All we need is the reply
   //    cdr. Is that rite? (Alex).
 
-  TAO_InputCDR *reply_cdr_;
-  // CDR where the reply message is placed. 
-  // @@ Carlos : You mentioned that wherever this is used, we should
-  //    make sure we dont do any copying. I havent taken care of this
-  //    yet. (Alex).
+  TAO_InputCDR reply_cdr_;
+  // CDR where the reply message is placed.
 };
 
 // *********************************************************************
@@ -128,7 +125,7 @@ class TAO_Export TAO_Asynch_Reply_Dispatcher : public TAO_Reply_Dispatcher
 {
   // = TITLE
   //
-  //     Reply dispatcher for Asynchoronous Method Invocation (AMI)s. 
+  //     Reply dispatcher for Asynchoronous Method Invocation (AMI)s.
   //
   // = DESCRIPTION
   //
@@ -156,7 +153,7 @@ public:
                               TAO_GIOP_Message_State* message_state);
   // Dispatch the reply. This involves demarshalling the reply and
   // calling the appropriate call back hook method on the reply
-  // handler. 
+  // handler.
 
   virtual TAO_GIOP_Message_State *message_state (void) const;
   // Return the message state.
