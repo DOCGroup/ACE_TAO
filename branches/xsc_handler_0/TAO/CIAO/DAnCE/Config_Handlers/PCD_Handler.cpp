@@ -3,6 +3,8 @@
 #include "PCD_Handler.h"
 #include "Req_Handler.h"
 #include "CEPE_Handler.h"
+#include "PSPE_Handler.h"
+#include "ERE_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
 
@@ -73,6 +75,37 @@ namespace CIAO
             *port); 
         }
         
+      //Configure the PlanSubcomponentPortEndpoint's.  
+      PSPE_Handler pspehandler;
+        
+      for (PlanConnectionDescription::internalEndpoint_iterator
+           ipoint (desc.begin_internalEndpoint ());
+           ipoint != desc.end_internalEndpoint ();
+           ++ipoint)
+        {
+          toconfig.internalEndpoint.length (
+            toconfig.internalEndpoint.length () + 1);
+  
+          pspehandler.get_PlanSubcomponentPortEndpoint (
+            toconfig.internalEndpoint [toconfig.internalEndpoint.length () - 1],
+            *ipoint); 
+        }
+        
+      //Configure the ExternalReferenceEndpoint's.  
+      ERE_Handler erehandler;
+        
+      for (PlanConnectionDescription::externalReference_iterator
+           ipoint (desc.begin_externalReference ());
+           ipoint != desc.end_externalReference ();
+           ++ipoint)
+        {
+          toconfig.externalReference.length (
+            toconfig.externalReference.length () + 1);
+  
+          erehandler.get_ExternalReferenceEndpoint (
+            toconfig.externalReference [toconfig.externalReference.length () - 1],
+            *ipoint); 
+        }
       
     }
     

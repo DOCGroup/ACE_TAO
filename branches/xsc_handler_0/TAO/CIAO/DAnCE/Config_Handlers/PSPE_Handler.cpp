@@ -2,7 +2,7 @@
 
 #include "PSPE_Handler.h"
 #include "Basic_Deployment_Data.hpp"
-
+#include "ciao/Deployment_DataC.h"
 
 namespace CIAO
 {
@@ -28,15 +28,12 @@ namespace CIAO
       
       if (desc.provider_p ())
         {
-          toconfig.provider.length (
-            toconfig.provider.length () + 1);
-          toconfig.provider[toconfig.provider.length () - 1] = 
-            CORBA::string_dup (desc.provider ().c_str ());
+          toconfig.provider = !(desc.provider ().empty ());
         }
-        
-        
-        
-        
+      else
+        {
+          toconfig.provider = 0; 
+        }  
       
     }
     
