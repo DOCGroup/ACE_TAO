@@ -84,9 +84,10 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
                                    this->address_.get_local_addr (),
                                    timeout, local_sap,
                                    reuse_addr, flags, perms,
-                                   PF_INET, protocol) == -1)
+                                   0, protocol) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_LIB_TEXT ("ACE_MEM_Connector::connect error connecting to socket\n")),
+                       ACE_LIB_TEXT ("%p\n"),
+                       ACE_LIB_TEXT ("ACE_MEM_Connector::connect")),
                       -1);
 
 

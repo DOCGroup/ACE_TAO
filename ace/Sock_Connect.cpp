@@ -15,6 +15,16 @@ extern "C" {
 }
 #endif /* VXWORKS */
 
+#if defined (ACE_HAS_IPV6)
+#  if defined (ACE_HAS_THREADS)
+#    include "ace/Synch.h"
+#    include "ace/Object_Manager.h"
+#  endif /* ACE_HAS_THREADS */
+
+// Whether or not ipv6 is turned on in this box
+int ACE_Sock_Connect::ipv6_enabled_ = -1;
+#endif /* ACE_HAS_IPV6 */
+
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Sock_Connect.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
@@ -210,25 +220,17 @@ get_windows_version()
 
 int
 ACE_Sock_Connect::bind_port (ACE_HANDLE handle,
-                ACE_UINT32 ip_addr)
+                             ACE_UINT32 ip_addr)
 {
   ACE_TRACE ("ACE_Sock_Connect::bind_port");
 
-  sockaddr_in sock_addr;
-
-  ACE_OS::memset ((void *) &sock_addr, 0, sizeof sock_addr);
-  sock_addr.sin_family = AF_INET;
-#if defined (ACE_HAS_SIN_LEN)
-  sock_addr.sin_len = sizeof sock_addr;
-#endif /* ACE_HAS_SIN_LEN */
-  sock_addr.sin_addr.s_addr = ip_addr;
+  ACE_INET_Addr addr ((u_short)0, ip_addr);
 
 #if !defined (ACE_LACKS_WILDCARD_BIND)
   // The OS kernel should select a free port for us.
-  sock_addr.sin_port = 0;
   return ACE_OS::bind (handle,
-                       ACE_reinterpret_cast(sockaddr *, &sock_addr),
-                       sizeof sock_addr);
+                       (sockaddr*)addr.get_addr(),
+                       addr.get_size());
 #else
   static u_short upper_limit = ACE_MAX_DEFAULT_PORT;
   int round_trip = upper_limit;
@@ -238,11 +240,11 @@ ACE_Sock_Connect::bind_port (ACE_HANDLE handle,
 
   for (;;)
     {
-      sock_addr.sin_port = htons (upper_limit);
+      addr.set((u_short)upper_limit,ip_addr);
 
       if (ACE_OS::bind (handle,
-                        ACE_reinterpret_cast(sockaddr *, &sock_addr),
-                        sizeof sock_addr) >= 0)
+                        (sockaddr*)addr.get_addr()
+                        addr.get_size()) >= 0)
         {
 #if defined (ACE_WIN32)
           upper_limit--;
@@ -468,14 +470,6 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
   // Win32 can do this by a simple API call if MSVC 5 or later is the compiler.
   // Not sure if Borland supplies the needed header/lib, but it might.
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-#if 0
-  // If this also needs to be predicated on MSVC 5 or later, add the
-  // following condition to the #if above.  It tests ok at Riverace w/ 4.2,
-  // but this isn't a virgin install of 4.2 so there's a minimal risk that
-  // it may need work later.
-  defined (_MSC_VER) && (_MSC_VER >= 1100)
-#endif /* 0 */
-
   int i, n_interfaces, status;
 
   INTERFACE_INFO info[64];
@@ -851,7 +845,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
       ACE_OS::close (handle);
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("%p\n"),
-                         ACE_LIB_TEXT ("is_address_local:")
+                         ACE_LIB_TEXT ("get_ip_interfaces:")
                          ACE_LIB_TEXT ("ioctl - SIOCGIFCONF failed")),
                         -1);
     }
@@ -983,8 +977,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
 // list of ifreq structs.
 
 int
-ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle,
-                       size_t &how_many)
+ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
 {
 #if defined (sparc) && defined (SIOCGIFNUM)
   int tmp_how_many; // For 64 bit Solaris
@@ -1095,4 +1088,38 @@ ACE_Sock_Connect::get_handle (void)
   handle = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 #endif /* sparc */
   return handle;
+}
+
+
+int
+ACE_Sock_Connect::ipv6_enabled (void)
+{
+#if defined (ACE_HAS_IPV6)
+  if (ACE_Sock_Connect::ipv6_enabled_ == -1)
+    {
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+                                *ACE_Static_Object_Lock::instance (), 0));
+
+      if (ACE_Sock_Connect::ipv6_enabled_ == -1)
+        {
+          // Determine if the kernel has IPv6 support by attempting to
+          // create a PF_INET6 socket and see if it fails.
+          ACE_HANDLE s = ACE_OS::socket (PF_INET6, SOCK_DGRAM, 0);
+          if (s == ACE_INVALID_HANDLE)
+            {
+              ACE_Sock_Connect::ipv6_enabled_ = 0;
+            }
+          else
+            {
+              ACE_Sock_Connect::ipv6_enabled_ = 1;
+              ACE_OS::closesocket (s);
+            }
+        }
+    }
+
+  return ACE_Sock_Connect::ipv6_enabled_;
+#else
+  return 0;
+#endif /* ACE_HAS_IPV6 */
 }

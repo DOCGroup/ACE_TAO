@@ -64,6 +64,21 @@ class ACE_Export ACE_Sock_Connect
   /// made.  Caller must <close> the handle.
   static ACE_HANDLE get_handle (void);
 
+  /**
+   * Returns 1 if IPv6 is enabled on the current host; 0 if not.
+   * This is an execution-time check. If ACE has not been compiled
+   * with ACE_HAS_IPV6, it always returns 0. If ACE_HAS_IPV6 is
+   * enabled, this function tries to create a PF_INET6 socket,
+   * returning 1 if it succeeds, and 0 if it fails. Caches the result
+   * so it only gets checked once.
+   */
+  static int ipv6_enabled (void);
+
+#if defined (ACE_HAS_IPV6)
+private:
+  /// Does this box have ipv6 turned on?
+  static int ipv6_enabled_;
+#endif /* ACE_HAS_IPV6 */
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

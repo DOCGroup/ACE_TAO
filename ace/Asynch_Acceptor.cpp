@@ -54,7 +54,7 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
   this->reissue_accept_ = reissue_accept;
 
   // Create the listener socket
-  this->listen_handle_ = ACE_OS::socket (PF_INET, SOCK_STREAM, 0);
+  this->listen_handle_ = ACE_OS::socket (address.get_type (), SOCK_STREAM, 0);
   if (this->listen_handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("%p\n"),
