@@ -1,3 +1,8 @@
+Mon Jun 22 02:59:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Process.cpp (setenv_i): Nedd to adjust the memory size to
+ 	  the actual string size.
+
 Mon Jun 22 02:32:56 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
 	* ace/Thread_Manager.h: 
