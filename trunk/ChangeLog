@@ -1,3 +1,10 @@
+Wed Jan 14 16:28:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release: 
+
+	  Fixed a bug with the way we were collecting the list of files
+	  for making the ACE distribution.
+
 Wed Jan 14 16:13:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Makefile:
