@@ -103,15 +103,11 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
-      // @@ What to do with local interface?
-#if 0
-        {
-          *os << " = 0;\n\n";
-          break;
-        }
-#endif
+    case TAO_CodeGen::TAO_LOCAL_OPERATION_ARGLIST_H:
+      *os << " = 0;\n\n";
+      break;
       // Fall thru.
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
       *os << ";\n\n";

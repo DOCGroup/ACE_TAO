@@ -90,7 +90,7 @@ public:
                                              // collocated
     TAO_ATTRIBUTE_SMART_PROXY_CH,            // in client header
     TAO_ATTRIBUTE_SMART_PROXY_CS,            // in client source
-    
+
     TAO_ATTRIBUTE_TIE_SH,
     TAO_ATTRIBUTE_TIE_SI,
 
@@ -163,6 +163,10 @@ public:
     TAO_INTERFACE_SMART_PROXY_CH,
     TAO_INTERFACE_SMART_PROXY_CS,
 
+    TAO_LOCAL_INTERFACE_H,
+    TAO_LOCAL_INTERFACE_I,
+    TAO_LOCAL_INTERFACE_S,
+
     // emitting code for the interface forward declaration
     TAO_INTERFACE_FWD_CH,
     TAO_INTERFACE_FWD_CI,
@@ -233,7 +237,7 @@ public:
     TAO_OPERATION_DIRECT_COLLOCATED_SH,            // in collocated server header
     TAO_OPERATION_DIRECT_COLLOCATED_SS,            // in collocated server skel
 
-    TAO_OPERATION_SMART_PROXY_CH,           // in client header   
+    TAO_OPERATION_SMART_PROXY_CH,           // in client header
     TAO_OPERATION_SMART_PROXY_CS,           // in client stubs
 
     TAO_OPERATION_RETTYPE_CH,                // return type in client header op
@@ -285,6 +289,11 @@ public:
     TAO_OBV_OPERATION_ARGLIST_OTHERS,          // ... for all other cases
     TAO_OBV_OPERATION_ARGLIST_IMPL_CH,       // for implementations, e.g. exception holders
     TAO_OBV_OPERATION_ARGLIST_IMPL_CS,       // for implementations, e.g. exception holders
+
+    TAO_LOCAL_OPERATION_H,
+    TAO_LOCAL_OPERATION_I,
+    TAO_LOCAL_OPERATION_S,
+    TAO_LOCAL_OPERATION_ARGLIST_H,
 
     // AMI next generation states
     TAO_AMI_INTERFACE_CH,

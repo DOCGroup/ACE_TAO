@@ -268,7 +268,7 @@ be_visitor_interface::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
-    case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:      
+    case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       return 0; // nothing to be done
@@ -412,6 +412,12 @@ be_visitor_interface::visit_operation (be_operation *node)
       break;
     case TAO_CodeGen::TAO_INTERFACE_CS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
+      break;
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_H:
+      ctx.state (TAO_CodeGen::TAO_LOCAL_OPERATION_H);
+      break;
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_S:
+      ctx.state (TAO_CodeGen::TAO_LOCAL_OPERATION_S);
       break;
     case TAO_CodeGen::TAO_INTERFACE_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SH);

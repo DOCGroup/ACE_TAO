@@ -251,12 +251,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return \"" << node->repoID () << "\";" << be_uidt_nl
       << "}\n\n";
 
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor *visitor = 0;
-
   // Smart Proxy classes
   if (! node->is_local_interface ())
     {
+      be_visitor_context ctx (*this->ctx_);
+      be_visitor *visitor = 0;
+
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
@@ -270,21 +270,21 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
         }
       delete visitor;
       visitor = 0;
-    }
 
-  // by using a visitor to declare and define the TypeCode, we have the
-  // added advantage to conditionally not generate any code. This will be
-  // based on the command line options. This is still TO-DO
-  ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
-  ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "TypeCode definition failed\n"),
-                        -1);
+      // by using a visitor to declare and define the TypeCode, we have the
+      // added advantage to conditionally not generate any code. This will be
+      // based on the command line options. This is still TO-DO
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
+      ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_cs::"
+                             "visit_interface - "
+                             "TypeCode definition failed\n"),
+                            -1);
+        }
     }
 
 
