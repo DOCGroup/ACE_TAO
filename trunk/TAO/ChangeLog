@@ -1,3 +1,10 @@
+Thu Jul 22 14:05:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/PolicyFactory/PI_PolicyFactory.mpc:
+
+	  Added missing ".cpp" extensions to some source files.  Fixes
+	  link-time errors.
+
 Thu Jul 22 10:10:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SecurityLevel3.idl:
