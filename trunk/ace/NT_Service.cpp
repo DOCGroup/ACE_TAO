@@ -19,14 +19,14 @@ ACE_ALLOC_HOOK_DEFINE(ACE_NT_Service)
 
 ACE_NT_Service::~ACE_NT_Service (void)
 {
-  if (svc_sc_handle_ != 0)
+  if (this->svc_sc_handle_ != 0)
     {
-      CloseServiceHandle (svc_sc_handle_);
-      svc_sc_handle_ = 0;
+      CloseServiceHandle (this->svc_sc_handle_);
+      this->svc_sc_handle_ = 0;
     }
-  delete [] desc_;
-  delete [] name_;
-  delete [] host_;
+  delete [] this->desc_;
+  delete [] this->name_;
+  delete [] this->host_;
 }
 
 // This default implementation of ACE_NT_Service::open sets the
@@ -53,7 +53,7 @@ int
 ACE_NT_Service::open (void *args)
 {
   ACE_UNUSED_ARG (args);
-  report_status (SERVICE_START_PENDING, 0);
+  this->report_status (SERVICE_START_PENDING, 0);
 
   int svc_return = this->svc ();
   if (svc_return == 0)
@@ -74,7 +74,7 @@ ACE_NT_Service::open (void *args)
         }
     }
 
-  report_status (SERVICE_STOPPED, 0);
+  this->report_status (SERVICE_STOPPED, 0);
 
   return svc_return;
 
@@ -83,23 +83,23 @@ ACE_NT_Service::open (void *args)
 void
 ACE_NT_Service::handle_control (DWORD control_code)
 {
-  switch(control_code)
+  switch (control_code)
     {
     case SERVICE_CONTROL_SHUTDOWN:
     case SERVICE_CONTROL_STOP:
-      stop_requested (control_code);
+      this->stop_requested (control_code);
       break;
 
     case SERVICE_CONTROL_PAUSE:
-      pause_requested (control_code);
+      this->pause_requested (control_code);
       break;
 
     case SERVICE_CONTROL_CONTINUE:
-      continue_requested (control_code);
+      this->continue_requested (control_code);
       break;
 
     case SERVICE_CONTROL_INTERROGATE:
-      interrogate_requested (control_code);
+      this->interrogate_requested (control_code);
       break;
     }
 }
@@ -116,7 +116,7 @@ ACE_NT_Service::pause_requested (DWORD)
 {
   this->report_status (SERVICE_PAUSE_PENDING);
   this->suspend ();
-  report_status (SERVICE_PAUSED);
+  this->report_status (SERVICE_PAUSED);
 }
 
 void
@@ -124,7 +124,7 @@ ACE_NT_Service::continue_requested (DWORD)
 {
   this->report_status (SERVICE_CONTINUE_PENDING);
   this->resume ();
-  report_status (SERVICE_RUNNING);
+  this->report_status (SERVICE_RUNNING);
 }
 
 void
@@ -136,34 +136,34 @@ ACE_NT_Service::interrogate_requested (DWORD)
 void
 ACE_NT_Service::name (const ACE_TCHAR *name, const ACE_TCHAR *desc)
 {
-  delete [] desc_;
-  delete [] name_;
+  delete [] this->desc_;
+  delete [] this->name_;
 
   if (desc == 0)
     desc = name;
 
-  name_ = ACE::strnew (name);
-  desc_ = ACE::strnew (desc);
+  this->name_ = ACE::strnew (name);
+  this->desc_ = ACE::strnew (desc);
 }
 
 void
 ACE_NT_Service::host (const ACE_TCHAR *host)
 {
-  delete [] host_;
+  delete [] this->host_;
 
-  if (svc_sc_handle_ != 0)
+  if (this->svc_sc_handle_ != 0)
     {
-      CloseServiceHandle (svc_sc_handle_);
-      svc_sc_handle_ = 0;
+      CloseServiceHandle (this->svc_sc_handle_);
+      this->svc_sc_handle_ = 0;
     }
 
   if (host == 0)
     {
-      host_ = 0;
+      this->host_ = 0;
     }
   else
     {
-      host_ = ACE::strnew (host);
+      this->host_ = ACE::strnew (host);
     }
 }
 
@@ -178,6 +178,9 @@ ACE_NT_Service::insert (DWORD start_type,
                         const ACE_TCHAR *password)
 {
   ACE_TCHAR this_exe[MAXPATHLEN];
+
+  // Insure ACE_OS::last_error finds GetLastError unless we set errno.
+  errno = 0;
 
   if (exe_path == 0)
     {
@@ -196,7 +199,7 @@ ACE_NT_Service::insert (DWORD start_type,
                                          this->name (),
                                          this->desc (),
                                          SERVICE_ALL_ACCESS,
-                                         svc_status_.dwServiceType,
+                                         this->svc_status_.dwServiceType,
                                          start_type,
                                          error_control,
                                          exe_path,
@@ -205,10 +208,18 @@ ACE_NT_Service::insert (DWORD start_type,
                                          dependencies,
                                          account_name,
                                          password);
+  // If there was an error, stash GetLastError before CloseServiceHandle
+  // smashes it. ACE_OS::last_error will find the saved error value.
+  if (sh == 0)
+    ACE_OS::set_errno_to_last_error ();
+
   CloseServiceHandle (sc_mgr);
+
   if (sh == 0)
     return -1;
 
+  if (this->svc_sc_handle_ != 0)
+    CloseServiceHandle (this->svc_sc_handle_);
   this->svc_sc_handle_ = sh;
 
   return 0;
@@ -311,7 +322,7 @@ ACE_NT_Service::start_svc (ACE_Time_Value *wait_time,
   if (!ACE_TEXT_StartService (svc, argc, argv))
     return -1;
 
-  wait_for_service_state (SERVICE_RUNNING, wait_time);
+  this->wait_for_service_state (SERVICE_RUNNING, wait_time);
   if (svc_state != 0)
     *svc_state = this->svc_status_.dwCurrentState;
 
@@ -331,8 +342,8 @@ ACE_NT_Service::stop_svc (ACE_Time_Value *wait_time,
                        &this->svc_status_))
     return -1;
 
-  wait_for_service_state (SERVICE_STOPPED,
-                          wait_time);
+  this->wait_for_service_state (SERVICE_STOPPED,
+                                wait_time);
   if (svc_state != 0)
     *svc_state = this->svc_status_.dwCurrentState;
 
@@ -352,8 +363,8 @@ ACE_NT_Service::pause_svc (ACE_Time_Value *wait_time,
                        &this->svc_status_))
     return -1;
 
-  wait_for_service_state (SERVICE_PAUSED,
-                          wait_time);
+  this->wait_for_service_state (SERVICE_PAUSED,
+                                wait_time);
   if (svc_state != 0)
     *svc_state = this->svc_status_.dwCurrentState;
 
@@ -373,8 +384,8 @@ ACE_NT_Service::continue_svc (ACE_Time_Value *wait_time,
                        &this->svc_status_))
     return -1;
 
-  wait_for_service_state (SERVICE_RUNNING,
-                          wait_time);
+  this->wait_for_service_state (SERVICE_RUNNING,
+                                wait_time);
   if (svc_state != 0)
     *svc_state = this->svc_status_.dwCurrentState;
 
@@ -405,7 +416,7 @@ ACE_NT_Service::state (DWORD *pstate,
   // QueryServiceStatus call will modify the setting depending on the
   // current state of the Service.  If the service is currently
   // STOPPED, the value will be cleared.
-  DWORD controls_accepted = svc_status_.dwControlsAccepted;
+  DWORD controls_accepted = this->svc_status_.dwControlsAccepted;
 
   if (QueryServiceStatus (svc,
                           &this->svc_status_) == 0)
@@ -501,21 +512,25 @@ ACE_NT_Service::report_status (DWORD new_status,
 SC_HANDLE
 ACE_NT_Service::svc_sc_handle (void)
 {
-  if (svc_sc_handle_ == 0)
+  if (this->svc_sc_handle_ == 0)
     {
       SC_HANDLE sc_mgr = ACE_TEXT_OpenSCManager (this->host (),
                                                  0,
                                                  SC_MANAGER_ALL_ACCESS);
       if (sc_mgr != 0)
         {
-          svc_sc_handle_ = ACE_TEXT_OpenService (sc_mgr,
-                                                 this->name (),
-                                                 SERVICE_ALL_ACCESS);
+          this->svc_sc_handle_ = ACE_TEXT_OpenService (sc_mgr,
+                                                       this->name (),
+                                                       SERVICE_ALL_ACCESS);
+          if (this->svc_sc_handle_ == 0)
+            ACE_OS::set_errno_to_last_error ();
           CloseServiceHandle (sc_mgr);
         }
+      else
+        ACE_OS::set_errno_to_last_error ();
     }
 
-  return svc_sc_handle_;
+  return this->svc_sc_handle_;
 }
 
 void
