@@ -21,7 +21,7 @@ Tue Apr 27 13:37:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  "*_CORBA_methods.h" forward declaration header so that they may
 	  be parsed before the templates.  Fixes some GNU g++ 3.4
 	  compile-time errors.
-	
+
 	* tests/DSI_Gateway/test_dsi.h:
 	* tests/Param_Test/client.cpp:
 	* tests/Param_Test/client.h:
