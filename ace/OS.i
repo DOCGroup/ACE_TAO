@@ -123,6 +123,9 @@ ACE_Errno_Guard::ACE_Errno_Guard (int &errno_ref,
 #endif /* ACE_MT_SAFE */
     error_ (error)
 {
+#if !defined(ACE_MT_SAFE)
+  ACE_UNUSED_ARG (errno_ref);
+#endif /* ACE_MT_SAFE */
 }
 
 ACE_INLINE

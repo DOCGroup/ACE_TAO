@@ -46,6 +46,8 @@ ACE::out_of_handles (int error)
       error == ENOENT ||
       // For RedHat5.2, need to check for EINVAL too.
       error == EINVAL ||
+      // Without threads check for EOPNOTSUPP
+      error == EOPNOTSUPP ||
 #elif defined (sun)
       // On sun, we need to check for ENOSR also.
       error == ENOSR ||
