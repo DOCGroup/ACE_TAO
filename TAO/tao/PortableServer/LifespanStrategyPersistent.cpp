@@ -69,6 +69,10 @@ namespace TAO
           TAO_Root_POA::imr_client_adapter_name ()
         );
 
+#if !defined (TAO_AS_STATIC_LIBS)
+      // In case we build shared, try to load the ImR Client library, in a
+      // static build we just can't do this, so don't try it, lower layers
+      // output an error then.
       if (adapter == 0)
         {
           ACE_Service_Config::process_directive (
@@ -79,6 +83,7 @@ namespace TAO
             ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
               TAO_Root_POA::imr_client_adapter_name ());
         }
+#endif /* !TAO_AS_STATIC_LIBS */
 
       if (adapter != 0)
         {
