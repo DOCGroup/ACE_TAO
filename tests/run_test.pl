@@ -42,15 +42,6 @@ else {
     print "Defaulting to configuration: $config\n";
 }
 
-### Doesn't look like we need $ACE_ROOT now
-#if (!($ACE_ROOT = $ENV{ACE_ROOT})) {
-#    my $cd = getcwd ();
-#    chdir ('..');
-#    $ACE_ROOT = getcwd ().$DIR_SEPARATOR;
-#    chdir ($cd);
-#    warn "ACE_ROOT not defined, defaulting to ACE_ROOT=$ACE_ROOT";
-#}
-
 if (!($tmp = $ENV{TMP})) {
   $tmp="/tmp";
 }
@@ -161,25 +152,27 @@ sub check_log ($)
 
 sub delete_temp_files ()
 {
-    unlink "ace_pipe_name";
-    unlink "pattern";
+    my @files = ('ace_pipe_name', 'pattern');
+    my $file = '';
 
     if (!opendir (DIR, $tmp)) {
         warn "Cannot open temp directory $tmp\n";
         return;
     }
 
-    my @files =readdir (DIR);
-    closedir (DIR);
-
-    my $file = "";
-    foreach $file (@files) {
-      if ($file =~ /^ace_temp_file/
-          || $file =~ /^Naming_Test/) 
-      {
-          unlink $tmp.$DIR_SEPARATOR.$file;
+    foreach $file (readdir (DIR)) {
+      if ($file =~ /^ace_temp_file/ || $file =~ /^Naming_Test/) {
+          push @files, $tmp.$DIR_SEPARATOR.$file;
       }
     }
+    closedir (DIR);
+
+    push @files, glob ('backing_store_*');
+
+    foreach $file (@files) {
+      unlink $file;
+    }
+
 }
 
 ################################################################################
