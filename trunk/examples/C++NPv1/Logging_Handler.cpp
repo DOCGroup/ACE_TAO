@@ -11,6 +11,7 @@
 #include "ace/Message_Block.h"
 
 #include "Logging_Handler.h"
+#include "ace/streams.h"
 
 
 int operator>> (ACE_InputCDR &cdr, ACE_Log_Record &log_record)
