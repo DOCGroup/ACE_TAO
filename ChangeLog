@@ -1,3 +1,9 @@
+Fri May  9 08:45:12 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/Reactor/WFMO_Reactor/Handle_Close.cpp:
+
+          Fixed a build warning from Borland.
+
 Fri May  9 08:01:59 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
