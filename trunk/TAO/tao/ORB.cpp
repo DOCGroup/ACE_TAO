@@ -718,9 +718,10 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
   if (n_bytes == -1 || retval == -1)
   {
     delete [] buf;
-    ACE_ERROR_RETURN ((LM_ERROR,
-                      "Error reading IIOP multicast response!\n"),
-                      0);
+    if (TAO_debug_level > 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error reading IIOP multicast response!\n"),
+                        0);
   }
 
   // Null terminate message.
