@@ -1,3 +1,10 @@
+Wed Jan 24 13:44:53 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile:
+          And I got nailed by the same problem again:
+          Just doing 'make depend' generates invalid dependencies for some
+          reason, had to manually patch them.
+
 Mon Oct 16 10:34:06 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:
