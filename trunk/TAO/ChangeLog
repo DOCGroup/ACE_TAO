@@ -1,3 +1,9 @@
+Thu Aug  7 11:14:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+	  Fixed a couple of problems with the checkin "Wed Aug  6 22:10:51
+	  2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>".
+
 Wed Aug  6 22:10:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
