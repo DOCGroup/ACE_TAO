@@ -1,3 +1,9 @@
+Thu Jul 26 07:37:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/RTCORBA/Server_Protocol/server.cpp:
+	* tests/RTCORBA/Client_Propagated/server.cpp:
+	* tests/RTCORBA/Thread_Pool/server.cpp: Fixed warnings in g++. 
+
 Wed Jul 25 23:37:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
  
         * orbsvcs/tests/AVStreams/Full_Profile/Makefile:
