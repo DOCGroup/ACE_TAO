@@ -13,6 +13,7 @@ INFO  = README
 DIRS  = Gateway \
         gperf \
 	JAWS \
+	JAWS2 \
 	drwho
 
 # The following directories aren't compiled by default since haven't

@@ -300,7 +300,7 @@ ifeq ($(findstring g++,$(CXX)),g++)
 endif # g++
 
 ifndef OBJDIRS
-  OBJDIRS = .obj .shobj # .obj_debug .obj_profile .obj_optimize
+  OBJDIRS = $(basename $(VDIR)) $(basename $(VSHDIR))
 endif # OBJDIRS
 
 ifndef OBJEXT
@@ -578,7 +578,7 @@ ifdef shared_libs
       LIB           =
 #      OBJEXT        = so
       ifndef VXWORKS
-        VDIR        = .shobj/
+        VDIR        = $VSHDIR
         ifeq ($(BIN),)
           #### No executables are being built, so don't create .obj/.
           OBJDIRS     = $(VSHDIR)
@@ -595,11 +595,11 @@ else # ! shared_libs
   ifdef static_libs
     #### Don't build shared libs.
     BUILD           = $(VLIB) $(VBIN)
-    OBJDIRS         = .obj
+    OBJDIRS         = $(basename $(VDIR))
     PIC             =
     SHLIB           =
     SOEXT           = o
-    VSHDIR          = .obj/
+    VSHDIR          = $(basename $(VDIR))
     VLDLIBS         = $(LDLIBS:%.so=%.o)
   else # ! static_libs
     #### Don't build any libs.

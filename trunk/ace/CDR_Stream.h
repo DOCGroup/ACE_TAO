@@ -89,7 +89,16 @@ public:
                    ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Build a CDR stream with an initial buffer, it will *not* remove
-  /// <data>, since it did not allocated it.
+  /// <data>, since it did not allocated it.  It's important to be careful 
+  /// with the alignment of <data>.
+  /**
+   * Create an output stream from an arbitrary buffer, care must be
+   * exercised with alignment, because this contructor will align if
+   * needed.  In this case <data> will not point to the start off the
+   * output stream. begin()->rd_prt() points to the start off the
+   * output stream.  See ACE_ptr_align_binary() to properly align a
+   * pointer and use ACE_CDR::MAX_ALIGNMENT for the correct alignment.  
+  */
   ACE_OutputCDR (char *data,
                  size_t size,
                  int byte_order = ACE_CDR_BYTE_ORDER,
@@ -458,9 +467,11 @@ public:
   friend class ACE_WChar_Codeset_Translator;
 
   /**
-   * Create an input stream from an arbitrary buffer, care must be
-   * exercised wrt alignment, because this contructor will *not* work
-   * if the buffer is unproperly aligned.
+   * Create an input stream from an arbitrary buffer.  The buffer must
+   * be properly aligned because this contructor will *not* work if
+   * the buffer is aligned unproperly.  See ACE_ptr_align_binary() for
+   * instructions on how to align a pointer properly and use
+   * ACE_CDR::MAX_ALIGNMENT for the correct alignment.
    */
   ACE_InputCDR (const char *buf,
                 size_t bufsiz,

@@ -74,7 +74,10 @@ ACE_INLINE int
 ACE_Select_Reactor_Impl::purge_pending_notifications (ACE_Event_Handler *eh,
                                                       ACE_Reactor_Mask mask)
 {
-  return this->notify_handler_->purge_pending_notifications (eh, mask);
+  if (this->notify_handler_ == 0)
+    return 0;
+  else
+    return this->notify_handler_->purge_pending_notifications (eh, mask);
 }
 
 ACE_INLINE int

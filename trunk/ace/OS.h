@@ -2251,14 +2251,12 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #       endif /* ! USYNC_PROCESS */
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
 
-
 /* MM-Graz:  prevent warnings */
 #undef THR_BOUND
 #undef THR_NEW_LWP
 #undef THR_DETACHED
 #undef THR_SUSPENDED
 #undef THR_DAEMON
-
 
 #     define THR_BOUND               0x00000001
 #     if defined (CHORUS)
@@ -6605,7 +6603,7 @@ public:
    * THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
    * THR_SUSPENDED, THR_DAEMON, THR_JOINABLE, THR_SCHED_FIFO,
    * THR_SCHED_RR, THR_SCHED_DEFAULT, THR_EXPLICIT_SCHED,
-   * THR_SCOPE_SYSTEM
+   * THR_SCOPE_SYSTEM, THR_SCOPE_PROCESS
    * = END<INDENT>
    *
    * By default, or if <priority> is set to

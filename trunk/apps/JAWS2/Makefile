@@ -8,6 +8,9 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
+DIRS	= HTTPU \
+	  JAWS
+
 BIN   	= main
 
 FILES  	= HTTP_10 \
@@ -20,7 +23,7 @@ SRC	= $(addsuffix .cpp,$(FILES))
 OBJ	= $(addsuffix .o,$(FILES))
 
 LDFLAGS += -L./JAWS
-LDLIBS  = -lHTTPU -lJAWS
+LDLIBS  = -lHTTPU -lJAWS2
 CFLAGS += -DJAWS_HAS_THREAD_SAFE_ACCEPT
 CPPFLAGS += -I.
 
@@ -33,7 +36,7 @@ BUILD 	= $(VBIN)
 include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include		$(ACE_ROOT)/include/makeinclude/macros.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 

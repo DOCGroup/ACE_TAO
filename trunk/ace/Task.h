@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TASK_H
 #define ACE_TASK_H
 #include "ace/pre.h"
@@ -135,7 +134,8 @@ public:
    * THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
    * THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
    * THR_SUSPENDED, THR_DAEMON, THR_JOINABLE, THR_SCHED_FIFO,
-   * THR_SCHED_RR, THR_SCHED_DEFAULT
+   * THR_SCHED_RR, THR_SCHED_DEFAULT, THR_EXPLICIT_SCHED,
+   * THR_SCOPE_SYSTEM, THR_SCOPE_PROCESS
    * = END<INDENT>
    *
    * By default, or if <{priority}> is set to
