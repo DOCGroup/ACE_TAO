@@ -1,3 +1,11 @@
+Thu Feb 24 01:52:51 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (append_thr): Moved the setting of
+	  THR_SPAWNED state down to right before releasing the thread
+	  creation lock.  Hopefully, this will eliminate a warning about a
+	  non-existing race condition from KAI Assure.  Thanks to John
+	  Hickin <hickin@nortelnetworks.com> for reporting this.
+
 Wed Feb 23 23:52:15 2000  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* ace/Log_Msg.h: Added a hack to work around nasty libraries

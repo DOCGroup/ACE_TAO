@@ -846,7 +846,6 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
   thr_desc->thr_id_ = t_id;
   thr_desc->thr_handle_ = t_handle;
   thr_desc->grp_id_ = grp_id;
-  ACE_SET_BITS (thr_desc->thr_state_, thr_state);
   thr_desc->task_ = task;
 #if defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   thr_desc->cleanup_info_.cleanup_hook_ = 0;
@@ -864,6 +863,7 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   thr_desc->terminated_ = 0;
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
+  ACE_SET_BITS (thr_desc->thr_state_, thr_state);
   thr_desc->sync_->release ();
 
   return 0;
