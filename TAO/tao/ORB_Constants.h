@@ -2,13 +2,14 @@
 
 //=============================================================================
 /**
- *  @file     ORB_Constants.h
+ *  @file  ORB_Constants.h
  *
  *  $Id$
  *
  *  Constants needed by various files.
  *
  *  @author  Jeff Parsons
+ *  @author  Ossama Othman
  */
 //=============================================================================
 
@@ -23,29 +24,120 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
-
-// An hash define for the regular two way operation
+// A hash define for the regular two way operation.
 #define TAO_TWOWAY_RESPONSE_FLAG 255
 
 namespace CORBA
 {
-  /// The OMG Vendor Minor Codeset ID.
+  /// The OMG Vendor Minor Codeset ID (VMCID).
   /**
    * This number is reserved by the OMG as a prefix to all the
    * standard system exception minor codes.  Check the CORBA/IIOP
    * specification for details.
+   *
+   * OMG defined system exception minor codes should be logically
+   * OR-ed with this constant when passing such minor codes to a
+   * @c CORBA::SystemException constructor.  For example, throwing a
+   * @c CORBA::BAD_PARAM exception with an OMG defined minor code of
+   * @c 2 is done as follows:
+   *
+   * @verbatim
+   *   throw (CORBA::BAD_PARAM (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+   * @endverbatim
+   *
+   * *NOT* as:
+   *
+   * @verbatim
+   *   throw (CORBA::BAD_PARAM (2, CORBA::COMPLETED_NO);
+   * @endverbatim
    */
   const ULong OMGVMCID = 0x4f4d0000U;
 }
 
-// This number was assigned by the OMG.  Do *NOT* change at random.
-// The ASCII representation is TA0xxxx, close enough since they only
-// take 20 bits, the first 16 are TA, the next 4 are 0000.  Remember
-// that we can only play with the last 12 bits, TAO_MAX_MINOR_CODE is
-// there to remind us of that.
-const CORBA::ULong TAO_DEFAULT_MINOR_CODE = 0x54410000U;
-const CORBA::ULong TAO_MAX_MINOR_CODE = 0x54410fffU;
+namespace TAO
+{
+  /// TAO Vendor Minor Codeset ID (VMCID).
+  /**
+   * TAO Vendor Minor Codeset ID (VMCID) assigned by the OMG.  Do
+   * *NOT* change at random.  The TAO VMCID is an ASCII representation
+   * of @c TA0xxxx (close enough since a VMCID only consists of the
+   * higher order 20 bits of a 32 bit unsigned long integer).  The
+   * first 16 bits are @c TA, and the remaining 4 are @c 0.
+   *
+   * @note Remember that we can only play with the lower order 12
+   *       bits.  @c MAX_MINOR_CODE is there to remind us of that.
+   *
+   * @see @c MAX_MINOR_CODE
+   */
+  const CORBA::ULong VMCID = 0x54410000U;
+
+  /// Maximum allowed TAO system exception minor code.
+  /**
+   * Vendors are only allowed to use the lower order 12 bits of their
+   * when defining vendor-specific exception minor codes.
+   * @c MAX_MINOR_CODE is the maximum minor code value available to
+   * TAO.  Do not exceed it when defining TAO system exception minor
+   * codes.
+   *
+   * @see @c VMCID
+   */
+  const CORBA::ULong MAX_MINOR_CODE = VMCID | 0xfffU;
+
+  /// TAO Vendor @c PolicyType Valueset ID (VPVID)
+  /**
+   * TAO Vendor @c PolicyType Valueset ID (VPVID) assigned by the
+   * OMG.  This value was automatically assigned when TAO's VMCID was
+   * assigned.  Its value is always the same as the VMCID.
+   *
+   * As with TAO-specific system exception minor codes, the
+   * TAO-specific @c PolicyType space occupies the lower order 12 bits
+   * of the TAO VPVID, i.e.
+   *
+   * @verbatim
+   *    TAO::VPVID <= TAO PolicyType <= TAO::VPVID | 0xfffU.
+   * @endverbatim
+   *
+   * For example, TAO-specific @c PolicyTypes should be defined by
+   * logically "OR-ing" a 12 bit or less (i.e. 0x0U <= value <=
+   * 0xfffU) value with @c TAO::VPVID.
+   *
+   * @see VMCID
+   */
+  const CORBA::ULong VPVID = VMCID;
+}
+
+/**
+ * @name TAO-Specific System Exception Minor Code Values
+ *
+ * These system exception minor code values are specific to TAO.
+ */
+//@{
+/// TAO VMCID assigned by the OMG.
+/**
+ * @note This constant has historically been used in the wrong way.
+ *       It was often used as the @a location argument to the @c
+ *       CORBA::SystemException::_tao_minor_code() static method.  A
+ *       more appropriate default @a location argument/value would
+ *       have been zero since the location code resides in portion of
+ *       the lower order 12 bits, not the higher order 20 bits which
+ *       is where the VMCID resides, and what this value happens to
+ *       be.
+ *
+ * @deprecated Please use @c TAO::VMCID instead, or zero if being used
+ *             as default TAO exception location code argument.
+ *
+ * @see @c TAO::VMCID
+ */
+const CORBA::ULong TAO_DEFAULT_MINOR_CODE = TAO::VMCID;
+
+/// Maximum allowed system exception minor code.
+/**
+ * @deprecated Please use @c TAO::MAX_MINOR_CODE instead.
+ *
+ * @see @c TAO::MAX_MINOR_CODE
+ */
+const CORBA::ULong TAO_MAX_MINOR_CODE = TAO::MAX_MINOR_CODE;
+//@}
 
 /// A dummy service context that is inserted in the service context
 /// list to preserve the alignment in DSI based gateways, so no
@@ -58,8 +150,8 @@ const CORBA::ULong TAO_SVC_CONTEXT_ALIGN = 0x54414f00U;
 /**
  * @name TAO-Specific Profile IDs
  *
- * The TAO @c IOP::ProfileId range 0x54414f00 - 0x54414f0f has been
- * reserved with the OMG.
+ * The TAO @c IOP::ProfileId range @c 0x54414f00 - @c 0x54414f0f has
+ * been reserved with the OMG.
  *
  * @note It is *NOT* necessary to list your own protocols here.
  *
