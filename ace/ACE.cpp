@@ -1334,7 +1334,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
 
   size_t bytes_transferred;
   ssize_t n;
-  int error = 0;
+  ssize_t error = 0;
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
@@ -1423,7 +1423,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
 
   size_t bytes_transferred;
   ssize_t n;
-  int error = 0;
+  ssize_t error = 0;
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
@@ -1589,7 +1589,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
   ACE::record_and_set_non_blocking_mode (handle, val);
 
   ssize_t bytes_transferred = 0;
-  int error = 0;
+  ssize_t error = 0;
 
   for (int s = 0;
        s < iovcnt;
@@ -1915,7 +1915,7 @@ ACE::send_n_i (ACE_HANDLE handle,
 
   size_t bytes_transferred;
   ssize_t n;
-  int error = 0;
+  ssize_t error = 0;
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
@@ -2004,7 +2004,7 @@ ACE::send_n_i (ACE_HANDLE handle,
 
   size_t bytes_transferred;
   ssize_t n;
-  int error = 0;
+  ssize_t error = 0;
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
@@ -2173,7 +2173,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
   ACE::record_and_set_non_blocking_mode (handle, val);
 
   ssize_t bytes_transferred = 0;
-  int error = 0;
+  ssize_t error = 0;
 
   for (int s = 0;
        s < iovcnt;
