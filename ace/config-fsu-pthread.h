@@ -11,7 +11,12 @@
 #define ACE_MT_SAFE 1
 #endif
 
+/*
+** FSU implements 1003.4a draft 6 threads - the ACE_HAS_FSU_PTHREADS def
+** is needed for some peculiarities with this particular implementation.
+*/
 #define	ACE_HAS_PTHREADS
+#define ACE_HAS_PTHREADS_DRAFT6
 #define	ACE_HAS_FSU_PTHREADS
 #define	ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define	ACE_HAS_PTHREAD_T
