@@ -116,7 +116,7 @@ public:
 #if !defined (_PORTABLESERVER__TAO_SEQ_OCTET___VAR_CH_)
 #define _PORTABLESERVER__TAO_SEQ_OCTET___VAR_CH_
 
-// *************************************************************
+  // *************************************************************
   // class PortableServer::_tao_seq_Octet_var
   // *************************************************************
 
@@ -203,7 +203,7 @@ public:
     ForwardRequest (const ForwardRequest &); // copy ctor
     ~ForwardRequest (void); // dtor
     ForwardRequest(
-      const CORBA::Object_ptr  _tao_forward_reference);
+                   const CORBA::Object_ptr  _tao_forward_reference);
 
     ForwardRequest &operator= (const ForwardRequest &);
     static ForwardRequest *_narrow (CORBA::Exception *);
@@ -211,10 +211,10 @@ public:
     // the alloc method. This is TAO extension
     static CORBA::Exception *_alloc (void);
   }; // exception PortableServer::ForwardRequest
-    friend void operator<<= (CORBA::Any &, const ForwardRequest &); // copying version
+  friend void operator<<= (CORBA::Any &, const ForwardRequest &); // copying version
   friend void operator<<= (CORBA::Any &, ForwardRequest*); // noncopying version
   friend CORBA::Boolean operator>>= (const CORBA::Any &, ForwardRequest *&);
-static CORBA::TypeCode_ptr _tc_ForwardRequest;
+  static CORBA::TypeCode_ptr _tc_ForwardRequest;
 
 
 #endif /* end #if !defined */
@@ -231,7 +231,7 @@ static CORBA::TypeCode_ptr _tc_ForwardRequest;
 #if !defined (_PORTABLESERVER_THREADPOLICY___PTR_CH_)
 #define _PORTABLESERVER_THREADPOLICY___PTR_CH_
 
-class ThreadPolicy;
+  class ThreadPolicy;
   typedef ThreadPolicy *ThreadPolicy_ptr;
 
 #endif // end #if !defined
@@ -303,16 +303,15 @@ class ThreadPolicy;
     static ThreadPolicy_ptr _duplicate (ThreadPolicy_ptr obj);
     static ThreadPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static ThreadPolicy_ptr _nil (void);
-    static ThreadPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual ThreadPolicyValue value (CORBA::Environment &env);
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     ThreadPolicy (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
+                  STUB_Object *objref = 0,
+                  TAO_ServantBase *servant = 0,
+                  CORBA::Boolean collocated = CORBA::B_FALSE
+                  );
   public:
     virtual ~ThreadPolicy (void);
   private:
@@ -337,7 +336,7 @@ class ThreadPolicy;
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY___PTR_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY___PTR_CH_
 
-class LifespanPolicy;
+  class LifespanPolicy;
   typedef LifespanPolicy *LifespanPolicy_ptr;
 
 #endif // end #if !defined
@@ -409,16 +408,15 @@ class LifespanPolicy;
     static LifespanPolicy_ptr _duplicate (LifespanPolicy_ptr obj);
     static LifespanPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static LifespanPolicy_ptr _nil (void);
-    static LifespanPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual LifespanPolicyValue value (CORBA::Environment &env);
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     LifespanPolicy (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
+                    STUB_Object *objref = 0,
+                    TAO_ServantBase *servant = 0,
+                    CORBA::Boolean collocated = CORBA::B_FALSE
+                    );
   public:
     virtual ~LifespanPolicy (void);
   private:
@@ -443,7 +441,7 @@ class LifespanPolicy;
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY___PTR_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY___PTR_CH_
 
-class IdUniquenessPolicy;
+  class IdUniquenessPolicy;
   typedef IdUniquenessPolicy *IdUniquenessPolicy_ptr;
 
 #endif // end #if !defined
@@ -515,16 +513,15 @@ class IdUniquenessPolicy;
     static IdUniquenessPolicy_ptr _duplicate (IdUniquenessPolicy_ptr obj);
     static IdUniquenessPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static IdUniquenessPolicy_ptr _nil (void);
-    static IdUniquenessPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual IdUniquenessPolicyValue value (CORBA::Environment &env);
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     IdUniquenessPolicy (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
+                        STUB_Object *objref = 0,
+                        TAO_ServantBase *servant = 0,
+                        CORBA::Boolean collocated = CORBA::B_FALSE
+                        );
   public:
     virtual ~IdUniquenessPolicy (void);
   private:
@@ -549,7 +546,7 @@ class IdUniquenessPolicy;
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY___PTR_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY___PTR_CH_
 
-class IdAssignmentPolicy;
+  class IdAssignmentPolicy;
   typedef IdAssignmentPolicy *IdAssignmentPolicy_ptr;
 
 #endif // end #if !defined
@@ -621,16 +618,15 @@ class IdAssignmentPolicy;
     static IdAssignmentPolicy_ptr _duplicate (IdAssignmentPolicy_ptr obj);
     static IdAssignmentPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static IdAssignmentPolicy_ptr _nil (void);
-    static IdAssignmentPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual IdAssignmentPolicyValue value (CORBA::Environment &env);
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     IdAssignmentPolicy (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
+                        STUB_Object *objref = 0,
+                        TAO_ServantBase *servant = 0,
+                        CORBA::Boolean collocated = CORBA::B_FALSE
+                        );
   public:
     virtual ~IdAssignmentPolicy (void);
   private:
@@ -655,7 +651,7 @@ class IdAssignmentPolicy;
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY___PTR_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY___PTR_CH_
 
-class ImplicitActivationPolicy;
+  class ImplicitActivationPolicy;
   typedef ImplicitActivationPolicy *ImplicitActivationPolicy_ptr;
 
 #endif // end #if !defined
@@ -727,16 +723,15 @@ class ImplicitActivationPolicy;
     static ImplicitActivationPolicy_ptr _duplicate (ImplicitActivationPolicy_ptr obj);
     static ImplicitActivationPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static ImplicitActivationPolicy_ptr _nil (void);
-    static ImplicitActivationPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual ImplicitActivationPolicyValue value (CORBA::Environment &env);
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     ImplicitActivationPolicy (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
+                              STUB_Object *objref = 0,
+                              TAO_ServantBase *servant = 0,
+                              CORBA::Boolean collocated = CORBA::B_FALSE
+                              );
   public:
     virtual ~ImplicitActivationPolicy (void);
   private:
@@ -761,7 +756,7 @@ class ImplicitActivationPolicy;
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY___PTR_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY___PTR_CH_
 
-class ServantRetentionPolicy;
+  class ServantRetentionPolicy;
   typedef ServantRetentionPolicy *ServantRetentionPolicy_ptr;
 
 #endif // end #if !defined
@@ -833,16 +828,15 @@ class ServantRetentionPolicy;
     static ServantRetentionPolicy_ptr _duplicate (ServantRetentionPolicy_ptr obj);
     static ServantRetentionPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static ServantRetentionPolicy_ptr _nil (void);
-    static ServantRetentionPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual ServantRetentionPolicyValue value (CORBA::Environment &env);
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     ServantRetentionPolicy (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
+                            STUB_Object *objref = 0,
+                            TAO_ServantBase *servant = 0,
+                            CORBA::Boolean collocated = CORBA::B_FALSE
+                            );
   public:
     virtual ~ServantRetentionPolicy (void);
   private:
@@ -868,7 +862,7 @@ class ServantRetentionPolicy;
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY___PTR_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY___PTR_CH_
 
-class RequestProcessingPolicy;
+  class RequestProcessingPolicy;
   typedef RequestProcessingPolicy *RequestProcessingPolicy_ptr;
 
 #endif // end #if !defined
@@ -940,16 +934,15 @@ class RequestProcessingPolicy;
     static RequestProcessingPolicy_ptr _duplicate (RequestProcessingPolicy_ptr obj);
     static RequestProcessingPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static RequestProcessingPolicy_ptr _nil (void);
-    static RequestProcessingPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual RequestProcessingPolicyValue value (CORBA::Environment &env);
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     RequestProcessingPolicy (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
+                             STUB_Object *objref = 0,
+                             TAO_ServantBase *servant = 0,
+                             CORBA::Boolean collocated = CORBA::B_FALSE
+                             );
   public:
     virtual ~RequestProcessingPolicy (void);
   private:
@@ -962,11 +955,123 @@ class RequestProcessingPolicy;
 
   static CORBA::TypeCode_ptr _tc_RequestProcessingPolicy;
 
+  // **************************************************
+  //
+  // TAO spcific POA locking policy (non-standard)
+  //
+  // **************************************************
+
+  enum TAO_POA_LockingPolicyValue 
+  {
+    USE_DEFAULT_LOCK,
+    USE_NULL_LOCK,
+    USE_THREAD_LOCK
+  };
+  typedef TAO_POA_LockingPolicyValue &TAO_POA_LockingPolicyValue_out;
+  static CORBA::TypeCode_ptr _tc_TAO_POA_LockingPolicyValue;
+
+
+#if !defined (_PORTABLESERVER_TAO_POA_LOCKINGPOLICY___PTR_CH_)
+#define _PORTABLESERVER_TAO_POA_LOCKINGPOLICY___PTR_CH_
+
+  class TAO_POA_LockingPolicy;
+  typedef TAO_POA_LockingPolicy *TAO_POA_LockingPolicy_ptr;
+
+#endif // end #if !defined
+
+
+#if !defined (_PORTABLESERVER_TAO_POA_LOCKINGPOLICY___VAR_CH_)
+#define _PORTABLESERVER_TAO_POA_LOCKINGPOLICY___VAR_CH_
+
+  class TAO_Export TAO_POA_LockingPolicy_var
+  {
+  public:
+    TAO_POA_LockingPolicy_var (void); // default constructor
+    TAO_POA_LockingPolicy_var (TAO_POA_LockingPolicy_ptr);
+    TAO_POA_LockingPolicy_var (const TAO_POA_LockingPolicy_var &); // copy constructor
+    ~TAO_POA_LockingPolicy_var (void); // destructor
+
+    TAO_POA_LockingPolicy_var &operator= (TAO_POA_LockingPolicy_ptr);
+    TAO_POA_LockingPolicy_var &operator= (const TAO_POA_LockingPolicy_var &);
+    TAO_POA_LockingPolicy_ptr operator-> (void) const;
+
+    operator const TAO_POA_LockingPolicy_ptr &() const;
+    operator TAO_POA_LockingPolicy_ptr &();
+    // in, inout, out, _retn
+    TAO_POA_LockingPolicy_ptr in (void) const;
+    TAO_POA_LockingPolicy_ptr &inout (void);
+    TAO_POA_LockingPolicy_ptr &out (void);
+    TAO_POA_LockingPolicy_ptr _retn (void);
+    TAO_POA_LockingPolicy_ptr ptr (void) const;
+
+  private:
+    TAO_POA_LockingPolicy_ptr ptr_;
+  };
+
+
+#endif // end #if !defined
+
+
+#if !defined (_PORTABLESERVER_TAO_POA_LOCKINGPOLICY___OUT_CH_)
+#define _PORTABLESERVER_TAO_POA_LOCKINGPOLICY___OUT_CH_
+
+  class TAO_Export TAO_POA_LockingPolicy_out
+  {
+  public:
+    TAO_POA_LockingPolicy_out (TAO_POA_LockingPolicy_ptr &);
+    TAO_POA_LockingPolicy_out (TAO_POA_LockingPolicy_var &);
+    TAO_POA_LockingPolicy_out (TAO_POA_LockingPolicy_out &);
+    TAO_POA_LockingPolicy_out &operator= (TAO_POA_LockingPolicy_out &);
+    TAO_POA_LockingPolicy_out &operator= (const TAO_POA_LockingPolicy_var &);
+    TAO_POA_LockingPolicy_out &operator= (TAO_POA_LockingPolicy_ptr);
+    operator TAO_POA_LockingPolicy_ptr &();
+    TAO_POA_LockingPolicy_ptr &ptr (void);
+    TAO_POA_LockingPolicy_ptr operator-> (void);
+
+  private:
+    TAO_POA_LockingPolicy_ptr &ptr_;
+  };
+
+
+#endif // end #if !defined
+
+
+#if !defined (_PORTABLESERVER_TAO_POA_LOCKINGPOLICY_CH_)
+#define _PORTABLESERVER_TAO_POA_LOCKINGPOLICY_CH_
+
+  class TAO_Export TAO_POA_LockingPolicy: public virtual CORBA::Policy
+  {
+  public:
+    // the static operations
+    static TAO_POA_LockingPolicy_ptr _duplicate (TAO_POA_LockingPolicy_ptr obj);
+    static TAO_POA_LockingPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static TAO_POA_LockingPolicy_ptr _nil (void);
+
+    virtual TAO_POA_LockingPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    TAO_POA_LockingPolicy (
+                           STUB_Object *objref = 0,
+                           TAO_ServantBase *servant = 0,
+                           CORBA::Boolean collocated = CORBA::B_FALSE
+                           );
+  public:
+    virtual ~TAO_POA_LockingPolicy (void);
+  private:
+    TAO_POA_LockingPolicy (const TAO_POA_LockingPolicy&);
+    void operator= (const TAO_POA_LockingPolicy&);
+  };
+
+
+#endif // end #if !defined
+
+  static CORBA::TypeCode_ptr _tc_TAO_POA_LockingPolicy;
+
 
 #if !defined (_PORTABLESERVER_POAMANAGER___PTR_CH_)
 #define _PORTABLESERVER_POAMANAGER___PTR_CH_
 
-class POAManager;
+  class POAManager;
   typedef POAManager *POAManager_ptr;
 
 #endif // end #if !defined
@@ -1038,7 +1143,6 @@ class POAManager;
     static POAManager_ptr _duplicate (POAManager_ptr obj);
     static POAManager_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static POAManager_ptr _nil (void);
-    static POAManager_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
 
 #if !defined (_PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE___PTR_CH_)
@@ -1059,15 +1163,15 @@ class POAManager;
       AdapterInactive (void); // default ctor
       AdapterInactive (const AdapterInactive &); // copy ctor
       ~AdapterInactive (void); // dtor
-            AdapterInactive &operator= (const AdapterInactive &);
+      AdapterInactive &operator= (const AdapterInactive &);
       static AdapterInactive *_narrow (CORBA::Exception *);
       // the alloc method. This is TAO extension
       static CORBA::Exception *_alloc (void);
     }; // exception PortableServer::POAManager::AdapterInactive
-        friend void operator<<= (CORBA::Any &, const AdapterInactive &); // copying version
+    friend void operator<<= (CORBA::Any &, const AdapterInactive &); // copying version
     friend void operator<<= (CORBA::Any &, AdapterInactive*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, AdapterInactive *&);
-static CORBA::TypeCode_ptr _tc_AdapterInactive;
+    static CORBA::TypeCode_ptr _tc_AdapterInactive;
 
 
 #endif // end #if !defined
@@ -1079,10 +1183,10 @@ static CORBA::TypeCode_ptr _tc_AdapterInactive;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     POAManager (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
+                STUB_Object *objref = 0,
+                TAO_ServantBase *servant = 0,
+                CORBA::Boolean collocated = CORBA::B_FALSE
+                );
   public:
     virtual ~POAManager (void);
   private:
@@ -1099,7 +1203,7 @@ static CORBA::TypeCode_ptr _tc_AdapterInactive;
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___PTR_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR___PTR_CH_
 
-class AdapterActivator;
+  class AdapterActivator;
   typedef AdapterActivator *AdapterActivator_ptr;
 
 #endif // end #if !defined
@@ -1171,16 +1275,15 @@ class AdapterActivator;
     static AdapterActivator_ptr _duplicate (AdapterActivator_ptr obj);
     static AdapterActivator_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static AdapterActivator_ptr _nil (void);
-    static AdapterActivator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual CORBA::Boolean  unknown_adapter (POA_ptr parent, const char *name, CORBA::Environment &env) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     AdapterActivator (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
+                      STUB_Object *objref = 0,
+                      TAO_ServantBase *servant = 0,
+                      CORBA::Boolean collocated = CORBA::B_FALSE
+                      );
   public:
     virtual ~AdapterActivator (void);
   private:
@@ -1197,7 +1300,7 @@ class AdapterActivator;
 #if !defined (_PORTABLESERVER_SERVANTMANAGER___PTR_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER___PTR_CH_
 
-class ServantManager;
+  class ServantManager;
   typedef ServantManager *ServantManager_ptr;
 
 #endif // end #if !defined
@@ -1269,15 +1372,14 @@ class ServantManager;
     static ServantManager_ptr _duplicate (ServantManager_ptr obj);
     static ServantManager_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static ServantManager_ptr _nil (void);
-    static ServantManager_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     ServantManager (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
+                    STUB_Object *objref = 0,
+                    TAO_ServantBase *servant = 0,
+                    CORBA::Boolean collocated = CORBA::B_FALSE
+                    );
   public:
     virtual ~ServantManager (void);
   private:
@@ -1294,7 +1396,7 @@ class ServantManager;
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR___PTR_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR___PTR_CH_
 
-class ServantActivator;
+  class ServantActivator;
   typedef ServantActivator *ServantActivator_ptr;
 
 #endif // end #if !defined
@@ -1366,17 +1468,16 @@ class ServantActivator;
     static ServantActivator_ptr _duplicate (ServantActivator_ptr obj);
     static ServantActivator_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static ServantActivator_ptr _nil (void);
-    static ServantActivator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual Servant  incarnate (const ObjectId &oid, POA_ptr adapter, CORBA::Environment &env) = 0;
     virtual void  etherealize (const ObjectId &oid, POA_ptr adapter, Servant serv, CORBA::Boolean cleanup_in_progress, CORBA::Boolean remaining_activations, CORBA::Environment &env) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     ServantActivator (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
+                      STUB_Object *objref = 0,
+                      TAO_ServantBase *servant = 0,
+                      CORBA::Boolean collocated = CORBA::B_FALSE
+                      );
   public:
     virtual ~ServantActivator (void);
   private:
@@ -1393,7 +1494,7 @@ class ServantActivator;
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR___PTR_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR___PTR_CH_
 
-class ServantLocator;
+  class ServantLocator;
   typedef ServantLocator *ServantLocator_ptr;
 
 #endif // end #if !defined
@@ -1468,17 +1569,16 @@ class ServantLocator;
     static ServantLocator_ptr _duplicate (ServantLocator_ptr obj);
     static ServantLocator_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static ServantLocator_ptr _nil (void);
-    static ServantLocator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual Servant  preinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie & the_cookie, CORBA::Environment &env) = 0;
     virtual void  postinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie the_cookie, Servant the_servant, CORBA::Environment &env) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     ServantLocator (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
+                    STUB_Object *objref = 0,
+                    TAO_ServantBase *servant = 0,
+                    CORBA::Boolean collocated = CORBA::B_FALSE
+                    );
   public:
     virtual ~ServantLocator (void);
   private:
@@ -1495,7 +1595,7 @@ class ServantLocator;
 #if !defined (_PORTABLESERVER_POA___PTR_CH_)
 #define _PORTABLESERVER_POA___PTR_CH_
 
-class POA;
+  class POA;
   typedef POA *POA_ptr;
 
 #endif // end #if !defined
@@ -1567,7 +1667,6 @@ class POA;
     static POA_ptr _duplicate (POA_ptr obj);
     static POA_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static POA_ptr _nil (void);
-    static POA_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERALREADYEXISTS___PTR_CH_)
@@ -1588,15 +1687,15 @@ class POA;
       AdapterAlreadyExists (void); // default ctor
       AdapterAlreadyExists (const AdapterAlreadyExists &); // copy ctor
       ~AdapterAlreadyExists (void); // dtor
-            AdapterAlreadyExists &operator= (const AdapterAlreadyExists &);
+      AdapterAlreadyExists &operator= (const AdapterAlreadyExists &);
       static AdapterAlreadyExists *_narrow (CORBA::Exception *);
       // the alloc method. This is TAO extension
       static CORBA::Exception *_alloc (void);
     }; // exception PortableServer::POA::AdapterAlreadyExists
-        friend void operator<<= (CORBA::Any &, const AdapterAlreadyExists &); // copying version
+    friend void operator<<= (CORBA::Any &, const AdapterAlreadyExists &); // copying version
     friend void operator<<= (CORBA::Any &, AdapterAlreadyExists*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, AdapterAlreadyExists *&);
-static CORBA::TypeCode_ptr _tc_AdapterAlreadyExists;
+    static CORBA::TypeCode_ptr _tc_AdapterAlreadyExists;
 
 
 #endif // end #if !defined
@@ -1620,15 +1719,15 @@ static CORBA::TypeCode_ptr _tc_AdapterAlreadyExists;
       AdapterInactive (void); // default ctor
       AdapterInactive (const AdapterInactive &); // copy ctor
       ~AdapterInactive (void); // dtor
-            AdapterInactive &operator= (const AdapterInactive &);
+      AdapterInactive &operator= (const AdapterInactive &);
       static AdapterInactive *_narrow (CORBA::Exception *);
       // the alloc method. This is TAO extension
       static CORBA::Exception *_alloc (void);
     }; // exception PortableServer::POA::AdapterInactive
-        friend void operator<<= (CORBA::Any &, const AdapterInactive &); // copying version
+    friend void operator<<= (CORBA::Any &, const AdapterInactive &); // copying version
     friend void operator<<= (CORBA::Any &, AdapterInactive*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, AdapterInactive *&);
-static CORBA::TypeCode_ptr _tc_AdapterInactive;
+    static CORBA::TypeCode_ptr _tc_AdapterInactive;
 
 
 #endif // end #if !defined
@@ -1652,15 +1751,15 @@ static CORBA::TypeCode_ptr _tc_AdapterInactive;
       AdapterNonExistent (void); // default ctor
       AdapterNonExistent (const AdapterNonExistent &); // copy ctor
       ~AdapterNonExistent (void); // dtor
-            AdapterNonExistent &operator= (const AdapterNonExistent &);
+      AdapterNonExistent &operator= (const AdapterNonExistent &);
       static AdapterNonExistent *_narrow (CORBA::Exception *);
       // the alloc method. This is TAO extension
       static CORBA::Exception *_alloc (void);
     }; // exception PortableServer::POA::AdapterNonExistent
-        friend void operator<<= (CORBA::Any &, const AdapterNonExistent &); // copying version
+    friend void operator<<= (CORBA::Any &, const AdapterNonExistent &); // copying version
     friend void operator<<= (CORBA::Any &, AdapterNonExistent*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, AdapterNonExistent *&);
-static CORBA::TypeCode_ptr _tc_AdapterNonExistent;
+    static CORBA::TypeCode_ptr _tc_AdapterNonExistent;
 
 
 #endif // end #if !defined
@@ -1685,7 +1784,7 @@ static CORBA::TypeCode_ptr _tc_AdapterNonExistent;
       InvalidPolicy (const InvalidPolicy &); // copy ctor
       ~InvalidPolicy (void); // dtor
       InvalidPolicy(
-        CORBA::UShort _tao_index);
+                    CORBA::UShort _tao_index);
 
       InvalidPolicy &operator= (const InvalidPolicy &);
       static InvalidPolicy *_narrow (CORBA::Exception *);
@@ -1693,10 +1792,10 @@ static CORBA::TypeCode_ptr _tc_AdapterNonExistent;
       // the alloc method. This is TAO extension
       static CORBA::Exception *_alloc (void);
     }; // exception PortableServer::POA::InvalidPolicy
-        friend void operator<<= (CORBA::Any &, const InvalidPolicy &); // copying version
+    friend void operator<<= (CORBA::Any &, const InvalidPolicy &); // copying version
     friend void operator<<= (CORBA::Any &, InvalidPolicy*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, InvalidPolicy *&);
-static CORBA::TypeCode_ptr _tc_InvalidPolicy;
+    static CORBA::TypeCode_ptr _tc_InvalidPolicy;
 
 
 #endif // end #if !defined
@@ -1720,15 +1819,15 @@ static CORBA::TypeCode_ptr _tc_InvalidPolicy;
       NoServant (void); // default ctor
       NoServant (const NoServant &); // copy ctor
       ~NoServant (void); // dtor
-            NoServant &operator= (const NoServant &);
+      NoServant &operator= (const NoServant &);
       static NoServant *_narrow (CORBA::Exception *);
       // the alloc method. This is TAO extension
       static CORBA::Exception *_alloc (void);
     }; // exception PortableServer::POA::NoServant
-        friend void operator<<= (CORBA::Any &, const NoServant &); // copying version
+    friend void operator<<= (CORBA::Any &, const NoServant &); // copying version
     friend void operator<<= (CORBA::Any &, NoServant*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, NoServant *&);
-static CORBA::TypeCode_ptr _tc_NoServant;
+    static CORBA::TypeCode_ptr _tc_NoServant;
 
 
 #endif // end #if !defined
@@ -1752,15 +1851,15 @@ static CORBA::TypeCode_ptr _tc_NoServant;
       ObjectAlreadyActive (void); // default ctor
       ObjectAlreadyActive (const ObjectAlreadyActive &); // copy ctor
       ~ObjectAlreadyActive (void); // dtor
-            ObjectAlreadyActive &operator= (const ObjectAlreadyActive &);
+      ObjectAlreadyActive &operator= (const ObjectAlreadyActive &);
       static ObjectAlreadyActive *_narrow (CORBA::Exception *);
       // the alloc method. This is TAO extension
       static CORBA::Exception *_alloc (void);
     }; // exception PortableServer::POA::ObjectAlreadyActive
-        friend void operator<<= (CORBA::Any &, const ObjectAlreadyActive &); // copying version
+    friend void operator<<= (CORBA::Any &, const ObjectAlreadyActive &); // copying version
     friend void operator<<= (CORBA::Any &, ObjectAlreadyActive*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, ObjectAlreadyActive *&);
-static CORBA::TypeCode_ptr _tc_ObjectAlreadyActive;
+    static CORBA::TypeCode_ptr _tc_ObjectAlreadyActive;
 
 
 #endif // end #if !defined
@@ -1784,15 +1883,15 @@ static CORBA::TypeCode_ptr _tc_ObjectAlreadyActive;
       ObjectNotActive (void); // default ctor
       ObjectNotActive (const ObjectNotActive &); // copy ctor
       ~ObjectNotActive (void); // dtor
-            ObjectNotActive &operator= (const ObjectNotActive &);
+      ObjectNotActive &operator= (const ObjectNotActive &);
       static ObjectNotActive *_narrow (CORBA::Exception *);
       // the alloc method. This is TAO extension
       static CORBA::Exception *_alloc (void);
     }; // exception PortableServer::POA::ObjectNotActive
-        friend void operator<<= (CORBA::Any &, const ObjectNotActive &); // copying version
+    friend void operator<<= (CORBA::Any &, const ObjectNotActive &); // copying version
     friend void operator<<= (CORBA::Any &, ObjectNotActive*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, ObjectNotActive *&);
-static CORBA::TypeCode_ptr _tc_ObjectNotActive;
+    static CORBA::TypeCode_ptr _tc_ObjectNotActive;
 
 
 #endif // end #if !defined
@@ -1816,15 +1915,15 @@ static CORBA::TypeCode_ptr _tc_ObjectNotActive;
       ServantAlreadyActive (void); // default ctor
       ServantAlreadyActive (const ServantAlreadyActive &); // copy ctor
       ~ServantAlreadyActive (void); // dtor
-            ServantAlreadyActive &operator= (const ServantAlreadyActive &);
+      ServantAlreadyActive &operator= (const ServantAlreadyActive &);
       static ServantAlreadyActive *_narrow (CORBA::Exception *);
       // the alloc method. This is TAO extension
       static CORBA::Exception *_alloc (void);
     }; // exception PortableServer::POA::ServantAlreadyActive
-        friend void operator<<= (CORBA::Any &, const ServantAlreadyActive &); // copying version
+    friend void operator<<= (CORBA::Any &, const ServantAlreadyActive &); // copying version
     friend void operator<<= (CORBA::Any &, ServantAlreadyActive*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, ServantAlreadyActive *&);
-static CORBA::TypeCode_ptr _tc_ServantAlreadyActive;
+    static CORBA::TypeCode_ptr _tc_ServantAlreadyActive;
 
 
 #endif // end #if !defined
@@ -1848,15 +1947,15 @@ static CORBA::TypeCode_ptr _tc_ServantAlreadyActive;
       ServantNotActive (void); // default ctor
       ServantNotActive (const ServantNotActive &); // copy ctor
       ~ServantNotActive (void); // dtor
-            ServantNotActive &operator= (const ServantNotActive &);
+      ServantNotActive &operator= (const ServantNotActive &);
       static ServantNotActive *_narrow (CORBA::Exception *);
       // the alloc method. This is TAO extension
       static CORBA::Exception *_alloc (void);
     }; // exception PortableServer::POA::ServantNotActive
-        friend void operator<<= (CORBA::Any &, const ServantNotActive &); // copying version
+    friend void operator<<= (CORBA::Any &, const ServantNotActive &); // copying version
     friend void operator<<= (CORBA::Any &, ServantNotActive*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, ServantNotActive *&);
-static CORBA::TypeCode_ptr _tc_ServantNotActive;
+    static CORBA::TypeCode_ptr _tc_ServantNotActive;
 
 
 #endif // end #if !defined
@@ -1880,15 +1979,15 @@ static CORBA::TypeCode_ptr _tc_ServantNotActive;
       WrongAdapter (void); // default ctor
       WrongAdapter (const WrongAdapter &); // copy ctor
       ~WrongAdapter (void); // dtor
-            WrongAdapter &operator= (const WrongAdapter &);
+      WrongAdapter &operator= (const WrongAdapter &);
       static WrongAdapter *_narrow (CORBA::Exception *);
       // the alloc method. This is TAO extension
       static CORBA::Exception *_alloc (void);
     }; // exception PortableServer::POA::WrongAdapter
-        friend void operator<<= (CORBA::Any &, const WrongAdapter &); // copying version
+    friend void operator<<= (CORBA::Any &, const WrongAdapter &); // copying version
     friend void operator<<= (CORBA::Any &, WrongAdapter*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, WrongAdapter *&);
-static CORBA::TypeCode_ptr _tc_WrongAdapter;
+    static CORBA::TypeCode_ptr _tc_WrongAdapter;
 
 
 #endif // end #if !defined
@@ -1912,15 +2011,15 @@ static CORBA::TypeCode_ptr _tc_WrongAdapter;
       WrongPolicy (void); // default ctor
       WrongPolicy (const WrongPolicy &); // copy ctor
       ~WrongPolicy (void); // dtor
-            WrongPolicy &operator= (const WrongPolicy &);
+      WrongPolicy &operator= (const WrongPolicy &);
       static WrongPolicy *_narrow (CORBA::Exception *);
       // the alloc method. This is TAO extension
       static CORBA::Exception *_alloc (void);
     }; // exception PortableServer::POA::WrongPolicy
-        friend void operator<<= (CORBA::Any &, const WrongPolicy &); // copying version
+    friend void operator<<= (CORBA::Any &, const WrongPolicy &); // copying version
     friend void operator<<= (CORBA::Any &, WrongPolicy*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, WrongPolicy *&);
-static CORBA::TypeCode_ptr _tc_WrongPolicy;
+    static CORBA::TypeCode_ptr _tc_WrongPolicy;
 
 
 #endif // end #if !defined
@@ -1935,6 +2034,15 @@ static CORBA::TypeCode_ptr _tc_WrongPolicy;
     virtual ImplicitActivationPolicy_ptr  create_implicit_activation_policy (ImplicitActivationPolicyValue value, CORBA::Environment &env) = 0;
     virtual ServantRetentionPolicy_ptr  create_servant_retention_policy (ServantRetentionPolicyValue value, CORBA::Environment &env) = 0;
     virtual RequestProcessingPolicy_ptr  create_request_processing_policy (RequestProcessingPolicyValue value, CORBA::Environment &env) = 0;
+
+    // **************************************************
+    //
+    // TAO spcific POA locking policy (non-standard)
+    //
+    // **************************************************
+
+    virtual TAO_POA_LockingPolicy_ptr  create_TAO_POA_locking_policy (TAO_POA_LockingPolicyValue value, CORBA::Environment &env) = 0;
+
     virtual char * the_name (CORBA::Environment &env) = 0;
     virtual POA_ptr  the_parent (CORBA::Environment &env) = 0;
     virtual POAManager_ptr  the_POAManager (CORBA::Environment &env) = 0;
@@ -1958,10 +2066,10 @@ static CORBA::TypeCode_ptr _tc_WrongPolicy;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     POA (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
+         STUB_Object *objref = 0,
+         TAO_ServantBase *servant = 0,
+         CORBA::Boolean collocated = CORBA::B_FALSE
+         );
   public:
     virtual ~POA (void);
   private:
@@ -1978,7 +2086,7 @@ static CORBA::TypeCode_ptr _tc_WrongPolicy;
 #if !defined (_PORTABLESERVER_CURRENT___PTR_CH_)
 #define _PORTABLESERVER_CURRENT___PTR_CH_
 
-class Current;
+  class Current;
   typedef Current *Current_ptr;
 
 #endif // end #if !defined
@@ -2050,7 +2158,6 @@ class Current;
     static Current_ptr _duplicate (Current_ptr obj);
     static Current_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static Current_ptr _nil (void);
-    static Current_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
 
 #if !defined (_PORTABLESERVER_CURRENT_NOCONTEXT___PTR_CH_)
@@ -2071,15 +2178,15 @@ class Current;
       NoContext (void); // default ctor
       NoContext (const NoContext &); // copy ctor
       ~NoContext (void); // dtor
-            NoContext &operator= (const NoContext &);
+      NoContext &operator= (const NoContext &);
       static NoContext *_narrow (CORBA::Exception *);
       // the alloc method. This is TAO extension
       static CORBA::Exception *_alloc (void);
     }; // exception PortableServer::Current::NoContext
-        friend void operator<<= (CORBA::Any &, const NoContext &); // copying version
+    friend void operator<<= (CORBA::Any &, const NoContext &); // copying version
     friend void operator<<= (CORBA::Any &, NoContext*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, NoContext *&);
-static CORBA::TypeCode_ptr _tc_NoContext;
+    static CORBA::TypeCode_ptr _tc_NoContext;
 
 
 #endif // end #if !defined
@@ -2089,10 +2196,10 @@ static CORBA::TypeCode_ptr _tc_NoContext;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
     Current (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
+             STUB_Object *objref = 0,
+             TAO_ServantBase *servant = 0,
+             CORBA::Boolean collocated = CORBA::B_FALSE
+             );
   public:
     virtual ~Current (void);
   private:

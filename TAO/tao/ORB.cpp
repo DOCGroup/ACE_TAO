@@ -778,10 +778,10 @@ operator<<(TAO_OutputCDR& cdr, const TAO_opaque& x)
 #if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
   cdr.write_octet_array (x.get_buffer (), length);
 #else
-  if (x.mb_ == 0)
+  if (x.mb () == 0)
     cdr.write_octet_array (x.get_buffer (), length);
   else
-    cdr.write_octet_array_mb (x.mb_);
+    cdr.write_octet_array_mb (x.mb ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
   return cdr;
 }

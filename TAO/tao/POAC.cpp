@@ -197,21 +197,6 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
                                                               );
 }
 
-PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-{
-  IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::ThreadPolicy::_nil ();
-  // create the CORBA level proxy
-  CORBA::Object_ptr objref = new CORBA_Object (data);
-  if (objref == 0)
-    {
-      data->Release ();
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return PortableServer::ThreadPolicy::_nil ();
-    }
-  return PortableServer::ThreadPolicy::_narrow (objref, env);
-}
-
 PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Environment &env)
 {
   static const TAO_Param_Data _get_PortableServer_ThreadPolicy_value_paramdata [] =
@@ -300,21 +285,6 @@ PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (
                                                                 ACE_reinterpret_cast(POA_PortableServer::LifespanPolicy_ptr, servant),
                                                                 stub
                                                                 );
-}
-
-PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-{
-  IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::LifespanPolicy::_nil ();
-  // create the CORBA level proxy
-  CORBA::Object_ptr objref = new CORBA_Object (data);
-  if (objref == 0)
-    {
-      data->Release ();
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return PortableServer::LifespanPolicy::_nil ();
-    }
-  return PortableServer::LifespanPolicy::_narrow (objref, env);
 }
 
 PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA::Environment &env)
@@ -407,21 +377,6 @@ PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narr
                                                                     );
 }
 
-PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-{
-  IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::IdUniquenessPolicy::_nil ();
-  // create the CORBA level proxy
-  CORBA::Object_ptr objref = new CORBA_Object (data);
-  if (objref == 0)
-    {
-      data->Release ();
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return PortableServer::IdUniquenessPolicy::_nil ();
-    }
-  return PortableServer::IdUniquenessPolicy::_narrow (objref, env);
-}
-
 PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::value(CORBA::Environment &env)
 {
   static const TAO_Param_Data _get_PortableServer_IdUniquenessPolicy_value_paramdata [] =
@@ -510,21 +465,6 @@ PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narr
                                                                     ACE_reinterpret_cast(POA_PortableServer::IdAssignmentPolicy_ptr, servant),
                                                                     stub
                                                                     );
-}
-
-PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-{
-  IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::IdAssignmentPolicy::_nil ();
-  // create the CORBA level proxy
-  CORBA::Object_ptr objref = new CORBA_Object (data);
-  if (objref == 0)
-    {
-      data->Release ();
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return PortableServer::IdAssignmentPolicy::_nil ();
-    }
-  return PortableServer::IdAssignmentPolicy::_narrow (objref, env);
 }
 
 PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::value(CORBA::Environment &env)
@@ -617,21 +557,6 @@ PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationP
                                                                           );
 }
 
-PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-{
-  IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::ImplicitActivationPolicy::_nil ();
-  // create the CORBA level proxy
-  CORBA::Object_ptr objref = new CORBA_Object (data);
-  if (objref == 0)
-    {
-      data->Release ();
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return PortableServer::ImplicitActivationPolicy::_nil ();
-    }
-  return PortableServer::ImplicitActivationPolicy::_narrow (objref, env);
-}
-
 PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivationPolicy::value(CORBA::Environment &env)
 {
   static const TAO_Param_Data _get_PortableServer_ImplicitActivationPolicy_value_paramdata [] =
@@ -720,21 +645,6 @@ PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolic
                                                                         ACE_reinterpret_cast(POA_PortableServer::ServantRetentionPolicy_ptr, servant),
                                                                         stub
                                                                         );
-}
-
-PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-{
-  IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::ServantRetentionPolicy::_nil ();
-  // create the CORBA level proxy
-  CORBA::Object_ptr objref = new CORBA_Object (data);
-  if (objref == 0)
-    {
-      data->Release ();
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return PortableServer::ServantRetentionPolicy::_nil ();
-    }
-  return PortableServer::ServantRetentionPolicy::_narrow (objref, env);
 }
 
 PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPolicy::value(CORBA::Environment &env)
@@ -829,21 +739,6 @@ PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPol
                                                                          );
 }
 
-PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-{
-  IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::RequestProcessingPolicy::_nil ();
-  // create the CORBA level proxy
-  CORBA::Object_ptr objref = new CORBA_Object (data);
-  if (objref == 0)
-    {
-      data->Release ();
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return PortableServer::RequestProcessingPolicy::_nil ();
-    }
-  return PortableServer::RequestProcessingPolicy::_narrow (objref, env);
-}
-
 PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPolicy::value(CORBA::Environment &env)
 {
   static const TAO_Param_Data _get_PortableServer_RequestProcessingPolicy_value_paramdata [] =
@@ -888,6 +783,103 @@ static const CORBA::Long _oc_PortableServer_RequestProcessingPolicy[] =
 static CORBA::TypeCode _tc__tc_PortableServer_RequestProcessingPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_RequestProcessingPolicy), (char *) &_oc_PortableServer_RequestProcessingPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_RequestProcessingPolicy = &_tc__tc_PortableServer_RequestProcessingPolicy;
 
+// **************************************************
+//
+// TAO spcific POA locking policy (non-standard)
+//
+// **************************************************
+
+static const CORBA::Long _oc_PortableServer_TAO_POA_LockingPolicyValue[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  50, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f54), ACE_NTOHL (0x414f5f50), ACE_NTOHL (0x4f415f4c), ACE_NTOHL (0x6f636b69), ACE_NTOHL (0x6e67506f), ACE_NTOHL (0x6c696379), ACE_NTOHL (0x56616c75), ACE_NTOHL (0x653a312e), ACE_NTOHL (0x3000fdfd),  // repository ID = IDL:PortableServer/TAO_POA_LockingPolicyValue:1.0
+  27, ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x504f415f), ACE_NTOHL (0x4c6f636b), ACE_NTOHL (0x696e6750), ACE_NTOHL (0x6f6c6963), ACE_NTOHL (0x7956616c), ACE_NTOHL (0x756500fd),  // name = TAO_POA_LockingPolicyValue
+  3, // member count
+    17, ACE_NTOHL (0x5553455f), ACE_NTOHL (0x44454641), ACE_NTOHL (0x554c545f), ACE_NTOHL (0x4c4f434b), ACE_NTOHL (0xfdfdfd),  // name = USE_DEFAULT_LOCK
+    14, ACE_NTOHL (0x5553455f), ACE_NTOHL (0x4e554c4c), ACE_NTOHL (0x5f4c4f43), ACE_NTOHL (0x4b00fdfd),  // name = USE_NULL_LOCK
+    16, ACE_NTOHL (0x5553455f), ACE_NTOHL (0x54485245), ACE_NTOHL (0x41445f4c), ACE_NTOHL (0x4f434b00),  // name = USE_THREAD_LOCK
+};
+static CORBA::TypeCode _tc__tc_PortableServer_TAO_POA_LockingPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_TAO_POA_LockingPolicyValue), (char *) &_oc_PortableServer_TAO_POA_LockingPolicyValue, CORBA::B_FALSE);
+CORBA::TypeCode_ptr PortableServer::_tc_TAO_POA_LockingPolicyValue = &_tc__tc_PortableServer_TAO_POA_LockingPolicyValue;
+
+PortableServer::TAO_POA_LockingPolicy_ptr PortableServer::TAO_POA_LockingPolicy::_duplicate (PortableServer::TAO_POA_LockingPolicy_ptr obj)
+{
+  if (!CORBA::is_nil (obj))
+    obj->AddRef ();
+
+  return obj;
+} // end of _duplicate
+
+PortableServer::TAO_POA_LockingPolicy_ptr PortableServer::TAO_POA_LockingPolicy::_narrow (
+                                                                                          CORBA::Object_ptr obj,
+                                                                                          CORBA::Environment &env
+                                                                                          )
+{
+  if (CORBA::is_nil (obj))
+    return PortableServer::TAO_POA_LockingPolicy::_nil ();
+  if (!obj->_is_a ("IDL:PortableServer/TAO_POA_LockingPolicy:1.0", env))
+    return PortableServer::TAO_POA_LockingPolicy::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+    {
+      PortableServer::TAO_POA_LockingPolicy_ptr
+        new_obj = new PortableServer::TAO_POA_LockingPolicy (obj->_get_parent ()); // construct obj ref using the stub object
+      return new_obj;
+    } // end of if
+
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
+    return PortableServer::TAO_POA_LockingPolicy::_nil ();
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/TAO_POA_LockingPolicy:1.0");
+  return new POA_PortableServer::_tao_collocated_TAO_POA_LockingPolicy(
+                                                                       ACE_reinterpret_cast(POA_PortableServer::TAO_POA_LockingPolicy_ptr, servant),
+                                                                       stub
+                                                                       );
+}
+
+PortableServer::TAO_POA_LockingPolicyValue PortableServer::TAO_POA_LockingPolicy::value(CORBA::Environment &env)
+{
+  static const TAO_Param_Data _get_PortableServer_TAO_POA_LockingPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_TAO_POA_LockingPolicyValue, PARAM_RETURN, 0}};
+
+  static const TAO_Call_Data _get_PortableServer_TAO_POA_LockingPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_TAO_POA_LockingPolicy_value_paramdata, 0, 0};
+
+  PortableServer::TAO_POA_LockingPolicyValue retval =
+    ACE_static_cast (PortableServer::TAO_POA_LockingPolicyValue, -1);
+  STUB_Object *istub;
+
+  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+    {
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return retval;
+    }
+  this->Release (); // QueryInterface has bumped up our refcount
+  istub->do_static_call (env, &_get_PortableServer_TAO_POA_LockingPolicy_value_calldata, &retval);
+  return retval;
+
+}
+
+CORBA::Boolean PortableServer::TAO_POA_LockingPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
+{
+  if (
+      (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/TAO_POA_LockingPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    return 1; // success using local knowledge
+  else
+    return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
+}
+
+static const CORBA::Long _oc_PortableServer_TAO_POA_LockingPolicy[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  45, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f54), ACE_NTOHL (0x414f5f50), ACE_NTOHL (0x4f415f4c), ACE_NTOHL (0x6f636b69), ACE_NTOHL (0x6e67506f), ACE_NTOHL (0x6c696379), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0xfdfdfd),  // repository ID = IDL:PortableServer/TAO_POA_LockingPolicy:1.0
+  22, ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x504f415f), ACE_NTOHL (0x4c6f636b), ACE_NTOHL (0x696e6750), ACE_NTOHL (0x6f6c6963), ACE_NTOHL (0x7900fdfd),  // name = TAO_POA_LockingPolicy,
+};
+static CORBA::TypeCode _tc__tc_PortableServer_TAO_POA_LockingPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_TAO_POA_LockingPolicy), (char *) &_oc_PortableServer_TAO_POA_LockingPolicy, CORBA::B_FALSE);
+CORBA::TypeCode_ptr PortableServer::_tc_TAO_POA_LockingPolicy = &_tc__tc_PortableServer_TAO_POA_LockingPolicy;
+
 PortableServer::POAManager_ptr PortableServer::POAManager::_duplicate (PortableServer::POAManager_ptr obj)
 {
   if (!CORBA::is_nil (obj))
@@ -920,21 +912,6 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
                                                             ACE_reinterpret_cast(POA_PortableServer::POAManager_ptr, servant),
                                                             stub
                                                             );
-}
-
-PortableServer::POAManager_ptr PortableServer::POAManager::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-{
-  IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::POAManager::_nil ();
-  // create the CORBA level proxy
-  CORBA::Object_ptr objref = new CORBA_Object (data);
-  if (objref == 0)
-    {
-      data->Release ();
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return PortableServer::POAManager::_nil ();
-    }
-  return PortableServer::POAManager::_narrow (objref, env);
 }
 
 // default constructor
@@ -1078,21 +1055,6 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
                                                                   );
 }
 
-PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-{
-  IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::AdapterActivator::_nil ();
-  // create the CORBA level proxy
-  CORBA::Object_ptr objref = new CORBA_Object (data);
-  if (objref == 0)
-    {
-      data->Release ();
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return PortableServer::AdapterActivator::_nil ();
-    }
-  return PortableServer::AdapterActivator::_narrow (objref, env);
-}
-
 CORBA::Boolean PortableServer::AdapterActivator::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
@@ -1146,21 +1108,6 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
                                                                 );
 }
 
-PortableServer::ServantManager_ptr PortableServer::ServantManager::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-{
-  IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::ServantManager::_nil ();
-  // create the CORBA level proxy
-  CORBA::Object_ptr objref = new CORBA_Object (data);
-  if (objref == 0)
-    {
-      data->Release ();
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return PortableServer::ServantManager::_nil ();
-    }
-  return PortableServer::ServantManager::_narrow (objref, env);
-}
-
 CORBA::Boolean PortableServer::ServantManager::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
@@ -1212,21 +1159,6 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
                                                                   ACE_reinterpret_cast(POA_PortableServer::ServantActivator_ptr, servant),
                                                                   stub
                                                                   );
-}
-
-PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-{
-  IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::ServantActivator::_nil ();
-  // create the CORBA level proxy
-  CORBA::Object_ptr objref = new CORBA_Object (data);
-  if (objref == 0)
-    {
-      data->Release ();
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return PortableServer::ServantActivator::_nil ();
-    }
-  return PortableServer::ServantActivator::_narrow (objref, env);
 }
 
 CORBA::Boolean PortableServer::ServantActivator::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
@@ -1283,21 +1215,6 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
                                                                 );
 }
 
-PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-{
-  IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::ServantLocator::_nil ();
-  // create the CORBA level proxy
-  CORBA::Object_ptr objref = new CORBA_Object (data);
-  if (objref == 0)
-    {
-      data->Release ();
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return PortableServer::ServantLocator::_nil ();
-    }
-  return PortableServer::ServantLocator::_narrow (objref, env);
-}
-
 CORBA::Boolean PortableServer::ServantLocator::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
@@ -1350,21 +1267,6 @@ PortableServer::POA_ptr PortableServer::POA::_narrow (
                                                      ACE_reinterpret_cast(POA_PortableServer::POA_ptr, servant),
                                                      stub
                                                      );
-}
-
-PortableServer::POA_ptr PortableServer::POA::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-{
-  IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::POA::_nil ();
-  // create the CORBA level proxy
-  CORBA::Object_ptr objref = new CORBA_Object (data);
-  if (objref == 0)
-    {
-      data->Release ();
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return PortableServer::POA::_nil ();
-    }
-  return PortableServer::POA::_narrow (objref, env);
 }
 
 // default constructor
@@ -2395,21 +2297,6 @@ PortableServer::Current_ptr PortableServer::Current::_narrow (
                                                          ACE_reinterpret_cast(POA_PortableServer::Current_ptr, servant),
                                                          stub
                                                          );
-}
-
-PortableServer::Current_ptr PortableServer::Current::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-{
-  IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::Current::_nil ();
-  // create the CORBA level proxy
-  CORBA::Object_ptr objref = new CORBA_Object (data);
-  if (objref == 0)
-    {
-      data->Release ();
-      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return PortableServer::Current::_nil ();
-    }
-  return PortableServer::Current::_narrow (objref, env);
 }
 
 // default constructor
