@@ -67,12 +67,14 @@ Quoter_Server::init (int argc,
   ACE_TRY
     {
       exception_message = "While ORB Manager init";
-      if (this->orb_manager_.init (argc, argv, ACE_TRY_ENV) == -1)
+      int result = this->orb_manager_.init (argc, argv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (result == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "init"),
                           -1);
-      ACE_TRY_CHECK;
 
       // Copy them, because parse_args expects them there.
       this->argc_ = argc;
@@ -87,7 +89,9 @@ Quoter_Server::init (int argc,
       this->parse_args ();
 
       // Obtain the RootPOA.
-      CORBA::Object_var obj = this->orb_manager_.orb()->resolve_initial_references ("RootPOA");
+      CORBA::Object_var obj = 
+        this->orb_manager_.orb()->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       exception_message = "While narrowing the root pos";
@@ -128,9 +132,11 @@ Quoter_Server::init (int argc,
       exception_message = "While object_to_string";
       CORBA::String_var quoter_Factory_ior =
         this->orb_manager_.orb()->object_to_string (quoter_Factory_var.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       exception_message = "While activating the POA Manager";
       poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Print the IOR.
       if (this->debug_level_ >= 2)
@@ -160,7 +166,8 @@ Quoter_Server::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
       CORBA::ORB_ptr orb_ptr = TAO_ORB_Core_instance()->orb();
 
       CORBA::Object_var naming_obj =
-        orb_ptr->resolve_initial_references ("NameService");
+        orb_ptr->resolve_initial_references ("NameService", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -257,9 +264,11 @@ main (int argc, char *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      if (quoter_server.init (argc, argv, ACE_TRY_ENV) == -1)
-        return 1;
+      int result = quoter_server.init (argc, argv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      if (result == -1)
+        return 1;
 
       quoter_server.run (ACE_TRY_ENV);
       ACE_TRY_CHECK;

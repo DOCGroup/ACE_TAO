@@ -560,11 +560,9 @@ ImplRepo_i::register_server (const char *server,
 void
 ImplRepo_i::reregister_server (const char *server,
                                const ImplementationRepository::StartupOptions &options,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   // Get current starting up value
   int starting_up = this->repository_.starting_up (server);
 
@@ -681,12 +679,14 @@ ImplRepo_i::server_is_running (const char *server,
   // @@ (brunsch) Only look at current profile for now.
   TAO_Profile *profile = mp.get_current_profile ();
 
-  if (profile)
-    new_location = profile->to_string (ACE_TRY_ENV);
+  if (profile) 
+    {
+      new_location = profile->to_string (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+    }
   else
     return new_location;
 
-  ACE_CHECK_RETURN (0);
 
   char *pos = ACE_OS::strstr (new_location, "://");
 

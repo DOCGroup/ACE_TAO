@@ -14,7 +14,10 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      if (server.init (argc, argv, ACE_TRY_ENV) == -1)
+      int retval = server.init (argc, argv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (retval == -1)
         return -1;
       else
         {
