@@ -120,7 +120,6 @@ main (int argc, char *argv[])
   u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
   ACE_DEBUG ((LM_DEBUG, "Starting tracing\n"));
   ACE_LOG_MSG->start_tracing ();
-  //  ACE_Reactor::instance(new My_Reactor);
   ACE_Reactor::instance (&reactor);
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
@@ -129,7 +128,7 @@ main (int argc, char *argv[])
 			     ACE_DEFAULT_SERVER_HOST);
   MemoryEx ex (local_addr);
 
-  if (ACE_Reactor::instance()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler 
       (&ex, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n%a", "register_handler", 1), -1);
 

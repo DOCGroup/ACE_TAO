@@ -316,7 +316,7 @@ Counting_Service::handle_input (ACE_HANDLE)
     {
       ACE_DEBUG ((LM_DEBUG,
 		  "(%P|%t) %d bytes of input on %d is %*s\n",
-		  bytes, this->peer ().get_handle (), buf));
+		  bytes, this->peer ().get_handle (), bytes, buf));
 
       // Read and return the current value in the file.
       if (ACE_OS::strncmp (buf, "read", 4) == 0)
@@ -353,9 +353,9 @@ Counting_Service::open (void *)
 
   if (OPTIONS::instance ()->concurrency_type () == Options::PROCESS)
     {
-      // We need to rerun the event loop here since we ended up here due
-      // to being fork'd and we can't just return to our context since
-      // it's in the wrong location in the process.
+      // We need to rerun the event loop here since we ended up here
+      // due to being fork'd and we can't just return to our context
+      // since it's in the wrong location in the process.
       while (this->handle_input () >= 0)
 	continue;
 
