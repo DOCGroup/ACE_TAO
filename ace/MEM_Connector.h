@@ -86,6 +86,10 @@ public:
                int perms = 0,
                int protocol = 0);
 
+  // Set/get the preferred signaling strategy.
+  ACE_MEM_IO::Signal_Strategy preferred_strategy (void) const;
+  void preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy);
+
   /// Accessor to underlying malloc options.
   ACE_MEM_SAP::MALLOC_OPTIONS &malloc_options (void);
 
@@ -106,6 +110,9 @@ private:
   /// A cached MALLOC_OPTIONS that the MEM_Connector used to initialize
   /// the shared memory malloc update connection establishment.
   ACE_MEM_SAP::MALLOC_OPTIONS malloc_options_;
+
+  // Preferred signaling strategy.
+  ACE_MEM_IO::Signal_Strategy preferred_strategy_;
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

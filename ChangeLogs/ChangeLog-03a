@@ -1,3 +1,41 @@
+Mon Apr 02 23:41:34 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_SAP.cpp:
+	* ace/MEM_SAP.h:
+	* ace/MEM_SAP.i:
+	  Generalized the ACE_MEM_SAP class to allocate memory in the new
+	  memory wrapper class ACE_MEM_SAP_Node.
+
+	* ace/MEM_IO.cpp:
+	* ace/MEM_IO.h:
+	* ace/MEM_IO.i:
+	  Separated the different signaling mechanisms into a different
+	  class in ACE_MEM_IO so it can determine the "right" signaling
+	  strategy allowed.  Currently, we implement the Reactive strategy
+	  (ACE_Reactive_MEM_IO) which uses sockets for signaling and
+	  multithreaded strategy (ACE_MT_MEM_IO) which uses semaphores for
+	  signaling.
+
+	* ace/MEM_Stream.cpp:
+	  Sending an empty buffer over to wake up the "other" end when we
+	  are closing down.
+
+	* ace/MEM_Acceptor.cpp:
+	* ace/MEM_Acceptor.h:
+	* ace/MEM_Acceptor.i:
+	* ace/MEM_Connector.cpp:
+	* ace/MEM_Connector.h:
+	* ace/MEM_Connector.i: Added facility to specify the "preferred"
+	  signaling strategy so the acceptor and connector can negociate
+	  and agree on the best signaling mechanism to use.
+
+	* ace/MEM_Stream_Test.h:
+	* ace/MEM_Stream_Test.cpp:
+	  Added the test for the new MT signaling MEM_Stream transfer.
+	  This part of the test seems to be failing on system that depends
+	  on SysV semaphores (because we need more semaphore than the
+	  system can provide.)
+
 Mon Apr  2 15:17:13 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-chorus.h:
@@ -15,14 +53,14 @@ Mon Apr  2 09:57:31 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/PerlACE/MSProject.pm:
 
-          Made a change to the tao_idl depencency checking.  
+          Made a change to the tao_idl depencency checking.
           It was only checking for tao_idl and $(InputName) where
           some places we use $(InputPath) instead.
 
         * ace/config-win32-msvc-5.h:
         * ace/config-win32-msvc-6.h:
 
-          Disabled the Inheritance by Dominance informational 
+          Disabled the Inheritance by Dominance informational
           warning that MSVC gives.  We have cases of this all over
           the place, and normally we just disable the warning on
           a file by file basis, but now we just do a blanket disable.

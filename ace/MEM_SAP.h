@@ -26,8 +26,47 @@
 
 #include "ace/Process_Mutex.h"
 
+class ACE_MEM_SAP;
+class ACE_Reactive_MEM_IO;
+class ACE_MT_MEM_IO;
+class ACE_MEM_IO;
+
+// Internal data structure
+// MEM_SAP uses to queue up
+// data.
+class ACE_Export ACE_MEM_SAP_Node
+{
+public:
+//    friend class ACE_MEM_SAP;
+//    friend class ACE_Reactive_MEM_IO;
+//    friend class ACE_MT_MEM_IO;
+//    friend class ACE_MEM_IO;
+
+  typedef ACE_Based_Pointer<ACE_MEM_SAP_Node> ACE_MEM_SAP_NODE_PTR;
+
+  // Initialize the node with its capacity.
+  ACE_MEM_SAP_Node (size_t cap);
+
+  // Get the size of the data we hold.
+  size_t size (void) const;
+
+  // Get the capacity of this block of data.
+  size_t capacity (void) const;
+
+  // Get the pointer to the block of data we hold.
+  void *data (void);
+
+  // The maximum size of this memory block.
+  size_t capacity_;
+
+  // The actualy size used.
+  size_t size_;
+
+  ACE_MEM_SAP_NODE_PTR next_;
+};
+
 /**
- * @class ACE_MEM_SAP
+ * @Class ACE_MEM_SAP
  *
  * @brief Defines the methods of shared memory management for
  * shared memory transport.
@@ -41,34 +80,45 @@ public:
   typedef ACE_MMAP_Memory_Pool_Options MALLOC_OPTIONS;
 
   /// Destructor.
-  ~ACE_MEM_SAP (void);
+  virtual ~ACE_MEM_SAP (void);
+
+  /**
+   * Initialize the MEM_SAP object.
+   */
+  virtual int init (ACE_HANDLE handle,
+                    const ACE_TCHAR *name,
+                    MALLOC_OPTIONS *options) = 0;
+
+  /**
+   * Finalizing the MEM_SAP object.  This method doesn't invoke
+   * the <remove> method.
+   */
+  virtual int fini (int remove) = 0;
+
+  /**
+   * Fetch location of next available data into <recv_buffer_>.
+   * As this operation read the address of the data off the socket
+   * using ACE::recv, <timeout> only applies to ACE::recv.
+   */
+  virtual int recv_buf (ACE_MEM_SAP_Node *&buf,
+                        int flags,
+                        const ACE_Time_Value *timeout) = 0;
+
+  /**
+   * Wait to to <timeout> amount of time to send <buf>.  If <send>
+   * times out a -1 is returned with <errno == ETIME>.  If it succeeds
+   * the number of bytes sent is returned.  */
+  virtual int send_buf (ACE_MEM_SAP_Node *buf,
+                        int flags,
+                        const ACE_Time_Value *timeout) = 0;
 
   /// request a buffer of size <size>.  Return 0 if the <shm_malloc_> is
   /// not initialized.
-  void *acquire_buffer (const ssize_t size);
+  ACE_MEM_SAP_Node *acquire_buffer (const ssize_t size);
 
   /// release a buffer pointed by <buf>.  Return -1 if the <shm_malloc_>
   /// is not initialized.
-  int release_buffer (void *buf);
-
-  /**
-   * Set the length of buf (containing information) to <n> bytes.
-   * Return the offset of the <buf> relative to the base address.
-   * <buf> must be acquired by <get_buffer> method.  Return -1 if the
-   * <shm_malloc_> is not initialized.
-   */
-  off_t set_buf_len (void *buf,
-                     size_t n);
-
-  /**
-   * Convert the buffer offset <off> to absolute address to <buf>.
-   * Return the size of valid information containing in the <buf>,
-   * -1 if <shm_malloc_> is not initialized.
-   */
-  ssize_t get_buf_len (const off_t off, void *&buf);
-
-  /// Remove the shared resouce (mmap file) used by us.
-  int remove (void);
+  int release_buffer (ACE_MEM_SAP_Node *buf);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -86,11 +136,13 @@ protected:
    * communication.
    */
   int create_shm_malloc (const ACE_TCHAR *name,
-                         MALLOC_OPTIONS *options = 0);
+                         MALLOC_OPTIONS *options);
 
   /// Close down the share memory pool.  If <remove> != 0, then the
   /// mmap file will also get removed.
   int close_shm_malloc (const int remove = 0);
+
+  ACE_HANDLE handle_;
 
   /// Data exchange channel.
   MALLOC_TYPE *shm_malloc_;

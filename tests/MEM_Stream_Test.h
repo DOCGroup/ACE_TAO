@@ -37,15 +37,17 @@ class Echo_Handler : public ACE_Svc_Handler<ACE_MEM_STREAM, ACE_MT_SYNCH>
   // = TITLE
   //   Simple class for reading in the data and then sending it back
 public:
-  Echo_Handler ();
-  //  virtual int open (void *);
+  Echo_Handler (ACE_Thread_Manager *thr_mgr = 0);
+  virtual int open (void *);
+  static void reset_handler (void);
   virtual int handle_input (ACE_HANDLE h);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
   // The Svc_Handler callbacks.
+  virtual int svc (void);
 
 public:
-  static u_short waiting_;
+  static ACE_Atomic_Op <ACE_Thread_Mutex, u_short> waiting_;
   // How many connections are we waiting for.
 
   static u_short connection_count_;
