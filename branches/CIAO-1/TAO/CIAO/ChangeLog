@@ -1,3 +1,12 @@
+Sun Dec 15 23:54:16 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/CIAO_single_com_server/*: Added a new prototype component
+	  server.  We can now run session components on a generic server
+	  using a proprietary config file for component installation.
+
+	* ciao/Container_Base.{h,cpp}: Fixed incorrect usage of ACE_DLL
+	  where executor and servant Dlls got unloaded prematurely.
+
 Wed Dec 11 14:39:08 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	  A lot have changed since last ChangeLog entry.  Most of the
