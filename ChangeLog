@@ -1,3 +1,8 @@
+Mon Jun 14 20:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TLI_Acceptor.h:
+          Added missing ;
+
 Mon Jun 14 19:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
