@@ -120,6 +120,7 @@ private:
   Mpeg_Acceptor acceptor_;
   // the acceptor
 
+  // %% why is this here  ? this should be in video_server
   Video_Sig_Handler vh_;
   // signal handler for SIGALRM to periodically send the video frames
   // to the client
