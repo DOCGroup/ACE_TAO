@@ -6,36 +6,40 @@
 int
 main (int argc, char *argv[])
 {
-	const char* orb_name = "";
-	CORBA::ORB_var _the_orb;
-	PortableServer::POA_var _the_root_poa;
-	PortableServer::POAManager_var _the_poa_manager;
+  const char *orb_name = "";
 
-	CORBA::Object_var orb_obj;
+  cout << "Initializing the ORB!" << endl;
+  CORBA::ORB_var the_orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            orb_name);
+  CORBA::Object_var orb_obj =
+    the_orb->resolve_initial_references ("RootPOA");
 
-	cout << "Initializing the ORB!" << endl;
-	_the_orb = CORBA::ORB_init (argc,argv,orb_name);
+  PortableServer::POA_var the_root_poa =
+    PortableServer::POA::_narrow (orb_obj.in ());
+  PortableServer::POAManager_var the_poa_manager =
+    the_root_poa->the_POAManager ();
 
-    orb_obj = _the_orb->resolve_initial_references("RootPOA");
+  // Retrieving the servants IOR from a file
+  cout << "Reading the IOR!" << endl;
 
-	_the_root_poa = PortableServer::POA::_narrow (orb_obj.in ());
-	_the_poa_manager = _the_root_poa->the_POAManager ();
+  const char *filename =
+    "file://ior.txt";
 
-	// Retrieving the servants IOR from a file
-	cout << "Reading the IOR!" << endl;
-	const char* filename = "file://ior.txt";
-	orb_obj = _the_orb->string_to_object (filename);
+  orb_obj =
+    the_orb->string_to_object (filename);
 
-	cout << "Narrowing the IOR!" << endl;
-	W32_Test_Interface_var mycall = 
-		  W32_Test_Interface::_narrow (orb_obj.in ());
+  cout << "Narrowing the IOR!" << endl;
 
-	CORBA::String response;
+  W32_Test_Interface_var mycall = 
+    W32_Test_Interface::_narrow (orb_obj.in ());
 
-	cout << "Sending the Request!" << endl;
-	response = mycall->getresponse(1);
+  CORBA::String response;
 
-	cout << "The answer ..." << response << endl;
+  cout << "Sending the Request!" << endl;
+  response = mycall->getresponse (1);
 
-	return 0;
+  cout << "The answer ..." << response << endl;
+
+  return 0;
 }

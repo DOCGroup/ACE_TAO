@@ -140,6 +140,7 @@ spawn (void)
       /* NOTREACHED */
     default:
       child ();
+      delete synchronizer;
       break;
       /* NOTREACHED */
     }

@@ -123,7 +123,8 @@ main (int, ASYS_TCHAR *[])
                              n_iterations);
 
   ACE_Thread_Manager::instance ()->wait ();
-
+  // Cleanup the thread hook so it doesn't leak.
+  delete ACE_Thread_Hook::thread_hook ();
 #else
   ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads not supported on this platform\n")));

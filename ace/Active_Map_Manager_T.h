@@ -108,14 +108,14 @@ public:
   // fails if <key> is not in the map.
 
   int find (const ACE_Active_Map_Manager_Key &key,
-            T &value);
+            T &value) const;
   // Locate <value> associated with <key>.
 
-  int find (const ACE_Active_Map_Manager_Key &key);
+  int find (const ACE_Active_Map_Manager_Key &key) const;
   // Is <key> in the map?
 
   int find (const ACE_Active_Map_Manager_Key &key,
-            T *&internal_value);
+            T *&internal_value) const;
   // Locate <value> associated with <key>.  The value is returned via
   // <internal_value> and hence a copy is saved.  Note that
   // <internal_value> is only a temporary pointer and will change when
