@@ -1,3 +1,9 @@
+Sat Jun 20 00:14:07 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_proactor_with_aio.cpp: Test
+	program for the Asynch_Transmit_File, Asynch_Read_File,
+	Asynch_Read_Stream, Asynch_Write_File and Asynch_Write_Stream.
+
 Fri Jun 19 23:58:35 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 	* ace/Proactor.h    :
 	* ace/Proactor.cpp  :
