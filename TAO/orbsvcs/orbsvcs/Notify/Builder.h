@@ -44,49 +44,69 @@ public:
 
   virtual ~TAO_NS_Builder ();
 
-  ///= Factory Method
-  CosNotifyChannelAdmin::EventChannelFactory_ptr build_event_channel_factory (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
+  ///= Factory Methods
 
-  CosNotifyChannelAdmin::EventChannel_ptr build_event_channel (TAO_NS_EventChannelFactory* ecf, const CosNotification::QoSProperties & initial_qos, const CosNotification::AdminProperties & initial_admin, CosNotifyChannelAdmin::ChannelID_out id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosNotification::UnsupportedQoS
-                     , CosNotification::UnsupportedAdmin
-                     ));
+  /// Build EventChannel Factory.
+  virtual CosNotifyChannelAdmin::EventChannelFactory_ptr
+  build_event_channel_factory (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
 
-  CosNotifyChannelAdmin::ConsumerAdmin_ptr build_consumer_admin (TAO_NS_EventChannel* ec, CosNotifyChannelAdmin::InterFilterGroupOperator op, CosNotifyChannelAdmin::AdminID_out id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  /// Build the Filter Factory.
+  virtual CosNotifyFilter::FilterFactory_ptr build_filter_factory (ACE_ENV_SINGLE_ARG_DECL);
 
-  CosNotifyChannelAdmin::SupplierAdmin_ptr build_supplier_admin (TAO_NS_EventChannel* ec, CosNotifyChannelAdmin::InterFilterGroupOperator op, CosNotifyChannelAdmin::AdminID_out id ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  /// Build EventChannel.
+  virtual CosNotifyChannelAdmin::EventChannel_ptr
+  build_event_channel (TAO_NS_EventChannelFactory* ecf
+                       , const CosNotification::QoSProperties & initial_qos
+                       , const CosNotification::AdminProperties & initial_admin
+                       , CosNotifyChannelAdmin::ChannelID_out id
+                       ACE_ENV_ARG_DECL);
 
-  CosNotifyChannelAdmin::ProxyConsumer_ptr build_notification_push_consumer (TAO_NS_SupplierAdmin* sa, CosNotifyChannelAdmin::ClientType ctype, CosNotifyChannelAdmin::ProxyID_out proxy_id  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosNotifyChannelAdmin::AdminLimitExceeded
-                     ));
+  /// Build ConsumerAdmin
+  virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr
+  build_consumer_admin (TAO_NS_EventChannel* ec
+                        , CosNotifyChannelAdmin::InterFilterGroupOperator op
+                        , CosNotifyChannelAdmin::AdminID_out id
+                        ACE_ENV_ARG_DECL);
 
-  CosNotifyChannelAdmin::ProxySupplier_ptr build_notification_push_supplier (TAO_NS_ConsumerAdmin* ca, CosNotifyChannelAdmin::ClientType ctype, CosNotifyChannelAdmin::ProxyID_out proxy_id  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosNotifyChannelAdmin::AdminLimitExceeded
-                     ));
+  /// Build SupplierAdmin
+  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr
+  build_supplier_admin (TAO_NS_EventChannel* ec
+                        , CosNotifyChannelAdmin::InterFilterGroupOperator op
+                        , CosNotifyChannelAdmin::AdminID_out id
+                        ACE_ENV_ARG_DECL);
 
-  CosNotifyFilter::FilterFactory_ptr build_filter_factory (ACE_ENV_SINGLE_ARG_DECL);
+  /// Build ProxyConsumer
+  virtual CosNotifyChannelAdmin::ProxyConsumer_ptr
+  build_proxy (TAO_NS_SupplierAdmin* sa
+               , CosNotifyChannelAdmin::ClientType ctype
+               , CosNotifyChannelAdmin::ProxyID_out proxy_id
+               , const CosNotification::QoSProperties & initial_qos
+               ACE_ENV_ARG_DECL);
 
-  CosEventChannelAdmin::ProxyPushSupplier_ptr build_push_supplier (TAO_NS_ConsumerAdmin* ca ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  /// Build ProxySupplier.
+  virtual CosNotifyChannelAdmin::ProxySupplier_ptr
+  build_proxy (TAO_NS_ConsumerAdmin* ca
+               , CosNotifyChannelAdmin::ClientType ctype
+               , CosNotifyChannelAdmin::ProxyID_out proxy_id
+               , const CosNotification::QoSProperties & initial_qos
+               ACE_ENV_ARG_DECL);
 
-  CosEventChannelAdmin::ProxyPushConsumer_ptr build_push_consumer (TAO_NS_SupplierAdmin* sa ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  /// Build CosEC style ProxySupplier.
+  virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
+  build_proxy (TAO_NS_ConsumerAdmin* ca ACE_ENV_ARG_DECL);
+
+  /// Build CosEC style ProxyConsumer.
+  virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
+  build_proxy (TAO_NS_SupplierAdmin* sa ACE_ENV_ARG_DECL);
+
+  /// Apply Reactive concurrency.
+  virtual void apply_reactive_concurrency (TAO_NS_Object& object ACE_ENV_ARG_DECL);
+
+  /// Apply Thread Pools.
+  virtual void apply_thread_pool_concurrency (TAO_NS_Object& object, const NotifyExt::ThreadPoolParams& tp_params ACE_ENV_ARG_DECL);
+
+  /// Apply Thread Pools with Lanes.
+  virtual void apply_lane_concurrency (TAO_NS_Object& object, const NotifyExt::ThreadPoolLanesParams& tpl_params ACE_ENV_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)

@@ -19,9 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/NotifyExtS.h"
 #include "Admin.h"
-#include "Destroy_Callback.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -36,28 +35,40 @@
  * @brief Implementation of CosNotifyChannelAdmin::ConsumerAdmin
  *
  */
-class TAO_Notify_Export TAO_NS_ConsumerAdmin : public POA_CosNotifyChannelAdmin::ConsumerAdmin, public virtual TAO_NS_Admin, public TAO_NS_Destroy_Callback
+class TAO_Notify_Export TAO_NS_ConsumerAdmin : public POA_NotifyExt::ConsumerAdmin
+                                             , public virtual TAO_NS_Admin
 {
-  friend class TAO_NS_Builder;
 public:
-
   /// Constuctor
   TAO_NS_ConsumerAdmin (void);
 
   /// Destructor
   ~TAO_NS_ConsumerAdmin ();
 
-  /// Return servant
-  virtual PortableServer::Servant servant (void);
+  /// Init
+  void init (TAO_NS_EventChannel *ec ACE_ENV_ARG_DECL);
 
   /// ServantBase refcount methods.
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// TAO_NS_Destroy_Callback methods
+  /// Release this object.
   virtual void release (void);
 
 protected:
+
+  /// = NotifyExt::ConsumerAdmin methods
+  virtual CosNotifyChannelAdmin::ProxySupplier_ptr
+  obtain_notification_push_supplier_with_qos (CosNotifyChannelAdmin::ClientType ctype,
+                                              CosNotifyChannelAdmin::ProxyID_out proxy_id,
+                                              const CosNotification::QoSProperties & initial_qos
+                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS
+                                              )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , CosNotifyChannelAdmin::AdminLimitExceeded
+                     , CosNotification::UnsupportedQoS
+                     ));
 
   /// = CosNotifyChannelAdmin::ConsumerAdmin methods
   virtual CosNotifyChannelAdmin::AdminID MyID (ACE_ENV_SINGLE_ARG_DECL)
@@ -117,17 +128,19 @@ protected:
                      , CosNotifyChannelAdmin::ProxyNotFound
                      ));
 
-  virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr obtain_notification_pull_supplier (CosNotifyChannelAdmin::ClientType ctype,
-                                                                                        CosNotifyChannelAdmin::ProxyID_out proxy_id
-                                                                                        ACE_ENV_ARG_DECL)
+  virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr
+  obtain_notification_pull_supplier (CosNotifyChannelAdmin::ClientType ctype,
+                                     CosNotifyChannelAdmin::ProxyID_out proxy_id
+                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      , CosNotifyChannelAdmin::AdminLimitExceeded
                      ));
 
-  virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr obtain_notification_push_supplier (CosNotifyChannelAdmin::ClientType ctype,
-                                                                                        CosNotifyChannelAdmin::ProxyID_out proxy_id
-                                                                                        ACE_ENV_ARG_DECL)
+  virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr
+  obtain_notification_push_supplier (CosNotifyChannelAdmin::ClientType ctype,
+                                     CosNotifyChannelAdmin::ProxyID_out proxy_id
+                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      , CosNotifyChannelAdmin::AdminLimitExceeded

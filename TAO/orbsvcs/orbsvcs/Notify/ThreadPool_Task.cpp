@@ -15,7 +15,6 @@ ACE_RCSID(RT_Notify, TAO_NS_ThreadPool_Task, "$Id$")
 TAO_NS_ThreadPool_Task::TAO_NS_ThreadPool_Task (void)
   : buffering_strategy_ (0), shutdown_ (0), timer_ (0)
 {
-  this->destroy_callback (this); // The <release> method is called to release memory.
 }
 
 TAO_NS_ThreadPool_Task::~TAO_NS_ThreadPool_Task ()

@@ -19,9 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/NotifyExtS.h"
 #include "Admin.h"
-#include "Destroy_Callback.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -36,9 +35,9 @@
  * @brief Implementation of CosNotifyChannelAdmin::SupplierAdmin
  *
  */
-class TAO_Notify_Export TAO_NS_SupplierAdmin : public virtual POA_CosNotifyChannelAdmin::SupplierAdmin, public virtual TAO_NS_Admin, public TAO_NS_Destroy_Callback
+class TAO_Notify_Export TAO_NS_SupplierAdmin : public virtual POA_NotifyExt::SupplierAdmin
+                                             , public virtual TAO_NS_Admin
 {
-  friend class TAO_NS_Builder;
 public:
   /// Constuctor
   TAO_NS_SupplierAdmin (void);
@@ -46,17 +45,31 @@ public:
   /// Destructor
   ~TAO_NS_SupplierAdmin ();
 
-  /// Return servant
-  virtual PortableServer::Servant servant (void);
+  /// Init
+  void init (TAO_NS_EventChannel *ec ACE_ENV_ARG_DECL);
 
   /// ServantBase refcount methods.
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// TAO_NS_Destroy_Callback methods
+  /// Release
   virtual void release (void);
 
 protected:
+
+  /// = NotifyExt::SupplierAdmin methods
+  CosNotifyChannelAdmin::ProxyConsumer_ptr
+  obtain_notification_push_consumer_with_qos (CosNotifyChannelAdmin::ClientType ctype,
+                                              CosNotifyChannelAdmin::ProxyID_out proxy_id,
+                                              const CosNotification::QoSProperties & initial_qos
+                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS
+                                              )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , CosNotifyChannelAdmin::AdminLimitExceeded
+                     , CosNotification::UnsupportedQoS
+                     ));
+
   /// = CosNotifyChannelAdmin::SupplierAdmin methods
   virtual CosNotifyChannelAdmin::AdminID MyID (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((

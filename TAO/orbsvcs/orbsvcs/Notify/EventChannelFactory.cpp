@@ -8,15 +8,25 @@
 
 ACE_RCSID(RT_Notify, TAO_NS_EventChannelFactory, "$Id$")
 
-#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
+#include "ace/Dynamic_Service.h"
 #include "Properties.h"
+#include "Factory.h"
 #include "Builder.h"
-#include "Proxy.h"
-#include "Admin.h"
 #include "EventChannel.h"
-#include "Notify_Service.h"
+#include "Container_T.h"
+#include "Find_Worker_T.h"
+#include "Seq_Worker_T.h"
+
+typedef TAO_NS_Find_Worker_T<TAO_NS_EventChannel
+                             , CosNotifyChannelAdmin::EventChannel
+                             , CosNotifyChannelAdmin::EventChannel_ptr
+                             , CosNotifyChannelAdmin::ChannelNotFound>
+TAO_NS_EventChannel_Find_Worker;
+
+typedef TAO_NS_Seq_Worker_T<TAO_NS_EventChannel> TAO_NS_EventChannel_Seq_Worker;
 
 TAO_NS_EventChannelFactory::TAO_NS_EventChannelFactory (void)
+  :ec_container_ (0)
 {
 }
 
@@ -25,15 +35,69 @@ TAO_NS_EventChannelFactory::~TAO_NS_EventChannelFactory ()
 }
 
 void
-TAO_NS_EventChannelFactory::init (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NS_EventChannelFactory::destroy (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
-  this->default_filter_factory_ = TAO_NS_PROPERTIES::instance()->builder ()->build_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
+  if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
+    return;
+
+  this->ec_container_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  TAO_NS_Properties* properties = TAO_NS_PROPERTIES::instance();
+
+  delete this->ec_container_;
+
+  // Shutdown the ORB.
+  CORBA::ORB_var orb = properties->orb ();
+  orb->shutdown ();
+
+  // Reset references to CORBA objects.
+  properties->orb (CORBA::ORB::_nil ());
+  properties->default_poa (PortableServer::POA::_nil ());
 }
 
-PortableServer::Servant
-TAO_NS_EventChannelFactory::servant (void)
+void
+TAO_NS_EventChannelFactory::init (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 {
-  return this;
+  this->default_filter_factory_ =
+    TAO_NS_PROPERTIES::instance()->builder()->build_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Init ec_container_
+  ACE_NEW_THROW_EX (this->ec_container_,
+                    TAO_NS_EventChannel_Container (),
+                    CORBA::INTERNAL ());
+  ACE_CHECK;
+
+  this->ec_container_->init (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  TAO_NS_POA_Helper* object_poa = 0;
+
+  // Bootstrap initial Object POA
+  ACE_NEW_THROW_EX (object_poa,
+                    TAO_NS_POA_Helper (),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
+
+  auto_ptr<TAO_NS_POA_Helper> auto_object_poa (object_poa);
+
+  object_poa->init (poa ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // release auto_ref.
+  auto_object_poa.release ();
+
+  this->object_poa_own (object_poa);
+
+  // We are also activated in the same Object POA.
+  this->poa_ = this->object_poa_;
+
+  // Make the Proxys acivate in this same POA.
+  this->proxy_poa_ = this->object_poa_;
 }
 
 void
@@ -55,30 +119,29 @@ TAO_NS_EventChannelFactory::release (void)
   //@@ inform factory
 }
 
+void
+TAO_NS_EventChannelFactory::remove (TAO_NS_EventChannel* event_channel ACE_ENV_ARG_DECL)
+{
+  this->ec_container_->remove (event_channel ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+int
+TAO_NS_EventChannelFactory::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (TAO_NS_Object::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
+    return 1;
+
+  this->ec_container_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (1);
+
+  return 0;
+}
+
 CosNotifyFilter::FilterFactory_ptr
 TAO_NS_EventChannelFactory::get_default_filter_factory (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return CosNotifyFilter::FilterFactory::_duplicate (this->default_filter_factory_.in ());
-}
-
-void
-TAO_NS_EventChannelFactory::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
-{
-  if (this->inherited::destroy (this ACE_ENV_ARG_PARAMETER) == 1)
-    return;
-
-  TAO_NS_Properties* properties = TAO_NS_PROPERTIES::instance();
-
-  // Shutdown the ORB.
-  CORBA::ORB_var orb = properties->orb ();
-  orb->shutdown ();
-
-  // Reset references to CORBA objects.
-  properties->orb (CORBA::ORB::_nil ());
-  properties->default_poa (PortableServer::POA::_nil ());
 }
 
 ::CosNotifyChannelAdmin::EventChannel_ptr TAO_NS_EventChannelFactory::create_channel (
@@ -87,12 +150,16 @@ TAO_NS_EventChannelFactory::destroy (ACE_ENV_SINGLE_ARG_DECL)
     CosNotifyChannelAdmin::ChannelID_out id ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , CosNotification::UnsupportedQoS
-    , CosNotification::UnsupportedAdmin
-  ))
+                   CORBA::SystemException
+                   , CosNotification::UnsupportedQoS
+                   , CosNotification::UnsupportedAdmin
+                   ))
 {
-  return TAO_NS_PROPERTIES::instance()->builder ()->build_event_channel (this, initial_qos, initial_admin, id ACE_ENV_ARG_PARAMETER);
+  return TAO_NS_PROPERTIES::instance()->builder()->build_event_channel (this
+                                                                        , initial_qos
+                                                                        , initial_admin
+                                                                        , id
+                                                                        ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::ChannelIDSeq*
@@ -101,23 +168,9 @@ TAO_NS_EventChannelFactory::get_all_channels (ACE_ENV_SINGLE_ARG_DECL)
     CORBA::SystemException
   ))
 {
-  CosNotifyChannelAdmin::ChannelIDSeq* seq;
+  TAO_NS_EventChannel_Seq_Worker seq_worker;
 
-  ACE_NEW_THROW_EX (seq,
-                    CosNotifyChannelAdmin::ChannelIDSeq (),
-                    CORBA::NO_MEMORY ());
-
-  seq->length (this->event_channel_id_list_.size ());
-
-  TAO_NS_Object_Id_Seq::CONST_ITERATOR iter (this->event_channel_id_list_);
-
-  TAO_NS_Object_Id* object_id;
-
-  CORBA::ULong i = 0;
-  for (iter.first (); iter.next (object_id); iter.advance (), ++i)
-    seq[i] = *object_id;
-
-  return seq;
+  return seq_worker.create (*this->ec_container_ ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
@@ -127,38 +180,33 @@ TAO_NS_EventChannelFactory::get_event_channel (CosNotifyChannelAdmin::ChannelID 
                    , CosNotifyChannelAdmin::ChannelNotFound
                    ))
 {
-  TAO_NS_Object* ns_object = this->find (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
+  TAO_NS_EventChannel_Find_Worker find_worker;
 
-  if (ns_object != 0)
-    {
-      CORBA::Object_var object = ns_object->ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
-
-      CosNotifyChannelAdmin::EventChannel_var ec_ret =
-        CosNotifyChannelAdmin::EventChannel::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
-
-      return ec_ret._retn ();
-    }
-  else
-    ACE_THROW_RETURN (CosNotifyChannelAdmin::ChannelNotFound (), CosNotifyChannelAdmin::EventChannel::_nil ());
+  return find_worker.resolve (id, *this->ec_container_ ACE_ENV_ARG_PARAMETER);
 }
 
-void
-TAO_NS_EventChannelFactory::insert (TAO_NS_EventChannel* event_channel ACE_ENV_ARG_DECL)
-{
-  inherited::insert (event_channel ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  this->event_channel_id_list_.insert (event_channel->id ());
-}
+template class TAO_NS_Find_Worker_T<TAO_NS_EventChannel
+                              , CosNotifyChannelAdmin::EventChannel
+                              , CosNotifyChannelAdmin::EventChannel_ptr
+                              , CosNotifyChannelAdmin::ChannelNotFound>;
+template class TAO_NS_Seq_Worker_T<TAO_NS_EventChannel>;
 
-void
-TAO_NS_EventChannelFactory::remove (TAO_NS_EventChannel* event_channel ACE_ENV_ARG_DECL)
-{
-  inherited::remove (event_channel ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+template class TAO_NS_Container_T <TAO_NS_EventChannel>;
 
-  this->event_channel_id_list_.remove (event_channel->id ());
-}
+template class TAO_ESF_Shutdown_Proxy<TAO_NS_EventChannel>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate TAO_NS_Find_Worker_T<TAO_NS_EventChannel
+                              , CosNotifyChannelAdmin::EventChannel
+                              , CosNotifyChannelAdmin::EventChannel_ptr
+                              , CosNotifyChannelAdmin::ChannelNotFound>
+#pragma instantiate TAO_NS_Seq_Worker_T<TAO_NS_EventChannel>
+
+
+#pragma instantiate TAO_NS_Container_T <TAO_NS_EventChannel>
+
+#pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_NS_EventChannel>;
+
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -40,7 +40,7 @@ TAO_NS_ProxySupplier_T<POA_CosEventChannelAdmin::ProxyPushSupplier>;
  * @brief
  *
  */
-class TAO_Notify_Export TAO_NS_CosEC_ProxyPushSupplier : public virtual TAO_NS_ProxySupplier_T <POA_CosEventChannelAdmin::ProxyPushSupplier>, public TAO_NS_Destroy_Callback
+class TAO_Notify_Export TAO_NS_CosEC_ProxyPushSupplier : public virtual TAO_NS_ProxySupplier_T <POA_CosEventChannelAdmin::ProxyPushSupplier>
 {
   friend class TAO_NS_Builder;
 public:
@@ -53,7 +53,7 @@ public:
   /// Destroy this object.
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// TAO_NS_Destroy_Callback methods
+  /// Release
   virtual void release (void);
 
   // = Interface methods

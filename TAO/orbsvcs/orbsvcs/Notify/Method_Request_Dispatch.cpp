@@ -11,11 +11,8 @@ ACE_RCSID(RT_Notify, TAO_NS_Method_Request_Dispatch, "$Id$")
 #include "tao/debug.h"
 #include "ProxySupplier.h"
 #include "Consumer.h"
-#include "Proxy.h"
 #include "Admin.h"
-#include "EventChannel.h"
-#include "EventChannelFactory.h"
-#include "Notify_Service.h"
+#include "ConsumerAdmin.h"
 
 TAO_NS_Method_Request_Dispatch::TAO_NS_Method_Request_Dispatch (const TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier)
   : TAO_NS_Method_Request_Event (event), proxy_supplier_ (proxy_supplier), refcountable_guard_ (*proxy_supplier)
@@ -39,7 +36,12 @@ TAO_NS_Method_Request_Dispatch::execute (ACE_ENV_SINGLE_ARG_DECL)
   if (this->proxy_supplier_->has_shutdown ())
     return 0; // If we were shutdown while waiting in the queue, return with no action.
 
-  CORBA::Boolean val =  this->proxy_supplier_->check_filters (this->event_ ACE_ENV_ARG_PARAMETER);
+  TAO_NS_Admin* parent = this->proxy_supplier_->consumer_admin ();
+
+  CORBA::Boolean val =  this->proxy_supplier_->check_filters (this->event_,
+                                                              parent->filter_admin (),
+                                                              parent->filter_operator ()
+                                                              ACE_ENV_ARG_PARAMETER);
 
   if (TAO_debug_level > 1)
     ACE_DEBUG ((LM_DEBUG, "Proxysupplier %x filter eval result = %d",this->proxy_supplier_ , val));
