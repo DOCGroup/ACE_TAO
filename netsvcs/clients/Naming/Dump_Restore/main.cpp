@@ -3,6 +3,7 @@
 // Test the client-side of the ACE Name Server...
 
 #include "ace/Service_Config.h"
+#include "ace/Log_Msg.h"
 #include "Dump_Restore.h"
 
 ACE_RCSID(Dump_Restore, main, "$Id$")

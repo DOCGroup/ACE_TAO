@@ -20,6 +20,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/ARGV.h"
+#include "ace/Log_Msg.h"
 #include "Timer_Service.h"
 
 ACE_RCSID(Misc, main, "$Id$")

@@ -3,6 +3,7 @@
 #include "Options.h"
 #include "File_Manager.h"
 #include "BS_Client.h"
+#include "ace/Log_Msg.h"
 
 BS_Client::BS_Client (void)
 {

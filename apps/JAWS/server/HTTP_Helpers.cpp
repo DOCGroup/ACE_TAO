@@ -3,6 +3,7 @@
 // HTTP_Helpers.cpp -- Helper utilities for both server and client
 
 #include "HTTP_Helpers.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(server, HTTP_Helpers, "$Id$")
 

@@ -6,6 +6,7 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Signal.h"
+#include "ace/Log_Msg.h"
 #include "IO_Test.h"
 
 ACE_RCSID(IO_tests, test_io, "$Id$")
