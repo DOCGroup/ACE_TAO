@@ -38,7 +38,7 @@ Mistakes page</a>.<P>
   <LI><A HREF="#egcs">Compiling ACE with egcs</A>
   <LI><A HREF="#aceinstall">Building and Installing ACE</A>
   <LI><A HREF="#svcsinstall">Building and Installing ACE Network Services</A>
-  <LI><A HREF="#resource requirements">System Resource Requirements</A>
+  <LI><A HREF="#resource_requirements">System Resource Requirements</A>
   <LI><A HREF="#advanced">Advanced Topics</A>
 </UL>
 
@@ -1456,7 +1456,7 @@ in your PATH.<P>
 
 
 <HR><P>
-<H3><A NAME="resource requirements">System Resource Requirements</A></H3>
+<H3><A NAME="resource_requirements">System Resource Requirements</A></H3>
 The amount of system resources required to build ACE and TAO varies
 greatly.  Platform, build options, and components built primarily
 influence the required system resources.  As a rough guide, the
@@ -1485,6 +1485,10 @@ some or all of these suggestions:<p>
     <a href="docs/ACE-subsets.html">ACE subsets</a> page.  For TAO's
     orbsvcs, see the discussion of <code>TAO_ORBSVCS</code> in
     <a href="TAO/docs/configurations.html#orbsvcs">orbsvcs Library configuration information</a>.<p>
+
+If disk space is a problem, disabling debugging should greatly
+reduce object code, and therefore, library size.  This is especially
+true with g++.<p>
 </ul>
 
 
