@@ -248,6 +248,11 @@ namespace Deployment
 
   void DnC_Dump::dump (const ::Deployment::Requirement &req)
   {
+    ACE_DEBUG ((LM_DEBUG, "Requirement:    \n"));
+    ACE_DEBUG ((LM_DEBUG, "resourceType: %s \n", req.resourceType.in ()));
+    for (::CORBA::ULong i = 0; i < req.property.length (); i ++)
+     DnC_Dump::dump (req.property [i]);
+    ACE_DEBUG ((LM_DEBUG, "name: %s \n", req.name.in ()));
   }
 
   void DnC_Dump::dump (const ::Deployment::ComponentExternalPortEndpoint &cepe)
@@ -268,6 +273,12 @@ namespace Deployment
 
   void DnC_Dump::dump (const ::Deployment::Property &property)
   {
+    ACE_DEBUG ((LM_DEBUG, "Property:  \n"));
+    ACE_DEBUG ((LM_DEBUG, "name: %s \n", property.name.in ()));
+    // @@ Folks, do you have an idea of how to process the value of the 
+    // property? It is of type CORBA::Any. Here in this function, how do we
+    // know what type is inserted into the any. If you do please 
+    // email me <arvindk@dre.vanderbilt.edu>
   }
 
   void DnC_Dump::dump (const ::Deployment::NamedImplementationArtifact &nia)
@@ -284,10 +295,9 @@ namespace Deployment
 
   void DnC_Dump::dump (const ::Deployment::ExternalReferenceEndpoint &ere)
   {
+    ACE_DEBUG ((LM_DEBUG, "ExternalReferenceEndpoint: \n"));
+    ACE_DEBUG ((LM_DEBUG, "location: %s \n", ere.location.in ()));
   }
-
 }
-
-
 
 #endif /* DNC_DUMP_C */
