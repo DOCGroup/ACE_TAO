@@ -1809,7 +1809,7 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
       // Don't bother to check <in_use_> if the program is shutting
       // down.  Doing so will cause a new ACE_TSS object getting
       // created again.
-      if (!ACE_Object_Manager::shutting_down ()
+      if (!ACE_OS_Object_Manager::shutting_down ()
           && !in_use_->test_and_clear (info.key_))
         --info.thread_count_;
 
@@ -6157,6 +6157,20 @@ ACE_OS_Object_Manager::fini (void)
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
   return 0;
+}
+
+int
+ACE_OS_Object_Manager::starting_up (void)
+{
+  return ACE_OS_Object_Manager::instance_  ?
+    instance_->starting_up_i ()  :  1;
+}
+
+int
+ACE_OS_Object_Manager::shutting_down (void)
+{
+  return ACE_OS_Object_Manager::instance_  ?
+    instance_->shutting_down_i ()  :  1;
 }
 
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)

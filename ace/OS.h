@@ -5919,6 +5919,14 @@ public:
   virtual int fini (void);
   // Explicitly destroy.
 
+  static int starting_up (void);
+  // Returns 1 before the ACE_OS_Object_Manager has been constructed.
+  // See ACE_Object_Manager::starting_up () for more information.
+
+  static int shutting_down (void);
+  // Returns 1 after the ACE_OS_Object_Manager has been destroyed.
+  // See ACE_Object_Manager::shutting_down () for more information.
+
   enum Preallocated_Object
     {
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
