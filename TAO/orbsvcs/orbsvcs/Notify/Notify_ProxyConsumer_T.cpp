@@ -70,7 +70,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::~TAO_Notify_ProxyConsumer (void)
   ACE_CHECK;
 
   TAO_Notify_EMO_Factory* event_manager_objects_factory =
-    event_manager_->resource_factory ();
+    this->event_manager_->resource_factory ();
 
   event_manager_objects_factory->destroy_listener_eval_task (this->filter_eval_task_);
 }
