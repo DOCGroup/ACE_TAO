@@ -70,6 +70,6 @@ module Database
         raises (Unknown_Type,
                 Unknown_Key);
 
-      void shutdown ();
+      oneway void shutdown ();
     };
 };
