@@ -1,35 +1,216 @@
+Wed Mar  8 19:18:10 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+        * tao/Marshal.h:
+        * tao/decode.cpp:
+        * tao/encode.cpp:
+          I have started the work to remove the interpretive engine.
+          The first step was to remove the the encode() and decode()
+          methods.  We have re-implemented all the other components in the
+          ORB to use compiled marshaling instead.
+
+        * tao/Any.h:
+        * tao/Any.i:
+        * tao/Any.cpp:
+          All the methods taking void* are deprecated (unfortunately due
+          to an editorial mistake this resolution didn't make it into the
+          text of the CORBA 2.3 mapping).  There is no portable way to use
+          them anyway.
+          For the time beign we have commented them out, to check that no
+          portion of TAO invokes them, eventually we will make them
+          visible again, but they will raise the CORBA::NO_IMPLEMENT
+          exception.
+          Re-implement all the basic <<= and >>= operators using
+          _tao_replace() instead of replace().
+          The extraction operators for the CORBA::Any::to_string,
+          CORBA::Any::to_wstring and CORBA::Any::to_object classes were
+          not implemented properly.  First they did not unalias the types,
+          and next they used equivalent() with the wrong TypeCode.
+          Implement the CDR operators for Any using compiled marshaling.
+
+        * tao/Makefile:
+        * tao/BoundsC.h:
+        * tao/BoundsC.cpp:
+          BoundsC was not compiled, though this is the right exception to
+          raise from certain NVList operations.
+          Updated to use _tao_replace() in the >>= and <<= operators.
+
+        * tao/CDR.h:
+        * tao/CDR.cpp:
+          Remove the decode() and encode() methods
+
+        * tao/Stub.h:
+        * tao/Stub.cpp:
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/Server_Request.h:
+          Remove the support for interpretive marshaling.
+
+        * tao/Invocation.h:
+        * tao/Invocation.cpp:
+          Removed old comments about interpretive marshaling.
+
+        * tao/NVList.cpp:
+          It was raising CORBA::TypeCode::Bounds to signal an error, but
+          the correct exception is CORBA::Bounds.
+
+        * tao/Exception.cpp:
+
+        * tao/DynAny_i.cpp:
+        * tao/Forwarding_Servant.cpp:
+        * tao/MessagingS.cpp:
+        * tao/ObjectIDList.cpp:
+        * tao/ObjectIDList.h:
+        * tao/POAS.cpp:
+        * tao/PolicyS.cpp:
+        * tao/PollableS.cpp:
+        * tao/Services.cpp:
+        * tao/Services.h:
+        * tao/Typecode.h:
+        * tao/Typecode.cpp:
+        * tao/append.cpp:
+        * tao/skip.cpp:
+          Re-implemented several stubs using compiled marshaling.
+          Use _tao_replace() in <<= and >>= operators.
+
+
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+          Use _tao_encode() and _tao_decode() to marshal and demarshal
+          exceptions.  Those methods are implemented using compiled
+          marshaling.
+
+        * tao/POAC.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+          Cosmetic changes.
+
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/anyop.cpp:
+          New test to verify that the <<= and >>= operators work
+          correctly.
+
+        * tests/Param_Test/param_test.idl:
+
+        * tests/Param_Test/client.cpp:
+        * tests/Param_Test/any.h:
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/bd_array_seq.h:
+        * tests/Param_Test/bd_array_seq.cpp:
+        * tests/Param_Test/bd_long_seq.h:
+        * tests/Param_Test/bd_long_seq.cpp:
+        * tests/Param_Test/bd_short_seq.h:
+        * tests/Param_Test/bd_short_seq.cpp:
+        * tests/Param_Test/bd_str_seq.h:
+        * tests/Param_Test/bd_str_seq.cpp:
+        * tests/Param_Test/bd_string.h:
+        * tests/Param_Test/bd_string.cpp:
+        * tests/Param_Test/bd_struct_seq.h:
+        * tests/Param_Test/bd_struct_seq.cpp:
+        * tests/Param_Test/bd_wstr_seq.h:
+        * tests/Param_Test/bd_wstr_seq.cpp:
+        * tests/Param_Test/bd_wstring.h:
+        * tests/Param_Test/bd_wstring.cpp:
+        * tests/Param_Test/big_union.h:
+        * tests/Param_Test/big_union.cpp:
+        * tests/Param_Test/complex_any.h:
+        * tests/Param_Test/complex_any.cpp:
+        * tests/Param_Test/except.h:
+        * tests/Param_Test/except.cpp:
+        * tests/Param_Test/fixed_array.h:
+        * tests/Param_Test/fixed_array.cpp:
+        * tests/Param_Test/fixed_struct.h:
+        * tests/Param_Test/fixed_struct.cpp:
+        * tests/Param_Test/multdim_array.h:
+        * tests/Param_Test/multdim_array.cpp:
+        * tests/Param_Test/nested_struct.h:
+        * tests/Param_Test/nested_struct.cpp:
+        * tests/Param_Test/objref.h:
+        * tests/Param_Test/objref.cpp:
+        * tests/Param_Test/objref_struct.h:
+        * tests/Param_Test/objref_struct.cpp:
+        * tests/Param_Test/recursive_struct.h:
+        * tests/Param_Test/recursive_struct.cpp:
+        * tests/Param_Test/recursive_union.h:
+        * tests/Param_Test/recursive_union.cpp:
+        * tests/Param_Test/short.h:
+        * tests/Param_Test/short.cpp:
+        * tests/Param_Test/typecode.h:
+        * tests/Param_Test/typecode.cpp:
+        * tests/Param_Test/ub_any_seq.h:
+        * tests/Param_Test/ub_any_seq.cpp:
+        * tests/Param_Test/ub_array_seq.h:
+        * tests/Param_Test/ub_array_seq.cpp:
+        * tests/Param_Test/ub_long_seq.h:
+        * tests/Param_Test/ub_long_seq.cpp:
+        * tests/Param_Test/ub_objref_seq.h:
+        * tests/Param_Test/ub_objref_seq.cpp:
+        * tests/Param_Test/ub_short_seq.h:
+        * tests/Param_Test/ub_short_seq.cpp:
+        * tests/Param_Test/ub_str_seq.h:
+        * tests/Param_Test/ub_str_seq.cpp:
+        * tests/Param_Test/ub_string.h:
+        * tests/Param_Test/ub_string.cpp:
+        * tests/Param_Test/ub_struct_seq.h:
+        * tests/Param_Test/ub_struct_seq.cpp:
+        * tests/Param_Test/ub_wstr_seq.h:
+        * tests/Param_Test/ub_wstr_seq.cpp:
+        * tests/Param_Test/ub_wstring.h:
+        * tests/Param_Test/ub_wstring.cpp:
+        * tests/Param_Test/ulonglong.h:
+        * tests/Param_Test/ulonglong.cpp:
+        * tests/Param_Test/var_array.h:
+        * tests/Param_Test/var_array.cpp:
+        * tests/Param_Test/var_struct.h:
+        * tests/Param_Test/var_struct.cpp:
+          We now use the standard <<= and >>= operators to test DII. We
+          also use the add_in_arg(), add_out_arg() and add_inout_arg()
+          helper methods.
+          The add_args() method was removed because it relied on the
+          non-portable, deprecated and ugly replace() operation in
+          CORBA::Any.
+          The SII tests are all passing, most of the DII tests pass too,
+          but these changes uncovered several problems with the
+          implementation of deep_free(), since deep_free has to be
+          removed we better wait for those changes instead of trying to
+          support the current scheme.
+
+        * tao/IIOP_Profile.cpp:
+        * tao/SHMIOP_Profile.cpp:
+        * tao/UIOP_Profile.cpp:
+          Cosmetic fixes.
+
 Wed Mar  8 17:22:32 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/pluggable_protocols/index.html:
+        * docs/pluggable_protocols/index.html:
 
-	  Fixed typographical errors.
+          Fixed typographical errors.
 
-	* tao/ORB.cpp (ORB_init):
+        * tao/ORB.cpp (ORB_init):
 
-	  It doesn't make sense for argc to be zero and argv to be
-	  non-empty/zero, or for argc to be greater than zero and argv be
-	  zero/empty.  Throw a CORBA::BAD_PARAM() exception if argc/argv
-	  combination is invalid.
+          It doesn't make sense for argc to be zero and argv to be
+          non-empty/zero, or for argc to be greater than zero and argv be
+          zero/empty.  Throw a CORBA::BAD_PARAM() exception if argc/argv
+          combination is invalid.
 
-	* tao/ORB_Core.cpp (init):
+        * tao/ORB_Core.cpp (init):
 
-	  Throw a CORBA::BAD_PARAM() exception if an unrecognized "-ORB"
-	  option is encountered.  This behavior is in accordance with the
-	  CORBA 2.3.1 specification.
+          Throw a CORBA::BAD_PARAM() exception if an unrecognized "-ORB"
+          option is encountered.  This behavior is in accordance with the
+          CORBA 2.3.1 specification.
 
-	  Use ACE_NEW_THROW_EX(), instead of ACE_NEW_RETURN() in
-	  "-ORBLogFile" option processing code.
-	
-	  Explicitly consume "-ORBid" options passed to this method since
-	  they are specifically handled in the CORBA::ORB_init() method.
-	  According to the CORBA specification, if the ORBid third
-	  argument is used then any "-ORBid" options must be ignored.
-	  However, the above fix that forces the ORB to throw an
-	  exception when encountering an unrecognized "-ORB" option,
-	  also forces us to explicitly recognize the "-ORBid" option in
-	  the TAO_ORB_Core::init() method since it may "slip" through when
-	  both the ORBid third argument to CORBA::ORB_init() and a
-	  "-ORBid" ORB option are provided.
+          Use ACE_NEW_THROW_EX(), instead of ACE_NEW_RETURN() in
+          "-ORBLogFile" option processing code.
+
+          Explicitly consume "-ORBid" options passed to this method since
+          they are specifically handled in the CORBA::ORB_init() method.
+          According to the CORBA specification, if the ORBid third
+          argument is used then any "-ORBid" options must be ignored.
+          However, the above fix that forces the ORB to throw an
+          exception when encountering an unrecognized "-ORB" option,
+          also forces us to explicitly recognize the "-ORBid" option in
+          the TAO_ORB_Core::init() method since it may "slip" through when
+          both the ORBid third argument to CORBA::ORB_init() and a
+          "-ORBid" ORB option are provided.
 
 Wed Mar  8 12:03:21 2000  Carlos O'Ryan  <coryan@uci.edu>
 

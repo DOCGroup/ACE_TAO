@@ -50,7 +50,30 @@ void
 Test_Recursive_Union::dii_req_invoke (CORBA::Request *req,
                                       CORBA::Environment &ACE_TRY_ENV)
 {
+  req->add_in_arg ("s1") <<= this->in_;
+  req->add_inout_arg ("s2") <<= this->inout_.in ();
+  req->add_out_arg ("s3") <<= this->out_.in ();
+
+  req->set_return_type (Param_Test::_tc_Recursive_Union);
+
   req->invoke (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  Param_Test::Recursive_Union *tmp;
+  req->return_value () >>= tmp;
+  this->ret_ = new Param_Test::Recursive_Union (*tmp);
+
+  CORBA::NamedValue_ptr o2 =
+    req->arguments ()->item (1, ACE_TRY_ENV);
+  ACE_CHECK;
+  *o2->value () >>= tmp;
+  this->inout_ = new Param_Test::Recursive_Union (*tmp);
+
+  CORBA::NamedValue_ptr o3 =
+    req->arguments ()->item (2, ACE_TRY_ENV);
+  ACE_CHECK;
+  *o3->value () >>= tmp;
+  this->inout_ = new Param_Test::Recursive_Union (*tmp);
 }
 
 int
@@ -76,7 +99,7 @@ Test_Recursive_Union::reset_parameters (void)
   Generator *gen = GENERATOR::instance ();
 
   // Set the depth of recursion.
-  CORBA::ULong depth = 
+  CORBA::ULong depth =
     (CORBA::ULong) (gen->gen_long () % MAX_DEPTH) + 1;
 
   // Create a nested union to put in inout_.
@@ -119,68 +142,6 @@ Test_Recursive_Union::run_sii_test (Param_Test_ptr objref,
   ACE_ENDTRY;
   return -1;
 }
-
-int
-Test_Recursive_Union::add_args (CORBA::NVList_ptr param_list,
-			                          CORBA::NVList_ptr retval,
-			                          CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_TRY
-    {
-      CORBA::Any in_arg (Param_Test::_tc_Recursive_Union,
-                         &this->in_,
-                         0);
-
-      CORBA::Any inout_arg (Param_Test::_tc_Recursive_Union,
-                            &this->inout_.inout (), // .out () causes crash
-                            0);
-
-      CORBA::Any out_arg (Param_Test::_tc_Recursive_Union,
-                          &this->out_.inout (),
-                          0);
-
-      // add parameters
-      param_list->add_value ("ru1",
-                             in_arg,
-                             CORBA::ARG_IN,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      param_list->add_value ("ru2",
-                             inout_arg,
-                             CORBA::ARG_INOUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      param_list->add_value ("ru3",
-                             out_arg,
-                             CORBA::ARG_OUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // add return value
-      CORBA::NamedValue *item = retval->item (0,
-                                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      item->value ()->replace (Param_Test::_tc_Recursive_Union,
-                               &this->ret_.inout (), // see above
-                               0, // does not own
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      return 0;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Recursive_Union::add_args\n");
-
-    }
-  ACE_ENDTRY;
-  return -1;
-}
-
 
 CORBA::Boolean
 Test_Recursive_Union::check_validity (void)
@@ -233,10 +194,10 @@ Test_Recursive_Union::deep_init (Param_Test::Recursive_Union &ru,
                                  Generator *gen,
                                  CORBA::ULong level)
 {
-  if (level == 1) 
+  if (level == 1)
   // No more recursion, just insert a nested_rec_union.
     {
-      CORBA::ULong nested_depth = 
+      CORBA::ULong nested_depth =
         (CORBA::ULong) (gen->gen_long () % MAX_DEPTH) + 1;
 
       Param_Test::nested_rec_union nru;
@@ -256,7 +217,7 @@ Test_Recursive_Union::deep_init (Param_Test::Recursive_Union &ru,
   else
     {
       // Generate a member sequence.
-      CORBA::ULong len = 
+      CORBA::ULong len =
         (CORBA::ULong) (gen->gen_long () % MAX_SEQ_LENGTH) + 1;
 
       // This line is TAO-specific, but some compilers we support
@@ -321,7 +282,7 @@ CORBA::Boolean
 Test_Recursive_Union::deep_check (const Param_Test::Recursive_Union &in_union,
                                   const Param_Test::Recursive_Union &test_union)
 {
-  // Do the discriminators match? 
+  // Do the discriminators match?
   if (in_union._d () != test_union._d ())
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -336,7 +297,7 @@ Test_Recursive_Union::deep_check (const Param_Test::Recursive_Union &in_union,
       case 0:
         {
           // Do the sequence lengths match?
-          if (in_union.rec_member ().length () != 
+          if (in_union.rec_member ().length () !=
                 test_union.rec_member ().length ())
             {
               ACE_DEBUG ((LM_DEBUG,
@@ -347,7 +308,7 @@ Test_Recursive_Union::deep_check (const Param_Test::Recursive_Union &in_union,
 
           for (CORBA::ULong i = 0; i < in_union.rec_member ().length (); i++)
             {
-              if (!this->deep_check (in_union.rec_member ()[i], 
+              if (!this->deep_check (in_union.rec_member ()[i],
                                      test_union.rec_member ()[i]))
                 {
                   ACE_DEBUG ((LM_DEBUG,
@@ -390,7 +351,7 @@ Test_Recursive_Union::deep_check_nested (const Param_Test::nested_rec_union &in,
   switch (in._d ())
     {
       // Active member is the long integer.
-      case 0:        
+      case 0:
         // Do the nested_rec_union member values match?
         if (in.value () != test.value ())
           {
@@ -417,7 +378,7 @@ Test_Recursive_Union::deep_check_nested (const Param_Test::nested_rec_union &in,
 
           for (CORBA::ULong i = 0; i < in.nested_rec_member ().length (); i++)
             {
-              if (!this->deep_check_nested (in.nested_rec_member ()[i], 
+              if (!this->deep_check_nested (in.nested_rec_member ()[i],
                                             test.nested_rec_member ()[i]))
                 {
                   ACE_DEBUG ((LM_DEBUG,

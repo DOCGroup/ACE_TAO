@@ -126,13 +126,8 @@ private:
 
 #endif /* end #if !defined */
 
-#ifndef __ACE_INLINE__
-
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ORB_ObjectIdList &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ORB_ObjectIdList &);
-
-#endif /* __ACE_INLINE__ */
-
 
 #if defined (__ACE_INLINE__)
 #include "tao/ObjectIDList.i"

@@ -50,7 +50,29 @@ void
 Test_Bounded_Long_Sequence::dii_req_invoke (CORBA::Request *req,
                                             CORBA::Environment &ACE_TRY_ENV)
 {
+  req->add_in_arg ("s1") <<= this->in_.in ();
+  req->add_inout_arg ("s2") <<= this->inout_.in ();
+  req->add_out_arg ("s3") <<= this->out_.in ();
+  req->set_return_type (Param_Test::_tc_Bounded_Long_Seq);
+
   req->invoke (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  const Param_Test::Bounded_Long_Seq *tmp;
+  req->return_value () >>= tmp;
+  this->ret_ = new Param_Test::Bounded_Long_Seq (*tmp);
+
+  CORBA::NamedValue_ptr arg2 =
+    req->arguments ()->item (1, ACE_TRY_ENV);
+  ACE_CHECK;
+  *arg2->value () >>= tmp;
+  this->inout_ = new Param_Test::Bounded_Long_Seq (*tmp);
+
+  CORBA::NamedValue_ptr arg3 =
+    req->arguments ()->item (2, ACE_TRY_ENV);
+  ACE_CHECK;
+  *arg3->value () >>= tmp;
+  this->out_ = new Param_Test::Bounded_Long_Seq (*tmp);
 }
 
 int
@@ -102,67 +124,6 @@ Test_Bounded_Long_Sequence::run_sii_test (Param_Test_ptr objref,
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_Bounded_Long_Sequence::run_sii_test\n");
-
-    }
-  ACE_ENDTRY;
-  return -1;
-}
-
-int
-Test_Bounded_Long_Sequence::add_args (CORBA::NVList_ptr param_list,
-                                       CORBA::NVList_ptr retval,
-                                       CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_TRY
-    {
-      CORBA::Any in_arg (Param_Test::_tc_Bounded_Long_Seq,
-                        (void *) &this->in_.in (),
-                         0);
-
-      CORBA::Any inout_arg (Param_Test::_tc_Bounded_Long_Seq,
-                            &this->inout_.inout (),
-                            0);
-
-      CORBA::Any out_arg (Param_Test::_tc_Bounded_Long_Seq,
-                          &this->out_.inout (), // .out () causes crash
-                          0);
-
-      // add parameters
-      param_list->add_value ("s1",
-                             in_arg,
-                             CORBA::ARG_IN,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      param_list->add_value ("s2",
-                             inout_arg,
-                             CORBA::ARG_INOUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      param_list->add_value ("s3",
-                             out_arg,
-                             CORBA::ARG_OUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // add return value type
-      CORBA::NamedValue *item = retval->item (0,
-                                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      item->value ()->replace (Param_Test::_tc_Bounded_Long_Seq,
-                               &this->ret_.inout (), // see above
-                               0, // does not own
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      return 0;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Bounded_Long_Sequence::add_args\n");
 
     }
   ACE_ENDTRY;

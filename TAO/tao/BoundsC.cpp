@@ -85,7 +85,7 @@ CORBA::Exception *CORBA_Bounds::_alloc (void)
 
 
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::Bounds &_tao_elem) // copying
+void operator<<= (CORBA::Any &_tao_any, const CORBA::Bounds &_tao_elem)
 {
   CORBA::Bounds *_tao_any_val = 0;
   ACE_NEW (_tao_any_val,
@@ -93,7 +93,14 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::Bounds &_tao_elem) // copyi
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::_tc_Bounds, _tao_any_val, 1, ACE_TRY_ENV);
+    TAO_OutputCDR stream;
+    stream << *_tao_any_val;
+    _tao_any._tao_replace (CORBA::_tc_Bounds,
+                           TAO_ENCAP_BYTE_ORDER,
+                           stream.begin (),
+                           1,
+                           _tao_any_val,
+                           ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -107,7 +114,14 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::Bounds *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::_tc_Bounds, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (CORBA::_tc_Bounds,
+                           TAO_ENCAP_BYTE_ORDER,
+                           stream.begin (),
+                           1,
+                           _tao_elem,
+                           ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY {}
@@ -129,24 +143,30 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Bounds *&_tao_ele
     else
     {
       ACE_NEW_RETURN (_tao_elem, CORBA::Bounds, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
-      if (stream.decode (CORBA::_tc_Bounds, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ());
+      if (stream >> *_tao_elem)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_Bounds, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            CORBA::_tc_Bounds,
+            1,
+            ACE_reinterpret_cast (void*, _tao_elem),
+            ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
+        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
+    _tao_elem = 0;
     return 0;
   }
   ACE_ENDTRY;

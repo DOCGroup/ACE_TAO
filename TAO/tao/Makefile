@@ -102,9 +102,7 @@ DEFAULT_RESOURCES_FILES = \
 
 INTERPRETIVE_MARSHALING_FILES = \
   append \
-  decode \
   deep_free \
-  encode \
   CDR_Interpreter \
   Marshal \
   skip
@@ -175,6 +173,7 @@ ORB_CORE_FILES = \
   CONV_FRAMES \
   Tagged_Components \
   GIOPC \
+  BoundsC \
   TAOC \
   TAOS
 

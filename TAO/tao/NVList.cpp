@@ -9,6 +9,7 @@
 #include "tao/Exception.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
+#include "tao/BoundsC.h"
 #include "tao/debug.h"
 #include "ace/Auto_Ptr.h"
 
@@ -148,20 +149,10 @@ CORBA_NVList::add_value (const char *name,
           // The normal behaviour for parameters is that the ORB "borrows"
           // their memory for the duration of calls.
           //
-          if (value.value_)
-            {
-              nv->any_.replace (value.type_,
-                                value.value_,
-                                0,
-                                ACE_TRY_ENV);
-            }
-          else
-            {
-              nv->any_._tao_replace (value.type_,
-                                     value.byte_order_,
-                                     value.cdr_,
-                                     ACE_TRY_ENV);
-            }
+          nv->any_._tao_replace (value.type_,
+                                 value.byte_order_,
+                                 value.cdr_,
+                                 ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
         }
       return nv;
@@ -265,7 +256,7 @@ CORBA_NVList::item (CORBA::ULong n, CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (CORBA::NamedValue::_nil ());
 
   if (n >= this->max_) // 0 based indexing
-    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
+    ACE_THROW_RETURN (CORBA::Bounds (), 0);
 
   CORBA::NamedValue_ptr *nv;
 

@@ -223,7 +223,7 @@ public:
               CORBA_Environment &ACE_TRY_ENV =
                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::Exception));
-  // Special purpose invoke method used by the interpretive stubs. This
+  // Special purpose invoke method used by the generated stubs. This
   // accomplishes the same task as the normal invoke except that
   // Exceptions are allocated and decoded here. This reduces the
   // footprint of the generated stubs.

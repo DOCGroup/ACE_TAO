@@ -22,19 +22,12 @@ void
 TAO_Forwarding_Servant::invoke (CORBA::ServerRequest_ptr request,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (request);
+  PortableServer::ForwardRequest exception (this->forward_to_.in ());
 
-  CORBA::Exception *exception = 0;
-  ACE_NEW_THROW_EX (exception,
-                    PortableServer::ForwardRequest (this->forward_to_.in ()),
-                    CORBA::NO_MEMORY ());
+  CORBA::Any any;
+  any <<= exception;
 
-  CORBA::Any any (exception->_type (),
-                  exception,
-                  1);
-
-  request->set_exception (any,
-                          ACE_TRY_ENV);
+  request->set_exception (any, ACE_TRY_ENV);
 }
 
 CORBA::RepositoryId

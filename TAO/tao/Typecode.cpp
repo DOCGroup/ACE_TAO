@@ -480,7 +480,7 @@ CORBA_TypeCode::skip_typecode (TAO_InputCDR &stream)
         case CORBA::tk_string:
         case CORBA::tk_wstring:
         case ~0u:
-          return stream.read_ulong (temp);
+          return (stream.read_ulong (temp) != 0);
 
           // The rest have "complex" parameter lists that are
           // encoded as bulk octets ... just skip them.
@@ -1587,10 +1587,6 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &ACE_TRY_ENV) const
   ACE_NOTREACHED (return 0);
 }
 
-// NOTE special calling convention for stream.decode () when we're
-// potentially deencapsulating an indirected typecode: the "data2"
-// value indicates that this typecode is the parent.  See comments at
-// stream.decode () for further details.
 //
 // Applicable only to struct, union, and except
 //
@@ -1647,27 +1643,14 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
           {
             if (!stream.skip_string ())  // skip the name
               ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
-            CORBA::TypeCode::traverse_status status =
-              stream.decode (CORBA::_tc_TypeCode,
-                             // the typecode will be
-                             // retrieved at the i-th
-                             // location. The decode
-                             // routine will allocate the
-                             // storage to hold a
-                             // typecode
-                             &this->private_state_->
-                             tc_member_type_list_[i],
-                             this,
-                             // pass ourselves since we
-                             // will be the parent. This
-                             // is the case where the 3rd
-                             // parameter is used in a
-                             // decode method
-                             ACE_TRY_ENV);
-            ACE_CHECK_RETURN (0);
 
-            if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-              ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
+            CORBA::TypeCode_ptr& member_type =
+              this->private_state_->tc_member_type_list_[i];
+            CORBA_TypeCode::_tao_decode (this,
+                                         stream,
+                                         member_type,
+                                         ACE_TRY_ENV);
+            ACE_CHECK_RETURN (0);
           }
 
         this->private_state_->tc_member_type_list_known_ = 1;
@@ -1707,10 +1690,6 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
         else if (!stream.read_ulong (temp)     // default used
                  || !stream.read_ulong (temp)) // member count
           ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
-        // Always big enough because labels can only be of a
-        // few different types of which "long" has the
-        // largest size.
-        CORBA::Long scratch;
 
         // get the typecode for the discriminator
         tc = this->discriminator_type (ACE_TRY_ENV);
@@ -1722,7 +1701,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
           // the ith entry will have the typecode of the ith guy
           {
             CORBA::TypeCode::traverse_status status =
-              stream.decode (tc.in (), &scratch, this,  ACE_TRY_ENV);
+              stream.skip (tc.in (), ACE_TRY_ENV);
             // member label
             ACE_CHECK_RETURN (0);
 
@@ -1730,21 +1709,20 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
                 || !stream.skip_string ())  // skip the name
               ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
 
-            status =  stream.decode (CORBA::_tc_TypeCode,  // get the typecode
-                                     &private_state_->tc_member_type_list_[i],
-                                     this,
-                                     ACE_TRY_ENV);
+            CORBA::TypeCode_ptr& member_type =
+              this->private_state_->tc_member_type_list_[i];
+            CORBA_TypeCode::_tao_decode (this,
+                                         stream,
+                                         member_type,
+                                         ACE_TRY_ENV);
             ACE_CHECK_RETURN (0);
-
-            if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-              ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
           }
         this->private_state_->tc_member_type_list_known_ = 1;
 
         if (slot < mcount)
           return this->private_state_->tc_member_type_list_[slot];
         else
-          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), (CORBA::TypeCode_ptr)0);
+          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
       }
       ACE_NOTREACHED (break);
 
@@ -1908,10 +1886,6 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
           ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
         else
           {
-            CORBA::Long scratch; // always big enough because labels can
-            // only be of a few different types of
-            // which "long" has the largest size
-
             // get the typecode for the discriminator
             tc = this->discriminator_type (ACE_TRY_ENV);
             // compute the name for all the members and return the
@@ -1922,10 +1896,8 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
               {
                 // the ith entry will have the name of the ith member
                 CORBA::TypeCode::traverse_status status =
-                  stream.decode (tc.in (),
-                                 &scratch,
-                                 this,
-                                 ACE_TRY_ENV); // member label
+                  stream.skip (tc.in (),
+                               ACE_TRY_ENV); // member label
                 ACE_CHECK_RETURN (0);
 
                 if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -2092,11 +2064,14 @@ CORBA_TypeCode::private_discriminator_type (CORBA::Environment &ACE_TRY_ENV) con
   // skip ID and name, and then get the discriminant TC
 
   if (!stream.skip_string () // type ID, hidden
-      || !stream.skip_string () // typedef name
-      || stream.decode (CORBA::_tc_TypeCode,
-                        &this->private_state_->tc_discriminator_type_, this,
-                        ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+      || !stream.skip_string ()) // typedef name
     ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
+
+  CORBA_TypeCode::_tao_decode (this,
+                               stream,
+                               this->private_state_->tc_discriminator_type_,
+                               ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   this->private_state_->tc_discriminator_type_known_ = 1;
   return this->private_state_->tc_discriminator_type_;
@@ -2184,8 +2159,6 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &ACE_TRY_ENV) const
 {
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
                        this->byte_order_);
-  CORBA::TypeCode::traverse_status status = CORBA::TypeCode::TRAVERSE_STOP;
-
   switch (kind_)
     {
     case CORBA::tk_sequence:
@@ -2198,18 +2171,14 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &ACE_TRY_ENV) const
           return this->private_state_->tc_content_type_;
 
         // retrieve the content type
-        status = stream.decode (CORBA::_tc_TypeCode,
-                           &this->private_state_->tc_content_type_,
-                           this,  ACE_TRY_ENV);
+        CORBA_TypeCode::_tao_decode (this,
+                                     stream,
+                                     this->private_state_->tc_content_type_,
+                                     ACE_TRY_ENV);
         ACE_CHECK_RETURN (0);
 
-        if (status != CORBA::TypeCode::TRAVERSE_CONTINUE) // element type
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
-        else
-          {
-            this->private_state_->tc_content_type_known_ = 1;
-            return this->private_state_->tc_content_type_;
-          }
+        this->private_state_->tc_content_type_known_ = 1;
+        return this->private_state_->tc_content_type_;
       }
       ACE_NOTREACHED (break);
 
@@ -2225,18 +2194,14 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &ACE_TRY_ENV) const
             || !stream.skip_string ()) // name
           ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
-        status = stream.decode (CORBA::_tc_TypeCode,
-                                &this->private_state_->tc_content_type_, this,
-                                ACE_TRY_ENV);
+        CORBA_TypeCode::_tao_decode (this,
+                                     stream,
+                                     this->private_state_->tc_content_type_,
+                                     ACE_TRY_ENV);
         ACE_CHECK_RETURN (0);
 
-        if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
-        else
-          {
-            this->private_state_->tc_content_type_known_ = 1;
-            return this->private_state_->tc_content_type_;
-          }
+        this->private_state_->tc_content_type_known_ = 1;
+        return this->private_state_->tc_content_type_;
       }
       /*NOTREACHED*/
 
@@ -2271,6 +2236,248 @@ CORBA_TypeCode::private_discrim_pad_size (CORBA::Environment &ACE_TRY_ENV)
  this->private_state_->tc_discrim_pad_size_ = discrim_size;
  return discrim_size;
 }
+
+// ****************************************************************
+
+void
+CORBA_TypeCode::_tao_decode (const CORBA_TypeCode *parent,
+                             TAO_InputCDR &cdr,
+                             CORBA_TypeCode *&x,
+                             CORBA::Environment &ACE_TRY_ENV)
+{
+  x = 0;
+  CORBA::ULong kind;
+
+  if (!cdr.read_ulong (kind))
+    ACE_THROW (CORBA::BAD_TYPECODE ());
+
+  static CORBA::TypeCode_ptr tc_consts [CORBA::TC_KIND_COUNT] =
+  {
+    CORBA::_tc_null,
+    CORBA::_tc_void,
+    CORBA::_tc_short,
+    CORBA::_tc_long,
+    CORBA::_tc_ushort,
+
+    CORBA::_tc_ulong,
+    CORBA::_tc_float,
+    CORBA::_tc_double,
+    CORBA::_tc_boolean,
+    CORBA::_tc_char,
+
+    CORBA::_tc_octet,
+    CORBA::_tc_any,
+    CORBA::_tc_TypeCode,
+    CORBA::_tc_Principal,
+
+    0, // CORBA::_tc_Object ... type ID is CORBA_Object
+    0, // CORBA_tk_struct
+    0, // CORBA_tk_union
+    0, // CORBA_tk_enum
+    0, // CORBA::_tc_string ... unbounded
+    0, // CORBA_tk_sequence
+    0, // CORBA_tk_array
+    0, // CORBA_tk_alias
+    0, // CORBA_tk_except
+
+    CORBA::_tc_longlong,
+    CORBA::_tc_ulonglong,
+    CORBA::_tc_longdouble,
+    CORBA::_tc_wchar,
+    0           // CORBA::_tc_wstring ... unbounded
+  };
+
+  if (kind < CORBA::TC_KIND_COUNT && tc_consts [kind] != 0)
+    {
+      // Easy case, the CDR contains no more data, and we can simply
+      // duplicate one of the TypeCode constants...
+      x = CORBA::TypeCode::_duplicate (tc_consts [kind]);
+      return;
+    }
+
+  if (kind != ~0u && kind >= CORBA::TC_KIND_COUNT)
+    {
+      // Invalid kind.... cannot even determine what portion of the
+      // CDR corresponds to the typecode....
+      ACE_THROW (CORBA::BAD_TYPECODE ());
+    }
+
+  if (kind == ~0u)
+    {
+      // Get the long indicating the encapsulation offset,
+      // then set up indirection stream that's like "stream"
+      // but has space enough only for the typecode and the
+      // length for the encapsulated parameters.
+      //
+      // The offset must be negative
+      CORBA::Long offset;
+
+      if (!cdr.read_long (offset) || offset >= 0)
+        {
+          // Since indirected typecodes cannot occur at the
+          // topmost level, they can occur starting only at the
+          // second and subsequent levels. This means that a
+          // normal encoding of that typecode occurred somewhere
+          // before in the stream. As a result the offset field
+          // must always be negative. See the CORBA spec for details.
+          ACE_THROW (CORBA::BAD_TYPECODE ());
+        }
+
+      // Slava Galperin <galperin@teknowledge.com> clarifies
+      // this:
+      // CORBA Spec says:
+      //
+      // The encoding of such an indirection is as a
+      // TypeCode with a TCKind value that has the special
+      // value 2^32 -1 (0xffffffff, all ones). Such
+      // typecodes have a single (simple) parameter, which
+      // is the long offset (in units of octets) from the
+      // simple parameter. (This means that an offset of
+      // negative four (-4) is illegal because it will be
+      // self-indirecting.)
+      // (CORBA V2.2 CDR Transfer Syntax February 1998 page 13-17)
+      //
+      // This apparently assumes offset from the <em>
+      // beginning </em> of the simple parameter.
+      // [Right, because otherwise the value -8 would be
+      // illegal]
+      // Because at this point stream is positioned after
+      // the parameter, we need to account for that when
+      // constructing indir_stream by subtracting 4 (length
+      // of the offset parameter itself).
+
+      //                TAO_InputCDR indir_stream (*stream, 8, offset
+      //                - 4);
+      ACE_Message_Block *mb = (ACE_Message_Block *)cdr.start ();
+      TAO_InputCDR indir_stream (mb->rd_ptr () + offset - 4,
+                                 -1 * (offset - 4));
+
+      if (!indir_stream.good_bit ())
+        ACE_THROW (CORBA::BAD_TYPECODE ());
+
+      // Get "kind" and length of target typecode
+      //
+      // XXX this currently assumes the TCKind to which we
+      // indirect is the same byte order as the "parent"
+      // typecode -- not the right assumption; see how the
+      // TypeCode interpreter does it.
+
+      CORBA::ULong indir_kind = 0;
+      CORBA::ULong indir_len = 0;
+
+      if (!indir_stream.read_ulong (indir_kind)
+          || indir_kind >= CORBA::TC_KIND_COUNT // no double indirections
+          || !indir_stream.read_ulong (indir_len))
+        ACE_THROW (CORBA::BAD_TYPECODE ());
+
+      // Now construct indirected typecode.  This shares the
+      // typecode octets with the "parent" typecode,
+      // increasing the amount of memory sharing and
+      // reducing the cost of getting typecodes.
+      ACE_NEW (x,
+               CORBA::TypeCode ((CORBA::TCKind) indir_kind,
+                                indir_len,
+                                indir_stream.rd_ptr(),
+                                0,
+                                0,
+                                // @@ TODO
+                                // Here we lose the parent
+                                // typecode...
+                                ACE_const_cast(CORBA_TypeCode*,parent)));
+      return;
+    }
+
+  // The other cases....
+  switch (kind)
+    {
+    default:
+      ACE_THROW (CORBA::INTERNAL ());
+
+      // Some have "simple" parameter lists ... some of these
+      // also have preallocated constants that could be used.
+    case CORBA::tk_string:
+    case CORBA::tk_wstring:
+      {
+        CORBA::ULong bound;
+
+        if (!cdr.read_ulong (bound))
+          ACE_THROW (CORBA::BAD_TYPECODE ());
+
+        if (bound == 0)
+          {
+            // unbounded string. Let us reuse the ORB owned
+            // _tc_string or _tc_wstring
+            if (kind == CORBA::tk_string)
+              x = CORBA::TypeCode::_duplicate (CORBA::_tc_string);
+            else
+              x = CORBA::TypeCode::_duplicate (CORBA::_tc_wstring);
+          }
+        else
+          {
+            // bounded string. Create a TypeCode. If it is does not
+            // have a parent, then the application must free it.
+
+            // allocate a new TypeCode
+
+            // This may produce a memory leak, because
+            // callers are sloppy about removing these
+            // objects.
+            CORBA::Long _oc_bounded_string [] =
+            {TAO_ENCAP_BYTE_ORDER, 0};
+            // Bounded string. Save the bounds
+            _oc_bounded_string [1] = (CORBA::Long) bound;
+            ACE_NEW (x,
+                     CORBA::TypeCode (ACE_static_cast(CORBA::TCKind, kind),
+                                      8,
+                                      ACE_reinterpret_cast(char*,_oc_bounded_string),
+                                      0,
+                                      sizeof (CORBA::String_var),
+                                      0));
+          }
+      }
+      break;
+
+    // The rest have "complex" parameter lists that are
+    // encoded as bulk octets ...
+    case CORBA::tk_objref:
+    case CORBA::tk_struct:
+    case CORBA::tk_union:
+    case CORBA::tk_enum:
+    case CORBA::tk_sequence:
+    case CORBA::tk_array:
+    case CORBA::tk_alias:
+    case CORBA::tk_except:
+      {
+        CORBA::ULong length;
+
+        // get the encapsulation length
+        if (!cdr.read_ulong (length))
+          ACE_THROW (CORBA::BAD_TYPECODE ());
+
+        // If the length is greater that the containing CDR stream
+        // that is an error...
+        if (length > cdr.length ())
+          ACE_THROW (CORBA::BAD_TYPECODE ());
+
+        // create a new typecode
+        ACE_NEW (x,
+                 CORBA::TypeCode ((CORBA::TCKind) kind,
+                                  length,
+                                  cdr.rd_ptr (),
+                                  0,
+                                  0,
+                                  ACE_const_cast (CORBA_TypeCode*,parent)));
+        // skip length number of bytes in the stream, otherwise we may
+        // leave the stream in an undefined state
+        (void) cdr.skip_bytes (length);
+      }
+      break;
+    } // end of switch
+}
+
+// ****************************************************************
+
+
 // ************ The following are deprecated ****************
 
 // say how many parameters this typecode has; normally a fixed number,
@@ -2439,28 +2646,67 @@ CORBA::TypeCode::private_alignment (CORBA::Environment &ACE_TRY_ENV)
 CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
 {
-  ACE_TRY_NEW_ENV
-    {
-      // @@ This function should *not* use the interpreter, there must
-      // be a way to do this with just CDR operations!!!!
-      CORBA::TypeCode::traverse_status status =
-        TAO_MARSHAL_TYPECODE::instance ()->encode (0,
-                                                   &x,
-                                                   0,
-                                                   &cdr,
-                                                   ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  CORBA::ULong kind =
+    x->kind_;
 
-      if (status == CORBA::TypeCode::TRAVERSE_CONTINUE)
-        return 1;
-      // else return 0 at the end of the function
-    }
-  ACE_CATCH (CORBA_Exception, ex)
+  if (!cdr.write_ulong (kind))
+    return 0;
+
+  switch (kind)
     {
+    default:
+      break;
+
+      // Indirected typecodes can't occur at "top level" like
+      // this, only nested inside others!
+    case ~0u:
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "indirected typecode at top level!\n"));
       return 0;
+      break;
+
+      // A few have "simple" parameter lists
+    case CORBA::tk_string:
+    case CORBA::tk_wstring:
+      {
+        ACE_TRY_NEW_ENV
+          {
+            CORBA::ULong length =
+              x->length (ACE_TRY_ENV);
+
+            if (!cdr.write_ulong (length))
+              return 0;
+          }
+        ACE_CATCHANY
+          {
+            return 0;
+          }
+        ACE_ENDTRY;
+      }
+      break;
+
+      // The rest have "complex" parameter lists that are
+      // already encoded as bulk octets ... put length, then
+      // octets.
+    case CORBA::tk_objref:
+    case CORBA::tk_struct:
+    case CORBA::tk_union:
+    case CORBA::tk_enum:
+    case CORBA::tk_sequence:
+    case CORBA::tk_array:
+    case CORBA::tk_alias:
+    case CORBA::tk_except:
+      {
+        if (!cdr.write_ulong (x->length_)
+            || !cdr.write_octet_array ((CORBA::Octet*)x->buffer_,
+                                       x->length_))
+          return 0;
+      }
+      break;
     }
-  ACE_ENDTRY;
-  return 0;
+
+  return 1;
 }
 
 CORBA::Boolean
@@ -2468,23 +2714,14 @@ operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
 {
   ACE_TRY_NEW_ENV
     {
-      CORBA::TypeCode::traverse_status status =
-        TAO_MARSHAL_TYPECODE::instance ()->decode (0,
-                                                   &x,
-                                                   0,
-                                                   &cdr,
-                                                   ACE_TRY_ENV);
+      CORBA_TypeCode::_tao_decode (0, cdr, x, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        return 0;
     }
-  ACE_CATCH (CORBA_Exception, ex)
+  ACE_CATCHANY
     {
       return 0;
     }
   ACE_ENDTRY;
-
   return 1;
 }
 

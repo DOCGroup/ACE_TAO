@@ -518,28 +518,21 @@ void  operator<<= (CORBA::Any &, const CORBA_ServiceInformation &); // copying v
 void  operator<<= (CORBA::Any &, CORBA_ServiceInformation*); // noncopying version
 CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA_ServiceInformation *&);
 
-#ifndef __ACE_INLINE__
-
 CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ServiceDetail &); //
 CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ServiceDetail &);
 CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ServiceDetail::_tao_seq_Octet &); //
 CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ServiceDetail::_tao_seq_Octet &);
+
 CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ServiceInformation &);
- //
 CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ServiceInformation &);
-CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ServiceInformation::_tao_seq_ServiceOption &); //
+CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ServiceInformation::_tao_seq_ServiceOption &);
 CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ServiceInformation::_tao_seq_ServiceOption &);
-CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ServiceInformation::_tao_seq_ServiceDetail &); //
+CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ServiceInformation::_tao_seq_ServiceDetail &);
 CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ServiceInformation::_tao_seq_ServiceDetail &);
 
-#endif /* __ACE_INLINE__ */
-
 #if defined (__ACE_INLINE__)
-
 #include "tao/Services.i"
 #endif /* defined INLINE */
-
-
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
