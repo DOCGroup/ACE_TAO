@@ -79,6 +79,7 @@ OBJFILES = \
 	$(OBJDIR)\Flushing_Strategy.obj \
 	$(OBJDIR)\Follower.obj \
 	$(OBJDIR)\Follower_Auto_Ptr.obj \
+	$(OBJDIR)\LF_Follower_Auto_Adder.obj \
 	$(OBJDIR)\GIOP_Message_Base.obj \
 	$(OBJDIR)\GIOP_Message_Lite.obj \
 	$(OBJDIR)\GIOP_Message_Generator_Parser.obj \

@@ -391,6 +391,10 @@ SOURCE=.\Follower.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Follower_Auto_Adder.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Follower_Auto_Ptr.cpp
 # End Source File
 # Begin Source File
@@ -1148,6 +1152,14 @@ SOURCE=.\Follower.h
 # Begin Source File
 
 SOURCE=.\Follower.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Follower_Auto_Adder.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Follower_Auto_Adder.inl
 # End Source File
 # Begin Source File
 
