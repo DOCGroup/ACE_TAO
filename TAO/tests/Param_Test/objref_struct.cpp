@@ -79,13 +79,13 @@ Test_Objref_Struct::dii_req_invoke (CORBA::Request *req,
 
 int
 Test_Objref_Struct::init_parameters (Param_Test_ptr objref,
-                                                             CORBA::Environment &ACE_TRY_ENV)
+                                     CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
       Generator *gen = GENERATOR::instance (); // value generator
 
-      // set the length of the sequence
+      // Set the long member.
       this->in_.x = gen->gen_long ();
 
       this->in_.y = objref->make_coffee (ACE_TRY_ENV);
@@ -97,6 +97,13 @@ Test_Objref_Struct::init_parameters (Param_Test_ptr objref,
       this->in_.y->description (d,
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+	    this->inout_->x = 0;
+
+	    this->inout_->y = Coffee::_nil ();
+
+      Coffee::Desc dd;
+	    dd.name = CORBA::string_dup ("");
 
       return 0;
     }
@@ -116,6 +123,14 @@ Test_Objref_Struct::reset_parameters (void)
   this->inout_ = new Param_Test::Objref_Struct; // delete the previous ones
   this->out_ = new Param_Test::Objref_Struct;
   this->ret_ = new Param_Test::Objref_Struct;
+
+	this->inout_->x = 0;
+
+	this->inout_->y = Coffee::_nil ();
+
+  Coffee::Desc dd;
+	dd.name = CORBA::string_dup ("");
+
   return 0;
 }
 

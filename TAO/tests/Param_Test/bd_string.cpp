@@ -62,6 +62,9 @@ Test_Bounded_String::dii_req_invoke (CORBA::Request *req,
   req->add_inout_arg ("s2") <<= CORBA::Any::from_string (this->inout_, 128);
   req->add_out_arg ("s3") <<= CORBA::Any::from_string (this->out_, 128);
 
+  // The Any arg manages its memory but this class member does not.
+  CORBA::string_free (this->inout_);
+
   req->set_return_type (Param_Test::_tc_short_string);
 
   req->invoke (ACE_TRY_ENV);

@@ -191,6 +191,10 @@ Test_Big_Union::reset_parameters (void)
     case 10:
       {
         Param_Test::Var_Struct var_struct;
+        var_struct.dbl = 3.14159;
+        var_struct.boole = gen->gen_short () % 2;
+        var_struct.shrt = gen->gen_short ();
+        // set the length of the sequence
         var_struct.dummy1 = gen->gen_string ();
         var_struct.dummy2 = gen->gen_string ();
         CORBA::ULong len = gen->gen_long () % 10 + 1;

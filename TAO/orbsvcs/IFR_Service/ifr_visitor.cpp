@@ -38,7 +38,7 @@ ifr_visitor::ifr_visitor (void)
       if (CORBA::is_nil (repo.in ()))
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("IR_Repository::_narrow failed\n")));
+                      ACE_TEXT ("CORBA::Repository::_narrow failed\n")));
         }
 
       be_global->repository (repo._retn ());

@@ -353,7 +353,7 @@ CORBA_NVList::_tao_encode (TAO_OutputCDR &cdr,
   // The list is already evaluated, we cannot optimize the copies, go
   // ahead with the slow way to do things.
 
-  // Then unmarshal each "in" and "inout" parameter.
+  // Then marshal each "in" and "inout" parameter.
   ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr> i (this->values_);
 
   for (i.first (); !i.done (); i.advance ())
