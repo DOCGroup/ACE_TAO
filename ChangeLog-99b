@@ -33,14 +33,18 @@ Wed Jun  9 00:20:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Wed Jun  9 10:46:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Priority_Reactor_Test.cpp:
+	* ace/Strategies.cpp:
+	  Moved template instantiations to ace/Service_Types.cpp
+
+	* ace/Service_Types.cpp:
 	  Added missing template instantiations for
-	  ACE_Message_Queue_Iterator
+	  ACE_Message_Queue_Iterator<>
 
 	* ace/Svc_Handler.cpp (flush):
 	  Removed extra characters and the end of a #endif
 	  Fixed warning about unused variable
 	  Use right iterator for the Message_Queue
+
 Wed Jun 09 10:11:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-g++-common.h: added #define of
