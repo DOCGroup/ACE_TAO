@@ -85,8 +85,6 @@ void Fault_Event_Service::push (const FtRtecEventChannelAdmin::ObjectId & oid,
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  RT_Task::set_current();
-
   TAO_EC_Default_Factory::init_svcs ();
   FT_EventService event_service;
   return event_service.run (argc, argv);
@@ -209,7 +207,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
     }
   }
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:f:jps:t:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:f:jprs:t:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -227,6 +225,9 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
       break;
     case 'p':
       this->membership_ = TAO_FTEC_Event_Channel::PRIMARY;
+      break;
+    case 'r':
+        RT_Task::enable();
       break;
     case 's':
       // It could be just a flag (i.e. no "global" or "local"
