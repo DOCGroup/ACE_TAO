@@ -16,20 +16,23 @@
 const char *TAO_AV_ORB_ARGUMENTS = "-ORBobjrefstyle URL";
 
 Command_Handler::Command_Handler (ACE_HANDLE command_handle)
-  : command_handle_ (command_handle),
-    video_reactive_strategy_ (&orb_manager_,this),
-    video_client_mmdevice_ (&video_reactive_strategy_),
-    video_data_handle_ (-1),
-    audio_reactive_strategy_ (&orb_manager_,this),
-    audio_client_mmdevice_ (&audio_reactive_strategy_),
-    audio_data_handle_ (-1)
+  :video_data_handle_ (-1),
+   audio_data_handle_ (-1),
+   command_handle_ (command_handle),
+   video_control_ (0),
+   video_reactive_strategy_ (&orb_manager_,this),
+   video_client_mmdevice_ (&video_reactive_strategy_),
+   audio_control_ (0),
+   audio_reactive_strategy_ (&orb_manager_,this),
+   audio_client_mmdevice_ (&audio_reactive_strategy_)
 {
 }
 
 Command_Handler::~Command_Handler (void)
 {
   TAO_ORB_Core_instance ()->reactor ()->remove_handler (this,
-                                            ACE_Event_Handler::READ_MASK);
+                                                        ACE_Event_Handler::READ_MASK);
+  ::remove_all_semaphores ();
 }
 
 int
@@ -251,7 +254,11 @@ Command_Handler::handle_input (ACE_HANDLE fd)
         {
         case CmdINIT:
           ACE_DEBUG ((LM_DEBUG,"(%P|%t) command_handler:CmdINIT received\n"));
-          this->init_av ();
+          if (this->init_av () == -1)
+            {
+              TAO_ORB_Core_instance ()->orb ()->shutdown ();
+              return -1;
+            }
           // automatic experiment code zapped :-)
           fp = NULL;
           break;
@@ -433,7 +440,7 @@ Command_Handler::init_av (void)
       /*
         fprintf(stderr, "CTR initialization failed.\n");
       */
-      return 0;
+      return -1;
     }
   else
     {

@@ -432,10 +432,58 @@ AV_Server_Sig_Handler::clear_child (int sig)
   return;
 }
 
+int
+AV_Server_Sig_Handler::remove_names (void)
+{
+  TAO_TRY
+    {
+  CORBA::Object_var naming_obj = TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService");
+  if (CORBA::is_nil (naming_obj.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       " (%P|%t) Unable to resolve the Name Service.\n"),
+                      -1);
+
+  CosNaming::NamingContext_var naming_context =
+    CosNaming::NamingContext::_narrow (naming_obj.in (),
+                                       TAO_TRY_ENV);
+  TAO_CHECK_ENV;
+
+  // Unregister the video_mmdevice with the naming service.
+
+  CosNaming::Name video_server_mmdevice_name (1);
+  video_server_mmdevice_name.length (1);
+  video_server_mmdevice_name [0].id = CORBA::string_dup ("Video_Server_MMDevice");
+  
+  // Register the video control object with the naming server.
+  naming_context->unbind (video_server_mmdevice_name,
+                          TAO_TRY_ENV);
+  // Unregister the audio_mmdevice with the naming service.
+
+  CosNaming::Name audio_server_mmdevice_name (1);
+  audio_server_mmdevice_name.length (1);
+  audio_server_mmdevice_name [0].id = CORBA::string_dup ("Audio_Server_MMDevice");
+  
+  // Register the audio control object with the naming server.
+  naming_context->unbind (audio_server_mmdevice_name,
+                          TAO_TRY_ENV);
+
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("AV_Server_Sig_Handler::remove_names ()");
+      return -1;
+    }
+  TAO_ENDTRY;
+  return 0;
+}
+
 //  ctrl-c, Bus error, interrupt sig handler
 void
 AV_Server_Sig_Handler::int_handler (int sig)
 {
+  // unbind the names from the naming service.
+
+  this->remove_names ();
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
   ACE_DEBUG ((LM_DEBUG, 
               "(%P|%t) AV server killed by signal %d\n",
@@ -579,6 +627,8 @@ AV_Server::on_exit_routine (void)
   if (Mpeg_Global::live_video > 1)
     ExitLiveVideo ();
   //  ComCloseServer();
+
+  // Remove the elements from the Naming service.
 }
 
 
@@ -677,15 +727,14 @@ AV_Server::init (int argc,
   TAO_CHECK_ENV_RETURN (env,-1);
 
   // Register the video_mmdevice with the naming service.
-
   CosNaming::Name video_server_mmdevice_name (1);
   video_server_mmdevice_name.length (1);
   video_server_mmdevice_name [0].id = CORBA::string_dup ("Video_Server_MMDevice");
   
   // Register the video control object with the naming server.
   this->naming_context_->bind (video_server_mmdevice_name,
-                        this->video_mmdevice_->_this (env),
-                        env);
+                               this->video_mmdevice_->_this (env),
+                               env);
 
   if (env.exception () != 0)
     {
