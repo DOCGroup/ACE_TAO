@@ -1,3 +1,8 @@
+Wed Feb 13 17:42:32 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Configuration.cpp (operator=): Fixed a warning in g+
+	  builds. Stupid mistake on my part :(.
+
 Wed Feb 13 12:45:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Configuration.cpp: 
