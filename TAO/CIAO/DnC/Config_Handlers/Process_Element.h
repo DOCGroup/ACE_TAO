@@ -12,6 +12,8 @@
 #define PROCESS_ELEMENT_H
 
 #include "DeploymentC.h"
+#include "Deployment.h"
+#include "Basic_Handler.h"
 #include "Config_Handler_export.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
