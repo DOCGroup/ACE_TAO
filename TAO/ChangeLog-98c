@@ -1,3 +1,8 @@
+Thu Jul 16 12:57:08 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* tao/ORB_Core.cpp: Fixed explicit template instantiation of
+	ACE_Thread_Condition and ACE_Condition on IRIX.
+
 Thu Jul 16 11:50:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * tao/ORB_Core.{h,cpp}: Due to merging a cvs branch
