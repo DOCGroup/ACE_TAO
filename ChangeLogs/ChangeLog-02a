@@ -3,7 +3,7 @@ Thu Mar 09 23:12:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* ace/OS.i (flock_init): On Win32, the hEvent in strut overlapped
 	  should initialized to NULL.  This was causing Naming_Test to
 	  fail on Windows 2000.  Thanks to <cody.dean@mindspring.com> for
-	  pointing this out.
+	  pointing this out. [Bug 485]
 
 Thu Mar  9 19:49:00 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
