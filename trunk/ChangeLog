@@ -1,6 +1,6 @@
 Tue Jul 22 00:19:39 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
-        * examples/C++NPv@/Logging_Handler.cpp:
+        * examples/C++NPv2/Logging_Handler.cpp:
           Added #include "ace/streams.h" to resolve compile error.
 
 Mon Jul 21 22:57:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
