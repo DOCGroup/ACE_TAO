@@ -1,3 +1,9 @@
+Mon May 27 18:48:42 UTC 2002  Don Hinton <dhinton@ieee.org>
+
+	* tests/Framework_Component_Test.cpp:
+
+	  Added new XML based config directives.
+
 Mon May 27 13:18:51 UTC 2002  Don Hinton <dhinton@ieee.org>
 
 	* ace/OS.i (mkstemp):
