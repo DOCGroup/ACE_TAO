@@ -146,8 +146,24 @@ TAO_Transport::~TAO_Transport (void)
 
   delete this->handler_lock_;
 
-  // By the time the destructor is reached all the connection stuff
-  // *must* have been cleaned up
+  if (!this->is_connected_)
+    {
+      // When we have a not connected transport we could have buffered
+      // messages on this transport which we have to cleanup now.
+      while (this->head_ != 0)
+        {
+          TAO_Queued_Message *i = this->head_;
+
+          i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+
+         i->remove_from_list (this->head_, this->tail_);
+
+         i->destroy ();
+       }
+    }
+
+  // By the time the destructor is reached here all the connection stuff
+  // *must* have been cleaned up.
   ACE_ASSERT (this->head_ == 0);
   ACE_ASSERT (this->cache_map_entry_ == 0);
 }
