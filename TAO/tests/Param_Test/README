@@ -68,7 +68,11 @@ To run the client, type
 	2. Using the -k option to read the IOR from the 	
 	   command line.
 
-
+run_test:
+--------
+	There is a shell script in this directory named run_test to test all
+	the types for sii invocation. It starts the server first and then runs
+	the client with the different data type parameters.
 
 
 
