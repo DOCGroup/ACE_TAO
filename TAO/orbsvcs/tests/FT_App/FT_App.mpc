@@ -91,6 +91,7 @@ project(*FaultConsumer): taoserver, fault_tolerance, orbsvcsexe {
 
   Source_Files {
     FTApp_FaultConsumer_Main.cpp
+    ReplicationManagerFaultConsumerAdapter.cpp
     ../../FT_ReplicationManager/FT_FaultConsumer.cpp
   }
 

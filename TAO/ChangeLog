@@ -1,12 +1,45 @@
+Thu Oct  2 14:21:13 2003  Steve Totten  <totten_s@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h:
+          Added accessors for the consumer's object reference and the
+          number of notifications it has received.  This is partially
+          to support testing and may be removed later (though they are
+          low impact).
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+          Cosmetic code changes to match ACE guidelines.
+
+        * orbsvcs/tests/FT_App/FTApp_FaultConsumer_Main.cpp:
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+        * orbsvcs/tests/FT_App/run_test_fault_consumer.pl:
+
+          Modifications to the test to make it work like other unit
+          tests in this directory:
+          - The Main is now very short and uses TAO::Utils::ServantMain<>.
+          - Wrapped the FT_ReplicationManager's FT_FaultConsumer in an
+            "adapter" class (ReplicationManagerFaultConsumerAdapter)
+            which is test-framework savvy (so the consumer class doesn't
+            have to be).
+          - Modified the test script to be like the others.
+
+        * orbsvcs/tests/FT_App/lReplicationManagerFaultConsumerAdapter.cpp:
+        * orbsvcs/tests/FT_App/lReplicationManagerFaultConsumerAdapter.h:
+
+          Added these two files as part of the changes described above.
+
+        These changes were made in the oci_haft branch.
+
 Thu Oct  2 11:23:02 2003  Curt Hibbs  <hibbs_c@ociweb.com>
 
-        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp
-        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h
-        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Main.cpp
-        * TAO/orbsvcs/tests/FT_App/FT_Client_Unit.cpp
-        * TAO/orbsvcs/tests/FT_App/FT_UnitTests.cpp
-        * TAO/orbsvcs/tests/FT_App/FT_UnitTests.h
-        Minor style and name changes to make the code following the ACE guidelines.
+        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Main.cpp:
+        * TAO/orbsvcs/tests/FT_App/FT_Client_Unit.cpp:
+        * TAO/orbsvcs/tests/FT_App/FT_UnitTests.cpp:
+        * TAO/orbsvcs/tests/FT_App/FT_UnitTests.h:
+          Minor style and name changes to make the code following the
+          ACE guidelines.
 
         These changes were made in the oci_haft branch.
 

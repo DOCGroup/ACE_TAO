@@ -16,8 +16,6 @@
  */
 //=============================================================================
 
-#include "ace/pre.h"
-
 #include "orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h"
 #include "orbsvcs/FT_ReplicationManagerC.h"
 
@@ -31,6 +29,7 @@ TAO::FT_FaultConsumer::FT_FaultConsumer ()
   , fault_notifier_ (FT::FaultNotifier::_nil ())
   , replication_manager_ (FT::ReplicationManager::_nil ())
   , consumer_id_ (0)
+  , consumer_ref_ (CosNotifyComm::StructuredPushConsumer::_nil ())
   , notifications_ (0)
 {
 }
@@ -85,16 +84,14 @@ int TAO::FT_FaultConsumer::init (
   ACE_CHECK_RETURN (-1);
 
   // Narrow it to CosNotifyComm::StructuredPushConsumer.
-  CosNotifyComm::StructuredPushConsumer_var consumer =
-    CosNotifyComm::StructuredPushConsumer::_nil ();
-  consumer = CosNotifyComm::StructuredPushConsumer::_narrow (
+  this->consumer_ref_ = CosNotifyComm::StructuredPushConsumer::_narrow (
     obj.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Subscribe to the FaultNotifier.
   CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_nil ();
   this->consumer_id_ = fault_notifier_->connect_structured_fault_consumer (
-    consumer.in(), filter ACE_ENV_ARG_PARAMETER);
+    this->consumer_ref_.in(), filter ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Success.
@@ -123,8 +120,22 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
   this->poa_->deactivate_object (oid.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
+  this->consumer_ref_ = CosNotifyComm::StructuredPushConsumer::_nil ();
+
   // Success.
   return 0;
+}
+
+CosNotifyComm::StructuredPushConsumer_ptr
+TAO::FT_FaultConsumer::consumer_ref ()
+{
+  return CosNotifyComm::StructuredPushConsumer::_duplicate (
+      this->consumer_ref_);
+}
+
+size_t TAO::FT_FaultConsumer::notifications () const
+{
+  return this->notifications_;
 }
 
 
@@ -193,6 +204,4 @@ void TAO::FT_FaultConsumer::disconnect_structured_push_consumer (
     "TAO::FT_FaultConsumer::disconnect_structured_push_consumer() call ignored.\n"
     ));
 }
-
-#include "ace/post.h"
 
