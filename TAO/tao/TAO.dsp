@@ -232,6 +232,10 @@ SOURCE=.\Server_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Stub.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAO.cpp
 # End Source File
 # Begin Source File
