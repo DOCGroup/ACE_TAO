@@ -53,7 +53,7 @@ main (int argc, char **argv)
   ACE_DEBUG ((LM_DEBUG,
               "\n \t IDL_Cubit: Collocation test \n\n"));
 
-  ACE_THREAD_MANAGER->spawn (ACE_static_cast (ACE_THR_FUNC, svr_worker),
+  ACE_THREAD_MANAGER->spawn (ACE_reinterpret_cast (ACE_THR_FUNC, &svr_worker),
                              &barrier);
   barrier.wait ();
   ACE_OS::sleep (1);
