@@ -70,7 +70,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 #else
 #include <stdio.h>
 
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   puts ("This very unportable example requires fork().\n");
   return 0;
