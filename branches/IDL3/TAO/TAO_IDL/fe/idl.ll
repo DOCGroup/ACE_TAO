@@ -319,32 +319,32 @@ L"'"\\u([0-9a-fA-F]{1,4})"'"	{
 		  yylval.wcval = idl_wchar_escape_reader(ace_yytext + 2);
 		  return IDL_WCHAR_LITERAL;
 		}
-^#[ \t]*pragma[ \t].*{NL}	|
+^[ \t]*#[ \t]*pragma[ \t].*{NL}	|
 ^\?\?=[ \t]*pragma[ \t].*{NL}	{/* remember pragma */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		  idl_store_pragma(ace_yytext);
 		}
-^#[ \t]*file[ \t].*{NL}	|
+^[ \t]*#file[ \t].*{NL}	|
 ^\?\?=[ \t]*file[ \t].*{NL}	{/* ignore file */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
-^#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL}		|
+^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL}		|
 ^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL}		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		|
+^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		|
 ^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#line[ \t]*[0-9]+[ \t]*("\""[^\"]*"\"")?{NL}		|
+^[ \t]*#line[ \t]*[0-9]+[ \t]*("\""[^\"]*"\"")?{NL}		|
 ^\?\?=line[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#[ \t]*[0-9]*{NL} |
+^[ \t]*#[ \t]*[0-9]*{NL} |
 ^\?\?=[ \t]*[0-9]*{NL} {
 		  idl_parse_line_and_file(ace_yytext);
 	        }
-^#[ \t]*ident[ \t].*{NL}	|
+^[ \t]*#[ \t]*ident[ \t].*{NL}	|
 ^\?\?=[ \t]*ident[ \t].*{NL}	{
 		  /* ignore cpp ident */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
