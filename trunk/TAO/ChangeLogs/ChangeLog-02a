@@ -1,5 +1,11 @@
+Thu Feb 28 07:44:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Makefile.bor:
+          Added missing files that I forgot to add when creating this makefile.
+          Thanks to Jaiganesh for noticing this.
+
 Wed Feb 27 20:20:19 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
-	
+
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
 	  Changed the include to point to the Messaging directory.
 
@@ -7,8 +13,8 @@ Wed Feb 27 20:24:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/performance-tests/RTEvent/lib/RTCORBA_Setup.inl:
 	* orbsvcs/performance-tests/RTEvent/lib/RT_Class.inl: Fixed fuzz
-	  errors.  
-	
+	  errors.
+
 
 Wed Feb 27 15:20:19 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 
@@ -36,7 +42,7 @@ Wed Feb 27 10:50:45 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Dispatching.cpp:
 	  Fixed thread activation properties.
-	
+
 Wed Feb 27 03:59:35 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAOACE.dsw:
@@ -655,9 +661,9 @@ Mon Feb 26 18:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
 	* tao/diffs/MessagingS_T.i.diff:
 	* tao/diffs/Messaging_PolicyValue.diff:
 	* tao/diffs/Messaging_SyncScope.diff:
-	  Added a new diffs directory for the new Messaging directory and 
+	  Added a new diffs directory for the new Messaging directory and
 	  generated new diff files for future use.
-	
+
 	* TAO_IDL/be/be_codegen.cpp:
 	  Modified the file to point to the new Messaging directory.
 
@@ -665,8 +671,8 @@ Mon Feb 25 19:25:27 2002 UTC  Don Hinton <dhinton@ieee.org>
 
 	* tao/default_resource.cpp (allocate_reactor_impl):
 	* tao/Strategies/advanced_resource.cpp (allocate_reactor_impl):
-	  Modified the ctors for the multi-threaded Select_Reactor 
-	  and TP_Reactor to use the new ACE_Token::LIFO queueing strategy.	
+	  Modified the ctors for the multi-threaded Select_Reactor
+	  and TP_Reactor to use the new ACE_Token::LIFO queueing strategy.
 
 Fri Feb 22 19:07:36 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -685,7 +691,7 @@ Fri Feb 22 16:32:17 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
 	  Add template instantiations needed for
-	  ACE_Hash_Map_Manager <ACE_CString, structured_event_field, 
+	  ACE_Hash_Map_Manager <ACE_CString, structured_event_field,
           TAO_SYNCH_MUTEX>.
 
 Thu Feb 21 15:46:52 2002  Ossama Othman  <ossama@uci.edu>
@@ -727,13 +733,13 @@ Thu Feb 21 09:34:41 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  Dan Green <dan.c.green@lmco.com> for reporting this.
 
 Wed Feb 20 11:20:00 2002  Daniel Troesser  <troesser_d@ociweb.com>
-        
+
         * Fixing Bugzilla Bug 1139:
 
 	* tests/RTCORBA/check_supported_priorities.cpp
 
 	  Changed to return a value of 2 when priorities are not supported.
-	
+
 	* tests/RTCORBA/Banded_Connections/run_test.pl
 	* tests/RTCORBA/Client_Propagated/run_test.pl
 	* tests/RTCORBA/Collocation/Collocation.cpp
@@ -752,7 +758,7 @@ Tue Feb 19 17:57:37 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * tao/CORBA_String.cpp:
 
           Fixed istream extraction operators to CORBA::String_var
-          and CORBA::String out. Thanks to Patrick J Lardieri 
+          and CORBA::String out. Thanks to Patrick J Lardieri
           <plardier@atl.lmco.com> for reporting the problem and to
           Carlos for suggesting the fix.
 
@@ -1006,7 +1012,7 @@ Wed Feb 13 12:47:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Tue Feb 12 17:53:31 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/PortableServer/POA.cpp (destroy_i):
-	  Got a duplicate before releasing the poa so that it stays around 
+	  Got a duplicate before releasing the poa so that it stays around
 	  while we change its status and call the corresponding
 	  interceptor's adapter_state_changed methods.
 
@@ -1014,7 +1020,7 @@ Tue Feb 12 16:01:25 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PICurrent.cpp (copy):
 
-	  Now that the code has been greatly simplified, an ACE_TRY block 
+	  Now that the code has been greatly simplified, an ACE_TRY block
 	  is no longer necessary.  Fixes an "unused label" warning in
 	  emulated exception builds.
 
