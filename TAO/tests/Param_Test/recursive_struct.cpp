@@ -18,7 +18,7 @@
 
 #include "recursive_struct.h"
 
-ACE_RCSID(Param_Test, var_struct, "$Id$")
+ACE_RCSID(Param_Test, recursive_struct, "$Id$")
 
 const CORBA::ULong MAX_DEPTH = 5;
 const CORBA::ULong MAX_SEQ_LENGTH = 3;
@@ -215,7 +215,7 @@ Test_Recursive_Struct::check_validity (void)
 }
 
 CORBA::Boolean
-Test_Recursive_Struct::check_validity (CORBA::Request_ptr )
+Test_Recursive_Struct::check_validity (CORBA::Request_ptr)
 {
   return this->check_validity ();
 }
@@ -225,7 +225,7 @@ Test_Recursive_Struct::print_values (void)
 {
 }
 
-// Private helper function to recursively initiialize the struct.
+// Private helper function to recursively initialize the struct.
 void
 Test_Recursive_Struct::deep_init (Param_Test::Recursive_Struct &rs,
                                   Generator *gen,

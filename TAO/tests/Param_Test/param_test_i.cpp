@@ -958,6 +958,19 @@ Param_Test_i::test_big_union (const Param_Test::Big_Union& u1,
   return ret._retn ();
 }
 
+Param_Test::Recursive_Union*
+Param_Test_i::test_recursive_union (const Param_Test::Recursive_Union& ru1,
+                                    Param_Test::Recursive_Union& ru2,
+                                    Param_Test::Recursive_Union_out ru3,
+                                    CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  Param_Test::Recursive_Union_var ret (new Param_Test::Recursive_Union (ru1));
+  ru2 = ru1;
+  ru3 = new Param_Test::Recursive_Union (ru1);
+  return ret._retn ();
+}
+
 CORBA::Any*
 Param_Test_i::test_complex_any (const CORBA::Any &a1,
                                 CORBA::Any &a2,

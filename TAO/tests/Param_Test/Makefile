@@ -63,6 +63,7 @@ CLI_FILES =	param_testCli	\
 		recursive_struct \
 		except		\
 		big_union	\
+		recursive_union \
 		multdim_array	\
 		complex_any
 
