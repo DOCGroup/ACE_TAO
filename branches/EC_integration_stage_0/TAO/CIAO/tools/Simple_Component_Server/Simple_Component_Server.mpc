@@ -14,7 +14,7 @@ project (Simple_Server_Stub) : taolib_with_idl, ciao_client {
 
 project (Simple_Component_Server) : ciao_server {
   after += Simple_Server_Stub
-  libs += CIAO_Simple_Server_Stub
+  libs += CIAO_Simple_Server_Stub CIAO_Events
   exename = Simple_Component_Server
 
   Source_Files {
@@ -27,7 +27,7 @@ project (Simple_Component_Server) : ciao_server {
 // Use the following settings as a blueprint for creating client project.
 project (Simple_Component_Server_test_client) : ciao_server {
   after += Simple_Server_Stub
-  libs += CIAO_Simple_Server_Stub
+  libs += CIAO_Simple_Server_Stub CIAO_Events
   libpaths += $(CIAO_ROOT)/tools/Simple_Component_Server
   exename = sample_client
 

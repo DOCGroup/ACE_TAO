@@ -29,7 +29,7 @@ ACE_THROW_SPEC ((CORBA::SystemException))
   static int count = 0;
 
   ACE_hrtime_t end = ACE_OS::gethrtime ();
-  //ACE_DEBUG ((LM_DEBUG, "UAV RTT = %i\n", end - start_));
+  ACE_DEBUG ((LM_DEBUG, "UAV RTT = %i\n", end - start_));
   this->UAV_times_[count++] = end - this->start_;
 
 
@@ -43,7 +43,7 @@ ACE_THROW_SPEC ((CORBA::SystemException))
   static int count = 0;
 
   ACE_hrtime_t end = ACE_OS::gethrtime ();
-  //ACE_DEBUG ((LM_DEBUG, "UCAV RTT = %i\n", end - start_));
+  ACE_DEBUG ((LM_DEBUG, "UCAV RTT = %i\n", end - start_));
   this->UCAV_times_[count++] = end - this->start_;
 
 }
@@ -55,7 +55,7 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   ACE_hrtime_t end = ACE_OS::gethrtime ();
-  //ACE_DEBUG ((LM_DEBUG, "Battle RTT = %i\n", end - start_));
+  ACE_DEBUG ((LM_DEBUG, "Battle RTT = %i\n", end - start_));
 
   this->Battle_times_[this->counter_] = end - this->start_;
 
@@ -104,7 +104,7 @@ MyImpl::Satellite_exec_i::alert (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->start_ = ACE_OS::gethrtime ();
       this->context_->push_target_located (ev.in ()
-                                         ACE_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
     }
 }
 

@@ -331,6 +331,8 @@ CIAO::Assembly_Impl::make_connections (ACE_ENV_SINGLE_ARG_DECL)
 
         case CIAO::Assembly_Connection::PUBLISHER_CONSUMER:
           {
+	    ACE_DEBUG ((LM_DEBUG, "case CIAO::Assembly_Connection::PUBLISHER_CONSUMER:!!!!\n"));
+
             Components::CCMObject_var sink
               = this->resolve_component (connection->dest_iface_->nested_resolver ()
                                          ACE_ENV_ARG_PARAMETER);
@@ -356,10 +358,17 @@ CIAO::Assembly_Impl::make_connections (ACE_ENV_SINGLE_ARG_DECL)
               ACE_DEBUG ((LM_DEBUG, "Nil source\n"));
 
             Components::Deployment::Container_var container;
-            this->assembly_context_.containers_.find (connection->src_comp_->resolver_info (),
+            
+	    if (this->assembly_context_.containers_.find (connection->src_comp_->resolver_info (),
+                                                      container
+							  ACE_ENV_ARG_PARAMETER) == -1)
+	      ACE_DEBUG ((LM_DEBUG, "Nil container is found!!!!\n"));
+
+	    this->assembly_context_.containers_.find (connection->src_comp_->resolver_info (),
                                                       container
                                                       ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
+	    container->_add_ref ();
 
             CIAO::ContainerEventService_var event_service =
               container->get_event_service (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -422,6 +431,8 @@ CIAO::Assembly_Impl::make_connections (ACE_ENV_SINGLE_ARG_DECL)
 
             consumer_config->destroy (ACE_ENV_SINGLE_ARG_DECL);
             ACE_CHECK;
+
+	    ACE_DEBUG ((LM_DEBUG, "case OUT OF CASE STATEMENT: CIAO::Assembly_Connection::PUBLISHER_CONSUMER:!!!!\n"));
 
           }
           break;

@@ -90,8 +90,6 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor,
     Container_Impl.cpp
     CCM_DeploymentC.cpp
     CCM_DeploymentS.cpp
-    CIAO_EventsC.cpp
-    CIAO_EventsS.cpp
   }
 
 }

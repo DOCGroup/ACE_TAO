@@ -278,7 +278,7 @@ CIAO::Assembly_Builder_Visitor::visit_componentinstantiation
                                                 comp);
 
   this->context_.containers_.bind (ci->id (),
-                                   this->container_.in ());
+                                   Components::Deployment::Container::_duplicate (this->container_.in ()));
 
   // Registering component.
   CIAO::Assembly_Placement::componentinstantiation::REGISTRATION_QUEUE::ITERATOR
