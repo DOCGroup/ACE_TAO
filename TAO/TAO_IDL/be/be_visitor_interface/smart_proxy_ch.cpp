@@ -172,6 +172,9 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           // member of the smart proxy and so the smart proxy's (nil)
           // stubobj will not be returned.
           << "virtual TAO_Stub *_stubobj (void) const;"
+	  << be_nl
+	  // Another version of the above method..
+	  << "virtual TAO_Stub *_stubobj (void);"
           << be_uidt_nl;
 
       // Generate code for the interface definition by traversing thru the
