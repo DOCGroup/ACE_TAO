@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(Callback_Quoter notifier): namingexe {
   Source_Files {
     Notifier_i.cpp

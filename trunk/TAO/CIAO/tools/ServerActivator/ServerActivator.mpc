@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(ServerActivator): ciao_server, iortable {
   Source_Files {
     ServerActivator.cpp

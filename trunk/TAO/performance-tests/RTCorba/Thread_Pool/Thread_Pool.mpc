@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*RTCorba server): rt_server {
   avoids += minimum_corba
   Source_Files {

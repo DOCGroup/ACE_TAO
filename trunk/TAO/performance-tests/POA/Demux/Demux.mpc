@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*poa server): namingexe {
   Source_Files {
     demux_test_server.cpp

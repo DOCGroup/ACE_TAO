@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(ORB Shutdown Server): taoexe, portableserver {
   Source_Files {
     Foo_Bar.cpp

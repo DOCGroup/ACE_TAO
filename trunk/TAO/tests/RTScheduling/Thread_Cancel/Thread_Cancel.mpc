@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(Thread_Cancel) : rtscheduling_client {
  Source_Files {
     ../Scheduler.cpp

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Consumer) : orbsvcsexe, notify, dsnotifylogadmin, naming {
   exename = consumer
   source_files {

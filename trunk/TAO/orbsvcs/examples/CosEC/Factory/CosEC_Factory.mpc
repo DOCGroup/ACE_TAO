@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Client) : orbsvcsexe, event {
   idlflags += -I ../../..
   source_files {

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Client) : namingexe {
   exename  = client
 }

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Server): taoexe, portableserver, minimum_corba, bidir_giop {
   Source_Files {
     ReceiverC.cpp

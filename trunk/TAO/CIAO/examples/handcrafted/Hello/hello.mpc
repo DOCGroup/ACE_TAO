@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(hello_stub): ciao_client {
   sharedname = hello_stub
   idlflags += -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs

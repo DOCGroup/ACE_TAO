@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*latency server): taoexe, portableserver, strategies, dynamicinterface {
   avoids  += minimum_corba
 

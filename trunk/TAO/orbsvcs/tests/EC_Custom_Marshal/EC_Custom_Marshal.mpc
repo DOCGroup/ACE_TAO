@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(ECM Supplier): rteventexe, rtsched, naming, iortable, messaging {
   exename  = ECM_Supplier
   Source_Files {

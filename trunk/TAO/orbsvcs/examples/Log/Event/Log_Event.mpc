@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Consumer) : orbsvcsexe, event, dseventlogadmin {
   exename = consumer
   source_files {

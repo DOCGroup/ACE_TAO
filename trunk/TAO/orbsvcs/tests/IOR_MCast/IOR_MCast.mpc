@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*server): namingexe {
   Source_Files {
     server_i.cpp

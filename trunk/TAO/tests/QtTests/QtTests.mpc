@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*server): taoexe, portableserver, qt_moc {
   requires += qt
 

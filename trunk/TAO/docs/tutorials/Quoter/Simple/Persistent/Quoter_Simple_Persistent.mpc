@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*client) : taoexe {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib

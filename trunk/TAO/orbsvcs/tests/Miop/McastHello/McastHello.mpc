@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*server): orbsvcsexe, portablegroup, portableserver {
   Source_Files {
     McastHello.cpp

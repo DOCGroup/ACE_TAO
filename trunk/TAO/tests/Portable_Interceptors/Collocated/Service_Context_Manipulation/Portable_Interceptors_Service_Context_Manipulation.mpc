@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Collocated): taoserver, taoclient {
   exename = collocated
   requires += interceptors

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*security server): orbsvcsexe, portableserver, ssl, ssliop {
   Source_Files {
     Server_Worker.cpp

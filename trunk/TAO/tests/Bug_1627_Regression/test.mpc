@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(Bug_1627_Server): server {
   libs    += TAO_IORTable
   libpaths += $(TAO_ROOT)/tao/IORTable $(TAO_ROOT)/tao/PortableServer $(TAO_ROOT)/tao/IORInterceptor $(TAO_ROOT)/tao/Valuetype $(TAO_ROOT)/tao/ObjRefTemplate $(ACE_ROOT)/ace $(TAO_ROOT)/tao

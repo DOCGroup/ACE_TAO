@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Client) : taoexe, portableserver {
   avoids += minimum_corba
   source_files {

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : taolib, portableserver {
   sharedname = TAO_Utils
   dynamicflags = TAO_UTILS_BUILD_DLL

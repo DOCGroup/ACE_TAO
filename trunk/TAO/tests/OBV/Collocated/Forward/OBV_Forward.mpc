@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Collocated): taoserver, taoclient, valuetype {
   exename = collocated
   libpaths += ../../../../../ace,../../../../tao,../../../../tao/PortableServer,../../../../tao/Valuetype,../../../../tao/ObjRefTemplate,../../../../tao/IORInterceptor

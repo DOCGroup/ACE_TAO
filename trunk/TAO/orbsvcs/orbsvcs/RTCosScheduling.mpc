@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(RTCosScheduling) : orbsvcslib, rtportableserver {
   requires     += interceptors
   sharedname    = TAO_RTCosScheduling
