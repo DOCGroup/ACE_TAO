@@ -1,3 +1,10 @@
+Thu Sep 25 01:39:47 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/Containers.{i,cpp}:  Commented out all ACE_TRACE macros in
+	  ACE_Unbounded_Queue<T> so that they won't cause SIGSEGV when we
+	  turn the tracing on.  Unbounded_Queue is used in Object_Manager
+	  which must be initialize before most of other objects.
+
 Wed Sep 24 23:37:19 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/OS.i (thr_getspecific): On NT, added check whether
