@@ -289,16 +289,17 @@ public:
     // = DESCRIPTION
     //   All GIOP messages include a header and message type.  Not
     //   really a message type, but needed to bring that information
-    //   back somehow
+    //   back somehow.
 
-    EndOfFile = -1, // "discovered" by either
-    Request = 0, // sent by client
-    Reply = 1, // by server
-    CancelRequest = 2, // by client
-    LocateRequest = 3, // by client
-    LocateReply = 4, // by server
-    CloseConnection = 5, // by server
-    MessageError = 6 // by both
+    CommunicationError = -2,    // Invalid request.
+    EndOfFile = -1,             // "discovered" by either.
+    Request = 0,                // sent by client.
+    Reply = 1,                  // by server.
+    CancelRequest = 2,          // by client.
+    LocateRequest = 3,          // by client.
+    LocateReply = 4,            // by server.
+    CloseConnection = 5,        // by server.
+    MessageError = 6            // by both.
   };
 
   static void close_connection (TAO_Client_Connection_Handler *&handle,
@@ -320,16 +321,12 @@ public:
                                               TAO_ORB_Core *orb_core);
   // Reads message, returns message type from header.
 
-  static void make_error (TAO_OutputCDR &msg, ...);
-  // Construct a message containing an error so that it can be sent as
-  // a response to a request.
-
   static void dump_msg (const char *label,
                         const u_char *ptr,
                         size_t len);
   // Print out a message header.
 
-  static void send_error (TAO_Client_Connection_Handler *&handler);
+  static void send_error (TAO_SVC_HANDLER *&handler);
   // Send an error message back to a caller.
 
   static ssize_t read_buffer (TAO_SOCK_Stream &peer,

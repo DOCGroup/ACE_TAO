@@ -455,14 +455,18 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
 
   ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_GRAB_ORB_CORE);
 
+  TAO_GIOP_ReplyStatusType status;
+
   // Do a locate_request if necessary/wanted.
   if (this->use_locate_request_ && this->first_locate_request_)
     {
       TAO_GIOP_Locate_Request_Invocation call (this, orb_core);
 
+      // Simply let these exceptions propagate up
+      // (if any of them occurs.)
       call.start (env);
          
-      TAO_GIOP_ReplyStatusType status = call.invoke (env);
+      status = call.invoke (env);
 
       this->first_locate_request_ = 0;
 
@@ -491,10 +495,13 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
       for (;;)
         {
           // Start the call by constructing the request message header.
-          call.start (env);
+          TAO_TRY_SYS
+            {
+              call.start (env);
 
-          ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
-          if (env.exception () != 0) 
+              ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
+            }
+          TAO_CATCH_SYS (CORBA_SystemException, ex)
             {
               ACE_MT (ACE_GUARD (ACE_Lock, 
                                 guard, 
@@ -502,33 +509,33 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
 
               // If this is the fwd_profile, then check to see if we
               // need to go back to the original profile and try that.
-              if (this->fwd_profile_ == 0)
-                return;
-              else
+              if (this->fwd_profile_ != 0)
                 {
                   delete this->fwd_profile_;
                   this->fwd_profile_ = 0;
-
+                  
                   // See if we need to try again.
                   if (this->fwd_profile_success_ == 1)
                     {
                       this->fwd_profile_success_ = 0;
                       env.clear ();
-                      continue;
+                      TAO_GOTO (roundtrip_continue_label);
                     }
-                  else
-                    return;
                 }
+              TAO_RETHROW_RETURN_VOID_SYS;
             }
+          TAO_ENDTRY;
 
           this->put_params (env, info, call, args);
-          if (env.exception () != 0) return;
+          TAO_CHECK_ENV_RETURN_VOID (env);
 
           ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
-          TAO_GIOP_ReplyStatusType status =
-            call.invoke (info->excepts, info->except_count, env);
 
-          if (status == TAO_GIOP_SYSTEM_EXCEPTION)
+          TAO_TRY_SYS
+            {
+              status = call.invoke (info->excepts, info->except_count, env);
+            }
+          TAO_CATCH_SYS (CORBA_SystemException, ex)
             {
               ACE_MT (ACE_GUARD (ACE_Lock, 
                                 guard, 
@@ -536,9 +543,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
  
               // If this is the fwd_profile, then check to see if we
               // need to go back to the original profile and try that.
-              if (this->fwd_profile_ == 0)
-                return;
-              else
+              if (this->fwd_profile_ != 0)
                 {
                   delete this->fwd_profile_;
                   this->fwd_profile_ = 0;
@@ -548,12 +553,12 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
                     {
                       this->fwd_profile_success_ = 0;
                       env.clear ();
-                      continue;
+                      TAO_GOTO (roundtrip_continue_label);
                     }
-                  else
-                    return;
                 }
+              TAO_RETHROW_RETURN_VOID_SYS;
             }
+          TAO_ENDTRY;
 
           if (status == TAO_GIOP_USER_EXCEPTION)
             return;
@@ -638,6 +643,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
               env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
               return;
             }
+          TAO_LABEL (roundtrip_continue_label);
         }
     }
   else
@@ -648,9 +654,12 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
           ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
 
           // Start the call by constructing the request message header.
-          call.start (env);
-          ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
-          if (env.exception () != 0) 
+          TAO_TRY_SYS
+            {
+              call.start (env);
+              ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
+            }
+          TAO_CATCH_SYS (CORBA_SystemException, ex)
             {
               ACE_MT (ACE_GUARD (ACE_Lock, 
                                 guard, 
@@ -658,9 +667,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
 
               // If this is the fwd_profile, then check to see if we
               // need to go back to the original profile and try that.
-              if (this->fwd_profile_ == 0)
-                return;
-              else
+              if (this->fwd_profile_ != 0)
                 {
                   // @@ DB: Memory leak?
                   this->fwd_profile_ = 0;
@@ -670,15 +677,15 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
                     {
                       this->fwd_profile_success_ = 0;
                       env.clear ();
-                      continue;
+                      TAO_GOTO (oneway_continue_label);
                     }
-                  else
-                    return;
                 }
+              TAO_RETHROW_RETURN_VOID_SYS;
             }
+          TAO_ENDTRY;
 
           this->put_params (env, info, call, args);
-          if (env.exception () != 0) return;
+          TAO_CHECK_ENV_RETURN_VOID (env);
 
           ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
           /* TAO_GIOP_ReplyStatusType status = */ call.invoke (env);
@@ -693,6 +700,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
           // a loop, as above.
           return;
         }
+      TAO_LABEL (oneway_continue_label);
     }
 }
 
