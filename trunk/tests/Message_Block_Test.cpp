@@ -14,7 +14,7 @@
 //      code.
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Doug Schmidt and Nanbor Wang
 // 
 // ============================================================================
 
@@ -25,8 +25,8 @@
 #include "ace/Free_List.h"
 #include "test_config.h"
 
-#define  ACE_ALLOC_STRATEGY_NO   2
-// Number of memory allocation strategies used in this test
+// Number of memory allocation strategies used in this test.
+static const int ACE_ALLOC_STRATEGY_NO = 2;
 
 #if defined (ACE_HAS_THREADS)
 
@@ -314,10 +314,24 @@ produce (Worker_Task &worker_task, ACE_Allocator *alloc_strategy)
   return 0;
 }
 
+typedef char MEMORY_CHUNK[ACE_MALLOC_ALIGN * 5];
+
+Cached_Memory_Pool_Allocator<MEMORY_CHUNK,
+                             ACE_SYNCH_MUTEX> 
+			     mem_allocator (48);
+
+struct
+{
+  ACE_Allocator *strategy_;
+  char *name_;
+  ACE_Profile_Timer::ACE_Elapsed_Time et_;
+} alloc_struct[2] =
+{
+  { NULL, "Default" },
+  { &mem_allocator, "Cached Memory" }
+};
 
 #endif /* ACE_HAS_THREADS */
-
-typedef char memory_chunk[ACE_MALLOC_ALIGN * 5];
 
 int 
 main (int, char *[])
@@ -328,15 +342,13 @@ main (int, char *[])
   
   ACE_DEBUG ((LM_DEBUG, "(%t) threads = %d\n", n_threads));
 
-  Cached_Memory_Pool_Allocator<memory_chunk, ACE_Thread_Mutex> mem_allocator (48);
   ACE_Profile_Timer ptime;
-  ACE_Profile_Timer::ACE_Elapsed_Time et[ACE_ALLOC_STRATEGY_NO];
-  ACE_Allocator *alloc_strategy[] = { NULL, &mem_allocator };
-  char *alloc_name[] = { "Default", "Cached Memory" };
 
-  for (int i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
+  int i;
+
+  for (i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%t) Start Message_Block_Test using %s allocation strategy\n", alloc_name[i]));
+      ACE_DEBUG ((LM_DEBUG, "(%t) Start Message_Block_Test using %s allocation strategy\n", alloc_struct[i].name_));
       // Create the worker tasks.
       Worker_Task worker_task[ACE_MAX_THREADS] ;
     
@@ -346,7 +358,7 @@ main (int, char *[])
 
       ptime.start ();
       // Generate messages and pass them through the pipeline.
-      produce (worker_task[0], alloc_strategy[i]);
+      produce (worker_task[0], alloc_struct[i].strategy_);
 
       // Wait for all the threads to reach their exit point.
     
@@ -354,13 +366,15 @@ main (int, char *[])
     
       ACE_Service_Config::thr_mgr ()->wait ();
       ptime.stop ();
-      ptime.elapsed_time (et[i]);
+      ptime.elapsed_time (alloc_struct[i].et_);
 
       ACE_DEBUG ((LM_DEBUG, "(%t) destroying worker tasks\n"));
     }
 
   for (i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
-    ACE_DEBUG ((LM_DEBUG, "Elapsed time using %s allocation strategy: %f sec\n", alloc_name[i], et[i].real_time));
+    ACE_DEBUG ((LM_DEBUG,
+		"Elapsed time using %s allocation strategy: %f sec\n",
+		alloc_struct[i].name_, alloc_struct[i].et_.real_time));
 
   ACE_DEBUG ((LM_DEBUG, "(%t) Exiting...\n"));
 #else

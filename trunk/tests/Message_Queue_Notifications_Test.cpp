@@ -131,12 +131,16 @@ main (int, char *[])
 {
   ACE_START_TEST ("Message_Queue_Notifications_Test");
 
+#if defined (ACE_HAS_THREADS)
   ACE_Reactor reactor; 
   Message_Handler mh (reactor);
 
   while (iterations > 0)
     reactor.handle_events ();
 
+#else
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+#endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
 }
