@@ -31,6 +31,8 @@
 namespace CIAO
 {
   class Servant_Activator;
+  class Dynamic_Component_Servant_Base;
+  class Container_Impl;
 
   /**
    * @class Container
@@ -49,7 +51,10 @@ namespace CIAO
         Facet_Consumer
       };
 
+    explicit Container (void);
+
     Container (CORBA::ORB_ptr o);
+    Container (CORBA::ORB_ptr o, Container_Impl *container_impl);
 
     virtual ~Container (void) = 0;
 
@@ -59,6 +64,7 @@ namespace CIAO
      * POA. Look at the const qualifier in the method.
      */
     PortableServer::POA_ptr the_POA (void) const;
+    PortableServer::POA_ptr the_facet_cons_POA (void) const;
 
     /// Get a reference to the underlying ORB.
     CORBA::ORB_ptr the_ORB (void) const;
@@ -92,6 +98,18 @@ namespace CIAO
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
+    // @@Jai, please see the Session Container class for comments.
+    // @@ Jai, do you really need the environment variable?
+    virtual void add_servant_map (PortableServer::ObjectId &oid,
+                                  Dynamic_Component_Servant_Base* servant
+                                  ACE_ENV_ARG_DECL) = 0;
+
+    virtual void delete_servant_map (PortableServer::ObjectId &oid
+                                     ACE_ENV_ARG_DECL) = 0;
+
+    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   protected:
     CORBA::ORB_var orb_;
@@ -107,6 +125,8 @@ namespace CIAO
      * are distinct from the component.
      */
     PortableServer::POA_var facet_cons_poa_;
+    PortableServer::POA_var home_servant_poa_;
+    Container_Impl *container_impl_;
   };
 
   class Session_Container;
@@ -145,10 +165,13 @@ namespace CIAO
   {
   public:
 
+    explicit Session_Container (void);
+
     // @@ (OO) Does the static_config_flag really need to be an int?
     //         It appears to be a boolean value.  Please use bool
     //         instead.
     Session_Container (CORBA::ORB_ptr o,
+                       Container_Impl *container_impl,
                        bool static_config_flag = false,
                        const Static_Config_EntryPoints_Maps* static_entrypts_maps =0);
 
@@ -195,7 +218,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Install a servant for component or home.
-    CORBA::Object_ptr install_servant (PortableServer::Servant p,
+    virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
                                        Container::OA_Type t
                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -207,7 +230,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Get an object reference to a component or home from the servant.
-    CORBA::Object_ptr get_objref (PortableServer::Servant p
+    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -223,12 +246,40 @@ namespace CIAO
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    // @@Jai, please consider naming this method as
+    // "add_servant_to_map ()" to be more descriptive.
+    virtual void add_servant_map (PortableServer::ObjectId &oid,
+                                  Dynamic_Component_Servant_Base* servant
+                                  ACE_ENV_ARG_DECL);
+
+    // @@Jai, please consider naming this method as
+    // "delete_servant_from_map ()" to be more descriptive.
+    virtual void delete_servant_map (PortableServer::ObjectId &oid
+                                     ACE_ENV_ARG_DECL);
+
+    // @@Jai, could yo please add documentation?
+    /*
+     * @@Jai, you may want to consider moving these away from the
+     * container interface. I know what you are going to say
+     * :-). Consider using dynamic_cast <> to access
+     * add_servant_to_map, delete_servant_from_map and
+     * deactivate_facet from the Swapping_Conatiner's interface. It
+     * would make the base container interface much cleaner.
+     */
+    virtual void deactivate_facet (PortableServer::ObjectId &oid
+                                   ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     // Analog of the POA method that creates an object reference from
     // an object id string.
     CORBA::Object_ptr generate_reference (const char *obj_id,
                                           const char *repo_id,
                                           Container::OA_Type t
-                                          ACE_ENV_ARG_DECL);
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// Return the servant activator factory that activates the
     /// servants for facets and consumers.
@@ -244,11 +295,12 @@ namespace CIAO
     void create_component_POA (const char *name,
                                const CORBA::PolicyList *p,
                                PortableServer::POA_ptr root
-                               ACE_ENV_ARG_DECL);
+                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// Create POA for the facets and consumers alone.
-    void create_facet_consumer_POA (PortableServer::POA_ptr root
-                                    ACE_ENV_ARG_DECL);
+    void create_facet_consumer_POA (const char *name,
+                                    PortableServer::POA_ptr root
+                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   protected:
     long number_;

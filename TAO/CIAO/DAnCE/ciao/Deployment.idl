@@ -63,6 +63,8 @@ module Deployment {
       raises (StartError);
     void destroyApplication ()
       raises (StopError);
+    void destroyManager ()
+      raises (StopError);
   };
 
   typedef sequence < DomainApplicationManager > DomainApplicationManagers;

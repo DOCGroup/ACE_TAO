@@ -28,6 +28,9 @@
 #include "CCM_EventC.h"
 #include "CIAO_Server_Export.h"
 #include "CCM_ComponentS.h"
+#include "CCM_ContainerS.h"
+#include "Home_Servant_Impl_Base.h"
+#include "Servant_Activator.h"
 
 namespace CIAO
 {
@@ -47,7 +50,9 @@ namespace CIAO
   public:
     explicit Servant_Impl_Base (void);
 
-    Servant_Impl_Base (Session_Container * c);
+    Servant_Impl_Base (Components::CCMHome_ptr home, 
+                       Home_Servant_Impl_Base *home_servant,
+                       Session_Container * c);
 
     virtual ~Servant_Impl_Base (void);
 
@@ -61,6 +66,10 @@ namespace CIAO
     virtual CORBA::IRObject_ptr
     get_component_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Components::SessionComponent_ptr
+    get_executor (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
     virtual void
     configuration_complete (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -98,9 +107,11 @@ namespace CIAO
     get_all_facets (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    
     virtual ::Components::ConsumerDescriptions *
     get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
+    
 
     virtual ::Components::EventConsumerBase_ptr
     get_consumer (const char *sink_name
@@ -205,6 +216,8 @@ namespace CIAO
 
     FacetTable facet_table_;
     ConsumerTable consumer_table_;
+    Components::CCMHome_var home_;
+    Home_Servant_Impl_Base *home_servant_;
     Session_Container * container_;
   };
 }
