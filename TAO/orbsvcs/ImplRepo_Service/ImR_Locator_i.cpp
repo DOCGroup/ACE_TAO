@@ -400,7 +400,12 @@ ImR_Locator_i::unregister_activator (const char *location,
                        1);
     }
   else
-    return 0;
+    {
+      // We duplicated the object ref while binding it. Decrement the
+      // counter.
+      object_ref->_remove_ref ();
+    }
+      return 0;
 }
 
 // Starts up the server <server> at all the locations that it is
