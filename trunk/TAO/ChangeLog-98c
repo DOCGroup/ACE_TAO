@@ -1,8 +1,18 @@
+Fri Aug 14 09:46:44 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp (calculate_utilization_params):
+          removed ACE_UINT64_DBLCAST_ADAPTER from effective_period (),
+          because it's 32 bits, not 64.
+
+        * orbsvcs/orbsvcs/Sched/SchedEntry.i (effective_execution_time):
+          replaced ACE_UINT32 static cast with ACE_U64_TO_U32, so that
+          it works with ACE_LACKS_LONGLONG_T.
+
 Fri Aug 14 09:15:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosTimeBase.idl: 
-	  Removed outdated comment, thanks to David Levine for pointing
-	  this out.
+        * orbsvcs/orbsvcs/CosTimeBase.idl:
+          Removed outdated comment, thanks to David Levine for pointing
+          this out.
 
 Thu Aug 13 17:45:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
