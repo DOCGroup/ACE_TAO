@@ -256,6 +256,7 @@ OTHER_FILES = \
   Naming_Context \
   Registry_Name_Space \
   Remote_Name_Space \
+  NT_Service \
 
 TEMPLATE_FILES = \
            Acceptor \
