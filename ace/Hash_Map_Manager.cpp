@@ -699,7 +699,10 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* (void)
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator*");
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *retv = 0;
 
-  int result = this->next (retv);
+# if !defined (ACE_NDEBUG)
+  int result =
+# endif /* ACE_NDEBUG */
+    this->next (retv);
 
   ACE_ASSERT (result != 0);
   return *retv;
@@ -772,7 +775,7 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>  
+ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)");
@@ -793,7 +796,7 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)");
@@ -840,7 +843,7 @@ ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
 {
   ACE_TRACE ("ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)");
@@ -861,7 +864,7 @@ ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 {
   ACE_TRACE ("ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)");
