@@ -1,3 +1,63 @@
+Mon Aug 17 12:14:13 1998  Steve Huston  <shuston@riverace.com>
+
+	Large number of small changes (all listed below) to begin aligning
+	the large number of Pthreads-related definitions around the 4 supported
+	drafts: 4, 6, 7, as well as the standard (also known as draft 10).
+	The notation for "DCE threads" is gone.  DCE threads are primarily
+	draft 4, plus platform-specific modifications.  Now all code must
+	declare the pthreads draft, and handle any platform/implementation
+	oddities as such.
+	As time goes on, I will remove more of the ACE_HAS_... and ACE_LACKS...
+	things that are actually changes with the pthreads drafts.
+	I tested these on Solaris 2.5.1 (CC), HP-UX 10.20 and 11.00, AIX 4.2.1,
+	and sanity-tested on NT/MSVC (though no changes affected the WTHREADS
+	parts).
+
+	* ace/README: Clarified use of Pthreads macros.
+
+	* ace/config-hpux-10.x.h:
+	* ace/config-lynxos.h:
+ 	* ace/config-osf1-3.2.h:
+ 	* ace/config-osf1-4.0.h:
+	  Changed from DCE threads to ACE_HAS_PTHREADS_DRAFT4.
+
+	* ace/config-fsu-pthread.h:
+	* ace/config-m88k.h:
+	* ace/config-mvs.h:  Added ACE_HAS_PTHREADS_DRAFT6.
+
+	* ace/config-aix-4.1.x.h:
+	* ace/config-aix-4.2.x.h: Added ACE_HAS_PTHREADS_DRAFT7.
+
+	* ace/config-chorus.h:
+	* ace/config-dgux-4.x-ghs.h:
+	* ace/config-hpux11.h:
+	* ace/config-irix6.x-g++.h:
+	* ace/config-irix6.x-sgic++.h:
+	* ace/config-linux-lxpthreads.h:
+	* ace/config-linux-pthread.h:
+	* ace/config-mit-pthread.h:
+	* ace/config-osf1-4.0.h:
+	* ace/config-sco-5.0.0-mit-pthread.h:
+	* ace/config-sunos-5.5.h: (also remove ACE_HAS_STHREADS if
+	  _POSIX_PTHREAD_SEMANTICS is defined by user).
+	* ace/config-sunos5.6.h:
+
+	  Changed to / added ACE_HAS_PTHREADS_STD.
+
+	* ace/config-hpux-10.x-g++.h: Changed over to use the base file
+	  config-hpux-10.x.h.
+
+	* ace/OS.h:
+	* ace/OS.i:
+	* ace/OS.cpp:
+	  Unified the compile ifdefs for pthreads around ACE_HAS_PTHREADS,
+	  ACE_HAS_PTHREADS_DRAFT{4, 6, 7} and ACE_HAS_PTHREADS_STD.
+	  Removed all use of ACE_HAS_DCETHREADS; put in platform-specific
+	  settings where needed.
+
+	* ace/Sched_Params.cpp:
+	* ace/Synch.cpp: Removed the use of ACE_HAS_DCETHREADS.
+
 Mon Aug 17 12:10:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_{dll,lib}.dsp: Removed Message_Queue_T.cpp from and included
