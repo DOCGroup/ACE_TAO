@@ -27,9 +27,11 @@ typedef ACE_Guard<ACE_Null_Mutex> GUARD;
 extern "C" void
 cleanup (void *ptr)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) in cleanup, ptr = %x\n", ptr));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) in cleanup, ptr = %x\n",
+              ptr));
 
-  delete ptr;
+  delete ACE_reinterpret_cast (char *, ptr);
 }
 
 // This worker function is the entry point for each thread.
@@ -37,8 +39,8 @@ cleanup (void *ptr)
 static void *
 worker (void *c)
 {
-  // Cast the arg to a long, first, because a pointer is the same
-  // size as a long on all current ACE platforms.
+  // Cast the arg to a long, first, because a pointer is the same size
+  // as a long on all current ACE platforms.
   int count = (int) (long) c;
 
   ACE_thread_key_t key = ACE_OS::NULL_key;
@@ -47,36 +49,62 @@ worker (void *c)
   // Make one key that will be available when the thread exits so that
   // we'll have something to cleanup!
 
-  if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
-    ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
+  if (ACE_OS::thr_keycreate (&key,
+                             cleanup) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "(%t) %p\n",
+                "ACE_OS::thr_keycreate"));
 
-  ACE_NEW_RETURN (ip, int, 0);
+  ACE_NEW_RETURN (ip,
+                  int,
+                  0);
 
-  if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
-    ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+  if (ACE_OS::thr_setspecific (key,
+                               (void *) ip) == -1)
+    ACE_ERROR ((LM_ERROR, 
+                "(%t) %p\n",
+                "ACE_OS::thr_setspecific"));
 
   for (int i = 0; i < count; i++)
     {
-      if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
-        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
+      if (ACE_OS::thr_keycreate (&key,
+                                 cleanup) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "(%t) %p\n",
+                    "ACE_OS::thr_keycreate"));
 
-      ACE_NEW_RETURN (ip, int, 0);
+      ACE_NEW_RETURN (ip,
+                      int,
+                      0);
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) in worker 1, key = %d, ip = %x\n", key, ip));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) in worker 1, key = %d, ip = %x\n",
+                  key,
+                  ip));
 
-      if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
-        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+      if (ACE_OS::thr_setspecific (key,
+                                   (void *) ip) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "(%t) %p\n",
+                    "ACE_OS::thr_setspecific"));
 
-      if (ACE_OS::thr_getspecific (key, (void **) &ip) == -1)
-        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+      if (ACE_OS::thr_getspecific (key,
+                                   (void **) &ip) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "(%t) %p\n",
+                    "ACE_OS::thr_setspecific"));
 
-      if (ACE_OS::thr_setspecific (key, (void *) 0) == -1)
-        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
-
+      if (ACE_OS::thr_setspecific (key,
+                                   (void *) 0) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "(%t) %p\n",
+                    "ACE_OS::thr_setspecific"));
       delete ip;
 
       if (ACE_OS::thr_keyfree (key) == -1)
-        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keyfree"));
+        ACE_ERROR ((LM_ERROR,
+                    "(%t) %p\n",
+                    "ACE_OS::thr_keyfree"));
 
       // Cause an error.
       ACE_OS::read (ACE_INVALID_HANDLE, 0, 0);
@@ -97,41 +125,63 @@ worker (void *c)
         ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, printf_lock, 0);
 
         ACE_OS::printf ("(%u) errno = %d, lineno = %d, flags = %d\n",
-                handle, tss_error->error (), tss_error->line (),
-                tss_error->flags () );
+                        handle,
+                        tss_error->error (),
+                        tss_error->line (),
+                        tss_error->flags ());
       }
       key = ACE_OS::NULL_key;
 
-      if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
-        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
+      if (ACE_OS::thr_keycreate (&key,
+                                 cleanup) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "(%t) %p\n",
+                    "ACE_OS::thr_keycreate"));
 
-      ACE_NEW_RETURN (ip, int, 0);
+      ACE_NEW_RETURN (ip,
+                      int,
+                      0);
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) in worker 2, key = %d, ip = %x\n", key, ip));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) in worker 2, key = %d, ip = %x\n",
+                  key,
+                  ip));
 
-      if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
-        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+      if (ACE_OS::thr_setspecific (key,
+                                   (void *) ip) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "(%t) %p\n",
+                    "ACE_OS::thr_setspecific"));
 
-      if (ACE_OS::thr_getspecific (key, (void **) &ip) == -1)
-        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
+      if (ACE_OS::thr_getspecific (key,
+                                   (void **) &ip) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "(%t) %p\n",
+                    "ACE_OS::thr_setspecific"));
 
-      if (ACE_OS::thr_setspecific (key, (void *) 0) == -1)
-        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
-
+      if (ACE_OS::thr_setspecific (key,
+                                   (void *) 0) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "(%t) %p\n",
+                    "ACE_OS::thr_setspecific"));
       delete ip;
 
       if (ACE_OS::thr_keyfree (key) == -1)
-        ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keyfree"));
+        ACE_ERROR ((LM_ERROR,
+                    "(%t) %p\n",
+                    "ACE_OS::thr_keyfree"));
     }
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) exiting\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) exiting\n"));
   return 0;
 }
 
 extern "C" void
 handler (int signum)
 {
-  ACE_DEBUG ((LM_DEBUG, "signal = %S\n", signum));
+  ACE_DEBUG ((LM_DEBUG,
+              "signal = %S\n", signum));
   ACE_Thread_Manager::instance ()->exit (0);
 }
 
@@ -153,7 +203,10 @@ main (int argc, char *argv[])
                                                ACE_THR_FUNC (&worker),
                                                (void *) count,
                                                THR_BOUND | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Thread_Manager::spawn_n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "ACE_Thread_Manager::spawn_n"),
+                      -1);
 
   ACE_Thread_Manager::instance ()->wait ();
 #else

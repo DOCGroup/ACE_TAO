@@ -1,5 +1,40 @@
 Fri Jul 24 23:14:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/Threads/thread_specific.cpp (cleanup): Added an
+ 	  ACE_reinterpret_cast().  Thanks to John Mulhern
+ 	  <9107@mn3.lawson.lawson.com> for this.
+
+	* ace/Typed_SV_Message_Queue.i: Added some necessary
+ 	  ACE_reinterpret_cast()s.  Thanks to John Mulhern
+ 	  <9107@mn3.lawson.lawson.com> for this.
+
+	* ace/Malloc_T.i (addr): Changed (T *) cast to
+ 	  ACE_reinterpret_cast().  Thanks to John Mulhern
+ 	  <9107@mn3.lawson.lawson.com> for this.
+
+	* ace/SOCK_Dgram_Bcast.cpp: Added an ACE_reinterpret_cast() macro
+ 	  to make the HP/UX 11 C++ compiler happy.  Thanks to John Mulhern
+ 	  <9107@mn3.lawson.lawson.com> for this.
+
+	* ace/config-hpux11.h: Added ACE_HAS_BROKEN_XTI_MACROS and
+	  ACE_HAS_SIGISMEMBER_BUG.
+
+	* ace/OS.i (sigismember): Sigismember works correctly in most
+ 	  respects but the Sigset_Ops_Test tests the sigismember function
+ 	  with an out-of-range signal number expecting it to fail with a
+ 	  minus one result.  On HPUX 11.0 it doesn't fail; it correctly
+ 	  reports that the signal is not in the sigset.  This happens
+ 	  because HP, bless their hearts, thought that it should only
+ 	  return out of range when the signal value was greater than the
+ 	  capacity of the sigset; if ACE_NSIG is forced to 257 then the
+ 	  test works as expected.  But the real maximum signal is 45.
+  	  Added a fix for this courtesy of John Mulhern
+ 	  <9107@mn3.lawson.lawson.com>.
+
+	* ace/OS.h: Added a workaround for broken XTI header files on
+ 	  HP/UX.  Thanks to John Mulhern <9107@mn3.lawson.lawson.com> for
+ 	  reporting this.
+
 	* tests/Dynamic_Priority_Test.cpp: Reformatted this just a bit.
 
 Fri Jul 24 21:42:39 1998  David L. Levine  <levine@cs.wustl.edu>
