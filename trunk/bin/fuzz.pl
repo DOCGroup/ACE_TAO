@@ -720,6 +720,11 @@ sub check_for_ace_check ()
                         $env_line = $line;
                     }
 
+                    # ignore quoted ACE_TRY_ENV's
+                    if (m/^[^\"]*\"[^\"]*ACE_TRY_ENV[^\"]*\"[^\"]*$/) {
+                        $found_env = 0;
+                    }
+
                     if (m/ACE_TRY_ENV.*ACE_TRY_ENV/) {
                         print_error ("Multiple ACE_TRY_ENV in $file ($line)");
                     }
