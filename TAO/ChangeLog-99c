@@ -1,3 +1,27 @@
+Sat Jun 12 18:08:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/GIOP.i:
+	  Fixed buffer managment bug, the incoming buffer on each
+	  (server) transport was re-used for the next call, but we cannot
+	  do that because the buffer may be in use by some octet
+	  sequences.
+
+	* tao/GIOP.cpp:
+	  More initializations to keep purify happy
+
+	* tao/ORB.cpp:
+	  Removed UMR warning on purify by initializing a CDR buffer with
+	  0's  The warning was due to padding bytes, it was not harmful,
+	  but it could hide real problems.
+
+	* utils/nslist/nslist.cpp:
+	  Improved output
+
+	* orbsvcs/tests/Simple_Naming/run_test.pl:
+	  Use a file to communicate the IOR back to the client, is more
+	  reliable.
+	  Several improvements in the subprocess managment.
+
 Sat Jun 12 14:28:20 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_union.cpp:

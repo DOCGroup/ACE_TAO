@@ -33,8 +33,9 @@ show_chunk (CosNaming::NamingContext_ptr nc,
        i++)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%*s",
+                  "%*s%s",
                   2 * level,
+                  "",
                   bl[i].binding_name[0].id.in ()));
 
       if (ACE_OS::strlen(bl[i].binding_name[0].kind) > 0)
