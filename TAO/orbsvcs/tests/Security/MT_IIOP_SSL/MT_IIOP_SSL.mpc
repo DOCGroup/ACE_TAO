@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*security server): orbsvcsexe, portableserver, ssl, ssliop {
+project(*security server): orbsvcslib, portableserver, ssl, ssliop {
   Source_Files {
     Server_Worker.cpp
     test_i.cpp
@@ -9,7 +9,7 @@ project(*security server): orbsvcsexe, portableserver, ssl, ssliop {
   }
 }
 
-project(*security client): orbsvcsexe, ssl {
+project(*security client): orbsvcslib {
   Source_Files {
     testC.cpp
     Client_Worker.cpp
