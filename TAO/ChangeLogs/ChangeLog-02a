@@ -1,3 +1,9 @@
+Mon Sep 11 01:02:17 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/TAO.dsp:
+        * tao/TAO_Statis.dsp: Removed IORC.* and IORManipulation.* from
+          the projects.
+
 Sun Sep 10 04:03:54 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/corbafwd.h:
