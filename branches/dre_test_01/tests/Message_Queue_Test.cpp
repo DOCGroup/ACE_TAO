@@ -442,7 +442,7 @@ performance_test (int queue_type = 0)
 #endif /* ACE_HAS_THREADS */
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Message_Queue_Test"));
 

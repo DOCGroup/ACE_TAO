@@ -66,7 +66,7 @@ static int str_str_index [] = {4, 2, 1, 0, 3, 6, 5, 7}; // LR preorder
 
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("RB_Tree_Test"));
 

@@ -20,16 +20,17 @@
 // ============================================================================
 
 #include "tests/test_config.h"
-#include "ace/Atomic_Op.h"
 
 ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/Atomic_Op.h"
+
 enum { TEST_ITERATIONS = 1000000 };
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Atomic_Op_Test"));
 
@@ -210,7 +211,7 @@ template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 
 #else
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Atomic_Op_Test"));
 

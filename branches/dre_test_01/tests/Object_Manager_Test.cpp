@@ -18,6 +18,7 @@
 
 #include "test_config.h"
 #include "ace/Object_Manager.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, Object_Manager_Test, "$Id$")
 
@@ -48,7 +49,7 @@ hook2 (void * /* object */, void *param)
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE::init ();
 

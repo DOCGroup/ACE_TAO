@@ -44,7 +44,7 @@ size_t count_const_set (const ACE_Unbounded_Set<MyNode>& cubs)
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   int r;
   unsigned k;

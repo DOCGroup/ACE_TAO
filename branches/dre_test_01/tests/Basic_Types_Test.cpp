@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 // Don't use the ACE version accessors in class ACE, so that we can
 // support this test cleanly with the OS component, only.
 #include "ace/Version.h"
@@ -58,7 +58,7 @@ check (const ACE_TCHAR *message, u_int i, u_int j)
 
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Basic_Types_Test"));
 
@@ -76,7 +76,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // but oh well...
   errors += check (ACE_TEXT ("ACE_SIZEOF_WCHAR: %u%s"),
                    sizeof (wchar_t), ACE_SIZEOF_WCHAR);
-#endif /* ACE_HAS_WCHAR */ 
+#endif /* ACE_HAS_WCHAR */
   errors += check (ACE_TEXT ("ACE_SIZEOF_SHORT: %u%s"),
                    sizeof (short), ACE_SIZEOF_SHORT);
   errors += check (ACE_TEXT ("ACE_SIZEOF_INT: %u%s"),

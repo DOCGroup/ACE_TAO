@@ -15,7 +15,7 @@
 //      are then dequeued by the consumer.
 //
 // = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and 
+//    Prashant Jain <pjain@cs.wustl.edu> and
 //    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
@@ -49,7 +49,7 @@ consumer (void *args)
                           args);
 
   u_long cur_priority = 27;
-  ACE_UNUSED_ARG (cur_priority); 
+  ACE_UNUSED_ARG (cur_priority);
   // To suppress ghs warning about unused local variable
   // "cur_priority".
 
@@ -102,7 +102,7 @@ consumer (void *args)
 static void *
 producer (void *args)
 {
-  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = 
+  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue =
     ACE_reinterpret_cast (ACE_Message_Queue<ACE_MT_SYNCH> *,
                           args);
 
@@ -156,7 +156,7 @@ producer (void *args)
 // size of each line.
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Priority_Buffer_Test"));
 
@@ -164,7 +164,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // Message queue.
   ACE_Message_Queue<ACE_MT_SYNCH> msg_queue (max_queue);
 
-  if (ACE_Thread_Manager::instance ()->spawn 
+  if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (producer),
        (void *) &msg_queue,
        THR_NEW_LWP | THR_DETACHED) == -1)

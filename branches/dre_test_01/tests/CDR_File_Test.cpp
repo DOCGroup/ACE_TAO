@@ -309,7 +309,7 @@ usage (ACE_TCHAR *cmd)
 // Main function
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("CDR_File_Test"));
 
@@ -448,7 +448,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("CDR_File_Test"));
 

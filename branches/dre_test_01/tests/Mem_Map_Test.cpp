@@ -21,6 +21,7 @@
 
 #include "test_config.h"
 #include "ace/Mem_Map.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, Mem_Map_Test, "$Id$")
 
@@ -119,7 +120,7 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
 #endif /* !ACE_LACKS_MMAP */
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Mem_Map_Test"));
 

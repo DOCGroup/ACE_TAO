@@ -45,6 +45,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/CDR_Stream.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/ACE.h"
 
 #if defined(USE_GETRUSAGE) && !defined(ACE_HAS_GETRUSAGE)
 #error "Can't define USE_GETRUSAGE on this platform."
@@ -884,7 +885,7 @@ validiters (int n)
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("CDR_Array_Test"));
 

@@ -405,7 +405,7 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("CDR_Test"));
 
