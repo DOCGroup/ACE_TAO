@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "PortableInterceptorC.h"
+#include "PolicyC.h"
 #include "ace/Map_Manager.h"
 
 class TAO_ORB_Core;
@@ -31,7 +32,7 @@ class TAO_ORB_Core;
  *
  * @brief
  * ORB-specific registry that contains all portable interceptor
- * policy factories. 
+ * policy factories.
  */
 class TAO_Export TAO_PolicyFactory_Registry
 {

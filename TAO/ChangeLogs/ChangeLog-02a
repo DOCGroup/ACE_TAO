@@ -1,13 +1,31 @@
+Wed Nov 15 09:56:21 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+          Fix inconsistencies in the location of the timeout hooks.  In
+          some places it was inside a
+          TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY, it other cases it
+          ignored the pragma completely.
+          Similar problems with the IOR interceptor accessors.
+
+        * tao/PolicyFactory_Registry.h:
+          Add missing #include
+
+        * tao/Cleanup_Func_Registry.cpp:
+          Fixed instantiation pragma
+
+
 Wed Nov 15 11:17:03 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Cleanup_Func_Registry.cpp: Added a missing a template
-	  instantiation for ACE_Array_Base <ACE_CLEANUP_FUNC>
-	
-	* tao/ORB_Core.cpp:  Added a missing template instantiation of
-	  ACE_Array_Base <void*> 
+        * tao/Cleanup_Func_Registry.cpp: Added a missing a template
+          instantiation for ACE_Array_Base <ACE_CLEANUP_FUNC>
 
-	* tao/ORBInitInfo.cpp: Fixed a warning in gcc build
-	
+        * tao/ORB_Core.cpp:  Added a missing template instantiation of
+          ACE_Array_Base <void*>
+
+        * tao/ORBInitInfo.cpp: Fixed a warning in gcc build
+
 Wed Nov 15 08:35:45 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.h:
