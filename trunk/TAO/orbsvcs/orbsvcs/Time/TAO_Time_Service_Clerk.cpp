@@ -7,7 +7,7 @@
 
 // Constructor.
 TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
-						IORS servers)
+						const IORS& servers)
   : server_ (servers),
     helper_ (this)
 {

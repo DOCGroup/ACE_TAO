@@ -43,13 +43,12 @@ public:
   friend class Timer_Helper;
   // Helper class to help in the updation of time.
 
-  typedef ACE_Unbounded_Set<CosTime::TimeService_var>
-	  IORS;
+  typedef ACE_Array_Base<CosTime::TimeService_var> IORS;
   // Unbounded set of IORs.
 
   // = Initialization and termination methods.
   TAO_Time_Service_Clerk (int timer_value,
-			  IORS server);
+			  const IORS& server);
   // Constructor.
 
   ~TAO_Time_Service_Clerk (void);

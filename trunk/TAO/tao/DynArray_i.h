@@ -165,7 +165,7 @@ private:
   CORBA::Long index_;
   // Index of the current component
 
-  ACE_Array<CORBA_DynAny_var> da_members_;
+  ACE_Array_Base<CORBA_DynAny_var> da_members_;
   // Each component is also a DynAny
 
   TAO_DynArray_i (void);

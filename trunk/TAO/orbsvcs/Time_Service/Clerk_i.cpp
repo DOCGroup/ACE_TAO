@@ -11,6 +11,7 @@ ACE_RCSID(Time_Service, Clerk_i, "$Id$")
 Clerk_i::Clerk_i (void)
   : ior_output_file_ (0),
     timer_value_ (3),
+    server_ (Clerk_i::DEFAULT_SERVER_COUNT),
     ior_fp_ (0)
 
 {
@@ -69,11 +70,12 @@ Clerk_i::read_ior (const char *filename)
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       "IOR for the server is Null\n"),
 			      -1);
-	  // Insert the server reference into the set of server IORs.
-	  this->server_.insert (CosTime::TimeService::_narrow
-				(objref.in (),
-				 TAO_TRY_ENV));
-	  TAO_CHECK_ENV;
+
+          CosTime::TimeService_ptr server =
+            CosTime::TimeService::_narrow (objref.in (),
+                                           TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+          this->insert_server (server);
 	}
       TAO_CATCHANY
 	{
@@ -251,7 +253,7 @@ Clerk_i::get_first_IOR (void)
 
       // Insert the first server IOR into the unbounded set of server
       // IORs.
-      this->server_.insert (obj);
+      this->insert_server (obj);
 
       // Iterate over the server context to get the next N IORs.
       if (next_n_IORs (iter,
@@ -302,9 +304,12 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
 					 TAO_TRY_ENV);
 	      TAO_CHECK_ENV;
 
-	      this->server_.insert (CosTime::TimeService::_narrow (temp_object.in (),
-								   TAO_TRY_ENV));
-	      TAO_CHECK_ENV;
+              CosTime::TimeService_ptr server = 
+                CosTime::TimeService::_narrow (temp_object.in (),
+                                               TAO_TRY_ENV);
+              TAO_CHECK_ENV;
+
+	      this->insert_server (server);
 	    }
 	  TAO_CHECK_ENV;
 	}
@@ -562,6 +567,19 @@ Clerk_i::run (CORBA::Environment &env)
   TAO_ENDTRY;
 
   return 0;
+}
+
+void
+Clerk_i::insert_server (CosTime::TimeService_ptr server)
+{
+  // We duplicate the capacity of the Array.
+  size_t s = this->server_.size ();
+  if (this->server_.max_size () == s)
+    {
+      this->server_.max_size (2 * s);
+    }
+  this->server_[s] = server;
+  this->server_.size (s + 1);
 }
 
 // #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

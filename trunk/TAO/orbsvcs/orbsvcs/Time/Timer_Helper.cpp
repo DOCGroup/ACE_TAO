@@ -32,13 +32,14 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &time,
 
   TAO_TRY
     {
-      for (IORS::ITERATOR server_iterator = this->clerk_->server_.begin ();
-	   server_iterator !=  this->clerk_->server_.end ();
-	   ++server_iterator)
+      IORS::TYPE* value;
+      for (IORS::ITERATOR server_iterator (this->clerk_->server_);
+	   server_iterator.next (value);
+	   !server_iterator.done ())
 	{
 	  // This is a remote call.
 	  CosTime::UTO_var UTO_server =
-	    (*server_iterator)->universal_time (TAO_TRY_ENV);
+	    (*value)->universal_time (TAO_TRY_ENV);
 
 	  TAO_CHECK_ENV;
 
@@ -82,7 +83,13 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &time,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Set <CosTime::TimeService_var>;
+
+template class ACE_Array_Base <CosTime::TimeService_var>;
+template class ACE_Array_Iterator <CosTime::TimeService_var>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unbounded_Set <CosTime::TimeService_var>
+
+#pragma instantiate ACE_Array_Base <CosTime::TimeService_var>
+#pragma instantiate ACE_Array_Iterator <CosTime::TimeService_var>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

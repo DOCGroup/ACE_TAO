@@ -17,6 +17,7 @@ DIRS  =	orbsvcs \
 	LifeCycle_Service \
 	Trading_Service \
 	Logging_Service \
+	Time_Service \
 	tests
 
 #----------------------------------------------------------------------------
