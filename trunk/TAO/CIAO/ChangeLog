@@ -1,3 +1,9 @@
+Mon Oct 13 23:41:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/RateGen/controller.cpp: 
+	* examples/handcrafted/Display/RateGen/client.cpp: Added inclusion
+	  of "ace/streams.h" to make them compile.
+
 Mon Oct 13 22:31:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_exec.cpp: 
