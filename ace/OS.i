@@ -7385,8 +7385,11 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
 {
   ACE_OS_TRACE ("ACE_OS::thr_join");
 #if defined (ACE_HAS_PACE)
+#   if defined (ACE_WIN32)
   int ace_result_ = 0;
-  ACE_OSCALL_RETURN ( ACE_ADAPT_RETVAL (::pace_pthread_join (thr_handle, status),
+#   endif /* ACE_WIN32) */
+  ACE_OSCALL_RETURN ( ACE_ADAPT_RETVAL (::pace_pthread_join
+                                        (thr_handle, status),
                                         ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
@@ -7443,9 +7446,12 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
 {
   ACE_OS_TRACE ("ACE_OS::thr_join");
 #if defined (ACE_HAS_PACE)
+#   if defined (ACE_WIN32)  
   int ace_result_ = 0;
+#   endif /* ACE_WIN32 */  
   ACE_UNUSED_ARG (thr_id);
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_join (waiter_id, status),
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_join
+                                       (waiter_id, status),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
@@ -7492,8 +7498,11 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
 {
   ACE_OS_TRACE ("ACE_OS::thr_setcancelstate");
 #if defined (ACE_HAS_PACE)
+#   if defined (ACE_WIN32)  
   int ace_result_ = 0;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setcancelstate (new_state, old_state),
+#   endif /* ACE_WIN32 */  
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setcancelstate
+                                       (new_state, old_state),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
@@ -7538,8 +7547,11 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
 {
   ACE_OS_TRACE ("ACE_OS::thr_setcanceltype");
 #if defined (ACE_HAS_PACE)
+#   if defined (ACE_WIN32)  
   int ace_result_ = 0;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setcanceltype (new_type, old_type),
+#   endif /* ACE_WIN32 */  
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setcanceltype
+                                       (new_type, old_type),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
@@ -7576,7 +7588,9 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
 {
   ACE_OS_TRACE ("ACE_OS::thr_cancel");
 #if defined (ACE_HAS_PACE)
+#   if defined (ACE_WIN32)  
   int ace_result_ = 0;
+#   endif /* ACE_WIN32 */  
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_cancel (thr_id),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
@@ -7729,8 +7743,11 @@ ACE_OS::thr_sigsetmask (int how,
 {
   ACE_OS_TRACE ("ACE_OS::thr_sigsetmask");
 #if defined (ACE_HAS_PACE)
-  int ace_result_;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_sigmask (how, nsm, osm),
+#   if defined (ACE_WIN32)  
+  int ace_result_ = 0;
+#   endif /* ACE_WIN32 */  
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_sigmask
+                                       (how, nsm, osm),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
@@ -7814,7 +7831,9 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
 {
   ACE_OS_TRACE ("ACE_OS::thr_kill");
 #if defined (ACE_HAS_PACE)
+#   if defined (ACE_WIN32)  
   int ace_result_ = 0;
+#   endif /* ACE_WIN32 */  
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_kill (thr_id, signum),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
@@ -7940,15 +7959,19 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
 #if defined (ACE_HAS_PACE)
   struct sched_param param;
   int policy = 0;
-  int result = 0;
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::pace_pthread_getschedparam (thr_id, &policy, &param),
+  int result;
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pace_pthread_getschedparam
+                                (thr_id, &policy, &param),
                                  result), int, -1, result);
 
   if (result == -1)
     return result; // error in pthread_getschedparam
   param.sched_priority = prio;
+#   if defined (ACE_WIN32)  
   int ace_result_ = 0;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setschedparam (thr_id, policy, &param),
+#   endif /* ACE_WIN32 */  
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setschedparam
+                                       (thr_id, policy, &param),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
@@ -11474,7 +11497,9 @@ ACE_INLINE int
 ACE_OS::pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
 {
 #if defined (ACE_HAS_PACE)
+#   if defined (ACE_WIN32)  
   int ace_result_ = 0;
+#   endif /* ACE_WIN32 */  
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_sigmask (how, nsp, osp),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_PTHREADS_STD)  &&  !defined (ACE_LACKS_PTHREAD_SIGMASK)

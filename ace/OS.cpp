@@ -3780,7 +3780,9 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
   // If we are using TSS emulation then we shuld use ACE's implementation
   //  of it and not make any PACE calls.
 #if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION)
+#   if defined (ACE_WIN32)  
   int ace_result_ = 0;
+#   endif /* ACE_WIN32 */  
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setspecific (key, data),
                                        ace_result_),
                      int, -1);
@@ -3962,7 +3964,9 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
   //  of it and not make any PACE calls.
 #if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_WIN32)
   ACE_UNUSED_ARG (inst);
+#   if defined (ACE_WIN32)  
   int ace_result_ = 0;
+#   endif /* ACE_WIN32 */  
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_key_create (key, dest),
                                        ace_result_),
                      int, -1);
