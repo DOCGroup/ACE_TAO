@@ -37,6 +37,9 @@ Mon Apr 26 23:40:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
   	  The call to Map_Key_Cookie::extract () should check for a false
 	  instead of -1. 
 
+	  Thanks to Ed Mulholland and Jacques Kerner for reporting the
+	  problem. 
+
 Mon Apr 26 17:35:29 2004  George Edwards  <g.edwards@vanderbilt.edu>
 
         * DnC/Config_Handlers/CompPkgDesc_Handler.cpp:
