@@ -1,3 +1,9 @@
+Tue Apr 08 10:31:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression/server.dsp:
+	* tests/Bug_1482_Regression/client.dsp: Fixed the release build
+	  configuration. 
+
 Tue Apr  8 17:01:55 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
