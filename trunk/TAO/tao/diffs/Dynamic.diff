@@ -1,31 +1,29 @@
---- DynamicC.h.old	Mon Oct 16 22:31:46 2000
-+++ DynamicC.h	Mon Oct 16 22:32:48 2000
-@@ -23,13 +23,15 @@
- #define _TAO_IDL_DYNAMICC_H_
+--- orig/DynamicC.h	2003-04-25 17:00:50.000000000 -0500
++++ DynamicC.h	2003-04-25 11:17:54.000000000 -0500
+@@ -30,19 +30,20 @@
  
+ #ifndef _TAO_IDL_ORIG_DYNAMICC_H_
+ #define _TAO_IDL_ORIG_DYNAMICC_H_
+-
  #include "ace/pre.h"
--#include "tao/corba.h"
-+
 +#include "tao/corbafwd.h"
+ 
+-#include "tao/corba.h"
  
  #if !defined (ACE_LACKS_PRAGMA_ONCE)
  # pragma once
  #endif /* ACE_LACKS_PRAGMA_ONCE */
- 
+-
+-
 -#include "tao/corbafwd.h"
-+#include "tao/Any.h"
+-
+ #include "StringSeqC.h"
++#include "tao/TAO_Export.h"
++#include "tao/Any_T.h"
 +#include "tao/Sequence.h"
++#include "tao/VarOut_T.h"
++#include "tao/Seq_Var_T.h"
++#include "tao/Seq_Out_T.h"
  
  #if defined (TAO_EXPORT_MACRO)
  #undef TAO_EXPORT_MACRO
---- DynamicC.cpp.old	Mon Oct 16 22:31:46 2000
-+++ DynamicC.cpp	Mon Oct 16 22:32:48 2000
-@@ -25,6 +25,8 @@
- #include "DynamicC.i"
- #endif /* !defined INLINE */
- 
-+#include "tao/StringSeqC.h"
-+
- static const CORBA::Long _oc_Dynamic_ParameterMode[] =
- {
-   TAO_ENCAP_BYTE_ORDER, // byte order

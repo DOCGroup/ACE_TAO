@@ -15,13 +15,19 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -29,17 +35,9 @@ CORBA::Boolean operator<< (
     const Dynamic::Parameter &_tao_aggregate
   )
 {
-  if (
+  return
     (strm << _tao_aggregate.argument) &&
-    (strm << _tao_aggregate.mode)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm << _tao_aggregate.mode);
 }
 
 ACE_INLINE
@@ -48,21 +46,13 @@ CORBA::Boolean operator>> (
     Dynamic::Parameter &_tao_aggregate
   )
 {
-  if (
+  return
     (strm >> _tao_aggregate.argument) &&
-    (strm >> _tao_aggregate.mode)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm >> _tao_aggregate.mode);
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_Dynamic_ParameterList_I_
 #define _TAO_CDR_OP_Dynamic_ParameterList_I_
@@ -80,7 +70,7 @@ CORBA::Boolean TAO_Export operator>> (
 #endif /* _TAO_CDR_OP_Dynamic_ParameterList_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_Dynamic_ExceptionList_I_
 #define _TAO_CDR_OP_Dynamic_ExceptionList_I_

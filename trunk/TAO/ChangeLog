@@ -1,3 +1,28 @@
+Fri Apr 25 22:26:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/DynamicC.cpp:
+	* tao/DynamicC.h:
+	* tao/DynamicC.i:
+	* tao/OctetSeqC.cpp:
+	* tao/OctetSeqC.h:
+	* tao/OctetSeqC.i:
+	* tao/PortableServer/Default_ORTC.cpp:
+	* tao/PortableServer/Default_ORTC.h:
+	* tao/PortableServer/Default_ORTC.i:
+	* tao/PortableServer/ImR_ActivatorC.h:
+	* tao/PortableServer/ImR_LocatorC.cpp:
+	* tao/PortableServer/ImR_LocatorC.h:
+	* tao/PortableServer/ImR_LocatorC.i:
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/ImplRepoC.h:
+	* tao/PortableServer/PortableServerC.cpp
+	* tao/PortableServer/ImplRepoC.i: Regenerated ode and patched them. 
+
+	* tao/PortableServer/diffs/Default_ORT.diff:
+	* tao/PortableServer/diffs/ImplRepo.diff:
+	* tao/diffs/Dynamic.diff:
+	* tao/diffs/OctetSeq.diff: Updated the diff files. 
+
 Fri Apr 25 17:04:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_type.cpp:
