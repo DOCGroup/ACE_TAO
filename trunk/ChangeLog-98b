@@ -15,6 +15,11 @@ Mon Jun 22 09:04:21 1998  David L. Levine  <levine@cs.wustl.edu>
           platforms that #define queue.  Thanks to Dave Meyer
           <dmeyer@std.saic.com> for reporting this.
 
+        * ace/Synch_T.h: added adapter class ACE_TSS_Type_Adapter.
+          It adapts built-in types for use with ACE_TSS.
+
+        * tests/TSS_Test.cpp: demonstrate/test use of ACE_TSS_Type_Adapter.
+
 Mon Jun 22 04:49:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * man/windex: Removed ACE_Service_Record from all the
