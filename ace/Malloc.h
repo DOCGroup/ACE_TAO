@@ -70,8 +70,19 @@ struct ACE_Export ACE_Malloc_Stats
 // padding to your selected size is done with an added array of long[]
 // and your compiler will decide how to align things in memory.
 
-#define ACE_MALLOC_PADDING 16
+#define ACE_MALLOC_PADDING 1
 #endif /* ACE_MALLOC_PADDING */
+
+#if !defined (ACE_MALLOC_ALIGN)
+// Align the malloc header size to a multiple of a double.
+#define ACE_MALLOC_ALIGN (sizeof (double))
+#endif /* ACE_MALLOC_ALIGN */
+
+// ACE_MALLOC_HEADER_SIZE is the normalized malloc header size.
+#define ACE_MALLOC_HEADER_SIZE (ACE_MALLOC_PADDING % ACE_MALLOC_ALIGN == 0 \
+                                ? ACE_MALLOC_PADDING \
+                                : (((ACE_MALLOC_PADDING / ACE_MALLOC_ALIGN) + 1) \
+                                   * ACE_MALLOC_ALIGN))
 
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
 #define ACE_MALLOC_HEADER_PTR ACE_Based_Pointer<ACE_Malloc_Header>
@@ -98,11 +109,9 @@ public:
   size_t size_;
   // Size of this header control block.
 
-#if (ACE_MALLOC_PADDING > 1)
-#define ACE_MALLOC_PADDING_SIZE ((int) (ACE_MALLOC_PADDING - \
+#define ACE_MALLOC_PADDING_SIZE ((int) (ACE_MALLOC_HEADER_SIZE - \
                                   (sizeof (ACE_MALLOC_HEADER_PTR) + sizeof (size_t))) / (int) sizeof (long))
   long padding_[ACE_MALLOC_PADDING_SIZE < 1 ? 1 : ACE_MALLOC_PADDING_SIZE];
-#endif /* ACE_MALLOC_PADDING > 0 */
 
   void dump (void) const;
   // Dump the state of the object.
@@ -200,9 +209,10 @@ public:
 
 // Notice the casting to int for <sizeof> otherwise unsigned int
 // arithmetic is used and some awful things may happen.
-#define ACE_CONTROL_BLOCK_ALIGN_LONGS ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_PADDING != 0 \
-                                        ? ACE_MALLOC_PADDING - (ACE_CONTROL_BLOCK_SIZE) \
-                                        : ACE_MALLOC_PADDING) / int (sizeof (long)))
+#define ACE_CONTROL_BLOCK_ALIGN_LONGS \
+            ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN != 0 \
+              ? ACE_MALLOC_ALIGN - (ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN) \
+              : ACE_MALLOC_ALIGN) / int (sizeof (long)))
 
   long align_[ACE_CONTROL_BLOCK_ALIGN_LONGS < 1 ? 1 : ACE_CONTROL_BLOCK_ALIGN_LONGS];
   // Force alignment.

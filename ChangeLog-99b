@@ -1,3 +1,19 @@
+Wed Dec 01 06:16:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc.h (ACE_MALLOC_PADDING): Restored default value to 1.
+	  Added a new macro ACE_MALLOC_HEADER_SIZE which serves the same
+	  function as ACE_MALLOC_PADDING (both specify the minimum malloc
+	  header size) but ACE_MALLOC_HEADER_SIZE is normalized to be
+	  multiple of ACE_MALLOC_ALIGN.
+
+	  (ACE_CONTROL_BLOCK_ALIGN_LONGS): Changed back to use
+	  ACE_MALLOC_ALIGN to calculate the starting malloc header
+	  alignment.
+
+	* tests/Malloc_Test.cpp: Expanded the memory offset between parent
+	  and child mmap base address so there'll be no overlap even when
+	  we use a larger ACE_MALLOC_PADDING.
+
 Wed Dec  1 02:10:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Auto_IncDec_Test.cpp: The main() function was missing
@@ -15,7 +31,7 @@ Tue Nov 30 14:24:31 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* acconfig.h:
 
 	  Minor cosmetic updates.
-	  
+
 	* configure.in:
 
 	  Only enable POSIX semaphore support if process shared semaphores
