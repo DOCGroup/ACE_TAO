@@ -55,7 +55,7 @@ Thu Feb 20 19:18:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* ChangeLogs/ChangeLog-02b:
 	* ChangeLogs/ChangeLog-03a: New files having all the old ChangeLog
 	  entries till 5.3.1.
-	* ChangeLog: Shortened the changelog for ease of use. 
+	* ChangeLog: Shortened the changelog for ease of use.
 
 Thu Feb 20 10:35:15 2003  Ossama Othman  <ossama@uci.edu>
 
@@ -304,7 +304,7 @@ Thu Feb 20 09:23:51 2003  Ossama Othman  <ossama@uci.edu>
 
 	  (bytes_transferred):
 	  Use map template traits to improve code clarity.
-	
+
 	* ace/POSIX_Asynch_IO.h:
 
 	  Redefined old map typedefs in terms of the map traits.
