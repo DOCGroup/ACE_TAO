@@ -1,6 +1,15 @@
+Sun Mar 28 12:20:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h:
+	* ace/CORBA_macros.h: Moved ACE_NEW_THROW* and ACE_GUARD_THROW*
+	  macros from OS.h to CORBA_macros.h.  Also added
+	  ACE_*GUARD_THROW_EX which has the new ACE try macros semantics.
+	  CORBA_macros.h needs to include "OS.h" to source in the correct
+	  platform configuration macros.
+
 Sun Mar 28 13:27:15 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/exceptions.html: 
+	* docs/exceptions.html:
 	Added a new example
 
 Fri Mar 26 23:35:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
