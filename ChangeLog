@@ -1,3 +1,12 @@
+Wed Apr 14 12:34:56 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Makefile.libs:
+
+	  Reverted a change (Makefile.libs,v 4.3 2004/04/13 23:15:45
+	  mbrudka) that incorrectly replaced a dependency on test_config.h
+	  with test_$(ACE_PLATFORM_CONFIG).  Thanks to Johnny Willemsen
+	  for pointing me in the right direction.
+
 Wed Apr 14 11:26:20 2004  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/platform_aix_g++.GNU: If rtti=0, add
