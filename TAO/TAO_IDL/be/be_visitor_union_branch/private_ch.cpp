@@ -171,9 +171,10 @@ be_visitor_union_branch_private_ch::visit_interface (be_interface *node)
 
   os->indent (); // start from current indentation
   // C++ does not allow an object declaration inside a union. Hence we
-  // must have a pointer. This changes some of the methods
-  *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name () <<
-    "_;\n";
+  // must have a pointer. This changes some of the methods.
+  // We use TAO_Object_Field_T<> so that _upcast() and _downcast() will work.
+  *os << "TAO_Object_Field_T<" << bt->nested_type_name (bu, "")
+      << "> *" << ub->local_name () << "_;\n";
   return 0;
 }
 
@@ -204,9 +205,10 @@ be_visitor_union_branch_private_ch::visit_interface_fwd (be_interface_fwd *node)
 
   os->indent (); // start from current indentation
   // C++ does not allow an object declaration inside a union. Hence we
-  // must have a pointer. This changes some of the methods
-  *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name () <<
-    "_;\n";
+  // must have a pointer. This changes some of the methods.
+  // We use TAO_Object_Field_T<> so that _upcast() and _downcast() will work.
+  *os << "TAO_Object_Field_T<" << bt->nested_type_name (bu, "")
+      << "> *" << ub->local_name () << "_;\n";
   return 0;
 }
 
