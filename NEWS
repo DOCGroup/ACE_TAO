@@ -4,6 +4,9 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.4
 ====================================================
 
+. The ace-config script has been replaced by pkg-config metadata files 
+  which are installed in ${prefix}/lib/pkgconfig by the automake build.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.2 and ACE-5.4.3
 ====================================================
 
