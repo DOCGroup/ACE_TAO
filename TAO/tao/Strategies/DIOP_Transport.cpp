@@ -82,9 +82,9 @@ TAO_DIOP_Transport::send_i (iovec *iov, int iovcnt,
   for (int i = 0; i < iovcnt; i++)
      bytes_to_send += iov[i].iov_len;
 
-  ssize_t retval = this->connection_handler_->dgram ().send (iov,
-                                                             iovcnt,
-                                                             addr);
+  this->connection_handler_->dgram ().send (iov,
+					    iovcnt,
+					    addr);
   // @@ Michael:
   // Always return a positive number of bytes sent, as we do
   // not handle sending errors in DIOP.

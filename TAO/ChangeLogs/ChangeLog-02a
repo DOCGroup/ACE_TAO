@@ -1,3 +1,10 @@
+Thu Dec  6 16:35:04 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tao/Strategies/DIOP_Transport.cpp:
+	  
+	  Fixed a compiler warning. Thanks to Venkita for pointing this
+	  out.
+
 Thu Dec  6 14:56:14 2001  Justin Michel  <michel_j@ociweb.com>
 
         * TAO/tests/TAO_Tests.dsw
