@@ -1,3 +1,10 @@
+Thu Jun 22 13:29:22 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.cpp (ACE_Thread_Adapter::invoke): Added cleanup code for
+          pSOS tasks at the end of the function. The code is from ISI's
+          documentation. Thanks to Matt Emerson <memerson@escient.com> for
+          pointing out this problem and supplying the fix.
+
 Thu Jun 22 09:47:56 2000  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS_Dirent.h
