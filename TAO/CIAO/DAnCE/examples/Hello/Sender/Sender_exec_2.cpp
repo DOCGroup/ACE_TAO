@@ -33,7 +33,7 @@ Hello::CCM_ReadMessage_ptr
 Sender_Impl::Sender_exec_2_i::get_push_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "Sender_Impl::Sender_exec.i::get_push_message called\n "));
   return ( new Message_Impl_2 (*this) );
 }
@@ -48,7 +48,7 @@ Sender_Impl::Sender_exec_2_i::start (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Sender_Impl::Sender_exec_2_i::set_session_context 
+Sender_Impl::Sender_exec_2_i::set_session_context
    (Components::SessionContext_ptr ctx
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -75,12 +75,32 @@ Sender_Impl::Sender_exec_2_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED
 }
 
 void
-Sender_Impl::Sender_exec_2_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Sender_Impl::Sender_exec_2_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Sender_Impl::Sender_exec_2_i::ccm_activate\n"));
+
+  ::Components::ConsumerDescriptions_var c =
+      this->base_exec_->consumers ();
+
+  CORBA::Object_var o =
+    this->context_->get_CCM_object ();
+
+  Hello::Sender_var sender =
+    Hello::Sender::_narrow (comp_object.in ()
+                            ACE_ENV_ARG_PARAMETER);
+
+  for (CORBA::ULong cnt = 0;
+       cnt != c->length ();
+       ++cnt)
+    {
+      sender->connect_consumer (c[cnt]->name (),
+                                c[cnt]
+                                ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 void
@@ -110,7 +130,12 @@ Sender_Impl::Sender_exec_2_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-createSenderExec_Impl (void)
+createSenderExec_Impl (SenderSwap_exec_i *p)
 {
-  return new Sender_Impl::Sender_exec_2_i ();
+  Sender_exec_2_i *tmp =
+    new Sender_Impl::Sender_exec_1_i ();
+
+  tmp->swap_exec (p);
+
+  return tmp;
 }

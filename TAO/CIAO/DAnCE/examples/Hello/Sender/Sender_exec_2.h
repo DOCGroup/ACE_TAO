@@ -30,8 +30,10 @@ namespace Sender_Impl
     }
 
     /// Secondary construction.
-    Sender_exec_2_i (const char* local_message)
+    Sender_exec_2_i (const char* local_message
+                     SenderSwap_exec_i *e)
       : message_ (CORBA::string_dup (local_message))
+      , base_exec_ (e)
     {
     }
 
@@ -88,12 +90,19 @@ namespace Sender_Impl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
+    void swap_exec (SenderSwap_exec_i *p)
+    {
+      this->base_exec_ = p;
+    }
+
   protected:
     /// Copmponent specific context
     Sender_Exec_Context_var context_;
 
   private:
     CORBA::String_var message_;
+
+    SenderSwap_exec_i *base_exec_;
 
     friend class Message_Impl_2;
   };
@@ -118,6 +127,6 @@ namespace Sender_Impl
 }
 
 extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-createSenderExec_Impl (void);
+createSenderExec_Impl (SenderSwap_exec_i *p);
 
 #endif /* SENDER_EXEC_H */

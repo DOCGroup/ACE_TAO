@@ -23,7 +23,8 @@ namespace Sender_Impl
   {
 
   public:
-
+    /// Default constructor.
+    Sender_exec_1_i () {};
 
     /// Secondary construction.
     Sender_exec_1_i (const char* local_message
@@ -86,6 +87,11 @@ namespace Sender_Impl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
+    void swap_exec (SenderSwap_exec_i *p)
+    {
+      this->base_exec_ = p;
+    }
+
   protected:
     /// Copmponent specific context
     Sender_Exec_Context_var context_;
@@ -95,9 +101,6 @@ namespace Sender_Impl
 
     // my incarnator
     SenderSwap_exec_i *base_exec_;
-
-    /// Default constructor.
-    Sender_exec_1_i () {};
 
     friend class Message_Impl_1;
   };
@@ -122,6 +125,6 @@ namespace Sender_Impl
 }
 
 extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-createSenderExec_Impl (void);
+createSenderExec_Impl (SenderSwap_exec_i *p);
 
 #endif /* SENDER_EXEC_H */
