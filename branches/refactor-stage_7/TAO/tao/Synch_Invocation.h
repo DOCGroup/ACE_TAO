@@ -99,7 +99,7 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::Exception));
   };
 
-  class Reply_Guard
+  class TAO_Export Reply_Guard
   {
   public:
     Reply_Guard (Invocation_Base *s,
