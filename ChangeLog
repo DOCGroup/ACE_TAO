@@ -1,3 +1,11 @@
+Sat Mar 20 18:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/templates/bor.mpd:
+	  When gendir is set, a \ must be added, not a /. This fixes
+	  problems in the Borland builds that where caused by the fact
+	  that the realclean didn't work and we did compile old generated
+	  files.
+
 Sat Mar 20 11:15:19 2004  Olli Savia  <ops@iki.fi>
 
         * ace/Containers_T.cpp:
