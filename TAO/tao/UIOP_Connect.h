@@ -89,7 +89,7 @@ protected:
   // Reference to the transport object, it is owned by this class.
 
   TAO_ORB_Core *orb_core_;
-  // Cache the ORB Core to minimize
+  // Cached ORB Core.
 };
 
 // ****************************************************************
@@ -146,7 +146,7 @@ protected:
   // Perform appropriate closing.
 
   TAO_ORB_Core *orb_core_;
-  // Cache the ORB Core to minimize
+  // Cached the ORB Core.
 
   TAO_ORB_Core_TSS_Resources *tss_resources_;
   // Cached tss resources of the ORB that activated this object.
