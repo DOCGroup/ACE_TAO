@@ -1145,7 +1145,7 @@ ACE_INLINE ACE_TCHAR *
 ACE_OS::tempnam (const ACE_TCHAR *dir, const ACE_TCHAR *pfx)
 {
   ACE_TRACE ("ACE_OS::tempnam");
-#if defined (VXWORKS) || defined (ACE_LACKS_TEMPNAM)
+#if defined (VXWORKS) || defined (ACE_HAS_WINCE) || defined (ACE_LACKS_TEMPNAM)
   ACE_UNUSED_ARG (dir);
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
@@ -1153,12 +1153,8 @@ ACE_OS::tempnam (const ACE_TCHAR *dir, const ACE_TCHAR *pfx)
   // pSOS only considers the directory prefix
   ACE_UNUSED_ARG (pfx);
   ACE_OSCALL_RETURN (::tmpnam ((char *) dir), char *, 0);
-#elif defined (__BORLANDC__) || (__IBMCPP__)
+#elif defined (__BORLANDC__) || (defined (ACE_WIN32) && defined (__IBMCPP__))
   ACE_OSCALL_RETURN (::_tempnam ((char *) dir, (char *) pfx), char *, 0);
-#elif defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (dir);
-  ACE_UNUSED_ARG (pfx);
-  ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
 #else /* VXWORKS */
