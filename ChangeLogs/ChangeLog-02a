@@ -1,3 +1,7 @@
+Thu Oct 19 14:23:52 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace-dll.icc: Removed extraneous ',' from Win32 section.
+
 Thu Oct 19 12:08:45 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Cached_Connect_Strategy_T.cpp: Fixed compile errors with old
