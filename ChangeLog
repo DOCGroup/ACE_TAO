@@ -1,3 +1,11 @@
+Tue Jan  4 04:25:44 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/OS_NS_sys_stat.inl:
+	* ace/OS_NS_sys_utsname.inl:
+
+	  Fixes for SUN Studio 9 builds on x86 platform. New builds will
+	  be setup soon to track this on a day-today basis. 
+
 Mon Jan  3 16:53:59 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/TMCast/Member/Makefile.am:
