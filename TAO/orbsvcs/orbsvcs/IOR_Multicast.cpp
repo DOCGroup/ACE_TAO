@@ -132,12 +132,12 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%P|%t) Error sending multicast: errno %d.\n", errno),
                                 -1);
+          else
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%P|%t) Error sending reply to a multicast: errno %d.\n",
+                               errno),
+                              0);
         }
-      else
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) Error sending reply to a multicast: errno %d.\n",
-                             errno),
-                            0);
     }
   else
     ACE_DEBUG ((LM_DEBUG,
