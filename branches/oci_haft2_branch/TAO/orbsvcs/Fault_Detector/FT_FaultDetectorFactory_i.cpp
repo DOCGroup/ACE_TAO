@@ -48,7 +48,6 @@ TAO::FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i ()
   : orb_ (0)
   , poa_ (0)
   , objectId_ (0)
-  , ior_ (0)
   , ior_output_file_ (0)
   , ns_name_ (0)
   , naming_context_ (0)
@@ -516,7 +515,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::create_object);
 
-  ACE_UNUSED_ARG (type_id); //@@ use it 
+  ACE_UNUSED_ARG (type_id); //@@ use it
   InternalGuard guard (this->internals_);
 
   ::TAO_PG::Properties_Decoder decoder (the_criteria);
