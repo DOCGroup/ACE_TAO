@@ -1,3 +1,9 @@
+Sun Sep 19 08:03:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/msvc_cidlc.pl:
+
+	  A new perl script to compile and build the CIDL compiler.
+
 Fri Sep 17 13:19:05 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Dirent_Test.cpp:
