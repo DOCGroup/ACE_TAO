@@ -216,6 +216,7 @@ project : acelib, core {
       Svc_Conf_l.cpp
       Svc_Conf_y.cpp
       Svc_Conf_Lexer_Guard.cpp
+      XML_Svc_Conf.cpp
     }
 
     Streams {
