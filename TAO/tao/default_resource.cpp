@@ -7,6 +7,7 @@
 #include "tao/debug.h"
 #include "tao/IIOP_Factory.h"
 #include "tao/UIOP_Factory.h"
+#include "tao/SHMIOP_Factory.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
 #include "tao/Single_Reactor.h"
@@ -421,6 +422,45 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
                       "TAO (%P|%t) Loaded default protocol <UIOP_Factory>\n"));
         }
 #endif /* TAO_HAS_UIOP == 1 */
+
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+      protocol_factory =
+        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("SHMIOP_Factory");
+
+      if (protocol_factory == 0)
+        {
+          if (TAO_orbdebug)
+            ACE_ERROR ((LM_WARNING,
+                        "(%P|%t) WARNING - No %s found in Service Repository."
+                        "  Using default instance.\n",
+                        "SHMIOP Protocol Factory"));
+
+          ACE_NEW_RETURN (protocol_factory,
+                          TAO_SHMIOP_Protocol_Factory,
+                          -1);
+        }
+
+      ACE_NEW_RETURN (item, TAO_Protocol_Item ("SHMIOP_Factory"), -1);
+      item->factory (protocol_factory);
+
+      if (this->protocol_factories_.insert (item) == -1)
+        {
+          delete item;
+          delete protocol_factory;
+
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "TAO (%P|%t) Unable to add "
+                             "<%s> to protocol factory set.\n",
+                             item->protocol_name ().c_str ()),
+                            -1);
+        }
+
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) Loaded default protocol <SHMIOP_Factory>\n"));
+        }
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
       return 0;
     }
 
