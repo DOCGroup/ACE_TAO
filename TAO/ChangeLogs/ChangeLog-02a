@@ -21,7 +21,7 @@ Sat Jan 26 23:09:56 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ClientRequestInfo_i.cpp (get_service_context_i):
 
-	  Corrected exception minor code (26 instead of 23).
+	  Corrected exception minor code (26 instead of incorrect 23).
 
 Sat Jan 26 22:53:04 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
