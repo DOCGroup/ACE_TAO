@@ -28,6 +28,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Message_Block.h"
 #include "ace/Get_Opt.h"
+#include "ace/streams.h"
 
 static char *host = 0;
 static u_short port = ACE_DEFAULT_SERVER_PORT;

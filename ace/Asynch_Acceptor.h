@@ -42,16 +42,18 @@ class ACE_Asynch_Acceptor : public ACE_Handler
 public:
   ACE_Asynch_Acceptor (void);
   // A do nothing constructor.
-
-  ~ACE_Asynch_Acceptor (void);
+  
+  virtual ~ACE_Asynch_Acceptor (void);
   // Virtual destruction
 
-  int open (const ACE_INET_Addr &address,
-	    size_t bytes_to_read = 0,
-	    int pass_addresses = 0,
-	    int backlog = 5,
-	    int reuse_addr = 1,
-	    ACE_Proactor *proactor = 0);
+  virtual int open (const ACE_INET_Addr &address,
+                    size_t bytes_to_read = 0,
+                    int pass_addresses = 0,
+                    int backlog = 5,
+                    int reuse_addr = 1,
+                    ACE_Proactor *proactor = 0,
+                    int validate_new_connection = 0,
+                    int reissue_accept = 1);
   // This starts the listening process at the port specified by
   // <address>.  ACE_Asynch_Acceptor initiates the AcceptEx calls with
   // <bytes_to_read>.  The buffer for the initial data will be created
@@ -68,13 +70,18 @@ public:
   // This initiates a new asynchronous accept through the <AcceptEx>
   // call.
 
-  static size_t address_size (void);
-  // This is required by the AcceptEx call.
-
-  int cancel (void);
+  virtual int cancel (void);
   // This cancels all pending accepts operations that were issued by
   // the calling thread.  The function does not cancel accept
   // operations issued by other threads.
+
+  virtual int validate_new_connection (const ACE_INET_Addr &remote_address);
+  // Template method for address validation.  
+  //
+  // Default implemenation always validates the remote address.
+
+  static size_t address_size (void);
+  // This is required by the AcceptEx call.
 
 protected:
   virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
@@ -105,6 +112,13 @@ private:
 
   int pass_addresses_;
   // Flag that indicates if parsing of addresses is necessary.
+
+  int validate_new_connection_;
+  // Flag that indicates if address validation is required.
+  
+  int reissue_accept_;
+  // Flag that indicates if a new accept should be reissued when a
+  // accept completes.
 
   int bytes_to_read_;
   // Bytes to be read with the <accept> call.
