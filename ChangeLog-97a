@@ -1,3 +1,7 @@
+Fri Jan 17 16:33:25 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/High_Res_Timer.*: added elapsed_time () and getTime ()
+
 Fri Jan 17 11:45:28 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* include/makeinclude/rules.local.GNU,
