@@ -30,9 +30,12 @@ finishLaunch (const Deployment::Connections & providedReference,
 {
   // @@ (OO) Please declare this as a "const CORBA::ULong".  This
   //         improves "const correctness", and improves code self
+       ACE_DEBUG ((LM_DEBUG, "into finishlaunch\n"));
   //         documentation.
   CORBA::ULong length = providedReference.length ();
 
+       ACE_DEBUG ((LM_DEBUG, "lenght %d\n", length));
+  
   // @@ (OO) Your indentation does not conform to DOC group coding
   //         conventions/guidelines.  Please place two spaces before
   //         the brace, e.g.:
@@ -54,12 +57,13 @@ finishLaunch (const Deployment::Connections & providedReference,
   {
     ACE_CString name = providedReference[i].instanceName.in ();
     Components::CCMObject_ptr comp;
-
+	
     if (this->component_map_.find (name, comp) != 0)
+    {
       ACE_THROW (Deployment::InvalidConnection ());
-
+    }       
     // @@ (OO) What purpose does the following _duplicate() and
-    //         assignment to a "_var" serve?  Can the object in
+    //         assignment to a "_var" serve?  Can the object in
     //         question disappear (e.g. reference count drop to zero)
     //         prior to invoking the connect() operations below?  If
     //         so, the below _duplicate() won't help since you've
@@ -74,7 +78,6 @@ finishLaunch (const Deployment::Connections & providedReference,
     Components::EventConsumerBase_var consumer;
     //Since we know CCMObject inherits from navigation/event/receptacle, no need
     //to narrow here.
-
     switch (providedReference[i].kind)
     {
     case Deployment::SimplexReceptacle:
@@ -95,9 +98,12 @@ finishLaunch (const Deployment::Connections & providedReference,
       consumer = Components::EventConsumerBase::
         _narrow (providedReference[i].endpoint.in ()
                  ACE_ENV_ARG_PARAMETER);
+
       ACE_CHECK;
       if (CORBA::is_nil (consumer.in ()))
-        ACE_THROW (Deployment::InvalidConnection ());
+      {
+          ACE_THROW (Deployment::InvalidConnection ());
+      }
 
       comp->connect_consumer(providedReference[i].portName.in (),
                              consumer.in ()
@@ -127,12 +133,11 @@ finishLaunch (const Deployment::Connections & providedReference,
   {
     // @@ (OO) Shouldn't you only print this message if some CIAO
     //         debug level is enabled.
-    ACE_DEBUG ((LM_DEBUG, "The Start value is true in FinishLaunch Call!\n"));
-
     // @@ (OO) You're missing the emulated exception argument to the
     //         start() call.  It should be:
     //
     //            this->start (ACE_ENV_SINGLE_ARG_PARAMETER);
+    
     this->start ();
     ACE_CHECK;
   }
@@ -140,7 +145,7 @@ finishLaunch (const Deployment::Connections & providedReference,
 
 // @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
 //         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
+//         the i"_WITH_DEFAULTS"
 void
 CIAO::NodeApplication_Impl::
 start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -248,12 +253,15 @@ install (const ::Deployment::ImplementationInfos & impl_infos
                    Deployment::InstallationFailure,
                    Components::InvalidConfiguration))
 {
+  Deployment::ComponentInfos_var retv;
+  ACE_TRY
+   {
   Deployment::ComponentInfos * tmp;
   ACE_NEW_THROW_EX (tmp,
                     Deployment::ComponentInfos,
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
-  Deployment::ComponentInfos_var retv (tmp);
+  retv = tmp;
 
   // @@ (OO) Please declare this as "const CORBA::ULong len".  Minor
   //         "const correctness" change.
@@ -272,12 +280,12 @@ install (const ::Deployment::ImplementationInfos & impl_infos
   {
     home = this->install_home (impl_infos[i]
                                ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_TRY_CHECK;
 
     Components::KeylessCCMHome_var kh =
       Components::KeylessCCMHome::_narrow (home.in ()
                                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_TRY_CHECK;
 
     if (CORBA::is_nil (kh.in ()))
         ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
@@ -285,7 +293,7 @@ install (const ::Deployment::ImplementationInfos & impl_infos
     // @@ Note, here we are missing the CreateFailure.
     // Sometime I will come back to add exception rethrow.
     comp = kh->create_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_TRY_CHECK;
 
     if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
                                    Components::CCMObject::_duplicate (comp.in ())))
@@ -325,7 +333,7 @@ install (const ::Deployment::ImplementationInfos & impl_infos
 
         CORBA::String_var ior =
           this->orb_->object_to_string (comp.in() ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        ACE_TRY_CHECK;
 
         if (write_IOR (path, ior.in ()) != 0)
         {
@@ -339,6 +347,15 @@ install (const ::Deployment::ImplementationInfos & impl_infos
 
     }
   }
+  }
+  ACE_CATCHANY
+   {
+     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                          "CIAO_NodeApplication::install error\t\n");
+     ACE_RE_THROW;
+     return 0;
+   }
+  ACE_ENDTRY;
   return retv._retn ();
 }
 
