@@ -636,20 +636,17 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i (void)
   else if (this->index_ >= ACE_static_cast (ssize_t, this->map_man_->total_size_))
     return 0;
 
-  for (;;)
-    if (this->next_ == &this->map_man_->table_[this->index_])
-      {
-        while (++this->index_ < ACE_static_cast (ssize_t,
-                                                 this->map_man_->total_size_))
-          {
-            this->next_ = this->map_man_->table_[this->index_].next_;
-            if (this->next_ != &this->map_man_->table_[this->index_])
-              break;
-          }
-        break;
-      }
-    else
-      this->next_ = this->next_->next_;
+  this->next_ = this->next_->next_;
+  if (this->next_ == &this->map_man_->table_[this->index_])
+    {
+      while (++this->index_ < ACE_static_cast (ssize_t,
+                                               this->map_man_->total_size_))
+        {
+          this->next_ = this->map_man_->table_[this->index_].next_;
+          if (this->next_ != &this->map_man_->table_[this->index_])
+            break;
+        }
+    }
 
   return this->index_ < ACE_static_cast (ssize_t, this->map_man_->total_size_);
 }
@@ -670,19 +667,16 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i (void)
   else if (this->index_ < 0)
     return 0;
 
-  for (;;)
-    if (this->next_ == &this->map_man_->table_[this->index_])
-      {
-        while (--this->index_ >= 0)
-          {
-            this->next_ = this->map_man_->table_[this->index_].next_;
-            if (this->next_ != &this->map_man_->table_[this->index_])
-              break;
-          }
-        break;
-      }
-    else
-      this->next_ = this->next_->prev_;
+  this->next_ = this->next_->prev_;
+  if (this->next_ == &this->map_man_->table_[this->index_])
+    {
+      while (--this->index_ >= 0)
+        {
+          this->next_ = this->map_man_->table_[this->index_].prev_;
+          if (this->next_ != &this->map_man_->table_[this->index_])
+            break;
+        }
+    }
 
   return this->index_ >= 0;
 }
@@ -701,7 +695,7 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* (void)
 }
 
 // Returns the reference to the hash_map_manager that is being
-// iterated over. 
+// iterated over.
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>&
 ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::map (void)
@@ -875,5 +869,3 @@ ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 }
 
 #endif /* ACE_HASH_MAP_MANAGER_C */
-
-
