@@ -124,12 +124,10 @@ ACE_QtReactor::exception_event (int handle)
   dispatch (1, dispatch_set);
 }
 
-
-
 int 
 ACE_QtReactor::QtWaitForMultipleEvents (int width,
                                         ACE_Select_Reactor_Handle_Set &wait_set,
-                                        ACE_Time_Value */*max_wait_time*/)
+                                        ACE_Time_Value * /*max_wait_time*/)
 {
   // Check to make sure our handle's are all usable.
   ACE_Select_Reactor_Handle_Set temp_set = wait_set;
