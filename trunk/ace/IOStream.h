@@ -184,6 +184,10 @@ public:
   u_int streambuf_size (void);
   // Query the streambuf for the size of it's buffers.
 
+  u_char timeout (void);
+  // Did we take an error because of an IO operation timeout?
+  // Note:  Invoking this resets the flag.
+
 protected:
   ACE_Streambuf (u_int streambuf_size,
                  int io_mode);
@@ -226,6 +230,9 @@ protected:
   const u_int streambuf_size_;
   // This defines the size of the input and output buffers.  It can be
   // set by the object constructor.
+
+  u_char timeout_;
+  // Did we take an error because of an IO operatio timeout?
 
   ACE_Time_Value recv_timeout_value_;
   ACE_Time_Value *recv_timeout_;

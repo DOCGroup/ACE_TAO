@@ -392,6 +392,8 @@ ACE_Streambuf::flushbuf (void)
 int
 ACE_Streambuf::get_one_byte (void)
 {
+  this->timeout_ = 0;
+
   // The recv function will return immediately if there is no data
   // waiting.  So, we use recv_n to wait for exactly one byte to come
   // from the peer.  Later, we can use recv to see if there is
@@ -399,7 +401,11 @@ ACE_Streambuf::get_one_byte (void)
   // to block but I like this better.)
 
   if (this->recv_n (base (), 1, MSG_PEEK, recv_timeout_) != 1)
-    return EOF;
+    {
+      if (errno == ETIME)
+        this->timeout_ = 1;
+      return EOF;
+    }
   else
     return 1;
 }
@@ -426,7 +432,11 @@ ACE_Streambuf::fillbuf (void)
   // error.
 
   if (bc < 0)
-    return EOF;
+    {
+      if (errno == ETIME)
+        this->timeout_ = 1;
+      return EOF;
+    }
 
   // Move the get pointer to reflect the number of bytes we just read.
 
@@ -607,6 +617,13 @@ ACE_Streambuf::~ACE_Streambuf (void)
 {
   delete [] this->eback_saved_;
   delete [] this->pbase_saved_;
+}
+
+u_char ACE_Streambuf::timeout (void)
+{
+  u_char rval = this->timeout_;
+  time->timeout_ = 0;
+  return rval;
 }
 
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
