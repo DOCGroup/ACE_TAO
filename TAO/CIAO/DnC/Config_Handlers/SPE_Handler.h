@@ -34,44 +34,40 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace Config_Handler
+namespace CIAO
 {
-  class SPE_Handler
+  namespace Config_Handler
   {
-  public:
-
-    SPE_Handler (DOMDocument* doc, unsigned long filter_);
-
-    SPE_Handler (DOMNodeIterator* iter, bool release = false);
-
-    ~SPE_Handler();
-
-    void process_SubcomponentPortEndpoint ();
-
-    void process_portName (const XMLCh* name);
-
-  public:
-
-    ::Deployment::SubcomponentPortEndpoint const&
-    spe ()
+    class SPE_Handler
     {
-      return *spe_;
-    }
+    public:
 
-  private:
+      SPE_Handler (DOMDocument* doc, unsigned long filter_);
 
-    DOMDocumentTraversal* traverse_;
+      SPE_Handler (DOMNodeIterator* iter, bool release = false);
 
-    DOMNode* root_;
+      ~SPE_Handler();
 
-    unsigned long filter_;
+      void process_SubcomponentPortEndpoint
+      (::Deployment::SubcomponentPortEndpoint &spe);
 
-    DOMNodeIterator* iter_;
+      void process_portName (const XMLCh* name,
+                             ::Deployment::SubcomponentPortEndpoint &spe);
 
-    bool release_;
+    private:
 
-    ::Deployment::SubcomponentPortEndpoint_var spe_;
-  };
+      DOMDocumentTraversal* traverse_;
+
+      DOMNode* root_;
+
+      unsigned long filter_;
+
+      DOMNodeIterator* iter_;
+
+      bool release_;
+
+    };
+  }
 }
 
 #include /**/ "ace/post.h"

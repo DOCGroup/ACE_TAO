@@ -3,32 +3,44 @@
 project (Config_Handlers) : taolib {
 
   sharedname = Config_Handers
-  dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
+  dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   macros   += XML_USE_PTHREADS
   includes += $(XERCESCROOT)/include $(CIAO_ROOT)/DnC/
-  libpaths += $(XERCESCROOT)/lib $(ACE_ROOT)/ace
+  libpaths += $(XERCESCROOT)/lib $(ACE_ROOT)/lib
   libs     += xerces-c
 
   Source_Files {
+    ACD_Handler.cpp
     ADD_Handler.cpp
-    Utils.cpp
-    ID_Handler.cpp
+    APM_Handler.cpp
+    CAD_Handler.cpp
     CEPE_Handler.cpp
+    CompImplDesc_Handler.cpp
+    CompPkgDesc_Handler.cpp
+    CPR_Handler.cpp
     CRDD_Handler.cpp
-    //DP_Handler.cpp
+    DP_Handler.cpp
     ERE_Handler.cpp
+    ID_Handler.cpp
     IDD_Handler.cpp
     IRDD_Handler.cpp
     MDD_Handler.cpp
+    MID_Handler.cpp
+    PC_Handler.cpp
     PCD_Handler.cpp
+    PCI_Handler.cpp
     PPM_Handler.cpp
+    Property_Handler.cpp
     PSPE_Handler.cpp
     PSPR_Handler.cpp
     RDD_Handler.cpp
-    RS_Handler.cpp
-    SP_Handler.cpp
-    SPK_Handler.cpp
     Requirement_Handler.cpp
-    Property_Handler.cpp
+    RS_Handler.cpp
+    SID_Handler.cpp
+    SP_Handler.cpp
+    SPE_Handler.cpp
+    SPK_Handler.cpp
+    SPR_Handler.cpp
+    Utils.cpp
   }
 }
