@@ -195,7 +195,7 @@ private:
 #include "ace/SSL/SSL_SOCK_Connector.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#endif /* ACE_SSL_SOCK_CONNECTOR_H */
-
 #include "ace/post.h"
+
+#endif /* ACE_SSL_SOCK_CONNECTOR_H */
 

@@ -243,7 +243,7 @@ protected:
 #include "ace/SSL/SSL_SOCK_Stream.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#endif /* ACE_SSL_SOCK_STREAM_H */
-
 #include "ace/post.h"
+
+#endif /* ACE_SSL_SOCK_STREAM_H */
 
