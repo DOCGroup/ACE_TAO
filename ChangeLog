@@ -1,3 +1,11 @@
+Tue May  6 11:50:18 2003  ace  <elliott_c@ociweb.com>
+
+        * ace/Synch.cpp (get_nesting_level):
+
+          On Windows XP 64-bit, the RecursionCount of the CRITICAL_SECTION
+          object is zero based.  With Win32, it is 1 based.  So, we use
+          LockCount + 1 on Win64.
+
 Tue May  6 09:19:07 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/MT_Reactor_Timer_Test.cpp:
