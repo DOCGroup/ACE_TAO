@@ -2,9 +2,11 @@
 
 
 #include "Svcconf.h"
-#include "common/FileCharStream.h"
-#include "common/StrCharStream.h"
-#include "parser/parser/Parser.h"
+#include "ACEXML/common/FileCharStream.h"
+#include "ACEXML/common/StrCharStream.h"
+#include "ACEXML/parser/parser/Parser.h"
+
+#if (ACE_USES_CLASSIC_SVC_CONF == 0)
 
 extern "C" ACE_Proper_Export_Flag ACE_XML_Svc_Conf *
 _ACEXML_create_XML_Svc_Conf_Object (void)
@@ -93,3 +95,5 @@ ACEXML_Svcconf_Parser::parse_string (const ACE_TCHAR str[])
     }
   return 0;
 }
+
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */

@@ -10,6 +10,8 @@
 #include "ace/ARGV.h"
 #include "ace/Module.h"
 
+#if (ACE_USES_CLASSIC_SVC_CONF == 0)
+
 #if !defined (__ACEXML_INLINE__)
 # include "Svcconf_Handler.i"
 #endif /* __ACEXML_INLINE__ */
@@ -669,3 +671,5 @@ ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist,
     }
   return 0;
 }
+
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
