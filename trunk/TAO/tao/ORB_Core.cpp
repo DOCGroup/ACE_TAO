@@ -118,7 +118,6 @@ TAO_ORB_Core::add_to_ior_table (ACE_CString init_ref,
 
   // Add the objectID-IOR to the table and return the status.
   return table.add_ior (object_id, ior);
-
 }
 
 int
@@ -360,8 +359,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           // may be dropped in future releases.
 
           ACE_DEBUG ((LM_WARNING,
-                      "(%P|%t) \nWARNING: The `-ORBhost' option is obsolete.\n"
-                      "In the future, use the `-ORBendpoint' option.\n"));
+                      "(%P|%t) \nWARNING: The `-ORBHost' option is obsolete.\n"
+                      "In the future, use the `-ORBEndpoint' option.\n"));
 
           if (arg_shifter.is_parameter_next())
             {
@@ -603,7 +602,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
                   ACE_DEBUG ((LM_WARNING,
                               "(%P|%t) \nWARNING: The `host:port' pair style "
-                              "for `-ORBpreconnect' is obsolete.\n"
+                              "for `-ORBPreconnect' is obsolete.\n"
                               "In the future, use the URL style.\n"));
 
                   preconnections =
@@ -668,6 +667,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                                    "-ORBInitRef") == 0)
         {
           arg_shifter.consume_arg ();
+
           if (arg_shifter.is_parameter_next ())
             {
               init_ref = arg_shifter.get_current ();
