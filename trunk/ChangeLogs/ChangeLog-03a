@@ -1,3 +1,9 @@
+Sat Mar 10 16:38:22 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/run_test.lst:
+          Running the Recursive_Mutex_Test on single-threaded builds makes
+          very little sense.
+
 Sat Mar 10 16:35:19 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
