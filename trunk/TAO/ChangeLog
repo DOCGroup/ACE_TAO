@@ -1,3 +1,11 @@
+Tue Apr 20 12:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+          Added include of tao/CDR.h
+
 Mon Apr 19 13:04:27 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/POA/TIE/POA_TIE.mpc:
