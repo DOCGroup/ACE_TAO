@@ -18,7 +18,6 @@
 // construction.
 
 #include "tao/corba.h"
-#include "tao/interp.h"
 
 // Constructor for CONSTANT typecodes with empty parameter lists.
 // These are only created once, and those constants are shared.
@@ -1883,10 +1882,10 @@ CORBA_TypeCode::private_discrim_pad_size (CORBA::Environment &env)
 
   stream.setup_encapsulation (this->buffer_, (size_t) this->length_);
 
- (void) TAO_IIOP_Interpeter::calc_key_union_attributes (&stream,
-                                                        overall_align,
-                                                        discrim_size,
-                                                        env);
+ (void) TAO_IIOP_Interpreter::calc_key_union_attributes (&stream,
+                                                         overall_align,
+                                                         discrim_size,
+                                                         env);
   if (env. exception () == 0)
     {
       this->private_state_->tc_discrim_pad_size_known_ = CORBA::B_TRUE;
