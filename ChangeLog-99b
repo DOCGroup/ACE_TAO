@@ -1,3 +1,15 @@
+Tue Aug  3 23:23:18 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Cached_Connect_Strategy_T.{h,cpp} (cleanup):
+	  Added a specialised method to prevent memory leaks with old
+	  versions of g++. This method calls the underlying iterator
+	  and does the cleanup.
+
+	* ace/run_tests.sh:
+	  Removed purify check over Cached_Accept_Conn_Test and
+	  Cached_Conn_Test since they no longer leak memory when built
+	  using old version of g++.
+	
 Tue Aug  3 22:23:18 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU: Added an ifeq flag for
