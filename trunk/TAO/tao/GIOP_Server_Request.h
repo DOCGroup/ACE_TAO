@@ -28,6 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Server_Request.h"
+#include "tao/ORB.h"
 #include "tao/Principal.h"
 
 class TAO_Export TAO_GIOP_ServerRequest : public CORBA_ServerRequest

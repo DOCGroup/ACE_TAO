@@ -1,6 +1,11 @@
+Tue Nov 09 10:25:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/GIOP_Server_Request.h: Added #include "tao/ORB.h".  I use ORB
+	  function in the .i file.  Thanks to David for noticing this.
+
 Mon Nov  8 23:21:35 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp: 
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
 	  Made a minor correction in use of ORBSVCS_Time
 	  Thanks to Keith Brown <kalbrown@ix.netcom.com> for providing
 	  the solution
