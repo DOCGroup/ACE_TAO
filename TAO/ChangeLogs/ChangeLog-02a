@@ -1,34 +1,39 @@
+Sat Mar 31 08:29:04 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/MT_Timeout/Client_Task.cpp:
+          Add missing ACE_TRY_CHECK
+
 Sat Mar 31 07:16:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/tao/IFR_Client/IFR_BaseC.cpp: Fixed errors in MSVC. 
+        * tao/tao/IFR_Client/IFR_BaseC.cpp: Fixed errors in MSVC.
 
 Sat Mar 31 02:23:16 2001  Sharath Cholleti  <sharath@cs.wustl.edu>
 
-	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp
-	* orbsvcs/AV/Endpoint_Strategy.cpp
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp
-	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp
-	* orbsvcs/tests/AVStreams/Latency/control.cpp
-	* orbsvcs/tests/AVStreams/Latency/ping.cpp
-	* orbsvcs/tests/AVStreams/Latency/pong.cpp
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp
-	* orbsvcs/tests/AVStreams/Multicast/server.cpp
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp
-	* orbsvcs/tests/AVStreams/benchmark/child_process.cpp
-	* orbsvcs/tests/AVStreams/benchmark/client.cpp
-	* orbsvcs/tests/AVStreams/benchmark/server.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp
-	* orbsvcs/tests/AVStreams/server_discovery/Trader_Client.cpp
-	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp
-	* orbsvcs/tests/Trading/export_test.cpp
-	* orbsvcs/tests/Trading/import_test.cpp
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp
+        * orbsvcs/AV/Endpoint_Strategy.cpp
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp
+        * orbsvcs/tests/AVStreams/Latency/control.cpp
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp
+        * orbsvcs/tests/AVStreams/Multicast/server.cpp
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp
+        * orbsvcs/tests/AVStreams/benchmark/child_process.cpp
+        * orbsvcs/tests/AVStreams/benchmark/client.cpp
+        * orbsvcs/tests/AVStreams/benchmark/server.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp
+        * orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp
+        * orbsvcs/tests/AVStreams/server_discovery/Trader_Client.cpp
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp
+        * orbsvcs/tests/Trading/export_test.cpp
+        * orbsvcs/tests/Trading/import_test.cpp
 
-	Fixed fuzz warnings for ACE_TRY_ENV.
+        Fixed fuzz warnings for ACE_TRY_ENV.
 
 Sat Mar 31 02:06:09 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -43,66 +48,66 @@ Sat Mar 31 02:06:09 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Fri Mar 30 22:06:02 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	These changes were first given out as a custom patch to TAO
-	1.1.14 to Oresis.  They've been tested there, and seem to minimize 
-	ORB leaks.
+        These changes were first given out as a custom patch to TAO
+        1.1.14 to Oresis.  They've been tested there, and seem to minimize
+        ORB leaks.
 
-	* tao/IIOP_Connection_Handler.h:
- 	* tao/Strategies/SHMIOP_Connection_Handler.h:
-	* tao/Strategies/UIOP_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
-	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.h:
-	
-	Changed pending_upcalls_ to be a signed quantity rather than
- 	unsigned.  There still seems to be a lingering condition whereby
- 	this value can get decremented "below" zero.  It's much easier to
- 	detect this situation when it's signed than unsigned.
+        * tao/IIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.h:
+        * tao/Strategies/UIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.h:
 
-	* tao/IIOP_Connection_Handler.cpp:
- 	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+        Changed pending_upcalls_ to be a signed quantity rather than
+        unsigned.  There still seems to be a lingering condition whereby
+        this value can get decremented "below" zero.  It's much easier to
+        detect this situation when it's signed than unsigned.
 
-	(open) Added code to set the transport's id.
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
 
-	(handle_close) Changed conditional on pending_upcalls_ from "equal
-	to zero" to "less than or equal to zero" in order to accomodate
-	the lingering condition outlined above.
+        (open) Added code to set the transport's id.
 
-	(handle_input_i) This now returns -1 when pending_upcalls_ falls
-	below or equal to zero.  This takes care of the situation outlined 
-	in the header file entry above.
+        (handle_close) Changed conditional on pending_upcalls_ from "equal
+        to zero" to "less than or equal to zero" in order to accomodate
+        the lingering condition outlined above.
 
-	* tao/Invocation.cpp (close_connection): Reverted the change made
- 	by Carlos in ChangeLogTag "Sat Mar 24 22:15:23 2001 Carlos O'Ryan
- 	<coryan@uci.edu>"
-	
+        (handle_input_i) This now returns -1 when pending_upcalls_ falls
+        below or equal to zero.  This takes care of the situation outlined
+        in the header file entry above.
+
+        * tao/Invocation.cpp (close_connection): Reverted the change made
+        by Carlos in ChangeLogTag "Sat Mar 24 22:15:23 2001 Carlos O'Ryan
+        <coryan@uci.edu>"
+
 Fri Mar 30 19:57:14 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/Makefile:
-	* tests/Makefile.bor:
-	* tests/README:
-	* tests/MT_Timeout/Makefile:
-	* tests/MT_Timeout/Makefile.bor:
-	* tests/MT_Timeout/client.bor:
-	* tests/MT_Timeout/server.bor:
-	* tests/MT_Timeout/README:
-	* tests/MT_Timeout/Test.idl:
-	* tests/MT_Timeout/run_test.pl:
-	* tests/MT_Timeout/Client_Task.h:
-	* tests/MT_Timeout/Client_Task.cpp:
-	* tests/MT_Timeout/Server_Task.h:
-	* tests/MT_Timeout/Server_Task.cpp:
-	* tests/MT_Timeout/Sleep_Service.h:
-	* tests/MT_Timeout/Sleep_Service.cpp:
-	* tests/MT_Timeout/client.cpp:
-	* tests/MT_Timeout/server.cpp:
-	  New regression test for bug 842.  The client creates multiple
-	  threads, each thread repeatedly send requests to a server that
-	  blocks for an specified amount of time.  Each client thread sets
-	  a roundtrip timeout policy.  The test currently deadlocks, while
-	  it should terminate in a relatively short amount of time.
+        * tests/Makefile:
+        * tests/Makefile.bor:
+        * tests/README:
+        * tests/MT_Timeout/Makefile:
+        * tests/MT_Timeout/Makefile.bor:
+        * tests/MT_Timeout/client.bor:
+        * tests/MT_Timeout/server.bor:
+        * tests/MT_Timeout/README:
+        * tests/MT_Timeout/Test.idl:
+        * tests/MT_Timeout/run_test.pl:
+        * tests/MT_Timeout/Client_Task.h:
+        * tests/MT_Timeout/Client_Task.cpp:
+        * tests/MT_Timeout/Server_Task.h:
+        * tests/MT_Timeout/Server_Task.cpp:
+        * tests/MT_Timeout/Sleep_Service.h:
+        * tests/MT_Timeout/Sleep_Service.cpp:
+        * tests/MT_Timeout/client.cpp:
+        * tests/MT_Timeout/server.cpp:
+          New regression test for bug 842.  The client creates multiple
+          threads, each thread repeatedly send requests to a server that
+          blocks for an specified amount of time.  Each client thread sets
+          a roundtrip timeout policy.  The test currently deadlocks, while
+          it should terminate in a relatively short amount of time.
 
 Fri Mar 30 18:52:54 2001  Carlos O'Ryan  <coryan@uci.edu>
 
