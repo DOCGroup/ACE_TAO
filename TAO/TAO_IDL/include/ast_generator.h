@@ -194,6 +194,7 @@ public:
   virtual AST_Expression        *create_expr(unsigned long v);
   virtual AST_Expression        *create_expr(UTL_String *s);
   virtual AST_Expression        *create_expr(char c);
+  virtual AST_Expression        *create_expr(ACE_OutputCDR::from_wchar wc);
   virtual AST_Expression        *create_expr(double d);
 
   // Create a node representing an enumerator
