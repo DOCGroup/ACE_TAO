@@ -80,13 +80,13 @@ public:
   const char *local_name (void) const;
   // Return the local name.
 
-  const char *full_name (void) const;
+  virtual const char *full_name (void) const;
   // Return the stringified full name.
 
   const char *flat_name (void) const;
   // Return the flattened full scoped name.
 
-  const char *repoID (void) const;
+  virtual const char *repoID (void) const;
   // Retrieve the repository ID.
 
   const char *full_skel_name (void) const;
