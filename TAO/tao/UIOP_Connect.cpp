@@ -234,6 +234,10 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
   // it so that nested upcall on the same transport can be handled.
   //
 
+  // Notice that the message_state is only modified in one thread at a 
+  // time because the reactor does not call handle_input() for the
+  // same Event_Handler in two threads at the same time.
+
   // Copy message type.
   CORBA::Octet message_type = this->transport_.message_state_.message_type;
 

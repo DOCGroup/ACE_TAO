@@ -4,6 +4,15 @@ Wed Jul 28 13:53:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  The test was mistakenly not using the octet sequence
 	  optimizations.
 
+	* tao/IIOP_Connect.cpp:
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Transport.cpp:
+	* tao/UIOP_Connect.cpp:
+	* tao/UIOP_Transport.cpp:
+	  Added a bunch of comments about code that could be refactored
+	  and things that were not very clear, thanks to James Megquier
+	  <jmegq@bbn.com> for helping out with this.
+
 Wed Jul 28 13:44:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/Makefile:
