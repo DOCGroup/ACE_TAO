@@ -1,0 +1,26 @@
+// $Id$   -*- C++ -*-
+
+/**
+ * @file cidl_template.cidl
+ *
+ * This file show an example cidl file.
+ */
+
+// @@ We do not support import (yet).
+//import [component module];
+
+// [idl-basename] contains the IDL3 definitions for component(s) and
+// home(s) and the interfaces that they need.
+
+#include "[idl-basename].idl"
+
+// We only support a simple session implementation definition.
+
+composition session [composition name]
+{
+  home executor [home executor name]
+    {
+      implement [home name];
+      manages [component executor name];
+    };
+};
