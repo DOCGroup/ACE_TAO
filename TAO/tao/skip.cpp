@@ -540,7 +540,11 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                                                    src,
                                                    ACE_TRY_ENV);
         }
-      return CORBA::TypeCode::TRAVERSE_STOP;
+
+      // If we're here, we have an implicit default case, and we 
+      // should just return without demarshaling anything, since no
+      // union member was marshaled in the first place.
+      return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
 
   // If we found the member successfully then just use that one...
