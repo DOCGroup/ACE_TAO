@@ -1,3 +1,75 @@
+Tue May  9 20:01:41 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Acceptor_Registry.h (TAO_Acceptor_Registry):
+	* tao/Connector_Registry.h (TAO_Connector_Registry):
+	* tao/ORB_Core.h (TAO_ORB_Core, TAO_ORB_Core_TSS_Resources,
+	                  TAO_TSS_Resources, TAO_ORB_Table):
+	* tao/Pluggable.h (TAO_Transport):
+	* tao/Profile.h (TAO_Profile):
+	* tao/Resource_Factory.h (TAO_Protocol_Item):
+	
+
+	  Declared the copy constructor and the assignment operator to be
+	  private and unimplemented.
+
+	* tao/Acceptor_Registry.cpp (open):
+
+	  Removed assignment from ACE_CString to temporary `const char *'
+	  pointer.  The temporary wasn't necessaery since the ACE_CString
+	  class has an array "[]" operator, which is what the temporary
+	  was being used for, i.e. individual element access.
+
+	* tao/IIOP_Connector.cpp (connect):
+	* tao/SHMIOP_Connector.cpp (connect):
+	* tao/UIOP_Connector.cpp (connect):
+
+	  Verify that the remote Addr was initialized properly.  Failure
+	  can occur, for example, if hostname lookup failed when
+	  initializing the remote Addr.
+
+	* tao/IIOP_Connector.cpp (connect):
+
+	  Don't bother using addr_to_string() to determine host and port
+	  to display in debugging output.  Simply use host() and port()
+	  instead.  Pluggable protocol neutrality isn't an issue here
+	  since this code is only used by the IIOP pluggable protocol.
+
+	* tao/IIOP_Profile.cpp (decode):
+	* tao/SHMIOP_Profile.cpp (decode):
+
+	  Delayed binding of hostname and port until first access.  This
+	  improves TAO's behavior in the presence of dynamically IP
+	  addresses, and also delays hostname lookups until the INET_Addr
+	  is actually needed, which may be never!
+
+	  Make sure the underlying INET_Addr is invalid, until it is first
+	  accessed by explicitly setting the family type to -1.
+
+	* tao/IIOP_Profile.i (object_addr):
+	* tao/SHMIOP_Profile.i (object_addr):
+
+	  The object_addr_ is now initialized here, rather than at IOR
+	  decode time for several reasons:
+
+		1. A request on the object may never be invoked.
+		2. The DNS setup may have changed dynamically.
+		...etc..
+
+	* tao/IIOP_Profile.h:
+	* tao/SHMIOP_Profile.h:
+	* tao/UIOP_Profile.h:
+
+	  Removed private declarations of the copy constructor and the
+	  assignment operator.  There is no need to have them in the
+	  derived class since the base class (TAO_Profile) already has
+	  private declarations of these methods.
+
+	* tao/UIOP_Profile.cpp (decode):
+
+	  If the call fails (this should never happen), allow the profile
+	  to be created, and rely on TAO's connection handling to throw
+	  the appropriate exception.
+
 Tue May  9 20:00:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
