@@ -99,6 +99,11 @@ public TAO_Local_RefCounted_Object
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     PortableInterceptor::ForwardRequest));
 
+  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri
+			   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+		     PortableInterceptor::ForwardRequest));
+
   virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
 			      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
