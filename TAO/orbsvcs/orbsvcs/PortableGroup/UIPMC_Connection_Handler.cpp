@@ -251,7 +251,7 @@ TAO_UIPMC_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   // Try to clean up things if the upcall count has reached 0
   if (upcalls == 0)
-    this->handle_close_i ();
+    this->decr_refcount ();
 
   return 0;
 }
@@ -354,7 +354,7 @@ TAO_UIPMC_Connection_Handler::handle_input (ACE_HANDLE)
   // Try to clean up things if the upcall count has reached 0
   if (upcalls == 0)
     {
-      this->handle_close_i ();
+      this->decr_refcount ();
 
       // As we have already performed the handle closing we dont want
       // to return a  -1. Doing so would make the reactor call
