@@ -1,3 +1,7 @@
+Wed Nov  6 11:35:01 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1020_Basic_Regression/Server_Task.h: Fixed fuzz errors. 
+
 Wed Nov  6 11:32:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
         * tests/Bug_1020_Regression/Echo.cpp:
