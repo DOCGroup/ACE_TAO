@@ -43,15 +43,15 @@ run()
 {
   /bin/rm -f core log/$1.log
 
-  if [ ! -f "$1" ]; then 
-    echo 1>&2 "Making \`$1'..."
+  if [ ! -f "$1" ]; then
+    echo 1>&2 "Making $1 . . ."
     remove_exe_after_test="true"
     make BIN="$1" >> "$compilation_log"
   else
     remove_exe_after_test=""
   fi
 
-  echo "running \`$1'"
+  echo "running $1"
   if [ "$chorus" ]; then
     #### Assumes that the PATH has been set on the target.
     rsh $target $run_command $1
@@ -75,7 +75,7 @@ run()
   fi
 
   if [ "$remove_exe_after_test" ]; then
-    echo 1>&2 "Discarding \`$1'..."
+    echo 1>&2 "Discarding $1"
     rm -f "$1" ".obj/$1.o"
   fi
 }
