@@ -28,13 +28,6 @@ Mon Jul 09 01:51:27 2001  Ossama Othman  <ossama@uci.edu>
 	  Updated invocation of the connect() method to match the
 	  signature change described below.
 
-	* tao/IIOP_Endpoint.cpp (hash):
-
-	  Invoke the object_addr() accessor instead of directly accessing
-	  the object_addr_ member.  The object_addr() method forces
-	  initialization of the object_addr_ member, thus making sure a
-	  hash is computed using a valid ACE_INET_Addr.
-
 	* tao/Connector_Registry.cpp:
 	* tao/Connector_Registry.h:
 	* tao/IIOP_Connector.cpp:
