@@ -47,6 +47,8 @@ namespace CIAO
   {
   public:
     Servant_Impl (EXEC * exe,
+                  Components::CCMHome_ptr home,
+                  Home_Servant_Impl_Base *home_servant,
                   Session_Container * c);
                   
     virtual ~Servant_Impl (void);
@@ -64,6 +66,10 @@ namespace CIAO
 
     virtual CORBA::Object_ptr
     _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Components::SessionComponent_ptr
+    get_executor (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
    // CIAO-specific operations.

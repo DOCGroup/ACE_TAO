@@ -11,8 +11,12 @@ namespace CIAO
     ACE_ASSERT (0);
   }
 
-  Servant_Impl_Base::Servant_Impl_Base (Session_Container * c)
-    : container_ (c)
+  Servant_Impl_Base::Servant_Impl_Base (Components::CCMHome_ptr home,
+                                        Home_Servant_Impl_Base *home_servant,
+                                        Session_Container * c)
+    : home_ (Components::CCMHome::_duplicate (home)),
+      home_servant_ (home_servant),
+      container_ (c)
   {
   }
 
@@ -61,6 +65,11 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
+    Components::SessionComponent_var temp = this->get_executor ();
+    temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+    ACE_DEBUG ((LM_DEBUG, "called passivate\n"));
+
     CORBA::Object_var objref =
       this->container_->get_objref (this);
 
@@ -72,6 +81,10 @@ namespace CIAO
     this->container_->uninstall_component ( ccmobjref.in (),
                                             oid.out ()
                                             ACE_ENV_ARG_PARAMETER);
+    ACE_DEBUG ((LM_DEBUG, "called uninstall\n"));
+    this->home_servant_->update_component_map (oid);
+    ACE_DEBUG ((LM_DEBUG, "called update\n"));
+
   }
 
   ::Components::ConnectionDescriptions *
