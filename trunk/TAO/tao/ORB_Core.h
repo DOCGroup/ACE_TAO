@@ -281,7 +281,7 @@ public:
    * No-Collocation is a special case of collocation.
    */
   static TAO_Collocation_Strategies collocation_strategy (
-    CORBA::Object_ptr object); 
+    CORBA::Object_ptr object);
   //@}
 
   /**
@@ -457,7 +457,28 @@ public:
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+  /// Invoke the timeout hook if present.
+  /**
+   * The timeout hook is used to determine if the timeout policy is
+   * set and with what value.  If the ORB is compiled without support
+   * for Messaging this feature does not take effect
+   * \param has_timeout returns 0 if there is no timeout policy set.
+   * \param time_value returns the timeout value in effect for the object,
+   * hread and current ORB.
+   */
+  void call_timeout_hook (TAO_Stub *stub,
+                          int &has_timeout,
+                          ACE_Time_Value &time_value);
+
+  /// Define the Timeout_Hook signature
+  typedef void (*Timeout_Hook) (TAO_ORB_Core *,
+                                TAO_Stub *,
+                                int&,
+                                ACE_Time_Value&);
+
+  // @@ Priyanka: this should be a private member!
+  static Timeout_Hook timeout_hook_;
+  // The hook to be set for the RelativeRoundtripTimeoutPolicy
 
   CORBA::Policy *default_relative_roundtrip_timeout (void) const;
   CORBA::Policy *stubless_relative_roundtrip_timeout (void);
@@ -465,21 +486,7 @@ public:
   // on the ORB.  In this method, we do not consider the stub since we
   // do not have access to it.
 
-  void call_timeout_hook (TAO_Stub *stub,
-                          int &has_timeout,
-                          ACE_Time_Value &time_value);
-
-  typedef void (*Timeout_Hook) (TAO_ORB_Core *,
-                                TAO_Stub *,
-                                int&,
-                                ACE_Time_Value&);
-
   static void set_timeout_hook (Timeout_Hook hook);
-
-  static Timeout_Hook timeout_hook_;
-  // The hook to be set for the RelativeRoundtripTimeoutPolicy
-
-#endif  /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -677,7 +684,7 @@ public:
   // Core. These hooks would be used to call back on the services or
   // other features that are dynamically loaded.
 
-  
+
 
   CORBA::Boolean service_profile_selection (TAO_MProfile &mprofile,
                                             TAO_Profile  *&profile);

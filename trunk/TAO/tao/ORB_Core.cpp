@@ -2991,4 +2991,5 @@ template class ACE_Array_Base<void *>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Array_Base<void *>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
