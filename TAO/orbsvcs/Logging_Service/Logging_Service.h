@@ -62,6 +62,9 @@ protected:
   // Resolve the naming service.
 
   // = Data members
+  const char* basic_log_factory_name_;
+  // The Log Factory name.
+
   BasicLogFactory_i basic_log_factory_;
   // The Basic Log Factory.
 

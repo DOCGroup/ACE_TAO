@@ -5,10 +5,7 @@
 #include "orbsvcs/Log/BasicLogFactory_i.h"
 
 Logging_Service::Logging_Service (void)
-  : basic_log_factory_name_ ("BasicLogFactory"),
-    event_log_factory_name_ ("EventLogFactory"),
-    notify_log_factory_name_ ("NotifyLogFactory"),
-    verbose_ (0)
+  : basic_log_factory_name_ ("BasicLogFactory")
 {
   // No-Op.
 }
