@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Kokyu_DLL"=.\Kokyu_DLL.dsp - Package Owner=<4>
+Project: "Kokyu DLL"=Kokyu.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -11,11 +11,14 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ace DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Kokyu_static"=.\Kokyu_static.dsp - Package Owner=<4>
+Project: "Kokyu LIB"=Kokyu_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

@@ -6,149 +6,83 @@
  *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
  *
- * Based on previous work by Tim Harrison (harrison@cs.wustl.edu),
- * Chris Gill, Carlos O'Ryan and other members of the DOC group.
+ * Based on previous work by Tim Harrison Chris Gill,
+ * Carlos O'Ryan and other members of the DOC group.
  */
 
 #ifndef KOKYU_H
 #define KOKYU_H
-#include /**/ "ace/pre.h"
-#include "ace/OS.h"
+#include "ace/pre.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Array.h"
-#include "ace/Time_Value.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Message_Block.h"
-#include "ace/Sched_Params.h"
+//#if !defined (ACE_LACKS_PRAGMA_ONCE)
+//# pragma once
+//#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "kokyu_export.h"
+#include "Kokyu_defs.h"
 
 namespace Kokyu
 {
-  typedef long Priority_t;
-  typedef ACE_Time_Value Deadline_t; //absolute deadline
-  typedef ACE_Time_Value Execution_Time_t; //execution time
-
-  enum Dispatching_Type_t
-    // Defines the type of prioritization strategy
-    // to be used by a dispatching queue
-    {
-      FIFO_DISPATCHING,
-      DEADLINE_DISPATCHING,
-      LAXITY_DISPATCHING
-    };
-
-  enum Criticality_t
-    // Defines the criticality of the operation.
-    // For use with Dynamic Scheduler.
-    {
-      VERY_LOW_CRITICALITY,
-      LOW_CRITICALITY,
-      MEDIUM_CRITICALITY,
-      HIGH_CRITICALITY,
-      VERY_HIGH_CRITICALITY
-    };
-
-  enum Importance_t
-    // Defines the importance of the operation,
-    // which can be used by the RtecScheduler as a
-    // "tie-breaker" when other scheduling
-    // parameters are equal.
-    {
-      VERY_LOW_IMPORTANCE,
-      LOW_IMPORTANCE,
-      MEDIUM_IMPORTANCE,
-      HIGH_IMPORTANCE,
-      VERY_HIGH_IMPORTANCE
-    };
-
-  struct ConfigInfo
-  {
-    Priority_t preemption_priority_;
-
-    // OS priority of the dispatching thread associated with the queue
-    Priority_t thread_priority_;
-
-    // type of dispatching queue
-    Dispatching_Type_t dispatching_type_;
-  };
-
-  typedef ACE_Array<ConfigInfo> ConfigInfoSet;
-
-  struct QoSDescriptor
-  {
-    Priority_t preemption_priority_;
-    Deadline_t deadline_;
-    Execution_Time_t execution_time_;
-    Importance_t importance_;
-  };
-
-  struct DSRT_QoSDescriptor
-  {
-    short importance_;
-  };
-
-  class Kokyu_Export Dispatch_Command
-    {
-    public:
-      Dispatch_Command(int dont_delete = 0);
-
-      /// Command callback
-      virtual int execute () = 0;
-
-      int can_be_deleted () const;
-
-      void destroy (void);
-    protected:
-      /// Destructor
-      // only inheritance is possible and object should be on heap,
-      // since object could be handed over to a different thread.
-      virtual ~Dispatch_Command (void);
-
-    private:
-      int dont_delete_;
-    };
-
   class Dispatcher_Impl;
-  class DSRT_Dispatcher_Impl;
 
-  struct DSRT_ConfigInfo
-  {
-  };
-
-  typedef int guid_t;
-  class Kokyu_Export DSRT_Dispatcher
-  {
-  public:
-    int schedule (guid_t guid, const DSRT_QoSDescriptor&);
-    int update_schedule (guid_t guid, const DSRT_QoSDescriptor&);
-    int cancel_schedule (guid_t guid, const DSRT_QoSDescriptor&);
-    void implementation (DSRT_Dispatcher_Impl*);
-
-  private:
-    DSRT_Dispatcher_Impl* dispatcher_impl_;
-  };
-
-  class Kokyu_Export Dispatcher
+  /**
+   * @class Dispatcher
+   *
+   * @brief Interface class for dynamic scheduling of events
+   *
+   * The responsibility of this class is to forward all methods to
+   * its delegation/implementation class, e.g.,
+   * @c Default_Dispatcher_Impl. This class follows the pImpl idiom
+   * or the bridge pattern to separate the implementation from the interface.
+   * Dispatcher is the class that users will be using to achieve
+   * dynamic dispatching of events in an event channel.
+   */
+  class Kokyu_Export Dispatcher : private non_copyable
   {
   public:
+    /// Dispatch a command object based on the qos info supplied.
     int dispatch (const Dispatch_Command*, const QoSDescriptor&);
+
+    /// Shut down the dispatcher. The dispatcher will stop processing requests.
     int shutdown ();
+
+    /// Supply this interface with an appripriate implementation.
     void implementation (Dispatcher_Impl*);
+
+    /// Non virtual destructor. Read as <b><i>this class not available
+    /// for inheritance<i></b>.
+    ~Dispatcher ();
   private:
+    /// Auto ptr to the implementation. Implementation will be created on the
+    /// heap and deleted automatically when the dispatcher object is destructed.
     auto_ptr<Dispatcher_Impl> dispatcher_impl_;
   };
 
-  class Kokyu_Export Dispatcher_Factory
+  typedef auto_ptr<Dispatcher> Dispatcher_Auto_Ptr;
+
+  /**
+   * @class Dispatcher_Factory
+   *
+   * @brief Factory class to create one of the dispatcher interface
+   * objects - for events.
+   *
+   * Factory class creates a dispatcher for EC and configures the
+   * interface object with the appropriate implementation.
+   */
+  class Kokyu_Export Dispatcher_Factory : private non_copyable
     {
     public:
-      //@@ Should we return auto_ptr<Dispatcher> instead?
-      static Dispatcher* create_dispatcher (const ConfigInfoSet&);
-      static DSRT_Dispatcher* create_DSRT_dispatcher (const DSRT_ConfigInfo&);
+      /**
+       * Create a dispatcher for dynamic dispatching of commands
+       * (eg. events). The caller is responsible for freeing the
+       * returned dynamically allocated memory.
+       *
+       * @param config Configuration information for the dispatcher.
+       *
+       * @return Auto pointer to the dispatcher.
+       */
+      static Dispatcher_Auto_Ptr create_dispatcher (const ConfigInfoSet& config);
+
     };
 } //end of namespace
 
@@ -156,8 +90,15 @@ namespace Kokyu
 #include "Kokyu.i"
 #endif /* __ACE_INLINE__ */
 
+//Currently I am not seeing a way to avoid including these here. The
+//whole purpose of the pImpl idiom is to avoid this dependency. But
+//using the auto_ptr<> to store the implementation causes a compile
+//error (in the destructor) that the implementation definition is not
+//found. Note that the auto-ptr<T>::~auto_ptr() calls delete on the
+//internal pointer and at this point the class definition needs to be
+//visible. Need to revisit this and see whether there is a work
+//around.
 #include "Dispatcher_Impl.h"
-#include "DSRT_Dispatcher_Impl.h"
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* KOKYU_H */
