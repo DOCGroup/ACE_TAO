@@ -69,6 +69,13 @@ ACE_Sig_Set::operator sigset_t *(void)
   return &this->sigset_;
 }
 
+ACE_INLINE sigset_t
+ACE_Sig_Set::sigset (void)
+{
+  ACE_TRACE ("ACE_Sig_Set::sigset");
+  return this->sigset_;
+}
+
 ACE_INLINE int
 ACE_Sig_Action::flags (void)
 {

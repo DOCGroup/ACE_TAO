@@ -108,6 +108,23 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
 }
 
 ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
+				ACE_Sig_Set &sig_mask,
+				int sig_flags)
+{
+  // ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
+  this->sa_.sa_flags = sig_flags;
+
+  // Structure assignment...
+  this->sa_.sa_mask = sig_mask.sigset ();
+
+#if !defined(ACE_HAS_TANDEM_SIGNALS)
+  this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
+#else
+  this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (sig_handler);
+#endif /* !ACE_HAS_TANDEM_SIGNALS */
+}
+
+ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
 				int signum,
 				sigset_t *sig_mask,
 				int sig_flags)
