@@ -21,6 +21,7 @@ IDL_FILES = \
 
 # Compile using av=1 to compile the AVStreams stuff.
 ifdef av
+## Add the IDL-compiler generated files
 IDL_FILES += \
 	CosPropertyServiceS \
 	CosPropertyServiceC \
@@ -34,6 +35,13 @@ FILES= $(IDL_FILES) \
 	Runtime_Scheduler \
 	Scheduler_Utilities \
 	TAO_IDL_templates \
+
+# Compile using av=1 to compile the AVStreams stuff.
+ifdef av
+## Add the implementation files 
+FILES += AVStreams_i CosPropertyService_i
+endif
+
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
