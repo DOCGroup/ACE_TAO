@@ -78,10 +78,10 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
 
-      /*policy_current->set_policy_overrides (policy_list,
+      policy_current->set_policy_overrides (policy_list,
                                             CORBA::ADD_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
-                                            ACE_TRY_CHECK;*/
+      ACE_TRY_CHECK;
 
 
       for (CORBA::ULong l = 0;
