@@ -59,6 +59,9 @@ namespace CIAO
     get_home_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    virtual void
+    update_component_map (PortableServer::ObjectId &oid) = 0;
+
   protected:
     Session_Container *container_;
   };

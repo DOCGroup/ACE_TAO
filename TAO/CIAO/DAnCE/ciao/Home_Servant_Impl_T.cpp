@@ -5,10 +5,11 @@
 
 #include "Home_Servant_Impl_T.h"
 
+
 namespace CIAO
 {
-  template <typename BASE_SKEL, 
-            typename EXEC, 
+  template <typename BASE_SKEL,
+            typename EXEC,
             typename EXEC_VAR,
             typename COMP,
             typename COMP_VAR,
@@ -31,8 +32,8 @@ namespace CIAO
   {
   }
 
-  template <typename BASE_SKEL, 
-            typename EXEC, 
+  template <typename BASE_SKEL,
+            typename EXEC,
             typename EXEC_VAR,
             typename COMP,
             typename COMP_VAR,
@@ -48,12 +49,21 @@ namespace CIAO
                     COMP_EXEC_VAR,
                     COMP_SVNT>::~Home_Servant_Impl (void)
   {
+    const OBJ_ITERATOR end =
+      this->objref_map_.end ();
+
+    for (OBJ_ITERATOR iter =
+           this->objref_map_.begin ();
+         iter != end; ++iter)
+      {
+        this->remove_component ((*iter).int_id_);
+      }
   }
 
   // Operations for CCMHome interface.
 
-  template <typename BASE_SKEL, 
-            typename EXEC, 
+  template <typename BASE_SKEL,
+            typename EXEC,
             typename EXEC_VAR,
             typename COMP,
             typename COMP_VAR,
@@ -75,26 +85,64 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
-    COMP_VAR _ciao_comp = COMP::_narrow (comp
-                                         ACE_ENV_ARG_PARAMETER);
+    PortableServer::ObjectId_var oid =
+      this->container_->the_POA ()->reference_to_id (comp
+                                                     ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    Components::CCMObject_ptr ccm_obj_ptr;
+    if (objref_map_.find (oid.in (), ccm_obj_ptr) != 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));
+        return;
+      }
+
+    COMP_VAR _ciao_comp =
+      COMP::_narrow (ccm_obj_ptr
+                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     if (CORBA::is_nil (_ciao_comp.in ()))
-    {
-      ACE_THROW (CORBA::INTERNAL ());
-    }
+      {
+        ACE_THROW (Components::RemoveFailure ());
+      }
 
     _ciao_comp->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
+  }
 
-    this->_ciao_passivate_component (_ciao_comp.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename EXEC_VAR,
+            typename COMP,
+            typename COMP_VAR,
+            typename COMP_EXEC,
+            typename COMP_EXEC_VAR,
+            typename COMP_SVNT>
+  void
+  Home_Servant_Impl<BASE_SKEL,
+                    EXEC,
+                    EXEC_VAR,
+                    COMP,
+                    COMP_VAR,
+                    COMP_EXEC,
+                    COMP_EXEC_VAR,
+                    COMP_SVNT>::update_component_map (
+      PortableServer::ObjectId &oid)
+  {
+    Components::CCMObject_var ccm_obj_ptr;
+    if (objref_map_.unbind (oid, ccm_obj_ptr) != 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));
+        return;
+      }
+    return;
   }
 
   // Operations for keyless home interface.
 
-  template <typename BASE_SKEL, 
-            typename EXEC, 
+  template <typename BASE_SKEL,
+            typename EXEC,
             typename EXEC_VAR,
             typename COMP,
             typename COMP_VAR,
@@ -120,8 +168,8 @@ namespace CIAO
 
   // Operations for implicit home interface.
 
-  template <typename BASE_SKEL, 
-            typename EXEC, 
+  template <typename BASE_SKEL,
+            typename EXEC,
             typename EXEC_VAR,
             typename COMP,
             typename COMP_VAR,
@@ -163,8 +211,8 @@ namespace CIAO
 
   // CIAO-specific operations.
 
-  template <typename BASE_SKEL, 
-            typename EXEC, 
+  template <typename BASE_SKEL,
+            typename EXEC,
             typename EXEC_VAR,
             typename COMP,
             typename COMP_VAR,
@@ -185,7 +233,7 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    CORBA::Object_var hobj = 
+    CORBA::Object_var hobj =
       this->container_->get_objref (this
                                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
@@ -199,6 +247,7 @@ namespace CIAO
     ACE_NEW_RETURN (svt,
                     COMP_SVNT (exe,
                                home.in (),
+                               this,
                                this->container_),
                     COMP::_nil ());
 
@@ -215,16 +264,19 @@ namespace CIAO
                                  ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
-    if (this->component_map_.bind (oid.in (), svt) == 0)
-      {
-        safe._retn ();
-      }
+    Components::CCMObject_var ccmobjref =
+      Components::CCMObject::_narrow (objref.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (Components::CCMObject::_nil ());
 
+    this->objref_map_.bind (oid.in (),
+      Components::CCMObject::_duplicate (ccmobjref.in ()));
+    
     return ho._retn ();
   }
 
-  template <typename BASE_SKEL, 
-            typename EXEC, 
+  template <typename BASE_SKEL,
+            typename EXEC,
             typename EXEC_VAR,
             typename COMP,
             typename COMP_VAR,
@@ -250,16 +302,6 @@ namespace CIAO
                                            oid.out ()
                                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-
-    COMP_SVNT *servant = 0;
-
-    if (this->component_map_.unbind (oid.in (), servant) == 0)
-    {
-      PortableServer::ServantBase_var safe (servant);
-
-      servant->_ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-    }
   }
 }
 

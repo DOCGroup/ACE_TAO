@@ -40,8 +40,8 @@ namespace CIAO
    * This class implements operations
    * common to all generated home servants.
    */
-  template <typename BASE_SKEL, 
-            typename EXEC, 
+  template <typename BASE_SKEL,
+            typename EXEC,
             typename EXEC_VAR,
             typename COMP,
             typename COMP_VAR,
@@ -56,9 +56,9 @@ namespace CIAO
   public:
     Home_Servant_Impl (EXEC * exe,
                        Session_Container * c);
-                       
+
     virtual ~Home_Servant_Impl (void);
-    
+
     // Operations for CCMHome interface.
 
     virtual void
@@ -66,7 +66,7 @@ namespace CIAO
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
-                       
+
     // Operations for keyless home interface.
 
     virtual ::Components::CCMObject_ptr
@@ -81,6 +81,9 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CreateFailure));
 
+    virtual void
+    update_component_map (PortableServer::ObjectId &oid);
+
   protected:
     // CIAO-specific operations.
 
@@ -88,7 +91,7 @@ namespace CIAO
     _ciao_activate_component (COMP_EXEC *exe
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
     void
     _ciao_passivate_component (COMP *comp
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -97,12 +100,13 @@ namespace CIAO
   protected:
     EXEC_VAR executor_;
 
-    ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
-                            COMP_SVNT *,
+    typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
+                            Components::CCMObject_ptr,
                             TAO_ObjectId_Hash,
                             ACE_Equal_To<PortableServer::ObjectId>,
-                            ACE_SYNCH_MUTEX>
-      component_map_;
+                            ACE_SYNCH_MUTEX> OBJREF_MAP;
+    typedef OBJREF_MAP::iterator OBJ_ITERATOR;
+    OBJREF_MAP objref_map_;
   };
 }
 
@@ -117,4 +121,3 @@ namespace CIAO
 #include /**/ "ace/post.h"
 
 #endif /* CIAO_HOME_SERVANT_IMPL_T_H */
-   
