@@ -1,6 +1,0 @@
-// If you change this location, be sure to also
-// change the tao_output.mpb as well.
-idl_compiler = $(ACE_ROOT)\bin\tao_idl
-// This is needed for vc6, so that it can set
-// a path to the tao_idl_be.dll and tao_idl_fe.dll
-idl_compiler_libs = $(ACE_ROOT)\lib

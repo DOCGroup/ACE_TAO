@@ -1,3 +1,0 @@
-// If you change this location, be sure to also
-// change the tao_output.mpb as well.
-idl_compiler = $(ACE_ROOT)/bin/tao_idl

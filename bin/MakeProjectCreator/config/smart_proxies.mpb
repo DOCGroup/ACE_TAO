@@ -1,5 +1,0 @@
-project : taolib {
-  after    += SmartProxies
-  libs     += TAO_SmartProxies
-  requires += smart_proxies
-}
