@@ -1,3 +1,24 @@
+Thu May  4 13:59:58 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/config-all.h:
+        * ace/config-win32-common.h:
+
+          Added two new macros, ACE_EXPORT_SINGLETON_DECLARE and 
+          ACE_IMPORT_SINGLETON_DECLARE.  They do the same thing as the
+          *_DECLARATION macros except they do not take arguments.  
+
+          So instead of
+          ACE_EXPORT_SINGLETON_DECLARATION (foo);
+          you use
+          ACE_EXPORT_SINGLETON_DECLARE foo;
+
+          This was needed since foo may be a template, and if so, the
+          comma that can be between multiple arguments causes problems.
+
+        * bin/generate_export_file.pl:
+
+          Now creates the above DECLARE macros in addition to the rest.
+
 Thu May  4 14:47:09 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/platform_freebsd.GNU: Defined BIN_TRUE as
