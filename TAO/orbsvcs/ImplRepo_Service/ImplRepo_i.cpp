@@ -116,7 +116,7 @@ ImplRepo_i::activate_server_i (const char *server,
       ACE_ERROR ((LM_ERROR,
                   "Error: Cannot find startup info for server <%s>\n",
                   server));
-      ACE_THROW(ImplementationRepository::Administration::NotFound ());
+      ACE_THROW_RETURN(ImplementationRepository::Administration::NotFound (), ImplRepo_i::Endpoint ());
     }
 
   // Find out if it is already running
@@ -127,7 +127,7 @@ ImplRepo_i::activate_server_i (const char *server,
       ACE_ERROR ((LM_ERROR,
                   "Error: Cannot find ServerObject IOR for server <%s>\n",
                   server));
-      ACE_THROW (ImplementationRepository::Administration::NotFound ());
+      ACE_THROW_RETURN (ImplementationRepository::Administration::NotFound (), ImplRepo_i::Endpoint ());
     }
 
   // Check to see if there is one running (if there is a server_object_ior)
@@ -151,7 +151,7 @@ ImplRepo_i::activate_server_i (const char *server,
               ACE_ERROR ((LM_ERROR,
                           "Error: Invalid ServerObject IOR: <%s>\n",
                           server_object_ior.c_str ()));
-              ACE_THROW (ImplementationRepository::Administration::NotFound ());
+              ACE_THROW_RETURN (ImplementationRepository::Administration::NotFound (), ImplRepo_i::Endpoint ());
             }
 
           // Check to see if we can ping it
@@ -174,10 +174,10 @@ ImplRepo_i::activate_server_i (const char *server,
     {
       // Make sure the activation allows us to start it up.
       if (activation == Server_Info::MANUAL && check_startup)
-        ACE_THROW (CORBA::TRANSIENT (
-          CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION,
-          0),
-        CORBA::COMPLETED_NO));
+        ACE_THROW_RETURN (CORBA::TRANSIENT (
+            CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION, 0),
+            CORBA::COMPLETED_NO),
+          ImplRepo_i::Endpoint ());
     
       // Check to see if it is already starting up
       int startup_val = this->repository_.starting_up (server, 1);
@@ -187,7 +187,7 @@ ImplRepo_i::activate_server_i (const char *server,
           ACE_ERROR ((LM_ERROR,
                       "Error: Cannot find startup info for server <%s>\n",
                       server));
-          ACE_THROW(ImplementationRepository::Administration::NotFound ());
+          ACE_THROW_RETURN (ImplementationRepository::Administration::NotFound (), ImplRepo_i::Endpoint ());
         }
 
       if (startup_val == 0)
@@ -198,7 +198,8 @@ ImplRepo_i::activate_server_i (const char *server,
               ACE_ERROR ((LM_ERROR,
                           "Error: No startup information for server <%s>\n",
                           server));
-              ACE_THROW (CORBA::TRANSIENT ());
+              // @@ (brunsch) Should this be a more specific transient exception?
+              ACE_THROW_RETURN (CORBA::TRANSIENT (), ImplRepo_i::Endpoint ());
             }
 
 
@@ -218,7 +219,8 @@ ImplRepo_i::activate_server_i (const char *server,
                          "Error: Cannot activate server <%s> using <%s>\n",
                           server,
                           startup.c_str ()));
-              ACE_THROW (ImplementationRepository::Administration::CannotActivate (CORBA::string_dup ("N/A")));
+              ACE_THROW_RETURN (ImplementationRepository::Administration::CannotActivate (CORBA::string_dup ("N/A")),
+                                ImplRepo_i::Endpoint ());
             }
         }
 
@@ -241,9 +243,9 @@ ImplRepo_i::activate_server_i (const char *server,
       if (starting_up == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Error: Cannot find startup info for server <%s>\n",
-                      server));
-          ACE_THROW (ImplementationRepository::Administration::NotFound ());
+                     "Error: Cannot find startup info for server <%s>\n",
+                     server));
+          ACE_THROW_RETURN (ImplementationRepository::Administration::NotFound (), ImplRepo_i::Endpoint ());
         }
 
       // Now it should be started.
@@ -263,7 +265,7 @@ ImplRepo_i::activate_server_i (const char *server,
         ACE_ERROR ((LM_ERROR,
                    "Error: Could not update information for server <%s>\n",
                    server));
-        ACE_THROW (ImplementationRepository::Administration::NotFound ());
+        ACE_THROW_RETURN (ImplementationRepository::Administration::NotFound (), ImplRepo_i::Endpoint ());
       }
   }
 

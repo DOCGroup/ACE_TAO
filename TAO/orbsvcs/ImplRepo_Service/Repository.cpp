@@ -20,10 +20,10 @@ Server_Info::Server_Info (const ACE_TString POA_name,
   POA_name_ (POA_name),
   startup_command_ (startup_command),
   working_dir_ (working_dir),
-  activation_ (activation),
   host_ (""),
   port_ (0),
-  server_object_ior_ ("")
+  server_object_ior_ (""),
+  activation_ (activation)
 {
   // Nothing
 }
