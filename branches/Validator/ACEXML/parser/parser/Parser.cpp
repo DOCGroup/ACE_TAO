@@ -2854,6 +2854,14 @@ ACEXML_Parser::push_context (ACEXML_Parser_Context* context)
 int
 ACEXML_Parser::pop_context (int GE_ref ACEXML_ENV_ARG_DECL)
 {
+  int nrelems = this->ctx_stack_.size();
+  if (nrelems <= 1)
+    {
+      this->fatal_error(ACE_TEXT ("Unexpected end-of-file")
+                        ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_CHECK_RETURN (-1);
+    }
+
   ACEXML_Parser_Context* temp = 0;
   int retval = this->ctx_stack_.pop (temp);
   if (retval != 0)
@@ -2888,22 +2896,15 @@ ACEXML_Parser::pop_context (int GE_ref ACEXML_ENV_ARG_DECL)
           ACEXML_CHECK_RETURN (-1);
         }
     }
+  nrelems = this->ctx_stack_.size();
 
-  int nrelems = this->ctx_stack_.size();
-  if (nrelems >= 1)
-    {
-      if (this->external_entity_)
-        this->external_entity_--;
-    }
-  else
-    {
-      this->fatal_error(ACE_TEXT ("Unexpected end-of-file")
-                        ACEXML_ENV_ARG_PARAMETER);
-      ACEXML_CHECK_RETURN (-1);
-    }
+  if (this->external_entity_)
+    this->external_entity_--;
+
   // Set up Locator.
   if (this->content_handler_)
     this->content_handler_->setDocumentLocator (this->current_->getLocator());
+
   return nrelems;
 }
 
