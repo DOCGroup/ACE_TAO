@@ -1,3 +1,10 @@
+Wed Apr 28 09:02:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SString: Clarified the comments a bit to avoid confusion.
+  	  Also, moved the definition of ACE_SString to AFTER ACE_CString
+ 	  and ACE_WString since they are more general.  Thanks to Kevin
+ 	  Lyda <kevin.lyda@trintech.com> for reporting this.
+
 Tue Apr 27 20:59:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/clients/Naming: Moved the README file into the Client/

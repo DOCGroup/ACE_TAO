@@ -29,20 +29,21 @@ class ACE_Allocator;
 class ACE_Export ACE_CString
 {
   // = TITLE
-  //   A simple C String <ACE_CString> class.
+  //   This class provides a wrapper facade for C strings.
   //
   // = DESCRIPTION
+  //   This class uses an <ACE_Allocator> to allocate memory.  The
+  //   user can make this a persistant class by providing an
+  //   ACE_Allocator with a persistable memory pool.  NOTE: if an
+  //   instance of this class is constructed from or assigned an empty
+  //   string (with first element of '\0'), then it is _not_ allocated
+  //   new space.  Instead, its internal representation is set equal
+  //   to a global empty string.  CAUTION: in cases when ACE_CString
+  //   is constructed from provided buffer with release parameter set
+  //   to 0, ACE_CString is not guaranteed to be '\0' terminated.
   //   This is a place holder until all compilers implement the
-  //   ANSI/ISO C++ standard String class.  This class uses
-  //   an ACE_Allocator to allocate memory.  The user can make this a
-  //   persistant class by providing an ACE_Allocator with a
-  //   persistable memory pool.  NOTE: if an instance of this class is
-  //   constructed from or assigned an empty string (with first
-  //   element of '\0'), then it is _not_ allocated new space.
-  //   Instead, its internal representation is set equal to a global
-  //   empty string.  CAUTION: in cases when ACE_CString is
-  //   constructed from provided buffer with release parameter set to 0, ACE_CString
-  //   is not guaranteed to be '\0' terminated.
+  //   ANSI/ISO C++ standard String class.
+
 public:
   static const int npos;
   // No position constant
@@ -192,151 +193,17 @@ ACE_Export ACE_INLINE ACE_CString operator + (const ACE_CString &, const ACE_CSt
 ACE_Export ostream &operator << (ostream &, const ACE_CString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-class ACE_Export ACE_SString
-{
-  // = TITLE
-  //   A very Simple String <ACE_SString> class.  This is not a
-  //   general-purpose string class, and you should probably consider
-  //   using <ACE_CString> is you don't understand why this class
-  //   exists...
-  //
-  // = DESCRIPTION
-  //   This class is only intended for use with applications that
-  //   understand how it works.  In particular, its destructor does
-  //   not deallocate its memory when it is destroyed...  We need this
-  //   class since the <ACE_Map_Manager> requires an object that
-  //   supports the operator == and operator !=.  This class uses an
-  //   <ACE_Allocator> to allocate memory.  The user can make this a
-  //   persistant class by providing an <ACE_Allocator> with a
-  //   persistable memory pool.
-public:
-  static const int npos;
-  // No position constant
-
-  ACE_SString (ACE_Allocator *alloc = 0);
-  // Default constructor.
-
-  ACE_SString (const char *s, ACE_Allocator *alloc = 0);
-  // Constructor that copies <s> into dynamically allocated memory.
-
-  ACE_SString (const char *s, size_t len, ACE_Allocator *alloc = 0);
-  // Constructor that copies <len> chars of <s> into dynamically
-  // allocated memory (will NUL terminate the result).
-
-  ACE_SString (const ACE_SString &);
-  // Copy constructor.
-
-  ACE_SString (char c, ACE_Allocator *alloc = 0);
-  // Constructor that copies <c> into dynamically allocated memory.
-
-  ~ACE_SString (void);
-  // Default dtor.
-
-  char operator [] (size_t index) const;
-  // Return the <index'th> character in the string (doesn't perform
-  // bounds checking).
-
-  char &operator [] (size_t index);
-  // Return the <index'th> character by reference in the string
-  // (doesn't perform bounds checking).
-
-  ACE_SString &operator = (const ACE_SString &);
-  // Assignment operator (does copy memory).
-
-  ACE_SString substring (size_t offset, ssize_t length = -1) const;
-  // Return a substring given an offset and length, if length == -1
-  // use rest of str return empty substring if offset or offset/length
-  // are invalid
-
-  ACE_SString substr (size_t offset, ssize_t length = -1) const;
-  // Same as substring
-
-  u_long hash (void) const;
-  // Returns a hash value for this string.
-
-  size_t length (void) const;
-  // Return the length of the string.
-
-  void rep (char *s);
-  // Set the underlying pointer.  Since this does not copy memory or
-  // delete existing memory use with extreme caution!!!
-
-  const char *rep (void) const;
-  // Get the underlying pointer.
-
-  const char *fast_rep (void) const;
-  // Get the underlying pointer.
-
-  const char *c_str (void) const;
-  // Same as STL String's <c_str> and <fast_rep>.
-
-  int strstr (const ACE_SString &s) const;
-  // Comparison operator that will match substrings.  Returns the
-  // index of the first location that matches, else -1.
-
-  int find (const ACE_SString &str, int pos = 0) const;
-  // Find <str> starting at pos.  Returns the index of the first
-  // location that matches, else npos.
-
-  int find (const char *s, int pos = 0) const;
-  // Find <s> starting at pos.  Returns the index of the first
-  // location that matches, else npos.
-
-  int find (char c, int pos = 0) const;
-  // Find <c> starting at pos.  Returns the index of the first
-  // location that matches, else npos.
-
-  int rfind (char c, int pos = npos) const;
-  // Find <c> starting at pos (counting from the end).  Returns the
-  // index of the first location that matches, else npos.
-
-  int operator == (const ACE_SString &s) const;
-  // Equality comparison operator (must match entire string).
-
-  int operator < (const ACE_SString &s) const;
-  // Less than comparison operator.
-
-  int operator > (const ACE_SString &s) const;
-  // Greater than comparison operator.
-
-  int operator != (const ACE_SString &s) const;
-  // Inequality comparison operator.
-
-  int compare (const ACE_SString &s) const;
-  // Performs a <strcmp>-style comparison.
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-private:
-  ACE_Allocator *allocator_;
-  // Pointer to a memory allocator.
-
-  size_t len_;
-  // Length of the ACE_SString (not counting the trailing '\0').
-
-  char *rep_;
-  // Pointer to data.
-};
-
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-ACE_Export ostream &operator << (ostream &, const ACE_SString &);
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-
 class ACE_Export ACE_WString
 {
   // = TITLE
-  //   A persistent wide string class.
+  //   This class provides a wrapper facade for C wide strings. 
   //
-  // = DESCRIPTION
-  //   We need to use this class since the <ACE_Map_Manager> requires
-  //   an object that supports the operator == and operator !=.  This
-  //   class uses an <ACE_Allocator> to allocate memory.  The user can
-  //   make this a persistant class by providing an <ACE_Allocator>
-  //   with a persistable memory pool
+  // = DESCRIPTION 
+  //     This class uses an <ACE_Allocator> to allocate memory.  The
+  //     user can make this a persistant class by providing an
+  //     <ACE_Allocator> with a persistable memory pool.  This is a
+  //     place holder until all compilers implement the ANSI/ISO C++
+  //     standard String class.
 public:
   static const int npos;
   // No position constant
@@ -486,7 +353,139 @@ ACE_Export ACE_INLINE ACE_WString operator + (const ACE_WString &, const ACE_WSt
 ACE_Export ostream &operator << (ostream &, const ACE_WString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-// ************************************************************
+class ACE_Export ACE_SString
+{
+  // = TITLE
+  //   A very Simple String <ACE_SString> class.  This is not a
+  //   general-purpose string class, and you should probably consider
+  //   using <ACE_CString> is you don't understand why this class
+  //   exists...
+  //
+  // = DESCRIPTION
+  //   This class is only intended for use with applications that
+  //   understand how it works.  In particular, its destructor does
+  //   not deallocate its memory when it is destroyed...  We need this
+  //   class since the <ACE_Map_Manager> requires an object that
+  //   supports the operator == and operator !=.  This class uses an
+  //   <ACE_Allocator> to allocate memory.  The user can make this a
+  //   persistant class by providing an <ACE_Allocator> with a
+  //   persistable memory pool.
+public:
+  static const int npos;
+  // No position constant
+
+  ACE_SString (ACE_Allocator *alloc = 0);
+  // Default constructor.
+
+  ACE_SString (const char *s, ACE_Allocator *alloc = 0);
+  // Constructor that copies <s> into dynamically allocated memory.
+
+  ACE_SString (const char *s, size_t len, ACE_Allocator *alloc = 0);
+  // Constructor that copies <len> chars of <s> into dynamically
+  // allocated memory (will NUL terminate the result).
+
+  ACE_SString (const ACE_SString &);
+  // Copy constructor.
+
+  ACE_SString (char c, ACE_Allocator *alloc = 0);
+  // Constructor that copies <c> into dynamically allocated memory.
+
+  ~ACE_SString (void);
+  // Default dtor.
+
+  char operator [] (size_t index) const;
+  // Return the <index'th> character in the string (doesn't perform
+  // bounds checking).
+
+  char &operator [] (size_t index);
+  // Return the <index'th> character by reference in the string
+  // (doesn't perform bounds checking).
+
+  ACE_SString &operator = (const ACE_SString &);
+  // Assignment operator (does copy memory).
+
+  ACE_SString substring (size_t offset, ssize_t length = -1) const;
+  // Return a substring given an offset and length, if length == -1
+  // use rest of str return empty substring if offset or offset/length
+  // are invalid
+
+  ACE_SString substr (size_t offset, ssize_t length = -1) const;
+  // Same as substring
+
+  u_long hash (void) const;
+  // Returns a hash value for this string.
+
+  size_t length (void) const;
+  // Return the length of the string.
+
+  void rep (char *s);
+  // Set the underlying pointer.  Since this does not copy memory or
+  // delete existing memory use with extreme caution!!!
+
+  const char *rep (void) const;
+  // Get the underlying pointer.
+
+  const char *fast_rep (void) const;
+  // Get the underlying pointer.
+
+  const char *c_str (void) const;
+  // Same as STL String's <c_str> and <fast_rep>.
+
+  int strstr (const ACE_SString &s) const;
+  // Comparison operator that will match substrings.  Returns the
+  // index of the first location that matches, else -1.
+
+  int find (const ACE_SString &str, int pos = 0) const;
+  // Find <str> starting at pos.  Returns the index of the first
+  // location that matches, else npos.
+
+  int find (const char *s, int pos = 0) const;
+  // Find <s> starting at pos.  Returns the index of the first
+  // location that matches, else npos.
+
+  int find (char c, int pos = 0) const;
+  // Find <c> starting at pos.  Returns the index of the first
+  // location that matches, else npos.
+
+  int rfind (char c, int pos = npos) const;
+  // Find <c> starting at pos (counting from the end).  Returns the
+  // index of the first location that matches, else npos.
+
+  int operator == (const ACE_SString &s) const;
+  // Equality comparison operator (must match entire string).
+
+  int operator < (const ACE_SString &s) const;
+  // Less than comparison operator.
+
+  int operator > (const ACE_SString &s) const;
+  // Greater than comparison operator.
+
+  int operator != (const ACE_SString &s) const;
+  // Inequality comparison operator.
+
+  int compare (const ACE_SString &s) const;
+  // Performs a <strcmp>-style comparison.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+  ACE_Allocator *allocator_;
+  // Pointer to a memory allocator.
+
+  size_t len_;
+  // Length of the ACE_SString (not counting the trailing '\0').
+
+  char *rep_;
+  // Pointer to data.
+};
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+ACE_Export ostream &operator << (ostream &, const ACE_SString &);
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 class ACE_Export ACE_Tokenizer
 {
