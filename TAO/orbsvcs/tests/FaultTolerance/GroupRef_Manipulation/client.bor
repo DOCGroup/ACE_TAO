@@ -26,6 +26,7 @@ LIBFILES = \
    TAO_IORManip$(LIB_DECORATOR).lib \
    TAO$(LIB_DECORATOR).lib \
    ACE$(LIB_DECORATOR).lib \
+   $(TAO_FTORB_UTILS_LIB) \
    $(TAO_FT_CLIENTORB_LIB) \
    $(TAO_FT_SERVERORB_LIB)
 
@@ -48,6 +49,7 @@ CFLAGS = \
    -I..\..\..\..\.. \
    $(LIB_FLAGS) \
    $(DLL_FLAGS) \
+   $(TAO_FTORB_UTILS_CFLAGS) \
    $(TAO_FT_CLIENTORB_CFLAGS) \
    $(TAO_FT_SERVERORB_CFLAGS)
 
