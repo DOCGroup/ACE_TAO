@@ -154,14 +154,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::deactivated (void)
   return this->state_ == ACE_Message_Queue_Base::DEACTIVATED;
 }
 
-template <ACE_SYNCH_DECL> ACE_INLINE int
-ACE_Message_Queue<ACE_SYNCH_USE>::state (void)
-{
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::state");
-
-  return this->state_;
-}
-
 #if 0
 // The Sun Forte 6 (CC 5.1) compiler is only happy if this is in the
 // header file      (j.russell.noseworthy@objectsciences.com)

@@ -170,7 +170,7 @@ public:
 
   /// Returns the current state of the queue, which can either
   /// be <ACTIVATED>, <DEACTIVATED>, or <PULSED>.
-  virtual int state (void) = 0;
+  virtual int state (void);
 
   /// Returns true if the state of the queue is <DEACTIVATED>,
   /// but false if the queue's is <ACTIVATED> or <PULSED>.
@@ -189,6 +189,11 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+
+protected:
+  /// Indicates the state of the queue, which can be
+  /// <ACTIVATED>, <DEACTIVATED>, or <PULSED>.
+  int state_;
 
 private:
   // = Disallow these operations.
@@ -501,7 +506,7 @@ public:
    * activated again will return -1 with <errno> == ESHUTDOWN.  If <pulse> is
    * non-0 then only the waiting threads are notified and the queue's state
    * is not changed.  In either case, however, no messages are removed
-   * from the queue.  Returns the state of the queue before the call.  */
+   * from the queue.  Returns the state of the queue before the call.
    */
   virtual int deactivate (int pulse = 0);
 
@@ -510,10 +515,6 @@ public:
    * messages again.  Returns the state of the queue before the call.
    */
   virtual int activate (void);
-
-  /// Returns the current state of the queue, which can either
-  /// be <ACTIVATED>, <DEACTIVATED>, or <PULSED>.
-  virtual int state (void);
 
   /// Returns true if the state of the queue is <DEACTIVATED>,
   /// but false if the queue's is <ACTIVATED> or <PULSED>.
