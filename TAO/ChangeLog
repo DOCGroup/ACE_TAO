@@ -1,6 +1,15 @@
+Thu Sep 19 13:50:09 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs\FT_ReplicationManager\FT_ReplicationManager.cpp
+        * orbsvcs\FT_ReplicationManager\FT_ReplicationManager.h
+          Added new includes needed because of changes made to reduce
+          include dependancies in the HEAD branch.
+
+        These changes were made in the oci_haft branch.
+
 Thu Sep 18 12:20:48 2003  Dale Wilson  <wilson_d@ociweb.com>
 
-	Continue merge HEAD->oci_haft_branch, and
+        Continue merge HEAD->oci_haft_branch, and
 
         * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
         * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
