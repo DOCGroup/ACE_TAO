@@ -496,9 +496,6 @@ TAO_GIOP::send_error (TAO_Transport *transport)
 
   ACE_HANDLE which = transport->handle ();
 
-  // @@ Carlos, can you please check to see if <send_n> should have
-  // it's reply checked?
-  // @@ Doug: I'm not sure what do you want me to do here...
   if (transport->send ((const u_char *)error_message,
                        TAO_GIOP_HEADER_LEN) == -1)
     {
@@ -597,7 +594,7 @@ TAO_GIOP::read_header (TAO_Transport *transport,
   // problems than just this small loop.
 
   char *buf = input.rd_ptr ();
-  size_t n;
+  ssize_t n;
 
   for (int t = header_size;
        t != 0;
@@ -645,12 +642,13 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
 
       if (input.grow (header_size +
                       header.message_size) == -1)
-        // @@ Carlos, shouldn't we only print out an error message if
-        // TAO_debug_level is > 0?
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "TAO (%P|%t) - %p\n",
-                           "TAO_GIOP::handle_input, ACE_CDR::grow"),
-                          -1);
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO (%P|%t) - %p\n",
+                        "TAO_GIOP::handle_input, ACE_CDR::grow"));
+          return -1;
+        }
 
       // Growing the buffer may have reset the rd_ptr(), but we want
       // to leave it just after the GIOP header (that was parsed
