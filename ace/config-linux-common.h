@@ -23,6 +23,10 @@
 
 // First the machine specific part
 
+#if defined (__alpha)
+  // This is necessary on Alphas with glib 2.0.7-13.
+# define ACE_POLL_IS_BROKEN
+#endif /* ! __alpha */
 
 // Then glibc/libc5 specific parts
 
