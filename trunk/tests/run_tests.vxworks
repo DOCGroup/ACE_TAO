@@ -1,3 +1,5 @@
+# $Id$
+#
 # ACE one-button test for VxWorks 5.2/3.x
 # To use:  -> < run_tests.vxworks > run_tests.log
 # The output logs can be checked from a Unix host:
@@ -6,37 +8,33 @@
 # These tests are not run because VxWorks doesn't
 # support their functionality:
 #
-#  Naming_Test (uses mmap?)
+#  Naming_Test (page fault)
 #  Mem_Map_Test (ENOTSUP: mmap)
-#  SV_Shared_Memory_Test
-#  MM_Shared_Memory_Test (ENOTSUP)
-#  Reactor_Exceptions_Test
+#  SV_Shared_Memory_Test (SYSV IPC is not supported on this platform)
+#  MM_Shared_Memory_Test (ENOTSUP: mmap)
+#  Reactor_Exceptions_Test (C++ exceptions not supported on this platform)
 #  Reactor_Performance_Test (unknown? doesn't appear to do anything)
+#  Reactor_Notify_Test (unknown? doesn't appear to do anything)
 #  Notify_Performance_Test (ENOTSUP: fcntl)
-#  SPIPE_Test
-#  UPIPE_SAP_Test
-#  Time_Service_Test (requires fork)
-#  Tokens_Test
-#  Pipe_Test (requires fork)
-#  Process_Mutex_Test (requires fork)
-#  Process_Strategy_Test (/tmp/ace_temp_file not found)
+#  SPIPE_Test (SPIPE is not supported on this platform)
+#  UPIPE_SAP_Test (UPIPE is not supported on this platform)
+#  Time_Service_Test (ENOTSUP: fork)
+#  Tokens_Test (ENOTSUP: fork)
+#  Pipe_Test (ENOTSUP: fork)
+#  Process_Mutex_Test (ENOTSUP: fork)
+#  Process_Strategy_Test (ENOTSUP: flock_wrlock)
 #  Service_Config_Test (page fault)
-#  Enum_Interfaces_Test
+#  Enum_Interfaces_Test (ENOTSUP: ACE::get_ip_interfaces)
 #
 # TSS_Test sometimes issues a memPartFree message during shutdown.
-#
-# Some other tests are commented out below.  They
-# currently fail on VxWorks for unknown reasons.
+# This might be due to deletion by the Object_Manager of something
+# that's in TSS.
 
 memShow
 
 ld < Atomic_Op_Test
 write 2, "Atomic_Op_Test ", 15
 ace_main; unld "Atomic_Op_Test"
-
-ld < TSS_Test
-write 2, "TSS_Test ", 9
-ace_main; unld "TSS_Test"
 
 ld < Time_Value_Test
 write 2, "Time_Value_Test ", 16
@@ -58,7 +56,7 @@ ld < Sigset_Ops_Test
 write 2, "Sigset_Ops_Test ", 16
 ace_main; unld "Sigset_Ops_Test"
 
-#### ENOTSUP (unknown)
+#### ENOTSUP: semget
 #### ld < Mutex_Test
 #### write 2, "Mutex_Test ", 11
 #### ace_main; unld "Mutex_Test"
@@ -87,13 +85,10 @@ ld < Future_Test
 write 2, "Future_Test ", 12
 ace_main; unld "Future_Test"
 
+#### ENOTSUP: fcntl
 #### ld < Reactors_Test
 #### write 2, "Reactors_Test ", 14
 #### ace_main; unld "Reactors_Test"
-
-#### ld < Reactor_Notify_Test
-#### write 2, "Reactor_Notify_Test ", 20
-#### ace_main; unld "Reactor_Notify_Test"
 
 ld < Reactor_Timer_Test
 write 2, "Reactor_Timer_Test ", 19
@@ -107,16 +102,15 @@ ld < SOCK_Test
 write 2, "SOCK_Test ", 10
 ace_main; unld "SOCK_Test"
 
-#### Cause of failure unknown:
-#### ld < Conn_Test
-#### write 2, "Conn_Test ", 10
-#### ace_main; unld "Conn_Test"
+ld < Conn_Test
+write 2, "Conn_Test ", 10
+ace_main; unld "Conn_Test"
 
 ld < Barrier_Test
 write 2, "Barrier_Test ", 13
 ace_main; unld "Barrier_Test"
 
-#### Uses ACE_OS::cond_timedwait (), which isn't supported on VxWorks.
+#### ENOTSUP: ACE_OS::cond_timedwait ()
 #### ld < Buffer_Stream_Test
 #### write 2, "Buffer_Stream_Test ", 19
 #### ace_main; unld "Buffer_Stream_Test"
@@ -133,13 +127,14 @@ ld < Map_Manager_Test
 write 2, "Map_Manager_Test ", 17
 ace_main; unld "Map_Manager_Test"
 
+#### This test usually runs properly, but sometimes never returns:
+#### ld < Message_Queue_Test
+#### write 2, "Message_Queue_Test ", 19
+#### ace_main; unld "Message_Queue_Test"
+
 ld < Message_Queue_Notifications_Test
 write 2, "Message_Queue_Notifications_Test ", 33
 ace_main; unld "Message_Queue_Notifications_Test"
-
-ld < Message_Queue_Test
-write 2, "Message_Queue_Test ", 19
-ace_main; unld "Message_Queue_Test"
 
 ld < Simple_Message_Block_Test
 write 2, "Simple_Message_Block_Test ", 26
@@ -157,6 +152,10 @@ ace_main; unld "Priority_Task_Test"
 ld < IOStream_Test
 write 2, "IOStream_Test ", 14
 ace_main; unld "IOStream_Test"
+
+ld < TSS_Test
+write 2, "TSS_Test ", 9
+ace_main; unld "TSS_Test"
 
 write 2, "\n", 1
 
