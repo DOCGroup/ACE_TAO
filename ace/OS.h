@@ -2786,9 +2786,7 @@ typedef void (*ACE_THR_DEST)(void *);
 
 extern "C"
 {
-#if defined (ACE_WIN32)
-typedef unsigned (__stdcall *ACE_THR_C_FUNC) (void*);
-#elif defined (VXWORKS)
+#if defined (VXWORKS)
 typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
 #else
 typedef void *(*ACE_THR_C_FUNC)(void *);
