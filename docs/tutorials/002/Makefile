@@ -35,13 +35,13 @@ HTML : #
 
 SHAR : #
 	[ ! -f combine.shar ] || exit 1
-	shar -T hdr bodies *.pre > combine.shar && rm -f hdr bodies *.pre *.pst
+	shar -T hdr bodies *.pre > combine.shar && $(RM) hdr bodies *.pre *.pst
 
 UNSHAR : #
 	sh combine.shar
 
 CLEAN : realclean
-	rm -f hdr bodies *.pre *.pst .depend
+	$(RM) hdr bodies *.pre *.pst .depend
 
 #----------------------------------------------------------------------------
 #	Dependencies
