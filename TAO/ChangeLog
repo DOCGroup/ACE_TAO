@@ -1,3 +1,17 @@
+Wed Sep  8 10:22:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        
+          Modified stream output to make sure a bare newline (with no
+          whitespace) is added at the end of the generated source
+          file containing Any operators and type codes (if the file
+          is generated) both when explicit template instantiations are
+          generated and when they are not. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for reporting the problem, for
+          compilers that must have an empty newline at the end of
+          each file.
+
 Wed Sep  8 04:54:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/CosEvent.mpc:
