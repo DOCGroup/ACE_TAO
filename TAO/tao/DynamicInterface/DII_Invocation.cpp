@@ -1,12 +1,10 @@
 // $Id$
 
-
-
 #include "DII_Invocation.h"
 
 ACE_RCSID(DynamicInterface, DII_Invocation, "$Id$")
 
-
+#include "Unknown_User_Exception.h"
 #include "tao/Stub.h"
 #include "tao/Principal.h"
 #include "tao/Object_KeyC.h"

@@ -318,61 +318,6 @@ TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION);     // invalid TP context passed
 #undef TAO_SYSTEM_EXCEPTION
 
 /**
- * @class CORBA_UnknownUserException
- *
- * @brief CORBA_UnknownUserException
- *
- * When user exceptions are received by a DII invocation the ORB
- * is unable to create the exception with the right dynamic type;
- * to workaround this problem it throws a
- * <CORBA::UnknownUserException> that contains the exception inside
- * an Any.
- */
-class TAO_Export CORBA_UnknownUserException : public CORBA_UserException
-{
-public:
-  // = Initialization and termination methods.
-
-  /// Constructor.
-  CORBA_UnknownUserException (void);
-
-  /// Constructor.
-  CORBA_UnknownUserException (CORBA_Any& exception);
-
-  /// Copy constructor.
-  CORBA_UnknownUserException (const CORBA_UnknownUserException& e);
-
-  /// Destructor.
-  virtual ~CORBA_UnknownUserException (void);
-
-  /// Return the any containing the user exception.
-  CORBA_Any& exception (void);
-
-  /// To throw an UnknownUserException of this type.
-  virtual void _raise (void);
-
-  virtual void _tao_encode (TAO_OutputCDR &cdr,
-                            CORBA::Environment &) const;
-  virtual void _tao_decode (TAO_InputCDR &cdr,
-                            CORBA::Environment &);
-
-  /// Narrow to an UnknowUserException.
-  static CORBA_UnknownUserException *_downcast (CORBA_Exception *ex);
-
-  // = TAO specific extension.
-
-  /// Helper method to implement _downcast.
-  virtual int _is_a (const char *type_id) const;
-
-  /// This class has a specific typecode.
-  virtual CORBA::TypeCode_ptr _type (void) const;
-
-private:
-  /// Holder for the actual exception.
-  CORBA_Any *exception_;
-};
-
-/**
  * @class TAO_Exceptions
  *
  * @brief This class is a namespace for exception-related static data and
@@ -417,15 +362,15 @@ public:
   /// List of system exceptions.
   static ACE_Unbounded_Queue<CORBA::TypeCode_ptr> *system_exceptions;
 
-private:
   /**
    * This global allocator is used to initialize system exception
    * typecodes.  Since at the time, the ORB is mostly still not
-   * available.  Using a separate allocator prevent CDR routine from
+   * available.  Using a separate allocator prevents CDR routines from
    * accessing the optimized allocators from the ORB.
    */
   static ACE_Allocator *global_allocator_;
 
+private:
   /// Flag that denotes that the TAO's CORBA exceptions have been
   /// initialized.
   static int initialized_;
