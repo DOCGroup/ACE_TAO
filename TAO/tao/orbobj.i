@@ -11,7 +11,7 @@ CORBA::release (CORBA::ORB_ptr obj)
     obj->Release ();
 }
 
-ACE_INLINE ULONG __stdcall
+ACE_INLINE ULONG
 CORBA_ORB::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));

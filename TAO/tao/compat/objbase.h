@@ -26,12 +26,12 @@
 // Random data types that come from Microsoft's APIs.
 //
 typedef u_long ULONG;
-typedef u_long HRESULT;
+typedef u_long TAO_HRESULT;
 
 //
 // Details of the procedure calling convention matter.
 //
-#define __stdcall               // MS-Windows non-varargs call convention
+//#define __stdcall                // MS-Windows non-varargs call convention
 
 #if defined(__cplusplus)
 #  define EXTERN_C extern "C"
@@ -44,12 +44,14 @@ typedef u_long HRESULT;
 //      IID -- interface ID
 //      CLSID -- implementation ID
 //
-typedef char IID [16];          // XXX actually a struct
-typedef const IID &REFIID;
+typedef char TAO_IID [16];          // XXX actually a struct
+typedef const TAO_IID &REFIID;
 #if !defined(INITGUID)
-#  define DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) extern "C" const IID name
+#  define DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) \
+                      extern "C" const TAO_IID name
 #else
-#  define DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) extern "C" const IID name = { 0 }
+#  define DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) \
+                      extern "C" const TAO_IID name = { 0 }
 #endif
 
 
@@ -57,25 +59,29 @@ typedef const IID &REFIID;
 // All objects in the "Component Object Model" (COM) inherit from
 // this pure virtual base class.
 //
-DEFINE_GUID (IID_IUnknown, b,c,d,e,f,g,h,i,j,k,l);
+DEFINE_GUID (IID_TAO_IUnknown, b,c,d,e,f,g,h,i,j,k,l);
 
-class IUnknown 
+class TAO_IUnknown 
 {
 public:
-  virtual HRESULT __stdcall QueryInterface (REFIID riid,
-                                            void **ppv) = 0;
-  virtual ULONG __stdcall AddRef (void) = 0;
-  virtual ULONG __stdcall Release (void) = 0;
+  virtual TAO_HRESULT  QueryInterface (REFIID riid,
+                                   void **ppv) = 0;
+  virtual ULONG  AddRef (void) = 0;
+  virtual ULONG  Release (void) = 0;
 };
 
 // XXX haven't looked closely at COM's fault reporting yet ...
 
-typedef u_long SCODE;
+typedef u_long TAO_SCODE;
 
-inline HRESULT ResultFromScode(SCODE scode) { return scode; }
+inline TAO_HRESULT
+ResultFromScode(TAO_SCODE scode)
+{
+  return scode;
+}
 
-#define NOERROR         ((SCODE) 0)
-#define E_NOINTERFACE   ((SCODE) 17)
+#define TAO_NOERROR         ((TAO_SCODE) 0)
+#define TAO_E_NOINTERFACE   ((TAO_SCODE) 17)
 
 
 // VARIANT is OLE's extremely limited version of "Any".  There are
@@ -87,8 +93,8 @@ inline HRESULT ResultFromScode(SCODE scode) { return scode; }
 // and even those that are worth supporting portably aren't fully
 // supported at this writing.
 
-typedef u_short         VARTYPE;
-enum VARENUM 
+typedef u_short         TAO_VARTYPE;
+enum TAO_VARENUM 
 {                  // only types suitable for VARIANTs
   VT_EMPTY    = 0,            // nothing
   VT_NULL     = 1,            // SQL style ull (XXX)
@@ -109,7 +115,7 @@ enum VARENUM
   VT_BYREF    = 0x4000        // pointer to more primitive type
 };
 
-struct CY 
+struct TAO_CY 
   // = TITLE
   //   Currency is an eight byte fixed point number (could be "long long").  
 {
@@ -125,49 +131,49 @@ struct CY
 // DATE format is days since 30-Dec-1889 ... days in the "whole"
 // part, time in the fractional part (part of a day).
 
-typedef double DATE;
+typedef double TAO_DATE;
 
-struct VARIANT 
+struct TAO_VARIANT 
 {
-  VARTYPE               vt;             // type ID
-  u_short       wReserved1, wReserved2, wReserved3;
+  TAO_VARTYPE               vt;             // type ID
+  u_short               wReserved1, wReserved2, wReserved3;
   union 
   {
     //
     // By-Value fields
     //
     long                lVal;                   // VT_I4
-    u_char      bVal;                   // VT_UI1
+    u_char              bVal;                   // VT_UI1
     short               iVal;                   // VT_I2
     float               fltVal;                 // VT_R4
     double              dblVal;                 // VT_R8
     // VARIANT_BOOL     bool;                   // VT_BOOL
-    SCODE               scode;                  // VT_ERROR
-    CY          cyVal;                  // VT_CY
-    DATE                date;                   // VT_DATE
+    TAO_SCODE           scode;                  // VT_ERROR
+    TAO_CY              cyVal;                  // VT_CY
+    TAO_DATE            date;                   // VT_DATE
     // BSTR             bstrVal;                // VT_BSTR
-    IUnknown    *punkVal;               // VT_UNKNOWN
+    TAO_IUnknown        *punkVal;               // VT_UNKNOWN
     // IDispatch        *pdispVal;              // VT_DISPATCH
     // SAFEARRAY        *parray;                // VT_ARRAY
 
     //
     // By-Reference fields (for VARIANTARG)
     //
-    u_char      *pbVal;                 // VT_BYREF|VT_UI1
+    u_char              *pbVal;                 // VT_BYREF|VT_UI1
     short               *piVal;                 // VT_BYREF|VT_I2
     long                *plVal;                 // VT_BYREF|VT_I4
     float               *pfltVal;               // VT_BYREF|VT_R4
     double              *pdblVal;               // VT_BYREF|VT_R8
     // VARIANT_BOOL     *pbool;                 // VT_BYREF|VT_BOOL
-    SCODE               *pscode;                // VT_BYREF|VT_ERROR
-    CY          *pcyVal;                // VT_BYREF|VT_CY
-    DATE                *pdate;                 // VT_BYREF|VT_DATE
+    TAO_SCODE           *pscode;                // VT_BYREF|VT_ERROR
+    TAO_CY              *pcyVal;                // VT_BYREF|VT_CY
+    TAO_DATE            *pdate;                 // VT_BYREF|VT_DATE
     // BSTR             *pbstrVal;              // VT_BYREF|VT_BSTR
-    IUnknown    **ppunkVal;             // VT_BYREF|VT_UNKNOWN
+    TAO_IUnknown            **ppunkVal;             // VT_BYREF|VT_UNKNOWN
     // IDispatch        **ppdisVal;             // VT_BYREF|VT_DISPATCH
     // SAFEARRAY        *pparray;               // VT_BYREF|VT_ARRAY
 
-    VARIANT             *pvarVal;               // VT_BYREF|VT_VARIANT
+    TAO_VARIANT         *pvarVal;               // VT_BYREF|VT_VARIANT
     void                *byref;                 // generic VT_BYREF
   };
 };

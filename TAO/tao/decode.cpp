@@ -650,7 +650,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
     {
       // retrieve the CORBA::Object from the IIOP_Object we created before.
       if (objdata->QueryInterface (IID_CORBA_Object,
-                                   (void **) data) != NOERROR)
+                                   (void **) data) != TAO_NOERROR)
         continue_decoding = CORBA::B_FALSE;
       objdata->Release ();
     }

@@ -10,6 +10,7 @@
 /* assert DEFINE_GUID is defined */
 #undef	DEFINE_GUID
 
-#define DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) EXTERN_C const IID name = { 0 }
+#define DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) \
+            EXTERN_C const TAO_IID name = { 0 }
 
 #endif /* TAO_COMPAT_INITGUID_H */

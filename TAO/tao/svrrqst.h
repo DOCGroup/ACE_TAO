@@ -24,20 +24,20 @@
 #if !defined (TAO_SVRRQST_H)
 #define TAO_SVRRQST_H
 
-class TAO_Export CORBA_ServerRequest : public IUnknown
+class TAO_Export CORBA_ServerRequest : public TAO_IUnknown
   // = TITLE
   //   XXX this is currently in an intermediate state; this is not
   //   supposed to be IIOP-specific, or to expose quite so many
   //   implementation details, but right now it is.
 {
 public:
-  virtual void __stdcall params (CORBA::NVList_ptr list,
+  virtual void params (CORBA::NVList_ptr list,
 				 CORBA::Environment &env) = 0;
   // Implementation uses this to provide the ORB with the operation's
   // parameter list ... on return, their values are available; the
   // list fed in has typecodes and (perhap) memory assigned.
 
-  virtual void __stdcall result (CORBA::Any_ptr value,
+  virtual void result (CORBA::Any_ptr value,
 				 CORBA::Environment &env) = 0;
   // Implementation uses this to provide the operation result
   // ... illegal if exception() was called or params() was not called.
@@ -45,7 +45,7 @@ public:
   // XXX Implementation should be able to assume response has been
   // sent when this returns, and reclaim memory it allocated.
 
-  virtual void __stdcall exception (CORBA::ExceptionType	type,
+  virtual void exception (CORBA::ExceptionType	type,
 				    CORBA::Any_ptr value,
 				    CORBA::Environment &env) = 0;
   // Implementation uses this to provide the exception value which is
@@ -64,11 +64,11 @@ public:
   // basic CORBA Object Model.
   //
   // XXX should not be not assuming all OAs implement the POA API !!
-  virtual CORBA::Principal_ptr __stdcall	caller (void) = 0;
-  virtual CORBA::Object_ptr __stdcall target (void) = 0;
-  virtual CORBA::String __stdcall op_name (void) = 0;
-  virtual CORBA::POA_ptr __stdcall oa (void) = 0;
-  virtual CORBA::ORB_ptr __stdcall orb (void) = 0;
+  virtual CORBA::Principal_ptr 	caller (void) = 0;
+  virtual CORBA::Object_ptr  target (void) = 0;
+  virtual CORBA::String  op_name (void) = 0;
+  virtual CORBA::POA_ptr  oa (void) = 0;
+  virtual CORBA::ORB_ptr  orb (void) = 0;
 };
 
 class TAO_Export IIOP_ServerRequest : public CORBA_ServerRequest
@@ -85,30 +85,30 @@ public:
   virtual ~IIOP_ServerRequest (void);
 
   // = General ServerRequest operations
-  void __stdcall params (CORBA::NVList_ptr list,
+  void  params (CORBA::NVList_ptr list,
 			 CORBA::Environment &env);
 
-  void __stdcall result (CORBA::Any_ptr value,
+  void  result (CORBA::Any_ptr value,
 			 CORBA::Environment &env);
 
-  void __stdcall exception (CORBA::ExceptionType type,
+  void  exception (CORBA::ExceptionType type,
 			    CORBA::Any_ptr value,
 			    CORBA::Environment &env);
 
   // = Request attributes
 
-  CORBA::String __stdcall op_name (void);
-  CORBA::Principal_ptr __stdcall	caller (void);
-  CORBA::Object_ptr __stdcall target (void);
-  CORBA::ORB_ptr __stdcall orb (void);
-  CORBA::POA_ptr __stdcall oa (void);
+  CORBA::String  op_name (void);
+  CORBA::Principal_ptr 	caller (void);
+  CORBA::Object_ptr  target (void);
+  CORBA::ORB_ptr  orb (void);
+  CORBA::POA_ptr  oa (void);
 
   // Stuff required for COM IUnknown support
 
-  ULONG __stdcall AddRef (void);
-  ULONG __stdcall Release (void);
-  HRESULT __stdcall QueryInterface (REFIID riid,
-				    void **ppv);
+  ULONG  AddRef (void);
+  ULONG  Release (void);
+  TAO_HRESULT  QueryInterface (REFIID riid,
+                               void **ppv);
 
   // private:
   CORBA::String opname_;        // Operation name.

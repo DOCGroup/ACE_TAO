@@ -83,7 +83,7 @@ CORBA_Exception::type (void) const
 
 // For COM -- IUnKnown operations
 
-ULONG __stdcall
+ULONG
 CORBA_Exception::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
@@ -91,7 +91,7 @@ CORBA_Exception::AddRef (void)
   return ++refcount_;
 }
 
-ULONG __stdcall
+ULONG
 CORBA_Exception::Release (void)
 {
   {
@@ -112,23 +112,23 @@ CORBA_Exception::Release (void)
   return 0;
 }
 
-HRESULT __stdcall
+TAO_HRESULT
 CORBA_Exception::QueryInterface (REFIID	riid,
 				 void **ppv)
 {
   *ppv = 0;
 
-  if (IID_CORBA_Exception == riid || IID_IUnknown == riid)
+  if (IID_CORBA_Exception == riid || IID_TAO_IUnknown == riid)
     *ppv = this;
 
   // XXX this approach needs modifying to enable returning
   // UserException, SystemException, and other kinds of pointers.
 
   if (*ppv == 0)
-    return ResultFromScode (E_NOINTERFACE);
+    return ResultFromScode (TAO_E_NOINTERFACE);
 
  (void) AddRef ();
-  return NOERROR;
+  return TAO_NOERROR;
 }
 
 // Avoid zillions of not-quite-inlined copies of utilities.

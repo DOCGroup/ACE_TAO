@@ -664,23 +664,23 @@ typedef void (*TAO_Skeleton)(CORBA::ServerRequest &,
 // signature of a skeleton for every operation of an interface
 
 // COM interface IIDs
-extern "C" TAO_Export const IID IID_CORBA_Any;
-extern "C" TAO_Export const IID IID_BOA;
-extern "C" TAO_Export const IID IID_CORBA_Exception;
-extern "C" TAO_Export const IID IID_CORBA_UserException;
-extern "C" TAO_Export const IID IID_CORBA_SystemException;
-extern "C" TAO_Export const IID IID_CORBA_Request;
-extern "C" TAO_Export const IID IID_CORBA_Object;
-extern "C" TAO_Export const IID IID_CORBA_ORB;
-extern "C" TAO_Export const IID IID_CORBA_NVList;
-extern "C" TAO_Export const IID IID_CORBA_Principal;
-extern "C" TAO_Export const IID IID_CORBA_TypeCode;
-extern "C" TAO_Export const IID IID_CORBA_ServerRequest;
-extern "C" TAO_Export const IID IID_IIOP_ServerRequest;
-extern "C" TAO_Export const IID IID_STUB_Object;
-extern "C" TAO_Export const IID IID_IIOP_Object;
-extern "C" TAO_Export const IID IID_IIOP_ORB;
-extern "C" TAO_Export const IID IID_POA;
+extern "C" TAO_Export const TAO_IID IID_CORBA_Any;
+extern "C" TAO_Export const TAO_IID IID_BOA;
+extern "C" TAO_Export const TAO_IID IID_CORBA_Exception;
+extern "C" TAO_Export const TAO_IID IID_CORBA_UserException;
+extern "C" TAO_Export const TAO_IID IID_CORBA_SystemException;
+extern "C" TAO_Export const TAO_IID IID_CORBA_Request;
+extern "C" TAO_Export const TAO_IID IID_CORBA_Object;
+extern "C" TAO_Export const TAO_IID IID_CORBA_ORB;
+extern "C" TAO_Export const TAO_IID IID_CORBA_NVList;
+extern "C" TAO_Export const TAO_IID IID_CORBA_Principal;
+extern "C" TAO_Export const TAO_IID IID_CORBA_TypeCode;
+extern "C" TAO_Export const TAO_IID IID_CORBA_ServerRequest;
+extern "C" TAO_Export const TAO_IID IID_IIOP_ServerRequest;
+extern "C" TAO_Export const TAO_IID IID_STUB_Object;
+extern "C" TAO_Export const TAO_IID IID_IIOP_Object;
+extern "C" TAO_Export const TAO_IID IID_IIOP_ORB;
+extern "C" TAO_Export const TAO_IID IID_POA;
 
 // NOTE: stub APIs are nonportable, and must be explicitly #included
 // by code emitted from an IDL compiler.
