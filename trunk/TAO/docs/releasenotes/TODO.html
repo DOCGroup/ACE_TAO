@@ -43,6 +43,18 @@
 	</P>
       </LI>
 
+      <LI><P>The nested upcall support must be strategized,
+	  some applications don't need this feature,
+	  other applications are single threaded or use an
+	  ORB-per-thread concurrency policy,
+	  so using a full-blown leader follower in all cases can
+	  result in a significant slow down.
+	  It seems like the right way to
+	  strategize this by changing the Client_Connection_Handlers.
+	  <BR>[STATUS] Irfan and Carlos are working on this.
+	</P>
+      </LI>
+
     </OL>
 
     <HR>
@@ -53,17 +65,11 @@
     <H4>Performance optimizations</H4>
 
     <OL>
-      <LI>Use active demuxing in the POA to locate servants in
-          constant time, as well as active demuxing
-          in the skeletons to locate operations in constant time.
-      <P></LI>
+      <LI><P>Location forwarding should be strategized since some
+	  applications don't need this feature.
+	</P>
+      </LI>
 
-      <LI>Optimize twoways by delaying memory allocation for the
-	incoming data buffer, thus improving interleaving between the
-	client and server (the client does something useful before
-	starting to wait for the server).
-      <P></LI>
-      
       <LI>Further optimize memory allocation by using a memory pool
 	for the incoming CDR stream.
       <P></LI>
@@ -74,21 +80,16 @@
 	contains).
       <P></LI>
 
+      <LI>Optimize twoways by delaying memory allocation for the
+	incoming data buffer, thus improving interleaving between the
+	client and server (the client does something useful before
+	starting to wait for the server).
+      <P></LI>
+
       <LI>The data blocks and their buffers could be allocated in a
 	single operation, using the beginning of a buffer to contain
 	the data block and the rest of it to contain the actual buffer
       <P></LI>
-
-      <LI><P>Parameterize support for location forwarding since some
-	  applications don't need this feature.
-	</P>
-      </LI>
-
-      <LI><P>Parameterized support nested upcalls, some applications
-	  don't need this feature. It seems like the right way to
-	  strategize this by changing the Client_Connection_Handlers.
-	</P>
-      </LI>
 
       <LI><P>Some applications cannot afford compiled marshaling for
 	  all the stubs and skeletons,
@@ -330,9 +331,10 @@ class Foo {
 	is potential for memory leaks if this locking is not used.
       <P></LI>
 
-      <LI>IDL compiler front-end should be case insensitive (actually
-	it should flag identifiers that only differ by case as a
-	conflict).
+      <LI>IDL compiler front-end should be case insensitive,
+	actually it should flag identifiers that only differ by case
+	as a conflict and verify that all uses of an identifier have
+	the same case.
       <P></LI>
 
       <LI>The operation tables do not need to be statics, they could
@@ -426,9 +428,6 @@ class Foo {
 
       <LI><B>EC:</B> Build a COS Event Channel on top of the RTEC
 	Event Service.
-      <P></LI>
-
-      <LI>Check what is failing in $TAO_ROOT/tests/CDR/tc.
       <P></LI>
 
       <LI><B>EC:</B> Debug interval computation in Linux (and NT?)
@@ -792,6 +791,13 @@ class Foo {
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P>Use active demuxing in the POA to locate servants in
+          constant time, as well as active demuxing
+          in the skeletons to locate operations in constant time.
+	  <BR>[DONE] Irfan finished this task.
+	</P>
+      </LI>
+
       <LI><P>Sometimes the ORB picks up the wrong name on multi-homed
 	  hosts,
 	  the <CODE>ACE_INET_Addr</CODE> class uses
@@ -802,7 +808,6 @@ class Foo {
 	  host.
 	</P>
       </LI>
-
 
       <LI><P>Many of the test programs in the
 	  <CODE>$TAO_ROOT/tests</CODE> hierarchy are actually sample
