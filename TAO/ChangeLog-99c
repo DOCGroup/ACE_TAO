@@ -1,3 +1,12 @@
+Mon May 10 00:36:02 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Request.h (CORBA_Request>): 
+	* tao/Request.cpp : Added new definition for the class
+	CORBA_ORB_RequestSeq. This was added to facilitate the testing
+	process. Thanks to Carlos for helping to generate the new class by
+	inheriting from TAO_Pseudo_Unbounded_Sequence ().
+	
+
 Sun May  9 12:47:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/releasenotes/index.html:
