@@ -108,7 +108,8 @@ Wed May 07 22:32:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           change should fix problems with servers crashing if remote peers
           dissappears under thread-per-connection strategy.
 
-          Thanks to <imburton@micron.com> for reporting this problem.
+          Thanks to Ira Burton <imburton@micron.com> for reporting this 
+	  problem.
 
 Wed May  7 17:56:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -188,8 +189,8 @@ Tue May  6 17:52:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tests/Faults/ping.cpp:
         * tests/Faults/ping_i.h:
         * tests/Faults/test_i.h: Fixed servant memory management
-          problems. Thanks to Ira <imburton@micron.com> for motivating to
-          take a look.
+          problems. Thanks to Ira Burton <imburton@micron.com> for motivating 
+	  to take a look.
 
 Tue May  6 15:52:42 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
