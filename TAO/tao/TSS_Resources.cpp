@@ -37,9 +37,9 @@ template class ACE_TSS<TAO_TSS_Resources>;
 #pragma instantiate TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_TSS_Resources>
 
-#elif defined (__GNUC__) && (defined (_AIX) \
-      || defined (__hpux) || defined (VXWORKS))
-template 
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+
+template
   TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX> *
   TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>::singleton_;
 
