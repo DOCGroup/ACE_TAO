@@ -5,6 +5,13 @@ Tue Mar 31 07:22:09 1998  David L. Levine  <levine@cs.wustl.edu>
           which requires a relative time.  Thanks to Steve Coy
           <stevec@magna.com.au> for reporting this on HP-UX.
 
+        * tests/Thread_Manager_Test.cpp (worker): cache the thread's
+          Signal_Catcher on entry.  That way, we don't have to
+          dereference it in the worker's loop.  It seems that a worker
+          thread can continue to run after main exits (and cleans up
+          TSS).  That shouldn't happen, but it looks like it does on
+          Linux, LynxOS, and Digital Unix.
+
 Fri Mar 27 23:04:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-common.h: added ACE_DEFAULT_MAX_SOCKET_BUFSIZ
