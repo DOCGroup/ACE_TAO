@@ -1,3 +1,10 @@
+Mon Nov 29 14:10:12 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ace.mpc:
+
+          Added a verbatim clause with MPC-ized versions of the original
+          Svc_Conf_y.cpp and Svc_Conf_l.cpp targets from Makefile.ace.
+
 Mon Nov 29 13:12:14 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
