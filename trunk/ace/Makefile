@@ -362,10 +362,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .PHONY: ACE_COMPONENTS
 ACE_COMPONENTS:
-	@$(ACE_ROOT)/bin/ace_components --ace --set " $(ACE_COMPONENTS) "
+	@sh $(ACE_ROOT)/bin/ace_components --ace --set ' $(ACE_COMPONENTS) '
 
 realclean:
-	@$(ACE_ROOT)/bin/ace_components --ace --remove
+	@sh $(ACE_ROOT)/bin/ace_components --ace --remove
 
 #### Setting ACELIB to null allows it to be used for building shared libraries,
 #### including libACE.$(SOEXT,) on certain platforms.
