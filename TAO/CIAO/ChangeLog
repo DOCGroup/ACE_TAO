@@ -1,3 +1,10 @@
+Fri Jun  4 15:54:09 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Cosmetic and other minor changes to generated code.
+
 Fri Jun  4 15:38:18 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * DnC/ciao/Deployment_Core.idl
