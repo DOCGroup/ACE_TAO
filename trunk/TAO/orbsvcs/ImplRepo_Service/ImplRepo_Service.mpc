@@ -99,7 +99,7 @@ project(ImR_Locator_Service) : orbsvcsexe, core, minimum_corba, iortable, messag
 }
 
 
-project(ImR_Activator_Service) : orbsvcsexe, core, acexml, minimum_corba, svc_utils {
+project(ImR_Activator_Service) : orbsvcsexe, core, acexml, minimum_corba, valuetype, svc_utils {
   exename  = ImR_Activator
   after   += ImR_Activator ImR_Activator_IDL ImR_Locator_IDL
   libs    += TAO_ImR_Activator TAO_ImR_Activator_IDL TAO_ImR_Locator_IDL
