@@ -1,3 +1,10 @@
+Fri Jun 22 13:10:13 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* examples/Log_Msg/test_ostream.cpp (main):
+
+	  Reverted the change as it seems to break VC++. Will fix it
+	  shortly.
+
 Fri Jun 22 07:33:45 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/OS_TLI.{h,inl}: Changed the signature of the t_open() and
