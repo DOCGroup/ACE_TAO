@@ -886,8 +886,9 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::dump (void) const
 // ACE_TRACE ("ACE_Condition<MUTEX>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  // No dump method for ACE_cond_t even in emulated mode. 
   // cond_.dump ();
-  // mutex_.dump ();
+  this->mutex_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }

@@ -1,10 +1,12 @@
 Tue Dec 10 10:20:35 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/Synch.cpp: Commented out couple of lines in the dump
-	  function that was causing build errors from the checkin "Mon Dec
-	  9 18:54:09 2002  Douglas C. Schmidt
-	  <schmidt@ace.cs.wustl.edu>". Fixed the return type of the
-	  implementation to match the declaration.
+	* ace/Synch.cpp: Commented out the dump () call on ACE_cond_t,
+	  which caused build errors from the checkin "Mon Dec 9 18:54:09
+	  2002  Douglas C. Schmidt <schmidt@ace.cs.wustl.edu>". There is
+	  no dump method on ACE_cond_t.
+
+	  Fixed the return type of the implementation to match the
+	  declaration. 
 
 Mon Dec  9 18:54:09 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
