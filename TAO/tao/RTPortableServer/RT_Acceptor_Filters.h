@@ -63,10 +63,6 @@ private:
   RTCORBA::ProtocolList &protocols_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "RT_Acceptor_Filters.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"

@@ -14,12 +14,9 @@
 #include "tao/Policy_Set.h"
 #include "tao/Transport_Acceptor.h"
 
-
-
 ACE_RCSID (RTPortableServer,
            RT_Policy_Validator,
            "$Id$")
-
 
 TAO_POA_RT_Policy_Validator::TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core)
   : TAO_Policy_Validator (orb_core),
