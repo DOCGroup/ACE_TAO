@@ -27,7 +27,6 @@
 
 class TAO_Request_Mux_Strategy;
 class TAO_Transport;
-class TAO_IIOP_Handler_Base;
 
 class TAO_Export TAO_Wait_Strategy
 {
@@ -55,7 +54,7 @@ public:
   //    can't you use TAO_Transport for this? After all it returns an
   //    Event_Handler if you need one...
 
-  virtual int register_handler (TAO_IIOP_Handler_Base *handler) = 0;
+  virtual int register_handler (void) = 0;
   // Register the handler with the Reactor if it makes sense for the
   // strategy.
 
@@ -67,7 +66,7 @@ protected:
   // Transport object.
 };
 
-// @@ Alex: we should consider moving these classes to separate files, 
+// @@ Alex: we should consider moving these classes to separate files,
 //    that can minimize the footprint of systems that use only one of
 //    the strategies....
 
@@ -99,11 +98,16 @@ public:
   //    can't you use TAO_Transport for this? After all it returns an
   //    Event_Handler if you need one...
 
-  virtual int register_handler (TAO_IIOP_Handler_Base *handler);
+  virtual int register_handler (void);
   // Register the handler with the Reactor.
 
   virtual int resume_handler (ACE_Reactor *reactor);
   // Resume the connection handler.
+
+private:
+  int reply_received_;
+  // This flag indicates if a *complete* reply has been received. Used 
+  // to exit the event loop.
 };
 
 class TAO_Export TAO_Wait_On_Leader_Follower : public TAO_Wait_Strategy
@@ -133,7 +137,7 @@ public:
 
   // @@ Alex: another use of IIOP_Handler...
 
-  virtual int register_handler (TAO_IIOP_Handler_Base *handler);
+  virtual int register_handler (void);
   // Register the handler with the Reactor.
 
   virtual int resume_handler (ACE_Reactor *reactor);
@@ -158,9 +162,10 @@ protected:
   // respose. Otherwise, any input received is unexpected.
   // @@ Do we need this anymore? (Alex).
 
-  int input_available_;
-  // Flag indicating whether or not input is available.  Only valid
-  // when <expecting_response_> is non-zero.
+  int reply_received_;
+  // This flag indicates if a *complete* reply was received. Until
+  // that happens we block on the leader/follower condition variable
+  // or the reactor event loop.
 };
 
 class TAO_Export TAO_Wait_On_Read :  public TAO_Wait_Strategy
@@ -187,7 +192,7 @@ public:
 
   // @@ Alex: another use of IIOP_Handler...
 
-  virtual int register_handler (TAO_IIOP_Handler_Base *handler);
+  virtual int register_handler (void);
   // No-op. Return 0.
 
   virtual int resume_handler (ACE_Reactor *reactor);
