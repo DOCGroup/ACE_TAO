@@ -1,3 +1,15 @@
+Wed Nov 25 02:02:32 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/DLL/Makefile:
+	* examples/DLL/Today.{h,cpp}:
+	* examples/DLL/Newsweek.{h,cpp}:
+	* examples/DLL/Magazine.h:
+	* examples/DLL/test_dll.cpp:
+
+	Added these files. This test example shows how dynamically linked 
+	library objects can be loaded on demand and their methods accessed 
+	on getting an pointer to these objects.
+	
 Wed Nov 25 22:28:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/INET_Addr.cpp: 
