@@ -468,7 +468,8 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
           ACE_Errno_Guard error (errno);
           // Make sure to close down the Channel to avoid descriptor
           // leaks.
-          new_sh->close (0);
+          if (new_sh)
+            new_sh->close (0);
         }
       return -1;
     }
