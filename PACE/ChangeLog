@@ -1,3 +1,10 @@
+Wed Aug 09 19:30:39 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* tests/tests.dsw:
+
+	  Removed test projects files that use constants from
+	  POSIX specific platforms (Posix_SP_Test.c, mqueue_test.c).
+
 Wed Aug 09 19:22:17 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* tests/tests.dsw:
