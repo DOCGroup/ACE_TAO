@@ -15,20 +15,19 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
 
 ACE_RCSID(mpeg_mib, mibDrawArea, "$Id$")
 
-extern Display	*dpy;
-extern GC	 mib_gc;
+extern Display  *dpy;
+extern GC        mib_gc;
 
 /* Code for DrawingArea */
 /*****************************************************************************/
 
-mib_Widget *mib_create_DrawingArea(mib_Widget *parent, char *name, char *label,
-	int posx, int posy, int width, int height, int mib_fill)
+mib_Widget *mib_create_DrawingArea(mib_Widget *parent, char *name, char * /* label */,
+        int posx, int posy, int width, int height, int mib_fill)
 {
-  mib_Widget		*temp;
-  mib_DrawingArea	*myres;
-  Widget		 wtemp;
-  Arg			 args[20];
-  int			 n;
+  mib_Widget            *temp;
+  mib_DrawingArea       *myres;
+  Arg                    args[20];
+  int                    n;
 
   /* create the new widget and add it to the tree */
 
