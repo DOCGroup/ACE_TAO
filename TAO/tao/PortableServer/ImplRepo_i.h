@@ -18,7 +18,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ImplRepoS.h"
+#include "tao/PortableServer/ServerObjectS.h"
 #include "tao/ORB.h"
 
 /**

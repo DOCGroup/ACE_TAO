@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:153
+// be\be_codegen.cpp:153
 
-#ifndef _TAO_IDL_IMPLREPOC_H_
-#define _TAO_IDL_IMPLREPOC_H_
+#ifndef _TAO_IDL_ORIG_IMPLREPOC_H_
+#define _TAO_IDL_ORIG_IMPLREPOC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -50,6 +50,8 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
+
+#include "tao/PortableServer/ServerObjectC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -73,7 +75,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from 
-// be/be_visitor_root/root_ch.cpp:63
+// be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
@@ -84,141 +86,13 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:48
 
 namespace ImplementationRepository
 {
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:601
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__VAR_OUT_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__VAR_OUT_CH_
-  
-  class ServerObject;
-  typedef ServerObject *ServerObject_ptr;
-  
-  typedef
-    TAO_Objref_Var_T<
-        ServerObject
-      >
-    ServerObject_var;
-  
-  typedef
-    TAO_Objref_Out_T<
-        ServerObject
-      >
-    ServerObject_out;
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:54
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT_CH_
-  
-  class TAO_PortableServer_Export ServerObject
-    : public virtual CORBA::Object
-  {
-  public:
-    friend class TAO::Narrow_Utils<ServerObject>;
-    typedef ServerObject_ptr _ptr_type;
-    typedef ServerObject_var _var_type;
-    
-    // The static operations.
-    static ServerObject_ptr _duplicate (ServerObject_ptr obj);
-    
-    static ServerObject_ptr _narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-    
-    static ServerObject_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-    
-    static ServerObject_ptr _nil (void)
-    {
-      return (ServerObject_ptr)0;
-    }
-    
-    static void _tao_any_destructor (void *);
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual void ping (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-    
-    virtual void shutdown (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:208
-    
-    virtual CORBA::Boolean _is_a (
-        const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-    
-    virtual const char* _interface_repository_id (void) const;
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  private:
-    TAO::Collocation_Proxy_Broker *the_TAO_ServerObject_Proxy_Broker_;
-  
-  protected:
-    // Concrete interface only.
-    ServerObject (void);
-    
-    // These methods travese the inheritance tree and set the
-    // parents piece of the given class in the right mode.
-    virtual void ImplementationRepository_ServerObject_setup_collocation (void);
-    
-    // Concrete non-local interface only.
-    ServerObject (
-        IOP::IOR *ior,
-        TAO_ORB_Core *orb_core = 0
-      );
-    
-    // Non-local interface only.
-    ServerObject (
-        TAO_Stub *objref,
-        CORBA::Boolean _tao_collocated = 0,
-        TAO_Abstract_ServantBase *servant = 0,
-        TAO_ORB_Core *orb_core = 0
-      );
-    
-    virtual ~ServerObject (void);
-  
-  private:
-    // Private and unimplemented for concrete interfaces.
-    ServerObject (const ServerObject &);
-    
-    void operator= (const ServerObject &);
-  };
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-  
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerObject;
-  
-  // TAO_IDL - Generated from
-  // be/be_visitor_exception/exception_ch.cpp:51
+  // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ALREADYREGISTERED_CH_)
 #define _IMPLEMENTATIONREPOSITORY_ALREADYREGISTERED_CH_
@@ -236,8 +110,10 @@ namespace ImplementationRepository
     static void _tao_any_destructor (void *);
     
     static AlreadyRegistered *_downcast (CORBA::Exception *);
+    static const AlreadyRegistered *_downcast (CORBA::Exception const *);
+    
     static CORBA::Exception *_alloc (void);
-
+    
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
     virtual void _raise (void) const;
@@ -253,20 +129,20 @@ namespace ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be/be_visitor_exception/exception_ch.cpp:125
+    // be\be_visitor_exception/exception_ch.cpp:127
     
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
   
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AlreadyRegistered;
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_exception/exception_ch.cpp:51
+  // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_CANNOTACTIVATE_CH_)
 #define _IMPLEMENTATIONREPOSITORY_CANNOTACTIVATE_CH_
@@ -285,8 +161,10 @@ namespace ImplementationRepository
     static void _tao_any_destructor (void *);
     
     static CannotActivate *_downcast (CORBA::Exception *);
+    static const CannotActivate *_downcast (CORBA::Exception const *);
+    
     static CORBA::Exception *_alloc (void);
-
+    
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
     virtual void _raise (void) const;
@@ -302,27 +180,27 @@ namespace ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be/be_visitor_exception/exception_ctor.cpp:66
+    // be\be_visitor_exception/exception_ctor.cpp:66
     
     CannotActivate (
         const char * _tao_reason
       );
     
     // TAO_IDL - Generated from
-    // be/be_visitor_exception/exception_ch.cpp:125
+    // be\be_visitor_exception/exception_ch.cpp:127
     
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
   
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CannotActivate;
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_exception/exception_ch.cpp:51
+  // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_NOTFOUND_CH_)
 #define _IMPLEMENTATIONREPOSITORY_NOTFOUND_CH_
@@ -340,8 +218,10 @@ namespace ImplementationRepository
     static void _tao_any_destructor (void *);
     
     static NotFound *_downcast (CORBA::Exception *);
+    static const NotFound *_downcast (CORBA::Exception const *);
+    
     static CORBA::Exception *_alloc (void);
-
+    
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
     virtual void _raise (void) const;
@@ -357,20 +237,20 @@ namespace ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be/be_visitor_exception/exception_ch.cpp:125
+    // be\be_visitor_exception/exception_ch.cpp:127
     
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
   
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotFound;
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_type.cpp:258
+  // be\be_type.cpp:258
   
   struct EnvironmentVariable;
   
@@ -388,7 +268,7 @@ namespace ImplementationRepository
     EnvironmentVariable_out;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_PortableServer_Export EnvironmentVariable
   {
@@ -400,12 +280,12 @@ namespace ImplementationRepository
   };
   
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EnvironmentVariable;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_sequence/sequence_ch.cpp:101
+  // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CH_)
 #define _IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CH_
@@ -453,12 +333,12 @@ namespace ImplementationRepository
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EnvironmentList;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_enum/enum_ch.cpp:57
+  // be\be_visitor_enum/enum_ch.cpp:57
   
   enum ActivationMode
   {
@@ -471,12 +351,12 @@ namespace ImplementationRepository
   typedef ActivationMode &ActivationMode_out;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ActivationMode;
   
   // TAO_IDL - Generated from
-  // be/be_type.cpp:258
+  // be\be_type.cpp:258
   
   struct StartupOptions;
   
@@ -494,7 +374,7 @@ namespace ImplementationRepository
     StartupOptions_out;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_PortableServer_Export StartupOptions
   {
@@ -510,12 +390,12 @@ namespace ImplementationRepository
   };
   
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_StartupOptions;
   
   // TAO_IDL - Generated from
-  // be/be_type.cpp:258
+  // be\be_type.cpp:258
   
   struct ServerInformation;
   
@@ -533,7 +413,7 @@ namespace ImplementationRepository
     ServerInformation_out;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_PortableServer_Export ServerInformation
   {
@@ -546,12 +426,12 @@ namespace ImplementationRepository
   };
   
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerInformation;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_sequence/sequence_ch.cpp:101
+  // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CH_
@@ -599,12 +479,12 @@ namespace ImplementationRepository
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerInformationList;
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:601
+  // be\be_interface.cpp:598
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__VAR_OUT_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__VAR_OUT_CH_
@@ -627,7 +507,7 @@ namespace ImplementationRepository
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:54
+  // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR_CH_
@@ -661,7 +541,7 @@ namespace ImplementationRepository
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Boolean next_n (
         ::CORBA::ULong how_many,
@@ -673,7 +553,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -683,7 +563,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:208
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -729,12 +609,12 @@ namespace ImplementationRepository
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerInformationIterator;
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:601
+  // be\be_interface.cpp:598
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION__VAR_OUT_CH_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION__VAR_OUT_CH_
@@ -757,7 +637,7 @@ namespace ImplementationRepository
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:54
+  // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION_CH_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION_CH_
@@ -791,7 +671,7 @@ namespace ImplementationRepository
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void activate_server (
         const char * server
@@ -804,7 +684,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void register_server (
         const char * server,
@@ -818,7 +698,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void reregister_server (
         const char * server,
@@ -832,7 +712,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void remove_server (
         const char * server
@@ -844,7 +724,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void shutdown_server (
         const char * server
@@ -856,7 +736,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void server_is_running (
         const char * server,
@@ -870,7 +750,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void server_is_shutting_down (
         const char * server
@@ -882,7 +762,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void find (
         const char * server,
@@ -895,7 +775,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void list (
         ::CORBA::ULong how_many,
@@ -908,7 +788,7 @@ namespace ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:208
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -954,25 +834,19 @@ namespace ImplementationRepository
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Administration;
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:66
 
 } // module ImplementationRepository
 
 // Proxy Broker Factory function pointer declarations.
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:120
-
-extern TAO_PortableServer_Export
-TAO::Collocation_Proxy_Broker *
-(*ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
+// be\be_visitor_root/root.cpp:120
 
 extern TAO_PortableServer_Export
 TAO::Collocation_Proxy_Broker *
@@ -987,32 +861,11 @@ TAO::Collocation_Proxy_Broker *
   );
 
 // TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:59
+// be\be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
 {
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__TRAITS_CH_)
-#define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__TRAITS_CH_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_PortableServer_Export Objref_Traits< ::ImplementationRepository::ServerObject>
-  {
-    static ::ImplementationRepository::ServerObject_ptr duplicate (
-        ::ImplementationRepository::ServerObject_ptr
-      );
-    static void release (
-        ::ImplementationRepository::ServerObject_ptr
-      );
-    static ::ImplementationRepository::ServerObject_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::ImplementationRepository::ServerObject_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__TRAITS_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__TRAITS_CH_
@@ -1058,14 +911,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_ch.cpp:52
-
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerObject_ptr); // copying
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerObject_ptr *); // non-copying
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::ServerObject_ptr &);
-
-// TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_ch.cpp:52
+// be\be_visitor_exception/any_op_ch.cpp:52
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::AlreadyRegistered &); // copying version
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::AlreadyRegistered*); // noncopying version
@@ -1073,7 +919,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, Implem
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::AlreadyRegistered *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_ch.cpp:52
+// be\be_visitor_exception/any_op_ch.cpp:52
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::CannotActivate &); // copying version
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::CannotActivate*); // noncopying version
@@ -1081,7 +927,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, Implem
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::CannotActivate *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/any_op_ch.cpp:52
+// be\be_visitor_exception/any_op_ch.cpp:52
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::NotFound &); // copying version
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::NotFound*); // noncopying version
@@ -1089,7 +935,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, Implem
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::NotFound *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:52
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::EnvironmentVariable &); // copying version
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::EnvironmentVariable*); // noncopying version
@@ -1097,7 +943,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, Implem
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::EnvironmentVariable *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:52
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::EnvironmentList &); // copying version
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::EnvironmentList*); // noncopying version
@@ -1105,13 +951,13 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, Implem
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::EnvironmentList *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_enum/any_op_ch.cpp:51
+// be\be_visitor_enum/any_op_ch.cpp:51
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::ActivationMode);
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::ActivationMode &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:52
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::StartupOptions &); // copying version
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::StartupOptions*); // noncopying version
@@ -1119,7 +965,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, Implem
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::StartupOptions *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:52
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::ServerInformation &); // copying version
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerInformation*); // noncopying version
@@ -1127,7 +973,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, Implem
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::ServerInformation *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:52
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, const ImplementationRepository::ServerInformationList &); // copying version
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerInformationList*); // noncopying version
@@ -1135,51 +981,45 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, Implem
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const ImplementationRepository::ServerInformationList *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:52
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerInformationIterator_ptr); // copying
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerInformationIterator_ptr *); // non-copying
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::ServerInformationIterator_ptr &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:52
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration_ptr); // copying
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, ImplementationRepository::Administration_ptr *); // non-copying
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::Administration_ptr &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_ch.cpp:55
-
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::ServerObject_ptr );
-TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::ServerObject_ptr &);
-
-// TAO_IDL - Generated from
-// be/be_visitor_exception/cdr_op_ch.cpp:52
+// be\be_visitor_exception/cdr_op_ch.cpp:52
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::AlreadyRegistered &);
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::AlreadyRegistered &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/cdr_op_ch.cpp:52
+// be\be_visitor_exception/cdr_op_ch.cpp:52
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::CannotActivate &);
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::CannotActivate &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/cdr_op_ch.cpp:52
+// be\be_visitor_exception/cdr_op_ch.cpp:52
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::NotFound &);
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::NotFound &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ch.cpp:54
+// be\be_visitor_structure/cdr_op_ch.cpp:54
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::EnvironmentVariable &);
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::EnvironmentVariable &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ch.cpp:71
+// be\be_visitor_sequence/cdr_op_ch.cpp:71
 
 #if !defined _TAO_CDR_OP_ImplementationRepository_EnvironmentList_H_
 #define _TAO_CDR_OP_ImplementationRepository_EnvironmentList_H_
@@ -1196,25 +1036,25 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_ImplementationRepository_EnvironmentList_H_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_enum/cdr_op_ch.cpp:50
+// be\be_visitor_enum/cdr_op_ch.cpp:50
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::ActivationMode &);
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::ActivationMode &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ch.cpp:54
+// be\be_visitor_structure/cdr_op_ch.cpp:54
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::StartupOptions &);
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::StartupOptions &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ch.cpp:54
+// be\be_visitor_structure/cdr_op_ch.cpp:54
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::ServerInformation &);
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::ServerInformation &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ch.cpp:71
+// be\be_visitor_sequence/cdr_op_ch.cpp:71
 
 #if !defined _TAO_CDR_OP_ImplementationRepository_ServerInformationList_H_
 #define _TAO_CDR_OP_ImplementationRepository_ServerInformationList_H_
@@ -1231,22 +1071,22 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_ImplementationRepository_ServerInformationList_H_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_ch.cpp:55
+// be\be_visitor_interface/cdr_op_ch.cpp:55
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::ServerInformationIterator_ptr );
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::ServerInformationIterator_ptr &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_ch.cpp:55
+// be\be_visitor_interface/cdr_op_ch.cpp:55
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const ImplementationRepository::Administration_ptr );
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::Administration_ptr &);
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:958
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
-#include "ImplRepoC.i"
+#include "ImplRepoC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)
