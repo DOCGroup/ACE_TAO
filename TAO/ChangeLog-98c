@@ -11,6 +11,13 @@ Mon Jul 13 17:50:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/TAO.dsp:  Added Invocation.cpp into project.
 
+	  
+	The following two changes were made per Carlos' instructions.
+	(I was just typing.)
+	
+	* tao/deep_free.cpp (DEEP_FREE): Commented out 'delete source' in
+	  case of CORBA::tk_struct.
+	  
 Mon Jul 13 17:37:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Object.cpp: 
