@@ -13,3 +13,13 @@ The following applications are used to measure performance of TAO's POA.
                 strategies used in the object adapter: searching for
                 POAs, servants and operation names
 
+
+        . Implicit_Activation
+
+                Measure the time required to activate servants via _this()
+
+        . Create_Reference
+
+                Measure the time required to create object references
+		using create_reference_with_id()
+
