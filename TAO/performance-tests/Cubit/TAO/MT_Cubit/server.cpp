@@ -82,18 +82,9 @@ Server::prelim_args_process (void)
 
   for (i = 0; i < this->argc_ ; i++)
     {
-      if (ACE_OS::strcmp (this->argv_[i], "-p") == 0
-          && i - 1 < this->argc_)
-        {
-          GLOBALS::instance ()->base_port =
-            ACE_OS::atoi (this->argv_[i + 1]);
-          ACE_DEBUG ((LM_DEBUG,
-                      "base_port:%d",
-                      GLOBALS::instance()->base_port));
-        }
-      else if (ACE_OS::strcmp (this->argv_[i], "-h") == 0
-               && i - 1 < this->argc_)
-        ACE_OS::strcpy (GLOBALS::instance ()->hostname,
+      if (ACE_OS::strcmp (this->argv_[i], "-e") == 0 &&
+          i - 1 < this->argc_)
+        ACE_OS::strcpy (GLOBALS::instance ()->endpoint,
                         this->argv_[i+1]);
     }
 }
@@ -175,14 +166,13 @@ Server::activate_high_servant (void)
   char orbendpoint[BUFSIZ];
 
   ACE_OS::sprintf (orbendpoint,
-                   "-ORBendpoint iiop://%s:%d ",
-                   GLOBALS::instance ()->hostname,
-                   GLOBALS::instance ()->base_port);
+                   "-ORBEndpoint %s ",
+                   GLOBALS::instance ()->endpoint);
 
   char *high_second_argv[] =
     {orbendpoint,
-     ACE_const_cast (char *, "-ORBsndsock 32768 "),
-     ACE_const_cast (char *, "-ORBrcvsock 32768 "),
+     ACE_const_cast (char *, "-ORBSndSock 32768 "),
+     ACE_const_cast (char *, "-ORBRcvSock 32768 "),
      0};
   ACE_NEW_RETURN (this->high_argv_,
                   ACE_ARGV (this->argv_, high_second_argv),
@@ -238,23 +228,39 @@ Server::activate_low_servants (void)
                       -1);
     }
 
+  // Strip the provided addr from the endpoint and make the ORB
+  // choose the remaining endpoints based on the protocol used in
+  // the endpoint.
+  //
+  // e.g.: orignal endpoint:    iiop://foobar:10001 
+  //       random endpoint      iiop://
+
+  const char protocol_delimiter[] = "://";
+
+  char *addr = ACE_OS::strstr (GLOBALS::instance ()->endpoint,
+                               protocol_delimiter);
+
+  size_t random_endpoint_length =
+    ACE_OS::strlen (GLOBALS::instance ()->endpoint) -
+    ACE_OS::strlen (addr) +
+    ACE_OS::strlen (protocol_delimiter);
+
+  char random_endpoint[BUFSIZ];
+
+  ACE_OS::sprintf (random_endpoint, "-ORBEndpoint ");
+
+  ACE_OS::strncat (random_endpoint,
+                   GLOBALS::instance ()->endpoint,
+                   random_endpoint_length);
+
   for (int i = this->num_low_priority_;
        i > 0;
        i--)
     {
-      char orbendpoint[BUFSIZ];
-
-      ACE_OS::sprintf (orbendpoint,
-                       "-ORBendpoint iiop://%s:%d",
-                       GLOBALS::instance ()->hostname,
-                       GLOBALS::instance ()->base_port == 0
-                       ? (int) 0
-                       : GLOBALS::instance ()->base_port + i);
-
       char *low_second_argv[] =
-        {orbendpoint,
-         ACE_const_cast (char *, "-ORBsndsock 32768 "),
-         ACE_const_cast (char *, "-ORBrcvsock 32768 "),
+        {random_endpoint,
+         ACE_const_cast (char *, "-ORBSndSock 32768 "),
+         ACE_const_cast (char *, "-ORBRcvSock 32768 "),
          0};
       ACE_NEW_RETURN (this->low_argv_,
                       ACE_ARGV (this->argv_,

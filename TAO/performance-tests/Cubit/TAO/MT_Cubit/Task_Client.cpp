@@ -570,8 +570,8 @@ Client::init_orb (void)
                   tmp_args.buf ());
   // Add the argument.
   ACE_OS::strcat (tmp_buf,
-                  " -ORBrcvsock 32768 "
-                  " -ORBsndsock 32768 ");
+                  " -ORBRcvSock 32768 "
+                  " -ORBSndSock 32768 ");
 
   ACE_DEBUG ((LM_DEBUG,
               tmp_buf));

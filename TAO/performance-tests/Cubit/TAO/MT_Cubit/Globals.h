@@ -128,17 +128,11 @@ public:
   // Default thread priority, used for the high thread priority.
   // Must call sched_fifo_init () before accessing.
 
-  char hostname[BUFSIZ];
-  // hostname to be used for ORB_init.
+  char endpoint[BUFSIZ];
+  // endpoint to be used for ORB_init.
 
   char *ior_file;
   // file name to read/write the iors of the servants.
-
-  int base_port;
-  // The base port upon which the servants will listen.  The high
-  // priority servant will listen at the <base_port> and the
-  // low_priority servants will listen at <base_port> + i where i is
-  // the number of that low priority servant.
 
   u_int num_of_objs;
   // number of objects per servant thread.
