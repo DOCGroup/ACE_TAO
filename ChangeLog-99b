@@ -1,3 +1,8 @@
+Wed Jul  7 09:05:32 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Caching_Strategies_T.i (ACE_Caching_Strategy_Adapter<>::purge_
+          percent): Don't return a value from a void function.
+
 Wed Jul  7 08:55:53 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/Map_Manager_Test.cpp (test_cache_map_manager): 
