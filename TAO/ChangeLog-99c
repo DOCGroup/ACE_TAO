@@ -1,14 +1,21 @@
+Mon Jun 21 18:57:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/POA.cpp:
+	  Fixed several places where the return value was checked for -1
+	  but actually any value != 0 was an error. Thanks to Irfan for
+	  helping me track this down.
+
 Mon Jun 21 18:52:55 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Cubit/COOL/IDL_Cubit/Makefile:
-	* performance-tests//Cubit/COOL/MT_Cubit/Makefile:
-	* performance-tests//Cubit/TAO/DII_Cubit/Makefile:
-	* performance-tests//Cubit/TAO/IDL_Cubit/Makefile:
-	* performance-tests//Cubit/TAO/MT_Cubit/Makefile:
-	* performance-tests//POA/Demux/Makefile:
-	* performance-tests//POA/Object_Creation_And_Registration/Makefile:
-	* performance-tests//Pluggable/Makefile:
-	* performance-tests//Thruput/TAO/Makefile:Added -Ge 1 option to
+	* performance-tests/Cubit/COOL/MT_Cubit/Makefile:
+	* performance-tests/Cubit/TAO/DII_Cubit/Makefile:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
+	* performance-tests/Cubit/TAO/MT_Cubit/Makefile:
+	* performance-tests/POA/Demux/Makefile:
+	* performance-tests/POA/Object_Creation_And_Registration/Makefile:
+	* performance-tests/Pluggable/Makefile:
+	* performance-tests/Thruput/TAO/Makefile:Added -Ge 1 option to
 	  the TAO_IDLFLAGS in these Makefile's
 	
 Mon Jun 21 18:35:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
