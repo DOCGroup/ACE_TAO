@@ -19,7 +19,7 @@
 
 #include "ace/POSIX_Proactor.h"
 
-#if defined (ACE_HAS_AIO_CALLS) && defined(sun)
+#if defined (ACE_HAS_AIO_CALLS) && defined (sun)
 
 #include "sys/asynch.h"    // Sun native aio calls
 
