@@ -61,7 +61,7 @@ ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period &period)
                                                  ORBSVCS_Time::zero,
                                                  ORBSVCS_Time::zero,
                                                  period,
-                                                 RtecScheduler::VERY_LOW,
+                                                 RtecScheduler::VERY_LOW_IMPORTANCE,
                                                  ORBSVCS_Time::zero,
                                                  1, TAO_TRY_ENV);
             TAO_CHECK_ENV;
