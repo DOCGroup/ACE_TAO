@@ -6,7 +6,9 @@ Fri Mar 02 13:17:36 2001  Steve Huston  <shuston@riverace.com>
           READ_MASK registered after the acceptor is destroyed when main()
           returns. This fixes Bugzilla # 801. Thanks to Pim Philipse
           <pph@rogan-medical.com> for reporting this.
-         
+
+        * THANKS: Added Pim Philipse to the Hall of Fame.
+
 Fri Mar 02 12:24:27 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-10.x-hpc++.h: If compiling without exceptions
