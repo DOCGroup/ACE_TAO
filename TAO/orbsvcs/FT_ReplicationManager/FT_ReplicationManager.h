@@ -90,7 +90,7 @@ namespace TAO
   int fini (ACE_ENV_SINGLE_ARG_DECL);
 
   /**
-   * Idle-time activity.  
+   * Idle-time activity.
    *
    * @param result is set to process return code if return value is non-zero.
    * @return zero to continue; nonzero to exit

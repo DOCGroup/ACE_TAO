@@ -1,3 +1,12 @@
+Thu Oct  2 15:12:50 2003  Steve Totten  <totten_s@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/tests/FT_App/lReplicationManagerFaultConsumerAdapter.h:
+
+          Removed trailing spaces after previous commit.
+
+        These changes were made in the oci_haft branch.
+
 Thu Oct  2 14:21:13 2003  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:

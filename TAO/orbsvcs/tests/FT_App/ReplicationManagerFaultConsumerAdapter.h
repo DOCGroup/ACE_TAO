@@ -20,7 +20,7 @@ class TAO_ORB_Manager;
 // Class declarations
 
 /**
- * An adapter to the Replication Manager's fault consumer 
+ * An adapter to the Replication Manager's fault consumer
  * for use in unit testing Fault Notifier and Fault Consumer.
  */
 class ReplicationManagerFaultConsumerAdapter
@@ -76,7 +76,7 @@ private:
 private:
   ReplicationManagerFaultConsumerAdapter (
     const ReplicationManagerFaultConsumerAdapter & rhs);
-  ReplicationManagerFaultConsumerAdapter & operator = 
+  ReplicationManagerFaultConsumerAdapter & operator =
     (const ReplicationManagerFaultConsumerAdapter & rhs);
 
   /////////////////////////
