@@ -444,6 +444,8 @@ TAO_SHMIOP_Profile::encode (TAO_OutputCDR &stream) const
                        this->orb_core ()->output_cdr_dblock_allocator (),
                        this->orb_core ()->output_cdr_msgblock_allocator (),
                        this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
+                       TAO_DEF_GIOP_MAJOR,
+                       TAO_DEF_GIOP_MINOR,
                        this->orb_core ()->to_iso8859 (),
                        this->orb_core ()->to_unicode ());
 
@@ -472,6 +474,8 @@ TAO_SHMIOP_Profile::create_tagged_profile (void)
                            this->orb_core ()->output_cdr_dblock_allocator (),
                            this->orb_core ()->output_cdr_msgblock_allocator (),
                            this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
+                           TAO_DEF_GIOP_MAJOR,
+                           TAO_DEF_GIOP_MINOR,
                            this->orb_core ()->to_iso8859 (),
                            this->orb_core ()->to_unicode ());
 

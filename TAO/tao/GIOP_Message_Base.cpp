@@ -38,6 +38,8 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                           orb_core->message_block_dblock_allocator (),
                           orb_core->message_block_msgblock_allocator (),
                           orb_core->orb_params ()->cdr_memcpy_tradeoff (),
+                          TAO_DEF_GIOP_MAJOR,
+                          TAO_DEF_GIOP_MINOR,
                           orb_core->to_iso8859 (),
                           orb_core->to_unicode ()));
 }
@@ -326,6 +328,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   size_t rd_pos = this->message_handler_.rd_pos ();
   size_t wr_pos = this->message_handler_.wr_pos ();
 
+  TAO_GIOP_Message_State &state =
+    this->message_handler_.message_state ();
 
   // Create a input CDR stream.
   // NOTE: We use the same data block in which we read the message and
@@ -335,7 +339,13 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           rd_pos,
                           wr_pos,
                           this->message_handler_.message_state ().byte_order,
+                          state.giop_version.major,
+                          state.giop_version.minor,
                           orb_core);
+
+  // Set giop version info for the outstream so that server replies
+  // in correct GIOP version
+  output_->set_version (state.giop_version.major, state.giop_version.minor);
 
   // Reset the message handler to receive upcalls if any
   this->message_handler_.reset (0);
@@ -375,6 +385,8 @@ TAO_GIOP_Message_Base::process_reply_message (
   size_t rd_pos = this->message_handler_.rd_pos ();
   size_t wr_pos = this->message_handler_.wr_pos ();
 
+  TAO_GIOP_Message_State &state =
+    this->message_handler_.message_state ();
 
   // Create a input CDR stream.
   // NOTE: We use the same data block in which we read the message and
@@ -383,8 +395,9 @@ TAO_GIOP_Message_Base::process_reply_message (
   TAO_InputCDR input_cdr (this->message_handler_.steal_data_block (),
                           rd_pos,
                           wr_pos,
-                          this->message_handler_.message_state ().byte_order);
-
+                          this->message_handler_.message_state ().byte_order,
+                          state.giop_version.major,
+                          state.giop_version.minor);
 
   // Reset the message state. Now, we are ready for the next nested
   // upcall if any.
@@ -1046,6 +1059,8 @@ TAO_GIOP_Message_Base::send_reply_exception (
                         orb_core->output_cdr_dblock_allocator (),
                         orb_core->output_cdr_msgblock_allocator (),
                         orb_core->orb_params ()->cdr_memcpy_tradeoff (),
+                        TAO_DEF_GIOP_MAJOR,
+                        TAO_DEF_GIOP_MINOR,
                         orb_core->to_iso8859 (),
                         orb_core->to_unicode ());
 

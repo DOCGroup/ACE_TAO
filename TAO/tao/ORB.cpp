@@ -1781,6 +1781,8 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
                          this->orb_core_->output_cdr_dblock_allocator (),
                          this->orb_core_->output_cdr_msgblock_allocator (),
                          this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
+                         TAO_DEF_GIOP_MAJOR,
+                         TAO_DEF_GIOP_MINOR,
                          this->orb_core_->to_iso8859 (),
                          this->orb_core_->to_unicode ());
 
@@ -1979,7 +1981,8 @@ CORBA_ORB::ior_string_to_object (const char *str,
   int byte_order = *(mb.rd_ptr ());
   mb.rd_ptr (1);
   mb.wr_ptr (len);
-  TAO_InputCDR stream (&mb, byte_order, this->orb_core_);
+  TAO_InputCDR stream (&mb, byte_order, TAO_DEF_GIOP_MAJOR,
+                       TAO_DEF_GIOP_MINOR, this->orb_core_);
 
   CORBA::Object_ptr objref = CORBA::Object::_nil ();
   stream >> objref;

@@ -89,6 +89,10 @@ public:
                  ACE_Allocator* data_block_allocator = 0,
                  ACE_Allocator* message_block_allocator = 0,
                  size_t memcpy_tradeoff = 0,
+                 ACE_CDR::Octet major_version =
+                   TAO_DEF_GIOP_MAJOR,
+                 ACE_CDR::Octet minor_version =
+                   TAO_DEF_GIOP_MINOR,
                  ACE_Char_Codeset_Translator *char_translator = 0,
                  ACE_WChar_Codeset_Translator *wchar_translator = 0);
 
@@ -101,6 +105,10 @@ public:
                  ACE_Allocator* data_block_allocator = 0,
                  ACE_Allocator* message_block_allocator = 0,
                  size_t memcpy_tradeoff = 0,
+                 ACE_CDR::Octet major_version =
+                   TAO_DEF_GIOP_MAJOR,
+                 ACE_CDR::Octet minor_version =
+                   TAO_DEF_GIOP_MINOR,
                  ACE_Char_Codeset_Translator *char_translator = 0,
                  ACE_WChar_Codeset_Translator *wchar_translator = 0);
 
@@ -109,6 +117,10 @@ public:
   TAO_OutputCDR (ACE_Message_Block *data,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  size_t memcpy_tradeoff = 0,
+                 ACE_CDR::Octet major_version =
+                   TAO_DEF_GIOP_MAJOR,
+                 ACE_CDR::Octet minor_version =
+                   TAO_DEF_GIOP_MINOR,
                  ACE_Char_Codeset_Translator *char_translator = 0,
                  ACE_WChar_Codeset_Translator *wchar_translator = 0);
 
@@ -157,22 +169,38 @@ public:
   TAO_InputCDR (const char* buf,
                 size_t bufsiz,
                 int byte_order = ACE_CDR_BYTE_ORDER,
+                ACE_CDR::Octet major_version =
+                  TAO_DEF_GIOP_MAJOR,
+                ACE_CDR::Octet minor_version =
+                  TAO_DEF_GIOP_MINOR,
                 TAO_ORB_Core* orb_core = 0);
 
   /// Create an empty input stream. The caller is responsible for
   /// putting the right data and providing the right alignment.
   TAO_InputCDR (size_t bufsiz,
                 int byte_order = ACE_CDR_BYTE_ORDER,
+                ACE_CDR::Octet major_version =
+                  TAO_DEF_GIOP_MAJOR,
+                ACE_CDR::Octet minor_version =
+                  TAO_DEF_GIOP_MINOR,
                 TAO_ORB_Core* orb_core = 0);
 
   /// Create an input stream from an ACE_Message_Block
   TAO_InputCDR (const ACE_Message_Block *data,
                 int byte_order = ACE_CDR_BYTE_ORDER,
+                ACE_CDR::Octet major_version =
+                  TAO_DEF_GIOP_MAJOR,
+                ACE_CDR::Octet minor_version =
+                  TAO_DEF_GIOP_MINOR,
                 TAO_ORB_Core* orb_core = 0);
 
   /// Create an input stream from an ACE_Data_Block
   TAO_InputCDR (ACE_Data_Block *data,
                 int byte_order = ACE_CDR_BYTE_ORDER,
+                ACE_CDR::Octet major_version =
+                  TAO_DEF_GIOP_MAJOR,
+                ACE_CDR::Octet minor_version =
+                  TAO_DEF_GIOP_MINOR,
                 TAO_ORB_Core* orb_core = 0);
 
   /// Create an input stream from an ACE_Data_Block
@@ -180,6 +208,10 @@ public:
                 size_t read_pointer_position,
                 size_t write_pointer_position,
                 int byte_order = ACE_CDR_BYTE_ORDER,
+                ACE_CDR::Octet major_version =
+                  TAO_DEF_GIOP_MAJOR,
+                ACE_CDR::Octet minor_version =
+                  TAO_DEF_GIOP_MINOR,
                 TAO_ORB_Core* orb_core = 0);
 
   /**
@@ -194,7 +226,6 @@ public:
   TAO_InputCDR (const TAO_InputCDR& rhs,
                 size_t size,
                 ACE_CDR::Long offset);
-
   /**
    * This creates an encapsulated stream, the first byte must be (per
    * the spec) the byte order of the encapsulation.  The default

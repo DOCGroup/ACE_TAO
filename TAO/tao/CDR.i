@@ -10,10 +10,14 @@ ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (const char *buf,
                             size_t bufsiz,
                             int byte_order,
+                            ACE_CDR::Octet major_version,
+                            ACE_CDR::Octet minor_version,
                             TAO_ORB_Core* orb_core)
   : ACE_InputCDR (buf,
                   bufsiz,
-                  byte_order),
+                  byte_order,
+                  major_version,
+                  minor_version),
     orb_core_ (orb_core)
 {
   this->init_translators ();
@@ -22,9 +26,13 @@ TAO_InputCDR::TAO_InputCDR (const char *buf,
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (size_t bufsiz,
                             int byte_order,
+                            ACE_CDR::Octet major_version,
+                            ACE_CDR::Octet minor_version,
                             TAO_ORB_Core* orb_core)
   : ACE_InputCDR (bufsiz,
-                  byte_order),
+                  byte_order,
+                  major_version,
+                  minor_version),
     orb_core_ (orb_core)
 {
   this->init_translators ();
@@ -33,9 +41,13 @@ TAO_InputCDR::TAO_InputCDR (size_t bufsiz,
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
                             int byte_order,
+                            ACE_CDR::Octet major_version,
+                            ACE_CDR::Octet minor_version,
                             TAO_ORB_Core* orb_core)
   : ACE_InputCDR (data,
-                  byte_order),
+                  byte_order,
+                  major_version,
+                  minor_version),
     orb_core_ (orb_core)
 {
   this->init_translators ();
@@ -44,9 +56,13 @@ TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
                             int byte_order,
+                            ACE_CDR::Octet major_version,
+                            ACE_CDR::Octet minor_version,
                             TAO_ORB_Core* orb_core)
   : ACE_InputCDR (data,
-                  byte_order),
+                  byte_order,
+                  major_version,
+                  minor_version),
     orb_core_ (orb_core)
 {
   this->init_translators ();
@@ -58,11 +74,15 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
                             size_t rd_pos,
                             size_t wr_pos,
                             int byte_order,
+                            ACE_CDR::Octet major_version,
+                            ACE_CDR::Octet minor_version,
                             TAO_ORB_Core* orb_core)
   : ACE_InputCDR (data,
                   rd_pos,
                   wr_pos,
-                  byte_order),
+                  byte_order,
+                  major_version,
+                  minor_version),
     orb_core_ (orb_core)
 {
   this->init_translators ();
