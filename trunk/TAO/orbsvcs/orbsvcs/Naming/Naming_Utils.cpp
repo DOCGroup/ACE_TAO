@@ -52,7 +52,8 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
   CORBA::Object_var naming_obj;
 
   if (resolve_for_existing_naming_service)
-    naming_obj = orb->resolve_initial_references ("NameService", timeout);
+    naming_obj = orb->resolve_initial_references ("NameService",
+                                                  timeout);
 
   if (CORBA::is_nil (naming_obj.in ()))
     {
@@ -105,14 +106,16 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
     {
       if (persistence_location != 0)
         {
-          TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex> *index =
-            new TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex> (orb, poa);
-
+          TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> *index =
+            new TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> (orb,
+                                                                                     poa);
           if (index->open (persistence_location) == -1)
-            ACE_DEBUG ((LM_DEBUG, "index->open failed"));
+            ACE_DEBUG ((LM_DEBUG,
+                        "index->open failed"));
 
-          if (index->init() == -1)
-            ACE_DEBUG ((LM_DEBUG, "index->init failed"));
+          if (index->init () == -1)
+            ACE_DEBUG ((LM_DEBUG,
+                        "index->init failed"));
 
           // Set the ior and objref to the root naming context.
           this->naming_service_ior_= index->root_ior ();
@@ -136,8 +139,8 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                           TAO_Naming_Context,
                           -1);
 
-          // Put c_impl into the auto pointer temporarily, in case next
-          // allocation fails.
+          // Put c_impl into the auto pointer temporarily, in case
+          // next allocation fails.
           ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp (c);
 
           ACE_NEW_RETURN (c_impl,
@@ -147,7 +150,6 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                    context_size,
                                                    1),
                           -1);
-
           PortableServer::ObjectId_var id =
            PortableServer::string_to_ObjectId ("NameService");
 
@@ -160,9 +162,9 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
             c->_this (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          // Stringify the objref we'll be implementing, and print it to
-          // stdout.  Someone will take that string and give it to a
-          // client.
+          // Stringify the objref we'll be implementing, and print it
+          // to stdout.  Someone will take that string and give it to
+          // a client.
           this->naming_service_ior_=
             orb->object_to_string (this->naming_context_.in (),
                                    ACE_TRY_ENV);
@@ -326,12 +328,12 @@ TAO_Naming_Client::~TAO_Naming_Client (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class ACE_Auto_Basic_Ptr<TAO_Naming_Context>;
-  template class TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex>;
-  template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex>;
-  template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex> >;
+  template class TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>;
+  template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>;
+  template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Naming_Context>
-  #pragma instantiate TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex>
-  #pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex>
-  #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex> >
+  #pragma instantiate TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>
+  #pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>
+  #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
