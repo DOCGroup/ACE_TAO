@@ -2644,10 +2644,6 @@ typedef short ACE_pri_t;
 #if defined (ACE_HAS_HI_RES_TIMER)
   /* hrtime_t is defined on systems (Suns) with ACE_HAS_HI_RES_TIMER */
   typedef hrtime_t ACE_hrtime_t;
-#elif defined (ACE_HAS_64BIT_LONGS)
-  typedef u_long ACE_hrtime_t;
-#elif defined (ACE_HAS_LONGLONG_T)
-  typedef unsigned long long ACE_hrtime_t;
 #else
   typedef ACE_UINT64 ACE_hrtime_t;
 #endif /* ACE_HAS_HI_RES_TIMER */
