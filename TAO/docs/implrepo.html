@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <html>
 
 <head>
@@ -12,6 +13,9 @@
 <h1>TAO Implementation Repository </h1>
 
 <p>Revision 3 - July 8, 1998</p>
+<!-- You could use a CVS ident tag here, like -->
+<!-- $Date$ -->
+<!-- or $Revision$ -->
 
 <hr>
 
@@ -22,15 +26,20 @@
 
 <h3>Persistent and Transient IORs</h3>
 
-<p>CORBA defines two types of objects, persistent and transient objects.&nbsp; The
-difference between the two is the lifetime of the object in relation to the lifetime of
-the server thread or process that created it.&nbsp; A transient object lifetime is tied to
+<p>CORBA defines two types of object references, persistent and transient objects.&nbsp; The
+difference between the two is the lifetime of the reference in relation to the lifetime of
+the server thread or process that created it.&nbsp; A transient object
+      reference lifetime is tied to
 the lifetime of its server.&nbsp;&nbsp;&nbsp; If the server stops or exits, the transient
-object no longer exists.&nbsp; All references to this object should now be invalid, even
-if the server is restarted.&nbsp; Persistent objects can outlive its se4rver.&nbsp; The
+object reference no longer exists.&nbsp; All references to this object should now be invalid, even
+if the server is restarted.&nbsp; Persistent object references can outlive its se4rver.&nbsp; The
 server can be stopped and restarted without invalidating all object references to it.
 &nbsp; This enables the implementation of features like load-on-demand servers and object
 migration.</p>
+
+<!-- IMHO we should make the difference between persitent object -->
+<!-- references and persistent objects, an infinite source of -->
+<!-- confussion for our users, and me (coryan). -->
 
 <h3>The Implementation Repository</h3>
 
@@ -68,7 +77,8 @@ The next section details our goals and plans for the implementation.</p>
     common use-case.&nbsp; For more complicated behavior, programs can use Implementation
     Repository extensions of the POA.</li>
   <li>The Implementation will work with any CORBA client that supports LOCATION_FORWARD
-    messages and multiple profiles in IORs.</li>
+    messages and multiple profiles in IORs, even if the client is not
+implemented using TAO.</li>
   <li>The Implementation Repository will keep track of all process that have registered with
     it by using a &quot;ping&quot; object located in the server.&nbsp; This ensures that
     multiple instances of the same server are not started.</li>
@@ -127,7 +137,10 @@ isn't tied to an executable, the virtual servers can be migrated to other server
     Key, a Tagged Components section will be added.&nbsp; This is where a tag for orb type and
     version will be located.</li>
   <li><strong>Multiple Profiles support</strong>: Our goal is to have the clients contact the
-    object first, and if that fails, then contact the Implementation Repository.&nbsp; </li>
+    object first, and if that fails, then contact the Implementation
+	Repository.&nbsp; </li>
+<!-- Shouldn't this go into the section above along with the ImplRepo -->
+<!-- "goodies" (coryan) -->
 </ol>
 
 <p>So the new profile will look like:</p>
@@ -161,6 +174,9 @@ isn't tied to an executable, the virtual servers can be migrated to other server
 <p>Transient objects will have a TimeStamp and Persistent object have a server name.</p>
 
 <p>Our Profile for the Implementation Repository objects look like this:</p>
+<!-- This is not "our profile", this is a standard IIOP 1.1 profile -->
+<!-- Maybe a small section explaining why we need to upgrade to -->
+<!-- 1.1 or why the new protocol offers advantages to use -->
 
 <table border="1">
   <tr>
@@ -206,14 +222,14 @@ contain more than one </p>
 
 <h3>POA Extensions</h3>
 
-<p>POA will contain a Create_Reference_VServer (...) that can take in additional arguments
+<p>POA will contain a <CODE>create_reference_vserver (...)</CODE> that can take in additional arguments
 for a virtual server name and a sequence of Implementation Repository IORs.&nbsp; This
 will then communicate with each Implementation Repository and get its generated profile
 back.&nbsp; Then all the profiles will be combined to produce an Persistent IOR.</p>
 
 <h3>Possible Future Goals</h3>
 
-<p>Some things that may be implemented in TOA relating to the Implementation Repository
+<p>Some things that may be implemented in TAO relating to the Implementation Repository
 domain: 
 
 <ul>
@@ -221,7 +237,7 @@ domain:
     other IORs which contain that server instead of going through the Implementation
     Repository</li>
   <li>Some sort of server security that checks the executable to make sure it is the correct
-    executable (checksum, etc).</li>
+    executable (checksum, signatures, etc).</li>
   <li>Add the ability to put servers into DLLs or Shared Object files so the Implementation
     Repository can load it via those methods.</li>
   <li>Federations of Implementation Repositories.</li>
@@ -389,6 +405,9 @@ least once) even when the server is already running. </p>
 <p>A helper application will be part of the Implementation Repository. It will be a
 command-line utility that will assist users with adding and removing Persistent Object
 References from the Implementation Repository. </p>
+<!-- Wouldn't this utility (or a similar one) be the mechanism to -->
+<!-- configure the mapping between virtual server names and -->
+<!-- executables. -->
 
 <h3>Locating an instance of Implementation Repository </h3>
 
@@ -398,6 +417,9 @@ References from the Implementation Repository. </p>
 host information can be specified through command line options or environment variables.
 The default port of the Implementation Repository can be overridden through command line
 options or environment variables. </p>
+<!-- How are we planning to start a "remote" server? Isn't federations -->
+<!-- of ImplRepo a solution for that? What are the drawbacks or -->
+<!-- advantages of using rsh ssh, rexec or a similar NT service? -->
 
 <h4>Client side</h4>
 
@@ -407,6 +429,8 @@ multicast group) the server name of the Persistent Object the client is interest
 default multicast group can be override through command line options or environment
 variables. The default port of the Implementation Repository can be overridden through
 command line options or environment variables. </p>
+<!-- Are we planning to support more than one ImplRepo profile -->
+<!-- in the IOR? -->
 
 <hr>
 
@@ -416,6 +440,8 @@ command line options or environment variables. </p>
 
 <p>Before the server starts, it must be registered (via a command-line utility) with an
 implementation repository that supports multicast. 
+<!-- is multicast support mandatory? OTOH it will be there always, -->
+<!-- right? -->
 
 <ol>
   <li>Now the server will start up and call ORB_init.&nbsp; ORB_init, if not passed a server
@@ -428,6 +454,7 @@ implementation repository that supports multicast.
     server_is_running () call.</li>
   <li>The profile returned by registration will be stored for later use.</li>
   <li>Client later can call POA::CreateRef ()</li>
+<!-- Irfan: is CreateRef the right name? Darrell: use <CODE></CODE> -->
   <li>First, CreateRef () will create the local profile</li>
   <li>The stored Implementation Repository profile will have its object id changed to be the
     object key just created.</li>
@@ -442,7 +469,7 @@ already, although it does not need to be multicast aware.
 <ol>
   <li>ORB_init () is called with a server name and a list of Implementation Repositories. </li>
   <li>After creating a ping object, it will register itself with every Implementation
-    Repository with server_is_running () and store all of the returned profiles for later use.</li>
+    Repository with <CODE>server_is_running ()</CODE> and store all of the returned profiles for later use.</li>
   <li>If POA::CreateRef () is called later, it will do the same as before and build a full
     IOR.</li>
 </ol>
