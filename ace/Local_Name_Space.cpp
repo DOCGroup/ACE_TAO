@@ -149,6 +149,9 @@ ACE_NS_Internal::type (void)
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Hash_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry <ACE_NS_String, ACE_NS_Internal>;
 template class ACE_Unbounded_Set<ACE_Name_Binding>;
 template class ACE_Unbounded_Set_Iterator<ACE_Name_Binding>;
 template class ACE_Unbounded_Set<ACE_WString>;
