@@ -2,19 +2,18 @@
 
 //=============================================================================
 /**
- *  @file    Struct_TypeCode.h
+ *  @file    Union_TypeCode.h
  *
  *  $Id$
  *
- *  Header file for a @c tk_struct CORBA::TypeCode.
+ *  Header file for a @c tk_union CORBA::TypeCode.
  *
- *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
- *  @author Carlos O'Ryan
+ *  @author Ossama Othman
  */
 //=============================================================================
 
-#ifndef TAO_STRUCT_TYPECODE_H
-#define TAO_STRUCT_TYPECODE_H
+#ifndef TAO_UNION_TYPECODE_H
+#define TAO_UNION_TYPECODE_H
 
 #include /**/ "ace/pre.h"
 
@@ -33,26 +32,32 @@ namespace TAO
   {
 
     /**
-     * @class Struct
+     * @class Union
      *
      * @brief @c CORBA::TypeCode implementation for an OMG IDL
-     *        @c struct.
+     *        @c union.
      *
      * This class implements a @c CORBA::TypeCode for an OMG IDL
-     * @c struct.
+     * @c union.
      */
-    template <typename StringType, class FieldArrayType, class RefCountPolicy>
-    class Struct
+    template <typename StringType, class CaseArrayType, class RefCountPolicy>
+    class Union
       : public CORBA::TypeCode,
         private RefCountPolicy
     {
     public:
 
+      typedef TAO::TypeCode::Case_Base<StringType> Case;
+
       /// Constructor.
-      Struct (char const * id,
-              char const * name,
-              Field<StringType> const * fields,
-              CORBA::ULong nfields);
+      Union (char const * id,
+             char const * name,
+             CORBA::TypeCode_ptr * discriminant_type,
+             Case const * cases,
+             CORBA::ULong ncases,
+             CORBA::Long default_index,
+             char const * default_member_name,
+             CORBA::TypeCode_ptr * default_member_type);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -73,7 +78,7 @@ namespace TAO
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
-       * @c tk_struct @c CORBA::TypeCode -specific template methods.
+       * @c tk_union @c CORBA::TypeCode -specific template methods.
        *
        * @see @c CORBA::TypeCode
        */
@@ -92,20 +97,46 @@ namespace TAO
                                           ACE_ENV_ARG_DECL) const;
       virtual CORBA::TypeCode_ptr member_type_i (CORBA::ULong index
                                                  ACE_ENV_ARG_DECL) const;
+      virtual CORBA::Any * member_label_i (ULong index
+                                           ACE_ENV_ARG_DECL) const;
+      virtual CORBA::TypeCode_ptr discriminator_type_i (
+        ACE_ENV_SINGLE_ARG_DECL) const;
+      virtual CORBA::Long default_index_i (ACE_ENV_SINGLE_ARG_DECL) const;
       //@}
 
     private:
 
-      /// Get pointer to the underlying @c Field array.
-      Field<StringType> const * fields (void) const;
+      /// Get pointer to the underlying @c Case array.
+      Case const * cases (void) const;
+
+      /// Return the number of cases in the IDL @c union, including
+      /// the @c default case.
+      CORBA::ULong case_count (void) const;
+
+      /// Return @c union case corresponding to given member (not
+      /// @c Case array) index.
+      /**
+       * @param index The zero-based index of the @c union member,
+       *              including the @c default case.  For example, if
+       *              the @c default case is the second @union
+       *              case/member, the @a index would be @c 1.
+       *
+       * @return Reference to @c union case/member corresponding to
+       *         the given member zero-based @a index value.
+       *
+       * @note This method handles the @c default case.  Do not
+       *       attempt to perform special handling for the @c default
+       *       case by shifting the index value by one, for example.
+       */
+      Case const & case (CORBA::ULong index) const;
 
     private:
 
       /**
-       * @c Struct Attributes
+       * @c Union Attributes
        *
        * Attributes representing the structure of an OMG IDL
-       * @c struct.
+       * @c union.
        *
        * @note These attributes are declared in the order in which
        *       they are marshaled into a CDR stream in order to
@@ -114,15 +145,27 @@ namespace TAO
       //@{
 
       /// Base attributes containing repository ID and name of
-      /// structure type.
+      /// union type.
       Base_Attributes<StringType> const base_attributes_;
 
-      /// The number of fields in the OMG IDL structure.
-      CORBA::ULong const nfields_;
+      /// Type of IDL @c union discriminant.
+      CORBA::TypeCode_ptr * const discriminant_type_;
 
-      /// Array of @c TAO::TypeCode fields representing structure of the
-      /// OMG IDL defined @c struct.
-      FieldArrayType const fields_;
+      /// The number of cases in the OMG IDL union, excluding the
+      /// @c default case.
+      CORBA::ULong const ncases_;
+
+      /// Array of @c TAO::TypeCode::Case representing structure of
+      /// the OMG IDL defined @c union.
+      CaseArrayType const cases_;
+
+      /// IDL @c union @c default case.
+      /**
+       * @note Only valid if @c this->default_index_ @c >= @c 0.
+       */
+      Default_Case<StringType> const default_case_;
+
+      //@}
 
     };
 
@@ -131,18 +174,18 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/Struct_TypeCode.inl"
+# include "tao/Union_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/Struct_TypeCode.cpp"
+# include "tao/Union_TypeCode.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("Struct_TypeCode.cpp")
+# pragma implementation ("Union_TypeCode.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_STRUCT_TYPECODE_H */
+#endif /* TAO_UNION_TYPECODE_H */

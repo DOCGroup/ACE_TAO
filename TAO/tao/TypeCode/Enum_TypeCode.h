@@ -96,7 +96,7 @@ namespace TAO
     private:
 
       /// Get pointer to the underlying @c Enumerator array.
-      Enumerator<STRING_TYPE> const * enumerators (void) const;
+      Enumerator<StringType> const * enumerators (void) const;
 
     private:
 
