@@ -1,21 +1,44 @@
+Thu May  4 10:10:38 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Latency/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Pluggable/Makefile:
+	  Add missing libraries to the Makefile, this is only a problem
+	  for static builds, well some platforms have problems with
+	  dynamic libraries too.
+
+	* performance-tests/POA/Demux/Makefile:
+	  More missing libraries.
+
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+	  Fixed some more problems with calls to ::feof()
+
+	* utils/catior/catior.cpp:
+	  Print out 1.2 profiles too their format is identical to 1.1
+	  profiles.
+
 Wed May  3 18:31:54 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp: 
-	  Removed a redundant template instantiation
-	
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
-	  Removed the ::feof error
-	
-	* orbsvcs/tests/AVStreams/Latency/pong.cpp: 
-	* orbsvcs/tests/AVStreams/Latency/ping.cpp: 
-	  Added missing template intantiations
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+          Removed a redundant template instantiation
+
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+          Removed the ::feof error
+
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp:
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp:
+          Added missing template intantiations
 
 Wed May  3 16:28:11 2000  Darrell Brunsch  <brunsch@uci.edu>
 
-        * tests/Param_Test/client.dsp:  
+        * tests/Param_Test/client.dsp:
 
           Updated to include the small_union files.
 
