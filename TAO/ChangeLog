@@ -1,3 +1,15 @@
+Tue Nov  2 07:24:04 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+	* orbsvcs/orbsvcs/Log/LogRecordStore.h:
+
+	  Added new method log_record_size() which returns the size of
+	  the log record including the contents of the Any field.
+
+	  Changed log() and remove() methods to use log_record_size().
+	  The old implementation only counted the size of the LogRecord
+	  struct which seriously underestimates the size.
+
 Mon Nov  1 15:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * VERSION:
