@@ -55,15 +55,15 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
 
 TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
                                           const char *operation,
-					  TAO_ORB_Core* orb_core)
+                                          TAO_ORB_Core* orb_core)
   : data_ (data),
     opname_ (operation),
     my_request_id_ (0),
     out_stream_ (buffer, sizeof buffer, /* CDR::DEFAULT_BUFSIZE */
-		 TAO_ENCAP_BYTE_ORDER,
-		 TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
-		 orb_core->output_cdr_buffer_allocator (),
-		 orb_core->output_cdr_dblock_allocator ()),
+                 TAO_ENCAP_BYTE_ORDER,
+                 TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
+                 orb_core->output_cdr_buffer_allocator (),
+                 orb_core->output_cdr_dblock_allocator ()),
     orb_core_ (orb_core)
 {
   // @@ TODO The comments here are scary, can someone please give me a
@@ -228,8 +228,8 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
   CORBA::Boolean bt =
     TAO_GIOP::start_message (message_type,
-			     this->out_stream_,
-			     this->orb_core_);
+                             this->out_stream_,
+                             this->orb_core_);
 
   if (bt != 1)
     TAO_THROW_ENV_RETURN_VOID (CORBA::MARSHAL (CORBA::COMPLETED_NO), env);
@@ -261,11 +261,11 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
     case TAO_GIOP::Request:
 
       this->write_request_header (svc_ctx,
-				  this->my_request_id_,
-				  is_roundtrip,
-				  key,
-				  this->opname_,
-				  principal);
+                                  this->my_request_id_,
+                                  is_roundtrip,
+                                  key,
+                                  this->opname_,
+                                  principal);
       break;
 
     case TAO_GIOP::LocateRequest:
@@ -327,18 +327,18 @@ TAO_GIOP_Invocation::write_request_header
 {
   if (this->orb_core_->orb_params ()->use_IIOP_lite_protocol ())
     return this->write_request_header_lite (svc_ctx,
-					    request_id,
-					    is_roundtrip,
-					    key,
-					    opname,
-					    principal);
+                                            request_id,
+                                            is_roundtrip,
+                                            key,
+                                            opname,
+                                            principal);
   else
     return this->write_request_header_std (svc_ctx,
-					   request_id,
-					   is_roundtrip,
-					   key,
-					   opname,
-					   principal);
+                                           request_id,
+                                           is_roundtrip,
+                                           key,
+                                           opname,
+                                           principal);
 }
 
 
@@ -491,6 +491,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
   TAO_GIOP_ReplyStatusType retval =
     TAO_GIOP_Invocation::invoke (1, env);
   TAO_CHECK_ENV_RETURN (env, retval);
+  ACE_UNUSED_ARG (retval);
 
   // This blocks until the response is read.  In the current version,
   // there is only one client thread that ever uses this connection,
@@ -531,7 +532,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
   TAO_SVC_HANDLER *handler = this->data_->handler ();
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
                                                      this->inp_stream_,
-						     this->orb_core_);
+                                                     this->orb_core_);
 
   this->orb_core_->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
@@ -642,11 +643,11 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
     case TAO_GIOP_USER_EXCEPTION:
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
-	// @@ TODO This code is not exception safe. Notice how on
-	// every exit path we have to invoke TAO_GIOP::send_error,
-	// this should be handled by the destructor of some class;
-	// which is disabled on the normal exit paths.
-	// Plus <buf> should be stored in a CORBA::String_var
+        // @@ TODO This code is not exception safe. Notice how on
+        // every exit path we have to invoke TAO_GIOP::send_error,
+        // this should be handled by the destructor of some class;
+        // which is disabled on the normal exit paths.
+        // Plus <buf> should be stored in a CORBA::String_var
 
         char* buf;
         CORBA::String_var buf_holder; // Used to clean up dynamic allocated string
@@ -663,47 +664,47 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
         buf_holder = buf;       // Assume ownership of <buf>
 
-	if (reply_status == TAO_GIOP_SYSTEM_EXCEPTION)
-	  {
-	    CORBA_Exception *exception =
-	      TAO_Exceptions::create_system_exception (buf_holder.in (), env);
+        if (reply_status == TAO_GIOP_SYSTEM_EXCEPTION)
+          {
+            CORBA_Exception *exception =
+              TAO_Exceptions::create_system_exception (buf_holder.in (), env);
             TAO_CHECK_ENV_RETURN (env, TAO_GIOP_SYSTEM_EXCEPTION);
 
-	    if (exception != 0)
-	      {
-		this->inp_stream_.decode (exception->_type (),
-					  &exception, 0,
-					  env);
+            if (exception != 0)
+              {
+                this->inp_stream_.decode (exception->_type (),
+                                          &exception, 0,
+                                          env);
                 TAO_CHECK_ENV_RETURN (env, TAO_GIOP_SYSTEM_EXCEPTION)
 ;
-		env.exception (exception);
-		return TAO_GIOP_SYSTEM_EXCEPTION;
-	      }
-	    else
-	      {
-		// @@ TODO We should have policies to handle this
-		// error, for instance:
-		// + the spec requires us to silently raise a
-		// CORBA::UNKNOWN exception
-		// + Don't print a message and try
-		// + Print the message and try
-		// + Print the message and rasize CORBA::UNKNOWN
-		ACE_ERROR ((LM_ERROR,
-			    "Received Reply with SYSTEM_EXCEPTION "
-			    "status, but unknown or invalid "
-			    "exception.\n"
-			    "Trying to interpret as a user exception"));
-	      }
-	  }
-	  {
-	    // Find it in the operation description and then use that
-	    // to get the typecode.
-	    // This is important to decode the exception.
+                env.exception (exception);
+                return TAO_GIOP_SYSTEM_EXCEPTION;
+              }
+            else
+              {
+                // @@ TODO We should have policies to handle this
+                // error, for instance:
+                // + the spec requires us to silently raise a
+                // CORBA::UNKNOWN exception
+                // + Don't print a message and try
+                // + Print the message and try
+                // + Print the message and rasize CORBA::UNKNOWN
+                ACE_ERROR ((LM_ERROR,
+                            "Received Reply with SYSTEM_EXCEPTION "
+                            "status, but unknown or invalid "
+                            "exception.\n"
+                            "Trying to interpret as a user exception"));
+              }
+          }
+          {
+            // Find it in the operation description and then use that
+            // to get the typecode.
+            // This is important to decode the exception.
 
-	    for (CORBA::ULong i = 0;
-		 i < exceptions.count ();
-		 i++)
-	      {
+            for (CORBA::ULong i = 0;
+                 i < exceptions.count ();
+                 i++)
+              {
                 CORBA::TypeCode_ptr tcp = 0;
                 int loop_continue = 0;
                 TAO_TRY
@@ -726,18 +727,18 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                 if (loop_continue)
                   continue;
 
-		const ACE_Message_Block* cdr =
-		  this->inp_stream_.start ();
-		CORBA_Any any (tcp, cdr);
-		CORBA_Exception *exception =
-		  new CORBA_UnknownUserException (any);
-		env.exception (exception);
-		return TAO_GIOP_USER_EXCEPTION;
+                const ACE_Message_Block* cdr =
+                  this->inp_stream_.start ();
+                CORBA_Any any (tcp, cdr);
+                CORBA_Exception *exception =
+                  new CORBA_UnknownUserException (any);
+                env.exception (exception);
+                return TAO_GIOP_USER_EXCEPTION;
               }
           }
 
         // If we couldn't find the right exception, report it as
-	// CORBA::UNKNOWN.
+        // CORBA::UNKNOWN.
 
         TAO_THROW_ENV_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE), env, TAO_GIOP_SYSTEM_EXCEPTION);
       }
@@ -768,6 +769,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
   TAO_GIOP_ReplyStatusType retval =
     TAO_GIOP_Invocation::invoke (1, env);
   TAO_CHECK_ENV_RETURN (env, retval);
+  ACE_UNUSED_ARG (retval);
 
   // This blocks until the response is read.  In the current version,
   // there is only one client thread that ever uses this connection,
@@ -808,7 +810,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
   TAO_SVC_HANDLER *handler = this->data_->handler ();
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
                                                      this->inp_stream_,
-						     this->orb_core_);
+                                                     this->orb_core_);
 
   this->orb_core_->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
@@ -919,11 +921,11 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
     case TAO_GIOP_USER_EXCEPTION:
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
-	// @@ TODO This code is not exception safe. Notice how on
-	// every exit path we have to invoke TAO_GIOP::send_error,
-	// this should be handled by the destructor of some class;
-	// which is disabled on the normal exit paths.
-	// Plus <buf> should be stored in a CORBA::String_var
+        // @@ TODO This code is not exception safe. Notice how on
+        // every exit path we have to invoke TAO_GIOP::send_error,
+        // this should be handled by the destructor of some class;
+        // which is disabled on the normal exit paths.
+        // Plus <buf> should be stored in a CORBA::String_var
 
         char* buf;
         CORBA::String_var buf_holder; // Used to clean up dynamically allocated
@@ -951,24 +953,24 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 
         if (reply_status == TAO_GIOP_SYSTEM_EXCEPTION)
           {
-	    exception =
-	      TAO_Exceptions::create_system_exception (buf_holder.in (), env);
+            exception =
+              TAO_Exceptions::create_system_exception (buf_holder.in (), env);
             TAO_CHECK_ENV_RETURN (env, TAO_GIOP_SYSTEM_EXCEPTION);
 
-	    if (exception != 0)
-	      {
-		this->inp_stream_.decode (exception->_type (),
-					  exception, 0,
-					  env);
+            if (exception != 0)
+              {
+                this->inp_stream_.decode (exception->_type (),
+                                          exception, 0,
+                                          env);
                 TAO_CHECK_ENV_RETURN (env, TAO_GIOP_SYSTEM_EXCEPTION);
 
-		// @@ What do we do if an exception is raised while
-		// demarshaling an exception????
-		env.exception (exception);
-		return TAO_GIOP_SYSTEM_EXCEPTION;
-	      }
+                // @@ What do we do if an exception is raised while
+                // demarshaling an exception????
+                env.exception (exception);
+                return TAO_GIOP_SYSTEM_EXCEPTION;
+              }
           }
-	// else // this else is commented out, see the coment above
+        // else // this else is commented out, see the coment above
           {
             // search the table of exceptions and see if there is a match
             for (CORBA::ULong i = 0;
@@ -1010,10 +1012,10 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
           }
 
         // If we couldn't find the right exception, report it as
-	// CORBA::UNKNOWN.
+        // CORBA::UNKNOWN.
 
-	env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_YES));
-	return TAO_GIOP_SYSTEM_EXCEPTION;
+        env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_YES));
+        return TAO_GIOP_SYSTEM_EXCEPTION;
       }
     // NOTREACHED
 
@@ -1054,7 +1056,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
   TAO_SVC_HANDLER *handler = this->data_->handler ();
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
                                                      this->inp_stream_,
-						     this->orb_core_);
+                                                     this->orb_core_);
 
   this->orb_core_->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
