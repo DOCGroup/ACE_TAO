@@ -2223,10 +2223,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 #  if defined (__Lynx__)
   if (timeout == 0)
-    {
-      ACE_OSCALL (::pthread_cond_wait (cv, external_mutex),
-                  int, -1, result);
-    }
+    ACE_OSCALL (::pthread_cond_wait (cv, external_mutex),
+                int, -1, result);
   else
     {
       // Note that we must convert between absolute time (which is
@@ -2825,7 +2823,26 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   return result < 0 ? -1 : result;
 #elif defined (ACE_HAS_WTHREADS)
 #  if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
-  switch (::WaitForSingleObject (*s, tv.sec () * 1000 + tv.usec () / 1000))
+  int msec_timeout;
+
+  if (timeout->sec () == 0 && timeout->usec () == 0)
+    msec_timeout = 0; // Do a "poll."
+  else
+    {
+      // Note that we must convert between absolute time (which is
+      // passed as a parameter) and relative time (which is what
+      // <WaitForSingleObjects> expects).
+      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+
+      // Watchout for situations where a context switch has caused the
+      // current time to be > the timeout.
+      if (relative_time < ACE_Time_Value::zero)
+        msec_timeout = 0;
+      else
+        msec_timeout = relative_time.msec ();
+    }
+
+  switch (::WaitForSingleObject (*s, msec_timeout))
     {
     case WAIT_OBJECT_0:
       return 0;
@@ -2840,9 +2857,9 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   /* NOTREACHED */
 #  else /* ACE_USES_WINCE_SEMA_SIMULATION */
   // Record the starting time for later reference.  This is necessary
-  // because we may get signaled but cannot grab the semaphore
-  // before timeout.  In that case, we'll need to restart the process
-  // with updated timeout value.
+  // because we may get signaled but cannot grab the semaphore before
+  // timeout.  In that case, we'll need to restart the process with
+  // updated timeout value.
   ACE_Time_Value start_time = ACE_OS::gettimeofday ();
 
   // Always wait <tv> time when we first start the wait.
