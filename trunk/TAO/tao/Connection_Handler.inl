@@ -48,3 +48,12 @@ TAO_Connection_Handler::pending_upcalls (void) const
 {
   return this->pending_upcalls_;
 }
+
+ACE_INLINE void
+TAO_Connection_Handler::update_protocol_properties (int /*send_buffer_size*/,
+                                                    int /*recv_buffer_size*/,
+                                                    int /*no_delay*/,
+                                                    int /*enable_network_priority*/)
+{
+}
+

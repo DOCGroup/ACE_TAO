@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 
 // ===================================================================
@@ -12,15 +13,19 @@
 
 #ifndef TAO_DEFAULT_PROTOCOLS_HOOKS_H
 #define TAO_DEFAULT_PROTOCOLS_HOOKS_H
+
 #include "ace/pre.h"
 
 #include "Protocols_Hooks.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
+
+class TAO_POA;
 
 class TAO_Export TAO_Default_Protocols_Hooks : public TAO_Protocols_Hooks
 {
@@ -35,13 +40,25 @@ public:
   virtual int call_client_protocols_hook (int &send_buffer_size,
                                           int &recv_buffer_size,
                                           int &no_delay,
+					  int &enable_network_priority,
                                           const char *protocol_type);
 
   virtual int call_server_protocols_hook (int &send_buffer_size,
                                           int &recv_buffer_size,
                                           int &no_delay,
+					  int &enable_network_priority,
                                           const char *protocol_type);
 
+  virtual int update_client_protocol_properties (TAO_Stub *stub,
+							TAO_Connection_Handler *connection_handler,
+							const char *protocol_type);
+  
+  virtual int update_server_protocol_properties (CORBA::Policy *policy,
+							TAO_Connection_Handler *connection_handler,
+							const char *protocol_type);
+  
+  virtual CORBA::Long get_dscp_codepoint (void);
+  
   virtual void rt_service_context (TAO_Stub *stub,
                                    TAO_Service_Context &service_context,
                                    CORBA::Boolean restart

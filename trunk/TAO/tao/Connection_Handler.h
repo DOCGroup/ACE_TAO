@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 
 //=============================================================================
@@ -74,6 +75,10 @@ public:
   /// reference to this object can call the event handler methods.
   virtual int handle_input (ACE_HANDLE fd) = 0;
 
+  void update_protocol_properties (int send_buffer_size,
+                                   int recv_buffer_size,
+                                   int no_delay,
+                                   int enable_network_priority);
 protected:
 
   /// Return our TAO_ORB_Core pointer
