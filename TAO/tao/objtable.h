@@ -234,6 +234,10 @@ public:
   // constructor. If size is 0, some default is used.
 
   // Implement TAO_Dynamic_Hash_ObjTable....
+  virtual int find (const PortableServer::Servant servant);
+  virtual int find (const PortableServer::ObjectId &id);
+  virtual int find (const PortableServer::Servant servant,
+		    PortableServer::ObjectId_out id);
   virtual int find (const PortableServer::ObjectId &id, 
 		    PortableServer::Servant &servant);
   virtual int bind (const PortableServer::ObjectId &id, 
@@ -309,6 +313,10 @@ public:
   TAO_Linear_ObjTable (CORBA::ULong size);
   virtual ~TAO_Linear_ObjTable (void);
 
+  virtual int find (const PortableServer::Servant servant);
+  virtual int find (const PortableServer::ObjectId &id);
+  virtual int find (const PortableServer::Servant servant,
+		    PortableServer::ObjectId_out id);
   virtual int find (const PortableServer::ObjectId &id, 
 		    PortableServer::Servant &servant);
   virtual int bind (const PortableServer::ObjectId &id, 
@@ -351,6 +359,10 @@ public:
   // assigned by the Object Table...
 
   // Implement TAO_Dynamic_Hash_ObjTable....
+  virtual int find (const PortableServer::Servant servant);
+  virtual int find (const PortableServer::ObjectId &id);
+  virtual int find (const PortableServer::Servant servant,
+		    PortableServer::ObjectId_out id);
   virtual int find (const PortableServer::ObjectId &id, 
 		    PortableServer::Servant &servant);
   virtual int bind (const PortableServer::ObjectId &id, 

@@ -15,7 +15,8 @@ TAO_Object_Table_Impl::~TAO_Object_Table_Impl (void)
 {
 }
 
-int TAO_Object_Table_Impl::find (const PortableServer::Servant servant)
+int
+TAO_Object_Table_Impl::find (const PortableServer::Servant servant)
 {
   PortableServer::ObjectId* id;
   int ret = this->find (servant, id);
@@ -27,14 +28,16 @@ int TAO_Object_Table_Impl::find (const PortableServer::Servant servant)
   return 0;
 }
 
-int TAO_Object_Table_Impl::find (const PortableServer::ObjectId &id)
+int
+TAO_Object_Table_Impl::find (const PortableServer::ObjectId &id)
 {
   PortableServer::Servant servant;
   return this->find (id, servant);
 }
 
-int TAO_Object_Table_Impl::find (const PortableServer::Servant servant,
-				 PortableServer::ObjectId_out id)
+int
+TAO_Object_Table_Impl::find (const PortableServer::Servant servant,
+			     PortableServer::ObjectId_out id)
 {
   auto_ptr<PortableServer::ObjectId> found;
   auto_ptr<TAO_Object_Table_Iterator_Impl> end = this->end ();
@@ -125,14 +128,16 @@ TAO_Object_Table_Iterator::operator++ (int)
   return *this;
 }
 
-int operator== (const TAO_Object_Table_Iterator &l,
-		const TAO_Object_Table_Iterator &r)
+int
+operator== (const TAO_Object_Table_Iterator &l,
+	    const TAO_Object_Table_Iterator &r)
 {
   return l.impl_->done (r.impl_);
 }
 
-int operator!= (const TAO_Object_Table_Iterator &l,
-		const TAO_Object_Table_Iterator &r)
+int
+operator!= (const TAO_Object_Table_Iterator &l,
+	    const TAO_Object_Table_Iterator &r)
 {
   return !(l == r);
 }
@@ -251,20 +256,42 @@ TAO_Dynamic_Hash_ObjTable::TAO_Dynamic_Hash_ObjTable (CORBA::ULong size)
 {
 }
 
-int TAO_Dynamic_Hash_ObjTable::find (const PortableServer::ObjectId &id,
-				     PortableServer::Servant &servant)
+int
+TAO_Dynamic_Hash_ObjTable::find (const PortableServer::Servant servant)
+{
+  return this->TAO_Object_Table_Impl::find (servant);
+}
+
+int
+TAO_Dynamic_Hash_ObjTable::find (const PortableServer::ObjectId &id)
+{
+  return this->TAO_Object_Table_Impl::find (id);
+}
+
+int
+TAO_Dynamic_Hash_ObjTable::find (const PortableServer::Servant servant,
+				 PortableServer::ObjectId_out id)
+{
+  return this->TAO_Object_Table_Impl::find (servant, id);
+}
+
+int
+TAO_Dynamic_Hash_ObjTable::find (const PortableServer::ObjectId &id,
+				 PortableServer::Servant &servant)
 {
   return this->hash_map_.find (id, servant);
 }
 
-int TAO_Dynamic_Hash_ObjTable::bind (const PortableServer::ObjectId &id,
-				     PortableServer::Servant servant)
+int
+TAO_Dynamic_Hash_ObjTable::bind (const PortableServer::ObjectId &id,
+				 PortableServer::Servant servant)
 {
   return this->hash_map_.bind (id, servant);
 }
 
-int TAO_Dynamic_Hash_ObjTable::unbind (const PortableServer::ObjectId &id,
-				       PortableServer::Servant &servant)
+int
+TAO_Dynamic_Hash_ObjTable::unbind (const PortableServer::ObjectId &id,
+				   PortableServer::Servant &servant)
 {
   return this->hash_map_.unbind (id, servant);
 }
@@ -372,6 +399,25 @@ TAO_Linear_ObjTable::~TAO_Linear_ObjTable (void)
       delete[] this->table_;
       this->table_ = 0;
     }
+}
+
+int
+TAO_Linear_ObjTable::find (const PortableServer::Servant servant)
+{
+  return this->TAO_Object_Table_Impl::find (servant);
+}
+
+int
+TAO_Linear_ObjTable::find (const PortableServer::ObjectId &id)
+{
+  return this->TAO_Object_Table_Impl::find (id);
+}
+
+int
+TAO_Linear_ObjTable::find (const PortableServer::Servant servant,
+			   PortableServer::ObjectId_out id)
+{
+  return this->TAO_Object_Table_Impl::find (servant, id);
 }
 
 int
@@ -528,6 +574,25 @@ TAO_Active_Demux_ObjTable::next_free (void) const
 }
 
 int
+TAO_Active_Demux_ObjTable::find (const PortableServer::Servant servant)
+{
+  return this->TAO_Object_Table_Impl::find (servant);
+}
+
+int
+TAO_Active_Demux_ObjTable::find (const PortableServer::ObjectId &id)
+{
+  return this->TAO_Object_Table_Impl::find (id);
+}
+
+int
+TAO_Active_Demux_ObjTable::find (const PortableServer::Servant servant,
+				 PortableServer::ObjectId_out id)
+{
+  return this->TAO_Object_Table_Impl::find (servant, id);
+}
+
+int
 TAO_Active_Demux_ObjTable::find (const PortableServer::ObjectId &id, 
 				 PortableServer::Servant &servant)
 {
@@ -581,11 +646,11 @@ TAO_Active_Demux_ObjTable::end () const
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Iterator<char const*, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Manager<char const*, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Entry<char const*, PortableServer::Servant>;
+template class ACE_Hash_Map_Iterator<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Entry<PortableServer::ObjectId, PortableServer::Servant>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Iterator<char const*, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager<char const*, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<char const*, PortableServer::Servant>
+#pragma instantiate ACE_Hash_Map_Iterator<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry<PortableServer::ObjectId, PortableServer::Servant>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

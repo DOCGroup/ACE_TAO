@@ -267,6 +267,8 @@ public:
   TAO_IUnknown *get_parent (void) const;
   // Get the "parent" in the QueryInterface hierarchy.
 
+  virtual const char* _interface_repository_id (CORBA::Environment& env) const = 0;
+
 protected:
   TAO_ServantBase (void);
   // Default constructor, only derived classes can be created.

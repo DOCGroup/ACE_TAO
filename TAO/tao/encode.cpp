@@ -368,7 +368,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
                          + 2                            // port
                          + (hostlen & 02)               // optional pad short
                          + 4                            // sizeof (key length)
-                         + profile->object_key.length); // key length
+                         + profile->object_key.length ()); // key length
 
       // CHAR describing byte order, starting the encapsulation
 
