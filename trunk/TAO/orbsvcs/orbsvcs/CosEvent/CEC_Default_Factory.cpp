@@ -18,6 +18,7 @@
 #include "orbsvcs/ESF/ESF_Copy_On_Read.h"
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
+#include "orbsvcs/ESF/ESF_Delayed_Command.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"
 

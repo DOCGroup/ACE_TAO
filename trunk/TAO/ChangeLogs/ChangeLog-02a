@@ -1,3 +1,13 @@
+Tue Sep  4 11:06:55 2001  Chad Elliott <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+
+          Added includes for ESF templates.  Fix for GHS on VxWorks.
+
 Tue Sep  4 09:19:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.av: Updated dependencies again to fix a
