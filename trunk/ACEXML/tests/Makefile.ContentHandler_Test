@@ -1,4 +1,3 @@
-# $Id$
 #----------------------------------------------------------------------------
 #       GNU Makefile
 #----------------------------------------------------------------------------
@@ -49,7 +48,8 @@ LDLIBS  = -lACEXML_Parser -lACEXML
 $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
 
-realclean: clean
+realclean: clean 
 ifneq ($(GENERATED_DIRTY),)
 	-$(RM) -r $(GENERATED_DIRTY)
 endif
+

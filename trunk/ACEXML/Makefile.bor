@@ -17,9 +17,6 @@ all:
 	@cd examples/SAXPrint
 	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.SAXPrint.bor all
 	@cd ../../
-	@cd examples/svcconf
-	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Svcconf.bor all
-	@cd ../../
 	@cd tests
 	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor all
 	@cd ../
@@ -45,9 +42,6 @@ clean:
 	@cd ../../
 	@cd examples/SAXPrint
 	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.SAXPrint.bor clean
-	@cd ../../
-	@cd examples/svcconf
-	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Svcconf.bor clean
 	@cd ../../
 	@cd tests
 	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor clean
@@ -75,9 +69,6 @@ realclean:
 	@cd examples/SAXPrint
 	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.SAXPrint.bor realclean
 	@cd ../../
-	@cd examples/svcconf
-	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Svcconf.bor realclean
-	@cd ../../
 	@cd tests
 	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor realclean
 	@cd ../
@@ -104,9 +95,6 @@ install:
 	@cd examples/SAXPrint
 	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.SAXPrint.bor install
 	@cd ../../
-	@cd examples/svcconf
-	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Svcconf.bor install
-	@cd ../../
 	@cd tests
 	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor install
 	@cd ../
@@ -121,4 +109,4 @@ install:
 	@cd ../
 
 regenerate:
-	D:\Perl\bin\perl.exe D:\ACE_wrappers\bin\mwc.pl -type borland -recurse
+	/usr/bin/perl /build/kitty/ACE_wrappers/bin/mwc.pl -type borland ACEXML.mwc
