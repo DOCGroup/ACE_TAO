@@ -1,3 +1,1 @@
-* figure out why we can't call getXXXXXXX_r in netdb.inl
-* get rid of warning on line 164 of stdio.inl
-* I believe we need to implement lltostr, ulltostr, and memalign
+
