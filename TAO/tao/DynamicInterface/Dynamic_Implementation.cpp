@@ -24,8 +24,8 @@ TAO_DynamicImplementation::_this (CORBA::Environment &ACE_TRY_ENV)
   // Create a object.
   TAO_Collocated_Object *retval = 0;
   ACE_NEW_RETURN (retval,
-                  TAO_Collocated_Object (stub, 
-                                         1, 
+                  TAO_Collocated_Object (stub,
+                                         1,
                                          this),
                   CORBA::Object::_nil ());
 
@@ -59,7 +59,7 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
     ACE_static_cast(TAO_POA_Current_Impl *,
                     TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 
-  if (poa_current_impl == 0 
+  if (poa_current_impl == 0
       || this != poa_current_impl->servant ())
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
@@ -69,7 +69,7 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
   PortableServer::POA_var poa = poa_current_impl->get_POA (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  CORBA::RepositoryId interface = 
+  CORBA::RepositoryId interface =
     this->_primary_interface (poa_current_impl->object_id (),
                               poa.in (),
                               ACE_TRY_ENV);
@@ -125,15 +125,15 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
   ACE_TRY
     {
       // Delegate to user.
-      this->invoke (dsi_request, 
+      this->invoke (dsi_request,
                     ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
         {
           dsi_request->dsi_marshal (ACE_TRY_ENV);
-          ACE_CHECK;
+          ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (CORBA::Exception, ex)

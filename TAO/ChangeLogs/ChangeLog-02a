@@ -1,3 +1,8 @@
+Fri Nov 17 10:59:05 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/DynamicInterface/Dynamic_Implementation.cpp:
+	  Fixed incorrect use of exception macros.
+
 Fri Nov 17 10:49:21 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/SSLIOP.dsp:
