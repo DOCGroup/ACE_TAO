@@ -1,6 +1,8 @@
 // $Id$
 
 #include "JAWS/JAWS.h"
+
+#include "JAWS/IO.h"
 #include "JAWS/Pipeline_Tasks.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/IO_Handler.h"
@@ -88,6 +90,22 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
         JAWS_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_IDLE");
         // Should mean that the IO is asynchronous, and the word isn't out
         // yet.
+
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+        if (policy->ratio () > 1)
+          {
+            for (int i = 1; i < policy->ratio (); i++)
+              {
+                io->accept (handler);
+                if (handler->status () == JAWS_IO_Handler::ACCEPT_ERROR)
+                  break;
+              }
+            policy->ratio (1);
+            policy->io (JAWS_Asynch2_IO_Singleton::instance ());
+            // This is the Asynch IO version with a do nothing accept().
+          }
+#endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
+
         break;
       }
     }

@@ -206,6 +206,20 @@ protected:
 typedef ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>
         JAWS_Asynch_IO_Singleton;
 
+class JAWS_Export JAWS_Asynch2_IO : public JAWS_Asynch_IO
+{
+  // This version of Asynch_IO has a do nothing accept() implementation.
+public:
+  virtual void accept (JAWS_IO_Handler *ioh,
+                       ACE_Message_Block *mb,
+                       unsigned int size);
+  // does nothing
+
+};
+
+typedef ACE_Singleton<JAWS_Asynch2_IO, ACE_SYNCH_MUTEX>
+        JAWS_Asynch2_IO_Singleton;
+
 #endif /* ACE_WIN32 */
 
 #endif /* JAWS_IO_H */

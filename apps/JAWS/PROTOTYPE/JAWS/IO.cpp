@@ -444,6 +444,13 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
     }
 }
 
+void
+JAWS_Asynch2_IO::accept (JAWS_IO_Handler *,
+                         ACE_Message_Block *,
+                         unsigned int);
+{
+}
+
 #endif /* ACE_WIN32 */
 
 
@@ -451,10 +458,12 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
 template class ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>;
   #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
   template class ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>;
+  template class ACE_Singleton<JAWS_Asynch2_IO, ACE_SYNCH_MUTEX>;
   #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)*/
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate  ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>
   #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
   #pragma instantiate  ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>
+  #pragma instantiate  ACE_Singleton<JAWS_Asynch2_IO, ACE_SYNCH_MUTEX>
   #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)*/
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
