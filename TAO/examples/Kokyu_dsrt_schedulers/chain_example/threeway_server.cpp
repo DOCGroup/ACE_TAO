@@ -16,7 +16,7 @@ ACE_RCSID(MT_Server, server, "$Id$")
 
 const char *ior_output_file = "test2.ior";
 
-int nthreads = 2;
+int nthreads = 1;
 int enable_dynamic_scheduling = 1;
 const CORBA::Short max_importance = 100;
 int enable_yield = 1;
@@ -216,7 +216,7 @@ main (int argc, char *argv[])
                                 1);
             }
         }
-//      TAO_debug_level = 1;
+      TAO_debug_level = 1;
       worker.wait ();
 
       ACE_DEBUG ((LM_DEBUG, "shutting down scheduler\n"));
