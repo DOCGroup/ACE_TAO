@@ -1,3 +1,27 @@
+Fri Apr 03 18:45:35 1998  Steve Huston  <shuston@riverace.com>
+
+	* apps/JAWS/clients/Blobby/Makefile
+	* apps/JAWS/clients/Caching/Makefile
+	* examples/ASX/Event_Server/Event_Server/Makefile
+	* examples/ASX/UPIPE_Event_Server/Makefile
+	* examples/Logger/simple-server/Makefile
+	* examples/Mem_Map/IO-tests/Makefile
+	* examples/Reactor/Multicast/Makefile
+	* examples/Service_Configurator/Misc/Makefile
+	* examples/Shared_Malloc/Makefile
+	* performance-tests/Synch-Benchmarks/Makefile
+	      Adjusted for corresponding changes to rules.bin.GNU and/or
+	      rules.lib.GNU, below.
+
+	* examples/Connection/non_blocking/Makefile
+	* examples/Service_Configurator/IPC-tests/server/Makefile
+	* examples/Timer_Queue/Makefile
+	* performance-tests/Misc/Makefile
+	      Moved all program source names to PSRC, not SRC, for
+	      'make depend'.
+	
+	* performance-tests/Makefile: Removed UDP from list of dirs to build.
+	
 Fri Apr 03 17:10:32 1998  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/rules.bin.GNU: Set OBJEXT and VOBJS from the
