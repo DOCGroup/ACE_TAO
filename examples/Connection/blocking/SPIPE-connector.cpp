@@ -32,9 +32,10 @@ Peer_Handler::open (void *)
   if (iterations_ == 0)
     {
       this->display_menu ();
-      if (ACE_Event_Handler::register_stdin_handler (this,
-						     ACE_Reactor::instance (),
-						     ACE_Thread_Manager::instance ()) == -1)
+      if (ACE_Event_Handler::register_stdin_handler 
+          (this,
+           ACE_Reactor::instance (),
+           ACE_Thread_Manager::instance ()) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "register_stdin_handler"),
@@ -54,7 +55,8 @@ Peer_Handler::open (void *)
       int length = ACE_OS::strlen (buffer);
 
       while (iterations_-- > 0
-	     && this->peer ().send_n (buffer, length) == length)
+	     && this->peer ().send_n (buffer,
+                                      length) == length)
 	continue;
 
       this->peer ().close ();
@@ -68,7 +70,9 @@ Peer_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
 
-  ssize_t n = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
+  ssize_t n = ACE_OS::read (ACE_STDIN,
+                            buf,
+                            sizeof buf);
 
   if (n > 0)
     if (this->peer ().send (buf, n) != n)
@@ -133,7 +137,8 @@ IPC_Client::init (int argc, char *argv[])
     return -1;
   // Handle signals through the ACE_Reactor.
   else if (ACE_Reactor::instance ()->register_handler
-	   (SIGINT, &this->done_handler_) == -1)
+	   (SIGINT,
+            &this->done_handler_) == -1)
     return -1;
 
   ACE_DEBUG ((LM_DEBUG,
