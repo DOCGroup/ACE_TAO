@@ -39,7 +39,7 @@ CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			 "NodeDaemon_Impl::constructor\t\n");
+                         "NodeDaemon_Impl::constructor\t\n");
     ACE_RE_THROW;
   }
   ACE_ENDTRY;
@@ -125,10 +125,10 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
 
       PortableServer::ServantBase_var safe (app_mgr);
 
-	   //@@ Note: after the init call the servant ref count would become 2. so
+           //@@ Note: after the init call the servant ref count would become 2. so
      //   we can leave the safeservant along and be dead. Also note that I added
       this->manager_ =
-	    app_mgr->init (this->nodeapp_location_,
+            app_mgr->init (this->nodeapp_location_,
                      this->spawn_delay_,
                      plan,
                      this->callback_poa_.in ()
@@ -156,7 +156,7 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			 "NodeDaemon_Impl::preparePlan\t\n");
+                         "NodeDaemon_Impl::preparePlan\t\n");
     ACE_RE_THROW;
   }
   ACE_ENDTRY;
@@ -175,7 +175,7 @@ CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr
   {
     // Deactivate this object
     PortableServer::ObjectId_var id =
-  	  this->poa_->reference_to_id (this->manager_.in () ACE_ENV_ARG_PARAMETER);
+          this->poa_->reference_to_id (this->manager_.in () ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     this->poa_->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
@@ -186,7 +186,7 @@ CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			 "NodeDaemon_Impl::destroyManager\t\n");
+                         "NodeDaemon_Impl::destroyManager\t\n");
     ACE_RE_THROW;
   }
   ACE_ENDTRY;

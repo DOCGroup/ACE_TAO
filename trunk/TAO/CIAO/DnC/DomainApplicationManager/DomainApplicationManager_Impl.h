@@ -103,7 +103,7 @@ namespace CIAO
      */
     void init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		       Deployment::ResourceNotAvailable,
+                       Deployment::ResourceNotAvailable,
                        Deployment::StartError,
                        Deployment::PlanError));
 
@@ -227,7 +227,7 @@ namespace CIAO
     // This is a helper function to find the connection for a component.
     bool
     get_outgoing_connections_i (const char * instname,
-				Deployment::Connections & retv);
+                                Deployment::Connections & retv);
 
     // Dump connections, a static method
     static void dump_connections (const ::Deployment::Connections & connections);

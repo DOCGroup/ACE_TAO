@@ -137,9 +137,9 @@ module Deployment
     //    client to really start to create homes and components.
     ComponentInfos install (in ImplementationInfos impl_infos)
       raises (UnknownImplId,
-	      ImplEntryPointNotFound,
-	      InstallationFailure,
-	      ::Components::InvalidConfiguration);
+              ImplEntryPointNotFound,
+              InstallationFailure,
+              ::Components::InvalidConfiguration);
 
 
     //@@ We know that Dployment::NodeApplicationManager will be returned,
@@ -163,10 +163,10 @@ module Deployment
     //     2. Might comes in handy in the future.
     //                                                   --Tao
     ::Components::CCMHome install_home (in ImplementationInfo impl_info)
-    	raises (UnknownImplId,
-		ImplEntryPointNotFound,
-		InstallationFailure,
-		::Components::InvalidConfiguration);
+        raises (UnknownImplId,
+                ImplEntryPointNotFound,
+                InstallationFailure,
+                ::Components::InvalidConfiguration);
 
     void remove_home (in string comp_ins_name)
       raises (::Components::RemoveFailure);

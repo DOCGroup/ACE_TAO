@@ -103,9 +103,9 @@ namespace CIAO
       ACE_Hash_Map_Manager_Ex
       < ACE_CString,
         Deployment::DomainApplicationManager_var,
-	ACE_Hash<ACE_CString>,
-	ACE_Equal_To<ACE_CString>,
-	TAO_SYNCH_MUTEX
+        ACE_Hash<ACE_CString>,
+        ACE_Equal_To<ACE_CString>,
+        TAO_SYNCH_MUTEX
       >
       Table;
       typedef Table::iterator Iterator;

@@ -6,7 +6,7 @@
 CIAO::ExecutionManager_Impl::ExecutionManager_Impl (CORBA::ORB_ptr orb,
                                                     PortableServer::POA_ptr poa,
                                                     const char * init_file
-						    ACE_ENV_ARG_DECL)
+                                                    ACE_ENV_ARG_DECL)
   : orb_ (CORBA::ORB::_duplicate  (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     init_file_ (init_file)
@@ -33,26 +33,26 @@ CIAO::ExecutionManager_Impl::~ExecutionManager_Impl ()
 Deployment::DomainApplicationManager_ptr
 CIAO::ExecutionManager_Impl::
 preparePlan (const Deployment::DeploymentPlan &plan,
-	     CORBA::Boolean
-	     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+             CORBA::Boolean
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Deployment::ResourceNotAvailable,
-		   Deployment::PlanError,
-		   Deployment::StartError
-		   ))
+                   Deployment::ResourceNotAvailable,
+                   Deployment::PlanError,
+                   Deployment::StartError
+                   ))
 {
   //@@ Make sure that this call will only called once before destroymanager
   //   being called!!!!
 
   // Create a new DomainApplicationMananager servant
   ACE_NEW_THROW_EX (this->dam_servant_,
-		    CIAO::DomainApplicationManager_Impl
-		    (this->orb_.in (),
-		     this->poa_.in (),
-		     Deployment::TargetManager::_nil (),
-		     plan,
-		     this->init_file_.c_str ()),
-		    CORBA::NO_MEMORY ());
+                    CIAO::DomainApplicationManager_Impl
+                    (this->orb_.in (),
+                     this->poa_.in (),
+                     Deployment::TargetManager::_nil (),
+                     plan,
+                     this->init_file_.c_str ()),
+                    CORBA::NO_MEMORY ());
   // @@ (OO) You're missing an
   //           ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil())
   //         here.  Emulated exceptions won't function correctly
@@ -82,7 +82,7 @@ preparePlan (const Deployment::DeploymentPlan &plan,
   // Register with our POA and activate the object.
   PortableServer::ObjectId_var oid
     = this->poa_->activate_object (this->dam_servant_
-				   ACE_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 
   // @@ (OO) Even though the return value of zero works,
   //         Deployment::DomainApplicationManager::_nil () should
@@ -94,14 +94,14 @@ preparePlan (const Deployment::DeploymentPlan &plan,
   // Get the reference of the object.
   CORBA::Object_var objref
     = this->poa_->id_to_reference (oid.in ()
-				   ACE_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   // @@ (OO) Same here.  Deployment::DomainApplicationManager::_nil ()
   //         instead of zero.
   ACE_CHECK_RETURN (0);
 
   this->dam_ =
     Deployment::DomainApplicationManager::_narrow (objref.in ()
-						   ACE_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   // @@ (OO) Same here.  Deployment::DomainApplicationManager::_nil ()
   //         instead of zero.
   ACE_CHECK_RETURN (0);

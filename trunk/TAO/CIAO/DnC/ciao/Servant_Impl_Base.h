@@ -31,7 +31,7 @@
 namespace CIAO
 {
   class Session_Container;
-  
+
   /**
    * @class Servant_Impl_Base
    *
@@ -44,13 +44,13 @@ namespace CIAO
   {
   public:
     Servant_Impl_Base (Session_Container * c);
-    
+
     virtual ~Servant_Impl_Base (void);
 
   protected:
     void add_facet (const char *port_name,
                     CORBA::Object_ptr port_ref);
-                    
+
     void add_consumer (const char *port_name,
                        ::Components::EventConsumerBase_ptr port_ref);
 
@@ -68,9 +68,9 @@ namespace CIAO
                                     ACE_Equal_To<const char *>,
                                     ACE_Null_Mutex>
        ConsumerTable;
-       
-    FacetTable facet_table_;    
-    ConsumerTable consumer_table_;      
+
+    FacetTable facet_table_;
+    ConsumerTable consumer_table_;
     Session_Container * container_;
   };
 }
@@ -78,4 +78,3 @@ namespace CIAO
 #include /**/ "ace/post.h"
 
 #endif /* CIAO_SERVANT_IMPL_T_H */
-

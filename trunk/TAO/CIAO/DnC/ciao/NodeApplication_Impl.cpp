@@ -22,11 +22,11 @@ CIAO::NodeApplication_Impl::~NodeApplication_Impl ()
 void
 CIAO::NodeApplication_Impl::
 finishLaunch (const Deployment::Connections & providedReference,
-	      CORBA::Boolean start
-	      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+              CORBA::Boolean start
+              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Deployment::StartError,
-		   Deployment::InvalidConnection))
+                   Deployment::StartError,
+                   Deployment::InvalidConnection))
 {
   // @@ (OO) Please declare this as a "const CORBA::ULong".  This
   //         improves "const correctness", and improves code self
@@ -79,43 +79,43 @@ finishLaunch (const Deployment::Connections & providedReference,
     {
     case Deployment::SimplexReceptacle:
       comp->connect (providedReference[i].portName.in (),
-		     providedReference[i].endpoint.in ()
-		     ACE_ENV_ARG_PARAMETER);
+                     providedReference[i].endpoint.in ()
+                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       break;
 
     case Deployment::MultiplexReceptacle:
       comp->connect(providedReference[i].portName.in (),
-		    providedReference[i].endpoint.in ()
-		    ACE_ENV_ARG_PARAMETER);
+                    providedReference[i].endpoint.in ()
+                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       break;
 
     case Deployment::EventEmitter:
       consumer = Components::EventConsumerBase::
-	_narrow (providedReference[i].endpoint.in ()
-		 ACE_ENV_ARG_PARAMETER);
+        _narrow (providedReference[i].endpoint.in ()
+                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       if (CORBA::is_nil (consumer.in ()))
-	ACE_THROW (Deployment::InvalidConnection ());
+        ACE_THROW (Deployment::InvalidConnection ());
 
       comp->connect_consumer(providedReference[i].portName.in (),
-			     consumer.in ()
-			     ACE_ENV_ARG_PARAMETER);
+                             consumer.in ()
+                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       break;
 
     case Deployment::EventPublisher:
       consumer = Components::EventConsumerBase::
-	_narrow (providedReference[i].endpoint.in ()
-		 ACE_ENV_ARG_PARAMETER);
+        _narrow (providedReference[i].endpoint.in ()
+                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       if (CORBA::is_nil (consumer.in ()))
-	ACE_THROW (Deployment::InvalidConnection ());
+        ACE_THROW (Deployment::InvalidConnection ());
 
       comp->subscribe (providedReference[i].portName.in (),
-		       consumer.in ()
-		       ACE_ENV_ARG_PARAMETER);
+                       consumer.in ()
+                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       break;
 
@@ -145,7 +145,7 @@ void
 CIAO::NodeApplication_Impl::
 start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Deployment::StartError))
+                   Deployment::StartError))
 {
   //@@ Note: set_session_context will be called when the servant is created.
   Funct_Ptr functor = & Components::CCMObject::ciao_preactivate;
@@ -167,9 +167,9 @@ start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 void
 CIAO::NodeApplication_Impl::
 start_i (Funct_Ptr functor
-	 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Deployment::StartError))
+                   Deployment::StartError))
 {
   // @@ (OO) Please rewrite this for statement as follows:
   //
@@ -241,17 +241,17 @@ properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 ::Deployment::ComponentInfos *
 CIAO::NodeApplication_Impl::
 install (const ::Deployment::ImplementationInfos & impl_infos
-	 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Deployment::UnknownImplId,
-		   Deployment::ImplEntryPointNotFound,
-		   Deployment::InstallationFailure,
-		   Components::InvalidConfiguration))
+                   Deployment::UnknownImplId,
+                   Deployment::ImplEntryPointNotFound,
+                   Deployment::InstallationFailure,
+                   Components::InvalidConfiguration))
 {
   Deployment::ComponentInfos * tmp;
   ACE_NEW_THROW_EX (tmp,
-		    Deployment::ComponentInfos,
-		    CORBA::INTERNAL ());
+                    Deployment::ComponentInfos,
+                    CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
   Deployment::ComponentInfos_var retv (tmp);
 
@@ -271,16 +271,16 @@ install (const ::Deployment::ImplementationInfos & impl_infos
   for (CORBA::ULong i = 0; i < len; ++i)
   {
     home = this->install_home (impl_infos[i]
-			       ACE_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     Components::KeylessCCMHome_var kh =
       Components::KeylessCCMHome::_narrow (home.in ()
-					   ACE_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     if (CORBA::is_nil (kh.in ()))
-	ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
+        ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
 
     // @@ Note, here we are missing the CreateFailure.
     // Sometime I will come back to add exception rethrow.
@@ -288,7 +288,7 @@ install (const ::Deployment::ImplementationInfos & impl_infos
     ACE_CHECK;
 
     if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
-				   Components::CCMObject::_duplicate (comp.in ())))
+                                   Components::CCMObject::_duplicate (comp.in ())))
       ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
 
     // Set the return value.
@@ -311,29 +311,29 @@ install (const ::Deployment::ImplementationInfos & impl_infos
     //     for (CORBA::ULong prop_len = 0; prop_len < clen; ++prop_len)
 
     for (CORBA::ULong prop_len = 0;
-	 prop_len < impl_infos[i].component_config.length ();
-	 ++prop_len)
+         prop_len < impl_infos[i].component_config.length ();
+         ++prop_len)
     {
       if (ACE_OS::strcmp (impl_infos[i].component_config[prop_len].name.in (),
-			  "ComponentIOR") == 0)
+                          "ComponentIOR") == 0)
       {
         // @@ (OO) Shouldn't you only print output if CIAO debugging
         //         is enabled?
-	ACE_DEBUG ((LM_DEBUG, "Found property to write the IOR.\n"));
-	const char * path;
-	impl_infos[i].component_config[prop_len].value >>= path;
+        ACE_DEBUG ((LM_DEBUG, "Found property to write the IOR.\n"));
+        const char * path;
+        impl_infos[i].component_config[prop_len].value >>= path;
 
-	CORBA::String_var ior =
-	  this->orb_->object_to_string (comp.in() ACE_ENV_ARG_PARAMETER);
-	ACE_CHECK;
+        CORBA::String_var ior =
+          this->orb_->object_to_string (comp.in() ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
 
-	if (write_IOR (path, ior.in ()) != 0)
-	{
+        if (write_IOR (path, ior.in ()) != 0)
+        {
         // @@ (OO) Shouldn't you only print output if CIAO debugging
         //         is enabled?
-	  ACE_DEBUG ((LM_DEBUG, "Failed to write the IOR.\n"));
-	  ACE_THROW (CORBA::INTERNAL ());
-	}
+          ACE_DEBUG ((LM_DEBUG, "Failed to write the IOR.\n"));
+          ACE_THROW (CORBA::INTERNAL ());
+        }
 
       }
 
@@ -348,12 +348,12 @@ install (const ::Deployment::ImplementationInfos & impl_infos
 ::Components::CCMHome_ptr
 CIAO::NodeApplication_Impl::
 install_home (const ::Deployment::ImplementationInfo & impl_info
-	      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Deployment::UnknownImplId,
-		   Deployment::ImplEntryPointNotFound,
-		   Deployment::InstallationFailure,
-		   Components::InvalidConfiguration))
+                   Deployment::UnknownImplId,
+                   Deployment::ImplEntryPointNotFound,
+                   Deployment::InstallationFailure,
+                   Components::InvalidConfiguration))
 {
   Components::CCMHome_var newhome =
     this->container_->ciao_install_home
@@ -369,9 +369,9 @@ install_home (const ::Deployment::ImplementationInfo & impl_info
 
   // Bind the home in the map.
   if (this->home_map_.bind (impl_info.component_instance_name.in (),
-			    Components::CCMHome::_duplicate (newhome.in ())))
+                            Components::CCMHome::_duplicate (newhome.in ())))
     ACE_THROW_RETURN (Deployment::InstallationFailure (),
-		      Components::CCMHome::_nil ());
+                      Components::CCMHome::_nil ());
 
   //Note: If the return value will be discarded, it must be kept in a var or
   //      release () will have to be called explicitly.
@@ -385,7 +385,7 @@ void
 CIAO::NodeApplication_Impl::
 remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Components::RemoveFailure))
+                   Components::RemoveFailure))
 {
   //Remove all the components in the NodeApplication/Container
   Home_Iterator iter (this->home_map_.begin ());
@@ -404,7 +404,7 @@ remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
        ++iter)
   {
     this->container_->ciao_uninstall_home ( (*iter).int_id_
-					    ACE_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     // @@ (OO) Consider making the internal ID of the home_map_ a
@@ -428,9 +428,9 @@ remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 void
 CIAO::NodeApplication_Impl::
 remove_home (const char * comp_ins_name
-	     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Components::RemoveFailure))
+                   Components::RemoveFailure))
 {
   Components::CCMHome_ptr home;
   ACE_CString str (comp_ins_name);
@@ -442,7 +442,7 @@ remove_home (const char * comp_ins_name
   // This is not implemented yet.
 
   this->container_->ciao_uninstall_home (home
-					 ACE_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // @@ (OO) Consider making the internal ID of the home_map_ a
@@ -521,8 +521,8 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_CHECK_RETURN (-1);
 
   return this->container_->init (0,
-				 0
-				 ACE_ENV_ARG_PARAMETER);
+                                 0
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   return 0;
 }
@@ -553,7 +553,7 @@ void
 CIAO::NodeApplication_Impl::
 remove_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Components::RemoveFailure))
+                   Components::RemoveFailure))
 {
   //Remove all the components in the NodeApplication/Container
   Component_Iterator iter (this->component_map_.begin ());
@@ -591,9 +591,9 @@ remove_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 void
 CIAO::NodeApplication_Impl::
 remove_component (const char * comp_ins_name
-	     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   Components::RemoveFailure))
+                   Components::RemoveFailure))
 {
   Components::CCMObject_ptr comp;
   Components::CCMHome_ptr home;
