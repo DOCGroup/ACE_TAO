@@ -6,21 +6,21 @@
  * @author Carlos O'Ryan <coryan@atdesk.com>
  *
  */
-#ifndef Test__idl_
-#define Test__idl_
+#ifndef BUG_1020_REGRESSION_TEST_IDL
+#define BUG_1020_REGRESSION_TEST_IDL
 
 module Test
 {
   typedef sequence<octet> Payload;
   interface Echo
   {
-    Payload echo_payload(in Payload data);
+    Payload echo_payload (in Payload data);
   };
 
   interface Server
   {
-    void start_task(in Echo client);
+    void start_task (in Echo client);
   };
 };
 
-#endif /* Test__idl_ */
+#endif /* BUG_1020_REGRESSION_TEST_IDL*/
