@@ -771,9 +771,8 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)
   ACE_TRACE ("ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, *this);
 
-  ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
   this->forward_i ();
-  return retv;
+  return *this;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -783,8 +782,9 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
   ACE_TRACE ("ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, *this);
 
+  ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
   this->forward_i ();
-  return *this;
+  return retv;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -794,9 +794,8 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)
   ACE_TRACE ("ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, *this);
 
-  ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
   this->reverse_i ();
-  return retv;
+  return *this;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -806,8 +805,9 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
   ACE_TRACE ("ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, *this);
 
+  ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
   this->reverse_i ();
-  return *this;
+  return retv;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Hash_Map_Reverse_Iterator)
