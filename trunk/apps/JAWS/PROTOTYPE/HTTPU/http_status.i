@@ -17,8 +17,3 @@ HTTP_SCode_Node::operator const char * (void) const
 {
   return this->code_str_;
 }
-
-ACE_INLINE
-HTTP_SCode::~HTTP_SCode (void)
-{
-}
