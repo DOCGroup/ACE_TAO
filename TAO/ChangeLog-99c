@@ -1,49 +1,55 @@
+Thu Apr 08 13:47:03 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * README, VERSION, Makefile, Makefile.am: moved BUG-REPORT-FORM
+          to PROBLEM-REPORT-FORM.  Thanks to Thomas Lockhart
+          <Thomas.G.Lockhart@jpl.nasa.gov> for suggesting this.
+
 Thu Apr  8 12:59:21 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* tao/orbconf.h (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT): Changed
- 	  the value from 1 to 4 to prevent premature timeouts.  Thanks to
- 	  Margaret Reitz <margaret@veritas.com> for motivating this.
+        * tao/orbconf.h (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT): Changed
+          the value from 1 to 4 to prevent premature timeouts.  Thanks to
+          Margaret Reitz <margaret@veritas.com> for motivating this.
 
-	  Also removed the #ifdef for TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS
-	  since this is obsolete now.
-	
+          Also removed the #ifdef for TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS
+          since this is obsolete now.
+
 Thu Apr  8 11:40:59 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* orbsvcs/orbsvcs/Naming_Service/Persistent_Context_Index.cpp:
-	  Missing implementation of the virtual destructor for TAO_Index
-	  added. 
+        * orbsvcs/orbsvcs/Naming_Service/Persistent_Context_Index.cpp:
+          Missing implementation of the virtual destructor for TAO_Index
+          added.
 
 Wed Apr  7 20:28:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/tests/CosEC_Multiple/CosECConsumer.cpp:
-	* orbsvcs/tests/CosEC_Multiple/CosECSupplier.cpp:
-	* orbsvcs/tests/CosEC_Multiple/CosEC_Multiple.cpp:  Added trailing
-	  semi-columns after ACE_DECLARE_NEW_CORBA_ENV.
+        * orbsvcs/tests/CosEC_Multiple/CosECConsumer.cpp:
+        * orbsvcs/tests/CosEC_Multiple/CosECSupplier.cpp:
+        * orbsvcs/tests/CosEC_Multiple/CosEC_Multiple.cpp:  Added trailing
+          semi-columns after ACE_DECLARE_NEW_CORBA_ENV.
 
 Wed Apr  7 19:34:44 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/tests/Property/{server, client}.dsp:Made the release
-	versions.
+        * orbsvcs/tests/Property/{server, client}.dsp:Made the release
+        versions.
 
 Wed Apr  7 18:49:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Typecode_Constants.cpp:
-	  Added missing _tc_ static in the CORBA module.
+        * tao/Typecode_Constants.cpp:
+          Added missing _tc_ static in the CORBA module.
 
-	* tao/Object_Adapter.cpp:
-	  Removed duplicate template instantiations.
+        * tao/Object_Adapter.cpp:
+          Removed duplicate template instantiations.
 
-	* tao/MessagingS_T.i:
-	  Commented out code for CORBA::Poller and friends.
+        * tao/MessagingS_T.i:
+          Commented out code for CORBA::Poller and friends.
 
-	* tao/MessagingC.cpp:
-	  Removed unwanted template instantiations.
+        * tao/MessagingC.cpp:
+          Removed unwanted template instantiations.
 
 Wed Apr  7 17:31:40 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/sfp.{h,cpp}: Replaced CDR with ACE_CDR.
-	  Also moved the FRAGMENT_SET_ITERATOR typedef outside the
-	  TAO_SFP_Fragment_Table_Entry.
+        * orbsvcs/orbsvcs/AV/sfp.{h,cpp}: Replaced CDR with ACE_CDR.
+          Also moved the FRAGMENT_SET_ITERATOR typedef outside the
+          TAO_SFP_Fragment_Table_Entry.
           Thanks to David Hooker <DHooker@uniview.net> for reporting this.
 
 Wed Apr  7 16:36:26 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
@@ -53,13 +59,13 @@ Wed Apr  7 16:36:26 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Wed Apr  7 16:32:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_expression.cpp:
-	* TAO_IDL/include/ast_expression.h:
-	  A quick fix for the DEC bug report by Rod Joseph
- 	  <rodjoseph@adt.com> and Hoggard <hoggard@cfx.com>. More
- 	  extensive changes are in progress. This fix just removes the
- 	  declaration and definition of AST_Expression constructors taking
- 	  ACE_CDR::LongLong and ACE_CDR::ULongLong args.
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/include/ast_expression.h:
+          A quick fix for the DEC bug report by Rod Joseph
+          <rodjoseph@adt.com> and Hoggard <hoggard@cfx.com>. More
+          extensive changes are in progress. This fix just removes the
+          declaration and definition of AST_Expression constructors taking
+          ACE_CDR::LongLong and ACE_CDR::ULongLong args.
 
 Wed Apr  7 16:25:49 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -70,280 +76,280 @@ Wed Apr  7 16:25:49 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Wed Apr  7 15:52:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* Makefile.am:
-	  Added `clean-local' targets to all Makefile.am files.  Minor
-	  updates to the top-level TAO Makefile.am.
+        * Makefile.am:
+          Added `clean-local' targets to all Makefile.am files.  Minor
+          updates to the top-level TAO Makefile.am.
 
 Wed Apr 07 15:17:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/POA_CORBA.h:
-	* tao/Typecode_Constants.cpp:
-	  Fixed problems with the (unimplemented) CORBA::Poller and
-	  friends. Thanks to Darrell for pointing this out.
+        * tao/POA_CORBA.h:
+        * tao/Typecode_Constants.cpp:
+          Fixed problems with the (unimplemented) CORBA::Poller and
+          friends. Thanks to Darrell for pointing this out.
 
 Wed Apr  7 15:13:23 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
-	* tao-config.1.in:
-	* tao-config.in:
-	* taoConf.sh.in:
-	* Makefile.am:
-	* TAO_IDL/ast/Makefile.am:
-	* TAO_IDL/be/Makefile.am:
-	* TAO_IDL/be_include/Makefile.am:
-	* TAO_IDL/driver/Makefile.am:
-	* TAO_IDL/fe/Makefile.am:
-	* TAO_IDL/include/Makefile.am:
-	* TAO_IDL/narrow/Makefile.am:
-	* TAO_IDL/util/Makefile.am:
-	* TAO_IDL/Makefile.am:
-	* orbsvcs/Concurrency_Service/Makefile.am:
-	* orbsvcs/CosEvent_Service/Makefile.am:
-	* orbsvcs/Dump_Schedule/Makefile.am:
-	* orbsvcs/Event_Service/Makefile.am:
-	* orbsvcs/ImplRepo_Service/Makefile.am:
-	* orbsvcs/LifeCycle_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Makefile.am:
-	* orbsvcs/Naming_Service/Makefile.am:
-	* orbsvcs/Scheduling_Service/Makefile.am:
-	* orbsvcs/Time_Service/Makefile.am:
-	* orbsvcs/Trading_Service/Makefile.am:
-	* orbsvcs/Makefile.am:
-	* orbsvcs/orbsvcs/AV/Makefile.am:
-	* orbsvcs/orbsvcs/Concurrency/Makefile.am:
-	* orbsvcs/orbsvcs/CosEvent/Makefile.am:
-	* orbsvcs/orbsvcs/Event/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
-	* orbsvcs/orbsvcs/Log/Makefile.am:
-	* orbsvcs/orbsvcs/Naming/Makefile.am:
-	* orbsvcs/orbsvcs/Property/Makefile.am:
-	* orbsvcs/orbsvcs/Sched/Makefile.am:
-	* orbsvcs/orbsvcs/Time/Makefile.am:
-	* orbsvcs/orbsvcs/Trader/Makefile.am:
-	* orbsvcs/tests/AVStreams/benchmark/Makefile.am:
-	* orbsvcs/tests/AVStreams/mpeg/source/client/Makefile.am:
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Makefile.am:
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/Makefile.am:
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Makefile.am:
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile.am:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Makefile.am:
-	* orbsvcs/tests/AVStreams/mpeg/source/Makefile.am:
-	* orbsvcs/tests/AVStreams/mpeg/Makefile.am:
-	* orbsvcs/tests/AVStreams/server_discovery/Makefile.am:
-	* orbsvcs/tests/AVStreams/sfp/Makefile.am:
-	* orbsvcs/tests/AVStreams/Makefile.am:
-	* orbsvcs/tests/Makefile.am:
-	* tao/Makefile.am:
+        * configure.in:
+        * tao-config.1.in:
+        * tao-config.in:
+        * taoConf.sh.in:
+        * Makefile.am:
+        * TAO_IDL/ast/Makefile.am:
+        * TAO_IDL/be/Makefile.am:
+        * TAO_IDL/be_include/Makefile.am:
+        * TAO_IDL/driver/Makefile.am:
+        * TAO_IDL/fe/Makefile.am:
+        * TAO_IDL/include/Makefile.am:
+        * TAO_IDL/narrow/Makefile.am:
+        * TAO_IDL/util/Makefile.am:
+        * TAO_IDL/Makefile.am:
+        * orbsvcs/Concurrency_Service/Makefile.am:
+        * orbsvcs/CosEvent_Service/Makefile.am:
+        * orbsvcs/Dump_Schedule/Makefile.am:
+        * orbsvcs/Event_Service/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * orbsvcs/LifeCycle_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Makefile.am:
+        * orbsvcs/Naming_Service/Makefile.am:
+        * orbsvcs/Scheduling_Service/Makefile.am:
+        * orbsvcs/Time_Service/Makefile.am:
+        * orbsvcs/Trading_Service/Makefile.am:
+        * orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/AV/Makefile.am:
+        * orbsvcs/orbsvcs/Concurrency/Makefile.am:
+        * orbsvcs/orbsvcs/CosEvent/Makefile.am:
+        * orbsvcs/orbsvcs/Event/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Log/Makefile.am:
+        * orbsvcs/orbsvcs/Naming/Makefile.am:
+        * orbsvcs/orbsvcs/Property/Makefile.am:
+        * orbsvcs/orbsvcs/Sched/Makefile.am:
+        * orbsvcs/orbsvcs/Time/Makefile.am:
+        * orbsvcs/orbsvcs/Trader/Makefile.am:
+        * orbsvcs/tests/AVStreams/benchmark/Makefile.am:
+        * orbsvcs/tests/AVStreams/mpeg/source/client/Makefile.am:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Makefile.am:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/Makefile.am:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Makefile.am:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile.am:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Makefile.am:
+        * orbsvcs/tests/AVStreams/mpeg/source/Makefile.am:
+        * orbsvcs/tests/AVStreams/mpeg/Makefile.am:
+        * orbsvcs/tests/AVStreams/server_discovery/Makefile.am:
+        * orbsvcs/tests/AVStreams/sfp/Makefile.am:
+        * orbsvcs/tests/AVStreams/Makefile.am:
+        * orbsvcs/tests/Makefile.am:
+        * tao/Makefile.am:
 
-	  Checked these files into the CVS repository.  These files are
-	  part of the TAO+auto{conf,make}/libtool integration work.  There
-	  are still some missing files and some of the above files need
-	  to be modified before they will work.  I just wanted to get
-	  these files under CVS control so that I can easily recover
-	  from a mishap or for some reason beyond my control.
+          Checked these files into the CVS repository.  These files are
+          part of the TAO+auto{conf,make}/libtool integration work.  There
+          are still some missing files and some of the above files need
+          to be modified before they will work.  I just wanted to get
+          these files under CVS control so that I can easily recover
+          from a mishap or for some reason beyond my control.
 
 Wed Apr 07 14:34:31 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/DSI/Database_i.cpp (_is_a): Removed unused
-	  variable.
+        * examples/POA/DSI/Database_i.cpp (_is_a): Removed unused
+          variable.
 
-	* examples/POA/Loader/Servant_Activator.cpp (ServantActivator_i):
-	* examples/POA/Loader/Servant_Locator.cpp (ServantLocator_i):
-	* examples/POA/On_Demand_Loading/Servant_Manager.cpp (obtain_servant):
-	  Should use a simple cast for casting functions and not
-	  reinterpret_cast.
+        * examples/POA/Loader/Servant_Activator.cpp (ServantActivator_i):
+        * examples/POA/Loader/Servant_Locator.cpp (ServantLocator_i):
+        * examples/POA/On_Demand_Loading/Servant_Manager.cpp (obtain_servant):
+          Should use a simple cast for casting functions and not
+          reinterpret_cast.
 
-	* examples/POA/On_Demand_Loading/Servant_Manager.cpp
-	  (parse_string): Fixed comparison between signed and unsigned;
- 	  <index> should be signed.
+        * examples/POA/On_Demand_Loading/Servant_Manager.cpp
+          (parse_string): Fixed comparison between signed and unsigned;
+          <index> should be signed.
 
 Wed Apr  7 14:05:09 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.{h,cpp}
-	* orbsvcs/orbsvcs/Naming/Naming_Context.{h, cpp}
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}
-	  Updated to use new exceptions macros.
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.{h,cpp}
+        * orbsvcs/orbsvcs/Naming/Naming_Context.{h, cpp}
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}
+          Updated to use new exceptions macros.
 
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.{h,cpp}
-	* orbsvcs/orbsvcs/Naming/Persistent_Entries.{h,cpp}
-	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.{h,cpp}
-	* orbsvcs/orbsvcs/Naming/Persistent_Bindings_Map.{h,cpp}
-	* orbsvcs/orbsvcs/Naming/Shared_Hash_Map.{h,cpp}
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}
-	* orbsvcs/Naming_Service/Naming_Service.{h,cpp}
-	* orbsvcs/orbsvcs/Makefile
-	  Added the files above, to implement persistent naming service.
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.{h,cpp}
+        * orbsvcs/orbsvcs/Naming/Persistent_Entries.{h,cpp}
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.{h,cpp}
+        * orbsvcs/orbsvcs/Naming/Persistent_Bindings_Map.{h,cpp}
+        * orbsvcs/orbsvcs/Naming/Shared_Hash_Map.{h,cpp}
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}
+        * orbsvcs/Naming_Service/Naming_Service.{h,cpp}
+        * orbsvcs/orbsvcs/Makefile
+          Added the files above, to implement persistent naming service.
 
-	  The first version of persistent naming service is available.  It
- 	  uses memory-mapped file to store the persistent state of the
- 	  naming service.  When starting the Naming Service from
- 	  orbsvcs/Naming_Service, if -f <file_name> option is provided,
- 	  the persistent implementation is used, if no -f option is
- 	  provided, an non-persistent implementation is used.
+          The first version of persistent naming service is available.  It
+          uses memory-mapped file to store the persistent state of the
+          naming service.  When starting the Naming Service from
+          orbsvcs/Naming_Service, if -f <file_name> option is provided,
+          the persistent implementation is used, if no -f option is
+          provided, an non-persistent implementation is used.
 
-	  We'll be adding comments/documentation for the above shortly.
-  	  The class structure for the persistent implementation will also
- 	  change in the near future, as I'll be merging some of
- 	  persistent/non-persistent classes.
+          We'll be adding comments/documentation for the above shortly.
+          The class structure for the persistent implementation will also
+          change in the near future, as I'll be merging some of
+          persistent/non-persistent classes.
 
 Wed Apr 07 14:11:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/PolicyS.cpp: Need to use ACE_CORBA_1 to specify
-	  PolicyManager and PolicyCurrent in constructors.
+        * tao/PolicyS.cpp: Need to use ACE_CORBA_1 to specify
+          PolicyManager and PolicyCurrent in constructors.
 
 Wed Apr  7 13:42:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/DSI/Database_i.cpp (_is_a):
-	  Added a ACE_UNSED_ARG to avoid warnings..
+        * examples/POA/DSI/Database_i.cpp (_is_a):
+          Added a ACE_UNSED_ARG to avoid warnings..
 
 Wed Apr 07 13:27:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/POAS.h:
-	* tao/POAC.h: Removed unnecessary TAO_EXPORT_MACRO redefinition.
-	  Made sure warning 4250 is reenabled at the end of header files.
+        * tao/POAS.h:
+        * tao/POAC.h: Removed unnecessary TAO_EXPORT_MACRO redefinition.
+          Made sure warning 4250 is reenabled at the end of header files.
 
-	* tao/POA_CORBA.h: Disabled warnings 4250 on NT.
+        * tao/POA_CORBA.h: Disabled warnings 4250 on NT.
 
 Wed Apr  7 12:54:49 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/client.{h,cpp}:
-	  Updated the files to use the new exceptions macros.
+        * orbsvcs/tests/Simple_Naming/client.{h,cpp}:
+          Updated the files to use the new exceptions macros.
 
 Wed Apr  7 12:40:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/PolicyC.cpp:
-	  Fixed syntax error, Sun/CC is *way* too lax.
+        * tao/PolicyC.cpp:
+          Fixed syntax error, Sun/CC is *way* too lax.
 
-	* tao/POA.cpp:
-	  Fixed duplicate template instantiations.
+        * tao/POA.cpp:
+          Fixed duplicate template instantiations.
 
 Wed Apr  7 12:03:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Makefile:
-	* tao/Exception.h:
-	* tao/Exception.cpp:
-	* tao/Current.pidl:
-	* tao/DynAnyC.cpp:
-	* tao/DynAnyS.cpp:
-	* tao/IOP.pidl:
-	* tao/iopfwd.h:
-	* tao/corbafwd.h:
-	* tao/POA_CORBA.h:
-	* tao/Typecode_Constants.cpp:
-	* tao/InconsistentTypeCodeC.cpp:
-	* tao/Messaging.pidl:
-	* tao/MessagingC.cpp:
-	* tao/MessagingC.h:
-	* tao/MessagingC.i:
-	* tao/MessagingS.cpp:
-	* tao/MessagingS.h:
-	* tao/MessagingS.i:
-	* tao/MessagingS_T.cpp:
-	* tao/MessagingS_T.h:
-	* tao/MessagingS_T.i:
-	* tao/Policy.pidl:
-	* tao/PolicyC.cpp:
-	* tao/PolicyC.h:
-	* tao/PolicyC.i:
-	* tao/PolicyS.cpp:
-	* tao/Pollable.pidl:
-	* tao/PollableC.cpp:
-	* tao/PollableC.h:
-	* tao/PollableC.i:
-	* tao/PollableS.cpp:
-	* tao/PollableS.h:
-	* tao/PollableS.i:
-	* tao/PollableS_T.cpp:
-	* tao/PollableS_T.h:
-	* tao/PollableS_T.i:
-	* tao/TimeBase.pidl:
-	* tao/TimeBaseC.cpp:
-	* tao/TimeBaseC.h:
-	* tao/TimeBaseC.i:
-	* tao/TimeBaseS.cpp:
-	* tao/TimeBaseS.h:
-	* tao/TimeBaseS.i:
-	* tao/TimeBaseS_T.cpp:
-	* tao/TimeBaseS_T.h:
-	* tao/TimeBaseS_T.i:
-	  Started work on the Messaging spec policy framework. I added new
-	  modules (such as Messaging, TimeBase and IOP) and extended
-	  others to include more features (such as Policy).
-	  Right now the modules are not compiled by default, I want to
-	  test the changes in more platforms before moving on.
-	  Also added support for more system exceptions and left some
-	  place holders for the Poller and Handler objects that are part
-	  of the AMI support.
+        * tao/Makefile:
+        * tao/Exception.h:
+        * tao/Exception.cpp:
+        * tao/Current.pidl:
+        * tao/DynAnyC.cpp:
+        * tao/DynAnyS.cpp:
+        * tao/IOP.pidl:
+        * tao/iopfwd.h:
+        * tao/corbafwd.h:
+        * tao/POA_CORBA.h:
+        * tao/Typecode_Constants.cpp:
+        * tao/InconsistentTypeCodeC.cpp:
+        * tao/Messaging.pidl:
+        * tao/MessagingC.cpp:
+        * tao/MessagingC.h:
+        * tao/MessagingC.i:
+        * tao/MessagingS.cpp:
+        * tao/MessagingS.h:
+        * tao/MessagingS.i:
+        * tao/MessagingS_T.cpp:
+        * tao/MessagingS_T.h:
+        * tao/MessagingS_T.i:
+        * tao/Policy.pidl:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+        * tao/PolicyS.cpp:
+        * tao/Pollable.pidl:
+        * tao/PollableC.cpp:
+        * tao/PollableC.h:
+        * tao/PollableC.i:
+        * tao/PollableS.cpp:
+        * tao/PollableS.h:
+        * tao/PollableS.i:
+        * tao/PollableS_T.cpp:
+        * tao/PollableS_T.h:
+        * tao/PollableS_T.i:
+        * tao/TimeBase.pidl:
+        * tao/TimeBaseC.cpp:
+        * tao/TimeBaseC.h:
+        * tao/TimeBaseC.i:
+        * tao/TimeBaseS.cpp:
+        * tao/TimeBaseS.h:
+        * tao/TimeBaseS.i:
+        * tao/TimeBaseS_T.cpp:
+        * tao/TimeBaseS_T.h:
+        * tao/TimeBaseS_T.i:
+          Started work on the Messaging spec policy framework. I added new
+          modules (such as Messaging, TimeBase and IOP) and extended
+          others to include more features (such as Policy).
+          Right now the modules are not compiled by default, I want to
+          test the changes in more platforms before moving on.
+          Also added support for more system exceptions and left some
+          place holders for the Poller and Handler objects that are part
+          of the AMI support.
 
-	* TAO_IDL/fe/fe_lookup.cpp:
-	* TAO_IDL/fe/keywords.dat:
-	  Added support for the "export" C++ keyword.
+        * TAO_IDL/fe/fe_lookup.cpp:
+        * TAO_IDL/fe/keywords.dat:
+          Added support for the "export" C++ keyword.
 
-	* TAO_IDL/util/utl_global.cpp:
-	  Added support for files with .IDL, .pidl and .PIDL extensions.
+        * TAO_IDL/util/utl_global.cpp:
+          Added support for files with .IDL, .pidl and .PIDL extensions.
 
-	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
-	* TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
-	  Any helper classes for the fields of an exception must be
-	  generated *before* the code for the ctor, because the ctor uses
-	  them.
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+          Any helper classes for the fields of an exception must be
+          generated *before* the code for the ctor, because the ctor uses
+          them.
 
-	* orbsvcs/orbsvcs/CosTimeBase.idl:
-	* orbsvcs/orbsvcs/Makefile:
-	* orbsvcs/orbsvcs/RtecEventComm.idl:
-	* orbsvcs/orbsvcs/RtecScheduler.idl:
-	* orbsvcs/orbsvcs/TimeBase.idl:
-	* orbsvcs/orbsvcs/TimeService.idl:
-	* orbsvcs/orbsvcs/Time_Utilities.h:
-	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
-	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp:
-	* orbsvcs/orbsvcs/Sched/SchedEntry.i:
-	  Removed all references to CosTimeBase.idl, the standard file
-	  name is TimeBase.idl, I also changed things so the code is
-	  actually defined in $TAO_ROOT/tao/TimeBase.pidl because the ORB
-	  needs those types.
-	  Many dependencies where updated to match this.
+        * orbsvcs/orbsvcs/CosTimeBase.idl:
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/RtecEventComm.idl:
+        * orbsvcs/orbsvcs/RtecScheduler.idl:
+        * orbsvcs/orbsvcs/TimeBase.idl:
+        * orbsvcs/orbsvcs/TimeService.idl:
+        * orbsvcs/orbsvcs/Time_Utilities.h:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.cpp:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.i:
+          Removed all references to CosTimeBase.idl, the standard file
+          name is TimeBase.idl, I also changed things so the code is
+          actually defined in $TAO_ROOT/tao/TimeBase.pidl because the ORB
+          needs those types.
+          Many dependencies where updated to match this.
 
-	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.h:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.h:
-	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
-	* orbsvcs/LifeCycle_Service/Factory_Trader.cpp:
-	* orbsvcs/LifeCycle_Service/Factory_Trader.h:
-	* orbsvcs/LifeCycle_Service/LifeCycle_Service_i.cpp:
-	  Changed all the calls to export() into _cxx_export() the people
-	  responsible for this code should revise my changes.
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.h:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.h:
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
+        * orbsvcs/LifeCycle_Service/Factory_Trader.cpp:
+        * orbsvcs/LifeCycle_Service/Factory_Trader.h:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service_i.cpp:
+          Changed all the calls to export() into _cxx_export() the people
+          responsible for this code should revise my changes.
 
-	* orbsvcs/tests/EC_Throughput/Makefile:
-	  Added some missing files to the SRC variable, the dependencies
-	  were incomplete.
+        * orbsvcs/tests/EC_Throughput/Makefile:
+          Added some missing files to the SRC variable, the dependencies
+          were incomplete.
 
 Wed Apr  7 11:27:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_expression.cpp:
-	  Fixed the problems with LL_MAX and friends, use the ACE_*_MAX
-	  constants instead.
+        * TAO_IDL/ast/ast_expression.cpp:
+          Fixed the problems with LL_MAX and friends, use the ACE_*_MAX
+          constants instead.
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	  T::_narrow() can use T::_unchecked_narrow() to complete its
-	  job.
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+          T::_narrow() can use T::_unchecked_narrow() to complete its
+          job.
 
-	* TAO_IDL/be/be_interface.cpp:
-	  The generated operation table is static to avoid namespace
-	  pollution.
+        * TAO_IDL/be/be_interface.cpp:
+          The generated operation table is static to avoid namespace
+          pollution.
 
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_si.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	  The generated code is more readable now.
-	  The code for the collocated class and the skeleton where mixed
-	  and thus harder to read.
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+          The generated code is more readable now.
+          The code for the collocated class and the skeleton where mixed
+          and thus harder to read.
 
 Wed Apr 07 10:11:23 1999  David L. Levine  <levine@cs.wustl.edu>
 

@@ -1,7 +1,14 @@
+Thu Apr 08 13:47:03 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * README, VERSION, Makefile, Makefile.am, bin/make_release,
+          docs/ACE-bug-process.html: moved BUG-REPORT-FORM
+          to PROBLEM-REPORT-FORM.  Thanks to Thomas Lockhart
+          <Thomas.G.Lockhart@jpl.nasa.gov> for suggesting this.
+
 Thu Apr  8 13:18:22 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/SString.h: Updated the documentation to show that "Memory is
-	_not_ allocated/freed if <release> is 0". 
+	_not_ allocated/freed if <release> is 0".
 
 Wed Apr  7 20:24:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
