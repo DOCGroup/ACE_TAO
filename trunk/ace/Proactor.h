@@ -143,9 +143,12 @@ public:
   // Public type.
 
   ACE_Proactor (ACE_Proactor_Impl *implementation = 0,
-                TIMER_QUEUE *tq = 0,
-                int delete_implementation = 0);
-  // A do nothing constructor.
+                int delete_implementation = 0,
+                TIMER_QUEUE *tq = 0);
+  // Constructor. If <implementation> is 0, the correct implementation
+  // object will be created. <delete_implementation> flag determines
+  // whether the implementation object should be deleted by the
+  // Proactor or not. If <tq> is 0, a new TIMER_QUEUE is created.
 
   virtual ~ACE_Proactor (void);
   // Virtual destruction.
