@@ -1,4 +1,4 @@
-project: messaging {
+project: messaging, corba_messaging {
   Source_Files {
     Oneway_Receiver.cpp
     Shutdown_Helper.cpp
@@ -6,7 +6,7 @@ project: messaging {
   }
 }
 
-project(client): messaging {
+project(client): messaging, corba_messaging {
   exename = client
 
   Source_Files {

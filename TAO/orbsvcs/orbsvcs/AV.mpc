@@ -4,6 +4,7 @@ project(AV) : orbsvcslib {
   libs      += TAO_CosProperty TAO_CosNaming TAO_Svc_Utils TAO_PortableServer TAO
   idlflags  += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_AV_Export -Wb,export_include=AV/AV_export.h
   dllflags   = TAO_AV_BUILD_DLL
+  tagchecks  = AV
 
   IDL_Files {
     AVStreams.idl
@@ -11,13 +12,15 @@ project(AV) : orbsvcslib {
     sfp.idl
   }
 
-  Source_Files {
-    AVStreamsC.cpp
-    AVStreamsS.cpp
-    Null_MediaCtrlC.cpp
-    Null_MediaCtrlS.cpp
-    sfpC.cpp
-    sfpS.cpp
-    AV
+  Source_Files(ORBSVCS_COMPONENTS) {
+    AV {
+      AVStreamsC.cpp
+      AVStreamsS.cpp
+      Null_MediaCtrlC.cpp
+      Null_MediaCtrlS.cpp
+      sfpC.cpp
+      sfpS.cpp
+      AV
+    }
   }
 }

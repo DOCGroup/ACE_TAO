@@ -3,6 +3,7 @@ project(Disconnect): orbsvcsexe, messaging {
   libs     += CECTests TAO_CosEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
   includes += ../lib
   exename   = Disconnect
+  comps    += CosEvent
 
   Source_Files {
     Disconnect.cpp
@@ -14,6 +15,7 @@ project(MT_Disconnect): orbsvcsexe, messaging {
   libs     += CECTests TAO_CosEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
   includes += ../lib
   exename   = MT_Disconnect
+  comps    += CosEvent
 
   Source_Files {
     MT_Disconnect.cpp
@@ -25,6 +27,7 @@ project(Push_Event): orbsvcsexe, messaging {
   libs     += CECTests TAO_CosEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
   includes += ../lib
   exename   = Push_Event
+  comps    += CosEvent
 
   Source_Files {
     Push_Event.cpp
@@ -36,6 +39,7 @@ project(Pull_Push_Event): orbsvcsexe, messaging {
   libs     += CECTests TAO_CosEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
   includes += ../lib
   exename   = Pull_Push_Event
+  comps    += CosEvent
 
   Source_Files {
     Pull_Push_Event.cpp
@@ -47,6 +51,7 @@ project(Shutdown): orbsvcsexe, messaging {
   libs     += CECTests TAO_CosEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
   includes += ../lib
   exename   = Shutdown
+  comps    += CosEvent
 
   Source_Files {
     Shutdown.cpp
@@ -58,6 +63,7 @@ project(Random): orbsvcsexe, messaging {
   libs     += CECTests TAO_CosEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
   includes += ../lib
   exename   = Random
+  comps    += CosEvent
 
   Source_Files {
     Random.cpp

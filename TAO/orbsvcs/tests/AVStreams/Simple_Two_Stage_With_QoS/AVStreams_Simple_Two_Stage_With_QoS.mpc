@@ -1,4 +1,4 @@
-project(sender): orbsvcsexe, avstreamsexe {
+project(sender): avstreamsexe {
   depends += QoS
   libs    += ACE_QoS
   exename  = sender
@@ -8,7 +8,7 @@ project(sender): orbsvcsexe, avstreamsexe {
   }
 }
 
-project(receiver): orbsvcsexe, avstreamsexe {
+project(receiver): avstreamsexe {
   depends += QoS
   libs    += ACE_QoS
   exename  = receiver

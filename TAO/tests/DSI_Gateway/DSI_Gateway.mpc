@@ -1,4 +1,4 @@
-project: messaging {
+project: messaging, minimum_corba {
   depends  += Dynamic_Interface
   libs     += TAO_DynamicInterface
 
@@ -8,7 +8,7 @@ project: messaging {
   }  
 }
  
-project(client): messaging {
+project(client): messaging, minimum_corba {
   exename   = client
   depends  += Dynamic_Interface
   libs     += TAO_DynamicInterface
@@ -19,7 +19,7 @@ project(client): messaging {
   }  
 }
 
-project(gateway): messaging {
+project(gateway): messaging, minimum_corba {
   exename   = gateway
   depends  += Dynamic_Interface
   libs     += TAO_DynamicInterface

@@ -2,6 +2,7 @@ project(Trading Test Lib): orbsvcslib {
   depends   += CosTrading CosNaming Svc_Utils IORTable DynamicAny PortableServer TAO
   libs      += TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_DynamicAny TAO_PortableServer TAO
   sharedname = TTest
+  comps     += Trader
 
   Source_Files {
     TT_Info.cpp
@@ -16,6 +17,7 @@ project(export test): namingexe {
   depends += "Trading Test Lib" CosTrading DynamicAny
   libs    += TTest TAO_CosTrading TAO_DynamicAny
   exename  = export_test
+  comps   += Trader
 
   IDL_Files {
   }
@@ -29,6 +31,7 @@ project(import test): namingexe {
   depends += "Trading Test Lib" CosTrading DynamicAny
   libs    += TTest TAO_CosTrading TAO_DynamicAny
   exename  = import_test
+  comps   += Trader
 
   IDL_Files {
   }
@@ -42,6 +45,7 @@ project(colocated test): namingexe {
   depends += "Trading Test Lib" CosTrading DynamicAny
   libs    += TTest TAO_CosTrading TAO_DynamicAny
   exename  = colocated_test
+  comps   += Trader
 
   IDL_Files {
   }

@@ -1,16 +1,18 @@
-project: server {
+project: server, minimum_corba {
   depends += BiDir_GIOP
   libs    += TAO_BiDirGIOP
+
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(client): server {
+project(client): server, minimum_corba {
   depends += BiDir_GIOP
   libs    += TAO_BiDirGIOP
   exename  = client
+
   Source_Files {
     test_i.cpp
     client.cpp

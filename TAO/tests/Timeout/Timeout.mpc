@@ -1,11 +1,11 @@
-project: server {
+project: server, corba_messaging {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(client): messaging {
+project(client): messaging, corba_messaging {
   exename = client
 
   Source_Files {
