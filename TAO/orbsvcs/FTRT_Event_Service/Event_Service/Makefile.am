@@ -7,7 +7,11 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.FTRT_Event_Service.am 
 
+if BUILD_CORBA_MESSAGING
+if !BUILD_MINIMUM_CORBA
 noinst_PROGRAMS = ftrt_eventservice
+endif
+endif
 
 ftrt_eventservice_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -19,7 +23,9 @@ ftrt_eventservice_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs/FtRtEvent/Utils
 
 ftrt_eventservice_SOURCES = \
-  FT_EventService.cpp
+  FT_EventService.cpp \
+  FT_EventService.h \
+  TP_Task.h
 
 ftrt_eventservice_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTRT_EventChannel.la \
@@ -41,9 +47,6 @@ ftrt_eventservice_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
-  FT_EventService.h \
-  TP_Task.h
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -7,7 +7,9 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.Notify_Logging_Service.am 
 
+if !BUILD_MINIMUM_CORBA
 noinst_PROGRAMS = Notify_Logging_Service
+endif
 
 Notify_Logging_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -21,7 +23,8 @@ Notify_Logging_Service_CPPFLAGS = \
 
 Notify_Logging_Service_SOURCES = \
   Notify_Logging_Server.cpp \
-  Notify_Logging_Service.cpp
+  Notify_Logging_Service.cpp \
+  Notify_Logging_Service.h
 
 Notify_Logging_Service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsNotifyLogAdmin.la \
@@ -44,8 +47,6 @@ Notify_Logging_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
-  Notify_Logging_Service.h
 
 ## Clean up template repositories, etc.
 clean-local:

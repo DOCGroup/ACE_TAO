@@ -1,36 +1,60 @@
+Tue Aug 10 18:33:30 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* orbsvcs/CosEvent_Service/Makefile.am:
+	* orbsvcs/Event_Service/Makefile.am:
+	* orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
+	* orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
+	* orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
+	* orbsvcs/FT_ReplicationManager/Makefile.am:
+	* orbsvcs/Fault_Detector/Makefile.am:
+	* orbsvcs/Fault_Notifier/Makefile.am:
+	* orbsvcs/IFR_Service/Makefile.am:
+	* orbsvcs/LifeCycle_Service/Makefile.am:
+	* orbsvcs/LoadBalancer/Makefile.am:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+	* orbsvcs/Trading_Service/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+	* tao/Makefile.am:
+	  Initial support for user-configurable features (ssl, rt_corba,
+	  minimum_corba, etc.) with automake conditionals.  Conditional
+	  values are currently hard-coded in configure.ac and will have
+	  to be replaced by --with-* and --enable-* options.
+
 Tue Aug 10 17:56:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
-        
+
           Fixed bug in the inheritance graph traversal algorithm
           that was sometimes failing to enqueue CCMObject and therefore
           also its parents Navigation, Receptacles, and Events. Thanks
           to Matthew Gillen <mgillen@bbn.com> for pointing out
           resulting runtime error in the generated skeleton operation
           table.
-          
+
         * TAO_IDL/be/be_visitor_arg_traits.cpp:
-        
+
           Fixed bug where the stub export macro was getting generated
           on the skeleton side.
-          
+
         * TAO_IDL/be/be_visitor_component/component_sh.cpp:
-        
+
           Cosmetic changes to source code.
-          
+
         * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-        
+
           Removed generation of collocation classes for abstract interfaces
           in the skeleton header file, since they are not generated in
           the skeleton source file, thus causing a link error. For
           abstract interfaces, all the code related to their operations
           is duplicated in code generation for concrete interfaces
           deriving from them, at least on the skeleton side, so no code
-          generation is required on the skeleton side at all for 
+          generation is required on the skeleton side at all for
           abstract interfaces.
-          
+
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
-        
+
           Fixed a bug in code generation of the copy constructor for
           a valuetype that supports an abstract interface.
 

@@ -7,7 +7,13 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.CosLoadManager.am 
 
+if BUILD_AMI
+if BUILD_INTERCEPTORS
+if !BUILD_MINIMUM_CORBA
 noinst_PROGRAMS = LoadManager
+endif
+endif
+endif
 
 LoadManager_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -18,29 +24,34 @@ LoadManager_CPPFLAGS = \
 
 LoadManager_SOURCES = \
   LoadManager.cpp \
-  Signal_Handler.cpp
+  Signal_Handler.cpp \
+  Signal_Handler.h
 
 LoadManager_LDADD = \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLoadBalancing.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
- $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
- $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
- $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
- $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
- $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
- $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
- $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
- $(TAO_BUILDDIR)/tao/libTAO.la \
- $(ACE_BUILDDIR)/ace/libACE.la
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLoadBalancing.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
+  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
-  Signal_Handler.h
 
 ## Makefile.CosLoadMonitor.am 
 
+if BUILD_AMI
+if BUILD_INTERCEPTORS
+if !BUILD_MINIMUM_CORBA
 noinst_PROGRAMS += LoadMonitor
+endif
+endif
+endif
 
 LoadMonitor_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -51,29 +62,28 @@ LoadMonitor_CPPFLAGS = \
 
 LoadMonitor_SOURCES = \
   LoadMonitor.cpp \
-  Push_Handler.cpp \
   Monitor_Signal_Handler.cpp \
-  Signal_Handler.cpp
+  Push_Handler.cpp \
+  Signal_Handler.cpp \
+  Monitor_Signal_Handler.h \
+  Push_Handler.h \
+  Signal_Handler.h
 
 LoadMonitor_LDADD = \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLoadBalancing.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
- $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
- $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
- $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
- $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
- $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
- $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
- $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
- $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
- $(TAO_BUILDDIR)/tao/libTAO.la \
- $(ACE_BUILDDIR)/ace/libACE.la
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLoadBalancing.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
+  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS += \
-  Push_Handler.h \
-  Signal_Handler.h \
-  Monitor_Signal_Handler.h
 
 ## Clean up template repositories, etc.
 clean-local:
