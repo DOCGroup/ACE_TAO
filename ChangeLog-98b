@@ -32,9 +32,6 @@ Thu Sep 17 09:54:56 1998  David L. Levine  <levine@cs.wustl.edu>
           removed trailing ; from instantiation #pragma.
 
         * ace/config-lynxos.h: added ACE_HAS_TSS_EMULATION.
-          Many, many thanks to Arturo for extending ACE's
-          TSS emulation to support all threaded platforms.
-          It works beautifully.
 
 Thu Sep 17 09:23:01 1998  Carlos O'Ryan  <coryan@JIG>
 
