@@ -1,6 +1,7 @@
 // $Id$
 
 #include "SupplierAdmin_i.h"
+#include "ace/Auto_Ptr.h"
 
 TAO_CosEC_SupplierAdmin_i::TAO_CosEC_SupplierAdmin_i (void)
   : qos_ (),
@@ -25,19 +26,34 @@ TAO_CosEC_SupplierAdmin_i::init (const RtecEventChannelAdmin::SupplierQOS &suppl
 }
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
-TAO_CosEC_SupplierAdmin_i::obtain_push_consumer (CORBA::Environment &TAO_IN_ENV)
+TAO_CosEC_SupplierAdmin_i::obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV)
 {
+  CosEventChannelAdmin::ProxyPushConsumer_ptr proxyconsumer_nil =
+    CosEventChannelAdmin::ProxyPushConsumer::_nil ();
+
   RtecEventChannelAdmin::ProxyPushConsumer_var rtecproxypushconsumer =
-    this->rtec_supplieradmin_->obtain_push_consumer (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
+    this->rtec_supplieradmin_->obtain_push_consumer (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (proxyconsumer_nil);
 
   TAO_CosEC_ProxyPushConsumer_i *proxypushconsumer;
 
   ACE_NEW_RETURN (proxypushconsumer,
                   TAO_CosEC_ProxyPushConsumer_i (this->qos_,
                                                  rtecproxypushconsumer.in ()),
-                  CosEventChannelAdmin::ProxyPushConsumer::_nil ());
-  return proxypushconsumer->_this (TAO_IN_ENV);
+                  proxyconsumer_nil);
+  auto_ptr <TAO_CosEC_ProxyPushConsumer_i>
+    auto_proxyconsumer (proxypushconsumer);
+
+  CosEventChannelAdmin::ProxyPushConsumer_ptr proxy_obj =
+    auto_proxyconsumer.get ()->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (proxyconsumer_nil);
+
+   // give the ownership to the POA.
+  auto_proxyconsumer.get ()->_remove_ref (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (proxyconsumer_nil);
+
+  auto_proxyconsumer.release ();
+  return proxy_obj;
 }
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr

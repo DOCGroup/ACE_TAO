@@ -26,7 +26,9 @@
 #include "orbsvcs/CosEvent/ConsumerAdmin_i.h"
 #include "orbsvcs/CosEvent/SupplierAdmin_i.h"
 
-class TAO_ORBSVCS_Export TAO_CosEC_EventChannel_i : public POA_CosEventChannelAdmin::EventChannel
+class TAO_ORBSVCS_Export TAO_CosEC_EventChannel_i :
+public virtual POA_CosEventChannelAdmin::EventChannel,
+public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   class TAO_CosEC_EventChannel_i implements the standard Cos EventChannel
@@ -49,29 +51,29 @@ public:
   int init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
             const RtecEventChannelAdmin::SupplierQOS &supplierqos,
             RtecEventChannelAdmin::EventChannel_ptr rtec,
-            CORBA::Environment &TAO_IN_ENV);
+            CORBA::Environment &ACE_TRY_ENV);
   // Activates the ConsumerAdmin and SupplierAdmin servants.  Returns
   // -1 on error, 0 on success.
 
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (CORBA::Environment &TAO_IN_ENV);
+  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (CORBA::Environment &ACE_TRY_ENV);
   // The for_consumers method will return the same ConsumerAdmin_ptr
   // everytime its called.
 
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (CORBA::Environment &TAO_IN_ENV);
+  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (CORBA::Environment &ACE_TRY_ENV);
   // The for_suppliers method will return the same SupplierAdmin_ptr
   // everytime its called.
 
-  virtual void destroy (CORBA::Environment &TAO_IN_ENV);
+  virtual void destroy (CORBA::Environment &ACE_TRY_ENV);
   // Destroys this Event Channel object.
 
-  void shutdown (CORBA::Environment &TAO_IN_ENV);
+  void shutdown (CORBA::Environment &ACE_TRY_ENV);
   // destroys this Event Channel object and <delete>s this object.
 
 private:
-  TAO_CosEC_ConsumerAdmin_i consumer_admin_;
+  TAO_CosEC_ConsumerAdmin_i* consumer_admin_;
   // ConsumerAdmin servant object.
 
-  TAO_CosEC_SupplierAdmin_i supplier_admin_;
+  TAO_CosEC_SupplierAdmin_i* supplier_admin_;
   // SupplierAdmin servant object.
 
   CosEventChannelAdmin::ConsumerAdmin_var consumeradmin_;

@@ -1,9 +1,10 @@
 // $Id$
 #include "EventChannel_i.h"
+#include "ace/Auto_Ptr.h"
 
 TAO_CosEC_EventChannel_i::TAO_CosEC_EventChannel_i (void)
-  : consumer_admin_ (),
-    supplier_admin_ (),
+  : consumer_admin_ (0),
+    supplier_admin_ (0),
     consumeradmin_ (CosEventChannelAdmin::ConsumerAdmin::_nil ()),
     supplieradmin_ (CosEventChannelAdmin::SupplierAdmin::_nil ())
 {
@@ -19,29 +20,57 @@ int
 TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
                                 const RtecEventChannelAdmin::SupplierQOS &supplierqos,
                                 RtecEventChannelAdmin::EventChannel_ptr rtec,
-                                CORBA::Environment &TAO_IN_ENV)
+                                CORBA::Environment &ACE_TRY_ENV)
 {
-  RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin =
-    rtec->for_consumers (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
+  // Allocate the admins..
+  TAO_CosEC_ConsumerAdmin_i *consumer_;
+  ACE_NEW_RETURN (consumer_,
+                  TAO_CosEC_ConsumerAdmin_i (),
+                  -1);
 
-  if (this->consumer_admin_.init (consumerqos,
-                                  rtec_consumeradmin) == -1)
+  auto_ptr <TAO_CosEC_ConsumerAdmin_i> auto_consumer_ (consumer_);
+
+  TAO_CosEC_SupplierAdmin_i *supplier_;
+  ACE_NEW_RETURN (supplier_,
+                  TAO_CosEC_SupplierAdmin_i (),
+                  -1);
+
+  auto_ptr <TAO_CosEC_SupplierAdmin_i> auto_supplier_ (supplier_);
+
+  RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin =
+    rtec->for_consumers (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (auto_consumer_.get ()->init (consumerqos,
+                                   rtec_consumeradmin) == -1)
     return -1;
 
-  this->consumeradmin_ = consumer_admin_._this (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
+  this->consumeradmin_ =
+    auto_consumer_.get ()->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  // give the ownership to the POA.
+  auto_consumer_.get ()->_remove_ref (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin =
-    rtec->for_suppliers (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
+    rtec->for_suppliers (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
-  if (this->supplier_admin_.init (supplierqos,
-                                  rtec_supplieradmin) == -1)
+  if (auto_supplier_.get ()->init (supplierqos,
+                                   rtec_supplieradmin) == -1)
     return -1;
 
-  this->supplieradmin_ = supplier_admin_._this (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
+  this->supplieradmin_ =
+    auto_supplier_.get ()->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  // give the ownership to the POA.
+  auto_supplier_.get ()->_remove_ref (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->consumer_admin_ = auto_consumer_.release ();
+  this->supplier_admin_ = auto_supplier_.release ();
 
   return 0;
 }
@@ -65,28 +94,27 @@ TAO_CosEC_EventChannel_i::for_suppliers (CORBA::Environment &)
 }
 
 void
-TAO_CosEC_EventChannel_i::destroy (CORBA::Environment &TAO_IN_ENV)
+TAO_CosEC_EventChannel_i::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   // Deactivate the CosEventChannel
   PortableServer::POA_var poa =
-    this->_default_POA (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+    this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
 
   PortableServer::ObjectId_var id = poa->servant_to_id (this,
-                                                        TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
 
   poa->deactivate_object (id.in (),
-                          TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+                          ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->supplieradmin_ =  CosEventChannelAdmin::SupplierAdmin::_nil ();
   this->consumeradmin_ =  CosEventChannelAdmin::ConsumerAdmin::_nil ();
 }
 
 void
-TAO_CosEC_EventChannel_i::shutdown (CORBA::Environment &TAO_IN_ENV)
+TAO_CosEC_EventChannel_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->destroy (TAO_IN_ENV);
-  delete this;
+  this->destroy (ACE_TRY_ENV);
 }
