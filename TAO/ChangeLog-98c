@@ -1,14 +1,14 @@
 Sat Aug 29 12:40:56 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/POA/TIE/client.cpp: 
-	* tests/POA/TIE/server.cpp: 
+	* tests/POA/TIE/client.cpp:
+	* tests/POA/TIE/server.cpp:
 	  Added missing template instantiations.
 
-	* tests/POA/Forwarding/MyFooServant.cpp: 
+	* tests/POA/Forwarding/MyFooServant.cpp:
 	  A call to is_nil() using a T_var was missing the .in ()
 	  invocation.
 
-	* tests/POA/Makefile: 
+	* tests/POA/Makefile:
 	  Fixed order.  Thanks to David for reporting this problems.
 
 Sat Aug 29 09:15:02 1998  David L. Levine  <levine@cs.wustl.edu>
@@ -16,6 +16,10 @@ Sat Aug 29 09:15:02 1998  David L. Levine  <levine@cs.wustl.edu>
         * utils/catior/catior.cpp (iiop_string_to_object): commented out
           because it's currently unused.  (main): commented out unused local
           "orb_ptr".
+
+        * TAO_IDL/be/be_interface.cpp (cleanup_gperf_temp_file):
+          don't delete ss on linux.  It causes a core dump on
+          RedHat 5.1/Intel.
 
 Fri Aug 28 19:43:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
