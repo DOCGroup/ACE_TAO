@@ -41,7 +41,8 @@ RSC=rc.exe
 # PROP Intermediate_Dir "LIB\Release\RTEvent"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D TAO_RTEVENT_HAS_DLL=0 /D "NDEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D TAO_RTEVENT_HAS_DLL=0 /D "NDEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -63,8 +64,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "Static\Debug\RTEvent"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D TAO_RTEVENT_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /FD  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D TAO_RTEVENT_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
