@@ -39,7 +39,8 @@ public:
                    CORBA::Long in_l,
                    const char* in_str,
                    CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     A::DidTheRightThing));
   
   void shutdown (CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));
