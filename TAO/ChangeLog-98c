@@ -20,6 +20,13 @@ Thu Aug 20 11:41:03 1998  David L. Levine  <levine@cs.wustl.edu>
           (load_schedule_data): don't dereference data->operation_name,
           because it already is a char *.
 
+        * orbsvcs/tests/Simulator/DOVEMIB/PrintVisitor.h (~PrintVisitor):
+          made destructor virtual because PrintVisitor inherits from a
+          class, NodeVisitor, that has virtual functions.
+
+        * orbsvcs/tests/Simulator/DOVEMIB/Node.cpp: added explicit
+          template instantiations.
+
 Thu Aug 20 08:29:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/tie_si.cpp:
