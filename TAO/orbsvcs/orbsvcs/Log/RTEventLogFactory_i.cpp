@@ -18,10 +18,6 @@
 
 #include "ace/Auto_Ptr.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_ConsumerAdmin.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (Log,
            RTEventLogFactory_i,
            "$Id$")
