@@ -1,3 +1,8 @@
+Tue Jul 27 14:41:26 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Codeset_IBM1047.cpp: Added a static variable only for HP aC++
+          to make it stop warning of an empty translation unit.
+
 Tue Jul 27 14:16:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (cancel_thr): This method should return
