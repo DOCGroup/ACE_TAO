@@ -143,7 +143,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       *os << node->local_name () << " (void); // default ctor" << be_nl;
       *os << node->local_name () << " (const " << node->local_name ()
           << " &); // copy ctor" << be_nl;
-      *os << "~" << node->local_name () << "(void); // dtor" << be_nl;
+      *os << "~" << node->local_name () << " (void); // dtor" << be_nl;
 
       // generate constructor that takes each member as a parameter. We need a
       // new state. Such a constructor exists if we have members
@@ -163,6 +163,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
           delete visitor;
         }
 
+      os->indent ();
       // assignment operator
       *os << node->local_name () << " &operator= (const "
           << node->local_name () << " &);" << be_nl;
@@ -186,14 +187,12 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       if (node->is_nested ())
         {
           // we have a scoped name
-          os->indent ();
           *os << "static CORBA::TypeCode_ptr "
               << node->tc_name ()->last_component () << ";\n\n";
         }
       else
         {
           // we are in the ROOT scope
-          os->indent ();
           *os << "extern "
 	      << idl_global->export_macro ()
 	      << " CORBA::TypeCode_ptr "
@@ -510,10 +509,17 @@ int be_visitor_exception_ctor::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    *os << "const " << node->nested_type_name (this->ctx_->scope ());
+  // set the right type;
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
   else
-    *os << "const " << node->name ();
+    bt = node;
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
+    *os << "const " << bt->nested_type_name (this->ctx_->scope ());
+  else
+    *os << "const " << bt->name ();
   return 0;
 }
 
@@ -521,10 +527,17 @@ int be_visitor_exception_ctor::visit_enum (be_enum *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    *os << node->nested_type_name (this->ctx_->scope ());
+  // set the right type;
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
   else
-    *os << node->name ();
+    bt = node;
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
+    *os << bt->nested_type_name (this->ctx_->scope ());
+  else
+    *os << bt->name ();
   return 0;
 }
 
@@ -532,10 +545,17 @@ int be_visitor_exception_ctor::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    *os << "const " << node->nested_type_name (this->ctx_->scope ());
+  // set the right type;
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
   else
-    *os << "const " << node->name ();
+    bt = node;
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
+    *os << "const " << bt->nested_type_name (this->ctx_->scope ());
+  else
+    *os << "const " << bt->name ();
   *os << "_ptr ";
   return 0;
 }
@@ -544,10 +564,17 @@ int be_visitor_exception_ctor::visit_interface_fwd (be_interface_fwd *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    *os << "const " << node->nested_type_name (this->ctx_->scope ());
+  // set the right type;
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
   else
-    *os << "const " << node->name ();
+    bt = node;
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
+    *os << "const " << bt->nested_type_name (this->ctx_->scope ());
+  else
+    *os << "const " << bt->name ();
   *os << "_ptr ";
   return 0;
 }
@@ -556,30 +583,37 @@ int be_visitor_exception_ctor::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
+  // set the right type;
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
   // check if the type is an any
   if (node->pt () == AST_PredefinedType::PT_any)
     {
       if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-        *os << "const " << node->nested_type_name (this->ctx_->scope ());
+        *os << "const " << bt->nested_type_name (this->ctx_->scope ());
       else
-        *os << "const " << node->name ();
+        *os << "const " << bt->name ();
       *os << " &";
       return 0;
     } // end of if
   else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
     {
       if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-        *os << "const " << node->nested_type_name (this->ctx_->scope ());
+        *os << "const " << bt->nested_type_name (this->ctx_->scope ());
       else
-        *os << "const " << node->name ();
+        *os << "const " << bt->name ();
       *os << "_ptr ";
     } // end else if
   else // simple predefined types
     {
       if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-        *os << node->nested_type_name (this->ctx_->scope ());
+        *os << bt->nested_type_name (this->ctx_->scope ());
       else
-        *os << node->name ();
+        *os << bt->name ();
     } // end of else
 
   return 0;
@@ -589,10 +623,17 @@ int be_visitor_exception_ctor::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    *os << "const " << node->nested_type_name (this->ctx_->scope ());
+  // set the right type;
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
   else
-    *os << "const " << node->name ();
+    bt = node;
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
+    *os << "const " << bt->nested_type_name (this->ctx_->scope ());
+  else
+    *os << "const " << bt->name ();
   *os << " &";
   return 0;
 }
@@ -609,10 +650,17 @@ int be_visitor_exception_ctor::visit_structure (be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    *os << "const " << node->nested_type_name (this->ctx_->scope ());
+  // set the right type;
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
   else
-    *os << "const " << node->name ();
+    bt = node;
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
+    *os << "const " << bt->nested_type_name (this->ctx_->scope ());
+  else
+    *os << "const " << bt->name ();
   *os << " &";
   return 0;
 }
@@ -621,10 +669,17 @@ int be_visitor_exception_ctor::visit_union (be_union *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    *os << "const " << node->nested_type_name (this->ctx_->scope ());
+  // set the right type;
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
   else
-    *os << "const " << node->name ();
+    bt = node;
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
+    *os << "const " << bt->nested_type_name (this->ctx_->scope ());
+  else
+    *os << "const " << bt->name ();
   *os << " &";
   return 0;
 }

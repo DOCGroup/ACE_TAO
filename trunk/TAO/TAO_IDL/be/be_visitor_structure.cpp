@@ -123,7 +123,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
 
       os->indent (); // start from whatever indentation level we were at
       *os << "struct " << node->local_name () << be_nl
-          << "{\n" << be_idt;
+          << "{" << be_idt << "\n";
 
       // generate code for field members
       if (this->visit_scope (node) == -1)
