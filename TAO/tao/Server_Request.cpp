@@ -360,9 +360,15 @@ IIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
   // since the upcall could have set some exception
   if (skel_env.exception ())
     {
-      // don't own it because ultimately it will be owned by the Server_Request
-      // via a call to "set_exception"
-      CORBA::Any any (skel_env.exception ()->_type (), skel_env.exception ());
+      // We must increase the "refcnt" on the exception, because it is
+      // "owned" by both <skel_env> and (eventually) by the
+      // Server_Request.
+      CORBA::Exception_ptr exception = skel_env.exception ();
+      exception->_incr_refcnt ();
+
+      // The Any does not own the because ultimately it will be owned 
+      // by the Server_Request via the call to "set_exception"
+      CORBA::Any any (skel_env.exception ()->_type (), exception);
       this->set_exception (any, orb_env);
     }
 
