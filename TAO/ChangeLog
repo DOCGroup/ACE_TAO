@@ -1,3 +1,12 @@
+Thu May 01 10:35:03 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp (encode_endpoints):
+
+	  Use the ssl_component() accessor method instead of directly
+	  accessing the class member variable.  TAO_SSLIOP_Profile is
+	  currently a friend of TAO_SSLIOP_Endpoint.  This change is a
+	  step in the direction of removing that friend declaration.
+
 Thu May  1 11:29:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynamicAnyC.cpp:
