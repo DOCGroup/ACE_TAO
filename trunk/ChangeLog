@@ -1,3 +1,11 @@
+Fri Apr 23 22:13:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Token_Collection.h:
+	* ace/Token_Invariants.h:
+
+	  Include "ace/Null_Mutex.h" to pull ACE_Null_Mutex class
+	  declaration.
+
 Fri Apr 23 20:25:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* Kokyu/Kokyu_defs.h:

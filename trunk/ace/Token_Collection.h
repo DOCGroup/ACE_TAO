@@ -30,10 +30,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_HAS_TOKENS_LIBRARY)
+
 #include "ace/Local_Tokens.h"
 #include "ace/SString.h"
-
-#if defined (ACE_HAS_TOKENS_LIBRARY)
+#include "ace/Null_Mutex.h"
 
 /**
  * @class ACE_Token_Collection
