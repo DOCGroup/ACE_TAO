@@ -1,0 +1,144 @@
+
+This directory contains the following programs:
+
+  ftrt_eventservice : Implements the functionality of fault tolerant event channel.
+                    It can be started directly or  be started by the ft_factory.
+
+  ftrtec_factory_service : A program used to spawn the ftrt_eventservice process. The process it
+               create can be controled through "test.cfg" whose contents should begin with the
+               repository id of EventChannel followed by the executable path of
+               ftrt_eventservice.
+
+  ftrtec_gateway_service : An intermediator program between the ftrt_eventservice and the clients which do not support FT CORBA.
+
+  consumer : A shell script to start the consumer test program. The actual consumer pragram is in orbsvcs/tests/FtRtEvent.
+
+  supplier : A shell script to start the supplier test program. The actual supplier pragram is in orbsvcs/tests/FtRtEvent.
+
+  ftec : a shell script to start ftrt_eventservice.
+
+Quick start:
+
+  Run the applications as follows:
+
+
+  1. Start Naming_Service
+   $ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -m 1
+     or you can use the shell script NameService in this directory to start it.
+
+  2. Start the ftrt_eventservice. Use the "-p" option to start it as a primary and
+     use the "-j" option to start it as a backup.
+
+  $ ./ftec -p
+  $ ./ftec -j
+  $ ./ftec -j
+
+
+  3. Start the consumer and supplier.
+  $ ./consumer
+  $ ./supplier
+
+How do we add a new FTRTEC to the system?
+
+  Just use
+
+  ./ftec -j
+
+  The newly created process will contact to the naming service and then join to
+  the existing object group.
+
+Is there any adjustable options for FTRTEC?
+
+  Here is the list of options for the ftec script
+
+  -sciop           Use SCIOP for CORBA communication
+  -sctp            Use SCTP for fault detection
+  -hb n            Specify the heart beat interval in sec
+                   for SCTP connection, this option also activate sctp option.
+  -ami             Use AMI call for replication messages (The default is
+                   two-way CORBA call for replication)
+  -p               activate as a primary replica.
+  -j               activate as a backup replica.
+
+
+ Below are some options that are used for the consumer and supplier
+    test scripts.
+
+  -sciop          Use SCIOP for CORBA communication. This requires that the Naming
+                  Service and ftec are also started using SCIOP transport protocol.
+
+  -t n            Specify the transaction depth. The transaction depth indicates the
+                  number of replicas that must complete the subscription request before
+                  the request can return.
+
+ If you the naming service are not running at the same machine with above programs,
+ you can always set the environmental variables NameServiceIOR before starting the
+ ftec, consumer or supplier.
+
+
+ How do I start the FTRTEC using ftrtec_factory_service?
+
+ The ftrtec_factory_service is a small program that can instaniate a ftrt_eventservice on demand.
+ It exports the FT::GenericFactory interface to its client. There are two ways that
+ you can get the IOR for the factory object. 1) specify the name you want the factory
+ register to the naming service and then get the IOR from the naming service by
+ the name. 2) output the IOR to a file when the factory starts. Here are the options
+
+    ftrtec_factory_service :
+
+      -i id_string          The id field of the name that is used to register to the naming service
+      -k kind_string        The kind field of the name that is used to register to the naming service
+      -o output_filename    The output file name for the factory IOR.
+
+Once you get the IOR for the factory, you can use create_object to intantiate the ftrt_eventservice.
+Here are the parameters in create_object() to control how ftrt_eventservice is created.
+
+   type_id : this value should be "IDL:FtRtecEventChannelAdmin/EventChannel:1.0"
+   the_criteria : the_criteria is a sequence of Property which in term consists of
+                  "nam" and "value". Below a a list of possible nam and values.
+
+           nam                                                  value
+       ==========================================================================
+         FTEC_MEMBERSHIP                                        PRIMARY
+                                                                BACKUP
+                                                                NONE
+       ----------------------------------------------------------------------
+         FTEC_DETECTOR_TRANSPORT_PROTOCL                        TCP
+                                                                SCTP
+       -----------------------------------------------------------------------
+         FTEC_HEART_BEAT                                 the heart beat value in sec.
+                                       (Note, you have to specify it using string, i.e.
+                                               the_criteria[0].value <<= "5");
+       ---------------------------------------------------------------------------------
+         FTEC_REPLICATION_STRATEGY                              AMI
+
+                                        (If not specified, the ftrt_eventservice use default
+                                         two-way call for replication)
+       ----------------------------------------------------------------------------------
+        NameServieIOR                                 the corbaloc representation for the
+                                                      naming service
+        =======================================================================================
+
+     Any nam string started with "-" will be used as a command line option to start ftrt_eventservice.
+     For example, if you specfiy the name as "-ORBEndpoint" and value as "sciop://" then the
+     ftrt_eventservice can be started using sciop.
+
+How do I use the ftrtec_gateway_service program ?
+
+    The FTRTEC uses some features in FT CORBA that requires every client to use FT ORB to work. If your
+    client is written based other ORBs other than TAO. You cannot get the desired fault tolerance feature.
+    In this case you can have the ftec_gateway as an intermediator between the FTRTEC and you client program.
+    For example, if you have an existing client called my_supplier.
+
+    # setting up the event channel group as previously stated.
+
+    $ftrtec_gateway_service -o gateway.ior        ## start the gateway and output the IOR of the gateway to a file
+    $my_supplier -i file://gateway.ior  ## start the supplier using the gateway
+
+
+
+
+
+
+
+
