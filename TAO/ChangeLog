@@ -1,3 +1,13 @@
+Tue Mar 15 11:43:28 2004  Amogh Kavimandan  <amoghk@dre.vanderbilt.edu>
+
+  * examples/Advanced/ch_8_and_10/client.cpp
+  * examples/Advanced/ch_8_and_10/server.cpp
+  * examples/Advanced/ch_8_and_10/server.h
+  * examples/Advanced/ch_8_and_10/icp.cpp
+  * examples/Advanced/ch_8_and_10/icp.h
+
+    Added min() function for vc6.0 so that this example compiles.
+
 Tue Mar 16 09:36:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Any_Unknown_IDL_Type.cpp (_tao_decode):
