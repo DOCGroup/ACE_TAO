@@ -1,3 +1,9 @@
+Sun Nov 16 22:47:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Synch_Invocation.cpp: 
+
+	  Fixed a compile error due to wrong exception macro usage. 
+
 Sun Nov 16 18:04:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/operation_details.i:
