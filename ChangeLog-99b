@@ -1,3 +1,12 @@
+Mon Dec 20 23:55:18 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* bin/make_release:
+
+	  Fixed MD5 checksum generation.
+
+	  Added temporary hacks to bootstrap ACE+autoconf support into the
+	  release.
+
 Mon Dec 20 22:15:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* Makefile:
