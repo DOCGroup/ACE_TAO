@@ -1620,7 +1620,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 {
   // ACE_TRACE ("ACE_OS::mutex_init");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS) || defined(ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (sa);
@@ -1628,16 +1628,20 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   pthread_mutexattr_t attributes;
   int result = -1;
 
-#   if defined (ACE_HAS_DCETHREADS)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4)
   if (::pthread_mutexattr_create (&attributes) == 0
-#     if !defined (ACE_DOES_NOT_HAVE_SETKIND_NP)
+#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
       && ::pthread_mutexattr_setkind_np (&attributes, type) == 0
-#     endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
       && ::pthread_mutex_init (m, attributes) == 0)
-#   elif defined (ACE_HAS_PTHREADS_1003_DOT_1C) || defined (AIX)
+#   elif defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
     if (ACE_ADAPT_RETVAL(::pthread_mutexattr_init (&attributes), result) == 0
+#     if defined (_POSIX_THREAD_PROCESS_SHARED)
+	&& ACE_ADAPT_RETVAL(::pthread_mutexattr_setpshared(&attributes, type),
+			    result) == 0
+#     endif /* _POSIX_THREAD_PROCESS_SHARED */
         && ACE_ADAPT_RETVAL(::pthread_mutex_init (m, &attributes), result)== 0)
-#   else
+#   else // draft 6
     if (::pthread_mutexattr_init (&attributes) == 0
 #     if !defined (ACE_LACKS_MUTEXATTR_PSHARED)
       && ::pthread_mutexattr_setpshared (&attributes, type) == 0
@@ -1646,20 +1650,20 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
         && ::pthread_mutexattr_setkind_np (&attributes, type) == 0
 #     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
         && ::pthread_mutex_init (m, &attributes) == 0)
-#   endif /* ACE_HAS_DCETHREADS */
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
       result = 0;
   else
     result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
 
-#   if !defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
+#   if (!defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP) && !defined (_POSIX_THREAD_PROCESS_SHARED))
   ACE_UNUSED_ARG (type);
 #   endif /* ! ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
 
-#   if defined (ACE_HAS_DCETHREADS)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4)
   ::pthread_mutexattr_delete (&attributes);
 #   else
   ::pthread_mutexattr_destroy (&attributes);
-#   endif /* ACE_HAS_DCETHREADS */
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
 
   return result;
 # elif defined (ACE_HAS_STHREADS)
@@ -1692,7 +1696,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_UNUSED_ARG (sa);
 
   return (*m = ::semMCreate (type)) == 0 ? -1 : 0;
-# endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (type);
@@ -1708,12 +1712,13 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
 {
   // ACE_TRACE ("ACE_OS::mutex_destroy");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#   if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+# if defined (ACE_HAS_PTHREADS)
+#   if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6))
   ACE_OSCALL_RETURN (::pthread_mutex_destroy (m), int, -1);
 #   else
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_destroy (m), ace_result_), int, -1);
-#   endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_destroy (m),
+				       ace_result_), int, -1);
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6*/
 # elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_destroy (m), ace_result_), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
@@ -1744,14 +1749,14 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
 {
   // ACE_TRACE ("ACE_OS::mutex_lock");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
-#   if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#   if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6))
   ACE_OSCALL_RETURN (pthread_mutex_lock (m), int, -1);
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_lock (m), ace_result_),
                      int, -1);
-#   endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
 # elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_lock (m), ace_result_), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
@@ -1830,9 +1835,9 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
 {
   // ACE_TRACE ("ACE_OS::mutex_trylock");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
-#   if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#   if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6))
   int status = pthread_mutex_trylock (m);
   if (status == 1)
     status = 0;
@@ -1941,9 +1946,9 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
 {
   // ACE_TRACE ("ACE_OS::mutex_unlock");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
-#   if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#   if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6))
   ACE_OSCALL_RETURN (pthread_mutex_unlock (m), int, -1);
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_unlock (m), ace_result_),
@@ -1982,7 +1987,7 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 {
   // ACE_TRACE ("ACE_OS::thread_mutex_init");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (type);
   // Force the use of USYNC_THREAD!
   return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg);
@@ -2010,7 +2015,7 @@ ACE_OS::thread_mutex_destroy (ACE_thread_mutex_t *m)
 {
   // ACE_TRACE ("ACE_OS::thread_mutex_destroy");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
   return ACE_OS::mutex_destroy (m);
 # elif defined (ACE_HAS_WTHREADS)
   ::DeleteCriticalSection (m);
@@ -2029,7 +2034,7 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m)
 {
   // ACE_TRACE ("ACE_OS::thread_mutex_lock");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
   return ACE_OS::mutex_lock (m);
 # elif defined (ACE_HAS_WTHREADS)
   ::EnterCriticalSection (m);
@@ -2048,7 +2053,7 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
 {
   // ACE_TRACE ("ACE_OS::thread_mutex_trylock");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
   return ACE_OS::mutex_trylock (m);
 # elif defined (ACE_HAS_WTHREADS)
 #   if defined (ACE_HAS_WIN32_TRYLOCK)
@@ -2078,7 +2083,7 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 {
   // ACE_TRACE ("ACE_OS::thread_mutex_unlock");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
   return ACE_OS::mutex_unlock (m);
 # elif defined (ACE_HAS_WTHREADS)
   ::LeaveCriticalSection (m);
@@ -2103,12 +2108,12 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 {
   // ACE_TRACE ("ACE_OS::cond_destroy");
 # if defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#     if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#   if defined (ACE_HAS_PTHREADS)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
   ACE_OSCALL_RETURN (::pthread_cond_destroy (cv), int, -1);
 #     else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_destroy (cv), ace_result_), int, -1);
-#     endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
 #   elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_destroy (cv), ace_result_), int, -1);
 #   endif /* ACE_HAS_STHREADS */
@@ -2126,17 +2131,21 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
 # if defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS)
   pthread_condattr_t attributes;
   int result = -1;
 
-#     if defined  (ACE_HAS_DCETHREADS)
+#     if defined  (ACE_HAS_PTHREADS_DRAFT4)
   if (::pthread_condattr_create (&attributes) == 0
       && ::pthread_cond_init (cv, attributes) == 0
-#     elif defined (ACE_HAS_PTHREADS_1003_DOT_1C) || defined (AIX)
+#     elif defined (ACE_HAS_PTHREADS_STD) || defined (ACE_HAS_PTHREADS_DRAFT7)
   if (ACE_ADAPT_RETVAL(::pthread_condattr_init (&attributes), result) == 0
+#       if defined (_POSIX_THREAD_PROCESS_SHARED)
+      && ACE_ADAPT_RETVAL(::pthread_condattr_setpshared(&attributes, type),
+			  result) == 0
+#       endif /* _POSIX_THREAD_PROCESS_SHARED */
       && ACE_ADAPT_RETVAL(::pthread_cond_init (cv, &attributes), result) == 0
-#     else
+#     else  /* this is draft 6 */
   if (::pthread_condattr_init (&attributes) == 0
 #       if !defined (ACE_LACKS_CONDATTR_PSHARED)
       && ::pthread_condattr_setpshared (&attributes, type) == 0
@@ -2150,18 +2159,18 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
      result = 0;
   else
      result = -1;       // ACE_ADAPT_RETVAL used it for intermediate status
-#     if defined (ACE_HAS_DCETHREADS)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
   ::pthread_condattr_delete (&attributes);
 #     else
   ::pthread_condattr_destroy (&attributes);
-#     endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
 
   return result;
 #   elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_init (cv, type, arg),
                                        ace_result_),
                      int, -1);
-#   endif /* ACE_HAS_DCETHREADS && ACE_HAS_STHREADS */
+#   endif /* ACE_HAS_PTHREADS && ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (cv);
   ACE_UNUSED_ARG (type);
@@ -2176,13 +2185,13 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
 {
 // ACE_TRACE ("ACE_OS::cond_signal");
 # if defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#     if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#   if defined (ACE_HAS_PTHREADS)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
   ACE_OSCALL_RETURN (::pthread_cond_signal (cv), int, -1);
 #     else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_signal (cv),ace_result_),
                      int, -1);
-#     endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
 #   elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_signal (cv), ace_result_), int, -1);
 #   endif /* ACE_HAS_STHREADS */
@@ -2197,14 +2206,14 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
 {
 // ACE_TRACE ("ACE_OS::cond_broadcast");
 # if defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#     if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#   if defined (ACE_HAS_PTHREADS)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
   ACE_OSCALL_RETURN (::pthread_cond_broadcast (cv), int, -1);
 #     else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_broadcast (cv),
                                        ace_result_),
                      int, -1);
-#     endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
 #   elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_broadcast (cv),
                                        ace_result_),
@@ -2222,17 +2231,17 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 {
   // ACE_TRACE ("ACE_OS::cond_wait");
 # if defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#     if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#   if defined (ACE_HAS_PTHREADS)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
   ACE_OSCALL_RETURN (::pthread_cond_wait (cv, external_mutex), int, -1);
 #     else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_wait (cv, external_mutex), ace_result_),
                      int, -1);
-#     endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
 #   elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_wait (cv, external_mutex), ace_result_),
                      int, -1);
-#   endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+#   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (cv);
   ACE_UNUSED_ARG (external_mutex);
@@ -2253,29 +2262,33 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   if (timeout != 0)
     ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
 
-#   if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#     if defined (__Lynx__)
+#   if defined (ACE_HAS_PTHREADS)
+
+#     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
   if (timeout == 0)
     ACE_OSCALL (::pthread_cond_wait (cv, external_mutex),
                 int, -1, result);
   else
     {
+
+#     if defined (__Lynx__)
       // Note that we must convert between absolute time (which is
       // passed as a parameter) and relative time (which is what the
-      // LynxOS Draft 4 POSIX 1003.4a pthread_cond_timedwait expects).
+      // LynxOS pthread_cond_timedwait expects).  This differs from 1003.4a
+      // draft 4.
 
       timespec_t relative_time = *timeout - ACE_OS::gettimeofday ();
 
       ACE_OSCALL (::pthread_cond_timedwait (cv, external_mutex,
                                             &relative_time),
                   int, -1, result);
+#     else
+      ACE_OSCALL (::pthread_cond_timedwait (cv, external_mutex,
+					    (ACE_TIMESPEC_PTR) &ts),
+	          int, -1, result);
+#     endif /* __Lynx__ */
     }
-#     elif defined (ACE_HAS_DCE_DRAFT4_THREADS)
-  ACE_OSCALL ((timeout == 0
-               ? ::pthread_cond_wait (cv, external_mutex)
-               : ::pthread_cond_timedwait (cv, external_mutex,
-                                           (ACE_TIMESPEC_PTR) &ts)),
-              int, -1, result);
+
 #     else
   ACE_OSCALL (ACE_ADAPT_RETVAL (timeout == 0
                                 ? ::pthread_cond_wait (cv, external_mutex)
@@ -2283,7 +2296,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                                                             (ACE_TIMESPEC_PTR) &ts),
                                 result),
               int, -1, result);
-#     endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6*/
   // We need to adjust this to make the POSIX and Solaris return
   // values consistent.  EAGAIN is from DCE DRAFT4 (HP-UX 10.20 and
   // down).
@@ -2336,7 +2349,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_destroy (s), ace_result_), int, -1);
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
   int r1 = ACE_OS::mutex_destroy (&s->lock_);
   int r2 = ACE_OS::cond_destroy (&s->count_nonzero_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
@@ -2407,7 +2420,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_init (s, count, type, arg), ace_result_),
                      int, -1);
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (max);
   ACE_UNUSED_ARG (sa);
   int result = -1;
@@ -2518,7 +2531,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_post (s), ace_result_), int, -1);
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
   int result = -1;
 
   if (ACE_OS::mutex_lock (&s->lock_) == 0)
@@ -2608,7 +2621,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_trywait (s),
                                        ace_result_),
                      int, -1);
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
 
   int result = -1;
 
@@ -2705,7 +2718,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 #elif defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_wait (s), ace_result_), int, -1);
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
   int result = 0;
 
   ACE_PTHREAD_CLEANUP_PUSH (&s->lock_);
@@ -2818,7 +2831,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (tv);
   ACE_NOTSUP_RETURN (-1);
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
   int result = 0;
   int error = 0;
 
@@ -3607,9 +3620,9 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
 # if !defined (ACE_LACKS_RWLOCK_T)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_rdlock (rw), ace_result_), int, -1);
 # else /* NT, POSIX, and VxWorks don't support this natively. */
-#   if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
-#   endif /* ACE_HAS_DCETHREADS */
+#   endif /* ACE_HAS_PTHREADS */
   int result = 0;
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
     result = -1; // -1 means didn't get the mutex.
@@ -3631,7 +3644,7 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
     rw->ref_count_++;
   if (result != -1)
     ACE_OS::mutex_unlock (&rw->lock_);
-#   if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
 #   endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
   return 0;
@@ -3650,9 +3663,9 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
 # if !defined (ACE_LACKS_RWLOCK_T)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_wrlock (rw), ace_result_), int, -1);
 # else /* NT, POSIX, and VxWorks don't support this natively. */
-#   if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
-#   endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
+#   endif /* defined (ACE_HAS_PTHREADS) */
   int result = 0;
 
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
@@ -3676,9 +3689,9 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
     rw->ref_count_ = -1;
   if (result != -1)
     ACE_OS::mutex_unlock (&rw->lock_);
-#   if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
-#   endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
+#   endif /* defined (ACE_HAS_PTHREADS) */
   return 0;
 # endif /* ACE_HAS_STHREADS */
 #else
@@ -3758,9 +3771,9 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
 
   int result = 0;
 
-#   if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
-#   endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
+#   endif /* defined (ACE_HAS_PTHREADS) */
 
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
     return -1;
@@ -3798,9 +3811,9 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
 
   ACE_OS::mutex_unlock (&rw->lock_);
 
-#   if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
-#   endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
+#   endif /* defined (ACE_HAS_PTHREADS) */
 
   return result;
 
@@ -4717,12 +4730,18 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
 # if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #   if !defined (ACE_LACKS_PWD_REENTRANT_FUNCTIONS)
-#     if defined (ACE_HAS_PTHREADS_1003_DOT_1C)
+#     if defined (ACE_HAS_PTHREADS_STD) && !defined (ACE_HAS_STHREADS)
   struct passwd *result;
+  int status;
 #       if defined (DIGITAL_UNIX)
   ::_Pgetpwnam_r (name, pwent, buffer, buflen, &result);
 #       else
-  ::getpwnam_r (name, pwent, buffer, buflen, &result);
+  status = ::getpwnam_r (name, pwent, buffer, buflen, &result);
+  if (status != 0)
+    {
+      errno = status;
+      result = 0;
+    }
 #       endif /* (DIGITAL_UNIX) */
   return result;
 #     elif defined (AIX) || defined (HPUX_10)
@@ -4732,7 +4751,7 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
     return pwent;
 #     else
   return ::getpwnam_r (name, pwent, buffer, buflen);
-#     endif /* ACE_HAS_PTHREADS_1003_DOT_1C */
+#     endif /* ACE_HAS_PTHREADS_STD */
 #   else
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (pwent);
@@ -5046,7 +5065,7 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_continue (target_thread), ace_result_), int, -1);
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_WTHREADS)
@@ -5067,7 +5086,7 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
 ACE_INLINE int
 ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
 {
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_PTHREADS)
 # if defined (pthread_equal)
   // If it's a macro we can't say "::pthread_equal"...
   return pthread_equal (t1, t2);
@@ -5085,7 +5104,7 @@ ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
 ACE_INLINE int
 ACE_OS::thr_cmp (ACE_hthread_t t1, ACE_hthread_t t2)
 {
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_PTHREADS)
 # if defined (ACE_HAS_TID_T) && !defined (ACE_HAS_PTHREAD_EQUAL)
   return t1 == t2; // I hope these aren't structs!
 # elif defined (pthread_equal)
@@ -5107,7 +5126,7 @@ ACE_OS::thr_getconcurrency (void)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
   return ::thr_getconcurrency ();
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
+# elif defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_WTHREADS)
   ACE_NOTSUP_RETURN (-1);
@@ -5124,9 +5143,9 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (thr_id, &prio), ace_result_), int, -1);
-# elif defined (ACE_HAS_DCETHREADS) || (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
+# elif (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
 
-#   if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4)
   int result;
   result = ::pthread_getprio (thr_id);
   if (result != -1)
@@ -5136,6 +5155,15 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
     }
   else
     return -1;
+#   elif defined (ACE_HAS_PTHREADS_DRAFT6)
+
+  pthread_attr_t  attr;
+  if (pthread_getschedattr (thr_id, &attr) == 0)
+    {
+      prio = pthread_attr_getprio(&attr);
+      return 0;
+    }
+  return -1;
 #   else
 
   struct sched_param param;
@@ -5147,7 +5175,7 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
               -1, result);
   prio = param.sched_priority;
   return result;
-#   endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
 # elif defined (ACE_HAS_WTHREADS)
   prio = ::GetThreadPriority (thr_id);
   if (prio == THREAD_PRIORITY_ERROR_RETURN)
@@ -5174,14 +5202,11 @@ ACE_OS::thr_self (ACE_hthread_t &self)
 {
   // ACE_TRACE ("ACE_OS::thr_self");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS)
+# if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
   self = pthread_self ();
 # elif defined (ACE_HAS_THREAD_SELF)
   self = ::thread_self ();
-# elif defined (ACE_HAS_PTHREADS)
-  // Note, don't use "::" here since the following call is often a macro.
-  self = pthread_self ();
 # elif defined (ACE_HAS_STHREADS)
   self = ::thr_self ();
 # elif defined (ACE_HAS_WTHREADS)
@@ -5199,7 +5224,7 @@ ACE_OS::thr_self (void)
 {
   // ACE_TRACE ("ACE_OS::thr_self");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
   ACE_OSCALL_RETURN (pthread_self (), int, -1);
 # elif defined (ACE_HAS_STHREADS)
@@ -5225,16 +5250,13 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#   if !defined (ACE_HAS_FSU_PTHREADS) && !defined (ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR)
-      // Note, don't use "::" here since the following call is often a macro.
-      *data = pthread_getspecific (key);
-#   elif !defined (ACE_HAS_FSU_PTHREADS) && defined (ACE_HAS_SETKIND_NP) || defined (ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR)
-      ::pthread_getspecific (key, data);
-#   else /* ACE_HAS_FSU_PTHREADS */
-      ::pthread_getspecific (key, data);
-#   endif       /*  ACE_HAS_FSU_PTHREADS */
-      return 0;
+# elif defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+    return pthread_getspecific(key, data);
+#   else /* this is ACE_HAS_PTHREADS_DRAFT7 or STD */
+    *data = ::pthread_getspecific (key);
+#   endif       /*  ACE_HAS_PTHREADS_DRAFT4, 6 */
+    return 0;
 # elif defined (ACE_HAS_WTHREADS)
 
   // The following handling of errno is designed like this due to
@@ -5363,15 +5385,12 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
       }
 # elif defined (ACE_HAS_STHREADS)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#   if !defined (ACE_HAS_FSU_PTHREADS) && !defined (ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR)
-      // Note, don't use "::" here since the following call is often a macro.
-      *data = pthread_getspecific (key);
-#   elif !defined (ACE_HAS_FSU_PTHREADS) && defined (ACE_HAS_SETKIND_NP) || defined (ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR)
-      ::pthread_getspecific (key, data);
-#   else /* ACE_HAS_FSU_PTHREADS */
-      ::pthread_getspecific (key, data);
-#   endif       /*  ACE_HAS_FSU_PTHREADS */
+# elif defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+      return ::pthread_getspecific (key, data);
+#   else /* this is Draft 7 or STD */
+      *data = ::pthread_getspecific (key);
+#   endif       /*  ACE_HAS_PTHREADS_DRAFT4, 6 */
       return 0;
 # elif defined (ACE_HAS_WTHREADS)
 
@@ -5410,6 +5429,7 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 #endif /* ACE_HAS_THREADS */
 }
 
+
 ACE_INLINE int
 ACE_OS::thr_join (ACE_thread_t waiter_id,
                   ACE_thread_t *thr_id,
@@ -5420,14 +5440,14 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
 # if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_join (waiter_id, thr_id, status), ace_result_),
                      int, -1);
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (thr_id);
-#   if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
   ACE_OSCALL_RETURN (::pthread_join (waiter_id, status), int, -1);
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_join (waiter_id, status), ace_result_),
                      int, -1);
-#   endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#   endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
 # elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (waiter_id);
   ACE_UNUSED_ARG (thr_id);
@@ -5461,13 +5481,13 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
 # if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_join (thr_handle, 0, status), ace_result_),
                      int, -1);
-# elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_HAS_THREAD_SELF)
-#   if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+# elif defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
   ACE_OSCALL_RETURN (::pthread_join (thr_handle, status), int, -1);
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_join (thr_handle, status), ace_result_),
                      int, -1);
-#   endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#   endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
 # elif defined (ACE_HAS_WTHREADS)
   void *local_status = 0;
 
@@ -5507,22 +5527,23 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
 {
   // ACE_TRACE ("ACE_OS::thr_setcancelstate");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS) || (defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_STHREADS))
-#   if defined (ACE_HAS_DCETHREADS)
-  ACE_UNUSED_ARG (old_state);
-  ACE_OSCALL_RETURN (::pthread_setcancel (new_state), int, -1);
-#   else /* ACE_HAS_DCETHREADS */
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setcancelstate (new_state, old_state),
+# if defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4)
+  int old;
+  old = pthread_setcancel (new_state);
+  if (old == -1)
+    return -1;
+  *old_state = old;
+  return 0;
+#   elif defined (ACE_HAS_PTHREADS_DRAFT6)
+  ACE_UNUSED_ARG(old_state);
+  ACE_OSCALL_RETURN (pthread_setintr (new_state), int, -1);
+#   else /* this is draft 7 or std */
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setcancelstate (new_state,
+								 old_state),
                                        ace_result_),
                      int, -1);
-#   endif /* ACE_HAS_DCETHREADS */
-# elif defined (ACE_HAS_PTHREADS)
-  // I didn't manage to find pthread_cancel anywhere in the MIT pthread
-  // implementation. So I'll just leave this instead, and see what
-  // breaks. -- jwr
-  ACE_UNUSED_ARG (new_state);
-  ACE_UNUSED_ARG (old_state);
-  ACE_NOTSUP_RETURN (-1);
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
 # elif defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (new_state);
   ACE_UNUSED_ARG (old_state);
@@ -5548,22 +5569,23 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
 {
   // ACE_TRACE ("ACE_OS::thr_setcanceltype");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS) || (defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_STHREADS))
-#   if defined (ACE_HAS_DCETHREADS)
-  ACE_UNUSED_ARG (old_type);
-  ACE_OSCALL_RETURN (::pthread_setcancel (new_type), int, -1);
-#   else /* ACE_HAS_DCETHREADS */
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setcanceltype (new_type, old_type),
+# if defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4)
+  int old;
+  old = pthread_setasynccancel(new_type);
+  if (old == -1)
+    return -1;
+  *old_type = old;
+  return 0;
+#   elif defined (ACE_HAS_PTHREADS_DRAFT6)
+  ACE_UNUSED_ARG(old_type);
+  ACE_OSCALL_RETURN (pthread_setintrtype (new_type), int, -1);
+#   else /* this is draft 7 or std */
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setcanceltype (new_type,
+								old_type),
                                        ace_result_),
                      int, -1);
-#   endif /* ACE_HAS_DCETHREADS */
-# elif defined (ACE_HAS_PTHREADS)
-  // I didn't manage to find pthread_cancel anywhere int the MIT pthread
-  // implementation. So I'll just leave this instead, and see what
-  // breaks. -- jwr
-  ACE_UNUSED_ARG (new_type);
-  ACE_UNUSED_ARG (old_type);
-  ACE_NOTSUP_RETURN (-1);
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
 # elif defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (new_type);
   ACE_UNUSED_ARG (old_type);
@@ -5589,20 +5611,14 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
 {
   // ACE_TRACE ("ACE_OS::thr_cancel");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
-#   if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+# if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
   ACE_OSCALL_RETURN (::pthread_cancel (thr_id), int, -1);
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cancel (thr_id),
                                        ace_result_),
                      int, -1);
 #   endif /* ACE_HAS_DCE_DRAFT4_THREADS */
-# elif defined (ACE_HAS_PTHREADS)
-  // I didn't manage to find pthread_cancel anywhere int the MIT
-  // pthread implementation. So I'll just leave this instead, and
-  // see what breaks. -- jwr
-  ACE_UNUSED_ARG (thr_id);
-  ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (thr_id);
   ACE_NOTSUP_RETURN (-1);
@@ -5630,31 +5646,33 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
 # if defined (__FreeBSD__) || defined (CHORUS)
   ACE_UNUSED_ARG (set);
   ACE_NOTSUP_RETURN (-1);
-# elif (defined (ACE_HAS_STHREADS) && (_POSIX_C_SOURCE - 0 < 199506L)) || defined (ACE_HAS_FSU_PTHREADS)
+# elif (defined (ACE_HAS_STHREADS) && !defined (_POSIX_PTHREAD_SEMANTICS))
   *sig = ::sigwait (set);
   return *sig;
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#   if defined (ACE_HAS_ONEARG_SIGWAIT)
-  *sig = sigwait (set);
-  return *sig;
-#   else /* ACE_HAS_ONEARG_SETWAIT */
-#     if defined (__Lynx__)
+# elif defined (ACE_HAS_PTHREADS)
+  // LynxOS and Digital UNIX have their own hoops to jump through.
+#   if defined (__Lynx__)
     // Second arg is a void **, which we don't need (the selected
     // signal number is returned).
     *sig = ::sigwait (set, 0);
     return *sig;
-#     elif defined (DIGITAL_UNIX) && defined (__DECCXX_VER)
+#   elif defined (DIGITAL_UNIX) && defined (__DECCXX_VER)
     // DEC cxx (but not g++) needs this direct call to its internal
     // sigwait ().  This allows us to #undef sigwait, so that we can
     // have ACE_OS::sigwait.  cxx gets confused by ACE_OS::sigwait if
     // sigwait is _not_ #undef'ed.
     errno = ::_Psigwait (set, sig);
     return errno == 0  ?  *sig  :  -1;
-#     else /* ! __Lynx __ && ! (DIGITAL_UNIX && __DECCXX_VER) */
-    errno = ::sigwait (set, sig);
-    return errno == 0  ?  *sig  :  -1;
-#     endif /* ! __Lynx__ */
-#   endif /* ACE_HAS_ONEARG_SIGWAIT */
+#   else /* ! __Lynx __ && ! (DIGITAL_UNIX && __DECCXX_VER) */
+
+#     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+      *sig = ::sigwait (set);
+      return *sig;
+#     else   /* this is draft 7 or std */
+      errno = ::sigwait (set, sig);
+      return errno == 0  ?  *sig  :  -1;
+#     endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
+#   endif /* ! __Lynx__ && ! (DIGITAL_UNIX && __DECCXX_VER) */
 # elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (set);
   ACE_NOTSUP_RETURN (-1);
@@ -5677,12 +5695,8 @@ ACE_OS::thr_testcancel (void)
 {
   // ACE_TRACE ("ACE_OS::thr_testcancel");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS) || (defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_STHREADS))
+# if defined (ACE_HAS_PTHREADS)
   ::pthread_testcancel ();
-# elif defined (ACE_HAS_PTHREADS)
-  // I didn't manage to find pthread_cancel anywhere int the MIT
-  // pthread implementation. So I'll just leave this instead, and
-  // see what breaks. -- jwr
 # elif defined (ACE_HAS_STHREADS)
 # elif defined (ACE_HAS_WTHREADS)
 # elif defined (VXWORKS)
@@ -5713,13 +5727,26 @@ ACE_OS::thr_sigsetmask (int how,
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_sigsetmask (how, nsm, osm),
                                        ace_result_),
                      int, -1);
-# elif defined (ACE_HAS_PTHREAD_SIGMASK)
+# elif defined (ACE_HAS_PTHREADS)
+#   if defined (AIX)
+  ACE_OSCALL_RETURN (sigthreadmask (how, nsm, osm), int, -1);
+  // Draft 4 and 6 implementations will sometimes have a sigprocmask() that
+  // modifies the calling thread's mask only.  If this is not so for your
+  // platform, define ACE_LACKS_PTHREAD_THR_SIGSETMASK.
+#   elif defined(ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+  ACE_OSCALL_RETURN (sigprocmask (how, nsm, osm), int, -1);
+#   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm),
                                        ace_result_), int, -1);
-# elif defined (ACE_HAS_PTHREADS) && !defined (ACE_HAS_FSU_PTHREADS)
+#   endif /* AIX */
+
+#if 0
+  /* Don't know if anyt platform actually needs this... */
   // as far as I can tell, this is now pthread_sigaction() -- jwr
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigaction (how, nsm, osm),
                                        ace_result_), int, -1);
+#endif /* 0 */
+
 # elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (osm);
   ACE_UNUSED_ARG (nsm);
@@ -5766,13 +5793,16 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
 {
   // ACE_TRACE ("ACE_OS::thr_kill");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_DCETHREADS)
+# if defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4)
   ACE_UNUSED_ARG (signum);
-  ACE_OSCALL_RETURN (pthread_cancel (thr_id), int, -1);
-# elif defined (ACE_HAS_PTHREADS)
+  ACE_UNUSED_ARG (thr_id);
+  ACE_NOTSUP_RETURN (-1);
+#   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_kill (thr_id, signum),
                                        ace_result_),
                      int, -1);
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
 # elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_kill (thr_id, signum),
                                        ace_result_),
@@ -5821,15 +5851,13 @@ ACE_OS::thr_min_stack (void)
                      int, -1);
 #   endif /* !ACE_HAS_THR_MINSTACK */
 # elif defined (ACE_HAS_PTHREADS)
-#   if defined (ACE_HAS_IRIX62_THREADS)
+#   if defined (_SC_THREAD_STACK_MIN)
   return (size_t) ACE_OS::sysconf (_SC_THREAD_STACK_MIN);
 #   elif defined (PTHREAD_STACK_MIN)
   return PTHREAD_STACK_MIN;
 #   else
   ACE_NOTSUP_RETURN (0);
-#   endif /* ACE_HAS_IRIX62_THREADS */
-# elif defined (ACE_HAS_DCETHREADS)
-  ACE_NOTSUP_RETURN (0);
+#   endif /* _SC_THREAD_STACK_MIN */
 # elif defined (ACE_HAS_WTHREADS)
   ACE_NOTSUP_RETURN (0);
 # elif defined (VXWORKS)
@@ -5860,7 +5888,7 @@ ACE_OS::thr_setconcurrency (int hint)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setconcurrency (hint),
                                        ace_result_),
                      int, -1);
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (hint);
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_WTHREADS)
@@ -5886,12 +5914,19 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setprio (thr_id, prio),
                                        ace_result_),
                      int, -1);
-# elif defined (ACE_HAS_DCETHREADS) || (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
+# elif (defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED))
 
-#   if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4)
   int result;
   result = ::pthread_setprio(thr_id, prio);
   return (result == -1 ? -1 : 0);
+#   elif defined (ACE_HAS_PTHREADS_DRAFT6)
+  pthread_attr_t  attr;
+  if (pthread_getschedattr(thr_id, &attr) == -1)
+    return -1;
+  if (pthread_attr_setprio (attr, prio) == -1)
+    return -1;
+  return pthread_setschedattr(thr_id, attr);
 #   else
   struct sched_param param;
   int policy = 0;
@@ -5935,7 +5970,7 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_suspend (target_thread), ace_result_), int, -1);
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_WTHREADS)
@@ -5960,15 +5995,13 @@ ACE_OS::thr_yield (void)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
   ::thr_yield ();
-# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#   if defined (ACE_HAS_IRIX62_THREADS) || defined (ACE_HAS_PTHREADS_1003_DOT_1C)
-  // Note - this is a POSIX.4 function - not a POSIX.1C function...
+# elif defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS_STD)
+  // Note - this is a POSIX.4 function - not a POSIX.1c function...
   ::sched_yield ();
-#   elif defined (ACE_HAS_FSU_PTHREADS) || defined (ACE_HAS_YIELD_VOID_PTR)
+#   elif defined (ACE_HAS_PTHREADS_DRAFT6)
   ::pthread_yield (NULL);
-#   elif defined (ACE_LACKS_PTHREAD_YIELD) || defined (ACE_HAS_THR_YIELD)
-  ::thr_yield ();
-#   else
+#   else    /* Draft 4 and 7 */
   ::pthread_yield ();
 #   endif  /*  ACE_HAS_IRIX62_THREADS */
 # elif defined (ACE_HAS_WTHREADS)
@@ -8702,6 +8735,16 @@ ACE_OS::sleep (u_int seconds)
 #if defined (ACE_WIN32)
   ::Sleep (seconds * ACE_ONE_SECOND_IN_MSECS);
   return 0;
+#if 0
+#elif defined (HPUX_10) && defined (ACE_HAS_PTHREADS_DRAFT4)
+  // On HP-UX 10, _CMA_NOWRAPPERS_ disables the mapping from sleep to cma_sleep
+  // which makes sleep() put the whole process to sleep, and keeps it from
+  // noticing pending cancels.  So, in this case, use pthread_delay_np
+  struct timespec rqtp;
+  rqtp.tv_sec = seconds;
+  rqtp.tv_nsec = 0L;
+  return pthread_delay_np (&rqtp);
+#endif /* 0 */
 #elif defined (ACE_HAS_CLOCK_GETTIME)
   struct timespec rqtp;
   // Initializer doesn't work with Green Hills 1.8.7

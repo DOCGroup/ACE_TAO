@@ -657,7 +657,7 @@ ACE_Recursive_Thread_Mutex::dump (void) const
   this->lock_available_.dump ();
   this->nesting_mutex_.dump ();
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("nesting_level_ = %d"), this->nesting_level_));
-#if !defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_PTHREADS)
+#if !defined (ACE_HAS_PTHREADS)
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nowner_id_ = %u"), this->owner_id_));
 #else
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
