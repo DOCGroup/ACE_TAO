@@ -18,27 +18,7 @@ $nsior = PerlACE::LocalFile ("ns.ior");
 $outfile = PerlACE::LocalFile ("output");
 
 # generate test stream data
-$input = "test_input";
-while ( -e $input ) {
-    $input = $input."X";
-}
-open( INPUT, "> $input" ) || die( "can't create input file: $input" );
-for($i =0; $i < 1000 ; $i++ ) {
-    print INPUT <<EOFINPUT;
-0123456789
-0123456789
-0123456789
-0123456789
-0123456789
-0123456789
-0123456789
-0123456789
-0123456789
-0123456789
-EOFINPUT
-}
-close(INPUT);
-
+$input = PerlACE::generate_test_file("test_input", 102400);
 
 unlink $nsior;
 

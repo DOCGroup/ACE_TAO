@@ -1,4 +1,28 @@
->Mon Sep 13 15:56:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+Tue Sep 14 08:41:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Run_test.pm:
+
+          Added a new PerlACE::generate_test_file(<basename>, <size>) subroutine
+          to be used with tests needing (large) testdata as input (like AVStreams
+          tests).
+
+        * tao/orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Bidirectional_Flows/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Modify_QoS/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Multicast/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Multiple_Flows/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl:
+
+          Changed to use the new PerlACE::generate_test_file() subroutine.
+
+Mon Sep 13 15:56:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/tests/Trading/Trading.mpc:
 
