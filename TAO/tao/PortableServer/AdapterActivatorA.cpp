@@ -26,58 +26,39 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "AdapterActivatorC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
+#include "tao/String_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-static const CORBA::Long _oc_PortableServer_AdapterActivator[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  48,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f41), 
-  ACE_NTOHL (0x64617074), 
-  ACE_NTOHL (0x65724163), 
-  ACE_NTOHL (0x74697661), 
-  ACE_NTOHL (0x746f723a), 
-  ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/AdapterActivator:2.3
-    17,
-  ACE_NTOHL (0x41646170), 
-  ACE_NTOHL (0x74657241), 
-  ACE_NTOHL (0x63746976), 
-  ACE_NTOHL (0x61746f72), 
-  ACE_NTOHL (0x0),  // name = AdapterActivator
-  };
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/objref_typecode.cpp:73
 
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_AdapterActivator (
-    CORBA::tk_objref,
-    sizeof (_oc_PortableServer_AdapterActivator),
-    (char *) &_oc_PortableServer_AdapterActivator,
-    0,
-    0
-  );
+static TAO::TypeCode::Objref<char const *,
+                             CORBA::tk_local_interface,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_PortableServer_AdapterActivator (
+    "IDL:omg.org/PortableServer/AdapterActivator:2.3",
+    "AdapterActivator");
 
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_AdapterActivator =
-    &_tc_TAO_tc_PortableServer_AdapterActivator;
+    &_tao_tc_PortableServer_AdapterActivator;
 }
+
+
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::AdapterActivator>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -87,14 +68,14 @@ TAO::Any_Impl_T<PortableServer::AdapterActivator>::to_object (
   return 1;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::AdapterActivator>::marshal_value (TAO_OutputCDR &)
 {
   return false;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::AdapterActivator>::demarshal_value (TAO_InputCDR &)
 {
@@ -157,6 +138,6 @@ operator>>= (
         PortableServer::AdapterActivator \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
