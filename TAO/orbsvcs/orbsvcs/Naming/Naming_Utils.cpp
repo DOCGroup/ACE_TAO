@@ -78,9 +78,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
       ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY
         {
-          //
           // Try to find an existing Naming Service.
-          //
           CORBA::Object_var naming_obj =
             orb->resolve_initial_references ("NameService",
                                              timeout,

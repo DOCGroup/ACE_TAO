@@ -83,7 +83,13 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
 
       // Check whether this matches the appropriate platform-specific
       // suffix.
+#if defined (ACE_WIN32)
+      // Use <ACE_OS::strcasecmp> on any platform with
+      // case-insensitive filenames.
+      if (ACE_OS::strcasecmp (s, dll_suffix) != 0)
+#else
       if (ACE_OS::strcmp (s, dll_suffix) != 0)
+#endif /* ACE_WIN32 */
         {
           ACE_ERROR ((LM_WARNING,
                       ACE_LIB_TEXT ("Warning: improper suffix for a ")

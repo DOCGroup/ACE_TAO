@@ -790,7 +790,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
 #  endif /* ACE_HAS_PHARLAP */
 # endif /* Winsock 2 && MSVC 5 or later */
 
-#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX)
+#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX) || defined (__MACOSX__)
   // COMMON (SVR4 and BSD) UNIX CODE
 
   size_t num_ifs;
@@ -835,6 +835,8 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
 
 #if defined (AIX)
   int cmd = CSIOCGIFCONF;
+#elif defined (__MACOSX__)
+  int cmd = OSIOCGIFCONF;
 #else
   int cmd = SIOCGIFCONF;
 #endif /* AIX */
@@ -990,7 +992,7 @@ ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
                       -1);
   how_many = (size_t) tmp_how_many;
   return 0;
-#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX)
+#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX) || defined (__MACOSX__)
   // Note: DEC CXX doesn't define "unix".  BSD compatible OS: HP UX,
   // AIX, SunOS 4.x perform some ioctls to retrieve ifconf list of
   // ifreq structs no SIOCGIFNUM on SunOS 4.x, so use guess and scan
@@ -1081,7 +1083,7 @@ ACE_Sock_Connect::get_handle (void)
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 #if defined (sparc) && ! defined (CHORUS)
   handle = ACE_OS::open ("/dev/udp", O_RDONLY);
-#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX)
+#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX) || defined (__MACOSX__)
   // Note: DEC CXX doesn't define "unix" BSD compatible OS: HP UX,
   // AIX, SunOS 4.x
 
