@@ -10,7 +10,7 @@ LSRC = $(DUMP_SRCS)
 SCHEDULE_OBJS = $(SCHEDULE_SRCS:.cpp=.o)
 DUMP_OBJS = $(DUMP_SRCS:.cpp=.o)
 
-LDLIBS = -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable $(TAO_SRVR_LIBS)
 
 BIN2 = Sched_Conf
 

@@ -23,8 +23,7 @@ LDLIBS = \
   -lTAO_PortableGroup \
   -lTAO_CosNaming \
   -lTAO_Messaging \
-  -lTAO_PortableServer \
-  -lTAO
+  $(TAO_SRVR_LIBS)
 
 BIN = LoadMonitor
 
