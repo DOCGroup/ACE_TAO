@@ -216,20 +216,19 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           be_typedef *td = be_typedef::narrow_from_decl (bt);
           nt = td->base_node_type ();
         }
-
+    }
       
-      if (! bt->seen_in_sequence ())
+  if (! bt->seen_in_sequence ())
+    {
+      // basic IDL types are in TAO. Sequences of (w)strings in TAO are
+      // specializations and so are not template classes.
+      if (nt != AST_Decl::NT_pre_defined
+          && nt != AST_Decl::NT_string
+          && nt != AST_Decl::NT_wstring)
         {
-          // basic IDL types are in TAO. Sequences of (w)strings in TAO are
-          // specializations and so are not template classes.
-          if (nt != AST_Decl::NT_pre_defined
-              && nt != AST_Decl::NT_string
-              && nt != AST_Decl::NT_wstring)
+          if (this->gen_base_class_tmplinst (node, bt) == -1)
             {
-              if (this->gen_base_class_tmplinst (node, bt) == -1)
-                {
-                  return -1;
-                }
+              return -1;
             }
         }
     }
