@@ -1,3 +1,8 @@
+Sun Apr 25 09:52:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added TAO/tests/Collocation/run_test.pl
+
 Fri Apr 23 22:35:23 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Process_Manager.cpp (wait):
