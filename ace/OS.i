@@ -862,8 +862,14 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
     }
   return 0;
 # else
+  int retval = -1;
   int fd = ::_open_osfhandle ((long) handle, 0);
-  ACE_OSCALL_RETURN (::_fstat (fd, (struct _stat *) stp), int, -1);
+  if (fd != -1)
+      retval = ::_fstat (fd, (struct _stat *) stp);
+
+  ::_close (fd);
+  // Remember to close the file handle.
+  return retval;
 # endif /* ACE_HAS_WINCE */
 }
 
