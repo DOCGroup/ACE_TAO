@@ -1486,7 +1486,7 @@ TAO_TypeCodeFactory_i::assemble_tc (TAO_OutputCDR &cdr,
                     CORBA::TypeCode (kind,
                                      consolidated_block.length (),
                                      consolidated_block.rd_ptr (),
-                                     0,
+                                     true,
                                      0),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());

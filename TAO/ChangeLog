@@ -1,3 +1,36 @@
+Wed Sep  8 21:36:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/Typecode.cpp:
+	* tao/Typecode.h:
+	* tao/Typecode.i:
+
+	  For long we got away with wrong typecode memory
+	  manipulation. The fundamental problem was that somewhere
+	  inbetween we started manipulating the lifetimes of stack based
+	  typecodes that are generated in the stub and skeleton code. This
+	  fix basically makes sure that we don't do that. The changes are
+	  as follows. 
+
+	  - Made _incr_ref () and _decr_ref () protected since
+	    clients should not be using this directly. 
+
+	  - The _duplicate () will check for stack based typecodes,
+            allocate a typecode off the heap. If the typecode is heap
+	    allocated we just increment the refcount. 
+
+	  - The _release () decrements the ref count if it is off the heap
+            and is no-op otherwise. 
+
+	  The Typecode had a boolean flag orb_owns_ which was supposed to
+	  be used for the above, but we never used it for some reason. 
+	
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+	  Set the orb_owns_ flag while creating a new typecode off the
+	  heap. 
+
+	  Thanks to JT Conklin for pointing out the problem.
+
 Wed Sep  8 12:51:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
@@ -217,7 +250,6 @@ Wed Sep  8 10:28:29 2004  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/orbsvcs/CosNotification.mpc:
           Add explicit Resource_Files sections to associate
           rc files with the correct project.
-
 
 Wed Sep  8 10:22:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
