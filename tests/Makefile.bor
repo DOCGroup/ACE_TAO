@@ -102,6 +102,8 @@ NAMES = \
 
 DIRS = RMCast
 
+MAKEFILES = DLL_Test.bor
+
 OBJFILES = $(OBJDIR)\$(NAME).obj
 
 CFLAGS = $(ACE_CFLAGS)
