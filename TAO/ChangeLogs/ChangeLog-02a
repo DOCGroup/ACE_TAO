@@ -1,3 +1,9 @@
+Thu May 02 00:23:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp: Removed reserved_ports.h and added
+	  default_ports.h. 
+
 Wed May 01 22:54:13 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/PortableServer/Servant_Dispatcher:
