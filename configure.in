@@ -172,10 +172,6 @@ AC_CHECK_PROG(GPERF, gperf, gperf) dnl
 dnl Check for profiling progam
 AC_CHECK_PROGS(PROF, gprof prof,) dnl
 
-dnl Call ACE_SET_COMPILER_FLAGS before AC_PROG_LIBTOOL
-ACE_SET_COMPILER_FLAGS
-
-
 dnl
 dnl SECTION 2: Configure script command line options
 dnl
@@ -512,7 +508,7 @@ AC_ARG_ENABLE(rtti,
                   if test -z "$GXX"; then
                     case "$target" in
                       *solaris*)
-                           ACE_CXXFLAGS="$ACE_CXXFLAGS -features=rtti"
+                           ace_user_enable_rtti=yes
                            ;;
                       *)
                            ;;
@@ -691,6 +687,10 @@ AC_ARG_WITH(tli-device,
                   ;;
                esac
               ],)
+
+dnl Call ACE_SET_COMPILER_FLAGS before AC_PROG_LIBTOOL and after the 
+dnl AC_ARG_ENABLE and AC_ARG_WITH calls.
+ACE_SET_COMPILER_FLAGS
 
 dnl
 dnl SECTION 3: check for programs <--- moved before section 2 (Ossama)
@@ -2450,6 +2450,7 @@ fi
 dnl Check for ANSI C++ cast support
 ACE_CACHE_CHECK(for ANSI C++ cast support,
   ace_cv_lib_posix_standard_casts,[
+   ACE_CONVERT_WARNINGS_TO_ERRORS([
     AC_TRY_COMPILE(
       [/* No headers */],
       [
@@ -2501,10 +2502,11 @@ ACE_CACHE_CHECK(for ANSI C++ cast support,
           ace_cv_lib_posix_standard_casts=no
          ])
       ])
+   ])
   ],
   [
    AC_DEFINE(ACE_HAS_ANSI_CASTS)
-   if test "$ace_cv_lib_rtti" = no; then
+   if test "$ace_cv_lib_rtti" != yes; then
      AC_DEFINE(ACE_LACKS_RTTI)
    fi
   ],)
@@ -2531,26 +2533,27 @@ ACE_CACHE_CHECK(if const char * can be rvalue in conditional operator,
 dnl Check if platform supports explicit template instantiation
 ACE_CACHE_CHECK(for explicit template instantiation,
   ace_cv_feature_explicit_template_instantiation,[
-    AC_TRY_COMPILE([
-                    template <class T>
-                    class Foo
-                    {
-                    public:
-                      Foo(T bar) : bar_(bar) {};
-                    private:
-                      T bar_;
-                    };
-                    template class Foo<int>;
-                   ],
-                   [
-                    Foo<int> foo(11);
-                   ],
-                   [
-                    ace_cv_feature_explicit_template_instantiation=yes
-                   ],
-                   [
-                    ace_cv_feature_explicit_template_instantiation=no
-                   ])
+    AC_TRY_LINK([
+                 template <class T>
+                 class Foo
+                 {
+                 public:
+                   Foo(T bar) : bar_(bar) {};
+                 private:
+                   T bar_;
+                 };
+
+                 template class Foo<int>;
+                ],
+                [
+                 Foo<int> foo(11);
+                ],
+                [
+                 ace_cv_feature_explicit_template_instantiation=yes
+                ],
+                [
+                 ace_cv_feature_explicit_template_instantiation=no
+                ])
   ],
   [
    AC_DEFINE(ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -2619,7 +2622,7 @@ EOF
 #include "conftest.h"
 int main ()
 {
- Foo<int> foo(15);
+ Foo<int> foo (15);
 
  return 0;
 }
@@ -2628,7 +2631,7 @@ EOF
    ace_save_ac_link="$ac_link"
 
    dnl Command to link two C++ files
-   ac_link='${CXX-g++} -o conftest${ac_exeext} $CXXFLAGS $CPPFLAGS $LDFLAGS conftestMain.$ac_ext $LIBS 1>&AC_FD_CC'
+   ac_link='${CXX-g++} -o conftest${ac_exeext} conftestMain.$ac_ext 1>&AC_FD_CC'
 
    dnl Now try to link them
    if AC_TRY_EVAL(ac_link) && test -s conftest${ac_exeext}; then
@@ -2641,14 +2644,8 @@ EOF
    else
      dnl Now try including the template source
      rm conftestMain.$ac_ext 
-     cat > conftestMain.$ac_ext <<EOF
-#include "conftest.h"
-int main ()
-{
- Foo<int> foo(15);
+     cat >> conftestMain.$ac_ext <<EOF
 
- return 0;
-}
 #include "conftest.$ac_ext"
 EOF
 
@@ -2685,9 +2682,8 @@ dnl Check if platform supports template specialization
 ACE_CACHE_CHECK(for template specialization,
   ace_cv_feature_cxx_template_specialization,[
     AC_TRY_COMPILE([
-
-dnl Some compilers have a hard time with this test since the syntax is
-dnl too "new" for them.
+// Some compilers have a hard time with this test since the syntax is
+// too "new" for them.
 
 // general vector type
 template<class T>
@@ -2701,7 +2697,7 @@ public:
   T& operator[] (int i);
 private:
   T* v;
-  int sz;;
+  int sz;
 };
 
 // void * specialization
@@ -2716,7 +2712,7 @@ public:
   void*& operator[] (int i);
 private:
   void** p;
-  int sz;;
+  int sz;
 };
                    ],
                    [
