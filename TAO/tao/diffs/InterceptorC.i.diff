@@ -1,8 +1,0 @@
-@@ -23,7 +23,2 @@
--ACE_INLINE
--PortableInterceptor::Cookie_var::Cookie_var (Cookie_ptr p)
--  : ptr_ (p)
--{}
--
-ACE_INLINE ::PortableInterceptor::Cookie_ptr
-PortableInterceptor::Cookie_var::ptr (void) const
