@@ -1,3 +1,25 @@
+Thu Feb 06 09:48:43 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-sunos-sun*.h,README: added
+	  ACE_LACKS_LINEBUFFERED_STREAMBUF and ACE_LACKS_SIGNED_CHAR.
+
+	* ace/IOStream.{h,cpp}: support
+	  ACE_LACKS_LINEBUFFERED_STREAMBUF and ACE_LACKS_SIGNED_CHAR
+	  so that this builds with SunC++.
+
+	* examples/IOStream/client/iostream_client.cpp:
+	  reordered args and fixed argv indexes.
+
+	* examples/IOStream/server/iostream_server.cpp:
+	  use ACE_DEFAULT_SERVER_PORT for default port.
+
+	* tests/Naming_Test.cpp (randomize): changed type of "size" arg to
+	  size_t to avoid compiler warnings about signed/unsigned comparison.
+
+Thu Feb 06 09:40:47 1997  Chris Cleeland <cleeland@cs.wustl.edu>
+
+	* ace/config-linux*.h: added typedef of timespec_t.
+
 Wed Feb  5 01:45:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i: Changed the Win32 implementation of all methods that call
