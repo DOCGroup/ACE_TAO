@@ -1,3 +1,20 @@
+Fri Apr  9 16:23:47 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/README:
+	Added a short blurb about persistent Naming Service
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.cpp:
+	Removed the use of nested typedefs, as this was breaking old g++
+	compiler.  Surrounded Debug statements by <if>.  Added a return
+	statement to avoid warnings.
+
+	* orbsvcs/Naming_Service/README:
+	Added description of persistence command-line option.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}:
+	Changed the order of arguments in <init> method and constructor,
+	to avoid breaking old code with the addition of the new parameter.
+
 Fri Apr 09 16:19:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp (create_object_key and parse_key): We must include
