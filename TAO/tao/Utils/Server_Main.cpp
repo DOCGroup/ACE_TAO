@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Server_Main.cpp
@@ -10,7 +11,7 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
-//
+
 #ifndef TAO_UTILS_SERVER_MAIN_T_CPP
 #define TAO_UTILS_SERVER_MAIN_T_CPP
 
@@ -19,18 +20,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
 ACE_RCSID (Utils,
            Server_Main,
            "$Id$")
 
 
-#include "ace/Argv_Type_Converter.h"
-#include "ace/Log_Msg.h"
 #include "tao/ORB.h"
 
-#ifndef ACE_TIME_VALUE_H
-#  include "ace/Time_Value.h"  // Required for ACE_Time_Value
-#endif
+#include "ace/Argv_Type_Converter.h"
+#include "ace/Log_Msg.h"
+#include "ace/Time_Value.h"
+
 
 template <typename SERVANT>
 TAO::Utils::Server_Main<SERVANT>::Server_Main (const char * name)

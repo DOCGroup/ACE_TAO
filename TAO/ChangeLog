@@ -1,3 +1,10 @@
+Tue Sep  7 21:48:40 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Utils/Server_Main.cpp:
+
+	  Removed redundant include guards around ace/Time_Value.h include
+	  directive.
+
 Tue Sep  7 16:31:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/tests/Notify/lib/EventChannel_Command.h:
