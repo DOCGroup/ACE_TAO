@@ -659,9 +659,10 @@ Stop_Handler::handle_input (ACE_HANDLE handle)
 }
 
 int
-Stop_Handler::handle_close (ACE_HANDLE handle)
+Stop_Handler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask)
 {
   ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (close_mask);
 
   ACE_DEBUG ((LM_INFO, "(%P|%t) Stop_Handler::handle_close - "
               "entered.\n"));
@@ -800,9 +801,10 @@ Repeats_Handler::open (Echo_Handler * check_handler,
 }
 
 int
-Repeats_Handler::handle_close (ACE_HANDLE handle)
+Repeats_Handler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask)
 {
   ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (close_mask);
 
   ACE_DEBUG ((LM_INFO, "(%P|%t) Repeats_Handler::handle_close - entered.\n"));
 

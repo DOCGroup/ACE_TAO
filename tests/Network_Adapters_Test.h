@@ -183,7 +183,8 @@ public:
   virtual int open (void);
 
   // De-registers this from the reactor and stops reactors event_loop.
-  virtual int handle_close (ACE_HANDLE);
+    virtual int handle_close (ACE_HANDLE handle,
+                              ACE_Reactor_Mask close_mask);
 
   // Called by reactor from the notification queue.
   virtual int handle_input (ACE_HANDLE);
@@ -234,7 +235,8 @@ public:
                     ACE_Reactor * const reactor = ACE_Reactor::instance (),
                     unsigned int seconds_timer = 60);
 
-  virtual int handle_close (ACE_HANDLE);
+  virtual int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask);
 
   // dispatches a new echo-checks series
   virtual int handle_timeout (ACE_Time_Value const & current_time,
