@@ -1408,14 +1408,16 @@ be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
   else
     bt = node;
 
-
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
       *os << "TAO_Object_Manager<" << bt->name () << "> ";
       break;
     default:
-      *os << bt->name () << " &";
+      if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
+	*os << bt->nested_type_name (this->ctx_->scope ()) << " &";
+      else
+	*os << bt->name () << " &";
     }
   return 0;
 }
