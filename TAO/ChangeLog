@@ -1,3 +1,9 @@
+Mon May 17 12:46:26 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* orbsvcs/performance-tests/RTEvent/lib/Shutdown.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Shutdown.inl:
+	  Fixed more exception macros problems.
+
 Mon May 17 11:23:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.i:
