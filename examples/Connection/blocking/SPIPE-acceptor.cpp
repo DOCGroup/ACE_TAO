@@ -15,7 +15,6 @@ Svc_Handler::Svc_Handler (void)
   this->mb_.size (BUFSIZ);
 }
 
-
 Svc_Handler::~Svc_Handler (void)
 {
 }
@@ -36,6 +35,7 @@ Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
   if (result.success () && result.bytes_transferred () > 0)
     {
       result.message_block ().rd_ptr ()[result.message_block ().length ()] = '\0';
+
       // Print out the message received from the server.
       ACE_DEBUG ((LM_DEBUG, "(%t) message size %d.\n", result.message_block ().length ()));
       ACE_DEBUG ((LM_DEBUG, "%s", result.message_block ().rd_ptr ()));
@@ -104,7 +104,7 @@ IPC_Server::parse_args (int argc, char *argv[])
 	  ACE_DEBUG ((LM_DEBUG, "%s == %d.\n",
 		      get_opt.optarg,
 		      n_threads_));
-	  ACE_Proactor::instance(2*n_threads_);
+	  ACE_Proactor::instance (2 * n_threads_);
 	  // This is a lame way to tell the proactor how many threads
 	  // we'll be using.
 	  break;
@@ -142,6 +142,7 @@ IPC_Server::svc (void)
       // EINTR).
       if (this->accept (&sh, 0) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept"), 1);
+
       // SH's destructor closes the stream implicitly but the
       // listening endpoint stays open.
       else
@@ -150,9 +151,9 @@ IPC_Server::svc (void)
 	  if (n_threads_ <= 1)
 	    run_reactor_event_loop (0);
 	  else if (ACE_Thread_Manager::instance ()->spawn_n (n_threads_,
-							    run_reactor_event_loop,
-							    0, THR_NEW_LWP)
-		   == -1)
+							     run_reactor_event_loop,
+							     0,
+							     THR_NEW_LWP) == -1)
 	    {
 	      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 

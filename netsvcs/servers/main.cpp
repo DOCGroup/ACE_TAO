@@ -40,7 +40,6 @@ main (int argc, char *argv[])
 	{
 	  char *l_argv[3];
 
-#if 0
 	  l_argv[0] = "-p " ACE_DEFAULT_NAME_SERVER_PORT_STR;
 	  l_argv[1] = 0;
 	  ACE_Service_Object_Ptr sp_1 = ACE_SVC_INVOKE (ACE_Name_Acceptor);
@@ -79,17 +78,16 @@ main (int argc, char *argv[])
 
 	  l_argv[0] = "-p " ACE_DEFAULT_LOGGING_SERVER_PORT_STR;
 	  l_argv[1] = 0;
-	  ACE_Service_Object_Ptr sp_7 = ACE_SVC_INVOKE (ACE_Server_Logging_Acceptor);
+	  ACE_Service_Object_Ptr sp_6 = ACE_SVC_INVOKE (ACE_Server_Logging_Acceptor);
 
-	  if (sp_7->init (1, l_argv) == -1)
+	  if (sp_6->init (1, l_argv) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Logging Server", 1));
 
-#endif
 	  l_argv[0] = "-p " ACE_DEFAULT_LOGGING_SERVER_PORT_STR;
-	  l_argv[1] = "-hflamenco.cs.wustl.edu";
-	  ACE_Service_Object_Ptr sp_6 = ACE_SVC_INVOKE (ACE_Client_Logging_Acceptor);
+	  l_argv[1] = 0;
+	  ACE_Service_Object_Ptr sp_7 = ACE_SVC_INVOKE (ACE_Client_Logging_Acceptor);
 
-	  if (sp_6->init (2, l_argv) == -1)
+	  if (sp_7->init (1, l_argv) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Logging Client", 1));
 
 	  // Run forever, performing the configured services until we are shut
