@@ -35,7 +35,7 @@
 ACE_RCSID(tests, Enum_Interfaces_Test, "$Id$")
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Enum_Interfaces_Test"));
 

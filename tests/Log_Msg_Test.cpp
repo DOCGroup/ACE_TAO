@@ -524,7 +524,7 @@ test_format_specs (void)
 // Main function.
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Log_Msg_Test"));
 

@@ -98,7 +98,7 @@ run_test (u_long unload_mask = 0)
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT("Framework_Component_Test"));
 

@@ -12,7 +12,7 @@
 //      This is a simple test that illustrates the timer mechanism of
 //      the reactor.  Scheduling timers, resetting timer intervals,
 //      handling expired timers and cancelling scheduled timers are
-//      all exercised in this test. 
+//      all exercised in this test.
 //
 // = AUTHOR
 //    Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt
@@ -62,7 +62,7 @@ Time_Handler::Time_Handler ()
   // Nothing
 }
 
-int 
+int
 Time_Handler::handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask)
 {
@@ -75,7 +75,7 @@ Time_Handler::handle_close (ACE_HANDLE handle,
   return 0;
 }
 
-int 
+int
 Time_Handler::handle_timeout (const ACE_Time_Value &tv,
                               const void *arg)
 {
@@ -123,8 +123,8 @@ Time_Handler::timer_id (long t)
 static void
 test_registering_all_handlers (void)
 {
-  ACE_Trace t (ACE_TEXT ("test_registering_all_handler"), 
-               __LINE__, 
+  ACE_Trace t (ACE_TEXT ("test_registering_all_handler"),
+               __LINE__,
                ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   int t_id[ACE_MAX_TIMERS];
@@ -132,8 +132,8 @@ test_registering_all_handlers (void)
   for (u_long i = 0; i < ACE_MAX_TIMERS; i++)
     {
       t_id[i] =
-        ACE_Reactor::instance ()->schedule_timer (&rt[i], 
-                                                  (const void *) i, 
+        ACE_Reactor::instance ()->schedule_timer (&rt[i],
+                                                  (const void *) i,
                                                   ACE_Time_Value (2 * i + 1));
       ACE_ASSERT (t_id[i] != -1);
       rt[i].timer_id (t_id[i]);
@@ -146,8 +146,8 @@ test_registering_all_handlers (void)
 static void
 test_registering_one_handler (void)
 {
-  ACE_Trace t (ACE_TEXT ("test_registering_one_handler"), 
-               __LINE__, 
+  ACE_Trace t (ACE_TEXT ("test_registering_one_handler"),
+               __LINE__,
                ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   int t_id[ACE_MAX_TIMERS];
@@ -171,8 +171,8 @@ test_registering_one_handler (void)
 static void
 test_canceling_odd_timers (void)
 {
-  ACE_Trace t (ACE_TEXT ("test_canceling_odd_timers"), 
-               __LINE__, 
+  ACE_Trace t (ACE_TEXT ("test_canceling_odd_timers"),
+               __LINE__,
                ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   int t_id[ACE_MAX_TIMERS];
@@ -194,7 +194,7 @@ test_canceling_odd_timers (void)
     // Cancel handlers with odd numbered timer ids.
     if (ACE_ODD (rt[j].timer_id ()))
       {
-        int result = 
+        int result =
           ACE_Reactor::instance ()->cancel_timer (rt[j].timer_id ());
         ACE_ASSERT (result != -1);
       }
@@ -206,8 +206,8 @@ test_canceling_odd_timers (void)
 static void
 test_resetting_timer_intervals (void)
 {
-  ACE_Trace t (ACE_TEXT ("test_resetting_timer_intervals"), 
-               __LINE__, 
+  ACE_Trace t (ACE_TEXT ("test_resetting_timer_intervals"),
+               __LINE__,
                ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt;
   int t_id;
@@ -217,8 +217,8 @@ test_resetting_timer_intervals (void)
   odd = 0;
 
   t_id =
-    ACE_Reactor::instance ()->schedule_timer 
-    (&rt, 
+    ACE_Reactor::instance ()->schedule_timer
+    (&rt,
      (const void *) -1,
      ACE_Time_Value (1),
      // Start off by making this an interval timer.
@@ -234,7 +234,7 @@ test_resetting_timer_intervals (void)
 // If any command line arg is given, run the test with high res timer
 // queue. Else run it normally.
 int
-ACE_TMAIN (int argc, ACE_TCHAR *[])
+run_main (int argc, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Timer_Test"));
 

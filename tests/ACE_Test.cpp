@@ -14,8 +14,11 @@
 //
 // ============================================================================
 
-#include "ace/ACE.h"
 #include "test_config.h"
+
+#if defined (ACE_WIN32)
+#include "ace/ACE.h"
+#endif /* ACE_WIN32 */
 
 ACE_RCSID(tests, ACE_Test, "$Id$")
 
@@ -64,7 +67,7 @@ execname_test (void)
 
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("ACE_Test"));
 

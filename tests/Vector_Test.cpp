@@ -30,7 +30,7 @@ const size_t TOP = 100;
 const size_t LEFT = 10;
 const size_t RESIZE = 20;
 
-int ACE_TMAIN (int, ACE_TCHAR *[])
+int run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Vector_Test"));
 

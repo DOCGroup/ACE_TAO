@@ -68,7 +68,8 @@ void iterate_const(const UNBOUNDED_SET& set)
 
 int dummyfunc() { return 0; }
 
-int ACE_TMAIN (int, ACE_TCHAR *[])
+int
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Collection_Test"));
 
@@ -106,7 +107,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     iterate_const (unbounded_set);
 
     unbounded_set.reset ();
-    
+
     {
       DATA *data;
       UNBOUNDED_SET_ITERATOR i (unbounded_set);

@@ -24,7 +24,7 @@
 ACE_RCSID(tests, Obstack_Test, "$Id$")
 
 
-int ACE_TMAIN (int, ACE_TCHAR *[])
+int run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Obstack_Test"));
 
