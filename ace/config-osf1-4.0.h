@@ -48,6 +48,9 @@
     // DEC CXX 6.0 supports exceptions, etc., by default.  Exceptions
     // are enabled by platform_osf1_4.0.GNU.
 #   define ACE_HAS_ANSI_CASTS
+#   if !defined (__RTTI)
+#     define ACE_LACKS_RTTI
+#   endif
 #   define ACE_HAS_STDCPP_STL_INCLUDES
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
