@@ -86,7 +86,7 @@ project (EC_client) : ciao_client {
 }
 
 
-project (controller) : ciao_client {
+project (EC_controller) : ciao_client {
   exename = controller
   depends += EC_stub
   libs += EC_stub BasicSP_stub TAO_Valuetype
