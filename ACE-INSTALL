@@ -137,6 +137,18 @@
           some dump core. Hopefully newer compiler releases will
           alleviate these problems.
           
+          CXX 6.0 is _much_ improved in this regard. Please note that
+          include/makeinclude/platform_osf1_4.0.GNU has a WARNING_FLAGS
+          macro that is disabled by default, because most users probably
+          don't have 6.0 yet. If you do, uncomment that macro definition
+          for a nearly clean compile. (There are a few warnings that
+          appear to be harmless.)
+          
+          The following ACE tests do not run properly with CXX 6.0:
+          Naming_Test, Mutex_Test, Conn_Test, and Message_Queue_Test. If
+          you have the facilities and time to debug these, please let us
+          know.
+          
           GNU gcc 2.7.2.1 compiles without problems. All tests run
           (besides minor problems). Thanks to Thilo Kielmann <[13]
           kielmann@informatik.uni-siegen.de> and David Trumble
