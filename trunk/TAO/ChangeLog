@@ -1,3 +1,8 @@
+Fri Sep 13 14:31:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator.bor:
+          Added missing libs
+
 Fri Sep 13 09:37:59 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tao/Connection_Handler.h:
@@ -26,7 +31,7 @@ Fri Sep 13 09:37:59 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 Thu Sep 12 08:08:35 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp (TAO_IIOP_Connection_Handler): 
+	* tao/IIOP_Connection_Handler.cpp (TAO_IIOP_Connection_Handler):
 	  Initialize the dscp_codepoint_ value.  Thanks to Martin Johnson
  	  <mjohnson@quickcut.com.au> for reporting this.
 
@@ -44,25 +49,25 @@ Thu Sep 12 11:31:13 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Wed Sep 11 09:22:25 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
-	* orbsvcs/ImplRepo_Service/Makefile.bor: 
-	* orbsvcs/ImplRepo_Service/ImplRepo.bor (CFLAGS): 
-	* orbsvcs/ImplRepo_Service/ImR_Activator.bor (CFLAGS): 
+	* orbsvcs/ImplRepo_Service/Makefile.bor:
+	* orbsvcs/ImplRepo_Service/ImplRepo.bor (CFLAGS):
+	* orbsvcs/ImplRepo_Service/ImR_Activator.bor (CFLAGS):
 	  Updated the Borland files. Added a new ImR_Activator.bor for the
 	  ImR_Activator executable. Thanks to Johnny Willemsen for
 	  pointing it out.
 
-	* tao/PortableServer/Makefile.bor (OBJFILES): 
+	* tao/PortableServer/Makefile.bor (OBJFILES):
 	  Updated the makefile to add the new ImR_Locator{C.S} and
 	  ImR_Activator{C,S} files.
-	
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp: 
+
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
 	  Fixed template instantiations. Thanks to Craig Rodrigues
 	  for pointing it out.
 
-	* orbsvcs/ImplRepo_Service/Server_Repository.cpp: 
+	* orbsvcs/ImplRepo_Service/Server_Repository.cpp:
 	  Fixed warnings on Debian_Full build.
 
-	* orbsvcs/tests/ImplRepo/locked/run_test.pl: 
+	* orbsvcs/tests/ImplRepo/locked/run_test.pl:
 	  Replaced ImR_Locator with ImplRepo_Service as it should be.
 
 Wed Sep 11 04:49:09 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
@@ -94,7 +99,7 @@ Tue Sep 10 04:10:46 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	  Do not build certain tests unless corba_messaging=1.
 
 Tue Sep 10 03:37:08 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
- 
+
 	* tests/Connection_Timeout/Makefile:
 	* tests/DSI_Gateway/Makefile:
 	* tests/LongUpcalls/Makefile:
@@ -102,7 +107,7 @@ Tue Sep 10 03:37:08 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	  Do not do final link in these tests unless corba_messaging=1
 
 	* orbsvcs/Makefile:
-	  Do not build CosEvent_Service and Event_Service unless 
+	  Do not build CosEvent_Service and Event_Service unless
 	  corba_messaging=1.
 
 Mon Sep  9 20:37:21 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
@@ -114,7 +119,7 @@ Mon Sep  9 01:25:56 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	* rules.tao.GNU:
 	* orbsvcs/tests/Event/Basic/Makefile:
 	* tests/Param_Test/Makefile:
-	  Remove references to obsolete ACE_HAS_GNUG_PRE_2_8 make 
+	  Remove references to obsolete ACE_HAS_GNUG_PRE_2_8 make
 	  variable.
 
 Sun Sep  8 21:04:45 2002  Carlos O'Ryan  <coryan@atdesk.com>
@@ -186,7 +191,7 @@ Mon Sep  9 00:24:44 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	* orbsvcs/tests/Trading/Makefile:
 	* tao/Makefile.dirs:
 	* tao/Makefile.tao:
-	  Remove references to obsolete ACE_HAS_GNUG_PRE_2_8 make 
+	  Remove references to obsolete ACE_HAS_GNUG_PRE_2_8 make
 	  variable.
 
 Sun Sep  8 11:57:47 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
@@ -195,9 +200,9 @@ Sun Sep  8 11:57:47 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	  decode_value (), the incoming buffer was used to create a CDR
 	  stream and it was not aligned on an 8 byte boundary on some
 	  platforms. There was no check performed to make sure that the
-	  buffer is aligned before extraction. 
+	  buffer is aligned before extraction.
 
-	  The methods have been changed to do the following 
+	  The methods have been changed to do the following
 	  
 	  - A message block is created and after proper alignment the
 	    buffer is copied. 

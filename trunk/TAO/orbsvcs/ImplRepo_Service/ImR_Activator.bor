@@ -30,6 +30,8 @@ CFLAGS = \
 
 LIBFILES = \
 	$(ACE_LIB) \
+        $(ACE_XML_LIB) \
+        $(ACE_XML_PARSER_LIB) \
 	$(TAO_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
 	$(TAO_IORTABLE_LIB) \
