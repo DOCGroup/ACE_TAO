@@ -7,6 +7,8 @@ Sun Feb 28 14:22:38 1999  David L. Levine  <levine@cs.wustl.edu>
           features.h.  But, features.h #defines the glibc version.
           Thanks to Ben Eng <bet@jetpen.com> for reporting this.
 
+        * ace/config-minimal.h: disable ACE_ASSERT, ACE_DEBUG, and ACE_ERROR.
+
 Sun Feb 28 12:57:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Thread_Manager.cpp (terminate): The condition for handling
