@@ -142,7 +142,8 @@ be_sequence::gen_name (void)
       ACE_OS::sprintf (ulval_str,
                        "_%lu",
                        this->max_size ()->ev ()->u.ulval);
-      ACE_OS::strcat (namebuf, ulval_str);
+      ACE_OS::strcat (namebuf, 
+                      ulval_str);
     }
 
   return ACE_OS::strdup (namebuf);
@@ -239,13 +240,20 @@ be_sequence::managed_type (void)
           {
             int is_valuetype = 0;
             be_interface *bf = be_interface::narrow_from_decl (prim_type);
+
             if (bf != 0)
-              is_valuetype = bf->is_valuetype ();
+              {
+                is_valuetype = bf->is_valuetype ();
+              }
             else
               {
-                be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (prim_type);
+                be_interface_fwd *bff = 
+                  be_interface_fwd::narrow_from_decl (prim_type);
+
                 if (bff != 0)
-                  is_valuetype = bff->is_valuetype ();
+                  {
+                    is_valuetype = bff->is_valuetype ();
+                  }
               }
             if (is_valuetype)
               {
@@ -253,8 +261,9 @@ be_sequence::managed_type (void)
               }
             else
               {
-          this->mt_ = be_sequence::MNG_OBJREF;
+                this->mt_ = be_sequence::MNG_OBJREF;
               }
+
           break;
           }
         case AST_Decl::NT_string:
@@ -267,20 +276,15 @@ be_sequence::managed_type (void)
           {
             be_predefined_type *bpd =
               be_predefined_type::narrow_from_decl (prim_type);
+            AST_PredefinedType::PredefinedType pt = bpd->pt ();
 
-            if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+            if (pt == AST_PredefinedType::PT_pseudo)
               {
-                // If this pseudo is a CORBA::Object, then the managed type is
-                // an objref.
-                if (!ACE_OS::strcmp (bpd->local_name ()->get_string (),
-                                     "Object"))
-                  {
-                    this->mt_ = be_sequence::MNG_OBJREF;
-                  }
-                else
-                  {
-                    this->mt_ = be_sequence::MNG_PSEUDO;
-                  }
+                this->mt_ = be_sequence::MNG_PSEUDO;
+              }
+            else if (pt == AST_PredefinedType::PT_object)
+              {
+                this->mt_ = be_sequence::MNG_OBJREF;
               }
             else
               {

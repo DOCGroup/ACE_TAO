@@ -193,10 +193,10 @@ int be_visitor_args_request_info_ch::visit_predefined_type (
     be_predefined_type *node
   )
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
+  AST_PredefinedType::PredefinedType pt = node-> pt ();
 
-  // Check if the type is an any.
-  if (node->pt () == AST_PredefinedType::PT_any)
+  if (pt == AST_PredefinedType::PT_any)
     {
       switch (this->direction ())
         {
@@ -218,9 +218,10 @@ int be_visitor_args_request_info_ch::visit_predefined_type (
 
             break;
           }
-        } // end switch direction
-    } // end of if
-  else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
+        }
+    }
+  else if (pt == AST_PredefinedType::PT_pseudo
+           || pt == AST_PredefinedType::PT_object)
     {
       switch (this->direction ())
         {
@@ -233,9 +234,9 @@ int be_visitor_args_request_info_ch::visit_predefined_type (
         case AST_Argument::dir_OUT:
           *os << this->type_name (node, "_out");
           break;
-        } // end switch direction
-    } // end else if
-  else // Simple predefined types.
+        }
+    } 
+  else 
     {
       switch (this->direction ())
         {

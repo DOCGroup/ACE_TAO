@@ -110,7 +110,9 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
 
   // operator[]
   *os << "const ";
+
   bt->accept (&visitor);
+
   *os << " &operator[] (CORBA::ULong i) const;" << be_nl << be_nl;
 
   // Static Operations

@@ -215,7 +215,7 @@ fe_populate_global_scope (AST_Module *m)
   UTL_ScopedName Object_name (&Object_id, 0);
   pdt =
     idl_global->gen ()->create_predefined_type (
-                            AST_PredefinedType::PT_pseudo,
+                            AST_PredefinedType::PT_object,
                             &Object_name
                           );
   m->fe_add_predefined_type (pdt);

@@ -157,6 +157,7 @@ be_visitor_operation_interceptors_info_rettype::visit_predefined_type (be_predef
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       *os << bt->name () << "_ptr";
       break;
     case AST_PredefinedType::PT_any:

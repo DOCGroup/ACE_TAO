@@ -259,6 +259,7 @@ int be_visitor_operation_rettype_marshal_ss::visit_predefined_type (be_predefine
       switch (node->pt ())
         {
         case AST_PredefinedType::PT_pseudo:
+        case AST_PredefinedType::PT_object:
           *os << "_tao_retval.in ()";
           break;
         case AST_PredefinedType::PT_any:
@@ -300,6 +301,7 @@ int be_visitor_operation_rettype_marshal_ss::visit_predefined_type (be_predefine
       switch (node->pt ())
         {
         case AST_PredefinedType::PT_pseudo:
+        case AST_PredefinedType::PT_object:
           *os << "_tao_retval.inout ()";
           break;
         case AST_PredefinedType::PT_any:

@@ -521,7 +521,10 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
       << "ACE_INLINE void" << be_nl
       << bu->name () << "::" << ub->local_name () << " (" << bt->name ();
 
-  if (node->pt () == AST_PredefinedType::PT_pseudo)
+  AST_PredefinedType::PredefinedType pt = node->pt ();
+
+  if (pt == AST_PredefinedType::PT_pseudo
+      || pt == AST_PredefinedType::PT_object)
     {
       *os << "_ptr";
     }
@@ -553,46 +556,56 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
 
   *os << ";" << be_nl;
 
-  switch (node->pt ())
+  switch (pt)
     {
-      case AST_PredefinedType::PT_pseudo:
-        if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
-          {
-            *os << "typedef CORBA::Object_var OBJECT_FIELD;" << be_nl
-                << "ACE_NEW (" << be_idt << be_idt_nl
-                << "this->u_." << ub->local_name () << "_," << be_nl
-                << "OBJECT_FIELD (CORBA::Object::_duplicate (val))"
-                << be_uidt_nl
-                << ");" << be_uidt << be_uidt_nl;
-          }
-        else
-          {
-            *os << "this->u_." << ub->local_name () << "_ = "
-                << bt->name () << "::_duplicate (val);" << be_uidt_nl;
-          }
-        break;
+      case AST_PredefinedType::PT_object:
+        *os << "typedef CORBA::Object_var OBJECT_FIELD;" << be_nl
+            << "ACE_NEW (" << be_idt << be_idt_nl
+            << "this->u_." << ub->local_name () << "_," << be_nl
+            << "OBJECT_FIELD (CORBA::Object::_duplicate (val))"
+            << be_uidt_nl
+            << ");" << be_uidt << be_uidt_nl;
 
+        break;
+      case AST_PredefinedType::PT_pseudo:
+        *os << "this->u_." << ub->local_name () << "_ = "
+            << bt->name () << "::_duplicate (val);" << be_uidt_nl;
+
+        break;
       case AST_PredefinedType::PT_any:
         *os << "ACE_NEW (" << be_idt << be_idt_nl
             << "this->u_." << ub->local_name ()
             << "_," << be_nl
             << bt->name () << " (val)" << be_uidt_nl
             << ");" << be_uidt << be_uidt_nl;
-        break;
 
+        break;
       case AST_PredefinedType::PT_void:
         break;
-
       default:
         *os << "// Set the value." << be_nl
             << "this->u_." << ub->local_name ()
             << "_ = val;" << be_uidt_nl;
+
+        break;
     }
 
   *os << "}" << be_nl << be_nl;
 
-  switch (node->pt ())
+  switch (pt)
     {
+    case AST_PredefinedType::PT_object:
+      // Get method.
+      *os << "// Retrieve the member." << be_nl
+          << "ACE_INLINE " << bt->name () << "_ptr" << be_nl
+          << bu->name () << "::" << ub->local_name ()
+          << " (void) const" << be_nl
+          << "{" << be_idt_nl;
+      *os << "return this->u_." << ub->local_name ()
+          << "_->ptr ();" << be_uidt_nl;
+      *os << "}\n\n";
+
+      break;
     case AST_PredefinedType::PT_pseudo:
       // Get method.
       *os << "// Retrieve the member." << be_nl
@@ -600,19 +613,10 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
           << bu->name () << "::" << ub->local_name ()
           << " (void) const" << be_nl
           << "{" << be_idt_nl;
-
-      if (!ACE_OS::strcmp (bt->local_name ()->get_string (), "Object"))
-        {
-          *os << "return this->u_." << ub->local_name ()
-              << "_->ptr ();" << be_uidt_nl;
-        }
-      else
-        {
-          *os << "return this->u_." << ub->local_name ()
-              << "_;" << be_uidt_nl;
-        }
-
+      *os << "return this->u_." << ub->local_name ()
+          << "_;" << be_uidt_nl;
       *os << "}\n\n";
+
       break;
     case AST_PredefinedType::PT_any:
       // Get method with read-only access.
@@ -644,6 +648,8 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
           << "{" << be_idt_nl
           << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
           << "}\n\n";
+
+      break;
     }
 
   return 0;

@@ -84,6 +84,7 @@ be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       {
         int is_pseudo_object =
           ACE_OS::strcmp (node->local_name ()->get_string (),

@@ -137,6 +137,7 @@ be_visitor_operation_interceptors_result::visit_predefined_type (be_predefined_t
       *os << "CORBA::Any::from_octet (this->_result);" << be_nl;
       break;
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
     case AST_PredefinedType::PT_any:
     case AST_PredefinedType::PT_long:
     case AST_PredefinedType::PT_ulong:

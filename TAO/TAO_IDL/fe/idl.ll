@@ -152,6 +152,7 @@ NL [\r?\n]
 %%
 
 any             return IDL_ANY;
+Object          return IDL_OBJECT;
 module		return IDL_MODULE;
 raises		return IDL_RAISES;
 readonly	return IDL_READONLY;

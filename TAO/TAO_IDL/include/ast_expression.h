@@ -136,7 +136,18 @@ public:
       , EV_bool                   // Expression value is boolean.
       , EV_string                 // Expression value is char *.
       , EV_wstring                // Expression value is wide string.
-      , EV_any                    // Expression value is any of above.
+      , EV_enum                   // Expression value is from an enum.
+
+      // CORBA::Any and CORBA::Object are constructed in the parser first as
+      // expression values, then looked up by name to get the 
+      // AST_PredefinedType entry. This is so the grammar non-terminals
+      // integer_type, float_type, bool_type, etc. can also be expression
+      // values in order to serve double duty -- as productions of const_type
+      // and also (along with object_type) as productions of base_type_spec,
+      // as found in the OMG IDL grammar specification.
+      , EV_any                    // Used for CORBA::Any operation parameters
+      , EV_object                 // Used for CORBA::Object parameters
+
       , EV_void                   // Expression value is void (absent).
       , EV_none                   // Expression value is missing.
     };

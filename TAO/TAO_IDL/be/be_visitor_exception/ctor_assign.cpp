@@ -196,11 +196,12 @@ int be_visitor_exception_ctor_assign::visit_predefined_type (
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
+  AST_PredefinedType::PredefinedType pt = node->pt ();
 
   os->indent ();
 
   // Check if the type is an any.
-  if (node->pt () == AST_PredefinedType::PT_any)
+  if (pt == AST_PredefinedType::PT_any)
     {
       if (this->ctx_->exception ()) // Special constructor.
         {
@@ -213,7 +214,8 @@ int be_visitor_exception_ctor_assign::visit_predefined_type (
               << bd->local_name () << ";\n";
         }
     }
-  else if (node->pt () == AST_PredefinedType::PT_pseudo)
+  else if (pt == AST_PredefinedType::PT_pseudo
+           || pt == AST_PredefinedType::PT_object)
     {
       if (this->ctx_->exception ()) // Special constructor.
         {

@@ -420,32 +420,35 @@ be_visitor_valuetype_field_cdr_ci::visit_predefined_type (be_predefined_type *no
                         -1);
     }
 
+  AST_PredefinedType::PredefinedType pt = node->pt ();
+
   // Check what is the code generations substate. Are we generating code for
   // the in/out operators for our parent or for us?
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      if (node->pt () == AST_PredefinedType::PT_pseudo)
+      if (pt == AST_PredefinedType::PT_pseudo
+          || pt == AST_PredefinedType::PT_object)
         {
           *os << "(strm >> " << pre_ << f->local_name () << post_
               << ".out ())";
         }
-      else if (node->pt () == AST_PredefinedType::PT_char)
+      else if (pt == AST_PredefinedType::PT_char)
         {
           *os << "(strm >> CORBA::Any::to_char (" << pre_
               << f->local_name () << post_ << "))";
         }
-      else if (node->pt () == AST_PredefinedType::PT_wchar)
+      else if (pt == AST_PredefinedType::PT_wchar)
         {
           *os << "(strm >> CORBA::Any::to_wchar (" << pre_
               << f->local_name () << post_ << "))";
             }
-      else if (node->pt () == AST_PredefinedType::PT_octet)
+      else if (pt == AST_PredefinedType::PT_octet)
         {
           *os << "(strm >> CORBA::Any::to_octet (" << pre_
               << f->local_name () << post_ << "))";
         }
-      else if (node->pt () == AST_PredefinedType::PT_boolean)
+      else if (pt == AST_PredefinedType::PT_boolean)
         {
           *os << "(strm >> CORBA::Any::to_boolean (" << pre_
               << f->local_name () << post_ << "))";
@@ -456,27 +459,28 @@ be_visitor_valuetype_field_cdr_ci::visit_predefined_type (be_predefined_type *no
         }
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      if (node->pt () == AST_PredefinedType::PT_pseudo)
+      if (pt == AST_PredefinedType::PT_pseudo
+          || pt == AST_PredefinedType::PT_object)
         {
           *os << "(strm << " << pre_ << f->local_name () 
               << post_ << ".in ())";
         }
-      else if (node->pt () == AST_PredefinedType::PT_char)
+      else if (pt == AST_PredefinedType::PT_char)
         {
           *os << "(strm << CORBA::Any::from_char (" << pre_
               << f->local_name () << post_ << "))";
         }
-      else if (node->pt () == AST_PredefinedType::PT_wchar)
+      else if (pt == AST_PredefinedType::PT_wchar)
         {
           *os << "(strm << CORBA::Any::from_wchar (" << pre_
               << f->local_name () << post_ << "))";
         }
-      else if (node->pt () == AST_PredefinedType::PT_octet)
+      else if (pt == AST_PredefinedType::PT_octet)
         {
           *os << "(strm << CORBA::Any::from_octet (" << pre_
               << f->local_name () << post_ << "))";
         }
-      else if (node->pt () == AST_PredefinedType::PT_boolean)
+      else if (pt == AST_PredefinedType::PT_boolean)
         {
           *os << "(strm << CORBA::Any::from_boolean (" << pre_
               << f->local_name () << post_ << "))";

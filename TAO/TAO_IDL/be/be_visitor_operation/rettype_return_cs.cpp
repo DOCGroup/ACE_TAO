@@ -100,13 +100,16 @@ be_visitor_operation_rettype_return_cs::visit_valuetype_fwd (be_valuetype_fwd *)
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_predefined_type (be_predefined_type *node)
+be_visitor_operation_rettype_return_cs::visit_predefined_type (
+    be_predefined_type *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       *os << "_tao_retval._retn ()";
 
       break;

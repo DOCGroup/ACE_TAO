@@ -261,18 +261,17 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
 
   switch (node->pt ())
     {
-    case AST_PredefinedType::PT_pseudo:
-      if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
-        {
-          *os << "delete this->u_."
-              << ub->local_name () << "_;" << be_nl;
-        }
-      else
-        {
-          *os << "CORBA::release (this->u_."
-	            << ub->local_name () << "_);" << be_nl;
-        }
+    case AST_PredefinedType::PT_object:
+      *os << "delete this->u_."
+          << ub->local_name () << "_;" << be_nl;
+      *os << "this->u_." << ub->local_name ()
+          << "_ = 0;" << be_nl
+          << "break;" << be_uidt_nl;
 
+      break;
+    case AST_PredefinedType::PT_pseudo:
+      *os << "CORBA::release (this->u_."
+	        << ub->local_name () << "_);" << be_nl;
       *os << "this->u_." << ub->local_name ()
           << "_ = 0;" << be_nl
           << "break;" << be_uidt_nl;
@@ -290,6 +289,8 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
       break;
     default:
       *os << "break;" << be_uidt_nl;
+
+      break;
     }
 
   return 0;

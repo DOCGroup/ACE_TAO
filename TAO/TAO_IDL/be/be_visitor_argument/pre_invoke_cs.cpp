@@ -197,6 +197,7 @@ be_visitor_args_pre_invoke_cs::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       {
       switch (this->direction ())
         {

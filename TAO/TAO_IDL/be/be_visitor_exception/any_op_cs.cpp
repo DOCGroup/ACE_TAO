@@ -29,8 +29,9 @@ ACE_RCSID (be_visitor_exception,
 // stubs file
 // ***************************************************************************
 
-be_visitor_exception_any_op_cs::be_visitor_exception_any_op_cs
-(be_visitor_context *ctx)
+be_visitor_exception_any_op_cs::be_visitor_exception_any_op_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_scope (ctx)
 {
 }
@@ -42,10 +43,10 @@ be_visitor_exception_any_op_cs::~be_visitor_exception_any_op_cs (void)
 int
 be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
 {
-  if (node->cli_stub_any_op_gen () ||
-      node->imported () ||
-      node->is_local ())
-    return 0;
+  if (node->cli_stub_any_op_gen () || node->imported () || node->is_local ())
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -151,7 +152,8 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception::visit_exception - "
-                         "codegen for scope failed\n"), -1);
+                         "codegen for scope failed\n"), 
+                        -1);
     }
 
   node->cli_stub_any_op_gen (1);
@@ -161,17 +163,17 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
 int
 be_visitor_exception_any_op_cs::visit_field (be_field *node)
 {
-  be_type *bt; // field's type
+  be_type *bt;
 
-  // first generate the type information
+  // First generate the type information.
   bt = be_type::narrow_from_decl (node->field_type ());
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception_any_op_cs::"
                          "visit_field - "
-                         "Bad field type\n"
-                         ), -1);
+                         "Bad field type\n"), 
+                        -1);
     }
 
   if (bt->accept (this) == -1)
@@ -179,8 +181,9 @@ be_visitor_exception_any_op_cs::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception_any_op_cs::"
                          "visit_field - "
-                         "codegen for field type failed\n"
-                         ), -1);
+                         "codegen for field type failed\n"), 
+                        -1);
     }
+
   return 0;
 }

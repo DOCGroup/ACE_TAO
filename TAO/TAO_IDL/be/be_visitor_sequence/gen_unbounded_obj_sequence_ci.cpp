@@ -397,11 +397,12 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
 
   // Operator[].
   be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
+
   int is_pseudo_object =
     pt->node_type () == AST_Decl::NT_pre_defined
-    && prim && prim->pt () == AST_PredefinedType::PT_pseudo
-    && ACE_OS::strcmp (prim->local_name ()->get_string (),
-                       "Object") != 0;
+    && prim 
+    && prim->pt () == AST_PredefinedType::PT_object;
+
   if (is_pseudo_object)
     {
       *os << "ACE_INLINE TAO_Pseudo_Object_Manager<";

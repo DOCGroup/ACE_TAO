@@ -289,6 +289,7 @@ be_visitor_union_branch_public_access_cs::visit_predefined_type (be_predefined_t
 
   switch (node->pt ())
     {
+    case AST_PredefinedType::PT_object:
     case AST_PredefinedType::PT_pseudo:
       *os << "ACE_UNUSED_ARG (alloc_flag);" << be_nl
           << "return &this->u_." << ub->local_name () << "_;" << be_uidt_nl;

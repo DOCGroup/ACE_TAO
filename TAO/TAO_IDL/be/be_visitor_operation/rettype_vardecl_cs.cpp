@@ -219,6 +219,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (be_predefined_ty
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       *os << bt->name () << "_var _tao_retval ("
           << bt->name () << "::_nil ());";
 

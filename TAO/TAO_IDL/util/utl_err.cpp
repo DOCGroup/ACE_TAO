@@ -223,8 +223,8 @@ exprtype_to_string (AST_Expression::ExprType t)
     return "boolean";
   case AST_Expression::EV_string:
     return "string";
-  case AST_Expression::EV_any:
-    return "any";
+  case AST_Expression::EV_enum:
+    return "enum";
   case AST_Expression::EV_void:
     return "void";
   case AST_Expression::EV_none:

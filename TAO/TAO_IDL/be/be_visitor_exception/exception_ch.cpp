@@ -137,7 +137,6 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
         }
 
       os->gen_endif ();
-
       node->cli_hdr_gen (1);
     }
 

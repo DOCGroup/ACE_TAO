@@ -98,8 +98,8 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
       // full_name with or without the underscore and use it later on.
       char fname [NAMEBUFSIZE];  // to hold the full and
 
-      // Save the node's local name and full name in a buffer for quick use later
-      // on.
+      // Save the node's local name and full name in a buffer for quick use
+      // later on.
       ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
       if (this->ctx_->tdef ())
         {
@@ -108,18 +108,24 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
       else
         {
           // For anonymous arrays ...
-          // we have to generate a name for us that has an underscope prepended to
-          // our local name. This needs to be inserted after the parents's name.
+          // We have to generate a name for us that has an underscope prepended
+          // to our local name. This needs to be inserted after the parents's 
+          // name.
 
           if (node->is_nested ())
             {
-              be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-              ACE_OS::sprintf (fname, "%s::_%s", parent->full_name (),
+              be_decl *parent = 
+                be_scope::narrow_from_scope (node->defined_in ())->decl ();
+              ACE_OS::sprintf (fname, 
+                               "%s::_%s", 
+                               parent->full_name (),
                                node->local_name ()->get_string ());
             }
           else
             {
-              ACE_OS::sprintf (fname, "_%s", node->full_name ());
+              ACE_OS::sprintf (fname, 
+                               "_%s", 
+                               node->full_name ());
             }
         }
 
@@ -196,6 +202,7 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
     case AST_PredefinedType::PT_any:
       // Let the helper handle this.
       return this->visit_node (node);
@@ -204,8 +211,8 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_ci::"
                          "visit_predefined_type - "
-                         "Bad primitive type\n"
-                         ), -1);
+                         "Bad primitive type\n"), 
+                        -1);
     default:
       // All other primitive types. Handle them as shown below.
       break;
@@ -213,8 +220,8 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
 
   // We get here if the "type" of individual elements of the array is a
   // primitive type. In this case, we treat the array as a single dimensional
-  // array (even though it was multi-dimensional), and pass the total length of
-  // the array as a cross product of the dimensions.
+  // array (even though it was multi-dimensional), and pass the total length
+  // of the array as a cross product of the dimensions.
 
   unsigned long i;
 
@@ -386,8 +393,8 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
                         -1);
     }
 
-  // Generate a product of all the dimensions. This will be the total length of
-  // the "unfolded" single dimensional array.
+  // Generate a product of all the dimensions. This will be the total length
+  // of the "unfolded" single dimensional array.
   for (i = 0; i < array->n_dims (); i++)
     {
       // Retrieve the ith dimension value.
@@ -403,8 +410,10 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
         }
 
       if (i != 0)
-        // Do not generate the multiplication operator the first time in.
-        *os << "*";
+        {
+          // Do not generate the multiplication operator the first time in.
+          *os << "*";
+        }
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
           // Generate a loop for each dimension.
@@ -419,6 +428,7 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
                             -1);
         }
     }
+
   *os << ");" << be_uidt_nl;
 
   return 0;
@@ -511,7 +521,8 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
           // Generate a loop for each dimension.
-          *os << be_nl << "for (CORBA::ULong i" << i << " = 0; i" << i << " < "
+          *os << be_nl << "for (CORBA::ULong i" << i 
+              << " = 0; i" << i << " < "
               << expr->ev ()->u.ulval << " && _tao_marshal_flag; i" << i
               << "++)" << be_idt_nl;
         }
@@ -584,7 +595,10 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                                         -1);
                     }
 
-                  if (pt->pt () == AST_PredefinedType::PT_pseudo)
+                  AST_PredefinedType::PredefinedType pdt = pt->pt ();
+
+                  if (pdt == AST_PredefinedType::PT_pseudo
+                      || pdt == AST_PredefinedType::PT_object)
                     {
                       *os << ".out ()";
                     }
@@ -654,7 +668,10 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                                         -1);
                     }
 
-                  if (pt->pt () == AST_PredefinedType::PT_pseudo)
+                  AST_PredefinedType::PredefinedType pdt = pt->pt ();
+
+                  if (pdt == AST_PredefinedType::PT_pseudo
+                      || pdt == AST_PredefinedType::PT_object)
                     {
                       *os << ".in ()";
                     }

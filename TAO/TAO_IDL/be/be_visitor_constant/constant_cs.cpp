@@ -67,7 +67,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
 
               *os << "TAO_NAMESPACE_DEFINE (const ";
 
-              if (node->et () == AST_Expression::EV_any)
+              if (node->et () == AST_Expression::EV_enum)
                 {
                   *os << node->enum_full_name ();
                 }

@@ -246,18 +246,15 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (node->pt () == AST_PredefinedType::PT_pseudo)
+  if (node->pt () == AST_PredefinedType::PT_object)
     {
-      // Cannot have an object inside of a union.
-      // Check if we are dealing with a CORBA::Object
-      if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
-        {
-          *os << bt->name () << "_var"
-              << " *" << ub->local_name () << "_;" << be_nl;
-        }
-      else
-        *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
-            << "_;" << be_nl;
+      *os << bt->name () << "_var"
+          << " *" << ub->local_name () << "_;" << be_nl;
+    }
+  else if (node->pt () == AST_PredefinedType::PT_pseudo)
+    {
+      *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
+          << "_;" << be_nl;
     }
   else if (node->pt () == AST_PredefinedType::PT_any)
     {

@@ -176,6 +176,10 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
           ACE_NEW (id,
                    Identifier ("Any"));
           break;
+        case AST_PredefinedType::PT_object:
+          ACE_NEW (id,
+                   Identifier ("Object"));
+          break;
         case AST_PredefinedType::PT_pseudo:
           ACE_NEW (id,
                    Identifier (n->last_component ()->get_string ()));

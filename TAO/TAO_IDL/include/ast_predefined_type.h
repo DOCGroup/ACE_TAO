@@ -90,7 +90,8 @@ public:
       , PT_wchar        // Predefined type "CORBA::WChar"
       , PT_boolean      // Predefined type "boolean"
       , PT_octet        // Predefined type "octet"
-      , PT_any          // Predefined type "any"
+      , PT_any          // Predefined type "CORBA::Any"
+      , PT_object       // Predefined type "CORBA::Object"
       , PT_void         // Predefined type "void"
       , PT_pseudo       // Predefined type for pseudo objects
     };
