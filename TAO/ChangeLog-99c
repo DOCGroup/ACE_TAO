@@ -1,3 +1,11 @@
+Fri Jul  2 11:00:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/ge_unbounded_obj_sequence_ci.cpp:
+	  Assigned pointers to 0 before plugging them into ACE_NEW (in
+	  generated code). Averted some Linux/egcs warnings.
+
 Fri Jul  2 10:52:05 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/benchmark/server.cpp: 
