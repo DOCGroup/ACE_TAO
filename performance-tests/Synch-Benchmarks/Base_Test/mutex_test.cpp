@@ -2,9 +2,12 @@
 
 #define ACE_BUILD_SVC_DLL
 
+#include "ace/Log_Msg.h"
 #include "ace/Token.h"
 #include "ace/Process_Mutex.h"
+#include "ace/RW_Mutex.h"
 #include "ace/RW_Process_Mutex.h"
+#include "ace/RW_Thread_Mutex.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Semaphore.h"

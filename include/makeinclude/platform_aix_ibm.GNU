@@ -26,7 +26,7 @@ else
 endif
 endif
 ifeq (,$(rtti))
-  rtti = 0
+  rtti = 1
 endif
 ifeq (,$(threads))
   threads = 1
@@ -149,7 +149,7 @@ ifeq ($(exceptions),0)
 endif
 
 ifeq (1,$(rtti))
-  CCFLAGS += -qrtti=dynamiccast
+  CCFLAGS += -qrtti=all
 else  # ! rtti
   CCFLAGS += -DACE_LACKS_RTTI
 endif # ! rtti
