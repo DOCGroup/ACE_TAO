@@ -71,6 +71,7 @@ ACE_HAS_POSIX_NONBLOCK			Platform supports POSIX O_NONBLOCK semantics
 ACE_HAS_POSIX_SEM			Platform supports POSIX real-time semaphores (e.g., VxWorks and Solaris)
 ACE_HAS_POSIX_TIME			Platform supports the POSIX struct timespec type
 ACE_HAS_PROC_FS				Platform supports the /proc file system and defines tid_t in <sys/procfs.h>
+ACE_HAS_POWERPC				Platform is a PowerPC microprocessor.
 ACE_HAS_PRUSAGE_T			Platform supports the prusage_t struct
 ACE_HAS_PTHREADS			Platform supports POSIX Pthreads
 ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP     Platform has pthread_condattr_setkind_np().
