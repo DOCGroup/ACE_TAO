@@ -1,3 +1,8 @@
+Thu May 13 15:59:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added ACE_HAS_SNPRINTF. Cygwin supports this
+
 Thu May 13 15:28:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
