@@ -31,7 +31,7 @@ TAO_UIPMC_Wait_Never::non_blocking (void) const
 bool
 TAO_UIPMC_Wait_Never::can_process_upcalls (void) const
 {
-  return false;
+  return true;
 }
 
 int
