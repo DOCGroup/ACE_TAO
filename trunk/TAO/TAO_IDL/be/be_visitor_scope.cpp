@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_scope.h"
 
@@ -54,23 +54,23 @@ be_visitor_scope::visit_scope (be_scope *node)
       // initialize an iterator to iterate thru our scope
       UTL_ScopeActiveIterator *si;
       ACE_NEW_RETURN (si,
-		      UTL_ScopeActiveIterator (node,
-					       UTL_Scope::IK_decls),
-		      -1);
+                      UTL_ScopeActiveIterator (node,
+                                               UTL_Scope::IK_decls),
+                      -1);
       this->elem_number_ = 0;
       // continue until each element is visited
       while (!si->is_done ())
-	{
-	  AST_Decl *d = si->item ();
+        {
+          AST_Decl *d = si->item ();
           if (!d)
-	    {
-	      delete si;
+            {
+              delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
                                  "bad node in this scope\n"), -1);
 
-	    }
-	  be_decl *bd = be_decl::narrow_from_decl (d);
+            }
+          be_decl *bd = be_decl::narrow_from_decl (d);
           // set the scope node as "node" in which the code is being generated
           // so that elements in the node's scope can use it for code generation
           this->ctx_->scope (node->decl ());
@@ -79,29 +79,29 @@ be_visitor_scope::visit_scope (be_scope *node)
           this->elem_number_++;
           // do any pre processing using the next item info
           if (this->pre_process (bd) == -1)
-	    {
-	      delete si;
+            {
+              delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
                                  "pre processing failed\n"), -1);
             }
-	  if (bd == 0 || bd->accept (this) == -1)
-	    {
-	      delete si;
+          if (bd == 0 || bd->accept (this) == -1)
+            {
+              delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
                                  "codegen for scope failed\n"), -1);
 
-	    }
+            }
           if (this->post_process (bd) == -1)
             {
-	      delete si;
+              delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
                                  "post processing failed\n"), -1);
             }
           si->next ();
-	} // end of while loop
+        } // end of while loop
       delete si;
     } // end of if
 
@@ -110,17 +110,17 @@ be_visitor_scope::visit_scope (be_scope *node)
   // For debugging the prefix...
   be_decl* decl = node->decl ();
   ACE_DEBUG ((LM_DEBUG, "Enter scope <%s> : [%s]\n",
-	      decl->fullname (), decl->prefix ()));
+              decl->fullname (), decl->prefix ()));
   if (decl->pragmas () != 0)
     {
       for (UTL_StrlistActiveIterator i(decl->pragmas ());
-	   !i.is_done ();
-	   i.next ())
-	{
-	  String* s = i.item ();
-	  
-	  ACE_DEBUG ((LM_DEBUG, "  pragma = <%s>\n", s->get_string ()));
-	}
+           !i.is_done ();
+           i.next ())
+        {
+          String* s = i.item ();
+
+          ACE_DEBUG ((LM_DEBUG, "  pragma = <%s>\n", s->get_string ()));
+        }
     }
 #endif
 
@@ -142,16 +142,16 @@ be_visitor_scope::pre_process (be_decl *)
 int
 be_visitor_scope::elem_number (void)
 {
-  // return the current element that we are working on 
+  // return the current element that we are working on
   return this->elem_number_;
 }
 
 // find the element that succeeds "elem" in the list
 int
-be_visitor_scope::next_elem (be_decl *elem, 
-                             be_decl *&successor) 
+be_visitor_scope::next_elem (be_decl *elem,
+                             be_decl *&successor)
 {
-  be_scope *node;
+  be_scope *node = 0;
 
   if (!this->ctx_->scope () ||
       !(node = this->ctx_->scope ()->scope ()))
@@ -159,9 +159,9 @@ be_visitor_scope::next_elem (be_decl *elem,
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_scope::next_elem - "
                          "bad scope\n"), -1);
-      
+
     }
-    
+
   successor = 0;
   // proceed if the number of members in our scope is greater than 0
   if (node->nmembers () > 0)
@@ -169,21 +169,21 @@ be_visitor_scope::next_elem (be_decl *elem,
       // initialize an iterator to iterate thru our scope
       UTL_ScopeActiveIterator *si;
       ACE_NEW_RETURN (si,
-		      UTL_ScopeActiveIterator (node,
-					       UTL_Scope::IK_decls),
-		      -1);
+                      UTL_ScopeActiveIterator (node,
+                                               UTL_Scope::IK_decls),
+                      -1);
       // continue until each element is visited
       while (!si->is_done ())
-	{
-	  be_decl *bd = be_decl::narrow_from_decl (si->item ());
+        {
+          be_decl *bd = be_decl::narrow_from_decl (si->item ());
           if (!bd)
-	    {
-	      delete si;
+            {
+              delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::next_elem - "
                                  "bad node in this scope\n"), -1);
 
-	    }
+            }
 
           if (bd == elem)
             {
@@ -202,7 +202,7 @@ be_visitor_scope::next_elem (be_decl *elem,
                   ACE_ERROR_RETURN ((LM_ERROR,
                                      "(%N:%l) be_visitor_scope::next_elem - "
                                      "bad node in this scope\n"), -1);
-                  
+
                 }
               // nothing else to do
               delete si;
@@ -211,7 +211,7 @@ be_visitor_scope::next_elem (be_decl *elem,
           else
             // proceed to the next element
             si->next ();
-	} // end of while loop
+        } // end of while loop
       delete si;
     } // end of if
   return 0;
@@ -227,5 +227,5 @@ be_visitor_scope::last_node (be_decl *bd)
     return 0;
 
   // I am the last one
-  return 1; 
-} 
+  return 1;
+}
