@@ -2,9 +2,9 @@
 
 SUBDIRS = \
         PSS \
-        TAO_Service 
+        TAO_Service \
+	orbsvcs
 
-#        orbsvcs \
 #        Trading_Service \
 #        Time_Service \
 #        Scheduling_Service \
