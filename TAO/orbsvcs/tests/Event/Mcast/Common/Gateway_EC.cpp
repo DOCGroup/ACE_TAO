@@ -6,6 +6,7 @@
 #include "orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.h"
 #include "ace/Get_Opt.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/OS_NS_stdio.h"
 
 Gateway_EC::Gateway_EC (void)
   : ec_ior_file_ ("gateway-ec.ior")
