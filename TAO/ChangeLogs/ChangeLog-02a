@@ -1,3 +1,159 @@
+Thu Jul  6 13:18:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/orbconf.h:
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+
+	  Additions to enable resolve_initial_references ("InterfaceRepository")
+	  and acquisition of IFR IOR via multicast.
+
+	* TAOACE.dsw:
+
+	  Added IFR_Service.dsp and TypeCodeFactory.dsp to the workspace,
+	  along with their dependencies.
+
+	* orbsvcs/IFR_Service/IFR.dsw:
+
+	  Added IFR_Service.dsp to the workspace.
+
+	* orbsvcs/IFR_Service/AliasDef_i.cpp:
+	* orbsvcs/IFR_Service/AliasDef_i.h:
+	* orbsvcs/IFR_Service/ArrayDef_i.cpp:
+	* orbsvcs/IFR_Service/ArrayDef_i.h:
+	* orbsvcs/IFR_Service/AttributeDef_i.cpp:
+	* orbsvcs/IFR_Service/AttributeDef_i.h:
+	* orbsvcs/IFR_Service/ComponentDef_i.cpp:
+	* orbsvcs/IFR_Service/ComponentDef_i.h:
+	* orbsvcs/IFR_Service/ComponentRepository_i.cpp:
+	* orbsvcs/IFR_Service/ComponentRepository_i.h:
+	* orbsvcs/IFR_Service/ConstantDef_i.cpp:
+	* orbsvcs/IFR_Service/ConstantDef_i.h:
+	* orbsvcs/IFR_Service/ConsumesDef_i.cpp:
+	* orbsvcs/IFR_Service/ConsumesDef_i.h:
+	* orbsvcs/IFR_Service/Contained_i.cpp:
+	* orbsvcs/IFR_Service/Contained_i.h:
+	* orbsvcs/IFR_Service/Container_i.cpp:
+	* orbsvcs/IFR_Service/Container_i.h:
+	* orbsvcs/IFR_Service/EmitsDef_i.cpp:
+	* orbsvcs/IFR_Service/EmitsDef_i.h:
+	* orbsvcs/IFR_Service/EnumDef_i.cpp:
+	* orbsvcs/IFR_Service/EnumDef_i.h:
+	* orbsvcs/IFR_Service/EventDef_i.cpp:
+	* orbsvcs/IFR_Service/EventDef_i.h:
+	* orbsvcs/IFR_Service/ExceptionDef_i.cpp:
+	* orbsvcs/IFR_Service/ExceptionDef_i.h:
+	* orbsvcs/IFR_Service/FactoryDef_i.cpp:
+	* orbsvcs/IFR_Service/FactoryDef_i.h:
+	* orbsvcs/IFR_Service/FinderDef_i.cpp:
+	* orbsvcs/IFR_Service/FinderDef_i.h:
+	* orbsvcs/IFR_Service/FixedDef_i.cpp:
+	* orbsvcs/IFR_Service/FixedDef_i.h:
+	* orbsvcs/IFR_Service/HomeDef_i.cpp:
+	* orbsvcs/IFR_Service/HomeDef_i.h:
+	* orbsvcs/IFR_Service/DLType_i.cpp:
+	* orbsvcs/IFR_Service/IDLType_i.h:
+	* orbsvcs/IFR_Service/IRObject_i.cpp:
+	* orbsvcs/IFR_Service/IRObject_i.h:
+	* orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+	* orbsvcs/IFR_Service/InterfaceDef_i.h:
+	* orbsvcs/IFR_Service/ModuleDef_i.cpp:
+	* orbsvcs/IFR_Service/ModuleDef_i.h:
+	* orbsvcs/IFR_Service/NativeDef_i.cpp:
+	* orbsvcs/IFR_Service/NativeDef_i.h:
+	* orbsvcs/IFR_Service/OperationDef_i.cpp:
+	* orbsvcs/IFR_Service/OperationDef_i.h:
+	* orbsvcs/IFR_Service/Options.cpp:
+	* orbsvcs/IFR_Service/Options.h:
+	* orbsvcs/IFR_Service/PrimaryKeyDef_i.cpp:
+	* orbsvcs/IFR_Service/PrimaryKeyDef_i.h:
+	* orbsvcs/IFR_Service/PrimitiveDef_i.cpp:
+	* orbsvcs/IFR_Service/PrimitiveDef_i.h:
+	* orbsvcs/IFR_Service/ProvidesDef_i.cpp:
+	* orbsvcs/IFR_Service/ProvidesDef_i.h:
+	* orbsvcs/IFR_Service/PublishesDef_i.cpp:
+	* orbsvcs/IFR_Service/PublishesDef_i.h:
+	* orbsvcs/IFR_Service/Repository_i.cpp:
+	* orbsvcs/IFR_Service/Repository_i.h:
+	* orbsvcs/IFR_Service/SequenceDef_i.cpp:
+	* orbsvcs/IFR_Service/SequenceDef_i.h:
+	* orbsvcs/IFR_Service/StringDef_i.cpp:
+	* orbsvcs/IFR_Service/StringDef_i.h:
+	* orbsvcs/IFR_Service/StructDef_i.cpp:
+	* orbsvcs/IFR_Service/StructDef_i.h:
+	* orbsvcs/IFR_Service/TypedefDef_i.cpp:
+	* orbsvcs/IFR_Service/TypedefDef_i.h:
+	* orbsvcs/IFR_Service/UnionDef_i.cpp:
+	* orbsvcs/IFR_Service/UnionDef_i.h:
+	* orbsvcs/IFR_Service/UsesDef_i.cpp:
+	* orbsvcs/IFR_Service/UsesDef_i.h:
+	* orbsvcs/IFR_Service/ValueBoxDef_i.cpp:
+	* orbsvcs/IFR_Service/ValueBoxDef_i.h:
+	* orbsvcs/IFR_Service/ValueDef_i.cpp:
+	* orbsvcs/IFR_Service/ValueDef_i.h:
+	* orbsvcs/IFR_Service/ValueMemberDef_i.cpp:
+	* orbsvcs/IFR_Service/ValueMemberDef_i.h:
+	* orbsvcs/IFR_Service/WstringDef_i.cpp:
+	* orbsvcs/IFR_Service/WstringDef_i.h:
+
+	  New files that implement Interface.idl.
+
+	* orbsvcs/IFR_Service/concrete_classes.h:
+	* orbsvcs/IFR_Service/tmplinst.cpp:
+
+	  Collections of #includes and template instantiations.
+
+	* orbsvcs/IFR_Service/Servant_Factory.cpp:
+	* orbsvcs/IFR_Service/Servant_Factory.h:
+	* orbsvcs/IFR_Service/Servant_Locator.cpp:
+	* orbsvcs/IFR_Service/Servant_Locator.h:
+
+	  Servant_Factory produces new IFR servants for internal use
+	  when the type is not known. Servant_Locator contains a
+	  subclass of the servant locator base class. This method is used
+	  for all calls on IFR object references, except those on the
+	  Repository itself, which had a different POA than the rest of
+	  the IFR objects.
+
+	* orbsvcs/IFR_Service/IFR_Server.cpp:
+	* orbsvcs/IFR_Service/IFR_Service.cpp:
+	* orbsvcs/IFR_Service/IFR_Service.dsp:
+	* orbsvcs/IFR_Service/IFR_Service.h:
+
+	  Contains classes to encapsulate the initialization and startup
+	  of the IFR service.
+
+	* orbsvcs/IFR_Service/InterfaceS.cpp:
+	* orbsvcs/IFR_Service/InterfaceS.h:
+	* orbsvcs/IFR_Service/InterfaceS.i:
+	* orbsvcs/IFR_Service/InterfaceS_T.cpp:
+	* orbsvcs/IFR_Service/InterfaceS_T.h:
+	* orbsvcs/IFR_Service/InterfaceS_T.i:
+
+	  Generated files. Since the IFR implementation classes form an
+	  inheritance tree, the tie classes are used to decouple this 
+	  inheritance from that of the object classes.
+
+	* orbsvcs/IFR_Service/Makefile:
+	* orbsvcs/IFR_Service/README:
+
+	  Self-explanatory.
+
+	* orbsvcs/tests/InterfaceRepo/InterfaceRepo.dsw:
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.h:
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/IFR_Test.dsp:
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile:
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/README:
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/client.cpp:
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:
+	  
+	  The beginnings of an IFR test suite.
+
+	* docs/releasenotes/index.html:
+
+	  Update added for the Interface Repository section of
+	  the ReleaseNotes.
+
 Thu Jul  6 11:46:38 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp (main):
