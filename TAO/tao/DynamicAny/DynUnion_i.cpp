@@ -372,7 +372,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value,
         }
 
       // If we got a match, a named member will be active.
-      this->discriminator_->from_any (*label_any,
+      this->discriminator_->from_any (label_any.in (),
                                       ACE_TRY_ENV);
       ACE_CHECK;
 
