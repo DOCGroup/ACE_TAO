@@ -17,16 +17,19 @@ Task_State::Task_State (int argc, char **argv)
     oneway_ (0),
     use_name_service_ (1),
     ior_file_ (0),
-    use_sysbench_ (0)
+    grain_ (1),
+    context_switch_ (0)
 {
-  ACE_Get_Opt opts (argc, argv, "sn:t:d:rk:xof:y");
+  ACE_Get_Opt opts (argc, argv, "sn:t:d:rk:xof:g:");
   int c;
   int datatype;
 
   while ((c = opts ()) != -1)
     switch (c) {
-    case 'y':
-      use_sysbench_ = 1;
+    case 'g':
+      grain_ = ACE_OS::atoi (opts.optarg);
+      if (grain_ < 1) 
+	grain_ = 1;
       break;
     case 's':
       use_name_service_ = 0;
@@ -86,6 +89,7 @@ Task_State::Task_State (int argc, char **argv)
                   " [-x] // makes a call to servant to shutdown"
                   " [-o] // makes client use oneway calls instead"
                   " [-s] // makes client *NOT* use the name service"
+                  " [-g granularity_of_request_timing]"
                   "\n", argv [0]));
     }
 
@@ -130,12 +134,14 @@ Client::Client (Task_State *ts)
 void
 Client::put_latency (double *jitter,
                      double latency,
-                     u_int thread_id)
+                     u_int thread_id,
+		     u_int context_switch)
 {
   ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, ts_->lock_));
 
   ts_->latency_[thread_id] = latency;
   ts_->global_jitter_array_[thread_id] = jitter;
+  ts_->context_switch_ += context_switch;
 
 #if defined (ACE_LACKS_FLOATING_POINT)
   ACE_DEBUG ((LM_DEBUG,
@@ -540,6 +546,7 @@ Client::run_tests (Cubit_ptr cb,
   u_int i = 0;
   u_int call_count = 0;
   u_int error_count = 0;
+  u_int context_switch = 0;
   double *my_jitter_array;
 
   ACE_NEW_RETURN (my_jitter_array,
@@ -550,6 +557,10 @@ Client::run_tests (Cubit_ptr cb,
   double sleep_time = (1 / frequency) * (1000 * 1000);
   double delta = 0;
 
+  int pstartTime = 0;
+  int pstopTime = 0;
+  double real_time = 0.0;
+
 #if defined (USE_QUANTIFY)
   quantify_stop_recording_data();
   quantify_clear_data ();
@@ -559,21 +570,26 @@ Client::run_tests (Cubit_ptr cb,
 
   for (i = 0; i < loop_count; i++)
     {
+      ACE_Profile_Timer timer_for_context_switch;
       ACE_High_Res_Timer timer_;
       ACE_Time_Value tv (0, (long int) (sleep_time - delta));
       ACE_OS::sleep (tv);
-
+      
       // Elapsed time will be in microseconds.
       ACE_Time_Value delta_t;
+      
+#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
+      ACE_Profile_Timer timer_for_context_switch;
+      ACE_Profile_Timer::Rusage usage;
+      timer_for_context_switch.start ();
+#endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
 
-      // use sysBench when CHORUS defined and option specified on command line
-#if defined (CHORUS)
-      if (ts_->use_sysbench_ == 1)
-        timer_.start (ACE_OS::ACE_HRTIMER_START);
-      else
-#endif /* CHORUS */
-        timer_.start ();
-
+#if defined (CHORUS)       
+      pstartTime = pccTime1Get();
+#else /* CHORUS */
+      timer_.start ();
+#endif /* !CHORUS */
+      
       if (ts_->oneway_ == 0)
         {
           switch (datatype)
@@ -763,35 +779,41 @@ Client::run_tests (Cubit_ptr cb,
             }
         }
 
-      // use sysBench when CHORUS defined and option specified on command line
-#if defined (CHORUS)
-      if (ts_->use_sysbench_ == 1)
-        timer_.stop (ACE_OS::ACE_HRTIMER_STOP);
-      else
-#endif /* CHORUS */
+#if defined (CHORUS)      
+      if ( (loop_count % ts_->grain_) == 0) 
+	  pstopTime = pccTime1Get();
+#else /* CHORUS */
       // if CHORUS is not defined just use plain timer_.stop ().
-      timer_.stop ();
-
+      timer_.stop (); 
       timer_.elapsed_time (delta_t);
+#endif /* !CHORUS */
 
-      double real_time = 0.0;
+#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
+      timer_for_context_switch.stop ();
+      timer_for_context_switch.elapsed_rusage (usage);
+      // Add up the voluntary context switches & involuntary context switches
+      context_switch += usage.pr_vctx + usage.pr_ictx;
+#endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
 
-#if !defined (ACE_HAS_PRUSAGE_T) && !defined (ACE_HAS_GETRUSAGE) && defined (ACE_LACKS_FLOATING_POINT)
+      // Calculate time elapsed
+#if defined (ACE_LACKS_FLOATING_POINT)
+#   if defined (CHORUS)      
+      real_time = pstopTime - pstartTime;
+      my_jitter_array [i/ts_->grain_] = real_time; // in units of microseconds.
+	  // update the latency array, correcting the index using the granularity 
+#   else /* CHORUS */
       // Store the time in usecs.
       real_time = delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
-        delta_t.usec ();
-
+	delta_t.usec ();
+      my_jitter_array [i] = real_time; // in units of microseconds.
+#   endif /* !CHORUS */
       delta = ((40 * fabs (real_time) / 100) + (60 * delta / 100)); // pow(10,6)
       latency += real_time;
-      my_jitter_array [i] = real_time; // in units of microseconds.
-#else
-      // Store the time in secs.
-      real_time = delta_t.sec () + (double)delta_t.usec () / ACE_ONE_SECOND_IN_USECS;
-
-      delta = ((40 * fabs (real_time * (1000 * 1000)) / 100) + (60 * delta / 100)); // pow(10,6)
+#else /* ACE_LACKS_FLOATING_POINT */
+      delta = ((0.4 * fabs (real_time * (1000 * 1000))) + (0.6 * delta)); // pow(10,6)
       latency += real_time;
       my_jitter_array [i] = real_time * 1000;
-#endif /* !defined (ACE_HAS_PRUSAGE_T) && !defined (ACE_HAS_GETRUSAGE) && defined (ACE_LACKS_FLOATING_POINT) */
+#endif /* !ACE_LACKS_FLOATING_POINT */
     }
 
   if (call_count > 0)
@@ -813,7 +835,10 @@ Client::run_tests (Cubit_ptr cb,
                           latency,
                           calls_per_second));
 
-              this->put_latency (my_jitter_array, latency, thread_id);
+              this->put_latency (my_jitter_array, 
+				 latency, 
+				 thread_id, 
+				 context_switch);
 #else
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) cube average call ACE_OS::time\t= %f msec, \t"
@@ -822,7 +847,8 @@ Client::run_tests (Cubit_ptr cb,
                           1 / latency));
               this->put_latency (my_jitter_array,
                                  latency * 1000,
-                                 thread_id);
+                                 thread_id, 
+				 context_switch);
 #endif /* ! ACE_LACKS_FLOATING_POINT */
             }
           else
@@ -830,7 +856,8 @@ Client::run_tests (Cubit_ptr cb,
               // still we have to call this function to store a valid array pointer.
               this->put_latency (my_jitter_array,
                                  0,
-                                 thread_id);
+                                 thread_id, 
+				 context_switch);
               ACE_DEBUG ((LM_DEBUG,
                           "*** Warning: Latency is less than or equal to zero."
                           "  Precision may have been lost.\n"));
@@ -844,4 +871,135 @@ Client::run_tests (Cubit_ptr cb,
 
   // cb->please_exit (env);
   return 0;
+}
+
+
+/////////////////////////////////////////////////////////////////////////
+// = DESCRIPTION
+//   Program that calculates context switch time between threads.
+//   This test is based on the Task Context Switching measurement
+//   approach described in:
+//   Darren Cathey<br>
+//   "RTOS Benchmarking -- All Things Considered . . ."<br>
+//   <a href="http://www.realtime-info.be"><em>Real-Time Magazine</em></a>,
+//      Second Quarter 1993,
+//   <em>reprinted by <a href="http://www.wrs.com/artreqfm.html">Wind River
+//                    Systems</a></em><p>
+//   which in turn is based on Superconducting Super Collider (SSC)
+//   Ping Suspend/Resume Task and Suspend/Resume Task benchmarks.
+//   Laboratory benchmark
+//   It measures two different times:
+//   1) the time to resume a block high priority task, which does
+//      nothing other than block immediately;  A lower priority task
+//      resumes the high priority task, so the elapsed time includes
+//      two context switches, one task suspend, and one task resume.
+//   2) the time to suspend and resume a low priority task that does
+//      nothing;  There is no context switching.  This time is subtracted
+//      from the one described in 1) above, and the result is divided by
+//      two to yield the context switch time.
+//
+//   Notes:
+//   On Solaris 2.5.1, it appears that the lowest context switching times,
+//   at least on a single-CPU machine, are obtained _without_ creating new
+//   LWPs for new threads (THR_NEW_LWP).  The -n option enables the use of
+//   THR_NEW_LWP for testing.
+//
+//   On Solaris 2.5.1, real-time threads must be bound to LWPs (using the
+//   THR_BOUND flag), so that they can compete for system-wide resources.
+//   In other words, if a thread is bound to an LWP, then the kernel is
+//   aware of it.
+//
+//   On Solaris 2.5.1, a call to thr_yield () is necessary after a call
+//   to thr_continue () by a low-priority task.  Without it, the high-priority
+//   task doesn't preempt the low-priority task.  This happens even with a
+//   10 nsec time quantum for the LWP.  Maybe it's because with this version
+//   of Solaris, the scheduling policy is SCHED_OTHER.
+//
+//   All threads are created with the THR_DETACHED flag so that their
+//   resources are released when they terminate.
+//
+// = CREATION DATE
+//    17 January 1997
+//
+// = AUTHOR
+//    David L. Levine
+//
+// ============================================================================
+
+
+Yield_Test::Yield_Test (const unsigned long iterations) :
+  ACE_Task<ACE_MT_SYNCH> (),
+  iterations_ (iterations),
+  timer_barrier_ (3),
+  timer_ ()
+{
+  timer_.start ();
+
+  this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 2, 0, LOW_PRIORITY);
+
+  timer_barrier_.wait ();
+
+  timer_.stop ();
+  timer_.elapsed_microseconds (elapsed_time_);
+}
+
+Yield_Test::~Yield_Test()
+{
+}
+
+int
+Yield_Test::svc ()
+{
+  for (unsigned long i = 0; i < iterations_; ++i)
+    {
+      ACE_OS::thr_yield ();
+    }
+
+  timer_barrier_.wait ();
+
+  return 0;
+}
+
+double
+context_switch_time (void)
+{
+  const u_int iterations = 1000;
+  const u_int retries = 100;
+  double tmp = 0;
+  // Disable LM_DEBUG
+  ACE_Log_Msg::instance ()->priority_mask (ACE_LOG_MSG->priority_mask () ^
+                                           LM_DEBUG);
+
+  if (ACE_OS::sched_params (
+        ACE_Sched_Params (
+          ACE_SCHED_FIFO,
+          ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
+          ACE_SCOPE_PROCESS)) != 0)
+    {
+      if (ACE_OS::last_error () == EPERM)
+        {
+          ACE_DEBUG ((LM_MAX, "context_switch_time: user is not superuser, "
+                              "so remain in time-sharing class\n"));
+        }
+      else
+        {
+          ACE_OS::perror ("context_switch_time");
+          ACE_OS::exit (-1);
+        }
+    }
+
+  for (u_int i=0; i<100; i++)
+    {
+      LOW_PRIORITY = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+      HIGH_PRIORITY = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+						       LOW_PRIORITY);
+      
+      // then Yield test
+      Yield_Test yield_test (iterations);
+      // Wait for all tasks to exit.
+      ACE_Thread_Manager::instance ()->wait ();
+      
+      tmp += (double) (yield_test.elapsed_time ()/ (ACE_UINT32) 1u) /iterations /2;
+    }
+  return tmp/retries;
 }

@@ -30,13 +30,14 @@ CUBIT_SVR_OBJS = \
 	server.o \
 	cubit_i.o \
 	tmplinst.o
+
 CUBIT_CLIENT_OBJS = \
 	cubitC.o \
 	cubitS.o \
 	Task_Client.o \
 	client.o \
 	Util_Thread.o \
-	tmplinst.o
+	tmplinst.o 
 
 BIN = server client
 BUILD = $(BIN)
@@ -62,7 +63,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/tao/compat
-##POSTLINK += -lnk="-n -T $(VME_ROOT)/src/act/slots/act_s2.ld" 
+
+# pccTimer will eventually get integrated into ACE.  It is specific for ClassiX on VME
+ifdef CHORUS
+	SRC += pccTimer.cpp
+	CLT_OBJS += pccTimer.o
+	LDLIBS += -lOrb
+else
+	LDLIBS += -lOrb-mt
+endif
+
 .PRECIOUS: cubitC.h cubitC.i cubitC.cpp cubitS.h cubitS.i cubitS.cpp
 
 server:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
@@ -70,7 +80,7 @@ server:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 
 client:	$(addprefix $(VDIR),$(CUBIT_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)  $(POSTLINK)
-## -lnk="-n -T $(VME_ROOT)/src/act/slots/act_s2.ld"
+
 clean:
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
 
