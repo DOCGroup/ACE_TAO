@@ -71,6 +71,10 @@ protected:
   /// request_id().
   CORBA::ULong request_id_generator_;
 
+  /// Keep track of the orb core pointer. We need to this to create the
+  /// Reply Dispatchers.
+  TAO_ORB_Core *orb_core_;
+
   typedef ACE_Hash_Map_Manager_Ex <CORBA::ULong,
                                    TAO_Reply_Dispatcher *,
                                    ACE_Hash <CORBA::ULong>,
@@ -79,10 +83,6 @@ protected:
 
   /// Table of <Request ID, Reply Dispatcher> pairs.
   REQUEST_DISPATCHER_TABLE dispatcher_table_;
-
-  /// Keep track of the orb core pointer. We need to this to create the
-  /// Reply Dispatchers.
-  TAO_ORB_Core *orb_core_;
 };
 
 #include "ace/post.h"
