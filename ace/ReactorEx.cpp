@@ -96,7 +96,7 @@ ACE_ReactorEx_Handler_Repository::unbind_i (ACE_HANDLE handle,
 
   // Remember this value; only if it changes do we need to wakeup
   // the other threads
-  int original_handle_count = this->handles_to_be_deleted_;
+  size_t original_handle_count = this->handles_to_be_deleted_;
   
   // Go through all the handles looking for <handle>.  Even if we find
   // it, we continue through the rest of the list since <handle> could
@@ -221,7 +221,7 @@ ACE_ReactorEx_Handler_Repository::suspend_handler_i (ACE_HANDLE handle,
 {
   // Remember this value; only if it changes do we need to wakeup
   // the other threads
-  int original_handle_count = this->handles_to_be_suspended_;
+  size_t original_handle_count = this->handles_to_be_suspended_;
   
   // Go through all the handles looking for <handle>.  Even if we find
   // it, we continue through the rest of the list since <handle> could
@@ -255,7 +255,7 @@ ACE_ReactorEx_Handler_Repository::resume_handler_i (ACE_HANDLE handle,
 {
   // Remember this value; only if it changes do we need to wakeup
   // the other threads
-  int original_handle_count = this->handles_to_be_resumed_;
+  size_t original_handle_count = this->handles_to_be_resumed_;
   
   // Go through all the handles looking for <handle>.  Even if we find
   // it, we continue through the rest of the list since <handle> could
@@ -755,9 +755,9 @@ ACE_ReactorEx_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask,
 							int &delete_event)
 {
   int found = 0;
-
+  
   // First go through the current entries
-  int total_entries = this->max_handlep1_;
+  size_t total_entries = this->max_handlep1_;
 
   for (size_t i = 0; i < total_entries && !found; i++)
     if (io_handle == this->current_info_[i].io_handle_)
