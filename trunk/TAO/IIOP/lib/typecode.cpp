@@ -222,7 +222,7 @@ CORBA_TypeCode::Release (void)
 
 void CORBA_TypeCode::child_free()
 {
-  CORBA_Long i;
+  CORBA_ULong i;
 
   switch (_kind)
     {

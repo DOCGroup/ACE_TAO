@@ -22,6 +22,9 @@ copy params.i    ..\proto\include
 copy connect.h   ..\proto\include
 copy connect.i   ..\proto\include
 copy xdr.h       ..\proto\include
+copy marshal.h   ..\proto\include
+copy typecode.i  ..\proto\include
+copy marshal.i   ..\proto\include
 
 mkdir ..\proto\include\corba
 copy  any.h      ..\proto\include\corba
