@@ -1,3 +1,27 @@
+Thu Sep 28 23:51:11 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/IIOP_Connect.cpp
+	* tao/IIOP_Connect.h
+	* tao/IIOP_Connector.cpp
+	* tao/IIOP_Connector.h
+	* tao/UIOP_Connect.cpp
+	* tao/UIOP_Connect.h
+	* tao/UIOP_Connector.cpp
+	* tao/UIOP_Connector.h:
+
+	  Support for client protocol properties configurations through
+	  RTCORBA::ClientProtocolPolicy.
+
+	* tao/ORB_Core.cpp
+	* tao/ORB_Core.h:
+
+	  Added ORB default RTCORBA::ClientProtocolPolicy.
+	
+	* tao/Policy_Manager.cpp
+	* tao/Policy_Manager.h:
+
+	  Added <client_protocol> setter.
+	
 Thu Sep 28 20:34:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
