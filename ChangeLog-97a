@@ -1,3 +1,38 @@
+Wed May 07 21:58:29 1997    <irfan@TWOSTEP>
+
+	* ace/Message_Block.h: ACE_Data_Block calling delete on the
+ 	  ACE_Message_Block was incorrect.  This was a hack to simplify
+ 	  the locking issues! However this optimization leaded to
+ 	  incorrect code. Therefore I have taken this behavior out. The
+ 	  new implementation will lock and unlock multiple times in the
+ 	  case when there are message_blocks in the continuation field,
+ 	  all of which point to same data block. However, this is a
+ 	  strange case that can be optimized later. For now correct code
+ 	  is more important.
+
+	  Also, the continuation message blocks are only deleted in the
+ 	  release() method and not in the destructor. This will ensure
+ 	  that if message blocks of the stack are chained together, we
+ 	  will not call release on message blocks of the stack.
+
+	  Also note that release() should only be called on message blocks
+ 	  that have been dynamically allocated. Message blocks of the
+ 	  stack will clean up properly when the activation record of the
+ 	  method completes. Dynamically allocated messages blocks should
+	  *never* be chained with message blocks allocated of the stack.
+	
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.h: Removed
+ 	  empty definitions of assignment operator and copy constructor.
+
+	* examples/ASX/Event_Server/Event_Server/event_server.cpp
+ 	  (handle_input): Added code here will make sure we actually wait
+ 	  for the user to type something. On platforms like Win32,
+ 	  handle_input() is called prematurely (even when there is no
+ 	  data).
+
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp: Changed
+ 	  a log message.
+
 Wed May  7 22:55:00 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* JAWS/server/*: Debugging changes!  GET and HEAD both work
