@@ -1485,6 +1485,7 @@ ACE_ReactorEx::instance (void)
 ACE_ReactorEx *
 ACE_ReactorEx::instance (ACE_ReactorEx *r)
 {
+  ACE_UNUSED_ARG (r);
   return NULL;
 }
 
@@ -1504,6 +1505,7 @@ int
 ACE_ReactorEx::run_event_loop (ACE_Time_Value &tv)
 {
   // not implemented
+  ACE_UNUSED_ARG (tv);
   return -1;
 }
 
