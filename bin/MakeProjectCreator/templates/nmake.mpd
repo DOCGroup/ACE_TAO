@@ -164,12 +164,14 @@ LINK32_OBJS= \
 <%foreach(resource_files)%>
 	"$(INTDIR)\<%basenoextension(resource_file)%>.res" \
 <%endfor%>
+<%if(exename || sharedname || staticname)%>
 <%if(pch_source)%>
 	"$(INTDIR)\<%basenoextension(pch_source)%>.obj" \
 <%endif%>
 <%foreach(source_files)%>
 	"$(INTDIR)\<%basenoextension(source_file)%>.obj"<%fornotlast(" \\")%>
 <%endfor%>
+<%endif%>
 
 "<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -212,6 +214,7 @@ CPP_SWITCHES=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%if(optimize)%
 
 <%endif%>
 <%endif%>
+<%if(exename || sharedname || staticname)%>
 <%foreach(source_files)%>
 SOURCE=.\<%source_file%>
 
@@ -221,6 +224,7 @@ SOURCE=.\<%source_file%>
 <%endif%>
 
 <%endfor%>
+<%endif%>
 <%foreach(template_files)%>
 SOURCE=.\<%template_file%>
 <%endfor%>

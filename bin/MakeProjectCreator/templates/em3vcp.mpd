@@ -91,6 +91,7 @@ LIB32=link.exe -lib
 # Name "<%project_name%> - <%platform%> (<%platform_long%>) <%configuration%>"
 <%endfor%>
 <%endfor%>
+<%if(exename || sharedname || staticname)%>
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;cxx;c"
@@ -110,6 +111,7 @@ SOURCE=".\<%source_file%>"
 # End Source File
 <%endfor%>
 # End Group
+<%endif%>
 <%if(header_files)%>
 # Begin Group "Header Files"
 

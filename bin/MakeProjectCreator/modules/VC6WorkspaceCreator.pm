@@ -46,10 +46,12 @@ sub pre_workspace {
             $crlf;
 }
 
+
 sub allow_duplicates {
-  my($self) = shift;
+  #my($self) = shift;
   return 0;
 }
+
 
 sub write_comps {
   my($self)     = shift;
@@ -88,7 +90,6 @@ sub write_comps {
 
     print $fh "}}}$crlf$crlf";
   }
-
 }
 
 
