@@ -4,15 +4,14 @@ Summary
 -------
 
 This directory contains an implmentation for a "simple" component
-server.  Although it is called "CIAO_single_com_server", it can host
-multiple component implementations.
+server.
 
 Running
 -------
 
 To run the component server, invoke it from command line as foloowing:
 
-  CIAO_single_com_server -i <config_file> -o <ior_output_file>
+  Simple_Component_Server -i <config_file> -o <home_finder_ior_output_file>
 
 The <config_file> currently contains information the component server
 needs to install component implementations.  The detail format of the
@@ -21,10 +20,11 @@ mechanism should eventually be replaced by the standard component
 deployment interfaces so component are installed and instantiated
 through a set of interfaces.
 
-The <ior_output_file> points to the file name where the component
-server will output a list of IORs (for home interfaces) hosted on the
-component server.  It will no longer be needed when we have the
-trivial HomeFinder interfaces implemented.
+The <home_finder_ior_output_file> points to the file name where the
+component server will output a IOR (for the HomeFinder interfaces)
+hosted on the component server.  Currently, Simple_Component_Server
+always instantiates a HomeRegistrar service within the process.
+
 
 Server Configuration:
 ---------------------

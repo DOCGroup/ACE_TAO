@@ -1,3 +1,10 @@
+Tue Dec 17 23:30:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/CIAO_single_com_server/*:
+	* tools/Simple_Component_Server/*: Changed the name of the simple
+	  server from CIAO_single_com_server to Simple_Component_Server.
+	  The original name didn't make too much sense at all.
+
 Tue Dec 17 22:49:32 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/CIAO_Server.dsp:
