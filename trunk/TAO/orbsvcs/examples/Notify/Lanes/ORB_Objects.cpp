@@ -2,10 +2,6 @@
 
 #include "ORB_Objects.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "ORB_Objects.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_NS_ORB_Objects, "$id$")
 
 TAO_NS_ORB_Objects::TAO_NS_ORB_Objects (void)
