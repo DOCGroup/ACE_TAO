@@ -119,7 +119,7 @@ CIAO_GLUE_HUDisplay::GPS_Servant::tickConsumer_Refresh_Servant::_get_component (
 
 ACE_INLINE void
 CIAO_GLUE_HUDisplay::GPS_Servant::tickConsumer_Refresh_Servant::push_tick
-  (HUDisplay::tick_ptr evt
+  (HUDisplay::tick *evt
    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -130,7 +130,7 @@ CIAO_GLUE_HUDisplay::GPS_Servant::tickConsumer_Refresh_Servant::push_tick
 // Operations for emits interfaces.
 
 // Operations for publishes interfaces.
-ACE_INLINE ::Components::Cookie_ptr
+ACE_INLINE ::Components::Cookie *
 CIAO_GLUE_HUDisplay::GPS_Servant::subscribe_Ready (HUDisplay::tickConsumer_ptr c
                                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -141,7 +141,7 @@ CIAO_GLUE_HUDisplay::GPS_Servant::subscribe_Ready (HUDisplay::tickConsumer_ptr c
 }
 
 ACE_INLINE HUDisplay::tickConsumer_ptr
-CIAO_GLUE_HUDisplay::GPS_Servant::unsubscribe_Ready (::Components::Cookie_ptr ck
+CIAO_GLUE_HUDisplay::GPS_Servant::unsubscribe_Ready (::Components::Cookie *ck
                                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::InvalidConnection))

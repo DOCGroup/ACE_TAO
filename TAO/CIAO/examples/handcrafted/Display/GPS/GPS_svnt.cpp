@@ -34,7 +34,7 @@ CIAO_GLUE_HUDisplay::GPS_Context::push_Ready (HUDisplay::tick *ev
 }
 
 // Operations for publishes interfaces.
-::Components::Cookie_ptr
+::Components::Cookie *
 CIAO_GLUE_HUDisplay::GPS_Context::subscribe_Ready (HUDisplay::tickConsumer_ptr c
                                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -57,7 +57,7 @@ CIAO_GLUE_HUDisplay::GPS_Context::subscribe_Ready (HUDisplay::tickConsumer_ptr c
 }
 
 HUDisplay::tickConsumer_ptr
-CIAO_GLUE_HUDisplay::GPS_Context::unsubscribe_Ready (::Components::Cookie_ptr ck
+CIAO_GLUE_HUDisplay::GPS_Context::unsubscribe_Ready (::Components::Cookie *ck
                                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::InvalidConnection))
@@ -193,7 +193,7 @@ CIAO_GLUE_HUDisplay::GPS_Servant::provide_MyLocation (ACE_ENV_SINGLE_ARG_DECL)
 
 // Inherit from ::Compopnents::EventConsumerBase
 void
-CIAO_GLUE_HUDisplay::GPS_Servant::tickConsumer_Refresh_Servant::push_event (Components::EventBase_ptr ev
+CIAO_GLUE_HUDisplay::GPS_Servant::tickConsumer_Refresh_Servant::push_event (Components::EventBase *ev
                                                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::BadEventType))
@@ -336,7 +336,7 @@ CIAO_GLUE_HUDisplay::GPS_Servant::same_component (CORBA::Object_ptr object_ref
 }
 
 // Operations for Receptacles interface
-::Components::Cookie_ptr
+::Components::Cookie *
 CIAO_GLUE_HUDisplay::GPS_Servant::connect (const char *,
                                            CORBA::Object_ptr
                                            ACE_ENV_ARG_DECL)
@@ -351,7 +351,7 @@ CIAO_GLUE_HUDisplay::GPS_Servant::connect (const char *,
 
 CORBA::Object_ptr
 CIAO_GLUE_HUDisplay::GPS_Servant::disconnect (const char *,
-                                              Components::Cookie_ptr
+                                              Components::Cookie *
                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
@@ -416,7 +416,7 @@ CIAO_GLUE_HUDisplay::GPS_Servant::get_consumer (const char * sink_name
   ACE_THROW_RETURN (Components::InvalidName (), 0);
 }
 
-::Components::Cookie_ptr
+::Components::Cookie *
 CIAO_GLUE_HUDisplay::GPS_Servant::subscribe (const char * publisher_name,
                                              Components::EventConsumerBase_ptr subscriber
                                              ACE_ENV_ARG_DECL)
@@ -448,7 +448,7 @@ CIAO_GLUE_HUDisplay::GPS_Servant::subscribe (const char * publisher_name,
 
 ::Components::EventConsumerBase_ptr
 CIAO_GLUE_HUDisplay::GPS_Servant::unsubscribe (const char * publisher_name,
-                                               Components::Cookie_ptr ck
+                                               Components::Cookie *ck
                                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
