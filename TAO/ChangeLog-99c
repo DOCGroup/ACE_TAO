@@ -1,3 +1,9 @@
+Thu Nov 11 21:05:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	  Broke up some long lines of generated code relating
+	  to interceptors.
+
 Thu Nov 11 20:53:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/orb.idl:
