@@ -90,8 +90,7 @@ namespace TAO
       virtual
       TAO_SERVANT_LOCATION
       locate_servant (const PortableServer::ObjectId &system_id,
-                      PortableServer::Servant &servant
-                      ACE_ENV_ARG_DECL) = 0;
+                      PortableServer::Servant &servant) = 0;
 
       virtual
       PortableServer::Servant

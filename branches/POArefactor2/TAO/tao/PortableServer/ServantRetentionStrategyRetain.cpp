@@ -374,7 +374,9 @@ namespace TAO
       else
         {
           return
-            this->request_processing_strategy_->locate_servant (system_id, servant);
+            this->request_processing_strategy_->locate_servant (system_id,
+                                                                servant
+                                                                ACE_ENV_ARG_PARAMETER);
         }
     }
 
@@ -616,7 +618,7 @@ namespace TAO
       // If the POA has the UNIQUE_ID policy and the specified servant is
       // active, the Object Id associated with that servant is returned.
       PortableServer::ObjectId_var user_id;
-      if (this->poa_->cached_policies().id_uniqueness () == PortableServer::UNIQUE_ID &&
+      if (!this->poa_->active_policy_strategies().id_uniqueness_strategy ()->allow_multiple_activations () &&
           this->active_object_map_->
           find_user_id_using_servant (servant,
                                       user_id.out ()) != -1)
@@ -669,8 +671,6 @@ namespace TAO
           return user_id._retn ();
         }
 
-      // todo, here still is somethings wrong
-
       /**
        * If the POA has the USE_DEFAULT_SERVANT policy, the servant specified
        * is the default servant, and the operation is being invoked in the
@@ -693,12 +693,13 @@ namespace TAO
     }
 
     PortableServer::ObjectId *
-    Retain_Servant_Retention_Strategy::servant_to_system_id_i (PortableServer::Servant servant,
-                                     CORBA::Short &priority
-                                     ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::ServantNotActive,
-                       PortableServer::POA::WrongPolicy))
+    Retain_Servant_Retention_Strategy::servant_to_system_id_i (
+      PortableServer::Servant servant,
+      CORBA::Short &priority
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ServantNotActive,
+                         PortableServer::POA::WrongPolicy))
     {
       // This operation requires the RETAIN and either the UNIQUE_ID or
       // IMPLICIT_ACTIVATION policies; if not present, the WrongPolicy
@@ -715,7 +716,7 @@ namespace TAO
       // If the POA has the UNIQUE_ID policy and the specified servant is
       // active, the Object Id associated with that servant is returned.
       PortableServer::ObjectId_var system_id;
-      if (this->poa_->cached_policies().id_uniqueness () == PortableServer::UNIQUE_ID &&
+      if (!this->poa_->active_policy_strategies().id_uniqueness_strategy ()->allow_multiple_activations () &&
           this->active_object_map_->
           find_system_id_using_servant (servant,
                                         system_id.out (),

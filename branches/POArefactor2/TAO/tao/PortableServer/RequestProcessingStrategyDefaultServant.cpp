@@ -114,8 +114,7 @@ namespace TAO
     TAO_SERVANT_LOCATION
     Default_Servant_Request_Processing_Strategy::locate_servant (
       const PortableServer::ObjectId &system_id,
-      PortableServer::Servant &servant
-      ACE_ENV_ARG_DECL_NOT_USED)
+      PortableServer::Servant &servant)
     {
       ACE_UNUSED_ARG (system_id);
       ACE_UNUSED_ARG (servant);

@@ -208,7 +208,7 @@ namespace TAO
     Non_Retain_Servant_Retention_Strategy::locate_servant (
       const PortableServer::ObjectId &system_id,
       PortableServer::Servant &servant
-      ACE_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL_NOT_USED)
     {
       return this->request_processing_strategy_->locate_servant (system_id, servant);
     }
