@@ -1,3 +1,14 @@
+Fri May 31 15:22:00 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp: 
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp: 
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp: 
+	* orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp: 
+	* tao/PortableServer/POA.cpp: 
+	  Removed the trailing ';' at the end of #pragma instantiates.
+  	  Thanks to Oliver Kellog <okellogg@freenet.de> for reporting
+ 	  this.
+
 Fri May 31 13:13:03 2002  Chris Hafey <chafey@stentor.com>
 
 	* utils/NamingViewer/AddNameServerDlg.cpp 
