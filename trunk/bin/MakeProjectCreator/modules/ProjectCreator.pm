@@ -316,7 +316,7 @@ sub parse_line {
           else {
             $name =~ s/^\(\s*//;
             $name =~ s/\s*\)$//;
-            $name =~ s/\s/_/g;
+            $name = $self->transform_file_name($name);
             $self->process_assignment('project_name', $name);
           }
         }
@@ -1485,7 +1485,7 @@ sub generate_defaults {
     my($current) = $self->get_current_input();
     if ($current eq '') {
       my($base) = $self->base_directory();
-      $base =~ s/\s/_/g;
+      $base = $self->transform_file_name($base);
       $self->process_assignment('project_name', $base);
     }
     else {
@@ -1493,8 +1493,8 @@ sub generate_defaults {
       ## into underscores.
       $current =~ s/\\/_/g;
 
-      ## Convert spaces to underscores
-      $current =~ s/\s/_/g;
+      ## Convert then name to a usable name
+      $current = $self->transform_file_name($current);
 
       ## Take off the extension
       $current =~ s/\.[^\.]+$//;
