@@ -1,11 +1,22 @@
+Tue Jan  9 09:53:53 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/MEM_Stream_Test.cpp:
+          Run the event loop for at most 1 minute.  After that we know
+          that something is amiss with the client threads, and we should
+          exit.  This fixes the deadlock problems we were seeing in the
+          nightly builds.
+          The real cause of the problem is something broken with the way
+          MEM_Addr objects compare local addresses, sometimes they fail to
+          compare equal.  In the test this results in failed connections.
+
 Mon Jan  8 18:53:39 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
-	* examples/Map_Manager/test_hash_map_manager.cpp:
-	  Removed template instantiations for 
-	  ACE_Guard<ACE_SYNCH_RW_MUTEX>,
-	  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>, and
-	  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> to fix linker
-	  errors under Lynx_I386.
+        * examples/Map_Manager/test_hash_map_manager.cpp:
+          Removed template instantiations for
+          ACE_Guard<ACE_SYNCH_RW_MUTEX>,
+          ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>, and
+          ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> to fix linker
+          errors under Lynx_I386.
 
 Mon Jan  8 10:44:57 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -16,10 +27,10 @@ Mon Jan  8 10:44:57 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Jan 08 10:04:55 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp (terminate): Reordered some statements so
-	  we get the thread descriptor's log_msg pointer before we delete
-	  the thread descriptor.  Thanks to Tomer Amiaz
-	  <Tomer@bandwiz.com> for reporting this.
+        * ace/Thread_Manager.cpp (terminate): Reordered some statements so
+          we get the thread descriptor's log_msg pointer before we delete
+          the thread descriptor.  Thanks to Tomer Amiaz
+          <Tomer@bandwiz.com> for reporting this.
 
 Sun Jan  7 16:51:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -35,30 +46,30 @@ Sun Jan  7 16:51:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Sun Jan  7 08:59:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/DLL_Test.cpp: Added a message in a ACE_ERROR statement.
-	* tests/run_test.lst: Disabled MEM_Stream_Test in Linux.
+        * tests/DLL_Test.cpp: Added a message in a ACE_ERROR statement.
+        * tests/run_test.lst: Disabled MEM_Stream_Test in Linux.
 
 Thu Jan  4 17:14:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp (dispatch_i): Eliminate a portion of the
-	  code from SunCC5 builds. This piece of code was trying to set
-	  things right when it sees all the masks clear and the <size_>
-	  greater than zero. This seems to be creating problems with SunCC
-	  5 builds alone. Commenting out this piece for SunCC5 helps. This
-	  should also be a work around for the bug #750 in bugzilla.
+        * ace/TP_Reactor.cpp (dispatch_i): Eliminate a portion of the
+          code from SunCC5 builds. This piece of code was trying to set
+          things right when it sees all the masks clear and the <size_>
+          greater than zero. This seems to be creating problems with SunCC
+          5 builds alone. Commenting out this piece for SunCC5 helps. This
+          should also be a work around for the bug #750 in bugzilla.
 
 Thu Jan 04 17:07:48 2001  Luther Baker  <luther@cs.wustl.edu>
 
- 	* ace/ace_dll.dsp
+        * ace/ace_dll.dsp
 
- 	  Consistent typography (win32 specific backslash).
+          Consistent typography (win32 specific backslash).
 
 Thu Jan  4 15:34:14 2001  Luther J Baker  <luther@cs.wustl.edu>
 
- 	* ace/ace_dll.dsp
+        * ace/ace_dll.dsp
 
-  	  Added PACE library to the ACE DLL project file.
- 	  (also changed the library search path)
+          Added PACE library to the ACE DLL project file.
+          (also changed the library search path)
 
 Wed Jan  3 17:24:11 2001  Darrell Brunsch <brunsch@uci.edu>
 
