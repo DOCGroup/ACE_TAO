@@ -1,3 +1,8 @@
+Thu Jan  8 20:15:09 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Reactor/Misc/test_demuxing.cpp:
+	  Made this example compiling with BCB.
+
 Thu Jan  8 14:05:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/Misc/Makefile:
