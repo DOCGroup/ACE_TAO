@@ -1,3 +1,7 @@
+Thu May 22 13:02:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ObjectKey_Table.cpp (unbind_i): Beefed up error checking.
+
 Thu May 22 10:51:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.cpp (create_object): If create_collocated_object ()
