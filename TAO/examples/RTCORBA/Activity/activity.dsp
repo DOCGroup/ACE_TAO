@@ -103,6 +103,7 @@ SOURCE=.\Job_i.cpp
 # Begin Source File
 
 SOURCE=.\JobC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

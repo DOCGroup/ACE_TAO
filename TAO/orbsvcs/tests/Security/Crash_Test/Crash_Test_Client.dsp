@@ -8,12 +8,12 @@ CFG=Send_File_Client - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Send_File_Client.mak".
+!MESSAGE NMAKE /f "Crash_Test_Client.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Send_File_Client.mak" CFG="Send_File_Client - Win32 Debug"
+!MESSAGE NMAKE /f "Crash_Test_Client.mak" CFG="Send_File_Client - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -94,6 +94,7 @@ SOURCE=.\client.cpp
 # Begin Source File
 
 SOURCE=.\testC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

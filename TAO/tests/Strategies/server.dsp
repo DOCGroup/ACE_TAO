@@ -98,6 +98,7 @@ SOURCE=.\simple_test_i.cpp
 # Begin Source File
 
 SOURCE=.\simple_testC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

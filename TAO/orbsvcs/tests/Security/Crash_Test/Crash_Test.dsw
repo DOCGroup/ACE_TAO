@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Send_File_Client"=.\Send_File_Client.dsp - Package Owner=<4>
+Project: "Send_File_Client"=.\Crash_Test_Client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Send_File_Server"=.\Send_File_Server.dsp - Package Owner=<4>
+Project: "Send_File_Server"=.\Crash_Test_Server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

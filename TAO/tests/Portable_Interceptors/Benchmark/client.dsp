@@ -110,6 +110,7 @@ SOURCE=.\marker.cpp
 # Begin Source File
 
 SOURCE=.\testC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"
