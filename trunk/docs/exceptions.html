@@ -246,7 +246,7 @@ macros discussed here.
           .
           .
           if (whatever)
-            ACE_TRY_THROW (CORBA::BadParam);
+            ACE_TRY_THROW (CORBA::BAD_PARAM ());
 
           some_other_operation (arg1, arg2, arg3, ACE_TRY_ENV);
           ACE_TRY_CHECK;
@@ -256,7 +256,7 @@ macros discussed here.
         {
           // error handling.
           if (still_has_error)
-            ACE_TRY_THROW (CORBA::NOWAY);
+            ACE_TRY_THROW (CORBA::NOWAY ());
         }
       ACE_CATCHANY
         {
