@@ -211,6 +211,9 @@ template class Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR>;
 #pragma instantiate ACE_Thread_Strategy<CLI_STREAM>
 #pragma instantiate CLI_Stream <THR_STREAM>
 #pragma instantiate Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR>
+#elif defined (AIX) && (defined (__IBMCPP__) && (__IBMCPP__ >= 500))
+// This works around a bug in Visual Age C++ template auto-instantiate.
+template CLI_Stream<THR_STREAM>::CLI_Stream(ACE_Thread_Manager*);
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_THREADS */
