@@ -1,3 +1,10 @@
+Mon Apr  9 07:50:08 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/Makefile:
+          Fixed a typo in the Makefile and added "Options.h" include to
+          CPP-memclient.cpp.
+
 Mon Apr  9 07:42:29 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Basic_Types.cpp:
