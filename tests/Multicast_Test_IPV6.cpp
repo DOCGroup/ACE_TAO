@@ -998,7 +998,7 @@ template class ACE_Array<ACE_String_Base<char> *>;
 
 #else
 int
-run_main (int, ACE_TCHAR *argv[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Multicast_Test_IPV6"));
 
