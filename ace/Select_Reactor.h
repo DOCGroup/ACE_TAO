@@ -34,7 +34,6 @@ class ACE_Select_Reactor;
 
 class ACE_Export ACE_Select_Reactor_Handle_Set
   // = TITLE
-  //
   //      Track handles we are interested for various events.
 {
 public:
