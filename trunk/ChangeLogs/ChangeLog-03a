@@ -1,3 +1,9 @@
+Mon Dec 30 12:21:33 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/taoversion.mpb: Fixed the version
+	  information. This should automatically get updated during the
+	  next beta/release.
+
 Sun Dec 29 18:27:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Prevented BiDirGIOP tests from running
