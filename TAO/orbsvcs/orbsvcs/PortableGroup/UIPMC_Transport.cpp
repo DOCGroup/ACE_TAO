@@ -25,7 +25,11 @@
 # include "UIPMC_Transport.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao, UIPMC_Transport, "$Id$")
+
+ACE_RCSID (PortableGroup,
+           UIPMC_Transport,
+           "$Id$")
+
 
 // Local MIOP Definitions:
 
@@ -278,11 +282,11 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
   bytes_transferred = 0;
 
   // Calculate the bytes to send.  This value is only used for
-  // error conditions to fake a good return.  We do this for 
+  // error conditions to fake a good return.  We do this for
   // semantic consistency with DIOP, and since errors aren't
-  // handled correctly from send_i (our fault).  If these 
+  // handled correctly from send_i (our fault).  If these
   // semantics are not desirable, the error handling problems
-  // that need to be fixed can be found in 
+  // that need to be fixed can be found in
   // UIPMC_Connection_Handler::decr_refcount which will need to
   // deregister the connection handler from the UIPMC_Connector
   // cache.
@@ -338,7 +342,7 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
 
               // Pretend it is o.k.  See note by bytes_to_send calculation.
               bytes_transferred = bytes_to_send;
-              return 1;                 
+              return 1;
             }
 
           // Otherwise, initialize another fragment.
@@ -383,7 +387,7 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
   miop_hdr.write_ulong (num_fragments);
 
   // UniqueId
-  ptr_arith_t unique_id = ACE_reinterpret_cast (ptr_arith_t, iov);
+  ptrdiff_t unique_id = ACE_reinterpret_cast (ptrdiff_t, iov);
   this->write_unique_id (miop_hdr,
                          ACE_static_cast (unsigned long, unique_id));
 
@@ -423,7 +427,7 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
 
             // Pretend it is o.k.  See note by bytes_to_send calculation.
             bytes_transferred = bytes_to_send;
-            return 1;                 
+            return 1;
         }
 
       // Increment the number of bytes transferred, but don't
