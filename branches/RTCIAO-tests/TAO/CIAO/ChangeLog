@@ -1,3 +1,16 @@
+Wed Nov 19 00:56:46 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+	* tools/Assembly_Deployer/README:
+	* tools/Assembly_Deployer/Assembly_Deployer.cpp: I'm in the
+	  process of disect the program into a command line tool that can
+	  either build or teardown an assembly with each invocation.
+	  Right now, you run an application to completion each time you
+	  invoke the deployer, with a manual keystroke indicating the
+	  tearing down of the application.  This change will make it much
+	  easier to write test script that can be shutdown cleanly.
+
+	  Not yet finished.
+
 Sun Nov 16 20:27:19 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Priority_Test/Workers/CB_Worker_exec.cpp: Fixed a g++
