@@ -10,6 +10,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/params.h"
 #include "tao/MProfile.h"
+#include "tao/debug.h"
 
 #include "ace/Auto_Ptr.h"
 

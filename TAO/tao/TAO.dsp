@@ -20,12 +20,13 @@ CFG=TAO - Win32 Debug
 !MESSAGE 
 !MESSAGE "TAO - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "TAO - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Release" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Debug" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 
@@ -104,12 +105,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 nologo MT Gt0 W3 GX O2 I "..\..\\ /I" D "WIN32" D "NDEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD ..\\ c
-# ADD CPP /Gt0 nologo MD Gt0 W3 GX O2 I "..\..\\ /I" D "WIN32" D "NDEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD ..\\ c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+CPP=cl.exe
+# ADD BASE CPP /Gt0 nologo MT Gt0 W3 GX O2 I "..\..\\ /I" D "WIN32" D "NDEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD ..\\ c
+# ADD CPP /Gt0 nologo MD Gt0 W3 GX O2 I "..\..\\ /I" D "WIN32" D "NDEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD ..\\ c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -134,12 +135,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy I "..\..\\ /I" D "WIN32" D "_DEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD MTd ..\\ c
-# ADD CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy I "..\..\\ /I" D "WIN32" D "_DEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD MDd ..\\ c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+CPP=cl.exe
+# ADD BASE CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy I "..\..\\ /I" D "WIN32" D "_DEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD MTd ..\\ c
+# ADD CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy I "..\..\\ /I" D "WIN32" D "_DEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD MDd ..\\ c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -161,6 +162,21 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
+# Begin Source File
+
+SOURCE=.\Acceptor_Registry.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
 # Begin Source File
 
 SOURCE=.\Active_Object_Map.cpp
@@ -3928,6 +3944,21 @@ NODEP_CPP_CONNE=\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connector_Registry.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -14798,6 +14829,21 @@ SOURCE=.\IIOP_Connector.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IIOP_Factory.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Profile.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -24183,6 +24229,21 @@ NODEP_CPP_PRINC=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\Protocol_Factory.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Request.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -30759,6 +30820,10 @@ SOURCE=.\WrongTransactionC.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
+SOURCE=.\Acceptor_Registry.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Active_Object_Map.h
 # End Source File
 # Begin Source File
@@ -30784,6 +30849,10 @@ SOURCE=.\Client_Strategy_Factory.h
 # Begin Source File
 
 SOURCE=.\connect.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connector_Registry.h
 # End Source File
 # Begin Source File
 
@@ -30880,6 +30949,10 @@ SOURCE=.\IIOP_Acceptor.h
 # Begin Source File
 
 SOURCE=.\IIOP_Connector.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Factory.h
 # End Source File
 # Begin Source File
 
@@ -31008,6 +31081,10 @@ SOURCE=.\PolicyC.h
 # Begin Source File
 
 SOURCE=.\Principal.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Protocol_Factory.h
 # End Source File
 # Begin Source File
 

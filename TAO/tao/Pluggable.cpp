@@ -7,7 +7,15 @@
 #include "tao/GIOP.h"
 #include "tao/CDR.h"
 #include "tao/Object_KeyC.h"
+#include "tao/debug.h"
+
 #include "ace/ACE.h"
+
+#if !defined (__ACE_INLINE__)
+# include "tao/Pluggable.i"
+#endif /* __ACE_INLINE__ */
+
+ACE_RCSID(tao, Pluggable, "$Id$")
 
 TAO_IOP_Version::~TAO_IOP_Version (void)
 {

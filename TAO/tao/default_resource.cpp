@@ -1,14 +1,16 @@
 // $Id$
 
 #include "tao/default_resource.h"
+#include "tao/Client_Strategy_Factory.h"
+#include "tao/ORB_Core.h"
+
 #include "ace/Select_Reactor.h"
 #include "ace/XtReactor.h"
 #include "ace/FlReactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
+#include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
-#include "tao/Client_Strategy_Factory.h"
-#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/default_resource.i"
@@ -214,11 +216,13 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
           ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("IIOP_Factory"));
       this->protocol_factories_.insert (item);
 
+#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
       item =
         new TAO_Protocol_Item ("UIOP_Factory");
       item->factory (
           ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("UIOP_Factory"));
       this->protocol_factories_.insert (item);
+#endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
       return 0;
     }
 

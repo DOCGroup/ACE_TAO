@@ -2,9 +2,6 @@
 
 #include "tao/ORB_Core.h"
 
-#include "ace/Env_Value_T.h"
-#include "ace/Arg_Shifter.h"
-
 #include "tao/TAO_Internal.h"
 #include "tao/default_client.h"
 #include "tao/default_server.h"
@@ -14,6 +11,10 @@
 
 #include "tao/Connector_Registry.h"
 #include "tao/Acceptor_Registry.h"
+
+#include "ace/Env_Value_T.h"
+#include "ace/Dynamic_Service.h"
+#include "ace/Arg_Shifter.h"
 
 ACE_RCSID(tao, ORB_Core, "$Id$")
 
@@ -917,8 +918,7 @@ TAO_ORB_Core::server_factory (void)
     {
       // Look in the service repository for an instance.
       this->server_factory_ =
-        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance
-          ("Server_Strategy_Factory");
+        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance ("Server_Strategy_Factory");
       // @@ Not needed!
       this->server_factory_from_service_config_ = 1;
     }
