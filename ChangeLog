@@ -1,3 +1,15 @@
+Fri Aug  6 10:26:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/OS_NS_string.h:
+        
+          Added include of ACE.h needed for WIN32 version of change in
+          
+          Fri Aug  6 07:58:54 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ace/OS_NS_string.inl:
+        
+          Fixed typo and mismatched return type for WIN32.
+
 Fri Aug  6 14:15:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
 
         * ace/config-win32-common.h:
