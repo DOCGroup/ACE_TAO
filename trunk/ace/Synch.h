@@ -1445,7 +1445,7 @@ protected:
   void set_thread_id (ACE_thread_t t);
 
   /// Recursive mutex.
-  ACE_recursive_thread_mutex_t recursive_mutex_;
+  ACE_recursive_thread_mutex_t lock_;
 
   /// Keeps track of whether <remove> has been called yet to avoid
   /// multiple <remove> calls, e.g., explicitly and implicitly in the

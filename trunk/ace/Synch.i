@@ -670,7 +670,7 @@ ACE_Condition_Thread_Mutex::mutex (void)
 ACE_INLINE ACE_recursive_thread_mutex_t &
 ACE_Recursive_Thread_Mutex::mutex (void)
 {
-  return recursive_mutex_;
+  return lock_;
 }
 
 ACE_INLINE ACE_thread_mutex_t &
@@ -678,9 +678,9 @@ ACE_Recursive_Thread_Mutex::get_nesting_mutex (void)
 {
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
   return ACE_static_cast (ACE_thread_mutex_t &,
-                          recursive_mutex_);
+                          lock_);
 #else
-  return recursive_mutex_.nesting_mutex_;
+  return lock_.nesting_mutex_;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 }
 
@@ -691,7 +691,7 @@ ACE_Recursive_Thread_Mutex::set_thread_id (ACE_thread_t t)
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
   ACE_UNUSED_ARG (t);
 #else  /* ! ACE_HAS_RECURSIVE_MUTEXES */
-  this->recursive_mutex_.owner_id_ = t;
+  this->lock_.owner_id_ = t;
 #endif /* ! ACE_HAS_RECURSIVE_MUTEXES */
 }
 
