@@ -282,6 +282,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Simple Bank Client"=.\Simple\bank\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Simple Bank Server"=.\Simple\bank\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Simple Echo Client"=.\Simple\echo\client.dsp - Package Owner=<4>
 
 Package=<5>
