@@ -1,5 +1,36 @@
 Sat Jan 15 00:41:12 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* netsvcs/clients/Naming/Client/main.cpp (main): Replaced
+	  the ad hoc use of argc/argv processing with the ACE_ARGV
+ 	  approach.
+
+	* examples/Service_Configurator/Misc/main.cpp (main): Replaced
+	  the ad hoc use of argc/argv processing with the ACE_ARGV
+ 	  approach.  Note that this required the enhancement shown in the
+ 	  following bullet.
+
+	* ace/Svc_Conf.l: Updated the Service Configurator lexer so that
+	  it will also accept strings that are delimited by single quotes,
+ 	  as well as double quotes.  This helps to simplify the use of
+ 	  ACE_ARGV to create svc.conf entries "on-the-fly".
+
+	* tests: Added a new test ARGV_Test.cpp that  illustrates how to
+	  use advanced features of <ACE_ARGV>.  Thanks to Suresh Kannan
+ 	  <kannan@uav.ae.gatech.edu> for contributing this.
+
+	* ace/config-win32-common.h: Added 
+	
+	  #define ACE_LACKS_SETREGID
+	  #define ACE_LACKS_SETREUID
+  
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
+ 	  reporting this.
+
+	* ace/Task.h: Added a comment to the suspend() and resume() methods 
+	  encouraging developers not to use these methods unless
+ 	  absolutely necessary.  Thanks to Mark C. Barnes <marcus@muse3d.com>
+	  for motivating this.
+
 	* ace: Reorganized the config-win32*.h files
 	  to insulate the different compiler configurations from each
 	  other.  The changes are as follows:
