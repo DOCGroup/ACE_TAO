@@ -1,3 +1,9 @@
+Mon May 14 07:06:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connector.cpp: Added a #include. This should fix
+	  problems in Visual Age. Thanks to Giga Giguashvili
+	  <gregoryg@paradigmgeo.com> for reporting this.
+
 Sat May 12 12:39:47 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/POA.cpp (imr_notify_startup, key_to_object):
