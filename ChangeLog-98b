@@ -6,6 +6,9 @@ Wed Sep 23 12:15:21 1998  David L. Levine  <levine@cs.wustl.edu>
           dynamic structure.  Then, to calculate the standard
           deviation, each sample is compared with the mean.
 
+        * ace/Sched_Params.cpp: replace ACE_HAS_STHREADS with
+          ACE_HAS_PRIOCNTL.  Thanks to Ossama for pointing this out.
+
 Wed Sep 23 11:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}
