@@ -1,3 +1,7 @@
+Mon Feb 01 21:28:27 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.3.1 released.
+
 Mon Feb  1 16:33:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/IIOP_Profile.cpp: 
