@@ -50,7 +50,7 @@ IIOP::Profile::set (const char *h,
     return -1;
 
   // Enough room as to print a <void *>.
-  // @@ The following "32" should not be a magic #...
+  // XXXTAO The following "32" should not be a magic #...
   const int bufs = 32;
   char buffer[bufs];
 
@@ -527,12 +527,12 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
             {
               void *ptr = va_arg (param_vector, void *);
 
-              // XXXASG - added this 12/24/97
               // if it is an inout parameter, it would become necessary to
               // first release the "in" memory
               if (pdp->mode == PARAM_INOUT)
                 {
-                  // XXXASG - add others as we test each case
+                  // XXXTAO - add others as we test each case
+                  // (ASG) will do 03/22/98.
                   switch (pdp->tc->kind (env))
                     {
                     case CORBA::tk_string:

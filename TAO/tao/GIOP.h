@@ -6,7 +6,7 @@
 //    TAO
 //
 // = FILENAME
-//    giop.h
+//    Giop.h
 //
 // = DESCRIPTION
 //     GIOP data structures and support routines
@@ -60,7 +60,7 @@ public:
   TAO_opaque profile_data;
 };
 
-typedef TAO_Unbounded_Sequence<TAO_IOP_Tagged_Profile> 
+typedef TAO_Unbounded_Sequence<TAO_IOP_Tagged_Profile>
         TAO_IOP_Tagged_Profile_Sequence;
 
 class TAO_IOP_IOR
@@ -115,7 +115,7 @@ public:
   TAO_opaque component_data;
 };
 
-typedef TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent> 
+typedef TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>
         TAO_IOP_MultipleComponentProfile;
 
 // namespace TAO_GIOP
@@ -126,23 +126,22 @@ struct TAO_Version
   CORBA::Octet minor;
 };
 
-// @@ Is it possible to put these enums into a class so they don't
-// pollute the global namespace?
-enum
-{
-  // = DESCRIPTION
-  //   GIOP protocol version 1.0 information.
-
-  MY_MAJOR = 1,
-  MY_MINOR = 0
-};
-
 class TAO_GIOP_MessageHeader
 {
   // = TITLE
   //   This is the header sent with ever GIOP request!
 
 public:
+  // version numbers
+  enum
+  {
+    // = DESCRIPTION
+    //   GIOP protocol version 1.0 information.
+
+    MY_MAJOR = 1,
+    MY_MINOR = 0
+  };
+
   CORBA::Char magic [4]; // "GIOP"
   TAO_Version giop_version;
   CORBA::Octet byte_order; // 0 = big, 1 = little
@@ -153,8 +152,10 @@ public:
 // defined by GIOP 1.0 protocol @@ Is this portable? The structure
 // above could have some padding on machines with absurd padding
 // requirements (like 8 byte boundaries); hence the size of it may not
-// match th size of the header on the wire.
-#define	TAO_GIOP_HEADER_LEN sizeof (TAO_GIOP_MessageHeader)
+// match the size of the header on the wire.
+//#define	TAO_GIOP_HEADER_LEN sizeof (TAO_GIOP_MessageHeader)
+// XXXTAO - I made this explicitly 12 (ASG)
+#define	TAO_GIOP_HEADER_LEN 12
 
 // Support for Implicit ORB Service Context.
 typedef CORBA::ULong TAO_GIOP_ServiceID;
@@ -174,12 +175,12 @@ class TAO_GIOP_ServiceContext
 {
   // = TITLE
   //   Sent for service context entries in the GIOP request header.
-public:  
+public:
   TAO_GIOP_ServiceID context_id;
   TAO_opaque context_data;
 };
 
-typedef TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext> 
+typedef TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>
         TAO_GIOP_ServiceContextList;
 
 extern CORBA::TypeCode TC_ServiceContextList;
@@ -230,7 +231,7 @@ enum TAO_GIOP_ReplyStatusType
   // Request terminated with system exception
 
   TAO_GIOP_LOCATION_FORWARD
-  // @@ More info
+  // Reply is a location forward type
 };
 
 class TAO_GIOP_ReplyHeader
@@ -309,10 +310,11 @@ public:
   // <start> goes beyond initialising data structures, and makes calls
   // that may fail -- and thus throw exceptions.
 
-  // @@ Andy, can you please document this method?
   void put_param (CORBA::TypeCode_ptr tc,
                   void *value,
                   CORBA::Environment &env);
+  // Encodes the value into the undelying CDR stream based on the TypeCode
+  // parameter
 
   TAO_GIOP_ReplyStatusType invoke (CORBA::ExceptionList &exceptions,
                                    CORBA::Environment &env);

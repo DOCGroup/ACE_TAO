@@ -154,23 +154,23 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
   CORBA::Any *any = (CORBA::Any *) data;
 
   // Typecode of the element that makes the Any.
-  CORBA::TypeCode_ptr elem_tc; 
+  CORBA::TypeCode_ptr elem_tc;
 
   // Value maintained by the Any.
   void *value = 0;
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
 
   // Context is the CDR stream.
-  CDR *stream = (CDR *) context; 
+  CDR *stream = (CDR *) context;
 
   // Status of encode operation.
   CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE; 
+    CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   // Decode the typecode description for the element.
   if (stream->decode (CORBA::_tc_TypeCode,
                       &elem_tc,
-                      this,
+                      0,
                       env) == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
       ACE_NEW_RETURN (value,
@@ -201,7 +201,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
             case CORBA::tk_double:
             case CORBA::tk_longlong:
             case CORBA::tk_ulonglong:
-              continue_decoding = 
+              continue_decoding =
                 stream->get_longlong (*(CORBA::LongLong *) value);
               break;
             case CORBA::tk_boolean:
@@ -272,16 +272,16 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
 
   // Context is the CDR stream.
-  CDR *stream = (CDR *) context;  
+  CDR *stream = (CDR *) context;
 
   // Typecode to be decoded.
-  CORBA::TypeCode_ptr *tcp;        
+  CORBA::TypeCode_ptr *tcp;
 
   // Typecode kind.
-  CORBA::ULong kind;               
+  CORBA::ULong kind;
 
   // TypeCode for the parent.
-  CORBA::TypeCode_ptr parent = (CORBA::TypeCode_ptr) parent_typecode; 
+  CORBA::TypeCode_ptr parent = (CORBA::TypeCode_ptr) parent_typecode;
 
   // Decode the "kind" field of the typecode from the stream
   continue_decoding = stream->get_ulong (kind);
@@ -289,7 +289,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
   if (continue_decoding == CORBA::B_TRUE)
     {
       // The data has to be a TypeCode_ptr *.
-      tcp = (CORBA::TypeCode_ptr *) data;  
+      tcp = (CORBA::TypeCode_ptr *) data;
 
       // Typecodes with empty parameter lists all have preallocated
       // constants.  We use those to reduce memory consumption and
@@ -304,7 +304,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
             {
               // Need special handling for all kinds of typecodes that
               // have nonempty parameter lists ...
-            default:                        
+            default:
               // Error: missed a case!
               env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_MAYBE));
               return CORBA::TypeCode::TRAVERSE_STOP;
@@ -332,9 +332,6 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                         *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
                                                     bound, 0, CORBA::B_FALSE,
                                                     parent);
-                        // @@ Andy, is the following still necessary?
-                        // If not, can we please remove it?
-                        //                            (*tcp)->parent_ = parent;
                       }
                   }
               }
@@ -502,7 +499,7 @@ TAO_Marshal_Principal::decode (CORBA::TypeCode_ptr,
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
 
   // Context is the CDR stream.
-  CDR *stream = (CDR *) context;  
+  CDR *stream = (CDR *) context;
 
   CORBA::Principal_ptr *pp = (CORBA::Principal_ptr *) data;
   CORBA::ULong len;
@@ -548,7 +545,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
 
   // Context is the CDR stream.
-  CDR *stream = (CDR *) context;  
+  CDR *stream = (CDR *) context;
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::String type_hint;
 
@@ -610,13 +607,13 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
 
         str.setup_encapsulation (ACE_reinterpret_cast(char*,buf), tmp);
 
-        // @@ (CJC) Does IIOP_Object duplicate 'type_hint' below so
+        // XXXTAO Does IIOP_Object duplicate 'type_hint' below so
         // that we can safely free it?  It does now!
         ACE_NEW_RETURN (objdata,
                         IIOP_Object (type_hint),
                         CORBA::TypeCode::TRAVERSE_STOP);
 
-        // @@ (coryan) The IIOP_Object created here has a String_var
+        // XXXTAO The IIOP_Object created here has a String_var
         // member to keep the string, this member is constructed using
         // type_hint, at that time a plain (char*). Hence the string
         // is *not* copied and it cannot be released, so the following
@@ -686,7 +683,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
       // Create a new CORBA_Object and give it the IIOP_Object just
       // created.
       CORBA_Object *corba_proxy;
-      
+
       ACE_NEW_RETURN (corba_proxy,
                       CORBA_Object (objdata),
                       CORBA::TypeCode::TRAVERSE_CONTINUE);
@@ -772,7 +769,7 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
                       case CORBA::tk_double:
                       case CORBA::tk_longlong:
                       case CORBA::tk_ulonglong:
-                        continue_decoding = 
+                        continue_decoding =
                           stream->get_longlong (*(CORBA::LongLong *) data);
                         break;
                       case CORBA::tk_boolean:
@@ -843,7 +840,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                            CORBA::Environment &env)
 {
   // Context is the CDR stream.
-  CDR *stream = (CDR *) context;  
+  CDR *stream = (CDR *) context;
 
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -1003,7 +1000,7 @@ TAO_Marshal_String::decode (CORBA::TypeCode_ptr,
 {
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
   // Context is the CDR stream.
-  CDR *stream = (CDR *) context;  
+  CDR *stream = (CDR *) context;
   CORBA::ULong len = 0;
   CORBA::String str;
 
@@ -1058,11 +1055,11 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
   TAO_Base_Sequence *seq = (TAO_Base_Sequence *)data;
   // Return status.
   CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;  
+    CORBA::TypeCode::TRAVERSE_CONTINUE;
   // Typecode of the element.
   CORBA::TypeCode_ptr tc2;
   // Size of element.
-  size_t size; 
+  size_t size;
   CORBA::ULong bounds;
   char *value;
 
@@ -1094,7 +1091,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                   // Allocate the buffer using the virtual
                   // _allocate_buffer method, hence the right
                   // constructors are invoked and size for the array
-                  // is OK.  @@ Who will free this memory?  (coryan):
+                  // is OK. XXXTAO Who will free this memory?  (coryan):
                   // the sequence will release it, since its release_
                   // field is 1.
                   seq->_allocate_buffer (bounds);
@@ -1261,13 +1258,13 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
 
   // Return status.
   CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;  
+    CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   // Typecode of the element.
   CORBA::TypeCode_ptr tc2;
 
   // Size of element.
-  size_t  size; 
+  size_t  size;
   CORBA::ULong  bounds;
   char *value = (char *) data;
 
@@ -1436,15 +1433,15 @@ TAO_Marshal_Alias::decode (CORBA::TypeCode_ptr  tc,
                            CORBA::Environment &env)
 {
   // Typecode of the aliased type.
-  CORBA::TypeCode_ptr tc2;  
+  CORBA::TypeCode_ptr tc2;
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
 
   // Context is the CDR stream.
-  CDR *stream = (CDR *) context;  
+  CDR *stream = (CDR *) context;
 
   // Status of decode operation.
   CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE; 
+    CORBA::TypeCode::TRAVERSE_CONTINUE;
   char *value = (char *) data;
 
   tc2 = tc->content_type (env);
@@ -1538,7 +1535,7 @@ TAO_Marshal_Except::decode (CORBA::TypeCode_ptr  tc,
                             CORBA::Environment &env)
 {
   CDR *stream = (CDR *) context;
-  CORBA::TypeCode::traverse_status retval = 
+  CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
   CORBA::TypeCode_ptr param;

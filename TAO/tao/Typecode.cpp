@@ -470,7 +470,7 @@ TC_Private_State::~TC_Private_State (void)
       // Delete the content type only if it has a parent i.e., if it
       // is not acquired from the pool of constant or predefined
       // typecodes.
-      if (this->tc_content_type_known_ 
+      if (this->tc_content_type_known_
           && this->tc_content_type_->parent_)
         delete this->tc_content_type_;
       break;
@@ -684,13 +684,13 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
     return 0;
 
   // compare repoIDs if they exist
-  if (ACE_OS::strlen (my_id) > 1 
+  if (ACE_OS::strlen (my_id) > 1
       && ACE_OS::strlen (tc_id) > 1
       && ACE_OS::strcmp (my_id, tc_id)) // not same
     return 0;
 
   // Compare names if they exist.
-  if (ACE_OS::strlen (my_name) > 1 
+  if (ACE_OS::strlen (my_name) > 1
       && ACE_OS::strlen (tc_name) > 1
       && ACE_OS::strcmp (my_name, tc_name)) // not same
     return 0;
@@ -719,7 +719,7 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
       if (env.exception ())
         return 0;
 
-      if (ACE_OS::strlen (my_member_name) > 1 
+      if (ACE_OS::strlen (my_member_name) > 1
           && ACE_OS::strlen (tc_member_name) > 1
           && ACE_OS::strcmp (my_member_name, tc_member_name)) // not same
         return 0;
@@ -765,13 +765,13 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
     return 0;
 
   // compare repoIDs if they exist
-  if (ACE_OS::strlen (my_id) > 1 
+  if (ACE_OS::strlen (my_id) > 1
       && ACE_OS::strlen (tc_id) > 1
       && ACE_OS::strcmp (my_id, tc_id)) // not same
     return 0;
 
   // compare names if they exist
-  if (ACE_OS::strlen (my_name) > 1 
+  if (ACE_OS::strlen (my_name) > 1
       && ACE_OS::strlen (tc_name) > 1
       && ACE_OS::strcmp (my_name, tc_name)) // not same
     return 0;
@@ -1370,7 +1370,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
                   // Always big enough because labels can only be of a
                   // few different types of which "long" has the
                   // largest size.
-                  CORBA::Long scratch; 
+                  CORBA::Long scratch;
 
                   // get the typecode for the discriminator
                   tc = this->discriminator_type (env);
@@ -1690,7 +1690,6 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
                 {           // member TC
                   dmsg1 ("TypeCode::private_member_label -- error getting typecode for member %d",i);
                   delete [] buf;
-                  // XXXASG: free this list on error
                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
                   return 0;
                 }

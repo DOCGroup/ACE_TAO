@@ -59,13 +59,14 @@ public:
   };
 
   // = Initialization and termination operations.
+
   CORBA_Any (void);
   // Default constructor.
 
   CORBA_Any (CORBA::TypeCode_ptr type,
 	     void *value = 0,
-	     CORBA::Boolean orb_owns_data = CORBA::B_FALSE);
-  // Constructor.
+	     CORBA::Boolean any_owns_data = CORBA::B_FALSE);
+  // Constructor. The any_owns_data flag determines if the Any owns the value
 
   CORBA_Any (const CORBA_Any &a);
   // Copy constructor.
@@ -156,7 +157,8 @@ public:
 
   struct from_string
   {
-    from_string (char* s, CORBA::ULong b,
+    from_string (char* s,
+                 CORBA::ULong b,
 		 CORBA::Boolean nocopy = CORBA::B_FALSE);
     char *val_;
     CORBA::ULong bound_;
@@ -176,7 +178,7 @@ public:
   // insert a bounded string
 
   // = Special types.
-  
+
   // These extract octets, chars, booleans, bounded strings, and
   // object references
 
@@ -212,33 +214,56 @@ public:
   };
 
   // extraction of the special types
+
   CORBA::Boolean operator>>= (to_boolean) const;
+  // extract a boolean
+
   CORBA::Boolean operator>>= (to_octet) const;
+  // extract an octet
+
   CORBA::Boolean operator>>= (to_char) const;
+  // extract a char
+
   CORBA::Boolean operator>>= (to_string) const;
+  // extract a bounded string
+
   CORBA::Boolean operator>>= (to_object) const;
+  // extract an object reference
 
   // = ALLOCATION
+
   void *operator new (size_t, const void *p);
   // Placement new.
+
   void *operator new (size_t s);
   // Default new.
+
   void operator delete (void *p);
   // Default delete
 
+  // the following are unsafe operations
+  // ORBOS/90-01-11, pg 672: For C++ mapping using the CORBA::Environment
+  // parameter, two forms of the replace method are provided.
+
   void replace (CORBA::TypeCode_ptr type,
 		const void *value,
-		CORBA::Boolean orb_owns_data,
+		CORBA::Boolean any_owns_data,
 		CORBA::Environment &env);
   // Replace the current typecode and data with the specified one -
   // unsafe.
+
+  void replace (CORBA::TypeCode_ptr type,
+		const void *value,
+		CORBA::Environment &env);
+  // Replace the current typecode and data with the specified one -
+  // unsafe. This uses a default value for the "any_owns_data" parameter
 
   CORBA::TypeCode_ptr type (void) const;
   // Return TypeCode of the element stored in the Any.
 
   const void *value (void) const;
   // Returns 0 if the Any has not been assigned a value, following the
-  // CORBA spec (TODO: give a reference) it returns a non-zero value
+  // CORBA spec (ORBOS/98-01-11) it returns a non-zero value
   // otherwise. TAO does *not* guarantee that this value may be casted
   // to the contained type safely.
 
@@ -253,17 +278,11 @@ private:
   void *value_;
   // Value for the <Any>.
 
-  CORBA::Boolean orb_owns_data_;
+  CORBA::Boolean any_owns_data_;
   // Flag that indicates the ORB is responsible for deleting the data.
 
   CORBA::ULong refcount_;
   // Reference count the <Any> to reduce copying costs.
-
-  void replace (CORBA::TypeCode_ptr type,
-		const void *value,
-		CORBA::Boolean orb_owns_data);
-  // Helper for extraction operators that don't pass an environment
-  // parameter.
 
   // 94-9-14 hides unsigned char insert/extract
   void operator<<= (unsigned char);
@@ -274,7 +293,7 @@ class TAO_Export CORBA_Any_var
 {
   // = TITLE
   //   Provide for automatic storage deallocation on going out of
-  //   scope.  
+  //   scope.
 public:
   CORBA_Any_var (void);
   // default constructor
@@ -321,9 +340,13 @@ private:
 };
 
 class TAO_Export CORBA_Any_out
-  // = TITLE
-  //   @@ (ANDY) Please document me.
 {
+  // = TITLE
+  //   CORBA_Any_out
+  //
+  // = DESCRIPTION
+  //   The _out class for CORBA_Any. This is used to help in managing the out
+  //   parameters.
 public:
   // = operations.
 
