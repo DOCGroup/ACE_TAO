@@ -22,13 +22,13 @@
 #include "ace/Process.h"
 
 #if defined (ACE_WIN32)
-#define EXEC_NAME "c:\\WINNT35\\system32\\MORE.COM"
-const char *DATE_PATH = "c:\\Utils\\bin\\date.exe";
-const char *LS_PATH = "c:\\Utils\\bin\\ls.exe";
+#define EXEC_NAME "MORE.COM"
+const char *DATE_PATH = "date.exe";
+const char *LS_PATH = "ls.exe";
 #else
-#define EXEC_NAME "/pkg/gnu/bin/less"
-const char *DATE_PATH = "/usr/bin/date";
-const char *LS_PATH = "/usr/bin/ls";
+#define EXEC_NAME "less"
+const char *DATE_PATH = "date";
+const char *LS_PATH = "ls";
 #endif /* ACE_WIN32 */
 
 static char *executable = EXEC_NAME;
