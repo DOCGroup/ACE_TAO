@@ -1,3 +1,32 @@
+Sun Aug 20 11:18:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/Makefile.CosTrading:
+	* orbsvcs/orbsvcs/Makefile.RTSchedEvent:	
+	* orbsvcs/orbsvcs/Makefile.CosConcurrency:
+	* orbsvcs/orbsvcs/Makefile.DsLogAdmin:
+	* orbsvcs/orbsvcs/Makefile.SSLIOP:
+	* orbsvcs/orbsvcs/Makefile.CosEvent:	  
+	* orbsvcs/orbsvcs/Makefile.ESF:		  
+	* orbsvcs/orbsvcs/Makefile.Security:
+	* orbsvcs/orbsvcs/Makefile.CosLifeCycle:	  
+	* orbsvcs/orbsvcs/Makefile.ETCL:		  
+	* orbsvcs/orbsvcs/Makefile.Svc_Utils:
+	* orbsvcs/orbsvcs/Makefile.CosNaming:	  
+	* orbsvcs/orbsvcs/Makefile.LoadBalancing:  
+	* orbsvcs/orbsvcs/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.CosNotification:  
+	* orbsvcs/orbsvcs/Makefile.RTEvent:	  
+	* orbsvcs/orbsvcs/Makefile.av:
+	* orbsvcs/orbsvcs/Makefile.CosProperty:	  
+	* orbsvcs/orbsvcs/Makefile.RTOLDEvent:	  
+	* orbsvcs/orbsvcs/Makefile.bor:
+	* orbsvcs/orbsvcs/Makefile.CosTime:	  
+	* orbsvcs/orbsvcs/Makefile.RTSched:
+ 	  
+	  Updated the Makefile dependencies to remove the obsolete
+	  dependencies on the old Interceptor files.
+	
 Sat Aug 19 21:03:48 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/RT_Policy_i.h
