@@ -32,7 +32,7 @@ unlink $cookie;
 
 $assembly_manager_args = "-o $am_ior -c $topo_config";
 
-$ad_deploy = " -k file://$am_ior -o $cookie -a demo.cad";
+$ad_deploy = " -k file://$am_ior -o $cookie -a $assembly";
 
 $ad_teardown = " -k file://$am_ior -d $cookie -x";
 
@@ -62,7 +62,7 @@ if (PerlACE::waitforfile_timed ($controller_ior, 15) == -1) {
     exit 1;
 }
 
-for ($work = 10; $work < 400; $work += 20)
+for ($work = 10; $work < 401; $work += 10)
 {
     printf "Test work: $work\n";
 
