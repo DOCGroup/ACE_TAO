@@ -400,7 +400,7 @@ Options::twoway_client_test (void *)
         // are sent.
         timer.start_incr ();
 
-        if (cli_stream.send (request, r_bytes) == -1)
+        if (cli_stream.send_n (request, r_bytes) == -1)
           {
             ACE_ERROR ((LM_ERROR,
                         "(%P|%t) %p\n",
@@ -408,8 +408,8 @@ Options::twoway_client_test (void *)
             result = -1;
             break;
           }
-        // Receive the reply from the server.  It just echos back the
-        // reply.
+        // Receive the reply from the server.  Normally, it just sends
+        // back 24 bytes, which is typical for an IIOP reply.
         else if (cli_stream.recv (request, r_bytes) <= 0)
           {
             ACE_ERROR ((LM_ERROR,
