@@ -115,7 +115,7 @@ sub store_file ($)
     elsif ($name =~ /\.(mpc|mwc|mpb|mpt)/i) {
         push @files_mpc, ($name);
     }
-    elsif ($name =~ /\.(bor)/i) {
+    elsif ($name =~ /\.bor$/i) {
         push @files_bor, ($name);
     }
 }
