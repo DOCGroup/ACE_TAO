@@ -14,14 +14,15 @@
 
 #if (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 199506L) || \
     defined (__EXTENSIONS__)
-# define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 // Hack 'cuz -DPOSIX_SOURCE=199506L and -DEXTENSIONS hides this.
 # include <sys/types.h>
   extern "C" int madvise(caddr_t, size_t, int);
 #endif /* _POSIX_C_SOURCE >= 199506L  ||  __EXTENSIONS__ */
 
-#define ACE_HAS_POSIX_SEM
+#if defined (_POSIX_PTHREAD_SEMANTICS)
+# define ACE_HAS_POSIX_SEM
+#endif /* _POSIX_PTHREAD_SEMANTICS */
 
 // SunOS 5.6 has AIO calls.
 #define ACE_HAS_AIO_CALLS
