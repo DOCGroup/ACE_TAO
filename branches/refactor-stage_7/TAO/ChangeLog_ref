@@ -1,3 +1,9 @@
+Fri Oct 24 11:00:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_tmplinst/arg_tmplinst.cpp:
+	* TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp: Numerous fixes
+	  for the explicit template instantiations.
+
 Fri Oct 17 21:30:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tao/Collocated_Invocation.cpp:
