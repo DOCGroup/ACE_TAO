@@ -3135,6 +3135,8 @@ class ACE_Export ACE_OS
   //     <ACE_Log_Msg::restart> flag is enabled).
 {
 public:
+  enum { NON_BLOCKING_BUG_DELAY = 35000 };
+  
   struct ace_flock_t
     // = TITLE
     //     OS file locking structure.
