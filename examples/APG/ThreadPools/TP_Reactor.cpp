@@ -11,6 +11,7 @@
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Acceptor.h"
