@@ -415,6 +415,12 @@ public:
   virtual int owner (ACE_thread_t *owner) = 0;
   // Return the ID of the "owner" thread.
 
+  virtual int restart (void) = 0;
+  // Get the existing restart value.
+  
+  virtual int restart (int r) = 0;
+  // Set a new value for restart and return the original value.
+
   virtual void requeue_position (int) = 0;
   // Set position of the owner thread.
 

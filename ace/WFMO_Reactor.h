@@ -860,10 +860,12 @@ public:
   // notify queue before breaking out of its
   // <ACE_Message_Queue::dequeue> loop.
 
+  // = Assorted helper methods.
+
   virtual int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
                        ACE_Event_Handler **event_handler = 0);
-  // Not implemented
+  // Not implemented.
 
   virtual int handler (int signum,
                        ACE_Event_Handler ** = 0);
@@ -893,6 +895,12 @@ public:
 
   virtual int owner (ACE_thread_t *owner);
   // Return the ID of the "owner" thread.
+
+  virtual int restart (void);
+  // Get the existing restart value.
+  
+  virtual int restart (int r);
+  // Set a new value for restart and return the original value.
 
   virtual void requeue_position (int);
   // Not implemented

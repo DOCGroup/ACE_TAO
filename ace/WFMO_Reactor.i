@@ -1048,6 +1048,18 @@ ACE_WFMO_Reactor::requeue_position (void)
 }
 
 ACE_INLINE int
+ACE_WFMO_Reactor::restart (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_WFMO_Reactor::restart (int)
+{
+  return 0;
+}
+
+ACE_INLINE int
 ACE_WFMO_Reactor::ready_ops (ACE_Event_Handler *event_handler,
                              ACE_Reactor_Mask mask,
                              int ops)
