@@ -52,6 +52,7 @@ IIOP::Profile::set (const char *h,
   char buffer[bufs];
   if (key == 0)
     {
+      // @@ (IRFAN) Object key generation
       // Use <this> as the key...
       ACE_OS::sprintf (buffer, "0x%024.24x", this);
       key = buffer;
