@@ -74,7 +74,6 @@ void check_bounds
 
 const size_t NPOS  = (size_t)(-1);
 
-
 /*
  *Added by d:\\convert.pl --begin--
  */
@@ -461,6 +460,8 @@ protected:
     delete_ref () _THROW_NONE ;
 
 public:
+
+    static const size_t npos;
 
     typedef  charT                       char_type;
     typedef  string_char_baggage<charT>  baggage_type;
@@ -2496,6 +2497,9 @@ operator>> (istream& i, basic_string<charT>& s) _THROW_ALLOC_LENGTH
 // GreenHills 1.8.8 doesn't like this template specialization . . .
 template basic_string<char>;
 #endif /* ghs */
+/* static */
+template<TYPE> 
+const size_t basic_string<TYPE>::npos = NPOS;
 typedef  basic_string<char>     cstring;
 typedef  basic_string<char>     string;
 //typedef  basic_string<wchar_t>  wstring;
