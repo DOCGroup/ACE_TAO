@@ -17,8 +17,6 @@ project (Config_Handlers) : taolib {
     Requirement_Handler.cpp
     Property_Handler.cpp
     SPK_Handler.cpp
-    ACD_Handler.cpp
-    APM_Handler.cpp
     CAD_Handler.cpp
     Cap_Handler.cpp
     CEPE_Handler.cpp
@@ -37,9 +35,6 @@ project (Config_Handlers) : taolib {
     PC_Handler.cpp
     PCI_Handler.cpp
     RS_Handler.cpp
-    SID_Handler.cpp
-    SPE_Handler.cpp
-    SPR_Handler.cpp
     Domain_Handler.cpp
     Plan_Handler.cpp
     DnC_Dump.cpp

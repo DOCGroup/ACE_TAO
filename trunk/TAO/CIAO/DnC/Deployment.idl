@@ -309,7 +309,7 @@ module Deployment {
 
   struct SubcomponentPortEndpoint {
     string portName;
-    SubcomponentInstantiationDescriptions instance;
+    unsigned long instance;
   };
 
   typedef sequence < SubcomponentPortEndpoint > SubcomponentPortEndpoints;
@@ -327,7 +327,7 @@ module Deployment {
   struct SubcomponentPropertyReference {
     string propertyName;
     // changed the type of the field below
-    SubcomponentInstantiationDescription instance;
+    unsigned long instance;
   };
 
   typedef sequence < SubcomponentPropertyReference > SubcomponentPropertyReferences;
