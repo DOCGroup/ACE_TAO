@@ -54,7 +54,8 @@ namespace CIAO
   {
   public:
     Swapping_Servant_Home_Impl (EXEC * exe,
-                       Swapping_Container * c);
+                       Swapping_Container * c,
+                       const char* obj_id, const char* repo_id);
 
     virtual ~Swapping_Servant_Home_Impl (void);
 
@@ -102,6 +103,9 @@ namespace CIAO
                             ACE_Equal_To<PortableServer::ObjectId>,
                             ACE_SYNCH_MUTEX>
       component_map_;
+
+    const char* obj_id_;
+    const char* repo_id_;
   };
 }
 

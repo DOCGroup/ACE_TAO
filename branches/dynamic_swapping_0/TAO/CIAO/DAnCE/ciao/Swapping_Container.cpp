@@ -32,6 +32,8 @@ namespace CIAO
                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+
+    ACE_DEBUG ((LM_DEBUG, "swap container init \n"));
     char buffer[MAXPATHLEN];
 
     if (name == 0)
