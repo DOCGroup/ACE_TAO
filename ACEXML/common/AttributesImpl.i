@@ -1,6 +1,7 @@
 // -*- C++ -*-  $Id$
 
 #include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
 
 ACEXML_INLINE
 ACEXML_Attribute::ACEXML_Attribute (void)

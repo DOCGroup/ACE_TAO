@@ -12,6 +12,8 @@
 //=============================================================================
 
 #include "ace/Codeset_Registry.h"
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_string.h"
 
 // $Id$
 

@@ -5,6 +5,9 @@
 #define ACE_CONNECTOR_C
 
 #include "ace/Connector.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/os_include/os_fcntl.h"     /* Has ACE_NONBLOCK */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

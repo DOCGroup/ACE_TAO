@@ -11,6 +11,7 @@ ACE_RCSID(common, ACEXML_URL_Addr, "$Id$")
 #include "ace/Log_Msg.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 ACEXML_URL_Addr::ACEXML_URL_Addr (void)
   : path_name_ (0),

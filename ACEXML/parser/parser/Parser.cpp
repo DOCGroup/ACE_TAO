@@ -12,6 +12,7 @@
 #include "ACEXML/common/StrCharStream.h"
 #include "ACEXML/common/StreamFactory.h"
 #include "ACEXML/parser/parser/ParserInternals.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 
 static const ACEXML_Char default_attribute_type[] = ACE_TEXT ("CDATA");

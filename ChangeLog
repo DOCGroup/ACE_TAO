@@ -1,3 +1,51 @@
+Fri Nov  7 15:21:49 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/Connector.cpp: Added #include "ace/os_include/os_fcntl.h" to
+	  get ACE_NONBLOCK, "ace/OS_NS_stdio.h" to get ACE_OS::sprintf(), and
+	  "ace/OS_NS_string.h" to get ACE_OS::strdup().
+
+	* ace/Service_Config.h:
+	* ACEXML/common/URL_Addr.h: Added #include "ace/Default_Constants.h" to
+	  see ACE_DEFAULT_SERVICE_REPOSITORY_SIZE.
+
+	* ace/Codeset_Registry.cpp:
+	* ace/Local_Name_Space.cpp:
+	* ace/Local_Name_Space_T.cpp:
+	* ace/Module.i:
+	* ace/Name_Space.cpp:
+	* ace/Naming_Context.cpp:
+	* ace/Obstack_T.cpp:
+	* ace/Parse_Node.cpp:
+	* ace/Remote_Name_Space.cpp:
+	* ace/Service_Config.i:
+	* ace/Service_Manager.cpp:
+	* ace/Service_Types.cpp:
+	* ace/Stream.cpp:
+	* ace/Svc_Conf_y.cpp:
+	* ace/UUID.cpp:
+	* ace/RMCast/RMCast_Partial_Message.cpp:
+	* ACEXML/common/AttributesImpl.i:
+	* ACEXML/common/Encoding.cpp:
+	* ACEXML/common/Exception.cpp:
+	* ACEXML/common/HttpCharStream.cpp:
+	* ACEXML/common/NamespaceSupport.cpp:
+	* ACEXML/common/SAXExceptions.cpp:
+	* ACEXML/common/StrCharStream.cpp:
+	* ACEXML/common/StreamFactory.cpp:
+	* ACEXML/common/Transcode.cpp:
+	* ACEXML/common/URL_Addr.{inl cpp}:
+	* ACEXML/common/XML_Codecs.cpp:
+	* ACEXML/parser/parser/Parser.cpp:
+	* ACEXML/tests/ContentHandler_Test.cpp:
+	* ACEXML/tests/Transcorder_Test.cpp: Add #include "ace/OS_NS_string.h"
+	  to see ACE_OS::strcmp() and friends.
+
+	* ace/RMCast/RMCast_Reordering.cpp: Added #include "ace/Guard_T.h" to
+	  see ACE_Guard.
+
+	* ACEXML/tests/HttpCharStream_Test.cpp:
+	  Added #include "ace/OS_NS_stdio.h" to get ACE_OS::printf().
+
 Fri Nov  7 11:21:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/CDR_Stream.cpp:
