@@ -1,3 +1,9 @@
+Sun Mar 25 18:15:39 2001  Angelo Corsaro  <corsaro@danzon.cs.wustl.edu>
+
+	* tests/RTCORBA/MT_Client_Protocol_Priority/process-output.pl: 
+	  Modified confition in the script that was leading to a false 
+	  detected error. See comment in the script.
+
 Sun Mar 25 17:14:31 2001  Angelo Corsaro  <corsaro@danzon.cs.wustl.edu>
 
 	* tao/orbconf.h: 
