@@ -137,7 +137,7 @@ ACE_WIN32_Asynch_Result::ACE_WIN32_Asynch_Result
 }
 
 int
-ACE_WIN32_Asynch_Operation::open (ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_WIN32_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE handle,
                                   const void *completion_key,
                                   ACE_Proactor *proactor)
@@ -618,7 +618,7 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
-ACE_WIN32_Asynch_Read_Stream::open (ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_WIN32_Asynch_Read_Stream::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                     ACE_HANDLE handle,
                                     const void *completion_key,
                                     ACE_Proactor *proactor)
@@ -1036,7 +1036,7 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
-ACE_WIN32_Asynch_Write_Stream::open (ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_WIN32_Asynch_Write_Stream::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
                                      const void *completion_key,
                                      ACE_Proactor *proactor)
@@ -1438,7 +1438,7 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
-ACE_WIN32_Asynch_Read_File::open (ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_WIN32_Asynch_Read_File::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE handle,
                                   const void *completion_key,
                                   ACE_Proactor *proactor)
@@ -1845,7 +1845,7 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
-ACE_WIN32_Asynch_Write_File::open (ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_WIN32_Asynch_Write_File::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                    ACE_HANDLE handle,
                                    const void *completion_key,
                                    ACE_Proactor *proactor)
@@ -2162,7 +2162,7 @@ ACE_WIN32_Asynch_Accept::~ACE_WIN32_Asynch_Accept (void)
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
-ACE_WIN32_Asynch_Accept::open (ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_WIN32_Asynch_Accept::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                ACE_HANDLE handle,
                                const void *completion_key,
                                ACE_Proactor *proactor)
@@ -2346,7 +2346,7 @@ ACE_WIN32_Asynch_Connect::set_handle (ACE_HANDLE)
 }
 
 int
-ACE_WIN32_Asynch_Connect::open (ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_WIN32_Asynch_Connect::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                 ACE_HANDLE,
                                 const void *completion_key,
                                 ACE_Proactor *proactor)
@@ -3041,7 +3041,7 @@ ACE_WIN32_Asynch_Transmit_File::~ACE_WIN32_Asynch_Transmit_File (void)
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
-ACE_WIN32_Asynch_Transmit_File::open (ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_WIN32_Asynch_Transmit_File::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
                                       const void *completion_key,
                                       ACE_Proactor *proactor)
@@ -3389,7 +3389,7 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
 }
 
 int
-ACE_WIN32_Asynch_Read_Dgram::open (ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_WIN32_Asynch_Read_Dgram::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                    ACE_HANDLE handle,
                                    const void *completion_key,
                                    ACE_Proactor *proactor)
@@ -3718,7 +3718,7 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
 }
 
 int
-ACE_WIN32_Asynch_Write_Dgram::open (ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_WIN32_Asynch_Write_Dgram::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                     ACE_HANDLE handle,
                                     const void *completion_key,
                                     ACE_Proactor *proactor)

@@ -121,7 +121,7 @@ public:
    * ACE_Handler::handle() will be called on the proxied handler to get the
    * correct handle.
    */
-  virtual int open (ACE_Handler::Proxy_Ptr &handler_proxy,
+  virtual int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
                     ACE_HANDLE handle,
                     const void *completion_key,
                     ACE_Proactor *proactor) = 0;

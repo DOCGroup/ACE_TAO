@@ -166,7 +166,7 @@ public:
    * Operation class itself was created by the correct implementation
    * Proactor class.
    */
-  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
@@ -676,7 +676,7 @@ public:
    * this call to that method. We have put this here to avoid the
    * compiler warnings.
    */
-  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
@@ -821,7 +821,7 @@ public:
    * this call to that method. We have put this here to avoid the
    * compiler warnings.
    */
-  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);

@@ -243,8 +243,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   int error = 0;
 
   // If the asynchronous accept fails.
-  if (!result.success () ||
-      result.accept_handle() == ACE_INVALID_HANDLE )
+  if (!result.success () || result.accept_handle () == ACE_INVALID_HANDLE)
     {
       error = 1;
     }
@@ -328,9 +327,16 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   result.message_block ().release ();
 
   // Start off another asynchronous accept to keep the backlog going,
-  // unless we closed the listen socket already (from the destructor).
+  // unless we closed the listen socket already (from the destructor),
+  // or this callback is the result of a canceled/aborted accept.
   if (this->should_reissue_accept () &&
-      this->listen_handle_ != ACE_INVALID_HANDLE)
+      this->listen_handle_ != ACE_INVALID_HANDLE
+#if defined (ACE_WIN32)
+      && result.error () != ERROR_OPERATION_ABORTED
+#else
+      && result.error () != ECANCELED
+#endif
+      )
     this->accept (this->bytes_to_read_);
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || defined (ACE_HAS_AIO_CALLS */
 }
