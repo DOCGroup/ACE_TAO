@@ -1,3 +1,11 @@
+Thu Jun 15 16:10:51 2000  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix4_cset++.GNU: Force exceptions=1
+          because IBM C/C++ doesn't have a way to disable exceptions.
+
+        * ace/config-aix-4.x.h: Add #if !defined around ACE_HAS_EXCEPTIONS
+          to avoid compile errors if exceptions=1 explicitly stated.
+
 Thu Jun 15 16:03:11 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU: removed
