@@ -123,6 +123,11 @@ endif # ! Token
 
 PSRC=$(addsuffix .cpp,$(BIN))
 
+# Library that is dynamically by the Service_Config_Test.
+LIB   	= libService_Config_Test.a
+SHLIB 	= libService_Config_Test.$(SOEXT)
+LSRC	= Service_Config_DLL.cpp
+
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -189,6 +194,13 @@ libDLL_Test.$(SOEXT): DLL_Test_Impl.cpp DLL_Test_Impl.h
 
 realclean: clean
 	-$(RM) libDLL_Test.$(SOEXT) log/compilations.log*
+
+
+ifeq ($(static_libs_only),1)
+$(VBIN): $(VLIB)
+else
+$(VBIN): $(VSHLIB)
+endif
 
 #----------------------------------------------------------------------------
 #       Dependencies
