@@ -100,21 +100,6 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
-      << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \\"
-      << be_idt_nl
-      << "  defined (ACE_HAS_GNU_REPO)" << be_nl
-      << "template class TAO::Any_Array_Impl_T<" << be_idt << be_idt_nl
-      << node->name () << "_slice," << be_nl
-      << node->name () << "_forany" << be_uidt_nl
-      << ">;" << be_uidt << be_uidt_nl
-      << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
-      << "# pragma instantiate TAO::Any_Array_Impl_T< \\" << be_idt << be_idt_nl
-      << node->name () << "_slice, \\" << be_nl
-      << node->name () << "_forany \\" << be_uidt_nl
-      << ">" << be_uidt_nl
-      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
-
   node->cli_stub_any_op_gen (1);
   return 0;
 }

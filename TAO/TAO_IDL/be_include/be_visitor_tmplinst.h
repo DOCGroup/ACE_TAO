@@ -23,6 +23,7 @@
 #define TAO_BE_VISITOR_TMPLINST_H
 
 #include "ast_argument.h"
+#include "idl_defines.h"
 
 #include "be_visitor_scope.h"
 #include "be_visitor_tmplinst/tmplinst.h"

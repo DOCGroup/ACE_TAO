@@ -485,6 +485,7 @@ be_sequence::instance_name ()
 
 int
 be_sequence::gen_base_class_name (TAO_OutStream *os,
+                                  char * linebreak,
                                   AST_Decl *ctx_scope)
 {
   be_type *elem = be_type::narrow_from_decl (this->base_type ());
@@ -495,25 +496,22 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
     case be_sequence::MNG_OBJREF:
       if (this->unbounded ())
         {
-          *os << "TAO_Unbounded_Object_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl;
-          *os << elem->nested_type_name (ctx_scope, "_var") << "," << be_nl
-              << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_life," << be_nl;
-          *os << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_cast" << be_uidt_nl
+          *os << "TAO_Unbounded_Object_Sequence<" << linebreak 
+              << be_idt << be_idt_nl
+              << elem->nested_type_name (ctx_scope) << "," << linebreak 
+              << be_nl;
+          *os << elem->nested_type_name (ctx_scope, "_var") << linebreak 
+              << be_uidt_nl
               << ">" << be_uidt;
         }
       else
         {
-          *os << "TAO_Bounded_Object_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl;
-          *os << elem->nested_type_name (ctx_scope, "_var") << "," << be_nl
-              << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_life," << be_nl
-              << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_cast," << be_nl
-              << this->max_size ()->ev ()->u.ulval << be_uidt_nl
+          *os << "TAO_Bounded_Object_Sequence<" << linebreak 
+              << be_idt << be_idt_nl
+              << elem->nested_type_name (ctx_scope) << "," << linebreak << be_nl;
+          *os << elem->nested_type_name (ctx_scope, "_var") << "," 
+              << linebreak << be_nl;
+          *os << this->max_size ()->ev ()->u.ulval << linebreak << be_uidt_nl
               << ">" << be_uidt;
         }
 
@@ -521,21 +519,23 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
     case be_sequence::MNG_ABSTRACT:
       if (this->unbounded ())
         {
-          *os << "TAO_Unbounded_Abstract_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl;
-          *os << elem->nested_type_name (ctx_scope, "_var") << "," << be_nl
-              << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_life" << be_uidt_nl
+          *os << "TAO_Unbounded_Abstract_Sequence<" << linebreak 
+              << be_idt << be_idt_nl
+              << elem->nested_type_name (ctx_scope) << "," << linebreak 
+              << be_nl;
+          *os << elem->nested_type_name (ctx_scope, "_var") << linebreak 
+              << be_uidt_nl
               << ">" << be_uidt;
         }
       else
         {
-          *os << "TAO_Bounded_Abstract_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl;
-          *os << elem->nested_type_name (ctx_scope, "_var") << "," << be_nl
-              << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_life," << be_nl
-              << this->max_size ()->ev ()->u.ulval << be_uidt_nl
+          *os << "TAO_Bounded_Abstract_Sequence<" << linebreak 
+              << be_idt << be_idt_nl
+              << elem->nested_type_name (ctx_scope) << "," << linebreak 
+              << be_nl;
+          *os << elem->nested_type_name (ctx_scope, "_var") << "," 
+              << linebreak << be_nl;
+          *os << this->max_size ()->ev ()->u.ulval << linebreak << be_uidt_nl
               << ">" << be_uidt;
         }
 
@@ -543,17 +543,22 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
     case be_sequence::MNG_PSEUDO:
       if (this->unbounded ())
         {
-          *os << "TAO_Unbounded_Pseudo_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl
-              << elem->name () << "_var" << be_uidt_nl
+          *os << "TAO_Unbounded_Pseudo_Sequence<" << linebreak 
+              << be_idt << be_idt_nl
+              << elem->nested_type_name (ctx_scope) << "," << linebreak 
+              << be_nl
+              << elem->name () << "_var" << linebreak << be_uidt_nl
               << ">" << be_uidt;
         }
       else
         {
-          *os << "TAO_Bounded_Pseudo_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl
-              << elem->name () << "_var," << be_nl
-              << this->max_size ()->ev ()->u.ulval << be_uidt_nl
+          *os << "TAO_Bounded_Pseudo_Sequence<" << linebreak 
+              << be_idt << be_idt_nl
+              << elem->nested_type_name (ctx_scope) << "," << linebreak 
+              << be_nl
+              << elem->name () << "_var," << linebreak << be_nl
+              << this->max_size ()->ev ()->u.ulval << linebreak 
+              << be_uidt_nl
               << ">" << be_uidt;
         }
 
@@ -561,21 +566,23 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
     case be_sequence::MNG_VALUE:
       if (this->unbounded ())
         {
-          *os << "TAO_Unbounded_Valuetype_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl;
-          *os << elem->nested_type_name (ctx_scope, "_var") << "," << be_nl
-              << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_life" << be_uidt_nl
+          *os << "TAO_Unbounded_Valuetype_Sequence<" << linebreak 
+              << be_idt << be_idt_nl
+              << elem->nested_type_name (ctx_scope) << "," << linebreak 
+              << be_nl;
+          *os << elem->nested_type_name (ctx_scope, "_var") << linebreak 
+              << be_uidt_nl
               << ">" << be_uidt;
         }
       else
         {
-          *os << "TAO_Bounded_Valuetype_Sequence<" << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << be_nl;
-          *os << elem->nested_type_name (ctx_scope, "_var") << "," << be_nl
-              << this->smart_fwd_helper_name (ctx_scope, elem) 
-              << "_life," << be_nl
-              << this->max_size ()->ev ()->u.ulval << be_uidt_nl
+          *os << "TAO_Bounded_Valuetype_Sequence<" << linebreak 
+              << be_idt << be_idt_nl
+              << elem->nested_type_name (ctx_scope) << "," << linebreak 
+              << be_nl;
+          *os << elem->nested_type_name (ctx_scope, "_var") << "," 
+              << linebreak << be_nl
+              << this->max_size ()->ev ()->u.ulval << linebreak << be_uidt_nl
               << ">" << be_uidt;
         }
 
@@ -610,38 +617,56 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
           case AST_Decl::NT_array:
             if (this->unbounded ())
               {
-                *os << "TAO_Unbounded_Array_Sequence<"
+                *os << "TAO_Unbounded_Array_Sequence<" << linebreak 
                     << be_idt << be_idt_nl
-                    << elem->nested_type_name (ctx_scope) << "," << be_nl
-                    << this->smart_fwd_helper_name (ctx_scope, elem) 
-                    << "_life" << be_uidt_nl
-                    << ">" << be_uidt;
+                    << elem->nested_type_name (ctx_scope) << "," << linebreak 
+                    << be_nl;
+                *os << "TAO::Array_Traits<" << linebreak 
+                    << be_idt << be_idt_nl
+                    << elem->nested_type_name (ctx_scope) << "," << linebreak 
+                    << be_nl;
+                *os << elem->nested_type_name (ctx_scope) << "_slice" 
+                    << linebreak << be_uidt_nl
+                    << ">" << linebreak << be_uidt << be_uidt_nl
+                    << ">" << be_uidt << be_uidt;
               }
             else
               {
-                *os << "TAO_Bounded_Array_Sequence<"
+                *os << "TAO_Bounded_Array_Sequence<" << linebreak 
                     << be_idt << be_idt_nl
-                    << elem->nested_type_name (ctx_scope) << "," << be_nl
-                    << this->smart_fwd_helper_name (ctx_scope, elem) 
-                    << "_life," << be_nl
-                    << this->max_size ()->ev ()->u.ulval << be_uidt_nl
-                    << ">" << be_uidt;
+                    << elem->nested_type_name (ctx_scope) << "," << linebreak 
+                    << be_nl;
+                *os << "TAO::Array_Traits<" << linebreak 
+                    << be_idt << be_idt_nl
+                    << elem->nested_type_name (ctx_scope) << "," << linebreak 
+                    << be_nl;
+                *os << elem->nested_type_name (ctx_scope) << "_slice" 
+                    << linebreak << be_uidt_nl
+                    << ">," << linebreak << be_uidt_nl
+                    << this->max_size ()->ev ()->u.ulval << linebreak 
+                    << be_uidt_nl
+                    << ">" << be_uidt << be_uidt;
               }
 
             break;
           default:
             if (this->unbounded ())
               {
-                *os << "TAO_Unbounded_Sequence<" << be_idt << be_idt_nl
-                    << elem->nested_type_name (ctx_scope) << be_uidt_nl
-                    << ">" << be_uidt;
+                *os << "TAO_Unbounded_Sequence<" << linebreak 
+                    << be_idt << be_idt_nl
+                    << elem->nested_type_name (ctx_scope) << linebreak 
+                    << be_uidt_nl
+                    << ">" << be_uidt << be_uidt;
               }
             else
               {
-                *os << "TAO_Bounded_Sequence<" << be_idt << be_idt_nl
-                    << elem->nested_type_name (ctx_scope) << "," << be_nl
-                    << this->max_size ()->ev ()->u.ulval << be_uidt_nl
-                    << ">" << be_uidt;
+                *os << "TAO_Bounded_Sequence<" << linebreak 
+                    << be_idt << be_idt_nl
+                    << elem->nested_type_name (ctx_scope) << "," << linebreak 
+                    << be_nl
+                    << this->max_size ()->ev ()->u.ulval << linebreak 
+                    << be_uidt_nl
+                    << ">" << be_uidt << be_uidt;
               }
 
             break;

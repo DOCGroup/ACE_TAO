@@ -93,54 +93,28 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl
-      << "void" << be_nl
-      << "TAO::Value_Traits<" << node->name  () << ">::tao_add_ref (" 
-      << be_idt << be_idt_nl
-      << node->name () << " * p" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "CORBA::add_ref (p);" << be_uidt_nl
-      << "}";
-
-  *os << be_nl << be_nl
-      << "void" << be_nl
-      << "TAO::Value_Traits<" << node->name () << ">::tao_remove_ref ("
-      << be_idt << be_idt_nl
-      << node->name () << " * p" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "CORBA::remove_ref (p);" << be_uidt_nl
-      << "}";
-
-  const char *fhname = node->fwd_helper_name ();
-
-  if (ACE_OS::strcmp (fhname, "") == 0)
+  if (node->is_defined ())
     {
-      node->gen_fwd_helper_name ();
-      fhname = node->fwd_helper_name ();
+      *os << be_nl << be_nl
+          << "void" << be_nl
+          << "TAO::Value_Traits<" << node->name  () << ">::tao_add_ref (" 
+          << be_idt << be_idt_nl
+          << node->name () << " * p" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "CORBA::add_ref (p);" << be_uidt_nl
+          << "}";
+
+      *os << be_nl << be_nl
+          << "void" << be_nl
+          << "TAO::Value_Traits<" << node->name () << ">::tao_remove_ref ("
+          << be_idt << be_idt_nl
+          << node->name () << " * p" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "CORBA::remove_ref (p);" << be_uidt_nl
+          << "}";
     }
-
-  // Helper functions to allow non-defined forward declared valuetypes
-  // access to some methods in the full definition.
-  *os << be_nl << be_nl
-      << "void" << be_nl
-      << fhname << "_life::tao_add_ref (" 
-      << be_idt << be_idt_nl
-      << node->full_name () << " * p" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "CORBA::add_ref (p);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  *os << "void" << be_nl
-      << fhname << "_life::tao_remove_ref (" 
-      << be_idt << be_idt_nl
-       << node->full_name () << " * p" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "CORBA::remove_ref (p);" << be_uidt_nl
-      << "}";
 
   // The _downcast method    // %! use ACE_xxx_cast here ?
   *os << be_nl << be_nl

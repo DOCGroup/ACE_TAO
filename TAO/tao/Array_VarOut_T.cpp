@@ -13,9 +13,9 @@ ACE_RCSID (tao,
            Array_VarOut_T, 
            "$Id$")
 
-template<typename T, typename T_slice, typename T_life>
-TAO_FixedArray_Var_T<T,T_slice,T_life> &
-TAO_FixedArray_Var_T<T,T_slice,T_life>::operator= (T_slice * p)
+template<typename T, typename T_slice>
+TAO_FixedArray_Var_T<T,T_slice> &
+TAO_FixedArray_Var_T<T,T_slice>::operator= (T_slice * p)
 {
   // Is what we own the same that is being assigned to us?
   if (this->ptr_ != p)
@@ -28,10 +28,10 @@ TAO_FixedArray_Var_T<T,T_slice,T_life>::operator= (T_slice * p)
   return *this;
 }
 
-template<typename T, typename T_slice, typename T_life>
-TAO_FixedArray_Var_T<T,T_slice,T_life> &
-TAO_FixedArray_Var_T<T,T_slice,T_life>::operator= (
-    const TAO_FixedArray_Var_T<T,T_slice,T_life> & p
+template<typename T, typename T_slice>
+TAO_FixedArray_Var_T<T,T_slice> &
+TAO_FixedArray_Var_T<T,T_slice>::operator= (
+    const TAO_FixedArray_Var_T<T,T_slice> & p
   )
 {
   if (this != &p)
@@ -47,9 +47,9 @@ TAO_FixedArray_Var_T<T,T_slice,T_life>::operator= (
 
 // *************************************************************
 
-template<typename T, typename T_slice, typename T_life>
-TAO_VarArray_Var_T<T,T_slice,T_life> &
-TAO_VarArray_Var_T<T,T_slice,T_life>::operator= (T_slice * p)
+template<typename T, typename T_slice>
+TAO_VarArray_Var_T<T,T_slice> &
+TAO_VarArray_Var_T<T,T_slice>::operator= (T_slice * p)
 {
   // Is what we own the same that is being assigned to us?
   if (this->ptr_ != p)
@@ -62,10 +62,10 @@ TAO_VarArray_Var_T<T,T_slice,T_life>::operator= (T_slice * p)
   return *this;
 }
 
-template<typename T, typename T_slice, typename T_life>
-TAO_VarArray_Var_T<T,T_slice,T_life> &
-TAO_VarArray_Var_T<T,T_slice,T_life>::operator= (
-    const TAO_VarArray_Var_T<T,T_slice,T_life> & p
+template<typename T, typename T_slice>
+TAO_VarArray_Var_T<T,T_slice> &
+TAO_VarArray_Var_T<T,T_slice>::operator= (
+    const TAO_VarArray_Var_T<T,T_slice> & p
   )
 {
   if (this != &p)
@@ -81,9 +81,9 @@ TAO_VarArray_Var_T<T,T_slice,T_life>::operator= (
 
 // *************************************************************
 
-template<typename T, typename T_slice, typename T_life>
+template<typename T, typename T_slice>
 void
-TAO_Array_Forany_T<T,T_slice,T_life>::_tao_any_destructor (
+TAO_Array_Forany_T<T,T_slice>::_tao_any_destructor (
     void * _tao_void_pointer
   )
 {

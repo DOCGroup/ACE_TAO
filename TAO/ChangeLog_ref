@@ -1,3 +1,107 @@
+Wed Jul 16 14:38:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/be_include/be_visitor_tmplinst.h:
+        * TAO_IDL/be_include/be_visitor_array/array_cs.h:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h:
+        * tao/Array_VarOut_T.cpp:
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/BD_String_Argument_T.inl:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Argument_T.inl:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.inl:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Fixed_Size_Argument_T.inl:
+        * tao/IOP_CodecC.cpp:
+        * tao/IOP_CodecC.h:
+        * tao/Object_Argument_T.h:
+        * tao/Object_Argument_T.inl:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/Policy_ForwardC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/Special_Basic_Argument_T.inl:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Argument_T.inl:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.inl:
+        * tao/Var_Size_Argument_T.h:
+        * tao/Var_Size_Argument_T.inl:
+        * tao/IORInterceptor/IORInterceptorC.cpp:
+        * tao/IORInterceptor/IORInterceptorC.h:
+        * tao/Messaging/MessagingC.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/Default_ORTC.h:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorC.h:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/Valuetype/Sequence_T.cpp:
+        * tao/Valuetype/Sequence_T.h:
+        * tao/Valuetype/Sequence_T.inl:
+        * tao/Valuetype/ValueBase.cpp:
+        * tao/Valuetype/ValueBase.h:
+        * tao/Valuetype/ValueFactory.cpp:
+        * tao/Valuetype/ValueFactory.h:
+        * tao/Valuetype/Value_VarOut_T.cpp:
+        * tao/Valuetype/Value_VarOut_T.h:
+
+	  - Removed all remaining vestiges of the tao_*_life and
+`	    tao_*_cast structs. The latter was not needed and the
+	    former has been replace by TAO::*_Traits<T>. This
+	    change includes hand-crafted and generated code.
+
+	  - Added arg() methods to the stub side argument helper
+	    template classes. These have the same return types as
+	    the ones for the corresponding skeleton arg helper
+	    classes, but will be used in collocated calls.
+
 Mon Jul 14 22:37:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_tmplinst.cpp:
@@ -166,7 +270,6 @@ Fri Jul 11 08:19:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  includes for whatever types are used in operation
 	  signatures.
 
->>>>>>> 1.5.18.29
 Thu Jul 10 16:05:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Fixed_Size_Argument_T.cpp:

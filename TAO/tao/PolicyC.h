@@ -587,29 +587,8 @@ TAO_NAMESPACE  CORBA
 
   class PolicyManager;
   typedef PolicyManager *PolicyManager_ptr;
-  struct tao_PolicyManager_life;
-  typedef TAO_Objref_Var_T<PolicyManager, tao_PolicyManager_life> PolicyManager_var;
-  typedef TAO_Objref_Out_T<PolicyManager, tao_PolicyManager_life> PolicyManager_out;
-
-  struct TAO_Export tao_PolicyManager_life
-  {
-    static PolicyManager_ptr tao_duplicate (PolicyManager_ptr);
-    static void tao_release (PolicyManager_ptr);
-    static PolicyManager_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        PolicyManager_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Export tao_PolicyManager_cast
-  {
-    static PolicyManager_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<PolicyManager> PolicyManager_var;
+  typedef TAO_Objref_Out_T<PolicyManager> PolicyManager_out;
 
 #endif /* end #if !defined */
 
@@ -703,29 +682,8 @@ TAO_NAMESPACE  CORBA
 
   class PolicyCurrent;
   typedef PolicyCurrent *PolicyCurrent_ptr;
-  struct tao_PolicyCurrent_life;
-  typedef TAO_Objref_Var_T<PolicyCurrent, tao_PolicyCurrent_life> PolicyCurrent_var;
-  typedef TAO_Objref_Out_T<PolicyCurrent, tao_PolicyCurrent_life> PolicyCurrent_out;
-
-  struct TAO_Export tao_PolicyCurrent_life
-  {
-    static PolicyCurrent_ptr tao_duplicate (PolicyCurrent_ptr);
-    static void tao_release (PolicyCurrent_ptr);
-    static PolicyCurrent_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        PolicyCurrent_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Export tao_PolicyCurrent_cast
-  {
-    static PolicyCurrent_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
+  typedef TAO_Objref_Var_T<PolicyCurrent> PolicyCurrent_var;
+  typedef TAO_Objref_Out_T<PolicyCurrent> PolicyCurrent_out;
 
 #endif /* end #if !defined */
 

@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-template<typename T, typename T_var, typename T_life>
+template<typename T, typename T_var>
 class TAO_Unbounded_Valuetype_Sequence;
 
   /**
@@ -34,10 +34,10 @@ class TAO_Unbounded_Valuetype_Sequence;
    *
    * @see TAO_Object_Manager
    */
-template<typename T, typename T_var, typename T_life>
+template<typename T, typename T_var>
 class TAO_Valuetype_Manager
 {
-  friend class TAO_Unbounded_Valuetype_Sequence<T,T_var,T_life>;
+  friend class TAO_Unbounded_Valuetype_Sequence<T,T_var>;
 public:
   // @@ Use partial template specialization here to give access only
   // to the right kind of sequence.
@@ -51,7 +51,7 @@ public:
    *   release value on the <rhs>.
    *   + In any case a new reference to the same object is created.
    */
-  TAO_Valuetype_Manager (const TAO_Valuetype_Manager<T,T_var,T_life> & rhs);
+  TAO_Valuetype_Manager (const TAO_Valuetype_Manager<T,T_var> & rhs);
 
   /**
    * Constructor from address of an element, it should be private and
@@ -70,15 +70,15 @@ public:
    * @@ TODO what happens if rhs.release_ is true an this->relase_ is
    * false?
    */
-  TAO_Valuetype_Manager<T,T_var,T_life> &operator= (
-      const TAO_Valuetype_Manager<T,T_var,T_life> & rhs
+  TAO_Valuetype_Manager<T,T_var> &operator= (
+      const TAO_Valuetype_Manager<T,T_var> & rhs
     );
 
   /// Assignment from T *.
-  TAO_Valuetype_Manager<T,T_var,T_life> &operator= (T *);
+  TAO_Valuetype_Manager<T,T_var> &operator= (T *);
 
   /// Assignment from T_var.
-  TAO_Valuetype_Manager<T,T_var,T_life> &operator= (const T_var &);
+  TAO_Valuetype_Manager<T,T_var> &operator= (const T_var &);
 
   /// Return pointer.
   T * operator-> (void) const;
@@ -126,7 +126,7 @@ private:
    *
    * @see TAO_Object_Manager
    */
-template<typename T, typename T_var, typename T_life>
+template<typename T, typename T_var>
 class TAO_Abstract_Manager
 {
 //  friend class TAO_Unbounded_Abstract_Sequence<T,T_var>;
@@ -138,7 +138,7 @@ public:
    *   release value on the <rhs>.
    *   + In any case a new reference to the same object is created.
    */
-  TAO_Abstract_Manager (const TAO_Abstract_Manager<T,T_var,T_life> & rhs);
+  TAO_Abstract_Manager (const TAO_Abstract_Manager<T,T_var> & rhs);
 
   /**
    * Constructor from address of an element, it should be private and
@@ -157,15 +157,15 @@ public:
    * @@ TODO what happens if rhs.release_ is true an this->relase_ is
    * false?
    */
-  TAO_Abstract_Manager<T,T_var,T_life> & operator= (
-      const TAO_Abstract_Manager<T,T_var,T_life> & rhs
+  TAO_Abstract_Manager<T,T_var> & operator= (
+      const TAO_Abstract_Manager<T,T_var> & rhs
     );
 
   /// Assignment from T *.
-  TAO_Abstract_Manager<T,T_var,T_life> & operator= (T *);
+  TAO_Abstract_Manager<T,T_var> & operator= (T *);
 
   /// Assignment from T_var.
-  TAO_Abstract_Manager<T,T_var,T_life> & operator= (const T_var &);
+  TAO_Abstract_Manager<T,T_var> & operator= (const T_var &);
 
   /// Return pointer.
   T * operator-> (void) const;
@@ -210,7 +210,7 @@ private:
  *
  * @see TAO_Unbounded_Object_Sequence
  */
-template<typename T, typename T_var, typename T_life>
+template<typename T, typename T_var>
 class TAO_Unbounded_Valuetype_Sequence : public TAO_Unbounded_Base_Sequence
 {
 public:
@@ -230,7 +230,7 @@ public:
 
   /// Copy ctor, deep copies.
   TAO_Unbounded_Valuetype_Sequence (
-      const TAO_Unbounded_Valuetype_Sequence<T,T_var,T_life> &
+      const TAO_Unbounded_Valuetype_Sequence<T,T_var> &
     );
 
   /// The destructor releases all object reference memebrs and frees
@@ -242,12 +242,12 @@ public:
    * members and frees all string members, and then performs a
    * deepcopy to create a new structure.
    */
-  TAO_Unbounded_Valuetype_Sequence<T,T_var,T_life> & operator= (
-      const TAO_Unbounded_Valuetype_Sequence <T,T_var,T_life> &
+  TAO_Unbounded_Valuetype_Sequence<T,T_var> & operator= (
+      const TAO_Unbounded_Valuetype_Sequence <T,T_var> &
     );
 
   /// read-write accessor
-  TAO_Valuetype_Manager<T,T_var,T_life> operator[] (CORBA::ULong slot) const;
+  TAO_Valuetype_Manager<T,T_var> operator[] (CORBA::ULong slot) const;
 
   /// The allocbuf function allocates a vector of T elements that can
   /// be passed to the T *data constructor.
@@ -274,7 +274,7 @@ public:
  *
  * Please see the documentation for the unbounded case.
  */
-template<typename T, typename T_var, typename T_life, size_t MAX>
+template<typename T, typename T_var, size_t MAX>
 class TAO_Bounded_Valuetype_Sequence : public TAO_Bounded_Base_Sequence
 {
 public:
@@ -290,19 +290,19 @@ public:
 
   /// Copy constructor.
   TAO_Bounded_Valuetype_Sequence (
-      const TAO_Bounded_Valuetype_Sequence<T,T_var,T_life,MAX> &
+      const TAO_Bounded_Valuetype_Sequence<T,T_var,MAX> &
     );
 
   /// destructor
   ~TAO_Bounded_Valuetype_Sequence (void);
 
   /// Assignment from another Bounded sequence.
-  TAO_Bounded_Valuetype_Sequence &operator= (
-      const TAO_Bounded_Valuetype_Sequence<T,T_var,T_life,MAX> &
+  TAO_Bounded_Valuetype_Sequence<T,T_var,MAX> &operator= (
+      const TAO_Bounded_Valuetype_Sequence<T,T_var,MAX> &
     );
 
   /// Read-write accessor.
-  TAO_Valuetype_Manager<T,T_var,T_life> operator[] (CORBA::ULong slot) const;
+  TAO_Valuetype_Manager<T,T_var> operator[] (CORBA::ULong slot) const;
 
   /// Allocate storage for a sequence..
   static T ** allocbuf (CORBA::ULong length);
@@ -329,7 +329,7 @@ public:
  *
  * @see TAO_Unbounded_Object_Sequence
  */
-template<typename T, typename T_var, typename T_life>
+template<typename T, typename T_var>
 class TAO_Unbounded_Abstract_Sequence : public TAO_Unbounded_Base_Sequence
 {
 public:
@@ -349,7 +349,7 @@ public:
 
   /// Copy ctor, deep copies.
   TAO_Unbounded_Abstract_Sequence (
-      const TAO_Unbounded_Abstract_Sequence<T,T_var,T_life> &
+      const TAO_Unbounded_Abstract_Sequence<T,T_var> &
     );
 
   /// The destructor releases all object reference memebrs and frees
@@ -361,12 +361,12 @@ public:
    * members and frees all string members, and then performs a
    * deepcopy to create a new structure.
    */
-  TAO_Unbounded_Abstract_Sequence<T,T_var,T_life> &operator= (
-      const TAO_Unbounded_Abstract_Sequence <T,T_var,T_life> &
+  TAO_Unbounded_Abstract_Sequence<T,T_var> &operator= (
+      const TAO_Unbounded_Abstract_Sequence <T,T_var> &
     );
 
   /// read-write accessor
-  TAO_Abstract_Manager<T,T_var,T_life> operator[] (CORBA::ULong slot) const;
+  TAO_Abstract_Manager<T,T_var> operator[] (CORBA::ULong slot) const;
 
   /// The allocbuf function allocates a vector of T elements that can
   /// be passed to the T *data constructor.
@@ -393,7 +393,7 @@ public:
  *
  * Please see the documentation for the unbounded case.
  */
-template<typename T, typename T_var, typename T_life, size_t MAX>
+template<typename T, typename T_var, size_t MAX>
 class TAO_Bounded_Abstract_Sequence : public TAO_Bounded_Base_Sequence
 {
 public:
@@ -409,19 +409,19 @@ public:
 
   /// Copy constructor.
   TAO_Bounded_Abstract_Sequence (
-      const TAO_Bounded_Abstract_Sequence<T,T_var,T_life,MAX> &
+      const TAO_Bounded_Abstract_Sequence<T,T_var,MAX> &
     );
 
   /// destructor
   ~TAO_Bounded_Abstract_Sequence (void);
 
   /// Assignment from another Bounded sequence.
-  TAO_Bounded_Abstract_Sequence &operator= (
-      const TAO_Bounded_Abstract_Sequence<T,T_var,T_life,MAX> &
+  TAO_Bounded_Abstract_Sequence<T,T_var,MAX> &operator= (
+      const TAO_Bounded_Abstract_Sequence<T,T_var,MAX> &
     );
 
   /// Read-write accessor.
-  TAO_Abstract_Manager<T,T_var,T_life> operator[] (CORBA::ULong slot) const;
+  TAO_Abstract_Manager<T,T_var> operator[] (CORBA::ULong slot) const;
 
   /// Allocate storage for a sequence..
   static T ** allocbuf (CORBA::ULong length);

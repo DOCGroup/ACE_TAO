@@ -43,14 +43,8 @@ namespace CORBA
   extern TAO_Valuetype_Export void add_ref (ValueBase *);
   extern TAO_Valuetype_Export void remove_ref (ValueBase *);
 
-  typedef TAO_Value_Var_T<ValueBase, tao_ValueBase_life> ValueBase_var;
-  typedef TAO_Value_Out_T<ValueBase, tao_ValueBase_life> ValueBase_out;
-
-  struct TAO_Valuetype_Export tao_ValueBase_life
-  {
-    static void tao_add_ref (ValueBase *);
-    static void tao_remove_ref (ValueBase *);
-  };
+  typedef TAO_Value_Var_T<ValueBase> ValueBase_var;
+  typedef TAO_Value_Out_T<ValueBase> ValueBase_out;
 
   /**
    * @class ValueBase

@@ -42,13 +42,13 @@ namespace TAO
  * @brief Parametrized implementation of _var class for valuetypes.
  *
  */
-template <typename T, typename T_life>
+template <typename T>
 class TAO_Value_Var_T 
 {
 public:
   TAO_Value_Var_T (void);
   TAO_Value_Var_T (T *);
-  TAO_Value_Var_T (const TAO_Value_Var_T<T,T_life> &);
+  TAO_Value_Var_T (const TAO_Value_Var_T<T> &);
 
   // (TAO extension)
   TAO_Value_Var_T (const T *);
@@ -56,7 +56,7 @@ public:
   ~TAO_Value_Var_T (void);
   
   TAO_Value_Var_T &operator= (T *);
-  TAO_Value_Var_T &operator= (const TAO_Value_Var_T<T,T_life> &);
+  TAO_Value_Var_T &operator= (const TAO_Value_Var_T<T> &);
 
   T * operator-> (void) const;
   
@@ -82,16 +82,16 @@ private:
  * @brief Parametrized implementation of _out class for valuetypes.
  *
  */
-template <typename T, typename T_life>
+template <typename T>
 class TAO_Value_Out_T 
 {
 public:
   TAO_Value_Out_T (T *&);
-  TAO_Value_Out_T (TAO_Value_Var_T<T,T_life> &);
-  TAO_Value_Out_T (const TAO_Value_Out_T<T,T_life> &);
+  TAO_Value_Out_T (TAO_Value_Var_T<T> &);
+  TAO_Value_Out_T (const TAO_Value_Out_T<T> &);
 
-  TAO_Value_Out_T &operator= (const TAO_Value_Out_T<T,T_life> &);
-  TAO_Value_Out_T &operator= (const TAO_Value_Var_T<T,T_life> &);
+  TAO_Value_Out_T &operator= (const TAO_Value_Out_T<T> &);
+  TAO_Value_Out_T &operator= (const TAO_Value_Var_T<T> &);
   TAO_Value_Out_T &operator= (T *);
 
   operator T *& ();
@@ -100,7 +100,7 @@ public:
   T * operator-> (void);
   
 private:
-  typedef TAO_Value_Out_T<T, T_life> THIS_OUT_TYPE;
+  typedef TAO_Value_Out_T<T> THIS_OUT_TYPE;
   T *& ptr_;
 };
 

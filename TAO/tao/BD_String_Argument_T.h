@@ -42,6 +42,8 @@ namespace TAO
     virtual void interceptor_param (Dynamic::Parameter &);
     virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
 
+    const S * arg (void) const;
+
   private:
     const S * x_;
   };
@@ -64,6 +66,8 @@ namespace TAO
     virtual void interceptor_param (Dynamic::Parameter &);
     virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
 
+    S *& arg (void);
+
   private:
     mutable S *& x_;
   };
@@ -85,6 +89,8 @@ namespace TAO
     Out_BD_String_Argument_T (S_out x);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+
+    S *& arg (void);
 
   private:
     mutable S *& x_;
@@ -110,6 +116,8 @@ namespace TAO
 
     virtual void interceptor_result (CORBA::Any *);
     virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
+
+    S *& arg (void);
 
     S * excp (void);
     S * retn (void);
@@ -180,7 +188,8 @@ namespace TAO
    *
    */
   template<typename S, 
-           typename S_var, 
+           typename S_var,
+           typename S_out,
            typename to_S, 
            typename from_S, 
            size_t BOUND>
@@ -282,6 +291,7 @@ namespace TAO
                                         BOUND>    inout_sarg_val;
     typedef Out_BD_String_SArgument_T<T,
                                       T_var,
+                                      T_out,
                                       to_T,
                                       from_T,
                                       BOUND>      out_sarg_val;

@@ -39,58 +39,6 @@
 
 int CORBA::Current::_tao_class_id = 0;
 
-CORBA::Current_ptr
-CORBA::tao_Current_life::tao_duplicate (
-    CORBA::Current_ptr p
-  )
-{
-  return CORBA::Current::_duplicate (p);
-}
-
-void
-CORBA::tao_Current_life::tao_release (
-    CORBA::Current_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-CORBA::Current_ptr
-CORBA::tao_Current_life::tao_nil (
-    void
-  )
-{
-  return CORBA::Current::_nil ();
-}
-
-CORBA::Boolean
-CORBA::tao_Current_life::tao_marshal (
-    CORBA::Current_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-CORBA::Current_ptr
-CORBA::tao_Current_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return CORBA::Current::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-CORBA::tao_Current_cast::tao_upcast (
-    void *src
-  )
-{
-  CORBA::Current **tmp =
-    ACE_static_cast (CORBA::Current **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<

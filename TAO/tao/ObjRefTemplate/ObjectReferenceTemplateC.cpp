@@ -104,43 +104,23 @@ TAO_NAMESPACE_END
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:94
 
-void
-PortableInterceptor::tao_ObjectReferenceFactory_life::tao_add_ref (
-    PortableInterceptor::ObjectReferenceFactory * p
-  )
-{
-  CORBA::add_ref (p);
-}
-
-void
-PortableInterceptor::tao_ObjectReferenceFactory_life::tao_remove_ref (
-    PortableInterceptor::ObjectReferenceFactory * p
-  )
-{
-  CORBA::remove_ref (p);
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Value_Var_T<
-        PortableInterceptor::ObjectReferenceFactory,
-        PortableInterceptor::tao_ObjectReferenceFactory_life
+        PortableInterceptor::ObjectReferenceFactory
       >;
   template class
     TAO_Value_Out_T<
-        PortableInterceptor::ObjectReferenceFactory,
-        PortableInterceptor::tao_ObjectReferenceFactory_life
+        PortableInterceptor::ObjectReferenceFactory
       >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate \
     TAO_Value_Var_T< \
-        PortableInterceptor::ObjectReferenceFactory, \
-        PortableInterceptor::tao_ObjectReferenceFactory_life \
+        PortableInterceptor::ObjectReferenceFactory
       >
 # pragma instantiate \
     TAO_Value_Out_T< \
-        PortableInterceptor::ObjectReferenceFactory, \
-        PortableInterceptor::tao_ObjectReferenceFactory_life \
+        PortableInterceptor::ObjectReferenceFactory
       >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -295,22 +275,6 @@ TAO_NAMESPACE_END
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:94
 
-void
-PortableInterceptor::tao_ObjectReferenceTemplate_life::tao_add_ref (
-    PortableInterceptor::ObjectReferenceTemplate * p
-  )
-{
-  CORBA::add_ref (p);
-}
-
-void
-PortableInterceptor::tao_ObjectReferenceTemplate_life::tao_remove_ref (
-    PortableInterceptor::ObjectReferenceTemplate * p
-  )
-{
-  CORBA::remove_ref (p);
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Value_Var_T<
@@ -454,8 +418,7 @@ PortableInterceptor::ObjectReferenceTemplateSeq::ObjectReferenceTemplateSeq (
   )
   : TAO_Unbounded_Valuetype_Sequence<
         PortableInterceptor::ObjectReferenceTemplate,
-        PortableInterceptor::ObjectReferenceTemplate_var,
-        PortableInterceptor::tao_ObjectReferenceTemplate_life
+        PortableInterceptor::ObjectReferenceTemplate_var
       >
     (max)
 {}
@@ -468,8 +431,7 @@ PortableInterceptor::ObjectReferenceTemplateSeq::ObjectReferenceTemplateSeq (
   )
   : TAO_Unbounded_Valuetype_Sequence<
         PortableInterceptor::ObjectReferenceTemplate,
-        PortableInterceptor::ObjectReferenceTemplate_var,
-        PortableInterceptor::tao_ObjectReferenceTemplate_life
+        PortableInterceptor::ObjectReferenceTemplate_var
       >
     (max, length, buffer, release)
 {}
@@ -479,8 +441,7 @@ PortableInterceptor::ObjectReferenceTemplateSeq::ObjectReferenceTemplateSeq (
   )
   : TAO_Unbounded_Valuetype_Sequence<
         PortableInterceptor::ObjectReferenceTemplate,
-        PortableInterceptor::ObjectReferenceTemplate_var,
-        PortableInterceptor::tao_ObjectReferenceTemplate_life
+        PortableInterceptor::ObjectReferenceTemplate_var
       >
     (seq)
 {}

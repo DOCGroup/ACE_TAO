@@ -78,42 +78,19 @@ TAO_NAMESPACE  PortableInterceptor
   
   class IORInfo;
   typedef IORInfo *IORInfo_ptr;
-  struct tao_IORInfo_life;
   
   typedef
     TAO_Objref_Var_T<
-        IORInfo,
-        tao_IORInfo_life
+        IORInfo
       >
     IORInfo_var;
   
   typedef
     TAO_Objref_Out_T<
-        IORInfo,
-        tao_IORInfo_life
+        IORInfo
       >
     IORInfo_out;
   
-  struct TAO_IORInterceptor_Export tao_IORInfo_life
-  {
-    static IORInfo_ptr tao_duplicate (IORInfo_ptr);
-    static void tao_release (IORInfo_ptr);
-    static IORInfo_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        IORInfo_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_IORInterceptor_Export tao_IORInfo_cast
-  {
-    static IORInfo_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
@@ -262,42 +239,19 @@ TAO_NAMESPACE  PortableInterceptor
   
   class IORInterceptor;
   typedef IORInterceptor *IORInterceptor_ptr;
-  struct tao_IORInterceptor_life;
   
   typedef
     TAO_Objref_Var_T<
-        IORInterceptor,
-        tao_IORInterceptor_life
+        IORInterceptor
       >
     IORInterceptor_var;
   
   typedef
     TAO_Objref_Out_T<
-        IORInterceptor,
-        tao_IORInterceptor_life
+        IORInterceptor
       >
     IORInterceptor_out;
   
-  struct TAO_IORInterceptor_Export tao_IORInterceptor_life
-  {
-    static IORInterceptor_ptr tao_duplicate (IORInterceptor_ptr);
-    static void tao_release (IORInterceptor_ptr);
-    static IORInterceptor_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        IORInterceptor_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_IORInterceptor_Export tao_IORInterceptor_cast
-  {
-    static IORInterceptor_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from

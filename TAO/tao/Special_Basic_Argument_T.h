@@ -41,6 +41,8 @@ namespace TAO
     virtual void interceptor_param (Dynamic::Parameter &);
     virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
 
+    S const & arg (void);
+
   private:
     S const & x_;
   };
@@ -63,6 +65,8 @@ namespace TAO
     virtual void interceptor_param (Dynamic::Parameter &);
     virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
 
+    S & arg (void);
+
   private:
     mutable S & x_;
   };
@@ -80,6 +84,8 @@ namespace TAO
     Out_Special_Basic_Argument_T (S & x);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+
+    S & arg (void);
 
   private:
     mutable S & x_;
@@ -101,6 +107,8 @@ namespace TAO
 
     virtual void interceptor_result (CORBA::Any *);
     virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
+
+    S & arg (void);
 
     S excp (void);
     S retn (void);

@@ -42,6 +42,7 @@
 #include "be_helper.h"
 #include "be_extern.h"
 #include "utl_identifier.h"
+#include "global_extern.h"
 
 #include "be_visitor_tmplinst.h"
 #include "be_visitor_context.h"

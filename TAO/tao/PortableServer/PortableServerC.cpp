@@ -77,9 +77,7 @@ PortableServer::POAList::POAList (void)
 PortableServer::POAList::POAList (CORBA::ULong max)
   : TAO_Unbounded_Object_Sequence<
         PortableServer::POA,
-        PortableServer::POA_var,
-        PortableServer::tao_POA_life,
-        PortableServer::tao_POA_cast
+        PortableServer::POA_var
       >
     (max)
 {}
@@ -92,9 +90,7 @@ PortableServer::POAList::POAList (
   )
   : TAO_Unbounded_Object_Sequence<
         PortableServer::POA,
-        PortableServer::POA_var,
-        PortableServer::tao_POA_life,
-        PortableServer::tao_POA_cast
+        PortableServer::POA_var
       >
     (max, length, buffer, release)
 {}
@@ -102,9 +98,7 @@ PortableServer::POAList::POAList (
 PortableServer::POAList::POAList (const POAList &seq)
   : TAO_Unbounded_Object_Sequence<
         PortableServer::POA,
-        PortableServer::POA_var,
-        PortableServer::tao_POA_life,
-        PortableServer::tao_POA_cast
+        PortableServer::POA_var
       >
     (seq)
 {}
@@ -125,8 +119,7 @@ template class
       PortableServer::POAList,
       TAO_Object_Manager<
           PortableServer::POA,
-          PortableServer::POA_var,
-          PortableServer::tao_POA_life
+          PortableServer::POA_var
         >
     >;
 
@@ -875,58 +868,6 @@ TAO_NAMESPACE_END
 
 int PortableServer::ThreadPolicy::_tao_class_id = 0;
 
-PortableServer::ThreadPolicy_ptr
-PortableServer::tao_ThreadPolicy_life::tao_duplicate (
-    PortableServer::ThreadPolicy_ptr p
-  )
-{
-  return PortableServer::ThreadPolicy::_duplicate (p);
-}
-
-void
-PortableServer::tao_ThreadPolicy_life::tao_release (
-    PortableServer::ThreadPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableServer::ThreadPolicy_ptr
-PortableServer::tao_ThreadPolicy_life::tao_nil (
-    void
-  )
-{
-  return PortableServer::ThreadPolicy::_nil ();
-}
-
-CORBA::Boolean
-PortableServer::tao_ThreadPolicy_life::tao_marshal (
-    PortableServer::ThreadPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableServer::ThreadPolicy_ptr
-PortableServer::tao_ThreadPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::ThreadPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableServer::tao_ThreadPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  PortableServer::ThreadPolicy **tmp =
-    ACE_static_cast (PortableServer::ThreadPolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -1168,58 +1109,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int PortableServer::LifespanPolicy::_tao_class_id = 0;
-
-PortableServer::LifespanPolicy_ptr
-PortableServer::tao_LifespanPolicy_life::tao_duplicate (
-    PortableServer::LifespanPolicy_ptr p
-  )
-{
-  return PortableServer::LifespanPolicy::_duplicate (p);
-}
-
-void
-PortableServer::tao_LifespanPolicy_life::tao_release (
-    PortableServer::LifespanPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableServer::LifespanPolicy_ptr
-PortableServer::tao_LifespanPolicy_life::tao_nil (
-    void
-  )
-{
-  return PortableServer::LifespanPolicy::_nil ();
-}
-
-CORBA::Boolean
-PortableServer::tao_LifespanPolicy_life::tao_marshal (
-    PortableServer::LifespanPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableServer::LifespanPolicy_ptr
-PortableServer::tao_LifespanPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::LifespanPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableServer::tao_LifespanPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  PortableServer::LifespanPolicy **tmp =
-    ACE_static_cast (PortableServer::LifespanPolicy **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -1464,58 +1353,6 @@ TAO_NAMESPACE_END
 
 int PortableServer::IdUniquenessPolicy::_tao_class_id = 0;
 
-PortableServer::IdUniquenessPolicy_ptr
-PortableServer::tao_IdUniquenessPolicy_life::tao_duplicate (
-    PortableServer::IdUniquenessPolicy_ptr p
-  )
-{
-  return PortableServer::IdUniquenessPolicy::_duplicate (p);
-}
-
-void
-PortableServer::tao_IdUniquenessPolicy_life::tao_release (
-    PortableServer::IdUniquenessPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableServer::IdUniquenessPolicy_ptr
-PortableServer::tao_IdUniquenessPolicy_life::tao_nil (
-    void
-  )
-{
-  return PortableServer::IdUniquenessPolicy::_nil ();
-}
-
-CORBA::Boolean
-PortableServer::tao_IdUniquenessPolicy_life::tao_marshal (
-    PortableServer::IdUniquenessPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableServer::IdUniquenessPolicy_ptr
-PortableServer::tao_IdUniquenessPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::IdUniquenessPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableServer::tao_IdUniquenessPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  PortableServer::IdUniquenessPolicy **tmp =
-    ACE_static_cast (PortableServer::IdUniquenessPolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -1759,58 +1596,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int PortableServer::IdAssignmentPolicy::_tao_class_id = 0;
-
-PortableServer::IdAssignmentPolicy_ptr
-PortableServer::tao_IdAssignmentPolicy_life::tao_duplicate (
-    PortableServer::IdAssignmentPolicy_ptr p
-  )
-{
-  return PortableServer::IdAssignmentPolicy::_duplicate (p);
-}
-
-void
-PortableServer::tao_IdAssignmentPolicy_life::tao_release (
-    PortableServer::IdAssignmentPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableServer::IdAssignmentPolicy_ptr
-PortableServer::tao_IdAssignmentPolicy_life::tao_nil (
-    void
-  )
-{
-  return PortableServer::IdAssignmentPolicy::_nil ();
-}
-
-CORBA::Boolean
-PortableServer::tao_IdAssignmentPolicy_life::tao_marshal (
-    PortableServer::IdAssignmentPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableServer::IdAssignmentPolicy_ptr
-PortableServer::tao_IdAssignmentPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::IdAssignmentPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableServer::tao_IdAssignmentPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  PortableServer::IdAssignmentPolicy **tmp =
-    ACE_static_cast (PortableServer::IdAssignmentPolicy **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -2068,58 +1853,6 @@ TAO_NAMESPACE_END
 
 int PortableServer::ImplicitActivationPolicy::_tao_class_id = 0;
 
-PortableServer::ImplicitActivationPolicy_ptr
-PortableServer::tao_ImplicitActivationPolicy_life::tao_duplicate (
-    PortableServer::ImplicitActivationPolicy_ptr p
-  )
-{
-  return PortableServer::ImplicitActivationPolicy::_duplicate (p);
-}
-
-void
-PortableServer::tao_ImplicitActivationPolicy_life::tao_release (
-    PortableServer::ImplicitActivationPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableServer::ImplicitActivationPolicy_ptr
-PortableServer::tao_ImplicitActivationPolicy_life::tao_nil (
-    void
-  )
-{
-  return PortableServer::ImplicitActivationPolicy::_nil ();
-}
-
-CORBA::Boolean
-PortableServer::tao_ImplicitActivationPolicy_life::tao_marshal (
-    PortableServer::ImplicitActivationPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableServer::ImplicitActivationPolicy_ptr
-PortableServer::tao_ImplicitActivationPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::ImplicitActivationPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableServer::tao_ImplicitActivationPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  PortableServer::ImplicitActivationPolicy **tmp =
-    ACE_static_cast (PortableServer::ImplicitActivationPolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -2368,58 +2101,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int PortableServer::ServantRetentionPolicy::_tao_class_id = 0;
-
-PortableServer::ServantRetentionPolicy_ptr
-PortableServer::tao_ServantRetentionPolicy_life::tao_duplicate (
-    PortableServer::ServantRetentionPolicy_ptr p
-  )
-{
-  return PortableServer::ServantRetentionPolicy::_duplicate (p);
-}
-
-void
-PortableServer::tao_ServantRetentionPolicy_life::tao_release (
-    PortableServer::ServantRetentionPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableServer::ServantRetentionPolicy_ptr
-PortableServer::tao_ServantRetentionPolicy_life::tao_nil (
-    void
-  )
-{
-  return PortableServer::ServantRetentionPolicy::_nil ();
-}
-
-CORBA::Boolean
-PortableServer::tao_ServantRetentionPolicy_life::tao_marshal (
-    PortableServer::ServantRetentionPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableServer::ServantRetentionPolicy_ptr
-PortableServer::tao_ServantRetentionPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::ServantRetentionPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableServer::tao_ServantRetentionPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  PortableServer::ServantRetentionPolicy **tmp =
-    ACE_static_cast (PortableServer::ServantRetentionPolicy **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -2683,58 +2364,6 @@ TAO_NAMESPACE_END
 
 int PortableServer::RequestProcessingPolicy::_tao_class_id = 0;
 
-PortableServer::RequestProcessingPolicy_ptr
-PortableServer::tao_RequestProcessingPolicy_life::tao_duplicate (
-    PortableServer::RequestProcessingPolicy_ptr p
-  )
-{
-  return PortableServer::RequestProcessingPolicy::_duplicate (p);
-}
-
-void
-PortableServer::tao_RequestProcessingPolicy_life::tao_release (
-    PortableServer::RequestProcessingPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableServer::RequestProcessingPolicy_ptr
-PortableServer::tao_RequestProcessingPolicy_life::tao_nil (
-    void
-  )
-{
-  return PortableServer::RequestProcessingPolicy::_nil ();
-}
-
-CORBA::Boolean
-PortableServer::tao_RequestProcessingPolicy_life::tao_marshal (
-    PortableServer::RequestProcessingPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableServer::RequestProcessingPolicy_ptr
-PortableServer::tao_RequestProcessingPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::RequestProcessingPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableServer::tao_RequestProcessingPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  PortableServer::RequestProcessingPolicy **tmp =
-    ACE_static_cast (PortableServer::RequestProcessingPolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -2927,58 +2556,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int PortableServer::POAManager::_tao_class_id = 0;
-
-PortableServer::POAManager_ptr
-PortableServer::tao_POAManager_life::tao_duplicate (
-    PortableServer::POAManager_ptr p
-  )
-{
-  return PortableServer::POAManager::_duplicate (p);
-}
-
-void
-PortableServer::tao_POAManager_life::tao_release (
-    PortableServer::POAManager_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableServer::POAManager_ptr
-PortableServer::tao_POAManager_life::tao_nil (
-    void
-  )
-{
-  return PortableServer::POAManager::_nil ();
-}
-
-CORBA::Boolean
-PortableServer::tao_POAManager_life::tao_marshal (
-    PortableServer::POAManager_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableServer::POAManager_ptr
-PortableServer::tao_POAManager_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::POAManager::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableServer::tao_POAManager_cast::tao_upcast (
-    void *src
-  )
-{
-  PortableServer::POAManager **tmp =
-    ACE_static_cast (PortableServer::POAManager **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -3302,58 +2879,6 @@ TAO_NAMESPACE_END
 
 int PortableServer::AdapterActivator::_tao_class_id = 0;
 
-PortableServer::AdapterActivator_ptr
-PortableServer::tao_AdapterActivator_life::tao_duplicate (
-    PortableServer::AdapterActivator_ptr p
-  )
-{
-  return PortableServer::AdapterActivator::_duplicate (p);
-}
-
-void
-PortableServer::tao_AdapterActivator_life::tao_release (
-    PortableServer::AdapterActivator_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableServer::AdapterActivator_ptr
-PortableServer::tao_AdapterActivator_life::tao_nil (
-    void
-  )
-{
-  return PortableServer::AdapterActivator::_nil ();
-}
-
-CORBA::Boolean
-PortableServer::tao_AdapterActivator_life::tao_marshal (
-    PortableServer::AdapterActivator_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableServer::AdapterActivator_ptr
-PortableServer::tao_AdapterActivator_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::AdapterActivator::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableServer::tao_AdapterActivator_cast::tao_upcast (
-    void *src
-  )
-{
-  PortableServer::AdapterActivator **tmp =
-    ACE_static_cast (PortableServer::AdapterActivator **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -3528,58 +3053,6 @@ TAO_NAMESPACE_END
 
 int PortableServer::ServantManager::_tao_class_id = 0;
 
-PortableServer::ServantManager_ptr
-PortableServer::tao_ServantManager_life::tao_duplicate (
-    PortableServer::ServantManager_ptr p
-  )
-{
-  return PortableServer::ServantManager::_duplicate (p);
-}
-
-void
-PortableServer::tao_ServantManager_life::tao_release (
-    PortableServer::ServantManager_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableServer::ServantManager_ptr
-PortableServer::tao_ServantManager_life::tao_nil (
-    void
-  )
-{
-  return PortableServer::ServantManager::_nil ();
-}
-
-CORBA::Boolean
-PortableServer::tao_ServantManager_life::tao_marshal (
-    PortableServer::ServantManager_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableServer::ServantManager_ptr
-PortableServer::tao_ServantManager_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::ServantManager::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableServer::tao_ServantManager_cast::tao_upcast (
-    void *src
-  )
-{
-  PortableServer::ServantManager **tmp =
-    ACE_static_cast (PortableServer::ServantManager **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -3752,58 +3225,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int PortableServer::ServantActivator::_tao_class_id = 0;
-
-PortableServer::ServantActivator_ptr
-PortableServer::tao_ServantActivator_life::tao_duplicate (
-    PortableServer::ServantActivator_ptr p
-  )
-{
-  return PortableServer::ServantActivator::_duplicate (p);
-}
-
-void
-PortableServer::tao_ServantActivator_life::tao_release (
-    PortableServer::ServantActivator_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableServer::ServantActivator_ptr
-PortableServer::tao_ServantActivator_life::tao_nil (
-    void
-  )
-{
-  return PortableServer::ServantActivator::_nil ();
-}
-
-CORBA::Boolean
-PortableServer::tao_ServantActivator_life::tao_marshal (
-    PortableServer::ServantActivator_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableServer::ServantActivator_ptr
-PortableServer::tao_ServantActivator_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::ServantActivator::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableServer::tao_ServantActivator_cast::tao_upcast (
-    void *src
-  )
-{
-  PortableServer::ServantActivator **tmp =
-    ACE_static_cast (PortableServer::ServantActivator **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -3993,58 +3414,6 @@ TAO_NAMESPACE_END
 
 int PortableServer::ServantLocator::_tao_class_id = 0;
 
-PortableServer::ServantLocator_ptr
-PortableServer::tao_ServantLocator_life::tao_duplicate (
-    PortableServer::ServantLocator_ptr p
-  )
-{
-  return PortableServer::ServantLocator::_duplicate (p);
-}
-
-void
-PortableServer::tao_ServantLocator_life::tao_release (
-    PortableServer::ServantLocator_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableServer::ServantLocator_ptr
-PortableServer::tao_ServantLocator_life::tao_nil (
-    void
-  )
-{
-  return PortableServer::ServantLocator::_nil ();
-}
-
-CORBA::Boolean
-PortableServer::tao_ServantLocator_life::tao_marshal (
-    PortableServer::ServantLocator_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableServer::ServantLocator_ptr
-PortableServer::tao_ServantLocator_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::ServantLocator::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableServer::tao_ServantLocator_cast::tao_upcast (
-    void *src
-  )
-{
-  PortableServer::ServantLocator **tmp =
-    ACE_static_cast (PortableServer::ServantLocator **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -4233,58 +3602,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int PortableServer::POA::_tao_class_id = 0;
-
-PortableServer::POA_ptr
-PortableServer::tao_POA_life::tao_duplicate (
-    PortableServer::POA_ptr p
-  )
-{
-  return PortableServer::POA::_duplicate (p);
-}
-
-void
-PortableServer::tao_POA_life::tao_release (
-    PortableServer::POA_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableServer::POA_ptr
-PortableServer::tao_POA_life::tao_nil (
-    void
-  )
-{
-  return PortableServer::POA::_nil ();
-}
-
-CORBA::Boolean
-PortableServer::tao_POA_life::tao_marshal (
-    PortableServer::POA_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableServer::POA_ptr
-PortableServer::tao_POA_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::POA::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableServer::tao_POA_cast::tao_upcast (
-    void *src
-  )
-{
-  PortableServer::POA **tmp =
-    ACE_static_cast (PortableServer::POA **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -5824,58 +5141,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int PortableServer::Current::_tao_class_id = 0;
-
-PortableServer::Current_ptr
-PortableServer::tao_Current_life::tao_duplicate (
-    PortableServer::Current_ptr p
-  )
-{
-  return PortableServer::Current::_duplicate (p);
-}
-
-void
-PortableServer::tao_Current_life::tao_release (
-    PortableServer::Current_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-PortableServer::Current_ptr
-PortableServer::tao_Current_life::tao_nil (
-    void
-  )
-{
-  return PortableServer::Current::_nil ();
-}
-
-CORBA::Boolean
-PortableServer::tao_Current_life::tao_marshal (
-    PortableServer::Current_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-PortableServer::Current_ptr
-PortableServer::tao_Current_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return PortableServer::Current::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-PortableServer::tao_Current_cast::tao_upcast (
-    void *src
-  )
-{
-  PortableServer::Current **tmp =
-    ACE_static_cast (PortableServer::Current **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
