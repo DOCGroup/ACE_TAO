@@ -1,6 +1,18 @@
+Thu Jun 24 06:31:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Abstract_Interface/test_i.cpp:
+        * tests/Bug_1269_Regression/Echo_Caller.cpp:
+        * tests/Bug_1269_Regression/Echo.cpp:
+        * tests/Bug_1270_Regression/Echo.cpp:
+        * tests/Bug_1361_Regression/Echo.cpp:
+        * tests/Bug_1020_Regression/Echo.cpp:
+        * tests/Bug_1020_Regression/Server_i.cpp:
+          Strange, our code had a bunch of TAO_ENV* in the cpp
+          files. Changed them to the ACE_ENV* equivalents.
+
 Wed Jun 23 14:29:12 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests/Protocols: 
+	* performance-tests/Protocols:
 
 	  Several things were cleaned up and latency and throughput
 	  testing were added.
@@ -9,7 +21,7 @@ Wed Jun 23 14:29:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/tao_idl.cpp (DRV_init):
         * TAO_IDLfe/fe_init.cpp (FE_init):
-          
+
           Moved code that sets the preprocessor back into the executable
           build from the front end library where it was recently moved.
           This code checks for a preprocessor directive given to the
