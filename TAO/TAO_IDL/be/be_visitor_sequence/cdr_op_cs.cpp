@@ -52,7 +52,8 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     {
       // we are here because the base type of the sequence node is
       // itself a sequence i.e., this is a case of sequence of
-      // sequence
+      // typedef'd sequence. For the case of sequence of
+      // anonymous sequence, see comment below.
       return this->visit_node (node);
     }
   else
@@ -71,6 +72,23 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
                              "visit_sequence - "
                              "Bad base type\n"),
                             -1);
+        }
+
+      // If our base type is anonymous sequence, 
+      // generate code for the sequence here.
+
+      if (bt->node_type () == AST_Decl::NT_sequence)
+        {
+          if (this->gen_anonymous_base_type (bt, 
+                                             TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CS) 
+              == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_array_cdr_op_cs::"
+                                 "visit_array - "
+                                 "gen_anonymous_base_type failed\n"),
+                                -1);
+            }              
         }
 
       // generate the CDR << and >> operator defns
@@ -103,13 +121,16 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
           << "{" << be_idt_nl;
       // now encode the sequence elements
       *os << "// encode all elements" << be_nl;
-      if (bt->accept (this) == -1)
+      if (bt->node_type () != AST_Decl::NT_sequence)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_sequence_cdr_op_cs::"
-                             "visit_sequence - "
-                             "Base type codegen failed\n"),
-                            -1);
+          if (bt->accept (this) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_sequence_cdr_op_cs::"
+                                 "visit_sequence - "
+                                 "Base type codegen failed\n"),
+                                -1);
+            }
         }
       *os << "}" << be_nl
           << "return 0; // error" << be_uidt_nl
