@@ -1,3 +1,24 @@
+Tue Jan  4 11:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/WrongTransaction.pidl:
+          Updated regeneration instructions, no need to apply diffs
+
+        * tao/diffs/UShortSeq.diff:
+          New diff file corresponding pidl file
+
+        * tao/WCharSeqC.{h,cpp,inl}:
+        * tao/WCharSeqS.h:
+        * tao/UShortSeqS.h:
+        * tao/ULongSeqS.h:
+          Regenerated with the latest version of the TAO_IDL compiler
+
+        * tao/UShortSeq.{h,cpp,i,inl}:
+        * tao/ULongSeq.{h,cpp,i,inl}:
+          Regenerated and replaced .i with .inl file
+
+        * tao/Makefile.am:
+          Updated because of changes above
+
 Tue Jan  4 10:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/WStringSeqC.{h,cpp,inl}:
