@@ -58,8 +58,10 @@ public:
   int control (Control_Mode cmd, Serial_Params * arg) const;
   // Interface for reading/writing serial device parameters.
 
+#if defined (ACE_NEEDS_DEV_IO_CONVERSION)
   operator ACE_DEV_IO &();
   // This is necessary to pass ACE_TTY_IO as parameter to DEV_Connector.
+#endif /* ACE_NEEDS_DEV_IO_CONVERSION */
 };
 
 #endif /* ACE_TTY_H */

@@ -224,8 +224,9 @@ ACE_TTY_IO::control (Control_Mode cmd,
 #endif /* ACE_HAS_TERM_IOCTLS */
 }
 
+#if defined (ACE_NEEDS_DEV_IO_CONVERSION)
 ACE_TTY_IO::operator ACE_DEV_IO &()
 {
   return (ACE_DEV_IO &) *this;
 }  
-
+#endif /* ACE_NEEDS_DEV_IO_CONVERSION */
