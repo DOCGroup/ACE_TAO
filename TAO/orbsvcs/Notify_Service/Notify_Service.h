@@ -5,8 +5,9 @@
 // = FILENAME
 //   Notify_Service.h
 //
-// = AUTHOR
+// = AUTHORS
 //   Pradeep Gore <pradeep@cs.wustl.edu>
+//   Service options code by Wei Chiang <Wei.Chiang@nokia.com>.
 //
 // = DESCRIPTION
 //   Notification Service front end.
@@ -18,6 +19,9 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
+
+#define NOTIFY_KEY "NotifyEventChannelFactory"
+#define NOTIFY_CHANNEL_NAME "NotifyEventChannel"
 
 class Notify_Service
 {
@@ -35,9 +39,6 @@ class Notify_Service
   virtual ~Notify_Service (void);
   // Destructor.
 
-  int parse_args (int argc, char *argv []);
-  // Parses the command line arguments.
-
   int startup (int argc, char *argv[],
                CORBA::Environment &ACE_TRY_ENV);
   // Initializes the Service.
@@ -52,8 +53,8 @@ class Notify_Service
   // Shutdown the Service.
   // Returns 0 on success, -1 on error.
 
-  CosNotifyChannelAdmin::EventChannelFactory_var obj;
-  // temp hack.
+  // CosNotifyChannelAdmin::EventChannelFactory_var obj;
+  //
 protected:
   int init_ORB (int& argc, char *argv [],
                 CORBA::Environment &ACE_TRY_ENV);
@@ -62,9 +63,32 @@ protected:
   int resolve_naming_service (CORBA::Environment &ACE_TRY_ENV);
   // Resolve the naming service.
 
+  int parse_args (int argc, char *argv []);
+  // Parses the command line arguments.
+
   // = Data members
-  const char* notify_factory_name_;
+
+  int bootstrap_;
+  // 1: this service is bootstrappable
+
+  int use_name_svc_;
+  // 1: register itself with the name service
+
+  int register_ec_;
+  // 1:
+
+  FILE *ior_output_file_;
+  // File where the IOR of the server object is stored.
+
+  ACE_CString notify_factory_name_;
   // The Factory name.
+
+  ACE_CString notify_channel_name_;
+  // The Factory name.
+
+  int register_event_channel_;
+  // 1:  create an event channel and registers it with the Naming Service with
+  //     the name <notify_channel_name_>
 
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
   // The Factory.
