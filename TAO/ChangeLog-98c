@@ -1,3 +1,19 @@
+Sun Oct 25 20:26:59 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * tao/DynArray_i.cpp:
+        * tao/DynSequence_i.cpp:
+        * tao/DynStruct_i.cpp:
+        * tao/DynUnion_i.cpp:
+        * TAO/tests/DynAny_Test/test_dynany.cpp:
+        * TAO/tests/DynAny_Test/test_dynarray.cpp:
+        * TAO/tests/DynAny_Test/test_dynenum.cpp:
+        * TAO/tests/DynAny_Test/test_dynsequence.cpp:
+        * TAO/tests/DynAny_Test/test_dynstruct.cpp:
+        * TAO/tests/DynAny_Test/test_dynunion.cpp:
+          Fixed some memory leaks - the ones that are left
+          are all similar, but I'm not sure how to approach 
+          it yet.
+
 Sun Oct 25 16:12:16 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * TAO/examples/Simple/time/README: Rearranged and cleared
