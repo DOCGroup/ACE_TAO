@@ -75,7 +75,32 @@ try macros.
       To simulate native exceptions on platforms without native
       exception handling, <em>every</em> single function call that may
       throw exceptions must be followed by <code>ACE_CHECK</code> or
-      <code>ACE_CHECK_RETURN</code>.  Notice that you should always
+      <code>ACE_CHECK_RETURN</code>.</p>
+
+      <p><a name="exc-func">Exception-throwing functions include the
+      following categories:</p>
+
+      <ol>
+        <li><p>Any function that takes a
+            <code>CORBA_Environment</code> variable.</p>
+        </li>
+
+        <li><p><code>ACE_NEW_THROW_EX</code>.  Notice that you
+            <em>should not</em> use <code>ACE_NEW_THROW</code>,
+            <code>ACE_NEW_THROW_RETURN</code>,
+            <code>ACE_NEW_TRY_THROW</code> anymore because they don't
+            work right with ACE try macros.  Instead, use
+            <code>ACE_NEW_THROW</code> with appropriate ACE_CHECK*
+            macros.</p>
+        </li>
+
+        <li><p><code>ACE_TRY</code> blocks.  Follow every
+            <code>ACE_ENDTRY</code> with appropriate ACE_CHECK*
+            macros.</p>
+        <li>
+      </ol>
+
+      Notice that you should always
       follow the outter most <code>ACE_ENDTRY</code> with
       <code>ACE_CHECK</code> or <code>ACE_CHECK_RETURN</code> because
       there might be uncaught exception.
