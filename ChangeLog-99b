@@ -1,155 +1,162 @@
+Sun Jun 06 08:08:11 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Functor.{h,i} (ACE_Hash<ACE_UINT64>::operator ()):
+          conditionally compile only if ACE_SIZEOF_LONG is not 8,
+          to avoid conflict with ACE_HASH<unsigned long> on 64-bit
+          platforms (alphas).
+
 Sat Jun  5 23:34:21 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
-	* ace/Containers_T: Changed all uses of "index" to "slot" to avoid
- 	  conflicts with broken C++ compilers that define macros named
- 	  "index."
+        * ace/Containers_T: Changed all uses of "index" to "slot" to avoid
+          conflicts with broken C++ compilers that define macros named
+          "index."
 
 Sat Jun  5 22:57:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h:
-	  Added new macro (ACE_TEMPLATE_SPECIALIZATION) to handle the
-	  differences between compilers supporting the standard way to
-	  specialize a template (i.e. template<> class Foo<int>) vs. the
-	  old style (just saying class Foo<int>).
-	  Also added new macro ACE_HAS_STD_TEMPLATE_SPECIALIZATION that
-	  platforms must define if they want the new style.
+        * ace/OS.h:
+          Added new macro (ACE_TEMPLATE_SPECIALIZATION) to handle the
+          differences between compilers supporting the standard way to
+          specialize a template (i.e. template<> class Foo<int>) vs. the
+          old style (just saying class Foo<int>).
+          Also added new macro ACE_HAS_STD_TEMPLATE_SPECIALIZATION that
+          platforms must define if they want the new style.
 
-	* ace/Filecache.cpp:
-	* ace/Functor.h:
-	  Use the new ACE_TEMPLATE_SPECIALIZATION macro
+        * ace/Filecache.cpp:
+        * ace/Functor.h:
+          Use the new ACE_TEMPLATE_SPECIALIZATION macro
 
-	* ace/config-sunos5.5.h:
-	  Define the new ACE_HAS_STD_TEMPLATE_SPECIALIZATION for Sun/CC
-	  5.0
+        * ace/config-sunos5.5.h:
+          Define the new ACE_HAS_STD_TEMPLATE_SPECIALIZATION for Sun/CC
+          5.0
 
-	* ACE-INSTALL.html:
-	  Added some notes about our success with Sun/CC 5.0
+        * ACE-INSTALL.html:
+          Added some notes about our success with Sun/CC 5.0
 
 Sat Jun  5 16:48:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix6.x-common.h
-	* ace/config-irix6.x-sgic++-nothreads.h
-	* ace/config-irix6.x-sgic++.h
-	* include/makeinclude/platform_irix6.x-sgic++.GNU
-	* include/makeinclude/platform_irix6.x_common.GNU
-	* include/makeinclude/platform_irix6.x_g++.GNU
-	* include/makeinclude/platform_irix6.x_kcc.GNU
-	* include/makeinclude/platform_irix6.x_sgic++.GNU: On IRIX 6.5 we
- 	  must not define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS, thanks to
- 	  Bob Laferriere <laferrie@gsao.med.ge.com> for pointing this out.
-  	  Created a new platform_*.GNU file that auto detects the IRIX
- 	  version (couldn't find a pre-processor macro to do it); also
- 	  renamed the platform_irix6.x-sgic++.GNU file to use underscore
- 	  instead of '-'; that way it is more consistent with the other
- 	  files.
+        * ace/config-irix6.x-common.h
+        * ace/config-irix6.x-sgic++-nothreads.h
+        * ace/config-irix6.x-sgic++.h
+        * include/makeinclude/platform_irix6.x-sgic++.GNU
+        * include/makeinclude/platform_irix6.x_common.GNU
+        * include/makeinclude/platform_irix6.x_g++.GNU
+        * include/makeinclude/platform_irix6.x_kcc.GNU
+        * include/makeinclude/platform_irix6.x_sgic++.GNU: On IRIX 6.5 we
+          must not define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS, thanks to
+          Bob Laferriere <laferrie@gsao.med.ge.com> for pointing this out.
+          Created a new platform_*.GNU file that auto detects the IRIX
+          version (couldn't find a pre-processor macro to do it); also
+          renamed the platform_irix6.x-sgic++.GNU file to use underscore
+          instead of '-'; that way it is more consistent with the other
+          files.
 
 Sat Jun  5 13:29:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Codeset_IBM1047: Minor reformatting to conform to ACE
-	  programming guidelines.
+        * ace/Codeset_IBM1047: Minor reformatting to conform to ACE
+          programming guidelines.
 
 Sat Jun  5 13:00:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/CDR_Stream.h:
-	* ace/CDR_Stream.i:
-	* ace/CDR_Stream.cpp:
-	  New methods added to the InputCDR class to simplify the process
-	  of reading a buffer from a socket or file.
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+        * ace/CDR_Stream.cpp:
+          New methods added to the InputCDR class to simplify the process
+          of reading a buffer from a socket or file.
 
 Fri Jun  4 23:52:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/CDR_Stream.h:
-	* ace/CDR_Stream.i:
-	* ace/CDR_Stream.cpp:
-	  Added support for codeset translators.
-	  Many thanks to Jim Rogers <jrogers@viasoft.com> for providing
-	  these fixes.
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+        * ace/CDR_Stream.cpp:
+          Added support for codeset translators.
+          Many thanks to Jim Rogers <jrogers@viasoft.com> for providing
+          these fixes.
 
-	* ace/Makefile:
-	* ace/Codeset_IBM1047.h:
-	* ace/Codeset_IBM1047.cpp:
-	  A pair of codeset translators between IBM1047 (aka EBCDIC) and
-	  ISO8859-1 (aka ISO-Latin-1)
+        * ace/Makefile:
+        * ace/Codeset_IBM1047.h:
+        * ace/Codeset_IBM1047.cpp:
+          A pair of codeset translators between IBM1047 (aka EBCDIC) and
+          ISO8859-1 (aka ISO-Latin-1)
 
-	* ace/config-mvs.h:
-	  Define an ACE_MVS macro
+        * ace/config-mvs.h:
+          Define an ACE_MVS macro
 
 Fri Jun  4 15:23:18 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Cached_Connect_Strategy_T.{h,i,cpp}: Removed common code by
-	  making Cached_Connect_Strategy_Ex derive from
-	  Cached_Connect_Strategy class.
-	
+        * ace/Cached_Connect_Strategy_T.{h,i,cpp}: Removed common code by
+          making Cached_Connect_Strategy_Ex derive from
+          Cached_Connect_Strategy class.
+
 Fri Jun 04 09:59:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* docs/tutorials/tutorials.dsw: Fixed "_" to "-". Thanks to Tom
-	  Bradley <thomas.bradley@maisel-gw.enst-bretagne.fr> for pointing
-	  out this problem.
+        * docs/tutorials/tutorials.dsw: Fixed "_" to "-". Thanks to Tom
+          Bradley <thomas.bradley@maisel-gw.enst-bretagne.fr> for pointing
+          out this problem.
 
 Fri Jun  4 09:02:35 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* ace/POSIX_Asynch_IO.cpp: Fixed a syntax error. There were two
-	consecutive commas in the ACE_DEBUG statement which were causing
-	syntax errors while compiling.
+        * ace/POSIX_Asynch_IO.cpp: Fixed a syntax error. There were two
+        consecutive commas in the ACE_DEBUG statement which were causing
+        syntax errors while compiling.
 
 Fri Jun  4 00:28:07 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/POSIX_Asynch_IO.cpp: Fixed the Linux egcs warning.
+        * ace/POSIX_Asynch_IO.cpp: Fixed the Linux egcs warning.
 
 Thu Jun  3 17:05:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Cached_Connect_Strategy_T.h
-	* ace/Cached_Connect_Strategy_T.i
-	* ace/Cached_Connect_Strategy_T.cpp
+        * ace/Cached_Connect_Strategy_T.h
+        * ace/Cached_Connect_Strategy_T.i
+        * ace/Cached_Connect_Strategy_T.cpp
 
-	  Caching connection strategy used by the Strategy Connector.
+          Caching connection strategy used by the Strategy Connector.
 
-	* ace/Cache_Map_Manager_T.h
-	* ace/Cache_Map_Manager_T.i
-	* ace/Cache_Map_Manager_T.cpp
+        * ace/Cache_Map_Manager_T.h
+        * ace/Cache_Map_Manager_T.i
+        * ace/Cache_Map_Manager_T.cpp
 
-	  Map Manager which performs caching depending on the caching
-	  strategy used.
+          Map Manager which performs caching depending on the caching
+          strategy used.
 
-	* ace/Hash_Cache_Map_Manager_T.h
-	* ace/Hash_Cache_Map_Manager_T.i
-	* ace/Hash_Cache_Map_Manager_T.cpp
+        * ace/Hash_Cache_Map_Manager_T.h
+        * ace/Hash_Cache_Map_Manager_T.i
+        * ace/Hash_Cache_Map_Manager_T.cpp
 
-	  Hash_Map used as a specialised form of the Cache Map.
+          Hash_Map used as a specialised form of the Cache Map.
 
-	* ace/Caching_Strategies_T.h
-	* ace/Caching_Strategies_T.i
-	* ace/Caching_Strategies_T.cpp
+        * ace/Caching_Strategies_T.h
+        * ace/Caching_Strategies_T.i
+        * ace/Caching_Strategies_T.cpp
 
-	  Strategies used for caching purposes, example: Least Recently
-	  Used.
+          Strategies used for caching purposes, example: Least Recently
+          Used.
 
-	* ace/Caching_Strategy_Utility_T.h
-	* ace/Caching_Strategy_Utility_T.i
-	* ace/Caching_Strategy_Utility_T.cpp
+        * ace/Caching_Strategy_Utility_T.h
+        * ace/Caching_Strategy_Utility_T.i
+        * ace/Caching_Strategy_Utility_T.cpp
 
-	  Helper class for the caching strategy classes which does the
-	  purging of entries.
+          Helper class for the caching strategy classes which does the
+          purging of entries.
 
-	* ace/Cleanup_Strategies_T.h
-	* ace/Cleanup_Strategies_T.i
-	* ace/Cleanup_Strategies_T.cpp
+        * ace/Cleanup_Strategies_T.h
+        * ace/Cleanup_Strategies_T.i
+        * ace/Cleanup_Strategies_T.cpp
 
-	  Strategy which deals with destruction and cleanup in general.
+          Strategy which deals with destruction and cleanup in general.
 
-	* ace/Makefile
+        * ace/Makefile
 
-	  Added the above under the TEMPLATE_FILES.
+          Added the above under the TEMPLATE_FILES.
 
-	* examples/Web_Crawler/Optimal_Cache_Map_Manager_T.h
+        * examples/Web_Crawler/Optimal_Cache_Map_Manager_T.h
         * examples/Web_Crawler/Optimal_Cache_Map_Manager_T.i
-	* examples/Web_Crawler/Optimal_Cache_Map_Manager_T.cpp
-	* examples/Web_Crawler/Cached_Connect_Strategy_T.h
-	* examples/Web_Crawler/Cached_Connect_Strategy_T.i
-	* examples/Web_Crawler/Cached_Connect_Strategy_T.cpp
-	* examples/Web_Crawler/Caching_Strategies_T.h
-	* examples/Web_Crawler/Caching_Strategies_T.i
-	* examples/Web_Crawler/Caching_Strategies_T.cpp
+        * examples/Web_Crawler/Optimal_Cache_Map_Manager_T.cpp
+        * examples/Web_Crawler/Cached_Connect_Strategy_T.h
+        * examples/Web_Crawler/Cached_Connect_Strategy_T.i
+        * examples/Web_Crawler/Cached_Connect_Strategy_T.cpp
+        * examples/Web_Crawler/Caching_Strategies_T.h
+        * examples/Web_Crawler/Caching_Strategies_T.i
+        * examples/Web_Crawler/Caching_Strategies_T.cpp
 
           Removed these files and added them to the ace library itself.
 
@@ -171,37 +178,37 @@ Thu Jun  3 17:05:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
         * examples/Web_Crawler/Web_Crawler.h
         * examples/Web_Crawler/main.cpp
 
-	  Changed to include files pertaining to Caching and Connection
-	  management from ace library.
+          Changed to include files pertaining to Caching and Connection
+          management from ace library.
 
 Thu Jun 03 15:57:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Strategies_T (ACE_Cached_Connect_Strategy): Allowed the user
-	  to pass in a mutex.  This allows the user to pass in a
-	  preconfigured mutex of his/her liking. Since the parameters
-	  default appropriately, no existing code should break.
+        * ace/Strategies_T (ACE_Cached_Connect_Strategy): Allowed the user
+          to pass in a mutex.  This allows the user to pass in a
+          preconfigured mutex of his/her liking. Since the parameters
+          default appropriately, no existing code should break.
 
-	* ace/Functor: Changed ACE_Hash<unsigned long long> specialization
-	  to ACE_Hash<ACE_UINT64>.
+        * ace/Functor: Changed ACE_Hash<unsigned long long> specialization
+          to ACE_Hash<ACE_UINT64>.
 
 Thu Jun  3 10:36:35  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* ace/Functor.i
-	* ace/Functor.h:
-	  Added ACE_Hash <unsigned long long>. It truncates the ULongLong
-	  to a ULong and returns it. Nothing major...
+        * ace/Functor.i
+        * ace/Functor.h:
+          Added ACE_Hash <unsigned long long>. It truncates the ULongLong
+          to a ULong and returns it. Nothing major...
 
 Wed Jun  2 17:50:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* include/makeinclude/platform_mvs.GNU:
-	  Debugging info was not generated on the C++ files.
-	  The -+ flag should be added to CPPFLAGS using +=
-	  Thanks to Jim Rogers <jrogers@viasoft.com> for these fixes.
+        * include/makeinclude/platform_mvs.GNU:
+          Debugging info was not generated on the C++ files.
+          The -+ flag should be added to CPPFLAGS using +=
+          Thanks to Jim Rogers <jrogers@viasoft.com> for these fixes.
 
 Wed Jun 02 16:11:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/TTY_IO.cpp (control): Commented out odd baud rates (56000,
-	  128000, 256000) which don't seem to be supported on FreeBSD.
+        * ace/TTY_IO.cpp (control): Commented out odd baud rates (56000,
+          128000, 256000) which don't seem to be supported on FreeBSD.
 
 Wed Jun 02 00:07:44 1999    <alex@cs.wustl.edu>
 
@@ -217,69 +224,69 @@ Wed Jun 02 00:07:44 1999    <alex@cs.wustl.edu>
        * examples/Reactor/Proactor/README:
        * examples/Reactor/Proactor/Makefile:
 
-	Related to ChangeLog : Tue Jun  1 16:48:58 1999  Alexander Babu
-	Arulanthu  <alex@cs.wustl.edu>
+        Related to ChangeLog : Tue Jun  1 16:48:58 1999  Alexander Babu
+        Arulanthu  <alex@cs.wustl.edu>
 
 Tue Jun  1 21:44:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* include/makeinclude/platform_linux_lxpthread.GNU:
-	  Added the rt library to the command line, ACE uses aynchronous
-	  I/O by default on linux.
+        * include/makeinclude/platform_linux_lxpthread.GNU:
+          Added the rt library to the command line, ACE uses aynchronous
+          I/O by default on linux.
 
 Tue Jun  1 16:48:58 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	   Ported <ACE_Asynch_Operation::cancel> to POSIX platforms based
-	   on <aio_cancel> API. Made the return values  consistent in both
-	   WIN32 and POSIX platforms as follows.
+           Ported <ACE_Asynch_Operation::cancel> to POSIX platforms based
+           on <aio_cancel> API. Made the return values  consistent in both
+           WIN32 and POSIX platforms as follows.
 
-	 All completion notifications for the I/O operations will occur
-	 normally.
+         All completion notifications for the I/O operations will occur
+         normally.
 
-	 = Return Values:
+         = Return Values:
 
-	 -1 : Operation failed. (can get only in POSIX).
-	  0 : All the operations were cancelled.
-	  1 : All the operations were already finished in this
-	      handle. Unable to cancel them.
-	  2 : Atleast one of the requested operations cannot be
-	      cancelled.
+         -1 : Operation failed. (can get only in POSIX).
+          0 : All the operations were cancelled.
+          1 : All the operations were already finished in this
+              handle. Unable to cancel them.
+          2 : Atleast one of the requested operations cannot be
+              cancelled.
 
-	* ace/Asynch_IO.cpp
-	* ace/Asynch_IO.h
-	* ace/POSIX_Asynch_IO.cpp
-	* ace/POSIX_Asynch_IO.h
-	* ace/POSIX_Proactor.h
-	* ace/WIN32_Asynch_IO.cpp:
-	* ace/POSIX_Proactor.cpp:
+        * ace/Asynch_IO.cpp
+        * ace/Asynch_IO.h
+        * ace/POSIX_Asynch_IO.cpp
+        * ace/POSIX_Asynch_IO.h
+        * ace/POSIX_Proactor.h
+        * ace/WIN32_Asynch_IO.cpp:
+        * ace/POSIX_Proactor.cpp:
 
-	* ace/config-linux-lxpthreads.h: Enabled the ACE_HAS_AIO_CALLS
-	flag for this platform.
+        * ace/config-linux-lxpthreads.h: Enabled the ACE_HAS_AIO_CALLS
+        flag for this platform.
 
 
 Tue Jun  1 15:02:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Connector.h:
-	  Documented the new connect() method
+        * ace/Connector.h:
+          Documented the new connect() method
 
 Tue Jun 01 11:18:03 1999    <alex@cs.wustl.edu>
 
-	* examples/Reactor/Proactor/test_end_event_loop.cpp:
-	* tao/post_completions.cpp
-	* tao/test_end_event_loop.cpp
-	* tao/test_end_event_loop.dsp
-	* tao/test_proactor.dsw
-	Fixed the link problems.
+        * examples/Reactor/Proactor/test_end_event_loop.cpp:
+        * tao/post_completions.cpp
+        * tao/test_end_event_loop.cpp
+        * tao/test_end_event_loop.dsp
+        * tao/test_proactor.dsw
+        Fixed the link problems.
 
 Tue Jun  1 09:57:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/TTY_IO.cpp (control),
-	* ace/config-freebsd.h,
-	  ace/config-freebsd-pthread.h: Attached is a patch that will
-	  allow the ACE_TTY_IO class to work with FreeBSD tty devices.
-	  Thanks to John Aughey <jha@FreeBSD.ORG> for contributing these.
+        * ace/TTY_IO.cpp (control),
+        * ace/config-freebsd.h,
+          ace/config-freebsd-pthread.h: Attached is a patch that will
+          allow the ACE_TTY_IO class to work with FreeBSD tty devices.
+          Thanks to John Aughey <jha@FreeBSD.ORG> for contributing these.
 
-	* ACE-INSTALL.html: Updated the list of platforms that ACE is
- 	  supported on.
+        * ACE-INSTALL.html: Updated the list of platforms that ACE is
+          supported on.
 
 Tue Jun 01 10:00:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
