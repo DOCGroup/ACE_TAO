@@ -17,6 +17,7 @@
 //      Jason Cohen, Lockheed Martin ATL <jcohen@atl.lmco.com>
 //
 // ============================================================================
+// FUZZ: disable check_for_streams_include
 
 #include "ace/Codeset_Registry.h"
 #include "ace/Get_Opt.h"
