@@ -115,6 +115,13 @@ namespace CIAO
         int value,
         Deployment::Requirement& req);
 
+      /// process attributes for NIA
+      void process_attributes_for_nia (DOMNamedNodeMap* nm,
+        DOMDocument* doc,
+        DOMNodeIterator* iter,
+        int value,
+        Deployment::NamedImplementationArtifact& nia);
+
       /// process IDREFS
       void process_refs (DOMNamedNodeMap* named_node_map);
 

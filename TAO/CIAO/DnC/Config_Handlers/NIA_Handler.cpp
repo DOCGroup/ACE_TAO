@@ -67,12 +67,13 @@ namespace CIAO
               IAD_Handler iad_handler (iter_, false);
 
               // delegate the populating process
-              iad_handler.process_ImplementationArtifactDescription (nia.referencedArtifact);
+              iad_handler.process_ImplementationArtifactDescription 
+                (nia.referencedArtifact);
             }
           else
             {
-              // ??? How did we get here ???
-              ACE_THROW (CORBA::INTERNAL());
+              this->iter_->previousNode ();
+              break;
             }
         }
       return;
