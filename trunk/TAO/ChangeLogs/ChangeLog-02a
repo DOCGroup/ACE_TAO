@@ -6,6 +6,11 @@ Wed Mar  6 14:37:41 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
         * tests/Queued_Message_Test/Queued_Message_Test.cpp: Changed the
 	  argv type in main to char*.
 
+Wed Mar  6 14:32:00 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* tao/Messaging/MessagingC.cpp:
+	  Made changes to fix the Debbian_KCC builds.
+
 Wed Mar  6 11:03:12 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:

@@ -7620,8 +7620,6 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (
 
 //@@ Boris: begin experimental
 
-TAO_NAMESPACE CORBA
-{
 void
 CORBA::add_ref (Messaging::ExceptionHolder * vt)
 {
@@ -7639,8 +7637,6 @@ CORBA::remove_ref (Messaging::ExceptionHolder * vt)
     vt->_remove_ref ();
   }
 }
-}
-TAO_NAMESPACE_CLOSE
 
 
 //@@ Boris: end experimental
