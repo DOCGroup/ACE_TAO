@@ -277,6 +277,14 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
     return 0;
 }
 
+int 
+ACE_XtReactor::remove_handler_i (const ACE_Handle_Set &handles, 
+				 ACE_Reactor_Mask mask)
+{
+  return ACE_Select_Reactor::remove_handler_i (handles, 
+					       mask);
+}
+
 // The following functions ensure that there is an Xt timeout for the
 // first timeout in the Reactor's Timer_Queue.
 

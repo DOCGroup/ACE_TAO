@@ -67,9 +67,14 @@ class ACE_Export ACE_Select_Reactor_Token : public ACE_SELECT_REACTOR_MUTEX
 public:
   ACE_Select_Reactor_Token (ACE_Select_Reactor &r);
   ACE_Select_Reactor_Token (void);
+  virtual ~ACE_Select_Reactor_Token (void);
 
   virtual void sleep_hook (void);
   // Called just before the ACE_Event_Handler goes to sleep.
+
+  ACE_Select_Reactor &select_reactor (void);
+  void select_reactor (ACE_Select_Reactor &);
+  // Set/Get methods
 
   void dump (void) const;
   // Dump the state of an object.
