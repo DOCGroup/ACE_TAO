@@ -4,6 +4,8 @@
 
 #include "CCF/IDL2/SemanticGraph/Name.hpp"
 
+#include <ostream>
+
 /*
 #include <iostream>
 
