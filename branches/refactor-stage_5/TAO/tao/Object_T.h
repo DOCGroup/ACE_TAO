@@ -17,6 +17,8 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/CORBA_macros.h"
+
 namespace CORBA
 {
   class Object;

@@ -10,7 +10,7 @@
  * following command:
  *
  *   tao_idl
- *        -o orig -Gp -Gd -Ge 1
+ *        -o orig -Gp -Gd -Ge 1 -GT
  *        -Wb,export_macro=TAO_Export
  *        -Wb,export_include=TAO_Export.h
  *        -Wb,pre_include="ace/pre.h"

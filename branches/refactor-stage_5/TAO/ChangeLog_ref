@@ -1,3 +1,74 @@
+Sun Aug 31 19:39:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Bounds.pidl:
+        * tao/BoundsC.cpp:
+        * tao/BoundsC.h:
+        * tao/BoundsC.i:
+        * tao/CONV_FRAME.pidl:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CONV_FRAMEC.h:
+        * tao/CONV_FRAMEC.i:
+        * tao/Current.pidl:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/CurrentC.i:
+        * tao/Domain.pidl:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/Dynamic.pidl:
+        * tao/DynamicC.cpp:
+        * tao/DynamicC.h:
+        * tao/DynamicC.i:
+        * tao/GIOP.pidl:
+        * tao/GIOPC.cpp:
+        * tao/GIOPC.h:
+        * tao/GIOPC.i:
+        * tao/IIOP.pidl:
+        * tao/IIOPC.cpp:
+        * tao/IIOPC.h:
+        * tao/IIOPC.i:
+        * tao/IOP.pidl:
+        * tao/IOPC.cpp:
+        * tao/IOPC.h:
+        * tao/IOPC.i:
+        * tao/IOP_Codec.pidl:
+        * tao/IOP_CodecC.cpp:
+        * tao/IOP_CodecC.h:
+        * tao/IOP_CodecC.i:
+        * tao/IOP_IOR.pidl:
+        * tao/IOP_IORC.cpp:
+        * tao/IOP_IORC.h:
+        * tao/IOP_IORC.i:
+        * tao/Messaging_PolicyValue.pidl:
+        * tao/Messaging_PolicyValueC.cpp:
+        * tao/Messaging_PolicyValueC.h:
+        * tao/Messaging_PolicyValueC.i:
+        * tao/Messaging_SyncScope.pidl:
+        * tao/Messaging_SyncScopeC.cpp:
+        * tao/Messaging_SyncScopeC.h:
+        * tao/Messaging_SyncScopeC.i:
+        * tao/ObjectIdList.pidl:
+
+	  Regenerated the above hand-crafted files and updated
+	  the command line documentation in the corresponding
+	  .pidl files.
+
+        * tao/Object_T.h:
+
+	  Added #include of ace/CORBA_macros.h.
+
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+
+	  Hacked these files to compile until I get a chance
+	  to regenerate them.
+
+        * tao/Tagged_Profile.cpp:
+
+	  Corrected name of struct member type in declaration.
+
 Sun Aug 31 15:49:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Object_T.h:

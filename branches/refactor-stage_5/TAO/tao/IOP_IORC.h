@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:151
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
 
 #ifndef _TAO_IDL_ORIG_IOP_IORC_H_
 #define _TAO_IDL_ORIG_IOP_IORC_H_
@@ -39,7 +39,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
 #include "tao/OctetSeqC.h"
 #include "tao/VarOut_T.h"
 #include "tao/CDR.h"
@@ -67,206 +66,209 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:48
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_ch.cpp:63
 
-TAO_NAMESPACE  IOP
+namespace TAO
 {
+  class Collocation_Proxy_Broker;
+}
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+
+namespace IOP
+{
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typedef/typedef_ch.cpp:333
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
+  
   typedef CORBA::ULong ProfileId;
   typedef CORBA::ULong_out ProfileId_out;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ProfileId;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ProfileId TAG_INTERNET_IOP = 0U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ProfileId TAG_MULTIPLE_COMPONENTS = 1U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_type.cpp:249
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
+  
   struct TaggedProfile;
-
+  
   typedef
     TAO_Var_Var_T<
         TaggedProfile
       >
     TaggedProfile_var;
-
+  
   typedef
     TAO_Out_T<
         TaggedProfile,
         TaggedProfile_var
       >
     TaggedProfile_out;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_structure/structure_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
+  
   struct TAO_Export TaggedProfile
   {
     typedef TaggedProfile_var _var_type;
-
+    
     static void _tao_any_destructor (void *);
     IOP::ProfileId tag;
     CORBA::OctetSeq profile_data;
   };
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedProfile;
-
+  
   // TAO_IDL - Generated from
-  // be/be_type.cpp:249
-
-#ifdef HPUX_11
-  // Remove clash with /usr/include/machine/inline.h and
-  // /usr/include/pa/inline.h
-#undef IOR
-#endif
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
+  
   struct IOR;
-
+  
   typedef
     TAO_Var_Var_T<
         IOR
       >
     IOR_var;
-
+  
   typedef
     TAO_Out_T<
         IOR,
         IOR_var
       >
     IOR_out;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_structure/structure_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
+  
   struct TAO_Export IOR
   {
     typedef IOR_var _var_type;
-
+    
     static void _tao_any_destructor (void *);
     TAO_String_Manager type_id;
-
-
+    
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_sequence/sequence_ch.cpp:89
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
-#if !defined (_IOP_IOR__TAO_SEQ_TAGGEDPROFILE_PROFILES_CH_)
-#define _IOP_IOR__TAO_SEQ_TAGGEDPROFILE_PROFILES_CH_
-
-    class TAO_Export _tao_seq_TaggedProfile_profiles
+#if !defined (_IOP_IOR__TAO_SEQ_IOP_TAGGEDPROFILE__CH_)
+#define _IOP_IOR__TAO_SEQ_IOP_TAGGEDPROFILE__CH_
+    
+    class TAO_Export _tao_seq_IOP_TaggedProfile_
       : public
           TAO_Unbounded_Sequence<
               ACE_NESTED_CLASS (IOP, TaggedProfile)
             >
     {
     public:
-      _tao_seq_TaggedProfile_profiles (void);
-      _tao_seq_TaggedProfile_profiles (CORBA::ULong max);
-      _tao_seq_TaggedProfile_profiles (
+      _tao_seq_IOP_TaggedProfile_ (void);
+      _tao_seq_IOP_TaggedProfile_ (CORBA::ULong max);
+      _tao_seq_IOP_TaggedProfile_ (
           CORBA::ULong max,
           CORBA::ULong length,
-          ACE_NESTED_CLASS (IOP, TaggedProfile)* buffer,
+          ACE_NESTED_CLASS (IOP, TaggedProfile)* buffer, 
           CORBA::Boolean release = 0
         );
-      _tao_seq_TaggedProfile_profiles (const _tao_seq_TaggedProfile_profiles &);
-      ~_tao_seq_TaggedProfile_profiles (void);
-
+      _tao_seq_IOP_TaggedProfile_ (const _tao_seq_IOP_TaggedProfile_ &);
+      ~_tao_seq_IOP_TaggedProfile_ (void);
+      
       static void _tao_any_destructor (void *);
-
-
+      
+      
     };
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_field/field_ch.cpp:453
-
-    typedef _tao_seq_TaggedProfile_profiles _profiles_seq;
-    _tao_seq_TaggedProfile_profiles profiles;
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_field/field_ch.cpp:453
+    
+    typedef _tao_seq_IOP_TaggedProfile_ _profiles_seq;
+    _tao_seq_IOP_TaggedProfile_ profiles;
   };
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IOR;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typedef/typedef_ch.cpp:333
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
+  
   typedef CORBA::ULong ComponentId;
   typedef CORBA::ULong_out ComponentId_out;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ComponentId;
-
+  
   // TAO_IDL - Generated from
-  // be/be_type.cpp:249
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
+  
   struct TaggedComponent;
-
+  
   typedef
     TAO_Var_Var_T<
         TaggedComponent
       >
     TaggedComponent_var;
-
+  
   typedef
     TAO_Out_T<
         TaggedComponent,
         TaggedComponent_var
       >
     TaggedComponent_out;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_structure/structure_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
+  
   struct TAO_Export TaggedComponent
   {
     typedef TaggedComponent_var _var_type;
-
+    
     static void _tao_any_destructor (void *);
     IOP::ComponentId tag;
     CORBA::OctetSeq component_data;
   };
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedComponent;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_sequence/sequence_ch.cpp:89
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_IOP_MULTIPLECOMPONENTPROFILE_CH_)
 #define _IOP_MULTIPLECOMPONENTPROFILE_CH_
-
+  
   class MultipleComponentProfile;
-
+  
   typedef
     TAO_VarSeq_Var_T<
         MultipleComponentProfile,
         TaggedComponent
       >
     MultipleComponentProfile_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         MultipleComponentProfile,
@@ -274,7 +276,7 @@ TAO_NAMESPACE  IOP
         TaggedComponent
       >
     MultipleComponentProfile_out;
-
+  
   class TAO_Export MultipleComponentProfile
     : public
         TAO_Unbounded_Sequence<
@@ -287,39 +289,39 @@ TAO_NAMESPACE  IOP
     MultipleComponentProfile (
         CORBA::ULong max,
         CORBA::ULong length,
-        TaggedComponent* buffer,
+        TaggedComponent* buffer, 
         CORBA::Boolean release = 0
       );
     MultipleComponentProfile (const MultipleComponentProfile &);
     ~MultipleComponentProfile (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef MultipleComponentProfile_var _var_type;
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_MultipleComponentProfile;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_sequence/sequence_ch.cpp:89
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_IOP_TAGGEDCOMPONENTLIST_CH_)
 #define _IOP_TAGGEDCOMPONENTLIST_CH_
-
+  
   class TaggedComponentList;
-
+  
   typedef
     TAO_VarSeq_Var_T<
         TaggedComponentList,
         TaggedComponent
       >
     TaggedComponentList_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         TaggedComponentList,
@@ -327,7 +329,7 @@ TAO_NAMESPACE  IOP
         TaggedComponent
       >
     TaggedComponentList_out;
-
+  
   class TAO_Export TaggedComponentList
     : public
         TAO_Unbounded_Sequence<
@@ -340,39 +342,39 @@ TAO_NAMESPACE  IOP
     TaggedComponentList (
         CORBA::ULong max,
         CORBA::ULong length,
-        TaggedComponent* buffer,
+        TaggedComponent* buffer, 
         CORBA::Boolean release = 0
       );
     TaggedComponentList (const TaggedComponentList &);
     ~TaggedComponentList (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef TaggedComponentList_var _var_type;
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedComponentList;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_sequence/sequence_ch.cpp:89
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_IOP_TAGGEDCOMPONENTSEQ_CH_)
 #define _IOP_TAGGEDCOMPONENTSEQ_CH_
-
+  
   class TaggedComponentSeq;
-
+  
   typedef
     TAO_VarSeq_Var_T<
         TaggedComponentSeq,
         TaggedComponent
       >
     TaggedComponentSeq_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         TaggedComponentSeq,
@@ -380,7 +382,7 @@ TAO_NAMESPACE  IOP
         TaggedComponent
       >
     TaggedComponentSeq_out;
-
+  
   class TAO_Export TaggedComponentSeq
     : public
         TAO_Unbounded_Sequence<
@@ -393,144 +395,144 @@ TAO_NAMESPACE  IOP
     TaggedComponentSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        TaggedComponent* buffer,
+        TaggedComponent* buffer, 
         CORBA::Boolean release = 0
       );
     TaggedComponentSeq (const TaggedComponentSeq &);
     ~TaggedComponentSeq (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef TaggedComponentSeq_var _var_type;
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedComponentSeq;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_ORB_TYPE = 0U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_CODE_SETS = 1U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_POLICIES = 2U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_ALTERNATE_IIOP_ADDRESS = 3U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_COMPLETE_OBJECT_KEY = 5U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_ENDPOINT_ID_POSITION = 6U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_LOCATION_POLICY = 12U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_DCE_STRING_BINDING = 100U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_DCE_BINDING_NAME = 101U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_DCE_NO_PIPES = 102U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typedef/typedef_ch.cpp:333
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
+  
   typedef CORBA::ULong ServiceId;
   typedef CORBA::ULong_out ServiceId_out;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceId;
-
+  
   // TAO_IDL - Generated from
-  // be/be_type.cpp:249
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
+  
   struct ServiceContext;
-
+  
   typedef
     TAO_Var_Var_T<
         ServiceContext
       >
     ServiceContext_var;
-
+  
   typedef
     TAO_Out_T<
         ServiceContext,
         ServiceContext_var
       >
     ServiceContext_out;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_structure/structure_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
+  
   struct TAO_Export ServiceContext
   {
     typedef ServiceContext_var _var_type;
-
+    
     static void _tao_any_destructor (void *);
     IOP::ServiceId context_id;
-
-
+    
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_sequence/sequence_ch.cpp:89
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
-#if !defined (_IOP_SERVICECONTEXT__TAO_SEQ_OCTET_CONTEXT_DATA_CH_)
-#define _IOP_SERVICECONTEXT__TAO_SEQ_OCTET_CONTEXT_DATA_CH_
-
-    class TAO_Export _tao_seq_Octet_context_data
+#if !defined (_IOP_SERVICECONTEXT__TAO_SEQ_CORBA_OCTET__CH_)
+#define _IOP_SERVICECONTEXT__TAO_SEQ_CORBA_OCTET__CH_
+    
+    class TAO_Export _tao_seq_CORBA_Octet_
       : public
           TAO_Unbounded_Sequence<
               CORBA::Octet
             >
     {
     public:
-      _tao_seq_Octet_context_data (void);
-      _tao_seq_Octet_context_data (CORBA::ULong max);
-      _tao_seq_Octet_context_data (
+      _tao_seq_CORBA_Octet_ (void);
+      _tao_seq_CORBA_Octet_ (CORBA::ULong max);
+      _tao_seq_CORBA_Octet_ (
           CORBA::ULong max,
           CORBA::ULong length,
-          CORBA::Octet* buffer,
+          CORBA::Octet* buffer, 
           CORBA::Boolean release = 0
         );
-      _tao_seq_Octet_context_data (const _tao_seq_Octet_context_data &);
-      ~_tao_seq_Octet_context_data (void);
-
+      _tao_seq_CORBA_Octet_ (const _tao_seq_CORBA_Octet_ &);
+      ~_tao_seq_CORBA_Octet_ (void);
+      
       static void _tao_any_destructor (void *);
-
-
+      
+      
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-      _tao_seq_Octet_context_data (
+      _tao_seq_CORBA_Octet_ (
           CORBA::ULong length,
           const ACE_Message_Block* mb
         )
@@ -539,34 +541,34 @@ TAO_NAMESPACE  IOP
     };
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_field/field_ch.cpp:453
-
-    typedef _tao_seq_Octet_context_data _context_data_seq;
-    _tao_seq_Octet_context_data context_data;
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_field/field_ch.cpp:453
+    
+    typedef _tao_seq_CORBA_Octet_ _context_data_seq;
+    _tao_seq_CORBA_Octet_ context_data;
   };
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceContext;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_sequence/sequence_ch.cpp:89
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_IOP_SERVICECONTEXTLIST_CH_)
 #define _IOP_SERVICECONTEXTLIST_CH_
-
+  
   class ServiceContextList;
-
+  
   typedef
     TAO_VarSeq_Var_T<
         ServiceContextList,
         ServiceContext
       >
     ServiceContextList_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         ServiceContextList,
@@ -574,7 +576,7 @@ TAO_NAMESPACE  IOP
         ServiceContext
       >
     ServiceContextList_out;
-
+  
   class TAO_Export ServiceContextList
     : public
         TAO_Unbounded_Sequence<
@@ -587,127 +589,134 @@ TAO_NAMESPACE  IOP
     ServiceContextList (
         CORBA::ULong max,
         CORBA::ULong length,
-        ServiceContext* buffer,
+        ServiceContext* buffer, 
         CORBA::Boolean release = 0
       );
     ServiceContextList (const ServiceContextList &);
     ~ServiceContextList (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef ServiceContextList_var _var_type;
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceContextList;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ServiceId TransactionService = 0U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ServiceId CodeSets = 1U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ServiceId ChainBypassCheck = 2U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ServiceId ChainBypassInfo = 3U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ServiceId LogicalThreadId = 4U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ServiceId BI_DIR_IIOP = 5U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ServiceId SendingContextRunTime = 6U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ServiceId INVOCATION_POLICIES = 7U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ServiceId UnknownExceptionInfo = 9U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ServiceId RTCorbaPriority = 10U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ServiceId RTCorbaPriorityRange = 11U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_FT_GROUP = 27U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_FT_PRIMARY = 28U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_FT_HEARTBEAT_ENABLED = 29U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ServiceId FT_GROUP_VERSION = 12U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ServiceId FT_REQUEST = 13U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ProfileId TAG_UIPMC = 1413566220U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_GROUP = 1413566211U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const IOP::ComponentId TAG_GROUP_IIOP = 1413566212U;
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
 
-}
-TAO_NAMESPACE_CLOSE // module IOP
+} // module IOP
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_ch.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+
+// Traits specializations.
+namespace TAO
+{
+};
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const IOP::TaggedProfile &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::TaggedProfile*); // noncopying version
@@ -715,7 +724,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::TaggedProfile *&
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::TaggedProfile *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_ch.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const IOP::IOR &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::IOR*); // noncopying version
@@ -723,7 +732,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::IOR *&); // depr
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::IOR *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_ch.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const IOP::TaggedComponent &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::TaggedComponent*); // noncopying version
@@ -731,7 +740,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::TaggedComponent 
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::TaggedComponent *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/any_op_ch.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const IOP::MultipleComponentProfile &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::MultipleComponentProfile*); // noncopying version
@@ -739,7 +748,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::MultipleComponen
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::MultipleComponentProfile *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/any_op_ch.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const IOP::TaggedComponentList &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::TaggedComponentList*); // noncopying version
@@ -747,7 +756,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::TaggedComponentL
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::TaggedComponentList *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/any_op_ch.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const IOP::TaggedComponentSeq &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::TaggedComponentSeq*); // noncopying version
@@ -755,7 +764,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::TaggedComponentS
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::TaggedComponentSeq *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/any_op_ch.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const IOP::ServiceContext &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::ServiceContext*); // noncopying version
@@ -763,7 +772,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::ServiceContext *
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::ServiceContext *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/any_op_ch.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const IOP::ServiceContextList &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::ServiceContextList*); // noncopying version
@@ -771,47 +780,47 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::ServiceContextLi
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::ServiceContextList *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/cdr_op.cpp:48
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ch.cpp:53
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:53
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::TaggedProfile &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::TaggedProfile &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ch.cpp:53
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:53
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::IOR &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::IOR &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ch.cpp:70
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
 
-#if !defined _TAO_CDR_OP_IOP_IOR__tao_seq_TaggedProfile_profiles_H_
-#define _TAO_CDR_OP_IOP_IOR__tao_seq_TaggedProfile_profiles_H_
+#if !defined _TAO_CDR_OP_IOP_IOR__tao_seq_IOP_TaggedProfile__H_
+#define _TAO_CDR_OP_IOP_IOR__tao_seq_IOP_TaggedProfile__H_
 
 TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const IOP::IOR::_tao_seq_TaggedProfile_profiles &
+    const IOP::IOR::_tao_seq_IOP_TaggedProfile_ &
   );
 TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    IOP::IOR::_tao_seq_TaggedProfile_profiles &
+    IOP::IOR::_tao_seq_IOP_TaggedProfile_ &
   );
 
-#endif /* _TAO_CDR_OP_IOP_IOR__tao_seq_TaggedProfile_profiles_H_ */
+#endif /* _TAO_CDR_OP_IOP_IOR__tao_seq_IOP_TaggedProfile__H_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ch.cpp:53
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:53
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::TaggedComponent &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::TaggedComponent &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ch.cpp:70
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
 
 #if !defined _TAO_CDR_OP_IOP_MultipleComponentProfile_H_
 #define _TAO_CDR_OP_IOP_MultipleComponentProfile_H_
@@ -828,7 +837,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_IOP_MultipleComponentProfile_H_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ch.cpp:70
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
 
 #if !defined _TAO_CDR_OP_IOP_TaggedComponentList_H_
 #define _TAO_CDR_OP_IOP_TaggedComponentList_H_
@@ -845,7 +854,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_IOP_TaggedComponentList_H_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ch.cpp:70
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
 
 #if !defined _TAO_CDR_OP_IOP_TaggedComponentSeq_H_
 #define _TAO_CDR_OP_IOP_TaggedComponentSeq_H_
@@ -862,30 +871,30 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_IOP_TaggedComponentSeq_H_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ch.cpp:53
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:53
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::ServiceContext &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::ServiceContext &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ch.cpp:70
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
 
-#if !defined _TAO_CDR_OP_IOP_ServiceContext__tao_seq_Octet_context_data_H_
-#define _TAO_CDR_OP_IOP_ServiceContext__tao_seq_Octet_context_data_H_
+#if !defined _TAO_CDR_OP_IOP_ServiceContext__tao_seq_CORBA_Octet__H_
+#define _TAO_CDR_OP_IOP_ServiceContext__tao_seq_CORBA_Octet__H_
 
 TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const IOP::ServiceContext::_tao_seq_Octet_context_data &
+    const IOP::ServiceContext::_tao_seq_CORBA_Octet_ &
   );
 TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    IOP::ServiceContext::_tao_seq_Octet_context_data &
+    IOP::ServiceContext::_tao_seq_CORBA_Octet_ &
   );
 
-#endif /* _TAO_CDR_OP_IOP_ServiceContext__tao_seq_Octet_context_data_H_ */
+#endif /* _TAO_CDR_OP_IOP_ServiceContext__tao_seq_CORBA_Octet__H_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ch.cpp:70
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
 
 #if !defined _TAO_CDR_OP_IOP_ServiceContextList_H_
 #define _TAO_CDR_OP_IOP_ServiceContextList_H_
@@ -902,12 +911,12 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_IOP_ServiceContextList_H_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/cdr_op.cpp:64
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:1018
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "IOP_IORC.i"
@@ -921,5 +930,6 @@ TAO_Export CORBA::Boolean operator>> (
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ifndef */
+

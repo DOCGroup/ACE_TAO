@@ -34,6 +34,7 @@
 
 #include "Policy_ForwardC.h"
 #include "Remote_Object_Proxy_Impl.h"
+#include "tao/Any_Impl_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

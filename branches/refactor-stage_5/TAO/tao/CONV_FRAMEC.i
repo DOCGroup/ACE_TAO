@@ -15,31 +15,37 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
 
-#if !defined _TAO_CDR_OP_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId_I_
-#define _TAO_CDR_OP_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId_I_
+#if !defined _TAO_CDR_OP_CONV_FRAME_CodeSetComponent__tao_seq_CONV_FRAME_CodeSetId__I_
+#define _TAO_CDR_OP_CONV_FRAME_CodeSetComponent__tao_seq_CONV_FRAME_CodeSetId__I_
 
 CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId &
+    const CONV_FRAME::CodeSetComponent::_tao_seq_CONV_FRAME_CodeSetId_ &
   );
 
 CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId &
+    CONV_FRAME::CodeSetComponent::_tao_seq_CONV_FRAME_CodeSetId_ &
   );
 
-#endif /* _TAO_CDR_OP_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId_I_ */
+#endif /* _TAO_CDR_OP_CONV_FRAME_CodeSetComponent__tao_seq_CONV_FRAME_CodeSetId__I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -47,17 +53,9 @@ CORBA::Boolean operator<< (
     const CONV_FRAME::CodeSetComponent &_tao_aggregate
   )
 {
-  if (
+  return
     (strm << _tao_aggregate.native_code_set) &&
-    (strm << _tao_aggregate.conversion_code_sets)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm << _tao_aggregate.conversion_code_sets);
 }
 
 ACE_INLINE
@@ -66,21 +64,13 @@ CORBA::Boolean operator>> (
     CONV_FRAME::CodeSetComponent &_tao_aggregate
   )
 {
-  if (
+  return
     (strm >> _tao_aggregate.native_code_set) &&
-    (strm >> _tao_aggregate.conversion_code_sets)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm >> _tao_aggregate.conversion_code_sets);
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -88,17 +78,9 @@ CORBA::Boolean operator<< (
     const CONV_FRAME::CodeSetComponentInfo &_tao_aggregate
   )
 {
-  if (
+  return
     (strm << _tao_aggregate.ForCharData) &&
-    (strm << _tao_aggregate.ForWcharData)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm << _tao_aggregate.ForWcharData);
 }
 
 ACE_INLINE
@@ -107,21 +89,13 @@ CORBA::Boolean operator>> (
     CONV_FRAME::CodeSetComponentInfo &_tao_aggregate
   )
 {
-  if (
+  return
     (strm >> _tao_aggregate.ForCharData) &&
-    (strm >> _tao_aggregate.ForWcharData)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm >> _tao_aggregate.ForWcharData);
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -129,17 +103,9 @@ CORBA::Boolean operator<< (
     const CONV_FRAME::CodeSetContext &_tao_aggregate
   )
 {
-  if (
+  return
     (strm << _tao_aggregate.char_data) &&
-    (strm << _tao_aggregate.wchar_data)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm << _tao_aggregate.wchar_data);
 }
 
 ACE_INLINE
@@ -148,16 +114,8 @@ CORBA::Boolean operator>> (
     CONV_FRAME::CodeSetContext &_tao_aggregate
   )
 {
-  if (
+  return
     (strm >> _tao_aggregate.char_data) &&
-    (strm >> _tao_aggregate.wchar_data)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm >> _tao_aggregate.wchar_data);
 }
 
