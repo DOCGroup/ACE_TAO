@@ -1,3 +1,8 @@
+Tue Nov 18 15:27:37 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/Timer_Queue_Adapters.cpp: Reordered include files.  Thanks
+	  to Torbjorn Lindgren <tl@funcom.no> for noticing the problem.
+
 Tue Nov 18 11:40:18 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/IOStream.(cpp h): Added:   &&(ACE_HAS_STANDARD_CPP_LIBRARY != 0)
