@@ -12,7 +12,6 @@ TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1 -Gsp -Gd \
 OBJFILES = \
         $(OBJDIR)\DiamondC.obj \
 	$(OBJDIR)\DiamondS.obj \
-        $(OBJDIR)\DiamondS_T.obj \
 	$(OBJDIR)\Diamond_i.obj
 
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) -DDiamond_HAS_DLL=1 -DDiamond_BUILD_DLL=1 $(TAO_PORTABLESERVER_CFLAGS)

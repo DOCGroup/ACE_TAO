@@ -3,7 +3,7 @@
 # Makefile for building the Collocation test
 #
 
-NAME = Collocation
+NAME = main
 
 OBJFILES = \
 	$(OBJDIR)\Coll_Tester.obj \
