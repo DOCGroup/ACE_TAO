@@ -41,18 +41,28 @@ parse_args (int argc, char *argv[])
 }
 
 int
-write_IOR(const char* ior)
+write_IOR(const char *filename
+          const char *ior)
 {
-  FILE* ior_output_file_ =
-    ACE_OS::fopen (ior_file_name_, "w");
+  if (filename == 0 || ior == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "A valid filename and an IOR string are required for saving IOR\n"),
+                      -1);
 
-  if (ior_output_file_)
-    {
-      ACE_OS::fprintf (ior_output_file_,
-                       "%s",
-                       ior);
-      ACE_OS::fclose (ior_output_file_);
-    }
+
+  FILE* ior_output_file_ =
+    ACE_OS::fopen (filename, "w");
+
+  if (ior_output_file_ == NULL)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to open <%s> for writing\n", filename),
+                      -1);
+
+  ACE_OS::fprintf (ior_output_file_,
+                   "%s",
+                   ior);
+
+  ACE_OS::fclose (ior_output_file_);
 
   return 0;
 }
@@ -77,7 +87,6 @@ int breakdown (char *source,
 void
 install_homes (CIAO::Session_Container &container,
                CORBA::ORB_ptr orb,
-               CIAO::HomeRegistrar_ptr hr
                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
   if (component_list_ == 0)
@@ -132,16 +141,6 @@ install_homes (CIAO::Session_Container &container,
               ACE_DEBUG ((LM_DEBUG, "Fail to create %s\n", items[6]));
               continue;
             }
-
-          // Register with the HomeFinder now.
-          ACE_DEBUG ((LM_DEBUG, "Installing %s|%s|%s\n",
-                      items[4], items[5], items[6]));
-          hr->register_home (items[4],
-                             items[5],
-                             items[6],
-                             home.in ()
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
     }
   ACE_OS::fclose (config_file);

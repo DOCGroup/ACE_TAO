@@ -58,12 +58,12 @@ parse_args (int argc, char *argv[])
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           "-n <component server pathname>"
-                           "-o <ior_output_file>"
-                           "-d <time (in second) to wait for component server>"
-                           "-i <installation data filename>"
-                           "-s <section name to use in installation data file>"
+                           "usage:  %s\n"
+                           "-n <component server pathname>\n"
+                           "-o <ior_output_file>\n"
+                           "-d <time (in second) to wait for component server>\n"
+                           "-i <installation data filename>\n"
+                           "-s <section name to use in installation data file>\n"
                            "\n",
                            argv [0]),
                           -1);

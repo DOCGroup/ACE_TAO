@@ -22,8 +22,8 @@ parse_args (int argc, char *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ComponentServer ior> "
+                           "usage:  %s \n"
+                           "-k <ComponentServer ior> \n"
                            "\n",
                            argv [0]),
                           -1);

@@ -28,7 +28,7 @@ ACE_INLINE
 [ciao module name]::[facet type]_Servant::[facet type]_Servant (CCM_[facet type]_ptr executor,
                                                                 ::Components::CCMContext_ptr c)
   : executor_ (CCM_[facet type]::_duplicate (executor)),
-    ctx_ (c)
+    ctx_ (Components::CCMContext::_duplicate (c))
 {
 }
 

@@ -39,9 +39,9 @@ parse_args (int argc, char *argv[])
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           "-c <deployment configuration file>"
-                           "-o <ior_output_file>"
+                           "usage:  %s\n"
+                           "-c <deployment configuration file>\n"
+                           "-o <ior_output_file>\n"
                            "\n",
                            argv [0]),
                           -1);
