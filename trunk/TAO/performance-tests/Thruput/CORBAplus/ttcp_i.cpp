@@ -4,10 +4,12 @@
 #include "pbroker/corba/environ.h"
 #include <pbroker/corba/xpsboa.h>
 #include <pbroker/corba/lifecycl/impldecl.h>
-#include <iostream.h>
 #include "ace/ACE.h"
 #include "ttcp_i.h"
 #include "ttcp_decl.h"
+#ifdef DEBUG
+# include "ace/streams.h"
+#endif
 
 ACE_RCSID(CORBAplus, ttcp_i, "$Id$")
 
