@@ -5,10 +5,17 @@
 // @file Executor.idl
 //
 // The purpose of this IDL file is to serve as a template for the CIDL
-// generated equivalent executor file.  The CIDL does *NOT* generate
-// this file directly, but instead, generates the C++ mappings for
-// the stuff defined in this file into a set of
-// [idl-name]EC.{h,inl,cpp} files.
+// generated equivalent executor file.  The CIDL will generate this
+// file directly which, in turn, gets compiled by the TAO IDL compiler
+// to generate the C++ mappings for the stuff defined in this file
+// into a set of [idl-name]EC.{h,inl,cpp} files.
+//
+// This intermediate step is necessary because component implemenetors
+// will need to extend these executor definitions (thru inheritance)
+// to implemenet more complex executor implementations, such as those
+// that support session component interface.  (This is necessary to
+// properly support C++ mapping for features such as interface
+// narrowing.)
 //
 // What are missing in the executor mappings are the exception
 // specifications for most operations.
