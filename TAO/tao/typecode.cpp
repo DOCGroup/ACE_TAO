@@ -383,7 +383,7 @@ CORBA_TypeCode::skip_typecode (CDR &stream)
         case CORBA::tk_alias:
         case CORBA::tk_except:
           return (stream.get_ulong (temp) != CORBA::B_FALSE
-		  && stream.rd_ptr (temp) != CORBA::B_FALSE);
+                  && stream.rd_ptr (temp) != CORBA::B_FALSE);
         }
 
       return CORBA::B_TRUE;
@@ -636,7 +636,7 @@ CORBA_TypeCode::private_equal (CORBA::TypeCode_ptr tc,
         // indirection offset must be same
         return CORBA::B_TRUE;
       }
-      break;
+      ACE_NOTREACHED (break);
     default:
       return CORBA::B_FALSE;
     }
