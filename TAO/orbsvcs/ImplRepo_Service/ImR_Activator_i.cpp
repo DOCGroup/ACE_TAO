@@ -8,13 +8,14 @@
 #include "ace/ARGV.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/os_include/os_netdb.h"
 
 
 static ACE_CString getActivatorName()
 {
   char host_name[MAXHOSTNAMELEN];
   ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
-  return ACE_CString(host_name);
+  return ACE_CString (host_name);
 }
 
 ImR_Activator_i::ImR_Activator_i (void)
