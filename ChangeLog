@@ -808,7 +808,7 @@ Sat Oct 26 21:49:15 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 Sat Oct 26 11:42:04 UTC 2002  John Aughey  <jha@aughey.com>
 
         * ace/INET_Addr.cpp: Changed default behavior to set 0
-        port and INADDR_ANY address.
+          port and INADDR_ANY address.
 
 Sat Oct 26 09:45:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1885,7 +1885,7 @@ Sat Oct 12 22:50:02 2002  Krishnakumar B  <kitty@cse.wustl.edu>
 Fri Oct 11 12:44:58 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
         * RTJava/*: Removed.  Angelo Corsaro <corsaro@ece.uci.edu>
-        keeps RTJperf related files in another CVS repository.
+          keeps RTJperf related files in another CVS repository.
 
         * ace/config-freebsd-pthread.h: Improved check of
         _POSIX_REALTIME_SIGNALS preprocessor constant.
