@@ -1,3 +1,11 @@
+Sat Mar 20 17:01:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Timer_Queue_Adapters.h:
+	* ace/Timer_Queue_Adapters.i:
+
+	  Changes from the effect of the following change "Thu Mar 18 
+	  22:47:05 2004 Balachandran Natarajan  <bala@dre.vanderbilt.edu>" 
+
 Sat Mar 20 18:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/MakeProjectCreator/templates/bor.mpd:

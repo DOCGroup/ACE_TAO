@@ -39,8 +39,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::activate (long flags,
                                               ACE_hthread_t thread_handles[],
                                               void *stack[],
                                               size_t stack_size[],
-                                              ACE_thread_t thread_names[],
-                                              bool )
+                                              ACE_thread_t thread_names[])
 {
   // Macros to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (thread_handles);
