@@ -1,3 +1,16 @@
+Sun Mar 28 14:58:50 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Param_Test/any.cpp 
+	* tests/Param_Test/bd_short_seq.cpp 
+	* tests/Param_Test/bd_str_seq.cpp 
+	* tests/Param_Test/client.cpp 
+	* tests/Param_Test/except.cpp    
+	* tests/Param_Test/objref.cpp 
+	* tests/Param_Test/server.cpp
+	Made cosmetic changes to these files. 
+	
+	
+
 Sun Mar 28 14:27:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	*  orbsvcs/Event/EC_ConsumerAdmin.cpp:
