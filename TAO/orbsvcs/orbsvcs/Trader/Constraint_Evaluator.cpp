@@ -611,13 +611,7 @@ sequence_does_contain(CORBA::Any* sequence,
       {
 	TAO_Sequences::StringSeq* string_seq;
 	if ((*sequence) >>= string_seq)
-	  {
-#ifdef ACE_HAS_TEMPLATE_SPECIALIZATION
-	    return_value = ::TAO_find (*string_seq, (const char *)element);
-#else
-	    return_value = ::TAO_find_string (*string_seq, (const char*) element);
-#endif // ACE_HAS_TEMPLATE_SPECIALIZATION 
-	  }
+	  return_value = ::TAO_find_string (*string_seq, (const char*) element);
 	break;
       }
     }
