@@ -96,7 +96,7 @@ public:
   // defines the stubs (all operations in T are pure virtual).
   // @@ TODO currently the stub class is not implemented.
   //
-  const char *full_coll_name (void) const;
+  const char *full_coll_name (void);
   // retrieve the fully qualified collocated class name
 
   const char *local_coll_name (void) const;
