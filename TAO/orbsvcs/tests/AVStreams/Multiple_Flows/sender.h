@@ -75,7 +75,7 @@ public:
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
   // Set the protocol object corresponding to the transport protocol chosen.
 
-  void shutdown (void);
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   int parse_args (int argc, char **argv);
