@@ -3,8 +3,6 @@
 #include "sum_server_i.h"
 #include "Server_IORInterceptor_ORBInitializer.h"
 
-#include "tao/PortableInterceptorC.h"
-
 #include "ace/Get_Opt.h"
 
 const char *ior_output_file = 0;
@@ -58,10 +56,9 @@ main (int argc, char *argv[])
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
-      /// The usual initialization stuff
-      /// {@
+      // The usual initialization stuff
 
-      /// Initialize the ORB.
+      // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             "server_sum_orb"
@@ -71,60 +68,58 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return -1;
 
-      /// Resolve reference to RootPOA
+      // Resolve reference to RootPOA
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      /// Narrow it down correctly.
+      // Narrow it down correctly.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      /// Check for nil references
+      // Check for nil references
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unable to obtain RootPOA reference.\n"),
                           -1);
 
-      /// Get poa_manager reference
+      // Get poa_manager reference
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      /// Activate it.
+      // Activate it.
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ///@}
-
-      /// initialize the sum_server
+      // initialize the sum_server
       sum_server_i sum_server_impl;
 
-      /// Activate
+      // Activate
       obj = sum_server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      /// Narrow it down.
+      // Narrow it down.
       ORT::sum_server_var sum_server =
         ORT::sum_server::_narrow (obj.in ()
                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      /// Check for nil reference
+      // Check for nil reference
       if (CORBA::is_nil (sum_server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unable to obtain reference to ORT::sum_server "
                            "object.\n"),
                           -1);
 
-      /// Convert the object reference to a string format.
+      // Convert the object reference to a string format.
       CORBA::String_var ior =
         orb->object_to_string (sum_server.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      /// If the ior_output_file exists, output the IOR to it.
+      // If the ior_output_file exists, output the IOR to it.
       if (ior_output_file != 0)
         {
           FILE *output_file = ACE_OS::fopen (ior_output_file, "w");

@@ -5,9 +5,6 @@
 
 #include "GatewayC.h"
 
-#include "tao/ORBInitInfo.h"
-#include "tao/ORB_Core.h"
-
 ACE_RCSID (ORT,
            Server_IORInterceptor_ORBInitializer,
            "$Id: ")
@@ -33,7 +30,8 @@ Server_IORInterceptor_ORBInitializer::post_init (
 
   /// Narrow it down correctly.
   Gateway::Object_Factory_var gateway_object_factory =
-    Gateway::Object_Factory::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+    Gateway::Object_Factory::_narrow (obj.in ()
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   /// Check for nil reference
@@ -52,8 +50,7 @@ Server_IORInterceptor_ORBInitializer::post_init (
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
 
-  PortableInterceptor::IORInterceptor_var ior_interceptor =
-    gateway;
+  PortableInterceptor::IORInterceptor_var ior_interceptor = gateway;
 
   info->add_ior_interceptor (ior_interceptor.in ()
                              ACE_ENV_ARG_PARAMETER);
