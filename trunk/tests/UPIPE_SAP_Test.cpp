@@ -146,8 +146,6 @@ main (int, char *[])
   ACE_START_TEST ("UPIPE_SAP_Test");
 
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32))
-  ACE_hthread_t thr_handle_acceptor;
-  ACE_hthread_t thr_handle_connector;
   ACE_UPIPE_Acceptor acc (addr);
 
   // Spawn a acceptor thread.
