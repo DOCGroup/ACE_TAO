@@ -1,3 +1,20 @@
+Fri Aug  2 00:29:43 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Bind_Dispatcher_Guard.i : 
+	* tao/Bind_Dispatcher_Guard.cpp: Moved the destructor from the
+	  inline file to the cpp file. Sounds crazy, but true. g++ seems
+	  to miss calling the destructor of this object (which was in the
+	  inlined file) created on the stack of the GIOP_Invocation object. 
+
+	  When a timeout occurs the stack unwinds but the destrcutor which
+	  unbinds the reply dispatcher never gets called. This leaves the
+	  reply dispatcher in the map and all hell breaks loose when the
+	  reply actually shows up! This problem showed up only in our Full
+	  builds on sirion which resulted in the failure of the Timeout
+	  test. My testing on sirion with this change seems to work
+	  fine. Let us wait and watch our daily builds to see the actual
+	  results. 
+
 Thu Aug  1 21:00:03 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (get_location):
