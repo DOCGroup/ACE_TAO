@@ -95,10 +95,10 @@ be_visitor_component_sh::visit_component (be_component *node)
       << "_ptr;" << be_nl << be_nl;
 
   // Forward class declarations.
-  if (be_global->gen_thru_poa_collocation ())
-    {
-      *os << "class " << node->thru_poa_proxy_impl_name () << ";" << be_nl;
-    }
+//  if (be_global->gen_thru_poa_collocation ())
+//    {
+//      *os << "class " << node->thru_poa_proxy_impl_name () << ";" << be_nl;
+//    }
 
   if (be_global->gen_direct_collocation ())
     {
@@ -154,6 +154,13 @@ be_visitor_component_sh::visit_component (be_component *node)
   *os << class_name.c_str () << " (void);" << be_uidt_nl << be_nl
       << "public:" << be_idt_nl;
 
+  // Some useful typedefs.
+  *os << "// Useful for template programming." << be_nl
+      << "typedef ::" << node->name () << " _stub_type;" << be_nl
+      << "typedef ::" << node->name () << "_ptr _stub_ptr_type;" << be_nl
+      << "typedef ::" << node->name () << "_var _stub_var_type;"
+      << be_nl << be_nl;
+
   // Copy constructor and destructor.
   *os << class_name.c_str () << " (const " 
       << class_name.c_str () << "& rhs);" << be_nl
@@ -166,9 +173,9 @@ be_visitor_component_sh::visit_component (be_component *node)
       << ");" << be_uidt_nl << be_nl;
 
   // _downcast
-  *os << "virtual void* _downcast (" << be_idt << be_idt_nl
-      << "const char* logical_type_id" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+//  *os << "virtual void* _downcast (" << be_idt << be_idt_nl
+//      << "const char* logical_type_id" << be_uidt_nl
+//      << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _is_a method.
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl
@@ -248,8 +255,6 @@ be_visitor_component_sh::visit_component (be_component *node)
 
   *os << be_uidt_nl << "};" << be_nl << be_nl;
 
-  // Generate the embedded RequestInfo classes per operation.
-  // This is to be used by interceptors.
   be_visitor_context ctx (*this->ctx_);
 
   if (be_global->gen_thru_poa_collocation ()
@@ -275,6 +280,7 @@ be_visitor_component_sh::visit_component (be_component *node)
   ctx = *this->ctx_;
 
   // Generate the collocated class.
+/*
   if (be_global->gen_thru_poa_collocation ())
     {
       ctx = *this->ctx_;
@@ -290,7 +296,7 @@ be_visitor_component_sh::visit_component (be_component *node)
                             -1);
         }
     }
-
+*/
   ctx = *this->ctx_;
 
   if (be_global->gen_direct_collocation ())
