@@ -57,6 +57,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -64,11 +65,13 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i
@@ -82,6 +85,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -89,16 +93,19 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/UNIX_Addr.h \
+ $(WRAPPER_ROOT)/ace/UNIX_Addr.i \
  $(WRAPPER_ROOT)/ace/LSOCK.h \
  $(WRAPPER_ROOT)/ace/LSOCK.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.i \
@@ -112,6 +119,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -119,14 +127,18 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/Handle_Set.h
+ $(WRAPPER_ROOT)/ace/SOCK_Acceptor.i \
+ $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Handle_Set.i
 .obj/CPP-inserver-poll.o .shobj/CPP-inserver-poll.so: CPP-inserver-poll.cpp \
  $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -136,6 +148,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -143,13 +156,16 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
- $(WRAPPER_ROOT)/ace/Time_Value.h
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Acceptor.i
 .obj/CPP-unserver.o .shobj/CPP-unserver.so: CPP-unserver.cpp \
  $(WRAPPER_ROOT)/ace/LSOCK_Acceptor.h \
  $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
@@ -160,6 +176,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -167,18 +184,23 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Acceptor.i \
  $(WRAPPER_ROOT)/ace/UNIX_Addr.h \
+ $(WRAPPER_ROOT)/ace/UNIX_Addr.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/LSOCK.h \
  $(WRAPPER_ROOT)/ace/LSOCK.i \
- $(WRAPPER_ROOT)/ace/LSOCK_Stream.i
+ $(WRAPPER_ROOT)/ace/LSOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/LSOCK_Acceptor.i
 .obj/FD-unclient.o .shobj/FD-unclient.so: FD-unclient.cpp \
  $(WRAPPER_ROOT)/ace/LSOCK_Connector.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
@@ -189,6 +211,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -196,16 +219,19 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/UNIX_Addr.h \
+ $(WRAPPER_ROOT)/ace/UNIX_Addr.i \
  $(WRAPPER_ROOT)/ace/LSOCK.h \
  $(WRAPPER_ROOT)/ace/LSOCK.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.i \
@@ -220,6 +246,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -227,22 +254,28 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/SOCK_Acceptor.i \
  $(WRAPPER_ROOT)/ace/UNIX_Addr.h \
+ $(WRAPPER_ROOT)/ace/UNIX_Addr.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/LSOCK.h \
  $(WRAPPER_ROOT)/ace/LSOCK.i \
- $(WRAPPER_ROOT)/ace/LSOCK_Stream.i
+ $(WRAPPER_ROOT)/ace/LSOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/LSOCK_Acceptor.i
 .obj/C-inclient.o .shobj/C-inclient.so: C-inclient.cpp \
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -254,6 +287,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \

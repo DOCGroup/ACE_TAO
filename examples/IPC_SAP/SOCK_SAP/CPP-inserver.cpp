@@ -29,11 +29,9 @@ main (int argc, char *argv[])
   // Create a server, reuse the address.
   if (peer_acceptor.open (server_addr, 1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
-#if !defined(VXWORKS)
   // Set the peer acceptor into non-blocking mode.
   else if (peer_acceptor.enable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "enable"), 1);
-#endif /* !VXWORKS */
   else if (peer_acceptor.get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), 1);
 
@@ -72,11 +70,9 @@ main (int argc, char *argv[])
 	      ACE_DEBUG ((LM_DEBUG, "client %s connected from %d\n", 
 			  cli_addr.get_host_name (), cli_addr.get_port_number ()));
       
-#if !defined(VXWORKS)
 	      // Enable non-blocking I/O.
 	      if (new_stream.enable (ACE_NONBLOCK) == -1)
 		ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "enable"), -1);
-#endif /* !VXWORKS */
 	  
 	      handle_set.reset ();
 	      handle_set.set_bit (new_stream.get_handle ());

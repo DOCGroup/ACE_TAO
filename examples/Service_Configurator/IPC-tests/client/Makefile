@@ -58,6 +58,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -65,6 +66,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
@@ -79,7 +81,9 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Dgram.i \
  $(WRAPPER_ROOT)/ace/UNIX_Addr.h \
- $(WRAPPER_ROOT)/ace/Get_Opt.h
+ $(WRAPPER_ROOT)/ace/UNIX_Addr.i \
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/Get_Opt.i
 .obj/local_stream_client_test.o .shobj/local_stream_client_test.so: local_stream_client_test.cpp \
  $(WRAPPER_ROOT)/ace/LSOCK_Connector.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
@@ -90,6 +94,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -97,21 +102,25 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/UNIX_Addr.h \
+ $(WRAPPER_ROOT)/ace/UNIX_Addr.i \
  $(WRAPPER_ROOT)/ace/LSOCK.h \
  $(WRAPPER_ROOT)/ace/LSOCK.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Connector.i \
- $(WRAPPER_ROOT)/ace/Get_Opt.h
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/Get_Opt.i
 .obj/local_pipe_client_test.o .shobj/local_pipe_client_test.so: local_pipe_client_test.cpp \
  $(WRAPPER_ROOT)/ace/LSOCK_Connector.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
@@ -122,6 +131,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -129,119 +139,143 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/UNIX_Addr.h \
+ $(WRAPPER_ROOT)/ace/UNIX_Addr.i \
  $(WRAPPER_ROOT)/ace/LSOCK.h \
  $(WRAPPER_ROOT)/ace/LSOCK.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/LSOCK_Connector.i \
- $(WRAPPER_ROOT)/ace/Get_Opt.h
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/Get_Opt.i
 .obj/remote_stream_client_test.o .shobj/remote_stream_client_test.so: remote_stream_client_test.cpp \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Mem_Map.i \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/SOCK_IO.h \
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  $(WRAPPER_ROOT)/ace/SOCK_CODgram.h \
  $(WRAPPER_ROOT)/ace/SOCK_CODgram.i \
- $(WRAPPER_ROOT)/ace/Get_Opt.h
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/Get_Opt.i
 .obj/remote_thr_stream_client_test.o .shobj/remote_thr_stream_client_test.so: remote_thr_stream_client_test.cpp \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Mem_Map.i \
  $(WRAPPER_ROOT)/ace/TLI_Connector.h \
  $(WRAPPER_ROOT)/ace/TLI_Stream.h \
  $(WRAPPER_ROOT)/ace/TLI.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/TLI.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/TLI_Stream.i \
  $(WRAPPER_ROOT)/ace/TLI_Connector.i \
- $(WRAPPER_ROOT)/ace/Get_Opt.h
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/Get_Opt.i
 .obj/remote_dgram_client_test.o .shobj/remote_dgram_client_test.so: remote_dgram_client_test.cpp \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Mem_Map.i \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.h \
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
- $(WRAPPER_ROOT)/ace/Get_Opt.h
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/Get_Opt.i
 .obj/local_fifo_client_test.o .shobj/local_fifo_client_test.so: local_fifo_client_test.cpp \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Mem_Map.i \
  $(WRAPPER_ROOT)/ace/FIFO_Send_Msg.h \
  $(WRAPPER_ROOT)/ace/FIFO_Send.h \
  $(WRAPPER_ROOT)/ace/FIFO.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
+ $(WRAPPER_ROOT)/ace/FIFO.i \
  $(WRAPPER_ROOT)/ace/FIFO_Send.i \
  $(WRAPPER_ROOT)/ace/FIFO_Send_Msg.i \
- $(WRAPPER_ROOT)/ace/Get_Opt.h
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/Get_Opt.i
 .obj/broadcast_client_test.o .shobj/broadcast_client_test.so: broadcast_client_test.cpp \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -249,6 +283,8 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram_Bcast.h \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.h \
  $(WRAPPER_ROOT)/ace/SOCK.h \
@@ -257,19 +293,22 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.i \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram_Bcast.i \
- $(WRAPPER_ROOT)/ace/Get_Opt.h
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/Get_Opt.i
 .obj/local_spipe_client_test.o .shobj/local_spipe_client_test.so: local_spipe_client_test.cpp \
  $(WRAPPER_ROOT)/ace/Mem_Map.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Mem_Map.i \
  $(WRAPPER_ROOT)/ace/SPIPE_Connector.h \
  $(WRAPPER_ROOT)/ace/SPIPE_Stream.h \
  $(WRAPPER_ROOT)/ace/SPIPE.h \
@@ -277,10 +316,15 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SPIPE_Addr.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
+ $(WRAPPER_ROOT)/ace/SPIPE_Addr.i \
+ $(WRAPPER_ROOT)/ace/SString.h \
+ $(WRAPPER_ROOT)/ace/SString.i \
  $(WRAPPER_ROOT)/ace/SPIPE.i \
  $(WRAPPER_ROOT)/ace/SPIPE_Stream.i \
  $(WRAPPER_ROOT)/ace/SPIPE_Connector.i \
- $(WRAPPER_ROOT)/ace/Get_Opt.h
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/Get_Opt.i
 .obj/remote_service_directory_test.o .shobj/remote_service_directory_test.so: remote_service_directory_test.cpp \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -290,6 +334,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -297,14 +342,17 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
- $(WRAPPER_ROOT)/ace/Get_Opt.h
+ $(WRAPPER_ROOT)/ace/Get_Opt.h \
+ $(WRAPPER_ROOT)/ace/Get_Opt.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

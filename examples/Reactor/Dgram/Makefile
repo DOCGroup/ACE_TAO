@@ -48,37 +48,51 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Handle_Set.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.i \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Thread.i \
+ $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Set.i \
+ $(WRAPPER_ROOT)/ace/Signal.i \
  $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Token.i \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/SOCK_IO.h \
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/SOCK_CODgram.h \
  $(WRAPPER_ROOT)/ace/SOCK_CODgram.i
 .obj/Dgram.o .shobj/Dgram.so: Dgram.cpp \
@@ -88,37 +102,51 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Handle_Set.i \
  $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue_T.h \
  $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/Synch.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.i \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Thread.i \
+ $(WRAPPER_ROOT)/ace/Timer_Queue_T.i \
  $(WRAPPER_ROOT)/ace/Signal.h \
  $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Set.i \
+ $(WRAPPER_ROOT)/ace/Signal.i \
  $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Token.i \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
  $(WRAPPER_ROOT)/ace/SOCK_IO.h \
  $(WRAPPER_ROOT)/ace/SOCK.h \
  $(WRAPPER_ROOT)/ace/Addr.h \
+ $(WRAPPER_ROOT)/ace/Addr.i \
  $(WRAPPER_ROOT)/ace/IPC_SAP.h \
  $(WRAPPER_ROOT)/ace/IPC_SAP.i \
  $(WRAPPER_ROOT)/ace/SOCK.i \
  $(WRAPPER_ROOT)/ace/SOCK_IO.i \
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
+ $(WRAPPER_ROOT)/ace/INET_Addr.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
+ $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.h \
  $(WRAPPER_ROOT)/ace/SOCK_Dgram.i
 

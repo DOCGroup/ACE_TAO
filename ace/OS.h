@@ -39,6 +39,9 @@
 #define ACE_DEFAULT_MULTICAST_PORT 10001
 #define ACE_DEFAULT_MULTICAST_ADDR "224.9.9.2"
 
+// Default port number for HTTP.
+#define ACE_DEFAULT_HTTP_SERVER_PORT 80
+
 // Used in many IPC_SAP tests
 #define ACE_DEFAULT_SERVER_PORT 10002  
 
