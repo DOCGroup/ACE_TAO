@@ -1,3 +1,16 @@
+1999-07-13  Yamuna Krishnamurthy  <krishnam@ss135.rsch.comm.mot.com>
+
+	* TAO_IDL/be/be_visitor_operation/operation_is.cpp (visit_operation): 
+	* TAO_IDL/be/be_visitor_operation/operation_ih.cpp (visit_operation): 
+	Fixed the duplicate generation of the ACE_THROW_SPEC macro
+	Thanks to Rick H. Wesson <wessorh@ar.com> for informing the bug
+	
+	* TAO_IDL/be/be_visitor_interface/interface_is.cpp (visit_interface):
+	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp (be_visitor_interface_ih): 
+	Modified the code generated to avoid dominance problem with multiple inheritance
+
+	
+
 Tue Jul 13 09:53:57 1999 Fred Kuhns <fredk@cs.wustl.edu>
        
         * Moved the implementation of TAO_Stub::add_forward_profiles
