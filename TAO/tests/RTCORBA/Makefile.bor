@@ -10,6 +10,7 @@ DIRS = \
 	Server_Declared \
 	Server_Protocol \
 	Private_Connection \
-	MT_Client_Protocol_Priority
+	MT_Client_Protocol_Priority \
+        RTMutex
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

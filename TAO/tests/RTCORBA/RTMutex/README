@@ -1,0 +1,23 @@
+$Id$
+
+This is a unit test for RTCORBA::Mutex implementation
+
+Scenario:
+---------
+
+RTCORBA::Mutex objects are created, locked and released.  Both named and
+unnamed mutexes are tested.
+
+To run (on Unix):
+-------
+$./server [-t]
+
+
+Options:
+--------
+         Server:
+
+   -t          Specifies that the unit tests for testing time outs >0  on
+               RTCORBA::Mutex::try_lock() should be skipped.
+
+
