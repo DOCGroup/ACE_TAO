@@ -1,3 +1,9 @@
+Thu Dec  4 09:09:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/RTCORBA/RT_Mutex.h:
+          In case TAO_HAS_NAMED_RT_MUTEXES is set to 1, include 
+          ace/SString.h to get ACE_CString.
+
 Wed Dec  3 10:12:18 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/CodeSets/libs/Makefile:
