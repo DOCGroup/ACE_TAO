@@ -1,6 +1,18 @@
+Fri Jul 27 16:32:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connection_Handler.cpp: Enabled GIOP lite flag to go
+	  through.
+
+	* tao/GIOP_Message_Lite.cpp: Transfered the reply that has been
+	  received to the another CDR which is used to dispatch the
+	  reply. This was actually fixed in my branch. Looks like this got
+	  missed when the branch was merged to the main trunk.  Added some
+	  cosmetic fixes to the debugging output. Thanks to Paul Calabrese
+	  for alerting me about this miss.
+
 Fri Jul 27 14:43:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional_NestedUpcall/svcs.conf: Removed from the
+	* tests/BiDirectional_NestedUpcall/svc.conf: Removed from the
 	  repository.  It is no longer needed as this test will work with
 	  a TP Reactor (the default one).
 
@@ -14,13 +26,13 @@ Fri Jul 27 12:25:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  22:10:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>. We
 	  need to resume the handle as soon the reply is ready for
 	  dispatching.  The situation where it can create problems can be
-	  easily seen in $TAO_ROOT/tests/LongUpcalls/run_ami_test.pl. 
+	  easily seen in $TAO_ROOT/tests/LongUpcalls/run_ami_test.pl.
 
 	  Further, the fix that was done earlier was for a race
 	  condition. I had a long discussion with Irfan yesterday, and
 	  looks like the possibility of the race condition seems to be
-	  almost zero. 
-	  
+	  almost zero.
+
 Fri Jul 27 11:09:25 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/RTCORBA/Banded_Connections/bands.hpux:
@@ -44,7 +56,7 @@ Fri Jul 27 10:50:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Replaced VLDLIBS with TAO_SRVR_LIBS for the server
           target in each Makefile, in order to pull in
-          TAO_PortableServer. Thanks to Ekkehard Hoffmann 
+          TAO_PortableServer. Thanks to Ekkehard Hoffmann
           <ehoffman@fzi.de> for pointing out the link errors.
 
 Thu Jul 26 22:41:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
@@ -52,7 +64,7 @@ Thu Jul 26 22:41:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
 
          Make TAO_FlowConnection and TAO_MMDevice virtually
-         inherit TAO_PropertySet.  Thanks to Rob Ruff <rruff@scires.com> 
+         inherit TAO_PropertySet.  Thanks to Rob Ruff <rruff@scires.com>
          for pointing this out.
 
 Thu Jul 26 21:48:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
@@ -78,16 +90,16 @@ Thu Jul 26 09:44:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
 
-          Hide more debugging messages behind: if( TAO_debug_level > 0) 
+          Hide more debugging messages behind: if( TAO_debug_level > 0)
 
 Thu Jul 26 07:37:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/RTCORBA/Server_Protocol/server.cpp:
 	* tests/RTCORBA/Client_Propagated/server.cpp:
-	* tests/RTCORBA/Thread_Pool/server.cpp: Fixed warnings in g++. 
+	* tests/RTCORBA/Thread_Pool/server.cpp: Fixed warnings in g++.
 
 Wed Jul 25 23:37:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
- 
+
         * orbsvcs/tests/AVStreams/Full_Profile/Makefile:
         * orbsvcs/tests/AVStreams/Latency/Makefile:
         * orbsvcs/tests/AVStreams/Modify_QoS/Makefile:
@@ -97,7 +109,7 @@ Wed Jul 25 23:37:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
         * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
         * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
         * orbsvcs/orbsvcs/Makefile.av:
- 
+
           Correct link flags so that ACE_QoS is linked in when
           rapi=1 is specified in platform_macros.GNU.
 

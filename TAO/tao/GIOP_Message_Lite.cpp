@@ -1095,6 +1095,10 @@ TAO_GIOP_Message_Lite::parse_reply (TAO_InputCDR &cdr,
         }
     }
 
+  // Steal the contents in to the reply CDR and loose ownership of the
+  // data block.
+  params.input_cdr_.exchange_data_blocks (cdr);
+
   return 0;
 }
 
@@ -1549,9 +1553,11 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
       if (ptr[TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REQUEST ||
           ptr[TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REPLY)
         {
+          char *buf = ACE_ptr_align_binary (ptr + TAO_GIOP_LITE_HEADER_LEN, 4);
+
           // @@ Only works if ServiceContextList is empty....
           id = ACE_reinterpret_cast (CORBA::ULong *,
-                                     (char * ) (ptr));
+                                     (char * ) (buf));
 
         }
 
