@@ -1152,7 +1152,7 @@ Mon Jun 21 13:37:57 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
           Thanks to J.T. Conklin for pointing out the problems with
           defining ACE_HAS_SIGNAL_SAFE_OS_CALLS.
 
-          These changes also fixe a problem with self-assignment of the
+          These changes also fix a problem with self-assignment of the
           variable used to store the return value of an operation wrapped
           within an ACE_ADAPT_RETVAL macro (e.g. ACE_OSCALL_RETURN
           (ACE_ADAPT_RETVAL (..., ace_result_),...).  Thanks to Andrew
