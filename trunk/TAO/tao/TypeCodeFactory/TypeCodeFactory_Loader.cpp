@@ -28,7 +28,7 @@ TAO_TypeCodeFactory_Loader::create_object (CORBA::ORB_ptr,
                                            int,
                                            char * [],
                                            CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_ptr obj;
   ACE_NEW_RETURN (obj,

@@ -1,3 +1,18 @@
+Fri May 11 07:39:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Client_Priority_Policy.cpp:
+	* tao/Client_Priority_Policy.h:
+	* tao/LocalObject.cpp:
+	* tao/LocalObject.h:
+	* tao/Object.cpp:
+	* tao/Object.h:
+	* tao/Services_Activate.h:
+	* tao/PortableServer/Collocated_Object.cpp:
+	* tao/PortableServer/Collocated_Object.h:
+	* tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactory_Loader.h: Fixed compilation
+	  errors for FORTE 6.1. 
+
 Thu May 10 22:31:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
