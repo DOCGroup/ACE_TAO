@@ -26,612 +26,303 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "ServicesC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Sequence_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_CORBA_ServiceType[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  34,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5365), 
-  ACE_NTOHL (0x72766963), 
-  ACE_NTOHL (0x65547970), 
-  ACE_NTOHL (0x653a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/ServiceType:1.0
-    12,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x69636554), 
-  ACE_NTOHL (0x79706500),  // name = ServiceType
-    CORBA::tk_ushort,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ServiceType (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_ServiceType),
-    (char *) &_oc_CORBA_ServiceType,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ServiceType (
+    "IDL:omg.org/CORBA/ServiceType:1.0",
+    "ServiceType",
+    &::_tao_tc_CORBA::_tc_ushort);
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceType =
-    &_tc_TAO_tc_CORBA_ServiceType;
+    &_tao_tc_CORBA_ServiceType;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_CORBA_ServiceOption[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  36,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5365), 
-  ACE_NTOHL (0x72766963), 
-  ACE_NTOHL (0x654f7074), 
-  ACE_NTOHL (0x696f6e3a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ServiceOption:1.0
-    14,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x6963654f), 
-  ACE_NTOHL (0x7074696f), 
-  ACE_NTOHL (0x6e000000),  // name = ServiceOption
-    CORBA::tk_ulong,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ServiceOption (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_ServiceOption),
-    (char *) &_oc_CORBA_ServiceOption,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ServiceOption (
+    "IDL:omg.org/CORBA/ServiceOption:1.0",
+    "ServiceOption",
+    &::_tao_tc_CORBA::_tc_ulong);
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceOption =
-    &_tc_TAO_tc_CORBA_ServiceOption;
+    &_tao_tc_CORBA_ServiceOption;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_CORBA_ServiceDetailType[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5365), 
-  ACE_NTOHL (0x72766963), 
-  ACE_NTOHL (0x65446574), 
-  ACE_NTOHL (0x61696c54), 
-  ACE_NTOHL (0x7970653a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ServiceDetailType:1.0
-    18,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x69636544), 
-  ACE_NTOHL (0x65746169), 
-  ACE_NTOHL (0x6c547970), 
-  ACE_NTOHL (0x65000000),  // name = ServiceDetailType
-    CORBA::tk_ulong,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ServiceDetailType (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_ServiceDetailType),
-    (char *) &_oc_CORBA_ServiceDetailType,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ServiceDetailType (
+    "IDL:omg.org/CORBA/ServiceDetailType:1.0",
+    "ServiceDetailType",
+    &::_tao_tc_CORBA::_tc_ulong);
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceDetailType =
-    &_tc_TAO_tc_CORBA_ServiceDetailType;
+    &_tao_tc_CORBA_ServiceDetailType;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_CORBA_ServiceDetail[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  36,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5365), 
-  ACE_NTOHL (0x72766963), 
-  ACE_NTOHL (0x65446574), 
-  ACE_NTOHL (0x61696c3a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ServiceDetail:1.0
-    14,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x69636544), 
-  ACE_NTOHL (0x65746169), 
-  ACE_NTOHL (0x6c000000),  // name = ServiceDetail
-  2, // member count
-    20,
-  ACE_NTOHL (0x73657276), 
-  ACE_NTOHL (0x6963655f), 
-  ACE_NTOHL (0x64657461), 
-  ACE_NTOHL (0x696c5f74), 
-  ACE_NTOHL (0x79706500),  // name = service_detail_type
-    CORBA::tk_alias, // typecode kind for typedefs
-  76, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    40,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f5365), 
-    ACE_NTOHL (0x72766963), 
-    ACE_NTOHL (0x65446574), 
-    ACE_NTOHL (0x61696c54), 
-    ACE_NTOHL (0x7970653a), 
-    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ServiceDetailType:1.0
-        18,
-    ACE_NTOHL (0x53657276), 
-    ACE_NTOHL (0x69636544), 
-    ACE_NTOHL (0x65746169), 
-    ACE_NTOHL (0x6c547970), 
-    ACE_NTOHL (0x65000000),  // name = ServiceDetailType
-        CORBA::tk_ulong,
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 
-  15,
-  ACE_NTOHL (0x73657276), 
-  ACE_NTOHL (0x6963655f), 
-  ACE_NTOHL (0x64657461), 
-  ACE_NTOHL (0x696c0000),  // name = service_detail
-    CORBA::tk_alias, // typecode kind for typedefs
-  76, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4f63), 
-    ACE_NTOHL (0x74657453), 
-    ACE_NTOHL (0x65713a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
-        9,
-    ACE_NTOHL (0x4f637465), 
-    ACE_NTOHL (0x74536571), 
-    ACE_NTOHL (0x0),  // name = OctetSeq
-        CORBA::tk_sequence, // typecode kind
-    12, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_octet,
 
-      0U,
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 
-};
 
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ServiceDetail (
-    CORBA::tk_struct,
-    sizeof (_oc_CORBA_ServiceDetail),
-    (char *) &_oc_CORBA_ServiceDetail,
-    0,
-    0
-  );
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:744
 
+static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_sequence_0 (
+    CORBA::tk_sequence,
+    &::_tao_tc_CORBA::_tc_octet,
+    0U);
+  
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_OctetSeq (
+    "IDL:omg.org/CORBA/OctetSeq:1.0",
+    "OctetSeq",
+    &::_tao_tc_CORBA_sequence_0);
+  
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr const _tc_ServiceDetail =
-    &_tc_TAO_tc_CORBA_ServiceDetail;
+  ::CORBA::TypeCode_ptr const _tc_OctetSeq =
+    &_tao_tc_CORBA_OctetSeq;
 }
 
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_CORBA_ServiceOptionSeq[] =
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ServiceDetailData (
+    "IDL:omg.org/CORBA/ServiceDetailData:1.0",
+    "ServiceDetailData",
+    &CORBA::_tc_OctetSeq);
+  
+namespace CORBA
 {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5365), 
-  ACE_NTOHL (0x72766963), 
-  ACE_NTOHL (0x654f7074), 
-  ACE_NTOHL (0x696f6e53), 
-  ACE_NTOHL (0x65713a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ServiceOptionSeq:1.0
-    17,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x6963654f), 
-  ACE_NTOHL (0x7074696f), 
-  ACE_NTOHL (0x6e536571), 
-  ACE_NTOHL (0x0),  // name = ServiceOptionSeq
-    CORBA::tk_sequence, // typecode kind
-  84, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_alias, // typecode kind for typedefs
-    68, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      36,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x434f5242), 
-      ACE_NTOHL (0x412f5365), 
-      ACE_NTOHL (0x72766963), 
-      ACE_NTOHL (0x654f7074), 
-      ACE_NTOHL (0x696f6e3a), 
-      ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ServiceOption:1.0
-            14,
-      ACE_NTOHL (0x53657276), 
-      ACE_NTOHL (0x6963654f), 
-      ACE_NTOHL (0x7074696f), 
-      ACE_NTOHL (0x6e000000),  // name = ServiceOption
-            CORBA::tk_ulong,
+  ::CORBA::TypeCode_ptr const _tc_ServiceDetailData =
+    &_tao_tc_CORBA_ServiceDetailData;
+}
 
 
-    0U,
 
-};
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ServiceOptionSeq (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_ServiceOptionSeq),
-    (char *) &_oc_CORBA_ServiceOptionSeq,
-    0,
-    0
-  );
 
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:744
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/alias_typecode.cpp:31
+
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ServiceOption (
+    "IDL:omg.org/CORBA/ServiceOption:1.0",
+    "ServiceOption",
+    &::_tao_tc_CORBA::_tc_ulong);
+  
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr const _tc_ServiceOption =
+    &_tao_tc_CORBA_ServiceOption;
+}
+
+static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ServiceOptionSeq_0 (
+    CORBA::tk_sequence,
+    &CORBA::_tc_ServiceOption,
+    0U);
+  
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ServiceOptionSeq (
+    "IDL:omg.org/CORBA/ServiceOptionSeq:1.0",
+    "ServiceOptionSeq",
+    &::_tao_tc_CORBA_ServiceOptionSeq_0);
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceOptionSeq =
-    &_tc_TAO_tc_CORBA_ServiceOptionSeq;
+    &_tao_tc_CORBA_ServiceOptionSeq;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static const CORBA::Long _oc_CORBA_ServiceDetailSeq[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_ServiceDetail[] =
+  {
+    { "service_detail_type", &CORBA::_tc_ServiceDetailType },
+    { "service_detail", &CORBA::_tc_ServiceDetailData }
+    
+  };
+
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_struct,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ServiceDetail (
+    "IDL:omg.org/CORBA/ServiceDetail:1.0",
+    "ServiceDetail",
+    _tao_fields_CORBA_ServiceDetail,
+    2);
+  
+namespace CORBA
 {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5365), 
-  ACE_NTOHL (0x72766963), 
-  ACE_NTOHL (0x65446574), 
-  ACE_NTOHL (0x61696c53), 
-  ACE_NTOHL (0x65713a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ServiceDetailSeq:1.0
-    17,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x69636544), 
-  ACE_NTOHL (0x65746169), 
-  ACE_NTOHL (0x6c536571), 
-  ACE_NTOHL (0x0),  // name = ServiceDetailSeq
-    CORBA::tk_sequence, // typecode kind
-  296, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_struct, // typecode kind
-    280, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      36,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x434f5242), 
-      ACE_NTOHL (0x412f5365), 
-      ACE_NTOHL (0x72766963), 
-      ACE_NTOHL (0x65446574), 
-      ACE_NTOHL (0x61696c3a), 
-      ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ServiceDetail:1.0
-            14,
-      ACE_NTOHL (0x53657276), 
-      ACE_NTOHL (0x69636544), 
-      ACE_NTOHL (0x65746169), 
-      ACE_NTOHL (0x6c000000),  // name = ServiceDetail
-      2, // member count
-            20,
-      ACE_NTOHL (0x73657276), 
-      ACE_NTOHL (0x6963655f), 
-      ACE_NTOHL (0x64657461), 
-      ACE_NTOHL (0x696c5f74), 
-      ACE_NTOHL (0x79706500),  // name = service_detail_type
-            CORBA::tk_alias, // typecode kind for typedefs
-      76, // encapsulation length
-        TAO_ENCAP_BYTE_ORDER, // byte order
-        40,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f5365), 
-        ACE_NTOHL (0x72766963), 
-        ACE_NTOHL (0x65446574), 
-        ACE_NTOHL (0x61696c54), 
-        ACE_NTOHL (0x7970653a), 
-        ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ServiceDetailType:1.0
-                18,
-        ACE_NTOHL (0x53657276), 
-        ACE_NTOHL (0x69636544), 
-        ACE_NTOHL (0x65746169), 
-        ACE_NTOHL (0x6c547970), 
-        ACE_NTOHL (0x65000000),  // name = ServiceDetailType
-                CORBA::tk_ulong,
-
-
-      15,
-      ACE_NTOHL (0x73657276), 
-      ACE_NTOHL (0x6963655f), 
-      ACE_NTOHL (0x64657461), 
-      ACE_NTOHL (0x696c0000),  // name = service_detail
-            CORBA::tk_alias, // typecode kind for typedefs
-      76, // encapsulation length
-        TAO_ENCAP_BYTE_ORDER, // byte order
-        31,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f4f63), 
-        ACE_NTOHL (0x74657453), 
-        ACE_NTOHL (0x65713a31), 
-        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
-                9,
-        ACE_NTOHL (0x4f637465), 
-        ACE_NTOHL (0x74536571), 
-        ACE_NTOHL (0x0),  // name = OctetSeq
-                CORBA::tk_sequence, // typecode kind
-        12, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          CORBA::tk_octet,
-
-          0U,
+  ::CORBA::TypeCode_ptr const _tc_ServiceDetail =
+    &_tao_tc_CORBA_ServiceDetail;
+}
 
 
 
-    0U,
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-};
 
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ServiceDetailSeq (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_ServiceDetailSeq),
-    (char *) &_oc_CORBA_ServiceDetailSeq,
-    0,
-    0
-  );
 
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:744
+
+static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ServiceDetailSeq_0 (
+    CORBA::tk_sequence,
+    &CORBA::_tc_ServiceDetail,
+    0U);
+  
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ServiceDetailSeq (
+    "IDL:omg.org/CORBA/ServiceDetailSeq:1.0",
+    "ServiceDetailSeq",
+    &::_tao_tc_CORBA_ServiceDetailSeq_0);
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceDetailSeq =
-    &_tc_TAO_tc_CORBA_ServiceDetailSeq;
+    &_tao_tc_CORBA_ServiceDetailSeq;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static const CORBA::Long _oc_CORBA_ServiceInformation[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  41,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5365), 
-  ACE_NTOHL (0x72766963), 
-  ACE_NTOHL (0x65496e66), 
-  ACE_NTOHL (0x6f726d61), 
-  ACE_NTOHL (0x74696f6e), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/ServiceInformation:1.0
-    19,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x69636549), 
-  ACE_NTOHL (0x6e666f72), 
-  ACE_NTOHL (0x6d617469), 
-  ACE_NTOHL (0x6f6e0000),  // name = ServiceInformation
-  2, // member count
-    16,
-  ACE_NTOHL (0x73657276), 
-  ACE_NTOHL (0x6963655f), 
-  ACE_NTOHL (0x6f707469), 
-  ACE_NTOHL (0x6f6e7300),  // name = service_options
-    CORBA::tk_alias, // typecode kind for typedefs
-  164, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    39,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f5365), 
-    ACE_NTOHL (0x72766963), 
-    ACE_NTOHL (0x654f7074), 
-    ACE_NTOHL (0x696f6e53), 
-    ACE_NTOHL (0x65713a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ServiceOptionSeq:1.0
-        17,
-    ACE_NTOHL (0x53657276), 
-    ACE_NTOHL (0x6963654f), 
-    ACE_NTOHL (0x7074696f), 
-    ACE_NTOHL (0x6e536571), 
-    ACE_NTOHL (0x0),  // name = ServiceOptionSeq
-        CORBA::tk_sequence, // typecode kind
-    84, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_alias, // typecode kind for typedefs
-      68, // encapsulation length
-        TAO_ENCAP_BYTE_ORDER, // byte order
-        36,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f5365), 
-        ACE_NTOHL (0x72766963), 
-        ACE_NTOHL (0x654f7074), 
-        ACE_NTOHL (0x696f6e3a), 
-        ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ServiceOption:1.0
-                14,
-        ACE_NTOHL (0x53657276), 
-        ACE_NTOHL (0x6963654f), 
-        ACE_NTOHL (0x7074696f), 
-        ACE_NTOHL (0x6e000000),  // name = ServiceOption
-                CORBA::tk_ulong,
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_ServiceInformation[] =
+  {
+    { "service_options", &CORBA::_tc_ServiceOptionSeq },
+    { "service_details", &CORBA::_tc_ServiceDetailSeq }
+    
+  };
 
-
-      0U,
-
-
-  16,
-  ACE_NTOHL (0x73657276), 
-  ACE_NTOHL (0x6963655f), 
-  ACE_NTOHL (0x64657461), 
-  ACE_NTOHL (0x696c7300),  // name = service_details
-    CORBA::tk_alias, // typecode kind for typedefs
-  376, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    39,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f5365), 
-    ACE_NTOHL (0x72766963), 
-    ACE_NTOHL (0x65446574), 
-    ACE_NTOHL (0x61696c53), 
-    ACE_NTOHL (0x65713a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ServiceDetailSeq:1.0
-        17,
-    ACE_NTOHL (0x53657276), 
-    ACE_NTOHL (0x69636544), 
-    ACE_NTOHL (0x65746169), 
-    ACE_NTOHL (0x6c536571), 
-    ACE_NTOHL (0x0),  // name = ServiceDetailSeq
-        CORBA::tk_sequence, // typecode kind
-    296, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_struct, // typecode kind
-      280, // encapsulation length
-        TAO_ENCAP_BYTE_ORDER, // byte order
-        36,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f5365), 
-        ACE_NTOHL (0x72766963), 
-        ACE_NTOHL (0x65446574), 
-        ACE_NTOHL (0x61696c3a), 
-        ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ServiceDetail:1.0
-                14,
-        ACE_NTOHL (0x53657276), 
-        ACE_NTOHL (0x69636544), 
-        ACE_NTOHL (0x65746169), 
-        ACE_NTOHL (0x6c000000),  // name = ServiceDetail
-        2, // member count
-                20,
-        ACE_NTOHL (0x73657276), 
-        ACE_NTOHL (0x6963655f), 
-        ACE_NTOHL (0x64657461), 
-        ACE_NTOHL (0x696c5f74), 
-        ACE_NTOHL (0x79706500),  // name = service_detail_type
-                CORBA::tk_alias, // typecode kind for typedefs
-        76, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          40,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5365), 
-          ACE_NTOHL (0x72766963), 
-          ACE_NTOHL (0x65446574), 
-          ACE_NTOHL (0x61696c54), 
-          ACE_NTOHL (0x7970653a), 
-          ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ServiceDetailType:1.0
-                    18,
-          ACE_NTOHL (0x53657276), 
-          ACE_NTOHL (0x69636544), 
-          ACE_NTOHL (0x65746169), 
-          ACE_NTOHL (0x6c547970), 
-          ACE_NTOHL (0x65000000),  // name = ServiceDetailType
-                    CORBA::tk_ulong,
-
-
-        15,
-        ACE_NTOHL (0x73657276), 
-        ACE_NTOHL (0x6963655f), 
-        ACE_NTOHL (0x64657461), 
-        ACE_NTOHL (0x696c0000),  // name = service_detail
-                CORBA::tk_alias, // typecode kind for typedefs
-        76, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          31,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4f63), 
-          ACE_NTOHL (0x74657453), 
-          ACE_NTOHL (0x65713a31), 
-          ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
-                    9,
-          ACE_NTOHL (0x4f637465), 
-          ACE_NTOHL (0x74536571), 
-          ACE_NTOHL (0x0),  // name = OctetSeq
-                    CORBA::tk_sequence, // typecode kind
-          12, // encapsulation length
-            TAO_ENCAP_BYTE_ORDER, // byte order
-            CORBA::tk_octet,
-
-            0U,
-
-
-
-      0U,
-
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ServiceInformation (
-    CORBA::tk_struct,
-    sizeof (_oc_CORBA_ServiceInformation),
-    (char *) &_oc_CORBA_ServiceInformation,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_struct,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ServiceInformation (
+    "IDL:omg.org/CORBA/ServiceInformation:1.0",
+    "ServiceInformation",
+    _tao_fields_CORBA_ServiceInformation,
+    2);
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceInformation =
-    &_tc_TAO_tc_CORBA_ServiceInformation;
+    &_tao_tc_CORBA_ServiceInformation;
+}
+
+
+
+// TAO_IDL - Generated from 
+// be\be_visitor_sequence/any_op_cs.cpp:54
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const CORBA::ServiceOptionSeq &_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::ServiceOptionSeq>::insert_copy (
+      _tao_any,
+      CORBA::ServiceOptionSeq::_tao_any_destructor,
+      CORBA_ServiceOptionSeq_0,
+      _tao_elem
+    );
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ServiceOptionSeq *_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::ServiceOptionSeq>::insert (
+      _tao_any,
+      CORBA::ServiceOptionSeq::_tao_any_destructor,
+      CORBA_ServiceOptionSeq_0,
+      _tao_elem
+    );
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::ServiceOptionSeq *&_tao_elem
+  )
+{
+  return _tao_any >>= const_cast<
+      const CORBA::ServiceOptionSeq *&> (
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const CORBA::ServiceOptionSeq *&_tao_elem
+  )
+{
+  return
+    TAO::Any_Dual_Impl_T<CORBA::ServiceOptionSeq>::extract (
+        _tao_any,
+        CORBA::ServiceOptionSeq::_tao_any_destructor,
+        CORBA_ServiceOptionSeq_0,
+        _tao_elem
+      );
 }
 
 // TAO_IDL - Generated from 
@@ -698,71 +389,13 @@ CORBA::Boolean operator>>= (
 // Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
-    const CORBA::ServiceOptionSeq &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<CORBA::ServiceOptionSeq>::insert_copy (
-      _tao_any,
-      CORBA::ServiceOptionSeq::_tao_any_destructor,
-      CORBA::_tc_ServiceOptionSeq,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    CORBA::ServiceOptionSeq *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<CORBA::ServiceOptionSeq>::insert (
-      _tao_any,
-      CORBA::ServiceOptionSeq::_tao_any_destructor,
-      CORBA::_tc_ServiceOptionSeq,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    CORBA::ServiceOptionSeq *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const CORBA::ServiceOptionSeq *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const CORBA::ServiceOptionSeq *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<CORBA::ServiceOptionSeq>::extract (
-        _tao_any,
-        CORBA::ServiceOptionSeq::_tao_any_destructor,
-        CORBA::_tc_ServiceOptionSeq,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
     const CORBA::ServiceDetailSeq &_tao_elem
   )
 {
   TAO::Any_Dual_Impl_T<CORBA::ServiceDetailSeq>::insert_copy (
       _tao_any,
       CORBA::ServiceDetailSeq::_tao_any_destructor,
-      CORBA::_tc_ServiceDetailSeq,
+      CORBA_ServiceDetailSeq_0,
       _tao_elem
     );
 }
@@ -776,7 +409,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CORBA::ServiceDetailSeq>::insert (
       _tao_any,
       CORBA::ServiceDetailSeq::_tao_any_destructor,
-      CORBA::_tc_ServiceDetailSeq,
+      CORBA_ServiceDetailSeq_0,
       _tao_elem
     );
 }
@@ -803,7 +436,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<CORBA::ServiceDetailSeq>::extract (
         _tao_any,
         CORBA::ServiceDetailSeq::_tao_any_destructor,
-        CORBA::_tc_ServiceDetailSeq,
+        CORBA_ServiceDetailSeq_0,
         _tao_elem
       );
 }
@@ -870,12 +503,12 @@ CORBA::Boolean operator>>= (
 
   template class
     TAO::Any_Dual_Impl_T<
-        CORBA::ServiceDetail
+        CORBA::ServiceOptionSeq
       >;
 
   template class
     TAO::Any_Dual_Impl_T<
-        CORBA::ServiceOptionSeq
+        CORBA::ServiceDetail
       >;
 
   template class
@@ -892,12 +525,12 @@ CORBA::Boolean operator>>= (
 
 # pragma instantiate \
     TAO::Any_Dual_Impl_T< \
-        CORBA::ServiceDetail \
+        CORBA::ServiceOptionSeq \
       >
 
 # pragma instantiate \
     TAO::Any_Dual_Impl_T< \
-        CORBA::ServiceOptionSeq \
+        CORBA::ServiceDetail \
       >
 
 # pragma instantiate \

@@ -26,52 +26,42 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "WCharSeqC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Sequence_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_CORBA_WCharSeq[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  31,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5743), 
-  ACE_NTOHL (0x68617253), 
-  ACE_NTOHL (0x65713a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/WCharSeq:1.0
-    9,
-  ACE_NTOHL (0x57436861), 
-  ACE_NTOHL (0x72536571), 
-  ACE_NTOHL (0x0),  // name = WCharSeq
-    CORBA::tk_sequence, // typecode kind
-  12, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_wchar,
 
-    0U,
 
-};
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:744
 
-static CORBA::TypeCode _tc_TAO_tc_CORBA_WCharSeq (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_WCharSeq),
-    (char *) &_oc_CORBA_WCharSeq,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_WCharSeq_0 (
+    CORBA::tk_sequence,
+    &::_tao_tc_CORBA::_tc_wchar,
+    0U);
+  
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_WCharSeq (
+    "IDL:omg.org/CORBA/WCharSeq:1.0",
+    "WCharSeq",
+    &::_tao_tc_CORBA_WCharSeq_0);
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_WCharSeq =
-    &_tc_TAO_tc_CORBA_WCharSeq;
+    &_tao_tc_CORBA_WCharSeq;
 }
+
+
 
 // TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
@@ -85,7 +75,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CORBA::WCharSeq>::insert_copy (
       _tao_any,
       CORBA::WCharSeq::_tao_any_destructor,
-      CORBA::_tc_WCharSeq,
+      CORBA_WCharSeq_0,
       _tao_elem
     );
 }
@@ -99,7 +89,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CORBA::WCharSeq>::insert (
       _tao_any,
       CORBA::WCharSeq::_tao_any_destructor,
-      CORBA::_tc_WCharSeq,
+      CORBA_WCharSeq_0,
       _tao_elem
     );
 }
@@ -126,7 +116,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<CORBA::WCharSeq>::extract (
         _tao_any,
         CORBA::WCharSeq::_tao_any_destructor,
-        CORBA::_tc_WCharSeq,
+        CORBA_WCharSeq_0,
         _tao_elem
       );
 }

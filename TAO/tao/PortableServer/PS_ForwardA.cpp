@@ -26,70 +26,58 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "PS_ForwardC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_PortableServer_ObjectId[] =
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/alias_typecode.cpp:31
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:744
+
+static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_sequence_0 (
+    CORBA::tk_sequence,
+    &::_tao_tc_CORBA::_tc_octet,
+    0U);
+  
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_OctetSeq (
+    "IDL:omg.org/CORBA/OctetSeq:1.0",
+    "OctetSeq",
+    &::_tao_tc_CORBA_sequence_0);
+  
+namespace CORBA
 {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f4f), 
-  ACE_NTOHL (0x626a6563), 
-  ACE_NTOHL (0x7449643a), 
-  ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/ObjectId:2.3
-    9,
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63744964), 
-  ACE_NTOHL (0x0),  // name = ObjectId
-    CORBA::tk_alias, // typecode kind for typedefs
-  76, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4f63), 
-    ACE_NTOHL (0x74657453), 
-    ACE_NTOHL (0x65713a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
-        9,
-    ACE_NTOHL (0x4f637465), 
-    ACE_NTOHL (0x74536571), 
-    ACE_NTOHL (0x0),  // name = OctetSeq
-        CORBA::tk_sequence, // typecode kind
-    12, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_octet,
+  ::CORBA::TypeCode_ptr const _tc_OctetSeq =
+    &_tao_tc_CORBA_OctetSeq;
+}
 
-      0U,
-
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_ObjectId (
-    CORBA::tk_alias,
-    sizeof (_oc_PortableServer_ObjectId),
-    (char *) &_oc_PortableServer_ObjectId,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_PortableServer_ObjectId (
+    "IDL:omg.org/PortableServer/ObjectId:2.3",
+    "ObjectId",
+    &CORBA::_tc_OctetSeq);
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ObjectId =
-    &_tc_TAO_tc_PortableServer_ObjectId;
+    &_tao_tc_PortableServer_ObjectId;
 }
+
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

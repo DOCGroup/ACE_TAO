@@ -26,53 +26,43 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "WStringSeqC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Sequence_TypeCode.h"
+#include "tao/String_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_CORBA_WStringSeq[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5753), 
-  ACE_NTOHL (0x7472696e), 
-  ACE_NTOHL (0x67536571), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/WStringSeq:1.0
-    11,
-  ACE_NTOHL (0x57537472), 
-  ACE_NTOHL (0x696e6753), 
-  ACE_NTOHL (0x65710000),  // name = WStringSeq
-    CORBA::tk_sequence, // typecode kind
-  16, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_wstring, 
-    0U, // string length
-    0U,
 
-};
 
-static CORBA::TypeCode _tc_TAO_tc_CORBA_WStringSeq (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_WStringSeq),
-    (char *) &_oc_CORBA_WStringSeq,
-    0,
-    0
-  );
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:744
 
+static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_WStringSeq_0 (
+    CORBA::tk_sequence,
+    &::_tao_tc_CORBA::_tc_wstring,
+    0U);
+  
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_WStringSeq (
+    "IDL:omg.org/CORBA/WStringSeq:1.0",
+    "WStringSeq",
+    &::_tao_tc_CORBA_WStringSeq_0);
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_WStringSeq =
-    &_tc_TAO_tc_CORBA_WStringSeq;
+    &_tao_tc_CORBA_WStringSeq;
 }
+
+
 
 // TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
@@ -86,7 +76,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CORBA::WStringSeq>::insert_copy (
       _tao_any,
       CORBA::WStringSeq::_tao_any_destructor,
-      CORBA::_tc_WStringSeq,
+      CORBA_WStringSeq_0,
       _tao_elem
     );
 }
@@ -100,7 +90,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CORBA::WStringSeq>::insert (
       _tao_any,
       CORBA::WStringSeq::_tao_any_destructor,
-      CORBA::_tc_WStringSeq,
+      CORBA_WStringSeq_0,
       _tao_elem
     );
 }
@@ -127,7 +117,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<CORBA::WStringSeq>::extract (
         _tao_any,
         CORBA::WStringSeq::_tao_any_destructor,
-        CORBA::_tc_WStringSeq,
+        CORBA_WStringSeq_0,
         _tao_elem
       );
 }

@@ -26,144 +26,72 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "IIOP_EndpointsC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Sequence_TypeCode.h"
+#include "tao/String_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static const CORBA::Long _oc_TAO_IIOP_Endpoint_Info[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  31,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x49494f50), 
-  ACE_NTOHL (0x5f456e64), 
-  ACE_NTOHL (0x706f696e), 
-  ACE_NTOHL (0x745f496e), 
-  ACE_NTOHL (0x666f3a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:TAO/IIOP_Endpoint_Info:1.0
-    19,
-  ACE_NTOHL (0x49494f50), 
-  ACE_NTOHL (0x5f456e64), 
-  ACE_NTOHL (0x706f696e), 
-  ACE_NTOHL (0x745f496e), 
-  ACE_NTOHL (0x666f0000),  // name = IIOP_Endpoint_Info
-  3, // member count
-    5,
-  ACE_NTOHL (0x686f7374), 
-  ACE_NTOHL (0x0),  // name = host
-    CORBA::tk_string, 
-  0U, // string length
-  5,
-  ACE_NTOHL (0x706f7274), 
-  ACE_NTOHL (0x0),  // name = port
-    CORBA::tk_short,
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_TAO_IIOP_Endpoint_Info[] =
+  {
+    { "host", &CORBA::_tc_string },
+    { "port", &CORBA::_tc_short },
+    { "priority", &CORBA::_tc_short }
+    
+  };
 
-  9,
-  ACE_NTOHL (0x7072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x0),  // name = priority
-    CORBA::tk_short,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_TAO_IIOP_Endpoint_Info (
-    CORBA::tk_struct,
-    sizeof (_oc_TAO_IIOP_Endpoint_Info),
-    (char *) &_oc_TAO_IIOP_Endpoint_Info,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_struct,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_TAO_IIOP_Endpoint_Info (
+    "IDL:TAO/IIOP_Endpoint_Info:1.0",
+    "IIOP_Endpoint_Info",
+    _tao_fields_TAO_IIOP_Endpoint_Info,
+    3);
+  
 namespace TAO
 {
   ::CORBA::TypeCode_ptr const _tc_IIOP_Endpoint_Info =
-    &_tc_TAO_tc_TAO_IIOP_Endpoint_Info;
+    &_tao_tc_TAO_IIOP_Endpoint_Info;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_TAO_IIOPEndpointSequence[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x49494f50), 
-  ACE_NTOHL (0x456e6470), 
-  ACE_NTOHL (0x6f696e74), 
-  ACE_NTOHL (0x53657175), 
-  ACE_NTOHL (0x656e6365), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:TAO/IIOPEndpointSequence:1.0
-    21,
-  ACE_NTOHL (0x49494f50), 
-  ACE_NTOHL (0x456e6470), 
-  ACE_NTOHL (0x6f696e74), 
-  ACE_NTOHL (0x53657175), 
-  ACE_NTOHL (0x656e6365), 
-  ACE_NTOHL (0x0),  // name = IIOPEndpointSequence
-    CORBA::tk_sequence, // typecode kind
-  140, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_struct, // typecode kind
-    124, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      31,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x54414f2f), 
-      ACE_NTOHL (0x49494f50), 
-      ACE_NTOHL (0x5f456e64), 
-      ACE_NTOHL (0x706f696e), 
-      ACE_NTOHL (0x745f496e), 
-      ACE_NTOHL (0x666f3a31), 
-      ACE_NTOHL (0x2e300000),  // repository ID = IDL:TAO/IIOP_Endpoint_Info:1.0
-            19,
-      ACE_NTOHL (0x49494f50), 
-      ACE_NTOHL (0x5f456e64), 
-      ACE_NTOHL (0x706f696e), 
-      ACE_NTOHL (0x745f496e), 
-      ACE_NTOHL (0x666f0000),  // name = IIOP_Endpoint_Info
-      3, // member count
-            5,
-      ACE_NTOHL (0x686f7374), 
-      ACE_NTOHL (0x0),  // name = host
-            CORBA::tk_string, 
-      0U, // string length
-      5,
-      ACE_NTOHL (0x706f7274), 
-      ACE_NTOHL (0x0),  // name = port
-            CORBA::tk_short,
-
-      9,
-      ACE_NTOHL (0x7072696f), 
-      ACE_NTOHL (0x72697479), 
-      ACE_NTOHL (0x0),  // name = priority
-            CORBA::tk_short,
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 
-    0U,
 
-};
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:744
 
-static CORBA::TypeCode _tc_TAO_tc_TAO_IIOPEndpointSequence (
-    CORBA::tk_alias,
-    sizeof (_oc_TAO_IIOPEndpointSequence),
-    (char *) &_oc_TAO_IIOPEndpointSequence,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+  _tao_tc_TAO_IIOPEndpointSequence_0 (
+    CORBA::tk_sequence,
+    &TAO::_tc_IIOP_Endpoint_Info,
+    0U);
+  
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_TAO_IIOPEndpointSequence (
+    "IDL:TAO/IIOPEndpointSequence:1.0",
+    "IIOPEndpointSequence",
+    &::_tao_tc_TAO_IIOPEndpointSequence_0);
+  
 namespace TAO
 {
   ::CORBA::TypeCode_ptr const _tc_IIOPEndpointSequence =
-    &_tc_TAO_tc_TAO_IIOPEndpointSequence;
+    &_tao_tc_TAO_IIOPEndpointSequence;
 }
+
+
 
 // TAO_IDL - Generated from 
 // be\be_visitor_structure/any_op_cs.cpp:54
@@ -235,7 +163,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<TAO::IIOPEndpointSequence>::insert_copy (
       _tao_any,
       TAO::IIOPEndpointSequence::_tao_any_destructor,
-      TAO::_tc_IIOPEndpointSequence,
+      TAO_IIOPEndpointSequence_0,
       _tao_elem
     );
 }
@@ -249,7 +177,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<TAO::IIOPEndpointSequence>::insert (
       _tao_any,
       TAO::IIOPEndpointSequence::_tao_any_destructor,
-      TAO::_tc_IIOPEndpointSequence,
+      TAO_IIOPEndpointSequence_0,
       _tao_elem
     );
 }
@@ -276,7 +204,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<TAO::IIOPEndpointSequence>::extract (
         _tao_any,
         TAO::IIOPEndpointSequence::_tao_any_destructor,
-        TAO::_tc_IIOPEndpointSequence,
+        TAO_IIOPEndpointSequence_0,
         _tao_elem
       );
 }

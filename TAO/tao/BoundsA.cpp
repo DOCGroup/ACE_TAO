@@ -26,15 +26,44 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "BoundsC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/struct_typecode.cpp:34
+
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_Bounds[] =
+  {
+    
+  };
+
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_except,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_Bounds (
+    "IDL:omg.org/CORBA/Bounds:1.0",
+    "Bounds",
+    _tao_fields_CORBA_Bounds,
+    0);
+  
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr const _tc_Bounds =
+    &_tao_tc_CORBA_Bounds;
+}
+
+
+
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<CORBA::Bounds>::demarshal_value (
     TAO_InputCDR & cdr

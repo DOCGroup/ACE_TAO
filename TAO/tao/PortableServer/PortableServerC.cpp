@@ -32,7 +32,13 @@
 #include "PortableServer.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
+#include "tao/Sequence_TypeCode.h"
+#include "tao/String_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
 #include "tao/Object_Argument_T.h"
 #include "ace/OS_NS_string.h"
 
@@ -250,52 +256,10 @@ void PortableServer::POA::AdapterAlreadyExists::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::POA::AdapterAlreadyExists::_type (void) const
+CORBA::TypeCode_ptr PortableServer::POA::AdapterAlreadyExists::_tao_type (void) const
 {
   return ::PortableServer::POA::_tc_AdapterAlreadyExists;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_PortableServer_POA_AdapterAlreadyExists[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  56,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f412f41), 
-  ACE_NTOHL (0x64617074), 
-  ACE_NTOHL (0x6572416c), 
-  ACE_NTOHL (0x72656164), 
-  ACE_NTOHL (0x79457869), 
-  ACE_NTOHL (0x7374733a), 
-  ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/POA/AdapterAlreadyExists:2.3
-    21,
-  ACE_NTOHL (0x41646170), 
-  ACE_NTOHL (0x74657241), 
-  ACE_NTOHL (0x6c726561), 
-  ACE_NTOHL (0x64794578), 
-  ACE_NTOHL (0x69737473), 
-  ACE_NTOHL (0x0),  // name = AdapterAlreadyExists
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_AdapterAlreadyExists (
-    CORBA::tk_except,
-    sizeof (_oc_PortableServer_POA_AdapterAlreadyExists),
-    (char *) &_oc_PortableServer_POA_AdapterAlreadyExists,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const PortableServer::POA::_tc_AdapterAlreadyExists =
-  &_tc_TAO_tc_PortableServer_POA_AdapterAlreadyExists;
 
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -387,51 +351,10 @@ void PortableServer::POA::AdapterNonExistent::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::POA::AdapterNonExistent::_type (void) const
+CORBA::TypeCode_ptr PortableServer::POA::AdapterNonExistent::_tao_type (void) const
 {
   return ::PortableServer::POA::_tc_AdapterNonExistent;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_PortableServer_POA_AdapterNonExistent[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  54,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f412f41), 
-  ACE_NTOHL (0x64617074), 
-  ACE_NTOHL (0x65724e6f), 
-  ACE_NTOHL (0x6e457869), 
-  ACE_NTOHL (0x7374656e), 
-  ACE_NTOHL (0x743a322e), 
-  ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/POA/AdapterNonExistent:2.3
-    19,
-  ACE_NTOHL (0x41646170), 
-  ACE_NTOHL (0x7465724e), 
-  ACE_NTOHL (0x6f6e4578), 
-  ACE_NTOHL (0x69737465), 
-  ACE_NTOHL (0x6e740000),  // name = AdapterNonExistent
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_AdapterNonExistent (
-    CORBA::tk_except,
-    sizeof (_oc_PortableServer_POA_AdapterNonExistent),
-    (char *) &_oc_PortableServer_POA_AdapterNonExistent,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const PortableServer::POA::_tc_AdapterNonExistent =
-  &_tc_TAO_tc_PortableServer_POA_AdapterNonExistent;
 
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -541,54 +464,10 @@ PortableServer::POA::InvalidPolicy::InvalidPolicy (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::POA::InvalidPolicy::_type (void) const
+CORBA::TypeCode_ptr PortableServer::POA::InvalidPolicy::_tao_type (void) const
 {
   return ::PortableServer::POA::_tc_InvalidPolicy;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_PortableServer_POA_InvalidPolicy[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  49,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f412f49), 
-  ACE_NTOHL (0x6e76616c), 
-  ACE_NTOHL (0x6964506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x3a322e33), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableServer/POA/InvalidPolicy:2.3
-    14,
-  ACE_NTOHL (0x496e7661), 
-  ACE_NTOHL (0x6c696450), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x79000000),  // name = InvalidPolicy
-  1, // member count
-    6,
-  ACE_NTOHL (0x696e6465), 
-  ACE_NTOHL (0x78000000),  // name = index
-    CORBA::tk_ushort,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_InvalidPolicy (
-    CORBA::tk_except,
-    sizeof (_oc_PortableServer_POA_InvalidPolicy),
-    (char *) &_oc_PortableServer_POA_InvalidPolicy,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const PortableServer::POA::_tc_InvalidPolicy =
-  &_tc_TAO_tc_PortableServer_POA_InvalidPolicy;
 
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -682,47 +561,10 @@ void PortableServer::POA::NoServant::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::POA::NoServant::_type (void) const
+CORBA::TypeCode_ptr PortableServer::POA::NoServant::_tao_type (void) const
 {
   return ::PortableServer::POA::_tc_NoServant;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_PortableServer_POA_NoServant[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  45,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f412f4e), 
-  ACE_NTOHL (0x6f536572), 
-  ACE_NTOHL (0x76616e74), 
-  ACE_NTOHL (0x3a322e33), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableServer/POA/NoServant:2.3
-    10,
-  ACE_NTOHL (0x4e6f5365), 
-  ACE_NTOHL (0x7276616e), 
-  ACE_NTOHL (0x74000000),  // name = NoServant
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_NoServant (
-    CORBA::tk_except,
-    sizeof (_oc_PortableServer_POA_NoServant),
-    (char *) &_oc_PortableServer_POA_NoServant,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const PortableServer::POA::_tc_NoServant =
-  &_tc_TAO_tc_PortableServer_POA_NoServant;
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
@@ -816,51 +658,10 @@ void PortableServer::POA::ObjectAlreadyActive::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::POA::ObjectAlreadyActive::_type (void) const
+CORBA::TypeCode_ptr PortableServer::POA::ObjectAlreadyActive::_tao_type (void) const
 {
   return ::PortableServer::POA::_tc_ObjectAlreadyActive;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_PortableServer_POA_ObjectAlreadyActive[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  55,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f412f4f), 
-  ACE_NTOHL (0x626a6563), 
-  ACE_NTOHL (0x74416c72), 
-  ACE_NTOHL (0x65616479), 
-  ACE_NTOHL (0x41637469), 
-  ACE_NTOHL (0x76653a32), 
-  ACE_NTOHL (0x2e330000),  // repository ID = IDL:omg.org/PortableServer/POA/ObjectAlreadyActive:2.3
-    20,
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x6374416c), 
-  ACE_NTOHL (0x72656164), 
-  ACE_NTOHL (0x79416374), 
-  ACE_NTOHL (0x69766500),  // name = ObjectAlreadyActive
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ObjectAlreadyActive (
-    CORBA::tk_except,
-    sizeof (_oc_PortableServer_POA_ObjectAlreadyActive),
-    (char *) &_oc_PortableServer_POA_ObjectAlreadyActive,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const PortableServer::POA::_tc_ObjectAlreadyActive =
-  &_tc_TAO_tc_PortableServer_POA_ObjectAlreadyActive;
 
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -952,49 +753,10 @@ void PortableServer::POA::ObjectNotActive::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::POA::ObjectNotActive::_type (void) const
+CORBA::TypeCode_ptr PortableServer::POA::ObjectNotActive::_tao_type (void) const
 {
   return ::PortableServer::POA::_tc_ObjectNotActive;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_PortableServer_POA_ObjectNotActive[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  51,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f412f4f), 
-  ACE_NTOHL (0x626a6563), 
-  ACE_NTOHL (0x744e6f74), 
-  ACE_NTOHL (0x41637469), 
-  ACE_NTOHL (0x76653a32), 
-  ACE_NTOHL (0x2e330000),  // repository ID = IDL:omg.org/PortableServer/POA/ObjectNotActive:2.3
-    16,
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63744e6f), 
-  ACE_NTOHL (0x74416374), 
-  ACE_NTOHL (0x69766500),  // name = ObjectNotActive
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ObjectNotActive (
-    CORBA::tk_except,
-    sizeof (_oc_PortableServer_POA_ObjectNotActive),
-    (char *) &_oc_PortableServer_POA_ObjectNotActive,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const PortableServer::POA::_tc_ObjectNotActive =
-  &_tc_TAO_tc_PortableServer_POA_ObjectNotActive;
 
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -1086,52 +848,10 @@ void PortableServer::POA::ServantAlreadyActive::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::POA::ServantAlreadyActive::_type (void) const
+CORBA::TypeCode_ptr PortableServer::POA::ServantAlreadyActive::_tao_type (void) const
 {
   return ::PortableServer::POA::_tc_ServantAlreadyActive;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_PortableServer_POA_ServantAlreadyActive[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  56,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f412f53), 
-  ACE_NTOHL (0x65727661), 
-  ACE_NTOHL (0x6e74416c), 
-  ACE_NTOHL (0x72656164), 
-  ACE_NTOHL (0x79416374), 
-  ACE_NTOHL (0x6976653a), 
-  ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/POA/ServantAlreadyActive:2.3
-    21,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x616e7441), 
-  ACE_NTOHL (0x6c726561), 
-  ACE_NTOHL (0x64794163), 
-  ACE_NTOHL (0x74697665), 
-  ACE_NTOHL (0x0),  // name = ServantAlreadyActive
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ServantAlreadyActive (
-    CORBA::tk_except,
-    sizeof (_oc_PortableServer_POA_ServantAlreadyActive),
-    (char *) &_oc_PortableServer_POA_ServantAlreadyActive,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const PortableServer::POA::_tc_ServantAlreadyActive =
-  &_tc_TAO_tc_PortableServer_POA_ServantAlreadyActive;
 
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -1223,50 +943,10 @@ void PortableServer::POA::ServantNotActive::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::POA::ServantNotActive::_type (void) const
+CORBA::TypeCode_ptr PortableServer::POA::ServantNotActive::_tao_type (void) const
 {
   return ::PortableServer::POA::_tc_ServantNotActive;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_PortableServer_POA_ServantNotActive[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  52,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f412f53), 
-  ACE_NTOHL (0x65727661), 
-  ACE_NTOHL (0x6e744e6f), 
-  ACE_NTOHL (0x74416374), 
-  ACE_NTOHL (0x6976653a), 
-  ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/POA/ServantNotActive:2.3
-    17,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x616e744e), 
-  ACE_NTOHL (0x6f744163), 
-  ACE_NTOHL (0x74697665), 
-  ACE_NTOHL (0x0),  // name = ServantNotActive
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ServantNotActive (
-    CORBA::tk_except,
-    sizeof (_oc_PortableServer_POA_ServantNotActive),
-    (char *) &_oc_PortableServer_POA_ServantNotActive,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const PortableServer::POA::_tc_ServantNotActive =
-  &_tc_TAO_tc_PortableServer_POA_ServantNotActive;
 
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -1358,48 +1038,10 @@ void PortableServer::POA::WrongAdapter::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::POA::WrongAdapter::_type (void) const
+CORBA::TypeCode_ptr PortableServer::POA::WrongAdapter::_tao_type (void) const
 {
   return ::PortableServer::POA::_tc_WrongAdapter;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_PortableServer_POA_WrongAdapter[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  48,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f412f57), 
-  ACE_NTOHL (0x726f6e67), 
-  ACE_NTOHL (0x41646170), 
-  ACE_NTOHL (0x7465723a), 
-  ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/POA/WrongAdapter:2.3
-    13,
-  ACE_NTOHL (0x57726f6e), 
-  ACE_NTOHL (0x67416461), 
-  ACE_NTOHL (0x70746572), 
-  ACE_NTOHL (0x0),  // name = WrongAdapter
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_WrongAdapter (
-    CORBA::tk_except,
-    sizeof (_oc_PortableServer_POA_WrongAdapter),
-    (char *) &_oc_PortableServer_POA_WrongAdapter,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const PortableServer::POA::_tc_WrongAdapter =
-  &_tc_TAO_tc_PortableServer_POA_WrongAdapter;
 
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -1491,47 +1133,10 @@ void PortableServer::POA::WrongPolicy::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::POA::WrongPolicy::_type (void) const
+CORBA::TypeCode_ptr PortableServer::POA::WrongPolicy::_tao_type (void) const
 {
   return ::PortableServer::POA::_tc_WrongPolicy;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_PortableServer_POA_WrongPolicy[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  47,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f412f57), 
-  ACE_NTOHL (0x726f6e67), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63793a32), 
-  ACE_NTOHL (0x2e330000),  // repository ID = IDL:omg.org/PortableServer/POA/WrongPolicy:2.3
-    12,
-  ACE_NTOHL (0x57726f6e), 
-  ACE_NTOHL (0x67506f6c), 
-  ACE_NTOHL (0x69637900),  // name = WrongPolicy
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_WrongPolicy (
-    CORBA::tk_except,
-    sizeof (_oc_PortableServer_POA_WrongPolicy),
-    (char *) &_oc_PortableServer_POA_WrongPolicy,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const PortableServer::POA::_tc_WrongPolicy =
-  &_tc_TAO_tc_PortableServer_POA_WrongPolicy;
 
 PortableServer::POA::POA (void)
 {}
@@ -1639,7 +1244,7 @@ PortableServer::POA::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -26,141 +26,63 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "Messaging.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
+#include "tao/Value_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/value_typecode.cpp:32
 
-static const CORBA::Long _oc_Messaging_ExceptionHolder[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  42,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f4578), 
-  ACE_NTOHL (0x63657074), 
-  ACE_NTOHL (0x696f6e48), 
-  ACE_NTOHL (0x6f6c6465), 
-  ACE_NTOHL (0x723a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/ExceptionHolder:1.0
-    16,
-  ACE_NTOHL (0x45786365), 
-  ACE_NTOHL (0x7074696f), 
-  ACE_NTOHL (0x6e486f6c), 
-  ACE_NTOHL (0x64657200),  // name = ExceptionHolder
-    0, // value modifier
-  CORBA::tk_null, // no stateful base valuetype
+static TAO::TypeCode::Value_Field<char const *> _tao_fields_Messaging_ExceptionHolder[] =
+  {
+    { "is_system_exception", &CORBA::_tc_boolean, CORBA::PUBLIC_MEMBER },
+    { "byte_order", &CORBA::_tc_boolean, CORBA::PUBLIC_MEMBER },
+    { "marshaled_exception", &CORBA::_tc_OctetSeq, CORBA::PUBLIC_MEMBER }
 
-3, // member count
-    20,
-  ACE_NTOHL (0x69735f73), 
-  ACE_NTOHL (0x79737465), 
-  ACE_NTOHL (0x6d5f6578), 
-  ACE_NTOHL (0x63657074), 
-  ACE_NTOHL (0x696f6e00),  // name = is_system_exception
-    CORBA::tk_boolean,
+  };
 
-  1, // data member visibility marker
-
-  11,
-  ACE_NTOHL (0x62797465), 
-  ACE_NTOHL (0x5f6f7264), 
-  ACE_NTOHL (0x65720000),  // name = byte_order
-    CORBA::tk_boolean,
-
-  1, // data member visibility marker
-
-  20,
-  ACE_NTOHL (0x6d617273), 
-  ACE_NTOHL (0x68616c65), 
-  ACE_NTOHL (0x645f6578), 
-  ACE_NTOHL (0x63657074), 
-  ACE_NTOHL (0x696f6e00),  // name = marshaled_exception
-    CORBA::tk_alias, // typecode kind for typedefs
-  76, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4f63), 
-    ACE_NTOHL (0x74657453), 
-    ACE_NTOHL (0x65713a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
-        9,
-    ACE_NTOHL (0x4f637465), 
-    ACE_NTOHL (0x74536571), 
-    ACE_NTOHL (0x0),  // name = OctetSeq
-        CORBA::tk_sequence, // typecode kind
-    12, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_octet,
-
-      0U,
-
-
-  1, // data member visibility marker
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_Messaging_ExceptionHolder (
-    CORBA::tk_value,
-    sizeof (_oc_Messaging_ExceptionHolder),
-    (char *) &_oc_Messaging_ExceptionHolder,
-    0,
-    0
-  );
+static TAO::TypeCode::Value<char const *,
+                            TAO::TypeCode::Value_Field<char const *> const *,
+                            CORBA::tk_value,
+                            TAO::Null_RefCount_Policy> const
+  _tao_tc_Messaging_ExceptionHolder (
+    "IDL:omg.org/Messaging/ExceptionHolder:1.0",
+    "ExceptionHolder",
+    CORBA::VM_NONE,
+    &CORBA::tk_null,
+    _tao_fields_Messaging_ExceptionHolder,
+    3);
 
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_ExceptionHolder =
-    &_tc_TAO_tc_Messaging_ExceptionHolder;
+    &_tao_tc_Messaging_ExceptionHolder;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/objref_typecode.cpp:73
 
-static const CORBA::Long _oc_Messaging_ReplyHandler[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x706c7948), 
-  ACE_NTOHL (0x616e646c), 
-  ACE_NTOHL (0x65723a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/ReplyHandler:1.0
-    13,
-  ACE_NTOHL (0x5265706c), 
-  ACE_NTOHL (0x7948616e), 
-  ACE_NTOHL (0x646c6572), 
-  ACE_NTOHL (0x0),  // name = ReplyHandler
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_Messaging_ReplyHandler (
-    CORBA::tk_objref,
-    sizeof (_oc_Messaging_ReplyHandler),
-    (char *) &_oc_Messaging_ReplyHandler,
-    0,
-    0
-  );
+static TAO::TypeCode::Objref<char const *,
+                             CORBA::tk_objref,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_Messaging_ReplyHandler (
+    "IDL:omg.org/Messaging/ReplyHandler:1.0",
+    "ReplyHandler");
 
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_ReplyHandler =
-    &_tc_TAO_tc_Messaging_ReplyHandler;
+    &_tao_tc_Messaging_ReplyHandler;
 }
+
+
 
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/any_op_cs.cpp:57
@@ -221,7 +143,7 @@ operator>>= (
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::ReplyHandler>::to_object (
     CORBA::Object_ptr &_tao_elem

@@ -448,7 +448,7 @@ namespace RTScheduling
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -872,7 +872,7 @@ namespace RTScheduling
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -1289,7 +1289,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
+// be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "RTSchedulerC.inl"

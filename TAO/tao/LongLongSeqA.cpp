@@ -26,53 +26,42 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "LongLongSeqC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Sequence_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_CORBA_LongLongSeq[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  34,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f4c6f), 
-  ACE_NTOHL (0x6e674c6f), 
-  ACE_NTOHL (0x6e675365), 
-  ACE_NTOHL (0x713a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/LongLongSeq:1.0
-    12,
-  ACE_NTOHL (0x4c6f6e67), 
-  ACE_NTOHL (0x4c6f6e67), 
-  ACE_NTOHL (0x53657100),  // name = LongLongSeq
-    CORBA::tk_sequence, // typecode kind
-  12, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_longlong,
 
-    0U,
 
-};
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:744
 
-static CORBA::TypeCode _tc_TAO_tc_CORBA_LongLongSeq (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_LongLongSeq),
-    (char *) &_oc_CORBA_LongLongSeq,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_LongLongSeq_0 (
+    CORBA::tk_sequence,
+    &::_tao_tc_CORBA::_tc_longlong,
+    0U);
+  
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_LongLongSeq (
+    "IDL:omg.org/CORBA/LongLongSeq:1.0",
+    "LongLongSeq",
+    &::_tao_tc_CORBA_LongLongSeq_0);
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_LongLongSeq =
-    &_tc_TAO_tc_CORBA_LongLongSeq;
+    &_tao_tc_CORBA_LongLongSeq;
 }
+
+
 
 // TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
@@ -86,7 +75,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CORBA::LongLongSeq>::insert_copy (
       _tao_any,
       CORBA::LongLongSeq::_tao_any_destructor,
-      CORBA::_tc_LongLongSeq,
+      CORBA_LongLongSeq_0,
       _tao_elem
     );
 }
@@ -100,7 +89,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<CORBA::LongLongSeq>::insert (
       _tao_any,
       CORBA::LongLongSeq::_tao_any_destructor,
-      CORBA::_tc_LongLongSeq,
+      CORBA_LongLongSeq_0,
       _tao_elem
     );
 }
@@ -127,7 +116,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<CORBA::LongLongSeq>::extract (
         _tao_any,
         CORBA::LongLongSeq::_tao_any_destructor,
-        CORBA::_tc_LongLongSeq,
+        CORBA_LongLongSeq_0,
         _tao_elem
       );
 }
