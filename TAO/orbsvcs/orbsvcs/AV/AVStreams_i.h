@@ -389,6 +389,10 @@ class TAO_ORBSVCS_Export TAO_VDev
   virtual ~TAO_VDev (void);
   // Destructor
 
+ protected:
+  virtual CORBA::Boolean set_media_ctrl (CORBA::Object_ptr media_ctrl,
+                                         CORBA::Environment &env);
+  // hook called after set_peer is done to set the media ctrl of the peer vdev.
  private:
   AVStreams::StreamCtrl_var streamctrl_;
   // My stream controller
