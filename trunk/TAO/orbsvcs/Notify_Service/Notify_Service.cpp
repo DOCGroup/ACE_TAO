@@ -64,8 +64,8 @@ Notify_Service::init_ORB  (int& argc, char *argv [],
 }
 
 int
-Notify_Service::startup (int argc, char *argv[],
-                          CORBA::Environment &ACE_TRY_ENV)
+Notify_Service::init (int argc, char *argv[],
+                      CORBA::Environment &ACE_TRY_ENV)
 {
   // initalize the ORB.
   if (this->init_ORB (argc, argv,
@@ -122,12 +122,10 @@ Notify_Service::startup (int argc, char *argv[],
       ACE_OS::fclose (this->ior_output_file_);
       this->ior_output_file_ = 0;
   }
-  else
-  {
+  else if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "The Notification Event Channel Factory IOR is <%s>\n",
                 str.in ()));
-  }
 
   // Make it bootstrappable, if asked.
   if (this->bootstrap_)
@@ -232,8 +230,9 @@ Notify_Service::resolve_naming_service (CORBA::Environment &ACE_TRY_ENV)
 int
 Notify_Service::run (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "%s: Running the Notification Service\n",
-              __FILE__));
+  if (TAO_debug_level > 0 )
+    ACE_DEBUG ((LM_DEBUG, "%s: Running the Notification Service\n",
+                __FILE__));
 
   if (this->nthreads_ > 0)
     {
@@ -415,9 +414,9 @@ main (int argc, char *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      if (service.startup (argc,
-                           argv,
-                           ACE_TRY_ENV) == -1)
+      if (service.init (argc,
+                        argv,
+                        ACE_TRY_ENV) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Failed to start the Notification Service.\n"),
                           1);

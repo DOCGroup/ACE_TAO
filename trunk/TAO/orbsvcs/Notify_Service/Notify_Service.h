@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = FILENAME
@@ -24,7 +25,6 @@
 
 #define NOTIFY_KEY "NotifyEventChannelFactory"
 #define NOTIFY_CHANNEL_NAME "NotifyEventChannel"
-
 
 class Worker : public ACE_Task_Base
 {
@@ -64,8 +64,8 @@ class Notify_Service
   virtual ~Notify_Service (void);
   // Destructor.
 
-  int startup (int argc, char *argv[],
-               CORBA::Environment &ACE_TRY_ENV);
+  int init (int argc, char *argv[],
+            CORBA::Environment &ACE_TRY_ENV);
   // Initializes the Service.
   // Returns 0 on success, -1 on error.
 
