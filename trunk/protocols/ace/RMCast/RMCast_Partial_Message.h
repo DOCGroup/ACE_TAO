@@ -7,7 +7,7 @@
 //   multicast library.
 //
 // = AUTHOR
-//    Carlos O'Ryan <coryan@cs.wustl.edu>
+//    Carlos O'Ryan <coryan@uci.edu>
 //
 // ============================================================================
 
