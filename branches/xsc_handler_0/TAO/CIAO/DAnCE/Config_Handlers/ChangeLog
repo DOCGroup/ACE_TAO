@@ -1,3 +1,10 @@
+Mon Sep 13 12:43:12 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * IDD_Handler.h:
+  * IDD_Handler.cpp:
+
+    Created a shell class for IDD_Handler.
+    
 Mon Sep 13 12:39:23 2004  Jules White <jules@dre.vanderbilt.edu>
 
   * CRDD_Handler.h:
