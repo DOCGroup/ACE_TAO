@@ -1,3 +1,29 @@
+Fri Jul  2 11:13:26 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/IORC.i:
+	* tao/Sequence_T.cpp:
+
+	  Fixed uninitialized variable warnings.
+
+	* tao/Pluggable.h (TAO_Connector):
+	* tao/Pluggable.cpp (make_mprofile):
+	* tao/{IIOP,UIOP}_Connector.h (TAO_{IIOP,UIOP}_Connector):
+	* tao/{IIOP,UIOP}_Connector.cpp (make_profile):
+
+	  Removed the return value from make_profile().  This was a case
+	  where an error return value was "competing" with native
+	  exception handling.  It makes more sense to handle the exception
+	  alone. Thanks to Carlos for talking this issue through with me.
+
+	* tao/IIOP_Connector.h (TAO_IIOP_Connector):
+
+	  Added a default value for the CORBA_Environment argument in
+	  make_profile().
+
+	* tao/{IIOP,UIOP}_Transport.*:
+
+	  Comment updates and some cosmetic updates.
+
 Fri Jul 02 11:11:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
@@ -28,7 +54,7 @@ Fri Jul  2 10:52:05 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 	  Moved the naming service unbind code from ~TAO_AV_Child_Process
 	  to a helper function unbind_names to avoid IRIX errors. Thanks
 	  to Carlos for helping with this. 
-	
+
 Fri Jul  2 09:49:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Pluggable/PP_Test_Server.cpp:
