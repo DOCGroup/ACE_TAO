@@ -1,3 +1,9 @@
+Mon Jun 14 08:56:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+          Added missing template instantiations
+
 Mon Jun 14 03:57:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_visitor_operation/collocated_ss.h:
