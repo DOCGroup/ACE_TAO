@@ -37,24 +37,33 @@ be_string::be_string (void)
 be_string::be_string (AST_Expression *v)
   : AST_String (v),
     AST_Decl (AST_Decl::NT_string,
-             new UTL_ScopedName(new Identifier("string", 1, 0, I_FALSE),
-                                NULL),
-             NULL)
+              new UTL_ScopedName (new Identifier ("string", 
+                                                  1, 
+                                                  0, 
+                                                  I_FALSE),
+                                  NULL),
+              NULL)
 {
   this->size_type (be_decl::VARIABLE); // always the case
 }
 
-be_string::be_string (AST_Expression *v, long wide)
+be_string::be_string (AST_Expression *v, 
+                      long wide)
   : AST_String (v, wide),
-    AST_Decl (AST_Decl::NT_string,
-              wide == 1
-              ? new UTL_ScopedName(new Identifier("string",1,0,I_FALSE),
-                                   NULL)
-              : new UTL_ScopedName(new Identifier("wstring_t",
-                                                  1,
-                                                  0,
-                                                  I_FALSE),
-                                   NULL),
+    AST_Decl (wide == sizeof (char)
+                ? AST_Decl::NT_string
+                : AST_Decl::NT_wstring,
+              wide == sizeof (char)
+                ? new UTL_ScopedName (new Identifier ("string",
+                                                      1,
+                                                      0,
+                                                      I_FALSE),
+                                      NULL)
+                : new UTL_ScopedName (new Identifier ("wstring",
+                                                      1,
+                                                      0,
+                                                      I_FALSE),
+                                      NULL),
               NULL)
 {
   this->size_type (be_decl::VARIABLE); // always the case

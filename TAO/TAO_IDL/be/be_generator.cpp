@@ -435,7 +435,7 @@ be_generator::create_sequence(AST_Expression *v, AST_Type *bt)
 AST_String *
 be_generator::create_string(AST_Expression *v)
 {
-  return (AST_String *) new be_string(v);
+  return (AST_String *) new be_string (v);
 }
 
 /*
@@ -444,7 +444,8 @@ be_generator::create_string(AST_Expression *v)
 AST_String *
 be_generator::create_wstring(AST_Expression *v)
 {
-  return (AST_String *) new be_string(v, sizeof(ACE_OS::WChar));
+  return (AST_String *) new be_string (v, 
+                                       sizeof (ACE_CDR::WChar));
 }
 
 /*
