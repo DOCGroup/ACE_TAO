@@ -196,21 +196,26 @@ ACE_INET_Addr::set (u_short port_number,
                     ACE_UINT32 ip_addr,
                     int encode)
 {
-  printf("in set1(port=%d,ip_addr=%u,encode=%d)\n",port_number,ip_addr,encode);
   if(ip_addr == INADDR_ANY)
     return this->set(port_number,ACE_INADDR_ANY);
 
   if(encode)
     ip_addr = htonl(ip_addr);
 
-  char addr[INET_ADDRSTRLEN];
-  ACE_OS::strcpy(addr,"::ffff:");
-  if(0 == ACE_OS::inet_ntop (AF_INET, (const void*)&ip_addr, addr+7, INET_ADDRSTRLEN)) {
-    errno = EINVAL;
-    return -1;
-  }
+  /* Build up a 128 bit address.  An IPv5-mapped IPv6 address is
+     defined as 0:0:0:0:0:ffff:IPv4_address.  This id defined in RFC 1884 */
+  struct {
+    char prefix[10];
+    ACE_UINT16 ffff;
+    ACE_UINT32 addr;
+  } newaddress = {
+    { 0,0,0,0,0,0,0,0,0,0 },
+    0xffff,
+    ip_addr
+  };
 
-  return this->set(port_number,addr);
+  memcpy(this->addr_pointer(),(void*)&newaddress,this->addr_size());
+  return 0;
 }
 #endif
 
@@ -222,8 +227,6 @@ ACE_INET_Addr::set (u_short port_number,
                     ace_in_addr_t inet_address,
                     int encode)
 {
-  printf("in set2(%d,ace_in_addr_t,%d)\n",port_number,encode);
-
 #if defined (ACE_HAS_IPV6)
   unsigned char &family = this->inet_addr_.sin6_family;
 #if defined (ACE_HAS_SIN_LEN)
@@ -261,11 +264,9 @@ ACE_INET_Addr::set (u_short port_number,
   else
     port = port_number;
 
-  printf("doing memcpy\n");
   (void) ACE_OS::memcpy ((void *) addrptr,
                          (void *) &inet_address,
                          addrsize);
-  printf("returning after memcpy\n");
   return 0;
 }
 
@@ -280,8 +281,6 @@ ACE_INET_Addr::set (u_short port_number,
   ACE_TRACE ("ACE_INET_Addr::set");
   ace_in_addr_t addr;
   ACE_UINT32 addrv4;
-
-  printf("in set3(%d,%s,%d)\n",port_number,host_name,encode);
 
   if(encode)
     port_number = htonl(port_number);
@@ -299,16 +298,12 @@ ACE_INET_Addr::set (u_short port_number,
   else if (ACE_OS::inet_pton (AF_INET6,
                               host_name,
                               (void*)&addr) == 1) {
-    printf("Setting AF_INET6 address from pton\n");
-
     return this->set (port_number,
                       addr,0);
   }
   else if (ACE_OS::inet_pton (AF_INET,
                               host_name,
                               (void*)&addrv4) == 1) {
-    printf("Setting address from AF_INET pton\n");
-
     return this->set (port_number,
                       addrv4,0);
   }
@@ -326,8 +321,7 @@ ACE_INET_Addr::set (u_short port_number,
       hostent hentry;
       ACE_HOSTENT_DATA buf;
       int error;
-      
-      printf("trying gethostbyname_r for %s\n",host_name);
+
       hostent *hp = ACE_OS::gethostbyname_r (host_name, &hentry,
                                              buf, &error);
 #endif /* VXWORKS */
@@ -707,6 +701,13 @@ const char *
 ACE_INET_Addr::get_host_addr (char *dst, int size) const
 {
 #if defined (ACE_HAS_IPV6)
+  /*
+  if(IN6_IS_ADDR_V4MAPPED(&this->inet_addr_.sin6_addr)) {
+    ACE_UINT32 addr;
+    addr = this->get_ip_address();
+    return ACE_OS::inet_ntop (AF_INET, (const void*)&addr,dst,size);
+  }
+  */
   dst[0] = '[';
   const char *ch = ACE_OS::inet_ntop (AF_INET6, (const void*)&this->inet_addr_.sin6_addr,dst+1,size-1);
   if(ch == 0) {
@@ -743,11 +744,12 @@ ACE_INET_Addr::get_ip_address (void) const
   ACE_TRACE ("ACE_INET_Addr::get_ip_address");
 #if defined (ACE_HAS_IPV6)
   if(IN6_IS_ADDR_V4MAPPED(&this->inet_addr_.sin6_addr)) {
-    char addr[INET6_ADDRSTRLEN];
-    ACE_OS::inet_ntop (AF_INET, (const void*)&this->inet_addr_.sin6_addr, addr, INET_ADDRSTRLEN);
-    ACE_UINT32 dst;
-    ACE_OS::inet_pton(AF_INET,addr,(void*)&dst);
-    return dst;
+    ACE_UINT32 addr;
+    // Return the last 32 bits of the address
+    char *thisaddrptr = (char*)this->addr_pointer();
+    thisaddrptr += 128 - 32;
+    memcpy((void*)&addr,(void*)(thisaddrptr),sizeof(addr));
+    return addr;
   } else {
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_INET_Addr::get_ip_address: address is a IPv6 address not IPv4\n")));
