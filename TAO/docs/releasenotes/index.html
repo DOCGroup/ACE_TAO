@@ -437,7 +437,32 @@ was defined), and support for #pragma version and #pragma ID has been added.</li
 
 </ul>
 
-<h4>Future work:</h4>
+<p><h4>Known Issues:</h4>
+<ul>
+
+<li>
+With Microsoft Visual C++, verison 6.0 and earlier, a problem has been discovered
+when the IDL compiler is built using the Release version of the MSVC project. For
+the Release version, the Optimizations box in the C/C++ tab has 'Maximize Speed'
+selected. This setting turned out to cause a problem when<br><br>
+
+const char *foo = ......<br><br>
+
+occurs in the source code. The variable foo is sometimes not allocated or assigned
+properly, and if foo is part of generated code, it will then display as garbage or
+as an empty string (or substring). Two workarounds have been found. One is to 
+change the declaration of foo to be<br><br>
+
+static const char *foo = ....<br><br>
+
+and this has been done in all cases we could find in the IDL compiler source code.
+Another way to avoid the problem is to change the Release project Optimization
+setting to 'Minimize Size'. Reportedly the problem has been fixed in MSVC version
+7.0.
+</li>
+</ul>
+
+<p><h4>Future work:</h4>
 <ul>
 
 <li>
@@ -449,12 +474,6 @@ the complete CORBA value type specification. Some of the items yet to be
 implemented include:<p>
 
 <ul>
-<li>
-Type codes for value types.<p>
-
-<li>
-CORBA::Any insertion and extraction operators for value types.<p>
-
 <li>
 Value types as members of a constructed type (struct, union or sequence).<p>
 
