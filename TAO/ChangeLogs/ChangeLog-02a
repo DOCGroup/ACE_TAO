@@ -1,3 +1,13 @@
+Mon Apr 23 10:03:31 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+          Reduce locking overhead by sharing the event handler mutex and
+          the queue mutex.  Since we need to lock the queue just before we
+          do any I/O it is a very natural fit, and saves us one mutex
+          per-call.
+
 Sun Apr 22 19:54:09 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO.dsp:

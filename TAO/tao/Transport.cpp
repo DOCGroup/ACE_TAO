@@ -235,7 +235,11 @@ TAO_Transport::send_message_block_chain (const ACE_Message_Block *mb,
                                          size_t &bytes_transferred,
                                          ACE_Time_Value *max_wait_time)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_mutex_, -1);
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
+
+  if (this->check_event_handler_i ("TAO_Transport::send_message_block_chain") == -1)
+    return -1;
+
   return this->send_message_block_chain_i (mb,
                                            bytes_transferred,
                                            max_wait_time);
@@ -287,7 +291,10 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
                                const ACE_Message_Block *message_block,
                                ACE_Time_Value *max_wait_time)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_mutex_, -1);
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
+
+  if (this->check_event_handler_i ("TAO_Transport::send_message_i") == -1)
+    return -1;
 
   if (is_synchronous)
     {
@@ -394,10 +401,10 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
 
   if (must_flush)
     {
-      typedef ACE_Reverse_Lock<TAO_SYNCH_MUTEX> TAO_REVERSE_SYNCH_MUTEX;
-      TAO_REVERSE_SYNCH_MUTEX reverse (this->queue_mutex_);
+      typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
+      TAO_REVERSE_LOCK reverse (*this->handler_lock_);
+      ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
 
-      ACE_GUARD_RETURN (TAO_REVERSE_SYNCH_MUTEX, ace_mon, reverse, -1);
       (void) flushing_strategy->flush_transport (this);
     }
 
@@ -450,10 +457,10 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
   // block for a long time writing out data.
   int result;
   {
-    typedef ACE_Reverse_Lock<TAO_SYNCH_MUTEX> TAO_REVERSE_SYNCH_MUTEX;
-    TAO_REVERSE_SYNCH_MUTEX reverse (this->queue_mutex_);
+    typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
+    TAO_REVERSE_LOCK reverse (*this->handler_lock_);
+    ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
 
-    ACE_GUARD_RETURN (TAO_REVERSE_SYNCH_MUTEX, ace_mon, reverse, -1);
     result = flushing_strategy->flush_message (this,
                                                &synch_message,
                                                max_wait_time);
@@ -674,20 +681,8 @@ TAO_Transport::send (iovec *iov, int iovcnt,
                             *this->handler_lock_,
                             -1));
 
-  // if there's no associated event handler, then we act like a null transport
-  if (this->event_handler_i () == 0)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) transport %d (tag=%d) send() ")
-                      ACE_TEXT ("no longer associated with handler, returning -1 with errno = ENOENT\n"),
-                      this->id (),
-                      this->tag_));
-        }
-      errno = ENOENT;
-      return -1;
-    }
+  if (this->check_event_handler_i ("TAO_Transport::send") == -1)
+    return -1;
 
   // now call the template method
   return this->send_i (iov, iovcnt, bytes_transferred, timeout);
@@ -703,18 +698,8 @@ TAO_Transport::recv (char *buffer,
                             *this->handler_lock_,
                             -1));
 
-  // if there's no associated event handler, then we act like a null transport
-  if (this->event_handler_i () == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) transport %d (tag=%d) recv() ")
-                  ACE_TEXT ("no longer associated with handler, returning -1 with errno = ENOENT\n"),
-                  this->id (),
-                  this->tag_));
-      // @@CJC Should we return -1, like an error, or should we return 0, like an EOF?
-      errno = ENOENT;
-      return -1;
-    }
+  if (this->check_event_handler_i ("TAO_Transport::recv") == -1)
+    return -1;
 
   // now call the template method
   return this->recv_i (buffer, len, timeout);
@@ -784,7 +769,7 @@ TAO_Transport::register_for_timer_event (const void* arg,
 int
 TAO_Transport::queue_is_empty (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_mutex_, 0);
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
   return this->queue_is_empty_i ();
 }
 
@@ -892,7 +877,7 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
 int
 TAO_Transport::drain_queue (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_mutex_, -1);
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
 
   return this->drain_queue_i ();
 }
@@ -900,11 +885,14 @@ TAO_Transport::drain_queue (void)
 int
 TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
 {
+  if (this->check_event_handler_i ("TAO_Transport::drain_queue_helper") == -1)
+    return -1;
+
   size_t byte_count = 0;
 
   // ... send the message ...
   ssize_t retval =
-    this->send (iov, iovcnt, byte_count);
+    this->send_i (iov, iovcnt, byte_count);
 
   if (TAO_debug_level == 5)
     {
@@ -1115,4 +1103,19 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
     }
 
   return constraints_reached;
+}
+
+void
+TAO_Transport::report_invalid_event_handler (const char *caller)
+{
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) transport %d (tag=%d) %s "
+                  "no longer associated with handler, "
+                  "returning -1 with errno = ENOENT\n",
+                  this->id (),
+                  this->tag_,
+                  caller));
+    }
 }

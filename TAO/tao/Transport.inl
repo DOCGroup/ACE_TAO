@@ -64,3 +64,16 @@ TAO_Transport::reset_flush_timer (void)
   this->current_deadline_ = ACE_Time_Value::zero;
 }
 
+ACE_INLINE int
+TAO_Transport::check_event_handler_i (const char *caller)
+{
+  // if there's no associated event handler, then we act like a null
+  // transport
+  if (this->event_handler_i () == 0)
+    {
+      this->report_invalid_event_handler (caller);
+      errno = ENOENT;
+      return -1;
+    }
+  return 0;
+}

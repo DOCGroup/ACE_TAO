@@ -632,7 +632,7 @@ public:
    *
    * @todo In the future this function could be used to expire
    *       messages (oneways) that have been sitting for too long on
-   *       the queue. 
+   *       the queue.
    */
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void* act);
@@ -694,6 +694,15 @@ private:
   /// not pending
   void reset_flush_timer (void);
 
+  /// Check if the underlying event handler is still valid.
+  /**
+   * @return Returns -1 if not, 0 if it is.
+   */
+  int check_event_handler_i (const char *caller);
+
+  /// Print out error messages if the event handler is not valid
+  void report_invalid_event_handler (const char *caller);
+
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Transport&))
@@ -736,9 +745,6 @@ protected:
    * if the server receives the info.
    */
   int bidirectional_flag_;
-
-  /// Synchronize access to the outgoing data queue
-  TAO_SYNCH_MUTEX queue_mutex_;
 
   /// Implement the outgoing data queue
   TAO_Queued_Message *head_;
