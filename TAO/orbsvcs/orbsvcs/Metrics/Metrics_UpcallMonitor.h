@@ -22,7 +22,7 @@
 #include "Metrics_FrameManager.h"
 #include "Metrics_Utils.h"
 
-class TAO_ORBSVCS_Export TAO_Metrics_UpcallMonitor
+class TAO_Metrics_Export TAO_Metrics_UpcallMonitor
   : public POA_Metrics::QoSMonitor
 {
   // = TITLE
@@ -55,7 +55,7 @@ public:
 
 
   TAO_Metrics_UpcallMonitor ();
-  // Default constructor. 
+  // Default constructor.
 
   ~TAO_Metrics_UpcallMonitor ();
   // Destructor.
@@ -89,7 +89,7 @@ public:
   virtual void get_aggregate_QoS_set (
       const Metrics::Handle_Set_t & handle_set,
       Metrics::QoSParameter_Set_out qos_set,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_4,
@@ -125,7 +125,7 @@ private:
 };
 
 
-class TAO_ORBSVCS_Export TAO_Metrics_ReportingUpcallMonitor
+class TAO_Metrics_Export TAO_Metrics_ReportingUpcallMonitor
   : public POA_Metrics::ReportingQoSMonitor
 {
   // = TITLE
@@ -159,7 +159,7 @@ public:
 
 
   TAO_Metrics_ReportingUpcallMonitor ();
-  // Default constructor. 
+  // Default constructor.
 
   ~TAO_Metrics_ReportingUpcallMonitor ();
   // Destructor.
@@ -193,7 +193,7 @@ public:
   virtual void get_aggregate_QoS_set (
       const Metrics::Handle_Set_t & handle_set,
       Metrics::QoSParameter_Set_out qos_set,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_4,
@@ -204,7 +204,7 @@ public:
   virtual void report_aggregate_QoS (
       Metrics::QoSLogger_ptr logger,
       Metrics::Time interval,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::NIL_LOGGER,
