@@ -381,11 +381,14 @@ namespace CIAO
       /// The name of the receptacle or consumer.
       ACE_CString name_;
 
-      /// The component that uses the receptacle or consumes the event.
-      IF_Resolver_Info *component_;
+      /// The component that provides an interface or event.
+      IF_Resolver_Info *src_comp_;
+
+      /// The component that receives an interface or event.
+      //IF_Resolver_Info *dest_comp_;
 
       /// The interface that is to be connected to the port.
-      IF_Resolver_Info *interface_;
+      IF_Resolver_Info *dest_iface_;
 
     } Connect_Info;
   }

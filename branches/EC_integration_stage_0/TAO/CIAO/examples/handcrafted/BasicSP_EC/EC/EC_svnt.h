@@ -20,8 +20,7 @@
 
 #ifndef CIAO_GLUE_SESSION_EC_SVNT_H
 #define CIAO_GLUE_SESSION_EC_SVNT_H
-#include /**/ "ace/pre.h"
-#include "tao/ORB_Core.h"
+#include "ace/pre.h"
 
 #include "ECS.h"
 #include "ECEC.h"
@@ -30,15 +29,6 @@
 #include "tao/LocalObject.h"
 #include "tao/PortableServer/Key_Adapters.h"
 #include "ace/Active_Map_Manager_T.h"
-
-// START new event code
-#include "orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "Event_Utilities.h"
-#include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Default_Factory.h"
-#include "CIAO_ValueC.h"
-// END new event code
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -137,34 +127,11 @@ namespace CIAO_GLUE_BasicSP
     ::CORBA::SystemException,
     ::Components::InvalidConnection));
 
-    // START new event code
-    /*
-    ::Components::Cookie *
-    subscribe_timeout_consumer (
-    ::BasicSP::TimeOutConsumer_ptr c);
-
-    void
-    create_event_channel (void);
-    */
-    // END new event code
-
     protected:
-
-	  // START old event code
-	  /*
+    /*
     ACE_Active_Map_Manager<
     ::BasicSP::TimeOutConsumer_var>
     ciao_publishes_timeout_map_;
-	  */
-	  // END old event code
-
-    /*
-    // START new event code
-    RtecEventChannelAdmin::ProxyPushConsumer_var
-    ciao_proxy_timeout_consumer_;
-
-    RtecEventChannelAdmin::EventChannel_var ciao_event_channel_;
-    // END new event code
     */
 
     ::Components::CCMHome_var
@@ -178,9 +145,6 @@ namespace CIAO_GLUE_BasicSP
 
     ::BasicSP::EC_var
     component_;
-
-    ::Components::Cookie * push_timeout_cookie_;
-
   };
 
   class EC_SVNT_Export EC_Servant
@@ -226,7 +190,7 @@ namespace CIAO_GLUE_BasicSP
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void
+    virtual void 
     hertz (
     ::CORBA::Long
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -400,6 +364,17 @@ namespace CIAO_GLUE_BasicSP
 
     // Operations for CCMObject interface.
 
+    virtual void
+    component_UUID (
+    const char * new_component_UUID
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CIAO::CONNECTION_ID
+    component_UUID (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
     virtual CORBA::IRObject_ptr
     get_component_def (
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -463,6 +438,8 @@ namespace CIAO_GLUE_BasicSP
 
     ::CIAO::Session_Container *
     container_;
+
+    ACE_CString component_UUID_;
 
   };
 
@@ -553,6 +530,7 @@ namespace CIAO_GLUE_BasicSP
     ACE_Equal_To<PortableServer::ObjectId>,
     ACE_SYNCH_MUTEX>
     component_map_;
+
   };
 
   extern "C" EC_SVNT_Export ::PortableServer::Servant
@@ -563,5 +541,6 @@ namespace CIAO_GLUE_BasicSP
 
 }
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* CIAO_GLUE_SESSION_EC_SVNT_H */
+

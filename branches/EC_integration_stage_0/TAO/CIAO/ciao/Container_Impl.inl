@@ -31,3 +31,10 @@ CIAO::Container_Impl::get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     }
   return this->objref_.in ();
 }
+
+CIAO::ContainerEventService_ptr
+CIAO::Container_Impl::get_event_service (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->container_->get_container_events_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+}

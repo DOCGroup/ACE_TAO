@@ -197,18 +197,18 @@ CIAO::Assembly_Builder_Visitor::visit_homeplacement
       // require putting similar policied home together for now.  They
       // have abandoned this implementation already anyway.
 
-      Components::Deployment::Container_var container
+      this->container_
         = this->get_container (hp->rtpolicyset_ref ()
                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
-      if (CORBA::is_nil (container.in ()))
+      if (CORBA::is_nil (this->container_.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Unable to acquire a reference to ServerActivator\n"),
                           -1);
 
       Components::CCMHome_var home =
-        container->install_home (info.executor_UUID_.c_str (),
+        this->container_->install_home (info.executor_UUID_.c_str (),
                                  info.executor_entrypt_.c_str (),
                                  home_config
                                  ACE_ENV_ARG_PARAMETER);
@@ -230,6 +230,8 @@ CIAO::Assembly_Builder_Visitor::visit_homeplacement
                           -1);
       // Save the home for component instantiation.
       this->home_ = klhome;
+
+      this->uuid_ = info.servant_UUID_.c_str ();
 
       // @@ Register home according to register spec.
       // @@ Not implemented yet.
@@ -266,8 +268,15 @@ CIAO::Assembly_Builder_Visitor::visit_componentinstantiation
     = this->home_->create_component (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
+  comp->component_UUID (this->uuid_.c_str ()
+                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   this->context_.instantiated_components_.bind (ci->id (),
                                                 comp);
+
+  this->context_.containers_.bind (ci->id (),
+                                   this->container_.in ());
 
   // Registering component.
   CIAO::Assembly_Placement::componentinstantiation::REGISTRATION_QUEUE::ITERATOR

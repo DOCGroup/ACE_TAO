@@ -18,7 +18,7 @@
 #define CIAO_COMPONENTINSTALLATION_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "CCM_DeploymentS.h"
+#include "CIAO_ServersS.h"
 #include "ace/Configuration.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

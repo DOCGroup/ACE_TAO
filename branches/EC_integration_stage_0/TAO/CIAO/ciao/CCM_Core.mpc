@@ -1,7 +1,8 @@
 project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
   sharedname  = CIAO_Client
-  idlflags  += -I $(TAO_ROOT) -Wb,stub_export_include=CIAO_Client_Export.h -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,skel_export_include=CIAO_Container_Export.h -Wb,skel_export_macro=CIAO_CONTAINER_Export
+  idlflags  += -I$(TAO_ROOT) -Wb,stub_export_include=CIAO_Client_Export.h -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,skel_export_include=CIAO_Container_Export.h -Wb,skel_export_macro=CIAO_CONTAINER_Export
   dynamicflags    = CIAO_CLIENT_BUILD_DLL
+  libpaths += $(ACE_ROOT)\lib,$(TAO_ROOT)\tao\IFR_Client,$(TAO_ROOT)\tao\Valuetype,$(TAO_ROOT)\tao,$(ACE_ROOT)\ace
 
   IDL_Files {
     CCM_Base.idl
@@ -19,20 +20,57 @@ project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
   }
 }
 
-project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor, objreftemplate, valuetype, ifr_client {
+project (CIAO_Events) : rtevent, notify {
+
   after += CIAO_Client
+  sharedname  = CIAO_Events
+  includes   += $(TAO_ROOT)/orbsvcs
+  idlflags  += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -Wb,export_include=CIAO_Events_Export.h -Wb,export_macro=CIAO_EVENTS_Export
+  dynamicflags = CIAO_EVENTS_BUILD_DLL
+  libpaths += $(ACE_ROOT)\lib,$(TAO_ROOT)\tao\IFR_Client,$(TAO_ROOT)\tao\Valuetype,$(TAO_ROOT)\tao,$(ACE_ROOT)\ace,$(TAO_ROOT)\orbsvcs\orbsvcs,$(TAO_ROOT)\tao\PortableServer,$(TAO_ROOT)\tao\IORInterceptor,$(TAO_ROOT)\tao\ObjRefTemplate,$(TAO_ROOT)\tao\DynamicAny,$(TAO_ROOT)\orbsvcs\orbsvcs\ETCL,$(TAO_ROOT)\tao\IORTable,$(TAO_ROOT)\tao\Messaging
+
+  IDL_Files {
+	  CIAO_Events.idl
+    CIAO_RTEvent.idl
+    CIAO_DirectEvent.idl
+    CIAO_CosNotify.idl
+  }
+
+  Source_Files {
+    CIAO_EventService_Factory.cpp
+	  CIAO_EventService_Factory_impl.cpp
+	  CIAO_EventsS.cpp
+	  CIAO_EventsC.cpp
+    CIAO_DirectEventS.cpp
+    CIAO_DirectEventC.cpp
+    CIAO_DirectEvent.cpp
+    CIAO_RTEventS.cpp
+    CIAO_RTEventC.cpp
+    CIAO_RTEvent.cpp
+    CIAO_CosNotifyS.cpp
+    CIAO_CosNotifyC.cpp
+    CIAO_CosNotify.cpp
+  }
+
+  Header_Files {
+    CIAO_EventServiceBase.h
+  }
+}
+
+project (CIAO_Container) : orbsvcslib, portableserver, security, valuetype, ifr_client {
+  after += CIAO_Events
   sharedname  = CIAO_Container
   libs       += CIAO_Client
   includes   += $(TAO_ROOT)/orbsvcs/orbsvcs
   idlflags  += -I$(TAO_ROOT)/orbsvcs/orbsvcs -Wb,export_include=CIAO_Container_Export.h -Wb,export_macro=CIAO_CONTAINER_Export
   dynamicflags = CIAO_CONTAINER_BUILD_DLL
-
+  libpaths += $(ACE_ROOT)\lib,$(TAO_ROOT)\tao\IFR_Client,$(TAO_ROOT)\tao\Valuetype,$(TAO_ROOT)\tao,$(ACE_ROOT)\ace,$(TAO_ROOT)\orbsvcs\orbsvcs,$(TAO_ROOT)\tao\PortableServer,$(TAO_ROOT)\tao\IORInterceptor,$(TAO_ROOT)\tao\ObjRefTemplate
   IDL_Files {
     CCM_Transaction.idl
     CosPersistentState.idl
     CCM_Container.idl
     CCM_Container_Ex.idl
-	CIAO_Events.idl
+    CCM_Deployment.idl
   }
 
   Source_Files {
@@ -44,39 +82,32 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor,
     CCM_EventS.cpp
     CCM_ComponentS.cpp
     Cookies.cpp
-	CIAO_EventsS.cpp
-	CIAO_EventsC.cpp
-	CIAO_Events.cpp
+    Container_Base.cpp
+    Container_Impl.cpp
+    CCM_DeploymentC.cpp
+    CCM_DeploymentS.cpp
   }
+
 }
 
-project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftemplate, valuetype, ifr_client, security {
+project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, security {
   after += CIAO_Container
   sharedname  = CIAO_Server
   libs       +=  CIAO_Client
   includes   += $(TAO_ROOT)/orbsvcs/orbsvcs
   idlflags  += -I$(TAO_ROOT)/orbsvcs/orbsvcs -Wb,export_include=CIAO_Server_Export.h -Wb,export_macro=CIAO_SERVER_Export
-
+  libpaths += $(ACE_ROOT)\lib,$(TAO_ROOT)\tao\IFR_Client,$(TAO_ROOT)\tao\Valuetype,$(TAO_ROOT)\tao,$(ACE_ROOT)\ace,$(TAO_ROOT)\orbsvcs\orbsvcs,$(TAO_ROOT)\tao\PortableServer,$(TAO_ROOT)\tao\IORInterceptor,$(TAO_ROOT)\tao\ObjRefTemplate
   dynamicflags    = CIAO_SERVER_BUILD_DLL
 
   IDL_Files {
-    CCM_Deployment.idl
     CIAO_Servers.idl
-//    HomeRegistrar.idl
   }
 
   Source_Files {
-    CCM_DeploymentC.cpp
-    CCM_DeploymentS.cpp
     CIAO_ServersC.cpp
     CIAO_ServersS.cpp
-//    HomeRegistrarC.cpp
-//    HomeRegistrarS.cpp
     ComponentInstallation_Impl.cpp
     ComponentServer_Impl.cpp
-    Container_Base.cpp
-    Container_Impl.cpp
-//    HomeRegistrar_i.cpp
     Server_init.cpp
     ServerActivator_Impl.cpp
   }

@@ -162,9 +162,11 @@ namespace CIAO_GLUE_BasicSP
     ::Components::InvalidConnection));
 
     protected:
+    /*
     ACE_Active_Map_Manager<
     ::BasicSP::DataAvailableConsumer_var>
     ciao_publishes_data_available_map_;
+    */
 
     ::Components::CCMHome_var
     home_;
@@ -177,10 +179,6 @@ namespace CIAO_GLUE_BasicSP
 
     ::BasicSP::BMDevice_var
     component_;
-
-    ::Components::Cookie * push_data_available_cookie_;
-
-    ::Components::Cookie * data_available_service_cookie_;
 
   };
 
@@ -430,6 +428,17 @@ namespace CIAO_GLUE_BasicSP
 
     // Operations for CCMObject interface.
 
+    virtual void
+    component_UUID (
+    const char * new_component_UUID
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CIAO::CONNECTION_ID
+    component_UUID (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
     virtual CORBA::IRObject_ptr
     get_component_def (
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -499,6 +508,8 @@ namespace CIAO_GLUE_BasicSP
 
     ::BasicSP::TimeOutConsumer_var
     consumes_timeout_;
+
+    ACE_CString component_UUID_;
 
   };
 

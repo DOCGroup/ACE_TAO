@@ -24,7 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CCM_DeploymentS.h"
 #include "Container_Base.h"
 #include "Object_Set_T.h"
 
@@ -49,7 +48,7 @@ namespace CIAO
    * used to manage the lifecycle of the installed components and
    * homes.
    */
-  class CIAO_SERVER_Export Container_Impl
+  class CIAO_CONTAINER_Export Container_Impl
     : public virtual POA_Components::Deployment::Container,
       public virtual PortableServer::RefCountServantBase
   {
@@ -101,6 +100,10 @@ namespace CIAO
     virtual void remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
+
+    virtual CIAO::ContainerEventService_ptr
+    get_event_service (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // ------------------- CIAO Internal Operations ------------------------
     /// Set the cached object reference.

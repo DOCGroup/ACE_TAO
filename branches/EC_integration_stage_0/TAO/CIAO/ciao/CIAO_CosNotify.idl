@@ -1,0 +1,37 @@
+// $Id$
+
+/**
+ * @file CIAO_CosNotify.idl
+ *
+ * @author George Edwards
+ *
+ * @brief Interfaces for configuring CIAO's notification service.
+ */
+
+#include "CIAO_Events.idl"
+#include "orbsvcs/CosNotifyFilter.idl"
+
+module CIAO
+{
+
+  interface CosNotify_Consumer_Config :
+    Consumer_Config
+  {
+
+    readonly attribute CosNotifyFilter::Filter notify_filter;
+
+    readonly attribute CosNotification::QoSProperties notify_qos;
+
+  };
+
+  interface CosNotify_Supplier_Config :
+    Supplier_Config
+  {
+
+    readonly attribute CosNotifyFilter::Filter notify_filter;
+
+    readonly attribute CosNotification::QoSProperties notify_qos;
+
+  };
+
+};

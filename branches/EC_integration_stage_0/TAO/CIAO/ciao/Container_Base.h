@@ -26,18 +26,15 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
+#include "CCM_DeploymentS.h"
 #include "CCM_ContainerC.h"
-#include "CCM_DeploymentC.h"
-#include "ace/Active_Map_Manager.h"
-#include "CIAO_Events.h"
+#include "ace/Hash_Map_Manager.h"
+
+#include "CIAO_EventService_Factory.h"
+#include "CIAO_EventsS.h"
 
 namespace CIAO
 {
-
-  // Forward declarations
-  struct EventServiceInfo;
-  class RTEventServiceSupplier_impl;
-  class RTEventServiceConsumer_impl;
 
   /**
    * @class Container
@@ -47,7 +44,8 @@ namespace CIAO
    * Perhaps we can use local interface to define these interfaces as
    * we will also get reference counting automatically.
    */
-  class CIAO_SERVER_Export Container
+  class CIAO_CONTAINER_Export Container :
+    public virtual POA_CIAO::ContainerEventService
   {
   public:
     Container (CORBA::ORB_ptr o);
@@ -84,57 +82,65 @@ namespace CIAO
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
-    // Events methods
+    ContainerEventService_ptr
+    CIAO::Container::get_container_events_ref (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
+    // ContainerEventService implementation
 
     /// A factory method for Consumer_Config objects.
-    CIAO_Events::Consumer_Config_ptr _ciao_create_event_consumer_config (
-        const char * service_type
+    Consumer_Config_ptr create_consumer_config (
+        EventServiceType type
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
     /// A factory method for Supplier_Config objects.
-    CIAO_Events::Supplier_Config_ptr _ciao_create_event_supplier_config (
-        const char * service_type
+    Supplier_Config_ptr create_supplier_config (
+        EventServiceType type
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
     /// Connect an event sink.
-    virtual void _ciao_connect_event_consumer (
-        CIAO_Events::Consumer_Config_ptr consumer_config
+    virtual void connect_event_consumer (
+        Consumer_Config_ptr consumer_config
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
     /// Connect an event source.
-    virtual void _ciao_connect_event_supplier (
-        CIAO_Events::Supplier_Config_ptr supplier_config
+    virtual void connect_event_supplier (
+        Supplier_Config_ptr supplier_config
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
     /// Disconnect event sink.
-    virtual void _ciao_disconnect_event_consumer (
-        CIAO_Events::CONNECTION_ID connection_id
+    virtual void disconnect_event_consumer (
+        const char * connection_id
         ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((::CORBA::SystemException,
-                       ::Components::InvalidName,
-                       ::Components::InvalidConnection));
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        Components::InvalidName,
+        Components::InvalidConnection));
 
     /// Disconnect event source.
-    virtual void _ciao_disconnect_event_supplier (
-        CIAO_Events::CONNECTION_ID connection_id
+    virtual void disconnect_event_supplier (
+        const char * connection_id
         ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((::CORBA::SystemException,
-                       ::Components::InvalidName,
-                       ::Components::InvalidConnection));
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        Components::InvalidName,
+        Components::InvalidConnection));
 
     /// Push an event.
-    virtual void _ciao_push_event (::Components::EventBase *ev,
-                                   CIAO_Events::CONNECTION_ID connection_id
-                                   ACE_ENV_ARG_DECL)
-                                 ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void push_event (
+        Components::EventBase * ev,
+        const char * connection_id
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
 
   protected:
 
@@ -144,21 +150,22 @@ namespace CIAO
     // Reference to the POA
     PortableServer::POA_var poa_;
 
-    /// Mapping of suppliers to an event service implementation.
-    ACE_Hash_Map_Manager<CIAO_Events::CONNECTION_ID,
-                         CIAO_Events::EventServiceBase *,
-                         ACE_Null_Mutex> event_service_map_;
+    /// Factory for event services.
+    EventService_Factory * event_service_factory_;
 
-    /// Mapping of consumers to state/disconnect info.
-    ACE_Hash_Map_Manager<CIAO_Events::CONNECTION_ID,
-                         CIAO_Events::EventServiceInfo,
-                         ACE_Null_Mutex> event_info_map_;
+    /// Mapping of components to an event service.
+    ACE_Hash_Map_Manager_Ex<ACE_CString,
+                            EventServiceBase *,
+                            ACE_Hash<ACE_CString>,
+                            ACE_Equal_To<ACE_CString>,
+                            ACE_Null_Mutex> event_service_map_;
 
-    /// A helper class that encapsulates event service management.
-    CIAO_Events::Events_Manager events_manager_;
+    /// Object reference to the events interface
+    ContainerEventService_var events_ref_;
+
   };
 
-  class CIAO_SERVER_Export Session_Container : public Container
+  class CIAO_CONTAINER_Export Session_Container : public Container
   {
   public:
     Session_Container (CORBA::ORB_ptr o);
@@ -210,11 +217,6 @@ namespace CIAO
 
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    // Get an object reference to a component or home from the servant.
-    CORBA::Object_ptr get_objref (PortableServer::Servant p
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
     // Uninstall a servant for component or home.
     void uninstall (CORBA::Object_ptr objref
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -229,6 +231,11 @@ namespace CIAO
     void uninstall_component (CORBA::Object_ptr objref,
                               PortableServer::ObjectId_out oid
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    // Get an object reference to a component or home from the servant.
+    CORBA::Object_ptr get_objref (PortableServer::Servant p
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
