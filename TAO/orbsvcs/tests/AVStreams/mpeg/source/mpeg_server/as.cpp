@@ -206,8 +206,8 @@ static int INITaudio(void)
     cmd = CmdFAIL;
     CmdWrite((char *)&cmd, 1);
     write_string(serviceSocket,
-                 failureType == 0 ? "Failed to open audio file for read.":
-                 "Failed to connect to live audio source.");
+                 failureType == 0 ? (char *)"Failed to open audio file for read.":
+                 (char *)"Failed to connect to live audio source.");
     return(1);
   }
 }
