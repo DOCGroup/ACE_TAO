@@ -113,7 +113,7 @@ main (int argc, char *argv[])
         return 1;
 
       // PolicyManager.
-      object = orb->resolve_initial_references ("PolicyManager",
+      object = orb->resolve_initial_references ("ORBPolicyManager",
                                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::PolicyManager_var policy_manager =
@@ -243,6 +243,10 @@ main (int argc, char *argv[])
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      server2->test_method (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Testing over.  Shut down server ORB.
       server2->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }

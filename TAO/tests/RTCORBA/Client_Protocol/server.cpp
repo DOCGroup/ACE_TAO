@@ -32,7 +32,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 void
-Test_i::test_method (CORBA::Environment& ACE_TRY_ENV)
+Test_i::test_method (CORBA::Environment& /*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -43,8 +43,6 @@ void
 Test_i::shutdown (CORBA::Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "Received request to shut down the ORB\n"));
   this->orb_->shutdown (0, ACE_TRY_ENV);
 }
 
@@ -234,7 +232,7 @@ main (int argc, char *argv[])
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
+      ACE_DEBUG ((LM_DEBUG, "\nServer ORB event loop finished\n\n"));
     }
   ACE_CATCHANY
     {
