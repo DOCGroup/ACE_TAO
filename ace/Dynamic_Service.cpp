@@ -1,11 +1,16 @@
 // Dynamic_Service.cpp
 // $Id$
 
-#if !defined (ACE_DYNAMIC_SERVICE_C)
+#ifndef ACE_DYNAMIC_SERVICE_C
 #define ACE_DYNAMIC_SERVICE_C
 
 #define ACE_BUILD_DLL
 #include "ace/Service_Config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Service_Repository.h"
 #include "ace/Dynamic_Service.h"
 

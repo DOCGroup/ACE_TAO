@@ -1,9 +1,13 @@
 // $Id$
 
-#if !defined (ACE_FREE_LIST_C)
+#ifndef ACE_FREE_LIST_C
 #define ACE_FREE_LIST_C
 
 #include "ace/Free_List.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Free_List.i"
@@ -25,7 +29,7 @@ ACE_Free_List<T>::~ACE_Free_List (void)
 
 template <class T, class ACE_LOCK>
 ACE_Locked_Free_List<T, ACE_LOCK>::ACE_Locked_Free_List (int mode,
-						     size_t prealloc,
+                                                     size_t prealloc,
                                                      size_t lwm,
                                                      size_t hwm,
                                                      size_t inc)
@@ -47,9 +51,9 @@ ACE_Locked_Free_List<T, ACE_LOCK>::~ACE_Locked_Free_List (void)
   if (this->mode_ != ACE_PURE_FREE_LIST)
     while (this->free_list_ != 0)
       {
-	T *temp = this->free_list_;
-	this->free_list_ = this->free_list_->get_next ();
-	delete temp;
+        T *temp = this->free_list_;
+        this->free_list_ = this->free_list_->get_next ();
+        delete temp;
       }
 }
 

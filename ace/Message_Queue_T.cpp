@@ -1,12 +1,16 @@
 // $Id$
 
-#if !defined (ACE_MESSAGE_QUEUE_T_C)
+#ifndef ACE_MESSAGE_QUEUE_T_C
 #define ACE_MESSAGE_QUEUE_T_C
 
 #define ACE_BUILD_DLL
 // #include Message_Queue.h instead of Message_Queue_T.h to avoid
 // circular include problems.
 #include "ace/Message_Queue.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Message_Queue_T.i"
@@ -483,7 +487,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
   if (this->cur_bytes_ <= this->low_water_mark_
       && this->signal_enqueue_waiters () == -1)
     return -1;
-  else      
+  else
     return this->cur_count_;
 }
 
@@ -1168,7 +1172,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::sublist_enqueue_i (ACE_Message_Block *
     new_item->prev (0);
     new_item->next (this->head_);
     if (this->head_ != 0)
-    {    
+    {
       this->head_->prev (new_item);
     }
     else
@@ -1393,7 +1397,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_pending_queue (const ACE_Time_
               else
                 break;  // do while
 
-            } 
+            }
           while (current_status == ACE_Dynamic_Message_Strategy::BEYOND_LATE);
 
           if (this->pending_head_)
@@ -1442,7 +1446,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_pending_queue (const ACE_Time_
               else
                 break;  // do while
 
-            } 
+            }
           while (current_status == ACE_Dynamic_Message_Strategy::LATE);
 
           if (this->pending_head_)
@@ -1512,7 +1516,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_late_queue (const ACE_Time_Val
               else
                 break;  // do while
 
-            } 
+            }
           while (current_status == ACE_Dynamic_Message_Strategy::BEYOND_LATE);
 
           if (this->late_head_)

@@ -1,9 +1,13 @@
 // $Id$
 
-#if !defined (ACE_TIMEPROBE_T_C)
+#ifndef ACE_TIMEPROBE_T_C
 #define ACE_TIMEPROBE_T_C
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 ACE_RCSID(ace, Timeprobe_T, "$Id$")
 
@@ -37,9 +41,9 @@ ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (const ACE_Timeprobe<ACE_LOCK> &)
   // Stupid MSVC is forcing me to define this; please don't use it.
   //
 
-  ACE_ERROR ((LM_ERROR, 
-              ASYS_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__)); 
-  errno = ENOTSUP;   
+  ACE_ERROR ((LM_ERROR,
+              ASYS_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__));
+  errno = ENOTSUP;
 }
 
 template <class ACE_LOCK>

@@ -1,10 +1,15 @@
 // $Id$
 
-#if !defined (ACE_STRATEGIES_T_C)
+#ifndef ACE_STRATEGIES_T_C
 #define ACE_STRATEGIES_T_C
 
 #define ACE_BUILD_DLL
 #include "ace/Strategies_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Service_Repository.h"
 #include "ace/Synch.h"
 #include "ace/Service_Types.h"

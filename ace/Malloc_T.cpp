@@ -1,11 +1,15 @@
 // Malloc_T.cpp
 // $Id$
 
-#if !defined (ACE_MALLOC_T_C)
+#ifndef ACE_MALLOC_T_C
 #define ACE_MALLOC_T_C
 
 #define ACE_BUILD_DLL
 #include "ace/Malloc_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Malloc_T.i"

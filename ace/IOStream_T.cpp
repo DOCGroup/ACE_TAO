@@ -1,11 +1,15 @@
 // $Id$
 
-#if !defined (ACE_IOSTREAM_T_C)
+#ifndef ACE_IOSTREAM_T_C
 #define ACE_IOSTREAM_T_C
 
 #define ACE_BUILD_DLL
 
 #include "ace/IOStream_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 ACE_RCSID(ace, IOStream_T, "$Id$")
 
@@ -70,7 +74,7 @@ ACE_IOStream<STREAM>::ACE_IOStream (STREAM &stream,
     STREAM (stream)
 {
   ACE_NEW (streambuf_,
-           ACE_Streambuf_T<STREAM> ((STREAM *) this, 
+           ACE_Streambuf_T<STREAM> ((STREAM *) this,
                                     streambuf_size));
   iostream::init (this->streambuf_);
 }
@@ -80,7 +84,7 @@ ACE_IOStream<STREAM>::ACE_IOStream (u_int streambuf_size)
   : iostream (0)
 {
   ACE_NEW (this->streambuf_,
-           ACE_Streambuf_T<STREAM> ((STREAM *) this, 
+           ACE_Streambuf_T<STREAM> ((STREAM *) this,
                                     streambuf_size));
   iostream::init (this->streambuf_);
 }

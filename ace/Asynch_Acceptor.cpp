@@ -1,10 +1,14 @@
 // $Id$
 
-#if !defined (ACE_ASYNCH_ACCEPTOR_C)
+#ifndef ACE_ASYNCH_ACCEPTOR_C
 #define ACE_ASYNCH_ACCEPTOR_C
 
 #define ACE_BUILD_DLL
 #include "ace/Asynch_Acceptor.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
 
@@ -38,11 +42,11 @@ ACE_Asynch_Acceptor<HANDLER>::~ACE_Asynch_Acceptor (void)
 
 template <class HANDLER> int
 ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
-				    size_t bytes_to_read,
-				    int pass_addresses,
-				    int backlog,
-				    int reuse_addr,
-				    ACE_Proactor *proactor,
+                                    size_t bytes_to_read,
+                                    int pass_addresses,
+                                    int backlog,
+                                    int reuse_addr,
+                                    ACE_Proactor *proactor,
                                     int validate_new_connection,
                                     int reissue_accept,
                                     int number_of_initial_accepts)
@@ -60,9 +64,9 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 
   // Initialize the ACE_Asynch_Accept
   if (this->asynch_accept_.open (*this,
-				 this->listen_handle_,
-				 0,
-				 this->proactor ()) == -1)
+                                 this->listen_handle_,
+                                 0,
+                                 this->proactor ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Asynch_Accept::open")), -1);
 
   if (reuse_addr)
@@ -70,11 +74,11 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
       // Reuse the address
       int one = 1;
       if (ACE_OS::setsockopt (this->listen_handle_,
-			      SOL_SOCKET,
-			      SO_REUSEADDR,
-			      (const char*) &one,
-			      sizeof one) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_OS::setsockopt")), -1);
+                              SOL_SOCKET,
+                              SO_REUSEADDR,
+                              (const char*) &one,
+                              sizeof one) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_OS::setsockopt")), -1);
     }
 
   // If port is not specified, bind to any port.
@@ -85,9 +89,9 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 
   // Bind to the specified port.
   if (ACE_OS::bind (this->listen_handle_,
-		    ACE_reinterpret_cast (sockaddr *,
+                    ACE_reinterpret_cast (sockaddr *,
                                           address.get_addr ()),
-		    address.get_size ()) == -1)
+                    address.get_size ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "ACE_OS::bind"),
@@ -121,9 +125,9 @@ ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_handle)
 
   // Reinitialize the ACE_Asynch_Accept
   if (this->asynch_accept_.open (*this,
-				 this->listen_handle_,
-				 0,
-				 this->proactor ()) == -1)
+                                 this->listen_handle_,
+                                 0,
+                                 this->proactor ()) == -1)
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Asynch_Accept::open")));
 }
 
@@ -144,7 +148,7 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
 
   // Initiate asynchronous accepts
   if (this->asynch_accept_.accept (*message_block,
-				   bytes_to_read,
+                                   bytes_to_read,
                                    ACE_INVALID_HANDLE,
                                    act) == -1)
     {
@@ -288,8 +292,8 @@ ACE_Asynch_Acceptor<HANDLER>::cancel (void)
 template <class HANDLER> void
 ACE_Asynch_Acceptor<HANDLER>::parse_address (const
                                              ACE_Asynch_Accept::Result &result,
-					     ACE_INET_Addr &remote_address,
-					     ACE_INET_Addr &local_address)
+                                             ACE_INET_Addr &remote_address,
+                                             ACE_INET_Addr &local_address)
 {
 #if defined (ACE_HAS_AIO_CALLS)
   // Getting the addresses.
@@ -355,13 +359,13 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const
   int remote_size = 0;
 
   ::GetAcceptExSockaddrs (message_block.rd_ptr (),
-			  message_block.size () - 2 * this->address_size (),
-			  this->address_size (),
-			  this->address_size (),
-			  &local_addr,
-			  &local_size,
-			  &remote_addr,
-			  &remote_size);
+                          message_block.size () - 2 * this->address_size (),
+                          this->address_size (),
+                          this->address_size (),
+                          &local_addr,
+                          &local_size,
+                          &remote_addr,
+                          &remote_size);
 
   local_address.set_addr (ACE_reinterpret_cast (sockaddr_in *,
                                                 local_addr),

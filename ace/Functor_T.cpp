@@ -25,11 +25,15 @@
 //
 // ============================================================================
 
-#if !defined (ACE_FUNCTOR_T_C)
+#ifndef ACE_FUNCTOR_T_C
 #define ACE_FUNCTOR_T_C
 
 #define ACE_BUILD_DLL
 #include "ace/Functor_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Functor_T.i"
@@ -59,5 +63,3 @@ ACE_Command_Callback<RECEIVER, ACTION>::execute (void *arg)
 
 
 #endif /* ACE_FUNCTOR_T_C */
-
-// EOF
