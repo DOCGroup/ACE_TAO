@@ -1,3 +1,47 @@
+Wed May 19 15:15:21 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\RTCCM\DiffServ: 
+
+	  Added a new DiffServ test. This test is similar to the
+	  RTCORBA/DiffServ test but uses components instead of a client
+	  and server.
+
+	  Here are the new files:	
+
+	  - Controller/Controller.cpp
+	  - Controller/Controller.mpc
+	  - Receiver/Receiver.cidl
+	  - Receiver/Receiver.idl
+	  - Receiver/Receiver.mpc
+	  - Receiver/Receiver_exec.cpp
+	  - Receiver/Receiver_exec.h
+	  - Receiver/Receiver_exec_export.h
+	  - Receiver/Receiver_stub_export.h
+	  - Receiver/Receiver_svnt_export.h
+	  - Sender/Custom_Network_Priority_Mapping.cpp
+	  - Sender/Custom_Network_Priority_Mapping.h
+	  - Sender/Sender.cidl
+	  - Sender/Sender.idl
+	  - Sender/Sender.mpc
+	  - Sender/Sender_exec.cpp
+	  - Sender/Sender_exec.h
+	  - Sender/Sender_exec_export.h
+	  - Sender/Sender_stub_export.h
+	  - Sender/Sender_svnt_export.h
+	  - common/DiffServ.idl
+	  - common/DiffServ.mpc
+	  - common/DiffServ_stub_export.h
+	  - common/DiffServ_svnt_export.h
+	  - descriptors/CIAO_Installation_Data.ini
+	  - descriptors/Receiver.csd
+	  - descriptors/Receiver.ssd
+	  - descriptors/Sender.csd
+	  - descriptors/Sender.ssd
+	  - descriptors/default.cad
+	  - descriptors/remote.cad
+	  - descriptors/rtsvc.conf
+	  - descriptors/test.dat	
+
 Tue May 18 23:20:10 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/CompIntrDesc_Handler.cpp:
