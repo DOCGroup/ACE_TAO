@@ -101,10 +101,18 @@ TAO_DP_Dispatcher::evalDP(const char* name,
     {
       TAO_DP_Evaluation_Handler* handler = handler_info.handle_;
       
-      result = handler->evalDP (extra_info, returned_type, _env);
+      result = handler->evalDP (extra_info, returned_type, _env);      
       TAO_CHECK_ENV_RETURN (_env, result);
+
       
-      if (! returned_type->equal(result->type(), _env))
+      if (result == 0)
+	{
+	  TAO_THROW_RETURN (CosTradingDynamic::DPEvalFailure
+			    (name, returned_type, extra_info),
+			    result);
+	}
+      
+      if (! returned_type->equal (result->type (), _env))
 	{
 	  TAO_THROW_RETURN (CosTradingDynamic::DPEvalFailure
 			    (name, returned_type, extra_info),
