@@ -162,7 +162,7 @@ TAO_CodeGen::start_client_header (const char *fname)
 
       if (be_global->pre_include () != 0)
         {
-          *this->client_header_ << "#include \""
+          *this->client_header_ << "#include /**/ \""
                                 << be_global->pre_include ()
                                 << "\"\n";
         }
@@ -401,7 +401,7 @@ TAO_CodeGen::start_server_header (const char *fname)
 
       if (be_global->pre_include () != 0)
         {
-          *this->server_header_ << "#include \""
+          *this->server_header_ << "#include /**/ \""
                                 << be_global->pre_include ()
                                 << "\"";
         }
@@ -564,7 +564,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
 
       if (be_global->pre_include () != 0)
         {
-          *this->server_template_header_ << "#include \""
+          *this->server_template_header_ << "#include /**/ \""
                                          << be_global->pre_include ()
                                          << "\"";
         }
@@ -988,7 +988,7 @@ TAO_CodeGen::end_client_header (void)
 
   if (be_global->post_include () != 0)
     {
-      *this->client_header_ << "#include \""
+      *this->client_header_ << "#include /**/ \""
                             << be_global->post_include ()
                             << "\"\n";
     }
@@ -1032,7 +1032,7 @@ TAO_CodeGen::end_server_header (void)
 
   if (be_global->post_include () != 0)
     {
-      *this->server_header_ << "#include \""
+      *this->server_header_ << "#include /**/ \""
                             << be_global->post_include ()
                             << "\"\n";
     }
@@ -1135,7 +1135,7 @@ TAO_CodeGen::end_server_template_header (void)
 
   if (be_global->post_include () != 0)
     {
-      *this->server_template_header_ << "#include \""
+      *this->server_template_header_ << "#include /**/ \""
                                      << be_global->post_include ()
                                      << "\"\n";
     }
