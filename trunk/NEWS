@@ -62,7 +62,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.1 and ACE-5.4.2
      applied. Basic stuff works without problems.  Advanced features
      still need some work.
 
-. Usage of ASYS_INLINE is deprecated in ACE, use ACE_INLINE instead.
+. Usage of ASYS_INLINE is deprecated in ACE.  Use ACE_INLINE instead.
 
 . All inline source files now end in ".inl".  The previous ".i"
   extension is generally used for preprocessed C sources.
