@@ -1,3 +1,21 @@
+Fri May 23 10:59:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Valuetype_Adapter.h: Cleaned the interface to the ORB to
+	  provide a consistent way of performing operations on ValueType. 
+	
+	* tao/ORB.h: Removed references to TAO_ValueFactory_Map. Cache a
+	  pointer to the ValueFactory_Adapter instead. 
+	
+	* tao/ORB.cpp: Integrated patches from Vincent Korkos
+	  <vincent.korkos@fr.thalesgroup.com>  which contained the
+	  implentation of the ORB::unregister_value_factory (). 
+
+	  Did some cosmetic fixes to the implementations of
+	  lookup_value_factory () and register_value_factory (). 
+	
+	* tao/Valuetype/Valuetype_Adapter_Impl.cpp (vf_map_find):
+	  Implemented the new adapter interfaces.
+
 Fri May 23 08:14:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IORInterceptor_Adapter.h: #included Exception.h. This should
@@ -21,8 +39,8 @@ Fri May 23 06:03:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  The focal point of the problem TAO_IORInterceptor_List class
 	  which was left in the main tao library. This class used all
-	  sorts of mechanisms to access the IORInterceptor libray which
-	  lead to shutdown probelms if the ORB was dynamically loaded.  
+	  sorts of mechanisms to access the IORInterceptor library which
+	  lead to shutdown problems if the ORB was dynamically loaded.  
 
 	  The following changes basically moved the class to its own
 	  library and resolves the problems seen. 

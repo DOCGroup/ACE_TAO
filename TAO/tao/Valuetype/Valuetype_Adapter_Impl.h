@@ -32,7 +32,7 @@
  * ValueFactory and AbstractInterface classes. This is a concrete class
  * implementating the pure virtual methods of TAO_Valuetype_Adapter
  */
-class TAO_Valuetype_Export TAO_Valuetype_Adapter_Impl 
+class TAO_Valuetype_Export TAO_Valuetype_Adapter_Impl
   : public TAO_Valuetype_Adapter
 {
 public:
@@ -44,16 +44,13 @@ public:
 
   virtual CORBA::ULong type_info_single (void) const;
 
-  virtual TAO_ValueFactory_Map *valuefactory_map_instance (void);
-
-  virtual int vf_map_rebind (TAO_ValueFactory_Map *,
-                             const char *,
+  virtual int vf_map_rebind (const char *,
                              CORBA::ValueFactory &);
 
-  virtual int vf_map_find (TAO_ValueFactory_Map *,
-                           const char *,
-                           CORBA::ValueFactory &);
-    
+  virtual int vf_map_unbind (const char *);
+
+  virtual CORBA::ValueFactory vf_map_find (const char *);
+
   // Used to force the initialization of the ORB code.
   static int Initializer (void);
 };
