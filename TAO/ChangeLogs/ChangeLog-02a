@@ -1,3 +1,17 @@
+Fri Jan 28 18:35:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Request.cpp:
+	  Removed the check on work_pending() in method
+	  get_repsonse(), used in deferred synchronous requests.
+	  Recent changes to perform_work() and/or work_pending()
+	  have made it possible for work_pending() to return 0
+	  even if the DII request has not completed (received its
+	  response). This was causing get_response() to return
+	  TRUE erroneously, and the resulting null message
+	  block pointer would eventually cause a client crash.
+	  Now get_response() returns TRUE only if the
+	  repsonse has been received.
+
 Fri Jan 28 17:27:19 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
