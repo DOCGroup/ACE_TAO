@@ -80,9 +80,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 extern  "C" int yywrap();
 #endif  // (defined(apollo) || defined(hpux)) && defined(__cplusplus)
 
-#if defined(ACE_GCC_HONORS_STD_NAMESPACE) && (ACE_GCC_HONORS_STD_NAMESPACE == 1)
-using std::cerr;
-#endif
 
 void yyerror (const char *);
 int yylex (void);

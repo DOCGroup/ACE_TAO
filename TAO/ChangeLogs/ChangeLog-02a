@@ -1,3 +1,11 @@
+Fri Oct  5 18:56:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+	* TAO_IDL/driver/drv_preproc.cpp:
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.cpp: Reverted the changes made in "Fri Oct  5
+	  16:44:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>"
+
 Fri Oct  5 17:42:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/include/utl_identifier.h:
