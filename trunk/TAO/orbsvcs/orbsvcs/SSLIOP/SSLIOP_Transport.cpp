@@ -145,7 +145,6 @@ TAO_SSLIOP_Transport::register_handler_i (void)
     return 0;
 
   // Set the flag in the Connection Handler
-  this->connection_handler_->is_registered (1);
   this->ws_->is_registered (1);
 
   // Register the handler with the reactor
