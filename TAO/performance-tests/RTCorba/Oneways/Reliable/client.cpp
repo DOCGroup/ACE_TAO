@@ -29,6 +29,8 @@ Messaging::SyncScope sync_scope = Messaging::SYNC_WITH_TRANSPORT;
 // Create a sync scope policy list.
 CORBA::PolicyList sync_scope_policy_list (1);
 
+//ACE_UINT64 *hist_array;
+
 static void 
 print_params (void)
 {
@@ -126,6 +128,8 @@ oneway_latency (Test_ptr servant,
       ACE_hrtime_t now = ACE_OS::gethrtime ();
 
       ACE_CHECK;
+
+//      hist_array[i] = now - latency_base;
 
       latency.sample (now - base,
                       now - latency_base);
@@ -253,7 +257,6 @@ int
 main (int argc, char *argv[])
 {
   int policy = ACE_SCHED_FIFO;
-  int flags  = THR_SCHED_FIFO|THR_NEW_LWP|THR_JOINABLE;
   int priority =
     (ACE_Sched_Params::priority_min (policy)
      + ACE_Sched_Params::priority_max (policy)) / 2;
@@ -270,8 +273,6 @@ main (int argc, char *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       "client (%P|%t): user is not superuser, "
                       "test runs in time-shared class\n"));
-          policy = ACE_SCHED_OTHER;
-          flags = THR_NEW_LWP|THR_JOINABLE;
         }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -279,12 +280,20 @@ main (int argc, char *argv[])
                           1);
     }
 
+  // Get our thread handle.
   ACE_hthread_t self;
   ACE_OS::thr_self (self);
 
+  // Set our thread priority.
+  if (ACE_OS::thr_setprio (self, priority) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "server (%P|%t):thr_setprio failed\n"),
+                      1);
+
+  // Do a sanity check.
   if (ACE_OS::thr_getprio (self, priority) == 0)
     ACE_DEBUG ((LM_DEBUG, 
-                "client (%P|%t): thread priority = %d.\n", 
+                "server (%P|%t): thread priority = %d.\n", 
                 priority));
 
   ACE_TRY_NEW_ENV
@@ -338,6 +347,8 @@ main (int argc, char *argv[])
                              "parse_args failed\n"),
                             1);
         }
+
+//      hist_array = new ACE_UINT64[iterations];
 
       // Run the test.
       if (test_twoway)
@@ -452,7 +463,14 @@ main (int argc, char *argv[])
           sync_scope_policy_list[0]->destroy (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+/*
+      for (CORBA::ULong i = 0; i < iterations; i++)
+        ACE_DEBUG ((LM_DEBUG,
+                    "%Q\n",
+                    hist_array[i]));
 
+      delete [] hist_array;
+*/
       root_poa->destroy (1,
                          1,
                          ACE_TRY_ENV);
