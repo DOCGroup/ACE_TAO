@@ -1,3 +1,8 @@
+Mon Jan 19 13:31:46 2004  Steve Huston  <shuston@riverace.com>
+
+	* Makefile: In AUTOCONF_RELEASE_FILES, changed aux to aux_config to
+	  match: Fri Jan 16 12:29:48 2004  Ossama Othman.
+
 Mon Jan 19 17:27:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/make_release:
