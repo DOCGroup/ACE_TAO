@@ -8,6 +8,7 @@ ACE_RCSID (TAO_SSLIOP, SSLIOP_Transport, "$Id$")
 
 #include "SSLIOP_Connection_Handler.h"
 #include "SSLIOP_Profile.h"
+#include "SSLIOP_Acceptor.h"
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
 #include "tao/Transport_Mux_Strategy.h"
@@ -17,7 +18,7 @@ ACE_RCSID (TAO_SSLIOP, SSLIOP_Transport, "$Id$")
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
-
+#include "tao/Acceptor_Registry.h"
 
 
 TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (TAO_SSLIOP_Connection_Handler *handler,
