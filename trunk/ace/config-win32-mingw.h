@@ -95,6 +95,9 @@
 # endif
 #endif
 
+#define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
+#define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
+
 #define ACE_ENDTHREADEX(STATUS)  ::_endthreadex ((DWORD) (STATUS))
 
 #include /**/ "ace/post.h"

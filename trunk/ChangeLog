@@ -1,3 +1,8 @@
+Wed Nov 10 13:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Added format specifiers for INT64 and UINT64.
+
 Tue Nov  9 11:53:39 PST 2004  Dave Craig <dwc@qualcomm.com>
 
         * ace/Multihomed_INET_Addr.cpp:
