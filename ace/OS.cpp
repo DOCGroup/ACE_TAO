@@ -3032,17 +3032,18 @@ int
 ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 {
   ACE_UINT32 ip_addr = ACE_OS::inet_addr (host_name);
+
   if (ip_addr == (ACE_UINT32) htonl ((ACE_UINT32) ~0)
       // Broadcast addresses are weird...
       && ACE_OS::strcmp (host_name, "255.255.255.255") != 0)
     return 0;
-  else if (addr != 0)
+  else if (addr == 0)
+    return 0;
+  else
     {
       ACE_OS::memcpy ((void *) addr, (void *) &ip_addr, sizeof ip_addr);
       return 1;
     }
-  else
-    return 1;
 }
 
 ssize_t
