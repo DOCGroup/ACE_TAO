@@ -334,6 +334,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           orb_core);
 
 
+  // input_cdr.skip_bytes (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   // Send the message state for the service layer like FT to log the
   // messages
@@ -379,13 +380,17 @@ TAO_GIOP_Message_Base::process_reply_message (
   // generally required as we are not going to write anything. But
   // this is *important* for checking the length of the CDR streams
   size_t n = this->message_handler_.message_state ().message_size;
-  msg_block.wr_ptr (n + TAO_GIOP_MESSAGE_HEADER_LEN);
-  msg_block.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
+  msg_block.wr_ptr (this->message_handler_.wr_pos ());
+  msg_block.rd_ptr (this->message_handler_.rd_pos ());
+  //msg_block.wr_ptr (n + TAO_GIOP_MESSAGE_HEADER_LEN);
+  //msg_block.rd_ptr (0);
 
 
   // Steal the input CDR from the message block
   int byte_order = this->message_handler_.message_state ().byte_order;
   TAO_InputCDR input_cdr (&msg_block, byte_order);
+
+  // input_cdr.skip_bytes (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   // Reset the message state. Now, we are ready for the next nested
   // upcall if any.

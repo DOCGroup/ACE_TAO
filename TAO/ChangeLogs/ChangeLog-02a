@@ -1,3 +1,7 @@
+Mon Mar 12 18:46:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp: Made a try fix for QNX and BCB.
+
 Mon Mar 12 16:50:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Fixed the Makefile for
