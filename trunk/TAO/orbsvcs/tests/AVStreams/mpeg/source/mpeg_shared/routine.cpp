@@ -64,7 +64,7 @@ int get_hostname(char *name, int len)
   if (sysinfo(SI_HOSTNAME, name, len) == -1) return -1;
   else return 0;
 #else
-  return gethostname(name, len);
+  return ACE_OS::hostname(name, len);
 #endif
 }
 
@@ -425,7 +425,7 @@ void setsignal(int sig, void (func)(int))
   */
 #else
   fprintf(stderr,
-	  "Error: code for setsignal(%d,func) is missing in source/shared/routine.c\n",
+	  "Error: code for setsignal(%d,func) is missing in source/mpeg_shared/routine.cpp\n",
 	  sig);
   exit(1);
 #endif

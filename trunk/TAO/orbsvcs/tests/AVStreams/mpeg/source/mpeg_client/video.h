@@ -51,6 +51,7 @@ typedef unsigned char UINT8;
 
 #define BOOLEAN int
 #define TRUE 1
+
 #define FALSE 0
 
 /* Set ring buffer size. */

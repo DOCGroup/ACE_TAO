@@ -219,7 +219,7 @@ void DeInstallXErrorHandler()
 int CompletionType = -1;
 #endif
 
-int XShmGetEventBase (Display*);
+// int XShmGetEventBase (Display*);
 
 static void 
 MakeWindow(void) 
@@ -258,7 +258,7 @@ MakeWindow(void)
     exit(1);
   }
   if(shmemFlag)
-    CompletionType = XShmGetEventBase(display) + ShmCompletion;
+    CompletionType = /*XShmGetEventBase(display) +*/ ShmCompletion;
 #endif
 
   screen = DefaultScreen (display);
