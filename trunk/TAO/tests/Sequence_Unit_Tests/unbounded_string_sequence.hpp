@@ -37,7 +37,6 @@ public:
   inline /* explicit */ unbounded_string_sequence(CORBA::ULong maximum)
     : impl_(maximum)
   {}
-#if 0
   inline unbounded_string_sequence(
       CORBA::ULong maximum,
       CORBA::ULong length,
@@ -45,7 +44,6 @@ public:
       CORBA::Boolean release = false)
     : impl_(maximum, length, data, release)
   {}
-#endif /* 0 */
   /* Use default ctor, operator= and dtor */
   inline CORBA::ULong maximum() const {
     return impl_.maximum();
@@ -66,7 +64,9 @@ public:
   inline element_type operator[](CORBA::ULong i) {
     return element_type(impl_[i], release());
   }
-#if 0
+  inline const_value_type const * get_buffer() const {
+    return impl_.get_buffer();
+  }
   inline void replace(
       CORBA::ULong maximum,
       CORBA::ULong length,
@@ -74,16 +74,12 @@ public:
       CORBA::Boolean release = false) {
     impl_.replace(maximum, length, data, release);
   }
-  inline const_value_type const * get_buffer() const {
-    return impl_.get_buffer();
-  }
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
   inline void swap(unbounded_string_sequence & rhs) throw() {
     impl_.swap(rhs.impl_);
   }
-#endif /* 0 */
 
   static value_type * allocbuf(CORBA::ULong maximum)
   {

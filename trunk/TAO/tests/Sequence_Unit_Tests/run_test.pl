@@ -30,13 +30,19 @@ foreach my $process (qw(unbounded_value_sequence_ut
   next unless -x $executable;
 
   print "Running $process ...";
-  my $result = $P->SpawnWaitKill(30);
-  if ($result != -1) {
-    print "SUCCESS\n";
-  } else {
+  my $result = $P->Spawn;
+  if ($result != 0) {
     print "FAILED\n";
     $final_result = 1;
+    next;
   }
+  $result = $P->WaitKill(30);
+  if ($result != 0) {
+    print "FAILED\n";
+    $final_result = 1;
+    next;
+  }
+  print "SUCCESS\n";
 }
 
 exit $final_result;

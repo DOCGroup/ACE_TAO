@@ -303,14 +303,6 @@ struct Tester
     BOOST_CHECK_MESSAGE(f.expect(1), f);
   }
 
-  void test_get_buffer_const()
-  {
-    value_type * buffer = alloc_and_init_buffer();
-    tested_sequence a(8, 4, buffer, true);
-    tested_sequence const & b = a;
-    BOOST_CHECK_EQUAL(b.get_buffer(), buffer);
-  }
-
   void test_get_buffer_default()
   {
     value_type * buffer = alloc_and_init_buffer();
@@ -405,9 +397,6 @@ struct Tester
                 shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_replace_true,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_get_buffer_const,
                 shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_get_buffer_false,

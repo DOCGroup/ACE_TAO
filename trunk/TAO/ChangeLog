@@ -1,3 +1,34 @@
+Sun Sep 26 11:13:12 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+	  Add a number of tests.  In no particular order:
+	  - verify that freebuf() calls release() for each element
+	  - verify that operator=() works correctly.
+	  - verify that exceptions in allocbuf() are handled correctly in
+	    both the constructors, operator= and length()
+	  - verify that exceptions in duplicate() are handled correctly in
+	    both the constructors, operator= and length()
+	  - add tests for the multiple get_buffer() member functions
+	  - add tests for the multiple constructors with a buffer
+	  - add tests for the multiple replace() functions with a buffer
+
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+	  Finished implementation of all methods, actually uncommented all
+	  the implementations, now that I have tests for them.
+
+	* tests/Sequence_Unit_Tests/generic_sequence.hpp:
+	  More T to value_type changes.
+
+	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+	* tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+	* tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
+	  Refactoed test for "get_buffer() const" to the shared tests.
+	  Also changed the test so it does not depend on having a
+	  constructor from buffer.
+
+	* tests/Sequence_Unit_Tests/run_test.pl:
+	  The script was not detecting all (most?) errors.
+
 Sun Sep 26 14:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer.mpc:

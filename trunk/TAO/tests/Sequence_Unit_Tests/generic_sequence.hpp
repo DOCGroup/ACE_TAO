@@ -244,7 +244,7 @@ public:
 private:
   CORBA::ULong maximum_;
   CORBA::ULong length_;
-  mutable T * buffer_;
+  mutable value_type * buffer_;
   CORBA::Boolean release_;
 };
 
