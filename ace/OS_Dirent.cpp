@@ -120,7 +120,7 @@ ACE_OS_Dirent::readdir_emulation (ACE_DIR *d)
     {
       d->dirent_ = (dirent *) ACE_OS_Memory::malloc (sizeof (dirent) +
                                                      ACE_OS_String::strlen (d->fdata_.cFileName)); 
-      ACE_OS_String::strcpy ((char *) d->dirent_->d_name, d->fdata_.cFileName); 
+      ACE_OS_String::strcpy (d->dirent_->d_name, d->fdata_.cFileName); 
       d->dirent_->d_reclen = sizeof (dirent) + ACE_OS_String::strlen (d->dirent_->d_name); 
       return d->dirent_; 
     }
