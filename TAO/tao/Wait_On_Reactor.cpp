@@ -21,6 +21,10 @@ int
 TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
                            TAO_Synch_Reply_Dispatcher &rd)
 {
+  // Start the count down timer to account for the time spent in this
+  // method.
+  ACE_Countdown_Time countdown (max_wait_time);
+
   // Reactor does not change inside the loop.
   ACE_Reactor* reactor =
     this->transport_->orb_core ()->reactor ();
