@@ -1,3 +1,33 @@
+Wed Oct  4 18:49:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_enum.cpp:
+
+	  Cosmetic changes.
+
+	* TAO_IDL/ast/ast_generator.cpp:
+	* TAO_IDL/ast/ast_interface.cpp:
+	* TAO_IDL/ast/ast_interface_fwd.cpp:
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/be/be_generator.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be_include/be_interface_fwd:
+	* TAO_IDL/be_include/be_valuetype.h:
+	* TAO_IDL/be_include/be_valuetype_fwd:
+	* TAO_IDL/include/ast_interface.h:
+	* TAO_IDL/include/ast_interface_fwd.h:
+
+	  Changes to allow valuetype information to be
+	  extracted from the base class AST_Interface and
+	  AST_InterfaceFwd, as well as from the be_valuetype
+	  and be_valuetype_fwd classes. Also modified the
+	  be_generator base class AST_Generator to generate
+	  these base class valuetype nodes. If the visitors of a
+	  pluggable IDL compiler BE iterate only over the
+	  AST_<node> classes, an instantiation of AST_Generator
+	  can then be used, and be_generator need not be
+	  included in the BE library.
+
 Wed Oct  4 15:05:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Makefile:
