@@ -1,16 +1,13 @@
 Sat Feb 28 18:37:54 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/tests/CosPropertyService/main.cpp (main): 
-
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp (define_properties_with_modes): 
-
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h (PropertySetFactory): 
-
-	* orbsvcs/orbsvcs/CosPropertyService.idl: 
-
+	* orbsvcs/tests/CosPropertyService/main.cpp:
+	Added some more code to test the functions defined in CosPropertyService_i.cpp.
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+	* orbsvcs/orbsvcs/CosPropertyService.idl:
 	* orbsvcs/tests/Makefile (DIRS): Added the directory
 	CosPropertyService under DIRS  here. It is compiled when av=1.
-
+				 
 Fri Feb 27 19:55:09 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp (main): Added this
