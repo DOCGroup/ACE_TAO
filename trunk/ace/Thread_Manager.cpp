@@ -772,7 +772,7 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td)
 #define ACE_THR_OP(OP,STATE) \
   int result = OP (td->thr_handle_); \
   if (result != 0) { \
-    this->remove_thr (td); \
+    this->thr_to_be_removed_.enqueue_tail (td); \
     errno = result; \
     return -1; \
   } \
@@ -840,7 +840,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int arg)
       // call may reset errno.
       int error = errno;
 
-      this->remove_thr (td);
+      this->thr_to_be_removed_.enqueue_tail (td);
 
       errno = error;
       return -1;
@@ -853,8 +853,15 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int arg)
 // Factor out some common behavior to simplify the following methods.
 #define ACE_EXECUTE_OP(OP) \
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1)); \
+  ACE_ASSERT (this->thr_to_be_removed_.is_empty ()); \
   ACE_FIND (this->find_thread (t_id), ptr); \
-  return OP (ptr);
+  int result = OP (ptr); \
+  while (! this->thr_to_be_removed_.is_empty ()) { \
+    ACE_Thread_Descriptor *td; \
+    this->thr_to_be_removed_.dequeue_head (td); \
+    this->remove_thr (td); \
+  } \
+  return result
 
 // Suspend a single thread.
 
@@ -889,7 +896,17 @@ int
 ACE_Thread_Manager::kill (ACE_thread_t t_id, int signum)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill");
-  return ACE_Thread::kill (t_id, signum);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_ASSERT (this->thr_to_be_removed_.is_empty ());
+
+  ACE_FIND (this->find_thread (t_id), ptr);
+  int result = this->kill_thr (ptr, signum);
+  while (! this->thr_to_be_removed_.is_empty ()) {
+    ACE_Thread_Descriptor *td;
+    this->thr_to_be_removed_.dequeue_head (td);
+    this->remove_thr (td);
+  }
+  return result;
 }
 
 int
@@ -980,15 +997,28 @@ ACE_Thread_Manager::apply_grp (int grp_id,
 {
   ACE_TRACE ("ACE_Thread_Manager::apply_grp");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_ASSERT (this->thr_to_be_removed_.is_empty ());
 
   int result = 0;
 
   for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
        !iter.done ();
        iter.advance ())
-    if (iter.next ()->grp_id_ == grp_id
-        && (this->*func) (iter.next (), arg) == -1)
-      result = -1;
+    {
+      if (iter.next ()->grp_id_ == grp_id)
+	if ((this->*func) (iter.next (), arg) == -1)
+	  result = -1;
+    }
+
+  // Must remove threads after we have traversed the thr_list_ to
+  // prevent clobber thr_list_'s integrity.
+
+  if (! this->thr_to_be_removed_.is_empty ())
+    {
+      ACE_Thread_Descriptor *td;
+      while (this->thr_to_be_removed_.dequeue_head (td) != -1)
+	this->remove_thr (td);
+    }
 
   return result;
 }
@@ -1036,6 +1066,7 @@ ACE_Thread_Manager::apply_all (ACE_THR_MEMBER_FUNC func, int arg)
 {
   ACE_TRACE ("ACE_Thread_Manager::apply_all");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_ASSERT (this->thr_to_be_removed_.is_empty ());
 
   int result = 0;
 
@@ -1044,6 +1075,16 @@ ACE_Thread_Manager::apply_all (ACE_THR_MEMBER_FUNC func, int arg)
        iter.advance ())
     if ((this->*func)(iter.next (), arg) == -1)
       result = -1;
+
+  // Must remove threads after we have traversed the thr_list_ to
+  // prevent clobber thr_list_'s integrity.
+
+  if (! this->thr_to_be_removed_.is_empty ())
+    {
+      ACE_Thread_Descriptor *td;
+      while (this->thr_to_be_removed_.dequeue_head (td) != -1)
+	this->remove_thr (td);
+    }
 
   return result;
 }
@@ -1185,7 +1226,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
           {
             // Mark thread as terminated.
             td->thr_state_ = ACE_THR_TERMINATED;
-            this->terminated_thr_queue_.enqueue_tail (*td);
+            this->terminated_thr_queue_.enqueue_tail (td);
           }
 #endif /* ! VXWORKS */
 
@@ -1245,12 +1286,12 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-    ACE_Thread_Descriptor item;
+    ACE_Thread_Descriptor *item;
 
     while (!this->terminated_thr_queue_.dequeue_head (item))
-      if(ACE_BIT_DISABLED (item.flags_, (THR_DETACHED | THR_DAEMON))
-           || ACE_BIT_ENABLED (item.flags_, THR_JOINABLE))
-        ACE_Thread::join (item.thr_handle_);
+      if(ACE_BIT_DISABLED (item->flags_, (THR_DETACHED | THR_DAEMON))
+	   || ACE_BIT_ENABLED (item->flags_, THR_JOINABLE))
+        ACE_Thread::join (item->thr_handle_);
   }
 #endif /* VXWORKS */
 #else
@@ -1267,6 +1308,7 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
 {
   ACE_TRACE ("ACE_Thread_Manager::apply_task");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_ASSERT (this->thr_to_be_removed_.is_empty ());
 
   int result = 0;
 
@@ -1276,6 +1318,16 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
     if (iter.next ()->task_ == task
         && (this->*func) (iter.next (), arg) == -1)
       result = -1;
+
+  // Must remove threads after we have traversed the thr_list_ to
+  // prevent clobber thr_list_'s integrity.
+
+  if (! this->thr_to_be_removed_.is_empty ())
+    {
+      ACE_Thread_Descriptor *td;
+      while (this->thr_to_be_removed_.dequeue_head (td) != -1)
+	this->remove_thr (td);
+    }
 
   return result;
 }
@@ -1287,37 +1339,35 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
 {
   int copy_count = 0;
   ACE_Thread_Descriptor *copy_table = 0;
+
+  // We have to make sure that while we wait for these threads to
+  // exit, we do not have the lock. Therefore we make a copy of all
+  // interesting entries and let go of the lock.
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+    ACE_NEW_RETURN (copy_table,
+                    ACE_Thread_Descriptor [this->thr_list_.size ()],
+                    -1);
+
+    for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+         !iter.done ();
+         iter.advance ())
+      // If threads are created as THR_DETACHED or THR_DAEMON, we can't help much here.
+      if (iter.next ()->task_ == task &&
+          (((iter.next ()->flags_ & (THR_DETACHED | THR_DAEMON)) == 0)
+           || ((iter.next ()->flags_ & THR_JOINABLE) != 0)))
+          copy_table[copy_count++] = *iter.next ();
+  }
+
+  // Now to do the actual work
   int result = 0;
 
-  if (this->thr_list_.size () > 0)
-    {
-      // We have to make sure that while we wait for these threads to
-      // exit, we do not have the lock. Therefore we make a copy of all
-      // interesting entries and let go of the lock.
-      {
-        ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  for (int i = 0; i < copy_count && result != -1; i++)
+    if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
+      result = -1;
 
-        ACE_NEW_RETURN (copy_table,
-                        ACE_Thread_Descriptor [this->thr_list_.size ()],
-                        -1);
-
-        for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
-             !iter.done ();
-             iter.advance ())
-          // If threads are created as THR_DETACHED or THR_DAEMON, we can't help much here.
-          if (iter.next ()->task_ == task &&
-              (((iter.next ()->flags_ & (THR_DETACHED | THR_DAEMON)) == 0)
-               || ((iter.next ()->flags_ & THR_JOINABLE) != 0)))
-              copy_table[copy_count++] = *iter.next ();
-      }
-
-      // Now to do the actual work
-      for (int i = 0; i < copy_count && result != -1; i++)
-        if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
-          result = -1;
-
-      delete [] copy_table;
-    }
+  delete [] copy_table;
 
   return result;
 }
@@ -1619,11 +1669,9 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#if !defined (VXWORKS)
-template class ACE_Unbounded_Queue<ACE_Thread_Descriptor>;
-template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor>;
-template class ACE_Node<ACE_Thread_Descriptor>;
-#endif /* VXWORKS */
+template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
+template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>;
+template class ACE_Node<ACE_Thread_Descriptor*>;
 template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
 template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
 #if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
@@ -1632,11 +1680,9 @@ template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
   template class ACE_TSS<ACE_Thread_Exit>;
 #endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#if !defined (VXWORKS)
-  #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor>
-  #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor>
-  #pragma instantiate ACE_Node<ACE_Thread_Descriptor>
-#endif /* VXWORKS */
+  #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
+  #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>
+  #pragma instantiate ACE_Node<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
 #if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))

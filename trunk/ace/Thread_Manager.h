@@ -417,7 +417,7 @@ protected:
   // Append a thread in the table (adds at the end, growing the table
   // if necessary).
 
-  void remove_thr (ACE_Thread_Descriptor *tda);
+  void remove_thr (ACE_Thread_Descriptor *td);
   // Remove thread from the table.
 
   void remove_thr_self(void);
@@ -441,19 +441,19 @@ protected:
   int apply_all (ACE_THR_MEMBER_FUNC, int  = 0);
   // Apply <func> to all members of the table.
 
-  int join_thr (ACE_Thread_Descriptor *tda);
+  int join_thr (ACE_Thread_Descriptor *td);
   // Join the thread described in <tda>.
 
-  int resume_thr (ACE_Thread_Descriptor *tda);
+  int resume_thr (ACE_Thread_Descriptor *td);
   // Resume the thread described in <tda>.
 
-  int suspend_thr (ACE_Thread_Descriptor *tda);
+  int suspend_thr (ACE_Thread_Descriptor *td);
   // Suspend the thread described in <tda>.
 
-  int kill_thr (ACE_Thread_Descriptor *tda, int signum);
+  int kill_thr (ACE_Thread_Descriptor *td, int signum);
   // Send signal <signum> to the thread described in <tda>.
 
-  int cancel_thr (ACE_Thread_Descriptor *tda);
+  int cancel_thr (ACE_Thread_Descriptor *td);
   // Set the cancellation flag for the thread described in <tda>.
 
   ACE_Double_Linked_List<ACE_Thread_Descriptor> thr_list_;
@@ -463,9 +463,12 @@ protected:
   // affecting other thread's descriptor entries.
 
 #if !defined (VXWORKS)
-  ACE_Unbounded_Queue<ACE_Thread_Descriptor> terminated_thr_queue_;
+  ACE_Unbounded_Queue<ACE_Thread_Descriptor*> terminated_thr_queue_;
   // Collect terminated but not yet joined thread entries.
 #endif /* VXWORKS */
+
+  ACE_Unbounded_Queue<ACE_Thread_Descriptor*> thr_to_be_removed_;
+  // Collect pointers to thread descriptors of threads to be removed later.
 
   int grp_id_;
   // Keeps track of the next group id to assign.
