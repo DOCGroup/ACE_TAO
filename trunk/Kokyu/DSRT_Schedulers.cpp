@@ -35,7 +35,7 @@ DSRT_Scheduler_Impl::DSRT_Scheduler_Impl ()
   this->prio_range_ = n-1;
 
 #else
-  this->prio_range_ = this->max_prio_ - this->min_prio_;
+  this->prio_range_ = this->max_prio_ - this->min_prio_ + 1;
 #endif /* ACE_WIN32 */
 
 }
@@ -155,7 +155,12 @@ MIF_Scheduler_Impl::schedule_i (guid_t id, const DSRT_QoSDescriptor& qos)
   ACE_UNUSED_ARG ((id));
   ACE_DEBUG ((LM_DEBUG, "(%t) request for MIF schedule\n"));
 
-  Priority_t prio_ = qos.importance_ * this->prio_range_ / this->importance_range_;
+  Priority_t prio = qos.importance_ * this->prio_range_ / this->importance_range_;
+
+  if (prio > max_prio_)
+    {
+      prio = max_prio_;
+    }
 
   return prio_;
 }
