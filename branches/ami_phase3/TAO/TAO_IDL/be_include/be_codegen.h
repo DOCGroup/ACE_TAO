@@ -275,15 +275,18 @@ public:
     // Emitting code for AMI.
     TAO_OPERATION_AMI_CH,                  // AMI stub generation.  
     TAO_OPERATION_AMI_CS,                  // AMI stub generation.  
-    TAO_OPERATION_AMI_ARGLIST,             // AMI stubs in client header
+    TAO_OPERATION_AMI_ARGLIST_CH,             // AMI stubs in client header
+    TAO_OPERATION_AMI_ARGLIST_CS,             // AMI stubs in client cpp.
     TAO_OPERATION_ARG_AMI,                 // AMI stub.
     TAO_ARGUMENT_AMI,                      // Argument in AMI stub.
-    TAO_ARGUMENT_AMI_ARGLIST,              // Arg list in AMI stub.
+    TAO_ARGUMENT_AMI_ARGLIST_CH,              // Arg list in AMI stub.
+    TAO_ARGUMENT_AMI_ARGLIST_CS,              // Arg list in AMI stub.
     TAO_AMI_HANDLER_FWD_CH,                // FWD decl for AMI handler.           
     TAO_AMI_HANDLER_FWD_CI,                // FWD decl for AMI handler.
     // @ Alex: FWD does nt make sense.
     //         Should rename it.
     TAO_AMI_HANDLER_CH,
+    TAO_AMI_HANDLER_STUB_CH,
     TAO_AMI_HANDLER_OPERATION_CH,
     TAO_AMI_HANDLER_OPERATION_ARGLIST,
     TAO_ARGUMENT_AMI_HANDLER_ARGLIST,

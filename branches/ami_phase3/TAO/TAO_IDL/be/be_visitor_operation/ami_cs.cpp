@@ -89,7 +89,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   // Generate the argument list with the appropriate mapping (same as
   // in the header file)
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CS);
   visitor = tao_cg->make_visitor (&ctx);
   if ((!visitor) || (node->accept (visitor) == -1))
     {

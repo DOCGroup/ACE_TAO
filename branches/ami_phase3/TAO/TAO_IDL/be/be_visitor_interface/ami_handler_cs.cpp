@@ -8,13 +8,13 @@
 //    TAO IDL
 //
 // = FILENAME
-//    interface_cs.cpp
+//    ami_handler_cs.cpp
 //
 // = DESCRIPTION
-//    Visitor generating code for Interfaces in the client stubs file.
+//    Visitor generating code for AMI Handler class for an Interface.
 //
 // = AUTHOR
-//    Aniruddha Gokhale
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu> 
 //
 // ============================================================================
 
@@ -24,60 +24,99 @@
 
 #include "be_visitor_interface.h"
 
-ACE_RCSID(be_visitor_interface, interface_cs, "$Id$")
+ACE_RCSID(be_visitor_interface,  ami_handler_cs, "$Id$")
 
 
 // ************************************************************
 // Interface visitor for client stubs
 // ************************************************************
 
-be_visitor_interface_cs::be_visitor_interface_cs (be_visitor_context *ctx)
+be_visitor_ ami_handler_cs::be_visitor_ ami_handler_cs (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_interface_cs::~be_visitor_interface_cs (void)
+be_visitor_ ami_handler_cs::~be_visitor_ ami_handler_cs (void)
 {
 }
 
 int
-be_visitor_interface_cs::visit_interface (be_interface *node)
+be_visitor_ ami_handler_cs::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os; // output stream
+  // output stream.
+  TAO_OutStream *os;
 
   if (node->cli_stub_gen () || node->imported ())
     return 0;
 
   os = this->ctx_->stream ();
 
-  os->indent (); // start with whatever indentation level we are at
+  // Start with whatever indentation level we are at.
+  os->indent ();
 
-  // first generate the code for the static methods
+  // Create the full name for the AMI_<Interface name>_Handler
+  // interface.  
+  char *full_name = 0;
 
+  // Full name. 
+  // If there exists a scope name for this, then generate
+  // "Scope::AMI_<Local Name>_Handler". 
+
+  size_t scope_len = 0;
+
+  be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+  
+  if (parent != 0 &&
+      parent->fullname () != 0 &&
+      ACE_OS::strlen (parent->fullname ()))
+    scope_len = ACE_OS::strlen (parent->fullname ()) + ACE_OS::strlen ("::");
+  
+  ACE_NEW_RETURN (full_name,
+                  char [scope_len +
+                       ACE_OS::strlen ("AMI_") +
+                       ACE_OS::strlen (node->local_name ()->get_string ()) +
+                       ACE_OS::strlen ("_Handler") +
+                       1],
+                  -1);
+  
+  if (parent != 0 &&
+      parent->fullname () != 0 &&
+      ACE_OS::strlen (parent->fullname ()))
+    ACE_OS::sprintf (full_name,
+                     "%s::AMI_%s_Handler",
+                     parent->fullname (),
+                     node->local_name ()->get_string ());
+  else
+    ACE_OS::sprintf (full_name,
+                     "AMI_%s_Handler",
+                     node->local_name ()->get_string ());
+
+  // First generate the code for the static methods.
+  
   // The _narrow method
-  *os << node->name () << "_ptr " << node->name ()
+  *os << full_name << "_ptr " << full_name
       << "::_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
       << "CORBA::Environment &env" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (CORBA::is_nil (obj))" << be_idt_nl
-      << "return " << node->name () << "::_nil ();" << be_uidt_nl
+      << "return " << full_name << "::_nil ();" << be_uidt_nl
       << "if (!obj->_is_a (\"" << node->repoID () << "\", env))"
       << be_idt_nl
-      << "return " << node->name () << "::_nil ();" << be_uidt_nl;
+      << "return " << full_name << "::_nil ();" << be_uidt_nl;
 
-  *os << "return " << node->name ()
+  *os << "return " << full_name
       << "::_unchecked_narrow (obj, env);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // This may be necessary to work around a GCC compiler bug!
-//  const char *skel_name = node->full_skel_name (); // unused at this time
+  //  const char *skel_name = node->full_skel_name (); // unused at this time
   const char *coll_name = node->full_coll_name ();
   assert (coll_name != 0);
 
   // The _unchecked_narrow method
-  *os << node->name () << "_ptr " << node->name ()
+  *os << full_name << "_ptr " << full_name
       << "::_unchecked_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
@@ -85,7 +124,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "ACE_UNUSED_ARG (ACE_TRY_ENV);" << be_nl
       << "if (CORBA::is_nil (obj))" << be_idt_nl
-      << "return " << node->name () << "::_nil ();" << be_uidt_nl;
+      << "return " << full_name << "::_nil ();" << be_uidt_nl;
 
   *os << "TAO_Stub* stub = obj->_stubobj ();" << be_nl
       << "stub->_incr_refcnt ();" << be_nl;
@@ -97,8 +136,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   *os << "if (servant != 0)" << be_idt_nl << "{" << be_idt_nl
     // The collocated object reference factory is not working right (yet)
-      << node->name () << "_ptr retv = ACE_reinterpret_cast (" << be_idt << be_idt_nl
-      << node->name () << "_ptr," << be_nl
+      << full_name << "_ptr retv = ACE_reinterpret_cast (" << be_idt << be_idt_nl
+      << full_name << "_ptr," << be_nl
       << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
       << "PortableServer::Servant," << be_nl
       << "servant" << be_uidt_nl
@@ -115,13 +154,13 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << be_uidt_nl
       << "}" << be_uidt_nl;
 
-  *os << "return new " << node->name () << "(stub);" << be_uidt_nl
+  *os << "return new " << full_name << "(stub);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // The _duplicate method
-  *os << node->name () << "_ptr " << be_nl
-      << node->name () << "::_duplicate ("
-      << node->name () << "_ptr obj)" << be_nl
+  *os << full_name << "_ptr " << be_nl
+      << full_name << "::_duplicate ("
+      << full_name << "_ptr obj)" << be_nl
       << "{" << be_idt_nl
       << "if (!CORBA::is_nil (obj))" << be_idt_nl
       << "obj->_incr_refcnt ();" << be_uidt_nl
@@ -132,14 +171,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_cs::"
+                         "(%N:%l) be_visitor_ ami_handler_cs::"
                          "visit_interface - "
                          "codegen for scope failed\n"), -1);
     }
 
   // generate the is_a method
   os->indent ();
-  *os << "CORBA::Boolean " << node->name () << "::_is_a (" <<
+  *os << "CORBA::Boolean " << full_name << "::_is_a (" <<
     "const CORBA::Char *value, CORBA::Environment &env)" << be_nl;
   *os << "{\n";
   os->incr_indent ();
@@ -148,7 +187,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (node->traverse_inheritance_graph (be_interface::is_a_helper, os) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_cs::"
+                         "(%N:%l) be_visitor_ ami_handler_cs::"
                          "visit_interface - "
                          "_is_a method codegen failed\n"), -1);
     }
@@ -163,7 +202,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << "}\n\n";
 
   os->indent ();
-  *os << "const char* " << node->name ()
+  *os << "const char* " << full_name
       << "::_interface_repository_id (void) const"
       << be_nl
       << "{" << be_idt_nl
@@ -181,11 +220,16 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (!visitor || (node->accept (visitor) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_cs::"
+                         "(%N:%l) be_visitor_ ami_handler_cs::"
                          "visit_interface - "
-                         "TypeCode definition failed\n"),
-                        -1);
+                         "TypeCode definition failed\n"
+                         ), -1);
     }
+  
+  // @@ Alex: Make sure you have done the following in the other ami
+  //    visitors. (Alex).
+  delete full_name;
+  full_name = 0;
 
   return 0;
 }

@@ -64,7 +64,7 @@ be_visitor_operation_ami_arglist::visit_operation (be_operation *node)
   // AMI Handler argument.
   *os << "AMI_"
       << interface->fullname ()
-      << "_ptr "
+      << "_Handler_ptr "
       << "ami_handler"
       << ",\n";
   // #endif /* TAO_IDL_HAS_AMI */
@@ -91,8 +91,13 @@ be_visitor_operation_ami_arglist::visit_operation (be_operation *node)
       << be_uidt;
   
   // Done with the argument list.
-  *os << be_uidt_nl << ")" << be_uidt << "\n";
+  *os << be_uidt_nl << ")" << be_uidt;
   
+  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CH)
+    *os << ";";
+  
+  *os << "\n";
+
   return 0;
 }
 
@@ -137,9 +142,14 @@ be_visitor_operation_ami_arglist::visit_argument (be_argument *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST);
+    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CH:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST_CH);
       break;
+
+    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CS:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST_CS);
+      break;
+
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,

@@ -81,7 +81,7 @@ be_visitor_scope::visit_scope (be_scope *node)
           this->ctx_->node (bd);
           this->elem_number_++;
 
-          // do any pre processing using the next item info
+          // Do any pre processing using the next item info. 
           if (this->pre_process (bd) == -1)
             {
               delete si;
@@ -89,7 +89,9 @@ be_visitor_scope::visit_scope (be_scope *node)
                                  "(%N:%l) be_visitor_scope::visit_scope - "
                                  "pre processing failed\n"), -1);
             }
-          if (bd == 0 || bd->accept (this) == -1)
+
+          // Send the visitor.
+          if (bd == 0 ||  bd->accept (this) == -1)
             {
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -97,6 +99,8 @@ be_visitor_scope::visit_scope (be_scope *node)
                                  "codegen for scope failed\n"), -1);
 
             }
+
+          // Do any post processing using this item info.
           if (this->post_process (bd) == -1)
             {
               delete si;
