@@ -15,8 +15,8 @@ $status = 0;
 
 $NS = Process::Create ("..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
-                       "Naming_Service".$DIR_SEPARATOR.
-                       "Naming_Service".$EXE_EXT,
+                       "Naming_Server".$DIR_SEPARATOR.
+                       "Naming_Server".$EXE_EXT,
                        " -o $NS_ior ");
 
 if (ACE::waitforfile_timed ($NS_ior, 5) == -1) {
