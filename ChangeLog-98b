@@ -1,3 +1,27 @@
+Tue Aug 25 05:23:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Message_Queue_Notifications_Test.dsp: Fixed something....
+
+	* tests/tests.dsw: Fixed a typo.
+
+	* ace/ace_{dll,lib}.dsp:
+	* ace/Makefile: Added Select_Reactor_T and Select_Reactor_Base.
+	  Rebuilt file dependencies.
+
+	* ace/Select_Reactor[_Base,_T].{h,i,cpp}: Templatized
+	  ACE_Select_Reactor and gangs.  The original Select_Reactor files
+	  are splited into three sets of files.  Select_Reactor_Base
+	  defines common components used by Select_Reactor and defines
+	  Select_Reactor_Base class.  Select_Reactor_T defines the
+	  template classes.  Select_Reactor instantiates necessary
+	  template classes.  Next step is to add template specialization
+	  for ACE_Guard< ACE_Select_Reactor_Token_T <ACE_Noop_Token> >.
+
+	* ace/Synch.{h,i}: Added a new class ACE_Noop_Token which is a
+	  subclass of ACE_Null_Mutex.  It supports a null renew method.
+	  This class should be called ACE_Null_Token but the name is
+	  already used.
+
 Tue Aug 25 01:38:40 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Threads/task_three.cpp (main): Fixed this example so
