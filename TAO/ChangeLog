@@ -1,3 +1,10 @@
+Mon Jul  8 14:38:42 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation/cpp:
+
+          Fixed error in stub code generation for non-anonymous
+          arrays with a fixed size element type.
+
 Mon Jul 08 14:25:44 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/RTCORBA/RT_Endpoint_Selector_Factory.cpp (get_selector): 
@@ -13,13 +20,6 @@ Mon Jul 08 12:51:34 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  CORBA.  Therefore, removed the unnecessary minimum_corba check
 	  from the Makefile.  Thanks to Jaiganesh Balasubramanian
 	  <jai@doc.ece.uci.edu> for pointing this out.
-
-Mon Jul  8 14:38:42 2002  Jeff Parsons <parsons@cs.wustl.edu>
-
-        * TAO_IDL/be/be_visitor_operation/operation/cpp:
-
-          Fixed error in stub code generation for non-anonymous
-          fixed arrays.
 
 Mon Jul  8 11:05:44 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
