@@ -9,7 +9,8 @@ Wed Apr  3 22:18:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
         Changes to wide variety of stuff from my branch. The checkin
         contains the following:
 
-	1. Couple of bug fixes (#1129 and #1164)
+	1. Couple of bug fixes (#1129 and #1164). They have been verified
+	   and they seem to work fine. 
 	2. A new policy to regulate the number of connections allowed by
 	   the ORB for every QoS property.
 
