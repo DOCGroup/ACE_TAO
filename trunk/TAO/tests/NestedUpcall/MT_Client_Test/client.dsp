@@ -132,12 +132,12 @@ SOURCE=.\MT_Object_Impl.h
 # PROP Default_Filter "*.idl"
 # Begin Source File
 
-SOURCE=.\NU MT_lient_Test.idl
-USERDEP__NU MT_L="..\..\..\tao_idl\tao_idl.exe"	
+SOURCE=.\MT_Client_Test.idl
+USERDEP__MT_CL="..\..\..\tao_idl\tao_idl.exe"	
 
-!IF  "$(CFG)" == "MT_Client_Test Client - Win32 Release"
+!IF  "$(CFG)" == "NU MT_Client_Test Client - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "MT_Client_Test Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "NU MT_Client_Test Client - Win32 Debug"
 
 # Begin Custom Build - Invoking TAO IDL compiler
 InputPath=.\MT_Client_Test.idl
