@@ -498,6 +498,7 @@ public:
   // Called to clean up when a thread exits.  If <do_thread_exit> is
   // non-0 then <ACE_Thread::exit> is called to exit the thread, in
   // which case <status> is passed as the exit value of the thread.
+  // Should _not_ be called by main thread.
 
   int wait (const ACE_Time_Value *timeout = 0,
             int abandon_detached_threads = 0);
