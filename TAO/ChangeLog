@@ -1,3 +1,9 @@
+Fri Nov 29 09:56:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/OBV/Any/client.cpp:
+	* tests/OBV/Any/AnyS_impl.cpp: Fixed compile errors in BCB6
+	  builds. 
+
 Fri Nov 29 08:01:56 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile: PortableGroup will not be compiled if
