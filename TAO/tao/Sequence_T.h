@@ -215,6 +215,7 @@ public:
 // *************************************************************
 
 template<class T,class T_var> class TAO_Unbounded_Object_Sequence;
+template<class T,class T_var> class TAO_Unbounded_Pseudo_Sequence;
 template<class T, class T_var, size_t MAX> class TAO_Bounded_Object_Sequence;
 template<size_t MAX> class TAO_Bounded_String_Sequence;
 
