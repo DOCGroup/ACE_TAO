@@ -52,23 +52,23 @@ ACE_INLINE int
 Handle_R_Stream::init (int argc, char *argv[])
 {
   ACE_INET_Addr sis (Handle_R_Stream::DEFAULT_PORT);
-  ACE_Get_Opt	get_opt (argc, argv, "p:", 0);
+  ACE_Get_Opt   get_opt (argc, argv, "p:", 0);
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
        case 'p':
-	 sis.set (ACE_OS::atoi (get_opt.opt_arg ()));
-	 break;
+         sis.set (ACE_OS::atoi (get_opt.opt_arg ()));
+         break;
        default:
-	 break;
+         break;
        }
 
   if (this->open (sis) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
   else if (ACE_Reactor::instance ()->register_handler
-	   (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
+           (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "registering service with ACE_Reactor\n"),
                       -1);
@@ -111,7 +111,7 @@ Handle_R_Stream::handle_input (ACE_HANDLE)
     return -1;
   else
     ACE_DEBUG ((LM_INFO, "new_remote_stream fd = %d\n",
-	       this->new_remote_stream.get_handle ()));
+               this->new_remote_stream.get_handle ()));
 
   ACE_INET_Addr sa;
 
@@ -134,9 +134,9 @@ Handle_R_Stream::handle_input (ACE_HANDLE)
   ACE_TCHAR *cs = ACE_OS::ctime (&t);
 
   if (this->new_remote_stream.send (4,
-				    Handle_R_Stream::login_name,
+                                    Handle_R_Stream::login_name,
                                     ACE_OS::strlen (Handle_R_Stream::login_name),
-				    cs,
+                                    cs,
                                     ACE_OS::strlen (cs)) == -1)
     return -1;
 
