@@ -456,6 +456,11 @@ TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
                                ACE_Time_Value *max_wait_time,
                                CORBA::Environment &ACE_TRY_ENV)
 {
+  if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
+                  ACE_TEXT ("looking for SSLIOP connection.\n")));
+
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
     return -1;
 
@@ -463,7 +468,7 @@ TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
     ACE_dynamic_cast (TAO_SSLIOP_Endpoint *,
                       endpoint);
   if (endpoint == 0)
-    return -1;  
+    return -1;
 
   const SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
 

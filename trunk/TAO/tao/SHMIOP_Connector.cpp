@@ -179,7 +179,7 @@ template class ACE_Hash_Cache_Map_Manager<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY,
 
 template class ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) 
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
 #if (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0)
 template class ACE_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
 template class ACE_LFU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
@@ -266,7 +266,7 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 
 #pragma instantiate ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) 
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
 #if (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0)
 
 #pragma instantiate ACE_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
@@ -442,6 +442,11 @@ TAO_SHMIOP_Connector::connect (TAO_Endpoint *endpoint,
                                ACE_Time_Value *max_wait_time,
                                CORBA::Environment &)
 {
+  if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
+                  ACE_TEXT ("looking for SHMIOP connection.\n")));
+
   if (endpoint->tag () != TAO_TAG_SHMEM_PROFILE)
     return -1;
 
