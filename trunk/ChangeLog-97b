@@ -1,3 +1,13 @@
+Wed Nov 19 07:54:44 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE.cpp: Added a #ifdef for __unix since this is the only
+ 	  case where we'll actually have the ifreq autoptr.  Thanks to
+ 	  Valik Solorzano Barboza <valik@xs4all.nl> for reporting this.
+
+	* ace/Log_Record.cpp (print): Added a work around for a really
+ 	  lame bug with BORLANDC.  Thanks to Valik Solorzano Barboza
+ 	  <valik@xs4all.nl> for reporting this.
+
 Wed Nov 19 04:22:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.51, released Wed Nov 19 04:22:38 1997.

@@ -118,14 +118,13 @@ ACE_Log_Record::print (const char *host_name,
       ctp[19] = '\0'; // NUL-terminate after the time.
       ctp[24] = '\0'; // NUL-terminate after the date.
 
-      if (host_name == 0)
-	host_name = "<local_host>";
+      const char *lhost_name = host_name == 0 ? "<local_host>" : host_name;
 
       ret =  ACE_OS::fprintf (fp, "%s.%d %s@%s@%d@%d@%s",
 			      ctp + 4, 
 			      this->time_stamp_.usec () / 1000,
 			      ctp + 20, 
-			      host_name, 
+			      lhost_name, 
 			      this->pid_,
 			      this->type_, 
 			      this->msg_data_);
@@ -159,8 +158,7 @@ ACE_Log_Record::print (const char host_name[],
       ctp[19] = '\0'; // NUL-terminate after the time.
       ctp[24] = '\0'; // NUL-terminate after the date.
 
-      if (host_name == 0)
-	host_name = "<local_host>";
+      const char *lhost_name = host_name == 0 ? "<local_host>" : host_name;
 
       s << (ctp + 4) << '.'
 	// The following line isn't portable, so I've commented it out...
@@ -168,7 +166,7 @@ ACE_Log_Record::print (const char host_name[],
 	<< this->time_stamp_.usec () / 1000 << ' '
 	<< (ctp + 20)
 	<< '@'
-	<< host_name
+	<< lhost_name
 	<< '@'
 	<< this->pid_
 	<< '@'

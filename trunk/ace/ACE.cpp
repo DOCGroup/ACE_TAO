@@ -2339,7 +2339,7 @@ ACE::get_ip_interfaces (size_t &count,
         }
     }
   return 0;
-#elif defined(__unix)
+#elif defined (__unix)
   //  COMMON (SVR4 and BSD) UNIX CODE
 
   size_t num_ifs;
@@ -2411,10 +2411,10 @@ ACE::get_ip_interfaces (size_t &count,
 #endif /* ACE_WIN32 */
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && defined (__unix)
 template class ACE_Auto_Array_Ptr<struct ifreq>;
 template class ACE_Auto_Basic_Array_Ptr<struct ifreq>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Auto_Array_Ptr<struct ifreq>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<struct ifreq>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION && __unix */
