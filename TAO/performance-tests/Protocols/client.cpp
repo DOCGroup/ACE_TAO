@@ -389,7 +389,7 @@ Paced_Worker::run (ACE_ENV_SINGLE_ARG_DECL)
                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->test_->end_test (ACE_ENV_ARG_PARAMETER);
+  this->test_->end_test (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->print_stats ();
