@@ -1,5 +1,5 @@
-How to run the cubit example
-----------------------------
+How to run the cubit example on UNIX
+------------------------------------
 
 server:
 -------
@@ -14,4 +14,25 @@ necessary.
 client:
 -------
 clnt [-d] -n <iterations> -O <IOR string displayed by server>
+
+
+Running the Examples
+
+<P>You will find the tests executables in $TAO_ROOT/tests directory.
+The Debug files are <CODE>client.exe</CODE> and
+<CODE>server.exe</CODE>.  The Release versions are
+<CODE>client-r.exe</CODE> and <CODE>server-r.exe</CODE>.  You will
+need to add the directories containing the ACE and TAO DLLS to your
+path before you can run the Cubit test.</P>
+
+<P>To run the server, type in <CODE>server -OAhost <EM>serverhost</EM> 
+-d</CODE> where <CODE><EM>serverhost</EM></CODE> is the name of the machine 
+that the server is running on. When the server is started, you should see as 
+the first line of output something that looks like 
+<CODE>iiop:1.0//serverhost:5001/key00</CODE>.  You will need this when you run 
+the client.</P>
+
+<P>At another prompt (on the same machine or a different machine) type in 
+<CODE>client -O <EM>IIOP</EM></CODE> where <CODE><EM>IIOP</EM></CODE> is the 
+name that the server gave you.</P>
 
