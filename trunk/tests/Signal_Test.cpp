@@ -422,6 +422,8 @@ main (int argc, ASYS_TCHAR *argv[])
       // of Linux threads...
       parent_pid = ACE_OS::getpid ();
 
+#if !defined (linux)
+      // Linux threads don't support this use-case very well.
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) **** test 1: handle signals synchronously in a separate thread\n")));
 
@@ -429,6 +431,10 @@ main (int argc, ASYS_TCHAR *argv[])
       // Run the parent logic for the signal test, first by handling
       // signals synchronously in a separate thread.
       run_test (worker_parent, 1L, 1L);
+#else
+      // Must increment anyhow.
+      test_number++;
+#endif /* linux */
 
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) **** test 2: handle signals synchronously in this thread\n")));
