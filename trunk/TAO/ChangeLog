@@ -1,3 +1,10 @@
+Sat Nov 22 20:39:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/ORT/ORT.mpc:
+
+	  Changed teh project name in the above file so that they don't
+	  clash with projects in orbsvcs/examples.
+
 Sat Nov 22 20:35:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.mpc:
