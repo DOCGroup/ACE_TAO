@@ -29,8 +29,8 @@ Wed Apr  7 14:05:09 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 Wed Apr 07 14:11:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/PolicyS.cpp: CORBA is not a nested class here so we don't
-	  need to use ACE_NESTED_CLASS macro.
+	* tao/PolicyS.cpp: Need to use ACE_CORBA_1 to specify
+	  PolicyManager and PolicyCurrent in constructors.
 
 Wed Apr  7 13:42:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
