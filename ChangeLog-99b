@@ -1,3 +1,12 @@
+Tue Jul  6 18:21:37 1999  Everett Anderson  <eea1@cs.wustl.edu>
+	* ace/Token_Request_Reply.{h,i,cpp}: 
+	  Added ACE_TOKEN_REQUEST_HEADER_SIZE for the fixed-length portion of
+ 	  ACE_Token_Request's Transfer struct, changing length calculations
+	  accordingly.  Added two bytes to the buffer to accomodate '\0'
+	  values after the token name and client ID.
+	* ace/Remote_Tokens.cpp: Changed the check for failure when 
+ 	  receiving a reply in request_reply.
+	
 Tue Jul  6 18:21:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Map_Manager.cpp: Made this file conform to the ACE programming
