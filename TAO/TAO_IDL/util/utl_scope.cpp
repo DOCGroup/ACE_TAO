@@ -795,7 +795,7 @@ UTL_Scope::look_in_inherited(UTL_ScopedName *e, idl_bool treat_as_ref)
  */
 AST_Decl *
 UTL_Scope::lookup_by_name_local(Identifier *e, 
-                                idl_bool treat_as_ref,
+                                idl_bool,
                                 long index)
 {
   UTL_ScopeActiveIterator *i = new UTL_ScopeActiveIterator(this,

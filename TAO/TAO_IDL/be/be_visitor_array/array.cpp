@@ -40,7 +40,7 @@ be_visitor_array::~be_visitor_array (void)
 {
 }
 
-int be_visitor_array::visit_array (be_array *node)
+int be_visitor_array::visit_array (be_array *)
 {
   // must be overloaded by derived visitors
   return -1;

@@ -294,7 +294,7 @@ be_visitor_union_branch_private_ch::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_union_branch_private_ch::visit_string (be_string *node)
+be_visitor_union_branch_private_ch::visit_string (be_string *)
 {
   TAO_OutStream *os; // output stream
   be_decl *ub = this->ctx_->node (); // get union branch

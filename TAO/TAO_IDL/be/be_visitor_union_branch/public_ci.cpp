@@ -740,7 +740,7 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_union_branch_public_ci::visit_string (be_string *node)
+be_visitor_union_branch_public_ci::visit_string (be_string *)
 {
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
