@@ -165,9 +165,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -285,8 +286,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_array.h \
-  include/ast_concrete_type.h be_include/be_codegen.h \
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_array.h include/ast_concrete_type.h be_include/be_codegen.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/Lock.h \
@@ -337,9 +338,11 @@ realclean: clean
   include/utl_identifier.h include/idl_defines.h include/global_extern.h \
   include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -370,10 +373,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_argument.h include/ast_field.h be_include/be_type.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_argument.h include/ast_field.h \
+  be_include/be_type.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -507,10 +511,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  be_include/be_decl.h be_include/be_operation_strategy.h \
-  be_include/be_codegen.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h be_include/be_decl.h \
+  be_include/be_operation_strategy.h be_include/be_codegen.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/Lock.h \
@@ -667,9 +672,11 @@ realclean: clean
   $(ACE_ROOT)/ace/SString.i \
   be_include/be_visitor.h include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -712,9 +719,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -896,9 +904,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -1032,9 +1041,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_constant.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_constant.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1157,9 +1167,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1209,9 +1221,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1340,13 +1353,15 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_enum.h \
-  include/ast_concrete_type.h be_include/be_visitor.h \
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_enum.h include/ast_concrete_type.h be_include/be_visitor.h \
   include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -1387,9 +1402,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_enum_val.h include/ast_constant.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_enum_val.h include/ast_constant.h \
+  include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1512,9 +1529,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1565,9 +1584,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1751,9 +1771,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -1899,9 +1920,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2035,9 +2057,11 @@ realclean: clean
   include/ast_concrete_type.h be_include/be_visitor.h \
   include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -2151,9 +2175,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2233,10 +2258,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_field.h be_include/be_visitor.h be_include/be_type.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_field.h be_include/be_visitor.h \
+  be_include/be_type.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -2367,7 +2393,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -2490,9 +2517,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -2547,9 +2576,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2719,9 +2749,11 @@ realclean: clean
   include/ast_home.h be_include/be_component.h include/ast_component.h \
   be_include/be_visitor.h include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -2754,9 +2786,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2935,9 +2968,11 @@ realclean: clean
   include/ast_predefined_type.h include/ast_union_label.h \
   include/ast_component.h include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -3164,9 +3199,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -3348,9 +3384,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3526,9 +3563,11 @@ realclean: clean
   include/utl_identifier.h include/idl_defines.h include/nr_extern.h \
   include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -3558,9 +3597,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -3706,9 +3746,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3792,9 +3833,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -3912,8 +3954,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_native.h \
-  be_include/be_visitor.h
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_native.h be_include/be_visitor.h
 
 .obj/be_operation.o .obj/be_operation.so .shobj/be_operation.o .shobj/be_operation.so: be/be_operation.cpp be_include/be_operation.h \
   be_include/be_scope.h include/utl_scope.h include/ast_decl.h \
@@ -3928,9 +3970,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4087,7 +4130,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Synch_Traits.h \
   be_include/TAO_IDL_BE_Export.h include/ast_operation.h \
   be_include/be_operation_strategy.h be_include/be_predefined_type.h \
-  be_include/be_type.h $(ACE_ROOT)/ace/SString.h \
+  be_include/be_type.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -4101,9 +4145,11 @@ realclean: clean
   be_include/be_argument.h include/ast_argument.h include/ast_field.h \
   be_include/be_visitor.h include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -4286,9 +4332,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -4411,9 +4458,11 @@ realclean: clean
   be_include/be_visitor.h include/utl_identifier.h \
   include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -4464,9 +4513,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h be_include/be_scope.h include/utl_scope.h \
+  include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4552,9 +4603,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4729,9 +4781,11 @@ realclean: clean
   be_include/be_helper.h include/utl_identifier.h include/idl_defines.h \
   include/nr_extern.h include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -4762,9 +4816,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -4882,13 +4937,16 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_string.h \
-  include/ast_concrete_type.h be_include/be_visitor.h \
-  include/utl_identifier.h include/global_extern.h include/idl_global.h \
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_string.h include/ast_concrete_type.h \
+  be_include/be_visitor.h include/utl_identifier.h \
+  include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -4940,9 +4998,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5114,9 +5173,11 @@ realclean: clean
   include/ast_field.h include/utl_identifier.h include/idl_defines.h \
   include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -5148,9 +5209,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -5283,9 +5345,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -5403,8 +5466,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i be_include/be_scope.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/SString.i \
+  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -5466,9 +5529,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -5586,8 +5650,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_typedef.h \
-  be_include/be_visitor.h
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_typedef.h be_include/be_visitor.h
 
 .obj/be_union.o .obj/be_union.so .shobj/be_union.o .shobj/be_union.so: be/be_union.cpp be_include/be_union.h be_include/be_type.h \
   be_include/be_decl.h include/ast_decl.h include/utl_scoped_name.h \
@@ -5601,9 +5665,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -5721,8 +5786,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i be_include/be_scope.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/SString.i \
+  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -5775,9 +5840,11 @@ realclean: clean
   include/ast_union_branch.h include/ast_field.h include/utl_identifier.h \
   include/idl_defines.h include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -5809,9 +5876,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -5957,10 +6025,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_union_branch.h include/ast_field.h be_include/be_union.h \
-  be_include/be_type.h include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_union_branch.h include/ast_field.h \
+  be_include/be_union.h be_include/be_type.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -6078,8 +6147,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i be_include/be_scope.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/SString.i \
+  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -6124,8 +6193,8 @@ realclean: clean
   include/ast_generator.h include/ast_operation.h include/ast_decl.h \
   include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
   include/TAO_IDL_FE_Export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6319,9 +6388,11 @@ realclean: clean
   be_include/be_constant.h include/ast_constant.h include/global_extern.h \
   include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -6546,9 +6617,11 @@ realclean: clean
   be_include/be_extern.h be_include/be_global.h include/global_extern.h \
   include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -6878,7 +6951,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
   include/global_extern.h include/TAO_IDL_FE_Export.h \
-  include/idl_global.h $(ACE_ROOT)/ace/SString.h \
+  include/idl_global.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
@@ -6890,9 +6964,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -7024,9 +7100,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h be_include/be_scope.h include/utl_scope.h \
+  include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7211,9 +7289,11 @@ realclean: clean
   include/ast_structure_fwd.h include/ast_string.h \
   include/utl_identifier.h include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -7241,9 +7321,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7590,9 +7671,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  be_include/be_visitor_factory.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h be_include/be_visitor_factory.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/Lock.h \
@@ -8160,9 +8242,11 @@ realclean: clean
   include/ast_argument.h include/utl_identifier.h include/global_extern.h \
   include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -8362,9 +8446,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i be_include/be_array.h \
-  include/ast_array.h include/ast_concrete_type.h be_include/be_enum.h \
-  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/SString.i \
+  be_include/be_array.h include/ast_array.h include/ast_concrete_type.h \
+  be_include/be_enum.h be_include/be_scope.h include/utl_scope.h \
+  include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -8415,9 +8500,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -8546,8 +8632,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_enum.h \
-  include/ast_concrete_type.h be_include/be_typedef.h \
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_enum.h include/ast_concrete_type.h be_include/be_typedef.h \
   be_include/be_predefined_type.h include/ast_predefined_type.h \
   be_include/be_array.h include/ast_array.h be_include/be_string.h \
   include/ast_string.h be_include/be_interface.h be_include/be_codegen.h \
@@ -8603,7 +8689,6 @@ realclean: clean
   be_include/be_visitor_array/any_op_ch.h \
   be_include/be_visitor_array/any_op_cs.h \
   be_include/be_visitor_array/cdr_op_ch.h \
-  be_include/be_visitor_array/cdr_op_ci.h \
   be_include/be_visitor_array/cdr_op_cs.h be_include/be_visitor_context.h \
   be_include/be_visitor_enum.h be_include/be_visitor_scope.h \
   be_include/be_visitor_enum/enum_ch.h \
@@ -8611,7 +8696,7 @@ realclean: clean
   be_include/be_visitor_enum/any_op_ch.h \
   be_include/be_visitor_enum/any_op_cs.h \
   be_include/be_visitor_enum/cdr_op_ch.h \
-  be_include/be_visitor_enum/cdr_op_ci.h \
+  be_include/be_visitor_enum/cdr_op_cs.h \
   be_include/be_visitor_structure.h be_include/be_visitor_union.h \
   be_include/be_visitor_union/union.h \
   be_include/be_visitor_union/union_ch.h \
@@ -8623,7 +8708,6 @@ realclean: clean
   be_include/be_visitor_union/any_op_ch.h \
   be_include/be_visitor_union/any_op_cs.h \
   be_include/be_visitor_union/cdr_op_ch.h \
-  be_include/be_visitor_union/cdr_op_ci.h \
   be_include/be_visitor_union/cdr_op_cs.h \
   be_include/be_visitor_structure/structure.h \
   be_include/be_visitor_structure/structure_ch.h \
@@ -8632,15 +8716,12 @@ realclean: clean
   be_include/be_visitor_structure/any_op_ch.h \
   be_include/be_visitor_structure/any_op_cs.h \
   be_include/be_visitor_structure/cdr_op_ch.h \
-  be_include/be_visitor_structure/cdr_op_ci.h \
   be_include/be_visitor_structure/cdr_op_cs.h \
   be/be_visitor_array/array.cpp be/be_visitor_array/array_ch.cpp \
   be/be_visitor_array/array_ci.cpp be/be_visitor_array/array_cs.cpp \
   be/be_visitor_array/any_op_ch.cpp be/be_visitor_array/any_op_cs.cpp \
   be/be_visitor_array/cdr_op_ch.cpp \
   be_include/be_visitor_sequence/cdr_op_ch.h \
-  be/be_visitor_array/cdr_op_ci.cpp \
-  be_include/be_visitor_sequence/cdr_op_ci.h \
   be/be_visitor_array/cdr_op_cs.cpp
 
 .obj/be_visitor_attribute.o .obj/be_visitor_attribute.so .shobj/be_visitor_attribute.o .shobj/be_visitor_attribute.so: be/be_visitor_attribute.cpp \
@@ -8656,10 +8737,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  be_include/be_decl.h be_include/be_operation_strategy.h \
-  be_include/be_codegen.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h be_include/be_decl.h \
+  be_include/be_operation_strategy.h be_include/be_codegen.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/Lock.h \
@@ -8816,7 +8898,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   include/ast_operation.h be_include/be_predefined_type.h \
-  be_include/be_type.h $(ACE_ROOT)/ace/SString.h \
+  be_include/be_type.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -9080,9 +9163,11 @@ realclean: clean
   include/ast_union_label.h include/utl_exceptlist.h \
   include/utl_namelist.h include/utl_err.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -9113,9 +9198,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -9303,7 +9389,6 @@ realclean: clean
   be_include/be_visitor_interface/any_op_ch.h \
   be_include/be_visitor_interface/any_op_cs.h \
   be_include/be_visitor_interface/cdr_op_ch.h \
-  be_include/be_visitor_interface/cdr_op_ci.h \
   be_include/be_visitor_interface/cdr_op_cs.h \
   be_include/be_visitor_interface/tie_sh.h \
   be_include/be_visitor_interface/tie_si.h \
@@ -9335,7 +9420,6 @@ realclean: clean
   be_include/be_visitor_component/any_op_ch.h \
   be_include/be_visitor_component/any_op_cs.h \
   be_include/be_visitor_component/cdr_op_ch.h \
-  be_include/be_visitor_component/cdr_op_ci.h \
   be_include/be_visitor_component/cdr_op_cs.h \
   be_include/be_visitor_attribute.h \
   be_include/be_visitor_attribute/attribute.h \
@@ -9388,7 +9472,7 @@ realclean: clean
   be_include/be_visitor_enum/any_op_ch.h \
   be_include/be_visitor_enum/any_op_cs.h \
   be_include/be_visitor_enum/cdr_op_ch.h \
-  be_include/be_visitor_enum/cdr_op_ci.h be_include/be_visitor_union.h \
+  be_include/be_visitor_enum/cdr_op_cs.h be_include/be_visitor_union.h \
   be_include/be_visitor_union/union.h \
   be_include/be_visitor_union/union_ch.h \
   be_include/be_visitor_union/union_ci.h \
@@ -9399,7 +9483,6 @@ realclean: clean
   be_include/be_visitor_union/any_op_ch.h \
   be_include/be_visitor_union/any_op_cs.h \
   be_include/be_visitor_union/cdr_op_ch.h \
-  be_include/be_visitor_union/cdr_op_ci.h \
   be_include/be_visitor_union/cdr_op_cs.h \
   be_include/be_visitor_structure/structure.h \
   be_include/be_visitor_structure/structure_ch.h \
@@ -9408,7 +9491,6 @@ realclean: clean
   be_include/be_visitor_structure/any_op_ch.h \
   be_include/be_visitor_structure/any_op_cs.h \
   be_include/be_visitor_structure/cdr_op_ch.h \
-  be_include/be_visitor_structure/cdr_op_ci.h \
   be_include/be_visitor_structure/cdr_op_cs.h \
   be_include/be_visitor_typedef.h be_include/be_visitor_typedef/typedef.h \
   be_include/be_visitor_typedef/typedef_ch.h \
@@ -9417,7 +9499,6 @@ realclean: clean
   be_include/be_visitor_typedef/any_op_ch.h \
   be_include/be_visitor_typedef/any_op_cs.h \
   be_include/be_visitor_typedef/cdr_op_ch.h \
-  be_include/be_visitor_typedef/cdr_op_ci.h \
   be_include/be_visitor_typedef/cdr_op_cs.h \
   be_include/be_visitor_typecode.h \
   be_include/be_visitor_typecode/typecode_decl.h \
@@ -9447,7 +9528,6 @@ realclean: clean
   be/be_visitor_component/any_op_ch.cpp \
   be/be_visitor_component/any_op_cs.cpp \
   be/be_visitor_component/cdr_op_ch.cpp \
-  be/be_visitor_component/cdr_op_ci.cpp \
   be/be_visitor_component/cdr_op_cs.cpp
 
 .obj/be_visitor_component_fwd.o .obj/be_visitor_component_fwd.so .shobj/be_visitor_component_fwd.o .shobj/be_visitor_component_fwd.so: be/be_visitor_component_fwd.cpp \
@@ -9464,9 +9544,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -9630,17 +9711,14 @@ realclean: clean
   be_include/be_visitor_component_fwd/component_fwd_ch.h \
   be_include/be_visitor_component_fwd/any_op_ch.h \
   be_include/be_visitor_component_fwd/cdr_op_ch.h \
-  be_include/be_visitor_component_fwd/cdr_op_ci.h \
   be_include/be_visitor_interface_fwd.h \
   be_include/be_visitor_interface_fwd/interface_fwd_ch.h \
   be_include/be_visitor_interface_fwd/cdr_op_ch.h \
-  be_include/be_visitor_interface_fwd/cdr_op_ci.h \
   be_include/be_visitor_interface_fwd/any_op_ch.h \
   be_include/be_visitor_context.h \
   be/be_visitor_component_fwd/component_fwd_ch.cpp \
   be/be_visitor_component_fwd/any_op_ch.cpp \
-  be/be_visitor_component_fwd/cdr_op_ch.cpp \
-  be/be_visitor_component_fwd/cdr_op_ci.cpp
+  be/be_visitor_component_fwd/cdr_op_ch.cpp
 
 .obj/be_visitor_constant.o .obj/be_visitor_constant.so .shobj/be_visitor_constant.o .shobj/be_visitor_constant.so: be/be_visitor_constant.cpp \
   be_include/be_constant.h be_include/be_decl.h include/ast_decl.h \
@@ -9655,9 +9733,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_constant.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_constant.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -9780,9 +9859,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -9866,10 +9947,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_argument.h include/ast_field.h be_include/be_array.h \
-  be_include/be_type.h include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_argument.h include/ast_field.h \
+  be_include/be_array.h be_include/be_type.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -9987,10 +10069,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_array.h \
-  include/ast_concrete_type.h be_include/be_attribute.h \
-  include/ast_attribute.h be_include/be_operation_strategy.h \
-  be_include/be_codegen.h \
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_array.h include/ast_concrete_type.h \
+  be_include/be_attribute.h include/ast_attribute.h \
+  be_include/be_operation_strategy.h be_include/be_codegen.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/Lock.h \
@@ -10039,9 +10121,11 @@ realclean: clean
   $(ACE_ROOT)/ace/CDR_Stream.i \
   include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -10223,7 +10307,6 @@ realclean: clean
   $(ACE_ROOT)/ace/Synch_Traits.h \
   be_include/TAO_IDL_BE_Export.h be_include/be_visitor_sequence.h \
   include/idl_defines.h be_include/be_visitor_sequence/sequence_ch.h \
-  be_include/be_visitor_sequence/sequence_ci.h \
   be_include/be_visitor_sequence/sequence_cs.h \
   be_include/be_visitor_sequence/sequence_base.h \
   be_include/be_visitor_sequence/buffer_type.h \
@@ -10231,7 +10314,6 @@ realclean: clean
   be_include/be_visitor_sequence/any_op_ch.h \
   be_include/be_visitor_sequence/any_op_cs.h \
   be_include/be_visitor_sequence/cdr_op_ch.h \
-  be_include/be_visitor_sequence/cdr_op_ci.h \
   be_include/be_visitor_sequence/cdr_op_cs.h \
   be_include/be_visitor_context.h include/idl_bool.h \
   be_include/be_typedef.h be_include/be_type.h be_include/be_decl.h \
@@ -10254,7 +10336,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_typedef.h
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_typedef.h
 
 .obj/be_visitor_enum.o .obj/be_visitor_enum.so .shobj/be_visitor_enum.o .shobj/be_visitor_enum.so: be/be_visitor_enum.cpp be_include/be_enum.h \
   be_include/be_scope.h include/utl_scope.h include/ast_decl.h \
@@ -10269,9 +10352,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -10400,14 +10484,16 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_enum.h \
-  include/ast_concrete_type.h be_include/be_enum_val.h \
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_enum.h include/ast_concrete_type.h be_include/be_enum_val.h \
   include/ast_enum_val.h include/ast_constant.h include/global_extern.h \
   include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -10470,13 +10556,13 @@ realclean: clean
   be_include/be_visitor_enum/any_op_ch.h \
   be_include/be_visitor_enum/any_op_cs.h \
   be_include/be_visitor_enum/cdr_op_ch.h \
-  be_include/be_visitor_enum/cdr_op_ci.h be_include/be_visitor_context.h \
+  be_include/be_visitor_enum/cdr_op_cs.h be_include/be_visitor_context.h \
   be/be_visitor_enum/enum_ch.cpp \
   be_include/be_visitor_typecode/typecode_decl.h \
   be/be_visitor_enum/enum_cs.cpp \
   be_include/be_visitor_typecode/typecode_defn.h \
   be/be_visitor_enum/any_op_ch.cpp be/be_visitor_enum/any_op_cs.cpp \
-  be/be_visitor_enum/cdr_op_ch.cpp be/be_visitor_enum/cdr_op_ci.cpp
+  be/be_visitor_enum/cdr_op_ch.cpp be/be_visitor_enum/cdr_op_cs.cpp
 
 .obj/be_visitor_eventtype.o .obj/be_visitor_eventtype.so .shobj/be_visitor_eventtype.o .shobj/be_visitor_eventtype.so: be/be_visitor_eventtype.cpp \
   $(ACE_ROOT)/ace/SString.h \
@@ -10677,7 +10763,6 @@ realclean: clean
   be_include/be_visitor_valuetype/any_op_ch.h \
   be_include/be_visitor_valuetype/any_op_cs.h \
   be_include/be_visitor_valuetype/cdr_op_ch.h \
-  be_include/be_visitor_valuetype/cdr_op_ci.h \
   be_include/be_visitor_valuetype/cdr_op_cs.h \
   be_include/be_visitor_valuetype/marshal_ch.h \
   be_include/be_visitor_valuetype/marshal_cs.h \
@@ -10686,7 +10771,7 @@ realclean: clean
   be_include/be_visitor_valuetype/field_ci.h \
   be_include/be_visitor_valuetype/field_cs.h \
   be_include/be_visitor_valuetype/field_cdr_ch.h \
-  be_include/be_visitor_valuetype/field_cdr_ci.h \
+  be_include/be_visitor_valuetype/field_cdr_cs.h \
   be_include/be_visitor_valuetype/obv_module.h \
   be_include/be_visitor_valuetype/ami_exception_holder_ch.h \
   be_include/be_visitor_valuetype/ami_exception_holder_cs.h \
@@ -10707,7 +10792,6 @@ realclean: clean
   be_include/be_visitor_eventtype/any_op_ch.h \
   be_include/be_visitor_eventtype/any_op_cs.h \
   be_include/be_visitor_eventtype/cdr_op_ch.h \
-  be_include/be_visitor_eventtype/cdr_op_ci.h \
   be_include/be_visitor_eventtype/cdr_op_cs.h \
   be_include/be_visitor_context.h be_include/be_helper.h \
   be/be_visitor_eventtype/eventtype_ch.cpp \
@@ -10722,7 +10806,6 @@ realclean: clean
   be/be_visitor_eventtype/any_op_ch.cpp \
   be/be_visitor_eventtype/any_op_cs.cpp \
   be/be_visitor_eventtype/cdr_op_ch.cpp \
-  be/be_visitor_eventtype/cdr_op_ci.cpp \
   be/be_visitor_eventtype/cdr_op_cs.cpp
 
 .obj/be_visitor_eventtype_fwd.o .obj/be_visitor_eventtype_fwd.so .shobj/be_visitor_eventtype_fwd.o .shobj/be_visitor_eventtype_fwd.so: be/be_visitor_eventtype_fwd.cpp \
@@ -10739,9 +10822,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -10903,17 +10987,14 @@ realclean: clean
   be_include/be_visitor_eventtype_fwd/eventtype_fwd_ch.h \
   be_include/be_visitor_eventtype_fwd/any_op_ch.h \
   be_include/be_visitor_eventtype_fwd/cdr_op_ch.h \
-  be_include/be_visitor_eventtype_fwd/cdr_op_ci.h \
   be_include/be_visitor_valuetype_fwd.h \
   be_include/be_visitor_valuetype_fwd/valuetype_fwd_ch.h \
   be_include/be_visitor_valuetype_fwd/any_op_ch.h \
   be_include/be_visitor_valuetype_fwd/cdr_op_ch.h \
-  be_include/be_visitor_valuetype_fwd/cdr_op_ci.h \
   be_include/be_visitor_context.h \
   be/be_visitor_eventtype_fwd/eventtype_fwd_ch.cpp \
   be/be_visitor_eventtype_fwd/any_op_ch.cpp \
-  be/be_visitor_eventtype_fwd/cdr_op_ch.cpp \
-  be/be_visitor_eventtype_fwd/cdr_op_ci.cpp
+  be/be_visitor_eventtype_fwd/cdr_op_ch.cpp
 
 .obj/be_visitor_exception.o .obj/be_visitor_exception.so .shobj/be_visitor_exception.o .shobj/be_visitor_exception.so: be/be_visitor_exception.cpp be_include/be_field.h \
   be_include/be_decl.h include/ast_decl.h include/utl_scoped_name.h \
@@ -10927,10 +11008,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_field.h be_include/be_exception.h be_include/be_scope.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_field.h be_include/be_exception.h \
+  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -10996,7 +11078,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  be_include/be_type.h $(ACE_ROOT)/ace/SString.h \
+  be_include/be_type.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -11115,7 +11198,7 @@ realclean: clean
   be_include/be_visitor_enum/any_op_ch.h \
   be_include/be_visitor_enum/any_op_cs.h \
   be_include/be_visitor_enum/cdr_op_ch.h \
-  be_include/be_visitor_enum/cdr_op_ci.h \
+  be_include/be_visitor_enum/cdr_op_cs.h \
   be_include/be_visitor_structure.h be_include/be_visitor_union.h \
   be_include/be_visitor_union/union.h \
   be_include/be_visitor_union/union_ch.h \
@@ -11127,7 +11210,6 @@ realclean: clean
   be_include/be_visitor_union/any_op_ch.h \
   be_include/be_visitor_union/any_op_cs.h \
   be_include/be_visitor_union/cdr_op_ch.h \
-  be_include/be_visitor_union/cdr_op_ci.h \
   be_include/be_visitor_union/cdr_op_cs.h \
   be_include/be_visitor_structure/structure.h \
   be_include/be_visitor_structure/structure_ch.h \
@@ -11136,7 +11218,6 @@ realclean: clean
   be_include/be_visitor_structure/any_op_ch.h \
   be_include/be_visitor_structure/any_op_cs.h \
   be_include/be_visitor_structure/cdr_op_ch.h \
-  be_include/be_visitor_structure/cdr_op_ci.h \
   be_include/be_visitor_structure/cdr_op_cs.h \
   be_include/be_visitor_exception/exception.h \
   be_include/be_visitor_exception/exception_ch.h \
@@ -11147,14 +11228,12 @@ realclean: clean
   be_include/be_visitor_exception/any_op_ch.h \
   be_include/be_visitor_exception/any_op_cs.h \
   be_include/be_visitor_exception/cdr_op_ch.h \
-  be_include/be_visitor_exception/cdr_op_ci.h \
   be_include/be_visitor_exception/cdr_op_cs.h \
   be_include/be_visitor_context.h be_include/be_visitor_field.h \
   include/idl_defines.h be_include/be_visitor_field/field_ch.h \
   be_include/be_visitor_field/field_ci.h \
   be_include/be_visitor_field/field_cs.h \
   be_include/be_visitor_field/cdr_op_ch.h \
-  be_include/be_visitor_field/cdr_op_ci.h \
   be_include/be_visitor_field/cdr_op_cs.h \
   be/be_visitor_exception/exception.cpp \
   be/be_visitor_exception/exception_ch.cpp \
@@ -11178,7 +11257,6 @@ realclean: clean
   be/be_visitor_exception/any_op_ch.cpp \
   be/be_visitor_exception/any_op_cs.cpp \
   be/be_visitor_exception/cdr_op_ch.cpp \
-  be/be_visitor_exception/cdr_op_ci.cpp \
   be/be_visitor_exception/cdr_op_cs.cpp
 
 .obj/be_visitor_field.o .obj/be_visitor_field.so .shobj/be_visitor_field.o .shobj/be_visitor_field.so: be/be_visitor_field.cpp be_include/be_type.h \
@@ -11193,9 +11271,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -11313,9 +11392,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i be_include/be_field.h \
-  include/ast_field.h be_include/be_array.h include/ast_array.h \
-  include/ast_concrete_type.h be_include/be_typedef.h \
+  $(ACE_ROOT)/ace/SString.i \
+  be_include/be_field.h include/ast_field.h be_include/be_array.h \
+  include/ast_array.h include/ast_concrete_type.h be_include/be_typedef.h \
   include/ast_typedef.h be_include/be_enum.h be_include/be_scope.h \
   include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -11326,8 +11405,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Message_Block_T.h \
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/CDR_Stream.i include/ast_enum.h \
-  be_include/be_interface.h be_include/be_codegen.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  include/ast_enum.h be_include/be_interface.h be_include/be_codegen.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/Lock.h \
@@ -11382,7 +11461,6 @@ realclean: clean
   be_include/be_visitor_field/field_ci.h \
   be_include/be_visitor_field/field_cs.h \
   be_include/be_visitor_field/cdr_op_ch.h \
-  be_include/be_visitor_field/cdr_op_ci.h \
   be_include/be_visitor_field/cdr_op_cs.h be_include/be_visitor_array.h \
   be_include/be_visitor_array/array.h \
   be_include/be_visitor_array/array_ch.h \
@@ -11391,7 +11469,6 @@ realclean: clean
   be_include/be_visitor_array/any_op_ch.h \
   be_include/be_visitor_array/any_op_cs.h \
   be_include/be_visitor_array/cdr_op_ch.h \
-  be_include/be_visitor_array/cdr_op_ci.h \
   be_include/be_visitor_array/cdr_op_cs.h \
   be_include/be_visitor_structure.h be_include/be_visitor_enum.h \
   be_include/be_visitor_enum/enum_ch.h \
@@ -11399,7 +11476,7 @@ realclean: clean
   be_include/be_visitor_enum/any_op_ch.h \
   be_include/be_visitor_enum/any_op_cs.h \
   be_include/be_visitor_enum/cdr_op_ch.h \
-  be_include/be_visitor_enum/cdr_op_ci.h be_include/be_visitor_union.h \
+  be_include/be_visitor_enum/cdr_op_cs.h be_include/be_visitor_union.h \
   be_include/be_visitor_union/union.h \
   be_include/be_visitor_union/union_ch.h \
   be_include/be_visitor_union/union_ci.h \
@@ -11410,7 +11487,6 @@ realclean: clean
   be_include/be_visitor_union/any_op_ch.h \
   be_include/be_visitor_union/any_op_cs.h \
   be_include/be_visitor_union/cdr_op_ch.h \
-  be_include/be_visitor_union/cdr_op_ci.h \
   be_include/be_visitor_union/cdr_op_cs.h \
   be_include/be_visitor_structure/structure.h \
   be_include/be_visitor_structure/structure_ch.h \
@@ -11419,18 +11495,13 @@ realclean: clean
   be_include/be_visitor_structure/any_op_ch.h \
   be_include/be_visitor_structure/any_op_cs.h \
   be_include/be_visitor_structure/cdr_op_ch.h \
-  be_include/be_visitor_structure/cdr_op_ci.h \
   be_include/be_visitor_structure/cdr_op_cs.h \
   be_include/be_visitor_context.h be/be_visitor_field/field_ch.cpp \
   be_include/be_visitor_sequence/sequence_ch.h include/nr_extern.h \
-  be/be_visitor_field/field_ci.cpp \
-  be_include/be_visitor_sequence/sequence_ci.h \
-  be/be_visitor_field/field_cs.cpp \
+  be/be_visitor_field/field_ci.cpp be/be_visitor_field/field_cs.cpp \
   be_include/be_visitor_sequence/sequence_cs.h \
   be/be_visitor_field/cdr_op_ch.cpp \
   be_include/be_visitor_sequence/cdr_op_ch.h \
-  be/be_visitor_field/cdr_op_ci.cpp \
-  be_include/be_visitor_sequence/cdr_op_ci.h \
   be/be_visitor_field/cdr_op_cs.cpp \
   be_include/be_visitor_sequence/cdr_op_cs.h
 
@@ -11447,9 +11518,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -11634,10 +11706,12 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_argument.h include/ast_field.h be_include/be_interface.h \
-  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_argument.h include/ast_field.h \
+  be_include/be_interface.h be_include/be_scope.h include/utl_scope.h \
+  include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -11703,7 +11777,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  be_include/be_type.h $(ACE_ROOT)/ace/SString.h \
+  be_include/be_type.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -11807,9 +11882,11 @@ realclean: clean
   be_include/be_operation_strategy.h be_include/be_constant.h \
   include/ast_constant.h include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -11851,7 +11928,6 @@ realclean: clean
   be_include/be_visitor_interface/any_op_ch.h \
   be_include/be_visitor_interface/any_op_cs.h \
   be_include/be_visitor_interface/cdr_op_ch.h \
-  be_include/be_visitor_interface/cdr_op_ci.h \
   be_include/be_visitor_interface/cdr_op_cs.h \
   be_include/be_visitor_interface/tie_sh.h \
   be_include/be_visitor_interface/tie_si.h \
@@ -11881,7 +11957,7 @@ realclean: clean
   be_include/be_visitor_enum/any_op_ch.h \
   be_include/be_visitor_enum/any_op_cs.h \
   be_include/be_visitor_enum/cdr_op_ch.h \
-  be_include/be_visitor_enum/cdr_op_ci.h \
+  be_include/be_visitor_enum/cdr_op_cs.h \
   be_include/be_visitor_exception.h be_include/be_visitor_structure.h \
   be_include/be_visitor_union.h be_include/be_visitor_union/union.h \
   be_include/be_visitor_union/union_ch.h \
@@ -11893,7 +11969,6 @@ realclean: clean
   be_include/be_visitor_union/any_op_ch.h \
   be_include/be_visitor_union/any_op_cs.h \
   be_include/be_visitor_union/cdr_op_ch.h \
-  be_include/be_visitor_union/cdr_op_ci.h \
   be_include/be_visitor_union/cdr_op_cs.h \
   be_include/be_visitor_structure/structure.h \
   be_include/be_visitor_structure/structure_ch.h \
@@ -11902,7 +11977,6 @@ realclean: clean
   be_include/be_visitor_structure/any_op_ch.h \
   be_include/be_visitor_structure/any_op_cs.h \
   be_include/be_visitor_structure/cdr_op_ch.h \
-  be_include/be_visitor_structure/cdr_op_ci.h \
   be_include/be_visitor_structure/cdr_op_cs.h \
   be_include/be_visitor_exception/exception.h \
   be_include/be_visitor_exception/exception_ch.h \
@@ -11913,7 +11987,6 @@ realclean: clean
   be_include/be_visitor_exception/any_op_ch.h \
   be_include/be_visitor_exception/any_op_cs.h \
   be_include/be_visitor_exception/cdr_op_ch.h \
-  be_include/be_visitor_exception/cdr_op_ci.h \
   be_include/be_visitor_exception/cdr_op_cs.h \
   be_include/be_visitor_structure_fwd.h \
   be_include/be_visitor_structure_fwd/structure_fwd_ch.h \
@@ -11924,7 +11997,6 @@ realclean: clean
   be_include/be_visitor_typedef/any_op_ch.h \
   be_include/be_visitor_typedef/any_op_cs.h \
   be_include/be_visitor_typedef/cdr_op_ch.h \
-  be_include/be_visitor_typedef/cdr_op_ci.h \
   be_include/be_visitor_typedef/cdr_op_cs.h \
   be_include/be_visitor_union_fwd.h \
   be_include/be_visitor_union_fwd/union_fwd_ch.h \
@@ -11986,7 +12058,6 @@ realclean: clean
   be/be_visitor_interface/any_op_ch.cpp \
   be/be_visitor_interface/any_op_cs.cpp \
   be/be_visitor_interface/cdr_op_ch.cpp \
-  be/be_visitor_interface/cdr_op_ci.cpp \
   be/be_visitor_interface/cdr_op_cs.cpp \
   be/be_visitor_interface/smart_proxy_ch.cpp \
   be/be_visitor_interface/smart_proxy_cs.cpp \
@@ -12016,9 +12087,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -12190,12 +12262,10 @@ realclean: clean
   be_include/be_visitor.h \
   be_include/be_visitor_interface_fwd/interface_fwd_ch.h \
   be_include/be_visitor_interface_fwd/cdr_op_ch.h \
-  be_include/be_visitor_interface_fwd/cdr_op_ci.h \
   be_include/be_visitor_interface_fwd/any_op_ch.h \
   be_include/be_visitor_context.h \
   be/be_visitor_interface_fwd/interface_fwd_ch.cpp \
   be/be_visitor_interface_fwd/cdr_op_ch.cpp \
-  be/be_visitor_interface_fwd/cdr_op_ci.cpp \
   be/be_visitor_interface_fwd/any_op_ch.cpp
 
 .obj/be_visitor_valuetype.o .obj/be_visitor_valuetype.so .shobj/be_visitor_valuetype.o .shobj/be_visitor_valuetype.so: be/be_visitor_valuetype.cpp \
@@ -12211,10 +12281,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_argument.h include/ast_field.h be_include/be_array.h \
-  be_include/be_type.h include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_argument.h include/ast_field.h \
+  be_include/be_array.h be_include/be_type.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -12332,10 +12403,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_array.h \
-  include/ast_concrete_type.h be_include/be_attribute.h \
-  include/ast_attribute.h be_include/be_operation_strategy.h \
-  be_include/be_codegen.h \
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_array.h include/ast_concrete_type.h \
+  be_include/be_attribute.h include/ast_attribute.h \
+  be_include/be_operation_strategy.h be_include/be_codegen.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/Lock.h \
@@ -12384,9 +12455,11 @@ realclean: clean
   $(ACE_ROOT)/ace/CDR_Stream.i \
   include/global_extern.h include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -12406,19 +12479,23 @@ realclean: clean
   include/ast_predefined_type.h include/utl_stack.h be_include/be_enum.h \
   be_include/be_scope.h include/utl_scope.h include/ast_typedef.h \
   include/ast_enum.h be_include/be_exception.h include/ast_exception.h \
-  include/ast_structure.h be_include/be_eventtype.h \
-  be_include/be_valuetype.h be_include/be_interface.h \
-  include/ast_interface.h include/ast_valuetype.h include/ast_eventtype.h \
-  be_include/be_factory.h include/ast_factory.h be_include/be_field.h \
+  include/ast_structure.h be_include/be_component.h \
+  be_include/be_interface.h include/ast_interface.h \
+  include/ast_component.h be_include/be_component_fwd.h \
   be_include/be_interface_fwd.h include/ast_interface_fwd.h \
-  be_include/be_module.h include/ast_module.h \
-  be_include/be_predefined_type.h be_include/be_operation.h \
-  include/ast_operation.h be_include/be_sequence.h include/ast_sequence.h \
-  be_include/be_string.h include/ast_string.h be_include/be_structure.h \
+  include/ast_component_fwd.h be_include/be_eventtype.h \
+  be_include/be_valuetype.h include/ast_valuetype.h \
+  include/ast_eventtype.h be_include/be_eventtype_fwd.h \
+  be_include/be_valuetype_fwd.h include/ast_valuetype_fwd.h \
+  include/ast_eventtype_fwd.h be_include/be_factory.h \
+  include/ast_factory.h be_include/be_field.h be_include/be_module.h \
+  include/ast_module.h be_include/be_predefined_type.h \
+  be_include/be_operation.h include/ast_operation.h \
+  be_include/be_sequence.h include/ast_sequence.h be_include/be_string.h \
+  include/ast_string.h be_include/be_structure.h \
   be_include/be_structure_fwd.h include/ast_structure_fwd.h \
   be_include/be_typedef.h be_include/be_union.h include/ast_union.h \
   be_include/be_union_fwd.h include/ast_union_fwd.h \
-  be_include/be_valuetype_fwd.h include/ast_valuetype_fwd.h \
   be_include/be_helper.h be_include/be_extern.h be_include/be_global.h \
   include/utl_identifier.h include/utl_exceptlist.h \
   be_include/be_visitor_valuetype.h include/idl_defines.h \
@@ -12436,7 +12513,6 @@ realclean: clean
   be_include/be_visitor_valuetype/any_op_ch.h \
   be_include/be_visitor_valuetype/any_op_cs.h \
   be_include/be_visitor_valuetype/cdr_op_ch.h \
-  be_include/be_visitor_valuetype/cdr_op_ci.h \
   be_include/be_visitor_valuetype/cdr_op_cs.h \
   be_include/be_visitor_valuetype/marshal_ch.h \
   be_include/be_visitor_valuetype/marshal_cs.h \
@@ -12445,7 +12521,7 @@ realclean: clean
   be_include/be_visitor_valuetype/field_ci.h \
   be_include/be_visitor_valuetype/field_cs.h \
   be_include/be_visitor_valuetype/field_cdr_ch.h \
-  be_include/be_visitor_valuetype/field_cdr_ci.h \
+  be_include/be_visitor_valuetype/field_cdr_cs.h \
   be_include/be_visitor_valuetype/obv_module.h \
   be_include/be_visitor_valuetype/ami_exception_holder_ch.h \
   be_include/be_visitor_valuetype/ami_exception_holder_cs.h \
@@ -12474,7 +12550,6 @@ realclean: clean
   be_include/be_visitor_array/any_op_ch.h \
   be_include/be_visitor_array/any_op_cs.h \
   be_include/be_visitor_array/cdr_op_ch.h \
-  be_include/be_visitor_array/cdr_op_ci.h \
   be_include/be_visitor_array/cdr_op_cs.h \
   be_include/be_visitor_eventtype.h \
   be_include/be_visitor_eventtype/eventtype_ch.h \
@@ -12489,13 +12564,11 @@ realclean: clean
   be_include/be_visitor_eventtype/any_op_ch.h \
   be_include/be_visitor_eventtype/any_op_cs.h \
   be_include/be_visitor_eventtype/cdr_op_ch.h \
-  be_include/be_visitor_eventtype/cdr_op_ci.h \
   be_include/be_visitor_eventtype/cdr_op_cs.h \
   be_include/be_visitor_field.h be_include/be_visitor_field/field_ch.h \
   be_include/be_visitor_field/field_ci.h \
   be_include/be_visitor_field/field_cs.h \
   be_include/be_visitor_field/cdr_op_ch.h \
-  be_include/be_visitor_field/cdr_op_ci.h \
   be_include/be_visitor_field/cdr_op_cs.h \
   be_include/be_visitor_constant.h \
   be_include/be_visitor_constant/constant_ch.h \
@@ -12505,7 +12578,7 @@ realclean: clean
   be_include/be_visitor_enum/any_op_ch.h \
   be_include/be_visitor_enum/any_op_cs.h \
   be_include/be_visitor_enum/cdr_op_ch.h \
-  be_include/be_visitor_enum/cdr_op_ci.h \
+  be_include/be_visitor_enum/cdr_op_cs.h \
   be_include/be_visitor_exception.h be_include/be_visitor_structure.h \
   be_include/be_visitor_union.h be_include/be_visitor_union/union.h \
   be_include/be_visitor_union/union_ch.h \
@@ -12517,7 +12590,6 @@ realclean: clean
   be_include/be_visitor_union/any_op_ch.h \
   be_include/be_visitor_union/any_op_cs.h \
   be_include/be_visitor_union/cdr_op_ch.h \
-  be_include/be_visitor_union/cdr_op_ci.h \
   be_include/be_visitor_union/cdr_op_cs.h \
   be_include/be_visitor_structure/structure.h \
   be_include/be_visitor_structure/structure_ch.h \
@@ -12526,7 +12598,6 @@ realclean: clean
   be_include/be_visitor_structure/any_op_ch.h \
   be_include/be_visitor_structure/any_op_cs.h \
   be_include/be_visitor_structure/cdr_op_ch.h \
-  be_include/be_visitor_structure/cdr_op_ci.h \
   be_include/be_visitor_structure/cdr_op_cs.h \
   be_include/be_visitor_exception/exception.h \
   be_include/be_visitor_exception/exception_ch.h \
@@ -12537,7 +12608,6 @@ realclean: clean
   be_include/be_visitor_exception/any_op_ch.h \
   be_include/be_visitor_exception/any_op_cs.h \
   be_include/be_visitor_exception/cdr_op_ch.h \
-  be_include/be_visitor_exception/cdr_op_ci.h \
   be_include/be_visitor_exception/cdr_op_cs.h \
   be_include/be_visitor_operation.h \
   be_include/be_visitor_operation/operation.h \
@@ -12583,7 +12653,6 @@ realclean: clean
   be_include/be_visitor_operation/amh_rh_ss.h \
   be_include/be_visitor_sequence.h \
   be_include/be_visitor_sequence/sequence_ch.h \
-  be_include/be_visitor_sequence/sequence_ci.h \
   be_include/be_visitor_sequence/sequence_cs.h \
   be_include/be_visitor_sequence/sequence_base.h \
   be_include/be_visitor_sequence/buffer_type.h \
@@ -12591,7 +12660,6 @@ realclean: clean
   be_include/be_visitor_sequence/any_op_ch.h \
   be_include/be_visitor_sequence/any_op_cs.h \
   be_include/be_visitor_sequence/cdr_op_ch.h \
-  be_include/be_visitor_sequence/cdr_op_ci.h \
   be_include/be_visitor_sequence/cdr_op_cs.h \
   be_include/be_visitor_structure_fwd.h \
   be_include/be_visitor_structure_fwd/structure_fwd_ch.h \
@@ -12605,7 +12673,6 @@ realclean: clean
   be_include/be_visitor_typedef/any_op_ch.h \
   be_include/be_visitor_typedef/any_op_cs.h \
   be_include/be_visitor_typedef/cdr_op_ch.h \
-  be_include/be_visitor_typedef/cdr_op_ci.h \
   be_include/be_visitor_typedef/cdr_op_cs.h \
   be_include/be_visitor_union_fwd.h \
   be_include/be_visitor_union_fwd/union_fwd_ch.h \
@@ -12622,7 +12689,6 @@ realclean: clean
   be/be_visitor_valuetype/any_op_ch.cpp \
   be/be_visitor_valuetype/any_op_cs.cpp \
   be/be_visitor_valuetype/cdr_op_ch.cpp \
-  be/be_visitor_valuetype/cdr_op_ci.cpp \
   be/be_visitor_valuetype/cdr_op_cs.cpp \
   be/be_visitor_valuetype/marshal_ch.cpp \
   be/be_visitor_valuetype/marshal_cs.cpp \
@@ -12631,7 +12697,7 @@ realclean: clean
   be/be_visitor_valuetype/field_ci.cpp \
   be/be_visitor_valuetype/field_cs.cpp \
   be/be_visitor_valuetype/field_cdr_ch.cpp \
-  be/be_visitor_valuetype/field_cdr_ci.cpp \
+  be/be_visitor_valuetype/field_cdr_cs.cpp \
   be/be_visitor_valuetype/obv_module.cpp \
   be/be_visitor_valuetype/ami_exception_holder_ch.cpp \
   be/be_visitor_valuetype/ami_exception_holder_cs.cpp \
@@ -12655,9 +12721,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -12833,12 +12900,10 @@ realclean: clean
   be_include/be_visitor_valuetype_fwd/valuetype_fwd_ch.h \
   be_include/be_visitor_valuetype_fwd/any_op_ch.h \
   be_include/be_visitor_valuetype_fwd/cdr_op_ch.h \
-  be_include/be_visitor_valuetype_fwd/cdr_op_ci.h \
   be_include/be_visitor_context.h \
   be/be_visitor_valuetype_fwd/valuetype_fwd_ch.cpp \
   be/be_visitor_valuetype_fwd/any_op_ch.cpp \
-  be/be_visitor_valuetype_fwd/cdr_op_ch.cpp \
-  be/be_visitor_valuetype_fwd/cdr_op_ci.cpp
+  be/be_visitor_valuetype_fwd/cdr_op_ch.cpp
 
 .obj/be_visitor_module.o .obj/be_visitor_module.so .shobj/be_visitor_module.o .shobj/be_visitor_module.so: be/be_visitor_module.cpp be_include/be_module.h \
   be_include/be_scope.h include/utl_scope.h include/ast_decl.h \
@@ -12853,9 +12918,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -12926,7 +12992,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   be_include/be_constant.h include/ast_constant.h include/global_extern.h \
-  include/idl_global.h $(ACE_ROOT)/ace/SString.h \
+  include/idl_global.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -12990,9 +13057,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -13075,7 +13144,7 @@ realclean: clean
   be_include/be_visitor_enum/any_op_ch.h \
   be_include/be_visitor_enum/any_op_cs.h \
   be_include/be_visitor_enum/cdr_op_ch.h \
-  be_include/be_visitor_enum/cdr_op_ci.h \
+  be_include/be_visitor_enum/cdr_op_cs.h \
   be_include/be_visitor_exception.h be_include/be_visitor_structure.h \
   be_include/be_visitor_union.h be_include/be_visitor_union/union.h \
   be_include/be_visitor_union/union_ch.h \
@@ -13087,7 +13156,6 @@ realclean: clean
   be_include/be_visitor_union/any_op_ch.h \
   be_include/be_visitor_union/any_op_cs.h \
   be_include/be_visitor_union/cdr_op_ch.h \
-  be_include/be_visitor_union/cdr_op_ci.h \
   be_include/be_visitor_union/cdr_op_cs.h \
   be_include/be_visitor_structure/structure.h \
   be_include/be_visitor_structure/structure_ch.h \
@@ -13096,7 +13164,6 @@ realclean: clean
   be_include/be_visitor_structure/any_op_ch.h \
   be_include/be_visitor_structure/any_op_cs.h \
   be_include/be_visitor_structure/cdr_op_ch.h \
-  be_include/be_visitor_structure/cdr_op_ci.h \
   be_include/be_visitor_structure/cdr_op_cs.h \
   be_include/be_visitor_exception/exception.h \
   be_include/be_visitor_exception/exception_ch.h \
@@ -13107,7 +13174,6 @@ realclean: clean
   be_include/be_visitor_exception/any_op_ch.h \
   be_include/be_visitor_exception/any_op_cs.h \
   be_include/be_visitor_exception/cdr_op_ch.h \
-  be_include/be_visitor_exception/cdr_op_ci.h \
   be_include/be_visitor_exception/cdr_op_cs.h \
   be_include/be_visitor_interface.h include/idl_defines.h \
   be_include/be_visitor_interface/interface.h \
@@ -13122,7 +13188,6 @@ realclean: clean
   be_include/be_visitor_interface/any_op_ch.h \
   be_include/be_visitor_interface/any_op_cs.h \
   be_include/be_visitor_interface/cdr_op_ch.h \
-  be_include/be_visitor_interface/cdr_op_ci.h \
   be_include/be_visitor_interface/cdr_op_cs.h \
   be_include/be_visitor_interface/tie_sh.h \
   be_include/be_visitor_interface/tie_si.h \
@@ -13145,7 +13210,6 @@ realclean: clean
   be_include/be_visitor_interface_fwd.h \
   be_include/be_visitor_interface_fwd/interface_fwd_ch.h \
   be_include/be_visitor_interface_fwd/cdr_op_ch.h \
-  be_include/be_visitor_interface_fwd/cdr_op_ci.h \
   be_include/be_visitor_interface_fwd/any_op_ch.h \
   be_include/be_visitor_structure_fwd.h \
   be_include/be_visitor_structure_fwd/structure_fwd_ch.h \
@@ -13156,7 +13220,6 @@ realclean: clean
   be_include/be_visitor_typedef/any_op_ch.h \
   be_include/be_visitor_typedef/any_op_cs.h \
   be_include/be_visitor_typedef/cdr_op_ch.h \
-  be_include/be_visitor_typedef/cdr_op_ci.h \
   be_include/be_visitor_typedef/cdr_op_cs.h \
   be_include/be_visitor_union_fwd.h \
   be_include/be_visitor_union_fwd/union_fwd_ch.h \
@@ -13174,7 +13237,6 @@ realclean: clean
   be_include/be_visitor_valuetype/any_op_ch.h \
   be_include/be_visitor_valuetype/any_op_cs.h \
   be_include/be_visitor_valuetype/cdr_op_ch.h \
-  be_include/be_visitor_valuetype/cdr_op_ci.h \
   be_include/be_visitor_valuetype/cdr_op_cs.h \
   be_include/be_visitor_valuetype/marshal_ch.h \
   be_include/be_visitor_valuetype/marshal_cs.h \
@@ -13183,7 +13245,7 @@ realclean: clean
   be_include/be_visitor_valuetype/field_ci.h \
   be_include/be_visitor_valuetype/field_cs.h \
   be_include/be_visitor_valuetype/field_cdr_ch.h \
-  be_include/be_visitor_valuetype/field_cdr_ci.h \
+  be_include/be_visitor_valuetype/field_cdr_cs.h \
   be_include/be_visitor_valuetype/obv_module.h \
   be_include/be_visitor_valuetype/ami_exception_holder_ch.h \
   be_include/be_visitor_valuetype/ami_exception_holder_cs.h \
@@ -13196,7 +13258,6 @@ realclean: clean
   be_include/be_visitor_valuetype_fwd/valuetype_fwd_ch.h \
   be_include/be_visitor_valuetype_fwd/any_op_ch.h \
   be_include/be_visitor_valuetype_fwd/cdr_op_ch.h \
-  be_include/be_visitor_valuetype_fwd/cdr_op_ci.h \
   be_include/be_visitor_eventtype.h \
   be_include/be_visitor_eventtype/eventtype_ch.h \
   be_include/be_visitor_eventtype/eventtype_ci.h \
@@ -13210,13 +13271,11 @@ realclean: clean
   be_include/be_visitor_eventtype/any_op_ch.h \
   be_include/be_visitor_eventtype/any_op_cs.h \
   be_include/be_visitor_eventtype/cdr_op_ch.h \
-  be_include/be_visitor_eventtype/cdr_op_ci.h \
   be_include/be_visitor_eventtype/cdr_op_cs.h \
   be_include/be_visitor_eventtype_fwd.h \
   be_include/be_visitor_eventtype_fwd/eventtype_fwd_ch.h \
   be_include/be_visitor_eventtype_fwd/any_op_ch.h \
   be_include/be_visitor_eventtype_fwd/cdr_op_ch.h \
-  be_include/be_visitor_eventtype_fwd/cdr_op_ci.h \
   be_include/be_visitor_component.h \
   be_include/be_visitor_component/component.h \
   be_include/be_visitor_component/component_ch.h \
@@ -13230,13 +13289,11 @@ realclean: clean
   be_include/be_visitor_component/any_op_ch.h \
   be_include/be_visitor_component/any_op_cs.h \
   be_include/be_visitor_component/cdr_op_ch.h \
-  be_include/be_visitor_component/cdr_op_ci.h \
   be_include/be_visitor_component/cdr_op_cs.h \
   be_include/be_visitor_component_fwd.h \
   be_include/be_visitor_component_fwd/component_fwd_ch.h \
   be_include/be_visitor_component_fwd/any_op_ch.h \
   be_include/be_visitor_component_fwd/cdr_op_ch.h \
-  be_include/be_visitor_component_fwd/cdr_op_ci.h \
   be_include/be_visitor_home.h be_include/be_visitor_home/home_ch.h \
   be_include/be_visitor_context.h be/be_visitor_module/module.cpp \
   be/be_visitor_module/module_ch.cpp be/be_visitor_module/module_sh.cpp \
@@ -13256,10 +13313,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_argument.h include/ast_field.h be_include/be_array.h \
-  be_include/be_type.h include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_argument.h include/ast_field.h \
+  be_include/be_array.h be_include/be_type.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -13377,10 +13435,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_array.h \
-  include/ast_concrete_type.h be_include/be_attribute.h \
-  include/ast_attribute.h be_include/be_operation_strategy.h \
-  be_include/be_codegen.h \
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_array.h include/ast_concrete_type.h \
+  be_include/be_attribute.h include/ast_attribute.h \
+  be_include/be_operation_strategy.h be_include/be_codegen.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/Lock.h \
@@ -13552,9 +13610,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_constant.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_constant.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -13677,9 +13736,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -13779,7 +13840,7 @@ realclean: clean
   be_include/be_visitor_enum/any_op_ch.h \
   be_include/be_visitor_enum/any_op_cs.h \
   be_include/be_visitor_enum/cdr_op_ch.h \
-  be_include/be_visitor_enum/cdr_op_ci.h \
+  be_include/be_visitor_enum/cdr_op_cs.h \
   be_include/be_visitor_exception.h be_include/be_visitor_structure.h \
   be_include/be_visitor_union.h be_include/be_visitor_union/union.h \
   be_include/be_visitor_union/union_ch.h \
@@ -13791,7 +13852,6 @@ realclean: clean
   be_include/be_visitor_union/any_op_ch.h \
   be_include/be_visitor_union/any_op_cs.h \
   be_include/be_visitor_union/cdr_op_ch.h \
-  be_include/be_visitor_union/cdr_op_ci.h \
   be_include/be_visitor_union/cdr_op_cs.h \
   be_include/be_visitor_structure/structure.h \
   be_include/be_visitor_structure/structure_ch.h \
@@ -13800,7 +13860,6 @@ realclean: clean
   be_include/be_visitor_structure/any_op_ch.h \
   be_include/be_visitor_structure/any_op_cs.h \
   be_include/be_visitor_structure/cdr_op_ch.h \
-  be_include/be_visitor_structure/cdr_op_ci.h \
   be_include/be_visitor_structure/cdr_op_cs.h \
   be_include/be_visitor_exception/exception.h \
   be_include/be_visitor_exception/exception_ch.h \
@@ -13811,7 +13870,6 @@ realclean: clean
   be_include/be_visitor_exception/any_op_ch.h \
   be_include/be_visitor_exception/any_op_cs.h \
   be_include/be_visitor_exception/cdr_op_ch.h \
-  be_include/be_visitor_exception/cdr_op_ci.h \
   be_include/be_visitor_exception/cdr_op_cs.h \
   be_include/be_visitor_interface.h include/idl_defines.h \
   be_include/be_visitor_interface/interface.h \
@@ -13826,7 +13884,6 @@ realclean: clean
   be_include/be_visitor_interface/any_op_ch.h \
   be_include/be_visitor_interface/any_op_cs.h \
   be_include/be_visitor_interface/cdr_op_ch.h \
-  be_include/be_visitor_interface/cdr_op_ci.h \
   be_include/be_visitor_interface/cdr_op_cs.h \
   be_include/be_visitor_interface/tie_sh.h \
   be_include/be_visitor_interface/tie_si.h \
@@ -13849,7 +13906,6 @@ realclean: clean
   be_include/be_visitor_interface_fwd.h \
   be_include/be_visitor_interface_fwd/interface_fwd_ch.h \
   be_include/be_visitor_interface_fwd/cdr_op_ch.h \
-  be_include/be_visitor_interface_fwd/cdr_op_ci.h \
   be_include/be_visitor_interface_fwd/any_op_ch.h \
   be_include/be_visitor_module.h be_include/be_visitor_module/module.h \
   be_include/be_visitor_module/module_ch.h \
@@ -13866,7 +13922,6 @@ realclean: clean
   be_include/be_visitor_typedef/any_op_ch.h \
   be_include/be_visitor_typedef/any_op_cs.h \
   be_include/be_visitor_typedef/cdr_op_ch.h \
-  be_include/be_visitor_typedef/cdr_op_ci.h \
   be_include/be_visitor_typedef/cdr_op_cs.h \
   be_include/be_visitor_union_fwd.h \
   be_include/be_visitor_union_fwd/union_fwd_ch.h \
@@ -13884,7 +13939,6 @@ realclean: clean
   be_include/be_visitor_valuetype/any_op_ch.h \
   be_include/be_visitor_valuetype/any_op_cs.h \
   be_include/be_visitor_valuetype/cdr_op_ch.h \
-  be_include/be_visitor_valuetype/cdr_op_ci.h \
   be_include/be_visitor_valuetype/cdr_op_cs.h \
   be_include/be_visitor_valuetype/marshal_ch.h \
   be_include/be_visitor_valuetype/marshal_cs.h \
@@ -13893,7 +13947,7 @@ realclean: clean
   be_include/be_visitor_valuetype/field_ci.h \
   be_include/be_visitor_valuetype/field_cs.h \
   be_include/be_visitor_valuetype/field_cdr_ch.h \
-  be_include/be_visitor_valuetype/field_cdr_ci.h \
+  be_include/be_visitor_valuetype/field_cdr_cs.h \
   be_include/be_visitor_valuetype/obv_module.h \
   be_include/be_visitor_valuetype/ami_exception_holder_ch.h \
   be_include/be_visitor_valuetype/ami_exception_holder_cs.h \
@@ -13906,7 +13960,6 @@ realclean: clean
   be_include/be_visitor_valuetype_fwd/valuetype_fwd_ch.h \
   be_include/be_visitor_valuetype_fwd/any_op_ch.h \
   be_include/be_visitor_valuetype_fwd/cdr_op_ch.h \
-  be_include/be_visitor_valuetype_fwd/cdr_op_ci.h \
   be_include/be_visitor_eventtype.h \
   be_include/be_visitor_eventtype/eventtype_ch.h \
   be_include/be_visitor_eventtype/eventtype_ci.h \
@@ -13920,13 +13973,11 @@ realclean: clean
   be_include/be_visitor_eventtype/any_op_ch.h \
   be_include/be_visitor_eventtype/any_op_cs.h \
   be_include/be_visitor_eventtype/cdr_op_ch.h \
-  be_include/be_visitor_eventtype/cdr_op_ci.h \
   be_include/be_visitor_eventtype/cdr_op_cs.h \
   be_include/be_visitor_eventtype_fwd.h \
   be_include/be_visitor_eventtype_fwd/eventtype_fwd_ch.h \
   be_include/be_visitor_eventtype_fwd/any_op_ch.h \
   be_include/be_visitor_eventtype_fwd/cdr_op_ch.h \
-  be_include/be_visitor_eventtype_fwd/cdr_op_ci.h \
   be_include/be_visitor_component.h \
   be_include/be_visitor_component/component.h \
   be_include/be_visitor_component/component_ch.h \
@@ -13940,13 +13991,11 @@ realclean: clean
   be_include/be_visitor_component/any_op_ch.h \
   be_include/be_visitor_component/any_op_cs.h \
   be_include/be_visitor_component/cdr_op_ch.h \
-  be_include/be_visitor_component/cdr_op_ci.h \
   be_include/be_visitor_component/cdr_op_cs.h \
   be_include/be_visitor_component_fwd.h \
   be_include/be_visitor_component_fwd/component_fwd_ch.h \
   be_include/be_visitor_component_fwd/any_op_ch.h \
   be_include/be_visitor_component_fwd/cdr_op_ch.h \
-  be_include/be_visitor_component_fwd/cdr_op_ci.h \
   be_include/be_visitor_home.h be_include/be_visitor_home/home_ch.h \
   be_include/be_visitor_traits.h be_include/be_visitor_arg_traits.h \
   be_include/be_visitor_tmplinst.h include/ast_argument.h \
@@ -13974,10 +14023,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_argument.h include/ast_field.h be_include/be_scope.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_argument.h include/ast_field.h \
+  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -14148,9 +14198,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -14268,9 +14319,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_array.h \
-  include/ast_concrete_type.h be_include/be_enum.h be_include/be_scope.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_array.h include/ast_concrete_type.h be_include/be_enum.h \
+  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -14340,9 +14391,11 @@ realclean: clean
   include/utl_identifier.h include/nr_extern.h include/global_extern.h \
   include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -14359,7 +14412,6 @@ realclean: clean
   include/utl_stack.h be_include/be_visitor_sequence.h \
   include/idl_defines.h be_include/be_visitor_decl.h \
   be_include/be_visitor.h be_include/be_visitor_sequence/sequence_ch.h \
-  be_include/be_visitor_sequence/sequence_ci.h \
   be_include/be_visitor_sequence/sequence_cs.h \
   be_include/be_visitor_sequence/sequence_base.h \
   be_include/be_visitor_sequence/buffer_type.h \
@@ -14367,18 +14419,15 @@ realclean: clean
   be_include/be_visitor_sequence/any_op_ch.h \
   be_include/be_visitor_sequence/any_op_cs.h \
   be_include/be_visitor_sequence/cdr_op_ch.h \
-  be_include/be_visitor_sequence/cdr_op_ci.h \
   be_include/be_visitor_sequence/cdr_op_cs.h \
   be_include/be_visitor_context.h be/be_visitor_sequence/any_op_ch.cpp \
   be/be_visitor_sequence/any_op_cs.cpp \
   be/be_visitor_sequence/cdr_op_ch.cpp \
-  be/be_visitor_sequence/cdr_op_ci.cpp \
   be/be_visitor_sequence/cdr_op_cs.cpp \
   be/be_visitor_sequence/buffer_type.cpp \
   be/be_visitor_sequence/elemtype.cpp \
   be/be_visitor_sequence/sequence_base.cpp \
   be/be_visitor_sequence/sequence_ch.cpp \
-  be/be_visitor_sequence/sequence_ci.cpp \
   be/be_visitor_sequence/sequence_cs.cpp
 
 .obj/be_visitor_structure.o .obj/be_visitor_structure.so .shobj/be_visitor_structure.o .shobj/be_visitor_structure.so: be/be_visitor_structure.cpp be_include/be_field.h \
@@ -14393,10 +14442,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_field.h be_include/be_structure.h be_include/be_scope.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_field.h be_include/be_structure.h \
+  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -14462,7 +14512,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  be_include/be_type.h $(ACE_ROOT)/ace/SString.h \
+  be_include/be_type.h \
+  $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -14572,7 +14623,7 @@ realclean: clean
   be_include/be_visitor_enum/any_op_ch.h \
   be_include/be_visitor_enum/any_op_cs.h \
   be_include/be_visitor_enum/cdr_op_ch.h \
-  be_include/be_visitor_enum/cdr_op_ci.h be_include/be_visitor_union.h \
+  be_include/be_visitor_enum/cdr_op_cs.h be_include/be_visitor_union.h \
   be_include/be_visitor_union/union.h \
   be_include/be_visitor_union/union_ch.h \
   be_include/be_visitor_union/union_ci.h \
@@ -14583,7 +14634,6 @@ realclean: clean
   be_include/be_visitor_union/any_op_ch.h \
   be_include/be_visitor_union/any_op_cs.h \
   be_include/be_visitor_union/cdr_op_ch.h \
-  be_include/be_visitor_union/cdr_op_ci.h \
   be_include/be_visitor_union/cdr_op_cs.h \
   be_include/be_visitor_structure/structure.h \
   be_include/be_visitor_structure/structure_ch.h \
@@ -14592,14 +14642,12 @@ realclean: clean
   be_include/be_visitor_structure/any_op_ch.h \
   be_include/be_visitor_structure/any_op_cs.h \
   be_include/be_visitor_structure/cdr_op_ch.h \
-  be_include/be_visitor_structure/cdr_op_ci.h \
   be_include/be_visitor_structure/cdr_op_cs.h \
   be_include/be_visitor_field.h include/idl_defines.h \
   be_include/be_visitor_field/field_ch.h \
   be_include/be_visitor_field/field_ci.h \
   be_include/be_visitor_field/field_cs.h \
   be_include/be_visitor_field/cdr_op_ch.h \
-  be_include/be_visitor_field/cdr_op_ci.h \
   be_include/be_visitor_field/cdr_op_cs.h \
   be_include/be_visitor_typecode.h \
   be_include/be_visitor_typecode/typecode_decl.h \
@@ -14622,7 +14670,6 @@ realclean: clean
   be/be_visitor_structure/any_op_ch.cpp \
   be/be_visitor_structure/any_op_cs.cpp \
   be/be_visitor_structure/cdr_op_ch.cpp \
-  be/be_visitor_structure/cdr_op_ci.cpp \
   be/be_visitor_structure/cdr_op_cs.cpp
 
 .obj/be_visitor_structure_fwd.o .obj/be_visitor_structure_fwd.so .shobj/be_visitor_structure_fwd.o .shobj/be_visitor_structure_fwd.so: be/be_visitor_structure_fwd.cpp \
@@ -14638,9 +14685,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -15241,9 +15289,11 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h be_include/be_scope.h include/utl_scope.h \
+  include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -15434,9 +15484,11 @@ realclean: clean
   be_include/be_global.h include/utl_identifier.h include/global_extern.h \
   include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -15475,9 +15527,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -15595,9 +15648,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_array.h \
-  include/ast_concrete_type.h be_include/be_enum.h be_include/be_scope.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_array.h include/ast_concrete_type.h be_include/be_enum.h \
+  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -15611,9 +15664,11 @@ realclean: clean
   include/ast_enum_val.h include/ast_constant.h include/global_extern.h \
   include/idl_global.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
+  $(ACE_ROOT)/ace/Functor_String.inl \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
@@ -15701,9 +15756,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -15821,9 +15877,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_array.h \
-  include/ast_concrete_type.h be_include/be_enum.h be_include/be_scope.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_array.h include/ast_concrete_type.h be_include/be_enum.h \
+  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -15886,7 +15942,6 @@ realclean: clean
   be_include/be_visitor_typedef/any_op_ch.h \
   be_include/be_visitor_typedef/any_op_cs.h \
   be_include/be_visitor_typedef/cdr_op_ch.h \
-  be_include/be_visitor_typedef/cdr_op_ci.h \
   be_include/be_visitor_typedef/cdr_op_cs.h be_include/be_visitor_array.h \
   include/idl_defines.h be_include/be_visitor_array/array.h \
   be_include/be_visitor_array/array_ch.h \
@@ -15895,16 +15950,14 @@ realclean: clean
   be_include/be_visitor_array/any_op_ch.h \
   be_include/be_visitor_array/any_op_cs.h \
   be_include/be_visitor_array/cdr_op_ch.h \
-  be_include/be_visitor_array/cdr_op_ci.h \
   be_include/be_visitor_array/cdr_op_cs.h be_include/be_visitor_enum.h \
   be_include/be_visitor_scope.h be_include/be_visitor_enum/enum_ch.h \
   be_include/be_visitor_enum/enum_cs.h \
   be_include/be_visitor_enum/any_op_ch.h \
   be_include/be_visitor_enum/any_op_cs.h \
   be_include/be_visitor_enum/cdr_op_ch.h \
-  be_include/be_visitor_enum/cdr_op_ci.h be_include/be_visitor_sequence.h \
+  be_include/be_visitor_enum/cdr_op_cs.h be_include/be_visitor_sequence.h \
   be_include/be_visitor_sequence/sequence_ch.h \
-  be_include/be_visitor_sequence/sequence_ci.h \
   be_include/be_visitor_sequence/sequence_cs.h \
   be_include/be_visitor_sequence/sequence_base.h \
   be_include/be_visitor_sequence/buffer_type.h \
@@ -15912,7 +15965,6 @@ realclean: clean
   be_include/be_visitor_sequence/any_op_ch.h \
   be_include/be_visitor_sequence/any_op_cs.h \
   be_include/be_visitor_sequence/cdr_op_ch.h \
-  be_include/be_visitor_sequence/cdr_op_ci.h \
   be_include/be_visitor_sequence/cdr_op_cs.h \
   be_include/be_visitor_structure.h be_include/be_visitor_union.h \
   be_include/be_visitor_union/union.h \
@@ -15925,7 +15977,6 @@ realclean: clean
   be_include/be_visitor_union/any_op_ch.h \
   be_include/be_visitor_union/any_op_cs.h \
   be_include/be_visitor_union/cdr_op_ch.h \
-  be_include/be_visitor_union/cdr_op_ci.h \
   be_include/be_visitor_union/cdr_op_cs.h \
   be_include/be_visitor_structure/structure.h \
   be_include/be_visitor_structure/structure_ch.h \
@@ -15934,7 +15985,6 @@ realclean: clean
   be_include/be_visitor_structure/any_op_ch.h \
   be_include/be_visitor_structure/any_op_cs.h \
   be_include/be_visitor_structure/cdr_op_ch.h \
-  be_include/be_visitor_structure/cdr_op_ci.h \
   be_include/be_visitor_structure/cdr_op_cs.h \
   be_include/be_visitor_typecode.h \
   be_include/be_visitor_typecode/typecode_decl.h \
@@ -15955,8 +16005,7 @@ realclean: clean
   be/be_visitor_typedef/typedef_ci.cpp \
   be/be_visitor_typedef/typedef_cs.cpp \
   be/be_visitor_typedef/any_op_ch.cpp be/be_visitor_typedef/any_op_cs.cpp \
-  be/be_visitor_typedef/cdr_op_ch.cpp be/be_visitor_typedef/cdr_op_ci.cpp \
-  be/be_visitor_typedef/cdr_op_cs.cpp
+  be/be_visitor_typedef/cdr_op_ch.cpp be/be_visitor_typedef/cdr_op_cs.cpp
 
 .obj/be_visitor_union.o .obj/be_visitor_union.so .shobj/be_visitor_union.o .shobj/be_visitor_union.so: be/be_visitor_union.cpp be_include/be_enum.h \
   be_include/be_scope.h include/utl_scope.h include/ast_decl.h \
@@ -15971,9 +16020,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -16102,8 +16152,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_enum.h \
-  include/ast_concrete_type.h be_include/be_typedef.h \
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_enum.h include/ast_concrete_type.h be_include/be_typedef.h \
   be_include/be_predefined_type.h include/ast_predefined_type.h \
   be_include/be_union.h include/ast_union.h include/ast_structure.h \
   be_include/be_union_branch.h include/ast_union_branch.h \
@@ -16153,7 +16203,7 @@ realclean: clean
   be_include/be_visitor_enum/any_op_ch.h \
   be_include/be_visitor_enum/any_op_cs.h \
   be_include/be_visitor_enum/cdr_op_ch.h \
-  be_include/be_visitor_enum/cdr_op_ci.h \
+  be_include/be_visitor_enum/cdr_op_cs.h \
   be_include/be_visitor_structure.h \
   be_include/be_visitor_structure/structure.h \
   be_include/be_visitor_structure/structure_ch.h \
@@ -16162,7 +16212,6 @@ realclean: clean
   be_include/be_visitor_structure/any_op_ch.h \
   be_include/be_visitor_structure/any_op_cs.h \
   be_include/be_visitor_structure/cdr_op_ch.h \
-  be_include/be_visitor_structure/cdr_op_ci.h \
   be_include/be_visitor_structure/cdr_op_cs.h \
   be_include/be_visitor_union/union.h \
   be_include/be_visitor_union/union_ch.h \
@@ -16174,7 +16223,6 @@ realclean: clean
   be_include/be_visitor_union/any_op_ch.h \
   be_include/be_visitor_union/any_op_cs.h \
   be_include/be_visitor_union/cdr_op_ch.h \
-  be_include/be_visitor_union/cdr_op_ci.h \
   be_include/be_visitor_union/cdr_op_cs.h be_include/be_visitor_context.h \
   be_include/be_visitor_union_branch.h include/idl_defines.h \
   be_include/be_visitor_union_branch/public_ch.h \
@@ -16184,7 +16232,6 @@ realclean: clean
   be_include/be_visitor_union_branch/public_reset_cs.h \
   be_include/be_visitor_union_branch/private_ch.h \
   be_include/be_visitor_union_branch/cdr_op_ch.h \
-  be_include/be_visitor_union_branch/cdr_op_ci.h \
   be_include/be_visitor_union_branch/cdr_op_cs.h \
   be_include/be_visitor_typecode.h \
   be_include/be_visitor_typecode/typecode_decl.h \
@@ -16206,7 +16253,7 @@ realclean: clean
   be/be_visitor_union/union_ch.cpp be/be_visitor_union/union_ci.cpp \
   be/be_visitor_union/union_cs.cpp be/be_visitor_union/any_op_ch.cpp \
   be/be_visitor_union/any_op_cs.cpp be/be_visitor_union/cdr_op_ch.cpp \
-  be/be_visitor_union/cdr_op_ci.cpp be/be_visitor_union/cdr_op_cs.cpp
+  be/be_visitor_union/cdr_op_cs.cpp
 
 .obj/be_visitor_union_fwd.o .obj/be_visitor_union_fwd.so .shobj/be_visitor_union_fwd.o .shobj/be_visitor_union_fwd.so: be/be_visitor_union_fwd.cpp \
   be_include/be_union_fwd.h be_include/be_structure_fwd.h \
@@ -16222,9 +16269,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -16412,9 +16460,10 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/iosfwd.h include/idl_narrow.h \
-  include/ast_type.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  include/idl_bool.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  include/idl_narrow.h include/ast_type.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -16532,9 +16581,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/SString.i include/ast_array.h \
-  include/ast_concrete_type.h be_include/be_enum.h be_include/be_scope.h \
-  include/utl_scope.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/SString.i \
+  include/ast_array.h include/ast_concrete_type.h be_include/be_enum.h \
+  be_include/be_scope.h include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -16601,7 +16650,6 @@ realclean: clean
   be_include/be_visitor_union_branch/public_reset_cs.h \
   be_include/be_visitor_union_branch/private_ch.h \
   be_include/be_visitor_union_branch/cdr_op_ch.h \
-  be_include/be_visitor_union_branch/cdr_op_ci.h \
   be_include/be_visitor_union_branch/cdr_op_cs.h \
   be_include/be_visitor_array.h be_include/be_visitor_array/array.h \
   be_include/be_visitor_array/array_ch.h \
@@ -16610,16 +16658,14 @@ realclean: clean
   be_include/be_visitor_array/any_op_ch.h \
   be_include/be_visitor_array/any_op_cs.h \
   be_include/be_visitor_array/cdr_op_ch.h \
-  be_include/be_visitor_array/cdr_op_ci.h \
   be_include/be_visitor_array/cdr_op_cs.h be_include/be_visitor_enum.h \
   be_include/be_visitor_scope.h be_include/be_visitor_enum/enum_ch.h \
   be_include/be_visitor_enum/enum_cs.h \
   be_include/be_visitor_enum/any_op_ch.h \
   be_include/be_visitor_enum/any_op_cs.h \
   be_include/be_visitor_enum/cdr_op_ch.h \
-  be_include/be_visitor_enum/cdr_op_ci.h be_include/be_visitor_sequence.h \
+  be_include/be_visitor_enum/cdr_op_cs.h be_include/be_visitor_sequence.h \
   be_include/be_visitor_sequence/sequence_ch.h \
-  be_include/be_visitor_sequence/sequence_ci.h \
   be_include/be_visitor_sequence/sequence_cs.h \
   be_include/be_visitor_sequence/sequence_base.h \
   be_include/be_visitor_sequence/buffer_type.h \
@@ -16627,7 +16673,6 @@ realclean: clean
   be_include/be_visitor_sequence/any_op_ch.h \
   be_include/be_visitor_sequence/any_op_cs.h \
   be_include/be_visitor_sequence/cdr_op_ch.h \
-  be_include/be_visitor_sequence/cdr_op_ci.h \
   be_include/be_visitor_sequence/cdr_op_cs.h \
   be_include/be_visitor_structure.h be_include/be_visitor_union.h \
   be_include/be_visitor_union/union.h \
@@ -16640,7 +16685,6 @@ realclean: clean
   be_include/be_visitor_union/any_op_ch.h \
   be_include/be_visitor_union/any_op_cs.h \
   be_include/be_visitor_union/cdr_op_ch.h \
-  be_include/be_visitor_union/cdr_op_ci.h \
   be_include/be_visitor_union/cdr_op_cs.h \
   be_include/be_visitor_structure/structure.h \
   be_include/be_visitor_structure/structure_ch.h \
@@ -16649,7 +16693,6 @@ realclean: clean
   be_include/be_visitor_structure/any_op_ch.h \
   be_include/be_visitor_structure/any_op_cs.h \
   be_include/be_visitor_structure/cdr_op_ch.h \
-  be_include/be_visitor_structure/cdr_op_ci.h \
   be_include/be_visitor_structure/cdr_op_cs.h \
   be_include/be_visitor_context.h \
   be/be_visitor_union_branch/private_ch.cpp \
@@ -16659,7 +16702,6 @@ realclean: clean
   be/be_visitor_union_branch/public_ci.cpp \
   be/be_visitor_union_branch/public_cs.cpp \
   be/be_visitor_union_branch/cdr_op_ch.cpp \
-  be/be_visitor_union_branch/cdr_op_ci.cpp \
   be/be_visitor_union_branch/cdr_op_cs.cpp
 
 .obj/be_tmplinst.o .obj/be_tmplinst.so .shobj/be_tmplinst.o .shobj/be_tmplinst.so: be/be_tmplinst.cpp \
@@ -16846,7 +16888,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
-  include/ast_typedef.h $(ACE_ROOT)/ace/Synch.h \
+  include/ast_typedef.h \
+  $(ACE_ROOT)/ace/Synch.h \
   $(ACE_ROOT)/ace/Auto_Event.h \
   $(ACE_ROOT)/ace/Event.h \
   $(ACE_ROOT)/ace/Event.inl \
