@@ -4,7 +4,7 @@
 #define ACE_CONFIG_WINCE_H
 
 #if !defined (ACE_HAS_WINCE)
-#define ACE_HAS_WINCE
+#define ACE_HAS_WINCE 1
 #endif
 
 // Only DLL version is supported on CE.
