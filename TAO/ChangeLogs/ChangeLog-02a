@@ -163,30 +163,30 @@ Wed Mar 15 19:39:20 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Wed Mar 15 19:20:17 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Acceptor_Registry.cpp
-	* tao/Active_Object_Map.cpp
-	* tao/Asynch_Invocation.h
-	* tao/BoundsC.cpp
-	* tao/Buffering_Constraint_Policy.cpp
-	* tao/Buffering_Constraint_Policy.i
-	* tao/CDR.cpp
-	* tao/CDR.h
-	* tao/CONV_FRAMEC.h
-	* tao/Client_Priority_Policy.cpp
-	* tao/Client_Priority_Policy.i
-	* tao/Connector_Registry.i
-	* tao/CurrentC.cpp
-	* tao/DomainC.cpp
-	* tao/DomainC.h
-	* tao/DomainS.cpp
-	* tao/DynEnum_i.cpp
-	* tao/DynStruct_i.cpp
-	* tao/DynUnion_i.cpp
-	* tao/Environment.cpp
-	* tao/IOPC.cpp
-	* tao/IOPC.h
-	* tao/IORC.cpp
-	* tao/IORC.h
+	* tao/Acceptor_Registry.cpp:
+	* tao/Active_Object_Map.cpp:
+	* tao/Asynch_Invocation.h:
+	* tao/BoundsC.cpp:
+	* tao/Buffering_Constraint_Policy.cpp:
+	* tao/Buffering_Constraint_Policy.i:
+	* tao/CDR.cpp:
+	* tao/CDR.h:
+	* tao/CONV_FRAMEC.h:
+	* tao/Client_Priority_Policy.cpp:
+	* tao/Client_Priority_Policy.i:
+	* tao/Connector_Registry.i:
+	* tao/CurrentC.cpp:
+	* tao/DomainC.cpp:
+	* tao/DomainC.h:
+	* tao/DomainS.cpp:
+	* tao/DynEnum_i.cpp:
+	* tao/DynStruct_i.cpp:
+	* tao/DynUnion_i.cpp:
+	* tao/Environment.cpp:
+	* tao/IOPC.cpp:
+	* tao/IOPC.h:
+	* tao/IORC.cpp:
+	* tao/IORC.h:
 	* tao/IOR_LookupTable.cpp: Picky cvs conflict resolution. No major
 	  changes but for removing the conflicts. Conflicts were not in
 	  the code at all.
