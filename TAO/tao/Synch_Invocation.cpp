@@ -72,16 +72,16 @@ namespace TAO
 
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
-
 #if TAO_HAS_INTERCEPTORS == 1
     // Start the interception point here..
     s =
       this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
+#endif /*TAO_HAS_INTERCEPTORS */
+
     if (s != TAO_INVOKE_SUCCESS)
       return s;
-#endif /*TAO_HAS_INTERCEPTORS */
 
     TAO_OutputCDR &cdr =
       this->resolver_.transport ()->messaging_object ()->out_stream ();
@@ -123,10 +123,11 @@ namespace TAO
 
             if (tmp != TAO_INVOKE_SUCCESS)
               s = tmp;
-
-            return s;
           }
 #endif /*TAO_HAS_INTERCEPTORS */
+
+        if (s != TAO_INVOKE_SUCCESS)
+          return s;
 
         countdown.update ();
 
@@ -170,10 +171,11 @@ namespace TAO
             // Push the latest values for the return..
             if (tmp != TAO_INVOKE_SUCCESS)
               s = tmp;
-
-            return s;
           }
 #endif /*TAO_HAS_INTERCEPTORS */
+
+        if (s != TAO_INVOKE_SUCCESS)
+          return s;
 
         // What happens when the above call returns an error through
         // the return value? That would be bogus as per the contract
@@ -205,6 +207,9 @@ namespace TAO
         if (tmp != TAO_INVOKE_SUCCESS)
           s = tmp;
 #endif /*TAO_HAS_INTERCEPTORS */
+
+        if (s != TAO_INVOKE_SUCCESS)
+          return s;
       }
     ACE_CATCHANY
       {
