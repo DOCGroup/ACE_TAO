@@ -10,9 +10,9 @@
 
 #include "ace/Auto_Ptr.h"
 
-#if defined (ACE_HAS_BASED_POINTER_MALLOC)
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
 #include "ace/Based_Pointer_T.h"
-#endif /* ACE_HAS_BASED_POINTER_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
 ACE_RCSID(ace, Memory_Pool, "$Id$")
 
@@ -79,10 +79,10 @@ ACE_MMAP_Memory_Pool::release (void)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::release");
 
-#if defined (ACE_HAS_BASED_POINTER_MALLOC)
-  ACE_BASED_POINTER_REPOSITORY::instance ()->unbind (this->mmap_.addr (),
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+  ACE_POSITION_INDEPENDENT_REPOSITORY::instance ()->unbind (this->mmap_.addr (),
                                                      this->mmap_.size ());
-#endif /* ACE_HAS_BASED_POINTER_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
   this->mmap_.remove ();
   return 0;
@@ -264,10 +264,10 @@ ACE_MMAP_Memory_Pool::map_file (off_t map_size)
     }
   else
     {
-#if defined (ACE_HAS_BASED_POINTER_MALLOC)
-      ACE_BASED_POINTER_REPOSITORY::instance ()->bind (this->base_addr_,
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+      ACE_POSITION_INDEPENDENT_REPOSITORY::instance ()->bind (this->base_addr_,
                                                        map_size);
-#endif /* ACE_HAS_BASED_POINTER_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
       return 0;
     }
 }

@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_BASED_POINTER_REPOSITORY_H)
+#ifndef ACE_BASED_POINTER_REPOSITORY_H
 #define ACE_BASED_POINTER_REPOSITORY_H
 
 #include "ace/Singleton.h"
