@@ -1,3 +1,10 @@
+Wed Feb 28 13:55:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+          Fixed indentation for generation of
+          '_tao_server_request.argument_flag (0);'
+
 Wed Feb 28 09:43:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Any:
