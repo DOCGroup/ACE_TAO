@@ -1,3 +1,11 @@
+Fri Jun 16 14:24:36 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h:
+        * include/makeinclude/platform_hpux_aCC.GNU: Allow user to do make
+          exceptions=0 to disable exception handling. This is not a safe
+          thing to do since the C++ runtime throws exceptions, but if you
+          must, and you know what you're doing, here's the rope.
+
 Fri Jun 16 08:40:38 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/msvc_auto_compile.pl: 
