@@ -106,7 +106,27 @@ SOURCE=.\Consumer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Control.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\EC_Destroyer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Federated_TestC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Federated_TestS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Implicit_Deactivator.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Loopback.cpp
 # End Source File
 # Begin Source File
 
@@ -126,6 +146,10 @@ SOURCE=.\ORB_Holder.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ORB_Shutdown.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ORB_Task.cpp
 # End Source File
 # Begin Source File
@@ -134,11 +158,19 @@ SOURCE=.\ORB_Task_Activator.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Peer_Base.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PriorityBand_Setup.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\RT_Class.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTClient_Setup.cpp
 # End Source File
 # Begin Source File
 
@@ -194,7 +226,31 @@ SOURCE=.\Consumer.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Control.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\EC_Destroyer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Federated_TestC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Federated_TestS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Federated_TestS_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Implicit_Deactivator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Loopback.h
 # End Source File
 # Begin Source File
 
@@ -214,11 +270,19 @@ SOURCE=.\ORB_Holder.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ORB_Shutdown.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ORB_Task.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\ORB_Task_Activator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Peer_Base.h
 # End Source File
 # Begin Source File
 
@@ -231,6 +295,10 @@ SOURCE=.\RIR_Narrow.h
 # Begin Source File
 
 SOURCE=.\RT_Class.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTClient_Setup.h
 # End Source File
 # Begin Source File
 
@@ -294,11 +362,31 @@ SOURCE=.\EC_Destroyer.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Federated_TestC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Federated_TestS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Federated_TestS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Implicit_Deactivator.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Loopback_Pair.inl
 # End Source File
 # Begin Source File
 
 SOURCE=.\ORB_Holder.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORB_Shutdown.inl
 # End Source File
 # Begin Source File
 
@@ -311,6 +399,10 @@ SOURCE=.\PriorityBand_Setup.inl
 # Begin Source File
 
 SOURCE=.\RT_Class.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTClient_Setup.inl
 # End Source File
 # Begin Source File
 
@@ -347,6 +439,11 @@ SOURCE=.\Auto_Disconnect.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Federated_TestS_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\RIR_Narrow.cpp
 # PROP Exclude_From_Build 1
 # End Source File
@@ -354,6 +451,93 @@ SOURCE=.\RIR_Narrow.cpp
 
 SOURCE=.\Servant_var.cpp
 # PROP Exclude_From_Build 1
+# End Source File
+# End Group
+# Begin Group "IDL Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Federated_Test.idl
+
+!IF  "$(CFG)" == "RTECPerf DLL - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\Federated_Test.idl
+InputName=Federated_Test
+
+BuildCmds= \
+	..\..\..\..\..\bin\Release\tao_idl.exe -Ge 1 -Wb,export_macro=TAO_RTEC_Perf_Export -Wb,export_include=rtec_perf_export.h $(InputPath)
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "RTECPerf DLL - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\Federated_Test.idl
+InputName=Federated_Test
+
+BuildCmds= \
+	..\..\..\..\..\bin\tao_idl.exe -Ge 1 -Wb,export_macro=TAO_RTEC_Perf_Export -Wb,export_include=rtec_perf_export.h $(InputPath)
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
 # End Source File
 # End Group
 # End Target
