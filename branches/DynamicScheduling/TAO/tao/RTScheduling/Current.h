@@ -163,11 +163,15 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
     current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)); 
   
-  void cancel_thread (void);
+  void cancel_thread (void
+		      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::THREAD_CANCELLED));
   
   void cleanup_DT (void);
 
   void cleanup_current (void);		
+
+  void delete_all_currents (void);
 
  private:
   RTScheduling::Scheduler_var scheduler_;

@@ -9,10 +9,12 @@ module CORBA
     // Extensions by this proposal:
 
     native VoidData;
-// Ada:  System.Address
-// C:    void*
-// C++:  void*
-// Java: Object
+    // Ada:  System.Address
+    // C:    void*
+    // C++:  void*
+    // Java: Object
+		
+    exception THREAD_CANCELLED {};
 };
 
 module RTScheduling

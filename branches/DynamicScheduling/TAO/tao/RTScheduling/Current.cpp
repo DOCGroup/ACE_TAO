@@ -296,7 +296,10 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
 						 this->dt_);
 
       if (result != 0)
-	this->cancel_thread ();
+	{
+	this->cancel_thread (ACE_ENV_ARG_PARAMETER);
+	ACE_CHECK;
+	}
       
       this->name_ = name;
       this->sched_param_ = sched_param;
@@ -306,7 +309,10 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
   else //Nested segment
     {
       if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
-	this->cancel_thread ();
+	{
+	  this->cancel_thread (ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
 
       // Inform scheduler of start of nested
       // scheduling segment.
@@ -354,7 +360,11 @@ TAO_RTScheduler_Current_i::update_scheduling_segment (const char * name,
 {
   // Check if DT has been cancelled
   if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
-    this->cancel_thread ();
+    {
+      this->cancel_thread (ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+  
     
   // Let scheduler know of the updates.
   this->scheduler_->update_scheduling_segment (this->guid_,
@@ -379,7 +389,10 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name
     {
       // Check if DT has been cancelled
       if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
-	this->cancel_thread ();
+	{
+	  this->cancel_thread (ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
 
       if (this->previous_current_ == 0)
 	{
@@ -416,7 +429,18 @@ TAO_RTScheduler_Current_i::lookup(const RTScheduling::Current::IdType & id
 				ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-		return 0;
+  CORBA::Object_ptr DT_obj;
+  this->orb_->dt_hash ()->find (id,
+								DT_obj);
+  
+  RTScheduling::DistributableThread_var DT = RTScheduling::DistributableThread::_narrow (DT_obj
+											 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  if (!CORBA::is_nil (DT.in ()))
+    return RTScheduling::DistributableThread::_duplicate (DT.in());
+  
+  return 0;
 }
 
 // returns a null reference if
@@ -463,8 +487,27 @@ TAO_RTScheduler_Current_i::current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_
 }
 
 void
-TAO_RTScheduler_Current_i::cancel_thread (void)
+TAO_RTScheduler_Current_i::cancel_thread (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::THREAD_CANCELLED))
 {
+  ACE_DEBUG ((LM_DEBUG,
+	      "Distributable Thread - %s is cancelled\n",
+	      (const char*) this->guid_.get_buffer ()));
+ 
+  // Let the scheduler know that the thread has
+  // been cancelled.
+  this->scheduler_->cancel (this->guid_
+			    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  // Remove DT from map.
+  this->orb_->dt_hash ()->unbind (this->guid_);
+  
+  // Remove all related nested currents.
+  this->delete_all_currents ();
+  
+  // Throw exception.
+  ACE_THROW (CORBA::THREAD_CANCELLED ());
 }
 
 void
@@ -488,3 +531,17 @@ TAO_RTScheduler_Current_i::cleanup_current (void)
   // Delete this current.
   delete this;
 }
+
+void
+TAO_RTScheduler_Current_i::delete_all_currents (void)
+{
+  TAO_RTScheduler_Current_i* current = this;
+  
+  while (current != 0)
+    {
+      TAO_RTScheduler_Current_i* prev_current = this->previous_current_;
+      current->cleanup_current ();
+      current = prev_current;
+    }
+}
+
