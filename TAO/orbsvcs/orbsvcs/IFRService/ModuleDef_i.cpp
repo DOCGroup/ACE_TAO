@@ -89,7 +89,6 @@ TAO_ModuleDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (0);
 
   ACE_TString container_id;
-
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "container_id",
                                             container_id);

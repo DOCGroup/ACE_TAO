@@ -155,14 +155,11 @@ public:
   virtual CORBA::Contained::Description *describe (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-  // Pure virtual.
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Contained::Description *describe_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-  // Pure virtual.
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void move (
       CORBA::Container_ptr new_container,
