@@ -347,6 +347,10 @@ SOURCE=.\IDLType_i.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IFR_macro.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IFR_Service.h
 # End Source File
 # Begin Source File
