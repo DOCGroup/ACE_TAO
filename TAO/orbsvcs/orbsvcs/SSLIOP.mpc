@@ -1,5 +1,6 @@
-project(SSLIOP) : orbsvcslib, core {
+project(SSLIOP) : orbsvcslib, corba_messaging, core {
   ssl         = 1
+  requires   += ssl interceptors
   depends    += Security PortableServer SSL
   sharedname  = TAO_SSLIOP
   libs       += TAO_Security TAO_PortableServer TAO ACE_SSL
