@@ -1,3 +1,11 @@
+Fri Dec 26 00:43:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/GIOP.pidl:
+
+	  The pragms prefix in this file was throwing up strange errors
+	  under stramge circumstances. Jeff needs to look into this. Till
+	  then we will keep things moving along.
+
 Fri Dec 26 00:15:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/FT_App/FT_App.mpc:
