@@ -1,3 +1,10 @@
+Mon Sep  1 10:43:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp (visit_interface): 
+
+	  Use _NOT_USED in the argument list for _is_a () only if the
+	  interface is local. 
+	
 Mon Sep  1 10:19:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_exception/exception_ci.cpp:

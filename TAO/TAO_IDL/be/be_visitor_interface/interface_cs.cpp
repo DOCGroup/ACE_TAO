@@ -129,7 +129,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   // Generate the proxy broker factory function pointer definition.
   *os << be_nl << be_nl
-      << "// Function pointer for collocation factory initialization." 
+      << "// Function pointer for collocation factory initialization."
       << be_nl
       << "TAO::Collocation_Proxy_Broker * " << be_nl
       << "(*" << node->flat_client_enclosing_scope ()
@@ -370,8 +370,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   *os << "CORBA::Boolean" << be_nl
       << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
-      << "const char *value" << be_nl
-      << "ACE_ENV_ARG_DECL_NOT_USED";
+      << "const char *value" << be_nl;
+
+  if (node->is_local ())
+    *os << "ACE_ENV_ARG_DECL_NOT_USED";
+  else
+    *os << "ACE_ENV_ARG_DECL";
 
   *os << be_uidt_nl << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -686,7 +690,7 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
 
   *os << "{" << be_idt_nl
       << "::" << node->name () << "_ptr p =" << be_idt_nl
-      << "dynamic_cast<::" << node->name () << "_ptr> (obj);" 
+      << "dynamic_cast<::" << node->name () << "_ptr> (obj);"
       << be_uidt_nl << be_nl
       << "p->_add_ref ();" << be_nl << be_nl
       << "return p;" << be_uidt_nl
