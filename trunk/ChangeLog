@@ -1,3 +1,9 @@
+Sun Aug 10 08:16:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/DEV.h: Fixed a typo in the definition of
+	  ACE_DEV_STREAM. Thanks to Edan Ayal <edanayal@yahoo.com> for
+	  pointing this out. 
+
 Sun Aug 10 06:17:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/Export/dll.cpp:
