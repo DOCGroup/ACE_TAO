@@ -56,6 +56,9 @@ private:
   ACE_Lock_Adapter<ACE_Thread_Mutex> lock_adapter_;
   // Serialize access to <ACE_Message_Block> reference count, which
   // will be decremented from multiple threads.
+
+  int n_threads_;
+  // Number of threads to spawn.
 };
 
 Thread_Pool::~Thread_Pool (void)
@@ -70,10 +73,8 @@ Thread_Pool::close (u_long)
 }
 
 Thread_Pool::Thread_Pool (int n_threads)
+  : n_threads_ (n_threads)
 {
-  // Create a pool of worker threads.
-  if (this->activate (THR_NEW_LWP, n_threads) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
 }
 
 // Simply enqueue the Message_Block into the end of the queue.
@@ -130,6 +131,10 @@ Thread_Pool::open (void *)
   ACE_DEBUG ((LM_DEBUG,
 	      "(%t) producer start, dumping the Thread_Pool\n"));
   this->dump ();
+
+  // Create a pool of worker threads.
+  if (this->activate (THR_NEW_LWP, this->n_threads_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate failed"), -1);
 
   for (size_t count = 0; count < n_iterations; count++)
     {
@@ -215,7 +220,8 @@ main (int, char *[])
   Thread_Pool thread_pool (n_threads);
 
   // Create work for the worker tasks to process in their own threads.
-  thread_pool.open ();
+  if (thread_pool.open () == -1)
+    return 1;
 
   // Wait for all the threads to reach their exit point.
 
