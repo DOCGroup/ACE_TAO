@@ -1,0 +1,6 @@
+// @@ Please document me.
+
+module TAO 
+{
+  typedef sequence<octet> ObjectKey;
+};
