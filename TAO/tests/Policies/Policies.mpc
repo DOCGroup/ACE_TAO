@@ -2,5 +2,6 @@
 // $Id$
 
 project(Policies Manipulation): taoexe, portableserver, messaging {
-  exename = Manipulation
+  exename   = Manipulation
+  requires += corba_messaging
 }

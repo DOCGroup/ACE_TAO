@@ -9,6 +9,8 @@ project(*Server): taoexe, portableserver {
 }
 
 project(*Client): messaging, taoexe, portableserver {
+  requires += corba_messaging
+
   Source_Files {
     testC.cpp
     client.cpp

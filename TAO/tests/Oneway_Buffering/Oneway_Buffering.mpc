@@ -17,6 +17,8 @@ project(*Server): messaging, taoexe, portableserver {
 // only one process is allowed to compile Test.idl and thus the build
 // succeeds.
 project(*Client): messaging, taoexe, portableserver {
+  requires += corba_messaging
+
   Source_Files {
     TestC.cpp
     client.cpp
