@@ -12,7 +12,7 @@ endif # ! TAO_ROOT
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 LDFLAGS  += -L$(TAO_ROOT)/orbsvcs
-LDLIBS	  = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
+LDLIBS	  = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
 
 BIN_UNCHECKED = wxNamingViewer
 

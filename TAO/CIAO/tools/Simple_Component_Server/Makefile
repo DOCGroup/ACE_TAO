@@ -20,7 +20,7 @@ LDLIBS = -lTAO_IFR_Client \
 	 -lCIAO_Container \
 	 -lCIAO_Server \
 	 -lTAO_CosNaming \
-	 -lTAO_PortableServer \
+	 -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor \
          -lTAO
 
 SRC = Simple_Component_Server.cpp

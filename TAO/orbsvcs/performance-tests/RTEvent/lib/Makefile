@@ -19,7 +19,7 @@ LDLIBS     = \
   -lTAO_Svc_Utils \
   -lTAO_IORTable \
   -lTAO_RTPortableServer \
-  -lTAO_PortableServer \
+  -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor \
   -lTAO_RTCORBA \
   -lTAO_Strategies \
   -lTAO_Messaging \

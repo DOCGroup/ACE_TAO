@@ -12,7 +12,7 @@ LSRC = 	$(addsuffix .cpp,$(BIN))
 
 CPPFLAGS += -I$(TAO_ROOT) -I../Generic_Servant
 
-LDLIBS     = -lGeneric_Servant -lTAO_PortableServer -lTAO
+LDLIBS     = -lGeneric_Servant -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
 LDFLAGS += -L$(TAO_ROOT)/tao -L../Generic_Servant
 
 INSTALL =

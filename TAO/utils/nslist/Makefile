@@ -13,7 +13,7 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 CPPFLAGS+= -I$(TAO_ROOT)/orbsvcs
-LDLIBS	=  -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS	=  -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
 
 BIN2	= nslist nsadd nsdel
 

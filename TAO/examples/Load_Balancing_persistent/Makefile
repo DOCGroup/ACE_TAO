@@ -8,7 +8,7 @@ ifndef TAO_ROOT
 endif
 
 TAO_IDLFLAGS += -Ge 1
-LDLIBS = -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
 
 IDL_FILES = Load_Balancer Identity
 IDL_SRC = \

@@ -56,8 +56,8 @@ CLNT_LIBS += -lTAO_SSLIOP
 SRVR_LIBS += -lTAO_SSLIOP
 endif  # static_libs_only = 1
 
-CLNT_LIBS += -lTAO_PortableServer $(TAO_CLNT_LIBS)
-SRVR_LIBS += -lTAO_PortableServer $(TAO_SRVR_LIBS)
+CLNT_LIBS += -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor $(TAO_CLNT_LIBS)
+SRVR_LIBS += -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor $(TAO_SRVR_LIBS)
 
 #----------------------------------------------------------------------------
 #       Local targets

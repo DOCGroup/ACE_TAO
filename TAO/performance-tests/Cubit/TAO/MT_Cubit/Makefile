@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO_Strategies -lTAO_PortableServer -lTAO $(MATHLIB)
+LDLIBS = -lTAO_Strategies -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO $(MATHLIB)
 
 IDL_FILES = cubit
 IDL_SRC = cubitC.cpp cubitS.cpp

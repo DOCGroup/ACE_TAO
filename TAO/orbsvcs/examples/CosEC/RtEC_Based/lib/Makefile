@@ -23,10 +23,10 @@ endif # RTEvent
 endif # CosEvent
 
 ACE_SHLIBS = -lTAO_RTEvent -lTAO_CosEvent \
-             -lTAO_Svc_Utils -lTAO_PortableServer -lTAO -lACE
+             -lTAO_Svc_Utils -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO -lACE
 
 LDLIBS  = -lTAO_RTEvent -lTAO_CosEvent -lTAO_Svc_Utils \
-	  -lTAO_PortableServer -lTAO -lACE
+	  -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO -lACE
 
 CPP_SRCS += \
         ConsumerAdmin_i \

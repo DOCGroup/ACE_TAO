@@ -15,7 +15,7 @@ endif # ! TAO_ROOT
 IDL_FILES = corbaloc
 IDL_SRC = corbalocC corbalocS
 
-LDLIBS = -lTAO_CosNaming -lTAO_PortableServer -lTAO 
+LDLIBS = -lTAO_CosNaming -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO 
 #CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 BIN = server client corbaname_client
 
