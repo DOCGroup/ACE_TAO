@@ -1,16 +1,16 @@
 ACE_INLINE
-CDR::CDR (u_char *buf = 0,
-          u_int len = 0,
-          int byte_order = MY_BYTE_SEX,
-          int consume_buf = 0) 
+CDR::CDR (u_char *buf,
+          u_int len,
+          int byte_order,
+          int consume_buf)
   // Constructor ... buffer must be aligned for the strictest CDR
   // alignment requirement, since the algorithms used here only
   // maintain alignment with respect to &buffer [0].
   //
   // Yes, that complicates the grow() primitive.
-  : real_buffer (buf),
-    do_free (consume_buf),
-    do_byteswap (byte_order != MY_BYTE_SEX)
+  : real_buffer(buf),
+    do_free(consume_buf),
+    do_byteswap(byte_order != MY_BYTE_SEX)
 {
   ptr_arith_t temp = (ptr_arith_t) buf;
 
