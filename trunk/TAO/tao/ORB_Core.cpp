@@ -72,7 +72,9 @@ TAO_ORB_Core::TAO_ORB_Core (const char* orbid)
     from_iso8859_ (0),
     to_iso8859_ (0),
     from_unicode_ (0),
-    to_unicode_ (0)
+    to_unicode_ (0),
+    use_tss_resources_ (0),
+    reactor_ (0)
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);

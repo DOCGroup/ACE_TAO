@@ -342,10 +342,20 @@ TAO_ORB_Manager::poa_manager (void)
 
 TAO_ORB_Manager::~TAO_ORB_Manager (void)
 {
-  CORBA::Environment ACE_TRY_ENV;
-
-  if (CORBA::is_nil (this->poa_.in ()) == 0)
-    this->poa_->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
+  ACE_TRY_NEW_ENV
+    {
+      if (CORBA::is_nil (this->poa_.in ()) == 0)
+        {
+          this->poa_->destroy (1,
+                               1,
+                               ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      // ignore any exceptions..
+    }
+  ACE_ENDTRY;
+  this->poa_ = PortableServer::POA::_nil ();
 }
