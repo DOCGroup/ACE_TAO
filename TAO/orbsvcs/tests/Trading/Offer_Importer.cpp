@@ -119,14 +119,15 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
 
 	  do
 	    {
-	      CosTrading::OfferSeq_ptr iter_offers_out;
-	      any_left =
-		offer_iterator->next_n (length,
-					CosTrading::OfferSeq_out (iter_offers_out),
-					TAO_TRY_ENV);
+	      CosTrading::OfferSeq_ptr iter_offers_ptr;
+	      CosTrading::OfferSeq_out iter_offers_out (iter_offers_ptr);
+
+	      any_left = offer_iterator->next_n (length,
+						 iter_offers_out,
+						 TAO_TRY_ENV);
 	      TAO_CHECK_ENV;
 
-	      CosTrading::OfferSeq_var iter_offers (iter_offers_out);
+	      CosTrading::OfferSeq_var iter_offers (iter_offers_ptr);
 	      for (length = iter_offers->length (), i = 0; i < length; i++)
 		{
 		  CosTrading::PropertySeq& props = iter_offers[i].properties;
