@@ -215,7 +215,7 @@ TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::hash (const char
   return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
 }
 
-const struct TAO_operation_db_entry *
+const TAO_operation_db_entry *
 TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 {
   enum
@@ -230,7 +230,7 @@ TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::lookup (const ch
       WORDLIST_SIZE = 10
     };
 
-  static const struct TAO_operation_db_entry  wordlist[] =
+  static const TAO_operation_db_entry  wordlist[] =
     {
       {"",0,0},{"",0,0},{"",0,0},{"",0,0},
       {"ping", &POA_ImplementationRepository::ServerObject::ping_skel, &POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::ping},

@@ -400,7 +400,7 @@ TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable::has
   return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
 }
 
-const struct TAO_operation_db_entry *
+const TAO_operation_db_entry *
 TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 {
   enum
@@ -415,7 +415,7 @@ TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable::loo
       WORDLIST_SIZE = 11
     };
 
-  static const struct TAO_operation_db_entry  wordlist[] =
+  static const TAO_operation_db_entry  wordlist[] =
     {
       {"",0,0},{"",0,0},{"",0,0},{"",0,0},{"",0,0},
       {"_is_a", &POA_ImplementationRepository::ServerInformationIterator::_is_a_skel, 0},
@@ -1300,7 +1300,7 @@ TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable::hash (const ch
   return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
 }
 
-const struct TAO_operation_db_entry *
+const TAO_operation_db_entry *
 TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 {
   enum
@@ -1315,7 +1315,7 @@ TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable::lookup (const 
       WORDLIST_SIZE = 17
     };
 
-  static const struct TAO_operation_db_entry  wordlist[] =
+  static const TAO_operation_db_entry  wordlist[] =
     {
       {"",0,0},{"",0,0},{"",0,0},{"",0,0},
       {"find", &POA_ImplementationRepository::Administration::find_skel, &POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::find},
