@@ -1,3 +1,9 @@
+Wed Jan 28 09:14:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/POA/Makefile: 
+	  Fixed order in the DIRS variable, Generic_Servant goes first
+	  since it builds a library needed in some of the other tests.
+
 Tue Jan 27 17:29:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/Makefile: 

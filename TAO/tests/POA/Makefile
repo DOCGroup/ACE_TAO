@@ -1,16 +1,18 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
 #
-#	Makefile for the TAO tests
+# $Id$
+#
+# Makefile for the POA tests
+#
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Explicit_Activation \
+DIRS  = Generic_Servant \
+	Explicit_Activation \
 	FindPOA \
-	Generic_Servant \
 	NewPOA \
 	On_Demand_Activation \
 	RootPOA
