@@ -67,29 +67,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << be_idt_nl
       << "return " << node->name () << "::_nil ();" << be_uidt_nl;
 
+  *os << "return " << node->name ()
+      << "::_unchecked_narrow (obj, env);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
   // This may be necessary to work around a GCC compiler bug!
   const char *skel_name = node->full_skel_name ();
   const char *coll_name = node->full_coll_name ();
   assert (coll_name != 0);
-
-  *os << "TAO_Stub* stub = obj->_stubobj ();" << be_nl
-      << "stub->_incr_refcnt ();" << be_nl;
-  *os << "void* servant = 0;" << be_nl;
-  *os << "if (obj->_is_collocated () "
-      << "&& obj->_servant() != 0)" << be_idt_nl
-      << "servant = obj->_servant()->_downcast (\""
-      << node->repoID () << "\");" << be_uidt_nl;
-
-  *os << "if (servant == 0)" << be_idt_nl
-      << "return new " << node->name () << "(stub);" << be_uidt_nl;
-
-  *os << "return new "
-      << coll_name << "(" << be_idt << be_idt_nl
-      << "ACE_reinterpret_cast(" << skel_name
-      << "_ptr, servant)," << be_nl
-      << "stub" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
 
   // The _unchecked_narrow method
   *os << node->name () << "_ptr " << node->name ()

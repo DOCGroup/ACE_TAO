@@ -102,33 +102,24 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   *os << be_nl
       << "{" << be_nl
       << "protected:" << be_idt_nl
-      << namebuf << " (void);" << be_uidt_nl
+      << namebuf << " (void);\n" << be_uidt_nl
       << "public:" << be_idt_nl
       << namebuf << " (const " << namebuf << "& rhs);" << be_nl
-      << "virtual ~" << namebuf << " (void);" << be_nl;
+      << "virtual ~" << namebuf << " (void);\n\n";
 
-  *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
+  *os << be_nl
+      << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char* logical_type_id," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "CORBA::Environment::default_environment ()"
       << be_uidt << be_uidt_nl
-      << ");" << be_uidt_nl;
+      << ");\n" << be_uidt_nl;
 
   *os << "virtual void* _downcast (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_uidt_nl
-      << ");\n" << be_uidt;
+      << ");\n" << be_uidt_nl;
 
-  // generate code for elements in the scope (e.g., operations)
-  if (this->visit_scope (node) ==  -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_sh::"
-                         "visit_interface - "
-                         "codegen for scope failed\n"),
-                        -1);
-    }
   // add a skeleton for our _is_a method
-  os->indent ();
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl
       << "CORBA::ServerRequest &req," << be_nl
       << "void *obj," << be_nl
@@ -136,7 +127,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "CORBA::Environment::default_environment ()"
       << be_uidt << be_uidt_nl
-      << ");" << be_uidt << "\n\n";
+      << ");\n" << be_uidt_nl;
 
   // add a skeleton for our _non_existent method
   os->indent ();
@@ -147,12 +138,37 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "CORBA::Environment::default_environment ()"
       << be_uidt << be_uidt_nl
-      << ");" << be_uidt << "\n\n";
+      << ");\n" << be_uidt_nl;
 
-  // add a method that says whether we are involved in a multiple inheritance
-  // or not
-  os->indent ();
-  *os << "CORBA::Boolean in_mult_inheritance (void);\n\n";
+  // add the dispatch method
+  *os << "virtual void _dispatch (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &_tao_req," << be_nl
+      << "void *_tao_context," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
+      << "CORBA::Environment::default_environment ()"
+      << be_uidt << be_uidt_nl
+      << ");\n" << be_uidt_nl;
+
+  // Print out the _this() method.
+  *os << node->name () << " *_this (" << be_idt << be_idt_nl
+      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
+      << "CORBA::Environment::default_environment ()"
+      << be_uidt << be_uidt_nl
+      << ");\n" << be_uidt_nl;
+
+  // the _interface_repository_id method
+  *os << "virtual const char* _interface_repository_id "
+      << "(void) const;" << be_uidt_nl;
+
+  // generate code for elements in the scope (e.g., operations)
+  if (this->visit_scope (node) ==  -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_sh::"
+                         "visit_interface - "
+                         "codegen for scope failed\n"),
+                        -1);
+    }
 
   // generate skeletons for operations of our base classes. These skeletons
   // just cast the pointer to the appropriate type before invoking the call
@@ -164,29 +180,6 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                          "inheritance graph traversal failed\n"),
                         -1);
     }
-
-  // add the dispatch method
-  os->indent ();
-  *os << "virtual void _dispatch (" << be_idt << be_idt_nl
-      << "CORBA::ServerRequest &_tao_req," << be_nl
-      << "void *_tao_context," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "CORBA::Environment::default_environment ()"
-      << be_uidt << be_uidt_nl
-      << ");" << be_uidt << "\n\n";
-
-  // Print out the _this() method.
-  os->indent ();
-  *os << node->name () << " *_this (" << be_idt << be_idt_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "CORBA::Environment::default_environment ()"
-      << be_uidt << be_uidt_nl
-      << ");" << be_uidt << "\n";
-
-  // the _interface_repository_id method
-  os->indent ();
-  *os << "virtual const char* _interface_repository_id (void) const;\n";
-  os->decr_indent ();
 
   *os << "};\n\n";
 

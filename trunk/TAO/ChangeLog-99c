@@ -1,3 +1,25 @@
+Wed Apr  7 11:27:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_expression.cpp: 
+	  Fixed the problems with LL_MAX and friends, use the ACE_*_MAX
+	  constants instead.
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	  T::_narrow() can use T::_unchecked_narrow() to complete its
+	  job.
+
+	* TAO_IDL/be/be_interface.cpp:
+	  The generated operation table is static to avoid namespace
+	  pollution.
+
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	  The generated code is more readable now.
+	  The code for the collocated class and the skeleton where mixed
+	  and thus harder to read.
+
 Wed Apr 07 10:11:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbscvs/Concurrency_Service/Makefile,
