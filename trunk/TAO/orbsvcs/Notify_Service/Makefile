@@ -2,7 +2,7 @@
 # $Id$
 #
 
-LDLIBS = -lorbsvcs -lTAO
+LDLIBS = -lTAO_CosNotification -lTAO_CosTrading -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
 
 LSRC = Notify_Service.cpp
 
@@ -55,9 +55,6 @@ Notify_Service: $(addprefix $(VDIR),$(NOTIFY_OBJS))
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -338,9 +335,10 @@ Notify_Service: $(addprefix $(VDIR),$(NOTIFY_OBJS))
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
@@ -386,7 +384,6 @@ Notify_Service: $(addprefix $(VDIR),$(NOTIFY_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 

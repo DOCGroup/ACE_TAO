@@ -21,7 +21,7 @@ DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
 
-LDLIBS 	+= -lAVsvc -lorbsvcs -lTAO
+LDLIBS 	+= -lAVsvc -lTAO_CosNaming -lTAO
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
 CPPFLAGS += -I$(MPEG_ROOT)
 

@@ -43,86 +43,83 @@ operator< (const TAO_SFP_Fragment_Node& left,
 TAO_SFP_Base::TAO_SFP_Base (void)
 {
   TAO_OutputCDR output_cdr;
-  ACE_DECLARE_NEW_CORBA_ENV;
   flowProtocol::frameHeader frame_header;
   flowProtocol::fragment fragment;
   flowProtocol::credit credit;
   flowProtocol::Start start;
   flowProtocol::StartReply start_reply;
-  ACE_TRY
-    {
-      // fill in the default frameHeader fields.
-      frame_header.magic_number [0] = '=';
-      frame_header.magic_number [1] = 'S';
-      frame_header.magic_number [2] = 'F';
-      frame_header.magic_number [3] = 'P';
-      frame_header.flags = TAO_ENCAP_BYTE_ORDER;
-      output_cdr.reset ();
-      output_cdr.encode (flowProtocol::_tc_frameHeader,
-                         &frame_header,
-                         0,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      frame_header_len = output_cdr.total_length ();
-      // fill in the default fragment message fields.
-      fragment.magic_number [0] = 'F';
-      fragment.magic_number [1] = 'R';
-      fragment.magic_number [2] = 'A';
-      fragment.magic_number [3] = 'G';
-      output_cdr.reset ();
-      output_cdr.encode (flowProtocol::_tc_fragment,
-                                &fragment,
-                                0,
-                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      fragment_len = output_cdr.total_length ();
-      // fill in the default Start message fields.
-      start.magic_number [0] = '=';
-      start.magic_number [1] = 'S';
-      start.magic_number [2] = 'T';
-      start.magic_number [3] = 'A';
-      start.major_version = TAO_SFP_Base::TAO_SFP_MAJOR_VERSION;
-      start.minor_version = TAO_SFP_Base::TAO_SFP_MINOR_VERSION;
-      start.flags = 0;
-      output_cdr.reset ();
-      output_cdr.encode (flowProtocol::_tc_Start,
-                         &start,
-                         0,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      start_len = output_cdr.total_length ();
-      // fill in the default StartReply message fields.
-      start_reply.magic_number [0] = '=';
-      start_reply.magic_number [1] = 'S';
-      start_reply.magic_number [2] = 'T';
-      start_reply.magic_number [3] = 'R';
-      start_reply.flags = 0;
-      output_cdr.reset ();
-      output_cdr.encode (flowProtocol::_tc_StartReply,
-                         &start_reply,
-                         0,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      start_reply_len = output_cdr.total_length ();
 
-      // fill in the default Credit message fields.
-      credit.magic_number [0] = '=';
-      credit.magic_number [1] = 'C';
-      credit.magic_number [2] = 'R';
-      credit.magic_number [3] = 'E';
-      output_cdr.reset ();
-      output_cdr.encode (flowProtocol::_tc_credit,
-                         &credit,
-                         0,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      credit_len = output_cdr.total_length ();
-    }
-  ACE_CATCHANY
+  // fill in the default frameHeader fields.
+  frame_header.magic_number [0] = '=';
+  frame_header.magic_number [1] = 'S';
+  frame_header.magic_number [2] = 'F';
+  frame_header.magic_number [3] = 'P';
+  frame_header.flags = TAO_ENCAP_BYTE_ORDER;
+  output_cdr.reset ();
+  if (!(output_cdr << frame_header))
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP constructor");
+      ACE_ERROR ((LM_ERROR, "TAO_SFP constructor\n"));
+      return;
     }
-  ACE_ENDTRY;
+
+  frame_header_len = output_cdr.total_length ();
+  // fill in the default fragment message fields.
+  fragment.magic_number [0] = 'F';
+  fragment.magic_number [1] = 'R';
+  fragment.magic_number [2] = 'A';
+  fragment.magic_number [3] = 'G';
+  output_cdr.reset ();
+  if (!(output_cdr << fragment))
+    {
+      ACE_ERROR ((LM_ERROR, "TAO_SFP constructor\n"));
+      return;
+    }
+
+  fragment_len = output_cdr.total_length ();
+  // fill in the default Start message fields.
+  start.magic_number [0] = '=';
+  start.magic_number [1] = 'S';
+  start.magic_number [2] = 'T';
+  start.magic_number [3] = 'A';
+  start.major_version = TAO_SFP_Base::TAO_SFP_MAJOR_VERSION;
+  start.minor_version = TAO_SFP_Base::TAO_SFP_MINOR_VERSION;
+  start.flags = 0;
+  output_cdr.reset ();
+  if (!(output_cdr << start))
+    {
+      ACE_ERROR ((LM_ERROR, "TAO_SFP constructor\n"));
+      return;
+    }
+
+  start_len = output_cdr.total_length ();
+  // fill in the default StartReply message fields.
+  start_reply.magic_number [0] = '=';
+  start_reply.magic_number [1] = 'S';
+  start_reply.magic_number [2] = 'T';
+  start_reply.magic_number [3] = 'R';
+  start_reply.flags = 0;
+  output_cdr.reset ();
+  if (!(output_cdr << start_reply))
+    {
+      ACE_ERROR ((LM_ERROR, "TAO_SFP constructor\n"));
+      return;
+    }
+
+  start_reply_len = output_cdr.total_length ();
+
+  // fill in the default Credit message fields.
+  credit.magic_number [0] = '=';
+  credit.magic_number [1] = 'C';
+  credit.magic_number [2] = 'R';
+  credit.magic_number [3] = 'E';
+  output_cdr.reset ();
+  
+  if (!(output_cdr << credit))
+    {
+      ACE_ERROR ((LM_ERROR, "TAO_SFP constructor\n"));
+      return;
+    }
+  credit_len = output_cdr.total_length ();
 }
 
 int
@@ -239,11 +236,7 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
                 // print the buffer.
                 //          this->dump_buf (message_block->rd_ptr (),16);
                 TAO_InputCDR frame_info_cdr (&frame_info_mb,byte_order);
-                frame_info_cdr.decode (flowProtocol::_tc_frame,
-                                       &state.frame_,
-                                       0,
-                                       ACE_TRY_ENV);
-                ACE_TRY_CHECK;
+                frame_info_cdr >> state.frame_;
                 if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"frame.timestamp = %d, frame.synchsource = %d, frame.sequence_num = %d\n",
                             state.frame_.timestamp,
                             state.frame_.synchSource,
@@ -484,90 +477,50 @@ TAO_SFP_Base::start_frame (CORBA::Octet flags,
                            flowProtocol::MsgType type,
                            TAO_OutputCDR &msg)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   msg.reset ();
   flowProtocol::frameHeader frame_header;
-  ACE_TRY
-    {
 
-      frame_header.magic_number [0] = '=';
-      frame_header.magic_number [1] = 'S';
-      frame_header.magic_number [2] = 'F';
-      frame_header.magic_number [3] = 'P';
-      frame_header.flags = flags;
-      frame_header.message_type = type;
-      frame_header.message_size = 0;
-      msg.encode (flowProtocol::_tc_frameHeader,
-                  &frame_header,
-                  0,
-                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP_Base::start_frame");
-      return 0;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  frame_header.magic_number [0] = '=';
+  frame_header.magic_number [1] = 'S';
+  frame_header.magic_number [2] = 'F';
+  frame_header.magic_number [3] = 'P';
+  frame_header.flags = flags;
+  frame_header.message_type = type;
+  frame_header.message_size = 0;
+  if (!(msg << frame_header))
+    return 0;
   return 1;
 }
 
 CORBA::Boolean
 TAO_SFP_Base::write_start_message (TAO_OutputCDR &msg)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   flowProtocol::Start start;
-  ACE_TRY
-    {
-      start.magic_number [0] = '=';
-      start.magic_number [1] = 'S';
-      start.magic_number [2] = 'T';
-      start.magic_number [3] = 'A';
-      start.major_version = TAO_SFP_MAJOR_VERSION;
-      start.minor_version = TAO_SFP_MINOR_VERSION;
-      start.flags = 0;
-      msg.encode (flowProtocol::_tc_Start,
-                  &start,
-                  0,
-                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP_Base::write_start_message");
-      return 0;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+
+  start.magic_number [0] = '=';
+  start.magic_number [1] = 'S';
+  start.magic_number [2] = 'T';
+  start.magic_number [3] = 'A';
+  start.major_version = TAO_SFP_MAJOR_VERSION;
+  start.minor_version = TAO_SFP_MINOR_VERSION;
+  start.flags = 0;
+  if (!(msg << start))
+    return 0;
   return 1;
 }
 
 CORBA::Boolean
 TAO_SFP_Base::write_start_reply_message (TAO_OutputCDR &msg)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   flowProtocol::StartReply start_reply;
-  ACE_TRY
-    {
-      start_reply.magic_number [0] = '=';
-      start_reply.magic_number [1] = 'S';
-      start_reply.magic_number [2] = 'T';
-      start_reply.magic_number [3] = 'R';
-      start_reply.flags = 0;
-      msg.encode (flowProtocol::_tc_StartReply,
-                  &start_reply,
-                  0,
-                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP_Base::write_start_reply_message");
-      return 0;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+
+  start_reply.magic_number [0] = '=';
+  start_reply.magic_number [1] = 'S';
+  start_reply.magic_number [2] = 'T';
+  start_reply.magic_number [3] = 'R';
+  start_reply.flags = 0;
+  if (!(msg << start_reply))
+    return 0;
   return 1;
 }
 
@@ -575,28 +528,15 @@ CORBA::Boolean
 TAO_SFP_Base::write_credit_message (CORBA::ULong cred_num,
                                     TAO_OutputCDR &msg)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   flowProtocol::credit credit;
-  ACE_TRY
-    {
-      credit.magic_number [0] = '=';
-      credit.magic_number [1] = 'C';
-      credit.magic_number [2] = 'R';
-      credit.magic_number [3] = 'E';
-      credit.cred_num = cred_num;
-      msg.encode (flowProtocol::_tc_credit,
-                  &credit,
-                  0,
-                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP_Base::write_credit_message");
-      return 0;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+
+  credit.magic_number [0] = '=';
+  credit.magic_number [1] = 'C';
+  credit.magic_number [2] = 'R';
+  credit.magic_number [3] = 'E';
+  credit.cred_num = cred_num;
+  if (!(msg << credit))
+    return 0;
   return 1;
 }
 
@@ -607,32 +547,19 @@ TAO_SFP_Base::write_fragment_message (CORBA::Octet flags,
                                       CORBA::ULong source_id,
                                       TAO_OutputCDR &msg)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   msg.reset ();
   flowProtocol::fragment fragment;
-  ACE_TRY
-    {
-      fragment.magic_number [0] = 'F';
-      fragment.magic_number [1] = 'R';
-      fragment.magic_number [2] = 'A';
-      fragment.magic_number [3] = 'G';
-      fragment.flags = flags;
-      fragment.frag_number = fragment_number;
-      fragment.sequence_num = sequence_number;
-      fragment.source_id = source_id;
-      msg.encode (flowProtocol::_tc_fragment,
-                  &fragment,
-                  0,
-                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP_Base::write_fragment_message");
-      return 0;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+
+  fragment.magic_number [0] = 'F';
+  fragment.magic_number [1] = 'R';
+  fragment.magic_number [2] = 'A';
+  fragment.magic_number [3] = 'G';
+  fragment.flags = flags;
+  fragment.frag_number = fragment_number;
+  fragment.sequence_num = sequence_number;
+  fragment.source_id = source_id;
+  if (!(msg << fragment))
+    return 0;
   return 1;
 }
 
@@ -643,27 +570,14 @@ TAO_SFP_Base::write_frame_message (CORBA::ULong timestamp,
                                    CORBA::ULong sequence_num,
                                    TAO_OutputCDR &msg)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   flowProtocol::frame frame;
-  ACE_TRY
-    {
-      frame.timestamp = timestamp;
-      frame.synchSource = synchSource;
-      frame.source_ids = source_ids;
-      frame.sequence_num = sequence_num;
-      msg.encode (flowProtocol::_tc_frame,
-                  &frame,
-                  0,
-                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP_Base::write_frame_message");
-      return 0;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+
+  frame.timestamp = timestamp;
+  frame.synchSource = synchSource;
+  frame.source_ids = source_ids;
+  frame.sequence_num = sequence_num;
+  if (!(msg << frame))
+    return 0;
   return 1;
 }
 
@@ -784,31 +698,17 @@ TAO_SFP_Base::read_start_message (TAO_AV_Transport *transport,
                                   flowProtocol::Start &start,
                                   TAO_InputCDR &input)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  input.grow (start_len);
+  char *buf = input.rd_ptr ();
+  int n = transport->recv (buf,
+                           start_len);
+  if (n != ACE_static_cast (int, start_len))
+    ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_start\n"),0);
+  else
     {
-      input.grow (start_len);
-      char *buf = input.rd_ptr ();
-      int n = transport->recv (buf,
-                               start_len);
-      if (n != ACE_static_cast (int, start_len))
-        ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_start\n"),0);
-      else
-        {
-          input.decode (flowProtocol::_tc_Start,
-                      &start,
-                      0,
-                      ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
+      if (!(input >> start))
+        return -1;
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP_Base::read_start_message");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -818,31 +718,17 @@ TAO_SFP_Base::read_start_reply_message (TAO_AV_Transport *transport,
                                         flowProtocol::StartReply &start_reply,
                                         TAO_InputCDR &input)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  input.grow (start_len);
+  char *buf = input.rd_ptr ();
+  int n = transport->recv (buf,
+                           start_reply_len);
+  if (n != ACE_static_cast (int, start_len))
+    ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_start_reply_message"),0);
+  else
     {
-      input.grow (start_len);
-      char *buf = input.rd_ptr ();
-      int n = transport->recv (buf,
-                               start_reply_len);
-      if (n != ACE_static_cast (int, start_len))
-        ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_start_reply_message"),0);
-      else
-        {
-          input.decode (flowProtocol::_tc_StartReply,
-                      &start_reply,
-                      0,
-                      ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
+      if (!(input >> start_reply))
+        return -1;
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP_Base::read_start_reply_message");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -851,31 +737,17 @@ TAO_SFP_Base::read_credit_message (TAO_AV_Transport *transport,
                                    flowProtocol::credit &credit,
                                    TAO_InputCDR &input)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  input.grow (start_len);
+  char *buf = input.rd_ptr ();
+  int n = transport->recv (buf,
+                           credit_len);
+  if (n != ACE_static_cast (int, credit_len))
+    ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_credit_message"),0);
+  else
     {
-      input.grow (start_len);
-      char *buf = input.rd_ptr ();
-      int n = transport->recv (buf,
-                               credit_len);
-      if (n != ACE_static_cast (int, credit_len))
-        ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_credit_message"),0);
-      else
-        {
-          input.decode (flowProtocol::_tc_credit,
-                      &credit,
-                      0,
-                      ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
+      if (!(input >> credit))
+        return -1;
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP_Base::read_credit_message");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -884,31 +756,17 @@ TAO_SFP_Base::read_endofstream_message (TAO_AV_Transport *transport,
                                         flowProtocol::frameHeader &endofstream,
                                         TAO_InputCDR &input)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  input.grow (start_len);
+  char *buf = input.rd_ptr ();
+  int n = transport->recv (buf,
+                           frame_header_len);
+  if (n != ACE_static_cast (int, frame_header_len))
+    ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_endofstream_message"),0);
+  else
     {
-      input.grow (start_len);
-      char *buf = input.rd_ptr ();
-      int n = transport->recv (buf,
-                               frame_header_len);
-      if (n != ACE_static_cast (int, frame_header_len))
-        ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_endofstream_message"),0);
-      else
-        {
-          input.decode (flowProtocol::_tc_frameHeader,
-                      &endofstream,
-                      0,
-                      ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
+      if (!(input >> endofstream))
+        return -1;
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP_Base::read_credit_message");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -917,33 +775,18 @@ TAO_SFP_Base::peek_frame_header (TAO_AV_Transport *transport,
                                  flowProtocol::frameHeader &header,
                                  TAO_InputCDR &input)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  input.grow (frame_header_len);
+  char *buf = input.rd_ptr ();
+  int n = transport->recv (buf,
+                           frame_header_len,
+                           MSG_PEEK);
+  if (n != ACE_static_cast (int, frame_header_len))
+    ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_endofstream_message"),0);
+  else
     {
-      input.grow (frame_header_len);
-      char *buf = input.rd_ptr ();
-      int n = transport->recv (buf,
-                               frame_header_len,
-                               MSG_PEEK);
-      if (n != ACE_static_cast (int, frame_header_len))
-        ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_endofstream_message"),0);
-      else
-        {
-          input.decode (flowProtocol::_tc_frameHeader,
-                      &header,
-                      0,
-                      ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      //      TAO_SFP_Base::dump_buf (buf,n);
+      if (!(input >> header))
+        return -1;
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP_Base::read_credit_message");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -952,32 +795,18 @@ TAO_SFP_Base::peek_fragment_header (TAO_AV_Transport *transport,
                                     flowProtocol::fragment &fragment,
                                     TAO_InputCDR &input)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  input.grow (fragment_len);
+  char *buf = input.rd_ptr ();
+  int n = transport->recv (buf,
+                           fragment_len,
+                           MSG_PEEK);
+  if (n != ACE_static_cast (int, fragment_len))
+    ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_endofstream_message"),0);
+  else
     {
-      input.grow (fragment_len);
-      char *buf = input.rd_ptr ();
-      int n = transport->recv (buf,
-                               fragment_len,
-                               MSG_PEEK);
-      if (n != ACE_static_cast (int, fragment_len))
-        ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_endofstream_message"),0);
-      else
-        {
-          input.decode (flowProtocol::_tc_fragment,
-                      &fragment,
-                      0,
-                      ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
+      if (!(input >> fragment))
+        return -1;
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP_Base::read_credit_message");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 

@@ -1,7 +1,7 @@
 # $Id$
 
 SRC = $(BIN:%=%$(VAR).cpp)
-LDLIBS = -lorbsvcs -lTAO
+LDLIBS = -lTAO_CosNaming -lTAO
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

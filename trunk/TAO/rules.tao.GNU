@@ -144,14 +144,26 @@ CPPFLAGS += \
 ####
 #### Build rules.
 ####
-IDL_EXT=C.h C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp
-IDL_EXT2=Cli.h Cli.i Cli.cpp Ser.h Ser.i Ser.cpp Ser_T.h Ser_T.i Ser_T.cpp
+IDL_EXT_MINUS=C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp
+IDL_EXT=C.h $(IDL_EXT_MINUS)
+IDL_EXT2_MINUS=Cli.i Cli.cpp Ser.h Ser.i Ser.cpp Ser_T.h Ser_T.i Ser_T.cpp
+IDL_EXT2=Cli.h $(IDL_EXT2_MINUS)
 
 .SUFFIXES: $(IDL_EXT)
 
 ifneq ($(use_flick),1)
-$(foreach ext, $(IDL_EXT) $(IDL_EXT2), %$(ext)): %.idl $(TAO_IDL)
+$(foreach ext, $(IDL_EXT_MINUS), %$(ext)): %C.h
+	@/bin/true $@
+
+%C.h: %.idl $(TAO_IDL)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
+
+$(foreach ext, $(IDL_EXT2_MINUS), %$(ext)): %Cli.h
+	@/bin/true $@
+
+%Cli.h: %.idl $(TAO_IDL)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $<
+
 else
 #### You can redefine the following in your platform_macros.GNU
 
