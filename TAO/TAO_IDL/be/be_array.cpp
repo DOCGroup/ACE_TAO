@@ -30,8 +30,8 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (be, 
-           be_array, 
+ACE_RCSID (be,
+           be_array,
            "$Id$")
 
 be_array::be_array (void)
@@ -87,8 +87,8 @@ be_array::create_name (void)
   UTL_ScopedName *n = 0;
   be_decl *scope;
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
   // Retrieve the base type.
   // The name always starts this way.
@@ -103,8 +103,8 @@ be_array::create_name (void)
                         0);
     }
 
-  ACE_OS::sprintf (namebuf, 
-                   "_tao_array_%s", 
+  ACE_OS::sprintf (namebuf,
+                   "_tao_array_%s",
                    bt->local_name ()->get_string ());
 
   // Now append dimensions.
@@ -123,9 +123,9 @@ be_array::create_name (void)
         }
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
-          ACE_OS::sprintf (namebuf, 
-                           "%s_%d", 
-                           namebuf, 
+          ACE_OS::sprintf (namebuf,
+                           "%s_%d",
+                           namebuf,
                            ((int)expr->ev ()->u.ulval));
         }
       else
