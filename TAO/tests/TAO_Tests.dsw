@@ -47,6 +47,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name IDL_Cubit Client
+    End Project Dependency
 }}}
 
 ###############################################################################
