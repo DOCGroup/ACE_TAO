@@ -376,7 +376,7 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
       return -1;
   }
 
-  ACE_DEBUG ((LM_DEBUG, "adding %s dependency to caller: %s\n",
+  ACE_DEBUG ((LM_DEBUG, "Sched (%t) adding %s dependency to caller: %s\n",
               (const char *) ((d.dependency_type == RtecScheduler::TWO_WAY_CALL)
                               ? "TWO_WAY" : "ONE_WAY"),
               (const char*)temp_info->entry_point.in ()));

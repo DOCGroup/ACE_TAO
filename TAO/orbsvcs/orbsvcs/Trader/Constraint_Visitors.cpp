@@ -1171,5 +1171,5 @@ template CORBA::Boolean TAO_find (const CosTradingSequences::StringSeq&, const c
 #pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::LongSeq&, const CORBA::Long)
 #pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::ShortSeq&, const CORBA::Long)
 #pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::UShortSeq&, const CORBA::ULong)
-#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::StringSeq&, const char*)
+#pragma instantiate CORBA::Boolean TAO_find (const CosTradingSequences::StringSeq&, const char* const)
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

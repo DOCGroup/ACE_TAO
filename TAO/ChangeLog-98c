@@ -1,7 +1,26 @@
-$Id$
+Wed Sep 16 20:39:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp: 
+	  Fixed template instantiation problem on IRIX, thanks to
+	  Margherita Vittone Wiersma <vittone@fndaub.fnal.gov> for
+	  reminding me of this.
+
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.h: 
+	  Removed TAO_Register<>::find_property() it wasn't defined or
+	  used in any place and it caused problems on IRIX.
+
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp: 
+	  Use the new ACE_OS::rand_r() interface.
+
+	* orbsvcs/orbsvcs/Sched/Scheduler.cpp: 
+	* orbsvcs/orbsvcs/Sched/DynSched.cpp: 
+	  Changed some debug messages so it would be easier to recognize
+	  the source.
+
+Wed Sep 16 20:30:53 1998  Vishal Kachroo  <vishal@cs.wustl.edu>
+
 	 * examples/Simple/bank/run_test.pl: Added this script 
 	  with proper sleep time between server and client.
-
 
 1998-09-16  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
