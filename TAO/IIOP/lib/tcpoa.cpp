@@ -53,12 +53,12 @@ static short		tcp_port;
 static char		namebuf [65];
 
 
-#ifdef _POSIX_THREADS
+#ifdef ACE_HAS_THREADS
 static pthread_key_t	request_key;
 static pthread_mutex_t	tcpoa_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t	tcpoa_lock = PTHREAD_MUTEX_INITIALIZER;
 static pthread_attr_t	thread_attr;
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
 
 TCP_OA::TCP_OA (
@@ -157,16 +157,16 @@ TCP_OA::init (
 {
     env.clear ();
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     Critical		region (&tcpoa_mutex);
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
     if (the_oa) {
 	env.exception (new CORBA_INITIALIZE (COMPLETED_NO));
 	return 0;
     }
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
 
     //
     // Initialize POSIX thread stuff:  TSD key for request data, and
@@ -184,7 +184,7 @@ TCP_OA::init (
     (void) pthread_attr_setscope (&thread_attr, PTHREAD_SCOPE_PROCESS);
 #endif	// _POSIX_THREAD_PRIORITY_SCHEDULING
 
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
 
     //
@@ -290,7 +290,7 @@ TCP_OA::get_key (
 }
 
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
 //
 // Use the TSD key set up as part of OA initialization to get the
 // thread-specific data describing this invocation
@@ -306,7 +306,7 @@ TCP_OA::get_key (
 // of purposes in the course of request processing.
 //
 static GIOP::RequestHeader	*request_tsd;
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
 
 //
@@ -428,11 +428,11 @@ tcp_oa_dispatcher (
     //
     svr_req._opname = req.operation;
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     (void) pthread_setspecific (request_key, &req);
 #else
     request_tsd = &req;
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
     TCP_OA::dispatch_context		*helper;
 
@@ -572,15 +572,15 @@ TCP_OA::handle_message (
 	    ctx.check_forward ? tcp_oa_forwarder : 0,
 	    tcp_oa_dispatcher, &ctx, env);
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     Critical		region (&tcpoa_mutex);
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
     call_count--;
 }
 
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
 //
 // For cases where the OA creates new threads to handle messages (which
 // are typically, but not always, GIOP::Request messages) we need to have
@@ -616,7 +616,7 @@ TCP_OA::worker (void *arg)
     delete context;
     return 0;
 }
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
 
 //
@@ -655,9 +655,9 @@ TCP_OA::get_request (
     // are used in clean shutdown, and can be modified here.
     //
     {
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     	Critical		region (&tcpoa_mutex);
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
 	//
 	// Applications sometimes make mistakes:  here, it'd be
@@ -669,7 +669,7 @@ TCP_OA::get_request (
 	    return;
 	}
 
-#ifndef	_POSIX_THREADS
+#ifndef	ACE_HAS_THREADS
 	//
 	// Here, some unthreaded app asked for thread support.  Ooops!
 	//
@@ -678,7 +678,7 @@ TCP_OA::get_request (
 	    dexc (env, "TCP_OA, unthreaded: can't create worker threads");
 	    return;
 	}
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
 	//
 	// Get a request/message ... if no file descriptor is returned,
@@ -697,7 +697,7 @@ TCP_OA::get_request (
 	// Also, note that the underlying constraint of only allowing a
 	// single thread to block_for_connection() call bubbles up here too.
 	//
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
 	static int		blocking;	// = 0
 
 	if (blocking) {
@@ -708,7 +708,7 @@ TCP_OA::get_request (
 	    blocking = 1;
 
 	region.leave ();
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
 	//
 	// Get a connection and hand it to method code.
@@ -754,10 +754,10 @@ TCP_OA::get_request (
 
 	fd = endpoint->block_for_connection (do_thr_create, timeout, env);
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
 	region.enter ();
 	blocking = 0;
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
 	if (env.exception () != 0) {
 	    dexc (env, "TCP_OA, block for connection");
@@ -786,7 +786,7 @@ TCP_OA::get_request (
     // kernel read queues.
     //
     if (do_thr_create) {
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
 	//
 	// Want to handle it in another thread.  That means handing off a
 	// bunch of information to that thread and then having it do the
@@ -834,7 +834,7 @@ TCP_OA::get_request (
 		strerror (errcode));
 	delete context;
 
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
     }
 
     //
@@ -849,7 +849,7 @@ TCP_OA::get_request (
     ctx.oa = this;
     ctx.endpoint = fd;
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     ctx.aggressive = CORBA_B_FALSE;
 #endif
 
@@ -877,9 +877,9 @@ TCP_OA::please_shutdown (
     CORBA_Environment	&env
 )
 {
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     Critical		region (&tcpoa_mutex);
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
     env.clear ();
     do_exit = CORBA_B_TRUE;
@@ -894,9 +894,9 @@ TCP_OA::clean_shutdown (
     CORBA_Environment	&env
 )
 {
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     Critical		region (&tcpoa_mutex);
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
     env.clear ();
 
@@ -973,7 +973,7 @@ ULONG
 __stdcall
 TCP_OA::AddRef ()
 {
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     Critical		region (&tcpoa_lock);
 #endif
 
@@ -984,14 +984,14 @@ ULONG
 __stdcall
 TCP_OA::Release ()
 {
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     Critical		region (&tcpoa_lock);
 #endif
 
     if (--refcount != 0)
 	return refcount;
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     region.leave ();
 #endif
 
