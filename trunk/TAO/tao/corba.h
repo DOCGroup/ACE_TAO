@@ -75,6 +75,9 @@
 #  define TAO_SINGLETON_DECLARATION(T)
 #endif /* TAO_HAS_DLL */
 
+class TAO_ORB_Core;
+extern TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
+
 // For some reason, PC compilers don't implement "natural" alignment,
 // but only use fixed alignment policies.  The following #pragmas
 // configure fixed one-byte alignment policy, since some fixed policy
@@ -91,9 +94,6 @@
 #       pragma option -a                // BC++, use 1 byte alignment
 
 #endif /* _MSC_VER */
-
-// Get various definitions facilitating portability.
-#include "tao/orbconf.h"
 
 // Forward declarations of some data types are needed.
 
