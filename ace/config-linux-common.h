@@ -4,9 +4,8 @@
 // This configuration file is designed to be included by another,
 // specific configuration file.  It provides config information common
 // to all Linux platforms.  It automatically determines the CPU
-// architecture, compiler (g++ or egcs), libc (libc5 or glibc), and
-// whether the library supports exception handling, and configures
-// based on those.
+// architecture, compiler (g++ or egcs), and libc (libc5 or glibc),
+// and configures based on those.
 
 #if !defined (ACE_LINUX_COMMON_H)
 #define ACE_LINUX_COMMON_H
@@ -59,45 +58,6 @@
   // To avoid compilation warnings about TCP_NODELAY and TCP_MAXSEG
   // being redefined, because they're defined in linux/socket.h:
 # define ACE_LACKS_TCP_H
-
-// NOTE:  On __alpha only, the assembler doesn't have enough string
-//        space with -g.  You can either SUPPRESS_DASH_G = 1, or patch
-//        your binutils 2.8.1.0.1-g gas/ecoff.c as follows:
-//--- ecoff.c.ORIGINAL	Mon May 26 12:32:47 1997
-//+++ ecoff.c	Thu Jan 15 09:21:08 1998
-//@@ -769,7 +769,11 @@
-//    can't be represented (assuming there are strings > 4096 bytes).  */
-// 
-// #ifndef PAGE_SIZE
-//-#define PAGE_SIZE 4096		/* size of varray pages */
-//+// Thu Jan 15 09:21:03 CST 1998  David L. Levine  <levine@cs.wustl.edu>
-//+// Raised PAGE_SIZE to 8192 from 4096 to avoid "String too big"
-//+// errors on Linux/Alpha, with -g.  The OS page size is 8192, so this
-//+// should be OK.
-//+#define PAGE_SIZE 8192		/* size of varray pages */
-// #endif
-// 
-// #define PAGE_USIZE ((unsigned long) PAGE_SIZE)
-
-// NOTE: you'll need to patch /usr/src/linux/include/linux/posix_types.h
-//       as follows:
-//--- posix_types.h.ORIGINAL	Wed Nov 12 12:01:56 1997
-//+++ posix_types.h	Wed Jan 14 13:07:47 1998
-//@@ -41,9 +41,13 @@
-// #undef __FDMASK
-// #define	__FDMASK(d)	(1UL << ((d) % __NFDBITS))
-// 
-//-typedef struct fd_set {
-//+#include <gnu/types.h>
-//+typedef __fd_set __kernel_fd_set;
-//+#if 0
-//+typedef struct kernel_fd_set {
-// 	unsigned long fds_bits [__FDSET_LONGS];
-// } __kernel_fd_set;
-//+#endif
-// 
-// /* Type of a signal handler.  */
-// typedef void (*__kernel_sighandler_t)(int);
 #endif /* ! __alpha */
 
 #else
@@ -207,8 +167,8 @@
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
-#if defined(__EXCEPTIONS)
-# define ACE_HAS_EXCEPTIONS
-#endif
+#if !defined (__EXCEPTIONS) && defined (ACE_HAS_EXCEPTIONS)
+# error ACE_HAS_EXCEPTIONS requested but old g++ does not support it well
+#endif /* ! __EXCEPTIONS && ACE_HAS_EXCEPTIONS */
 
 #endif /* ACE_LINUX_COMMON_H */
