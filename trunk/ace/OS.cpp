@@ -5195,9 +5195,14 @@ ACE_OS_WString::ACE_OS_WString (const ACE_USHORT16 *s)
   : rep_ (0)
 {
   size_t len = ACE_OS::strlen (s);
-  ACE_NEW (this->rep_, char[len]);
+  ACE_NEW (this->rep_,
+           char[len]);
+
   for (size_t i = 0; i < len; i++)
-    this->rep_[i] = ACE_static_cast (char, s[i]);
+    {
+      ACE_USHORT16 *t = ACE_const_cast (ACE_USHORT16 *, s);
+      this->rep_[i] = ACE_static_cast (char, *(t + i));
+    }
 
   this->rep_[len] = '\0';
   return;
@@ -5207,7 +5212,9 @@ ACE_OS_CString::ACE_OS_CString (const char *s)
   : rep_ (0)
 {
   size_t len = ACE_OS::strlen (s);
-  ACE_NEW (this->rep_, ACE_USHORT16[len]);
+  ACE_NEW (this->rep_,
+           ACE_USHORT16[len]);
+
   for (size_t i = 0; i < len; i++)
     this->rep_[i] = s[i];
 
