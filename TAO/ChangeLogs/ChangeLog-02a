@@ -1,3 +1,9 @@
+Sat Oct 07 15:05:31 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Object.i:
+	* tao/Object.cpp: Moved CORBA::Object::is_nil to Object.i.  This
+	  function should be inlined when appropriate.
+
 Sat Oct 07 14:00:27 2000 Balachandran Natarajan <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
