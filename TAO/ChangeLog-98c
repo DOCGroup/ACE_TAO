@@ -1,3 +1,12 @@
+Sun Nov 16 14:48:00 1997    <nw1@COYOTE>
+
+	* test/Cubit/TAO/IDL_Cubit/{server,client}.dsp: Updated library
+ 	  path for release version.
+
+	* TAO_IDL/TAO_IDL.mak:
+	* TAO_IDL/tao_idl.dsp: Added new files (be_state_*.cpp) into
+ 	  project file.
+
 Sun Nov 16 12:56:24 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp: The _is_a_skel method's signature
