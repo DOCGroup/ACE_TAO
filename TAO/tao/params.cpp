@@ -24,7 +24,8 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
     ace_sched_policy_ (ACE_SCHED_OTHER),
     sched_policy_ (THR_SCHED_DEFAULT),
     scope_policy_ (THR_SCOPE_PROCESS),
-    single_read_optimization_ (1)
+    single_read_optimization_ (1),
+    disable_rt_collocation_resolver_ (false)
 {
   for (int i = 0; i <= TAO_NO_OF_MCAST_SERVICES; ++i)
     {

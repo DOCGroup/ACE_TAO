@@ -1,3 +1,28 @@
+Fri Jan  2 23:22:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	This fix should have gone in long time back. Since this is
+        non-intrusive and needed by a sponsor it was decided to checkin. 
+	
+	* tao/ORB_Core.cpp:
+
+	  Added a command line option -ORBDisableRTCollocation. This is
+	  useful for applications that would like to disable RT
+	  collocation with RTORB and use the default collocation features
+	  instead. Most notably this is being added for Boeing. 
+	
+	* tao/params.cpp:
+	* tao/params.h:
+	* tao/params.i:
+
+	  Added a new boolean variable to the class, together with
+	  accessors and mutators. The new boolean caches the value of the
+	  above option passed to the ORB by the application. 
+	
+	* tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
+
+	  Do a check before setting the collocation resolver name and
+	  intializing the service configurator with the new directive. 
+
 Fri Jan  2 14:50:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Smart_Proxies/Collocation/Coll_Tester.cpp:

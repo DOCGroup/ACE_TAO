@@ -821,6 +821,27 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBDisableRTCollocation"))))
+        {
+          const ACE_TCHAR *popt = current_arg;
+          if (ACE_OS::strcasecmp (popt, ACE_LIB_TEXT("NO")) == 0)
+            {
+              this->orb_params ()->disable_rt_collocation_resolver (false);
+            }
+          else if (ACE_OS::strcasecmp (popt, ACE_LIB_TEXT("YES")) == 0)
+            {
+              this->orb_params ()->disable_rt_collocation_resolver (true);
+            }
+          else
+            {
+              // Should we print an error mesg?? Probably we
+              // should. We will look into this after 1.4 and make all
+              // the options consistent.
+            }
+
+          arg_shifter.consume_arg ();
+        }
       ////////////////////////////////////////////////////////////////
       // catch any unknown -ORB args                                //
       ////////////////////////////////////////////////////////////////
