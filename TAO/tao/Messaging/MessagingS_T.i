@@ -21,6 +21,8 @@
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T &t)
 	: ptr_ (&t),
@@ -97,6 +99,6 @@ POA_Messaging::ReplyHandler_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 
   return this->ReplyHandler::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 #endif /* ACE_HAS_USING_KEYWORD */
 

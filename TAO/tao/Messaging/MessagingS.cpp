@@ -48,6 +48,8 @@
 #include "MessagingS.i"
 #endif /* !defined INLINE */
 
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 class TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
 private:
@@ -154,6 +156,7 @@ static TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable tao_Messaging_ReplyHandle
 #if (TAO_HAS_INTERCEPTORS == 1)
 #endif /* TAO_HAS_INTERCEPTORS */
 
+
 ///////////////////////////////////////////////////////////////////////
 //            Strategized Proxy Broker Implementation
 //
@@ -244,6 +247,8 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::create_proxy (
   }
 }
 
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+
 
 //
 //        End Strategized Proxy Broker Implementation
@@ -276,6 +281,7 @@ static int Messaging__TAO_ReplyHandler_Proxy_Broker_Stub_Factory_Initializer_Sca
 ///////////////////////////////////////////////////////////////////////
 //                 ThruPOA Proxy  Implementation
 //
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1 )
 
 POA_Messaging::_TAO_ReplyHandler_ThruPOA_Proxy_Impl::_TAO_ReplyHandler_ThruPOA_Proxy_Impl (void)
 {}
@@ -468,6 +474,6 @@ POA_Messaging::ReplyHandler::_this (ACE_ENV_SINGLE_ARG_DECL)
   return ::Messaging::ReplyHandler::_unchecked_narrow (obj.in ());
 }
 
-
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 #endif /* ifndef */

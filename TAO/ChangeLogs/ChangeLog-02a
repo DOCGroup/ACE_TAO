@@ -1,3 +1,15 @@
+Mon Mar  4 15:35:08 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* tao/Messaging/MessagingC.cpp:
+	* tao/Messaging/MessagingC.h:
+	* tao/Messaging/MessagingC.i:
+	* tao/Messaging/MessagingS.cpp:
+	* tao/Messaging/MessagingS.h:
+	* tao/Messaging/MessagingS_T.h:
+	* tao/Messaging/MessagingS_T.i:
+	  Made changes to have the code compile when the TAO_HAS_AMI
+	  option is 0.
+
 Mon Mar  4 14:43:11 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.RTCORBAEvent:
