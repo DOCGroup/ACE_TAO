@@ -240,8 +240,6 @@ tao_imr: $(addprefix $(VDIR),$(tao_imr_OBJS))
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
@@ -595,8 +593,6 @@ tao_imr: $(addprefix $(VDIR),$(tao_imr_OBJS))
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
@@ -784,7 +780,8 @@ tao_imr: $(addprefix $(VDIR),$(tao_imr_OBJS))
  $(ACE_ROOT)/ace/Process_Manager.h \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i \
- $(ACE_ROOT)/ace/Process_Manager.i Options.h \
+ $(ACE_ROOT)/ace/Process_Manager.i \
+ Options.h \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
@@ -982,8 +979,6 @@ tao_imr: $(addprefix $(VDIR),$(tao_imr_OBJS))
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
@@ -1432,8 +1427,6 @@ tao_imr: $(addprefix $(VDIR),$(tao_imr_OBJS))
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
@@ -1751,8 +1744,6 @@ tao_imr: $(addprefix $(VDIR),$(tao_imr_OBJS))
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
