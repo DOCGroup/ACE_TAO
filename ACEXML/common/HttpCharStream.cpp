@@ -283,5 +283,5 @@ ACEXML_HttpCharStream::read (ACEXML_Char *str,
 int
 ACEXML_HttpCharStream::peek (void)
 {
-  return this->stream_->peek_char (1);
+  return this->stream_->peek_char (0);
 }
