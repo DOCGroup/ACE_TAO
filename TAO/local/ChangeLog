@@ -1,3 +1,25 @@
+Sun Nov 30 16:57:40 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* bin/Event_Service/Makefile: 
+	  Added the old probe=X flag to include/exclude ACE_TIMEPROBE code.
+
+	* bin/Event_Service/Event_Channel.i: 
+	* bin/Event_Service/Event_Channel.cpp: 
+	* bin/Event_Service/Dispatching_Modules.i: 
+	* bin/Event_Service/Dispatching_Modules.cpp: 
+	  Normalized ACE_TIMEPROBE messages, all start with two spaces,
+	  but the timeout, which starts a loop, IMHO is easier to read
+	  that way.
+
+	* bin/Scheduling_Service/dump_schedule.cpp: 
+	* bin/Event_Service/Event_Service.cpp: 
+	  g++ does not seems to cast _var types to _ptr parameters on its
+	  own, an explicit call to the ptr() method seems needed.
+
+	* tests/Latency.h: 
+	  Removed virtual methods from Latency_Supplier, thanks to g++ for
+	  noticing that those were uneeded.
+
 Tue Nov 25 22:49:23 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* bin/Event_Service/Event_Service.cpp: 

@@ -265,14 +265,14 @@ ACE_ES_Priority_Timer::schedule_timer (RtecScheduler::handle_t rt_info,
 
   // @@ We're losing resolution here.
   ACE_Time_Value tv_delta;
-  tv_delta.usec (delta / 10);
+  tv_delta.usec (int (delta / 10));
   if (tv_delta.usec () == 0)
     tv_delta.usec (1);
 		  
   ACE_Time_Value tv_interval;
   if (interval > 0)
     {
-      tv_interval.usec (interval / 10);
+      tv_interval.usec (int (interval / 10));
       if (tv_interval.usec () == 0)
 	tv_interval.usec (1);
     }
@@ -410,6 +410,7 @@ void
 ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
 			       CORBA::Environment &_env)
 {
+  ACE_TIMEPROBE ("  enter Push_Supplier_Proxy::push");
   if (!this->connected ())
     ACE_THROW (RtecEventComm::Disconnected);
 
@@ -419,6 +420,7 @@ ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
 void 
 ACE_Push_Supplier_Proxy::disconnect_push_consumer (CORBA::Environment &_env)
 {
+  ACE_TIMEPROBE_PRINT;
   if (this->connected ())
     {
       push_supplier_ = 0;
@@ -481,6 +483,7 @@ ACE_Push_Consumer_Proxy::connect_push_consumer (RtecEventComm::PushConsumer_ptr 
 void 
 ACE_Push_Consumer_Proxy::disconnect_push_supplier (CORBA::Environment &_env)
 {
+  ACE_TIMEPROBE_PRINT;
   consumer_module_->disconnecting (this, _env);
   push_consumer_ = 0;
 }
@@ -896,8 +899,7 @@ ACE_ES_Consumer_Module::shutdown_request (ACE_ES_Dispatch_Request *request)
   // everyone can free up any resources.
   down_->disconnected (sc->consumer ());
 
-  ACE_DEBUG ((LM_DEBUG, "Deleting proxy for %s.\n", 
-	      ::ACE_ES_Consumer_Name (sc->consumer ()->qos ())));
+  ACE_DEBUG ((LM_DEBUG, "Deleting proxy for consumer\n"));
 
   // Delete the consumer proxy.
   delete sc->consumer ();
@@ -1007,8 +1009,7 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
   // @@ TODO Orbix parameters:
   // (0, CORBA::COMPLETED_NO, "ACE_ES_Consumer_Module::disconnecting"));
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) initiating consumer disconnect for %s.\n",
-		 ::ACE_ES_Consumer_Name (consumer->qos ())));;
+  ACE_DEBUG ((LM_DEBUG, "(%t) initiating consumer disconnect.\n"));
 
   // Set a 100ns timer.
   if (channel_->timer ()->schedule_timer (0, // no rt_info
@@ -1032,6 +1033,7 @@ void
 ACE_ES_Consumer_Module::push (const ACE_ES_Dispatch_Request *request,
 			      CORBA::Environment &_env)
 {
+  ACE_TIMEPROBE ("  enter ES_Consumer_Module::push");
   // We'll create a temporary event set with the size of the incoming
   // request.
   RtecEventComm::EventSet event_set (request->number_of_events ());
@@ -1039,6 +1041,7 @@ ACE_ES_Consumer_Module::push (const ACE_ES_Dispatch_Request *request,
 
   // Forward the event set.
   request->consumer ()->push (event_set, _env);
+  ACE_TIMEPROBE ("  leave ES_Consumer_Module::push");
 }
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
@@ -1130,7 +1133,7 @@ ACE_ES_Correlation_Module::push (ACE_ES_Consumer_Rep *consumer,
 				 ACE_ES_Event_Container *event,
 				 CORBA::Environment &_env)
 {
-  ACE_TIMEPROBE ("enter ACE_ES_Correlation_Module::push");
+  ACE_TIMEPROBE ("  enter ACE_ES_Correlation_Module::push");
   ACE_ES_Dispatch_Request *request = 
     consumer->correlation ()->push (consumer, event);
   ACE_TIMEPROBE ("  pushed to Correlation_Module");
@@ -1771,6 +1774,7 @@ ACE_ES_Consumer_Rep::execute (void)
 void
 ACE_ES_Consumer_Rep_Timeout::execute (void)
 {
+  ACE_TIMEPROBE ("Timeout execute");
   if (this->receiving_events ())
     {
       CORBA::Environment __env;
@@ -1887,7 +1891,7 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
 		   new_subscribers->dependency_info_->rt_info,
 		   new_subscribers->dependency_info_->number_of_calls,
 		   _env);
-		ACE_DEBUG ((LM_ERROR, "%p - add_dependency (%d,%d,%d)\n",
+		ACE_DEBUG ((LM_DEBUG, "%s - add_dependency (%d,%d,%d)\n",
 			    "ACE_ES_Priority_Timer::schedule_timer",
 			    (*proxy)->dependency()->rt_info,
 			    new_subscribers->dependency_info_->rt_info,
@@ -2054,8 +2058,10 @@ ACE_ES_Subscription_Module::subscribe_source (ACE_ES_Consumer_Rep *consumer,
 			   temp->int_id_->dependency_info_->rt_info,
 			   temp->int_id_->dependency_info_->number_of_calls,
 			   ACE_TRY_ENV);
-			ACE_DEBUG ((LM_ERROR,
-				    "%p - add_dependency (%d,%d,%d)\n",
+			ACE_CHECK_ENV;
+
+			ACE_DEBUG ((LM_DEBUG,
+				    "%s - add_dependency (%d,%d,%d)\n",
 				    "ACE_ES_Priority_Timer::subscribe_source",
 				    consumer->dependency()->rt_info,
 				    temp->int_id_->dependency_info_->rt_info,
@@ -2063,6 +2069,7 @@ ACE_ES_Subscription_Module::subscribe_source (ACE_ES_Consumer_Rep *consumer,
 		      }
 		    ACE_CATCHANY
 		      {
+			ACE_TRY_ENV.print_exception ("error adding dependency");
 			return -1;
 		      }
 		    ACE_ENDTRY;
@@ -2414,7 +2421,7 @@ ACE_ES_Subscription_Module::push (ACE_Push_Supplier_Proxy *source,
 				  ACE_ES_Event_Container *event,
 				  CORBA::Environment &)
 {
-  ACE_TIMEPROBE ("deliver to Subscription Module");
+  ACE_TIMEPROBE ("  deliver to Subscription Module");
   // These are all inline function calls.
   if (this->push_source (source, event) == -1)
     return;
@@ -2522,8 +2529,11 @@ ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
       ACE_DEBUG ((LM_DEBUG, "(%t) No more suppliers connected.\n"));
       channel_->report_disconnect (ACE_EventChannel::SUPPLIER);
     }
-
-  CORBA::release (supplier);
+  
+  // IMHO this release is broken: supplier is a parameter, we never
+  // actually increased its reference count, so we shouldn't decrease
+  // it.
+  // CORBA::release (supplier);
 }
 
 void
@@ -2592,7 +2602,7 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
 {
   ACE_TRY
     {
-      for (int i = 0; i < event.length(); ++i)
+      for (CORBA::ULong i = 0; i < event.length(); ++i)
 	{
 	  ACE_ES_Event_Container *temp =
 	    new ACE_ES_Event_Container (event[i]);
@@ -2608,7 +2618,7 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
 	  // the scope. 
 	  ACE_ES_Event_Container_var event_copy (temp);
 	  temp->_release ();
-	  ACE_TIMEPROBE ("deliver to Supplier Module (thru Supplier Proxy)");
+	  ACE_TIMEPROBE ("  deliver to Supplier Module (thru Supplier Proxy)");
 	  up_->push (proxy, event_copy, ACE_TRY_ENV);
 	  ACE_CHECK_ENV;
 	}
@@ -2766,7 +2776,7 @@ ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos)
     {
       RtecScheduler::RT_Info* rt_info = ACE_Scheduler_Factory::server ()->get
 	(qos.dependencies[1].rt_info, ACE_TRY_ENV);
-      ACE_TRY_ENV;
+      ACE_CHECK_ENV;
 
       return rt_info->entry_point;
     }
@@ -2848,6 +2858,8 @@ template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Ch
 
 template class ACE_ES_Array_Iterator<ACE_ES_Consumer_Rep *>;
 template class ACE_ES_Simple_Array<ACE_ES_Consumer_Rep *, 100>;
+
+template class ACE_CORBA_var<ACE_ES_Event_Container>;
 
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

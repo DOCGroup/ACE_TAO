@@ -40,7 +40,7 @@ ACE_ES_Dispatch_Request::make_copy (RtecEventComm::EventSet &dest) const
 int
 ACE_ES_Dispatch_Request::execute (u_long &command_action)
 {
-  ACE_TIMEPROBE ("dispatch (dequeue) the event");
+  ACE_TIMEPROBE ("  dispatch (dequeue) the event");
 
   return dispatching_module_->dispatch_event (this, command_action);
 }
