@@ -199,8 +199,6 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_infrastructure_managed_group
 {
   CORBA::Object_var group = CORBA::Object::_nil ();
 
-  PortableGroup::ObjectGroupId group_id = 0;
-
   if (this->have_replication_manager_)
   {
     // set typeid properties
