@@ -49,6 +49,12 @@ EC_Consumer::connect (
   ACE_CHECK;
 }
 
+int
+EC_Consumer::connected (void) const
+{
+  return !CORBA::is_nil (this->supplier_proxy_.in ());
+}
+
 void
 EC_Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
 {

@@ -60,6 +60,9 @@ public:
   // whatevet supplier_proxy we already have (useful for reconnection
   // tests).
 
+  virtual int connected (void) const;
+  // returns 0 if it is not connected
+
   void disconnect (CORBA::Environment& ACE_TRY_ENV);
   // The application can invoke this method to disconnect from the EC
   // and deactivate this class.

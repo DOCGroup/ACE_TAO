@@ -61,6 +61,13 @@ public:
   virtual int run (int argc, char* argv[]);
   // Execute the test.
 
+  virtual void run_init (int& argc, char* argv[],
+                         CORBA::Environment& ACE_TRY_ENV);
+  // The initialization section
+
+  virtual void run_cleanup (CORBA::Environment& ACE_TRY_ENV);
+  // The cleanup section
+
   virtual void initialize_orb_and_poa (int& argc, char* argv[],
                                        CORBA::Environment& env);
   // Initialize the ORB and obtain the RootPOA object
@@ -152,11 +159,17 @@ public:
   virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
   // Allow modifications of the default EC attributes
 
+  virtual int decode_consumer_cookie (void* cookie) const;
+  // Returns the index of the consumer for <cookie>
+
+  virtual int decode_supplier_cookie (void* cookie) const;
+  // Returns the index of the supplier for <cookie>
+
   virtual void consumer_push (void* consumer_cookie,
                               const RtecEventComm::EventSet& event,
                               CORBA::Environment& ACE_TRY_ENV);
   // One of the consumers in the test has received an event
-
+  
   virtual void consumer_shutdown (void* consumer_cookie,
                                   CORBA::Environment& ACE_TRY_ENV);
   // One of the consumers has received a shutdown event

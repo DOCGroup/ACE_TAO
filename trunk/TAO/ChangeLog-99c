@@ -1,3 +1,22 @@
+Thu May 20 13:53:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/Event/Basic/Observer.h:
+	* orbsvcs/tests/Event/Basic/Observer.cpp:
+	* orbsvcs/tests/Event/Basic/observer.conf:
+	* orbsvcs/tests/Event/lib/Consumer.h:
+	* orbsvcs/tests/Event/lib/Consumer.cpp:
+	* orbsvcs/tests/Event/lib/Driver.h:
+	* orbsvcs/tests/Event/lib/Driver.cpp:
+	  New test for the observers and dynamic
+	  connection/reconnections. It compiles, but needs more testing
+	  and I cannot do that on Linux.
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway.h:
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+	  Minor fixes to support configurations without an scheduling
+	  service.
+
 Thu May 20 12:17:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.h:
