@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  
+ *
  *
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
@@ -29,7 +29,7 @@
 #include "orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
 #include "orbsvcs/DsLogAdminC.h"
 
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 
 #include "log_serv_export.h"
 
@@ -109,7 +109,7 @@ private:
                                 TAO_SYNCH_MUTEX> HASH_MAP;
 
   typedef HASH_MAP::ENTRY HASH_ENTRY;
-        
+
   /// Used to lookup property name and values.
   HASH_MAP property_lookup_;
 

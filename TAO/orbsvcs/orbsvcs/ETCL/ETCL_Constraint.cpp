@@ -9,7 +9,7 @@
 #include "tao/Managed_Types.h"
 #include "tao/Environment.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "ETCL_Constraint.inl"
@@ -89,12 +89,12 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
       else if (corba_type == CORBA::tk_enum)
         {
           TAO::Any_Impl *impl = any->impl ();
-          
+
           if (impl->encoded ())
             {
               TAO::Unknown_IDL_Type *unk =
                 dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-                
+
               // We don't want unk's rd_ptr to move, in case we are shared by
               // another Any, so we use this to copy the state, not the buffer.
               TAO_InputCDR for_reading (unk->_tao_get_cdr ());
