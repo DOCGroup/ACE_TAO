@@ -21,6 +21,7 @@
 #define _SERVANT_LOCATOR_H_
 
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ServantLocatorC.h"
 #include "tao/ORB.h"
 
 class Servant_Locator : public PortableServer::ServantLocator
