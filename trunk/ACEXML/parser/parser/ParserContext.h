@@ -39,7 +39,7 @@ public:
                          ACEXML_LocatorImpl* locator);
 
   /// Comparison operator
-  int operator!= (const ACEXML_Parser_Context& src);
+  bool operator!= (const ACEXML_Parser_Context& src);
 
   /// Destructor
   virtual ~ACEXML_Parser_Context();

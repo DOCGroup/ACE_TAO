@@ -99,7 +99,7 @@ public:
   ACEXML_Attribute &operator= (const ACEXML_Attribute &rhs);
 
   /// Comparison operator.
-  int operator!= (const ACEXML_Attribute&rhs) const;
+  bool operator!= (const ACEXML_Attribute&rhs) const;
 
 private:
   /// @var uri_ Namespace URI of an attribute

@@ -1,4 +1,6 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
+//
+//$Id$
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
@@ -140,13 +142,13 @@ ACEXML_Attribute::operator= (const ACEXML_Attribute &rhs)
   return *this;
 }
 
-ACEXML_INLINE int
+ACEXML_INLINE bool
 ACEXML_Attribute::operator!= (const ACEXML_Attribute &rhs) const
 {
   return (ACE_OS::strcmp (this->uri_, rhs.uri ()) == 0 &&
           ACE_OS::strcmp (this->localName_, rhs.localName ()) == 0 &&
           ACE_OS::strcmp (this->qName_, rhs .qName ()) == 0 &&
           ACE_OS::strcmp (this->type_, rhs.type ()) == 0 &&
-          ACE_OS::strcmp (this->value_, rhs.value ()) == 0 ? 0 : 1);
+          ACE_OS::strcmp (this->value_, rhs.value ()) == 0 ? false : true);
 
 }

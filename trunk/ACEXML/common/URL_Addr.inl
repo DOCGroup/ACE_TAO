@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/ACE.h"
@@ -34,7 +36,7 @@ ACEXML_URL_Addr::hash (void) const
   return result;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACEXML_URL_Addr::operator== (const ACEXML_URL_Addr &addr) const
 {
   return ACE_OS::strcmp (addr.get_path_name (), this->get_path_name ()) == 0
@@ -42,7 +44,7 @@ ACEXML_URL_Addr::operator== (const ACEXML_URL_Addr &addr) const
     && addr.get_ip_address () == this->get_ip_address ();
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACEXML_URL_Addr::operator!= (const ACEXML_URL_Addr &addr) const
 {
   return !(*this == addr);
