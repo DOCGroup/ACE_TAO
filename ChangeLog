@@ -1,3 +1,7 @@
+Sat Nov 10 17:16:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (fopen): Removed redundant parentheses.
+
 Sat Nov 10 09:29:48 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/OS.i (pipe): Replaced the _pipe() call on Win32 with the
@@ -52,7 +56,7 @@ Wed Nov  7 05:17:03 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* ace/OS.i: In BCB the _wtempnam() has the following signature:
 	   wchar_t *_wtempnam(wchar_t *dir, wchar_t *prefix)
 
-	 This means that the arguments must be made non-const by a cast.  The 
+	 This means that the arguments must be made non-const by a cast.  The
 	 fix is to add some defines so that with BCB and no wchar the
  	  _tempnam is used (with the casts) and with BCB and wchar then
  	  the _wtempnam is used with the casts.  Thanks to Johnny
