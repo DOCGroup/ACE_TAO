@@ -1,6 +1,6 @@
 Tue Mar 26 10:23:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs.Cosnotification.dsp:
+        * orbsvcs/orbsvcs.CosNotification.dsp:
 
           Added some missing files to the project.
 
