@@ -42,8 +42,6 @@ CIAO::Assembly_Builder_Visitor::visit_hostcollocation
 {
   ACE_DEBUG ((LM_DEBUG, "hostcollocation %s\n", hc->id ()));
 
-
-
   CIAO::Assembly_Placement::Container::ITERATOR iter (*hc);
   CIAO::Assembly_Placement::Node *node = 0;
 
@@ -84,7 +82,7 @@ CIAO::Assembly_Builder_Visitor::visit_processcollocation
                           -1);
 
       Components::ConfigValues server_config;
-      // @@ Nothing to config yet.
+      // @@ check for RTCAD file, parse the file, and insert the thing in server_config.
 
       if (endpos != ACE_CString::npos)
         {
@@ -166,6 +164,9 @@ CIAO::Assembly_Builder_Visitor::visit_homeplacement
       item->name (CORBA::string_dup ("CIAO-servant-entrypt"));
       item->value () <<= CORBA::string_dup (info.servant_entrypt_.c_str ());
       home_config[1] = item;
+
+      // How do I get a customized container here, if we named a
+      // RTpolicy_Set for this home placement?
 
       Components::Deployment::Container_var container
         = this->get_current_container (ACE_ENV_SINGLE_ARG_PARAMETER);

@@ -88,6 +88,18 @@ CIAO::Assembly_Placement::homeplacement::componentfileref (const char *ref)
   this->componentfileref_ = ref;
 }
 
+ACE_INLINE const char *
+CIAO::Assembly_Placement::homeplacement::rtpolicyset_ref (void) const
+{
+  return this->rtpolicyset_ref_.c_str ();
+}
+
+ACE_INLINE void
+CIAO::Assembly_Placement::homeplacement::rtpolicyset_ref (const char *ref)
+{
+  this->rtpolicyset_ref_ = ref;
+}
+
 // ================================================================
 
 ACE_INLINE
@@ -104,6 +116,18 @@ CIAO::Assembly_Placement::processcollocation::processcollocation (const char *id
                                                                   unsigned long cardinality)
   : CIAO::Assembly_Placement::Container (id, cardinality)
 {
+}
+
+ACE_INLINE void
+CIAO::Assembly_Placement::processcollocation::rtcad_filename (const char *fn)
+{
+  this->rtcad_filename_ = fn;
+}
+
+ACE_INLINE const char *
+CIAO::Assembly_Placement::processcollocation::rtcad_filename () const
+{
+  return this->rtcad_filename_.c_str ();
 }
 
 // ================================================================

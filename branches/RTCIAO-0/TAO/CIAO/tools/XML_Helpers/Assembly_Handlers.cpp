@@ -9,7 +9,7 @@
 void
 CIAO::Assembly_Handler::characters (const ACEXML_Char *,
                                    int ,
-                                   int 
+                                   int
                                    ACEXML_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
@@ -356,7 +356,14 @@ CIAO::Partitioning_Handler::endElement (const ACEXML_Char *namespaceURI,
         }
       else if (ACE_OS::strcmp (qName, "extension") == 0)
         {
-          // Do nothing for now.
+          if (this->process_collocation_ != 0 &&
+              this->ext_type_ == CAT_FILE_NAME)
+            this->process_collocation_->rtcad_filename (this->characters_.c_str ());
+          else
+            ACEXML_THROW (ACEXML_SAXException
+                          (ACE_TEXT ("Invalid \"extension\" type encountered.\n")));
+
+          this->ext_type_ = INVALID_EXT;
         }
       else if (ACE_OS::strcmp (qName, "destination") == 0)
         {
@@ -389,6 +396,15 @@ CIAO::Partitioning_Handler::endElement (const ACEXML_Char *namespaceURI,
       else if (ACE_OS::strcmp (qName, "homeplacement") == 0)
         {
           this->home_placement_->destination (this->characters_.c_str ());
+        }
+      else if (ACE_OS::strcmp (qName, "extension") == 0)
+        {
+          if (this->ext_type_ == RTPOLICYSET_NAME)
+            this->home_placement_->rtpolicyset_ref (this->characters_.c_str ());
+          else
+            ACEXML_THROW (ACEXML_SAXException
+                          (ACE_TEXT ("Invalid \"extension\" type encountered.\n")));
+          this->ext_type_ = INVALID_EXT;
         }
       else if (ACE_OS::strcmp (qName, "usagename") == 0)
         {
@@ -504,15 +520,24 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
                                ("Internal error, no memory."));
           ACEXML_CHECK;
         }
+      else if (ACE_OS::strcmp (qName, "extension") == 0)
+        {
+          if (this->process_collocation_ != 0) // can only handle extension in
+                                               // processcollocation element for now
+            {
+              EXT_Types type = this->get_extension_info (atts
+                                                         ACEXML_ENV_ARG_PARAMETER);
+              if (type == CAT_FILE_NAME)
+                this->ext_type_ = type;
+            }
+          else                  // Should we throw an exception here?
+            ACEXML_THROW (ACEXML_SAXException
+                          (ACE_TEXT ("\"extension\" is not yet supported.")));
+        }
       else if (ACE_OS::strcmp (qName, "executableplacement") == 0)
         {
           ACEXML_THROW (ACEXML_SAXException
                         (ACE_TEXT ("\"executableplacement\" is not yet supported.")));
-        }
-      else if (ACE_OS::strcmp (qName, "extension") == 0)
-        {
-          ACEXML_THROW (ACEXML_SAXException
-                        (ACE_TEXT ("\"extension\" is not yet supported.")));
         }
       else if (ACE_OS::strcmp (qName, "partitioning") == 0 ||
                ACE_OS::strcmp (qName, "destination") == 0)
@@ -573,6 +598,14 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
           reg_info.name_ = name;
           this->home_placement_->register_info_.enqueue_tail (reg_info);
         }
+      else if (ACE_OS::strcmp (qName, "extension") == 0)
+        {
+          EXT_Types type = this->get_extension_info (atts
+                                                     ACEXML_ENV_ARG_PARAMETER);
+          if (type == RTPOLICYSET_NAME)
+            this->ext_type_ = type;
+
+        }
       // @@ Ignore the rest of element in home placement for now.
       break;
 
@@ -618,6 +651,49 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
 
 }
 
+CIAO::Partitioning_Handler::EXT_Types
+CIAO::Partitioning_Handler::get_extension_info (ACEXML_Attributes *atts
+                                                ACEXML_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
+{
+  int ciao_ext = 0;
+  EXT_Types retv = INVALID_EXT;
+
+  for (size_t i = 0; i < atts->getLength (); ++i)
+    {
+      if (ACE_OS_String::strcmp (atts->getQName (i), "class") == 0)
+        {
+          if (ACE_OS::strcmp (atts->getValue (i), "RT-CAD-EXT") == 0)
+            retv = CAT_FILE_NAME;
+          else if (ACE_OS::strcmp (atts->getValue (i), "RT-POLICY-SET") == 0)
+            retv = RTPOLICYSET_NAME;
+          // Do nothing if no match is found.  We are not obliged to
+          // handle unknown extension.
+        }
+      else if (ACE_OS_String::strcmp (atts->getQName (i), "origin") == 0)
+        {
+          if (ACE_OS_String::strcmp (atts->getValue (i), "CIAO") == 0)
+            ciao_ext = 1;       // This is indeed a CIAO extension.
+        }
+      else if (ACE_OS_String::strcmp (atts->getQName (i), "id") == 0)
+        {
+        }
+      else if (ACE_OS_String::strcmp (atts->getQName (i), "extra") == 0)
+        {
+          // Do nothing.  We don't handle this case.
+        }
+      else if (ACE_OS_String::strcmp (atts->getQName (i), "html-form") == 0)
+        {
+          // Do nothing.  We don't handle this case.
+        }
+      else
+        ACEXML_THROW
+          (ACEXML_SAXException
+           ("Invalid attributes encounter while parsing \"extension\""));
+    }
+
+  return (ciao_ext == 0 ? INVALID_EXT : retv);
+}
 // =================================================================
 
 void
@@ -919,6 +995,6 @@ CIAO::Connections_Handler::reset_info (ACEXML_Attributes *atts
       else
         ACEXML_THROW
           (ACEXML_SAXException
-           ("Invalid tag encounter while parsing \"componentfiles\""));
+           ("Invalid attribute encounter while parsing \"componentfiles\""));
     }
 }

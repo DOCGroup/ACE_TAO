@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "RTConfigurationC.h"
+#include "../XML_Helpers/RTConfigurationC.h"
 
 namespace CIAO
 {
