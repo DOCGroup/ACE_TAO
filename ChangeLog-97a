@@ -1,3 +1,16 @@
+Thu Apr 10 00:34:10 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/Logger/simple-server/Logging_Acceptor.cpp
+ 	  (handle_input): We need to call svc_handler->close() if accept()
+ 	  or open() fails.  Thanks to Ganesh Pai <gpai@voicetek.com> for
+ 	  reporting this.
+
+	* ace/Service_Config.cpp (close): Moved the call to
+ 	  ACE_Service_Config::close_singletons() to outside the check for
+ 	  ACE_Service_Config::svc_rep_ since the Singletons can be used
+ 	  independently of the services.  Thanks to Matthias Kerkhoff
+ 	  <make@cs.tu-berlin.de> for suggesting this.
+
 Wed Apr  9 21:11:38 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Gateway.cpp (handle_signal): Evil demons

@@ -734,11 +734,15 @@ ACE_Service_Config::close (void)
     {
       ACE_DEBUG ((LM_SHUTDOWN, "shutting down daemon %n\n"));
 
-      // ACE_Service_Config must be deleted first so that an object's
-      // fini() method may reference a valid ACE_Reactor.
+      // ACE_Service_Config must be deleted before the Singletons are
+      // closed so that an object's fini() method may reference a
+      // valid ACE_Reactor.
       ACE_Service_Config::close_svcs ();
-      ACE_Service_Config::close_singletons ();
     }
+
+  // The Singletons can be used independently of the services.
+  // Therefore, this call must go out here.
+  ACE_Service_Config::close_singletons ();
   return 0;
 }
 
