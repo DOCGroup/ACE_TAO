@@ -4,7 +4,9 @@ Sat Dec  4 00:17:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Strategies/SCIOP_Endpoint.cpp
 	
 	  Fixed a logic error while trying to parse the string passed in
-	  for PreferredInterfaces option. Thanks to Theckla Louchios
+	  for PreferredInterfaces option. The parsing introduced a loop
+	  for endpoints created which were not part of the "destination"
+	  in the ORBPreferredInterface option. Thanks to Theckla Louchios
 	  <theckla.louchois@lmco.com> for reporting the problem.
 
 Fri Dec  3 11:34:37 2004  Dale Wilson  <wilson_d@ociweb.com>
