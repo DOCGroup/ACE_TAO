@@ -1,3 +1,10 @@
+Fri Apr 30 12:11:36 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/OS.i (gethostbyname2): 
+
+	  Added an IPv4-only implementation.  If ACE_HAS_IP6 is not defined,
+	  the IPv4-only implementation will be used.
+
 Fri Apr 30 12:11:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Basic_Types_Test.cpp: Added checks for sizeof(long) ==
