@@ -1,3 +1,8 @@
+Thu Jan 24 15:14:52 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Lib_Find.cpp (ldfind): Restored previously removed Win32
+	  code and re-organized macros so we wouldn't upset CE builds.
+
 Thu Jan 24 14:53:38 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/generate_doxygen.pl:
