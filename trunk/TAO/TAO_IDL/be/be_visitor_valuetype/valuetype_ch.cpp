@@ -186,12 +186,14 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   **    compiler again has to generate is superflous, unnecessary, more code
   **    bloat and unnecessary information for the app-programmer.  The 
   **    changes required for this (n the *C.h file) are:
-  **      2.1) Generate the raise_method as non-abstract.
+  **      2.1) Generate the raise_method as non-abstract and provide a definition 
+  **           in place
   **      2.2) Generate a new constructor that takes in a CORBA::Exception*
   **      2.3) Make the destructor public (instead of protected) 
   **      2.4) Generate a private CORBA::Exception* field.
   **      2.5) Generate the tao_marshal and tao_unmarshal methods as 
   **           non-abstarct. 
+  **      2.6) Generate the right throw spec for the AMH ExceptionHolders
   ***************************************************************************/
 
   /****************************************************************/
@@ -213,7 +215,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
        if (last_E != 0
            && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
          {
-           //ACE_DEBUG ((LM_DEBUG, "Passed second test of amh_excepholder \n"));
+           //ACE_DEBUG ((LM_DEBUG, "visit_valuetype: Passed second test of amh_excepholder \n"));
            is_an_amh_exception_holder = 1;
          }
      }
@@ -231,7 +233,10 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       /*********************************************************************/
       // 2
       if (is_an_amh_exception_holder)
-        *os << "public virtual CORBA_DefaultValueRefCountBase" << be_uidt_nl;
+        {
+          *os << "public virtual CORBA_DefaultValueRefCountBase" 
+              << be_uidt_nl;
+        }
       /*********************************************************************/
       else
         *os << "public virtual CORBA_ValueBase" << be_uidt_nl;
@@ -339,8 +344,11 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   
   /*********************************************************/
   // 2.4
-  *os << "CORBA::Exception *exception;"
-      << be_nl;
+  if (is_an_amh_exception_holder)
+    {
+      *os << "CORBA::Exception *exception;"
+          << be_nl;
+    }
   /*********************************************************/
 
 

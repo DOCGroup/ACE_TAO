@@ -68,7 +68,7 @@ be_visitor_obv_operation_arglist::is_amh_exception_holder (be_operation *node)
           if (last_E != 0
               && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
             {
-              //ACE_DEBUG ((LM_DEBUG, "Passed second test of amh_excepholder \n"));
+              //ACE_DEBUG ((LM_DEBUG, "obv_operation: Passed second test of amh_excepholder \n"));
               is_an_amh_exception_holder = 1;
             }
         }
@@ -136,12 +136,17 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
+      /***********************************************************/
+      // 2.1
       // Each method is pure virtual in the Valuetype class.
       // BUT, not if it is an AMH ExceptionHolder!
+      /***********************************************************/
       if (is_amh_exception_holder (node))
         {
-          *os << "{ this->exception->_raise (); }" << be_uidt_nl;
+          *os << "{ this->exception->_raise (); }" 
+              << be_uidt_nl;
         }
+      /***********************************************************/
       else
         {
           *os << " = 0;" << be_uidt_nl;

@@ -116,7 +116,7 @@ be_visitor_operation::is_amh_exception_holder (be_interface *node)
       if (last_E != 0
           && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
         {
-          //ACE_DEBUG ((LM_DEBUG, "Passed second test of amh_excepholder \n"));
+          //ACE_DEBUG ((LM_DEBUG, "be_visitor_operation: Passed second test of amh_excepholder \n"));
           is_an_amh_exception_holder = 1;
         }
     }
@@ -143,6 +143,10 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
   UTL_Scope *scope = node->defined_in ();
   be_interface *iface = be_interface::narrow_from_scope ( scope );
 
+  /***************************************************************************/
+  // 2.6
+  // Generate the Right Throw Spec if it is an AMH ExceptionHolder 
+  /***************************************************************************/
   // Check if this is (IF and it's not VT) or (it is an AMH ExceptionHolder).
   if (iface != 0)
     {
@@ -176,11 +180,10 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
                   *os << excp->name ();
                 }
             }
+          *os << be_uidt_nl << throw_spec_close << be_uidt;
         }
-      
-      *os << be_uidt_nl << throw_spec_close << be_uidt;
     }
-
+  /*******************************************************************************/
   return 0;
 }
 
