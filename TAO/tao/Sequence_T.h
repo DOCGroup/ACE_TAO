@@ -297,6 +297,8 @@ public:
   operator T *&();
   // Cast.
 
+  operator const T_var () const;
+
   T *in (void) const;
   // for in parameter.
 
