@@ -44,7 +44,7 @@ Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_MESSAGING_REPLYHANDLER___CI_)
 #define _MESSAGING_REPLYHANDLER___CI_
@@ -56,9 +56,13 @@ Messaging::ReplyHandler::ReplyHandler (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc),
+  : ACE_NESTED_CLASS (CORBA, Object) (
+        objref,
+        _tao_collocated,
+        servant,
+        oc
+      ),
     the_TAO_ReplyHandler_Proxy_Broker_ (0)
-  
 {
   this->Messaging_ReplyHandler_setup_collocation (_tao_collocated);
 }
@@ -70,14 +74,13 @@ Messaging::ReplyHandler::ReplyHandler (
   )
   : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
     the_TAO_ReplyHandler_Proxy_Broker_ (0)
-  
 {
 }
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_valuetype.cpp:236
+// be/be_valuetype.cpp:463
 
 #if defined (__ACE_INLINE__)
 

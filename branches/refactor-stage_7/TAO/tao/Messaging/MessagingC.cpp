@@ -26,19 +26,13 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:301
+// be/be_codegen.cpp:302
 
 
 #include "Messaging.h"
-#include "tao/Stub.h"
-#include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Dual_Impl_T.h"
-#include "tao/Any_Basic_Impl_T.h"
-#include "tao/Basic_Arguments.h"
-#include "tao/Fixed_Size_Argument_T.h"
 #include "tao/Typecode.h"
+#include "tao/Any_Impl_T.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -49,7 +43,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:59
+// be/be_visitor_arg_traits.cpp:60
 
 // Arg traits specializations.
 namespace TAO
@@ -150,7 +144,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/valuetype_cs.cpp:94
+// be/be_visitor_valuetype/valuetype_cs.cpp:66
 
 void
 TAO::Value_Traits<Messaging::ExceptionHolder>::tao_add_ref (
@@ -176,7 +170,7 @@ Messaging::ExceptionHolder::_downcast (CORBA::ValueBase *v)
       return 0;
     }
 
-  return (ExceptionHolder *) v->_tao_obv_narrow ((ptrdiff_t) &_downcast);
+  return dynamic_cast<Messaging::ExceptionHolder *> (v);
 }
 
 const char *
@@ -184,32 +178,6 @@ Messaging::ExceptionHolder::_tao_obv_repository_id (void) const
 {
   return this->_tao_obv_static_repository_id ();
 }
-
-void *
-#if defined (_MSC_VER)
-Messaging::ExceptionHolder::Messaging_ExceptionHolder_tao_obv_narrow (ptrdiff_t type_id)
-#else
-Messaging::ExceptionHolder::_tao_obv_narrow (ptrdiff_t type_id)
-#endif /* _MSC_VER */
-{
-  if (type_id == (ptrdiff_t) &_downcast)
-    {
-      return this;
-    }
-
-  void *rval = 0;
-
-  return rval;
-}
-
-#if defined (_MSC_VER)
-void *
-Messaging::ExceptionHolder::_tao_obv_narrow (ptrdiff_t type_id)
-{
-  return this->Messaging_ExceptionHolder_tao_obv_narrow (type_id);
-}
-#endif /* _MSC_VER */
-
 void
 Messaging::ExceptionHolder::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -275,7 +243,7 @@ CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/valuetype_init_cs.cpp:84
+// be/be_visitor_valuetype/valuetype_init_cs.cpp:85
 
 Messaging::ExceptionHolder_init::ExceptionHolder_init (void)
 {
@@ -559,7 +527,19 @@ OBV_Messaging::ExceptionHolder::marshaled_exception (void)
 // TAO_IDL - Generated from
 // be/be_visitor_valuetype/any_op_cs.cpp:57
 
-// Copying insertion.
+
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ExceptionHolder>::to_value (
+    CORBA::ValueBase *&_tao_elem
+  ) const
+{
+  CORBA::add_ref (this->value_);
+  _tao_elem = this->value_;
+  return 1;
+}// Copying insertion.
 void
 operator<<= (
     CORBA::Any &_tao_any,
@@ -600,21 +580,20 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ExceptionHolder>::to_value (
-    CORBA::ValueBase *&_tao_elem
-  ) const
-{
-  CORBA::add_ref (this->value_);
-  _tao_elem = this->value_;
-  return 1;
-}
-
 
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyHandler>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
 
 // Copying insertion.
 void
@@ -658,18 +637,8 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyHandler>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 // TAO_IDL - Generated from
-// be/be_valuetype.cpp:263
+// be/be_valuetype.cpp:490
 
 void
 CORBA::add_ref (Messaging::ExceptionHolder * vt)
@@ -792,43 +761,20 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1703
+// be/be_visitor_root/root.cpp:1702
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::PollableSet::NoPossiblePollable
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::PollableSet::UnknownPollable
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::SetOverrideType
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::PolicyError
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::InvalidPolicies
-      >;  template class
     TAO_Value_Var_T<
-        Messaging::ExceptionHolder,
-        TAO::Value_Traits<Messaging::ExceptionHolder>
+        Messaging::ExceptionHolder
+
       >;
 
   template class
     TAO_Value_Out_T<
-        Messaging::ExceptionHolder,
-        TAO::Value_Traits<Messaging::ExceptionHolder>
+        Messaging::ExceptionHolder
+
       >;
 
   template class
@@ -836,17 +782,22 @@ CORBA::Boolean operator>> (
         Messaging::ExceptionHolder
       >;
 
+  template class TAO::Objref_Traits<Messaging::ReplyHandler>;
+
   template class
     TAO_Objref_Var_T<
-        Messaging::ReplyHandler,
-        TAO::Objref_Traits<Messaging::ReplyHandler>
+        Messaging::ReplyHandler
+
       >;
 
   template class
     TAO_Objref_Out_T<
-        Messaging::ReplyHandler,
-        TAO::Objref_Traits<Messaging::ReplyHandler>
+        Messaging::ReplyHandler
+
       >;
+
+  template class
+    TAO::Narrow_Utils<Messaging::ReplyHandler>;
 
   template class
     TAO::Any_Impl_T<
@@ -856,38 +807,15 @@ CORBA::Boolean operator>> (
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::PollableSet::NoPossiblePollable \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::PollableSet::UnknownPollable \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::SetOverrideType \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::PolicyError \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::InvalidPolicies \
-      ># pragma instantiate \
     TAO_Value_Var_T< \
-        Messaging::ExceptionHolder, \
-        TAO::Value_Traits<Messaging::ExceptionHolder> \
+        Messaging::ExceptionHolder \
+
       >
 
 # pragma instantiate \
     TAO_Value_Out_T< \
-        Messaging::ExceptionHolder, \
-        TAO::Value_Traits<Messaging::ExceptionHolder> \
+        Messaging::ExceptionHolder \
+
       >
 
 # pragma instantiate \
@@ -895,17 +823,22 @@ CORBA::Boolean operator>> (
         Messaging::ExceptionHolder \
       >
 
+# pragma instantiate TAO::Objref_Traits<Messaging::ReplyHandler>
+
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        Messaging::ReplyHandler, \
-        TAO::Objref_Traits<Messaging::ReplyHandler> \
+        Messaging::ReplyHandler
+
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        Messaging::ReplyHandler, \
-        TAO::Objref_Traits<Messaging::ReplyHandler> \
+        Messaging::ReplyHandler
+
       >
+
+# pragma instantiate \
+    TAO::Narrow_Utils<Messaging::ReplyHandler>
 
 # pragma instantiate \
     TAO::Any_Impl_T< \

@@ -1,3 +1,38 @@
+Fri Oct 24 18:28:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/DynamicInterface/Context.h:
+	* tao/DynamicInterface/Context.inl:
+	* tao/DynamicInterface/Request.cpp:
+
+          Added is_nil () and release () for CORBA::Context. Further,
+	  fixed some compilation errors with explicit template
+	  instantiations. 
+
+	* tao/Messaging/Messaging.pidl: 
+	* tao/Messaging/Messaging_No_Impl.pidl:
+	* tao/Messaging/Messaging_RT_Policy.pidl:
+	* tao/Messaging/TAO_Ext.pidl:
+	* tao/Messaging/Messaging_SyncScope_Policy.pidl:
+	* tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
+	
+	  Added command line options for compiling these files. 
+	
+	* tao/IORInterceptor/IORInterceptorC.cpp:
+	* tao/IORInterceptor/IORInterceptorC.h:
+	* tao/IORInterceptor/IORInterceptorC.i:
+	* tao/Messaging/MessagingC.cpp:
+	* tao/Messaging/MessagingC.h:
+	* tao/Messaging/MessagingC.i:
+	* tao/Messaging/Messaging_No_ImplC.cpp:
+	* tao/Messaging/Messaging_RT_PolicyC.cpp:
+	* tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+	* tao/Messaging/TAO_ExtC.cpp:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.i:
+
+	  Regenerated code 
+
 Fri Oct 24 18:27:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp: 

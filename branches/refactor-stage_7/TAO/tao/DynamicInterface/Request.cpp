@@ -352,23 +352,20 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
   template class TAO_Pseudo_Out_T<CORBA::Request, CORBA::Request_var>;
   template class
     TAO_Unbounded_Pseudo_Sequence<
-        CORBA::Request,
-        CORBA::Request_var
+        CORBA::Request
       >;
   template class
     TAO_MngSeq_Var_T<
         CORBA::ORB::RequestSeq,
         TAO_Pseudo_Object_Manager<
-            CORBA::Request,
-            CORBA::Request_var
+            CORBA::Request
           >
       >;
   template class
     TAO_Seq_Var_Base_T<
         CORBA::ORB::RequestSeq,
         TAO_Pseudo_Object_Manager<
-            CORBA::Request,
-            CORBA::Request_var
+            CORBA::Request
           >
       >;
   template class
@@ -376,8 +373,7 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
         CORBA::ORB::RequestSeq,
         CORBA::ORB::RequestSeq_var,
         TAO_Pseudo_Object_Manager<
-            CORBA::Request,
-            CORBA::Request_var
+            CORBA::Request
           >
       >;
 
@@ -387,23 +383,20 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
 # pragma instantiate TAO_Pseudo_Out_T<CORBA::Request, CORBA::Request_var>
 # pragma instantiate \
     TAO_Unbounded_Pseudo_Sequence< \
-        CORBA::Request, \
-        CORBA::Request_var \
+        CORBA::Request \
       >
 # pragma instantiate \
     TAO_VarSeq_Var_T< \
         CORBA::ORB::RequestSeq, \
         TAO_Pseudo_Object_Manager< \
-            CORBA::Request, \
-            CORBA::Request_var \
+            CORBA::Request \
           > \
       >
 # pragma instantiate \
     TAO_Seq_Var_Base_T< \
         CORBA::ORB::RequestSeq, \
         TAO_Pseudo_Object_Manager< \
-            CORBA::Request, \
-            CORBA::Request_var \
+            CORBA::Request \
           > \
       >
 # pragma instantiate \
@@ -411,8 +404,7 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
         CORBA::ORB::RequestSeq, \
         CORBA::ORB::RequestSeq_var, \
         TAO_Pseudo_Object_Manager< \
-            CORBA::Request, \
-            CORBA::Request_var \
+            CORBA::Request \
           > \
       >
 

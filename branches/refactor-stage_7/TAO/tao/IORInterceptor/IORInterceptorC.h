@@ -26,30 +26,24 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:151
+// be/be_codegen.cpp:150
 
 #ifndef _TAO_IDL_ORIG_IORINTERCEPTORC_H_
 #define _TAO_IDL_ORIG_IORINTERCEPTORC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "iorinterceptor_export.h"
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Valuetype/AbstractBase.h"
-#include "tao/Valuetype/ValueBase.h"
-#include "tao/Valuetype/Valuetype_Adapter_Impl.h"
-#include "tao/Valuetype/ValueFactory.h"
-#include "tao/Valuetype/Sequence_T.h"
-#include "tao/Sequence_T.h"
+#include "iorinterceptor_export.h"
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
-#include "tao/Valuetype/Value_VarOut_T.h"
-#include "tao/Seq_Var_T.h"
-#include "tao/Seq_Out_T.h"
-#include "tao/VarOut_T.h"
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/ObjRefTemplate/ObjectReferenceTemplateC.h"
@@ -83,6 +77,8 @@
 namespace TAO
 {
   class Collocation_Proxy_Broker;
+  
+  template<typename T> class Narrow_Utils;
 }
 
 // TAO_IDL - Generated from
@@ -92,7 +88,7 @@ namespace PortableInterceptor
 {
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:601
+  // be/be_interface.cpp:605
 
 #if !defined (_PORTABLEINTERCEPTOR_IORINFO__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_IORINFO__VAR_OUT_CH_
@@ -115,7 +111,7 @@ namespace PortableInterceptor
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:53
+  // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLEINTERCEPTOR_IORINFO_CH_)
 #define _PORTABLEINTERCEPTOR_IORINFO_CH_
@@ -136,9 +132,9 @@ namespace PortableInterceptor
       );
     
     static IORInfo_ptr _nil (void)
-      {
-        return (IORInfo_ptr)0;
-      }
+    {
+      return (IORInfo_ptr)0;
+    }
     
     
     
@@ -228,7 +224,7 @@ namespace PortableInterceptor
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:185
+    // be/be_visitor_interface/interface_ch.cpp:187
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -239,18 +235,22 @@ namespace PortableInterceptor
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
+    // Abstract or local interface only.
     IORInfo (void);
+    
     virtual ~IORInfo (void);
   
   private:
+    // Private and unimplemented for concrete interfaces.
     IORInfo (const IORInfo &);
+    
     void operator= (const IORInfo &);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:601
+  // be/be_interface.cpp:605
 
 #if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_IORINTERCEPTOR__VAR_OUT_CH_
@@ -273,7 +273,7 @@ namespace PortableInterceptor
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:53
+  // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR_CH_)
 #define _PORTABLEINTERCEPTOR_IORINTERCEPTOR_CH_
@@ -294,9 +294,9 @@ namespace PortableInterceptor
       );
     
     static IORInterceptor_ptr _nil (void)
-      {
-        return (IORInterceptor_ptr)0;
-      }
+    {
+      return (IORInterceptor_ptr)0;
+    }
     
     
     
@@ -347,7 +347,7 @@ namespace PortableInterceptor
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:185
+    // be/be_visitor_interface/interface_ch.cpp:187
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -358,11 +358,15 @@ namespace PortableInterceptor
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
+    // Abstract or local interface only.
     IORInterceptor (void);
+    
     virtual ~IORInterceptor (void);
   
   private:
+    // Private and unimplemented for concrete interfaces.
     IORInterceptor (const IORInterceptor &);
+    
     void operator= (const IORInterceptor &);
   };
 
@@ -379,6 +383,7 @@ namespace PortableInterceptor
 // Traits specializations.
 namespace TAO
 {
+
 #if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_IORINTERCEPTOR__TRAITS_CH_
   
@@ -433,7 +438,7 @@ namespace TAO
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:969
+// be/be_codegen.cpp:911
 
 #if defined (__ACE_INLINE__)
 #include "IORInterceptorC.i"
@@ -448,5 +453,6 @@ namespace TAO
 #endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* ifndef */
 
