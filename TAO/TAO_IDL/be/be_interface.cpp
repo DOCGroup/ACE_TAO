@@ -2331,7 +2331,7 @@ be_interface::copy_ctor_helper (be_interface *derived,
     }
 
   *os << "," << be_idt_nl;
-  
+
   idl_bool is_rh_base =
     (ACE_OS::strcmp (base->flat_name (), "Messaging_ReplyHandler") == 0);
 
@@ -2528,41 +2528,41 @@ be_interface::session_component_child (void)
           this->session_component_child_ = 0;
           return this->session_component_child_;
         }
-        
+
       Identifier tail_id ("SessionComponent");
       UTL_ScopedName tail (&tail_id, 0);
       Identifier head_id ("Components");
       UTL_ScopedName sn (&head_id, &tail);
-     
+
       AST_Decl *session_component =
-        const_cast<be_interface*> (this)->scope ()->lookup_by_name (&sn, 
+        const_cast<be_interface*> (this)->scope ()->lookup_by_name (&sn,
                                                                     I_TRUE);
-        
+
       tail_id.destroy ();
       head_id.destroy ();
-        
+
       // If Components::SessionComponent is not in the AST, we are
-      // barking up the wrong tree.  
+      // barking up the wrong tree.
       if (session_component == 0)
         {
           this->session_component_child_ = 0;
           return this->session_component_child_;
         }
-        
+
       for (long i = 0; i < this->pd_n_inherits; ++i)
         {
           AST_Decl *tmp = this->pd_inherits[i];
-          
+
           if (tmp == session_component)
             {
               this->session_component_child_ = 1;
               return this->session_component_child_;
             }
         }
-        
+
       this->session_component_child_ = 0;
     }
-  
+
   return this->session_component_child_;
 }
 
