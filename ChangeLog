@@ -1,3 +1,10 @@
+Thu Aug 22 03:50:02 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* bin/footprint_stats.sh: Calculate value of DATE
+	  inside this script instead of passing it in as the
+	  third parameter.  This will make it easier to make
+	  an autobuild script around this.
+
 Wed Aug 21 20:40:20 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/OS.h:

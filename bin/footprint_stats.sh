@@ -3,14 +3,15 @@
 # $Id$
 #
 
-if [ $# -lt 3 ]; then
-  echo "Usage: $0 <ACE_ROOT> <DEST> <DATE>"
+
+if [ $# -lt 2 ]; then
+  echo "Usage: $0 [ACE_ROOT] [DEST]"
   exit 0
 fi
 
 ACE_ROOT=$1
 DEST=$2
-DATE=$3
+DATE=`date +%Y/%m/%d-%H:%M`
 
 BINS="TAO/tests/ORB_init/ORB_init TAO/tests/ORB_destroy/ORB_destroy"
 
