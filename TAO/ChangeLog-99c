@@ -1,3 +1,13 @@
+Fri Jun 25 14:19:48 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/benchmark/client.cpp: 
+	* orbsvcs/tests/AVStreams/sfp/server.cpp (main): 
+	* orbsvcs/tests/AVStreams/sfp/client.cpp (main): 
+	* orbsvcs/tests/AVStreams/sfp/common.h: 
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (create_B): 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (remove_fep): 
+	  Fixed SunCC 5.0 warnings thanks to Carlos O' Ryan.
+	
 Fri Jun 25 14:06:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/Event_Service/Event_Service.cpp:
