@@ -1,3 +1,13 @@
+Wed Jan  2 10:22:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp (visit_array):
+
+          Made changes that were overlooked in 
+
+          Fri Dec 28 15:41:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
+ 
+          that correspond to changes made in typedef_ch.cpp.
+
 Wed Jan  2 09:41:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvvcs/IFR_Service/drv_init_ifr.cpp:
