@@ -4,6 +4,18 @@ Sun Nov 30 20:32:50 1997  David L. Levine  <levine@cs.wustl.edu>
           from CCFLAGS, so the default template repository will be used.
           Thanks to Dani Flexer <danif@ivory-sw.com> for reporting this.
 
+        * ace/Svc_Conf_l.cpp,Makefile:
+          1) #include ace/stdcpp.h instead of stdio.h so that anything
+             that needs to be #included with/before stdio.h can be.
+          2) Changed ECHO to ACE_SVC_CONF_ECHO to avoid compiler warning if
+             ECHO was #defined to be a constant.
+
+        * ace/Makefile: set ACELIB to null so that it can be used to build
+          shared libs, including libACE.$(SOEXT).
+
+        * include/makeinclude/paltform_osf1_4.0.GNU: added $(ACELIB) to
+          SOFLAGS to avoid shared lib build warnings.
+
 Sun Nov 30 14:13:09 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
         * netsvcs/servers/README: Clarified a bit more about how to
