@@ -25,7 +25,7 @@ FILES   = \
         IO
 
 LIBS   += $(ACELIB)
-LDLIBS  = -lJAWS
+LDLIBS  = # -lJAWS
 
 PSRC    = $(addsuffix .cpp,$(BIN))
 LSRC    = $(addsuffix .cpp,$(FILES))
@@ -60,6 +60,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #       Local targets
 #----------------------------------------------------------------------------
 
+ifeq (Utils,$(findstring Utils,$(ACE_BUILD_COMPONENTS)))
+  ifneq (FOR_TAO,$(ACE_COMPONENTS))
+    ifeq ($(static_libs_only),1)
+$(VBIN): $(VLIB)
+    else
+$(VBIN): $(VSHLIB)
+    endif
+  endif # ! FOR_TAO
+endif # ! Utils
 
 #----------------------------------------------------------------------------
 #       Dependencies
