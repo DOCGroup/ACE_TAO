@@ -34,8 +34,14 @@ class List_Node
   //   Data and function members for defining values and operations of
   //   a list node.  
 public:
+  // = Initialization and termination methods.
   List_Node (char *key, int len);
-  static void set_sort (char *base, int len);
+  // Constructor.
+
+  ~List_Node (void);
+  // Destructor.
+
+  static void sort (char *base, int len);
 
   List_Node *link;              
   // TRUE if key has an identical KEY_SET as another key.

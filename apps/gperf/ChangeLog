@@ -1,3 +1,39 @@
+Sun Sep 27 00:04:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* src/Key_List.cpp (output): If it's not possible to use the
+ 	  lookup_array implementation of -D (e.g., because there aren't
+ 	  enough empty slots in the lookup_array), then default to using
+ 	  -S1 option...  This fixes a nasty bug that's been in gperf for
+ 	  years....
+
+	* tests/c++-res.exp: Added a new test for C++ keywords.
+
+	* tests/corba.gperf: Added a proper test for CORBA keywords.
+
+Sat Sep 26 15:32:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* src/Hash_Table.cpp (find): Fixed a bug in the increment
+ 	  computation that arose if the -n option was given.
+
+	* src: Removed all set_ and get_ prefixes to be more consistent
+ 	  with ACE programming guidelines.
+
+	* src: GPERF now Purifies cleanly.
+
+	* src/Gen_Perf: Cleaned up the code so that if errors occur they
+ 	  get handled properly.
+
+	* src/List_Node: Added a destructor to remove the memory when
+	  we're done.
+
+	* src: Continued to tidy up the source code so that it is better
+ 	  designed and Purifies cleanly on shutdown.
+
+	* src/Makefile: Removed the need for libGperf.{a,so}.
+
+	* src/Key_List: Changed read_keys() to return a value so that we
+ 	  can check for errors.
+
 Fri Sep 25 08:54:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * src/Key_List.cpp (Key_List ctor): reordered initializers to
