@@ -1,3 +1,10 @@
+Mon Mar 21 09:28:35 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Modified ACE_THROW to be ACE_THROW_RETURN to support
+          non-exceptions builds.
+
 Mon Mar 21 07:58:47 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/RTScheduling/DT_Creator.h:

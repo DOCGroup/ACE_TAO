@@ -342,7 +342,7 @@ TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck
   if (!flck->peer ().good ())
     {
       flck->peer ().clear ();
-      ACE_THROW (CORBA::INTERNAL ());
+      ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
     }
 
   // reset the destroyed flag
@@ -355,7 +355,7 @@ TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck
     if (!flck->peer ().good ())
       {
         flck->peer ().clear ();
-        ACE_THROW (CORBA::INTERNAL ());
+        ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
       }
     if( record.type() == TAO_NS_Persistence_Record::NCONTEXT )
     {
@@ -693,7 +693,7 @@ TAO_Storable_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
         gfl_.get ()->rdstate () != TAO_Storable_Base::eofbit)
       {
         gfl_.get ()->clear ();
-        ACE_THROW (CORBA::INTERNAL ());
+        ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
       }
     gcounter_ = global.counter();
     // use it to generate a new name
@@ -1532,7 +1532,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
       gfl_.get ()->rdstate () != TAO_Storable_Base::eofbit)
     {
       gfl_.get ()->clear ();
-      ACE_THROW (CORBA::INTERNAL ());
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
   gcounter_ = global.counter();
   if(redundant_) gfl_->close();
