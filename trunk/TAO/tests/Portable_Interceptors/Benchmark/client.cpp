@@ -68,6 +68,7 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
       server->ready (ACE_TRY_ENV);
+      ACE_CHECK;
 
       // Grab timestamp again.
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -85,42 +86,37 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
   marker.dump_stats ("Ready method  ", gsf, 1);
 
   ACE_TRY
+    {
+      marker.accumulate_into (throughput, 2);
+      throughput_base = ACE_OS::gethrtime ();
+
+      for (i = 0; i < niterations ; ++i)
         {
-          marker.accumulate_into (throughput, 2);
-          throughput_base = ACE_OS::gethrtime ();
+          // Record current time.
+          ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
-          for (i = 0; i < niterations ; ++i)
-            {
-              // Record current time.
-              ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
-
-              server->authenticate (user, ACE_TRY_ENV);
-
-              // Grab timestamp again.
-              ACE_hrtime_t now = ACE_OS::gethrtime ();
-
-              // Record statistics.
-              marker.sample (now - throughput_base,
-                             now - latency_base,
-                             2);
-
-              ACE_TRY_CHECK;
-              if (TAO_debug_level > 0 && i % 100 == 0)
-                ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
-
-            }
-          marker.dump_stats ("Authenticate method  ", gsf, 2);
-
+          server->authenticate (user, ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
+          // Grab timestamp again.
+          ACE_hrtime_t now = ACE_OS::gethrtime ();
+
+          // Record statistics.
+          marker.sample (now - throughput_base,
+                         now - latency_base,
+                         2);
+
+          if (TAO_debug_level > 0 && i % 100 == 0)
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
         }
+      marker.dump_stats ("Authenticate method  ", gsf, 2);
+    }
   ACE_CATCH (Test_Interceptors::Invalid, userex)
     {
       ACE_DEBUG ((LM_DEBUG, "Invalid user\n"));
     }
   ACE_ENDTRY;
   ACE_CHECK;
-
 
   Test_Interceptors::Secure_Vault::Record record;
   record.check_num = 1;
@@ -154,7 +150,6 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
     }
 
   marker.dump_stats ("update records  method  ", gsf, 3);
-  ACE_CHECK;
 }
 
 

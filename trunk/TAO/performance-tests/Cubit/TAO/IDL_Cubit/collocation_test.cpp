@@ -27,16 +27,17 @@ svr_worker (void *arg)
 
   ACE_TRY_NEW_ENV
     {
-      if (cubit_server.init (args.argc (),
-                             args.argv (),
-                             ACE_TRY_ENV) == -1)
+      int result = cubit_server.init (args.argc (),
+                                      args.argv (),
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (result == -1)
         return (void *) 1;
-      else
-        {
-          barrier->wait ();
-          cubit_server.run (ACE_TRY_ENV);
-        }
-        ACE_TRY_CHECK;
+
+      barrier->wait ();
+      cubit_server.run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {

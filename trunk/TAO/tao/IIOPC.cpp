@@ -344,11 +344,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IIOP::ListenPointL
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IIOP::_tc_ListenPointList, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (IIOP::_tc_ListenPointList, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -425,11 +429,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IIOP::BiDirIIOPSer
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (IIOP::_tc_BiDirIIOPServiceContext, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (IIOP::_tc_BiDirIIOPServiceContext,
+                        ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
