@@ -1266,7 +1266,7 @@ ACE_OS::write (ACE_HANDLE handle,
   if (::WriteFile (handle, buf, short_nbyte, &bytes_written, overlapped))
     return (ssize_t) bytes_written;
   else
-    return -1;
+    ACE_FAIL_RETURN (-1);
 #else
   return ACE_OS::write (handle, buf, nbyte);
 #endif /* ACE_WIN32 */
