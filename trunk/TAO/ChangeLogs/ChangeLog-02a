@@ -41,7 +41,6 @@ Tue Jun 19 12:25:09 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
           Added RTCORBA includes and added the RTCORBA library to
           client.dsp.
 
->>>>>>> 1.3796
 Tue Jun 19 10:38:07 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tests/RTCORBA/Server_Protocol/client.cpp:
