@@ -688,8 +688,7 @@ typedef u_int ACE_thread_key_t;
 
 
 #   elif defined (VXWORKS)
-//#     include /**/ <remLib.h> I don't see where this is used...
-//#     include /**/ <sysLib.h>  this is for board specific routines (not used by ACE)
+#     include /**/ <sysLib.h>  this is for board specific routines (not used by ACE)
 #     include /**/ <taskLib.h>
 #     include /**/ <taskHookLib.h>
 
@@ -704,7 +703,7 @@ typedef u_int ACE_thread_key_t;
 #include "ace/os_include/os_stropts.h"
 #include "ace/os_include/os_unistd.h"
 #include "ace/os_include/arpa/os_inet.h"
-#include "ace/os_include/sys/select.h"
+#include "ace/os_include/sys/os_select.h"
 #include "ace/os_include/sys/os_socket.h"
 
 // task options:  the other options are either obsolete, internal, or for

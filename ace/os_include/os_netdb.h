@@ -49,7 +49,9 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_PSOS) || defined (VXWORKS)
+// VxWorks does define these, at least on a Sun cross compile, so this
+// may need to be added back for windows.
+#if defined (ACE_PSOS) //|| defined (VXWORKS)
    struct  hostent {
      char    *h_name;        /* official name of host */
      char    **h_aliases;    /* alias list */
