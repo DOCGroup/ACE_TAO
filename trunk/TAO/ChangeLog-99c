@@ -1,3 +1,9 @@
+Mon Jul 19 20:00:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/Union_cs.cpp:
+	  Some changes to avert egcs warnings when there is an implicit
+	  default case and an enum discriminator.
+
 Mon Jul 19 19:42:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/corbafwd.h,Exception.cpp: added minor code support for
