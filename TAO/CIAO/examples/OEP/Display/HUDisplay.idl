@@ -11,7 +11,7 @@
 #ifndef HUDISPLAY_IDL
 #define HUDISPLAY_IDL
 
-#include <ciao/Components.idl>
+#include <Components.idl>
 
 module HUDisplay
 {
