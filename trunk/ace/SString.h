@@ -590,7 +590,7 @@ private:
 
 // ****************************************************************
 
-class ACE_Auto_String_Free
+class ACE_Export ACE_Auto_String_Free
 {
   // = TITLE
   //   Simple class to automatically de-allocate strings
