@@ -41,14 +41,13 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
       IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *,
                                                 obj->_stubobj ());
     
-      // @@ Darrell, please make sure to use the ACE_NEW_RETURN or
-      // ACE_NEW macros for your dynamic memory allocations in all
-      // your code.
-      new_iiop_obj = new IIOP_Object (iiop_obj->type_id, 
-                                      ACE::strnew (new_addr->host_),
-                                      new_addr->port_,
-                                      iiop_obj->profile.object_key,
-                                      iiop_obj->profile.object_addr ());
+      ACE_NEW_RETURN (new_iiop_obj, 
+                      IIOP_Object (iiop_obj->type_id, 
+                                   ACE::strnew (new_addr->host_),
+                                   new_addr->port_,
+                                   iiop_obj->profile.object_key,
+                                   iiop_obj->profile.object_addr ()),
+                      0);
     }
   TAO_CATCHANY
     {
@@ -79,7 +78,6 @@ ImplRepo_i::activate_server (const char *server,
                 server));
 
   // Find out if it is already running
-
   if (this->repository_.get_ping_ior (server, ping_ior) != 0)
     {
       // If we had problems getting the ping_ior, probably meant that
@@ -350,7 +348,7 @@ ImplRepo_i::server_is_running (const char *server,
   if (this->debug_level_ >= 2)
     ACE_DEBUG ((LM_DEBUG,
                 "The new host/port is: %Lu:%hu\n",
-                new_addr->host_,
+                new_addr->host_.inout (),
                 new_addr->port_));
 
   return new_addr;
