@@ -831,8 +831,8 @@ ACE_SSL_Asynch_Stream::print_error (int err_ssl,
               err_ssl,
               pText));
 
-#if OPENSSL_VERSION_NUMBER >= x0090600fL
-  // OpenSSL < 0.9.6 doesn't have ERR_error_string_n() function.
+#if OPENSSL_VERSION_NUMBER >= 0x0090601fL
+  // OpenSSL < 0.9.6a doesn't have ERR_error_string_n() function.
   unsigned long lerr = 0;
   char buf[1024];
 
