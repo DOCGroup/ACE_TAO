@@ -539,6 +539,11 @@ class Foo {
 	</P>
       </LI>
 
+      <LI><P>CORBA 2.2 does not allow <CODE>octets</CODE> as
+	  constants, yet the IDL compiler does not complain about it.
+	</P>
+      </LI>
+
       <LI><P>Verify that the typecode for unions use a
 	  <CODE>octet</CODE> with value <CODE>0</CODE> for the default
 	  discriminator
@@ -635,6 +640,20 @@ class Foo {
 
   <!-- Things below this point are "big" tasks" that -->
   <!-- could require major work -->
+
+      <LI><P>The Cached_Connector does not support any kind of
+	  recycling strategy.
+	  We should add LRU and/or similar strategies to the
+	  Cached_Connector and make them available to the user via the
+	  <CODE>svc.conf</CODE> file.
+	  Similarly we need to give the users control on the maximum
+	  number of open sockets that the ORB will hold at any point
+	  in time.
+	</P>
+      </LI>
+
+      <LI><P>Add support for Smart Proxies to the ORB</P>
+      </LI>
 
       <LI><P>The ORB should support server side and client side
 	  interceptors</P>
