@@ -1,3 +1,14 @@
+Mon Jan 14 14:40:25 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* bin/g++dep:
+	  Fixed small problems in the dependency generation:
+	  - The script did not properly handle files with '+' in their
+	    names.
+	  - In some cases the script generated escaped blanks, i.e. lines
+	    containing a blank preceded by a backslash.  Such blanks are
+	    interpreted as part of a dependency name and break havoc with
+	    the builds.
+
 Mon Jan 14 16:49:37 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h (ACE_STATIC_SVC_DEFINE): Corrected the documentation to
