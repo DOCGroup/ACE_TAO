@@ -78,8 +78,8 @@ main (int argc, char *argv[])
         orb->string_to_object (ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      Timeout_var timeout_var =
-        Timeout::_narrow (object.in (), ACE_TRY_ENV);
+      TimeoutObj_var timeout_var =
+        TimeoutObj::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (timeout_var.in ()))
@@ -115,7 +115,7 @@ main (int argc, char *argv[])
       // Instantiate reply handler
       TimeoutHandler_i timeoutHandler_i;
 
-      AMI_TimeoutHandler_var timeoutHandler_var =
+      AMI_TimeoutObjHandler_var timeoutHandler_var =
         timeoutHandler_i._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
