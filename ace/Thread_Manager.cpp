@@ -708,9 +708,9 @@ ACE_Thread_Manager::run_thread_exit_hooks (int i)
       (*this->thr_table_[i].cleanup_info_.cleanup_hook_) 
         (this->thr_table_[i].cleanup_info_.object_,
          this->thr_table_[i].cleanup_info_.param_);
-    }
 
-  this->thr_table_[i].cleanup_info_.cleanup_hook_ = 0;
+      this->thr_table_[i].cleanup_info_.cleanup_hook_ = 0;
+    }
 }
 
 // Remove a thread from the pool.  Must be called with locks held.
@@ -1097,10 +1097,17 @@ void *
 ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 {
   ACE_TRACE ("ACE_Thread_Manager::exit");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
-  // Locate thread id.
-  int i = this->find_thread (ACE_Thread::self ());
+  int i;
+
+  // Just hold onto the guard while finding this thread's id.
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
+
+    // Locate thread id.
+    i = this->find_thread (ACE_Thread::self ());
+  }
+  // Let go of the guard.
 
   if (i != -1)
     {
@@ -1112,14 +1119,6 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 
   if (do_thr_exit)
     {
-      // Note, since we are exiting this scope, there's no guarantee
-      // that the destructor will be called.  Therefore, we must
-      // manually release the lock...  Note that once we release the
-      // lock, it marks the Guard as being "unowned" so that the
-      // Guard's destructor won't try to release it again.
-
-      ACE_MT (ace_mon.release ()); 
-
       ACE_Thread::exit (status);
       // On reasonable systems <ACE_Thread::exit> should not return.
       // However, due to horrible semantics with Win32 thread-specific
