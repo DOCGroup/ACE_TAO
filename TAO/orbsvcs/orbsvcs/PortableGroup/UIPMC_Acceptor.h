@@ -115,10 +115,6 @@ protected:
   /// Parse protocol specific options.
   virtual int parse_options (const char *options);
 
-  /// Obtain uipmc properties that must be used by this acceptor, i.e.,
-  /// initialize <uipmc_properties_>.
-  int init_uipmc_properties (void);
-
 protected:
 
   /// Array of ACE_INET_Addr instances, each one corresponding to a
@@ -147,10 +143,6 @@ protected:
 
   /// ORB Core.
   TAO_ORB_Core *orb_core_;
-
-  /// UIPMC configuration properties to be used for all
-  /// connections opened by this acceptor.
-  TAO_UIPMC_Properties uipmc_properties_;
 
 private:
 

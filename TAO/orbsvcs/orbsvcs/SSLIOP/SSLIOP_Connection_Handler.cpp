@@ -1,5 +1,6 @@
 #include "SSLIOP_Connection_Handler.h"
 #include "SSLIOP_Endpoint.h"
+#include "SSLIOP_Util.h"
 
 #include "tao/debug.h"
 #include "tao/Base_Transport_Property.h"
@@ -9,6 +10,7 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Wait_Strategy.h"
+#include "tao/Protocols_Hooks.h"
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
 
@@ -26,8 +28,7 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (
     ACE_Thread_Manager *t)
   : SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    current_ (),
-    tcp_properties_ (0)
+    current_ ()
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -39,18 +40,13 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (
 
 TAO::SSLIOP::Connection_Handler::Connection_Handler (
     TAO_ORB_Core *orb_core,
-    CORBA::Boolean /* flag */, // SSLIOP does *not* support GIOPlite
-    void *arg)
+    CORBA::Boolean /* flag */) // SSLIOP does *not* support GIOPlite
   : SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    current_ (),
-    tcp_properties_ (0)
+    current_ ()
 {
-  TAO::SSLIOP::Connection_Handler_State *s =
-    static_cast<TAO::SSLIOP::Connection_Handler_State *> (arg);
-
-  this->tcp_properties_ = s->tcp_properties;
-  this->current_ = s->ssliop_current;
+  this->current_ =
+    TAO::SSLIOP::Util::current (orb_core);
 
   TAO::SSLIOP::Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
@@ -59,7 +55,6 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
 }
-
 
 TAO::SSLIOP::Connection_Handler::~Connection_Handler (void)
 {
@@ -75,15 +70,37 @@ TAO::SSLIOP::Connection_Handler::open_handler (void *v)
 int
 TAO::SSLIOP::Connection_Handler::open (void *)
 {
+  TAO_IIOP_Protocol_Properties protocol_properties;
+
+  // Initialize values from ORB params.
+  protocol_properties.send_buffer_size_ =
+    this->orb_core ()->orb_params ()->sock_sndbuf_size ();
+  protocol_properties.recv_buffer_size_ =
+    this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
+  protocol_properties.no_delay_ =
+    this->orb_core ()->orb_params ()->nodelay ();
+
+  TAO_Protocols_Hooks *tph =
+    this->orb_core ()->get_protocols_hooks ();
+
+  int client =
+    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;;
+
+  if (client)
+    tph->client_protocol_properties_at_orb_level (protocol_properties);
+  else
+    tph->server_protocol_properties_at_orb_level (protocol_properties);
+
   if (this->set_socket_option (this->peer (),
-                               tcp_properties_->send_buffer_size,
-                               tcp_properties_->recv_buffer_size) == -1)
+                               protocol_properties.send_buffer_size_,
+                               protocol_properties.recv_buffer_size_) == -1)
     return -1;
 
 #if !defined (ACE_LACKS_TCP_NODELAY)
+
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
-                                (void *) &this->tcp_properties_->no_delay,
+                                (void *) &protocol_properties.no_delay_,
                                 sizeof (int)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */

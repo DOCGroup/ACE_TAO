@@ -18,8 +18,8 @@
 #include "UIPMC_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (PortableGroup, 
-           UIPMC_Acceptor, 
+ACE_RCSID (PortableGroup,
+           UIPMC_Acceptor,
            "$Id$")
 
 
@@ -89,9 +89,6 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
                           const char *options)
 {
   this->orb_core_ = orb_core;
-
-  if (this->init_uipmc_properties () != 0)
-    return -1;
 
   if (this->hosts_ != 0)
     {
@@ -178,8 +175,7 @@ TAO_UIPMC_Acceptor::open_i (const ACE_INET_Addr& addr,
                             ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->connection_handler_,
-                  TAO_UIPMC_Connection_Handler (this->orb_core_,
-                                                0 /* TAO_UIPMC_Properties */),
+                  TAO_UIPMC_Connection_Handler (this->orb_core_),
                   -1);
 
   this->connection_handler_->local_addr (addr);
@@ -351,12 +347,5 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
                               -1);
         }
     }
-  return 0;
-}
-
-int
-TAO_UIPMC_Acceptor::init_uipmc_properties (void)
-{
-  // @@ Michael: We use UDP, so we do not set TCP settings.
   return 0;
 }

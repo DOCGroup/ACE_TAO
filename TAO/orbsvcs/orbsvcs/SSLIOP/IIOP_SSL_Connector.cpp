@@ -1,7 +1,5 @@
 #include "IIOP_SSL_Connector.h"
 
-#include "SSLIOP_Util.h"
-
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
@@ -63,21 +61,12 @@ TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
   if (this->create_connect_strategy () == -1)
     return -1;
 
-  if (this->init_tcp_properties () != 0)
-    return -1;
-
-  if (TAO::SSLIOP::Util::setup_handler_state (orb_core,
-                                              &(this->tcp_properties_),
-                                              this->handler_state_) != 0)
-      return -1;
-
   // Our connect creation strategy
   CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   CONNECT_CREATION_STRATEGY (orb_core->thr_mgr (),
                                              orb_core,
-                                             &(this->handler_state_),
                                              this->lite_flag_),
                   -1);
 

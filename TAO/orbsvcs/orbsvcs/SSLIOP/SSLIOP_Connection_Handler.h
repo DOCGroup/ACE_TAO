@@ -61,8 +61,7 @@ namespace TAO
        *        connection.
        */
       Connection_Handler (TAO_ORB_Core *orb_core,
-                          CORBA::Boolean flag,
-                          void *arg);
+                          CORBA::Boolean flag);
 
       /// Destructor.
       ~Connection_Handler (void);
@@ -130,21 +129,6 @@ namespace TAO
 
       /// TCP configuration for this connection.
       TAO_IIOP_Properties *tcp_properties_;
-
-    };
-
-    // ****************************************************************
-
-    class Connection_Handler_State
-    {
-    public:
-
-      /// TCP configuration for the connection associated with the
-      /// connection handler.
-      TAO_IIOP_Properties *tcp_properties;
-
-      /// Reference to the (downcast) SSLIOP::Current object.
-      TAO::SSLIOP::Current_var ssliop_current;
 
     };
 

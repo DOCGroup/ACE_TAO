@@ -1,3 +1,49 @@
+Thu Sep 30 16:53:48 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\Protocols_Hooks.h: 
+
+	  Added export directives to the class declarations.
+
+	* tao\Connection_Handler.{h,inl} (TAO_Connection_Handler): 
+
+	  Gave the set_dscp_codepoint() method a default no-op
+	  implementation.  This way local protocols will not have to
+	  bother overwritting this method.
+
+	* tao\Strategies\UIOP_Connection_Handler.{h,cpp}: 
+	* tao\Strategies\SHMIOP_Connection_Handler.{h,cpp}: 
+
+	  Removed no-op implementation of set_dscp_codepoint().
+	
+	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Util.{h,cpp}: 
+
+	  SSLIOP::Util::setup_handler_state no longer needed.  However, a
+	  helper for resolving the current is needed and was added.
+
+	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Acceptor.{h,cpp}: 
+	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Connector.{h,cpp}: 
+	* orbsvcs\orbsvcs\SSLIOP\IIOP_SSL_Acceptor.{h,cpp}: 
+	* orbsvcs\orbsvcs\SSLIOP\IIOP_SSL_Connector.{h,cpp}: 
+	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Acceptor.{h,cpp}: 
+	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Connector.{h,cpp}: 
+
+	  The void * arg parameter that was being passed to
+	  TAO_Creation_Strategy is no longer necessary.  Service handlers
+	  now figure out protocol properties when they are created.
+
+	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Connection_Handler.{h,cpp}: 
+	* orbsvcs\orbsvcs\SSLIOP/IIOP_SSL_Connection_Handler.{h,cpp}:
+	* orbsvcs\orbsvcs\SSLIOP/SSLIOP_Connection_Handler.{h,cpp}:
+	
+	  TAO_{Protocol Name}_Properties was removed.  <arg> parameter
+	  that was used to pass information between acceptor/connector and
+	  service handler was removed. open() was modified to get the
+	  protocol properties from the correct place.
+
+	* orbsvcs\orbsvcs\FtRtEvent\EventChannel\Fault_Detector_Loader.cpp: 
+
+	  Added missing semicolon.
+
 Thu Sep 30 07:19:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Makefile.am:
@@ -240,7 +286,7 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	* tao/IIOP_Acceptor.{h,cpp}:
 	* tao/IIOP_Connector.{h,cpp}:
 
-	  - The void * arg parameter that was being passed to
+	  The void * arg parameter that was being passed to
 	  TAO_Creation_Strategy is no longer necessary.  Service handlers
 	  now figure out protocol properties when they are created.
 

@@ -92,7 +92,7 @@ namespace TAO
       virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
       //@}
 
-      /// SSL-specific profile 
+      /// SSL-specific profile
       TAO_Profile * make_secure_profile (ACE_ENV_SINGLE_ARG_DECL);
 
       /// IIOP-specific connection establishment.
@@ -147,10 +147,6 @@ namespace TAO
 
       /// The connector initiating connection requests for IIOP.
       BASE_CONNECTOR base_connector_;
-
-      /// State that will be passed to each SSLIOP connection handler upon
-      /// creation.
-      Connection_Handler_State handler_state_;
 
     };
 
