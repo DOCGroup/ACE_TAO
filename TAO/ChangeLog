@@ -1,3 +1,19 @@
+Thu Aug 28 18:31:02 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Acceptor_Impl.cpp:
+
+	  Include "tao/debug.h" for TAO_debug_level global variable.
+
+	* tao/Any_Impl_T.cpp:
+	* tao/Any_Basic_Impl_T.cpp: 
+	* tao/Any_Special_Impl_T.cpp:
+
+	  Include "tao/Environment.h" for CORBA::Environment class.
+
+	* tao/Any_Dual_Impl_T.cpp:
+
+	  Include "tao/CDR.h" for TAO_{Input,Output}CDR types.
+
 Thu Aug 28 17:34:51 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.cpp
