@@ -348,10 +348,15 @@ TAO_ValueDef_i::is_a (const char *id,
 }
 
 CORBA::Boolean 
-TAO_ValueDef_i::is_a_i (const char * /* id */,
+TAO_ValueDef_i::is_a_i (const char *id,
                         CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (ACE_OS::strcmp (id, "IDL:omg.org/CORBA/ValueBase:1.0") == 0)
+    {
+      return 1;
+    }
+
   // TODO
   return 0;
 }

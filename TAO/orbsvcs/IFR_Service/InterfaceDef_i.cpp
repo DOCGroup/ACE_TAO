@@ -190,51 +190,11 @@ CORBA_InterfaceDefSeq *
 TAO_InterfaceDef_i::base_interfaces_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_Configuration_Section_Key inherited_key;
-  this->repo_->config ()->open_section (this->section_key_,
-                                        "inherited",
-                                        0,
-                                        inherited_key);
-
-  int index = 0;
-  int status = 0;
-  u_int kind = 0;
-  ACE_Configuration::VALUETYPE type;
-  ACE_TString section_name, inherited_path;
-  CORBA::DefinitionKind def_kind = CORBA::dk_none;
   ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
   ACE_Unbounded_Queue<ACE_TString> path_queue;
-  ACE_Configuration_Section_Key base_key;
 
-  while (this->repo_->config ()->enumerate_values (inherited_key,
-                                                   index++,
-                                                   section_name,
-                                                   type)
-          == 0)
-    {
-      this->repo_->config ()->get_string_value (inherited_key,
-                                                section_name.c_str (),
-                                                inherited_path);
-
-      status =
-        this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                             inherited_path,
-                                             base_key,
-                                             0);
-
-      if (status == 0)
-        {
-          path_queue.enqueue_tail (inherited_path);
-
-          this->repo_->config ()->get_integer_value (base_key,
-                                                     "def_kind",
-                                                     kind);
-
-          def_kind = ACE_static_cast (CORBA::DefinitionKind, kind);
-
-          kind_queue.enqueue_tail (def_kind);
-        }
-    }
+  this->base_interfaces_recursive (kind_queue,
+                                   path_queue);
 
   size_t size = kind_queue.size ();
 
@@ -287,6 +247,28 @@ TAO_InterfaceDef_i::base_interfaces_i (const CORBA_InterfaceDefSeq &base_interfa
                                        CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // If we are an abstract interface, all our base interfaces must be
+  // abstract as well.
+  CORBA::DefinitionKind def_kind = this->def_kind (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (def_kind == CORBA::dk_AbstractInterface)
+    {
+      CORBA::ULong length = base_interfaces.length ();
+
+      for (CORBA::ULong i = 0; i < length; ++i)
+        {
+          def_kind = base_interfaces[i]->def_kind (ACE_TRY_ENV);
+          ACE_CHECK;
+
+          if (def_kind != CORBA::dk_AbstractInterface)
+            {
+              ACE_THROW (CORBA::BAD_PARAM (11,
+                                           CORBA::COMPLETED_NO));
+            }
+        }
+    }
+
   // Remove the old base interfaces.
   this->repo_->config ()->remove_section (this->section_key_,
                                           "inherited",
@@ -354,6 +336,11 @@ TAO_InterfaceDef_i::is_a_i (const char *interface_id,
                             CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (ACE_OS::strcmp (interface_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
+    {
+      return 1;
+    }
+
   CORBA::String_var id = this->id_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
@@ -442,6 +429,8 @@ TAO_InterfaceDef_i::describe_interface_i (CORBA::Environment &ACE_TRY_ENV)
   ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
 
   // Operations
+  this->inherited_operations (key_queue);
+
   ACE_Configuration_Section_Key ops_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
@@ -488,6 +477,8 @@ TAO_InterfaceDef_i::describe_interface_i (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Attributes
+  this->inherited_attributes (key_queue);
+
   ACE_Configuration_Section_Key attrs_key;
   status =
     this->repo_->config ()->open_section (this->section_key_,
@@ -615,7 +606,14 @@ TAO_InterfaceDef_i::create_attribute_i (
 
   if (bad_params)
     return CORBA_AttributeDef::_nil ();
+
+  bad_params = this->check_inherited_attrs (name,
+                                            ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA_AttributeDef::_nil ());
   
+  if (bad_params)
+    return CORBA_AttributeDef::_nil ();
+
   ACE_Configuration_Section_Key attrs_key;
 
   // Create/open section for attributes.
@@ -652,6 +650,15 @@ TAO_InterfaceDef_i::create_attribute_i (
   this->repo_->config ()->set_integer_value (new_key,
                                              "mode",
                                              mode);
+
+  // Create the set and/or get operations for this attribute.
+  this->create_attr_ops (id,
+                         name,
+                         version,
+                         type,
+                         mode,
+                         ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::AttributeDef::_nil ());
 
 #if 0 // CCM specific.
 
@@ -1093,4 +1100,266 @@ TAO_InterfaceDef_i::destroy_special (const char *sub_section,
         }
     }
                                                     
+}
+
+void
+TAO_InterfaceDef_i::create_attr_ops (const char *id,
+                                     const char *name,
+                                     const char *version,
+                                     CORBA_IDLType_ptr type,
+                                     CORBA::AttributeMode mode,
+                                     CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_CString the_get_name ("_get_");
+
+  ACE_CString start (id);
+
+  int pos = start.find (name);
+
+  ACE_CString piece (start.substr (pos));
+
+  ACE_CString the_get_id (start.substr (0, pos) + the_get_name + piece);
+
+  the_get_name += name;
+
+  CORBA_ParDescriptionSeq params (0);
+  CORBA_ExceptionDefSeq excepts (0);
+  CORBA_ContextIdSeq contexts (0);
+
+  CORBA_OperationDef_var the_get_op =
+    this->create_operation_i (the_get_id.c_str (),
+                              the_get_name.c_str (),
+                              version,
+                              type,
+                              CORBA::OP_NORMAL,
+                              params,
+                              excepts,
+                              contexts,
+                              ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (mode == CORBA::ATTR_NORMAL)
+    {
+      ACE_CString the_set_name ("_set_");
+
+      ACE_CString the_set_id (start.substr (0, pos) + the_set_name + piece);
+
+      the_set_name += name;
+
+      CORBA_PrimitiveDef_var rettype = 
+        this->repo_->get_primitive (CORBA::pk_void,
+                                    ACE_TRY_ENV);
+      ACE_CHECK;
+
+      params.length (1);
+
+      params[0].name = name;
+      params[0].type = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
+      params[0].type_def = CORBA::IDLType::_duplicate (type);
+      params[0].mode = CORBA::PARAM_IN;
+
+      CORBA_OperationDef_var the_set_op =
+        this->create_operation_i (the_set_id.c_str (),
+                                  the_set_name.c_str (),
+                                  version,
+                                  rettype.in (),
+                                  CORBA::OP_NORMAL,
+                                  params,
+                                  excepts,
+                                  contexts,
+                                  ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+}
+
+void 
+TAO_InterfaceDef_i::base_interfaces_recursive (
+    ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
+    ACE_Unbounded_Queue<ACE_TString> &path_queue
+  )
+{
+  ACE_Configuration_Section_Key inherited_key;
+  this->repo_->config ()->open_section (this->section_key_,
+                                        "inherited",
+                                        0,
+                                        inherited_key);
+
+  int index = 0;
+  int status = 0;
+  u_int kind = 0;
+  ACE_Configuration::VALUETYPE type;
+  ACE_TString section_name, inherited_path;
+  CORBA::DefinitionKind def_kind = CORBA::dk_none;
+  ACE_Configuration_Section_Key base_key;
+
+  while (this->repo_->config ()->enumerate_values (inherited_key,
+                                                   index++,
+                                                   section_name,
+                                                   type)
+          == 0)
+    {
+      this->repo_->config ()->get_string_value (inherited_key,
+                                                section_name.c_str (),
+                                                inherited_path);
+
+      status =
+        this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                             inherited_path,
+                                             base_key,
+                                             0);
+
+      if (status == 0)
+        {
+          TAO_InterfaceDef_i tmp (this->repo_,
+                                  base_key);
+
+          tmp.base_interfaces_recursive (kind_queue,
+                                         path_queue);
+
+          path_queue.enqueue_tail (inherited_path);
+
+          this->repo_->config ()->get_integer_value (base_key,
+                                                     "def_kind",
+                                                     kind);
+
+          def_kind = ACE_static_cast (CORBA::DefinitionKind, kind);
+
+          kind_queue.enqueue_tail (def_kind);
+        }
+    }
+}
+
+void 
+TAO_InterfaceDef_i::inherited_attributes (
+    ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue
+  )
+{
+  ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
+  ACE_Unbounded_Queue<ACE_TString> path_queue;
+
+  this->base_interfaces_recursive (kind_queue,
+                                   path_queue);
+
+  size_t size = path_queue.size ();
+  ACE_Configuration_Section_Key base_key, attrs_key, attr_key;
+  int status = 0;
+  ACE_TString path_name;
+  u_int count = 0;
+
+  for (size_t i = 0; i < size; ++i)
+    {
+      path_queue.dequeue_head (path_name);
+
+      status = 
+        this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                             path_name,
+                                             base_key,
+                                             0);
+
+      if (status == 0)
+        {
+          this->repo_->config ()->open_section (base_key,
+                                                "attrs",
+                                                0,
+                                                attrs_key);
+
+          this->repo_->config ()->get_integer_value (attrs_key,
+                                                     "count",
+                                                     count);
+
+          for (u_int j = 0; j < count; ++j)
+            {
+              this->repo_->config ()->open_section (attrs_key,
+                                                    this->int_to_string (j),
+                                                    0,
+                                                    attr_key);
+
+              key_queue.enqueue_tail (attr_key);
+            }
+        }
+    }
+}
+
+void 
+TAO_InterfaceDef_i::inherited_operations (
+    ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue
+  )
+{
+  ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
+  ACE_Unbounded_Queue<ACE_TString> path_queue;
+
+  this->base_interfaces_recursive (kind_queue,
+                                   path_queue);
+
+  size_t size = path_queue.size ();
+  ACE_Configuration_Section_Key base_key, ops_key, op_key;
+  int status = 0;
+  ACE_TString path_name;
+  u_int count = 0;
+
+  for (size_t i = 0; i < size; ++i)
+    {
+      path_queue.dequeue_head (path_name);
+
+      status = 
+        this->repo_->config ()->expand_path (this->repo_->root_key (),
+                                             path_name,
+                                             base_key,
+                                             0);
+
+      if (status == 0)
+        {
+          this->repo_->config ()->open_section (base_key,
+                                                "ops",
+                                                0,
+                                                ops_key);
+
+          this->repo_->config ()->get_integer_value (ops_key,
+                                                     "count",
+                                                     count);
+
+          for (u_int j = 0; j < count; ++j)
+            {
+              this->repo_->config ()->open_section (ops_key,
+                                                    this->int_to_string (j),
+                                                    0,
+                                                    op_key);
+
+              key_queue.enqueue_tail (op_key);
+            }
+        }
+    }
+}
+
+CORBA::Boolean 
+TAO_InterfaceDef_i::check_inherited_attrs (const char *name,
+                                           CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
+
+  this->inherited_attributes (key_queue);
+
+  size_t size = key_queue.size ();
+  ACE_Configuration_Section_Key attr_key;
+  ACE_TString attr_name;
+
+  for (u_int i = 0; i < size; ++i)
+    {
+      key_queue.dequeue_head (attr_key);
+
+      this->repo_->config ()->get_string_value (attr_key,
+                                                "name",
+                                                attr_name);
+
+      if (attr_name == name)
+        {
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (5,
+                                              CORBA::COMPLETED_NO),
+                            1);
+        }
+    }
+
+  return 0;
 }

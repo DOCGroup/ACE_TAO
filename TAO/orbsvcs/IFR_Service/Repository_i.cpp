@@ -244,6 +244,12 @@ TAO_Repository_i::lookup_id_i (const char *search_id,
                                CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (ACE_OS::strcmp (search_id, "IDL:omg.org/CORBA/Object:1.0") == 0
+      || ACE_OS::strcmp (search_id, "IDL:omg.org/CORBA/ValueBase:1.0") == 0)
+    {
+      return CORBA_Contained::_nil ();
+    }
+
   ACE_TString path;
   if (this->config_->get_string_value (this->repo_ids_key_,
                                        search_id,
@@ -273,7 +279,7 @@ TAO_Repository_i::lookup_id_i (const char *search_id,
   ACE_CHECK_RETURN (CORBA_Contained::_nil ());
 
   return CORBA_Contained::_narrow (obj.in (),
-                                 ACE_TRY_ENV);
+                                   ACE_TRY_ENV);
 }
 
 CORBA::TypeCode_ptr

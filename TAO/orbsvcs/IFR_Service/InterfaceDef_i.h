@@ -223,6 +223,40 @@ private:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Removed the repo ids of our attributes and operations from
   // the flat repo ids section of the repository.
+
+  void create_attr_ops (const char *id,
+                        const char *name,
+                        const char *version,
+                        CORBA_IDLType_ptr type,
+                        CORBA::AttributeMode mode,
+                        CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Create set and/or get operations for an attribute.
+
+  void base_interfaces_recursive (
+      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
+      ACE_Unbounded_Queue<ACE_TString> &path_queue
+    );
+  // Depth-first traversal of the inheritance tree to get all
+  // the base interfaces.
+
+  void inherited_attributes (
+      ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue
+    );
+  // Depth-first traversal of the inheritance tree to get all the
+  // attributes.
+
+  void inherited_operations (
+      ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue
+    );
+  // Depth-first traversal of the inheritance tree to get all the
+  // operations.
+
+  CORBA::Boolean check_inherited_attrs (const char *name,
+                                        CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // When creating a new attribute, check for a clash with an inherited
+  // attribute name.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
