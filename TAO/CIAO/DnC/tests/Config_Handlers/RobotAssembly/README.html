@@ -10,7 +10,7 @@ implementation.
 
 <UL>
   <LI> Make sure you have the latest DnC code by running
-    <code> [in $CIAO_ROOT/DnC directory] cvs up </code>
+    <code> [in ACE_wrappers/TAO/CIAO/DnC directory] cvs up </code>
   </LI>
 
   <LI>
@@ -51,8 +51,6 @@ implementation.
     (or any other name you want) and change the working directory to that.
   </LI>
 
-<!-- change the location of the following files -->
-
   <LI> Download the files into the newly created directory:
     <UL>
     <LI> <A HREF=
@@ -70,7 +68,7 @@ implementation.
   
   <LI> Start the execution manager:
     <code>
-      $CIAO_ROOT/DnC/ExecutionManager/Execution_Manager
+      [Your ACE_wrapper directory]/TAO/CIAO/DnC/ExecutionManager/Execution_Manager
         -o EM.ior
         -i deployment.dat
     </code>
@@ -79,9 +77,9 @@ implementation.
   <LI> Start the executor:
     <code>
      $CIAO_ROOT/DnC/RepositoryManager/executor
-       -p file://$CIAO_ROOT/DnC/tests/Config_Handlers/RobotAssembly/package.tpd
+       -p file://[Your ACE_wrapper directory]/TAO/CIAO/DnC/tests/Config_Handlers/RobotAssembly/package.tpd
        -d
-file://$CIAO_ROOT/DnC/tests/Config_Handlers/RobotAssembly/DeploymentPlan.cdp
+file://[Your ACE_wrapper directory]/TAO/CIAO/DnC/tests/Config_Handlers/RobotAssembly/DeploymentPlan.cdp
        -k file://EM.ior
     </code>
 
