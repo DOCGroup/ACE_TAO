@@ -1,3 +1,9 @@
+Thu Jul 08 11:30:43 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: added note about the uninitialized
+          variable warnings from (the old) egcs that is
+          distributed with Wind River's Tornado II.
+
 Thu Jul 08 10:40:02 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linuxppcr5.h: use config-linux-lxpthreads.h
