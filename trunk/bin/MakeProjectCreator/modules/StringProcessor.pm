@@ -30,26 +30,22 @@ sub extractType {
 
 
 sub process_special {
-  my($self) = shift;
-  my($line) = shift;
+  my($self)   = shift;
+  my($line)   = shift;
+  my($length) = length($line);
 
-  ## Remove any double quotes that may follow an escaped backslash
-  $line =~ s/\\\\"/\\\\/g;
-
-  ## Turn all escaped doubled quotes into something temporary
-  my($escaped) = ($line =~ s/\\\"/\01/g);
-
-  ## Remove all double quotes
-  $line =~ s/\"//g;
-
-  ## Un-escape all other characters
-  $line =~ s/\\(.)/$1/g;
-
-  ## Put the escaped double quotes back in
-  if ($escaped) {
-    $line =~ s/\01/\"/g;
+  for(my $i = 0; $i < $length; $i++) {
+    my($ch) = substr($line, $i, 1);
+    if ($ch eq "\\" && $i + 1 < $length) {
+      substr($line, $i, 1) = '';
+      $length--;
+    }
+    elsif ($ch eq '"') {
+      substr($line, $i, 1) = '';
+      $length--;
+      $i--;
+    }
   }
-
   return $line;
 }
 

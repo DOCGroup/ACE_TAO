@@ -1,3 +1,10 @@
+Tue Mar  2 18:59:53 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/StringProcessor.pm:
+
+          Reverted my change from Tue Mar  2 12:28:09 2004 which broke in
+          certain usages.
+
 Tue Mar  2 18:36:08 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/TMCast/TMCast.mpc:
