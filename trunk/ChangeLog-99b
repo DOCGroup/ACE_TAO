@@ -1,3 +1,12 @@
+Sun Jan 24 19:46:55 1999  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/CDR.{h,i,cpp}:
+        * ace/Basic_Types.h:
+          Made some fixes to make DEC cxx happy, but I'm going to
+          undo many of the typedefs and change the design. These
+          changes will hopefully lead to a clean build with cxx,
+          but the CDR classes are not yet in finished form.
+
 Sun Jan 24 19:26:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/SString.cpp (set): Fixed usage case of when the incoming
