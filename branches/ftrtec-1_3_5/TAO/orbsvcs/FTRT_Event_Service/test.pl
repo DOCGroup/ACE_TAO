@@ -5,7 +5,7 @@
 use strict;
 use lib '../../../bin';
 use PerlACE::Run_Test;
-use Proc::Background;
+#use Proc::Background;
 
 my $HOSTNAME=`hostname`;
 
