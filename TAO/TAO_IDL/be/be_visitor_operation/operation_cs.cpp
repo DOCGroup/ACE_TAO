@@ -370,8 +370,24 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       << "if (_tao_vfr.valid ())" << be_idt_nl << "{" << be_idt_nl
       << "istub->orb_core ()->orb ()->create_list "
       << "(0, _tao_interceptor_args.inout (), ACE_TRY_ENV);\n";*/
+  // Obtain the scope.
 
-  *os << "ClientRequest_Info_"<< node->flat_name () << "  ri (" << this->compute_operation_name (node) << ",\n"
+  os->indent ();
+  if (node->is_nested ())
+    {
+      be_decl *parent =
+        be_scope::narrow_from_scope (node->defined_in ())->decl ();
+      // But since we are at the interface level our parents full_name
+      // will include the interface name which we dont want and so we 
+      // get our parent's parent's full name.
+      //    be_interface *parent_interface = be_interface::narrow_from_decl (parent);
+      // be_decl *parents_parent = be_interface::narrow_from_scope (parent_interface->scope ())->decl ();
+      // Generate the scope::operation name.
+      //  *os << parents_parent->full_name () << "::";
+      *os << parent->full_name () << "::";
+    }
+
+  *os << "TAO_ClientRequest_Info_"<< node->flat_name () << "  ri (" << this->compute_operation_name (node) << ",\n"
       << "_tao_call.service_info ()," << be_nl
       << "(CORBA::Object_ptr) this";
 
@@ -388,7 +404,8 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS);
   visitor = tao_cg->make_visitor (&ctx);
 
-  if ((!visitor) || (bt->accept (visitor) == -1))
+  //  if ((!visitor) || (bt->accept (visitor) == -1))
+  if ((!visitor) || (node->accept (visitor) == -1))
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -411,7 +428,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
 
                         }*/
   os->decr_indent ();
-  *os << "}\n" << be_uidt_nl;
+  //  *os << "}\n" << be_uidt_nl;
 
   *os << "ACE_TRY" << be_idt_nl
       << "{\n"
@@ -700,17 +717,42 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       *os << be_uidt;
     }
 
+  // Obtain the scope.
 
-  *os << "ClientRequest_Info_"<< node->flat_name () << "  ri_next (" << this->compute_operation_name (node) << ",\n"
+  os->indent ();
+  if (node->is_nested ())
+    {
+      be_decl *parent =
+        be_scope::narrow_from_scope (node->defined_in ())->decl ();
+      // But since we are at the interface level our parents full_name
+      // will include the interface name which we dont want and so we 
+      // get our parent's parent's full name.
+      //    be_interface *parent_interface = be_interface::narrow_from_decl (parent);
+      // be_decl *parents_parent = be_interface::narrow_from_scope (parent_interface->scope ())->decl ();
+      // Generate the scope::operation name.
+      //  *os << parents_parent->full_name () << "::";
+      *os << parent->full_name () << "::";
+    }
+
+  *os << "TAO_ClientRequest_Info_"<< node->flat_name () << "  ri_next (" << this->compute_operation_name (node) << ",\n"
       << "_tao_call.service_info ()," << be_nl
-      << "(CORBA::Object_ptr) this," << be_nl;
+      << "(CORBA::Object_ptr) this" << be_nl;
+
+  // This necesary becos: (a) a comma is needed if there are arguments
+  // (b) not needed if exceptions enabled since thats done already (c)
+  // not needed if there are no args and exceptions is disabled.
+
+  os->indent ();
+  if (node->argument_count () > 0)
+    *os << ",\n";
 
   // Generate the formal argument fields which are passed to the RequestInfo object
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS);
   visitor = tao_cg->make_visitor (&ctx);
 
-  if ((!visitor) || (bt->accept (visitor) == -1))
+  //  if ((!visitor) || (bt->accept (visitor) == -1))
+  if ((!visitor) || (node->accept (visitor) == -1))
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,

@@ -8,10 +8,10 @@
 //    TAO IDL
 //
 // = FILENAME
-//    operation_interceptors_cs.cpp
+//    operation_interceptors_ss.cpp
 //
 // = DESCRIPTION
-//    Visitor generating code for Operation node in the client stubs.
+//    Visitor generating code for Operation node in the server stubs.
 //
 // = AUTHOR
 //    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
@@ -24,24 +24,24 @@
 
 #include "be_visitor_operation.h"
 
-ACE_RCSID(be_visitor_operation, operation_interceptors_cs, "$Id$")
+ACE_RCSID(be_visitor_operation, operation_interceptors_ss, "$Id$")
 
 
   // ******************************************************
-  // primary visitor for "operation" in client header
+  // primary visitor for "operation" in server header
   // ******************************************************
 
-  be_visitor_operation_interceptors_cs::be_visitor_operation_interceptors_cs (be_visitor_context *ctx)
+  be_visitor_operation_interceptors_ss::be_visitor_operation_interceptors_ss (be_visitor_context *ctx)
     : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_interceptors_cs::~be_visitor_operation_interceptors_cs (void)
+be_visitor_operation_interceptors_ss::~be_visitor_operation_interceptors_ss (void)
 {
 }
 
 int
-be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
+be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
 {
 
   TAO_OutStream *os; // output stream
@@ -53,7 +53,7 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
   this->ctx_->node (node); // save the node
   os->indent (); // start with the current indentation level
 
-  // Generate the ClientRequest_Info object definition per operation
+  // Generate the ServerRequest_Info object definition per operation
   // to be used by the interecptors
   if (node->is_nested ())
     {
@@ -66,12 +66,11 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
       // be_decl *parents_parent = be_interface::narrow_from_scope (parent_interface->scope ())->decl ();
       // Generate the scope::operation name.
       //  *os << parents_parent->full_name () << "::";
-      *os << parent->full_name () << "::";
+      *os << "POA_" <<parent->full_name () << "::";
     }
-  *os << "TAO_ClientRequest_Info_"<<node->flat_name ()<< "::"
-      << "TAO_ClientRequest_Info_"<< node->flat_name () << " (const char *  operation," << be_nl
-      << "IOP::ServiceContextList &service_context_list," << be_nl               
-      << "CORBA::Object * target";
+  *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
+      << "TAO_ServerRequest_Info_"<< node->flat_name () << " (const char *  operation," << be_nl
+      << "IOP::ServiceContextList &service_context_list";             
   
   if (node->argument_count () > 0)
     *os << "," << be_nl;
@@ -80,13 +79,13 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
   // we grab a visitor that generates the parameter listing
   
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS);
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (node->accept (visitor) == -1))
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ss::"
                          "visit_operation - "
                          "codegen for argument pre invoke failed\n"),
                         -1);
@@ -98,18 +97,18 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
   // Generate the member list and set each member but before that, 
   // its necessary to pass on some args to the base class.
   os->indent (); 
-  *os << "  : TAO_ClientRequest_Info (operation, service_context_list, target)";  
+  *os << "  : TAO_ServerRequest_Info (operation, service_context_list)";  
   if (node->argument_count () > 0)
     *os << "," << be_idt_nl;
 
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS);
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (node->accept (visitor) == -1))
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ss::"
                          "visit_operation - "
                          "codegen for argument pre invoke failed\n"),
                         -1);
@@ -131,10 +130,10 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
       // be_decl *parents_parent = be_interface::narrow_from_scope (parent_interface->scope ())->decl ();
       // Generate the scope::operation name.
       //  *os << parents_parent->full_name () << "::";
-      *os << parent->full_name () << "::";
+      *os << "POA_" <<parent->full_name () << "::";
     }
   
-  *os << "TAO_ClientRequest_Info_"<<node->flat_name ()<< "::"
+  *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
       << "arguments (CORBA::Environment &)"<< be_nl
       << "{\n // Generate the arg list on demand \n return 0;\n}\n\n";
 
@@ -150,10 +149,10 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
       // be_decl *parents_parent = be_interface::narrow_from_scope (parent_interface->scope ())->decl ();
       // Generate the scope::operation name.
       //  *os << parents_parent->full_name () << "::";
-      *os << parent->full_name () << "::";
+      *os << "POA_" << parent->full_name () << "::";
     }
 
-  *os << "TAO_ClientRequest_Info_"<<node->flat_name ()<< "::"
+  *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
       << "exceptions (CORBA::Environment &)"<< be_nl
       << "{\n // Generate the exception list on demand \n return 0;\n}\n\n";
 
@@ -169,10 +168,10 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
       // be_decl *parents_parent = be_interface::narrow_from_scope (parent_interface->scope ())->decl ();
       // Generate the scope::operation name.
       //  *os << parents_parent->full_name () << "::";
-      *os << parent->full_name () << "::";
+      *os << "POA_" <<parent->full_name () << "::";
     }
 
-  *os << "TAO_ClientRequest_Info_"<<node->flat_name ()<< "::"
+  *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
       << "result (CORBA::Environment &)"<< be_nl
       << "{\n // Generate the result on demand \n return 0;\n}\n\n";
 
@@ -188,10 +187,10 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
       // be_decl *parents_parent = be_interface::narrow_from_scope (parent_interface->scope ())->decl ();
       // Generate the scope::operation name.
       //  *os << parents_parent->full_name () << "::";
-      *os << parent->full_name () << "::";
+      *os << "POA_" <<parent->full_name () << "::";
     }
 
-  *os << "TAO_ClientRequest_Info_"<<node->flat_name ()<< "::"
+  *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
       << "received_exception_id (CORBA::Environment &)"<< be_nl
       << "{\n // Return the exception thrown \n return 0;\n}\n\n";
 
