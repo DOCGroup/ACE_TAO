@@ -29,6 +29,10 @@
 # undef _REENTRANT
 #endif
 
+#ifndef _POSIX_C_SOURCE
+# undef _POSIX_C_SOURCE
+#endif
+
 #ifndef _POSIX_THREADS
 # undef _POSIX_THREADS
 #endif
@@ -42,8 +46,8 @@
 # undef _POSIX_PTHREAD_SEMANTICS
 #endif
 
-/* Some platforms require _GNU_SOURCE to be defined to make some functions
-   declaration "visible." */
+/* Some platforms require _GNU_SOURCE to be defined to make some function
+   prototypes "visible." */
 #ifndef _GNU_SOURCE
 # undef _GNU_SOURCE
 #endif
@@ -409,9 +413,6 @@
 /* OS/compiler omits the const from the rlimit parameter in the setrlimit()
    prototype. */
 #undef ACE_HAS_BROKEN_SETRLIMIT
-
-/* Platform doesn't define _terrno() even though it should (only for TLI) */
-#undef ACE_HAS_BROKEN_T_ERRNO
 
 /* platform define struct timespec members as ts_sec and ts_nsec instead of
    tv_sec and tv_nsec.  This is highly non-portable.  Currently only

@@ -900,9 +900,14 @@ AC_CHECK_FUNC(gethostbyname, , dnl
 dnl Check for getservbyname in -lxnet since some platforms (e.g. Solaris)
 dnl may put it there.  Define ACE_LACKS_GETSERVBYNAME in case the getservbyname
 dnl AC_CHECK_FUNC gets skipped due to caching.
-AC_CHECK_FUNC(getservbyname, , dnl
-  AC_CHECK_LIB(xnet, getservbyname,,
-    AC_DEFINE(ACE_LACKS_GETSERVBYNAME)))
+AC_CHECK_FUNC(getservbyname, , dnl 
+  AC_CHECK_LIB(xnet, getservbyname, , ace_lacks_getservbyname=yes))
+
+dnl For some reason autoheader misses ACE_LACKS_GETSERVBYNAME if I put the
+dnl AC_DEFINE in the above getservbyname() tests.
+if test $ace_lacks_getservbyname = yes; then
+  AC_DEFINE(ACE_LACKS_GETSERVBYNAME)
+fi
 
 dnl Check for compile() regex function in -lgen.  Solaris, for example,
 dnl may put it there.
@@ -1284,16 +1289,7 @@ dnl Check for t_errno type in TLI headers
      [
       ace_cv_lib_has_t_errno=no
      ])
-  ],
-  [
-   dnl Do not define ACE_HAS_BROKEN_T_ERRNO if t_errno isn't declared in a
-   dnl header since ACE's definition of _terrno needs a previously declared
-   dnl t_errno.
-   AC_CHECK_FUNC(_terrno, , AC_DEFINE(ACE_HAS_BROKEN_T_ERRNO))
-  ],
-  [
-   AC_DEFINE(ACE_LACKS_T_ERRNO)
-  ])
+  ], , AC_DEFINE(ACE_LACKS_T_ERRNO))
 
 fi dnl test "$ace_has_tli" = yes
 fi dnl test "$ace_has_tli_funcs" = yes
@@ -2007,7 +2003,7 @@ ACE_CACHE_CHECK(for sin_len member in struct sockaddr_in,
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
 #endif
-qQqq#include <netinet/in.h>
+#include <netinet/in.h>
           ],
           [
            sockaddr_in ace_sin;
@@ -2381,10 +2377,10 @@ dnl Check for C++ standard namespace
 ACE_CACHE_CHECK(for C++ standard namespace,
   ace_cv_feature_posix_uses_std_namespace,[
     AC_TRY_COMPILE([
-#include <vector.h>
+#include <iostream.h>
                    ],
                    [
-                     std::vector< int > iv;
+                    std::cout << "FOO" << endl;
                    ],
                    [
                     ace_cv_feature_posix_uses_std_namespace=yes
@@ -2594,27 +2590,102 @@ ACE_CACHE_CHECK(for explicit template instantiation,
 dnl Check if templates require source on platform
 dnl FIXME:  This test may be broken.
 ACE_CACHE_CHECK(if templates require source,
-  ace_cv_feature_templates_require_source,[
-    AC_TRY_LINK([
-/*
-#include "config/trs.h"
-*/
-                ],
-                [
-                  Foo<int> foo(15);
-                ],
-                [
-                 ace_cv_feature_templates_require_source=no
-                ],
-                [
-                 ace_cv_feature_templates_require_source=yes
-                ])
+  ace_cv_feature_templates_require_source,
+  [
+   dnl Create the common header file
+   cat > conftest.h <<EOF
+#ifndef FOO_H
+#define FOO_H
+template <class T>
+class Foo
+{
+ public:
+   Foo (T val);
+ private:
+   T value_;
+};
+#endif /* FOO_H */
+EOF
+
+   dnl Create template source test file 1
+   cat > conftest.$ac_ext <<EOF
+#include "conftest.h"
+#ifndef FOO_CXX
+#define FOO_CXX
+template <class T>
+Foo<T>::Foo (T val)
+{
+ value_ = val;
+}
+#endif /* FOO_CXX */
+EOF
+
+   dnl Create the Main test file
+   cat > conftestMain.$ac_ext <<EOF
+#include "conftest.h"
+int main ()
+{
+ Foo<int> foo(15);
+
+ return 0;
+}
+EOF
+
+   save_ac_link="$ac_link"
+
+   dnl Command to link two C++ files
+   ac_link='${CXX-g++} -o conftest${ac_exeext} $CXXFLAGS $CPPFLAGS $LDFLAGS conftestMain.$ac_ext $LIBS 1>&AC_FD_CC'
+
+   dnl Now try to link them
+   if AC_TRY_EVAL(ac_link) && test -s conftest${ac_exeext}; then
+     rm -rf conftest*
+     dnl Restore the original link variable NOW not later
+     ac_link="$save_ac_link"
+
+     dnl Template source is not required
+     ace_cv_feature_templates_require_source=no
+   else
+     dnl Now try including the template source
+     rm conftestMain.$ac_ext 
+     cat > conftestMain.$ac_ext <<EOF
+#include "conftest.h"
+int main ()
+{
+ Foo<int> foo(15);
+
+ return 0;
+}
+#include "conftest.$ac_ext"
+EOF
+
+     if AC_TRY_EVAL(ac_link) && test -s conftest${ac_exeext}; then
+       rm -rf conftest*
+       dnl Restore the original link variable NOW not later
+       ac_link="$save_ac_link"
+
+       dnl Template source is required!
+       ace_cv_feature_templates_require_source=yes
+     else
+       dnl if we get then we have no idea what is needed!
+       echo "configure: failed program was:" >&AC_FD_CC
+       echo "conftest.h:" >&AC_FD_CC
+       cat conftest.h >&AC_FD_CC
+       echo "conftest.$ac_ext:" >&AC_FD_CC
+       cat conftest.$ac_ext >&AC_FD_CC
+       echo "conftestMain.$ac_ext:" >&AC_FD_CC
+       cat conftestMain.$ac_ext >&AC_FD_CC
+       rm -rf conftest*
+       dnl Restore the original link variable NOW not later
+       ac_link="$save_ac_link"
+
+       ace_cv_feature_templates_require_source=no
+     fi
+   fi
+   rm -f conftest*
   ],
   [
    AC_DEFINE(ACE_TEMPLATES_REQUIRE_SOURCE)
   ],)
-AM_CONDITIONAL(TEMPLATES_REQUIRE_SOURCE,
-               test X$ace_cv_feature_templates_require_source = Xyes)
 
 dnl Check if platform supports template specialization
 ACE_CACHE_CHECK(for template specialization,
@@ -3136,7 +3207,7 @@ if test "$ac_cv_header_sys_priocntl_h" = yes; then
 
 dnl Some platforms define priocntl as a macro!
   if test "$ac_cv_func_priocntl" = no; then
-    ACE_CACHE_CHECK(if priocntl macro,
+    ACE_CACHE_CHECK(for priocntl macro,
       ace_cv_lib_has_priocntl_macro,
       [
        AC_EGREP_CPP(ACE_PRIOCNTL_MACRO,
