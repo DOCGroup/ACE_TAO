@@ -24,6 +24,8 @@
 
 
 #include "OctetSeqC.h"
+#include "Any_T.h"
+#include "ORB_Core.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -33,64 +35,38 @@
 #include "OctetSeqC.i"
 #endif /* !defined INLINE */
 
-#include "Any_T.h"
-#include "ORB_Core.h"
-
-#if !defined (_CORBA_OCTETSEQ_CS_)
-#define _CORBA_OCTETSEQ_CS_
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
-
-// *************************************************************
-// CORBA::OctetSeq
-// *************************************************************
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
 
 CORBA::OctetSeq::OctetSeq (void)
 {}
 
 CORBA::OctetSeq::OctetSeq (CORBA::ULong max)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
+  : TAO_Unbounded_Sequence<
+        CORBA::Octet
+      >
+    (max)
 {}
 
 CORBA::OctetSeq::OctetSeq (
     CORBA::ULong max,
     CORBA::ULong length,
-    CORBA::Octet *buffer,
+    CORBA::Octet* buffer,
     CORBA::Boolean release
   )
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
+  : TAO_Unbounded_Sequence<
+        CORBA::Octet
+      >
+    (max, length, buffer, release)
 {}
 
 CORBA::OctetSeq::OctetSeq (const OctetSeq &seq)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
+  : TAO_Unbounded_Sequence<
+        CORBA::Octet
+      >
+    (seq)
 {}
 
-CORBA::OctetSeq::~OctetSeq (void) // dtor
+CORBA::OctetSeq::~OctetSeq (void)
 {}
 
 void CORBA::OctetSeq::_tao_any_destructor (void *_tao_void_pointer)
@@ -99,7 +75,37 @@ void CORBA::OctetSeq::_tao_any_destructor (void *_tao_void_pointer)
   delete tmp;
 }
 
-#endif /* end #if !defined */
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_FixedSeq_Var_T<
+      OctetSeq,
+      CORBA::Octet
+    >;
+
+template class
+  TAO_Seq_Out_T<
+      OctetSeq,
+      OctetSeq_var,
+      CORBA::Octet
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_FixedSeq_Var_T< \
+      OctetSeq, \
+      CORBA::Octet \
+    >
+
+# pragma instantiate \
+  TAO_Seq_Out_T< \
+      OctetSeq, \
+      OctetSeq_var, \
+      CORBA::Octet \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -204,8 +210,15 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<CORBA::OctetSeq>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<CORBA::OctetSeq>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

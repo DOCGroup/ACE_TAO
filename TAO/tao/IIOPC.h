@@ -26,17 +26,13 @@
 #define _TAO_IDL_ORIG_IIOPC_H_
 
 #include "ace/pre.h"
-#include "tao/TAO_Export.h"
-
+#include "tao/Sequence_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
-#include "tao/Managed_Types.h"
-#include "tao/Sequence_T.h"
-#include "tao/CDR.h"
+#include "CDR.h"
 #include "tao/VarOut_T.h"
 #include "tao/Seq_VarOut_T.h"
 
@@ -107,11 +103,7 @@ TAO_NAMESPACE  IIOP
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
   
-  typedef
-    TAO_Unbounded_Sequence<
-        IIOP::ListenPoint
-      >
-    ListenPointList;
+  class ListenPointList;
   
   typedef
     TAO_VarSeq_Var_T<
@@ -127,6 +119,29 @@ TAO_NAMESPACE  IIOP
         IIOP::ListenPoint
       >
     ListenPointList_out;
+  
+  class TAO_Export ListenPointList
+    : public
+        TAO_Unbounded_Sequence<
+            IIOP::ListenPoint
+          >
+  {
+  public:
+    ListenPointList (void);
+    ListenPointList (CORBA::ULong max);
+    ListenPointList (
+        CORBA::ULong max,
+        CORBA::ULong length,
+        ListenPoint *buffer, 
+        CORBA::Boolean release = 0
+      );
+    ListenPointList (const ListenPointList &);
+    ~ListenPointList (void);
+    
+    static void _tao_any_destructor (void *);
+    
+    typedef ListenPointList_var _var_type;
+  };
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
@@ -209,7 +224,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IIOP::ListenPoint &
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IIOP::ListenPoint &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:64
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_IIOP_ListenPointList_H_
 #define _TAO_CDR_OP_IIOP_ListenPointList_H_

@@ -27,14 +27,15 @@
 
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "PolicyC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PolicyC.h"
+#include "Messaging_SyncScopeC.h"
 #include "TimeBaseC.h"
+#include "VarOut_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -64,10 +65,9 @@
 
 TAO_NAMESPACE  TAO
 {
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:334
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
   
   typedef CORBA::UShort BufferingConstraintMode;
   typedef CORBA::UShort_out BufferingConstraintMode_out;
@@ -80,27 +80,40 @@ TAO_NAMESPACE  TAO
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::UShort BUFFER_FLUSH = 0U;
+  const TAO::BufferingConstraintMode BUFFER_FLUSH = 0U;
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::UShort BUFFER_TIMEOUT = 1U;
+  const TAO::BufferingConstraintMode BUFFER_TIMEOUT = 1U;
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::UShort BUFFER_MESSAGE_COUNT = 2U;
+  const TAO::BufferingConstraintMode BUFFER_MESSAGE_COUNT = 2U;
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::UShort BUFFER_MESSAGE_BYTES = 4U;
+  const TAO::BufferingConstraintMode BUFFER_MESSAGE_BYTES = 4U;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:49
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
   
-  class BufferingConstraint_var;
+  struct BufferingConstraint;
+  
+  typedef
+    TAO_Fixed_Var_T<
+        BufferingConstraint
+      >
+    BufferingConstraint_var;
+  
+  typedef
+    BufferingConstraint &
+    BufferingConstraint_out;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
   
   struct TAO_Export BufferingConstraint
   {
@@ -114,48 +127,6 @@ TAO_NAMESPACE  TAO
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:71
-  
-  class TAO_Export BufferingConstraint_var
-  {
-  public:
-    BufferingConstraint_var (void);
-    BufferingConstraint_var (BufferingConstraint *);
-    BufferingConstraint_var (const BufferingConstraint_var &);
-    // Fixed-size types only.
-    BufferingConstraint_var (const BufferingConstraint &);
-    ~BufferingConstraint_var (void);
-    
-    BufferingConstraint_var &operator= (BufferingConstraint *);
-    BufferingConstraint_var &operator= (const BufferingConstraint_var &);
-    
-    // Fixed-size types only.
-    BufferingConstraint_var &operator= (const BufferingConstraint &);
-    
-    BufferingConstraint *operator-> (void);
-    const BufferingConstraint *operator-> (void) const;
-    
-    operator const BufferingConstraint &() const;
-    operator BufferingConstraint &();
-    operator BufferingConstraint &() const;
-    
-    // in, inout, out, _retn 
-    const BufferingConstraint &in (void) const;
-    BufferingConstraint &inout (void);
-    BufferingConstraint &out (void);
-    BufferingConstraint _retn (void);
-    BufferingConstraint *ptr (void) const;
-  
-  private:
-    BufferingConstraint *ptr_;
-  };
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:105
-  
-  typedef BufferingConstraint &BufferingConstraint_out;
-  
-  // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_BufferingConstraint;
@@ -163,93 +134,44 @@ TAO_NAMESPACE  TAO
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::ULong BUFFERING_CONSTRAINT_POLICY_TYPE = 1413545985U;
+  const CORBA::PolicyType BUFFERING_CONSTRAINT_POLICY_TYPE = 1413545985U;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY___PTR_CH_)
-#define _TAO_BUFFERINGCONSTRAINTPOLICY___PTR_CH_
+#if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY__ODDS_N_ENDS_CH_)
+#define _TAO_BUFFERINGCONSTRAINTPOLICY__ODDS_N_ENDS_CH_
   
   class BufferingConstraintPolicy;
   typedef BufferingConstraintPolicy *BufferingConstraintPolicy_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY___VAR_CH_)
-#define _TAO_BUFFERINGCONSTRAINTPOLICY___VAR_CH_
+  struct tao_BufferingConstraintPolicy_life;
+  typedef TAO_Objref_Var_T<BufferingConstraintPolicy, tao_BufferingConstraintPolicy_life> BufferingConstraintPolicy_var;
+  typedef TAO_Objref_Out_T<BufferingConstraintPolicy, tao_BufferingConstraintPolicy_life> BufferingConstraintPolicy_out;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
-  
-  class TAO_Export BufferingConstraintPolicy_var : public TAO_Base_var
+  struct tao_BufferingConstraintPolicy_life
   {
-  public:
-    BufferingConstraintPolicy_var (void); // default constructor
-    BufferingConstraintPolicy_var (BufferingConstraintPolicy_ptr p) : ptr_ (p) {} 
-    BufferingConstraintPolicy_var (const BufferingConstraintPolicy_var &); // copy constructor
-    ~BufferingConstraintPolicy_var (void); // destructor
-    
-    BufferingConstraintPolicy_var &operator= (BufferingConstraintPolicy_ptr);
-    BufferingConstraintPolicy_var &operator= (const BufferingConstraintPolicy_var &);
-    BufferingConstraintPolicy_ptr operator-> (void) const;
-    
-    operator const BufferingConstraintPolicy_ptr &() const;
-    operator BufferingConstraintPolicy_ptr &();
-    // in, inout, out, _retn 
-    BufferingConstraintPolicy_ptr in (void) const;
-    BufferingConstraintPolicy_ptr &inout (void);
-    BufferingConstraintPolicy_ptr &out (void);
-    BufferingConstraintPolicy_ptr _retn (void);
-    BufferingConstraintPolicy_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static BufferingConstraintPolicy_ptr tao_duplicate (BufferingConstraintPolicy_ptr);
     static void tao_release (BufferingConstraintPolicy_ptr);
     static BufferingConstraintPolicy_ptr tao_nil (void);
-    static BufferingConstraintPolicy_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        BufferingConstraintPolicy_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    BufferingConstraintPolicy_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    BufferingConstraintPolicy_var (const TAO_Base_var &rhs);
-    BufferingConstraintPolicy_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY___OUT_CH_)
-#define _TAO_BUFFERINGCONSTRAINTPOLICY___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_Export BufferingConstraintPolicy_out
+  struct tao_BufferingConstraintPolicy_cast
   {
-  public:
-    BufferingConstraintPolicy_out (BufferingConstraintPolicy_ptr &);
-    BufferingConstraintPolicy_out (BufferingConstraintPolicy_var &);
-    BufferingConstraintPolicy_out (const BufferingConstraintPolicy_out &);
-    BufferingConstraintPolicy_out &operator= (const BufferingConstraintPolicy_out &);
-    BufferingConstraintPolicy_out &operator= (const BufferingConstraintPolicy_var &);
-    BufferingConstraintPolicy_out &operator= (BufferingConstraintPolicy_ptr);
-    operator BufferingConstraintPolicy_ptr &();
-    BufferingConstraintPolicy_ptr &ptr (void);
-    BufferingConstraintPolicy_ptr operator-> (void);
-  
-  private:
-    BufferingConstraintPolicy_ptr &ptr_;
+    static BufferingConstraintPolicy_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY_CH_)
 #define _TAO_BUFFERINGCONSTRAINTPOLICY_CH_
@@ -293,7 +215,7 @@ TAO_NAMESPACE  TAO
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -303,10 +225,6 @@ TAO_NAMESPACE  TAO
   protected:
     BufferingConstraintPolicy (void);
     virtual ~BufferingConstraintPolicy (void);
-    
-    friend class _TAO_BufferingConstraintPolicy_Remote_Proxy_Impl;
-    friend class _TAO_BufferingConstraintPolicy_ThruPOA_Proxy_Impl;
-    friend class _TAO_BufferingConstraintPolicy_Direct_Proxy_Impl;
   
   private:
     BufferingConstraintPolicy (const BufferingConstraintPolicy &);
@@ -320,25 +238,21 @@ TAO_NAMESPACE  TAO
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_BufferingConstraintPolicy;
   
-#endif  /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::Short SYNC_EAGER_BUFFERING = 0;
+  const Messaging::SyncScope SYNC_EAGER_BUFFERING = 0;
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::Short SYNC_DELAYED_BUFFERING = -2;
+  const Messaging::SyncScope SYNC_DELAYED_BUFFERING = -2;
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
 
 }
 TAO_NAMESPACE_CLOSE // module TAO
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52
@@ -372,13 +286,11 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO::BufferingConstraint &
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "TAOC.i"
 #endif /* defined INLINE */
-
-#endif  /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

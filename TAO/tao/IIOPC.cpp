@@ -128,12 +128,45 @@ template class
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+IIOP::ListenPointList::ListenPointList (void)
+{}
 
-template class
-  TAO_Unbounded_Sequence<
-      IIOP::ListenPoint
-    >;
+IIOP::ListenPointList::ListenPointList (CORBA::ULong max)
+  : TAO_Unbounded_Sequence<
+        IIOP::ListenPoint
+      >
+    (max)
+{}
+
+IIOP::ListenPointList::ListenPointList (
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IIOP::ListenPoint *buffer,
+    CORBA::Boolean release
+  )
+  : TAO_Unbounded_Sequence<
+        IIOP::ListenPoint
+      >
+    (max, length, buffer, release)
+{}
+
+IIOP::ListenPointList::ListenPointList (const ListenPointList &seq)
+  : TAO_Unbounded_Sequence<
+        IIOP::ListenPoint
+      >
+    (seq)
+{}
+
+IIOP::ListenPointList::~ListenPointList (void)
+{}
+
+void IIOP::ListenPointList::_tao_any_destructor (void *_tao_void_pointer)
+{
+  ListenPointList *tmp = ACE_static_cast (ListenPointList*, _tao_void_pointer);
+  delete tmp;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class
   TAO_VarSeq_Var_T<
@@ -149,11 +182,6 @@ template class
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_Unbounded_Sequence< \
-      IIOP::ListenPoint \
-    >
 
 # pragma instantiate \
   TAO_VarSeq_Var_T< \
@@ -586,7 +614,7 @@ CORBA::Boolean operator>>= (
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

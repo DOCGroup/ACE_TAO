@@ -33,9 +33,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-#include "tao/corbafwd.h"
-
 #include "PolicyC.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -601,23 +598,18 @@ TAO_NAMESPACE  CORBA
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
   
-  typedef
-    TAO_Unbounded_Object_Sequence<
-        CORBA::DomainManager,
-        CORBA::DomainManager_var,
-        CORBA::tao_DomainManager_life,
-        CORBA::tao_DomainManager_cast
-      > DomainManagerList;
+  class DomainManagerList;
   
   typedef
-    TAO_VarSeq_Var_T<
+    TAO_MngSeq_Var_T<
         DomainManagerList,
         TAO_Object_Manager<
             CORBA::DomainManager,
             CORBA::DomainManager_var,
             CORBA::tao_DomainManager_life
           >
-      > DomainManagerList_var;
+      >
+    DomainManagerList_var;
   
   typedef
     TAO_Seq_Out_T<
@@ -628,7 +620,34 @@ TAO_NAMESPACE  CORBA
             CORBA::DomainManager_var,
             CORBA::tao_DomainManager_life
           >
-      > DomainManagerList_out;
+      >
+    DomainManagerList_out;
+  
+  class TAO_Export DomainManagerList
+    : public
+        TAO_Unbounded_Object_Sequence<
+            CORBA::DomainManager,
+            CORBA::DomainManager_var,
+            CORBA::tao_DomainManager_life,
+            CORBA::tao_DomainManager_cast
+          >
+  {
+  public:
+    DomainManagerList (void);
+    DomainManagerList (CORBA::ULong max);
+    DomainManagerList (
+        CORBA::ULong max,
+        CORBA::ULong length,
+        DomainManager_ptr *buffer, 
+        CORBA::Boolean release = 0
+      );
+    DomainManagerList (const DomainManagerList &);
+    ~DomainManagerList (void);
+    
+    static void _tao_any_destructor (void *);
+    
+    typedef DomainManagerList_var _var_type;
+  };
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
@@ -698,7 +717,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::Construction
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ConstructionPolicy_ptr &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:64
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_CORBA_DomainManagerList_H_
 #define _TAO_CDR_OP_CORBA_DomainManagerList_H_

@@ -129,12 +129,6 @@ public:
                                 const char *prefix = 0);
   // Type name of a node used when generating declarations.
 
-  idl_bool seq_cdr_hdr_gen (void) const;
-  void seq_cdr_hdr_gen (idl_bool val);
-  idl_bool seq_cdr_body_gen (void) const;
-  void seq_cdr_body_gen (idl_bool val);
-  // Accessors for the members.
-
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Type, AST_Decl);
   DEF_NARROW_FROM_DECL(AST_Type);
@@ -172,11 +166,6 @@ protected:
 
   char *nested_type_name_;
   // For the corresponding method.
-
-  idl_bool seq_cdr_hdr_gen_;
-  idl_bool seq_cdr_body_gen_;
-  // Helps in avoiding duplicate generation of CDR stream operators
-  // for sequences.
 };
 
 #endif           // _AST_TYPE_AST_TYPE_HH

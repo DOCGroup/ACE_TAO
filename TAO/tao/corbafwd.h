@@ -180,18 +180,12 @@ namespace CORBA
   class WString_out;
 
   class StringSeq;
-  class StringSeq_var;
-  class StringSeq_out;
   extern TAO_Export TypeCode_ptr _tc_StringSeq;
 
   class WStringSeq;
-  class WStringSeq_var;
-  class WStringSeq_out;
   extern TAO_Export TypeCode_ptr _tc_WStringSeq;
 
   class OctetSeq;
-  class OctetSeq_var;
-  class OctetSeq_out;
   extern TAO_Export TypeCode_ptr _tc_OctetSeq;
 
   class Any;
@@ -561,14 +555,10 @@ namespace CORBA
   extern TAO_Export  CORBA::TypeCode_ptr _tc_ServiceDetailType;
 
   struct ServiceDetail;
-  class ServiceDetail_var;
-  class ServiceDetail_out;
   typedef ServiceDetail * ServiceDetail_ptr;
   extern TAO_Export CORBA::TypeCode_ptr _tc_ServiceDetail;
 
   struct ServiceInformation;
-  class ServiceInformation_var;
-  class ServiceInformation_out;
   typedef ServiceInformation * ServiceInformation_ptr;
   extern TAO_Export CORBA::TypeCode_ptr _tc_ServiceInformation;
 

@@ -67,8 +67,6 @@ namespace CORBA
   class ValueMemberSeq;
 
   class ORB_ObjectIdList;
-  class ORB_ObjectIdList_var;
-  class ORB_ObjectIdList_out;
 
   class ORB;
   typedef TAO_Pseudo_Var_T<ORB> ORB_var;

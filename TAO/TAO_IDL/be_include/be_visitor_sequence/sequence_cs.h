@@ -43,6 +43,11 @@ public:
 
   virtual int visit_sequence (be_sequence *node);
   // visit sequence node
+
+  int gen_varout_tmplinst (be_sequence *node,
+                           be_type *bt);
+  // Generate explicit template instantiations for our _var
+  // and _out classes.
 };
 
 #endif /* _BE_VISITOR_SEQUENCE_SEQUENCE_CS_H_ */

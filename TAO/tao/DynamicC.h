@@ -105,11 +105,7 @@ TAO_NAMESPACE  Dynamic
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
   
-  typedef
-    TAO_Unbounded_Sequence<
-        Dynamic::Parameter
-      >
-    ParameterList;
+  class ParameterList;
   
   typedef
     TAO_VarSeq_Var_T<
@@ -125,6 +121,29 @@ TAO_NAMESPACE  Dynamic
         Dynamic::Parameter
       >
     ParameterList_out;
+  
+  class TAO_Export ParameterList
+    : public
+        TAO_Unbounded_Sequence<
+            Dynamic::Parameter
+          >
+  {
+  public:
+    ParameterList (void);
+    ParameterList (CORBA::ULong max);
+    ParameterList (
+        CORBA::ULong max,
+        CORBA::ULong length,
+        Parameter *buffer, 
+        CORBA::Boolean release = 0
+      );
+    ParameterList (const ParameterList &);
+    ~ParameterList (void);
+    
+    static void _tao_any_destructor (void *);
+    
+    typedef ParameterList_var _var_type;
+  };
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
@@ -159,12 +178,7 @@ TAO_NAMESPACE  Dynamic
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
   
-  typedef
-    TAO_Unbounded_Pseudo_Sequence<
-        Dynamic::TypeCode,
-        Dynamic::TypeCode_var
-      >
-    ExceptionList;
+  class ExceptionList;
   
   typedef
     TAO_VarSeq_Var_T<
@@ -173,7 +187,8 @@ TAO_NAMESPACE  Dynamic
             Dynamic::TypeCode,
             Dynamic::TypeCode_var
           >
-      > ExceptionList_var;
+      >
+    ExceptionList_var;
   
   typedef
     TAO_Seq_Out_T<
@@ -183,7 +198,32 @@ TAO_NAMESPACE  Dynamic
             Dynamic::TypeCode,
             Dynamic::TypeCode_var
           >
-      > ExceptionList_out;
+      >
+    ExceptionList_out;
+  
+  class TAO_Export ExceptionList
+    : public
+        TAO_Unbounded_Pseudo_Sequence<
+            Dynamic::TypeCode,
+            Dynamic::TypeCode_var
+          >
+  {
+  public:
+    ExceptionList (void);
+    ExceptionList (CORBA::ULong max);
+    ExceptionList (
+        CORBA::ULong max,
+        CORBA::ULong length,
+        CORBA::TypeCode_ptr *buffer, 
+        CORBA::Boolean release = 0
+      );
+    ExceptionList (const ExceptionList &);
+    ~ExceptionList (void);
+    
+    static void _tao_any_destructor (void *);
+    
+    typedef ExceptionList_var _var_type;
+  };
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
@@ -244,7 +284,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Dynamic::Parameter 
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Dynamic::Parameter &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:64
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_Dynamic_ParameterList_H_
 #define _TAO_CDR_OP_Dynamic_ParameterList_H_
@@ -261,7 +301,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_Dynamic_ParameterList_H_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:64
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_Dynamic_ExceptionList_H_
 #define _TAO_CDR_OP_Dynamic_ExceptionList_H_
