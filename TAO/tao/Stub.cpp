@@ -114,7 +114,7 @@ TAO_Stub::~TAO_Stub (void)
   if (forward_profiles_)
     reset_profiles ();
 
-  if (this->profile_in_use_ != 0)
+  if (this->profile_in_use_ != 0 && this->orb_->orb_core () != 0)
     {
       this->profile_in_use_->reset_hint ();
       // decrease reference count on profile
@@ -122,8 +122,7 @@ TAO_Stub::~TAO_Stub (void)
       this->profile_in_use_ = 0;
     }
 
-  if (this->profile_lock_ptr_)
-    delete this->profile_lock_ptr_;
+  delete this->profile_lock_ptr_;
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
   delete this->policies_;
@@ -171,7 +170,7 @@ CORBA::ULong
 TAO_Stub::hash (CORBA::ULong max,
                 CORBA::Environment &ACE_TRY_ENV)
 {
-  // we rely on the profile object to has it's address info
+  // we rely on the profile object that its address info
   if (profile_in_use_)
     return profile_in_use_->hash (max, ACE_TRY_ENV);
   ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) hash called on a null profile!\n"), 0);
@@ -1072,14 +1071,15 @@ TAO_Stub::validate_connection (CORBA::PolicyList_out inconsistent_policies,
                                                      this->orb_core_);
 
   //@@ Currently, if we select profiles based on priorities (i.e.,
-  //  ClientPriorityPolicy is set), and we get a FORWARD reply to our
-  // location request, we don't go to the new location - just return 0.
-  // This is because we don't yet have full support in MProfiles&friends
-  // for profiles used based on priorities.  Once the support is
-  // there, we should follow a forwarded object to track it down,
-  // just like in the case where ClientPriorityPolicy is not set.
-  // At that point, we can remove a lot of 'special case' code from
-  // this function, along with this comment ;-) (marina).
+  //   ClientPriorityPolicy is set), and we get a FORWARD reply to our
+  //   location request, we don't go to the new location - just return
+  //   0. This is because we don't yet have full support in
+  //   MProfiles & friends for profiles used based on priorities.
+  //   Once the support is there, we should follow a forwarded object
+  //   to track it down, just like in the case where
+  //   ClientPriorityPolicy is not set.  At that point, we can remove
+  //   a lot of 'special case' code from this function, along with
+  //   this comment ;-) (marina).
   for (;;)
     {
       locate_request.start (ACE_TRY_ENV);
