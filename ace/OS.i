@@ -1770,7 +1770,11 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // ACE_TRACE ("ACE_OS::cond_timedwait");
 #if defined (ACE_HAS_THREADS)
   int result;
-  timespec_t ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
+  timespec_t ts;
+  if (timeout != 0)
+    {
+      ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
+    }
 
 #if (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_HAS_FSU_PTHREADS)
 #  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
@@ -1791,13 +1795,20 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // values consistent.
   if (result == -1 && errno == ETIMEDOUT)
     errno = ETIME;
+
 #elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL (ACE_ADAPT_RETVAL (timeout == 0
                                 ? ::cond_wait (cv, external_mutex) 
-				: ::cond_timedwait (cv, external_mutex, &ts), result),
+				: ::cond_timedwait (cv,
+						    external_mutex,
+						    (timestruc_t*)&ts),
+				result),
 	      int, -1, result);
 #endif /* ACE_HAS_STHREADS */
-  timeout->set (ts); // Update the time value before returning.
+  if (timeout != 0)
+    {
+      timeout->set (ts); // Update the time value before returning.
+    }
   return result;
 #else
   ACE_UNUSED_ARG (cv);
