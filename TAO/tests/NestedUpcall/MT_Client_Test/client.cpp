@@ -24,17 +24,17 @@
 #include "local_server.h"
 
 
-MT_Client_Task::MT_Client_Task (int argc, 
+MT_Client_Task::MT_Client_Task (int argc,
                                 char **argv)
-  : argc_ (argc), 
+  : argc_ (argc),
     argv_ (argv)
 {
 }
 
-int 
+int
 MT_Client_Task::svc (void)
 {
-  if (this->mT_Client_.init (this->argc_, 
+  if (this->mT_Client_.init (this->argc_,
                              this->argv_) == -1)
     return 1;
   else
@@ -84,18 +84,18 @@ MT_Client::parse_args (void)
   ACE_Get_Opt get_opts (argc_, argv_, "df:g:h:i:n:s:");
   int c;
   int result;
-  
+
   while ((c = get_opts ()) != -1)
     switch (c)
-    {   
+    {
       case 'd':  // debug flag
         TAO_debug_level++;
         break;
         // Depending on the thread ID we pick the IOR
       case 'f': // read the IOR from the file.
-        if ((this->thread_ID_%2) == 0)
+        if ((this->thread_ID_ % 2) == 0)
         {
-          result = this->read_ior (get_opts.optarg); 
+          result = this->read_ior (get_opts.optarg);
           // read IOR for MT Object
           if (result < 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -105,9 +105,9 @@ MT_Client::parse_args (void)
         }
         break;
       case 'g': // read the IOR from the file.
-        if ((this->thread_ID_%2) == 1)
+        if ((this->thread_ID_ % 2) == 1)
         {
-          result = this->read_ior (get_opts.optarg); 
+          result = this->read_ior (get_opts.optarg);
           // read IOR for Object A
           if (result < 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -119,23 +119,23 @@ MT_Client::parse_args (void)
       case 'i': this->iterations_ = ACE_OS::atoi (get_opts.optarg);
         break;
       case 'h':
-      case 'n':      
+      case 'n':
       case 's':
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                           "usage:  %s\n"
-                           " [-f] first server ior file\n" 
-                           " [-g] second server ior file\n" 
-                           " [-h] third server ior file\n" 
+                           " [-f] first server ior file\n"
+                           " [-g] second server ior file\n"
+                           " [-h] third server ior file\n"
                            " [-i] client iterations\n"
                            " [-n] number of client threads\n"
                            " [-s] number of server iterations\n",
                           this->argv_ [0]),
                           -1);
     }
-  
+
   // Indicates successful parsing of command line.
   return 0;
 }
@@ -147,7 +147,7 @@ MT_Client::run (void)
   {
     for (unsigned long i = 0; i < this->iterations_; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) MT_Client::run: %d of %d\n",
                   i,
                   this->iterations_));
@@ -155,7 +155,7 @@ MT_Client::run (void)
       // call the recursive object MT_Object for nested upcalls
       // testing
       this->mT_Object_var_->yadda (0,
-                                   0, 
+                                   0,
                                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
@@ -180,7 +180,7 @@ MT_Client::~MT_Client (void)
 
 
 int
-MT_Client::init (int argc, 
+MT_Client::init (int argc,
                  char **argv)
 {
 
@@ -190,18 +190,20 @@ MT_Client::init (int argc,
   for (int i = 0; i < argc; i++)
     this->argv_[i] = argv[i];
 
-  
-  this->thread_ID_ = ACE_Thread::self ();
-  
+
+  // This has to be a reinterpret_cast on platforms that define
+  // ACE_thread_t as a pointer, such as DU 4.0.
+  this->thread_ID_ = ACE_reinterpret_cast (unsigned long, ACE_Thread::self ());
+
   TAO_TRY
   {
       this->orb_var_ = CORBA::ORB::_duplicate (TAO_ORB_Core_instance()->orb());
       TAO_CHECK_ENV;
-      
+
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         return -1;
-    
+
       if (this->object_key_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "The IOR is nil, not able to get the object.\n"),
@@ -217,12 +219,12 @@ MT_Client::init (int argc,
                              "No proper object has been returned.\n"),
                             -1);
 
-      this->mT_Object_var_ = MT_Object::_narrow (object_var.in(), 
-                                                 TAO_TRY_ENV);     
+      this->mT_Object_var_ = MT_Object::_narrow (object_var.in(),
+                                                 TAO_TRY_ENV);
       TAO_CHECK_ENV;
-    
+
       if (CORBA::is_nil (this->mT_Object_var_.in()))
-      { 
+      {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "We have no proper reference to the Object.\n"),
                             -1);
@@ -238,7 +240,7 @@ MT_Client::init (int argc,
     return -1;
   }
   TAO_ENDTRY;
-  
+
   return 0;
 }
 
@@ -254,13 +256,13 @@ main (int argc, char **argv)
 
   orb_manager.init (argc,
                     argv,
-                    env);   
+                    env);
 
   if (env.exception() != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "main: Failure while initializing the ORB."),
                        -1);
-  
+
 
   ACE_DEBUG ((LM_DEBUG,"\n\tMT_Client: client\n\n"));
 
@@ -274,17 +276,17 @@ main (int argc, char **argv)
   // create a separate server thread
   ACE_Thread_Manager server_thr_mgr;
   // starting the server thread
-  MT_Server_Task *server = new MT_Server_Task (&server_thr_mgr, 
-                                               argc, 
-                                               argv, 
+  MT_Server_Task *server = new MT_Server_Task (&server_thr_mgr,
+                                               argc,
+                                               argv,
                                                &orb_manager);
   server->activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, ACE_DEFAULT_THREAD_PRIORITY);
-    
+
   // starting the client threads
   MT_Client_Task **clients = new MT_Client_Task*[threads];
-    
+
   for (i = 0; i < threads; i++)
-    clients[i] = new MT_Client_Task (argc, 
+    clients[i] = new MT_Client_Task (argc,
                                      argv);
 
   for (i = 0; i < threads; i++)
