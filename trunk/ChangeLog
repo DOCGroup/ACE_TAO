@@ -1,3 +1,10 @@
+Mon Sep 15 13:22:40 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added some optimizations to the circular dependency tree
+          generation code.
+
 Mon Sep 15 06:42:28 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
