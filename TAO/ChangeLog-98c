@@ -1,11 +1,15 @@
 Tue May 26 10:32:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/tao_idl.dsp: Updated project files per Andy's changes.
+        * TAO_IDL/tao_idl.dsp: Updated project files per Andy's changes.
 
 Tue May 26 10:03:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * tests/NestedUpcal/server.cpp (init_naming_service): dereferenced
+        * tests/NestedUpcall/server.cpp (init_naming_service): dereferenced
           the parameters to init () call.
+
+        * tests/NestedUpcall/NestedUpCalls_Test.cpp,NestedUpCalls_i.h,
+          client.{h,cpp},eh_i.{h,cpp},reactor_i.{h,cpp},server.h:
+          removed trailing ^M's from all lines.
 
 Tue May 26 09:51:20 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
@@ -132,9 +136,9 @@ Tue May 26 09:40:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
           The file was full of ^M (i.e. it was using DOS end-of-line)
           characters; that was confusing the IDL compiler.
 
-	* TAO_IDL/be/be_visitor_args.cpp: 
-	  The code generation for strings and anys as out parameters was
-	  broken.
+        * TAO_IDL/be/be_visitor_args.cpp:
+          The code generation for strings and anys as out parameters was
+          broken.
 
 Tue May 26 01:46:23 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
