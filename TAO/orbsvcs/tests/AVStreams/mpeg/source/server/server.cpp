@@ -7,6 +7,41 @@ int AV_Server::done_;
 pid_t AV_Server::current_pid_ = -1;
 
 
+Audio_MMDevice::Audio_MMDevice (TAO_AV_Endpoint_Process_Strategy *endpoint_strategy)
+  :TAO_MMDevice (endpoint_strategy),
+   connections_ (0)
+{
+}
+
+AVStreams::StreamEndPoint_B_ptr  
+Audio_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester, 
+                        AVStreams::VDev_out the_vdev, 
+                        AVStreams::streamQoS &the_qos, 
+                        CORBA::Boolean_out met_qos, 
+                        char *&named_vdev, 
+                        const AVStreams::flowSpec &the_spec,  
+                        CORBA::Environment &env)
+{
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_MMDevice::create_B called \n"));
+  AVStreams::StreamEndPoint_B_ptr stream_ptr;
+  stream_ptr = TAO_MMDevice::create_B (the_requester,
+                                       the_vdev,
+                                       the_qos,
+                                       met_qos,
+                                       named_vdev,
+                                       the_spec,
+                                       env);
+  if (stream_ptr != 0)
+    this->connections_;
+  return stream_ptr;
+}
+
+int
+Audio_MMDevice::connections (void)
+{
+  return this->connections_;
+}
+
 // AV_Server_Sig_Handler routines
 
 AV_Server_Sig_Handler::AV_Server_Sig_Handler (void)
@@ -74,14 +109,7 @@ AV_Server_Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 }
 
 // This method handles all the signals that are being caught by this
-// object.  In our simple example, we are simply catching SIGALRM,
-// SIGINT, and SIGQUIT.  Anything else is logged and ignored.
-//
-// There are several advantages to using this approach.  First, 
-// the behavior triggered by the signal is handled in the main event
-// loop, rather than in the signal handler.  Second, the ACE_Reactor's 
-// signal handling mechanism eliminates the need to use global signal 
-// handler functions and data. 
+// object.  
 
 int
 AV_Server_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
@@ -263,9 +291,6 @@ AV_Server::parse_args (int argc,
       case 'a':// live audio flag
         Mpeg_Global::live_audio = 1;
         break;
-      case 'm':// remove flag
-        ACE_OS::unlink (VCR_UNIX_PORT);
-        break;
       case '?':
       case 'h':// help flag
         ACE_DEBUG ((LM_DEBUG,
@@ -353,7 +378,7 @@ AV_Server::init (int argc,
 
   // Register the audio mmdevice object with the ORB
   ACE_NEW_RETURN (this->audio_mmdevice_,
-                  TAO_MMDevice (&this->audio_process_strategy_),
+                  Audio_MMDevice (&this->audio_process_strategy_),
                   -1);
 
   // create the audio server mmdevice with the naming service pointer.
