@@ -1,26 +1,35 @@
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
+
+// ============================================================================
 //
-// = TITLE
-//   TAO_TRY macros and friends.
+// = LIBRARY
+//    TAO
+//
+// = FILENAME
+//    try_macros.h
 //
 // = DESCRIPTION
 //   Writing code that is portable between platforms with a without
-//   native C++ exceptions is difficult if not impossible.
-//   The following macros offer some help on this task, mostly
-//   oriented to making the ORB code and the IDL generated code
-//   portable.
+//   native C++ exceptions is hard.  The following macros offer some
+//   help on this task, mostly oriented to making the ORB code and the
+//   IDL generated code portable.
+//
+// = AUTHOR
+//     Copyright by Douglas C. Schmidt.
+//
+// ============================================================================
 
 #if !defined (TAO_TRY_MACROS_H)
 #define TAO_TRY_MACROS_H
 
 #include "tao/orbconf.h"
 
-//
 // These macros can be used to write "portable" code between platforms
 // supporting CORBA exceptions natively (using the C++ exceptions) or
-// through the Enviroment parameter.
-// Their use requires some discipline, but they certainly help...
-//
+// through the Enviroment parameter.  Their use requires some
+// discipline, but they certainly help...
+
 #if defined (TAO_USE_EXCEPTIONS)
 
 #define TAO_TRY_ENV __env
