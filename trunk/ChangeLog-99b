@@ -1,35 +1,29 @@
-Wed Jun 23 10:09:06 1999  David L. Levine  <levine@cs.wustl.edu>
+Wed Jun 23 14:09:27 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-        * ACE-INSTALL.html: updated System Resource requirements discussion.
-          All of ACE+TAO requires well over 1 Gb of disk now :-/.
-
-Wed Jun 23 00:03:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/SOCK_Dgram.cpp (ACE_SOCK_Dgram): Fixed an unused args
-          warning.  Thanks to David for reporting this.
-
-        * ace/Service_Config.h (ACE_Service_Config): Moved the
-          documentation for the open() method's "argv" parameters *to* the
-          open() method.  Also clarified that by default we don't install
-          the "statically configured services" (such as ACE_Svc_Manager).
-          Thanks to Ian MacDonald <ianmacd@bg.com> for motivating this.
-
-        * ace/OS.i (accept): Added a new workaround for platforms
-          like VxWorks that can't handle NULL addrs to accept().  Thanks
-          to James Hu <jhx@entera.com> and John Weald
-          <John.Weald@sylantro.com> for this fix.
-
-        * ace/config-vxworks5.x.h: Added a new macro
-          ACE_HAS_BROKEN_ACCEPT_ADDR to work around VxWorks problems
-          with NULL addrs to accept().
-
+	* ace/Caching_Strategies_T.cpp (ACE_LRU_Caching_Strategy): 
+	  Checked and modified the creation and deletion logic of the 
+	  caching utility object.
+        * ace/Cache_Map_Manager_T.cpp (~Cache_Map_Manager):
+	  Added the close method call to avoid memory leaks.
+	* tests/run_test.pl:
+	* tests/run_test.bat:
+	  Added Cache_Map_Manager_Test.
+	* tests/Cache_Map_Manager_Test: Removed extra comma.     
+	* ace/Caching_Strategies_T.{h, i, cpp}
+	* ace/Cache_Map_Manager_T.{i,h,cpp}
+	* ace/Caching_Strategy_Utility_T.{h,i,cpp}
+	* ace/Cleanup_Strategies_T.{h, i,cpp}
+	* ace/Hash_Cache_Map_Manager_T.{h, i,cpp}
+	* ace/ace_dll.dsp: 
+	  Added above caching related files into the NT ace workspace.
+	
 Tue Jun 22 21:17:49 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-        * tests/Cache_Map_Manager_Test.cpp: Tests the Cache_Map_Manager
-          as well as the Hash_Cache_Map_Manager which has additional
-          features of caching and purging of entries along with the map
-          properties.
-        * tests/Makefile: Added Cache_Map_Manager_Test.cpp
+	* tests/Cache_Map_Manager_Test.cpp: Tests the Cache_Map_Manager
+	  as well as the Hash_Cache_Map_Manager which has additional
+	  features of caching and purging of entries along with the map
+	  properties.
+	* tests/Makefile: Added Cache_Map_Manager_Test.cpp
 
 Tue Jun 22 15:20:53 1999  David L. Levine  <levine@cs.wustl.edu>
 
