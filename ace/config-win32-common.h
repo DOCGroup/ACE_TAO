@@ -278,11 +278,14 @@ typedef unsigned __int64 ACE_UINT64;
 #endif
 
 // We are build ACE and want to use MFC (multithreaded)
-#if (ACE_HAS_DLL != 0) && defined(ACE_BUILD_DLL) && defined(ACE_HAS_MFC) && (ACE_HAS_MFC != 0) && defined (_MT)
-        #if !defined (_AFXDLL)
+#if defined(ACE_HAS_MFC) && (ACE_HAS_MFC != 0) && defined (_MT)
+        #if (ACE_HAS_DLL != 0) && defined(ACE_BUILD_DLL) && !defined (_WINDLL)
                 // force multithreaded MFC DLL
-                #define _AFXDLL
+                #define _WINDLL
         #endif /* _AFXDLL */
+        #if !defined (_AFXDLL) && !define (ACE_USES_STATIC_MFC)
+                #define _AFXDLL
+        #endif /* _AFXDLL */ 
 #endif
 
 // <windows.h> and MFC's <afxwin.h> are mutually
@@ -301,8 +304,7 @@ typedef unsigned __int64 ACE_UINT64;
 
 // This is necessary since MFC users apparently can't #include
 // <windows.h> directly.
-#if defined (_AFXDLL) || defined (_WINDLL) || \
-    ( (ACE_HAS_DLL != 0) && defined(ACE_BUILD_DLL) && (ACE_HAS_MFC != 0))
+#if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
         #include /**/ <afxwin.h>   /* He is doing MFC */
                 // Windows.h will be included via afxwin.h->afx.h->afx_ver_.h->afxv_w32.h
                 // #define      _INC_WINDOWS  // Prevent winsock.h from including windows.h
