@@ -1,3 +1,39 @@
+Thu Mar 16 13:53:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_interface.cpp:
+	  Fixed an inheritance problem when a module is
+	  reopened by inclusion. Thanks to Brian Wright
+	  <bwright@paladyne.com> for reporting this bug.
+
+	* TAO_IDL/include/utl_scope.h:
+	* TAO_IDL/util/utl_scope.cpp:
+	* TAO_IDL/ast/ast_operation.cpp:
+	   Another inheritance problem when a module is
+	   reopened by inclusion. To fix this bug, changes
+	   were also made to ast_interface.cpp listed above.
+	   Thanks to Michael Kircher <Michael.Kircher@mchp.siemens.de>
+	   for reporting this one.
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	   Disabled the exclusion (for all data types) of the repository
+	   id from optimized typecodes (it was already disabled for interfaces,
+	   valuetypes and exceptions, as required by the spec). It proved to
+	   be an unpopular feature, causing performace slowdowns 
+	   disproportionate to its value in decreasing typecode size. Thanks
+	   to Hugh Arnold <harnold@bebe.culver.itginc.com> for pointing
+	   this out.
+
+	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_union/union_ch.cpp:
+	   Removed generation of 'typedef foo *foo_ptr' and
+	   'typedef foo_ptr _ptr_type' for these types. This has
+	   already been removed to structs - these typedefs should
+	   be there only for interfaces and valuetypes. Thanks to
+	   Chris Cleeland <cleeland@ociweb.com> for pointing this
+	   out.
+
 Thu Mar 16 13:26:09 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: Forgot to
