@@ -63,7 +63,7 @@ public:
 private:  
   unsigned char use_LifeCycle_Service_;
   // This flag defines if a Generic Factory is used (0 by default) or 
-  // the more sophisticated LifeCycle Service
+  // the more sophisticated LifeCycle Service (1)
 };
 
 // Forward declaration.
