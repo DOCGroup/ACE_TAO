@@ -1,3 +1,9 @@
+Tue Mar 17 21:41:57 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Threads/task_five.cpp (svc): use ACE_OS::sleep
+          instead of ::Sleep.  (main): declare "ii" outside of the
+          first loop because it is used in other loops.
+
 Tue Mar 17 16:02:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/WFMO_Reactor: Changes were made to WFMO_Reactor to make it
