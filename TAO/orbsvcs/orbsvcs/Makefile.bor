@@ -22,6 +22,7 @@ MAKEFILES = \
 	DsLogAdmin.bor \
 	LoadBalancing.bor \
         FT_ORB.bor \
-	FaultTolerance.bor
+        FaultTolerance.bor \
+        PortableGroup.bor
 
 !include <$(ACE_ROOT)/include/makeinclude/recurse.bor>
