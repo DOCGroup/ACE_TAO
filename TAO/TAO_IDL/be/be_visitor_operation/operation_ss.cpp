@@ -573,8 +573,8 @@ be_visitor_operation_ss::gen_pre_skel_info (be_operation *node)
       this->has_param_type (node, AST_Argument::dir_INOUT))
     {
       // Instantiate a TAO_InputCDR variable.
-      os->indent ();
-      *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();\n";
+      *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();"
+          << be_nl;
     }
 
   return 0;

@@ -2424,7 +2424,11 @@ be_interface::copy_ctor_helper (be_interface *derived,
   idl_bool is_rh_base =
     (ACE_OS::strcmp (base->flat_name (), "Messaging_ReplyHandler") == 0);
 
-  if (base->is_nested () && !is_rh_base)
+  if (is_rh_base)
+    {
+      *os << "ACE_NESTED_CLASS (POA_Messsaging, ReplyHandler) (rhs)";
+    }
+  else if (base->is_nested ())
     {
       be_decl *scope;
       scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
