@@ -190,7 +190,8 @@ ACE_Semaphore::ACE_Semaphore (u_int count,
 ACE_Semaphore::~ACE_Semaphore (void)
 {
 // ACE_TRACE ("ACE_Semaphore::~ACE_Semaphore");
-  this->remove ();
+  if (this->remove () == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Semaphore_Mutex::~ACE_Semaphore_Mutex"));
 }
 
 void
@@ -255,6 +256,8 @@ ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,
 ACE_Process_Semaphore::~ACE_Process_Semaphore (void)
 {
 // ACE_TRACE ("ACE_Process_Semaphore::~ACE_Process_Semaphore");
+  //  if (this->remove () == -1)
+  //    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Process_Mutex::~ACE_Process_Mutex"));
 }
 
 // Explicitly destroy the semaphore.
@@ -502,6 +505,8 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (LPCTSTR name,
 ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex (void)
 {
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex");
+  if (this->remove () == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Process_Mutex::~ACE_Process_Mutex"));
 }
 
 int
@@ -856,6 +861,8 @@ ACE_Thread_Mutex::dump (void) const
 ACE_Thread_Mutex::~ACE_Thread_Mutex (void)
 {
 // ACE_TRACE ("ACE_Thread_Mutex::~ACE_Thread_Mutex");
+  if (this->remove () == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Thread_Mutex::~ACE_Thread_Mutex"));
 }
 
 ACE_Thread_Mutex::ACE_Thread_Mutex (LPCTSTR name, void *arg)
