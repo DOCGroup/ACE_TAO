@@ -159,7 +159,7 @@ main (int argc, char *argv[])
                                               max_request_buffer_size,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      ACE_UNUSED_ARG (id1);
+      ACE_UNUSED_ARG (id2);
 
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
