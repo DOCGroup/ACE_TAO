@@ -68,7 +68,7 @@ ACE_TPQ_Entry::waiting (int v)
   waiting_ = v;
 }
 
-ACE_INLINE const ASYS_TCHAR *
+ACE_INLINE const ACE_TCHAR *
 ACE_TPQ_Entry::client_id (void) const
 {
   ACE_TRACE ("ACE_TPQ_Entry::client_id");
@@ -121,7 +121,7 @@ ACE_Tokens::dec_reference (void)
   ACE_TRACE ("ACE_Tokens::dec_reference");
   if (this->reference_count_ == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("dec_reference already zero")));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("dec_reference already zero")));
       return 0;
     }
 
@@ -184,17 +184,17 @@ ACE_Tokens::owner (void)
   return (ACE_TPQ_Entry *) this->waiters_.head ();
 }
 
-ACE_INLINE const ASYS_TCHAR*
+ACE_INLINE const ACE_TCHAR*
 ACE_Tokens::owner_id ()
 {
   ACE_TRACE ("ACE_Tokens::owner_id");
   if (this->owner () == 0)
-    return ASYS_TEXT ("no owner");
+    return ACE_TEXT ("no owner");
   else
     return this->owner ()->client_id ();
 }
 
-ACE_INLINE const ASYS_TCHAR*
+ACE_INLINE const ACE_TCHAR*
 ACE_Tokens::name (void)
 {
   ACE_TRACE ("ACE_Tokens::name");
@@ -277,7 +277,7 @@ ACE_TPQ_Entry::call_sleep_hook (void)
 }
 
 ACE_INLINE int
-ACE_TPQ_Entry::equal_client_id (const ASYS_TCHAR *id)
+ACE_TPQ_Entry::equal_client_id (const ACE_TCHAR *id)
 {
   ACE_TRACE ("ACE_TPQ_Entry::equal_client_id");
   return (ACE_OS::strcmp (this->client_id (), id) == 0);
@@ -288,7 +288,7 @@ ACE_TPQ_Entry::equal_client_id (const ASYS_TCHAR *id)
 // ************************************************************
 
 ACE_INLINE
-ACE_Local_Mutex::ACE_Local_Mutex (const ASYS_TCHAR *token_name,
+ACE_Local_Mutex::ACE_Local_Mutex (const ACE_TCHAR *token_name,
                                   int ignore_deadlock,
                                   int debug)
 {
@@ -297,22 +297,22 @@ ACE_Local_Mutex::ACE_Local_Mutex (const ASYS_TCHAR *token_name,
 }
 
 ACE_INLINE void
-ACE_Token_Name::name (const ASYS_TCHAR *new_name)
+ACE_Token_Name::name (const ACE_TCHAR *new_name)
 {
   ACE_TRACE ("ACE_Token_Name::name");
 
   if (new_name == 0)
-    new_name = ASYS_TEXT ("no name");
+    new_name = ACE_TEXT ("no name");
 
   int n = ACE_OS::strlen (new_name) + 1;
 
   if (n >= ACE_MAXTOKENNAMELEN)
     n = ACE_MAXTOKENNAMELEN - 1;
 
-  ACE_OS::strncpy (this->token_name_, (ASYS_TCHAR *) new_name, n);
+  ACE_OS::strncpy (this->token_name_, (ACE_TCHAR *) new_name, n);
 }
 
-ACE_INLINE const ASYS_TCHAR*
+ACE_INLINE const ACE_TCHAR*
 ACE_Token_Name::name (void) const
 {
   ACE_TRACE ("ACE_Token_Name::name");
@@ -328,7 +328,7 @@ ACE_Local_Mutex::clone (void) const
 }
 
 ACE_INLINE ACE_Tokens *
-ACE_Local_Mutex::create_token (const ASYS_TCHAR *name)
+ACE_Local_Mutex::create_token (const ACE_TCHAR *name)
 {
   return new ACE_Mutex_Token (name);
 }
@@ -341,7 +341,7 @@ ACE_Local_Mutex::~ACE_Local_Mutex (void)
 // ************************************************************
 
 ACE_INLINE
-ACE_Local_RLock::ACE_Local_RLock (const ASYS_TCHAR *token_name,
+ACE_Local_RLock::ACE_Local_RLock (const ACE_TCHAR *token_name,
                                   int ignore_deadlock,
                                   int debug)
 {
@@ -355,7 +355,7 @@ ACE_Local_RLock::~ACE_Local_RLock (void)
 }
 
 ACE_INLINE ACE_Tokens *
-ACE_Local_RLock::create_token (const ASYS_TCHAR *name)
+ACE_Local_RLock::create_token (const ACE_TCHAR *name)
 {
   return new ACE_RW_Token (name);
 }
@@ -377,7 +377,7 @@ ACE_Local_RLock::clone (void) const
 // ************************************************************
 
 ACE_INLINE
-ACE_Local_WLock::ACE_Local_WLock (const ASYS_TCHAR *token_name,
+ACE_Local_WLock::ACE_Local_WLock (const ACE_TCHAR *token_name,
                                   int ignore_deadlock,
                                   int debug)
 {
@@ -391,7 +391,7 @@ ACE_Local_WLock::~ACE_Local_WLock (void)
 }
 
 ACE_INLINE ACE_Tokens *
-ACE_Local_WLock::create_token (const ASYS_TCHAR *name)
+ACE_Local_WLock::create_token (const ACE_TCHAR *name)
 {
   return new ACE_RW_Token (name);
 }

@@ -812,9 +812,9 @@ be_union::in_recursion (be_type *node)
             {
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("(%N:%l) be_union::")
-                                 ASYS_TEXT ("in_recursion - ")
-                                 ASYS_TEXT ("bad field node\n")),
+                                 ACE_TEXT ("(%N:%l) be_union::")
+                                 ACE_TEXT ("in_recursion - ")
+                                 ACE_TEXT ("bad field node\n")),
                                 0);
             }
           be_type *type = be_type::narrow_from_decl (field->field_type ());
@@ -822,9 +822,9 @@ be_union::in_recursion (be_type *node)
             {
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("(%N:%l) be_union::")
-                                 ASYS_TEXT ("in_recursion - ")
-                                 ASYS_TEXT ("bad field type\n")),
+                                 ACE_TEXT ("(%N:%l) be_union::")
+                                 ACE_TEXT ("in_recursion - ")
+                                 ACE_TEXT ("bad field type\n")),
                                 0);
             }
           if (type->in_recursion (node))
@@ -851,10 +851,10 @@ be_union::default_value (be_union::DefaultValue &dv)
       if (this->compute_default_value () == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) be_union::")
-                             ASYS_TEXT ("default_value - ")
-                             ASYS_TEXT ("Error computing ")
-                             ASYS_TEXT ("default value\n")),
+                             ACE_TEXT ("(%N:%l) be_union::")
+                             ACE_TEXT ("default_value - ")
+                             ACE_TEXT ("Error computing ")
+                             ACE_TEXT ("default value\n")),
                             -1);
         }
     }
@@ -921,9 +921,9 @@ be_union::compute_default_value (void)
       // error for now
       this->default_value_.computed_ = -1;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_union::compute_default_value ")
-                         ASYS_TEXT ("- unimplemented discriminant type ")
-                         ASYS_TEXT ("(longlong or ulonglong)\n")),
+                         ACE_TEXT ("(%N:%l) be_union::compute_default_value ")
+                         ACE_TEXT ("- unimplemented discriminant type ")
+                         ACE_TEXT ("(longlong or ulonglong)\n")),
                         -1);
       ACE_NOTREACHED (break;)
     case AST_Expression::EV_char:
@@ -958,9 +958,9 @@ be_union::compute_default_value (void)
             // error
             this->default_value_.computed_ = -1;
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("(%N:%l) be_union::")
-                               ASYS_TEXT ("compute_default_value ")
-                               ASYS_TEXT ("- disc type not an ENUM\n")),
+                               ACE_TEXT ("(%N:%l) be_union::")
+                               ACE_TEXT ("compute_default_value ")
+                               ACE_TEXT ("- disc type not an ENUM\n")),
                               -1);
           }
       }
@@ -969,8 +969,8 @@ be_union::compute_default_value (void)
       // error
       this->default_value_.computed_ = -1;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_union::compute_default_value ")
-                         ASYS_TEXT ("- Bad discriminant type\n")),
+                         ACE_TEXT ("(%N:%l) be_union::compute_default_value ")
+                         ACE_TEXT ("- Bad discriminant type\n")),
                         -1);
       ACE_NOTREACHED (break;)
     } // end of switch
@@ -983,8 +983,8 @@ be_union::compute_default_value (void)
       // error
       this->default_value_.computed_ = -1;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_union::compute_default_value ")
-                         ASYS_TEXT ("- default clause is invalid here\n")),
+                         ACE_TEXT ("(%N:%l) be_union::compute_default_value ")
+                         ACE_TEXT ("- default clause is invalid here\n")),
                         -1);
     }
 
@@ -1067,9 +1067,9 @@ be_union::compute_default_value (void)
                           this->default_value_.computed_ = -1;
                           ACE_ERROR_RETURN
                             ((LM_ERROR,
-                              ASYS_TEXT ("(%N:%l) be_union::")
-                              ASYS_TEXT ("compute_default_value - ")
-                              ASYS_TEXT ("Bad case label value\n")),
+                              ACE_TEXT ("(%N:%l) be_union::")
+                              ACE_TEXT ("compute_default_value - ")
+                              ACE_TEXT ("Bad case label value\n")),
                              -1);
                         }
 

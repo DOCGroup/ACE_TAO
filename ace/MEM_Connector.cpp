@@ -17,7 +17,7 @@ ACE_MEM_Connector::dump (void) const
   ACE_TRACE ("ACE_MEM_Connector::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -63,8 +63,8 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
 
   if (!this->address_.same_host (remote_sap))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("(%P|%t) MEM_Connector can't connect ")
-                       ASYS_TEXT ("to %s:%d which is not a local endpoint"),
+                       ACE_TEXT ("(%P|%t) MEM_Connector can't connect ")
+                       ACE_TEXT ("to %s:%d which is not a local endpoint"),
                        remote_sap.get_host_name (),
                        remote_sap.get_port_number ()),
                       -1);
@@ -86,7 +86,7 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   // Do not close the handle.
 
   // now we should setup the mmap malloc.
-  TCHAR buf[MAXPATHLEN];
+  ACE_TCHAR buf[MAXPATHLEN];
 
   // @@ Need to handle timeout here.
   ACE_INT16 buf_len;

@@ -32,7 +32,7 @@ static void
 throw_exception (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) throw exception\n")));
+              ACE_TEXT ("(%P|%t) throw exception\n")));
 
   // Cause a Win32 structured exception.
   *(char *) 0 = 0;
@@ -45,7 +45,7 @@ static void
 throw_exception (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) throw exception\n")));
+              ACE_TEXT ("(%P|%t) throw exception\n")));
   throw Except ();
 }
 #endif /* ACE_WIN32 */
@@ -73,11 +73,11 @@ My_Handler::get_handle (void) const
 int
 My_Handler::handle_input (ACE_HANDLE)
 {
-  ASYS_TCHAR buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
   ACE_INET_Addr from_addr;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Activity occurred on handle %d!\n"),
+              ACE_TEXT ("Activity occurred on handle %d!\n"),
               ACE_SOCK_Dgram::get_handle ()));
 
   ssize_t n = ACE_SOCK_Dgram::recv (buf,
@@ -85,11 +85,11 @@ My_Handler::handle_input (ACE_HANDLE)
                                     from_addr);
   if (n == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("handle_input")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("handle_input")));
   else
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("got buf = %s\n"),
+                ACE_TEXT ("got buf = %s\n"),
                 buf));
 
   throw_exception ();
@@ -129,7 +129,7 @@ public:
     catch (...)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT (" (%t) catch exception\n")));
+                    ACE_TEXT (" (%t) catch exception\n")));
         ret = -1;
         // do your thing, etc.
       }
@@ -151,7 +151,7 @@ worker (void)
   for (;;)
     if (ACE_Reactor::instance ()->handle_events () == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT (" (%t) exception return\n")),
+                         ACE_TEXT (" (%t) exception return\n")),
                         0);
 
   ACE_NOTREACHED (return 0);
@@ -159,13 +159,13 @@ worker (void)
 #endif /* ACE_HAS_EXCEPTIONS */
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Reactor_Exceptions_Test"));
+  ACE_START_TEST (ACE_TEXT ("Reactor_Exceptions_Test"));
 
 #if defined (ACE_HAS_EXCEPTIONS)
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Starting tracing\n")));
+              ACE_TEXT ("Starting tracing\n")));
 
   u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
 
@@ -186,8 +186,8 @@ main (int argc, ASYS_TCHAR *argv[])
       (&handler,
        ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("register_handler")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("register_handler")),
                       -1);
 
 #if defined (ACE_HAS_THREADS)
@@ -195,14 +195,14 @@ main (int argc, ASYS_TCHAR *argv[])
 #else
   // Need to figure out how to implement this test.
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_SOCK_Dgram dgram (ACE_sap_any_cast (ACE_INET_Addr &));
 
   for (size_t i = 0; i < ACE_MAX_ITERATIONS; i++)
-    dgram.send (ASYS_TEXT ("Hello"),
-                sizeof (ASYS_TEXT ("Hello")),
+    dgram.send (ACE_TEXT ("Hello"),
+                sizeof (ACE_TEXT ("Hello")),
                 remote_addr);
   // Barrier to wait for the other thread to return.
   thr_mgr->wait ();
@@ -211,12 +211,12 @@ main (int argc, ASYS_TCHAR *argv[])
   dgram.close ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) exiting main\n")));
+              ACE_TEXT (" (%t) exiting main\n")));
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("C++ exception support not enabled on this platform\n")));
+              ACE_TEXT ("C++ exception support not enabled on this platform\n")));
 #endif /* ACE_HAS_EXCEPTIONS */
 
   ACE_END_TEST;

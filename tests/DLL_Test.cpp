@@ -35,20 +35,20 @@ ACE_RCSID(tests, DLL_Test, "$Id$")
 // symbols dynamically at runtime.
 
 #if defined (ACE_WIN32)
-#  define OBJ_SUFFIX ".exe"
-#  define OBJ_PREFIX ""
+#  define OBJ_SUFFIX ACE_TEXT (".exe")
+#  define OBJ_PREFIX ACE_TEXT ("")
 #else
 #  define OBJ_SUFFIX ACE_DLL_SUFFIX
 #  define OBJ_PREFIX "./" ACE_DLL_PREFIX
 #endif /*ACE_WIN32*/
 
-char const *
-cdecl_decoration (char const *func_name)
+ACE_TCHAR const *
+cdecl_decoration (ACE_TCHAR const *func_name)
 {
 #if defined (__BORLANDC__)
-  static char decorated_func_name[10*1024];
+  static ACE_TCHAR decorated_func_name[10*1024];
   ACE_OS::sprintf (decorated_func_name,
-                   "_%s",
+                   ACE_TEXT ("_%s"),
                    func_name);
   return decorated_func_name;
 #else
@@ -75,25 +75,25 @@ get_hello (void)
 typedef Hello *(*TC) (void);
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
-  ACE_START_TEST (ASYS_TEXT ("DLL_Test"));
+  ACE_START_TEST (ACE_TEXT ("DLL_Test"));
 
 // Protection against this test being run on platforms not supporting Dlls.
 #if defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
     defined (__hpux)
 
   ACE_DLL dll;
-  int retval = dll.open (ASYS_TEXT (OBJ_PREFIX)
-                         ASYS_TEXT ("DLL_Test")
-                         ASYS_TEXT (OBJ_SUFFIX));
+  int retval = dll.open (OBJ_PREFIX
+                         ACE_TEXT ("DLL_Test")
+                         OBJ_SUFFIX);
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-		       dll.error ()),
+                       ACE_TEXT ("%p\n"),
+		               dll.error ()),
                       -1);
 
   // Just because the ANSI C++ spec says you can no longer cast a
@@ -101,7 +101,7 @@ main (int argc, ASYS_TCHAR *argv[])
   // TC f = (TC) dll.symbol ("get_hello");
   void *foo;
 
-  char const *cdecl_str = cdecl_decoration ("get_hello");
+  ACE_TCHAR const *cdecl_str = cdecl_decoration (ACE_TEXT ("get_hello"));
   foo = dll.symbol (cdecl_str);
 
   // Cast the void* to long first.
@@ -109,7 +109,7 @@ main (int argc, ASYS_TCHAR *argv[])
   TC f = ACE_reinterpret_cast (Hello * (*)(void), tmp);
   if (f == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
+                       ACE_TEXT ("%p\n"),
 		       dll.error ()),
                       -1);
 
@@ -121,7 +121,7 @@ main (int argc, ASYS_TCHAR *argv[])
 
 #else
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("Dynamically Linkable Libraries not supported on this platform\n")));
+              ACE_TEXT ("Dynamically Linkable Libraries not supported on this platform\n")));
 #endif /* ACE_WIN32 || ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux */
 
   ACE_END_TEST;

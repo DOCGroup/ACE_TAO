@@ -84,7 +84,7 @@ ACE_SOCK_Dgram_Mcast::open (const ACE_Addr &mcast_addr,
 
 int
 ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                                     const ASYS_TCHAR *net_if,
+                                     const ACE_TCHAR *net_if,
                                      int protocol_family,
                                      int protocol,
                                      int reuse_addr)
@@ -125,7 +125,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
         {
           if (this->subscribe (mcast_addr,
                                reuse_addr,
-                               ASYS_TEXT ("0.0.0.0"),
+                               ACE_TEXT ("0.0.0.0"),
                                protocol_family,
                                protocol) == 0)
             ++nr_subscribed;
@@ -142,7 +142,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
               continue;
             if (this->subscribe (mcast_addr,
                                  reuse_addr,
-                                 ASYS_WIDE_STRING (if_addrs[if_cnt].get_host_addr()),
+                                 if_addrs[if_cnt].get_host_addr(),
                                  protocol_family,
                                  protocol) == 0)
               ++nr_subscribed;
@@ -180,7 +180,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 int
 ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
                                  int reuse_addr,
-                                 const ASYS_TCHAR *net_if,
+                                 const ACE_TCHAR *net_if,
                                  int protocol_family,
                                  int protocol)
 {
@@ -221,7 +221,7 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
 
 int
 ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                                       const ASYS_TCHAR *net_if,
+                                       const ACE_TCHAR *net_if,
                                        int protocol_family,
                                        int protocol)
 {
@@ -260,7 +260,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
       if (if_cnt < 2)
         {
           if (this->unsubscribe (mcast_addr,
-                                 ASYS_WIDE_STRING ("0.0.0.0"),
+                                 ACE_TEXT ("0.0.0.0"),
                                  protocol_family,
                                  protocol) == 0)
             ++nr_unsubscribed;
@@ -273,7 +273,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
             if (if_addrs[if_cnt].get_ip_address() == INADDR_LOOPBACK)
               continue;
             if (this->unsubscribe (mcast_addr,
-                                   ASYS_WIDE_STRING (if_addrs[if_cnt].get_host_addr()),
+                                   if_addrs[if_cnt].get_host_addr(),
                                    protocol_family,
                                    protocol) == 0)
               ++nr_unsubscribed;
@@ -308,7 +308,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
 int
 ACE_SOCK_Dgram_Mcast::unsubscribe (const ACE_INET_Addr &mcast_addr,
-                                   const ASYS_TCHAR *net_if,
+                                   const ACE_TCHAR *net_if,
                                    int protocol_family,
                                    int protocol)
 {
@@ -346,7 +346,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe (void)
 int
 ACE_SOCK_Dgram_Mcast::make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
                                                 ip_mreq &multicast_address ,
-                                                const ASYS_TCHAR *net_if)
+                                                const ACE_TCHAR *net_if)
 {
   if (net_if != 0)
     {
@@ -388,7 +388,7 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
 
 int
 ACE_SOCK_Dgram_Mcast::make_multicast_address (const ACE_INET_Addr &mcast_addr,
-                                              const ASYS_TCHAR *net_if)
+                                              const ACE_TCHAR *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::make_multicast_address");
 

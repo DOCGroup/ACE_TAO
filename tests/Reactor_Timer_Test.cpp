@@ -66,7 +66,7 @@ Time_Handler::handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("[%x] handle = %d, close_mask = %d, timer id = %d\n"),
+              ACE_TEXT ("[%x] handle = %d, close_mask = %d, timer id = %d\n"),
               this,
               handle,
               close_mask,
@@ -83,7 +83,7 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
     ACE_ASSERT (current_count == count);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("[%x] Timer id %d with count #%d|%d timed out at %d!\n"),
+              ACE_TEXT ("[%x] Timer id %d with count #%d|%d timed out at %d!\n"),
               this,
               this->timer_id (),
               count,
@@ -122,7 +122,9 @@ Time_Handler::timer_id (long t)
 static void
 test_registering_all_handlers (void)
 {
-  ACE_Trace t ("test_registering_all_handler", __LINE__, __FILE__);
+  ACE_Trace t (ACE_TEXT ("test_registering_all_handler"), 
+               __LINE__, 
+               ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   int t_id[ACE_MAX_TIMERS];
 
@@ -143,7 +145,9 @@ test_registering_all_handlers (void)
 static void
 test_registering_one_handler (void)
 {
-  ACE_Trace t ("test_registering_one_handler", __LINE__, __FILE__);
+  ACE_Trace t (ACE_TEXT ("test_registering_one_handler"), 
+               __LINE__, 
+               ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   int t_id[ACE_MAX_TIMERS];
 
@@ -166,7 +170,9 @@ test_registering_one_handler (void)
 static void
 test_canceling_odd_timers (void)
 {
-  ACE_Trace t ("test_canceling_odd_timers", __LINE__, __FILE__);
+  ACE_Trace t (ACE_TEXT ("test_canceling_odd_timers"), 
+               __LINE__, 
+               ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   int t_id[ACE_MAX_TIMERS];
 
@@ -199,7 +205,9 @@ test_canceling_odd_timers (void)
 static void
 test_resetting_timer_intervals (void)
 {
-  ACE_Trace t ("test_resetting_timer_intervals", __LINE__, __FILE__);
+  ACE_Trace t (ACE_TEXT ("test_resetting_timer_intervals"), 
+               __LINE__, 
+               ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt;
   int t_id;
 
@@ -223,9 +231,9 @@ test_resetting_timer_intervals (void)
 }
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Reactor_Timer_Test"));
+  ACE_START_TEST (ACE_TEXT ("Reactor_Timer_Test"));
 
   // Register all different handlers, i.e., one per timer.
   test_registering_all_handlers ();

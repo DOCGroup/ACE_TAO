@@ -20,7 +20,7 @@ Options::~Options ()
 }
 
 int
-Options::parse_args (int argc, ASYS_TCHAR *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "d:o:p:rt:");
   int c;

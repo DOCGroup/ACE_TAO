@@ -6,7 +6,7 @@
 
 #if 0
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   Sleep (500);
   for (int i = 0; i < argc; i++, Sleep (700))

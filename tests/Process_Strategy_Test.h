@@ -101,7 +101,7 @@ public:
   ~Options (void);
   // Destructor.
 
-  int parse_args (int argc, ASYS_TCHAR *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Read command-line arguments and initialize options.
 
   enum Concurrency_Type
@@ -118,7 +118,7 @@ public:
   ACE_File_Lock &file_lock (void);
   // Returns the file lock.
 
-  const ASYS_TCHAR *filename (void);
+  const ACE_TCHAR *filename (void);
   // Returns the filename that we're using as the lock.
 
   ACE_Concurrency_Strategy <Counting_Service> *concurrency_strategy (void);
@@ -135,7 +135,7 @@ private:
   // Activation strategy that either forks a new process or spawns a
   // new thread for each client connection.
 
-  ASYS_TCHAR filename_[MAXPATHLEN + 1];
+  ACE_TCHAR filename_[MAXPATHLEN + 1];
   // Name of the counting file.
 };
 

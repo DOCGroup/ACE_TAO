@@ -55,7 +55,7 @@ public:
   static ACE_Token_Manager *instance (void);
   void instance (ACE_Token_Manager *);
 
-  void get_token (ACE_Token_Proxy *, const ASYS_TCHAR *token_name);
+  void get_token (ACE_Token_Proxy *, const ACE_TCHAR *token_name);
   // The Token manager uses ACE_Token_Proxy::token_id_ to look for
   // an existing token.  If none is found, the Token Manager calls
   // ACE_Token_Proxy::create_token to create a new one.  When
@@ -94,7 +94,7 @@ private:
   static ACE_Token_Manager *token_manager_;
   // pointer to singleton token manager.
 
-  ACE_Tokens *token_waiting_for (const ASYS_TCHAR *client_id);
+  ACE_Tokens *token_waiting_for (const ACE_TCHAR *client_id);
   // return the token that the given client_id is waiting for, if any
 
   ACE_TOKEN_CONST::MUTEX lock_;

@@ -139,22 +139,22 @@ public:
   // = Explicit methods.  These to not require actual proxies in order
   // to test a scenario.
 
-  int mutex_acquired (const ASYS_TCHAR *token_name);
+  int mutex_acquired (const ACE_TCHAR *token_name);
   // Returns 1 on success, 0 when an invariant has been violated and
   // -1 on error.
 
-  void mutex_releasing (const ASYS_TCHAR *token_name);
+  void mutex_releasing (const ACE_TCHAR *token_name);
   // Updates internal database.
 
-  int reader_acquired (const ASYS_TCHAR *token_name);
+  int reader_acquired (const ACE_TCHAR *token_name);
   // Returns 1 on success, 0 when an invariant has been violated and
   // -1 on error.
 
-  int writer_acquired (const ASYS_TCHAR *token_name);
+  int writer_acquired (const ACE_TCHAR *token_name);
   // Returns 1 on success, 0 when an invariant has been violated and
   // -1 on error.
 
-  void rwlock_releasing (const ASYS_TCHAR *token_name);
+  void rwlock_releasing (const ACE_TCHAR *token_name);
   // Updates internal database.
 
   void dump (void) const;
@@ -169,11 +169,11 @@ public:
   // Destruction.
 
 protected:
-  int get_mutex (const ASYS_TCHAR *token_name,
+  int get_mutex (const ACE_TCHAR *token_name,
                  ACE_Mutex_Invariants *&inv);
   // Return or create.
 
-  int get_rwlock (const ASYS_TCHAR *token_name,
+  int get_rwlock (const ACE_TCHAR *token_name,
                   ACE_RWLock_Invariants *&inv);
   // Return or create.
 

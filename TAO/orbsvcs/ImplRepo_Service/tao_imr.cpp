@@ -6,7 +6,7 @@
 ACE_RCSID(ImplRepo_Service, tao_imr, "$Id$")
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   TAO_IMR_i tao_imr_i;
 

@@ -336,8 +336,8 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
       if ((*this->outgoing_ << object_ptr) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO_GIOP_ServerRequest::marshal - ")
-                      ASYS_TEXT ("encoding forwarded objref failed\n")));
+                      ACE_TEXT ("TAO_GIOP_ServerRequest::marshal - ")
+                      ACE_TEXT ("encoding forwarded objref failed\n")));
           return;
         }
     }
@@ -406,8 +406,8 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
           // No exception but some kind of error, yet a response
           // is required.
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n"),
-                      ASYS_TEXT ("TAO_GIOP_ServerRequest::send_no_exception_reply")));
+                      ACE_TEXT ("TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n"),
+                      ACE_TEXT ("TAO_GIOP_ServerRequest::send_no_exception_reply")));
         }
     }
 }

@@ -67,7 +67,7 @@ ACE_Process_Descriptor::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nproc_id_ = %d"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nproc_id_ = %d"),
                           this->process_->getpid( )));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -80,8 +80,8 @@ ACE_Process_Manager::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nmax_process_table_size_ = %d"), this->max_process_table_size_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ncurrent_count_ = %d"), this->current_count_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nmax_process_table_size_ = %d"), this->max_process_table_size_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncurrent_count_ = %d"), this->current_count_));
 
   for (size_t i = 0; i < this->current_count_; i++)
     this->process_table_[i].dump ();
@@ -173,9 +173,9 @@ ACE_Process_Manager::open (size_t size,
   // for them.
    if (ACE_OS::setpgid (0, 0) == -1)
      ACE_ERROR ((LM_WARNING,
-                 ASYS_TEXT ("%p.\n"),
-                 ASYS_TEXT ("ACE_Process_Manager::open: can't create a ")
-                 ASYS_TEXT ("process group; some wait functions may fail")));
+                 ACE_TEXT ("%p.\n"),
+                 ACE_TEXT ("ACE_Process_Manager::open: can't create a ")
+                 ACE_TEXT ("process group; some wait functions may fail")));
 #endif /* ACE_LACKS_SETPGID */
 
   if (r)
@@ -242,8 +242,8 @@ ACE_Process_Manager::ACE_Process_Manager (size_t size,
   if (this->open (size,
                   r) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Process_Manager")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Process_Manager")));
 }
 
 // Close up and release all resources.
@@ -353,15 +353,15 @@ ACE_Process_Manager::handle_signal (int,
         }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("Process still active")
-                           ASYS_TEXT (" -- shouldn't have been called yet!\n")),
+                           ACE_TEXT ("Process still active")
+                           ACE_TEXT (" -- shouldn't have been called yet!\n")),
                           0); // return 0 : stay registered
     }
   else
     {
       // <GetExitCodeProcess> failed.
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("GetExitCodeProcess failed")),
+                         ACE_TEXT ("GetExitCodeProcess failed")),
                         -1); // return -1: unregister
     }
 #else /* !ACE_WIN32 */
@@ -818,8 +818,8 @@ ACE_Process_Manager::wait (pid_t pid,
               // we're holding a lock!
               delete [] handles;
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("Process removed")
-                                 ASYS_TEXT (" -- somebody's ignoring the lock!\n")),
+                                 ACE_TEXT ("Process removed")
+                                 ACE_TEXT (" -- somebody's ignoring the lock!\n")),
                                 -1);
             }
         }
@@ -880,7 +880,7 @@ ACE_Process_Manager::wait (pid_t pid,
             {
               // oops, reaped an unmanaged process!
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("(%P|%t) oops, reaped unmanaged %d\n"),
+                          ACE_TEXT ("(%P|%t) oops, reaped unmanaged %d\n"),
                           pid));
               return pid;
             }
@@ -944,8 +944,8 @@ ACE_Process_Manager::notify_proc_handler (size_t i,
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P:%t|%T) ACE_Process_Manager::notify_proc_handler:"),
-                  ASYS_TEXT (" unknown/unmanaged process reaped\n")));
+                  ACE_TEXT ("(%P:%t|%T) ACE_Process_Manager::notify_proc_handler:"),
+                  ACE_TEXT (" unknown/unmanaged process reaped\n")));
       return 0;
     }
 }

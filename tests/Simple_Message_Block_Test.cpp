@@ -26,9 +26,9 @@
 ACE_RCSID(tests, Simple_Message_Block_Test, "$Id$")
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Simple_Message_Block_Test"));
+  ACE_START_TEST (ACE_TEXT ("Simple_Message_Block_Test"));
 
   {
     // Checks normal stack deletes.

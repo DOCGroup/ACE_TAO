@@ -128,17 +128,17 @@ ACE_Stream_Head<ACE_SYNCH_USE>::put (ACE_Message_Block *mb,
 }
 
 template <ACE_SYNCH_DECL> int
-ACE_Stream_Head<ACE_SYNCH_USE>::init (int, ASYS_TCHAR *[])
+ACE_Stream_Head<ACE_SYNCH_USE>::init (int, ACE_TCHAR *[])
 {
   ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::init");
   return 0;
 }
 
 template <ACE_SYNCH_DECL> int
-ACE_Stream_Head<ACE_SYNCH_USE>::info (ASYS_TCHAR **strp, size_t length) const
+ACE_Stream_Head<ACE_SYNCH_USE>::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::info");
-  const ASYS_TCHAR *name = this->name ();
+  const ACE_TCHAR *name = this->name ();
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
     return -1;
@@ -267,17 +267,17 @@ ACE_Stream_Tail<ACE_SYNCH_USE>::put (ACE_Message_Block *mb,
 }
 
 template <ACE_SYNCH_DECL> int
-ACE_Stream_Tail<ACE_SYNCH_USE>::init (int, ASYS_TCHAR *[])
+ACE_Stream_Tail<ACE_SYNCH_USE>::init (int, ACE_TCHAR *[])
 {
   ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::init");
   return 0;
 }
 
 template <ACE_SYNCH_DECL> int
-ACE_Stream_Tail<ACE_SYNCH_USE>::info (ASYS_TCHAR **strp, size_t length) const
+ACE_Stream_Tail<ACE_SYNCH_USE>::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::info");
-  const ASYS_TCHAR *name = this->name ();
+  const ACE_TCHAR *name = this->name ();
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
     return -1;
@@ -343,18 +343,18 @@ ACE_Thru_Task<ACE_SYNCH_USE>::put (ACE_Message_Block *msg,
 }
 
 template <ACE_SYNCH_DECL> int
-ACE_Thru_Task<ACE_SYNCH_USE>::init (int, ASYS_TCHAR *[])
+ACE_Thru_Task<ACE_SYNCH_USE>::init (int, ACE_TCHAR *[])
 {
   ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::init");
   return 0;
 }
 
 template <ACE_SYNCH_DECL> int
-ACE_Thru_Task<ACE_SYNCH_USE>::info (ASYS_TCHAR **strp,
+ACE_Thru_Task<ACE_SYNCH_USE>::info (ACE_TCHAR **strp,
                                     size_t length) const
 {
   ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::info");
-  const ASYS_TCHAR *name = this->name ();
+  const ACE_TCHAR *name = this->name ();
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
     return -1;

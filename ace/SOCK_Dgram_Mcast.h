@@ -48,7 +48,7 @@ public:
 
   int subscribe (const ACE_INET_Addr &mcast_addr,
                  int reuse_addr = 1,
-                 const ASYS_TCHAR *net_if = 0,
+                 const ACE_TCHAR *net_if = 0,
                  int protocol_family = PF_INET,
                  int protocol = 0);
   // This is a BSD-style method (i.e., no QoS) for joining a multicast
@@ -68,7 +68,7 @@ public:
   // them into numbers via <ACE_OS::atoi>.
 
   int unsubscribe (const ACE_INET_Addr &mcast_addr,
-                   const ASYS_TCHAR *net_if = 0,
+                   const ACE_TCHAR *net_if = 0,
                    int protocol_family = PF_INET,
                    int protocol = 0);
   // Leave a multicast group identified by <mcast_addr>.  The <net_if>
@@ -121,8 +121,18 @@ private:
             int reuse_addr = 0);
   // Not publically visible.
 
+  int open (const ACE_Addr &mcast_addr,
+            const ACE_QoS_Params &qos_params,
+            int protocol_family = PF_INET,
+            int protocol = 0,
+            ACE_Protocol_Info *protocolinfo = 0,
+            ACE_SOCK_GROUP g = 0,
+            u_long flags = 0,
+            int reuse_addr = 0);
+  // Not publically visible.
+
   int subscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                     const ASYS_TCHAR *net_if,
+                     const ACE_TCHAR *net_if,
                      int protocol_family,
                      int protocol,
                      int reuse_addr);
@@ -130,7 +140,7 @@ private:
   // (no QoS).
 
   int unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                       const ASYS_TCHAR *net_if = 0,
+                       const ACE_TCHAR *net_if = 0,
                        int protocol_family = PF_INET,
                        int protocol = 0);
   // Unsubscribe to multicast interfaces subscribed to previously by
@@ -150,12 +160,12 @@ private:
 
 protected:
   int make_multicast_address (const ACE_INET_Addr &mcast_addr,
-                              const ASYS_TCHAR *net_if = ASYS_TEXT ("le0"));
+                              const ACE_TCHAR *net_if = ACE_TEXT ("le0"));
   // Initialize the <multicast_address_> IP address.
 
   int make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
                                 ip_mreq& multicast_address,
-                                const ASYS_TCHAR *net_if = ASYS_TEXT ("le0"));
+                                const ACE_TCHAR *net_if = ACE_TEXT ("le0"));
   // Initialize a multicast address.  This method factors out common
   // code called by <make_multicast_address> and <subscribe>.
 

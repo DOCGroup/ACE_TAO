@@ -128,8 +128,8 @@ template class ACE_Node<ACE_Thread_Descriptor>;
 
 template class ACE_Node<ACE_WString>;
 
-// ASYS_TCHAR is defined in OS.h
-template class ACE_Node<ASYS_TCHAR *>;
+// ACE_TCHAR is defined in OS.h
+template class ACE_Node<ACE_TCHAR *>;
 
 template class ACE_Read_Guard<ACE_Null_Mutex>;
 template class ACE_Read_Guard<ACE_RW_Process_Mutex>;
@@ -164,16 +164,16 @@ template class ACE_Unbounded_Queue<ACE_Event_Tuple>;
 template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
 template class ACE_Unbounded_Queue<ACE_Thread_Descriptor>;
 
-// ASYS_TCHAR is defined in OS.h
-template class ACE_Unbounded_Queue<ASYS_TCHAR *>;
+// ACE_TCHAR is defined in OS.h
+template class ACE_Unbounded_Queue<ACE_TCHAR *>;
 
 template class ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Event_Tuple>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor>;
 
-// ASYS_TCHAR is defined in OS.h
-template class ACE_Unbounded_Queue_Iterator<ASYS_TCHAR *>;
+// ACE_TCHAR is defined in OS.h
+template class ACE_Unbounded_Queue_Iterator<ACE_TCHAR *>;
 
 template class ACE_Unbounded_Set<ACE_Name_Binding>;
 template class ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>;
@@ -253,16 +253,16 @@ template class ACE_Hash_Map_Iterator_Base_Ex<const char *, ACE_Filecache_Object 
 template class ACE_Hash_Map_Iterator_Ex<const char *, ACE_Filecache_Object *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, ACE_Filecache_Object *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
 #else
-template class ACE_Hash_Map_Entry<ACE_CString, ACE_Filecache_Object *>;
-template class ACE_Hash<ACE_CString>;
-template class ACE_Equal_To<ACE_CString>;
-template class ACE_Hash_Map_Manager<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Filecache_Object *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Filecache_Object *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_Filecache_Object *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Filecache_Object *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_TString, ACE_Filecache_Object *>;
+template class ACE_Hash<ACE_TString>;
+template class ACE_Equal_To<ACE_TString>;
+template class ACE_Hash_Map_Manager<ACE_TString, ACE_Filecache_Object *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_TString, ACE_Filecache_Object *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_TString, ACE_Filecache_Object *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
 template class ACE_Map_Iterator<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>;

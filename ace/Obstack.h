@@ -44,16 +44,16 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  char *end_;
+  ACE_TCHAR *end_;
   // Pointer to the end of the chunk.
 
-  char *cur_;
+  ACE_TCHAR *cur_;
   // Pointer to the current location in the chunk.
 
   ACE_Obchunk *next_;
   // Next chunk in the chain.
 
-  char contents_[4];
+  ACE_TCHAR contents_[4];
   // Pointer to the beginning contents of this chunk.  This field is
   // actually overlayed by the memory allocated by
   // <ACE_Obstack::new_chunk>.  Therefore, it *must* come last.
@@ -73,8 +73,8 @@ public:
                ACE_Allocator *allocator_strategy = 0);
   ~ACE_Obstack (void);
 
-  char *copy (const char *data,
-              size_t len);
+  ACE_TCHAR *copy (const ACE_TCHAR *data,
+                   size_t len);
   // Copy the data into the current Obchunk.
 
   void release (void);

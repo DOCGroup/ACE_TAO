@@ -7,7 +7,7 @@
 #include "ace/Capabilities.i"
 #endif /* !__ACE_INLINE__ */
 
-#define ACE_ESC ((char)0x1b)
+#define ACE_ESC ((ACE_TCHAR)0x1b)
 
 ACE_CapEntry::~ACE_CapEntry (void)
 {
@@ -22,53 +22,53 @@ ACE_Capabilities::~ACE_Capabilities (void)
   this->resetcaps ();
 }
 
-const char *
-ACE_Capabilities::parse (const char *buf,
-                         ACE_CString &cap)
+const ACE_TCHAR *
+ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
 {
-  while (*buf!='\0' && *buf!=',')
+  while (*buf != ACE_TEXT ('\0') && *buf != ACE_TEXT (','))
     {
-      if (*buf == '\\')
+      if (*buf == ACE_TEXT ('\\'))
         {
           buf++;
-          if (*buf == 'E' || *buf == 'e')
+          if (*buf == ACE_TEXT ('E') || *buf == ACE_TEXT ('e'))
             {
               cap += ACE_ESC;
               buf++;
               continue;
             }
-          else if (*buf == 'r')
+          else if (*buf == ACE_TEXT ('r'))
             {
-              cap += '\r';
+              cap += ACE_TEXT ('\r');
               buf++;
               continue;
             }
-          else if (*buf == 'n')
+          else if (*buf == ACE_TEXT ('n'))
             {
-              cap += '\n';
+              cap += ACE_TEXT ('\n');
               buf++;
               continue;
             }
-          else if (*buf == 't')
+          else if (*buf == ACE_TEXT ('t'))
             {
-              cap += '\t';
+              cap += ACE_TEXT ('\t');
               buf++;
               continue;
             }
-          else if (*buf == '\\')
+          else if (*buf == ACE_TEXT ('\\'))
             {
               cap += *buf++;
               continue;
             }
           if (isdigit(*buf))
             {
+              // @@ UNICODE Does this work with unicode?
               int oc = 0;
               for (int i = 0;
                    i < 3 && *buf && isdigit (*buf);
                    i++)
-                oc = oc * 8 + (*buf++ - '0');
+                oc = oc * 8 + (*buf++ - ACE_TEXT ('0'));
 
-              cap += (char) oc;
+              cap += (ACE_TCHAR) oc;
               continue;
             }
         }
@@ -77,14 +77,13 @@ ACE_Capabilities::parse (const char *buf,
   return buf;
 }
 
-const char *
-ACE_Capabilities::parse (const char *buf,
-                         int &cap)
+const ACE_TCHAR *
+ACE_Capabilities::parse (const ACE_TCHAR *buf, int &cap)
 {
   int n = 0;
 
   while (*buf && isdigit (*buf))
-    n = n * 10 + (*buf++ - '0');
+    n = n * 10 + (*buf++ - ACE_TEXT ('0'));
 
   cap = n;
 
@@ -94,11 +93,11 @@ ACE_Capabilities::parse (const char *buf,
 void
 ACE_Capabilities::resetcaps (void)
 {
-  for (ACE_Hash_Map_Iterator<ACE_CString, ACE_CapEntry *, ACE_Null_Mutex> iter (caps_);
+  for (ACE_Hash_Map_Iterator<ACE_TString, ACE_CapEntry *, ACE_Null_Mutex> iter (caps_);
        !iter.done ();
        iter.advance ())
     {
-      ACE_Hash_Map_Entry<ACE_CString,ACE_CapEntry*> *entry;
+      ACE_Hash_Map_Entry<ACE_TString,ACE_CapEntry*> *entry;
       iter.next (entry);
       delete entry->int_id_;
     }
@@ -108,40 +107,40 @@ ACE_Capabilities::resetcaps (void)
 }
 
 int
-ACE_Capabilities::fillent (const char *buf)
+ACE_Capabilities::fillent (const ACE_TCHAR *buf)
 {
   this->resetcaps ();
   while (*buf)
     {
-      ACE_CString s;
+      ACE_TString s;
       int n;
-      ACE_CString name;
+      ACE_TString name;
       ACE_CapEntry *ce;
 
       // Skip blanks
       while (*buf && isspace(*buf)) buf++;
       // If we get end of line return
 
-      if (*buf=='\0')
+      if (*buf == ACE_TEXT ('\0'))
         break;
 
-      if (*buf=='#')
+      if (*buf == ACE_TEXT ('#'))
         {
-          while (*buf && *buf!='\n')
+          while (*buf && *buf != ACE_TEXT ('\n'))
             buf++;
-          if (*buf=='\n')
+          if (*buf == ACE_TEXT ('\n'))
             buf++;
           continue;
         }
-      while(*buf && *buf != '='
-            && *buf!= '#'
-            && *buf != ',')
+      while(*buf && *buf != ACE_TEXT ('=')
+            && *buf!= ACE_TEXT ('#')
+            && *buf != ACE_TEXT (','))
         name += *buf++;
 
       // If name is null.
       switch (*buf)
         {
-        case '=':
+        case ACE_TEXT ('='):
           // String property
           buf = this->parse (buf + 1, s);
           ACE_NEW_RETURN (ce,
@@ -153,7 +152,7 @@ ACE_Capabilities::fillent (const char *buf)
               return -1;
             }
           break;
-        case '#':
+        case ACE_TEXT ('#'):
           // Integer property
           buf = this->parse (buf + 1, n);
           ACE_NEW_RETURN (ce,
@@ -165,7 +164,7 @@ ACE_Capabilities::fillent (const char *buf)
               return -1;
             }
           break;
-        case ',':
+        case ACE_TEXT (','):
           // Boolean
           ACE_NEW_RETURN (ce,
                           ACE_BoolCapEntry (1),
@@ -180,7 +179,7 @@ ACE_Capabilities::fillent (const char *buf)
           return 0;
         }
 
-      if (*buf++!=',')
+      if (*buf++ != ACE_TEXT (','))
         return -1;
     }
 
@@ -188,8 +187,7 @@ ACE_Capabilities::fillent (const char *buf)
 }
 
 int
-ACE_Capabilities::is_entry (const char *name,
-                            const char *line)
+ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
 {
   for (;;)
     {
@@ -198,12 +196,12 @@ ACE_Capabilities::is_entry (const char *name,
         line++;
 
       // End of line reached
-      if (*line=='\0')
+      if (*line == ACE_TEXT ('\0'))
         break;
 
       // Build the entry name
-      ACE_CString nextname;
-      while (*line && *line != '|' && *line != ',')
+      ACE_TString nextname;
+      while (*line && *line != ACE_TEXT ('|') && *line != ACE_TEXT (','))
         nextname += *line++;
 
       // We have found the required entry?
@@ -211,12 +209,12 @@ ACE_Capabilities::is_entry (const char *name,
         return 1;
 
       // Skip puntuaction char if neccesary.
-      if (*line=='|' || *line==',')
+      if (*line == ACE_TEXT ('|') || *line == ACE_TEXT (','))
         line++;
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Invalid entry\n"));
+                      ACE_TEXT ("Invalid entry\n")));
           break;
         }
     }
@@ -224,16 +222,14 @@ ACE_Capabilities::is_entry (const char *name,
 }
 
 int
-ACE_Capabilities::getline (FILE *fp,
-                           ACE_CString &line)
-
+ACE_Capabilities::getline (FILE *fp, ACE_TString &line)
 {
   int ch;
 
   line.set (0, 0);
 
-  while ((ch = fgetc (fp)) != EOF && ch != '\n')
-    line += (char) ch;
+  while ((ch = fgetc (fp)) != EOF && ch != ACE_TEXT ('\n'))
+    line += (ACE_TCHAR) ch;
 
   if (ch == EOF && line.length () == 0)
     return -1;
@@ -242,16 +238,14 @@ ACE_Capabilities::getline (FILE *fp,
 }
 
 int
-ACE_Capabilities::getval (const char *keyname,
-                          ACE_CString &val)
+ACE_Capabilities::getval (const ACE_TCHAR *keyname, ACE_TString &val)
 {
   ACE_CapEntry* cap;
   if (caps_.find (keyname, cap) == -1)
     return -1;
 
   ACE_StringCapEntry *scap =
-    ACE_dynamic_cast (ACE_StringCapEntry *,
-                      cap);
+    ACE_dynamic_cast (ACE_StringCapEntry *, cap);
   if (scap == 0)
     return -1;
 
@@ -260,16 +254,14 @@ ACE_Capabilities::getval (const char *keyname,
 }
 
 int
-ACE_Capabilities::getval (const char *keyname,
-                          int &val)
+ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
 {
   ACE_CapEntry *cap;
   if (caps_.find (keyname, cap) == -1)
     return -1;
 
   ACE_IntCapEntry *icap =
-    ACE_dynamic_cast (ACE_IntCapEntry *,
-                      cap);
+    ACE_dynamic_cast (ACE_IntCapEntry *, cap);
   if (icap != 0)
     {
       val = icap->getval ();
@@ -277,8 +269,7 @@ ACE_Capabilities::getval (const char *keyname,
     }
 
   ACE_BoolCapEntry *bcap =
-    ACE_dynamic_cast (ACE_BoolCapEntry *,
-                      cap);
+    ACE_dynamic_cast (ACE_BoolCapEntry *, cap);
 
   if (bcap == 0)
     return -1;
@@ -288,38 +279,36 @@ ACE_Capabilities::getval (const char *keyname,
 }
 
 static int
-is_empty (const char *line)
+is_empty (const ACE_TCHAR *line)
 {
   while (*line && isspace (*line))
     line++;
 
-  return *line == '\0' || *line == '#';
+  return *line == ACE_TEXT ('\0') || *line == ACE_TEXT ('#');
 }
 
 static int
-is_line (const char *line)
+is_line (const ACE_TCHAR *line)
 {
   while (*line && isspace (*line))
     line++;
 
-  return *line != '\0';
+  return *line != ACE_TEXT ('\0');
 }
 
 int
-ACE_Capabilities::getent (const char *fname,
-                          const char *name)
+ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
 {
-  FILE *fp = ACE_OS::fopen (fname,
-                            "r");
+  FILE *fp = ACE_OS::fopen (fname, ACE_TEXT ("r"));
 
   if (fp == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Can't open %s file\n",
+                       ACE_TEXT ("Can't open %s file\n"),
                        fname),
                       -1);
 
   int done;
-  ACE_CString line;
+  ACE_TString line;
 
   while (!(done = (this->getline (fp, line) == -1))
          && is_empty (line.c_str ()))
@@ -327,10 +316,10 @@ ACE_Capabilities::getent (const char *fname,
 
   while (!done)
     {
-      ACE_CString newline;
-      ACE_CString description;
+      ACE_TString newline;
+      ACE_TString description;
 
-      while (!(done= (this->getline (fp, newline) == -1)))
+      while (!(done = (this->getline (fp, newline) == -1)))
         if (is_line (newline.c_str ()))
           description += newline;
         else
@@ -352,25 +341,25 @@ ACE_Capabilities::getent (const char *fname,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager<ACE_CString,ACE_CapEntry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ACE_CString,ACE_CapEntry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_CString,ACE_CapEntry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<ACE_CString,ACE_CapEntry*>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>;
-template class ACE_Hash<ACE_CString>;
-template class ACE_Equal_To<ACE_CString>;
+template class ACE_Hash_Map_Manager<ACE_TString,ACE_CapEntry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_TString,ACE_CapEntry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_TString,ACE_CapEntry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_TString,ACE_CapEntry*>;
+template class ACE_Hash_Map_Manager_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
+template class ACE_Hash<ACE_TString>;
+template class ACE_Equal_To<ACE_TString>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,ACE_CapEntry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,ACE_CapEntry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString,ACE_CapEntry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString,ACE_CapEntry*>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString,ACE_CapEntry*,ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash<ACE_CString>
-#pragma instantiate ACE_Equal_To<ACE_CString>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_TString,ACE_CapEntry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_TString,ACE_CapEntry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_TString,ACE_CapEntry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_TString,ACE_CapEntry*>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash<ACE_TString>
+#pragma instantiate ACE_Equal_To<ACE_TString>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

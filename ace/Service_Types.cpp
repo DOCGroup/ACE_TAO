@@ -23,7 +23,7 @@ ACE_Service_Type_Impl::dump (void) const
 }
 
 ACE_Service_Type_Impl::ACE_Service_Type_Impl (void *so,
-                                              const ASYS_TCHAR *s_name,
+                                              const ACE_TCHAR *s_name,
                                               u_int f,
                                               ACE_Service_Object_Exterminator gobbler)
   : name_ (0),
@@ -41,7 +41,7 @@ ACE_Service_Type_Impl::~ACE_Service_Type_Impl (void)
 
   // It's ok to call this, even though we may have already deleted it
   // in the fini() method since it would then be NULL.
-  delete [] (ASYS_TCHAR *) this->name_;
+  delete [] (ACE_TCHAR *) this->name_;
 }
 
 int
@@ -50,11 +50,11 @@ ACE_Service_Type_Impl::fini (void) const
   ACE_TRACE ("ACE_Service_Type_Impl::fini");
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("destroying %s, flags = %d\n"),
+                ACE_TEXT ("destroying %s, flags = %d\n"),
                 this->name_,
                 this->flags_));
 
-  delete [] (ASYS_TCHAR *) this->name_;
+  delete [] (ACE_TCHAR *) this->name_;
   ((ACE_Service_Type_Impl *) this)->name_ = 0;
 
   if (ACE_BIT_ENABLED (this->flags_,
@@ -75,7 +75,7 @@ ACE_Service_Type_Impl::fini (void) const
 }
 
 ACE_Service_Object_Type::ACE_Service_Object_Type (void *so,
-                                                  const ASYS_TCHAR *s_name,
+                                                  const ACE_TCHAR *s_name,
                                                   u_int f,
                                                   ACE_Service_Object_Exterminator gobbler)
   : ACE_Service_Type_Impl (so, s_name, f, gobbler)
@@ -84,7 +84,7 @@ ACE_Service_Object_Type::ACE_Service_Object_Type (void *so,
 }
 
 int
-ACE_Service_Object_Type::init (int argc, ASYS_TCHAR *argv[]) const
+ACE_Service_Object_Type::init (int argc, ACE_TCHAR *argv[]) const
 {
   ACE_TRACE ("ACE_Service_Object_Type::init");
 
@@ -106,7 +106,7 @@ ACE_Module_Type::dump (void) const
 }
 
 ACE_Module_Type::ACE_Module_Type (void *m,
-                                  const ASYS_TCHAR *m_name,
+                                  const ACE_TCHAR *m_name,
                                   u_int f)
   : ACE_Service_Type_Impl (m, m_name, f)
 {
@@ -114,7 +114,7 @@ ACE_Module_Type::ACE_Module_Type (void *m,
 }
 
 int
-ACE_Module_Type::init (int argc, ASYS_TCHAR *argv[]) const
+ACE_Module_Type::init (int argc, ACE_TCHAR *argv[]) const
 {
   ACE_TRACE ("ACE_Module_Type::init");
   void *obj = this->object ();
@@ -186,15 +186,15 @@ ACE_Module_Type::fini (void) const
 }
 
 int
-ACE_Module_Type::info (ASYS_TCHAR **str, size_t len) const
+ACE_Module_Type::info (ACE_TCHAR **str, size_t len) const
 {
   ACE_TRACE ("ACE_Module_Type::info");
-  ASYS_TCHAR buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
-                   ASYS_TEXT ("%s\t %s"),
+                   ACE_TEXT ("%s\t %s"),
                    this->name (),
-                   ASYS_TEXT ("# ACE_Module\n"));
+                   ACE_TEXT ("# ACE_Module\n"));
 
   if (*str == 0 && (*str = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -226,7 +226,7 @@ ACE_Stream_Type::dump (void) const
 }
 
 int
-ACE_Stream_Type::init (int, ASYS_TCHAR *[]) const
+ACE_Stream_Type::init (int, ACE_TCHAR *[]) const
 {
   ACE_TRACE ("ACE_Stream_Type::init");
   return 0;
@@ -259,7 +259,7 @@ ACE_Stream_Type::resume (void) const
 }
 
 ACE_Stream_Type::ACE_Stream_Type (void *s,
-                                  const ASYS_TCHAR *s_name,
+                                  const ACE_TCHAR *s_name,
                                   u_int f)
   : ACE_Service_Type_Impl (s, s_name, f),
     head_ (0)
@@ -268,15 +268,15 @@ ACE_Stream_Type::ACE_Stream_Type (void *s,
 }
 
 int
-ACE_Stream_Type::info (ASYS_TCHAR **str, size_t len) const
+ACE_Stream_Type::info (ACE_TCHAR **str, size_t len) const
 {
   ACE_TRACE ("ACE_Stream_Type::info");
-  ASYS_TCHAR buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
-                   ASYS_TEXT ("%s\t %s"),
+                   ACE_TEXT ("%s\t %s"),
                    this->name (),
-                   ASYS_TEXT ("# STREAM\n"));
+                   ACE_TEXT ("# STREAM\n"));
 
   if (*str == 0 && (*str = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -366,7 +366,7 @@ ACE_Stream_Type::push (ACE_Module_Type *new_module)
 }
 
 ACE_Module_Type *
-ACE_Stream_Type::find (const ASYS_TCHAR *mod_name) const
+ACE_Stream_Type::find (const ACE_TCHAR *mod_name) const
 {
   ACE_TRACE ("ACE_Stream_Type::find");
 

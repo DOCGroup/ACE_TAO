@@ -7,20 +7,20 @@ ACE_RCSID(Misc, Timer_Service, "$Id$")
 Timer_Service_1::Timer_Service_1 (void)
 {
   ACE_OS::strcpy (this->name_,
-                  ASYS_TEXT ("Timer_Service_1"));
+                  ACE_TEXT ("Timer_Service_1"));
 }
 
 int
-Timer_Service_1::init (int argc, ASYS_TCHAR *argv[])
+Timer_Service_1::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("in Timer_Service::init, argv[0] = %s, argc == %d\n"),
+	      ACE_TEXT ("in Timer_Service::init, argv[0] = %s, argc == %d\n"),
 	      argv[0], argc));
 
   // Printout the <argv> values for sanity's sake.
   for (int i = 0; i < argc; i++)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("argv[%d] = %s\n"),
+                ACE_TEXT ("argv[%d] = %s\n"),
                 i, argv[i]));
 
   int interval = Timer_Service_1::TIMEOUT;
@@ -72,8 +72,8 @@ Timer_Service_1::handle_timeout (const ACE_Time_Value &tv,
                                  const void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("(%x) in %s::handle_timeout sec = %d, usec = %d")
-	      ASYS_TEXT (" cur_timeouts = %d, max_timeouts = %d\n"),
+	      ACE_TEXT ("(%x) in %s::handle_timeout sec = %d, usec = %d")
+	      ACE_TEXT (" cur_timeouts = %d, max_timeouts = %d\n"),
               this,
               this->name_,
 	      tv.sec (),
@@ -94,7 +94,7 @@ int
 Timer_Service_1::handle_close (ACE_HANDLE,
                                ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("closing down the timer test\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("closing down the timer test\n")));
 
   ACE_Reactor::end_event_loop();
   return 0;
@@ -103,18 +103,18 @@ Timer_Service_1::handle_close (ACE_HANDLE,
 Timer_Service_2::Timer_Service_2 (void)
 {
   ACE_OS::strcpy (this->name_,
-                  ASYS_TEXT ("Timer_Service_2"));
+                  ACE_TEXT ("Timer_Service_2"));
 }
 
 Timer_Service_3::Timer_Service_3 (void)
 {
   ACE_OS::strcpy (this->name_,
-                  ASYS_TEXT ("Timer_Service_3"));
+                  ACE_TEXT ("Timer_Service_3"));
 }
 
 // Define the object that describes the service.
 ACE_STATIC_SVC_DEFINE (Timer_Service_1,
-		       ASYS_TEXT ("Timer_Service_1"),
+		       ACE_TEXT ("Timer_Service_1"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (Timer_Service_1),
 		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

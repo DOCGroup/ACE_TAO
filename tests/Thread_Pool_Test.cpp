@@ -90,7 +90,7 @@ int
 Thread_Pool::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) worker thread closing down\n")));
+              ACE_TEXT ("(%t) worker thread closing down\n")));
   return 0;
 }
 
@@ -129,8 +129,8 @@ Thread_Pool::svc (void)
         {
           // The queue has been deactivated, so let's bail out.
           ACE_DEBUG ((LM_DEBUG, 
-                      ASYS_TEXT ("(%t) in iteration %d, queue len = %d, ")
-                      ASYS_TEXT ("queue deactivated, exiting\n"),
+                      ACE_TEXT ("(%t) in iteration %d, queue len = %d, ")
+                      ACE_TEXT ("queue deactivated, exiting\n"),
                       count,
                       this->msg_queue ()->message_count ()));
 
@@ -141,8 +141,8 @@ Thread_Pool::svc (void)
 
       if (length > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%t) in iteration %d, queue len = %d, ")
-                    ASYS_TEXT ("length = %d, text = \"%*s\"\n"),
+                    ACE_TEXT ("(%t) in iteration %d, queue len = %d, ")
+                    ACE_TEXT ("length = %d, text = \"%*s\"\n"),
                     count,
                     this->msg_queue ()->message_count (),
                     length,
@@ -155,8 +155,8 @@ Thread_Pool::svc (void)
       if (length == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("(%t) in iteration %d, queue len = %d, ")
-                      ASYS_TEXT ("got \"empty\" message, exiting\n"),
+                      ACE_TEXT ("(%t) in iteration %d, queue len = %d, ")
+                      ACE_TEXT ("got \"empty\" message, exiting\n"),
                       count,
                       this->msg_queue ()->message_count ()));
           break;
@@ -172,15 +172,15 @@ int
 Thread_Pool::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) producer start, dumping the Thread_Pool\n")));
+              ACE_TEXT ("(%t) producer start, dumping the Thread_Pool\n")));
   this->dump ();
 
   // Create a pool of worker threads.
   if (this->activate (THR_NEW_LWP,
                       this->n_threads_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("activate failed")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("activate failed")),
                       -1);
   return 0;
 }
@@ -219,7 +219,8 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
       if (manual)
         {
           ACE_DEBUG ((LM_DEBUG, 
-                      "(%t) enter a new message for the task pool..."));
+                      ACE_TEXT ("(%t) enter a new message for ")
+                      ACE_TEXT ("the task pool...")));
           n = ACE_OS::read (ACE_STDIN,
                             mb->rd_ptr (),
                             mb->size ());
@@ -246,13 +247,13 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
         {
           // Send a normal message to the waiting threads and continue
           // producing.
-          mb->wr_ptr (n * sizeof (ASYS_TCHAR));
+          mb->wr_ptr (n * sizeof (ACE_TCHAR));
 
           // Pass the message to the Thread_Pool.
           if (this->put (mb) == -1)
             ACE_ERROR ((LM_ERROR,
-                        ASYS_TEXT (" (%t) %p\n"),
-                        ASYS_TEXT ("put")));
+                        ACE_TEXT (" (%t) %p\n"),
+                        ACE_TEXT ("put")));
         }
       else
         {
@@ -262,8 +263,8 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
           mb->release ();
           // Deactivate the message queue and return.
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("\n(%t) deactivating queue for %d threads, ")
-                      ASYS_TEXT ("dump of task:\n"),
+                      ACE_TEXT ("\n(%t) deactivating queue for %d threads, ")
+                      ACE_TEXT ("dump of task:\n"),
                       this->thr_count ()));
           this->dump ();
 
@@ -308,7 +309,8 @@ Thread_Pool::test_empty_message_shutdown (void)
       if (manual)
         {
           ACE_DEBUG ((LM_DEBUG, 
-                      "(%t) enter a new message for the task pool..."));
+                      ACE_TEXT ("(%t) enter a new message for ")
+                      ACE_TEXT ("the task pool...")));
           n = ACE_OS::read (ACE_STDIN,
                             mb->rd_ptr (),
                             mb->size ());
@@ -335,20 +337,20 @@ Thread_Pool::test_empty_message_shutdown (void)
         {
           // Send a normal message to the waiting threads and continue
           // producing.
-          mb->wr_ptr (n * sizeof (ASYS_TCHAR));
+          mb->wr_ptr (n * sizeof (ACE_TCHAR));
 
           // Pass the message to the Thread_Pool.
           if (this->put (mb) == -1)
             ACE_ERROR ((LM_ERROR,
-                        ASYS_TEXT (" (%t) %p\n"),
-                        ASYS_TEXT ("put")));
+                        ACE_TEXT (" (%t) %p\n"),
+                        ACE_TEXT ("put")));
         }
       else
         {
           // Send a shutdown message to the waiting threads and return.
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("\n(%t) sending shutdown message to %d threads, ")
-                      ASYS_TEXT ("dump of task:\n"),
+                      ACE_TEXT ("\n(%t) sending shutdown message to %d threads, ")
+                      ACE_TEXT ("dump of task:\n"),
                       this->thr_count ()));
           this->dump ();
 
@@ -361,8 +363,8 @@ Thread_Pool::test_empty_message_shutdown (void)
                i--)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("(%t) end of input, ")
-                          ASYS_TEXT ("enqueueing \"empty\" message %d\n"),
+                          ACE_TEXT ("(%t) end of input, ")
+                          ACE_TEXT ("enqueueing \"empty\" message %d\n"),
                           i));
 
               // Note the use of reference counting to avoid copying
@@ -371,14 +373,14 @@ Thread_Pool::test_empty_message_shutdown (void)
 
               if (this->put (dup) == -1)
                 ACE_ERROR ((LM_ERROR,
-                            ASYS_TEXT (" (%t) %p\n"),
-                            ASYS_TEXT ("put")));
+                            ACE_TEXT (" (%t) %p\n"),
+                            ACE_TEXT ("put")));
             }
 
           mb->release ();
 
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("\n(%t) end loop, dump of task:\n")));
+                      ACE_TEXT ("\n(%t) end loop, dump of task:\n")));
           this->dump ();
 
           return 0;
@@ -395,9 +397,9 @@ template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Thread_Pool_Test"));
+  ACE_START_TEST (ACE_TEXT ("Thread_Pool_Test"));
 
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
@@ -406,11 +408,11 @@ main (int, ASYS_TCHAR *[])
   Thread_Pool thread_pool (n_threads);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) running test with %d threads\n"),
+              ACE_TEXT ("(%t) running test with %d threads\n"),
               n_threads));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) starting empty message shutdown test\n")));
+              ACE_TEXT ("(%t) starting empty message shutdown test\n")));
 
   // Activate the task's thread pool, produce the messages that are,
   // produce the messages that are consumed by the threads in the
@@ -420,7 +422,7 @@ main (int, ASYS_TCHAR *[])
     return 1;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) waiting for worker tasks to finish...\n")));
+              ACE_TEXT ("(%t) waiting for worker tasks to finish...\n")));
   // Wait for all the threads to reach their exit point, at which
   // point the barrier in the destructor of the <ACE_Task> portion of
   // <Thread_Pool> will return.
@@ -428,7 +430,7 @@ main (int, ASYS_TCHAR *[])
     return 1;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) starting queue deactivation shutdown test\n")));
+              ACE_TEXT ("(%t) starting queue deactivation shutdown test\n")));
 
   // Activate the task's thread pool, produce the messages that are
   // consumed by the threads in the thread pool, and demonstate how to
@@ -437,7 +439,7 @@ main (int, ASYS_TCHAR *[])
     return 1;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) waiting for worker tasks to finish...\n")));
+              ACE_TEXT ("(%t) waiting for worker tasks to finish...\n")));
   // Wait for all the threads to reach their exit point, at which
   // point the barrier in the destructor of the <ACE_Task> portion of
   // <Thread_Pool> will return.
@@ -445,10 +447,10 @@ main (int, ASYS_TCHAR *[])
     return 1;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) all worker tasks destroyed, exiting test...\n")));
+              ACE_TEXT ("(%t) all worker tasks destroyed, exiting test...\n")));
 #else
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

@@ -128,7 +128,7 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
   ACE_GUARD_RETURN (ACE_Thread_Mutex, id_lock, this->lock_, 0);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("%T (%t): Timer #%d (id #%d) expired\n"),
+              ACE_TEXT ("%T (%t): Timer #%d (id #%d) expired\n"),
               time_tag,
               this->timer_id_[time_tag]));
 
@@ -154,27 +154,27 @@ Dispatch_Count_Handler::Dispatch_Count_Handler (void)
   // Initialize the pipe.
   if (this->pipe_.open () == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Pipe::open")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Pipe::open")));
   // Register the "read" end of the pipe.
   else if (r->register_handler (this->pipe_.read_handle (),
                                 this,
                                 ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("register_handler")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("register_handler")));
   // Put something in our pipe and smoke it... ;-)
   else if (ACE::send (this->pipe_.write_handle (),
                       "z",
                       1) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("send")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("send")));
   // Call notify to prime the pump for this, as well.
   else if (r->notify (this) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("notify")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("notify")));
 }
 
 int
@@ -184,7 +184,7 @@ Dispatch_Count_Handler::handle_close (ACE_HANDLE h,
   ACE_Reactor *r = ACE_Reactor::instance ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("%T (%t): handle_close\n")));
+              ACE_TEXT ("%T (%t): handle_close\n")));
 
   ACE_ASSERT (h == this->pipe_.read_handle ()
               && m == ACE_Event_Handler::READ_MASK);
@@ -193,8 +193,8 @@ Dispatch_Count_Handler::handle_close (ACE_HANDLE h,
                          ACE_Event_Handler::READ_MASK
                          | ACE_Event_Handler::DONT_CALL) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("remove_handler")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("remove_handler")),
                       -1);
   return 0;
 }
@@ -209,13 +209,13 @@ Dispatch_Count_Handler::handle_input (ACE_HANDLE h)
 
   if (ACE::recv (h, &c, 1) != 1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("recv")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("recv")),
                       -1);
 
   ACE_ASSERT (c == 'z');
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("%T (%t): handle_input\n")));
+              ACE_TEXT ("%T (%t): handle_input\n")));
   // Trigger the <handle_close> hook.
   return -1;
 }
@@ -229,7 +229,7 @@ Dispatch_Count_Handler::handle_exception (ACE_HANDLE h)
   this->notify_seen_ = 1;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("%T (%t): handle_exception\n")));
+              ACE_TEXT ("%T (%t): handle_exception\n")));
   return 0;
 }
 
@@ -246,7 +246,7 @@ Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
   // This case just tests to make sure the Reactor is counting timer
   // expiration correctly.
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("%T (%t): expiration %d\n"),
+              ACE_TEXT ("%T (%t): expiration %d\n"),
               value));
   return 0;
 }
@@ -263,9 +263,9 @@ Dispatch_Count_Handler::verify_results (void)
 }
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("MT_Reactor_Timer_Test"));
+  ACE_START_TEST (ACE_TEXT ("MT_Reactor_Timer_Test"));
 
   int status = 0;
   int test_result = 0;
@@ -280,8 +280,8 @@ main (int, ASYS_TCHAR *[])
                            (const void *) i,
                            ACE_Time_Value (0)) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("%p\n"),
-                         ASYS_TEXT ("schedule_timer")),
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("schedule_timer")),
                         1);
 
   ACE_Time_Value no_waiting (0);
@@ -307,7 +307,7 @@ main (int, ASYS_TCHAR *[])
   if (events < ACE_MAX_TIMERS + 2) 
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("expected %d events, got %d instead\n"),
+                  ACE_TEXT ("expected %d events, got %d instead\n"),
                   ACE_MAX_TIMERS + 2,
                   events));
       ACE_ASSERT (events >= ACE_MAX_TIMERS + 2);
@@ -317,7 +317,7 @@ main (int, ASYS_TCHAR *[])
   if (status != 0) 
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("Dispatch counting test failed.\n")));
+                  ACE_TEXT ("Dispatch counting test failed.\n")));
       test_result = 1;
     }
 
@@ -339,7 +339,7 @@ main (int, ASYS_TCHAR *[])
   if (status == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("%p, errno is %d\n"),
+                  ACE_TEXT ("%p, errno is %d\n"),
                   "wait ()",
                   errno));
       ACE_ASSERT (status != -1);
@@ -351,7 +351,7 @@ main (int, ASYS_TCHAR *[])
 
 #else
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;

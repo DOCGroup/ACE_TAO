@@ -577,8 +577,8 @@ ACE_TS_Clerk_Processor::parse_args (int argc, char *argv[])
 	case 'p':
 	  // Get the poolname
 	  ACE_OS::strncpy (this->poolname_,
-			   ACE_WIDE_STRING (get_opt.optarg),
-			   sizeof this->poolname_ / sizeof (TCHAR));
+			   ACE_TEXT_CHAR_TO_TCHAR (get_opt.optarg),
+			   sizeof this->poolname_ / sizeof (ACE_TCHAR));
 	  break;
 	case 'b':
 	  // Blocking semantics

@@ -188,7 +188,7 @@ Options::parse_args (int argc, char *argv[])
           ACE_OS::strncpy (this->consumer_config_file_,
                            get_opt.optarg,
                            sizeof this->consumer_config_file_ 
-                             / sizeof (ASYS_TCHAR));
+                             / sizeof (ACE_TCHAR));
           break;
         case 'c':
           {

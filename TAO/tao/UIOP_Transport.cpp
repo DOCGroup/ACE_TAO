@@ -351,7 +351,7 @@ TAO_UIOP_Client_Transport::
               if (TAO_debug_level > 0)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
-                                     ASYS_TEXT ("(%N|%l|%p|%t) No matching minor version number \n")),
+                                     ACE_TEXT ("(%N|%l|%p|%t) No matching minor version number \n")),
                                     0);
                 }
             }
@@ -361,7 +361,7 @@ TAO_UIOP_Client_Transport::
           if (TAO_debug_level > 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("(%N|%l|%p|%t) No matching major version number \n")),
+                                 ACE_TEXT ("(%N|%l|%p|%t) No matching major version number \n")),
                                 0);
             }
         }

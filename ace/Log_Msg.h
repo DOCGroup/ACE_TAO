@@ -30,9 +30,9 @@
   do { if(!(X)) { \
   int __ace_error = ACE_OS::last_error (); \
   ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-  ace___->set (ASYS_TEXT (__FILE__), __LINE__, -1, __ace_error, ace___->restart (), \
+  ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, -1, __ace_error, ace___->restart (), \
                ace___->msg_ostream (), ace___->msg_callback ()); \
-  ace___->log (LM_ERROR, ASYS_TEXT ("ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n"), ASYS_WIDE_STRING (#X), -1); \
+  ace___->log (LM_ERROR, ACE_TEXT ("ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n"), #X, -1); \
   } } while (0)
 #endif  /* ACE_NDEBUG */
 
@@ -49,21 +49,21 @@
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set (ASYS_TEXT (__FILE__), __LINE__, 0, __ace_error, ace___->restart (), \
+    ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, 0, __ace_error, ace___->restart (), \
                 ace___->msg_ostream (), ace___->msg_callback ()); \
     ace___->log_hexdump X; \
    } while (0)
 #define ACE_RETURN(Y) \
   do { \
     int __ace_error = ACE_OS::last_error (); \
-    ACE_Log_Msg::instance ()->set (ASYS_TEXT (__FILE__), __LINE__, Y, __ace_error); \
+    ACE_Log_Msg::instance ()->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, Y, __ace_error); \
     return Y; \
   } while (0)
 #define ACE_ERROR_RETURN(X, Y) \
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set (ASYS_TEXT (__FILE__), __LINE__, Y, __ace_error, ace___->restart (), \
+    ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, Y, __ace_error, ace___->restart (), \
                  ace___->msg_ostream (), ace___->msg_callback ()); \
     ace___->log X; \
     return Y; \
@@ -72,7 +72,7 @@
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set (ASYS_TEXT (__FILE__), __LINE__, -1, __ace_error, ace___->restart (), \
+    ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, -1, __ace_error, ace___->restart (), \
                  ace___->msg_ostream (), ace___->msg_callback ()); \
     ace___->log X; \
   } while (0)
@@ -80,7 +80,7 @@
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set (ASYS_TEXT (__FILE__), __LINE__, 0, __ace_error, ace___->restart (), \
+    ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, 0, __ace_error, ace___->restart (), \
                  ace___->msg_ostream (), ace___->msg_callback ()); \
     ace___->log X; \
   } while (0)
@@ -205,9 +205,9 @@ public:
   ~ACE_Log_Msg (void);
   // cleanup logger.
 
-  int open (const ASYS_TCHAR *prog_name,
+  int open (const ACE_TCHAR *prog_name,
             u_long options_flags = ACE_Log_Msg::STDERR,
-            LPCTSTR logger_key = 0);
+            const ACE_TCHAR *logger_key = 0);
   // Initialize the ACE error handling facility.  <prog_name> is the
   // name of the executable program.  <flags> are a bitwise-or of
   // options flags passed to the Logger (see the enum above for the valid
@@ -234,7 +234,7 @@ public:
   int release (void);
   // Release the internal lock.
 
-  void sync (const ASYS_TCHAR *program_name);
+  void sync (const ACE_TCHAR *program_name);
   // Call after doing a <fork> to resynchronize the process id and
   // <program_name> variables.
 
@@ -263,16 +263,16 @@ public:
   int linenum (void);
   // Get the line number where an error occurred.
 
-  void file (const ASYS_TCHAR *);
+  void file (const ACE_TCHAR *);
   // Set the file name where an error occurred.
 
-  const ASYS_TCHAR *file (void);
+  const ACE_TCHAR *file (void);
   // Get the file name where an error occurred.
 
-  void msg (const ASYS_TCHAR *);
+  void msg (const ACE_TCHAR *);
   // Set the message that describes what type of error occurred.
 
-  const ASYS_TCHAR *msg (void);
+  const ACE_TCHAR *msg (void);
   // Get the message that describes what type of error occurred.
 
   void restart (int);
@@ -357,10 +357,10 @@ public:
   // cached...).
 
   // = Set/get the name of the local host.
-  const ASYS_TCHAR *local_host (void) const;
-  void local_host (const ASYS_TCHAR *);
+  const ACE_TCHAR *local_host (void) const;
+  void local_host (const ACE_TCHAR *);
 
-  void set (const ASYS_TCHAR *file,
+  void set (const ACE_TCHAR *file,
             int line,
             int op_status = -1,
             int errnum = 0,
@@ -371,7 +371,7 @@ public:
   // restart flag, ostream, and the callback object.  This combines
   // all the other set methods into a single method.
 
-  ssize_t log (ACE_Log_Priority priority, const ASYS_TCHAR *format, ...);
+  ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
   // Format a message to the thread-safe ACE logging mechanism.  Valid
   // options (prefixed by '%', as in printf format strings) include:
   //  'A': print an ACE_timer_t value (which could be either double or ACE_UINT32.)
@@ -400,7 +400,7 @@ public:
   //  'X', 'x': print as a hex number
   //  '%': print out a single percent sign, '%'
 
-  ssize_t log (const ASYS_TCHAR *format,
+  ssize_t log (const ACE_TCHAR *format,
                ACE_Log_Priority priority,
                va_list argp);
   // An alternative logging mechanism that makes it possible to
@@ -415,7 +415,7 @@ public:
   int log_hexdump (ACE_Log_Priority log_priority,
                    const char *buffer,
                    int size,
-                   const ASYS_TCHAR *text = 0);
+                   const ACE_TCHAR *text = 0);
   // Method to log hex dump.  This is useful for debugging.  Calls
   // <log> to do the actual print, but formats first to make the chars
   // printable.
@@ -436,10 +436,10 @@ private:
   int linenum_;
   // Line number where the error occurred.
 
-  ASYS_TCHAR file_[MAXPATHLEN + 1];
+  ACE_TCHAR file_[MAXPATHLEN + 1];
   // File where the error occurred.
 
-  ASYS_TCHAR msg_[ACE_Log_Record::MAXLOGMSGLEN];
+  ACE_TCHAR msg_[ACE_Log_Record::MAXLOGMSGLEN];
   // The error message.
 
   int restart_;
@@ -491,10 +491,10 @@ private:
   // are currently enabled.  Default is for all logging priorities to
   // be enabled.
 
-  static const ASYS_TCHAR *program_name_;
+  static const ACE_TCHAR *program_name_;
   // Records the program name.
 
-  static const ASYS_TCHAR *local_host_;
+  static const ACE_TCHAR *local_host_;
   // Name of the local host (used when printing messages).
 
   static pid_t pid_;

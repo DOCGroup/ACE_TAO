@@ -50,9 +50,9 @@ ACE_Future_Rep<T>::dump (void) const
  (int) this->ref_count_));
   ACE_DEBUG ((LM_INFO,"value_: \n"));
   if (this->value_)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (NON-NULL)\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (NON-NULL)\n")));
   else
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (NULL)\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (NULL)\n")));
 
   ACE_DEBUG ((LM_INFO,"value_ready_: \n"));
   this->value_ready_.dump ();
@@ -276,7 +276,7 @@ ACE_Future<T>::ACE_Future (const T &r)
   : future_rep_ (FUTURE_REP::create ())
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) funny constructor\n")));
+              ACE_TEXT (" (%t) funny constructor\n")));
   this->future_rep_->set (r,
                           *this);
 }

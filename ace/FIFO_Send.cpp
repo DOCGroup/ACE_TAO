@@ -26,7 +26,7 @@ ACE_FIFO_Send::ACE_FIFO_Send (void)
 }
 
 int
-ACE_FIFO_Send::open (const ASYS_TCHAR *rendezvous_name,
+ACE_FIFO_Send::open (const ACE_TCHAR *rendezvous_name,
                      int flags,
                      int perms,
                      LPSECURITY_ATTRIBUTES sa)
@@ -38,7 +38,7 @@ ACE_FIFO_Send::open (const ASYS_TCHAR *rendezvous_name,
                          sa);
 }
 
-ACE_FIFO_Send::ACE_FIFO_Send (const ASYS_TCHAR *fifo_name,
+ACE_FIFO_Send::ACE_FIFO_Send (const ACE_TCHAR *fifo_name,
                               int flags,
                               int perms,
                               LPSECURITY_ATTRIBUTES sa)
@@ -49,6 +49,6 @@ ACE_FIFO_Send::ACE_FIFO_Send (const ASYS_TCHAR *fifo_name,
                                  perms,
                                  sa) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_FIFO_Send::ACE_FIFO_Send")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_FIFO_Send::ACE_FIFO_Send")));
 }

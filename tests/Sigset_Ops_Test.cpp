@@ -29,31 +29,31 @@ siglistset(sigset_t x, int *sigset)
   int empty = 1 ;
   int retv = 0 ;
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Signal(s) in the set = %08x:\n    "), x)) ;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal(s) in the set = %08x:\n    "), x)) ;
   for (int i = 1; i < ACE_NSIG; i++) {
     if ((retv = ACE_OS::sigismember (&x, i)) > 0) {
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" %d"), i)) ;
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" %d"), i)) ;
       empty = 0 ;
     }
     ACE_ASSERT ((sigset [i] ? retv > 0 : retv <= 0)) ;
   }
   if (empty) {
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Empty!!\n\n"))) ;
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Empty!!\n\n"))) ;
   }
   else {
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n\n"))) ;
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n\n"))) ;
   }
 }
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Sigset_Ops_Test"));
+  ACE_START_TEST (ACE_TEXT ("Sigset_Ops_Test"));
 
 #if defined (ACE_LACKS_SIGSET)
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%n uses ACE implementation of sigset*() functions.\n\n"))) ;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%n uses ACE implementation of sigset*() functions.\n\n"))) ;
 #else
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%n uses platform's native sigset*() functions.\n\n"))) ;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%n uses platform's native sigset*() functions.\n\n"))) ;
 #endif
 
   sigset_t x ;                  // examined sigset
@@ -107,11 +107,11 @@ main (int, ASYS_TCHAR *[])
 
   // Now testing out of bound signal
   if (ACE_OS::sigismember (&x, ACE_NSIG) >= 0) {
-    ACE_ERROR((LM_ERROR, ASYS_TEXT ("Platform doesn't check for valid signal number.\n")));
+    ACE_ERROR((LM_ERROR, ACE_TEXT ("Platform doesn't check for valid signal number.\n")));
     status = 1;
   }
   else if (ACE_OS::last_error() != EINVAL) {
-    ACE_ERROR((LM_ERROR, ASYS_TEXT ("%p.\n"), ASYS_TEXT ("Expected status EINVAL; got")));
+    ACE_ERROR((LM_ERROR, ACE_TEXT ("%p.\n"), ACE_TEXT ("Expected status EINVAL; got")));
     status = 1;
   }
 
@@ -120,7 +120,7 @@ main (int, ASYS_TCHAR *[])
   // Currently, I can only think of passing a NULL ptr
   // If you know other situations that fall into this
   // catagory, please let me know.  Thanks.
-  ACE_DEBUG ((LM_ERROR, ASYS_TEXT ("Now testing invalid sigset.  If your platform gets a \nsegmentation fault, then it doesn't check the error properly.\n"))) ;
+  ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Now testing invalid sigset.  If your platform gets a \nsegmentation fault, then it doesn't check the error properly.\n"))) ;
 
   ACE_ASSERT (ACE_OS::sigfillset (NULL) < 0 && ACE_OS::last_error() == EFAULT) ;
   */

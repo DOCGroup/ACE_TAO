@@ -85,7 +85,7 @@ ACE_TP_Reactor::dispatch_io_set (int number_of_active_handles,
          && number_dispatched < number_of_active_handles
          && this->state_changed_ == 0)
     {
-      // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_TP_Reactor::dispatching\n")));
+      // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_TP_Reactor::dispatching\n")));
       number_dispatched++;
 
       // Remember this info

@@ -118,7 +118,7 @@ ACE_FTP_Addr::get_path (void) const
 ACE_INLINE ACE_INET_Addr
 ACE_FTP_Addr::get_inet_address (void) const
 {
-  return ACE_INET_Addr (ASYS_TEXT ("ftp"), this->hostname_);
+  return ACE_INET_Addr (ACE_TEXT ("ftp"), this->hostname_);
 }
 
 // ****************************************************************

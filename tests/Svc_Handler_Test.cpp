@@ -58,24 +58,24 @@ run_test (SVC_HANDLER &svc_handler,
       // Note that this is a buffered call!
       if (svc_handler.put (mb) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%p\n"),
-                    ASYS_TEXT ("put")));
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("put")));
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("final flush\n")));
+              ACE_TEXT ("final flush\n")));
 
   // Make sure to flush everything out before we exit.
   if (svc_handler.flush () == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("flush")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("flush")));
 }
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Svc_Handler_Test"));
+  ACE_START_TEST (ACE_TEXT ("Svc_Handler_Test"));
   {
     size_t max_buffer_size = BUFSIZ;
     size_t iterations = 10;
@@ -94,14 +94,14 @@ main (int argc, ASYS_TCHAR *argv[])
     if (connector.connect (file_io,
                            file) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("connect failed for %p\n"),
+                         ACE_TEXT ("connect failed for %p\n"),
                          file.get_path_name ()),
                         1);
     // Unlink this file right away so that it is automatically removed
     // when the process exits.
     else if (file_io.unlink () == -1)
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("unlink failed for %p\n"),
+                         ACE_TEXT ("unlink failed for %p\n"),
                          file.get_path_name ()),
                         1);
 

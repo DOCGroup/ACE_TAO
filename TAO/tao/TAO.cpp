@@ -64,7 +64,7 @@ TAO_ORB_Manager::init (int &argc,
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           -1);
 
       // Get the POA object.
@@ -118,7 +118,7 @@ TAO_ORB_Manager::init_child_poa (int& argc,
 
   if (init_result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT (" (%P|%t) Error in init.\n")),
+                       ACE_TEXT (" (%P|%t) Error in init.\n")),
                       -1);
 
   // Create the default policies - user-supplied ID, and persistent
@@ -224,8 +224,8 @@ TAO_ORB_Manager::activate_under_child_poa (const char* object_name,
 {
   if (object_name == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("\n(%P|%t) TAO_ORB_Manager::register: ")
-                       ASYS_TEXT ("object_name is null!")),
+                       ACE_TEXT ("\n(%P|%t) TAO_ORB_Manager::register: ")
+                       ACE_TEXT ("object_name is null!")),
                       0);
 
   PortableServer::ObjectId_var id =
@@ -282,8 +282,8 @@ TAO_ORB_Manager::run (CORBA_Environment &ACE_TRY_ENV,
 
   if (status == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("(%P|%t) TAO_ORB_Manager %p\n"),
-                       ASYS_TEXT ("run")),
+                       ACE_TEXT ("(%P|%t) TAO_ORB_Manager %p\n"),
+                       ACE_TEXT ("run")),
                       -1);
   return 0;
 }
@@ -300,8 +300,8 @@ TAO_ORB_Manager::run (ACE_Time_Value &tv,
 
   if (status == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("(%P|%t) TAO_ORB_Manager %p\n"),
-                       ASYS_TEXT ("run")),
+                       ACE_TEXT ("(%P|%t) TAO_ORB_Manager %p\n"),
+                       ACE_TEXT ("run")),
                       -1);
   return 0;
 }
@@ -332,8 +332,8 @@ TAO_ORB_Manager::run (CORBA_Environment &ACE_TRY_ENV)
 
   if (status == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("(%P|%t) TAO_ORB_Manager %p\n"),
-                       ASYS_TEXT ("run")),
+                       ACE_TEXT ("(%P|%t) TAO_ORB_Manager %p\n"),
+                       ACE_TEXT ("run")),
                       -1);
   return 0;
 }

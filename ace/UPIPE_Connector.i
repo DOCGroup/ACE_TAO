@@ -7,21 +7,21 @@
 
 ASYS_INLINE
 ACE_UPIPE_Connector::ACE_UPIPE_Connector (ACE_UPIPE_Stream &new_stream,
-					  const ACE_UPIPE_Addr &addr,
-					  ACE_Time_Value *timeout,
-					  const ACE_Addr &local_sap,
-					  int reuse_addr,
-					  int flags,
-					  int perms)
+                                          const ACE_UPIPE_Addr &addr,
+                                          ACE_Time_Value *timeout,
+                                          const ACE_Addr &local_sap,
+                                          int reuse_addr,
+                                          int flags,
+                                          int perms)
 {
   ACE_TRACE ("ACE_UPIPE_Connector::ACE_UPIPE_Connector");
   if (this->connect (new_stream, addr, timeout, local_sap,
 		     reuse_addr, flags, perms) == -1
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("address %s, %p\n"),
+                ACE_TEXT ("address %s, %p\n"),
                 addr.get_path_name (),
-                ASYS_TEXT ("ACE_UPIPE_Connector")));
+                ACE_TEXT ("ACE_UPIPE_Connector")));
 }
 
 ASYS_INLINE int

@@ -152,11 +152,11 @@ public:
   // <remove> is called make sure to call <dup> on the <handle> before
   // closing it.
 
-  ACE_File_Lock (LPCTSTR filename, int flags, mode_t mode = 0);
+  ACE_File_Lock (const ACE_TCHAR *filename, int flags, mode_t mode = 0);
   // Open the <filename> with <flags> and <mode> and set the result to
   // <handle_>.
 
-  int open (LPCTSTR filename, int flags, mode_t mode = 0);
+  int open (const ACE_TCHAR *filename, int flags, mode_t mode = 0);
   // Open the <filename> with <flags> and <mode> and set the result to
   // <handle_>.
 
@@ -243,7 +243,7 @@ public:
   // = Initialization and termination.
   ACE_Semaphore (u_int count = 1, // By default make this unlocked.
                  int type = USYNC_THREAD,
-                 LPCTSTR name = 0,
+                 const ACE_TCHAR *name = 0,
                  void * = 0,
                  int max = 0x7fffffff);
   // Initialize the semaphore, with initial value of "count".
@@ -343,7 +343,7 @@ class ACE_Export ACE_Process_Semaphore
   //     across processes.
 public:
   ACE_Process_Semaphore (u_int count = 1, // By default make this unlocked.
-                         LPCTSTR name = 0,
+                         const ACE_TCHAR *name = 0,
                          void * = 0,
                          int max = 0x7FFFFFFF);
   // Initialize the semaphore, with an initial value of <count> and a
@@ -424,7 +424,7 @@ class ACE_Export ACE_Null_Semaphore
 public:
   ACE_Null_Semaphore (u_int count = 1, // By default make this unlocked.
                        int type = USYNC_THREAD,
-                       LPCTSTR name = 0,
+                       const ACE_TCHAR *name = 0,
                        void * = 0,
                        int max = 0x7fffffff);
   ~ACE_Null_Semaphore (void);
@@ -457,7 +457,7 @@ class ACE_Export ACE_RW_Mutex
   //     parallel readers than writers...
 public:
   ACE_RW_Mutex (int type = USYNC_THREAD,
-                LPCTSTR name = 0,
+                const ACE_TCHAR *name = 0,
                 void *arg = 0);
   // Initialize a readers/writer lock.
 
@@ -531,7 +531,7 @@ class ACE_Export ACE_Mutex
   //     processes (depending on TYPE flag)).
 public:
   ACE_Mutex (int type = USYNC_THREAD,
-             LPCTSTR name = 0,
+             const ACE_TCHAR *name = 0,
              ACE_mutexattr_t *arg = 0);
   // Initialize the mutex.
 
@@ -593,7 +593,7 @@ public:
   ACE_mutex_t *process_lock_;
   // This lock resides in shared memory.
 
-  LPCTSTR lockname_;
+  const ACE_TCHAR *lockname_;
   // Remember the name of the mutex if we created it so we can unlink
   // it when we go away (only the actor that initialized the memory
   // can destroy it).
@@ -622,7 +622,7 @@ class ACE_Export ACE_Process_Mutex
   //     the same host machine, as well as within a process, of
   //     course.
 public:
-  ACE_Process_Mutex (LPCTSTR name = 0,
+  ACE_Process_Mutex (const ACE_TCHAR *name = 0,
                      void *arg = 0);
   // Create a Process_Mutex, passing in the optional <name>.
 
@@ -675,11 +675,11 @@ private:
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   ACE_Mutex lock_;
 #else
-  TCHAR name_[ACE_UNIQUE_NAME_LEN];
+  ACE_TCHAR name_[ACE_UNIQUE_NAME_LEN];
   // If the user does not provide a name we generate a unique name in
   // this buffer.
 
-  LPCTSTR unique_name (void);
+  const ACE_TCHAR *unique_name (void);
   // Create and return the unique name.
 
   ACE_SV_Semaphore_Complex lock_;
@@ -699,7 +699,7 @@ class ACE_Export ACE_RW_Process_Mutex
   //     same process.  This isn't a limitation of ACE, it's simply
   //     the file lock semantics on UNIX and Win32.
 public:
-  ACE_RW_Process_Mutex (LPCTSTR name = 0,
+  ACE_RW_Process_Mutex (const ACE_TCHAR *name = 0,
                         int flags = O_CREAT|O_RDWR);
   // Create a readers/writer <Process_Mutex>, passing in the optional
   // <name>.
@@ -787,7 +787,7 @@ class ACE_Export ACE_Null_Mutex
   //     Implement a do nothing <ACE_Mutex>, i.e., all the methods are
   //     no ops.
 public:
-  ACE_Null_Mutex (LPCTSTR = 0);
+  ACE_Null_Mutex (const ACE_TCHAR * = 0);
   ~ACE_Null_Mutex (void);
   int remove (void);
 
@@ -826,7 +826,7 @@ class ACE_Export ACE_Null_Condition
   //     some C++ compilers are *very* lame...
 public:
   ACE_Null_Condition (const ACE_Null_Mutex &m,
-                      LPCTSTR = 0,
+                      const ACE_TCHAR * = 0,
                       void * = 0);
   ~ACE_Null_Condition (void);
   int remove (void);
@@ -923,7 +923,7 @@ public:
   ACE_Event (int manual_reset = 0,
              int initial_state = 0,
              int type = USYNC_THREAD,
-             LPCTSTR name = 0,
+             const ACE_TCHAR *name = 0,
              void *arg = 0);
   // Constructor which will create event.
 
@@ -1012,7 +1012,7 @@ class ACE_Export ACE_Manual_Event : public ACE_Event
 public:
   ACE_Manual_Event (int initial_state = 0,
                     int type = USYNC_THREAD,
-                    LPCTSTR name = 0,
+                    const ACE_TCHAR *name = 0,
                     void *arg = 0);
   // constructor which will create manual event
 
@@ -1037,7 +1037,7 @@ class ACE_Export ACE_Auto_Event : public ACE_Event
 public:
   ACE_Auto_Event (int initial_state = 0,
                   int type = USYNC_THREAD,
-                  LPCTSTR name = 0,
+                  const ACE_TCHAR *name = 0,
                   void *arg = 0);
   // constructor which will create auto event
 
@@ -1058,7 +1058,7 @@ class ACE_Barrier
   // = TITLE
   //   This is a no-op to make ACE "syntactically consistent."
 public:
-  ACE_Barrier (u_int, LPCTSTR = 0, void * = 0) {}
+  ACE_Barrier (u_int, const ACE_TCHAR * = 0, void * = 0) {}
   ~ACE_Barrier (void) {}
   int wait (void) { ACE_NOTSUP_RETURN (-1); }
   void dump (void) const {}
@@ -1082,7 +1082,7 @@ class ACE_Export ACE_Thread_Mutex
   //     recursive mutex.
   friend class ACE_Condition_Thread_Mutex;
 public:
-  ACE_Thread_Mutex (LPCTSTR name = 0,
+  ACE_Thread_Mutex (const ACE_TCHAR *name = 0, 
                     ACE_mutexattr_t *attributes = 0);
   // Constructor.
 
@@ -1257,13 +1257,13 @@ class ACE_Export ACE_Condition_Thread_Mutex
   //     with compilers precludes this...
 public:
   ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
-                              LPCTSTR name = 0,
+                              const ACE_TCHAR *name = 0,
                               void *arg = 0);
   // Initialize the condition variable.
 
   ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
                               ACE_Condition_Attributes &attributes,
-                              LPCTSTR name = 0,
+                              const ACE_TCHAR *name = 0,
                               void *arg = 0);
   // Initialize the condition variable.
 
@@ -1333,7 +1333,7 @@ class ACE_Export ACE_Recursive_Thread_Mutex
   //     Implement a C++ wrapper that allows nested acquisition and
   //     release of a mutex that occurs in the same thread.
 public:
-  ACE_Recursive_Thread_Mutex (LPCTSTR name = 0,
+  ACE_Recursive_Thread_Mutex (const ACE_TCHAR *name = 0,
                               ACE_mutexattr_t *arg = 0);
   // Initialize a recursive mutex.
 
@@ -1426,7 +1426,7 @@ class ACE_Export ACE_RW_Thread_Mutex : public ACE_RW_Mutex
   // = TITLE
   //     Wrapper for readers/writer locks that exist within a process.
 public:
-  ACE_RW_Thread_Mutex (LPCTSTR name = 0,
+  ACE_RW_Thread_Mutex (const ACE_TCHAR *name = 0,
                        void *arg = 0);
 
   ~ACE_RW_Thread_Mutex (void);
@@ -1454,7 +1454,7 @@ class ACE_Export ACE_Thread_Semaphore : public ACE_Semaphore
   //     only within one process.
 public:
   ACE_Thread_Semaphore (u_int count = 1, // By default make this unlocked.
-                        LPCTSTR name = 0,
+                        const ACE_TCHAR *name = 0,
                         void * = 0,
                         int max = 0x7FFFFFFF);
   // Initialize the semaphore, with an initial value of <count>,
@@ -1475,7 +1475,7 @@ struct ACE_Export ACE_Sub_Barrier
   // = Initialization.
   ACE_Sub_Barrier (u_int count,
                    ACE_Thread_Mutex &lock,
-                   LPCTSTR name = 0,
+                   const ACE_TCHAR *name = 0,
                    void *arg = 0);
 
   ~ACE_Sub_Barrier (void);
@@ -1509,7 +1509,7 @@ class ACE_Export ACE_Barrier
   //     (Richard.Marejka@canada.sun.com).
 public:
   ACE_Barrier (u_int count,
-               LPCTSTR name = 0,
+               const ACE_TCHAR *name = 0,
                void *arg = 0);
   // Initialize the barrier to synchronize <count> threads.
 
@@ -1564,7 +1564,7 @@ class ACE_Export ACE_Process_Condition
   // = TITLE
   //     ACE_Condition variable wrapper that works across processes.
 public:
-  ACE_Process_Condition (MUTEX &m, LPCTSTR name = 0, void *arg = 0);
+  ACE_Process_Condition (MUTEX &m, const ACE_TCHAR *name = 0, void *arg = 0);
 
   void dump (void) const;
   // Dump the state of an object.
@@ -1584,7 +1584,7 @@ class ACE_Export ACE_Process_Barrier : public ACE_Barrier
   //     This class is just a simple wrapper for ACE_Barrier that
   //     selects the USYNC_PROCESS variant for the locks.
 public:
-  ACE_Process_Barrier (u_int count, LPCTSTR name = 0);
+  ACE_Process_Barrier (u_int count, const ACE_TCHAR *name = 0);
   // Create a Process_Barrier, passing in the optional <name>.
 
   void dump (void) const;
@@ -1604,7 +1604,7 @@ class ACE_Export ACE_Thread_Barrier : public ACE_Barrier
   //     This class is just a simple wrapper for ACE_Barrier that
   //     selects the USYNC_THREAD variant for the locks.
 public:
-  ACE_Thread_Barrier (u_int count, LPCTSTR name = 0);
+  ACE_Thread_Barrier (u_int count, const ACE_TCHAR *name = 0);
   // Create a Thread_Barrier, passing in the optional <name>.
 
   ~ACE_Thread_Barrier (void);

@@ -165,7 +165,7 @@ ACE_CLASSIX_Select_Reactor_Notify::dump (void) const
   ACE_TRACE ("ACE_CLASSIX_Select_Reactor_Notify::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("ACE_CLASSIX_select_reactor_ = %x"), 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_CLASSIX_select_reactor_ = %x"), 
 	      this->select_reactor_));
   this->notification_sap_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -305,7 +305,7 @@ ACE_CLASSIX_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
 		break;
             default:
 		// Should we bail out if we get an invalid mask?
-		ACE_ERROR ((LM_ERROR, ASYS_TEXT ("invalid mask = %d\n"), buffer.mask_));
+		ACE_ERROR ((LM_ERROR, ACE_TEXT ("invalid mask = %d\n"), buffer.mask_));
             }
 	    if (result == -1)
 		buffer.eh_->handle_close (ACE_INVALID_HANDLE,

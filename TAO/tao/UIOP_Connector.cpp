@@ -509,8 +509,8 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
           profile->addr_to_string (buffer,
                                    (MAXNAMELEN * 2) - 1);
           ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("(%P|%t) %s:%u, connection to ")
-                      ASYS_TEXT ("%s failed (%p)\n"),
+                      ACE_TEXT ("(%P|%t) %s:%u, connection to ")
+                      ACE_TEXT ("%s failed (%p)\n"),
                       __FILE__,
                       __LINE__,
                       buffer,
@@ -530,7 +530,7 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("(%N|%l|%p|%t) init_mesg_protocol () failed \n")));
+                      ACE_TEXT ("(%N|%l|%p|%t) init_mesg_protocol () failed \n")));
         }
       return -1;
     }

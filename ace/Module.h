@@ -77,7 +77,7 @@ public:
   ~ACE_Module (void);
   // Shutdown the Module.
 
-  ACE_Module (const ASYS_TCHAR *module_name,
+  ACE_Module (const ACE_TCHAR *module_name,
               ACE_Task<ACE_SYNCH_USE> *writer = 0,
               ACE_Task<ACE_SYNCH_USE> *reader = 0,
               void *args = 0,
@@ -85,7 +85,7 @@ public:
   // Create an initialized module with <module_name> as its identity
   // and <reader> and <writer> as its tasks.
 
-  int open (const ASYS_TCHAR *module_name,
+  int open (const ACE_TCHAR *module_name,
             ACE_Task<ACE_SYNCH_USE> *writer = 0,
             ACE_Task<ACE_SYNCH_USE> *reader = 0,
             void *a = 0,
@@ -128,9 +128,9 @@ public:
   // Set and get pointer to sibling <ACE_Task> in an <ACE_Module>
 
   // = Identify the module
-  const ASYS_TCHAR *name (void) const;
+  const ACE_TCHAR *name (void) const;
   // Get the module name.
-  void name (const ASYS_TCHAR *);
+  void name (const ACE_TCHAR *);
   // Set the module name.
 
   // = Argument to the Tasks.
@@ -164,7 +164,7 @@ private:
   // Pair of Tasks that form the "read-side" and "write-side" of the
   // ACE_Module partitioning.
 
-  ASYS_TCHAR name_[MAXNAMLEN + 1];
+  ACE_TCHAR name_[MAXNAMLEN + 1];
   // Name of the ACE_Module.
 
   ACE_Module<ACE_SYNCH_USE> *next_;

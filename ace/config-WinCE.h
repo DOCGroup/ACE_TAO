@@ -35,11 +35,9 @@
 #define ACE_HAS_MFC 1
 
 // So is UNICODE.
-#if defined (ACE_HAS_UNICODE)
-# undef ACE_HAS_UNICODE
-#endif /* ACE_HAS_UNICODE */
-#define ACE_HAS_UNICODE
-#define ACE_HAS_MOSTLY_UNICODE_APIS
+#if !defined (ACE_HAS_WCHAR)
+# error Only Unicode ACE is supported on Windows CE
+#endif /* ACE_HAS_WCHAR */
 
 #define ACE_USES_WINCE_SEMA_SIMULATION
 

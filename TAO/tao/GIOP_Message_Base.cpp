@@ -134,7 +134,7 @@ TAO_GIOP_Message_Base::
     default:
       if (TAO_debug_level > 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("(%P|%t|%N|%l) Wrong header type \n")),
+                           ACE_TEXT ("(%P|%t|%N|%l) Wrong header type \n")),
                           0);
 
     }
@@ -222,8 +222,8 @@ TAO_GIOP_Message_Base::
       if (retval == -1 && TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) - \n")
-                      ASYS_TEXT ("TAO_GIOP_Message_Base::handle_input \n")));
+                      ACE_TEXT ("TAO (%P|%t) - \n")
+                      ACE_TEXT ("TAO_GIOP_Message_Base::handle_input \n")));
           return -1;
         }
 
@@ -232,8 +232,8 @@ TAO_GIOP_Message_Base::
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("TAO (%P|%t) -"),
-                        ASYS_TEXT ("TAO_GIOP_Message_Base::handle_input, parse_magic_bytes \n")));
+                        ACE_TEXT ("TAO (%P|%t) -"),
+                        ACE_TEXT ("TAO_GIOP_Message_Base::handle_input, parse_magic_bytes \n")));
           return -1;
         }
 
@@ -243,8 +243,8 @@ TAO_GIOP_Message_Base::
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("TAO (%P|%t|%N%l) -\n"),
-                        ASYS_TEXT ("TAO_GIOP_Message_Base::handle_input \n")));
+                        ACE_TEXT ("TAO (%P|%t|%N%l) -\n"),
+                        ACE_TEXT ("TAO_GIOP_Message_Base::handle_input \n")));
           return -1;
         }
 
@@ -253,8 +253,8 @@ TAO_GIOP_Message_Base::
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("TAO (%P|%t|%N|%l) - %p\n"),
-                        ASYS_TEXT ("ACE_CDR::grow")));
+                        ACE_TEXT ("TAO (%P|%t|%N|%l) - %p\n"),
+                        ACE_TEXT ("ACE_CDR::grow")));
           return -1;
         }
 
@@ -277,16 +277,16 @@ TAO_GIOP_Message_Base::
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) - %p\n"),
-                    ASYS_TEXT ("TAO_GIOP_Message_Base::handle_input, read_buffer[1] \n")));
+                    ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                    ACE_TEXT ("TAO_GIOP_Message_Base::handle_input, read_buffer[1] \n")));
       return -1;
     }
   else if (n == 0)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) - %p\n"),
-                    ASYS_TEXT ("TAO_GIOP_Message_Base::handle_input, read_buffer[2]\n")));
+                    ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                    ACE_TEXT ("TAO_GIOP_Message_Base::handle_input, read_buffer[2]\n")));
       return -1;
     }
 
@@ -364,8 +364,8 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 
       // Print.
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P | %t):%s GIOP v%c.%c msg, ")
-                  ASYS_TEXT ("%d data bytes, %s endian, %s = %d\n"),
+                  ACE_TEXT ("(%P | %t):%s GIOP v%c.%c msg, ")
+                  ACE_TEXT ("%d data bytes, %s endian, %s = %d\n"),
                   label,
                   digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
                   digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
@@ -378,7 +378,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
         ACE_HEX_DUMP ((LM_DEBUG,
                        (const char *) ptr,
                        len,
-                       ASYS_TEXT ("GIOP message")));
+                       ACE_TEXT ("GIOP message")));
 
 
     }
@@ -423,7 +423,7 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%N|%l|%P|%t) error sending error to %d\n"),
+                    ACE_TEXT ("TAO (%N|%l|%P|%t) error sending error to %d\n"),
                     which));
     }
 
@@ -446,7 +446,7 @@ TAO_GIOP_Message_Base::parse_magic_bytes (TAO_GIOP_Message_State  *state)
       // For the present...
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) bad header, magic word [%c%c%c%c]\n"),
+                    ACE_TEXT ("TAO (%P|%t) bad header, magic word [%c%c%c%c]\n"),
                     buf[0],
                     buf[1],
                     buf[2],
@@ -459,8 +459,8 @@ TAO_GIOP_Message_Base::parse_magic_bytes (TAO_GIOP_Message_State  *state)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("(%N|%l|%P|%t) Error in validating")
-                      ASYS_TEXT ("revision \n")));
+                      ACE_TEXT ("(%N|%l|%P|%t) Error in validating")
+                      ACE_TEXT ("revision \n")));
           return -1;
         }
     }
@@ -482,8 +482,8 @@ TAO_GIOP_Message_Base::parse_header (TAO_GIOP_Message_State *state)
           && state->byte_order != 0 && state->byte_order != 1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) invalid byte order <%d>")
-                      ASYS_TEXT (" for version <1.0>\n"),
+                      ACE_TEXT ("TAO (%P|%t) invalid byte order <%d>")
+                      ACE_TEXT (" for version <1.0>\n"),
                       state->byte_order));
           return -1;
         }
@@ -499,8 +499,8 @@ TAO_GIOP_Message_Base::parse_header (TAO_GIOP_Message_State *state)
           && (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) invalid flags for <%d>")
-                      ASYS_TEXT (" for version <%d %d> \n"),
+                      ACE_TEXT ("TAO (%P|%t) invalid flags for <%d>")
+                      ACE_TEXT (" for version <%d %d> \n"),
                       buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET],
                       this->major_version (),
                       this->minor_version ()));
@@ -521,7 +521,7 @@ TAO_GIOP_Message_Base::parse_header (TAO_GIOP_Message_State *state)
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) Parsed header = <%d,%d,%d,%d,%d>\n"),
+                  ACE_TEXT ("TAO (%P|%t) Parsed header = <%d,%d,%d,%d,%d>\n"),
                   this->major_version (),
                   this->minor_version (),
                   state->byte_order,

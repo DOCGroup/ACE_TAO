@@ -346,7 +346,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (ACE_Naming
 {
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
   if (this->open (scope_in) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Local_Name_Space::ACE_Local_Name_Space")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Local_Name_Space::ACE_Local_Name_Space")));
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
@@ -382,8 +382,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
 {
   ACE_TRACE ("ACE_Local_Name_Space::create_manager");
   // Get directory name
-  LPCTSTR dir = this->name_options_->namespace_dir ();
-  LPCTSTR database = this->name_options_->database ();
+  const ACE_ACE_TCHAR *dir = this->name_options_->namespace_dir ();
+  const ACE_ACE_TCHAR *database = this->name_options_->database ();
 
   // Use process name as the file name.
   size_t len = ACE_OS::strlen (dir);
@@ -410,12 +410,12 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
                                 ACE_CHORUS_LOCAL_NAME_SPACE_T_SIZE);
 #endif /* CHORUS */
 
-  TCHAR lock_name_for_local_name_space [MAXNAMELEN + MAXPATHLEN];
-  TCHAR lock_name_for_backing_store [MAXPATHLEN + MAXNAMELEN];
-  LPCTSTR postfix = database;
+  ACE_TCHAR lock_name_for_local_name_space [MAXNAMELEN + MAXPATHLEN];
+  ACE_TCHAR lock_name_for_backing_store [MAXPATHLEN + MAXNAMELEN];
+  const ACE_ACE_TCHAR *postfix = database;
 
   size_t length = 0;
-  length = sizeof lock_name_for_local_name_space / sizeof (TCHAR);
+  length = sizeof lock_name_for_local_name_space / sizeof (ACE_TCHAR);
   ACE_OS::strncpy (lock_name_for_local_name_space,
                    ACE_TEXT ("name_space_"),
                    length);
@@ -423,7 +423,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
                    postfix,
                    length - ACE_OS::strlen (ACE_TEXT ("name_space_")));
 
-  length = sizeof lock_name_for_backing_store / sizeof (TCHAR);
+  length = sizeof lock_name_for_backing_store / sizeof (ACE_TCHAR);
   ACE_OS::strncpy (lock_name_for_backing_store,
                    ACE_TEXT ("backing_store_"),
                    length);
@@ -439,7 +439,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
 
   if (ACE_LOG_MSG->op_status ())
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("Allocator::Allocator\n")),
+                       ACE_TEXT ("Allocator::Allocator\n")),
                       -1);
 
   ACE_NEW_RETURN (this->lock_,
@@ -450,7 +450,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
   // Now check if the backing store has been created successfully
   if (ACE_OS::access (this->context_file_, F_OK) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("create_manager\n")),
+                       ACE_TEXT ("create_manager\n")),
                       -1);
 #endif /* ACE_LACKS_ACCESS */
 
@@ -462,7 +462,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
     {
       this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
       if (ACE::debug ())
-        ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
                     this->name_space_map_, ns_map));
     }
 
@@ -478,7 +478,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
         {
           this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
           if (ACE::debug ())
-            ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+            ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
                         this->name_space_map_, ns_map));
         }
       else
@@ -493,11 +493,11 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
 
           if (this->allocator_->bind (ACE_NAME_SERVER_MAP, ns_map) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("create_manager\n")), -1);
+                               ACE_TEXT ("create_manager\n")), -1);
         }
 
       if (ACE::debug ())
-        ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
                     this->name_space_map_, ns_map));
     }
 
@@ -770,7 +770,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i (void) const
       const char *type = map_entry->int_id_.type ();
 #endif /* ! ACE_NLOGGING */
 
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("key=%s\nvalue=%s\ntype=%s\n"),
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("key=%s\nvalue=%s\ntype=%s\n"),
                   key, value, type));
       // We need to delete key and value since char_rep allocates memory for them
       delete [] key;

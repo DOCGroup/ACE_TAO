@@ -36,10 +36,10 @@ public:
   ACE_Dirent (void);
   // Default constructor.
 
-  ACE_Dirent (const char *dirname);
+  ACE_Dirent (const ACE_TCHAR *dirname);
   // Constructor calls <opendir>
 
-  int open (const char *filename);
+  int open (const ACE_TCHAR *filename);
   // Opens the directory named by filename and associates a directory
   // stream with it.
 

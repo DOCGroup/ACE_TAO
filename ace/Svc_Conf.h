@@ -69,7 +69,7 @@ extern FILE *ace_yyin;
   } \
   else if ( ((result = fread( buf, 1, max_size, ace_yyin )) == 0) \
     && ferror( ace_yyin ) ) \
-    ACE_YY_FATAL_ERROR( "input in flex scanner failed" );
+    ACE_YY_FATAL_ERROR( ACE_TEXT ("input in flex scanner failed") );
 
 void ace_yyerror (const char *);
 // Error handling routine required by YACC or BISON
@@ -80,11 +80,11 @@ extern int ace_yylineno;
 extern int ace_yyerrno;
 // Keeps track of the number of errors encountered so far
 
-extern const ASYS_TCHAR *ace_yydirective;
+extern const ACE_TCHAR *ace_yydirective;
 // Used to parse service configurator directives from a string rather
 // than from a svc.conf file.
 
-extern char *ace_yytext;
+extern ACE_TCHAR *ace_yytext;
 // Holds the lexeme for the current token
 
 extern int ace_yyleng;
@@ -93,7 +93,7 @@ extern int ace_yyleng;
 extern ACE_Obstack *ace_obstack;
 // Efficient memory allocation technique
 
-ACE_Service_Type_Impl *ace_create_service_type (const ASYS_TCHAR *, int,
+ACE_Service_Type_Impl *ace_create_service_type (const ACE_TCHAR *, int,
                                                 void *, unsigned int,
                                                 ACE_Service_Object_Exterminator = 0);
 // Factory that creates a new ACE_Service_Type_Impl.
@@ -105,7 +105,7 @@ typedef union
   ACE_Parse_Node *parse_node_;
   ACE_Static_Node *static_node_;
   ACE_Service_Type *svc_record_;
-  char *ident_;
+  ACE_TCHAR *ident_;
 } ACE_YYSTYPE;
 extern ACE_YYSTYPE ace_yylval;
 #include "ace/post.h"

@@ -753,9 +753,9 @@ be_structure::in_recursion (be_type *node)
             {
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("(%N:%l) be_structure::")
-                                 ASYS_TEXT ("in_recursion - ")
-                                 ASYS_TEXT ("bad field type\n")),
+                                 ACE_TEXT ("(%N:%l) be_structure::")
+                                 ACE_TEXT ("in_recursion - ")
+                                 ACE_TEXT ("bad field type\n")),
                                 0);
             }
           if (type->in_recursion (node))

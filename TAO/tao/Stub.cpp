@@ -61,8 +61,8 @@ TAO_Stub::TAO_Stub (char *repository_id,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO: (%P|%t) TAO_Stub created with default ")
-                      ASYS_TEXT ("ORB core\n")));
+                      ACE_TEXT ("TAO: (%P|%t) TAO_Stub created with default ")
+                      ACE_TEXT ("ORB core\n")));
         }
       this->orb_core_ = TAO_ORB_Core_instance ();
     }
@@ -155,7 +155,7 @@ TAO_Stub::hash (CORBA::ULong max,
   // we rely on the profile object that its address info
   if (profile_in_use_)
     return profile_in_use_->hash (max, ACE_TRY_ENV);
-  ACE_ERROR_RETURN((LM_ERROR, ASYS_TEXT ("(%P|%t) hash called on a null profile!\n")), 0);
+  ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT ("(%P|%t) hash called on a null profile!\n")), 0);
 }
 
 // Expensive comparison of objref data, to see if two objrefs

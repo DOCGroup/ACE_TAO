@@ -12,7 +12,7 @@
 
 # include "ace/config-win32-common.h"
 
-# define ACE_CC_NAME "Visual C++"
+# define ACE_CC_NAME ACE_TEXT ("Visual C++")
 # define ACE_CC_PREPROCESSOR "CL.EXE"
 # define ACE_CC_PREPROCESSOR_ARGS "-nologo -E"
 
@@ -61,9 +61,6 @@
 #  define ACE_HAS_ANSI_CASTS 0
 # endif
 
-// MSVC already defined __TEXT
-# define ACE_HAS_TEXT_MACRO_CONFLICT
-
 # define ACE_HAS_EXPLICIT_KEYWORD
 # define ACE_HAS_MUTABLE_KEYWORD
 
@@ -72,7 +69,6 @@
 #  define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 # endif /* _MSC_VER && _MSC_VER < 1200 */
 
-# define ACE_HAS_WCHAR_TYPEDEFS_USHORT
 # if !defined (ACE_HAS_WINCE)
 #  define ACE_HAS_EXCEPTIONS
 # endif /* ACE_HAS_WINCE */
@@ -203,8 +199,8 @@ inline void *operator new (unsigned int, void *p) { return p; }
 # pragma warning(default: 4201)  /* winnt.h uses nameless structs */
 
 // At least for Win32 - MSVC compiler (ver. 5)
-# define ACE_INT64_FORMAT_SPECIFIER "%I64d"
-# define ACE_UINT64_FORMAT_SPECIFIER "%I64u"
+# define ACE_INT64_FORMAT_SPECIFIER ACE_TEXT ("%I64d")
+# define ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT ("%I64u")
 
 #endif /* _MSC_VER */
 

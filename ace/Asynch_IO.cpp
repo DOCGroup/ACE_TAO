@@ -1004,16 +1004,16 @@ ACE_Service_Handler::addresses (const ACE_INET_Addr &remote_address,
                                 const ACE_INET_Addr &local_address)
 {
   // Default behavior is to print out the addresses.
-  ASYS_TCHAR local_address_buf[BUFSIZ], remote_address_buf[BUFSIZ];
+  ACE_TCHAR local_address_buf[BUFSIZ], remote_address_buf[BUFSIZ];
   if (local_address.addr_to_string (local_address_buf, sizeof local_address_buf) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("can't obtain local_address's address string")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("can't obtain local_address's address string")));
 
   if (remote_address.addr_to_string (remote_address_buf, sizeof remote_address_buf) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("can't obtain remote_address's address string")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("can't obtain remote_address's address string")));
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("On fd %d\n"), this->handle ()));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("local address %s\n"), local_address_buf));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("remote address %s\n"), remote_address_buf));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("On fd %d\n"), this->handle ()));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("local address %s\n"), local_address_buf));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("remote address %s\n"), remote_address_buf));
 }
 
 void

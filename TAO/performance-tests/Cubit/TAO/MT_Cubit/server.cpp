@@ -198,8 +198,8 @@ Server::activate_high_servant (void)
        0,
        this->high_priority_) == -1)
     ACE_DEBUG ((LM_ERROR,
-                ASYS_TEXT ("(%P|%t) task activation at priority %d ")
-                ASYS_TEXT (" failed, exiting!\n%a"),
+                ACE_TEXT ("(%P|%t) task activation at priority %d ")
+                ACE_TEXT (" failed, exiting!\n%a"),
                 this->high_priority_,
                 -1));
 
@@ -288,8 +288,8 @@ Server::activate_low_servants (void)
            0,
            this->low_priority_) == -1)
         ACE_DEBUG ((LM_ERROR,
-                    ASYS_TEXT ("(%P|%t) task activation at priority %d ")
-                    ASYS_TEXT (" failed, exiting!\n%a"),
+                    ACE_TEXT ("(%P|%t) task activation at priority %d ")
+                    ACE_TEXT (" failed, exiting!\n%a"),
                     this->low_priority_,
                     -1));
 

@@ -75,7 +75,7 @@ public:
 protected:
   // = Class initializing methods to create/connect to a shared memory pool.
 
-  int create_shm_malloc (LPCTSTR name,
+  int create_shm_malloc (const ACE_TCHAR *name,
                          MALLOC_OPTIONS *options = 0);
   // Create a new shm_malloc object.  Return 0 if succeed and -1
   // otherwise.  This method should only be called from an acceptor

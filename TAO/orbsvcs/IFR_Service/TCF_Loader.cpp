@@ -61,7 +61,7 @@ TCF_Loader::create_object (CORBA::ORB_ptr orb,
 
 #if 0
 ACE_STATIC_SVC_DEFINE (TCF_Loader,
-                       ASYS_TEXT ("TAO_Object_Loader"),
+                       ACE_TEXT ("TAO_Object_Loader"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TCF_Loader),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

@@ -31,7 +31,7 @@ class ACE_Dynamic_Service
   //     Uses "name" for lookup in the ACE service repository. Obtains
   //     the object and returns it as the appropriate type.
 public:
-  static SERVICE *instance (const char *name);
+  static SERVICE *instance (const ACE_TCHAR *name);
   // Return instance using <name> to search the Service_Repository.
 
   void dump (void) const;

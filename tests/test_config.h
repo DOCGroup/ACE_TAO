@@ -43,51 +43,21 @@
 #undef ACE_NDEBUG
 
 #if defined (ACE_HAS_WINCE)
-
-#define ACE_LOG_DIRECTORY_A "log\\"
-#define MAKE_PIPE_NAME_A(X) "\\\\.\\pipe\\"#X
-
-#define ACE_LOG_DIRECTORY_W ASYS_TEXT (ACE_LOG_DIRECTORY_A)
-#define MAKE_PIPE_NAME_W(X) ASYS_TEXT (MAKE_PIPE_NAME_A(X))
-
+# define ACE_LOG_DIRECTORY ACE_TEXT ("log\\")
+# define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\"#X)
 #elif defined (ACE_WIN32)
-
-#define ACE_LOG_DIRECTORY_A "log\\"
-#define MAKE_PIPE_NAME_A(X) "\\\\.\\pipe\\"#X
-
-#define ACE_LOG_DIRECTORY_W L"log\\"
-#define MAKE_PIPE_NAME_W(X) L"\\\\.\\pipe\\"#X
-
+# define ACE_LOG_DIRECTORY ACE_TEXT ("log\\")
+# define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\"#X)
 #else
-
-#define ACE_LOG_DIRECTORY_A "log/"
-#define MAKE_PIPE_NAME_A(X) X
-
-#if defined (ACE_HAS_UNICODE)
-#define ACE_LOG_DIRECTORY_W L"log/"
-#define MAKE_PIPE_NAME_W(X) L##X
-#else
-#define ACE_LOG_DIRECTORY_W "log/"
-#define MAKE_PIPE_NAME_W(X) X
-#endif /* ACE_HAS_UNICODE */
-
+# define ACE_LOG_DIRECTORY ACE_TEXT ("log/")
+# define MAKE_PIPE_NAME(X) ACE_TEXT (X)
 #endif /* ACE_WIN32 */
 
 #if defined (ACE_HAS_WINCE)
-#define ACE_LOG_FILE_EXT_NAME_A ".txt"
-#define ACE_LOG_FILE_EXT_NAME_W ACE_TEXT (ACE_LOG_FILE_EXT_NAME_A)
+#define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".txt")
 #else
-#define ACE_LOG_FILE_EXT_NAME_W L".log"
-#define ACE_LOG_FILE_EXT_NAME_A ".log"
+#define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".log")
 #endif /* ACE_HAS_WINCE */
-
-#if defined (UNICODE)
-#define ACE_LOG_DIRECTORY ACE_LOG_DIRECTORY_W
-#define MAKE_PIPE_NAME MAKE_PIPE_NAME_W
-#else
-#define ACE_LOG_DIRECTORY ACE_LOG_DIRECTORY_A
-#define MAKE_PIPE_NAME MAKE_PIPE_NAME_A
-#endif /* UNICODE */
 
 #if defined (ACE_HAS_WINCE) || defined (ACE_HAS_PHARLAP)
 const size_t ACE_MAX_CLIENTS = 4;
@@ -107,35 +77,35 @@ const size_t ACE_MAX_THREADS = 4;
 char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 #define ACE_START_TEST(NAME) \
-  const ASYS_TCHAR *program = NAME; \
+  const ACE_TCHAR *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
   if (ace_file_stream::instance()->set_output (program) != 0) \
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("set_output failed")), -1); \
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Starting %s test at %D\n"), program))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program))
 
 #define ACE_END_TEST \
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Ending %s test at %D\n"), program)); \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test at %D\n"), program)); \
   ace_file_stream::instance()->close ()
 
 #if !defined (ACE_WIN32)
 #define ACE_APPEND_LOG(NAME) \
-  const ASYS_TCHAR *program = NAME; \
+  const ACE_TCHAR *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
   ace_file_stream::instance()->close (); \
   if (ace_file_stream::instance()->set_output (program, 1) != 0) \
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("set_output failed")), -1); \
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
 #else /* ACE_WIN32 */
 #define ACE_APPEND_LOG(NAME) \
-  const ASYS_TCHAR *program = NAME; \
+  const ACE_TCHAR *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
   if (ace_file_stream::instance()->set_output (program, 1) != 0) \
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("set_output failed")), -1); \
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
 #endif /* ACE_WIN32 */
 
 #define ACE_END_LOG \
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Ending %s test at %D\n\n"), program)); \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test at %D\n\n"), program)); \
   ACE_LOG_MSG->set_flags(ACE_Log_Msg::SILENT); \
   ace_file_stream::instance()->close ();
 
@@ -143,12 +113,12 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
   // This is the only way I could figure out to avoid an error
   // about attempting to unlink a non-existant file.
 #define ACE_INIT_LOG(NAME) \
-  ASYS_TCHAR temp[MAXPATHLEN]; \
-  ACE_OS::sprintf (temp, ASYS_TEXT ("%s%s%s"), \
-                   ASYS_TEXT (ACE_LOG_DIRECTORY_A), \
-                   ACE::basename (NAME, ASYS_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)), \
-                   ASYS_TEXT (ACE_LOG_FILE_EXT_NAME_A)); \
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Deleting old log file %s (if any)\n\n"), temp)); \
+  ACE_TCHAR temp[MAXPATHLEN]; \
+  ACE_OS::sprintf (temp, ACE_TEXT ("%s%s%s"), \
+                   ACE_LOG_DIRECTORY, \
+                   ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR), \
+                   ACE_LOG_FILE_EXT_NAME); \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Deleting old log file %s (if any)\n\n"), temp)); \
   int fd_init_log; \
   if ((fd_init_log = ACE_OS::open (temp, \
                                    O_WRONLY | O_CREAT, 0x644)) != ERROR) \
@@ -164,12 +134,12 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 #endif /* ghs */
 #else /* ! VXWORKS */
 #define ACE_INIT_LOG(NAME) \
-  ASYS_TCHAR temp[MAXPATHLEN]; \
-  ACE_OS::sprintf (temp, ASYS_TEXT ("%s%s%s"), \
-                   ASYS_TEXT (ACE_LOG_DIRECTORY_A), \
-                   ACE::basename (NAME, ASYS_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)), \
-                   ASYS_TEXT (ACE_LOG_FILE_EXT_NAME_A)); \
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Deleting old log file %s (if any)\n\n"), temp)); \
+  ACE_TCHAR temp[MAXPATHLEN]; \
+  ACE_OS::sprintf (temp, ACE_TEXT ("%s%s%s"), \
+                   ACE_LOG_DIRECTORY, \
+                   ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR), \
+                   ACE_LOG_FILE_EXT_NAME); \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Deleting old log file %s (if any)\n\n"), temp)); \
   ACE_OS::unlink (temp);
 #endif /* ! VXWORKS */
 
@@ -184,7 +154,7 @@ class ACE_Test_Output
 public:
   ACE_Test_Output (void);
   ~ACE_Test_Output (void);
-  int set_output (const ASYS_TCHAR *filename, int append = 0);
+  int set_output (const ACE_TCHAR *filename, int append = 0);
   OFSTREAM *output_file (void);
   void close (void);
 
@@ -217,7 +187,7 @@ ACE_Test_Output::~ACE_Test_Output (void)
 }
 
 int
-ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
+ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 {
 #if defined (ACE_HAS_PHARLAP)
   // For PharLap, just send it all to the host console for now - redirect
@@ -226,23 +196,23 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
   ACE_LOG_MSG->msg_ostream (&cout);
 
 #else
-  ASYS_TCHAR temp[MAXPATHLEN];
+  ACE_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
-  const ASYS_TCHAR *test_dir;
+  const ACE_TCHAR *test_dir;
 
 #if !defined (ACE_HAS_WINCE)
-  test_dir = ACE_OS::getenv (ASYS_TEXT ("ACE_TEST_DIR"));
+  test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
 
   if (test_dir == 0)
 #endif /* ACE_HAS_WINCE */
-    test_dir = ASYS_TEXT ("");
+    test_dir = ACE_TEXT ("");
 
   ACE_OS::sprintf (temp,
-                   ASYS_TEXT ("%s%s%s%s"),
+                   ACE_TEXT ("%s%s%s%s"),
                    test_dir,
-                   ASYS_TEXT (ACE_LOG_DIRECTORY_A),
-                   ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR_A),
-                   ASYS_TEXT (ACE_LOG_FILE_EXT_NAME_A));
+                   ACE_LOG_DIRECTORY,
+                   ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR),
+                   ACE_LOG_FILE_EXT_NAME);
 
 #if defined (VXWORKS)
   // This is the only way I could figure out to avoid a console
@@ -260,20 +230,20 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
   // directory does exist, it causes a wierd console error message
   // about "cat: input error on standard input: Is a directory".  So,
   // VxWorks users must create the directory manually.
-  ACE_OS::mkdir (ASYS_TEXT (ACE_LOG_DIRECTORY_A));
+  ACE_OS::mkdir (ACE_LOG_DIRECTORY);
 # endif /* ! VXWORKS */
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  this->output_file_->open (ASYS_ONLY_MULTIBYTE_STRING (temp),
+  this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp),
                             ios::out | (append ? ios::app : ios::trunc));
   if (this->output_file_->bad ())
     return -1;
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
-  ASYS_TCHAR *fmode = 0;
+  ACE_TCHAR *fmode = 0;
   if (append)
-    fmode = ASYS_TEXT ("a");
+    fmode = ACE_TEXT ("a");
   else
-    fmode = ASYS_TEXT ("w");
+    fmode = ACE_TEXT ("w");
   this->output_file_ = ACE_OS::fopen (temp, fmode);
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 

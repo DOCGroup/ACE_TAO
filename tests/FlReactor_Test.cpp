@@ -31,7 +31,7 @@ ACE_RCSID(tests, FlReactor_Test, "$Id$")
 int 
 main (int, char*[])
 {
-  ACE_START_TEST (ASYS_TEXT ("FlReactor_Test"));
+  ACE_START_TEST (ACE_TEXT ("FlReactor_Test"));
 
   ACE_ERROR ((LM_INFO,
               "FL not supported on this platform\n"));
@@ -231,7 +231,7 @@ Acceptor::make_svc_handler (Connection_Handler *&sh)
 
 int main (int argc, char *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("FlReactor_Test"));
+  ACE_START_TEST (ACE_TEXT ("FlReactor_Test"));
 
   Fl_Window window (300, 370);
 

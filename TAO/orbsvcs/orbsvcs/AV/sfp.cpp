@@ -1364,7 +1364,7 @@ template class ACE_Singleton<TAO_SFP_Base, ACE_SYNCH_MUTEX>;
 
 ACE_FACTORY_DEFINE (AV, TAO_AV_SFP_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_SFP_Factory,
-                       ASYS_TEXT ("SFP_Factory"),
+                       ACE_TEXT ("SFP_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_AV_SFP_Factory),
                        ACE_Service_Type::DELETE_THIS |

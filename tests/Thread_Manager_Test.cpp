@@ -86,7 +86,7 @@ static void *
 worker (int iterations)
 {
 #if defined (VXWORKS)
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) %s: stack size is %u\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) %s: stack size is %u\n"),
               ACE_OS::thr_self (),
               ACE_OS::thr_min_stack ()));
 #endif /* VXWORKS */
@@ -102,7 +102,7 @@ worker (int iterations)
   thread_start->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) worker starting loop\n")));
+              ACE_TEXT ("(%t) worker starting loop\n")));
 
   for (int i = 0; i < iterations; i++)
     {
@@ -112,14 +112,14 @@ worker (int iterations)
           if (been_signalled (t_id))
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("(%t) had received signal\n")));
+                          ACE_TEXT ("(%t) had received signal\n")));
 
               // Only test for cancellation after we've been signaled,
               // to avoid race conditions for suspend() and resume().
               if (thr_mgr->testcancel (ACE_Thread::self ()) != 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ASYS_TEXT ("(%t) has been cancelled "
+                              ACE_TEXT ("(%t) has been cancelled "
                                          "before iteration %d!\n"),
                               i));
                   break;
@@ -129,8 +129,8 @@ worker (int iterations)
           if (thr_mgr->testcancel (ACE_Thread::self ()) != 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("(%t) has been cancelled "
-                                     "before iteration %d!\n"),
+                          ACE_TEXT ("(%t) has been cancelled ")
+                          ACE_TEXT ("before iteration %d!\n"),
                           i));
               break;
             }
@@ -148,9 +148,9 @@ static const int DEFAULT_ITERATIONS = 10000;
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Thread_Manager_Test"));
+  ACE_START_TEST (ACE_TEXT ("Thread_Manager_Test"));
   int status = 0;
 
 #if defined (ACE_HAS_THREADS)
@@ -200,7 +200,7 @@ main (int, ASYS_TCHAR *[])
                           char[32],
                           -1);
           ACE_OS::sprintf (thread_name[i],
-                           ASYS_TEXT ("thread%u"),
+                           ACE_TEXT ("thread%u"),
                            i);
         }
       else
@@ -233,15 +233,15 @@ main (int, ASYS_TCHAR *[])
 
   // Wait for 1 second and then suspend every thread in the group.
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) suspending group\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) suspending group\n")));
   if (thr_mgr->suspend_grp (grp_id) == -1)
     {
       // Pthreads w/o UNIX 98 extensions doesn't support suspend/resume,
       // so it's allowed to ENOTSUP; anything else is a hard fail.
       ACE_ASSERT (errno == ENOTSUP);
       ACE_DEBUG((LM_DEBUG,
-                 ASYS_TEXT (" OK: suspend_grp isn't supported with ")
-                 ASYS_TEXT ("Pthreads\n")));
+                 ACE_TEXT (" OK: suspend_grp isn't supported with ")
+                 ACE_TEXT ("Pthreads\n")));
     }
 
   // Wait for 1 more second and then resume every thread in the
@@ -249,14 +249,14 @@ main (int, ASYS_TCHAR *[])
   ACE_OS::sleep (ACE_Time_Value (1));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) resuming group\n")));
+              ACE_TEXT ("(%t) resuming group\n")));
 
   if (thr_mgr->resume_grp (grp_id) == -1)
     {
       ACE_ASSERT (errno == ENOTSUP);
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT (" OK: resume_grp isn't supported with ")
-                  ASYS_TEXT ("Pthreads\n")));
+                  ACE_TEXT (" OK: resume_grp isn't supported with ")
+                  ACE_TEXT ("Pthreads\n")));
     }
 
   // Wait for 1 more second and then send a SIGINT to every thread in
@@ -264,7 +264,7 @@ main (int, ASYS_TCHAR *[])
   ACE_OS::sleep (ACE_Time_Value (1));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) signaling group\n")));
+              ACE_TEXT ("(%t) signaling group\n")));
 
 #if defined (ACE_HAS_WTHREADS)
   thr_mgr->kill_grp (grp_id,
@@ -287,7 +287,7 @@ main (int, ASYS_TCHAR *[])
   ACE_OS::sleep (ACE_Time_Value (1));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) cancelling group\n")));
+              ACE_TEXT ("(%t) cancelling group\n")));
 
   ACE_ASSERT (thr_mgr->cancel_grp (grp_id) != -1);
 
@@ -299,16 +299,16 @@ main (int, ASYS_TCHAR *[])
     {
       if (errno == ETIME)
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("maximum wait time of %d msec exceeded\n"),
+                    ACE_TEXT ("maximum wait time of %d msec exceeded\n"),
                                max_wait.msec ()));
       else
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%p\n"), ASYS_TEXT ("wait")));
+                    ACE_TEXT ("%p\n"), ACE_TEXT ("wait")));
       status = -1;
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) main thread finished\n")));
+              ACE_TEXT ("(%t) main thread finished\n")));
 
 #if defined (VXWORKS)
   for (i = 0; i < n_threads - 1; ++i)
@@ -328,7 +328,7 @@ main (int, ASYS_TCHAR *[])
 
 #else
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;

@@ -4,7 +4,7 @@
 #include "ace/SString.h"
 
 ACE_INLINE void
-ACE_DEV_Addr::set (LPCTSTR devname)
+ACE_DEV_Addr::set (const ACE_TCHAR *devname)
 {
   ACE_TRACE ("ACE_DEV_Addr::set");
 
@@ -13,27 +13,13 @@ ACE_DEV_Addr::set (LPCTSTR devname)
 }
 
 // Transform the current address into string format.
-#if defined (UNICODE)
+
 ACE_INLINE int
-ACE_DEV_Addr::addr_to_string (wchar_t *s, size_t len) const
+ACE_DEV_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 {
   ACE_TRACE ("ACE_DEV_Addr::addr_to_string");
 
   ACE_OS::strncpy (s, this->devname_, len);
-  return 0;
-}
-#endif /* UNICODE */
-
-// Transform the current address into string format.
-
-ACE_INLINE int
-ACE_DEV_Addr::addr_to_string (char *s, size_t len) const
-{
-  ACE_TRACE ("ACE_DEV_Addr::addr_to_string");
-
-  ACE_OS::strncpy (s,
-		   ACE_MULTIBYTE_STRING (this->devname_),
-		   len);
   return 0;
 }
 
@@ -69,7 +55,7 @@ ACE_DEV_Addr::operator != (const ACE_DEV_Addr &sap) const
 
 // Return the path name used for the rendezvous point.
 
-ACE_INLINE LPCTSTR
+ACE_INLINE const ACE_TCHAR *
 ACE_DEV_Addr::get_path_name (void) const
 {
   ACE_TRACE ("ACE_DEV_Addr::get_path_name");

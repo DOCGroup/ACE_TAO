@@ -105,7 +105,7 @@ TAO_Naming_Service::init (int argc,
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           -1);
 
       // Get the POA object.

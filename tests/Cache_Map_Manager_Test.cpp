@@ -142,7 +142,7 @@ run_iterator_cache (MAP_CACHE &cache)
     {
       // Debugging info.
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%d|%d)"),
+                  ACE_TEXT ("(%d|%d)"),
                   (*iter).first (),
                   (*iter).second ()));
 
@@ -150,7 +150,7 @@ run_iterator_cache (MAP_CACHE &cache)
       ++counter;
     }
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
   ACE_UNUSED_ARG (iterations);
   ACE_ASSERT (counter == iterations);
@@ -169,7 +169,7 @@ run_iterator_hash_cache (HASH_MAP_CACHE &cache)
     {
       // Debugging info.
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%d|%d)"),
+                  ACE_TEXT ("(%d|%d)"),
                   (*iter).first (),
                   (*iter).second ()));
 
@@ -177,7 +177,7 @@ run_iterator_hash_cache (HASH_MAP_CACHE &cache)
       ++counter;
     }
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
   ACE_UNUSED_ARG (iterations);
   ACE_ASSERT (counter == iterations);
@@ -198,14 +198,14 @@ run_reverse_iterator_cache (MAP_CACHE &cache)
       // Debugging info.
       if (debug)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%d|%d)"),
+                    ACE_TEXT ("(%d|%d)"),
                     (*iter).first (),
                     (*iter).second ()));
       --counter;
     }
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
   ACE_ASSERT (counter == 0);
 }
@@ -225,14 +225,14 @@ run_reverse_iterator_hash_cache (HASH_MAP_CACHE &cache)
       // Debugging info.
       if (debug)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%d|%d)"),
+                    ACE_TEXT ("(%d|%d)"),
                     (*iter).first (),
                     (*iter).second ()));
       --counter;
     }
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
   ACE_ASSERT (counter == 0);
 }
@@ -249,13 +249,13 @@ find_test_cache (MAP_CACHE &cache)
       ACE_ASSERT (j == lookup_array[i]);
 
       if (debug)
-        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d  "), j));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d  "), j));
 
       ACE_UNUSED_ARG (result);
     }
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 }
 
 static void
@@ -270,13 +270,13 @@ find_test_hash_cache (HASH_MAP_CACHE &cache)
       ACE_ASSERT (j == lookup_array[i]);
 
       if (debug)
-        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d  "), j));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d  "), j));
 
       ACE_UNUSED_ARG (result);
     }
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 }
 
 static void
@@ -352,14 +352,14 @@ functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
       ACE_UNUSED_ARG (result);
 
       if (debug)
-        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
                     i, i, j, j));
       ++counter;
       ACE_ASSERT (cache.current_size () == counter);
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Number of entries in cache before purging: %d\n"),
+              ACE_TEXT ("Number of entries in cache before purging: %d\n"),
               cache.current_size ()));
 
   run_iterator_cache (cache);
@@ -373,7 +373,7 @@ functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
   run_reverse_iterator_cache (cache);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Number of entries in cache  after purging: %d\n"),
+              ACE_TEXT ("Number of entries in cache  after purging: %d\n"),
               cache.current_size ()));
 }
 
@@ -395,14 +395,14 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
 
       if (debug)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
+                    ACE_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
                     i, i, j, j));
       ++counter;
       ACE_ASSERT (cache.current_size () == counter);
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Number of entries in cache before purging: %d\n"),
+              ACE_TEXT ("Number of entries in cache before purging: %d\n"),
               cache.current_size ()));
 
   run_iterator_hash_cache (cache);
@@ -416,7 +416,7 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
   run_reverse_iterator_hash_cache (cache);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Number of entries in cache  after purging: %d\n"),
+              ACE_TEXT ("Number of entries in cache  after purging: %d\n"),
               cache.current_size ()));
 }
 
@@ -429,7 +429,7 @@ test_caching_strategy_type (void)
   switch (caching_strategy_type)
     {
     case ACE_NULL:
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nNull_Caching_Strategy\n\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nNull_Caching_Strategy\n\n")));
       ACE_NEW (map_caching_strategy,
                MAP_NULL_ADAPTER);
       ACE_NEW (hash_map_caching_strategy,
@@ -437,7 +437,7 @@ test_caching_strategy_type (void)
       break;
 
     case ACE_LRU:
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nLRU_Caching_Strategy\n\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nLRU_Caching_Strategy\n\n")));
       ACE_NEW (map_caching_strategy,
                MAP_LRU_ADAPTER);
       ACE_NEW (hash_map_caching_strategy,
@@ -445,7 +445,7 @@ test_caching_strategy_type (void)
       break;
 
     case ACE_LFU:
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nLFU_Caching_Strategy\n\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nLFU_Caching_Strategy\n\n")));
       ACE_NEW (map_caching_strategy,
                MAP_LFU_ADAPTER);
       ACE_NEW (hash_map_caching_strategy,
@@ -453,7 +453,7 @@ test_caching_strategy_type (void)
       break;
 
     case ACE_FIFO:
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nFIFO_Caching_Strategy\n\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nFIFO_Caching_Strategy\n\n")));
       ACE_NEW (map_caching_strategy,
                MAP_FIFO_ADAPTER);
       ACE_NEW (hash_map_caching_strategy,
@@ -464,10 +464,10 @@ test_caching_strategy_type (void)
       break;
     }
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("map cache\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("map cache\n")));
   functionality_test_cache (*map_caching_strategy);
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nhash map cache\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhash map cache\n")));
   functionality_test_hash_cache (*hash_map_caching_strategy);
 
   delete map_caching_strategy;
@@ -475,9 +475,9 @@ test_caching_strategy_type (void)
 }
 
 static int
-parse_args (int argc, ASYS_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("c:i:r:f:p:d"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("c:i:r:f:p:d"));
 
   int cc;
   while ((cc = get_opt ()) != -1)
@@ -485,13 +485,13 @@ parse_args (int argc, ASYS_TCHAR *argv[])
     switch (cc)
       {
       case 'c':
-        if (ACE_OS::strcmp (get_opt.optarg, ASYS_TEXT ("null")) == 0)
+        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("null")) == 0)
           caching_strategy_type = ACE_NULL;
-        if (ACE_OS::strcmp (get_opt.optarg, ASYS_TEXT ("lru")) == 0)
+        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("lru")) == 0)
           caching_strategy_type = ACE_LRU;
-        if (ACE_OS::strcmp (get_opt.optarg, ASYS_TEXT ("lfu")) == 0)
+        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("lfu")) == 0)
           caching_strategy_type = ACE_LFU;
-        if (ACE_OS::strcmp (get_opt.optarg, ASYS_TEXT ("fifo")) == 0)
+        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("fifo")) == 0)
           caching_strategy_type = ACE_FIFO;
         break;
       case 'i':
@@ -513,13 +513,13 @@ parse_args (int argc, ASYS_TCHAR *argv[])
       case 'h':
       default:
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("usage: %s ")
-                    ASYS_TEXT ("[-c (caching strategy: lru / lfu / fifo / null [default = all])] ")
-                    ASYS_TEXT ("[-r (randomize lookups)] ")
-                    ASYS_TEXT ("[-i (iterations)] ")
-                    ASYS_TEXT ("[-d (debug, i.e., addition printouts)] ")
-                    ASYS_TEXT ("[-p (purge percent)] ")
-                    ASYS_TEXT ("[-f (number of lookups)] \n"),
+                    ACE_TEXT ("usage: %s ")
+                    ACE_TEXT ("[-c (caching strategy: lru / lfu / fifo / null [default = all])] ")
+                    ACE_TEXT ("[-r (randomize lookups)] ")
+                    ACE_TEXT ("[-i (iterations)] ")
+                    ACE_TEXT ("[-d (debug, i.e., addition printouts)] ")
+                    ACE_TEXT ("[-p (purge percent)] ")
+                    ACE_TEXT ("[-f (number of lookups)] \n"),
                     argv[0]));
         return -1;
       }
@@ -528,7 +528,7 @@ parse_args (int argc, ASYS_TCHAR *argv[])
 }
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   // Validate options.
   int result = parse_args (argc, argv);
@@ -536,7 +536,7 @@ main (int argc, ASYS_TCHAR *argv[])
     return result;
 
   // Start the test only if options are valid.
-  ACE_START_TEST (ASYS_TEXT ("Cache_Map_Manager_Test"));
+  ACE_START_TEST (ACE_TEXT ("Cache_Map_Manager_Test"));
 
   // Remove the extra debugging attributes from Log_Msg output.
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
@@ -550,7 +550,7 @@ main (int argc, ASYS_TCHAR *argv[])
                   -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\nLookup sequence: ")));
+              ACE_TEXT ("\nLookup sequence: ")));
 
   // Initialize the lookup array.
   for (size_t k = 0;
@@ -563,12 +563,12 @@ main (int argc, ASYS_TCHAR *argv[])
         lookup_array[k] = k % iterations;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("%d  "),
+                  ACE_TEXT ("%d  "),
                   lookup_array[k]));
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\n\n")));
+              ACE_TEXT ("\n\n")));
 
   // Do we need to test all the strategies.
   if (caching_strategy_type == ACE_ALL)

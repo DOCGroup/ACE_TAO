@@ -56,7 +56,7 @@ public:
                         int protocol_family = PF_INET,
                         int protocol = 0,
                         int reuse_addr = 0,
-                        const ASYS_TCHAR *host_name = 0);
+                        const ACE_TCHAR *host_name = 0);
 
   ~ACE_SOCK_Dgram_Bcast (void);
   // Default dtor.
@@ -67,7 +67,7 @@ public:
             int protocol_family = PF_INET,
             int protocol = 0,
             int reuse_addr = 0,
-            const ASYS_TCHAR *host_name = 0);
+            const ACE_TCHAR *host_name = 0);
   // Initiate a connectionless datagram broadcast endpoint.
 
   int close (void);
@@ -109,7 +109,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  int mk_broadcast (const ASYS_TCHAR *host_name);
+  int mk_broadcast (const ACE_TCHAR *host_name);
   // Make broadcast available for Datagram socket.
 
   ACE_Bcast_Node *if_list_;

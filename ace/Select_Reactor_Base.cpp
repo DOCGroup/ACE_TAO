@@ -432,8 +432,8 @@ ACE_Select_Reactor_Handler_Repository_Iterator::dump (void) const
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository_Iterator::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("rep_ = %u"), this->rep_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("current_ = %d"), this->current_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("rep_ = %u"), this->rep_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("current_ = %d"), this->current_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -444,19 +444,19 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) max_handlep1_ = %d, max_size_ = %d\n"),
+              ACE_TEXT ("(%t) max_handlep1_ = %d, max_size_ = %d\n"),
               this->max_handlep1_, this->max_size_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("[")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("[")));
 
   ACE_Event_Handler *eh = 0;
 
   for (ACE_Select_Reactor_Handler_Repository_Iterator iter (this);
        iter.next (eh) != 0;
        iter.advance ())
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (eh = %x, eh->handle_ = %d)"),
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (eh = %x, eh->handle_ = %d)"),
                 eh, eh->get_handle ()));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" ]")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" ]")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -489,7 +489,7 @@ ACE_Select_Reactor_Notify::dump (void) const
   ACE_TRACE ("ACE_Select_Reactor_Notify::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("select_reactor_ = %x"), this->select_reactor_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("select_reactor_ = %x"), this->select_reactor_));
   this->notification_pipe_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -724,14 +724,14 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
               break;
             else if (notify_queue_.dequeue_head (temp) == -1)
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("%p\n"),
-                                 ASYS_TEXT ("dequeue_head")),
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("dequeue_head")),
                                 -1);
             buffer = *temp;
             if (free_queue_.enqueue_head (temp) == -1)
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("%p\n"),
-                                 ASYS_TEXT ("enqueue_head")),
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("enqueue_head")),
                                 -1);
           }
 
@@ -758,7 +758,7 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
                   break;
                 default:
                   // Should we bail out if we get an invalid mask?
-                  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("invalid mask = %d\n"), buffer.mask_));
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("invalid mask = %d\n"), buffer.mask_));
                 }
               if (result == -1)
                 buffer.eh_->handle_close (ACE_INVALID_HANDLE,
@@ -796,7 +796,7 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
             default:
               // Should we bail out if we get an invalid mask?
               ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("invalid mask = %d\n"),
+                          ACE_TEXT ("invalid mask = %d\n"),
                           buffer.mask_));
             }
           if (result == -1)

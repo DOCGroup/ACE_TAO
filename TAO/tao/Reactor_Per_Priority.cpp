@@ -42,8 +42,8 @@ TAO_Reactor_Per_Priority::reactor (void)
     {
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) - Reactor_Per_Priority::reactor: ")
-                    ASYS_TEXT (" cannot get priority for this thread\n")));
+                    ACE_TEXT ("TAO (%P|%t) - Reactor_Per_Priority::reactor: ")
+                    ACE_TEXT (" cannot get priority for this thread\n")));
       return 0;
     }
 
@@ -108,7 +108,7 @@ TAO_Reactor_Per_Priority::leader_follower_i (CORBA::Short priority)
     {
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) - new priority %d\n"),
+                    ACE_TEXT ("TAO (%P|%t) - new priority %d\n"),
                     priority));
       // The priority is new, create an entry in the table.
       ACE_NEW_RETURN (leader_follower,

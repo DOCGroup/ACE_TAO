@@ -293,7 +293,7 @@ TAO_Connector::make_mprofile (const char *string,
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) - TAO_Connector::make_mprofile <%s>\n"),
+                  ACE_TEXT ("TAO (%P|%t) - TAO_Connector::make_mprofile <%s>\n"),
                   string));
     }
 

@@ -28,12 +28,12 @@
 ACE_RCSID(tests, OrdMultiSet_Test, "$Id$")
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
   int ret = 0;
   int *ptr = 0;
 
-  ACE_START_TEST (ASYS_TEXT ("OrdMultiSet_Test"));
+  ACE_START_TEST (ACE_TEXT ("OrdMultiSet_Test"));
 
   // make an empty set of int and an iterator
   ACE_Ordered_MultiSet<int> set;

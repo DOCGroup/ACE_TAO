@@ -28,9 +28,9 @@ static ACE_UINT32 iterations = ACE_MAX_ITERATIONS * 10;
 static ACE_UINT32 table_size = ACE_MAX_ITERATIONS;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "t:i:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("t:i:"));
 
   int cc;
 
@@ -38,18 +38,18 @@ parse_args (int argc, char *argv[])
     switch (cc)
       {
       case 't':
-        table_size = atoi (get_opt.optarg);
+        table_size = ACE_OS::atoi (get_opt.optarg);
         break;
       case 'i':
-        iterations = atoi (get_opt.optarg);
+        iterations = ACE_OS::atoi (get_opt.optarg);
         break;
       case '?':
       case 'h':
       default:
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("usage: %s ")
-                    ASYS_TEXT ("[-i (iterations)] ")
-                    ASYS_TEXT ("[-t (table size)] "),
+                    ACE_TEXT ("usage: %s ")
+                    ACE_TEXT ("[-i (iterations)] ")
+                    ACE_TEXT ("[-t (table size)] "),
                     argv[0]));
         return -1;
       }
@@ -70,7 +70,7 @@ typedef ACE_Hash_Map_Bucket_Iterator<ACE_UINT32,
                                      ACE_SYNCH_NULL_MUTEX> HASH_MAP_BUCKET_ITERATOR;
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   // Validate options.
   int result = parse_args (argc, argv);
@@ -78,7 +78,7 @@ main (int argc, ASYS_TCHAR *argv[])
     return result;
 
   // Start the test only if options are valid.
-  ACE_START_TEST (ASYS_TEXT ("Hash_Map_Bucket_Iterator_Test"));
+  ACE_START_TEST (ACE_TEXT ("Hash_Map_Bucket_Iterator_Test"));
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
   ACE_UINT32 i = 0;

@@ -219,7 +219,7 @@ main (int argc, char *argv[])
   int result = 0;
 
   // Parse args
-  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("swmc"), 1);
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("swmc"), 1);
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {

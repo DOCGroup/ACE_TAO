@@ -261,7 +261,7 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 int
 main (int argc, char *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("XtReactor_Test"));
+  ACE_START_TEST (ACE_TEXT ("XtReactor_Test"));
 
 #if defined (ACE_HAS_XT)
   XtAppContext app_context;

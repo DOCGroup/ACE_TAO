@@ -17,7 +17,7 @@ ACE_Module<ACE_SYNCH_USE>::arg (void *a)
   this->arg_ = a;
 }
 
-template <ACE_SYNCH_DECL> ACE_INLINE const ASYS_TCHAR *
+template <ACE_SYNCH_DECL> ACE_INLINE const ACE_TCHAR *
 ACE_Module<ACE_SYNCH_USE>::name (void) const
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::name");
@@ -25,7 +25,7 @@ ACE_Module<ACE_SYNCH_USE>::name (void) const
 }
 
 template <ACE_SYNCH_DECL> ACE_INLINE void
-ACE_Module<ACE_SYNCH_USE>::name (const ASYS_TCHAR *n)
+ACE_Module<ACE_SYNCH_USE>::name (const ACE_TCHAR *n)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::name");
   ACE_OS::strncpy (this->name_, n, MAXNAMLEN);

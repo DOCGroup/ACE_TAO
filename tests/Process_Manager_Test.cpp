@@ -52,7 +52,7 @@ public:
   {
     if (debug_test)
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P|%t) Exit_Handler(%s) got %d: %d\n"),
+                  ACE_TEXT ("(%P|%t) Exit_Handler(%s) got %d: %d\n"),
                   msg_,
                   int (proc->getpid ()),
                   int (proc->exit_code ()) ));
@@ -63,23 +63,23 @@ private:
 };
 
 static void
-usage (const char *argv0)
+usage (const ACE_TCHAR *argv0)
 {
   ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT ("usage: %s [-d] [sleep-seconds]\n"),
+              ACE_TEXT ("usage: %s [-d] [sleep-seconds]\n"),
               argv0));
   ACE_OS::exit (0);
 }
 
 static pid_t
-spawn_child (const char *argv0,
+spawn_child (const ACE_TCHAR *argv0,
              ACE_Process_Manager &mgr,
              int sleep_time = 0)
 {
   ACE_Process_Options opts;
 
   opts.command_line (ACE_TEXT("%s %s %d"),
-                     ACE_WIDE_STRING(argv0),
+                     argv0,
                      debug_test ? ACE_TEXT ("-d") : ACE_TEXT (""),
                      sleep_time);
 
@@ -87,15 +87,15 @@ spawn_child (const char *argv0,
 
   if (debug_test)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%P|%t) spawned child: %d\n"),
+                ACE_TEXT ("(%P|%t) spawned child: %d\n"),
                 int (result)));
   return result;
 }
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt args (argc, argv, "d");
+  ACE_Get_Opt args (argc, argv, ACE_TEXT ("d"));
 
   for (int arg = args (); arg != EOF; arg = args ())
     switch (arg)
@@ -110,11 +110,11 @@ main (int argc, ASYS_TCHAR *argv[])
 
   if (args.optind == argc - 1)
     {     // child process: sleep & exit
-      int secs = atoi (argv[args.optind]);
+      int secs = ACE_OS::atoi (argv[args.optind]);
       ACE_OS::sleep (secs ? secs : 1);
       if (debug_test)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%P|%t) about to exit with code %d\n"),
+                    ACE_TEXT ("(%P|%t) about to exit with code %d\n"),
                     secs));
       return secs;
     }
@@ -122,7 +122,7 @@ main (int argc, ASYS_TCHAR *argv[])
   if (args.optind != argc)      // incorrect usage
     usage (argv[0]);
 
-  ACE_START_TEST (ASYS_TEXT ("Process_Manager_Test"));
+  ACE_START_TEST (ACE_TEXT ("Process_Manager_Test"));
 
   // Try the explicit <ACE_Process_Manager::wait> functions
 
@@ -146,7 +146,7 @@ main (int argc, ASYS_TCHAR *argv[])
 
   if (debug_test)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%P|%t) waited for child %d: %d\n"),
+                ACE_TEXT ("(%P|%t) waited for child %d: %d\n"),
                 child1,
                 exitcode));
 
@@ -166,7 +166,7 @@ main (int argc, ASYS_TCHAR *argv[])
 
   if (debug_test)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%P|%t) waited for child %d: %d\n"),
+                ACE_TEXT ("(%P|%t) waited for child %d: %d\n"),
                 child3,
                 exitcode));
 
@@ -176,7 +176,7 @@ main (int argc, ASYS_TCHAR *argv[])
                             &exitcode);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) expected to reap %d, got %d\n"),
+              ACE_TEXT ("(%P|%t) expected to reap %d, got %d\n"),
               child2,
               result3));
   ACE_ASSERT (result3 == child2);
@@ -184,7 +184,7 @@ main (int argc, ASYS_TCHAR *argv[])
 
   if (debug_test)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%P|%t) waited for any child: %d\n"),
+                ACE_TEXT ("(%P|%t) waited for any child: %d\n"),
                 exitcode));
 
   // --------------------------------------------------
@@ -203,7 +203,7 @@ main (int argc, ASYS_TCHAR *argv[])
 
   if (debug_test)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%P|%t) waited for any child: %d\n"),
+                ACE_TEXT ("(%P|%t) waited for any child: %d\n"),
                 exitcode));
 
   // This one should timeout:
@@ -218,7 +218,7 @@ main (int argc, ASYS_TCHAR *argv[])
 
   if (debug_test)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%P|%t) waited for any child: %d\n"),
+                ACE_TEXT ("(%P|%t) waited for any child: %d\n"),
                 exitcode));
 
   // Now wait indefinitely to clean up...
@@ -230,7 +230,7 @@ main (int argc, ASYS_TCHAR *argv[])
 
   if (debug_test)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%P|%t) waited for child 5 again: %d\n"),
+                ACE_TEXT ("(%P|%t) waited for child 5 again: %d\n"),
                 exitcode));
 
   // --------------------------------------------------
@@ -254,7 +254,7 @@ main (int argc, ASYS_TCHAR *argv[])
 
   if (debug_test)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%P|%t) done!\n") ));
+                ACE_TEXT ("(%P|%t) done!\n") ));
 
   ACE_END_TEST;
   return result;
@@ -262,11 +262,11 @@ main (int argc, ASYS_TCHAR *argv[])
 
 #else /* (!ACE_LACKS_FORK || ACE_WIN32) && ACE_HAS_THREADS */
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Process_Manager_Test"));
+  ACE_START_TEST (ACE_TEXT ("Process_Manager_Test"));
   ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT ("The ACE Process Manager is not supported on this platform\n")));
+              ACE_TEXT ("The ACE Process Manager is not supported on this platform\n")));
   ACE_END_TEST;
   return 0;
 }

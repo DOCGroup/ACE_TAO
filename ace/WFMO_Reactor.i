@@ -15,7 +15,7 @@ ACE_Wakeup_All_Threads_Handler::handle_signal (int signum,
 
   // This will get called when <WFMO_Reactor->wakeup_all_threads_> event
   // is signaled. There is nothing to be done here.
-  //  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%t) waking up to get updated handle set info\n")));
+  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) waking up to get updated handle set info\n")));
   return 0;
 }
 
@@ -79,31 +79,31 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("I/O Entry = %d\n"),
+              ACE_TEXT ("I/O Entry = %d\n"),
               this->io_entry_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Event Handler = %d\n"),
+              ACE_TEXT ("Event Handler = %d\n"),
               this->event_handler_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("I/O Handle = %d\n"),
+              ACE_TEXT ("I/O Handle = %d\n"),
               this->io_handle_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Network Events = %d\n"),
+              ACE_TEXT ("Network Events = %d\n"),
               this->network_events_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Delete Event = %d\n"),
+              ACE_TEXT ("Delete Event = %d\n"),
               this->delete_event_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Delete Entry = %d\n"),
+              ACE_TEXT ("Delete Entry = %d\n"),
               this->delete_entry_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Close Masks = %d\n"),
+              ACE_TEXT ("Close Masks = %d\n"),
               this->close_masks_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -162,11 +162,11 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (ACE_HANDLE event_handle
   Common_Info::dump ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Event Handle = %d\n"),
+              ACE_TEXT ("Event Handle = %d\n"),
               event_handle));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Suspend Entry = %d\n"),
+              ACE_TEXT ("Suspend Entry = %d\n"),
               this->suspend_entry_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -231,11 +231,11 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump (void) const
   Common_Info::dump ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Event Handle = %d\n"),
+              ACE_TEXT ("Event Handle = %d\n"),
               this->event_handle_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Suspend Entry = %d\n"),
+              ACE_TEXT ("Suspend Entry = %d\n"),
               this->suspend_entry_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -300,11 +300,11 @@ ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump (void) const
   Common_Info::dump ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Event Handle = %d\n"),
+              ACE_TEXT ("Event Handle = %d\n"),
               this->event_handle_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Resume Entry = %d\n"),
+              ACE_TEXT ("Resume Entry = %d\n"),
               this->resume_entry_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));

@@ -105,16 +105,16 @@ static void
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("usage: %n [-r n_readers] [-w n_writers]\n")
-              ASYS_TEXT ("   [-e max_entries] [-u try update] ")
-              ASYS_TEXT ("[-n iteration_count] [-f for FIFO threads]\n")));
+              ACE_TEXT ("usage: %n [-r n_readers] [-w n_writers]\n")
+              ACE_TEXT ("   [-e max_entries] [-u try update] ")
+              ACE_TEXT ("[-n iteration_count] [-f for FIFO threads]\n")));
   ACE_OS::exit (1);
 }
 
 static void
-parse_args (int argc, ASYS_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("e:fr:w:n:u"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("e:fr:w:n:u"));
 
   int c;
 
@@ -205,7 +205,7 @@ Reader_Task::svc (void)
         }
       else if (result == -1 && errno != EBUSY)
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT (" (%t) failure in upgrading to write lock!\n"),
+                    ACE_TEXT (" (%t) failure in upgrading to write lock!\n"),
                     1));
     }
 
@@ -290,23 +290,23 @@ Time_Calculation ::print_stats (void)
       double tmp = 1000 / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("\n")
-                  ASYS_TEXT ("\treal_time\t = %0.06f ms, \n")
-                  ASYS_TEXT ("\tuser_time\t = %0.06f ms, \n")
-                  ASYS_TEXT ("\tsystem_time\t = %0.06f ms, \n")
-                  ASYS_TEXT ("\t%0.00f calls/second\n"),
+                  ACE_TEXT ("\n")
+                  ACE_TEXT ("\treal_time\t = %0.06f ms, \n")
+                  ACE_TEXT ("\tuser_time\t = %0.06f ms, \n")
+                  ACE_TEXT ("\tsystem_time\t = %0.06f ms, \n")
+                  ACE_TEXT ("\t%0.00f calls/second\n"),
                   elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
                   elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,
                   elapsed_time.system_time < 0.0 ? 0.0 : elapsed_time.system_time,
                   tmp < 0.0 ? 0.0 : tmp));
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("Number of reported times: %d\n"),
+                  ACE_TEXT ("Number of reported times: %d\n"),
                   this->reported_times_));
     }
   else
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("\tNo time stats printed.  Zero iterations or error ocurred.\n")));
+                ACE_TEXT ("\tNo time stats printed.  Zero iterations or error ocurred.\n")));
 }
 
 static int
@@ -351,9 +351,9 @@ template class ACE_Guard<ACE_RW_Mutex>;
 // Spawn off threads.
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Upgradable_RW_Test"));
+  ACE_START_TEST (ACE_TEXT ("Upgradable_RW_Test"));
   int status = 0;
 
 #if defined (ACE_HAS_THREADS)
@@ -369,7 +369,7 @@ main (int argc, ASYS_TCHAR *argv[])
   init ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) main thread starting\n")));
+              ACE_TEXT (" (%t) main thread starting\n")));
 
   Time_Calculation time_Calculation;
   // for the time calculation
@@ -429,10 +429,10 @@ main (int argc, ASYS_TCHAR *argv[])
     {
       if (errno == ETIME)
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("maximum wait time of %d msec exceeded\n"),
+                    ACE_TEXT ("maximum wait time of %d msec exceeded\n"),
                                max_wait.msec ()));
       else
-        ACE_OS::perror ("wait");
+        ACE_OS::perror (ACE_TEXT ("wait"));
 
       status = -1;
     }
@@ -442,16 +442,16 @@ main (int argc, ASYS_TCHAR *argv[])
 
   if (not_upgraded != 0 || upgraded != 0)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("upgraded to not upgraded ratio = %f \n"),
+                ACE_TEXT ("upgraded to not upgraded ratio = %f \n"),
                 (float) upgraded / (float) (not_upgraded + upgraded)));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Number of times, that find was called: %d\n"),
+              ACE_TEXT ("Number of times, that find was called: %d\n"),
               find_called));
 
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) exiting main thread\n")));
+              ACE_TEXT (" (%t) exiting main thread\n")));
 
   // Delete the memory of the Double_Linked_List
   ACE_CString *cString_ptr;
@@ -488,7 +488,7 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;

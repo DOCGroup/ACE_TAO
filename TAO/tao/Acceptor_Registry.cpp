@@ -141,8 +141,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ASYS_TEXT ("(%P|%t) Invalid endpoint specification: ")
-                        ASYS_TEXT ("<%s>.\n"),
+                        ACE_TEXT ("(%P|%t) Invalid endpoint specification: ")
+                        ACE_TEXT ("<%s>.\n"),
                         iop.c_str ()));
 
           ACE_THROW_RETURN (CORBA::BAD_PARAM (
@@ -261,8 +261,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
                           if (TAO_debug_level > 0)
                             ACE_ERROR ((LM_ERROR,
-                                        ASYS_TEXT ("TAO (%P|%t) unable to open acceptor ")
-                                        ASYS_TEXT ("for <%s>%p\n"),
+                                        ACE_TEXT ("TAO (%P|%t) unable to open acceptor ")
+                                        ACE_TEXT ("for <%s>%p\n"),
                                         iop.c_str (),""));
 
                           ACE_THROW_RETURN (CORBA::BAD_PARAM (
@@ -280,8 +280,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                     {
                       if (TAO_debug_level > 0)
                         ACE_ERROR ((LM_ERROR,
-                                    ASYS_TEXT ("TAO (%P|%t) unable to create ")
-                                    ASYS_TEXT ("an acceptor for <%s>.\n"),
+                                    ACE_TEXT ("TAO (%P|%t) unable to create ")
+                                    ACE_TEXT ("an acceptor for <%s>.\n"),
                                     iop.c_str ()));
 
                       ACE_THROW_RETURN (CORBA::NO_MEMORY (
@@ -300,8 +300,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       if (found == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("TAO (%P|%t) no usable transport protocol ")
-                      ASYS_TEXT ("was found.\n")));
+                      ACE_TEXT ("TAO (%P|%t) no usable transport protocol ")
+                      ACE_TEXT ("was found.\n")));
 
           ACE_THROW_RETURN (CORBA::BAD_PARAM (
             CORBA_SystemException::_tao_minor_code (
@@ -361,10 +361,10 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("TAO (%P|%t) No default endpoints ")
-                      ASYS_TEXT ("opened.\n")
-                      ASYS_TEXT ("Please specify one or more using ")
-                      ASYS_TEXT ("the \"-ORBEndpoint\" option.\n")));
+                      ACE_TEXT ("TAO (%P|%t) No default endpoints ")
+                      ACE_TEXT ("opened.\n")
+                      ACE_TEXT ("Please specify one or more using ")
+                      ACE_TEXT ("the \"-ORBEndpoint\" option.\n")));
         }
 
       return -1;
@@ -391,8 +391,8 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("TAO (%P|%t) unable to create ")
-                    ASYS_TEXT ("an acceptor for <%s>\n"),
+                    ACE_TEXT ("TAO (%P|%t) unable to create ")
+                    ACE_TEXT ("an acceptor for <%s>\n"),
                     (*factory)->protocol_name ().c_str ()));
 
       return -1;
@@ -405,8 +405,8 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
 
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("TAO (%P|%t) unable to open ")
-                    ASYS_TEXT ("default acceptor for <%s>%p\n"),
+                    ACE_TEXT ("TAO (%P|%t) unable to open ")
+                    ACE_TEXT ("default acceptor for <%s>%p\n"),
                     (*factory)->protocol_name ().c_str (), ""));
 
       return -1;

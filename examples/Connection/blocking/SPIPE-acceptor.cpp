@@ -77,7 +77,7 @@ IPC_Server::init (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               "Opening %s\n",
-              ACE_MULTIBYTE_STRING (rendezvous_)));
+              rendezvous_));
 
   // Initialize named pipe listener.
   if (this->open (ACE_SPIPE_Addr (rendezvous_)) == -1)
@@ -113,8 +113,8 @@ IPC_Server::parse_args (int argc, char *argv[])
 	{
 	case 'r':
 	  ACE_OS::strncpy (rendezvous_,
-			   ACE_WIDE_STRING (get_opt.optarg),
-			   sizeof rendezvous_ / sizeof TCHAR);
+			   ACE_TEXT_CHAR_TO_TCHAR (get_opt.optarg),
+			   sizeof rendezvous_ / sizeof ACE_TCHAR);
 	  break;
 	case 't':
 	  n_threads_ = ACE_OS::atoi (get_opt.optarg);

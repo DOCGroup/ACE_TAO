@@ -725,7 +725,7 @@ TAO_POA::is_servant_in_map (PortableServer::Servant servant)
             {
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
-                            ASYS_TEXT ("(%t) TAO_POA::is_servant_in_map: waiting for servant to deactivate\n")));
+                            ACE_TEXT ("(%t) TAO_POA::is_servant_in_map: waiting for servant to deactivate\n")));
 
               ++this->waiting_servant_deactivation_;
 
@@ -762,7 +762,7 @@ TAO_POA::is_user_id_in_map (const PortableServer::ObjectId &id)
             {
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
-                            ASYS_TEXT ("(%t) TAO_POA::is_user_id_in_map: waiting for servant to deactivate\n")));
+                            ACE_TEXT ("(%t) TAO_POA::is_user_id_in_map: waiting for servant to deactivate\n")));
 
               ++this->waiting_servant_deactivation_;
 

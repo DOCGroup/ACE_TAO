@@ -197,7 +197,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
                   -1);
 
   // We only accept connection on localhost.
-  //  ACE_INET_Addr local_addr (addr.get_port_number (), ASYS_TEXT ("localhost"));
+  //  ACE_INET_Addr local_addr (addr.get_port_number (), ACE_TEXT ("localhost"));
   if (this->base_acceptor_.open (this->address_,
                                  this->orb_core_->reactor (this),
                                  this->creation_strategy_,
@@ -206,8 +206,8 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n\nTAO (%P|%t) SHMIOP_Acceptor::open_i - %p\n\n"),
-                    ASYS_TEXT ("cannot open acceptor")));
+                    ACE_TEXT ("\n\nTAO (%P|%t) SHMIOP_Acceptor::open_i - %p\n\n"),
+                    ACE_TEXT ("cannot open acceptor")));
       return -1;
     }
 
@@ -219,8 +219,8 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n\nTAO (%P|%t) SHMIOP_Acceptor::open_i - %p\n\n"),
-                    ASYS_TEXT ("cannot get local addr")));
+                    ACE_TEXT ("\n\nTAO (%P|%t) SHMIOP_Acceptor::open_i - %p\n\n"),
+                    ACE_TEXT ("cannot get local addr")));
       return -1;
     }
 
@@ -231,8 +231,8 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n\nTAO (%P|%t) SHMIOP_Acceptor::open_i - %p\n\n"),
-                    ASYS_TEXT ("cannot cache hostname")));
+                    ACE_TEXT ("\n\nTAO (%P|%t) SHMIOP_Acceptor::open_i - %p\n\n"),
+                    ACE_TEXT ("cannot cache hostname")));
       return -1;
     }
   this->host_ = tmp_host;
@@ -240,8 +240,8 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
   if (TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("\nTAO (%P|%t) SHMIOP_Acceptor::open_i - ")
-                  ASYS_TEXT ("listening on %s using: <localhost:%u>\n"),
+                  ACE_TEXT ("\nTAO (%P|%t) SHMIOP_Acceptor::open_i - ")
+                  ACE_TEXT ("listening on %s using: <localhost:%u>\n"),
                   this->host_.c_str (),
                   this->address_.get_port_number ()));
     }
@@ -306,7 +306,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("TAO (%P|%t) Zero length SHMIOP option.\n")),
+                           ACE_TEXT ("TAO (%P|%t) Zero length SHMIOP option.\n")),
                           -1);
       else if (end != ACE_CString::npos)
         {
@@ -317,8 +317,8 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
           if (slot == ACE_static_cast (int, len - 1)
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("TAO (%P|%t) SHMIOP option <%s> is ")
-                               ASYS_TEXT ("missing a value.\n"),
+                               ACE_TEXT ("TAO (%P|%t) SHMIOP option <%s> is ")
+                               ACE_TEXT ("missing a value.\n"),
                                opt.c_str ()),
                               -1);
 
@@ -327,8 +327,8 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
 
           if (name.length () == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("TAO (%P|%t) Zero length SHMIOP ")
-                               ASYS_TEXT ("option name.\n")),
+                               ACE_TEXT ("TAO (%P|%t) Zero length SHMIOP ")
+                               ACE_TEXT ("option name.\n")),
                               -1);
 
           if (name == "priority")
@@ -345,14 +345,14 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
                 this->priority_ = corba_priority;
               else
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   ASYS_TEXT ("TAO (%P|%t) Invalid SHMIOP endpoint ")
-                                   ASYS_TEXT ("priority: <%s>\n"),
+                                   ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP endpoint ")
+                                   ACE_TEXT ("priority: <%s>\n"),
                                    value.c_str ()),
                                   -1);
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("TAO (%P|%t) Invalid SHMIOP option: <%s>\n"),
+                               ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP option: <%s>\n"),
                                name.c_str ()),
                               -1);
         }

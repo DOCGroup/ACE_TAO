@@ -9,7 +9,7 @@ ACE_RCSID(Web_Crawler, Options, "$Id$")
 int 
 Options::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("df:h:i:l:rt:u:vo:p:"));
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("df:h:i:l:rt:u:vo:p:"));
 
   ACE_LOG_MSG->open (argv[0]);
 
@@ -121,24 +121,24 @@ Options::verbose (void) const
   return this->verbose_;
 }
 
-LPCTSTR 
+const ACE_TCHAR *
 Options::order (void) const
 {
   return this->order_;
 }
-LPCTSTR
+const ACE_TCHAR *
 Options::hostname (void) const
 {
   return this->hostname_;
 }
 
-LPCTSTR
+const ACE_TCHAR *
 Options::path_name (void) const
 {
   return this->uri_;
 }
 
-LPCTSTR
+const ACE_TCHAR *
 Options::url_filter (void) const
 {
   return this->url_filter_;

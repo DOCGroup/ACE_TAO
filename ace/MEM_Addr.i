@@ -30,7 +30,7 @@ ACE_MEM_Addr::set (u_short port_number, int encode)
 }
 
 ACE_INLINE int
-ACE_MEM_Addr::set (const ASYS_TCHAR port_number[])
+ACE_MEM_Addr::set (const ACE_TCHAR port_number[])
 {
   ACE_TRACE ("ACE_MEM_Addr::set");
   return this->string_to_addr (port_number);
@@ -47,7 +47,7 @@ ACE_MEM_Addr::get_port_number (void) const
 
 // Return the dotted Internet address.
 
-ACE_INLINE const char *
+ACE_INLINE const ACE_TCHAR *
 ACE_MEM_Addr::get_host_addr (void) const
 {
   ACE_TRACE ("ACE_MEM_Addr::get_host_addr");

@@ -104,7 +104,7 @@ public:
   // Null constructor.
 
   ACE_TPQ_Entry (const ACE_Token_Proxy *proxy,
-                 const ASYS_TCHAR *client_id);
+                 const ACE_TCHAR *client_id);
   // Construction.
 
   ACE_TPQ_Entry (const ACE_TPQ_Entry &rhs);
@@ -125,10 +125,10 @@ public:
   void nesting_level (int delta);
 
   // = Set/get client_id of the entry.
-  const ASYS_TCHAR *client_id (void) const;
-  void client_id (const ASYS_TCHAR *);
+  const ACE_TCHAR *client_id (void) const;
+  void client_id (const ACE_TCHAR *);
 
-  int equal_client_id (const ASYS_TCHAR *id);
+  int equal_client_id (const ACE_TCHAR *id);
   // Returns 1 if <id> == client id.  Does not check for <id> == 0.
 
   void set (void (*sleep_hook)(void *));
@@ -168,7 +168,7 @@ private:
   void *arg_;
   // Arg.
 
-  ASYS_TCHAR client_id_[ACE_MAXCLIENTIDLEN];
+  ACE_TCHAR client_id_[ACE_MAXCLIENTIDLEN];
   // Client id.
 
   void (*sleep_hook_)(void *);
@@ -191,7 +191,7 @@ class ACE_Export ACE_TSS_TPQ_Entry : public ACE_TPQ_ENTRY
   //     Not a public interface.
 public:
   ACE_TSS_TPQ_Entry (const ACE_Token_Proxy *proxy,
-                     const ASYS_TCHAR *client_id);
+                     const ACE_TCHAR *client_id);
   // These are passed to the constructor of ACE_TPQ_Entry in
   // make_TSS_TYPE
 
@@ -223,7 +223,7 @@ private:
   // make_TSS_TYPE
   const ACE_Token_Proxy *proxy_;
   // Proxy.
-  const ASYS_TCHAR *client_id_;
+  const ACE_TCHAR *client_id_;
   // Client_id.
 };
 
@@ -294,7 +294,7 @@ public:
   const ACE_TPQ_Entry* head (void);
   // Top of the queue.
 
-//  int member (const ASYS_TCHAR *id);
+//  int member (const ACE_TCHAR *id);
   // Is this id in the waiter list?
 
   void dequeue (void);
@@ -374,14 +374,14 @@ public:
   typedef ACE_Unbounded_Stack<ACE_TPQ_Entry *> OWNER_STACK;
   // Stack of owners.
 
-  virtual int owners (OWNER_STACK &o, const ASYS_TCHAR *id) = 0;
+  virtual int owners (OWNER_STACK &o, const ACE_TCHAR *id) = 0;
   // Returns a stack of the current owners.  Returns -1 on error, 0 on
   // success.  If <id> is non-zero, returns 1 if id is an owner.
 
-  virtual int is_waiting_for (const ASYS_TCHAR *id) = 0;
+  virtual int is_waiting_for (const ACE_TCHAR *id) = 0;
   // Returns 1 if <id> is waiting for this token.  0 otherwise.
 
-  virtual int is_owner (const ASYS_TCHAR *id) = 0;
+  virtual int is_owner (const ACE_TCHAR *id) = 0;
   // Returns 1 if <id> is an owner of this token.  0 otherwise.
 
   virtual ACE_Token_Proxy_Queue *waiters (void);
@@ -391,10 +391,10 @@ public:
   // Return the number of proxies that are currently waiting to get
   // the token.
 
-  const ASYS_TCHAR *owner_id (void);
+  const ACE_TCHAR *owner_id (void);
   // The current owner.
 
-  const ASYS_TCHAR* name (void);
+  const ACE_TCHAR* name (void);
   // Token name.
 
   // = Reference counting.  These are only called by the
@@ -438,7 +438,7 @@ protected:
   ACE_Token_Proxy_Queue waiters_;
   // List of client's owning and waiting the token.
 
-  ASYS_TCHAR token_name_[ACE_MAXTOKENNAMELEN];
+  ACE_TCHAR token_name_[ACE_MAXTOKENNAMELEN];
   // Name of token.
 };
 
@@ -462,7 +462,7 @@ class ACE_Export ACE_Mutex_Token : public ACE_Tokens
   //    order as other threads release the token (SunOS 5.x mutexes
   //    don't strictly enforce an acquisition order).
 public:
-  ACE_Mutex_Token (const ASYS_TCHAR* name);
+  ACE_Mutex_Token (const ACE_TCHAR* name);
   // life
 
   virtual ~ACE_Mutex_Token (void);
@@ -517,14 +517,14 @@ public:
   virtual int type (void) const;
   // Returns ACE_Tokens::MUTEX.
 
-  virtual int owners (OWNER_STACK &o, const ASYS_TCHAR *id);
+  virtual int owners (OWNER_STACK &o, const ACE_TCHAR *id);
   // Returns a stack of the current owners.  Returns -1 on error, 0 on
   // success.  If <id> is non-zero, returns 1 if id is an owner.
 
-  virtual int is_waiting_for (const ASYS_TCHAR *id);
+  virtual int is_waiting_for (const ACE_TCHAR *id);
   // Returns 1 if <id> is waiting for this token.  0 otherwise.
 
-  virtual int is_owner (const ASYS_TCHAR *id);
+  virtual int is_owner (const ACE_TCHAR *id);
   // Returns 1 if <id> is an owner of this token.  0 otherwise.
 
 private:
@@ -550,7 +550,7 @@ class ACE_Export ACE_RW_Token : public ACE_Tokens
   //    other threads release the token (SunOS 5.x mutexes don't strictly
   //    enforce an acquisition order).
 public:
-  ACE_RW_Token (const ASYS_TCHAR* name);
+  ACE_RW_Token (const ACE_TCHAR* name);
   // Life.
 
   virtual ~ACE_RW_Token (void);
@@ -608,14 +608,14 @@ public:
   virtual int type (void) const;
   // Returns READER or WRITER.
 
-  virtual int owners (OWNER_STACK &o, const ASYS_TCHAR *id);
+  virtual int owners (OWNER_STACK &o, const ACE_TCHAR *id);
   // Returns a stack of the current owners.  Returns -1 on error, 0 on
   // success.  If <id> is non-zero, returns 1 if id is an owner.
 
-  virtual int is_waiting_for (const ASYS_TCHAR *id);
+  virtual int is_waiting_for (const ACE_TCHAR *id);
   // Returns 1 if <id> is waiting for this token.  0 otherwise.
 
-  virtual int is_owner (const ASYS_TCHAR *id);
+  virtual int is_owner (const ACE_TCHAR *id);
   // Returns 1 if <id> is an owner of this token.  0 otherwise.
 
 protected:
@@ -642,7 +642,7 @@ class ACE_Export ACE_Token_Name
   //     needed.  For instance, we may choose to identify tokens by
   //     name and *type* in the future.
 public:
-  ACE_Token_Name (const ASYS_TCHAR *token_name = 0);
+  ACE_Token_Name (const ACE_TCHAR *token_name = 0);
   // Construction.
 
   ACE_Token_Name (const ACE_Token_Name &rhs);
@@ -657,17 +657,17 @@ public:
   int operator== (const ACE_Token_Name &rhs) const;
   // Comparison.
 
-  const ASYS_TCHAR *name (void) const;
+  const ACE_TCHAR *name (void) const;
   // Token name.
 
-  void name (const ASYS_TCHAR *new_name);
+  void name (const ACE_TCHAR *new_name);
   // Token name.
 
   void dump (void) const;
   // Dump the state of the class.
 
 private:
-  ASYS_TCHAR token_name_[ACE_MAXTOKENNAMELEN];
+  ACE_TCHAR token_name_[ACE_MAXTOKENNAMELEN];
   // Name of the token.
 };
 
@@ -710,7 +710,7 @@ public:
   virtual ~ACE_Token_Proxy (void);
   // Death.
 
-  virtual int open (const ASYS_TCHAR *name,
+  virtual int open (const ACE_TCHAR *name,
                     int ignore_deadlock = 0,
                     int debug = 0);
   // <name> is the string uniquely identifying the token.
@@ -772,16 +772,16 @@ public:
 
   // = Utility methods.
 
-  virtual const ASYS_TCHAR *client_id (void) const;
+  virtual const ACE_TCHAR *client_id (void) const;
   // Get the client id of the proxy.  This is implemented as
   // thread-specific data.
 
-  virtual void client_id (const ASYS_TCHAR *client_id);
+  virtual void client_id (const ACE_TCHAR *client_id);
   // Set the client_id for the calling thread.  I strongly recommend
   // that this not be used unless you really know what you're doing.
   // I use this in the Token Server, and it caused many headaches.
 
-  virtual const ASYS_TCHAR *name (void) const;
+  virtual const ACE_TCHAR *name (void) const;
   // Return the name of the token.  This is important for use within
   // the token servers (local and remote) as well as with token
   // collections.  So, all derivations of ACE_Token_Proxy must be able to
@@ -798,7 +798,7 @@ public:
   // This is called when a queued (waiting) proxy is removed from the
   // waiters list and given the token.
 
-  virtual const ASYS_TCHAR *owner_id (void);
+  virtual const ACE_TCHAR *owner_id (void);
   // the client id of the current token holder
 
   virtual ACE_Token_Proxy *clone (void) const = 0;
@@ -834,7 +834,7 @@ protected:
   ACE_TSS_TPQ_Entry waiter_;
   // Waiter info used for asynchronous transactions.
 
-  virtual ACE_Tokens *create_token (const ASYS_TCHAR *name) = 0;
+  virtual ACE_Tokens *create_token (const ACE_TCHAR *name) = 0;
   // Make the correct type of ACE_Tokens.  This is called by the Token
   // Manager.
 };
@@ -882,7 +882,7 @@ public:
   void dump (void) const;
   // Dump the state of the class.
 
-  virtual ACE_Tokens *create_token (const ASYS_TCHAR *) { return 0; }
+  virtual ACE_Tokens *create_token (const ACE_TCHAR *) { return 0; }
   // Do not allow the Token Manager to create us.
 };
 
@@ -907,7 +907,7 @@ class ACE_Export ACE_Local_Mutex : public ACE_Token_Proxy
   //   etc. are defined in ACE_Token_Proxy.  The semantics for
   //   ACE_Local_Mutex are that of a mutex.
 public:
-  ACE_Local_Mutex (const ASYS_TCHAR *token_name = 0,
+  ACE_Local_Mutex (const ACE_TCHAR *token_name = 0,
                    int ignore_deadlock = 0,
                    int debug = 0);
   // <token_name> uniquely id's the token.
@@ -924,7 +924,7 @@ public:
   // Return deep copy.
 
 protected:
-  virtual ACE_Tokens *create_token (const ASYS_TCHAR *name);
+  virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
   // Return a new ACE_Local_Mutex.
 };
 
@@ -957,7 +957,7 @@ class ACE_Export ACE_Local_RLock : public ACE_Token_Proxy
 public:
   // = Initialization and termination.
 
-  ACE_Local_RLock (const ASYS_TCHAR *token_name = 0,
+  ACE_Local_RLock (const ACE_TCHAR *token_name = 0,
                    int ignore_deadlock = 0,
                    int debug = 0);
   // <token_name> uniquely id's the token.
@@ -977,7 +977,7 @@ public:
   // Return deep copy.
 
 protected:
-  virtual ACE_Tokens *create_token (const ASYS_TCHAR *name);
+  virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
   // Return a new ACE_Local_Mutex.
 };
 
@@ -1010,7 +1010,7 @@ class ACE_Export ACE_Local_WLock : public ACE_Token_Proxy
 public:
   // = Initialization and termination.
 
-  ACE_Local_WLock (const ASYS_TCHAR *token_name = 0,
+  ACE_Local_WLock (const ACE_TCHAR *token_name = 0,
                    int ignore_deadlock = 0,
                    int debug = 0);
   // <token_name> uniquely id's the token.
@@ -1030,7 +1030,7 @@ public:
   // Return deep copy.
 
 protected:
-  ACE_Tokens *create_token (const ASYS_TCHAR *name);
+  ACE_Tokens *create_token (const ACE_TCHAR *name);
   // Return a new ACE_Local_Mutex.
 };
 

@@ -58,7 +58,7 @@ public:
   // is vendor specific (FORE systems). May need to change when other
   // vendors are supported.
 
-  ACE_ATM_Addr (const ASYS_TCHAR sap[],
+  ACE_ATM_Addr (const ACE_TCHAR sap[],
                 unsigned char selector = DEFAULT_SELECTOR);
   // Initializes an <ACE_ATM_Addr> from the <sap> which can be
   // "atm-address" (e.g.,
@@ -83,20 +83,20 @@ public:
   // structure. This is vendor specific (FORE systems). May need to
   // change when other vendors are supported.
 
-  int set (const ASYS_TCHAR sap[],
+  int set (const ACE_TCHAR sap[],
            unsigned char selector = DEFAULT_SELECTOR);
   // Initializes an <ACE_ATM_Addr> from the <sap> which can be
   // "atm-address" (e.g.,
   // "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
   // (e.g., "frisbee.cs.wustl.edu").
 
-  virtual int string_to_addr (const ASYS_TCHAR sap[]);
+  virtual int string_to_addr (const ACE_TCHAR sap[]);
   // Initializes an <ACE_ATM_Addr> from the <sap> which can be
   // "atm-address" (e.g.,
   // "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
   // (e.g., "frisbee.cs.wustl.edu").
 
-  virtual int addr_to_string (ASYS_TCHAR addr[], 
+  virtual int addr_to_string (ACE_TCHAR addr[], 
                               size_t addrlen) const;
   // Return the character representation of the ATM address (e.g.,
   // "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") storing it in
@@ -104,7 +104,7 @@ public:
   // version is reentrant.  Returns -1 if the <addrlen> of the <addr>
   // is too small, else 0.
 
-  const ASYS_TCHAR *addr_to_string (void) const;
+  const ACE_TCHAR *addr_to_string (void) const;
   // Return the character representation of the ATM address (e.g.,
   // "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00"). Returns -1
   // if the <size> of the <buffer> is too small, else 0.(This version

@@ -23,14 +23,14 @@ ACE_Message_Queue_Vx::dump (void) const
   ACE_TRACE ("ACE_Message_Queue_Vx::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("deactivated = %d\n")
-              ASYS_TEXT ("low_water_mark = %d\n")
-              ASYS_TEXT ("high_water_mark = %d\n")
-              ASYS_TEXT ("cur_bytes = %d\n")
-              ASYS_TEXT ("cur_length = %d\n")
-              ASYS_TEXT ("cur_count = %d\n")
-              ASYS_TEXT ("head_ = %u\n")
-              ASYS_TEXT ("MSG_Q_ID = %u\n"),
+              ACE_TEXT ("deactivated = %d\n")
+              ACE_TEXT ("low_water_mark = %d\n")
+              ACE_TEXT ("high_water_mark = %d\n")
+              ACE_TEXT ("cur_bytes = %d\n")
+              ACE_TEXT ("cur_length = %d\n")
+              ACE_TEXT ("cur_count = %d\n")
+              ACE_TEXT ("head_ = %u\n")
+              ACE_TEXT ("MSG_Q_ID = %u\n"),
               this->deactivated_,
               this->low_water_mark_,
               this->high_water_mark_,
@@ -52,7 +52,7 @@ ACE_Message_Queue_Vx::ACE_Message_Queue_Vx (size_t max_messages,
   ACE_TRACE ("ACE_Message_Queue_Vx::ACE_Message_Queue_Vx");
 
   if (this->open (max_messages_, max_message_length_, ns) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("open")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("open")));
 }
 
 ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx (void)
@@ -60,7 +60,7 @@ ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx (void)
   ACE_TRACE ("ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx");
 
   if (this->tail_ != 0  &&  this->close () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("close")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("close")));
 }
 
 // Don't bother locking since if someone calls this function more than
@@ -420,13 +420,13 @@ ACE_Message_Queue_NT::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("deactivated = %d\n")
-              ASYS_TEXT ("max_cthrs_ = %d\n")
-              ASYS_TEXT ("cur_thrs_ = %d\n")
-              ASYS_TEXT ("cur_bytes = %d\n")
-              ASYS_TEXT ("cur_length = %d\n")
-              ASYS_TEXT ("cur_count = %d\n")
-              ASYS_TEXT ("completion_port_ = %x\n"),
+              ACE_TEXT ("deactivated = %d\n")
+              ACE_TEXT ("max_cthrs_ = %d\n")
+              ACE_TEXT ("cur_thrs_ = %d\n")
+              ACE_TEXT ("cur_bytes = %d\n")
+              ACE_TEXT ("cur_length = %d\n")
+              ACE_TEXT ("cur_count = %d\n")
+              ACE_TEXT ("completion_port_ = %x\n"),
               this->deactivated_,
               this->max_cthrs_,
               this->cur_thrs_,

@@ -11,7 +11,7 @@ ACE_URL_Addr::ACE_URL_Addr (void)
 }
 
 int
-ACE_URL_Addr::addr_to_string (LPTSTR s,
+ACE_URL_Addr::addr_to_string (ACE_TCHAR *s,
                               size_t size,
                               int ipaddr_format) const
 {
@@ -29,17 +29,17 @@ ACE_URL_Addr::addr_to_string (LPTSTR s,
     return -1;
   else
     {
-      ACE_OS::sprintf (s, ASYS_TEXT ("%s:%d/%s"),
-                       ASYS_WIDE_STRING (ipaddr_format == 0 
-                                         ? this->get_host_name ()
-                                         : this->get_host_addr ()),
+      ACE_OS::sprintf (s, ACE_TEXT ("%s:%d/%s"),
+                       ACE_TEXT_CHAR_TO_TCHAR (ipaddr_format == 0
+                                               ? this->get_host_name ()
+                                               : this->get_host_addr ()),
                        this->get_port_number (),
                        this->get_path_name ());
       return 0;
     }
 }
 
-LPCTSTR 
+const ACE_TCHAR *
 ACE_URL_Addr::addr_to_string (int ipaddr_format) const
 {
   ACE_URL_Addr *this_ptr = ACE_const_cast (ACE_URL_Addr *,
@@ -64,20 +64,20 @@ ACE_URL_Addr::addr_to_string (int ipaddr_format) const
       this_ptr->addr_string_len_ = size;
     }
   ACE_OS::sprintf (this->addr_string_,
-                   ASYS_TEXT ("%s:%d/%s"),
-                   ASYS_WIDE_STRING (ipaddr_format == 0 
-                                     ? this->get_host_name ()
-                                     : this->get_host_addr ()),
+                   ACE_TEXT ("%s:%d/%s"),
+                   ACE_TEXT_CHAR_TO_TCHAR (ipaddr_format == 0
+                                           ? this->get_host_name ()
+                                          : this->get_host_addr ()),
                    this->get_port_number (),
                    this->get_path_name ());
   return this->addr_string_;
 }
 
-int 
-ACE_URL_Addr::string_to_addr (LPCTSTR s)
+int
+ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s)
 {
   int result;
-  LPTSTR t;
+  ACE_TCHAR *t;
 
   // Need to make a duplicate since we'll be overwriting the string.
   ACE_ALLOCATOR_RETURN (t,
@@ -87,8 +87,8 @@ ACE_URL_Addr::string_to_addr (LPCTSTR s)
 
   // First split off the path_name.
 
-  LPTSTR path_name = ACE_OS::strchr (t, '/');
-  LPCTSTR name = "index.html";
+  ACE_TCHAR *path_name = ACE_OS::strchr (t, '/');
+  const ACE_TCHAR *name = "index.html";
   if (path_name != 0)
     {
       if (ACE_OS::strlen (path_name + 1) > 0)
@@ -103,9 +103,9 @@ ACE_URL_Addr::string_to_addr (LPCTSTR s)
                         -1);
 
   // Now handle the host address and port number.
-  LPTSTR port_number = ACE_OS::strchr (t, ':');
+  ACE_TCHAR *port_number = ACE_OS::strchr (t, ':');
 
-  if (port_number == 0) 
+  if (port_number == 0)
     {
       // Assume it's an ip-address or ip-number.
       result = this->ACE_INET_Addr::set (ACE_DEFAULT_HTTP_PORT,
@@ -129,17 +129,17 @@ ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr &addr)
 {
   if (this->set (addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_URL_Addr::ACE_URL_Addr")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_URL_Addr::ACE_URL_Addr")));
 }
 
-int 
+int
 ACE_URL_Addr::set (const ACE_URL_Addr &addr)
 {
-  ACE_OS::free (ACE_reinterpret_cast (void *, 
+  ACE_OS::free (ACE_reinterpret_cast (void *,
                                       ACE_const_cast (char *,
                                                       this->path_name_)));
-  ACE_OS::free (ACE_reinterpret_cast (void *, 
+  ACE_OS::free (ACE_reinterpret_cast (void *,
                                       ACE_const_cast (char *,
                                                       this->addr_string_)));
   if (this->ACE_INET_Addr::set (addr) == -1)
@@ -165,8 +165,8 @@ ACE_URL_Addr::operator= (const ACE_URL_Addr &addr)
 {
   if (this->set (addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_URL_Addr::ACE_URL_Addr")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_URL_Addr::ACE_URL_Addr")));
 }
 
 u_long
@@ -181,7 +181,7 @@ ACE_URL_Addr::hash (void) const
 int
 ACE_URL_Addr::operator== (const ACE_URL_Addr &addr) const
 {
-  return ACE_OS::strcmp (addr.get_path_name (), 
+  return ACE_OS::strcmp (addr.get_path_name (),
                          this->get_path_name ()) == 0
     && addr.get_port_number () == this->get_port_number ()
     && addr.get_ip_address () == this->get_ip_address ();
@@ -193,8 +193,8 @@ ACE_URL_Addr::operator!= (const ACE_URL_Addr &addr) const
   return !(*this == addr);
 }
 
-ACE_URL_Addr::ACE_URL_Addr (LPCTSTR host_name,
-                            LPCTSTR path_name,
+ACE_URL_Addr::ACE_URL_Addr (const ACE_TCHAR *host_name,
+                            const ACE_TCHAR *path_name,
                             u_short port)
   : ACE_INET_Addr (port, host_name),
     path_name_ (ACE_OS::strdup (path_name)),
@@ -203,7 +203,7 @@ ACE_URL_Addr::ACE_URL_Addr (LPCTSTR host_name,
 {
 }
 
-LPCTSTR 
+const ACE_TCHAR *
 ACE_URL_Addr::get_path_name (void) const
 {
   return this->path_name_;
@@ -211,16 +211,16 @@ ACE_URL_Addr::get_path_name (void) const
 
 ACE_URL_Addr::~ACE_URL_Addr (void)
 {
-  ACE_OS::free (ACE_reinterpret_cast (void *, 
+  ACE_OS::free (ACE_reinterpret_cast (void *,
                                       ACE_const_cast (LPTSTR,
                                                       this->path_name_)));
-  ACE_OS::free (ACE_reinterpret_cast (void *, 
+  ACE_OS::free (ACE_reinterpret_cast (void *,
                                       ACE_const_cast (LPTSTR,
                                                       this->addr_string_)));
   this->path_name_ = 0;
 }
 
-int 
+int
 ACE_URL_Addr::destroy (void)
 {
   // Commit suicide.

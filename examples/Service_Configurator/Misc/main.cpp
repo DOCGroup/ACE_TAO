@@ -30,7 +30,7 @@ ACE_RCSID(Misc, main, "$Id$")
 ACE_STATIC_SVC_REQUIRE (Timer_Service_1)
 
 int
-main (int, ASYS_TCHAR *argv[])
+main (int, ACE_TCHAR *argv[])
 {
   // Set up an argument vector that we can add entries to!
   ACE_ARGV args;
@@ -39,24 +39,24 @@ main (int, ASYS_TCHAR *argv[])
   // that allows us to pass these entries via the "command-line"
   // rather than the svc.conf file.
   args.add (argv[0]);
-  args.add (ASYS_TEXT ("-y"));
-  args.add (ASYS_TEXT ("-d"));
-  args.add (ASYS_TEXT ("-S"));
-  args.add (ASYS_TEXT ("\"static Timer_Service_1 'timer 1 10 $TRACE'\""));
-  args.add (ASYS_TEXT ("-S"));
-  args.add (ASYS_TEXT ("\"dynamic Timer_Service_2 Service_Object * ./Timer:_make_Timer_Service_2() 'timer 2 10 $TRACE'\""));
+  args.add (ACE_TEXT ("-y"));
+  args.add (ACE_TEXT ("-d"));
+  args.add (ACE_TEXT ("-S"));
+  args.add (ACE_TEXT ("\"static Timer_Service_1 'timer 1 10 $TRACE'\""));
+  args.add (ACE_TEXT ("-S"));
+  args.add (ACE_TEXT ("\"dynamic Timer_Service_2 Service_Object * ./Timer:_make_Timer_Service_2() 'timer 2 10 $TRACE'\""));
   // Test the -f option!
-  args.add (ASYS_TEXT ("-fsvc.conf1"));
-  args.add (ASYS_TEXT ("-fsvc.conf2"));
+  args.add (ACE_TEXT ("-fsvc.conf1"));
+  args.add (ACE_TEXT ("-fsvc.conf2"));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("argc = %d\n"),
-              ASYS_TEXT (args.argc ())));
+              ACE_TEXT ("argc = %d\n"),
+              ACE_TEXT (args.argc ())));
 
   // Print the contents of the combined <ACE_ARGV>.
   for (size_t i = 0; i < args.argc (); i++)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%d) %s\n"),
+                ACE_TEXT ("(%d) %s\n"),
                 i,
                 args.argv ()[i]));
 
@@ -66,8 +66,8 @@ main (int, ASYS_TCHAR *argv[])
                                 0) == -1 
       && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("open")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("open")),
                       1);
 
   // Run forever, performing the configured services until we

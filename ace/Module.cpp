@@ -82,7 +82,7 @@ ACE_Module<ACE_SYNCH_USE>::link (ACE_Module<ACE_SYNCH_USE> *m)
 }
 
 template <ACE_SYNCH_DECL> int
-ACE_Module<ACE_SYNCH_USE>::open (const ASYS_TCHAR *mod_name,
+ACE_Module<ACE_SYNCH_USE>::open (const ACE_TCHAR *mod_name,
                                  ACE_Task<ACE_SYNCH_USE> *writer_q,
                                  ACE_Task<ACE_SYNCH_USE> *reader_q,
                                  void *arg,
@@ -177,7 +177,7 @@ ACE_Module<ACE_SYNCH_USE>::~ACE_Module (void)
 }
 
 template <ACE_SYNCH_DECL>
-ACE_Module<ACE_SYNCH_USE>::ACE_Module (const ASYS_TCHAR *mod_name,
+ACE_Module<ACE_SYNCH_USE>::ACE_Module (const ACE_TCHAR *mod_name,
                                      ACE_Task<ACE_SYNCH_USE> *writer_q,
                                      ACE_Task<ACE_SYNCH_USE> *reader_q,
                                      void *args,
@@ -191,8 +191,8 @@ ACE_Module<ACE_SYNCH_USE>::ACE_Module (const ASYS_TCHAR *mod_name,
 
   if (this->open (mod_name, writer_q, reader_q, args, flags) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Module")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Module")));
 }
 
 template <ACE_SYNCH_DECL> int

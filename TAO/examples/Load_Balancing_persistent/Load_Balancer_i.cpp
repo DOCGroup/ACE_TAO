@@ -335,8 +335,8 @@ Object_Group_Factory_i::resolve (const char * id,
                                  (void *&)this->rr_groups_) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N|%l) The factory does not have any references "),
-                             ASYS_TEXT ("to the group that you have sought \n\n")),
+                             ACE_TEXT ("(%N|%l) The factory does not have any references "),
+                             ACE_TEXT ("to the group that you have sought \n\n")),
                             0);
         }
     }
@@ -347,8 +347,8 @@ Object_Group_Factory_i::resolve (const char * id,
                                  (void *&)this->random_groups_) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N|%l) The factory does not have any references "),
-                             ASYS_TEXT ("to the group that you have sought \n\n")),
+                             ACE_TEXT ("(%N|%l) The factory does not have any references "),
+                             ACE_TEXT ("to the group that you have sought \n\n")),
                             0);
 
         }

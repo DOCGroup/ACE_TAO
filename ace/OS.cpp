@@ -32,7 +32,7 @@ const wchar_t *ACE_OS::month_name[] = {ACE_TEXT ("Jan"), ACE_TEXT ("Feb"),
                                        ACE_TEXT ("Sep"), ACE_TEXT ("Oct"),
                                        ACE_TEXT ("Nov"), ACE_TEXT ("Dec") };
 
-static const ASYS_TCHAR *ACE_OS_CTIME_R_FMTSTR = ACE_TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
+static const ACE_TCHAR *ACE_OS_CTIME_R_FMTSTR = ACE_TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
 # endif /* ACE_HAS_WINCE */
 
 # if defined (ACE_WIN32)
@@ -441,8 +441,8 @@ ACE_Time_Value::dump (void) const
 {
   ACE_TRACE ("ACE_Time_Value::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ntv_sec_ = %d"), this->tv_.tv_sec));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ntv_usec_ = %d\n"), this->tv_.tv_usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntv_sec_ = %d"), this->tv_.tv_sec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntv_usec_ = %d\n"), this->tv_.tv_usec));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -596,9 +596,9 @@ ACE_OS::uname (struct utsname *name)
     // the space to the processor and half the space to subtype.  The
     // -1 is necessary for because of the space between processor and
     // subtype in the machine name.
-    const int bufsize = ((sizeof (name->machine) / sizeof (TCHAR)) / 2) - 1;
-    TCHAR processor[bufsize] = ACE_TEXT ("Unknown");
-    TCHAR subtype[bufsize] = ACE_TEXT ("Unknown");
+    const int bufsize = ((sizeof (name->machine) / sizeof (ACE_TCHAR)) / 2) - 1;
+    ACE_TCHAR processor[bufsize] = ACE_TEXT ("Unknown");
+    ACE_TCHAR subtype[bufsize] = ACE_TEXT ("Unknown");
 
     WORD arch = sinfo.wProcessorArchitecture;
 
@@ -867,17 +867,17 @@ ACE_OS::ace_flock_t::dump (void) const
 ACE_TRACE ("ACE_OS::ace_flock_t::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("handle_ = %u"), this->handle_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %u"), this->handle_));
 #if defined (ACE_WIN32)
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nInternal = %d"), this->overlapped_.Internal));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nInternalHigh = %d"), this->overlapped_.InternalHigh));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nOffsetHigh = %d"), this->overlapped_.OffsetHigh));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nhEvent = %d"), this->overlapped_.hEvent));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nInternal = %d"), this->overlapped_.Internal));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nInternalHigh = %d"), this->overlapped_.InternalHigh));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nOffsetHigh = %d"), this->overlapped_.OffsetHigh));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhEvent = %d"), this->overlapped_.hEvent));
 #elif !defined (CHORUS)
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nl_whence = %d"), this->lock_.l_whence));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nl_start = %d"), this->lock_.l_start));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nl_len = %d"), this->lock_.l_len));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nl_type = %d"), this->lock_.l_type));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_whence = %d"), this->lock_.l_whence));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_start = %d"), this->lock_.l_start));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_len = %d"), this->lock_.l_len));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_type = %d"), this->lock_.l_type));
 #endif /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -900,13 +900,13 @@ ACE_TRACE ("ACE_OS::mutex_lock_cleanup");
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 FILE *
-ACE_OS::fopen (const char *filename,
-               const char *mode)
+ACE_OS::fopen (const ACE_TCHAR *filename,
+               const ACE_TCHAR *mode)
 {
   ACE_TRACE ("ACE_OS::fopen");
   int hmode = _O_TEXT;
 
-  for (const char *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
+  for (const ACE_TCHAR *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
     ACE_OS::fopen_mode_to_open_mode_converter (*mode_ptr, hmode);
 
   ACE_HANDLE handle = ACE_OS::open (filename, hmode);
@@ -918,7 +918,9 @@ ACE_OS::fopen (const char *filename,
         {
 #   if defined(__BORLANDC__)
           FILE *fp = _fdopen (fd, ACE_const_cast (char *, mode));
-#   else /* defined(__BORLANDC__) */
+#   elif defined (ACE_USES_WCHAR)
+          FILE *fp = _wfdopen (fd, mode);
+#   else
           FILE *fp = _fdopen (fd, mode);
 #   endif /* defined(__BORLANDC__) */
           if (fp != NULL)
@@ -931,44 +933,6 @@ ACE_OS::fopen (const char *filename,
 }
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 
-#if defined (ACE_WIN32) && defined (ACE_HAS_UNICODE)
-FILE *
-ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
-{
-  ACE_TRACE ("ACE_OS::fopen");
-  int hmode = _O_TEXT;
-
-  for (const wchar_t *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
-    ACE_OS::fopen_mode_to_open_mode_converter ((char) *mode_ptr, hmode);
-
-  ACE_HANDLE handle = ACE_OS::open (filename, hmode);
-#   if defined (ACE_HAS_WINCE)
-  return (handle == ACE_INVALID_HANDLE ? NULL : handle);
-#   else
-  if (handle != ACE_INVALID_HANDLE)
-    {
-      hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
-      int fd = _open_osfhandle ((long) handle, hmode);
-      if (fd != -1)
-        {
-#   if defined(__BORLANDC__)
-          FILE *fp = _wfdopen (fd, ACE_const_cast (wchar_t *, mode));
-#   else /* defined(__BORLANDC__) */
-          FILE *fp = _wfdopen (fd, mode);
-#   endif /* defined(__BORLANDC__) */
-          if (fp != NULL)
-            return fp;
-          _close (fd);
-        }
-      ACE_OS::close (handle);
-    }
-  return NULL;
-#   endif /* !ACE_HAS_WINCE */
-}
-# endif /* ACE_WIN32 && ACE_HAS_UNICODE */
-
-#if !defined (ACE_HAS_WINCE)
-
 // The following *printf functions aren't inline because
 // they use varargs.
 
@@ -976,13 +940,37 @@ int
 ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
   ACE_TRACE ("ACE_OS::fprintf");
+# if defined (ACE_HAS_WINCE)
+  ACE_NOTSUP_RETURN (-1);
+# else /* ACE_HAS_WINCE */
   int result = 0;
   va_list ap;
   va_start (ap, format);
   ACE_OSCALL (::vfprintf (fp, format, ap), int, -1, result);
   va_end (ap);
   return result;
+# endif /* ACE_HAS_WINCE */
 }
+
+#if defined (ACE_HAS_WCHAR)
+int
+ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
+{
+  ACE_TRACE ("ACE_OS::fprintf");
+# if defined (ACE_HAS_WINCE)
+  ACE_NOTSUP_RETURN (-1);
+# else /* ACE_HAS_WINCE */
+  int result = 0;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::vfwprintf (fp, format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+# endif /* ACE_HAS_WINCE */
+}
+#endif /* ACE_HAS_WCHAR */
+
+#if !defined (ACE_HAS_WINCE)
 
 int
 ACE_OS::printf (const char *format, ...)
@@ -1008,6 +996,20 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
   va_end (ap);
   return result;
 }
+
+#if defined (ACE_HAS_WCHAR)
+int
+ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
+{
+  ACE_TRACE ("ACE_OS::sprintf");
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::vswprintf (buf, format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+}
+#endif /* ACE_HAS_WCHAR */
 
 char *
 ACE_OS::gets (char *str, int n)
@@ -1043,105 +1045,10 @@ ACE_OS::gets (char *str, int n)
 int
 fprintf (FILE *fp, char *format, const char *msg)
 {
-  ACE_DEBUG ((LM_DEBUG, ASYS_WIDE_STRING (format), ASYS_WIDE_STRING (msg)));
+  ACE_DEBUG ((LM_DEBUG, format, msg));
   return 0;
 }
 #endif /* ! ACE_HAS_WINCE */
-
-#if defined (ACE_HAS_UNICODE)
-# if defined (ACE_WIN32)
-
-int
-ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
-{
-  ACE_TRACE ("ACE_OS::fprintf");
-#   if defined (ACE_HAS_WINCE)
-  ACE_NOTSUP_RETURN (-1);
-#   else
-  int result = 0;
-  va_list ap;
-  va_start (ap, format);
-  ACE_OSCALL (::vfwprintf (fp, format, ap), int, -1, result);
-  va_end (ap);
-  return result;
-#   endif /* ACE_HAS_WINCE */
-}
-
-int
-ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
-{
-  ACE_TRACE ("ACE_OS::sprintf");
-  int result;
-  va_list ap;
-  va_start (ap, format);
-  ACE_OSCALL (::vswprintf (buf, format, ap), int, -1, result);
-  va_end (ap);
-  return result;
-}
-
-#   if 0
-int
-ACE_OS::sprintf (wchar_t *buf, const char *format, ...)
-{
-  ACE_TRACE ("ACE_OS::sprintf");
-  const wchar_t *wide_format = ACE_WString (format).fast_rep ();
-  int result;
-  va_list ap;
-  va_start (ap, wide_format);
-  ACE_OSCALL (::vswprintf (buf, wide_format, ap), int, -1, result);
-  va_end (ap);
-  return result;
-}
-#   endif /* 0 */
-
-# endif /* ACE_WIN32 */
-
-# if defined (ACE_LACKS_MKTEMP)
-wchar_t *
-ACE_OS::mktemp (wchar_t *s)
-{
-  ACE_TRACE ("ACE_OS::mktemp");
-  if (s == 0)
-    // check for null template string failed!
-    return 0;
-  else
-    {
-      wchar_t *xxxxxx = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX"));
-
-      if (xxxxxx == 0)
-        // the template string doesn't contain "XXXXXX"!
-        return s;
-      else
-        {
-          wchar_t unique_letter = L'a';
-          struct stat sb;
-
-          // Find an unused filename for this process.  It is assumed
-          // that the user will open the file immediately after
-          // getting this filename back (so, yes, there is a race
-          // condition if multiple threads in a process use the same
-          // template).  This appears to match the behavior of the
-          // SunOS 5.5 mktemp().
-          ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%05d%c"),
-                           ACE_OS::getpid (), unique_letter);
-          while (ACE_OS::stat (s, &sb) >= 0)
-            {
-              if (++unique_letter <= L'z')
-                ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%05d%c"),
-                                 ACE_OS::getpid (), unique_letter);
-              else
-                {
-                  // maximum of 26 unique files per template, per process
-                  ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%s"), L"");
-                  return s;
-                }
-            }
-        }
-      return s;
-    }
-}
-# endif /* ACE_LACKS_MKTEMP */
-#endif /* ACE_HAS_UNICODE */
 
 int
 ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
@@ -1619,9 +1526,9 @@ ACE_TSS_Info::dump (void)
 //  ACE_TRACE ("ACE_TSS_Info::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("key_ = %u\n"), this->key_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("destructor_ = %u\n"), this->destructor_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("tss_obj_ = %u\n"), this->tss_obj_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("key_ = %u\n"), this->key_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("destructor_ = %u\n"), this->destructor_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("tss_obj_ = %u\n"), this->tss_obj_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -2398,7 +2305,7 @@ ACE_Thread_Adapter::inherit_log_msg (void)
 
   //Initialize the task specific logger
   ACE_LOG_MSG->open(new_name);
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) starting %s thread at %D\n"),new_name));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting %s thread at %D\n"),new_name));
 #  endif /* ACE_PSOS */
 #endif /* ! ACE_THREADS_DONT_INHERIT_LOG_MSG  &&  ! ACE_HAS_MINIMAL_ACE_OS */
 }
@@ -2616,7 +2523,7 @@ ACE_Thread_Adapter::invoke (void)
 int ACE_SEH_Default_Exception_Selector (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) Win32 structured exception exiting thread\n")));
+              ACE_TEXT ("(%t) Win32 structured exception exiting thread\n")));
   return (DWORD) ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION;
 }
 
@@ -4024,7 +3931,7 @@ ACE_OS::thr_key_detach (void *inst)
 
 void
 ACE_OS::unique_name (const void *object,
-                     LPTSTR name,
+                     ACE_TCHAR *name,
                      size_t length)
 {
   // The process ID will provide uniqueness between processes on the
@@ -4032,7 +3939,7 @@ ACE_OS::unique_name (const void *object,
   // uniqueness between other "live" objects in the same process. The
   // uniqueness of this name is therefore only valid for the life of
   // <object>.
-  TCHAR temp_name[ACE_UNIQUE_NAME_LEN];
+  ACE_TCHAR temp_name[ACE_UNIQUE_NAME_LEN];
   ACE_OS::sprintf (temp_name,
                    ACE_TEXT ("%lx%d"),
                    ACE_reinterpret_cast (long, object),
@@ -4043,8 +3950,8 @@ ACE_OS::unique_name (const void *object,
 }
 
 int
-ACE_OS::argv_to_string (ASYS_TCHAR **argv,
-                        ASYS_TCHAR *&buf,
+ACE_OS::argv_to_string (ACE_TCHAR **argv,
+                        ACE_TCHAR *&buf,
                         int substitute_env_args)
 {
   if (argv == 0 || argv[0] == 0)
@@ -4056,7 +3963,7 @@ ACE_OS::argv_to_string (ASYS_TCHAR **argv,
 
   for (int i = 0; argv[i] != 0; i++)
     {
-      ASYS_TCHAR *temp = 0;
+      ACE_TCHAR *temp = 0;
 
       // Account for environment variables.
       if (substitute_env_args
@@ -4074,17 +3981,17 @@ ACE_OS::argv_to_string (ASYS_TCHAR **argv,
   // each param with white space.
 
   ACE_NEW_RETURN (buf,
-                  ASYS_TCHAR[buf_len + 1],
+                  ACE_TCHAR[buf_len + 1],
                   0);
 
   // Initial null charater to make it a null string.
   buf[0] = '\0';
-  ASYS_TCHAR *end = buf;
+  ACE_TCHAR *end = buf;
   int j;
 
   for (j = 0; argv[j] != 0; j++)
     {
-      ASYS_TCHAR *temp = 0;
+      ACE_TCHAR *temp = 0;
 
       // Account for environment variables.
       if (substitute_env_args
@@ -4106,9 +4013,9 @@ ACE_OS::argv_to_string (ASYS_TCHAR **argv,
 }
 
 int
-ACE_OS::string_to_argv (ASYS_TCHAR *buf,
+ACE_OS::string_to_argv (ACE_TCHAR *buf,
                         size_t &argc,
-                        ASYS_TCHAR **&argv,
+                        ACE_TCHAR **&argv,
                         int substitute_env_args)
 {
   // Reset the number of arguments
@@ -4117,7 +4024,7 @@ ACE_OS::string_to_argv (ASYS_TCHAR *buf,
   if (buf == 0)
     return -1;
 
-  ASYS_TCHAR *cp = buf;
+  ACE_TCHAR *cp = buf;
 
   // First pass: count arguments.
 
@@ -4135,7 +4042,7 @@ ACE_OS::string_to_argv (ASYS_TCHAR *buf,
       // Grok quotes....
       if (*cp == '\'' || *cp == '"')
         {
-          ASYS_TCHAR quote = *cp;
+          ACE_TCHAR quote = *cp;
 
           // Scan past the string..
           for (cp++; *cp != '\0' && *cp != quote; cp++)
@@ -4145,7 +4052,7 @@ ACE_OS::string_to_argv (ASYS_TCHAR *buf,
           if (*cp == '\0')
             {
               ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("unmatched %c detected\n"),
+                          ACE_TEXT ("unmatched %c detected\n"),
                           quote));
               argc--;
               break;
@@ -4159,22 +4066,22 @@ ACE_OS::string_to_argv (ASYS_TCHAR *buf,
     }
 
   // Second pass: copy arguments.
-  ASYS_TCHAR arg[ACE_DEFAULT_ARGV_BUFSIZ];
-  ASYS_TCHAR *argp = arg;
+  ACE_TCHAR arg[ACE_DEFAULT_ARGV_BUFSIZ];
+  ACE_TCHAR *argp = arg;
 
   // Make sure that the buffer we're copying into is always large
   // enough.
   if (cp - buf >= ACE_DEFAULT_ARGV_BUFSIZ)
     ACE_NEW_RETURN (argp,
-                    ASYS_TCHAR[cp - buf + 1],
+                    ACE_TCHAR[cp - buf + 1],
                     -1);
 
   // Make a new argv vector of argc + 1 elements.
   ACE_NEW_RETURN (argv,
-                  ASYS_TCHAR *[argc + 1],
+                  ACE_TCHAR *[argc + 1],
                   -1);
 
-  ASYS_TCHAR *ptr = buf;
+  ACE_TCHAR *ptr = buf;
 
   for (size_t i = 0; i < argc; i++)
     {
@@ -4185,7 +4092,7 @@ ACE_OS::string_to_argv (ASYS_TCHAR *buf,
       // Copy next argument and move to next whitespace..
       if (*ptr == '\'' || *ptr == '"')
         {
-          ASYS_TCHAR quote = *ptr++;
+          ACE_TCHAR quote = *ptr++;
 
           for (cp = argp;
                *ptr != '\0' && *ptr != quote;
@@ -4217,13 +4124,11 @@ ACE_OS::string_to_argv (ASYS_TCHAR *buf,
         }
 
       // Check for environment variable substitution here.
-#if !defined (ACE_HAS_WINCE)
       if (substitute_env_args)
         ACE_ALLOCATOR_RETURN (argv[i],
                               ACE_OS::strenvdup (arg),
                               -1);
       else
-#endif /* ACE_HAS_WINCE */
         ACE_ALLOCATOR_RETURN (argv[i],
                               ACE_OS::strdup (arg),
                               -1);
@@ -4240,42 +4145,42 @@ ACE_OS::string_to_argv (ASYS_TCHAR *buf,
 // separated by spaces.
 
 pid_t
-ACE_OS::fork_exec (ASYS_TCHAR *argv[])
+ACE_OS::fork_exec (ACE_TCHAR *argv[])
 {
 # if defined (ACE_WIN32)
-  ASYS_TCHAR *buf;
+  ACE_TCHAR *buf;
 
   if (ACE_OS::argv_to_string (argv, buf) != -1)
     {
       PROCESS_INFORMATION process_info;
 #   if !defined (ACE_HAS_WINCE)
-      STARTUPINFO startup_info;
+      ACE_TEXT_STARTUPINFO startup_info;
       ACE_OS::memset ((void *) &startup_info,
                       0,
                       sizeof startup_info);
       startup_info.cb = sizeof startup_info;
 
-      if (::CreateProcess (0,
-                           (LPTSTR) ASYS_ONLY_WIDE_STRING (buf),
-                           0, // No process attributes.
-                           0,  // No thread attributes.
-                           TRUE, // Allow handle inheritance.
-                           0, // Don't create a new console window.
-                           0, // No environment.
-                           0, // No current directory.
-                           &startup_info,
-                           &process_info))
+      if (ACE_TEXT_CreateProcess (0,
+                                  buf,
+                                  0, // No process attributes.
+                                  0,  // No thread attributes.
+                                  TRUE, // Allow handle inheritance.
+                                  0, // Don't create a new console window.
+                                  0, // No environment.
+                                  0, // No current directory.
+                                  &startup_info,
+                                  &process_info))
 #   else
-      if (::CreateProcess (0,
-                           (LPTSTR) ASYS_ONLY_WIDE_STRING (buf),
-                           0, // No process attributes.
-                           0,  // No thread attributes.
-                           FALSE, // Can's inherit handles on CE
-                           0, // Don't create a new console window.
-                           0, // No environment.
-                           0, // No current directory.
-                           0, // Can't use startup info on CE
-                           &process_info))
+      if (ACE_TEXT_CreateProcess (0,
+                                  buf,
+                                  0, // No process attributes.
+                                  0,  // No thread attributes.
+                                  FALSE, // Can's inherit handles on CE
+                                  0, // Don't create a new console window.
+                                  0, // No environment.
+                                  0, // No current directory.
+                                  0, // Can't use startup info on CE
+                                  &process_info))
 #   endif /* ! ACE_HAS_WINCE */
         {
           // Free resources allocated in kernel.
@@ -4503,9 +4408,9 @@ ftruncate (ACE_HANDLE handle, long len)
 }
 # endif /* ACE_NEEDS_FTRUNCATE */
 
-# if defined (ACE_LACKS_MKTEMP) && !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-char *
-ACE_OS::mktemp (char *s)
+# if defined (ACE_LACKS_MKTEMP)
+ACE_TCHAR *
+ACE_OS::mktemp (ACE_TCHAR *s)
 {
   ACE_TRACE ("ACE_OS::mktemp");
   if (s == 0)
@@ -4513,14 +4418,14 @@ ACE_OS::mktemp (char *s)
     return 0;
   else
     {
-      char *xxxxxx = ACE_OS::strstr (s, "XXXXXX");
+      ACE_TCHAR *xxxxxx = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX");
 
       if (xxxxxx == 0)
         // the template string doesn't contain "XXXXXX"!
         return s;
       else
         {
-          char unique_letter = 'a';
+          ACE_TCHAR unique_letter = ACE_TEXT ('a');
           struct stat sb;
 
           // Find an unused filename for this process.  It is assumed
@@ -4529,16 +4434,21 @@ ACE_OS::mktemp (char *s)
           // condition if multiple threads in a process use the same
           // template).  This appears to match the behavior of the
           // SunOS 5.5 mktemp().
-          ACE_OS::sprintf (xxxxxx, "%05d%c", ACE_OS::getpid (), unique_letter);
+          ACE_OS::sprintf (xxxxxx, 
+                           ACE_TEXT ("%05d%c"), 
+                           ACE_OS::getpid (), 
+                           unique_letter);
           while (ACE_OS::stat (s, &sb) >= 0)
             {
-              if (++unique_letter <= 'z')
-                ACE_OS::sprintf (xxxxxx, "%05d%c", ACE_OS::getpid (),
+              if (++unique_letter <= ACE_TEXT ('z'))
+                ACE_OS::sprintf (xxxxxx, 
+                                 ACE_TEXT ("%05d%c"), 
+                                 ACE_OS::getpid (),
                                  unique_letter);
               else
                 {
                   // maximum of 26 unique files per template, per process
-                  ACE_OS::sprintf (xxxxxx, "%s", "");
+                  ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%s"), ACE_TEXT (""));
                   return s;
                 }
             }
@@ -4546,7 +4456,7 @@ ACE_OS::mktemp (char *s)
       return s;
     }
 }
-# endif /* ACE_LACKS_MKTEMP && !ACE_HAS_MOSTLY_UNICODE_APIS */
+# endif /* ACE_LACKS_MKTEMP */
 
 int
 ACE_OS::socket_init (int version_high, int version_low)
@@ -4698,7 +4608,7 @@ siginfo_t::siginfo_t (ACE_HANDLE *handles)
 # endif /* ACE_HAS_SIGINFO_T */
 
 pid_t
-ACE_OS::fork (const char *program_name)
+ACE_OS::fork (const ACE_TCHAR *program_name)
 {
   ACE_TRACE ("ACE_OS::fork");
 # if defined (ACE_LACKS_FORK)
@@ -4786,13 +4696,13 @@ ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs) const
 }
 
 int
-ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
+ACE_OS::inet_aton (const ACE_TCHAR *host_name, struct in_addr *addr)
 {
   ACE_UINT32 ip_addr = ACE_OS::inet_addr (host_name);
 
   if (ip_addr == (ACE_UINT32) htonl ((ACE_UINT32) ~0)
       // Broadcast addresses are weird...
-      && ACE_OS::strcmp (host_name, "255.255.255.255") != 0)
+      && ACE_OS::strcmp (host_name, ACE_TEXT ("255.255.255.255")) != 0)
     return 0;
   else if (addr == 0)
     return 0;
@@ -5088,19 +4998,13 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 }
 
 ACE_HANDLE
-ACE_OS::open (const char *filename,
+ACE_OS::open (const ACE_TCHAR *filename,
               int mode,
               int perms,
               LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_OS::open");
-#if defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (filename);
-  ACE_UNUSED_ARG (mode);
-  ACE_UNUSED_ARG (perms);
-  ACE_UNUSED_ARG (sa);
-  return 0;
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   ACE_UNUSED_ARG (perms);
 
   DWORD access = GENERIC_READ;
@@ -5160,12 +5064,12 @@ ACE_OS::open (const char *filename,
       VER_PLATFORM_WIN32_NT)
     shared_mode |= FILE_SHARE_DELETE;
 
-  ACE_HANDLE h = ::CreateFileA (filename, access,
-                                shared_mode,
-                                ACE_OS::default_win32_security_attributes (sa),
-                                creation,
-                                flags,
-                                0);
+  ACE_HANDLE h = ACE_TEXT_CreateFile (filename, access,
+                                      shared_mode,
+                                      ACE_OS::default_win32_security_attributes (sa),
+                                      creation,
+                                      flags,
+                                      0);
 
   if (ACE_BIT_ENABLED (mode, _O_APPEND))
     {
@@ -5226,99 +5130,6 @@ ACE_OS::open (const char *filename,
   ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE, -1);
 #endif /* ACE_WIN32 */
 }
-
-#if defined (ACE_HAS_UNICODE) && defined (ACE_WIN32)
-
-ACE_HANDLE
-ACE_OS::open (const wchar_t *filename,
-              int mode,
-              int perms,
-              LPSECURITY_ATTRIBUTES sa)
-{
-  ACE_UNUSED_ARG (perms);
-  ACE_TRACE ("ACE_OS::open");
-  // Warning: This function ignores _O_APPEND
-  DWORD access = GENERIC_READ;
-  if (ACE_BIT_ENABLED (mode, O_WRONLY))
-    access = GENERIC_WRITE;
-  else if (ACE_BIT_ENABLED (mode, O_RDWR))
-    access = GENERIC_READ | GENERIC_WRITE;
-
-  DWORD creation = OPEN_EXISTING;
-
-  if ((mode & (_O_CREAT | _O_EXCL)) == (_O_CREAT | _O_EXCL))
-    creation = CREATE_NEW;
-  else if ((mode & (_O_CREAT | _O_TRUNC)) == (_O_CREAT | _O_TRUNC))
-    creation = CREATE_ALWAYS;
-  else if (ACE_BIT_ENABLED (mode, _O_CREAT))
-    creation = OPEN_ALWAYS;
-  else if (ACE_BIT_ENABLED (mode, _O_TRUNC))
-    creation = TRUNCATE_EXISTING;
-
-  DWORD flags = 0;
-
-  if (ACE_BIT_ENABLED (mode, _O_TEMPORARY))
-    flags |= FILE_FLAG_DELETE_ON_CLOSE | FILE_ATTRIBUTE_TEMPORARY;
-
-  if (ACE_BIT_ENABLED (mode, FILE_FLAG_WRITE_THROUGH))
-    flags |= FILE_FLAG_WRITE_THROUGH;
-  if (ACE_BIT_ENABLED (mode, FILE_FLAG_OVERLAPPED))
-    flags |= FILE_FLAG_OVERLAPPED;
-  if (ACE_BIT_ENABLED (mode, FILE_FLAG_NO_BUFFERING))
-    flags |= FILE_FLAG_NO_BUFFERING;
-  if (ACE_BIT_ENABLED (mode, FILE_FLAG_RANDOM_ACCESS))
-    flags |= FILE_FLAG_RANDOM_ACCESS;
-  if (ACE_BIT_ENABLED (mode, FILE_FLAG_SEQUENTIAL_SCAN))
-    flags |= FILE_FLAG_SEQUENTIAL_SCAN;
-  if (ACE_BIT_ENABLED (mode, FILE_FLAG_DELETE_ON_CLOSE))
-    flags |= FILE_FLAG_DELETE_ON_CLOSE;
-  if (ACE_BIT_ENABLED (mode, FILE_FLAG_BACKUP_SEMANTICS))
-    flags |= FILE_FLAG_BACKUP_SEMANTICS;
-  if (ACE_BIT_ENABLED (mode, FILE_FLAG_POSIX_SEMANTICS))
-    flags |= FILE_FLAG_POSIX_SEMANTICS;
-
-  ACE_MT (ACE_thread_mutex_t *ace_os_monitor_lock = 0;)
-
-  if (ACE_BIT_ENABLED (mode, _O_APPEND))
-    {
-      ACE_MT
-        (
-          ace_os_monitor_lock = (ACE_thread_mutex_t *)
-            ACE_OS_Object_Manager::preallocated_object[
-              ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK];
-          ACE_OS::thread_mutex_lock (ace_os_monitor_lock);
-        )
-    }
-
-  DWORD shared_mode = FILE_SHARE_READ | FILE_SHARE_WRITE;
-  if (ACE_OS::get_win32_versioninfo().dwPlatformId ==
-      VER_PLATFORM_WIN32_NT)
-    shared_mode |= FILE_SHARE_DELETE;
-
-  ACE_HANDLE h = ::CreateFileW (filename, access,
-                                shared_mode,
-                                ACE_OS::default_win32_security_attributes (sa),
-                                creation,
-                                flags,
-                                0);
-
-  if (ACE_BIT_ENABLED (mode, _O_APPEND))
-    {
-      if (h != ACE_INVALID_HANDLE)
-        {
-          ::SetFilePointer (h, 0, 0, FILE_END);
-        }
-
-      ACE_MT (ACE_OS::thread_mutex_unlock (ace_os_monitor_lock);)
-    }
-
-  if (h == ACE_INVALID_HANDLE)
-    ACE_FAIL_RETURN (h);
-  else
-    return h;
-}
-
-#endif /* ACE_HAS_UNICODE && ACE_WIN32 */
 
 # if defined (ACE_LACKS_DIFFTIME)
 double
@@ -5453,30 +5264,10 @@ ACE_OS::difftime (time_t t1, time_t t0)
 }
 # endif /* ACE_LACKS_DIFFTIME */
 
-# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-wchar_t *
-ACE_OS::ctime (const time_t *t)
+# if defined (ACE_HAS_WINCE)
+ACE_TCHAR *
+ACE_OS::ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen)
 {
-#if defined (ACE_HAS_WINCE)
-  wchar_t buf[26];              // 26 is a "magic number" ;)
-  return ACE_OS::ctime_r (t, buf, 26);
-#else
-  ACE_OSCALL_RETURN (::_wctime (t), wchar_t *, 0);
-#endif /* ACE_HAS_WINCE */
-}
-
-wchar_t *
-ACE_OS::ctime_r (const time_t *clock,
-                 wchar_t *buf,
-                 int buflen)
-{
-#if !defined (ACE_HAS_WINCE)
-  wchar_t *result;
-  ACE_OSCALL (::_wctime (clock), wchar_t *, 0, result);
-  if (result != 0)
-    ::wcsncpy (buf, result, buflen);
-  return buf;
-#else
   // buflen must be at least 26 wchar_t long.
   if (buflen < 26)              // Again, 26 is a magic number.
     return 0;
@@ -5490,15 +5281,10 @@ ACE_OS::ctime_r (const time_t *clock,
   file_time.dwLowDateTime = _100ns.LowPart;
   file_time.dwHighDateTime = _100ns.HighPart;
 
-#   if 1
   FILETIME localtime;
   SYSTEMTIME systime;
   FileTimeToLocalFileTime (&file_time, &localtime);
   FileTimeToSystemTime (&localtime, &systime);
-#   else
-  SYSTEMTIME systime;
-  FileTimeToSystemTime ((FILETIME *) &file_time, &systime);
-#   endif /* 0 */
   ACE_OS::sprintf (buf, ACE_OS_CTIME_R_FMTSTR,
                    ACE_OS::day_of_week_name[systime.wDayOfWeek],
                    ACE_OS::month_name[systime.wMonth - 1],
@@ -5508,9 +5294,8 @@ ACE_OS::ctime_r (const time_t *clock,
                    systime.wSecond,
                    systime.wYear);
   return buf;
-#endif /* ACE_HAS_WINCE */
 }
-# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+# endif /* ACE_HAS_WINCE */
 
 # if !defined (ACE_HAS_WINCE)
 time_t
@@ -5534,7 +5319,7 @@ ACE_OS::mktime (struct tm *t)
 int
 ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                      int type,
-                     LPCTSTR name,
+                     const ACE_TCHAR *name,
                      void *arg)
 {
   // ACE_TRACE ("ACE_OS::rwlock_init");
@@ -5545,10 +5330,10 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 
   // Since we cannot use the user specified name for all three
   // objects, we will create three completely new names.
-  TCHAR name1[ACE_UNIQUE_NAME_LEN];
-  TCHAR name2[ACE_UNIQUE_NAME_LEN];
-  TCHAR name3[ACE_UNIQUE_NAME_LEN];
-  TCHAR name4[ACE_UNIQUE_NAME_LEN];
+  ACE_TCHAR name1[ACE_UNIQUE_NAME_LEN];
+  ACE_TCHAR name2[ACE_UNIQUE_NAME_LEN];
+  ACE_TCHAR name3[ACE_UNIQUE_NAME_LEN];
+  ACE_TCHAR name4[ACE_UNIQUE_NAME_LEN];
 
   ACE_OS::unique_name ((const void *) &rw->lock_,
                        name1,
@@ -5647,13 +5432,13 @@ ACE_OS::condattr_destroy (ACE_condattr_t &)
 int
 ACE_OS::cond_init (ACE_cond_t *cv,
                    ACE_condattr_t &attributes,
-                   LPCTSTR name, void *arg)
+                   const ACE_TCHAR *name, void *arg)
 {
   return ACE_OS::cond_init (cv, attributes.type, name, arg);
 }
 
 int
-ACE_OS::cond_init (ACE_cond_t *cv, short type, LPCTSTR name, void *arg)
+ACE_OS::cond_init (ACE_cond_t *cv, short type, const ACE_TCHAR *name, void *arg)
 {
 ACE_TRACE ("ACE_OS::cond_init");
 # if defined (ACE_HAS_THREADS)
@@ -6427,7 +6212,7 @@ ace_sysconf_dump (void)
 
   if (time == -1)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("Cannot get time\n")));
+                ACE_TEXT ("Cannot get time\n")));
   else
     time.dump ();
 
@@ -6496,37 +6281,6 @@ ace_sysconf_dump (void)
               ACE_OS::sysconf (_SC_VERSION)));
 }
 # endif /* CHORUS */
-
-ACE_OS_WString::ACE_OS_WString (const ACE_USHORT16 *s)
-  : rep_ (0)
-{
-  size_t len = ACE_OS::strlen (s);
-  ACE_NEW (this->rep_,
-           char[len+1]);
-
-  for (size_t i = 0; i < len; i++)
-    {
-      ACE_USHORT16 *t = ACE_const_cast (ACE_USHORT16 *, s);
-      this->rep_[i] = ACE_static_cast (char, *(t + i));
-    }
-
-  this->rep_[len] = '\0';
-  return;
-}
-
-ACE_OS_CString::ACE_OS_CString (const char *s)
-  : rep_ (0)
-{
-  size_t len = ACE_OS::strlen (s);
-  ACE_NEW (this->rep_,
-           ACE_USHORT16[len+1]);
-
-  for (size_t i = 0; i < len; i++)
-    this->rep_[i] = s[i];
-
-  this->rep_[len] = '\0';
-  return;
-}
 
 # define ACE_OS_PREALLOCATE_OBJECT(TYPE, ID)\
     {\
@@ -6870,7 +6624,8 @@ ACE_OS_Object_Manager::at_exit (ACE_EXIT_HOOK func)
 }
 
 void
-ACE_OS_Object_Manager::print_error_message (u_int line_number, LPCTSTR message)
+ACE_OS_Object_Manager::print_error_message (u_int line_number, 
+                                            const ACE_TCHAR *message)
 {
   // To avoid duplication of these const strings in OS.o.
 #if !defined (ACE_HAS_WINCE)
@@ -6883,7 +6638,7 @@ ACE_OS_Object_Manager::print_error_message (u_int line_number, LPCTSTR message)
   ACE_UNUSED_ARG (line_number);
   ACE_UNUSED_ARG (message);
 
-  LPTSTR lpMsgBuf = 0;
+  ACE_TCHAR *lpMsgBuf = 0;
   ::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER |
                    FORMAT_MESSAGE_FROM_SYSTEM,
                    NULL,
@@ -6891,7 +6646,7 @@ ACE_OS_Object_Manager::print_error_message (u_int line_number, LPCTSTR message)
                    MAKELANGID (LANG_NEUTRAL,
                                SUBLANG_DEFAULT),
                    // Default language
-                   (LPTSTR) &lpMsgBuf,
+                   (ACE_TCHAR *) &lpMsgBuf,
                    0,
                    NULL);
   ::MessageBox (NULL,
@@ -7045,9 +6800,9 @@ ACE_CE_Bridge::get_default_winbridge (void)
 }
 
 int
-ACE_CE_Bridge::write_msg (LPCTSTR str)
+ACE_CE_Bridge::write_msg (const ACE_TCHAR *str)
 {
-  LPTSTR s = ACE_OS::strdup (str);
+  ACE_TCHAR *s = ACE_OS::strdup (str);
   return PostMessage (this->text_output_,
                       WM_COMMAND,
                       MAKEWORD (this->idc_,

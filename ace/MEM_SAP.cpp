@@ -19,7 +19,7 @@ ACE_MEM_SAP::dump (void) const
   if (this->shm_malloc_ != 0)
     this->shm_malloc_->dump ();
   else
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("ACE_MEM_SAP uninitialized.\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_MEM_SAP uninitialized.\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -30,7 +30,7 @@ ACE_MEM_SAP::ACE_MEM_SAP (void)
 }
 
 int
-ACE_MEM_SAP::create_shm_malloc (LPCTSTR name,
+ACE_MEM_SAP::create_shm_malloc (const ACE_TCHAR *name,
                                 MALLOC_OPTIONS *options)
 {
   ACE_TRACE ("ACE_MEM_SAP::create_shm_malloc");

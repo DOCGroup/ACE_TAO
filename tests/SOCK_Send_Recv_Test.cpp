@@ -49,7 +49,7 @@ client (void *arg)
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) Connecting to port %d\n"),
+              ACE_TEXT ("(%P|%t) Connecting to port %d\n"),
               server_addr.get_port_number()));
 
   // Initiate connection with server; don't wait forever
@@ -58,14 +58,14 @@ client (void *arg)
                    &timeout) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) %p\n"),
-                  ASYS_TEXT ("connection failed")));
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("connection failed")));
       Test_Result = 1;
       return 0;
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) connected to %s\n"),
+              ACE_TEXT ("(%P|%t) connected to %s\n"),
               server_addr.get_host_name ()));
 
   //*******************   TEST 1   ******************************
@@ -104,8 +104,8 @@ client (void *arg)
   if (len == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) %p\n"),
-                  ASYS_TEXT ("Test 1, sendv failed")));
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("Test 1, sendv failed")));
       Test_Result = 1;
     }
   else
@@ -127,7 +127,8 @@ client (void *arg)
   if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) %p; len is %d, but should be 255!\n", len));
+                  ACE_TEXT ("(%P|%t) %p; len is %d, but should be 255!\n"), 
+                  len));
     }
   ACE_ASSERT (len == 255);
 
@@ -135,7 +136,7 @@ client (void *arg)
     if (buffer2[i] != buffer[i])
       {
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("(%P|%t) Test 2, rcvd byte %d is %d, not %d\n"),
+                    ACE_TEXT ("(%P|%t) Test 2, rcvd byte %d is %d, not %d\n"),
                     i, buffer2[i], buffer[i]));
         Test_Result = 1;
       }
@@ -160,14 +161,14 @@ server (void *arg)
                              &timeout) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) %p\n"),
-                  ASYS_TEXT ("accept")));
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("accept")));
       Test_Result = 1;
       return 0;
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) client %s connected from %d\n"),
+              ACE_TEXT ("(%P|%t) client %s connected from %d\n"),
               cli_addr.get_host_name (),
               cli_addr.get_port_number ()));
 
@@ -197,8 +198,8 @@ server (void *arg)
   if (len == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) %p\n"),
-                  ASYS_TEXT ("Test 1, recvv failed")));
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("Test 1, recvv failed")));
       Test_Result = 1;
     }
 
@@ -207,7 +208,7 @@ server (void *arg)
     if (buffer[i] != i)
       {
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("(%P|%t) Test 1, rcvd byte %d is %d, not %d\n"),
+                    ACE_TEXT ("(%P|%t) Test 1, rcvd byte %d is %d, not %d\n"),
                     i,
                     buffer[i],
                     i));
@@ -245,12 +246,12 @@ spawn (void)
   if (peer_acceptor.open (ACE_Addr::sap_any) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("(%P|%t) %p\n"),
-                ASYS_TEXT ("open")));
+                ACE_TEXT ("(%P|%t) %p\n"),
+                ACE_TEXT ("open")));
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P|%t) starting server at port %d\n"),
+                  ACE_TEXT ("(%P|%t) starting server at port %d\n"),
                   server_addr.get_port_number ()));
 
 #if !defined (ACE_LACKS_FORK)
@@ -258,8 +259,8 @@ spawn (void)
         {
         case -1:
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("(%P|%t) %p\n%a"),
-                      ASYS_TEXT ("fork failed")));
+                      ACE_TEXT ("(%P|%t) %p\n%a"),
+                      ACE_TEXT ("fork failed")));
           /* NOTREACHED */
         case 0:
           client (&server_addr);
@@ -276,22 +277,22 @@ spawn (void)
            ACE_reinterpret_cast (void *, &peer_acceptor),
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("(%P|%t) %p\n%a"),
-                    ASYS_TEXT ("thread create failed")));
+                    ACE_TEXT ("(%P|%t) %p\n%a"),
+                    ACE_TEXT ("thread create failed")));
 
       if (ACE_Thread_Manager::instance ()->spawn
           (ACE_THR_FUNC (client),
            ACE_reinterpret_cast (void *, &server_addr),
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("(%P|%t) %p\n%a"),
-                    ASYS_TEXT ("thread create failed")));
+                    ACE_TEXT ("(%P|%t) %p\n%a"),
+                    ACE_TEXT ("thread create failed")));
 
       // Wait for the threads to exit.
       ACE_Thread_Manager::instance ()->wait ();
 #else
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"),
+                  ACE_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"),
                   1));
 #endif /* ACE_HAS_THREADS */
 
@@ -300,9 +301,9 @@ spawn (void)
 }
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("SOCK_Send_Recv_Test"));
+  ACE_START_TEST (ACE_TEXT ("SOCK_Send_Recv_Test"));
 
   spawn ();
 
