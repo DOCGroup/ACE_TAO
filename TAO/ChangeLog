@@ -1,5 +1,36 @@
 2002-09-26  D A Hanvey  <dhanvey@qub.ac.uk>
 
+	* /orbsvcs/Logging_Service
+
+	  Logging_Service extended to include event logging.
+	  4 separate services each in its own directory as below.
+	
+	* Basic_Logging_Service/README
+	* Basic_Logging_Service/Basic_Logging_Service.cpp
+	* Basic_Logging_Service/Basic_Logging_Service.h
+	* Basic_Logging_Service/Makefile:
+
+	* Event_Logging_Service/Event_Logging_Service.cpp
+	* Event_Logging_Service/Event_Logging_Service.h
+	* Event_Logging_Service/Makefile
+	* Event_Logging_Service/README:
+
+	* Notify_Logging_Service/Makefile
+	* Notify_Logging_Service/Notify_Logging_Server.cpp
+	* Notify_Logging_Service/Notify_Logging_Service.cpp
+	* Notify_Logging_Service/Notify_Logging_Service.h
+	* Notify_Logging_Service/README
+	* Notify_Logging_Service/svc.conf:
+	
+	* RTEvent_Logging_Service/Makefile
+	* RTEvent_Logging_Service/RTEvent_Logging_Service.cpp
+	* RTEvent_Logging_Service/RTEvent_Logging_Service.h:
+
+
+
+
+2002-09-26  D A Hanvey  <dhanvey@qub.ac.uk>
+
 	* /orbsvcs/examples/Log
 
 	  Examples of the 4 Logging Services
