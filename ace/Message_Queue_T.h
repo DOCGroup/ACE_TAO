@@ -409,6 +409,10 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue (const ACE_Message_Queue<ACE_SYNCH_USE> &))
 };
 
+// This typedef is used to get around a compiler bug in g++/vxworks.
+typedef ACE_Message_Queue<ACE_SYNCH> ACE_DEFAULT_MESSAGE_QUEUE_TYPE;
+
+
 /**
  * @class ACE_Message_Queue_Iterator
  *
