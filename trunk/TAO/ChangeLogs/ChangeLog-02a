@@ -3,9 +3,9 @@ Sat Apr 29 14:16:40 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/GIOP_Message_Accept_State.cpp:
 	* tao/GIOP_Message_Connectors.cpp: Removed support for reliable
 	  oneways from GIOP 1.1 implementation. This means that there are
-	  only two types of calls ie. a oneway or a two way. All the
+	  only two types of calls ie. oneway and two ways. All the
 	  policy settings for reliable oneways will not be considered at
-	  all. They will be converted to a simple oneway.
+	  all. They will be mapped to a simple oneway.
 
 Sat Apr 29 11:49:19 2000  Carlos O'Ryan  <coryan@uci.edu>
 
