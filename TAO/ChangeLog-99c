@@ -1,3 +1,50 @@
+Thu Jul  8 17:18:36 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/params.{h,cpp}:
+
+	  Changed the preconnects container to an
+	  ACE_Unbounded_Queue<ACE_CString> since it allows duplicate
+	  values and since it has already been instantiated in ACE.  Since
+	  it has already been instantiated in ACE, no increase in TAO's
+	  footprint will occur.  Furthermore, since the preconnect
+	  processing is not in a performance critical path, no degradation
+	  in performance will occur. [Bug 4]
+	
+	* tao/Connector_Registry.{h,cpp}:
+
+	  Added a new preprocess_preconnects() method to "squeeze" all
+	  protocol similar preconnects into a single string.  This
+	  preprocessing gets around having to iterate over all of the
+	  loaded protocols in each protocol connector.  Protocol iteration
+	  will remain in the connector registry.  Furthermore,
+	  preprocessing the preconnects in this manner also makes it
+	  easier for protocol implementers to parse the preconnects.
+	  [Bug 4]
+	
+	* tao/Protocol_Factory.{h,cpp}:
+	* tao/IIOP_Factory.{h,cpp}:
+	* tao/UIOP_Factory.{h,cpp}:
+
+	  Added a prefix() method that returns the expected prefix for the 
+	  given transport protocol.  One such method already exists in
+	  each protocol's Profile class.  However, it makes more sense to
+	  get the prefix from the protocol factory in the case that this
+	  newly added method is used, currently only in preconnect
+	  processing.
+	
+	* tao/ORB_Core.cpp (init):
+
+	  The preconnect provided on the command line wasn't being
+	  "consumed" during command line parsing.  Thanks to Steve Totten
+	  <totten_s@ociweb.com> for reporting this problem and providing a 
+	  fix.  [Bug 39]
+
+	  Update related to the preconnect fixes described above. [Bug 4]
+
+	* tao/ORB_Core.h (TAO_ORB_Core):
+
+	  Comment updates.
+
 Thu Jul  8 16:30:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Sequence_T.h:
