@@ -5840,22 +5840,6 @@ class ACE_Export ACE_Object_Manager_Base
   // = DESCRIPTION
   //     Encapsulates the most useful ACE_Object_Manager data structures.
 public:
-  static int starting_up (void);
-  // Returns 1 before ACE_Object_Manager has been constructed.  This
-  // flag can be used to determine if the program is constructing
-  // static objects.  If no static object spawns any threads, the
-  // program will be single-threaded when this flag returns 1.  (Note
-  // that the program still might construct some static objects when
-  // this flag returns 0, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
-  // defined.)
-
-  static int shutting_down (void);
-  // Returns 1 after ACE_Object_Manager has been destroyed.  This flag
-  // can be used to determine if the program is in the midst of
-  // destroying static objects.  (Note that the program might destroy
-  // some static objects before this flag can return 1, if
-  // ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined.)
-
 # if (defined (ACE_PSOS) && defined (__DIAB))  || \
      (defined (__DECCXX_VER) && __DECCXX_VER < 60000000)
   // The Diab compiler got confused and complained about access rights
@@ -5880,22 +5864,32 @@ public:
 
   enum Object_Manager_State
     {
-      UNINITIALIZED_OBJ_MAN = 0,
-      INITIALIZING_ACE_OS_OBJ_MAN,
-      INITIALIZED_ACE_OS_OBJ_MAN,
-      INITIALIZING_ACE_OBJ_MAN,
-      INITIALIZED_ACE_OBJ_MAN,
-      RUNNING_OBJ_MAN = INITIALIZED_ACE_OBJ_MAN,
-      SHUTTING_DOWN_ACE_OBJ_MAN,
-      SHUT_DOWN_ACE_OBJ_MAN,
-      SHUTTING_DOWN_ACE_OS_OBJ_MAN,
-      SHUT_DOWN_ACE_OS_OBJ_MAN,
-      TERMINATED_OBJ_MAN = SHUT_DOWN_ACE_OS_OBJ_MAN
+      OBJ_MAN_UNINITIALIZED = 0,
+      OBJ_MAN_INITIALIZING,
+      OBJ_MAN_INITIALIZED,
+      OBJ_MAN_SHUTTING_DOWN,
+      OBJ_MAN_SHUT_DOWN
     };
 
 protected:
-  static Object_Manager_State object_manager_state_;
-  // State of the program, from the ACE Object_Managers' points-of-view.
+  int starting_up_i (void);
+  // Returns 1 before ACE_Object_Manager_Base has been constructed.
+  // This flag can be used to determine if the program is constructing
+  // static objects.  If no static object spawns any threads, the
+  // program will be single-threaded when this flag returns 1.  (Note
+  // that the program still might construct some static objects when
+  // this flag returns 0, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
+  // defined.)
+
+  int shutting_down_i (void);
+  // Returns 1 after ACE_Object_Manager_Base has been destroyed.  This
+  // flag can be used to determine if the program is in the midst of
+  // destroying static objects.  (Note that the program might destroy
+  // some static objects before this flag can return 1, if
+  // ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined.)
+
+  Object_Manager_State object_manager_state_;
+  // State of the Object_Manager;
 
   u_int dynamically_allocated_;
   // Flag indicating whether the ACE_Object_Manager was dynamically
