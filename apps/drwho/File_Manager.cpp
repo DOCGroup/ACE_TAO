@@ -1,6 +1,7 @@
 // $Id$
 
 #include "File_Manager.h"
+#include "ace/OS_String.h"
 
 File_Manager::File_Manager (void)
   : number_of_friends (0),
@@ -81,7 +82,7 @@ File_Manager::open_passwd_file (void)
        (pwent = ACE_OS::getpwent ()) != 0; )
     if (*pwent->pw_gecos != '\0')
       {
-	char *cp = strchr (pwent->pw_gecos, ',');
+	char *cp = ACE_OS_String::strchr (pwent->pw_gecos, ',');
 
 	if (cp != 0)
 	  *cp = '\0';

@@ -29,6 +29,7 @@ ACE_RCSID(src, Key_List, "$Id$")
 
 #include "ace/Read_Buffer.h"
 #include "Hash_Table.h"
+#include "ace/OS_String.h"
 
 // Default type for generated code.
 const char *const Key_List::default_array_type = "char *";
@@ -185,16 +186,16 @@ Key_List::output_types (void)
       else
         {
           // Yow, we've got a user-defined type...
-          int struct_tag_length = ACE_OS::strcspn (array_type_,
-                                                   "{\n\0");
+          int struct_tag_length = ACE_OS_String::strcspn (array_type_,
+                                                          "{\n\0");
           if (option[POINTER])      // And it must return a pointer...
             {
               ACE_NEW_RETURN (return_type,
                               char[struct_tag_length + 2],
                               -1);
-              ACE_OS::strncpy (return_type,
-                               array_type_,
-                               struct_tag_length);
+              ACE_OS_String::strncpy (return_type,
+                                      array_type_,
+                                      struct_tag_length);
               return_type[struct_tag_length] = '*';
               return_type[struct_tag_length + 1] = '\0';
             }
@@ -202,9 +203,9 @@ Key_List::output_types (void)
           ACE_NEW_RETURN (struct_tag,
                           char[struct_tag_length + 2],
                           -1);
-          ACE_OS::strncpy (struct_tag,
-                           array_type_,
-                           struct_tag_length);
+          ACE_OS_String::strncpy (struct_tag,
+                                  array_type_,
+                                  struct_tag_length);
           if (struct_tag[struct_tag_length] != ' ')
             {
               struct_tag[struct_tag_length] = ' ';
@@ -249,18 +250,18 @@ Key_List::read_keys (void)
           const char *delimiter = option.delimiter ();
           ACE_NEW_RETURN (this->head,
                           List_Node (buffer,
-                                     ACE_OS::strcspn (buffer,
-                                                      delimiter)),
+                                     ACE_OS_String::strcspn (buffer,
+                                                             delimiter)),
                           -1);
           for (temp = this->head;
                (buffer = input.read ('\n'))
-                 && ACE_OS::strcmp (buffer, "%%");
+                 && ACE_OS_String::strcmp (buffer, "%%");
                temp = temp->next)
             {
               ACE_NEW_RETURN (temp->next,
                               List_Node (buffer,
-                                         ACE_OS::strcspn (buffer,
-                                                          delimiter)),
+                                         ACE_OS_String::strcspn (buffer,
+                                                                 delimiter)),
                               -1);
               this->total_keys++;
             }
@@ -360,7 +361,7 @@ Key_List::merge (List_Node *list1, List_Node *list2)
     return list1;
   else if (occurrence_sort && list1->occurrence < list2->occurrence
            || hash_sort && list1->hash_value > list2->hash_value
-           || key_sort && strcmp (list1->key, list2->key) >= 0)
+           || key_sort && ACE_OS_String::strcmp (list1->key, list2->key) >= 0)
     {
       list2->next = merge (list2->next, list1);
       return list2;
@@ -551,15 +552,15 @@ Key_List::output_switch (int use_keyword_table)
       // Keep track of the longest string we'll need!
       const char *s = "charmap[*str] == *resword->%s && !strncasecmp (str + 1, resword->%s + 1, len - 1)";
       comp_buffer =
-        new char [strlen (s) + 2 * strlen (option.key_name ()) + 1];
+        new char [ACE_OS_String::strlen (s) + 2 * ACE_OS_String::strlen (option.key_name ()) + 1];
       if (option[COMP])
-        sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1, len - 1)",
-                 option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
-                 option[STRCASECMP] ? "strncasecmp" : "strncmp", option.key_name ());
+        ACE_OS::sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1, len - 1)",
+                         option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
+                         option[STRCASECMP] ? "strncasecmp" : "strncmp", option.key_name ());
       else
-        sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1)",
-                 option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
-                 option[STRCASECMP] ? "strcasecmp" : "strcmp", option.key_name ());
+        ACE_OS::sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1)",
+                         option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
+                         option[STRCASECMP] ? "strcasecmp" : "strcmp", option.key_name ());
     }
   else
     {

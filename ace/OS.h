@@ -1951,8 +1951,8 @@ extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 # endif /* ACE_HAS_THR_C_FUNC */
 
 /////////////////////////////////////////////////////////////////////////////
-// These don't seem to be used anywhere...
-#if 0
+// These don't seem to be used anywhere... except in the tests!!!
+// looks like Global_Macros.h or Default_Constants might be a better place...
 # if !defined (ACE_DEFAULT_MUTEX_A)
 #   define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"
 # endif /* ACE_DEFAULT_MUTEX_A */
@@ -1962,7 +1962,6 @@ extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 # endif /* ACE_HAS_WCHAR */
 
 # define ACE_DEFAULT_MUTEX ACE_LIB_TEXT (ACE_DEFAULT_MUTEX_A)
-#endif /* 0 */
 
 //////////////////////////////////////////////////////////////////////////////
 // Need to look into getting rid of this--or moving it to a move apropriate place.

@@ -28,6 +28,8 @@ ACE_RCSID(src, Hash_Table, "$Id$")
 #if defined (ACE_HAS_GPERF)
 
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_String.h"
 
 // The size of the hash table is always the smallest power of 2 >= the
 // size indicated by the user.  This allows several optimizations,
@@ -43,18 +45,18 @@ Hash_Table::Hash_Table (size_t s)
     this->size_ = 1;
   ACE_NEW (this->table_,
            List_Node*[this->size_]);
-  ACE_OS::memset ((char *) this->table_,
-                  0,
-                  this->size_ * sizeof *this->table_);
+  ACE_OS_String::memset ((char *) this->table_,
+                         0,
+                         this->size_ * sizeof *this->table_);
 }
 
 Hash_Table::~Hash_Table (void)
 {
   if (option[DEBUGGING])
     {
-      u_int keysig_width = option.max_keysig_size () > ACE_OS::strlen ("keysig") 
+      u_int keysig_width = option.max_keysig_size () > ACE_OS_String::strlen ("keysig") 
         ? option.max_keysig_size () 
-        : ACE_OS::strlen ("keysig");
+        : ACE_OS_String::strlen ("keysig");
 
       ACE_DEBUG ((LM_DEBUG,
                   "\ndumping the hash table\ntotal available table slots = %d, total bytes = %d, total collisions = %d\n"
@@ -97,7 +99,7 @@ Hash_Table::find (List_Node *item,
 
   for (probe = hash_val & size;
        this->table_[probe]
-         && (ACE_OS::strcmp (this->table_[probe]->keysig, item->keysig) != 0
+         && (ACE_OS_String::strcmp (this->table_[probe]->keysig, item->keysig) != 0
              || (ignore_length == 0 && this->table_[probe]->length != item->length));
        probe = probe + increment & size)
     this->collisions_++;

@@ -3,6 +3,8 @@
 #include "Multicast_Manager.h"
 #include "ace/Mem_Map.h"
 #include "ace/Log_Msg.h"
+#include "ace/ace_ctype.h"
+#include "ace/OS_String.h"
 
 // Initialize all the static member vars.
 int Multicast_Manager::received_host_count = 0;
@@ -80,12 +82,12 @@ Multicast_Manager::get_next_host_addr (in_addr &host_addr)
         }
 
       Multicast_Manager::received_host_count++;
-      ACE_OS::memcpy (&host_addr,
-                      hp->h_addr,
-                      sizeof host_addr);
-      ACE_OS::memcpy (&Multicast_Manager::current_ptr->host_addr,
-                      hp->h_addr,
-                      sizeof host_addr);
+      ACE_OS_String::memcpy (&host_addr,
+                             hp->h_addr,
+                             sizeof host_addr);
+      ACE_OS_String::memcpy (&Multicast_Manager::current_ptr->host_addr,
+                             hp->h_addr,
+                             sizeof host_addr);
       return 1;
     }
 
@@ -118,7 +120,7 @@ Multicast_Manager::get_host_entry (const char *host)
     hp = ACE_OS::gethostbyname (host);
 
 
-  return hp == 0 ? 0 : (hostent *) memcpy (&host_entry, hp, sizeof *hp);
+  return hp == 0 ? 0 : (hostent *) ACE_OS_String::memcpy (&host_entry, hp, sizeof *hp);
 }
 
 // Adds an additional new host to the list of host machines.
@@ -137,9 +139,9 @@ Multicast_Manager::checkoff_host (in_addr host_addr)
   for (Host_Elem *tmp = Multicast_Manager::drwho_list;
        tmp != 0;
        tmp = tmp->next)
-    if (ACE_OS::memcmp (&tmp->host_addr.s_addr,
-                        &host_addr.s_addr,
-                        sizeof host_addr.s_addr) == 0)
+    if (ACE_OS_String::memcmp (&tmp->host_addr.s_addr,
+                               &host_addr.s_addr,
+                               sizeof host_addr.s_addr) == 0)
       {
         tmp->checked_off = 1;
         Multicast_Manager::received_host_count--;

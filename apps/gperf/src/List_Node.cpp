@@ -28,6 +28,8 @@ ACE_RCSID(src, List_Node, "$Id$")
 #if defined (ACE_HAS_GPERF)
 
 #include "Vectors.h"
+#include "ace/Log_Msg.h"
+#include "ace/ace_ctype.h"
 
 // Sorts the key set alphabetically to speed up subsequent operation
 // Uses insertion sort since the set is probably quite small.
