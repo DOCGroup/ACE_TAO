@@ -1,15 +1,23 @@
+Fri Sep  3 21:46:10 2004  Olli Savia  <ops@iki.fi>
+
+        * TAO_IDL/be/be_tmplinst.cpp:
+          Use ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
+          to check if explicit template instantiation is needed.
+          Thanks to Johnny Willemsen for informing me about this
+          macro.
+
 Fri Sep  3 12:41:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Object_KeyC.cpp:
-        
+
           Fixed hand-crafted code to compile when
           TAO_NO_COPY_OCTET_SEQUENCES is defined as 0.
 
 Fri Sep  3 10:17:32 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Updated to account for Ossama's Exception refactor.
+          Updated to account for Ossama's Exception refactor.
 
 Fri Sep  3 19:01:59 2004  Olli Savia  <ops@iki.fi>
 
