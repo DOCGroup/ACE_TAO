@@ -38,7 +38,7 @@ ACE_RCSID(tao, UIOP_Connect, "$Id$")
 enum
 {
   // Timeprobe description table start key
-  TAO_UIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START = 300,
+  TAO_UIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START = 1400,
   TAO_UIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END,
 
   TAO_UIOP_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START,
@@ -147,7 +147,7 @@ TAO_UIOP_Server_Connection_Handler::open (void*)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) connection from client %s\n",
+                "(%P|%t) UIOP connection from client %s\n",
                 client));
   return 0;
 }
@@ -294,7 +294,7 @@ TAO_UIOP_Client_Connection_Handler::open (void *)
   // @@ TODO: This flags should be set using the RT CORBA policies...
 
   // Here is where we could enable all sorts of things such as
-  // nonblock I/O, sock buf sizes, TCP no-delay, etc.
+  // nonblock I/O, sock buf sizes, etc.
 
 #if !defined (ACE_LACKS_SOCKET_BUFSIZ)
   int sndbufsize =
@@ -328,13 +328,13 @@ TAO_UIOP_Client_Connection_Handler::open (void *)
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
-  char server[MAXHOSTNAMELEN + 16];
+  char server[MAXPATHLEN + 1];
 
   (void) addr.addr_to_string (server, sizeof (server));
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) connection to server <%s> on %d\n",
+                "(%P|%t) UIOP connection to server <%s> on %d\n",
                 server, this->peer ().get_handle ()));
 
   // Register the handler with the Reactor if necessary.
