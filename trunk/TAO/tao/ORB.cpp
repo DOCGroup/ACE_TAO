@@ -957,7 +957,7 @@ CORBA::instance (void)
   if (CORBA::instance_ == 0)
     {
       int argc = 0;
-      const *char *argv = 0;
+      char *const *argv = 0;
       // Note that CORBA::ORB_init() will also acquire the static
       // lock, but that's ok since it's a recursive lock.
       CORBA::instance_ = CORBA::ORB_init (argc, argv);
