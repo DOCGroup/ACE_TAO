@@ -1,3 +1,12 @@
+Fri Jul 09 11:08:32 1999  Everett Anderson  <eea1@cs.wustl.edu>
+
+	* src/TimedWait.java, Stream*.java, Token.java
+	  Fixed a bug in TimedWait from the recent changes.  Made
+	  Streams (and Modules) use absolute times for timeouts.
+	  Changed Tokens slightly so that it ignores interrupts --
+	  will probably change all synchronization mechanisms to
+	  do the same, as well as add a common base class.
+
 Thu Jul 08 14:54:36 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
 	* src/Condition.java, TimedWait.java, EventHandler.java, 
