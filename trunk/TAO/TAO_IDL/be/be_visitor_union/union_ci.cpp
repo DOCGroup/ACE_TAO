@@ -61,15 +61,6 @@ int be_visitor_union_ci::visit_union (be_union *node)
       *os << "// Inline operations for union " << node->name () << be_nl;
       *os << "// *************************************************************\n\n";
 
-      os->indent ();
-      *os << "// this reset method is used by the decoding engine" << be_nl;
-      *os << "ACE_INLINE void" << be_nl
-          << node->name () << "::_reset (void)" << be_nl
-          << "{" << be_idt_nl
-          << "this->_reset (this->disc_, 1);" << be_nl
-          << "ACE_OS::memcpy (&this->u_, 0, sizeof (this->u_));" << be_uidt_nl
-          << "}" << be_nl << be_nl;
-
       // the discriminant type may have to be defined here if it was an enum
       // declaration inside of the union statement.
 
