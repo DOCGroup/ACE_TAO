@@ -1,3 +1,19 @@
+Thu May  1 11:08:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/Param_Test.mpc:
+        * tests/Param_Test/client.bor:
+        * tests/Param_Test/client.dsp:
+        * tests/Param_Test/server.bor:
+        * tests/Param_Test/server.dsp:
+
+          Modified these files to reflect the removal of the file below.
+
+        * tests/Param_Test/tmplinst.cpp:
+
+          Removed this file. All the necessary explicit template
+          instantiations are generated now.
+
 Thu May  1 10:46:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicInterface/Request.cpp:
