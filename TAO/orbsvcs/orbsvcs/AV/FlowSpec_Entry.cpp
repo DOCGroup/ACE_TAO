@@ -619,18 +619,22 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         case TAO_AV_Core::TAO_AV_TCP:
           {
 	    ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->peer_addr_);
-            //inet_addr->addr_to_string (address,BUFSIZ);
-	    inet_addr->get_host_name (address, BUFSIZ);
-	    ACE_CString cstring (address);
-	    cstring += ACE_OS::itoa (address, BUFSIZ, inet_addr->get_port_number ());
-	    //peer_address_str = this->carrier_protocol_;
-	    //peer_address_str += "=";
-	    peer_address_str += cstring;
+            inet_addr->addr_to_string (address,BUFSIZ);
+	    //inet_addr->get_host_name (address, BUFSIZ);
+	    
+	    //cstring += ACE_OS::itoa (address, BUFSIZ, inet_addr->get_port_number ());
+
           }
           break;
         default:
           break;
         }
+
+	  ACE_CString cstring (address);
+
+	  //peer_address_str = this->carrier_protocol_;
+	  //peer_address_str += "=";
+	  peer_address_str += cstring;
 
     }
 
