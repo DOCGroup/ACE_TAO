@@ -1,3 +1,12 @@
+Mon Aug  9 22:26:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_args.cpp:
+	  Found a mistake is DRV_usage. When we were toggling the
+	  default behavior for case-only spelling differences
+	  between identifiers in the same scope back and forth
+	  between warning and error, this one got left on the
+	  wrong toggle.
+
 Mon Aug  9 20:13:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/IDL_Test/Makefile:
