@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author From ACE to TAO by Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
 
