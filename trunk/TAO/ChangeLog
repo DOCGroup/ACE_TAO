@@ -1,3 +1,10 @@
+Sun Sep  5 09:42:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Time_Utilities.i:
+
+	  Include "ace/Time_Value.h" to pull in ACE_Time_Value class
+	  declaration.
+
 Sun Sep  5 09:32:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/CDR/basic_types.cpp:
