@@ -193,7 +193,7 @@ TAO_CodeGen::client_header (const char *fname)
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
       const char *suffix = ACE_OS::strstr (fname, ".h");
       if (suffix == 0)
-	return -1; // bad file name
+        return -1; // bad file name
       else
         {
           ACE_OS::sprintf (macro_name, "_TAO_IDL_");
@@ -201,6 +201,8 @@ TAO_CodeGen::client_header (const char *fname)
           for (int i=0; i < (suffix - fname); i++)
             if (isalpha (fname [i]))
               macro_name[i+9] = toupper (fname [i]);
+            else
+              macro_name[i+9] = fname[i];
 
           ACE_OS::strcat (macro_name, "_H_");
 
