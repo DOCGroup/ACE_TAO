@@ -1,3 +1,16 @@
+Thu Jul 16 11:50:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * tao/ORB_Core.{h,cpp}: Due to merging a cvs branch
+	  to the main trunk, the following changes went away, and
+	  where now reintroduced:
+
+	  Tue Jul 14 11:48:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+          * tao/ORB_Core.{h,cpp} (arl_same_port_connect):  Added the new
+            member function to ORB_Core to check if we want the client to
+            initiate a connection using the same local port number as
+            server's.
+
+
 Thu Jul 16 00:00:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * Removed all the COM madness, TAO no longer uses the IUnknown
