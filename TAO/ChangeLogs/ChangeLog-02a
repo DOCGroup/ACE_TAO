@@ -1,3 +1,29 @@
+Thu Sep 20 12:40:34 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Thread_Pool/client.cpp: 
+
+	  - Previously, each thread kept it's own start time.  This
+	    meant that if a low priority thread did not reach the
+	    point where it recorded it's start time before it got
+	    preempted by a thread of higher priority, then it is
+	    possible that this low priority thread may start after the
+	    high priority thread is done and hence would not notice
+	    that it is late at all.  Therefore, the start time is made
+	    global and is the same for all threads.
+
+	  - We now keep track of the invocations that were missed
+            because we didn't make the deadline.  This will help note
+            any particularities in the test. 
+
+          - Some of the threads were being given an unfair advantage
+            because a connection had already been setup for them
+            before they started pacing.  Therefore, all threads (paced
+            and continuous) now do all the accounting/connection setup
+            and then synchronize with the main thread.  When all the
+            worker threads are ready to go, the main thread signals
+            them.  This also gives the main thread a chance to mark
+            the start time for the test.
+
 Wed Sep 19 17:43:42 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/RTCORBA/Linear_Priority/server.cpp:
