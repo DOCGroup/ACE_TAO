@@ -31,7 +31,7 @@ namespace StringLiterals
     "ACE_ENV_SINGLE_ARG_DECL",                            // ENV_SNGL_SRC
     "ACE_ENV_ARG_PARAMETER",                              // ENV_ARG
     "ACE_ENV_SINGLE_ARG_PARAMETER",                       // ENV_SNGL_ARG
-    
+
     // Common CORBA and all Components exceptions.
     "ACE_THROW_SPEC ((CORBA::SystemException))",          // EXCP_SNGL
     "ACE_THROW_SPEC ((",                                  // EXCP_START
@@ -47,19 +47,19 @@ namespace StringLiterals
     "::Components::InvalidConfiguration",                 // EXCP_ICF
     "::Components::CookieRequired",                       // EXCP_CR
     "::Components::BadEventType",                         // EXCP_BET
-    
+
     // Commonly used Components module members.
     "::Components::Cookie",                               // COMP_CK
     "::Components::NameList &names",                      // COMP_NAMES
     "::Components::EventConsumerBase",                    // COMP_ECB
-    
+
     // This could change - don't want it scattered all over.
     "namespace CIAO_GLUE",                                // GLUE_NS
-    
+
     // Commonly used base class.
     "public virtual PortableServer::RefCountServantBase"  // INH_RCSB
   };
-  
+
   // Index into the strings above.
   enum
   {

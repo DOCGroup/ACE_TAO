@@ -3,50 +3,16 @@
 #include "ServantHeaderGenerator.hpp"
 #include "ServantSourceGenerator.hpp"
 
+#include "Collectors.hpp"
+
 #include "CCF/CodeGenerationKit/Regex.hpp"
-#include "CCF/CodeGenerationKit/IDLStream.hpp"
+#include "CCF/CodeGenerationKit/IndentationIDL.hpp"
+#include "CCF/CodeGenerationKit/IndentationImplanter.hpp"
 
-ProvidesCollector::ProvidesCollector (
-  UnconstrainedInterfaceDefSet& interface_set)
-    : interface_set_ (interface_set)
-{
-}
-
-void
-ProvidesCollector::visit_provides_decl (ProvidesDeclPtr const& p)
-{
-  //@@ CCM issue: interface should be defined at this point
-  UnconstrainedInterfaceDefPtr def (
-    p->type ()->dynamic_type<SyntaxTree::UnconstrainedInterfaceDef> ());
-
-  if (def != 0)
-  {
-    // Add to the list if it's not already there.
-    interface_set_.insert (def);
-  }
-}
-
-Collector::Collector (UnconstrainedInterfaceDefSet& interface_set,
-                      ComponentDefSet& component_set,
-                      HomeDefSet& home_set)
-    : component_set_ (component_set),
-      home_set_ (home_set),
-      provides_collector_ (interface_set)
-{
-}
-
-void
-Collector::visit_home_executor (HomeExecutorPtr const& he)
-{
-  HomeDefPtr h = he->implements ();
-  ComponentDefPtr c = h->manages ();
-
-  //@@unsupported: need to handle inherited components as well
-  component_set_.insert (c);
-  home_set_.insert (h);
-
-  c->accept (&provides_collector_);
-}
+using namespace CCF;
+using namespace CIDL;
+using namespace SyntaxTree;
+using namespace Traversal;
 
 namespace
 {
@@ -66,20 +32,65 @@ ServantGenerator::ServantGenerator (CommandLine const& cl)
 {
 }
 
-void
-ServantGenerator::generate (CIDL::SyntaxTree::TranslationUnitPtr const& u)
+void ServantGenerator::
+options (CL::Description& d)
 {
-  ComponentDefSet component_set_;
-  HomeDefSet home_set_;
-  UnconstrainedInterfaceDefSet interface_set;
+  d.add_option (CL::OptionDescription (
+                  "svnt-file-suffix",
+                  "suffix",
+                  "Use provided suffix instead of default \'_svnt\' "
+                  "when constructing name of servant file.",
+                  true));
 
-  {
-    Collector collector (interface_set,
-                         component_set_,
-                         home_set_);
-    u->accept (&collector);
-  }
+  d.add_option (CL::OptionDescription (
+                  "svnt-file-regex",
+                  "regex",
+                  "Use provided regular expression when constructing "
+                  "name of servant file.",
+                  true));
+  /*
+  d.add_option (CL::OptionDescription (
+                  "lem-force-all",
+                  "Force generation of local executor mapping for all IDL "
+                  "types including those not used (directly or inderectly) "
+                  "by compositions. This option is useful for generating a "
+                  "common portion of local executor mapping used by more "
+                  "than one component or composition.",
+                  true));
+  */
+}
 
+
+void ServantGenerator::generate (TranslationUnitPtr const& u)
+{
+  Declarations declarations;
+
+
+  ProvidedInterfaceCollector provides (declarations);
+  //  Traversal::InterfaceDecl provides (&i);
+
+  ComponentCollector component (declarations);
+  component.add_scope_delegate (&provides);
+
+  HomeCollector home (declarations);
+
+  HomeExecutorCollector home_executor (declarations, &home, &component);
+
+  Traversal::Composition composition;
+  composition.add_scope_delegate (&home_executor);
+
+  Traversal::Scope scope;
+  scope.add_scope_delegate (&composition);
+  scope.add_scope_delegate (&scope);
+
+  Traversal::PrincipalTranslationRegion region (&scope);
+
+  Traversal::TranslationUnit collector;
+  collector.add_content_delegate (&region);
+
+  collector.dispatch (u);
+
+  // Generate files
   compute_export_macro (u->principal_translation_region ()->file_path ());
 
   {
@@ -89,26 +100,14 @@ ServantGenerator::generate (CIDL::SyntaxTree::TranslationUnitPtr const& u)
                                         "hdr-file-regex",
                                         hdr_ofs);
 
-    // Set auto-indentation for os
-    IDLFormattingBuffer ifb (hdr_os.rdbuf ());
-    hdr_os.rdbuf (&ifb);
+    Indentation::Implanter<Indentation::IDL> header_guard (hdr_os);
 
-    {
-      ServantHeaderEmitter hdr_emitter (hdr_os,
-                                        cl_,
-                                        export_macro_,
-                                        interface_set,
-                                        component_set_,
-                                        home_set_);
-      u->accept (&hdr_emitter);
-    }
 
-    {
-      ServantHeaderFinalizingEmitter hdr_finalizer (hdr_os,
-                                                    cl_,
-                                                    export_macro_);
-      u->accept (&hdr_finalizer);
-    }
+    ServantHeaderEmitter hdr_emitter (hdr_os,
+                                      cl_,
+                                      export_macro_,
+                                      declarations);
+    hdr_emitter.generate (u);
   }
 
   {
@@ -118,25 +117,15 @@ ServantGenerator::generate (CIDL::SyntaxTree::TranslationUnitPtr const& u)
                                         "src-file-regex",
                                         src_ofs);
 
-    // Set auto-indentation for os
-    IDLFormattingBuffer ifb (src_os.rdbuf ());
-    src_os.rdbuf (&ifb);
+    Indentation::Implanter<Indentation::IDL> header_guard (src_os);
 
-    {
-      ServantSourceEmitter src_emitter (src_os,
-                                        cl_,
-                                        interface_set,
-                                        component_set_,
-                                        home_set_);
-      u->accept (&src_emitter);
-    }
-
-    {
-      ServantSourceFinalizingEmitter src_finalizer (src_os,
-                                                    export_macro_);
-      u->accept (&src_finalizer);
-    }
+    ServantSourceEmitter src_emitter (src_os,
+                                      export_macro_,
+                                      cl_,
+                                      declarations);
+    src_emitter.generate (u);
   }
+
 }
 
 void
@@ -146,7 +135,7 @@ ServantGenerator::compute_export_macro (const fs::path& file_path)
   {
     file_name_ = file_path.leaf ();
   }
-  
+
   export_macro_ = cl_.get_value ("export-macro", "");
 
   if (export_macro_.empty () && !file_name_.empty ())
@@ -163,7 +152,7 @@ ServantGenerator::compute_export_macro (const fs::path& file_path)
     // Replace the suffix.
     export_macro_ =
       regex::perl_s (export_macro_,
-                     "/^(.*?)(\\.(IDL|CIDL))?$/$1_SVNT_Export/");
+                     "/(\\.(IDL|CIDL))?$/_SVNT_Export/");
 
     // Replace any remaining '.' in the string with '_'.
     export_macro_ = regex::perl_s (export_macro_,
@@ -179,11 +168,11 @@ ServantGenerator::configure_stream (string const& suffix_option,
 {
   if (! file_name_.empty ())
   {
-    string file_suffix = cl_.get_value (suffix_option, 
+    string file_suffix = cl_.get_value (suffix_option,
                                         default_suffix);
     string file_expr =
       cl_.get_value (regex_option,
-                     "/^(.*?)(\\.(idl|cidl))?$/$1" + file_suffix + "/");
+                     "/(\\.(idl|cidl))?$/" + file_suffix + "/");
 
     string file_name = regex::perl_s (file_name_, file_expr);
 
@@ -199,7 +188,15 @@ ServantGenerator::configure_stream (string const& suffix_option,
     }
   }
 
-  return ofs.is_open () 
-    ? static_cast<ostream&> (ofs) 
+  return ofs.is_open ()
+    ? static_cast<ostream&> (ofs)
     : static_cast<ostream&> (cout);
 }
+
+
+/*
+ * Local Variables:
+ * mode: C++
+ * c-basic-offset: 2
+ * End:
+ */

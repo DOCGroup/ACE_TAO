@@ -2,13 +2,17 @@
 # Author : Boris Kolpackov <boris@kolpackov.net>
 # $Id$
 
-root = CCF/External/Utility
+root = .
 
-include $(root)/Config/Executable.pre.rules
+include $(root)/CCF/Bootstrap.rules
+
+$(call include, $(root)/CCF/Config.rules)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Executable.pre.rules)
 
 cxx_translation_units := ExecutorMappingGenerator.cpp   \
-         		 ServantGenerator.cpp           \
-                         ServantHeaderGenerator.cpp     \
+			 ServantGenerator.cpp           \
+	                 ServantHeaderGenerator.cpp     \
                          ServantSourceGenerator.cpp     \
                          cidlc.cpp
 
@@ -16,18 +20,20 @@ module_base           := cidlc
 module_prefix         :=
 module_suffix         :=
 
-CXX_PREPROCESS_FLAGS  += -ICCF  -ICCF/External/Utility -ICCF/External/boost
+CXX_PREPROCESS_FLAGS  += -I$(root)/CCF  -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
 
-CXX_LINK_LIBS         += -LCCF/CCF/IDL2               \
+CXX_LINK_LIBS         += -L$(root)/CCF/CCF/IDL2               \
                          -lIDL2                       \
-                         -LCCF/CCF/IDL3               \
+                         -L$(root)/CCF/CCF/IDL3               \
                          -lIDL3                       \
-         		 -LCCF/CCF/CIDL               \
+			 -L$(root)/CCF/CCF/CIDL               \
                          -lCIDL                       \
-        		 -LCCF/CCF/CodeGenerationKit  \
-        		 -lCodeGenerationKit          \
-        		 -LCCF/External/boost/lib     \
+			 -L$(root)/CCF/CCF/CodeGenerationKit  \
+			 -lCodeGenerationKit          \
+			 -L$(BOOST_ROOT)/lib     \
                          -lboost_regex                \
-                         -lboost_filesystem
+                         -lboost_filesystem	      \
+			 -L$(UTILITY_ROOT)/Utility/Introspection \
+			 -lIntrospection
 
-include $(root)/Config/Executable.post.rules
+$(call include, $(UTILITY_ROOT)/BuildRules/Executable.post.rules)
