@@ -24,7 +24,6 @@ ACE_CORBA_Handler::dump (void) const
   ACE_TRACE ("ACE_CORBA_Handler::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "reactor_ = %x", this->reactor_));
   ACE_DEBUG ((LM_DEBUG, "\nreference_count_ = %d", this->reference_count_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -59,9 +58,9 @@ ACE_CORBA_Handler::~ACE_CORBA_Handler (void)
 }
 
 ACE_CORBA_Handler::ACE_CORBA_Handler (void)
-  : reactor_ (ACE_Reactor::instance ())
 {
   ACE_TRACE ("ACE_CORBA_Handler::ACE_CORBA_Handler");
+  reactor (ACE_Reactor::instance ());
 }
 
 // Only one ST CORBA Handler per-process...
@@ -77,8 +76,8 @@ ACE_ST_CORBA_Handler::insert_handle (ACE_HANDLE handle)
   ACE_TRACE ("ACE_ST_CORBA_Handler::insert_handle");
 //  ACE_DEBUG ((LM_DEBUG, "+++ inserting %d\n", handle));
 
-  if (ACE_ST_CORBA_Handler::instance_->reactor_ != 0)
-    ACE_ST_CORBA_Handler::instance_->reactor_->register_handler 
+  if (ACE_ST_CORBA_Handler::instance_->reactor() != 0)
+    ACE_ST_CORBA_Handler::instance_->reactor()->register_handler 
       (handle, ACE_ST_CORBA_Handler::instance_, ACE_Event_Handler::READ_MASK);
   else
     ;
@@ -94,8 +93,8 @@ ACE_ST_CORBA_Handler::remove_handle (ACE_HANDLE handle)
   ACE_TRACE ("ACE_ST_CORBA_Handler::remove_handle");
 //  ACE_DEBUG ((LM_DEBUG, "--- removing %d\n", handle));
 
-  if (ACE_ST_CORBA_Handler::instance_->reactor_ != 0)
-    ACE_ST_CORBA_Handler::instance_->reactor_->remove_handler
+  if (ACE_ST_CORBA_Handler::instance_->reactor () != 0)
+    ACE_ST_CORBA_Handler::instance_->reactor ()->remove_handler
       (handle, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
   else
     ;
@@ -142,7 +141,7 @@ ACE_ST_CORBA_Handler::suspend (void)
   for (ACE_HANDLE h; 
        (h = orbix_descriptors ()) != ACE_INVALID_HANDLE; 
        ++orbix_descriptors)
-    this->reactor_->suspend_handler (h);
+    this->reactor ()->suspend_handler (h);
 
   return 0;
 }
@@ -158,7 +157,7 @@ ACE_ST_CORBA_Handler::resume (void)
   for (ACE_HANDLE h; 
        (h = orbix_descriptors ()) != ACE_INVALID_HANDLE; 
        ++orbix_descriptors)
-    this->reactor_->resume_handler (h);
+    this->reactor ()->resume_handler (h);
 
   return 0;
 }
@@ -396,7 +395,7 @@ ACE_MT_CORBA_Handler::suspend (void)
 {
   // Suspend the event handler listening for new CORBA requests to
   // dispatch.
-  this->reactor_->suspend_handler (this->pipe_.read_handle ());
+  this->reactor ()->suspend_handler (this->pipe_.read_handle ());
 
   // Suspend the daemon thread.
   this->thr_mgr ()->suspend_all ();
@@ -408,7 +407,7 @@ ACE_MT_CORBA_Handler::resume (void)
 {
   // Resume the event handler listening for new CORBA requests to
   // dispatch.
-  this->reactor_->resume_handler (this->pipe_.read_handle ());
+  this->reactor ()->resume_handler (this->pipe_.read_handle ());
 
   // Resume the daemon thread.
   this->thr_mgr ()->resume_all ();
@@ -425,7 +424,7 @@ ACE_MT_CORBA_Handler::ACE_MT_CORBA_Handler (void)
   if (this->pipe_.open () == -1)
     result = -1;
   // Register one end of the pipe with the reactor with a READ mask.
-  else if (this->reactor_->register_handler
+  else if (this->reactor ()->register_handler
       (this->pipe_.read_handle (), this, ACE_Event_Handler::READ_MASK) == -1) 
     result = -1;
   // Create a new thread that processes events for the Orbix event
@@ -528,7 +527,7 @@ ACE_MT_CORBA_Handler::~ACE_MT_CORBA_Handler (void)
   ACE_TRACE ("ACE_MT_CORBA_Handler::~ACE_MT_CORBA_Handler");
 
   // Unregister one end of the pipe with the reactor 
-  this->reactor_->remove_handler 
+  this->reactor ()->remove_handler 
     (this->pipe_.read_handle (),
      ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
 
