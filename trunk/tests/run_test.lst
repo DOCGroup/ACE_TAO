@@ -26,12 +26,12 @@ Bound_Ptr_Test
 Buffer_Stream_Test
 Cache_Map_Manager_Test
 Cached_Conn_Test: !LynxOS !VxWorks
-Cached_Accept_Conn_Test: !VxWorks
 Cached_Allocator_Test
 Capabilities_Test
 CDR_Test
 CDR_File_Test
 CDR_Array_Test
+Cached_Accept_Conn_Test: !VxWorks
 Codecs_Test
 Collection_Test
 Config_Test
