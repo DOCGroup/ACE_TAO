@@ -46,13 +46,18 @@ public:
 		     int argc = 0,
                      char **argv = 0);
   // Takes the POA under which to register the Naming Service
-  // implementation object.
+  // implementation object.  The <argc> and <argv> commmand-line
+  // arguments are parsed to determine if this name server instance is
+  // part of a naming tree that resides under the default name server.
 
   int init (CORBA::ORB_var &orb,
             PortableServer::POA_var &root_poa,
 	    int argc = 0,
             char **argv = 0);
-  // Initialize the name server under the given ORB and POA.
+  // Initialize the name server under the given ORB and POA.  The
+  // <argc> and <argv> commmand-line arguments are parsed to determine
+  // if this name server instance is part of a naming tree that
+  // resides under the default name server.
 
   NS_NamingContext &GetNamingContext (void);
   // Returns the "NameService" NamingContext implementation object
