@@ -825,7 +825,7 @@ endif
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Future.h \
  $(ACE_ROOT)/ace/Future.cpp \
- $(ACE_ROOT)/ace/Method_Object.h \
+ $(ACE_ROOT)/ace/Method_Request.h \
  $(ACE_ROOT)/ace/Activation_Queue.h \
  $(ACE_ROOT)/ace/Activation_Queue.i \
  $(ACE_ROOT)/ace/Auto_Ptr.h \

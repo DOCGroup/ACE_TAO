@@ -5420,7 +5420,7 @@ DEP_CPP_FUTUR=\
 	"..\ace/Message_Queue_T.cpp"\
 	"..\ace/Message_Queue_T.h"\
 	"..\ace/Message_Queue_T.i"\
-	"..\ace/Method_Object.h"\
+	"..\ace/Method_Request.h"\
 	"..\ace/Module.cpp"\
 	"..\ace/Module.h"\
 	"..\ace/Module.i"\
