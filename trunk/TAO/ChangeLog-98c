@@ -20,6 +20,11 @@ Fri Jun 19 15:18:04 1998  David L. Levine  <levine@cs.wustl.edu>
           priority is 0 and not running as root.  It's a no-op,
           in that case, but Solaris' ::thr_setprio fails with EINVAL.
 
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp{,.diff}
+          (ace_cc_yyinput): don't compile this function in if
+          ACE_CC_YY_NO_INPUT is defined, to avoid compile warning about
+          unused static function.
+
 Fri Jun 19 12:07:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * tests/Quoter/Generic_Factory.cpp: added .in() to passed
