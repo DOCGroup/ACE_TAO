@@ -25,6 +25,12 @@ endif
 endif
 
 CCFLAGS		+= $(CFLAGS) -fno-implicit-templates -DHPUX_VERS=$(HPUX_VERS) $(THR_DEFS)
+# On HP-UX 11, there's a conflict with pthread_atfork in sys/unistd.h and
+# sys/pthread.h - both define the function, but slightly differently.
+# -fstrict-prototype resolves the issue.
+ifeq ($(word 2,$(HPVERS_WORDS)), 11)
+CCFLAGS		+= -fstrict-prototype
+endif
 DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX)
