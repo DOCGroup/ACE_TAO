@@ -1,24 +1,29 @@
+Tue Jan 19 15:44:09 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/Event_Supplier/Makefile:
+          added dependencies.
+
 Tue Jan 19 15:22:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/tests.dsw: 
-	  Added the ECT_Throughput project file.
+        * orbsvcs/tests/tests.dsw:
+          Added the ECT_Throughput project file.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.cpp: 
-	  MSVC5 does not support conversion from 64bit unsigneds to
-	  doubles.
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
+          MSVC5 does not support conversion from 64bit unsigneds to
+          doubles.
 
 Tue Jan 19 01:31:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Added a quick
-	  hack to open the tmp_file in the "correct" status on Win32 so
-	  the tmp_file will get removed automatically.
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Added a quick
+          hack to open the tmp_file in the "correct" status on Win32 so
+          the tmp_file will get removed automatically.
 
-	  We need to reimplement ACE_OS::fopen to make it behave the same
-	  as on other platforms at some later point.
+          We need to reimplement ACE_OS::fopen to make it behave the same
+          as on other platforms at some later point.
 
-	  (DRV_copy_input): Changed to use ACE_OS::f* functions.  It
-	  doesn't really make any difference here because the temp file
-	  get closed before unlink.
+          (DRV_copy_input): Changed to use ACE_OS::f* functions.  It
+          doesn't really make any difference here because the temp file
+          get closed before unlink.
 
 Mon Jan 18 22:57:31 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -27,63 +32,63 @@ Mon Jan 18 22:57:31 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
           Updated for NT Alpha.
 
 Mon Jan 18 22:01:13 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
-	* orbsvcs/tests/CosEC_Multiple/run_test.pl
-	  Added this script to run the test.
-	  This is still *under construction*.
-	* orbsvcs/tests/CosEC_Multiple/README:
+        * orbsvcs/tests/CosEC_Multiple/run_test.pl
+          Added this script to run the test.
+          This is still *under construction*.
+        * orbsvcs/tests/CosEC_Multiple/README:
           Updated the README to reflect all the new options.
-	* orbsvcs/tests/CosEC_Multiple/CosECConsumer{.h,cpp}:
-	  Added an <event_count> parameter.
-	* orbsvcs/tests/CosEC_Multiple/CosECSupplier{.h,cpp}:
-	  Added an <event_count> parameter.
-	* orbsvcs/tests/CosEC_Multiple/CosEC_Multiple.cpp:
-	  modified the <shutdown> method to check for nil pointer.
-	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
-	  1. Removed the code to [un]register the local scheduler with
-	  the naming service.This fixed the "-s global option not working" bug.
-	  2. Modified the <init_SupplierQOS> method to scan for just 1 pair
-	    of {sourceid, event type} from the command line.
-	* orbsvcs/CosEvent_Service/README:
-	  Updated the README to reflect all the new options.
+        * orbsvcs/tests/CosEC_Multiple/CosECConsumer{.h,cpp}:
+          Added an <event_count> parameter.
+        * orbsvcs/tests/CosEC_Multiple/CosECSupplier{.h,cpp}:
+          Added an <event_count> parameter.
+        * orbsvcs/tests/CosEC_Multiple/CosEC_Multiple.cpp:
+          modified the <shutdown> method to check for nil pointer.
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+          1. Removed the code to [un]register the local scheduler with
+          the naming service.This fixed the "-s global option not working" bug.
+          2. Modified the <init_SupplierQOS> method to scan for just 1 pair
+            of {sourceid, event type} from the command line.
+        * orbsvcs/CosEvent_Service/README:
+          Updated the README to reflect all the new options.
 
 Mon Jan 18 17:37:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Channel_Clients.h:
-	* orbsvcs/orbsvcs/Event/Channel_Clients.i:
-	* orbsvcs/orbsvcs/Event/Channel_Clients_T.i:
-	  There was an horrible confusion with this files. I removed some
-	  obsolote versions and fixed an include.  Thanks to Jeff
-	  Olszewski <jolszewski@std.saic.com> for pointing this out.
+        * orbsvcs/orbsvcs/Channel_Clients.h:
+        * orbsvcs/orbsvcs/Event/Channel_Clients.i:
+        * orbsvcs/orbsvcs/Event/Channel_Clients_T.i:
+          There was an horrible confusion with this files. I removed some
+          obsolote versions and fixed an include.  Thanks to Jeff
+          Olszewski <jolszewski@std.saic.com> for pointing this out.
 
 Mon Jan 18 16:51:56 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	The bank example was throwing an exception if run multiple times.
+        The bank example was throwing an exception if run multiple times.
 
-	* examples/Simple/bank/Server_i.cpp (init_naming_service):
-	  Added the TAO_TRY blocks. Used rebind instead of bind.
+        * examples/Simple/bank/Server_i.cpp (init_naming_service):
+          Added the TAO_TRY blocks. Used rebind instead of bind.
 
-	* examples/Simple/bank/server.cpp:
-	  Added a TAO_CHECK_ENV.
+        * examples/Simple/bank/server.cpp:
+          Added a TAO_CHECK_ENV.
 
 Mon Jan 18 11:20:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/decode.cpp:
-	  Fixed a problem with indirected type codes, thanks to Slava
-	  Galperin <galperin@teknowledge.com> for detecting the problem
-	  and providing us with a patch for it.
+        * tao/decode.cpp:
+          Fixed a problem with indirected type codes, thanks to Slava
+          Galperin <galperin@teknowledge.com> for detecting the problem
+          and providing us with a patch for it.
 
-	* examples/Simple/time/server.cpp:
-	* examples/Simple/time/Time_Client_i.cpp:
-	  Added missing template instantiations.
+        * examples/Simple/time/server.cpp:
+        * examples/Simple/time/Time_Client_i.cpp:
+          Added missing template instantiations.
 
 Mon Jan 18 01:16:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Connect.cpp:
-	* tao/GIOP.cpp: Replaced TAO try macros with ACE try macros.
+        * tao/Connect.cpp:
+        * tao/GIOP.cpp: Replaced TAO try macros with ACE try macros.
 
-	* tao/try_macros.h: Source in ace/CORBA_macros.h so we can start
-	  switching over to the new macros.  Most of the macros in this
-	  file will be gone once we finish the transition.
+        * tao/try_macros.h: Source in ace/CORBA_macros.h so we can start
+          switching over to the new macros.  Most of the macros in this
+          file will be gone once we finish the transition.
 
 Mon Jan 18 00:25:40 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -91,19 +96,19 @@ Mon Jan 18 00:25:40 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Jan 17 16:15:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/GIOP.h:
-	* tao/GIOP.cpp:
-	  Checked the return value of some send_n() calls, at least to
-	  print appropiate debug messages if TAO_orbdebug is not 0.
-	  Also added constants to document the size of the IIOP_Lite
-	  header (vs. the GIOP header) and the offset of the message size
-	  in the GIOP and the IIOP_Lite headers.
+        * tao/GIOP.h:
+        * tao/GIOP.cpp:
+          Checked the return value of some send_n() calls, at least to
+          print appropiate debug messages if TAO_orbdebug is not 0.
+          Also added constants to document the size of the IIOP_Lite
+          header (vs. the GIOP header) and the offset of the message size
+          in the GIOP and the IIOP_Lite headers.
 
 Sun Jan 17 15:51:39 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/Time_Service/Time_Service_Server.dsp: Added the generated
-	files of ImplRepo to the project .dsp. This is required till the
-	ImplRepo idl files are moved to the orbsvcs/orbsvcs directory.
+        * orbsvcs/Time_Service/Time_Service_Server.dsp: Added the generated
+        files of ImplRepo to the project .dsp. This is required till the
+        ImplRepo idl files are moved to the orbsvcs/orbsvcs directory.
 
 Sun Jan 17 15:41:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -115,92 +120,92 @@ Sun Jan 17 15:41:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
         * TAO/orbsvcs/orbsvcs/orbsvcs_static.dsp:
         * TAO/tao/TAO.dsp:
         * TAO/tao/TAO_Static.dsp: Rearranged the intermediate directory
-	  for DLL/LIB build to avoid confusing the build utility in VC.
+          for DLL/LIB build to avoid confusing the build utility in VC.
 
 Sun Jan 17 15:34:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp (wait_until_ready):
- 	  Replaced ACE_Thread_Mutex with ACE_SYNCH_MUTEX so that this will
- 	  compile properly with threads=0.  Thanks to Russ Noseworthy for
- 	  reporting this!
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp (wait_until_ready):
+          Replaced ACE_Thread_Mutex with ACE_SYNCH_MUTEX so that this will
+          compile properly with threads=0.  Thanks to Russ Noseworthy for
+          reporting this!
 
 Sat Jan 16 22:54:14 1999  Ossama Othman  <othman@macarena.cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_args.cpp (DRV_check_gperf):
-	  Added ability to check for a gperf program with a name other
-	  than "gperf."  This modification complements the change that
-	  was made to TAO_IDL/util/utl_global.cpp a few months ago that
-	  allowed TAO to use a gperf with a name besides "gperf."  As before,
-	  define the ACE_GPERF macro like so:
-	                 -DACE_GPERF=\"gperf-ace\"
-	  for example, to specify a perfect hash function generator called
-	  "gperf-ace."
+        * TAO_IDL/driver/drv_args.cpp (DRV_check_gperf):
+          Added ability to check for a gperf program with a name other
+          than "gperf."  This modification complements the change that
+          was made to TAO_IDL/util/utl_global.cpp a few months ago that
+          allowed TAO to use a gperf with a name besides "gperf."  As before,
+          define the ACE_GPERF macro like so:
+                         -DACE_GPERF=\"gperf-ace\"
+          for example, to specify a perfect hash function generator called
+          "gperf-ace."
 
 Sat Jan 16 11:49:45 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* TAO_IDL/util/utl_global.cpp (add_to_included_idl_files):
-	  Change line 515 from: this->n_included_idl_files_ += INCREMENT;
-	  to: this->n_allocated_idl_files_ += INCREMENT;
-	  so that tao_idl won't crash when including 64 or more files.
-	  Thanks to Tommy Andreasen <tommy.andreasen@radiometer.dk>
-	  for reporting this.
+        * TAO_IDL/util/utl_global.cpp (add_to_included_idl_files):
+          Change line 515 from: this->n_included_idl_files_ += INCREMENT;
+          to: this->n_allocated_idl_files_ += INCREMENT;
+          so that tao_idl won't crash when including 64 or more files.
+          Thanks to Tommy Andreasen <tommy.andreasen@radiometer.dk>
+          for reporting this.
 
 Fri Jan 15 19:11:10 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/time/Time_Client_i.cpp:
-	* examples/Simple/time/Time_Client_i.h:
-	Added permissions for these files.
+        * examples/Simple/time/Time_Client_i.cpp:
+        * examples/Simple/time/Time_Client_i.h:
+        Added permissions for these files.
 
 Fri Jan 15 18:43:02 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/time/Time_Client_i.cpp:
-	* examples/Simple/time/Time_Client_i.h:
-	New files added for implementing the Templates for
-	a single client/server model
+        * examples/Simple/time/Time_Client_i.cpp:
+        * examples/Simple/time/Time_Client_i.h:
+        New files added for implementing the Templates for
+        a single client/server model
 
-	* examples/Simple/time/Time_i.cpp:
-	* examples/Simple/time/Time_i.h:
-	* examples/Simple/time/server.cpp:
-	* examples/Simple/time/client.cpp:
-	Made  changes in a way such that server and client
-	make instantiations of templates with their interface
-	objects.
+        * examples/Simple/time/Time_i.cpp:
+        * examples/Simple/time/Time_i.h:
+        * examples/Simple/time/server.cpp:
+        * examples/Simple/time/client.cpp:
+        Made  changes in a way such that server and client
+        make instantiations of templates with their interface
+        objects.
 
-	* examples/Simple/Simple_Util.h:
-	* examples/Simple/Simple_Util.cpp:
-	New files that have the template definitions and
-	implementation of those methods.
+        * examples/Simple/Simple_Util.h:
+        * examples/Simple/Simple_Util.cpp:
+        New files that have the template definitions and
+        implementation of those methods.
 
 Fri Jan 15 17:24:36 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/tests/Time/Client_i.cpp (init): Checked the return value
-	of the obtain_initial_references () for the client to die gracefully
-	in the absence of a clerk. Thanks to Ulf for pointing out this.
+        * orbsvcs/tests/Time/Client_i.cpp (init): Checked the return value
+        of the obtain_initial_references () for the client to die gracefully
+        in the absence of a clerk. Thanks to Ulf for pointing out this.
 
-	* orbsvcs/tests/Time/Client_i.h : Removed explicit qualification
-	of the method test_for_secure_universal_time (). Thanks to Ulf for
-	pointing out this.
+        * orbsvcs/tests/Time/Client_i.h : Removed explicit qualification
+        of the method test_for_secure_universal_time (). Thanks to Ulf for
+        pointing out this.
 
 Fri Jan 15 14:25:29 1999  Seth Widoff  <swidoff@thalia.cimds.ri.cmu.edu>
 
-	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
-	* orbsvcs/tests/Trading/TT_Info.{h,cpp}:
-	* orbsvcs/tests/Trading/colocated_test.cpp:
-	* orbsvcs/tests/Trading/export_test.cpp:
-	* orbsvcs/tests/Trading/import_test.cpp:
-	Added the -iorfile or -i option to the export and import
-	test. When provided a file name, the tests read the trader IOR
-	from the file, else from standard input. Fixed some formating in
-	the remaining files.
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+        * orbsvcs/tests/Trading/TT_Info.{h,cpp}:
+        * orbsvcs/tests/Trading/colocated_test.cpp:
+        * orbsvcs/tests/Trading/export_test.cpp:
+        * orbsvcs/tests/Trading/import_test.cpp:
+        Added the -iorfile or -i option to the export and import
+        test. When provided a file name, the tests read the trader IOR
+        from the file, else from standard input. Fixed some formating in
+        the remaining files.
 
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_T.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
-	More "clever" uses of sequence buffers to avoid copying broke
-	when the memory mangement of string sequences changed
-	recently. Resorted to good, ol' fashioned copying. There shouldn't
-	be any more of these lurking around.
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        More "clever" uses of sequence buffers to avoid copying broke
+        when the memory mangement of string sequences changed
+        recently. Resorted to good, ol' fashioned copying. There shouldn't
+        be any more of these lurking around.
 
 Fri Jan 15 08:21:55 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -208,8 +213,8 @@ Fri Jan 15 08:21:55 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Jan 15 03:52:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/exceptions.html: Removed most entries in this file.  Added
-	  redirection to the new exception handling guideline page.
+        * docs/exceptions.html: Removed most entries in this file.  Added
+          redirection to the new exception handling guideline page.
 
 Fri Jan 15 01:47:41 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -217,21 +222,21 @@ Fri Jan 15 01:47:41 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Jan 15 00:35:24 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/tests/Time/run_test.pl : Added this perl script to test
-	run the time service. The script offers options to run the service
-	using either of the following :
-	  - Implementation Repository
-	  - Naming Service
-	  - Files
-	The script runs only a single server because at this time I dont
-	know how to start servers on different machines with the same
-	script. Also the IR doesnt allow to run its multiple copies in
-	the same directory because it writes implrepo.ior to the current
-	directory.
+        * orbsvcs/tests/Time/run_test.pl : Added this perl script to test
+        run the time service. The script offers options to run the service
+        using either of the following :
+          - Implementation Repository
+          - Naming Service
+          - Files
+        The script runs only a single server because at this time I dont
+        know how to start servers on different machines with the same
+        script. Also the IR doesnt allow to run its multiple copies in
+        the same directory because it writes implrepo.ior to the current
+        directory.
 
-	* orbsvcs/tests/Time/implrepo.conf : Added this file. This doesnt
-	really belong here but anything which needs to run the IR needs
-	this file.
+        * orbsvcs/tests/Time/implrepo.conf : Added this file. This doesnt
+        really belong here but anything which needs to run the IR needs
+        this file.
 
 Thu Jan 14 23:50:25 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -248,19 +253,19 @@ Thu Jan 14 23:50:25 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Thu Jan 14 23:32:19 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/tests/ImplRepo/Makefile: Changed to incorporate the
-	right path for Repository.o file. The make was throwing a link
-	error.
+        * orbsvcs/tests/ImplRepo/Makefile: Changed to incorporate the
+        right path for Repository.o file. The make was throwing a link
+        error.
 
 Thu Jan 14 22:10:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/try_macros.h: Added comments to indication the macros in the
-	  file has been depricated.
+        * tao/try_macros.h: Added comments to indication the macros in the
+          file has been depricated.
 
 Thu Jan 14 15:39:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Connect.cpp (check_unexpected_data): Only print the closing
- 	  connection message when TAO_orbdebug is on.
+        * tao/Connect.cpp (check_unexpected_data): Only print the closing
+          connection message when TAO_orbdebug is on.
 
 Thu Jan 14 15:52:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -277,10 +282,10 @@ Thu Jan 14 14:07:17 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
 Thu Jan 14 11:51:31 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h,
- 	  orbsvcs/orbsvcs/Trader/Service_Type_Repository.h: Changed a
- 	  private: to public: to fix a problem on IRIX 6.4.  Thanks to
- 	  Eric Mitchell <emitchell@altaira.com> for reporting this.
+        * orbsvcs/orbsvcs/Event/Event_Channel.h,
+          orbsvcs/orbsvcs/Trader/Service_Type_Repository.h: Changed a
+          private: to public: to fix a problem on IRIX 6.4.  Thanks to
+          Eric Mitchell <emitchell@altaira.com> for reporting this.
 
 Thu Jan 14 02:46:56 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -288,25 +293,25 @@ Thu Jan 14 02:46:56 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Jan 14 00:52:48 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB.cpp (run): Added a new version of the run() method.
-  	  This variant takes no timeout parameters and hence does not
- 	  terminate the event loop if the Reactor returns a 0.  This
- 	  variant is necessary for TAO to work correctly with Reactor
- 	  implementations such as XtReactor that returns zero even when
- 	  the timeout does not expire.
+        * tao/ORB.cpp (run): Added a new version of the run() method.
+          This variant takes no timeout parameters and hence does not
+          terminate the event loop if the Reactor returns a 0.  This
+          variant is necessary for TAO to work correctly with Reactor
+          implementations such as XtReactor that returns zero even when
+          the timeout does not expire.
 
-	  Thanks to JM Strauss <jms97@club-internet.fr> for suggesting
- 	  this change.
+          Thanks to JM Strauss <jms97@club-internet.fr> for suggesting
+          this change.
 
-	  Also, fixed the timeout by reference version of the run() method
- 	  such that it no longer pretends to be dealing with const
- 	  timeouts.
+          Also, fixed the timeout by reference version of the run() method
+          such that it no longer pretends to be dealing with const
+          timeouts.
 
 Wed Jan 13 14:56:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp
           orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.cpp: fixed string
-	  members of IDL structs by using .inout () to obtain lvalue.
+          members of IDL structs by using .inout () to obtain lvalue.
 
 Wed Jan 13 09:50:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
