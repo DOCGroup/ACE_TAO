@@ -197,13 +197,13 @@ CIAO::Container::push_event (
     CORBA::SystemException))
 {
 
-  ACE_DEBUG ((LM_DEBUG, "CIAO::Container::push_event\n"));
+  ////ACE_DEBUG ((LM_DEBUG, "CIAO::Container::push_event\n"));
 
   CIAO::EventServiceBase * event_service;
-  ACE_DEBUG ((LM_DEBUG, "Pushing from supplier id: %s\n", connection_id));
+  ////ACE_DEBUG ((LM_DEBUG, "Pushing from supplier id: %s\n", connection_id));
   if (this->event_service_map_.find (connection_id, event_service) != 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "-------------Gosh!!! Invalid Connection! -----------------\n"));
+      ACE_DEBUG ((LM_DEBUG, "-----------Invalid Connection: %s ----------\n", connection_id));
 
       ACE_THROW (Components::InvalidConnection ());
     }
