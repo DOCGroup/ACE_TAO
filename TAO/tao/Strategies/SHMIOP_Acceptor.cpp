@@ -151,8 +151,7 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       pfile = mprofile.get_profile (i);
       if (pfile->tag () == TAO_TAG_SHMEM_PROFILE)
       {
-        shmiop_profile = ACE_dynamic_cast (TAO_SHMIOP_Profile *,
-                                           pfile);
+        shmiop_profile = dynamic_cast <TAO_SHMIOP_Profile *>(pfile);
         break;
       }
     }
@@ -186,7 +185,7 @@ int
 TAO_SHMIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_SHMIOP_Endpoint *endp =
-    ACE_dynamic_cast(const TAO_SHMIOP_Endpoint *, endpoint);
+    dynamic_cast <const TAO_SHMIOP_Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == 0)
@@ -222,10 +221,8 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                            const char *options)
 {
   if (major >=0 && minor >= 0)
-    this->version_.set_version (ACE_static_cast (CORBA::Octet,
-                                                 major),
-                                ACE_static_cast (CORBA::Octet,
-                                                 minor));
+    this->version_.set_version (static_cast <CORBA::Octet>(major),
+                                static_cast <CORBA::Octet>(minor));
   // Parse options
   if (this->parse_options (options) == -1)
     return -1;
@@ -248,10 +245,8 @@ TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                    const char *options)
 {
   if (major >=0 && minor >= 0)
-    this->version_.set_version (ACE_static_cast (CORBA::Octet,
-                                                 major),
-                                ACE_static_cast (CORBA::Octet,
-                                                 minor));
+    this->version_.set_version (static_cast <CORBA::Octet>(major),
+                                static_cast <CORBA::Octet>(minor));
 
   // Parse options
   if (this->parse_options (options) == -1)
@@ -365,7 +360,7 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   TAO_InputCDR cdr (profile.profile_data.mb ());
 #else
-  TAO_InputCDR cdr (ACE_reinterpret_cast(char*,profile.profile_data.get_buffer ()),
+  TAO_InputCDR cdr (reinterpret_cast<char*>(profile.profile_data.get_buffer ()),
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
@@ -466,8 +461,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = ACE_static_cast (int,
-                               len - begin); // Handle last endpoint differently
+        end = static_cast <int>(len - begin); // Handle last endpoint differently
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -479,7 +473,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
 
           int slot = opt.find ("=");
 
-          if (slot == ACE_static_cast (int, len - 1)
+          if (slot == static_cast <int> (len - 1)
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) SHMIOP option <%s> is ")
