@@ -58,7 +58,8 @@ Mistakes page</a>.<P>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
    <td><b>Nearly fully supported, i.e., periodically tested</b></td>
-   <td>Windows 95, MVS, DEC Alpha Windows NT (MSVC++ 5.0), Chorus
+   <td>Windows 95, MVS, DEC Alpha Windows NT (MSVC++ 5.0), Chorus,
+     QNX Neutrino 2.0
    </td>
   </tr>
   <tr valign=top>
@@ -147,7 +148,7 @@ try to help you fix the problems.
       href="http://www.cs.wustl.edu/~levine/Hints.html">David Levine's
       Hints page</a>
       for instructions on how to build egcs on a SunOS 5.7 host, using
-      a g++ or egcs that was built on an older SunOS host.<p>
+      a g++ or egcs that was built on an older SunOS host.
 
         <p>The Sun/C++ 5.0 compilers has several problems with
           templates, we have worked around most of them but this is
@@ -367,8 +368,8 @@ make: *** [libACE.so] Error 8
 
       GNU gcc 2.7.2.1 compiles without problems. All tests run (besides
       minor problems).  Thanks to Thilo Kielmann &lt<A
-      HREF="mailto:kielmann@informatik.uni-siegen.de">
-      kielmann@informatik.uni-siegen.de</A>&gt and David Trumble &lt<A
+      HREF="mailto:kielmann@informatik.uni-siegen.de">kielmann@informatik.uni-siegen.de</A>&gt
+      and David Trumble &lt<A
       HREF="mailto:trumble@cvg.enet.dec.com">trumble@cvg.enet.dec.com</A>&gt
       for help with this port.<P>
 
@@ -520,6 +521,16 @@ make: *** [libACE.so] Error 8
       This is mainly due to the way shared libraries are handled on MVS.  See
       <A HREF="#mvs">additional build tips for MVS</A> for more on
       this.<P>
+
+  <li><strong>QNX Neutrino</strong></p>
+    ACE has been ported to
+    <a href="http://www.qnx.com/products/os/neutrino.html">QNX Neutrino
+    2.0</a>.  We cross-compile for Neutrino on a QNX4 host using g++ 2.8.1,
+    using the <a href="ace/config-qnx-neutrino.h">ace/config-qnx-neutrino.h</a>
+    and <a href="include/makeinclude/platform_qnx_neutrino.GNU">include/makeinclude/platform_qnx_neutrino.GNU</a> configuration files.  Many of the
+    ACE tests succeed, though some fail.  As the porting effort progresses,
+    we hope to eliminate these failures.  If you know of fixes, please
+    send them to us.
 </UL>
 
 <HR>
@@ -643,8 +654,7 @@ If you use the GNU GCC g++ compiler please note the following:
       thereby use the default g++ implicit template instantiation.<P>
 
   <LI>Thanks to Thilo Kielmann &lt<A
-      HREF="mailto:kielmann@informatik.uni-siegen.de">
-      kielmann@informatik.uni-siegen.de</A>&gt;
+      HREF="mailto:kielmann@informatik.uni-siegen.de">kielmann@informatik.uni-siegen.de</A>&gt;
       for reporting the problem with ACE_Singleton on g++, and
       for helping to find and implement these solutions.<P>
 
@@ -843,10 +853,9 @@ probably work.  Sheesh...
 <P>
 Note, however, that regardless of the version of SP3,
 there are some STL bugs in SP3 which you should get corrected.  Please see
-<A HREF="http://www.dinkumware.com/vc_fixes.html">
-http://www.dinkumware.com/vc_fixes.html</A> for details.
-Thank you to <A HREF="mailto:ben@jetpen.com">Ben Eng</A> for the pointer to
-the STL fixes.
+<A HREF="http://www.dinkumware.com/vc_fixes.html">http://www.dinkumware.com/vc_fixes.html</A>
+for details.  Thank you to <A HREF="mailto:ben@jetpen.com">Ben Eng</A>
+for the pointer to the STL fixes.
 
 <OL>
   <LI>Uncompress the ACE distribution into a directory, where it will create a
