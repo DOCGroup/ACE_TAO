@@ -13,19 +13,23 @@ project (Config_Handlers) : taolib {
     ACD_Handler.cpp
     ADD_Handler.cpp
     APM_Handler.cpp
+    Bridge_Handler.cpp
     CAD_Handler.cpp
     CEPE_Handler.cpp
     CompImplDesc_Handler.cpp
     CompPkgDesc_Handler.cpp
     CPR_Handler.cpp
     CRDD_Handler.cpp
+    Domain_Handler.cpp
     DP_Handler.cpp
     ERE_Handler.cpp
+    IC_Handler.cpp
     ID_Handler.cpp
     IDD_Handler.cpp
     IRDD_Handler.cpp
     MDD_Handler.cpp
     MID_Handler.cpp
+    Node_Handler.cpp
     PC_Handler.cpp
     PCD_Handler.cpp
     PCI_Handler.cpp
@@ -34,6 +38,7 @@ project (Config_Handlers) : taolib {
     PSPE_Handler.cpp
     PSPR_Handler.cpp
     RDD_Handler.cpp
+    Resource_Handler.cpp
     Requirement_Handler.cpp
     RS_Handler.cpp
     SID_Handler.cpp
@@ -41,6 +46,7 @@ project (Config_Handlers) : taolib {
     SPE_Handler.cpp
     SPK_Handler.cpp
     SPR_Handler.cpp
+    SR_Handler.cpp
     Utils.cpp
   }
 }
