@@ -928,7 +928,10 @@ Thu Mar 25 01:05:47 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
           not defined, /tmp/ will be used.
 
         * TAO_IDL/be/be_interface.cpp: Fixed to use the temp directory to
-          keep the gperf temp files.
+	  keep the gperf temp files. 
+	
+	Thanks to "Margaret Reitz" <margaret@veritas.com> for reporting
+	the problem.
 
 Wed Mar 24 16:39:03 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
