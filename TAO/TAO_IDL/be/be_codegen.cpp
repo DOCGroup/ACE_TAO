@@ -1529,15 +1529,8 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "tao/ORB_Core.h");
     }
 
-  // We generate this include if we
-  // have typecode support
-  // AND have not already included it in the header file
-  // OR a TypeCode or TCKind reference is not seen
-  //    AND we are not generating typecodes in a separate file.
   if (be_global->tc_support ()
-      && ( idl_global->exception_seen_
-      || (!idl_global->typecode_seen_
-          && !be_global->gen_anyop_files ())))
+      && !be_global->gen_anyop_files ())
     {
       this->gen_typecode_includes (this->client_stubs_);
     }
