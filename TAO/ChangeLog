@@ -1,3 +1,19 @@
+Tue Aug 13 07:54:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.bor:
+
+	  Fixed IDL file compile rules.  One still referred to the IDL for
+	  the old Load Balancer, and the other for LB_ORT.idl was
+	  missing.
+
+	  (OBJFILES):
+
+	  Added stub and skeleton sources to the list of object files to
+	  build.
+
+	  Thanks to Johnny Willemsen for explaining what was wrong with
+	  this Borland Makefile.
+
 Mon Aug 12 20:03:09 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
