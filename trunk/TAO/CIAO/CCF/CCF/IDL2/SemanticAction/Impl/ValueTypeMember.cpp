@@ -30,18 +30,23 @@ namespace CCF
         void ValueTypeMember::
         begin_private ()
         {
+          if (ctx.trace ()) cerr << "private valuetype member" << endl;
+
+          access_ = SemanticGraph::ValueTypeMember::Access::private_;
         }
 
         void ValueTypeMember::
         begin_public ()
         {
+          if (ctx.trace ()) cerr << "public valuetype member" << endl;
+
+          access_ = SemanticGraph::ValueTypeMember::Access::public_;
         }
 
         void ValueTypeMember::
         type (IdentifierPtr const& id)
         {
-          /*
-          if (ctx.trace ()) cerr << "member " << id << endl;
+          if (ctx.trace ()) cerr << " type: " << id << endl;
 
           type_ = 0;
 
@@ -56,7 +61,7 @@ namespace CCF
             }
             catch (Resolve const&)
             {
-              cerr << "error: invalid member declaration" << endl;
+              cerr << "error: invalid valuetype member declaration" << endl;
               throw;
             }
 
@@ -76,41 +81,56 @@ namespace CCF
             cerr << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not a type declaration" << endl;
-            cerr << "using non-type as an member type is illegal" << endl;
+            cerr << "using non-type as a valuetype member type is illegal"
+                 << endl;
           }
           catch (NotComplete const& e)
           {
             cerr << "type \'" << e.name () << "\' is not complete" << endl;
           }
-          */
         }
 
 
         void ValueTypeMember::
         name (SimpleIdentifierPtr const& id)
         {
-          /*
-          if (ctx.trace ()) cerr << " " << id << endl;
+          using namespace SemanticGraph;
+
+          if (ctx.trace ()) cerr << " name: " << id << endl;
 
           if (type_)
           {
             SimpleName name (id->lexeme ());
 
-            SemanticGraph::Member& m (
-              ctx.tu ().new_node<SemanticGraph::Member> ());
+            SemanticGraph::ValueTypeMember* m;
 
-            ctx.tu ().new_edge<Belongs> (m, *type_);
-            ctx.tu ().new_edge<Defines> (ctx.scope (), m, name);
+            switch (access_)
+            {
+            case SemanticGraph::ValueTypeMember::Access::private_:
+              {
+                m = &ctx.tu ().new_node<ValueTypePrivateMember> ();
+                break;
+              }
+            case SemanticGraph::ValueTypeMember::Access::public_:
+              {
+                m = &ctx.tu ().new_node<ValueTypePublicMember> ();
+                break;
+              }
+            default:
+              {
+                abort ();
+              }
+            }
+
+            ctx.tu ().new_edge<Belongs> (*m, *type_);
+            ctx.tu ().new_edge<Defines> (ctx.scope (), *m, name);
           }
-          */
         }
 
         void ValueTypeMember::
         end ()
         {
-          /*
           if (ctx.trace ()) cerr << "end" << endl;
-          */
         }
       }
     }

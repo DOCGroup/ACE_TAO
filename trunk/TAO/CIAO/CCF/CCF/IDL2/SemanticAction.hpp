@@ -23,6 +23,7 @@
 #include "CCF/IDL2/SemanticAction/TypeId.hpp"
 #include "CCF/IDL2/SemanticAction/Union.hpp"
 #include "CCF/IDL2/SemanticAction/ValueType.hpp"
+#include "CCF/IDL2/SemanticAction/ValueTypeFactory.hpp"
 #include "CCF/IDL2/SemanticAction/ValueTypeMember.hpp"
 
 #endif  // CCF_IDL2_SEMANTIC_ACTION_HPP

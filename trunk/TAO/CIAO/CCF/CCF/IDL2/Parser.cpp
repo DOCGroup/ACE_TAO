@@ -200,6 +200,7 @@ namespace CCF
           act_member_end (
             f.member (), &SemanticAction::Member::end),
 
+
           // Module
           //
           //
@@ -361,8 +362,20 @@ namespace CCF
             f.value_type (), &SemanticAction::ValueType::end),
 
 
-          // ValueTypeMember
+          // ValueTypeFactory
           //
+          act_value_type_factory_name (
+            f.value_type_factory (), &SemanticAction::ValueTypeFactory::name),
+
+          act_value_type_factory_parameter (
+            f.value_type_factory (), &SemanticAction::ValueTypeFactory::parameter),
+
+          act_value_type_factory_raises (
+            f.value_type_factory (), &SemanticAction::ValueTypeFactory::raises),
+
+
+
+          // ValueTypeMember
           //
           act_value_type_member_begin_private (
             f.value_type_member (),
@@ -1218,26 +1231,12 @@ namespace CCF
         ;
 
 
-      // valuetype member
-      //
-      //
-      value_type_member_decl =
-           (
-               PUBLIC[act_value_type_member_begin_public]
-             | PRIVATE[act_value_type_member_begin_private]
-           )
-        >> identifier[act_value_type_member_type]
-        >> simple_identifier[act_value_type_member_name]
-        >> *(COMMA >> simple_identifier[act_value_type_member_name])
-        >> SEMI[act_value_type_member_end]
-        ;
-
       // valuetype factory
       //
       //
       value_type_factory_decl =
            FACTORY
-        >> simple_identifier //[act_value_type_factory_name]
+        >> simple_identifier[act_value_type_factory_name]
         >> LPAREN
         >> value_type_factory_parameter_list
         >> RPAREN
@@ -1254,12 +1253,27 @@ namespace CCF
 
       value_type_factory_parameter =
            IN
-        >> (identifier >> simple_identifier) //[act_value_type_factory_parameter]
+        >> (identifier >> simple_identifier)[act_value_type_factory_parameter]
         ;
 
       value_type_factory_raises_list =
-           identifier //[act_value_type_factory_raises]
-        >> *(COMMA >> identifier) // [act_value_type_factory_raises])
+           identifier[act_value_type_factory_raises]
+        >> *(COMMA >> identifier[act_value_type_factory_raises])
+        ;
+
+
+      // valuetype member
+      //
+      //
+      value_type_member_decl =
+           (
+               PUBLIC[act_value_type_member_begin_public]
+             | PRIVATE[act_value_type_member_begin_private]
+           )
+        >> identifier[act_value_type_member_type]
+        >> simple_identifier[act_value_type_member_name]
+        >> *(COMMA >> simple_identifier[act_value_type_member_name])
+        >> SEMI[act_value_type_member_end]
         ;
     }
   }

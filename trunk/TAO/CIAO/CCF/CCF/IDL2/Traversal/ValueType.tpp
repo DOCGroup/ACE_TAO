@@ -10,14 +10,14 @@ namespace CCF
     {
       template <typename T>
       void ValueTypeTemplate<T>::
-      traverse (T& i)
+      traverse (T& v)
       {
-        pre (i);
-        name (i);
-        inherits (i);
-        supports (i);
-        names (i);
-        post (i);
+        pre (v);
+        name (v);
+        inherits (v);
+        supports (v);
+        names (v);
+        post (v);
       }
 
       template <typename T>
@@ -34,26 +34,35 @@ namespace CCF
 
       template <typename T>
       void ValueTypeTemplate<T>::
-      inherits (T&, EdgeDispatcherBase&)
+      inherits (T& v, EdgeDispatcherBase& d)
       {
-        //@@ TODO
+        iterate_and_traverse (v.inherits_begin (),
+                              v.inherits_end (),
+                              d);
       }
 
       template <typename T>
       void ValueTypeTemplate<T>::
-      inherits (T&)
+      inherits (T& v)
       {
-        /*
         typename T::InheritsIterator
-          b (i.inherits_begin ()), e (i.inherits_end ());
+          b (v.inherits_begin ()), e (v.inherits_end ());
 
         if (b != e)
         {
-          inherits_pre (i);
-          iterate_and_dispatch (b, e, *this, &ValueTypeTemplate::comma, i);
-          inherits_post (i);
+          inherits_pre (v);
+          iterate_and_traverse (b,
+                                e,
+                                this->edge_traverser (),
+                                *this,
+                                &ValueTypeTemplate::comma,
+                                v);
+          inherits_post (v);
         }
-        */
+        else
+        {
+          inherits_none (v);
+        }
       }
 
       template <typename T>
@@ -76,26 +85,35 @@ namespace CCF
 
       template <typename T>
       void ValueTypeTemplate<T>::
-      supports (T&, EdgeDispatcherBase&)
+      supports (T& v, EdgeDispatcherBase& d)
       {
-        //@@ TODO
+        iterate_and_traverse (v.supports_begin (),
+                              v.supports_end (),
+                              d);
       }
 
       template <typename T>
       void ValueTypeTemplate<T>::
-      supports (T&)
+      supports (T& v)
       {
-        /*
         typename T::SupportsIterator
-          b (i.supports_begin ()), e (i.supports_end ());
+          b (v.supports_begin ()), e (v.supports_end ());
 
         if (b != e)
         {
-          supports_pre (i);
-          iterate_and_dispatch (b, e, *this, &ValueTypeTemplate::comma, i);
-          supports_post (i);
+          supports_pre (v);
+          iterate_and_traverse (b,
+                                e,
+                                this->edge_traverser (),
+                                *this,
+                                &ValueTypeTemplate::comma,
+                                v);
+          supports_post (v);
         }
-        */
+        else
+        {
+          supports_none (v);
+        }
       }
 
       template <typename T>

@@ -10,14 +10,14 @@ namespace CCF
     {
       template <typename T>
       void EventTypeTemplate<T>::
-      traverse (T& i)
+      traverse (T& et)
       {
-        pre (i);
-        name (i);
-        inherits (i);
-        supports (i);
-        names (i);
-        post (i);
+        pre (et);
+        name (et);
+        inherits (et);
+        supports (et);
+        names (et);
+        post (et);
       }
 
       template <typename T>
@@ -34,26 +34,36 @@ namespace CCF
 
       template <typename T>
       void EventTypeTemplate<T>::
-      inherits (T&, EdgeDispatcherBase&)
+      inherits (T& et, EdgeDispatcherBase& d)
       {
-        //@@ TODO
+        iterate_and_traverse (et.inherits_begin (),
+                              et.inherits_end (),
+                              d);
+
       }
 
       template <typename T>
       void EventTypeTemplate<T>::
-      inherits (T&)
+      inherits (T& et)
       {
-        /*
         typename T::InheritsIterator
-          b (i.inherits_begin ()), e (i.inherits_end ());
+          b (et.inherits_begin ()), e (et.inherits_end ());
 
         if (b != e)
         {
-          inherits_pre (i);
-          iterate_and_dispatch (b, e, *this, &EventTypeTemplate::comma, i);
-          inherits_post (i);
+          inherits_pre (et);
+          iterate_and_traverse (b,
+                                e,
+                                this->edge_traverser (),
+                                *this,
+                                &EventTypeTemplate::comma,
+                                et);
+          inherits_post (et);
         }
-        */
+        else
+        {
+          inherits_none (et);
+        }
       }
 
       template <typename T>
@@ -76,26 +86,35 @@ namespace CCF
 
       template <typename T>
       void EventTypeTemplate<T>::
-      supports (T&, EdgeDispatcherBase&)
+      supports (T& et, EdgeDispatcherBase& d)
       {
-        //@@ TODO
+        iterate_and_traverse (et.supports_begin (),
+                              et.supports_end (),
+                              d);
       }
 
       template <typename T>
       void EventTypeTemplate<T>::
-      supports (T&)
+      supports (T& et)
       {
-        /*
         typename T::SupportsIterator
-          b (i.supports_begin ()), e (i.supports_end ());
+          b (et.supports_begin ()), e (et.supports_end ());
 
         if (b != e)
         {
-          supports_pre (i);
-          iterate_and_dispatch (b, e, *this, &EventTypeTemplate::comma, i);
-          supports_post (i);
+          supports_pre (et);
+          iterate_and_traverse (b,
+                                e,
+                                this->edge_traverser (),
+                                *this,
+                                &EventTypeTemplate::comma,
+                                et);
+          supports_post (et);
         }
-        */
+        else
+        {
+          supports_none (et);
+        }
       }
 
       template <typename T>

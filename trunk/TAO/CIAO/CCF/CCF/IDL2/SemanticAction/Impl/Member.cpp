@@ -65,7 +65,7 @@ namespace CCF
             cerr << "declaration with name \'" << name
                  << "\' visible from scope \'" << from
                  << "\' is not a type declaration" << endl;
-            cerr << "using non-type as an member type is illegal" << endl;
+            cerr << "using non-type as a member type is illegal" << endl;
           }
           catch (NotComplete const& e)
           {

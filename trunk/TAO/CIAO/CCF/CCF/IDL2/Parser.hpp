@@ -472,13 +472,12 @@ namespace CCF
       Rule value_type_def_trailer;
       Rule value_type_body;
 
-      Rule value_type_member_decl;
-
       Rule value_type_factory_decl;
       Rule value_type_factory_parameter_list;
       Rule value_type_factory_parameter;
       Rule value_type_factory_raises_list;
 
+      Rule value_type_member_decl;
     public:
       Parser (CompilerElements::Context& context,
               Diagnostic::Stream& dout,
@@ -585,6 +584,7 @@ namespace CCF
 
       NoArgAction<SemanticAction::Member>
       act_member_end;
+
 
       // Module
       //
@@ -747,7 +747,6 @@ namespace CCF
 
       // ValueType
       //
-      //
       OneArgAction<SimpleIdentifierPtr, SemanticAction::ValueType>
         act_value_type_begin_abstract_def,
         act_value_type_begin_abstract_fwd,
@@ -767,8 +766,21 @@ namespace CCF
       act_value_type_end;
 
 
-      // ValueTypeMember
+      // ValueTypeFactory
       //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::ValueTypeFactory>
+      act_value_type_factory_name;
+
+      TwoArgAction<IdentifierPtr,
+                   SimpleIdentifierPtr,
+                   SemanticAction::ValueTypeFactory>
+      act_value_type_factory_parameter;
+
+      OneArgAction<IdentifierPtr, SemanticAction::ValueTypeFactory>
+      act_value_type_factory_raises;
+
+
+      // ValueTypeMember
       //
       NoArgAction<SemanticAction::ValueTypeMember>
       act_value_type_member_begin_private;

@@ -144,7 +144,7 @@ namespace CCF
           }
           catch (NotDefined const& e)
           {
-            cerr << "attempt to support from forward-declared component "
+            cerr << "attempt to support forward-declared interface "
                  << e.name () << endl;
             cerr << "support of forward-declared interface is illegal"
                  << endl;

@@ -5,7 +5,7 @@
 #ifndef CCF_IDL2_SEMANTIC_ACTION_IMPL_VALUE_TYPE_MEMBER_HPP
 #define CCF_IDL2_SEMANTIC_ACTION_IMPL_VALUE_TYPE_MEMBER_HPP
 
-#include "CCF/IDL2/SemanticGraph/Elements.hpp"
+#include "CCF/IDL2/SemanticGraph/ValueTypeMember.hpp"
 #include "CCF/IDL2/SemanticAction/ValueTypeMember.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Elements.hpp"
 
@@ -37,7 +37,8 @@ namespace CCF
           end ();
 
         private:
-          //SemanticGraph::Type* type_;
+          SemanticGraph::ValueTypeMember::Access::Value access_;
+          SemanticGraph::Type* type_;
         };
       }
     }
