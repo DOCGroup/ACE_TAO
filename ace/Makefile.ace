@@ -453,10 +453,6 @@ endif # ! FOR_TAO
 ####
 #### ACE_COMPONENTS support.
 ####
-ifneq (,$(findstring OS,$(ACE_COMPONENTS)))
-  FILES += $(OS_FILES)
-endif # OS
-
 ifneq (,$(findstring Utils,$(ACE_COMPONENTS)))
   FILES += $(UTILS_FILES)
 endif # Utils
@@ -494,6 +490,10 @@ ifneq (,$(findstring Svcconf,$(ACE_COMPONENTS)))
 else # ! Svcconf
   CCFLAGS += -DACE_LACKS_ACE_SVCCONF
 endif # ! Svcconf
+
+ifneq (,$(findstring OS,$(ACE_COMPONENTS)))
+  FILES += $(OS_FILES)
+endif # OS
 
 ifneq (,$(findstring Streams,$(ACE_COMPONENTS)))
   FILES += $(STREAMS_FILES)
