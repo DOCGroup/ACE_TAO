@@ -806,13 +806,13 @@ TAO_Marshal_Sequence::deep_copy(
 	    {
 	      //	      CORBA_release(tc2);
 	      dmsg ("marshaling TAO_Marshal_Sequence::deep_copy detected error");
-	      retval = CORBA_TypeCode::TRAVERSE_STOP;
+	      return CORBA_TypeCode::TRAVERSE_STOP;
 	    }
 	} 
       else // exception computing content type
 	{
 	  dmsg ("marshaling TAO_Marshal_Sequence::deep_copy detected error");
-	  retval = CORBA_TypeCode::TRAVERSE_STOP;
+	  return CORBA_TypeCode::TRAVERSE_STOP;
 	}
     }
   else // no typecode
@@ -821,7 +821,6 @@ TAO_Marshal_Sequence::deep_copy(
       dmsg ("TAO_Marshal_Struct::deep_copy detected error");
       return CORBA_TypeCode::TRAVERSE_STOP;
     }
-
   return retval;
 }
 
