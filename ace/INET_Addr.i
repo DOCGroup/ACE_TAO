@@ -52,7 +52,7 @@ ACE_INET_Addr::hash (void) const
 }
 
 ACE_INLINE int
-ACE_INET_Addr::operator < (const ACE_INET_Addr &rhs)
+ACE_INET_Addr::operator < (const ACE_INET_Addr &rhs) const
 {
   return this->get_ip_address () < rhs.get_ip_address ()
     || (this->get_ip_address () == rhs.get_ip_address ()

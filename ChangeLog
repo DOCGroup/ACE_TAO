@@ -1,3 +1,8 @@
+Tue Dec 19 15:08:40 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/INET_Addr.{h,i}: Make operator < const.  Thanks to
+	  Michael Lindner <mikel@att.net> for reporting this.
+
 Tue Dec 19 18:39:27 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* ace/WFMO_Reactor.cpp (simple_dispatch_handler):
