@@ -154,6 +154,21 @@ LINK32=link.exe
 # PROP Default_Filter ""
 # Begin Source File
 
+SOURCE=.\Naming_Server.cpp
+
+!IF  "$(CFG)" == "Naming_Service - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Naming_Service - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Naming_Service.cpp
 
 !IF  "$(CFG)" == "Naming_Service - Win32 Release"
@@ -319,14 +334,12 @@ DEP_CPP_NAMIN=\
 	"..\..\..\ace\WFMO_Reactor.h"\
 	"..\..\..\ace\WFMO_Reactor.i"\
 	"..\..\..\ace\ws2tcpip.h"\
-	"..\..\tao\align.h"\
 	"..\..\tao\any.h"\
 	"..\..\tao\any.i"\
 	"..\..\tao\cdr.h"\
 	"..\..\tao\cdr.i"\
+	"..\..\tao\CDR_Interpreter.h"\
 	"..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\tao\connect.h"\
-	"..\..\tao\connect.i"\
 	"..\..\tao\corba.h"\
 	"..\..\tao\CurrentC.h"\
 	"..\..\tao\CurrentC.i"\
@@ -341,11 +354,6 @@ DEP_CPP_NAMIN=\
 	"..\..\tao\Exception.i"\
 	"..\..\tao\giop.h"\
 	"..\..\tao\giop.i"\
-	"..\..\tao\CDR_Interpreter.h"\
-	"..\..\tao\IIOP_Object.h"\
-	"..\..\tao\IIOP_Object.i"\
-	"..\..\tao\IIOP_ORB.h"\
-	"..\..\tao\IIOP_ORB.i"\
 	"..\..\tao\Invocation.h"\
 	"..\..\tao\Invocation.i"\
 	"..\..\tao\marshal.h"\
@@ -361,9 +369,6 @@ DEP_CPP_NAMIN=\
 	"..\..\tao\ORB.i"\
 	"..\..\tao\orb_core.h"\
 	"..\..\tao\orb_core.i"\
-	"..\..\tao\ORB_Strategies_T.cpp"\
-	"..\..\tao\ORB_Strategies_T.h"\
-	"..\..\tao\ORB_Strategies_T.i"\
 	"..\..\tao\orbconf.h"\
 	"..\..\tao\params.h"\
 	"..\..\tao\params.i"\
@@ -408,7 +413,6 @@ DEP_CPP_NAMIN=\
 	"..\orbsvcs\CosNamingS_T.h"\
 	"..\orbsvcs\CosNamingS_T.i"\
 	"..\orbsvcs\IOR_Multicast.h"\
-	"..\orbsvcs\Naming\CosNaming_i.h"\
 	"..\orbsvcs\Naming\Entries.h"\
 	"..\orbsvcs\Naming\Naming_Utils.h"\
 	"..\orbsvcs\orbsvcs_export.h"\
@@ -416,7 +420,18 @@ DEP_CPP_NAMIN=\
 	
 NODEP_CPP_NAMIN=\
 	"..\..\..\ace\sys_conf.h"\
+	"..\..\tao\align.h"\
+	"..\..\tao\connect.h"\
+	"..\..\tao\connect.i"\
+	"..\..\tao\IIOP_Object.h"\
+	"..\..\tao\IIOP_Object.i"\
+	"..\..\tao\IIOP_ORB.h"\
+	"..\..\tao\IIOP_ORB.i"\
 	"..\..\tao\Object_Table.h"\
+	"..\..\tao\ORB_Strategies_T.cpp"\
+	"..\..\tao\ORB_Strategies_T.h"\
+	"..\..\tao\ORB_Strategies_T.i"\
+	"..\orbsvcs\Naming\CosNaming_i.h"\
 	
 
 !ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Release"
