@@ -84,7 +84,7 @@ ACE_Handle_Set::count_bits (u_long n) const
 {
 
  ACE_TRACE ("ACE_Handle_Set::count_bits");
-#if defined (ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT)
+#if 0 // defined (ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT)
   register int rval = 0;
 
   // Count the number of enabled bits in <n>.  This algorithm is very

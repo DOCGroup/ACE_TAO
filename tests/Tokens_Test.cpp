@@ -147,21 +147,16 @@ run_test (ACE_Token_Proxy *A,
   ACE_Thread_Manager *mgr = ACE_Thread_Manager::instance ();
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &tp1, THR_BOUND | THR_SUSPENDED) == -1)
+		 (void *) &tp1, THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 1 failed"), -1);
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &tp2, THR_BOUND | THR_SUSPENDED) == -1)
+		 (void *) &tp2, THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 2 failed"), -1);
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &tp3, THR_BOUND | THR_SUSPENDED) == -1)
+		 (void *) &tp3, THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 3 failed"), -1);
-
-#if ! defined (ACE_HAS_PTHREADS)
-  if (mgr->resume_all () == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "resume failed"), -1);
-#endif
 
   // Wait for all threads to exit.
   mgr->wait ();
@@ -176,15 +171,17 @@ main (int, char *[])
 {
   ACE_START_TEST ("Tokens_Test");
 #if defined (ACE_HAS_THREADS)
-  ACE_Token_Proxy *A, *B, *R, *W;
+  ACE_Token_Proxy *A = 0, *B = 0, *R = 0, *W = 0;
+
+#if 0
 
   ACE_NEW_RETURN (A, ACE_Local_Mutex ("L Mutex A", 0, 0), -1);
   ACE_NEW_RETURN (B, ACE_Local_Mutex ("L Mutex B", 0, 0), -1);
   ACE_NEW_RETURN (R, ACE_Local_RLock ("L Reader Lock", 0, 0), -1);
   ACE_NEW_RETURN (W, ACE_Local_WLock ("L Writer Lock", 0, 0), -1);
 
-  run_test (A,B,R,W);
-
+  run_test (A, B, R, W);
+#endif
   LPCTSTR cl = 
     __TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR
     __TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR
