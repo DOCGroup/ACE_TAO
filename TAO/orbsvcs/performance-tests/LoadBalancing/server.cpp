@@ -75,7 +75,7 @@ CORBA::Object_ptr
 join_object_group (CORBA::ORB_ptr orb,
                    CosLoadBalancing::LoadManager_ptr lm,
                    const PortableGroup::Location & location
-                   ACE_ENV_ARG_PARAMETER)
+                   ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var ns_object =
     orb->resolve_initial_references ("NameService"
