@@ -333,11 +333,11 @@ int be_interface::gen_client_stubs (void)
   cs->incr_indent ();
   *cs << "STUB_Object *istub;" << nl;
   *cs << name () << "_ptr new_obj; // to be returned " << nl;
-#if 0 // XXXASG - I was told that emitting this line of code is the root cause
+  //#if 0 // XXXASG - I was told that emitting this line of code is the root cause
       // of all evil
   *cs << "obj->Release ();" <<
     " // need this since _is_a grabbed an obj reference " << nl;
-#endif
+  //#endif
   *cs << "if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) " <<
     "!= NOERROR)\n";
   cs->incr_indent ();

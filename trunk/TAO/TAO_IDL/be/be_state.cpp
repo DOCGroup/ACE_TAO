@@ -2407,11 +2407,6 @@ be_state_typedef::gen_code (be_type *bt, be_decl *d, be_type *type)
                                         -1);
                     }
                 }
-              os->indent (); // start from current indentation
-              *os << "typedef " << bt->nested_type_name (scope, "_var") << " "
-                  << d->local_name () << "_var;" << nl;
-              *os << "typedef " << bt->nested_type_name (scope, "_out") << " "
-                  << d->local_name () << "_out;\n\n";
             }
             break;
           case TAO_CodeGen::TAO_TYPEDEF_CI:
