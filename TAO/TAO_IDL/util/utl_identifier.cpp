@@ -88,6 +88,12 @@ Identifier::Identifier (const char *s)
 
   if (*s == '_')
     {
+      // Only one leading underscore is allowed.
+      if (s[1] == '_')
+        {
+          idl_global->err ()->error0 (UTL_Error::EIDL_UNDERSCORE);
+        }
+
       shift = 1;
       this->escaped_ = 1;
 
