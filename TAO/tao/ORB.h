@@ -856,6 +856,27 @@ operator<< (TAO_OutputCDR &, const CORBA::ORB::InvalidName &);
 extern TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, CORBA::ORB::InvalidName &);
 
+# if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+extern TAO_Export ostream & 
+operator<< (ostream &, const CORBA::String_var &);
+extern TAO_Export istream &
+operator>> (istream &, CORBA::String_var &);
+extern TAO_Export ostream & 
+operator<< (ostream &, CORBA::String_out &);
+extern TAO_Export istream &
+operator>> (istream &, CORBA::String_out &);
+extern TAO_Export ostream & 
+operator<< (ostream &, const CORBA::WString_var &);
+extern TAO_Export istream &
+operator>> (istream &, CORBA::WString_var &);
+extern TAO_Export ostream & 
+operator<< (ostream &, CORBA::WString_out &);
+extern TAO_Export istream &
+operator>> (istream &, CORBA::WString_out &);
+
+# endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
 #if defined (__ACE_INLINE__)
 # include "tao/ORB.i"
 #endif /* __ACE_INLINE__ */

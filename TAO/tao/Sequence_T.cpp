@@ -1068,15 +1068,12 @@ operator= (const TAO_Unbounded_Array_Sequence<T, T_var> &rhs)
 
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
-  T *tmp1 = ACE_reinterpret_cast (T *, 
-                                  this->buffer_);
-
-  const T *tmp2 = ACE_reinterpret_cast (const T *, 
-                                        rhs.buffer_);
-
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
-      T_var::copy (tmp1[i], tmp2[i]);
+      T_var::copy (ACE_reinterpret_cast (T *, 
+                                         this->buffer_)[i], 
+                   ACE_reinterpret_cast (const T *, 
+                                         rhs.buffer_)[i]);
     }
 
   return *this;
@@ -1176,17 +1173,12 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::operator=
         TAO_Bounded_Array_Sequence<T, T_var, MAX>::allocbuf (rhs.maximum_);
     }
 
-  TAO_Bounded_Base_Sequence::operator= (rhs);
-
-  T *tmp1 = ACE_reinterpret_cast (T *, 
-                                  this->buffer_);
-
-  const T *tmp2 = ACE_reinterpret_cast (const T *, 
-                                        rhs.buffer_);
-
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
-      T_var::copy (tmp1[i], tmp2[i]);
+      T_var::copy (ACE_reinterpret_cast (T *, 
+                                         this->buffer_)[i], 
+                   ACE_reinterpret_cast (const T *, 
+                                         rhs.buffer_)[i]);
     }
 
   return *this;
