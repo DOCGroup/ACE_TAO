@@ -1,3 +1,10 @@
+Wed Oct 27 12:53:15 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Object_Manager.h:
+	* ace/config-win32.h: The instructions on how to disable the use
+	  of nonstatic object manager were not consistent for NT and other
+	  platforms.  Thanks to Russ Noseworthy for reporting this.
+
 Wed Oct 27 09:48:41 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU: changed check
