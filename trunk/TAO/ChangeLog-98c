@@ -1,5 +1,8 @@
 Wed Oct 29 22:26:10 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* tests/IDL_Cubit/clnt.cpp (init): Fixed the error handling so we
+ 	exit correctly when things go wrong.
+
 	* tao/connect.cpp (open): Revised the code to use the new
  	ACE_LACKS_SOCKET_BUFSIZ to detect when this feature isn't
  	supported.
