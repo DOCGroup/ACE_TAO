@@ -1527,9 +1527,9 @@ public:
 
   /**
    * <open> is called by ACE_Asynch_Acceptor to initialize a new
-   * instance of ACE_Service_Handler that has been created after the a
+   * instance of ACE_Service_Handler that has been created after the
    * new connection is accepted. The handle for the new connection is
-   * passed along with an initial data that may have shown up.
+   * passed along with the initial data that may have shown up.
    */
   virtual void open (ACE_HANDLE new_handle,
                      ACE_Message_Block &message_block);
