@@ -19,10 +19,14 @@ bgcolor="#ffffff">
   <li><a href="#ref">References</a>
 </ul>
 
+<!-- @@ Kirthika, can you please add more html tags into the -->
+<!-- document so it can be more readable in a browser?       -->
+
 <h2><a name="Introduction">Introduction</a></h2>
 
-<P>Smart Proxies (or Smart Stubs) are basically proxy classes which are
-user defined.
+<P>Smart Proxies (or Smart Stubs) are basically user-defined proxy
+classes.</p> 
+
 <P>By default, the IDL compiler generates proxy classes for IDL interfaces.
 The proxy is an exact image of the target object on whom the
 invocations are to be made by the client, i.e. it has the same methods
@@ -253,7 +257,7 @@ public:
  // Interface operations...
  int method ()
   {
-    this->proxy_.method ();
+    this->proxy_->method ();
   }
  ...
  // @@@ Not sure how to handle support for native exception (i.e., no
@@ -283,7 +287,7 @@ class VerySmartProxy : public DefaultSmartProxy
  int method ()
  {
    print "Yahoo, I am so smart"
-   this->proxy_.method ();
+   this->proxy_->method ();
  }
 
 }
