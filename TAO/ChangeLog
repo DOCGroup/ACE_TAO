@@ -4,6 +4,7 @@ Thu Oct 30 10:44:58 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           Updated this makefile with all the recent changes
 
         * tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * tao/Messaging/Asynch_Invocation_Adapter.h:
           Removed ; after ACE_UNIMPLEMENTED_FUNC
 
 Thu Oct 30 08:10:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
