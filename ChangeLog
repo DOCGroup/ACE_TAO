@@ -1,20 +1,26 @@
-Wed Feb 9 14:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Feb 10 08:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release:
+          Don't do crlf conversion on .vsd files, that are Microsoft Visio
+          files which must be shipped unmodified
+
+Wed Feb  9 14:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release:
           Added the removal of the temporary file we create in the
           old_versions_dir to check if we can write to that directory
 
-Tue Feb 8 20:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Feb  8 20:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
           Improved VxWorks description, committed on behalf of Martin Corino
 
-Tue Feb 8 05:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Feb  8 05:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
           Disable the CodeSet test in the static builds
 
-Mon Feb 7 21:36:37 2005  Martin Corino  <mcorino@remedy.nl>
+Mon Feb  7 21:36:37 2005  Martin Corino  <mcorino@remedy.nl>
 
 	* tests/run_test.pl:
 
