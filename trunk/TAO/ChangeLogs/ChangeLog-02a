@@ -1,3 +1,21 @@
+Wed Sep 19 17:43:42 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/RTCORBA/Linear_Priority/server.cpp:
+	* tests/RTCORBA/Persistent_IOR/server.cpp:
+	* tests/RTCORBA/Policy_Combinations/server.cpp:
+
+	  Added missing ACE_UNUSED_ARGs for asserted <result>.
+
+	* tao/TAO_Internal.cpp: Added explicit template instantiations for
+	  ACE_Dynamic_Service<ACE_Service_Object>.
+
+	* tests/Exposed_Policies/Policy_Tester.cpp (init): Changed
+	  ACE_CHECK to ACE_CHECK_RETURN.	  
+
+	* tests/RTCORBA/Collocation/Collocation.cpp
+	  (create_poa_and_servant_with_tp_policy and
+	  create_servant_in_root_poa): Fixed misplaced ACE_CHECKs.
+
 Wed Sep 19 14:15:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/TAO.dsp:

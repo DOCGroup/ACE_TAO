@@ -91,7 +91,7 @@ Policy_Tester::init (int argc,
                                 RT_Properties,
                                 CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                                   CORBA::COMPLETED_NO));
-              ACE_CHECK;
+              ACE_CHECK_RETURN (-1);
             }
           this->rt_poa_properties_->ior_source (arg);
         }
@@ -103,7 +103,7 @@ Policy_Tester::init (int argc,
                                 RT_Properties,
                                 CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                                   CORBA::COMPLETED_NO));
-              ACE_CHECK;
+              ACE_CHECK_RETURN (-1);
             }
           this->rt_object_properties_->ior_source (arg);
         }
