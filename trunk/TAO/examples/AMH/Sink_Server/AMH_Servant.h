@@ -29,21 +29,19 @@ class AMH_Servant
 {
 public:
   AMH_Servant (CORBA::ORB_ptr orb);
+  
+  virtual ~AMH_Servant (void);
 
   /// parse arguments from command line for sleep time
-  virtual int parse_args (int* argc, char **argv);
+  virtual int parse_args (int& argc, char **argv);
 
   // = The skeleton methods
-  // @@ Mayur, why doesn't the skeleton use
-  //    ACE_ENV_ARG_DECL_WITH_DEFAULTS?  The AMH skeleton code's
-  //    emulated exception support isn't consistent with the rest of
-  //    the emulated exception support in the stubs/skeletons.
   virtual void start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-                           ACE_ENV_ARG_DECL_NOT_USED)
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-                         ACE_ENV_ARG_DECL_NOT_USED)
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
@@ -52,7 +50,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
-  CORBA::ORB_ptr orb_;
+  ACE_Reactor *reactor_;
   int sleep_time_;
 };
 

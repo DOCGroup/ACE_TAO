@@ -1,7 +1,34 @@
+Thu Oct 17 18:35:29 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* examples/AMH/Sink_Server/Base_Server.inl:
+	* examples/AMH/Sink_Server/Client_Task.cpp:
+	* examples/AMH/Sink_Server/Client_Task.h:
+	* examples/AMH/Sink_Server/MT_AMH_Server.cpp:
+	* examples/AMH/Sink_Server/MT_AMH_Server.h:
+	* examples/AMH/Sink_Server/Timer_Handler.h:
+	* examples/AMH/Sink_Server/AMH_Servant.cpp:
+	* examples/AMH/Sink_Server/AMH_Servant.h:
+	* examples/AMH/Sink_Server/Base_Server.cpp:
+	* examples/AMH/Sink_Server/Base_Server.h:
+	* examples/AMH/Sink_Server/Makefile:
+	* examples/AMH/Sink_Server/README:
+	* examples/AMH/Sink_Server/Sink_Server.mpc:
+	* examples/AMH/Sink_Server/Timer_Handler.cpp:
+	* examples/AMH/Sink_Server/client.bor:
+	* examples/AMH/Sink_Server/client.cpp:
+	* examples/AMH/Sink_Server/mt_server.bor:
+	* examples/AMH/Sink_Server/mt_server.cpp:
+
+	  Addressed number of @@ comments left by Ossama on previous
+	  code-review. Fleshed out classes into .h and .cpp and .inl
+	  files, added more error-handling, compliance to ACE/TAO
+	  coding-rules, passing by references instead of pointers/value,
+	  and tons of other fixes.
+
 Thu Oct 17 14:45:08 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tao/PortableServer/AMH_Response_Handler.cpp:
-	
+
 	  Changed all the 'transport->send_message ()' from the default
 	  parameter for 'message_semantics' (TAO_Transport::Two_Way) to
 	  TAO_Transport::TAO_Reply.  Doing this blocks the sender until
