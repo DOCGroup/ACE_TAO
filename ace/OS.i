@@ -723,7 +723,7 @@ ACE_OS::isatty (ACE_HANDLE handle)
   int fd = ::_open_osfhandle ((long) handle, 0);
   ACE_OSCALL_RETURN (::_isatty ((int) fd), int, -1);
 #else
-  ACE_UNUSED_ARG (fd);
+  ACE_UNUSED_ARG (handle);
   return 0;
 #endif /* ACE_HAS_WINCE */
 }
@@ -816,10 +816,11 @@ ACE_OS::gettimeofday (void)
   timeval tv;
   int result = 0;
 #if defined (ACE_HAS_WINCE)
-  // @@ Don't know how to convert absolute time to ACE time yet.
-  ACE_UNUSED_ARG (result);
-  ACE_UNUSED_ARG (tv);
-  ACE_NOTSUP_RETURN (-1);
+  SYSTEMTIME tsys;
+  FILETIME   tfile;
+  ::GetSystemTime (&tsys);
+  ::SystemTimeToFileTime (&tsys, &tfile);
+  return ACE_Time_Value (tfile);
 #elif defined (ACE_WIN32)
   // From Todd Montgomery...
   struct _timeb tb;
@@ -6076,7 +6077,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 #endif /* ACE_WIN32 */
 #else /* ACE_HAS_WINCE */
   // @@ Don'T know how to implement this (yet.)  Can probably get around
-  // this by peeking into Register set.
+  // this by peeking into the Register set.
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (maxnamelen);
   ACE_NOTSUP_RETURN (-1);
@@ -8705,3 +8706,8 @@ ACE_Thread_Adapter::entry_point (void)
 {
   return this->entry_point_;
 }
+
+#if defined (ACE_HAS_WINCE)
+// Let's not deal with too many errors at a time.
+#error "WINCE HERE"
+#endif
