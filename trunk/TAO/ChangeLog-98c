@@ -1,3 +1,6 @@
+Sun Oct  4 15:40:05 1998  Balachandra Natarajan <bala@lambada.cs.wustl.edu>
+        * Any.cpp
+        Anticipated fix for break in build
 Sun Oct 04 08:40:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp,client.cpp,
