@@ -41,10 +41,11 @@ public:
                      ACE_Message_Block &message_block);
 
 protected:
-  ACE_Asynch_Read_Stream  reader_;
-  ACE_Asynch_Write_Stream writer_;
-  int can_write_;
+  ACE_Asynch_Read_Stream  reader_;   // Detects connection loss
+  ACE_Asynch_Write_Stream writer_;   // Sends to server
+  int can_write_;    // Safe to begin send a log record?
 
+  // Initiate the send of a log record
   void start_write (ACE_Message_Block *mblk = 0);
 
   // Handle disconnects from the logging server.
@@ -74,9 +75,10 @@ public:
                      ACE_Message_Block &message_block);
 
 protected:
-  AIO_CLD_Acceptor *acceptor_;
-  ACE_Message_Block *mblk_;
-  ACE_Asynch_Read_Stream  reader_;
+  enum { LOG_HEADER_SIZE = 8 };   // Length of CDR header
+  AIO_CLD_Acceptor *acceptor_;    // Our creator
+  ACE_Message_Block *mblk_;       // Block to receive log record
+  ACE_Asynch_Read_Stream reader_; // Async read factory
 
   // Handle input from logging clients.
   virtual void handle_read_stream
@@ -111,7 +113,7 @@ public:
 
   // Constructor.
   AIO_CLD_Connector ()
-    : retry_delay_ (3), ssl_ctx_ (0), ssl_ (0)
+    : retry_delay_ (INITIAL_RETRY_DELAY), ssl_ctx_ (0), ssl_ (0)
   { open (0, ACE_Proactor::instance (), 1); }
   //    Pass addr                     Validate
 
@@ -215,7 +217,7 @@ void AIO_Output_Handler::open
 
 void AIO_Output_Handler::start_write (ACE_Message_Block *mblk) {
   if (mblk == 0) {
-    ACE_Time_Value nonblock (ACE_OS::gettimeofday ());
+    ACE_Time_Value nonblock (0);
     getq (mblk, &nonblock);
   }
   if (mblk != 0) {
@@ -270,7 +272,7 @@ void AIO_Input_Handler::open
     (mblk_, ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (mblk_);
-  reader_.read (*mblk_, 8);
+  reader_.read (*mblk_, LOG_HEADER_SIZE);
   return;
 }
 
@@ -291,8 +293,8 @@ void AIO_Input_Handler::handle_read_stream
 
   // All bytes requested are complete. If we read 8, it's the header,
   // else it's the payload.
-  if (mblk_->length () == 8) {
-    // Create a CDR stream to parse the 8-byte header.
+  if (mblk_->length () == LOG_HEADER_SIZE) {
+    // Create a CDR stream to parse the header.
     ACE_InputCDR cdr (mblk_);
 
     // Extract the byte-order and use helper methods to
@@ -308,7 +310,7 @@ void AIO_Input_Handler::handle_read_stream
     cdr >> length;
 
     // Ensure there's sufficient room for log record payload.
-    mblk_->size (length + 8);
+    mblk_->size (length + LOG_HEADER_SIZE);
     reader_.read (*mblk_, length);
     return;
   }
@@ -319,7 +321,7 @@ void AIO_Input_Handler::handle_read_stream
   ACE_NEW_NORETURN
     (mblk_, ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
   ACE_CDR::mb_align (mblk_);
-  reader_.read (*mblk_, 8);
+  reader_.read (*mblk_, LOG_HEADER_SIZE);
   return;
 }
 
@@ -389,6 +391,16 @@ int AIO_CLD_Connector::validate_new_connection
   return 0;
 }
 
+// Alex, Edan, anyone...
+// This is here for two reasons:
+// 1. There's no notification of failed connects anywhere in the
+//    application layer of the framework. Is this right?
+// 2. The validate_connection() method does not have access to the
+//    connection handle... was this intentional?  If so, why?
+// Further, if the first 'if' below is:
+//    if (result.success ())
+// it is true whether the connect was rejected or succeeded. This
+// doesn't seem right... am I missing something?
 void AIO_CLD_Connector::handle_connect
   (const ACE_Asynch_Connect::Result &result) {
 
