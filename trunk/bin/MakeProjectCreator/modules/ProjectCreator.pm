@@ -1877,7 +1877,6 @@ sub write_project {
   my($status)   = 1;
   my($error)    = '';
   my($name)     = $self->transform_file_name($self->project_file_name());
-  my($prjname)  = $self->get_assignment('project_name');
   my($progress) = $self->get_progress_callback();
 
   if (defined $progress) {
@@ -1888,20 +1887,14 @@ sub write_project {
     ## Writing the non-static file so set it to 0
     if ($self->get_dynamic()) {
       $self->{'writing_type'} = 0;
-      $self->process_assignment('project_name',
-                                $prjname . $self->get_type_append());
       ($status, $error) = $self->write_output_file($name);
     }
 
     if ($status && $self->get_static() && $self->separate_static_project()) {
-      ## Set the project name back to what it originally was
-      $self->process_assignment('project_name', $prjname);
       $name = $self->transform_file_name($self->static_project_file_name());
 
       ## Writing the static file so set it to 1
       $self->{'writing_type'} = 1;
-      $self->process_assignment('project_name',
-                                $prjname . $self->get_type_append());
       ($status, $error) = $self->write_output_file($name);
     }
   }
@@ -2078,12 +2071,6 @@ sub save_project_value {
   #my($self)  = shift;
   #my($name)  = shift;
   #my($value) = shift;
-}
-
-
-sub get_type_append {
-  #my($self) = shift;
-  return '';
 }
 
 

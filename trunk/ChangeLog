@@ -1,3 +1,18 @@
+Tue Jun 17 06:36:39 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC6ProjectCreator.pm:
+
+          Removed a hack in the VC6 projects which originally appended EXE,
+          DLL and LIB to the end of the project names.  This caused problems
+          with exe dependencies and wasn't necessary in the first place.
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Changed value from undef to '' to avoid using an undefined
+          reference in case a referenced environment variable doesn't
+          exist.
+
 Tue Jun 17 06:42:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS.h:
@@ -35,11 +50,11 @@ Tue Jun 17 05:37:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jun 16 22:24:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Priority_Reactor.h: Fixed typos in the operator= and copy
-	  constructor. Thanks to Douglas A Stuart
-	  <douglas.a.stuart@boeing.com> for reporting the problem.
+        * ace/Priority_Reactor.h: Fixed typos in the operator= and copy
+          constructor. Thanks to Douglas A Stuart
+          <douglas.a.stuart@boeing.com> for reporting the problem.
 
-	* THANKS: Added Doug A Stuart to the hall of fame.
+        * THANKS: Added Doug A Stuart to the hall of fame.
 
 Mon Jun 16 11:13:22 2003  Chris Cleeland  <cleeland@ociweb.com>
 
@@ -47,55 +62,55 @@ Mon Jun 16 11:13:22 2003  Chris Cleeland  <cleeland@ociweb.com>
 
 Fri Jun 13 13:13:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release: Remeved the generation of a README file in
-	  TAO/orbsvcs.
+        * bin/make_release: Remeved the generation of a README file in
+          TAO/orbsvcs.
 
 Fri Jun 13 06:02:32 2003  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Template_Instantiations.cpp: Removed the explicit template
-	  instantiations introduced by this change "Thu Jun 12 15:20:37
-	  2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>". This
-	  botches up SunOS53 build.
+        * ace/Template_Instantiations.cpp: Removed the explicit template
+          instantiations introduced by this change "Thu Jun 12 15:20:37
+          2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>". This
+          botches up SunOS53 build.
 
-	* ace/Containers_Instantiations.cpp: A new file where we have
-	  moved the instantiations.
+        * ace/Containers_Instantiations.cpp: A new file where we have
+          moved the instantiations.
 
-	  Thanks t Chris Cleeland for alerting us on this.
+          Thanks t Chris Cleeland for alerting us on this.
 
 Thu Jun 12 15:20:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Template_Instantiations.cpp: This file now contains some
-	  useful template definitions that would be used by ACE+TAO and
-	  its applications. We have started by doing
-	  ACE_Unbounded_Queue<long>. In future we will add other basic
-	  types on a case by case basis.
+        * ace/Template_Instantiations.cpp: This file now contains some
+          useful template definitions that would be used by ACE+TAO and
+          its applications. We have started by doing
+          ACE_Unbounded_Queue<long>. In future we will add other basic
+          types on a case by case basis.
 
-	* ace/Stats.cpp: Removed the template instantiations of
-	  ACE_Unbounded_Queue<long> since it has now been moved to another
-	  file.
+        * ace/Stats.cpp: Removed the template instantiations of
+          ACE_Unbounded_Queue<long> since it has now been moved to another
+          file.
 
-	* ace/Makefile.ace: Compile the file Template_Instantiations.cpp
-	  in normal builds.
+        * ace/Makefile.ace: Compile the file Template_Instantiations.cpp
+          in normal builds.
 
-	* ace/INET_Addr.cpp: In get_port_number_from_name () set the port
-	  number to 0 for VxWorks.
+        * ace/INET_Addr.cpp: In get_port_number_from_name () set the port
+          number to 0 for VxWorks.
 
-	  Thanks to Rob Andzik  <andzik@rtlogic.com> for providing these
-	  patches to get ACE+TAO compiling on  VxWorks 5.5.
+          Thanks to Rob Andzik  <andzik@rtlogic.com> for providing these
+          patches to get ACE+TAO compiling on  VxWorks 5.5.
 
 Wed Jun 11 16:27:41 2003  Steve Huston  <shuston@riverace.com>
 
-	* examples/C++NPv1/Logging_Client.cpp:
-	* examples/C++NPv2/TP_Reactor_Logging_Server.cpp: Fixed compile error
-	  arising from: Wed Jun 11 07:28:57 2003  Balachandran Natarajan
+        * examples/C++NPv1/Logging_Client.cpp:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.cpp: Fixed compile error
+          arising from: Wed Jun 11 07:28:57 2003  Balachandran Natarajan
 
 Wed Jun 11 07:28:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/config-lynxos.h:
-	* examples/C++NPv1/Logging_Client.cpp:
-	* examples/C++NPv2/Select_Reactor_Logging_Server.cpp: Applied
-	  patches from Olli Savia <ops@iki.fi> to get the C++NPv examples
-	  compiling on pre-LynxOS 3.0.1 with gcc 2.7-97r1.
+        * ace/config-lynxos.h:
+        * examples/C++NPv1/Logging_Client.cpp:
+        * examples/C++NPv2/Select_Reactor_Logging_Server.cpp: Applied
+          patches from Olli Savia <ops@iki.fi> to get the C++NPv examples
+          compiling on pre-LynxOS 3.0.1 with gcc 2.7-97r1.
 
 Tue Jun 10 12:50:16 2003  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -800,7 +800,7 @@ sub process_cmdline {
     foreach my $arg (@$args) {
       while($arg =~ /\$(\w+)/) {
         my($name) = $1;
-        my($val)  = undef;
+        my($val)  = '';
         if ($name eq 'PWD') {
           $val = $self->getcwd();
         }
