@@ -620,8 +620,8 @@ TAO_Container_i::describe_contents_i (CORBA::DefinitionKind limit_type,
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA_ContainedSeq_var contents = this->contents_i (limit_type,
-                                                    exclude_inherited,
-                                                    ACE_TRY_ENV);
+                                                      exclude_inherited,
+                                                      ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   CORBA::ULong length = contents->length ();
