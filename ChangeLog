@@ -1,3 +1,8 @@
+Wed May  9 14:25:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* THANKS: Added Darren Griffith <darren.griffith@esecurityinc.com>
+	  to the hall of fame.  
+
 Wed May  9 11:40:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.i:
@@ -47,6 +52,20 @@ Fri May  4 15:42:20 2001  Craig Rodrigues <crodrigu@bbn.com>
           This is necessary to work with RAPI.
 
 Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+<<<<<<< ChangeLog
+
+	* ace/ace_wchar.h: Add a new macro (ACE_USES_L_PREFIX) that allows
+	  users to control whether wide character strings use the "L"
+ 	  prefix via their config.h files.  Thanks to Albert Wijnja for
+ 	  this fix.
+
+	* examples/Misc/test_read_buffer.cpp (main): Changed <int> to
+	  <ACE_HANDLE> so this will work properly on Win32 platforms.
+	  Thanks to Johnny Willemsen for reporting the problem.
+
+	* examples/Misc/test_XtReactor2.cpp (main): Fixed a stray ')'.
+	  Thanks to Johnny Willemsen for reporting the problem.  
+=======
 
         * ace/OS.h: Changed the typedefs of uid_t, gid_t, and mode_t to
           match those in standard POSIX.  Thanks to Gonzalo Diethelm
@@ -62,10 +81,14 @@ Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
         * examples/Misc/test_read_buffer.cpp (main): Changed <int> to
           <ACE_HANDLE> so this will work properly on Win32 platforms.
           Thanks to Johnny Willemsen for reporting the problem.
+>>>>>>> 4.1972
 
+<<<<<<< ChangeLog
+=======
         * examples/Misc/test_XtReactor2.cpp (main): Fixed a stray ')'.
           Thanks to Johnny Willemsen for reporting the problem.  
 
+>>>>>>> 4.1972
 Thu May  3 17:33:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ace/OS.h: Fixed a mistake in the setsockopt() comment.  Thanks
@@ -1569,7 +1592,7 @@ Thu Mar 29 19:48:00 2001  Craig Rodrigues <crodrigu@bbn.com>
         * examples/QOS/server.cpp:
         * examples/QOS/Makefile:
 
-        Move QoS_Session.h to the ace/QoS directory.
+          Move QoS_Session.h to the ace/QoS directory.
 
 Thu Mar 29 19:12:38 2001  Steve Huston  <shuston@riverace.com>
 
@@ -1792,11 +1815,11 @@ Tue Mar 27 10:08:44 2001  Carlos O'Ryan  <coryan@uci.edu>
 Tue Mar 27 05:35:38 2001  Christopher Kohlhoff <chris@kohlhoff.com>
 
         * include/makeinclude/make_flags.bor:
-        Prevent PASCAL build by default with BCB5 since it is not required.
-        Since both VCL and non-VCL applications share a common run-time
-        library you can simply link your VCL code with a non-PASCAL build
-        of the ACE+TAO libraries. This behaviour can be overridden by
-        defining the FORCE_PASCAL flag.
+          Prevent PASCAL build by default with BCB5 since it is not
+	  required. Since both VCL and non-VCL applications share a common
+	  run-time library you can simply link your VCL code with a
+	  non-PASCAL build of the ACE+TAO libraries. This behaviour can be
+	  overridden by defining the FORCE_PASCAL flag.
 
         * include/makeinclude/build_core_exe.bor:
         * include/makeinclude/build_core_library.bor:
