@@ -16,12 +16,15 @@
 
 #ifndef _URL_VISITOR_H
 #define _URL_VISITOR_H
+#include /**/ "ace/pre.h"
+
+#include "ace/Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Strategies_T.h"
+
 #include "ace/Synch.h"
 #include "HTTP_URL.h"
 #include "Iterators.h"
@@ -217,7 +220,7 @@ public:
 
   // @@
   // virtual int visit (FTP_URL &http_url) = 0;
-  
+
   virtual int destroy (void) = 0;
   // Cleanup the resources.
 
@@ -227,7 +230,7 @@ protected:
 };
 
 typedef int ATTRIBUTES;
-typedef ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH> 
+typedef ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
         Client_Svc_Handler;
 typedef ACE_Pair<Client_Svc_Handler *, ATTRIBUTES>
         CACHED_HANDLER;
@@ -287,7 +290,7 @@ class URL_Validation_Visitor : public URL_Visitor
   //   This class checks to make sure that the <HTTP_URL> is valid.
   //   If the <HTTP_URL> is an <HTML> file, it can also be used to
   //   recursively check that all embedded links in this file are
-  //   valid. 
+  //   valid.
 public:
   typedef ACE_Hash_Map_Manager <ACE_URL_Addr, URL_Status, ACE_Null_Mutex>
           URL_CACHE;
@@ -304,7 +307,7 @@ public:
   URL_Validation_Visitor (void);
   virtual int destroy (void);
   // Cleanup the resources.
-  
+
   URL_CACHE &url_cache (void);
   // Returns a reference to the URL cache.
 
@@ -312,7 +315,7 @@ public:
   /*
 
 
-  typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> 
+  typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
           Svc_Handler;
   typedef ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
           STRAT_CONNECTOR;
@@ -327,23 +330,23 @@ public:
                                   ACE_Pair<Svc_Handler *, int>,\
                                   ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, \
                                   ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,\
-                                  ACE_Null_Mutex> 
+                                  ACE_Null_Mutex>
           CONNECTION_HASH_MAP;
   typedef ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,\
                                   ACE_Pair<Svc_Handler *, int>,\
                                   ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, \
                                   ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,\
-                                  ACE_Null_Mutex> 
+                                  ACE_Null_Mutex>
           CONNECTION_HASH_MAP_ITERATOR;
   typedef ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,\
                                   ACE_Pair<Svc_Handler *, int>,\
                                   ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, \
                                   ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,\
-                                  ACE_Null_Mutex> 
+                                  ACE_Null_Mutex>
           CONNECTION_HASH_MAP_REVERSE_ITERATOR;
   typedef ACE_Pair_Caching_Utility <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, \
                                             ACE_Pair<Svc_Handler *, int>, \
-                                            CONNECTION_HASH_MAP, CONNECTION_HASH_MAP_ITERATOR, int > 
+                                            CONNECTION_HASH_MAP, CONNECTION_HASH_MAP_ITERATOR, int >
           CACHING_STRATEGY_UTILITY;
   typedef ACE_LRU_Caching_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,\
                                    ACE_Pair<Svc_Handler *, int>,\
@@ -373,7 +376,7 @@ protected:
   // connection.
   CACHED_CONNECT_STRATEGY *caching_connect_strategy_;
 
-  STRATEGY_CONNECTOR *strat_connector_;  
+  STRATEGY_CONNECTOR *strat_connector_;
 
   CACHING_STRATEGY caching_strategy_;
 };
@@ -398,7 +401,7 @@ public:
 
   virtual int destroy (void);
   // Cleanup the resources.
-  
+
 protected:
   URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &);
   // Factory Method that makes a <URL_Download_Visitation_Strategy_Factory>.
@@ -419,19 +422,20 @@ public:
   Auto_Destroyer (T *t): t_ (t) {}
   T *operator-> (void) { return this->t_; }
   T *operator *(void) { return this->t_; }
-  void operator= (T *t) 
+  void operator= (T *t)
   {
     if (this->t_ != 0)
       this->t_->destroy ();
     this->t_ = t;
   }
-  ~Auto_Destroyer (void) 
+  ~Auto_Destroyer (void)
   {
     if (this->t_ != 0)
-      t_->destroy (); 
+      t_->destroy ();
   }
 private:
   T *t_;
 };
 
+#include /**/ "ace/post.h"
 #endif /* _URL_VISITOR_H */
