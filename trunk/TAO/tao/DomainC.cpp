@@ -24,6 +24,12 @@
 
 const CORBA::PolicyType CORBA::SecConstruction = 11;
 
+CORBA::DomainManager_ptr
+CORBA_DomainManager::_nil (void)
+{
+  return (CORBA::DomainManager_ptr)0;
+}
+
 CORBA_DomainManager_ptr CORBA_DomainManager::_narrow (
     CORBA::Object_ptr obj,
     CORBA::Environment &env
