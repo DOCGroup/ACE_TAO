@@ -239,7 +239,7 @@ WFMO_Reactor_Test, Timer_Cancellation_Test</ul>
 <h3>
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:j.parsons@vanderbilt.edu">Jeff Parsons</a>
-<p>Current status: (As of October 1, 2002.)
+<p>Current status: (As of November 19, 2003.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
@@ -354,8 +354,9 @@ Include files are handled properly. So are the definitions used inside
 the include files that are used in the currently parsed files.</li>
 
 <li>
-Generates C++ stubs and skeletons that use TAO's <a href="http://www.cs.wustl.edu/~schmidt/HICSS-97.ps.gz">interpretive
-IIOP protocol engine</a>.</li>
+Generates C++ stubs and skeletons that use TAO's 
+<a href="http://www.cs.wustl.edu/~schmidt/HICSS-97.ps.gz">
+interpretive IIOP protocol engine</a>.</li>
 
 <li>
 Support dynamic libraries on NT, i.e., marking classes for DLL export was
@@ -564,6 +565,23 @@ Interface supports list</li>
 <li>
 Support for the CCM extensions to IDL, which first appeared in CORBA 3.0
 is complete, with the exception of support for the 'import' keyword.</li>
+
+<li>
+Generated code for constants defined in a module is now inlined
+(value is assigned in the header file) by default, enabling such 
+constants to be referenced by name as array bounds, etc. either in
+subsequent generated code or in application code. However, this inlining causes
+a problem with some compilers when using pre-compiled headers, so the
+option -Guc has been added to turn it off. NOTE: Constants
+defined at global scope (always inlined) and constants defined inside an
+interface or a valuetype (never inlined) are not affected by the option.
+</li>
+
+<li>
+Generation of explicit template instantiations is now off by default. The
+option -GT turns it on. If turned on, the generated explicit instantiations
+are guarded by the same #ifdef preprocessor directives as before.
+</li>
 </ul>
 
 <h4>

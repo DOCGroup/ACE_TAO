@@ -226,7 +226,7 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -d\t\tOutputs (to stdout) a dump of the AST\n")
+      ACE_TEXT (" -d\t\t\tOutputs (to stdout) a dump of the AST\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -252,26 +252,26 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -GC \t\tGenerate the AMI classes\n")
+      ACE_TEXT (" -GC \t\t\tGenerate the AMI classes\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -GH \t\tGenerate the AMH classes\n")
+      ACE_TEXT (" -GH \t\t\tGenerate the AMH classes\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Gd \t\tGenerate the code for direct collocation. Default")
+      ACE_TEXT (" -Gd \t\t\tGenerate the code for direct collocation. Default")
       ACE_TEXT ("is thru-POA collocation\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Ge [0|1]\t\t\tDisable/Enable generation of")
+      ACE_TEXT (" -Ge [0|1]\t\tDisable/Enable generation of")
       ACE_TEXT (" CORBA::Environment arguments (disabled by default")
       ACE_TEXT (" if ACE_HAS_EXCEPTIONS)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -GI[h|s|b|e|c]\tGenerate Implemenation Files \n")
+      ACE_TEXT (" -GI[h|s|b|e|c]\t\tGenerate Implemenation Files \n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -295,12 +295,12 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Gp \t\tGenerate the code for thru-POA collocation")
+      ACE_TEXT (" -Gp \t\t\tGenerate the code for thru-POA collocation")
       ACE_TEXT (" (default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Gsp \t\tGenerate the code for Smart Proxies\n")
+      ACE_TEXT (" -Gsp\t\t\tGenerate the code for Smart Proxies\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -315,6 +315,12 @@ DRV_usage (void)
       LM_DEBUG,
       ACE_TEXT (" -GT\t\t\tgenerate explicit template instantiations")
       ACE_TEXT (" (off by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Guc\t\t\tgenerate uninlined constant if declared ")
+      ACE_TEXT ("in a module")
+      ACE_TEXT (" (inlined by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -333,22 +339,22 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -H perfect_hash\t\tTo force perfect hashed operation")
+      ACE_TEXT (" -H perfect_hash\tTo force perfect hashed operation")
       ACE_TEXT (" lookup strategy (default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -H dynamic_hash\t\tTo force dynamic hashed operation")
+      ACE_TEXT (" -H dynamic_hash\tTo force dynamic hashed operation")
       ACE_TEXT (" lookup strategy. Default is perfect hashing\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -H linear_search\t\tTo force linear search operation")
+      ACE_TEXT (" -H linear_search\tTo force linear search operation")
       ACE_TEXT (" lookup strategy\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -H binary_search\t\tTo force binary search operation")
+      ACE_TEXT (" -H binary_search\tTo force binary search operation")
       ACE_TEXT (" lookup strategy\n")
     ));
   ACE_DEBUG ((
@@ -1210,12 +1216,12 @@ DRV_parse_args (long ac, char **av)
 
                   break;
                 }
-              else if (av[i][2] == 'i')
+              else if (av[i][2] == 'u')
                 {
                   if (av[i][3] == 'c')
                     {
                       // inline constants
-                      be_global->gen_inline_constants (I_TRUE);
+                      be_global->gen_inline_constants (I_FALSE);
                     }
                   else
                     {
