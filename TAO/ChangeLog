@@ -3,7 +3,7 @@ Mon Nov  3 22:46:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_codegen.cpp:
 
           Added check for IDL exception to condition for generating
-          #include of ace/OS_NS_String.h - the _downdast() method uses
+          #include of ace/OS_NS_String.h - the _downcast() method uses
           strcmp().
 
         * TAO_IDL/be/be_interface.cpp:
