@@ -768,8 +768,11 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Any &x)
 {
   TAO_TRY
     {
-      if (TAO_MARSHAL_ANY::instance ()->encode (0, &x, 0, &cdr, TAO_TRY_ENV)
-          == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      CORBA::TypeCode::traverse_status status =
+        TAO_MARSHAL_ANY::instance ()->encode (0, &x, 0, &cdr, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (status== CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 1;
       else
         return 0;
@@ -779,6 +782,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Any &x)
       return 0;
     }
   TAO_ENDTRY;
+  return 0;
 }
 
 ACE_INLINE CORBA_Boolean
@@ -786,8 +790,11 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object *x)
 {
   TAO_TRY
     {
-      if (TAO_MARSHAL_OBJREF::instance ()->encode (0, &x, 0, &cdr, TAO_TRY_ENV)
-          == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      CORBA::TypeCode::traverse_status status =
+        TAO_MARSHAL_OBJREF::instance ()->encode (0, &x, 0, &cdr, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (status == CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 1;
       else
         return 0;
@@ -797,6 +804,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object *x)
       return 0;
     }
   TAO_ENDTRY;
+  return 0;
 }
 
 ACE_INLINE CORBA_Boolean
@@ -804,8 +812,11 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
 {
   TAO_TRY
     {
-      if (TAO_MARSHAL_TYPECODE::instance ()->encode (0, &x, 0, &cdr, TAO_TRY_ENV)
-          == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      CORBA::TypeCode::traverse_status status =
+        TAO_MARSHAL_TYPECODE::instance ()->encode (0, &x, 0, &cdr, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (status == CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 1;
       else
         return 0;
@@ -815,6 +826,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
       return 0;
     }
   TAO_ENDTRY;
+  return 0;
 }
 
 // The following use the helper classes
