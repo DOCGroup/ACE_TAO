@@ -10,6 +10,7 @@
 
 #include "CCM_Event.idl"
 #include "RtecEventChannelAdmin.idl"
+#include "CosNotifyChannelAdmin.idl"
 
 module CIAO_Events
 {
@@ -21,8 +22,8 @@ module CIAO_Events
     DIRECT,
     EC,
     RTEC,
-    NS,
-    RTNS
+    NOTIFY,
+    RTNOTIFY
   };
 
   /// An object for setting consumer QoS requirements. This will be expanded to
@@ -32,12 +33,19 @@ module CIAO_Events
   /// CIAO::Container::_ciao_create_event_consumer_config ().
   interface Consumer_Config
   {
-    void set_consumer_id (in CONNECTION_ID connection_id);
 
-    void set_supplier_id (in CONNECTION_ID connection_id);
+    // Configuring methods.
+    void start_conjunction_group (in long size);
+
+    void start_disjunction_group (in long size);
+
+    void insert_supplier_id (in CONNECTION_ID connection_id);
+
+    void set_consumer_id (in CONNECTION_ID connection_id);
 
     void set_consumer (in Components::EventConsumerBase consumer);
 
+    // Access methods.
     CONNECTION_ID get_consumer_id ();
 
     CONNECTION_ID get_supplier_id ();
@@ -47,6 +55,10 @@ module CIAO_Events
     EventServiceType get_service_type ();
 
     RtecEventChannelAdmin::ConsumerQOS get_rt_event_qos ();
+
+    CosNotifyFilter::Filter get_notify_filter ();
+
+    CosNotification::QoSProperties get_notify_qos ();
   };
 
 
@@ -55,13 +67,20 @@ module CIAO_Events
   /// Created via CIAO::Container::_ciao_create_event_supplier_config ().
   interface Supplier_Config
   {
+
+    // Configuring methods.
     void set_supplier_id (in CONNECTION_ID connection_id);
 
+    // Access methods.
     CONNECTION_ID get_supplier_id ();
 
     EventServiceType get_service_type ();
 
     RtecEventChannelAdmin::SupplierQOS get_rt_event_qos ();
+
+    CosNotifyFilter::Filter get_notify_filter ();
+
+    CosNotification::QoSProperties get_notify_qos ();
   };
 
 };

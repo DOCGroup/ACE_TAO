@@ -297,7 +297,11 @@ namespace CIAO_GLUE_BasicSP
     CIAO_Events::Consumer_Config_var consumer_config =
       this->container_->_ciao_create_event_consumer_config ("RTEC" ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-    consumer_config->set_supplier_id (0301 ACE_ENV_ARG_PARAMETER);
+    consumer_config->start_conjunction_group (2 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->insert_supplier_id (0201 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->insert_supplier_id (0301 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
     consumer_config->set_consumer_id (0302 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
