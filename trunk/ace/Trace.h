@@ -36,7 +36,7 @@ public:
 
   ACE_Trace (const ACE_TCHAR *n,
              int line = 0,
-             const ACE_TCHAR *file = ACE_TEXT (""));
+             const ACE_TCHAR *file = ACE_LIB_TEXT (""));
   // Perform the first part of the trace, which prints out the string
   // N, the LINE, and the ACE_FILE as the function is entered.
 

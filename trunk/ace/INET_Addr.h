@@ -62,13 +62,13 @@ public:
 
   ACE_INET_Addr (const ACE_TCHAR port_name[],
 		 const ACE_TCHAR host_name[],
-                 const ACE_TCHAR protocol[] = ACE_TEXT ("tcp"));
+                 const ACE_TCHAR protocol[] = ACE_LIB_TEXT ("tcp"));
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
   // <port_name>, the remote <host_name>, and the <protocol>.
 
   ACE_INET_Addr (const ACE_TCHAR port_name[],
 		 ACE_UINT32 ip_addr,
-                 const ACE_TCHAR protocol[] = ACE_TEXT ("tcp"));
+                 const ACE_TCHAR protocol[] = ACE_LIB_TEXT ("tcp"));
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
   // <port_name>, an Internet <ip_addr>, and the <protocol>.  This
   // method assumes that <ip_addr> is in host byte order.
@@ -102,13 +102,13 @@ public:
 
   int set (const ACE_TCHAR port_name[],
 	   const ACE_TCHAR host_name[],
-           const ACE_TCHAR protocol[] = ACE_TEXT ("tcp"));
+           const ACE_TCHAR protocol[] = ACE_LIB_TEXT ("tcp"));
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name>, the remote <host_name>, and the <protocol>.
 
   int set (const ACE_TCHAR port_name[],
 	   ACE_UINT32 ip_addr,
-           const ACE_TCHAR protocol[] = ACE_TEXT ("tcp"));
+           const ACE_TCHAR protocol[] = ACE_LIB_TEXT ("tcp"));
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name>, an <ip_addr>, and the <protocol>.  This assumes that
   // <ip_addr> is already in network byte order.

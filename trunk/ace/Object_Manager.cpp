@@ -122,7 +122,7 @@ ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
   // service descriptors that are used for initialization below.
 #if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_OTHER) 
   ACE_STATIC_SVC_DEFINE (ACE_Naming_Context_initializer,
-                         ACE_TEXT ("ACE_Naming_Context"),
+                         ACE_LIB_TEXT ("ACE_Naming_Context"),
                          ACE_SVC_OBJ_T,
                          &ACE_SVC_NAME (ACE_Naming_Context),
                          ACE_Service_Type::DELETE_THIS |
@@ -132,7 +132,7 @@ ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
 #endif /* ! ACE_HAS_WINCE  &&  ! ACE_LACKS_ACE_OTHER */
 
   ACE_STATIC_SVC_DEFINE (ACE_Service_Manager_initializer,
-                         ACE_TEXT ("ACE_Service_Manager"),
+                         ACE_LIB_TEXT ("ACE_Service_Manager"),
                          ACE_SVC_OBJ_T,
                          &ACE_SVC_NAME (ACE_Service_Manager),
                          ACE_Service_Type::DELETE_THIS |

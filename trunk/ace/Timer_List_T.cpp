@@ -150,8 +150,8 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
        curr = curr->get_next ())
     count++;
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize_ = %d"), count));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntimer_id_ = %d"), this->timer_id_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nsize_ = %d"), count));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntimer_id_ = %d"), this->timer_id_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

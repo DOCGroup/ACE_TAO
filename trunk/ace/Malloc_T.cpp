@@ -58,11 +58,20 @@ ACE_Allocator_Adapter<MALLOC>::protect (void *addr, size_t len, int flags)
 }
 
 template <class MALLOC>
-ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const ACE_TCHAR *pool_name)
-  : allocator_ (pool_name)
+ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const char *pool_name)
+  : allocator_ (ACE_TEXT_CHAR_TO_TCHAR (pool_name))
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
 }
+
+#if defined (ACE_HAS_WCHAR)
+template <class MALLOC>
+ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const wchar_t *pool_name)
+  : allocator_ (ACE_TEXT_WCHAR_TO_TCHAR (pool_name))
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
+}
+#endif /* ACE_HAS_WCHAR */
 
 template <class MALLOC>
 ACE_Allocator_Adapter<MALLOC>::~ACE_Allocator_Adapter (void)
@@ -93,8 +102,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->memory_pool_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("cb_ptr_ = %x"), this->cb_ptr_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("cb_ptr_ = %x"), this->cb_ptr_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   this->cb_ptr_->dump ();
 #if defined (ACE_HAS_MALLOC_STATS)
   if (this->cb_ptr_ != 0)
@@ -115,14 +124,14 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::print_stats (void) const
     return;
   this->cb_ptr_->malloc_stats_.dump ();
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) contents of freelist:\n")));
+              ACE_LIB_TEXT ("(%P|%t) contents of freelist:\n")));
 
   for (MALLOC_HEADER *currp = this->cb_ptr_->freep_->next_block_;
        ;
        currp = currp->next_block_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) ptr = %u, MALLOC_HEADER units = %d, byte units = %d\n"),
+                  ACE_LIB_TEXT ("(%P|%t) ptr = %u, MALLOC_HEADER units = %d, byte units = %d\n"),
                   currp,
                   currp->size_,
                   currp->size_ * sizeof (MALLOC_HEADER)));
@@ -165,12 +174,12 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open (void)
                                      first_time);
   if (this->cb_ptr_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("init_acquire failed")),
+                       ACE_LIB_TEXT ("(%P|%t) %p\n"),
+                       ACE_LIB_TEXT ("init_acquire failed")),
                       -1);
   else if (first_time)
     {
-      // ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) first time in, control block = %u\n"), this->cb_ptr_));
+      // ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(%P|%t) first time in, control block = %u\n"), this->cb_ptr_));
 
       MALLOC_HEADER::init_ptr (&this->cb_ptr_->freep_,
                                &this->cb_ptr_->base_,
@@ -231,8 +240,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
   if (this->open () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
@@ -246,8 +255,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
   if (this->open () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p"),
-                ACE_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
+                ACE_LIB_TEXT ("%p"),
+                ACE_LIB_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
 }
 
 #if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
@@ -262,8 +271,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
   if (this->open () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p"),
-                ACE_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
+                ACE_LIB_TEXT ("%p"),
+                ACE_LIB_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
 }
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
@@ -280,7 +289,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove (void)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove");
-  // ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) destroying ACE_Malloc_T\n")));
+  // ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(%P|%t) destroying ACE_Malloc_T\n")));
   int result = 0;
 
 #if defined (ACE_HAS_MALLOC_STATS)
@@ -398,8 +407,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
                 // wchar before printing out.  The compiler will complain
                 // about this since a destructor would present in a SEH block
                 //ACE_ERROR_RETURN ((LM_ERROR,
-                //                   ACE_TEXT ("(%P|%t) %p\n"),
-                //                   ACE_TEXT ("malloc")),
+                //                   ACE_LIB_TEXT ("(%P|%t) %p\n"),
+                //                   ACE_LIB_TEXT ("malloc")),
                 //                  0);
             }
           prevp = currp;
@@ -708,8 +717,8 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->curr_->dump ();
   this->guard_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("name_ = %s"), this->name_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("name_ = %s"), this->name_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -801,8 +810,8 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->curr_->dump ();
   this->guard_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("name_ = %s"), this->name_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("name_ = %s"), this->name_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

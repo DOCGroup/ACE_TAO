@@ -34,7 +34,7 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
   else
     {
       ACE_OS::sprintf (s,
-                       ACE_TEXT ("%s:%d"),
+                       ACE_LIB_TEXT ("%s:%d"),
                        (ipaddr_format == 0
                         ? this->get_host_name ()
                         : this->get_host_addr ()),
@@ -51,10 +51,10 @@ ACE_INET_Addr::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_TCHAR s[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 16];
-  ACE_OS::sprintf (s, ACE_TEXT ("%s:%d"),
+  ACE_OS::sprintf (s, ACE_LIB_TEXT ("%s:%d"),
                    this->get_host_addr (),
                    this->get_port_number ());
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s"), s));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("%s"), s));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -127,7 +127,7 @@ ACE_INET_Addr::string_to_addr (const ACE_TCHAR s[])
 
   if (ip_addr == 0) // Assume it's a port number.
     {
-      if (ACE_OS::strspn (t, ACE_TEXT ("1234567890"))
+      if (ACE_OS::strspn (t, ACE_LIB_TEXT ("1234567890"))
           == ACE_OS::strlen (t))
         { // port number
           u_short port = (u_short) ACE_OS::atoi (t);
@@ -143,7 +143,7 @@ ACE_INET_Addr::string_to_addr (const ACE_TCHAR s[])
       *ip_addr = '\0'; ++ip_addr; // skip over ':'
 
       if (ACE_OS::strspn (ip_addr,
-                          ACE_TEXT ("1234567890")) ==
+                          ACE_LIB_TEXT ("1234567890")) ==
           ACE_OS::strlen (ip_addr))
         {
           u_short port =
@@ -346,9 +346,9 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                  ((char *) (host_name)))));
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_INET_Addr::ACE_INET_Addr: %p\n"),
+                ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr: %p\n"),
                 ((host_name == 0) ?
-                 (ACE_TEXT ("<unknown>")) :
+                 (ACE_LIB_TEXT ("<unknown>")) :
                  host_name)));
 #endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
 }
@@ -394,8 +394,8 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_number, inet_address) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-		ACE_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
+                ACE_LIB_TEXT ("%p\n"),
+		ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
 }
 
 // Creates a ACE_INET_Addr from a PORT_NAME and the remote
@@ -410,7 +410,7 @@ ACE_INET_Addr::ACE_INET_Addr (const ACE_TCHAR port_name[],
                  host_name,
                  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
+                ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
 }
 
 // Creates a ACE_INET_Addr from a PORT_NAME and an Internet address.
@@ -425,7 +425,7 @@ ACE_INET_Addr::ACE_INET_Addr (const ACE_TCHAR port_name[],
                  inet_address,
                  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
+                ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
 }
 
 int
@@ -512,7 +512,7 @@ ACE_INET_Addr::get_host_name (void) const
 
   static ACE_TCHAR name[MAXHOSTNAMELEN + 1];
   if (this->get_host_name (name, MAXHOSTNAMELEN + 1) == -1)
-    ACE_OS::strcpy (name, ACE_TEXT ("<unknown>"));
+    ACE_OS::strcpy (name, ACE_LIB_TEXT ("<unknown>"));
   return name;
 }
 

@@ -108,7 +108,7 @@ ACE_Arg_Shifter::cur_arg_strncasecmp (const ACE_TCHAR *flag)
 	      // matches, with more info to boot!
 	      return ACE_OS::strspn
 		(this->temp_[current_index_] + flag_length,
-		 ACE_TEXT (" ")) + flag_length;
+		 ACE_LIB_TEXT (" ")) + flag_length;
 	    }
 	}
     }

@@ -510,8 +510,8 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
 
   if (qos_manager->qos_session_set ().find (this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("This QoS session was not subscribed to")
-                       ACE_TEXT (" by the socket\n")),
+                       ACE_LIB_TEXT ("This QoS session was not subscribed to")
+                       ACE_LIB_TEXT (" by the socket\n")),
                       -1);
   
   // Set the QOS according to the supplied ACE_QoS. The I/O control
@@ -525,12 +525,12 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
                      qos, 
                      &ret_bytes) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error in Qos set ACE_OS::ioctl() %d\n"),
+                       ACE_LIB_TEXT ("Error in Qos set ACE_OS::ioctl() %d\n"),
                        ret_bytes),
                       -1);					   	
   else
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Setting QoS with ACE_OS::ioctl () succeeds \n")));
+                ACE_LIB_TEXT ("Setting QoS with ACE_OS::ioctl () succeeds \n")));
   
   return 0;
 }

@@ -93,7 +93,7 @@ public:
 #endif /* ACE_WIN32 */
 
   static int get_env_global_scale_factor (const ACE_TCHAR *env 
-                                          = ACE_TEXT ("ACE_SCALE_FACTOR"));
+                                          = ACE_LIB_TEXT ("ACE_SCALE_FACTOR"));
   // Sets the global_scale_factor to the value in the <env>
   // environment variable.  Returns 0 on success, -1 on failure.  Note
   // if <env> points to string "0" (value zero), this call will fail.

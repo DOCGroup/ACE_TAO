@@ -67,7 +67,7 @@ ACE_Get_Opt::dump (void) const
   ACE_TRACE ("ACE_Get_Opt::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -93,7 +93,7 @@ ACE_Get_Opt::operator () (void)
       if (this->optind >= this->argc_
 	  || *(this->nextchar_ = this->argv_[this->optind]) != '-')
 	{
-	  this->nextchar_ = ACE_const_cast (ACE_TCHAR *, ACE_TEXT (""));
+	  this->nextchar_ = ACE_const_cast (ACE_TCHAR *, ACE_LIB_TEXT (""));
 	  return EOF;
 	}
 
@@ -102,7 +102,7 @@ ACE_Get_Opt::operator () (void)
 	{
 	  // Found "--".
 	  ++this->optind;
-	  this->nextchar_ = ACE_const_cast (ACE_TCHAR *, ACE_TEXT (""));
+	  this->nextchar_ = ACE_const_cast (ACE_TCHAR *, ACE_LIB_TEXT (""));
 	  return EOF;
 	}
     }
@@ -123,7 +123,7 @@ ACE_Get_Opt::operator () (void)
 
       if (this->opterr && *this->optstring_ != ':')
 	ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%s: illegal option -- %c\n"),
+                    ACE_LIB_TEXT ("%s: illegal option -- %c\n"),
 		    this->argv_[0],
                     opt));
       return '?';
@@ -142,20 +142,20 @@ ACE_Get_Opt::operator () (void)
       else if (this->argc_ <= ++this->optind)
 	{
 	  // No arg.
-	  this->nextchar_ = ACE_const_cast (ACE_TCHAR *, ACE_TEXT (""));
+	  this->nextchar_ = ACE_const_cast (ACE_TCHAR *, ACE_LIB_TEXT (""));
 
 	  if (*this->optstring_ == ':')
 	    return ':';
 	  if (this->opterr)
 	    ACE_ERROR ((LM_ERROR,
-			ACE_TEXT ("%s: option requires an argument -- %c\n"),
+			ACE_LIB_TEXT ("%s: option requires an argument -- %c\n"),
 			this->argv_[0], opt));
 	  return '?';
 	}
       else // White space.
 	this->optarg = this->argv_[this->optind];
 
-      this->nextchar_ = ACE_const_cast (ACE_TCHAR *, ACE_TEXT (""));
+      this->nextchar_ = ACE_const_cast (ACE_TCHAR *, ACE_LIB_TEXT (""));
       ++this->optind;
     }
 

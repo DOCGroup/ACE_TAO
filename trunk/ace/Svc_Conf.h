@@ -69,7 +69,7 @@ extern FILE *ace_yyin;
   } \
   else if ( ((result = fread( buf, 1, max_size, ace_yyin )) == 0) \
     && ferror( ace_yyin ) ) \
-    ACE_YY_FATAL_ERROR( ACE_TEXT ("input in flex scanner failed") );
+    ACE_YY_FATAL_ERROR( ACE_LIB_TEXT ("input in flex scanner failed") );
 
 void ace_yyerror (const ACE_TCHAR *);
 // Error handling routine required by YACC or BISON

@@ -35,7 +35,7 @@
   ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
   ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, -1, __ace_error, ace___->restart (), \
                ace___->msg_ostream (), ace___->msg_callback ()); \
-  ace___->log (LM_ERROR, ACE_TEXT ("ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n"), #X, -1); \
+  ace___->log (LM_ERROR, ACE_LIB_TEXT ("ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n"), #X, -1); \
   } } while (0)
 #endif  /* ACE_NDEBUG */
 

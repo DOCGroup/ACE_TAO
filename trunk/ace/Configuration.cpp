@@ -175,7 +175,7 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
   while (1)
     {
       // Detmine the begin/ending of the key name
-      end = ACE_OS::strchr (begin, ACE_TEXT ('\\'));
+      end = ACE_OS::strchr (begin, ACE_LIB_TEXT ('\\'));
       size_t length = end ? (size_t)(end-begin) : ACE_OS::strlen (begin);
 
       // Make sure length is not 0
@@ -213,7 +213,7 @@ ACE_Configuration::validate_name (const ACE_TCHAR* name)
   // make sure it doesn't contain any invalid characters
   while (*pos)
     {
-      if (ACE_OS::strchr (ACE_TEXT ("\\]["), *pos))
+      if (ACE_OS::strchr (ACE_LIB_TEXT ("\\]["), *pos))
         return -1;
 
       pos++;
@@ -235,10 +235,10 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
   if (path.length ())
     {
       // Write out the section header
-      ACE_TString header = ACE_TEXT ("[");
+      ACE_TString header = ACE_LIB_TEXT ("[");
       header += path;
-      header += ACE_TEXT ("]");
-      header += ACE_TEXT (" \n");
+      header += ACE_LIB_TEXT ("]");
+      header += ACE_LIB_TEXT (" \n");
       if (ACE_OS::fputs (header.fast_rep (), out) < 0)
         return -1;
 
@@ -254,7 +254,7 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
       ACE_TString string_value;
       while (!enumerate_values (section, index, name, type))
         {
-          line = ACE_TEXT ("\"") + name + ACE_TEXT ("\"=");
+          line = ACE_LIB_TEXT ("\"") + name + ACE_LIB_TEXT ("\"=");
           switch (type)
             {
             case INTEGER:
@@ -263,8 +263,8 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
                 if (get_integer_value (section, name.fast_rep (), value))
                   return -2;
 
-                ACE_OS::sprintf (int_value, ACE_TEXT ("%08x"), value);
-                line += ACE_TEXT("dword:");
+                ACE_OS::sprintf (int_value, ACE_LIB_TEXT ("%08x"), value);
+                line += ACE_LIB_TEXT ("dword:");
                 line += int_value;
                 break;
               }
@@ -275,8 +275,8 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
                                       string_value))
                   return -2;
 
-                line += ACE_TEXT ("\"");
-                line += string_value + ACE_TEXT("\"");
+                line += ACE_LIB_TEXT ("\"");
+                line += string_value + ACE_LIB_TEXT ("\"");
                 break;
               }
 #ifdef _WIN32
@@ -291,16 +291,16 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
                                     binary_length))
                   return -2;
 
-                line += ACE_TEXT ("hex:");
+                line += ACE_LIB_TEXT ("hex:");
 
                 unsigned char* ptr = (unsigned char*)binary_data;
                 while(binary_length)
                 {
                   if(ptr != binary_data)
                   {
-                    line += ACE_TEXT (",");
+                    line += ACE_LIB_TEXT (",");
                   }
-                  ACE_OS::sprintf(bin_value, ACE_TEXT ("%02x"), *ptr);
+                  ACE_OS::sprintf(bin_value, ACE_LIB_TEXT ("%02x"), *ptr);
                   line += bin_value;
                   --binary_length;
                   ++ptr;
@@ -312,7 +312,7 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
               return -3;
             }
 
-          line += ACE_TEXT ("\n");
+          line += ACE_LIB_TEXT ("\n");
           if (ACE_OS::fputs (line.fast_rep (), out) < 0)
             return -4;
 
@@ -330,7 +330,7 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
     {
       ACE_TString sub_section (path);
       if (path.length ())
-        sub_section += ACE_TEXT ("\\");
+        sub_section += ACE_LIB_TEXT ("\\");
 
       sub_section += name;
       if (open_section (section, name.fast_rep (), 0, sub_key))
@@ -348,11 +348,11 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
 int
 ACE_Configuration::export_config (const ACE_TCHAR* filename)
 {
-  FILE* out = ACE_OS::fopen (filename, ACE_TEXT ("w"));
+  FILE* out = ACE_OS::fopen (filename, ACE_LIB_TEXT ("w"));
   if (!out)
     return -1;
 
-  int result = export_section (root_, ACE_TEXT (""), out);
+  int result = export_section (root_, ACE_LIB_TEXT (""), out);
   ACE_OS::fclose (out);
   return result;
 }
@@ -360,7 +360,7 @@ ACE_Configuration::export_config (const ACE_TCHAR* filename)
 int
 ACE_Configuration::import_config (const ACE_TCHAR* filename)
 {
-  FILE* in = ACE_OS::fopen (filename, ACE_TEXT ("r"));
+  FILE* in = ACE_OS::fopen (filename, ACE_LIB_TEXT ("r"));
   if (!in)
     return -1;
 
@@ -370,13 +370,13 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
   while (ACE_OS::fgets (buffer, 4096, in))
     {
       // Check for a comment
-      if (buffer[0] == ACE_TEXT (';') || buffer[0] == ACE_TEXT ('#'))
+      if (buffer[0] == ACE_LIB_TEXT (';') || buffer[0] == ACE_LIB_TEXT ('#'))
         continue;
 
-      if (buffer[0] == ACE_TEXT ('['))
+      if (buffer[0] == ACE_LIB_TEXT ('['))
         {
           // We have a new section here, strip out the section name
-          ACE_TCHAR* end = ACE_OS::strrchr(buffer, ACE_TEXT(']'));
+          ACE_TCHAR* end = ACE_OS::strrchr(buffer, ACE_LIB_TEXT (']'));
           if(!end)
           {
             fclose(in);
@@ -393,7 +393,7 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
           continue;
         }
 
-      if(buffer[0] == ACE_TEXT ('"'))
+      if(buffer[0] == ACE_LIB_TEXT ('"'))
       {
         // we have a value
         ACE_TCHAR* end = ACE_OS::strchr (buffer+1, '"');
@@ -421,7 +421,7 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
               return -4;
             }
           }
-        else if (ACE_OS::strncmp(end, ACE_TEXT ("dword:"), 6) == 0)
+        else if (ACE_OS::strncmp(end, ACE_LIB_TEXT ("dword:"), 6) == 0)
           {
             // number type
             ACE_TCHAR* endptr = 0;
@@ -432,7 +432,7 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
               return -4;
             }
           }
-        else if(ACE_OS::strncmp(end, ACE_TEXT ("hex:"), 4) == 0)
+        else if(ACE_OS::strncmp(end, ACE_LIB_TEXT ("hex:"), 4) == 0)
           {
             // binary type
             u_int string_length = ACE_OS::strlen(end+4);
@@ -934,7 +934,7 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
   while (1)
     {
       // Detmine the begin/ending of the key name
-      end = ACE_OS::strchr (begin, ACE_TEXT ('\\'));
+      end = ACE_OS::strchr (begin, ACE_LIB_TEXT ('\\'));
       size_t length = end ? (size_t)(end-begin) : ACE_OS::strlen (begin);
 
       // Make sure length is not 0
@@ -1176,7 +1176,7 @@ ACE_Configuration_Heap::ACE_Configuration_Heap (void)
 {
   ACE_Configuration_Section_Key_Heap *temp = 0;
 
-  ACE_NEW (temp, ACE_Configuration_Section_Key_Heap (ACE_TEXT ("")));
+  ACE_NEW (temp, ACE_Configuration_Section_Key_Heap (ACE_LIB_TEXT ("")));
   root_ = ACE_Configuration_Section_Key (temp);
 }
 
@@ -1238,7 +1238,7 @@ ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
   // Now check if the backing store has been created successfully.
   if (ACE_OS::access (file_name, F_OK) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("create_index\n")),
+                       ACE_LIB_TEXT ("create_index\n")),
                       -1);
 #endif /* ACE_LACKS_ACCESS */
 
@@ -1269,12 +1269,12 @@ ACE_Configuration_Heap::create_index (void)
         {
           // Attempt to clean up.
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT("create_index\n")));
+                      ACE_LIB_TEXT ("create_index\n")));
           this->allocator_->remove ();
           return -1;
         }
       // Add the root section
-      return new_section (ACE_TEXT (""), root_);
+      return new_section (ACE_LIB_TEXT (""), root_);
     }
   return 0;
 }
@@ -1330,7 +1330,7 @@ ACE_Configuration_Heap::add_section (const ACE_Configuration_Section_Key& base,
   // Create the new section name
   // only prepend a separater if were not at the root
   if (section.length ())
-    section += ACE_TEXT ("\\");
+    section += ACE_LIB_TEXT ("\\");
 
   section += sub_section;
 
@@ -1466,7 +1466,7 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
 
   // Only add the \\ if were not at the root
   if (section.length ())
-    section += ACE_TEXT ("\\");
+    section += ACE_LIB_TEXT ("\\");
 
   section += sub_section;
 
@@ -1509,7 +1509,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
 
   // Find this subkey
   if (section.length ())
-    section += ACE_TEXT ("\\");
+    section += ACE_LIB_TEXT ("\\");
 
   section += sub_section;
   ACE_Configuration_ExtId SectionExtId (section.fast_rep ());

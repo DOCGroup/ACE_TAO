@@ -14,10 +14,10 @@ ACE_Read_Buffer::dump (void) const
 {
   ACE_TRACE ("ACE_Read_Buffer::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %d"), this->size_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\noccurrences_ = %d"), this->occurrences_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nstream_ = %x"), this->stream_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nallocator_ = %x"), this->allocator_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("size_ = %d"), this->size_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\noccurrences_ = %d"), this->occurrences_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nstream_ = %x"), this->stream_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nallocator_ = %x"), this->allocator_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -36,7 +36,7 @@ ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
 ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
                                   int close_on_delete,
                                   ACE_Allocator *alloc)
-  : stream_ (ACE_OS::fdopen (handle, ACE_TEXT ("r"))),
+  : stream_ (ACE_OS::fdopen (handle, ACE_LIB_TEXT ("r"))),
     close_on_delete_ (close_on_delete),
     allocator_ (alloc)
 {

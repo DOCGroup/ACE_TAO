@@ -45,7 +45,7 @@ ACE_MEM_Acceptor::ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,
                   backlog,
                   protocol) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_MEM_Acceptor::ACE_MEM_Acceptor")));
+                ACE_LIB_TEXT ("ACE_MEM_Acceptor::ACE_MEM_Acceptor")));
 }
 
 int
@@ -116,7 +116,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   if (this->mmap_prefix_ != 0)
     {
       ACE_OS::sprintf (buf,
-                       ACE_TEXT ("%s_%d_"),
+                       ACE_LIB_TEXT ("%s_%d_"),
                        this->mmap_prefix_,
                        local_addr.get_port_number ());
     }
@@ -127,13 +127,13 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
       if (ACE::get_temp_dir (buf, MAXPATHLEN - 24) == -1)
         {
           ACE_ERROR ((LM_ERROR, 
-                      ACE_TEXT ("Temporary path too long, ")
-                      ACE_TEXT ("defaulting to current directory\n")));
+                      ACE_LIB_TEXT ("Temporary path too long, ")
+                      ACE_LIB_TEXT ("defaulting to current directory\n")));
           buf[0] = 0;
         }
 
       ACE_OS::sprintf (name,
-                       ACE_TEXT ("MEM_Acceptor_%d_"),
+                       ACE_LIB_TEXT ("MEM_Acceptor_%d_"),
                        local_addr.get_port_number ());
       ACE_OS::strcat (buf, name);
     }

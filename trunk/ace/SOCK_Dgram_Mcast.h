@@ -160,12 +160,12 @@ private:
 
 protected:
   int make_multicast_address (const ACE_INET_Addr &mcast_addr,
-                              const ACE_TCHAR *net_if = ACE_TEXT ("le0"));
+                              const ACE_TCHAR *net_if = ACE_LIB_TEXT ("le0"));
   // Initialize the <multicast_address_> IP address.
 
   int make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
                                 ip_mreq& multicast_address,
-                                const ACE_TCHAR *net_if = ACE_TEXT ("le0"));
+                                const ACE_TCHAR *net_if = ACE_LIB_TEXT ("le0"));
   // Initialize a multicast address.  This method factors out common
   // code called by <make_multicast_address> and <subscribe>.
 

@@ -27,8 +27,8 @@ ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h)
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
   if (ACE_OS::flock_init (&this->lock_) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_File_Lock::ACE_File_Lock")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_File_Lock::ACE_File_Lock")));
   this->set_handle (h);
 }
 
@@ -40,8 +40,8 @@ ACE_File_Lock::ACE_File_Lock (const ACE_TCHAR *name,
 
   if (this->open (name, flags, perms) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p %s\n"),
-                ACE_TEXT ("ACE_File_Lock::ACE_File_Lock"),
+                ACE_LIB_TEXT ("%p %s\n"),
+                ACE_LIB_TEXT ("ACE_File_Lock::ACE_File_Lock"),
                 name));
 }
 

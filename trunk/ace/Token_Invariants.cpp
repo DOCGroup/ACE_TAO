@@ -137,9 +137,9 @@ ACE_Token_Invariant_Manager::dump (void) const
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("mutex_collection_:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("mutex_collection_:\n")));
   mutex_collection_.dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("rwlock_collection_:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("rwlock_collection_:\n")));
   rwlock_collection_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -261,7 +261,7 @@ ACE_Mutex_Invariants::dump (void) const
 {
   ACE_TRACE ("ACE_Mutex_Invariants::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("owners_ = %d\n"), owners_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("owners_ = %d\n"), owners_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -334,7 +334,7 @@ ACE_RWLock_Invariants::dump (void) const
 {
   ACE_TRACE ("ACE_RWLock_Invariants::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("writers_ = %d\n"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("writers_ = %d\n"),
               "readers_ = %d\n",
               writers_, readers_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));

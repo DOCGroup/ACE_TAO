@@ -67,7 +67,7 @@ ACE_TSS_Connection::make_TSS_TYPE (void) const
       return 0;
     }
 
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_TSS_Connection new connection\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_TSS_Connection new connection\n")));
   return stream;
 }
 
@@ -81,10 +81,10 @@ ACE_TSS_Connection::dump (void) const
 {
   ACE_TRACE ("ACE_TSS_Connection::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_TSS_Connection::dump:\n")));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("server_address_\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_TSS_Connection::dump:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("server_address_\n")));
   server_address_.dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("base:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base:\n")));
   ACE_TSS<ACE_SOCK_Stream>::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -124,7 +124,7 @@ ACE_Remote_Token_Proxy::initiate_connection (void)
     {
       errno = ENOENT;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("ACE_Remote_Token_Proxy not open.\n")), -1);
+                         ACE_LIB_TEXT ("ACE_Remote_Token_Proxy not open.\n")), -1);
     }
 
   ACE_SOCK_Stream *peer = ACE_Token_Connections::instance ()->get_connection ();
@@ -142,7 +142,7 @@ ACE_Remote_Token_Proxy::request_reply (ACE_Token_Request &request,
   ssize_t length;
 
   if ((length = request.encode (buffer)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("encode failed")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("encode failed")), -1);
 
   ACE_SOCK_Stream *peer = ACE_Token_Connections::instance ()->get_connection ();
 
@@ -152,7 +152,7 @@ ACE_Remote_Token_Proxy::request_reply (ACE_Token_Request &request,
   // Transmit request via a blocking send.
 
   if (peer->send_n (buffer, length) != length)
-    ACE_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("send_n failed")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("send_n failed")), -1);
   else
     {
       ACE_Token_Reply reply;
@@ -160,10 +160,10 @@ ACE_Remote_Token_Proxy::request_reply (ACE_Token_Request &request,
       // Receive reply via blocking read.
 
       if (peer->recv (&reply, sizeof reply) != sizeof reply)
-	ACE_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("recv failed")), -1);
+	ACE_ERROR_RETURN ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("recv failed")), -1);
 
       if (reply.decode () == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("decode failed")), -1);
+	ACE_ERROR_RETURN ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("decode failed")), -1);
 
       errno = int (reply.errnum ());
       if (errno != 0)
@@ -191,14 +191,14 @@ ACE_Remote_Token_Proxy::acquire (int notify,
 	case EWOULDBLOCK :
 	  // Whoah, we detected wouldblock via the shadow mutex!
 	  if (debug_)
-	    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) shadow: acquire will block, owner is %s\n"),
+	    ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%t) shadow: acquire will block, owner is %s\n"),
 			this->token_->owner_id ()));
 	  // No error, but would block,
 	  break;
 
 	case EDEADLK :
 	  if (debug_)
-	    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) shadow: deadlock detected\n")));
+	    ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%t) shadow: deadlock detected\n")));
 
 	  if (ignore_shadow_deadlock_)
 	    break;
@@ -210,8 +210,8 @@ ACE_Remote_Token_Proxy::acquire (int notify,
 
 	default :
 	  ACE_ERROR_RETURN ((LM_ERROR,
-			     ACE_TEXT ("(%t) %p shadow acquire failed\n"),
-			     ACE_TEXT ("ACE_Remote_Token_Proxy")),
+			     ACE_LIB_TEXT ("(%t) %p shadow acquire failed\n"),
+			     ACE_LIB_TEXT ("ACE_Remote_Token_Proxy")),
 			    -1);
 	}
     }
@@ -230,12 +230,12 @@ ACE_Remote_Token_Proxy::acquire (int notify,
   if (result == -1)
     {
       // Update the local shadow copy.
-      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("error on remote acquire, releasing shadow mutex.\n")));
+      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("error on remote acquire, releasing shadow mutex.\n")));
       ACE_Token_Proxy::release ();
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) acquired %s remotely.\n"), this->name ()));
+      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%t) acquired %s remotely.\n"), this->name ()));
       // Our shadow call may have failed.  However, it's still a race
       // to the remote server.  If we beat the client which holds the
       // local token, we need to fix things locally to reflect the
@@ -261,7 +261,7 @@ ACE_Remote_Token_Proxy::tryacquire (void (*sleep_hook)(void *))
           // Save/restore errno.
           ACE_Errno_Guard error (errno);
 	  ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("shadow try acquire failed\n")));
+                      ACE_LIB_TEXT ("shadow try acquire failed\n")));
 	}
 
       return -1;
@@ -292,7 +292,7 @@ ACE_Remote_Token_Proxy::renew (int requeue_position,
 	return -1;
       else if (debug_)
 	ACE_DEBUG ((LM_DEBUG,
-		    ACE_TEXT ("(%t) shadow: renew would block. owner %s.\n"),
+		    ACE_LIB_TEXT ("(%t) shadow: renew would block. owner %s.\n"),
 		    this->token_->owner_id ()));
     }
 
@@ -315,13 +315,13 @@ ACE_Remote_Token_Proxy::renew (int requeue_position,
         ACE_Token_Proxy::release ();
       }
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p error on remote renew, releasing shadow mutex.\n"),
-                         ACE_TEXT ("ACE_Remote_Token_Proxy")), -1);
+                         ACE_LIB_TEXT ("%p error on remote renew, releasing shadow mutex.\n"),
+                         ACE_LIB_TEXT ("ACE_Remote_Token_Proxy")), -1);
     }
   else
     {
       if (debug_)
-	ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renewed %s remotely.\n"), this->name ()));
+	ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%t) renewed %s remotely.\n"), this->name ()));
       // Make sure that the local shadow reflects our new ownership.
       token_->make_owner (waiter_);
       return result;
@@ -342,13 +342,13 @@ ACE_Remote_Token_Proxy::release (ACE_Synch_Options &options)
 
   int result = this->request_reply (request, options);
   if (result == 0)
-    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) released %s remotely.\n"), this->name ()));
+    ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%t) released %s remotely.\n"), this->name ()));
 
   // whether success or failure, we're going to release the shadow.
   // If race conditions exist such that we are no longer the owner,
   // this release will perform a remove.
   if (ACE_Token_Proxy::release () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) shadow: release failed\n")));
+    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("(%t) shadow: release failed\n")));
 
   return result;
 }
@@ -364,7 +364,7 @@ void
 ACE_Remote_Token_Proxy::token_acquired (ACE_TPQ_Entry *)
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::token_acquired");
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) shadow token %s acquired\n"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%t) shadow token %s acquired\n"),
 	      this->client_id (),
 	      this->name ()));
   // ACE_Token_Proxy::token_acquired (vp);
@@ -374,7 +374,7 @@ const ACE_TCHAR*
 ACE_Remote_Token_Proxy::owner_id (void)
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::owner_id");
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("owner_id called\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("owner_id called\n")));
   // @@ special operation
   return 0;
 }
@@ -384,10 +384,10 @@ ACE_Remote_Token_Proxy::dump (void) const
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::owner_id");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Tokens::dump:\n")
-              ACE_TEXT (" ignore_shadow_deadlock_ = %d\n"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Tokens::dump:\n")
+              ACE_LIB_TEXT (" ignore_shadow_deadlock_ = %d\n"),
               ignore_shadow_deadlock_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("base:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base:\n")));
   ACE_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -397,8 +397,8 @@ ACE_Remote_Mutex::dump (void) const
 {
   ACE_TRACE ("ACE_Remote_Mutex::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Remote_Mutex::dump:\n")));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("base:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Remote_Mutex::dump:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base:\n")));
   ACE_Remote_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -408,8 +408,8 @@ ACE_Remote_RLock::dump (void) const
 {
   ACE_TRACE ("ACE_Remote_RLock::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Remote_RLock::dump:\n")));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("base:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Remote_RLock::dump:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base:\n")));
   ACE_Remote_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -419,8 +419,8 @@ ACE_Remote_WLock::dump (void) const
 {
   ACE_TRACE ("ACE_Remote_WLock::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Remote_WLock::dump:\n")));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("base:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Remote_WLock::dump:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base:\n")));
   ACE_Remote_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }

@@ -721,9 +721,17 @@ class ACE_Export ACE_Manual_Event : public ACE_Event
 public:
   ACE_Manual_Event (int initial_state = 0,
                     int type = USYNC_THREAD,
-                    const ACE_TCHAR *name = 0,
+                    const char *name = 0,
                     void *arg = 0);
   // constructor which will create manual event
+
+#if defined (ACE_HAS_WCHAR)
+  ACE_Manual_Event (int initial_state,
+                    int type,
+                    const wchar_t *name,
+                    void *arg = 0);
+  // constructor which will create manual event (wchar_t version)
+#endif /* ACE_HAS_WCHAR */
 
   ~ACE_Manual_Event (void);
   // Default dtor.

@@ -20,13 +20,13 @@ ACE_ARGV::dump (void) const
   ACE_TRACE ("ACE_ARGV::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("argc_ = %d"), this->argc_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("argc_ = %d"), this->argc_));
 
   for (size_t i = 0; i < this->argc_; i++)
-    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nargv_[%i] = %s"), i, this->argv_[i]));
+    ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nargv_[%i] = %s"), i, this->argv_[i]));
 
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nbuf = %s\n"), this->buf_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nbuf = %s\n"), this->buf_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -75,8 +75,8 @@ ACE_ARGV::ACE_ARGV (const ACE_TCHAR buf[],
   // Create this->argv_.
   if (this->string_to_argv () == -1)
     ACE_ERROR ((LM_ERROR, 
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("string_to_argv")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("string_to_argv")));
 }
 
 ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
@@ -137,7 +137,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
 
       // Replace the null char that strecpy copies with white space as
       // a separator.
-      *(end-1) = ACE_TEXT (' ');
+      *(end-1) = ACE_LIB_TEXT (' ');
     }
 
   // Remember how many arguments there are
@@ -223,7 +223,7 @@ ACE_ARGV::add (const ACE_TCHAR *next_arg)
   // Put the new argument at the end of the queue.
   if (this->queue_.enqueue_tail ((ACE_TCHAR *) next_arg) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Can't add more to ARGV queue")),
+                       ACE_LIB_TEXT ("Can't add more to ARGV queue")),
                       -1);
 
   this->length_ += ACE_OS::strlen (next_arg);
