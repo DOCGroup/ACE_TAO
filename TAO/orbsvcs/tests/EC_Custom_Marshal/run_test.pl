@@ -46,8 +46,14 @@ if ($S->TimedWait (60) == -1) {
   $S->Kill (); $S->TimedWait (1);
 }
 
-$NS->Kill (); $NS->TimedWait (1);
-$ES->Kill (); $ES->TimedWait (1);
+$NS->Terminate();
+$ES->Terminate();
+if ($NS->TimedWait (5) == -1 || $ES->TimedWait (5) == -1) {
+  print STDERR "ERROR: couldn't terminate the services nicely\n";
+  $NS->Kill (); $NS->TimedWait (1);
+  $ES->Kill (); $ES->TimedWait (1);
+  $status = 1;
+}
 
 unlink $NS_ior;
 

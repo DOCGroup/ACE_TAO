@@ -100,15 +100,26 @@ sub cosec_multiple_test1
 
     #----------
     # cleanup..
-    $SV1->Kill ();
-    $SV2->Kill ();
-    $SV3->Kill ();
-    $SV4->Kill ();
+    $SV1->Terminate ();
+    $SV2->Terminate ();
+    $SV3->Terminate ();
+    $SV4->Terminate ();
 
-    $SV1->TimedWait (1);
-    $SV2->TimedWait (1);
-    $SV3->TimedWait (1);
-    $SV4->TimedWait (1);
+    if ($SV1->TimedWait (5) == -1 ||
+        $SV2->TimedWait (5) == -1 ||
+        $SV3->TimedWait (5) == -1 ||
+        $SV4->TimedWait (5)) {
+      $SV1->Kill ();
+      $SV2->Kill ();
+      $SV3->Kill ();
+      $SV4->Kill ();
+      $SV1->TimedWait (1);
+      $SV2->TimedWait (1);
+      $SV3->TimedWait (1);
+      $SV4->TimedWait (1);
+      print STDERR "ERROR: couldn't terminate servers nicely\n";
+      $status = 1;
+    }
 }
 
 # Parse the arguments
