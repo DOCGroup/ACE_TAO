@@ -1,3 +1,14 @@
+Tue May 20 18:33:07 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace/Connector: 
+
+	  Reverted the Connector to inherit from ACE_Service_Object again.
+	  Even though the Connector no longer registers with the Reactor,
+	  it still needs to inherit from ACE_Service_Object so that it can
+	  be used through the Service Configurator primarily for dynamic
+	  linking.  The resume(), suspend(), and init() no-ops, and fini()
+	  and info() were restated.
+
 Fri May 16 16:34:35 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests/MT_Reference_Counted_Event_Handler_Test.cpp:

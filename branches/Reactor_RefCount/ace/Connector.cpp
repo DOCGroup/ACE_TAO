@@ -679,6 +679,55 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int
+ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::fini (void)
+{
+  ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::fini");
+
+  return this->close ();
+}
+
+// Hook called by the explicit dynamic linking facility.
+
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int
+ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::init (int, ACE_TCHAR *[])
+{
+  ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::init");
+  return -1;
+}
+
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int
+ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::suspend (void)
+{
+  ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::suspend");
+  return -1;
+}
+
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int
+ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::resume (void)
+{
+  ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::resume");
+  return -1;
+}
+
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int
+ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::info (ACE_TCHAR **strp, size_t length) const
+{
+  ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::info");
+  ACE_TCHAR buf[BUFSIZ];
+
+  ACE_OS::sprintf (buf,
+                   ACE_LIB_TEXT ("%s\t %s"),
+                   ACE_LIB_TEXT ("ACE_Connector"),
+                   ACE_LIB_TEXT ("# connector factory\n"));
+
+  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+    return -1;
+  else
+    ACE_OS::strsncpy (*strp, buf, length);
+  return ACE_static_cast (int, ACE_OS::strlen (buf));
+}
+
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int
 ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::open (ACE_Reactor *r,
                                                                  int flags)
 {
