@@ -422,6 +422,7 @@ ifneq ($(xt_reactor),)
   CPPFLAGS += -DACE_HAS_XT $(PLATFORM_XT_CPPFLAGS)
   LIBS += $(PLATFORM_XT_LIBS)
   LDFLAGS += $(PLATFORM_XT_LDFLAGS)
+  ACE_MAKE_OPTIONS += xt_reactor
 endif # xt_reactor
 
 ifeq ($(fl_reactor),0)
@@ -434,6 +435,7 @@ ifneq ($(fl_reactor),)
   CPPFLAGS += -DACE_HAS_FL $(PLATFORM_FL_CPPFLAGS)
   LIBS += $(PLATFORM_FL_LIBS)
   LDFLAGS += $(PLATFORM_FL_LDFLAGS)
+  ACE_MAKE_OPTIONS += rl_reactor
 endif # fl_reactor
 
 ifeq ($(tk_reactor),0)
@@ -445,6 +447,7 @@ ifneq ($(tk_reactor),)
   CPPFLAGS += -DACE_HAS_TK $(PLATFORM_TK_CPPFLAGS)
   LIBS += $(PLATFORM_TK_LIBS)
   LDFLAGS += $(PLATFORM_TK_LDFLAGS)
+  ACE_MAKE_OPTIONS += tk_reactor
 endif # tk_reactor
 
 ifeq ($(qt_reactor),0)
@@ -456,6 +459,7 @@ ifneq ($(qt_reactor),)
   CPPFLAGS += -DACE_HAS_QT $(PLATFORM_QT_CPPFLAGS)
   LIBS += $(PLATFORM_QT_LIBS)
   LDFLAGS += $(PLATFORM_QT_LDFLAGS)
+  ACE_MAKE_OPTIONS += qt_reactor
 endif # qt_reactor
 
 ifneq ($(QTDIR),)
@@ -473,6 +477,7 @@ ifneq ($(gtk_reactor),)
   CPPFLAGS += -DACE_HAS_GTK $(PLATFORM_GTK_CPPFLAGS)
   LIBS += $(PLATFORM_GTK_LIBS)
   LDFLAGS += $(PLATFORM_GTK_LDFLAGS)
+  ACE_MAKE_OPTIONS += gtk_reactor
 endif # gtk_reactor
 
 ifeq ($(rapi),0)
@@ -483,13 +488,19 @@ ifneq ($(rapi),)
   CPPFLAGS += -DACE_HAS_RAPI $(PLATFORM_RAPI_CPPFLAGS)
   LIBS += $(PLATFORM_RAPI_LIBS)
   LDFLAGS += $(PLATFORM_RAPI_LDFLAGS)
+  ACE_MAKE_OPTIONS += rapi
 endif # rapi
+
+ifeq ($(sctp),0)
+     override sctp =
+endif #rapi
 
 # if any sctp implementation is present then add
 ifneq ($(sctp),)
  CPPFLAGS += -DACE_HAS_SCTP $(PLATFORM_SCTP_CPPFLAGS)
  LDFLAGS  += $(PLATFORM_SCTP_LDFLAGS)
  LIBS     += $(PLATFORM_SCTP_LIBS)
+  ACE_MAKE_OPTIONS += sctp
 endif
 
 ifeq ($(ace_with_gl),0)
@@ -501,6 +512,7 @@ ifneq ($(ace_with_gl),)
   CPPFLAGS += $(PLATFORM_GL_CPPFLAGS)
   LIBS += $(PLATFORM_GL_LIBS)
   LDFLAGS += $(PLATFORM_GL_LDFLAGS)
+  ACE_MAKE_OPTIONS += ace_with_gl
 endif # ace_with_gl
 
 ifeq ($(ace_with_x11),0)
@@ -511,6 +523,7 @@ ifneq ($(ace_with_x11),)
   CPPFLAGS += $(PLATFORM_X11_CPPFLAGS)
   LIBS += $(PLATFORM_X11_LIBS)
   LDFLAGS += $(PLATFORM_X11_LDFLAGS)
+  ACE_MAKE_OPTIONS += ace_with_x11
 endif # ace_with_x11
 
 ifeq ($(ssl),0)
@@ -542,6 +555,7 @@ else  # exceptions
 #    CCFLAGS += -Wno-uninitialized
 #  endif # g++ > 2.8.0
   endif # ! ACE_HAS_GNUG_PRE_2_8
+  ACE_MAKE_OPTIONS += exceptions
 endif # exceptions
 
 ifeq ($(profile),0)
@@ -588,12 +602,14 @@ ifdef shared_libs
   ifndef static_libs
     override shared_libs_only = 1
   endif
+  ACE_MAKE_OPTIONS += shared_libs
 endif
 
 ifdef static_libs
   ifndef shared_libs
     override static_libs_only = 1
   endif
+  ACE_MAKE_OPTIONS += static_libs
 endif
 
 #### We need to set VBIN here, because it's used in the BUILD
@@ -720,6 +736,24 @@ endif
 ifeq ($(pipes),1)
    CFLAGS += -pipe
 endif # pipes
+
+# RMCast is turned on by default
+ifeq (,$(rmcast))
+  rmcast = 1
+endif
+
+ifeq ($(rmcast),1)
+  ACE_MAKE_OPTIONS += rmcast
+endif
+
+# SSL is turned off by default
+ifeq (,$(ssl))
+  ssl = 0
+endif
+
+ifeq ($(ssl),1)
+  ACE_MAKE_OPTIONS += ssl
+endif
 
 #----------------------------------------------------------------------------
 #      Conditional macro definitions
