@@ -1,3 +1,8 @@
+Thu Jun 27 07:30:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Makefile.bor:
+          Added Nested_Upcall_Crash.
+
 Wed Jun 26 14:07:59 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
@@ -53,7 +58,7 @@ Tue Jun 25 11:48:39 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	* examples/AMH/Sink_Server/AMH_Servant.h:
 	* examples/AMH/Sink_Server/AMH_Servant.cpp:
 	  Implement the AMH Roundtrip interface.
-	  
+
 	* examples/AMH/Sink_Server/Base_Server.h:
 	* examples/AMH/Sink_Server/Base_Server.cpp:
 	  Implements common CORBA server ORB and POA initialisations. Yet
@@ -77,7 +82,7 @@ Tue Jun 25 11:48:39 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	  Sample 'one-button' script that illustrates options to the
 	  server(ST)/client, what output to expect and what is the
 	  real output (in terms of throughput).
-	
+
 Mon Jun 24 17:54:43 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * rules.tao.GNU (TAO_BETA_VERSION):
