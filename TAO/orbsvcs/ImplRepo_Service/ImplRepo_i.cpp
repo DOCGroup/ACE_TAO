@@ -23,7 +23,7 @@ CORBA::Object_ptr
 ImplRepo_i::activate_object (CORBA::Object_ptr obj,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  Implementation_Repository::INET_Addr *new_addr;
+  /* Implementation_Repository::INET_Addr *new_addr; */
   TAO_Stub *new_stub_obj = 0;
 
   if (OPTIONS::instance()->debug () >= 1)
@@ -34,7 +34,7 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
   ACE_TRY
     {
       // @@ Where to get the poa name from?
-      new_addr = this->activate_server (0, ACE_TRY_ENV);
+      /* new_addr = */ this->activate_server (0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // @@ Use auto_ptr<> to avoid memory leaks!
