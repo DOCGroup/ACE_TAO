@@ -40,17 +40,17 @@ Sat Nov 22 17:20:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           allow the project to build automatically, without
           needing a separate step for code generation.
 
-	    * examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
-	    * examples/Kokyu_dsrt_schedulers/Kokyu_qos.idl:
-	    * examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
-	    * examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_qos.idl:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
 
           New files renamed from the ones below.
 
-	    * examples/Kokyu_dsrt_schedulers/FP_Scheduling.pidl:
-	    * examples/Kokyu_dsrt_schedulers/Kokyu_qos.pidl:
-	    * examples/Kokyu_dsrt_schedulers/MIF_Scheduling.pidl:
-	    * examples/Kokyu_dsrt_schedulers/MUF_Scheduling.pidl:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduling.pidl:
+	* examples/Kokyu_dsrt_schedulers/Kokyu_qos.pidl:
+	* examples/Kokyu_dsrt_schedulers/MIF_Scheduling.pidl:
+	* examples/Kokyu_dsrt_schedulers/MUF_Scheduling.pidl:
 
           Removed files, renamed to the ones above.
 
