@@ -1,5 +1,4 @@
 // $Id$
-//
 
 // ============================================================================
 //
@@ -17,10 +16,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_sequence.h"
 
 // Root visitor for client header
@@ -40,7 +38,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   TAO_NL  nl;        // end line
   be_type *bt;       // type node
   // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  // UNUSED: TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   TAO_OutStream &os = this->stream ();
 
   // generate the ifdefined macro for the sequence type
@@ -78,9 +76,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       break;
     case be_sequence::MNG_STRING: // sequence of strings
       if (node->unbounded ())
-	os << "TAO_Unbounded_String_Sequence";
+        os << "TAO_Unbounded_String_Sequence";
       else
-	os << "TAO_Bounded_String_Sequence<";
+        os << "TAO_Bounded_String_Sequence<";
       break;
     default: // not a managed type
       if (node->unbounded ())
@@ -90,7 +88,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       break;
     }
 
-  
+
   be_visitor_sequence_base_ch base (&os, node, bt);
   if (bt->accept (&base) == -1)
     {
@@ -103,20 +101,20 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (node->managed_type () == be_sequence::MNG_STRING)
     {
       if (!node->unbounded ())
-	{
-	  os << "<" << node->max_size () << ">";
-	}
+        {
+          os << "<" << node->max_size () << ">";
+        }
     }
   else
     {
       if (node->unbounded ())
-	{
-	  os << " >";
-	}
+        {
+          os << " >";
+        }
       else
-	{
-	  os << ", " << node->max_size () << " >";
-	}
+        {
+          os << ", " << node->max_size () << " >";
+        }
     }
 
   os << " " << node->local_name () << ";" << nl;
@@ -137,9 +135,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       // we are in the ROOT scope
       os.indent ();
       os << "extern "
-	 << idl_global->export_macro ()
-	 << " CORBA::TypeCode_ptr "
-	 << node->tc_name ()->last_component () << ";\n\n";
+         << idl_global->export_macro ()
+         << " CORBA::TypeCode_ptr "
+         << node->tc_name ()->last_component () << ";\n\n";
     }
 
 
@@ -183,8 +181,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
 be_visitor_sequence_base_ch::
 be_visitor_sequence_base_ch (TAO_OutStream *stream,
-			     be_decl *sequence_scope,
-			     be_type *base_type)
+                             be_decl *sequence_scope,
+                             be_type *base_type)
 {
   this->os_ = stream;
   this->be_node (sequence_scope);
@@ -296,8 +294,8 @@ be_visitor_sequence_base_ch::visit_typedef (be_typedef *node)
 
 be_visitor_sequence_elemtype::
 be_visitor_sequence_elemtype (TAO_OutStream *stream,
-			      be_decl *sequence_scope,
-			      be_type *base_type)
+                              be_decl *sequence_scope,
+                              be_type *base_type)
 {
   this->os_ = stream;
   this->be_node (sequence_scope);
