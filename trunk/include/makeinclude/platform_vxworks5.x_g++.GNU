@@ -1,6 +1,19 @@
 # VxWorks 5.2-5.3.1 with GNU g++ 2.7.2
 
-#### This file assumes that the WIND_BASE environment variable is set.
+#### Notes:
+#### 1) This file assumes that the WIND_BASE environment variable is set.
+####
+#### 2) If you have problems with munch output not being compilable
+####    because it contains identifiers with ".", e.g., ".cpp", in them:
+####    add a global variable or function to that .cpp file.  See
+####    ace/IOStream_T.cpp for an explanation and example.
+####
+#### 3) I have run into problems with undefined symbols __cleanup and
+####    __exit, with some executables, on pc486 target.  For some reason,
+####    they're not provided in Wind River's Tornado 1.0.1 libraries.
+####    I have a TSR (#44826) open with them to investigate/solve this.
+####    In the meantime, I created stub versions and link them in.
+
 
 #### BEGIN CPU-specific settings
 
@@ -38,21 +51,17 @@ TARGET_DIR	= $(WIND_BASE)/target
 HOST_DIR	= $(WIND_BASE)/host/sun4-solaris2
 BIN_DIR		= $(HOST_DIR)/bin
 
-
 CC		= cc$(TOOLENV)
 CXX		= g++$(TOOLENV)
-CFLAGS		+= -DVXWORKS -I$(WIND_BASE)/target/h -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -O -Wall
-#### Note: -f-no-implicit-templates doesn't seem to work well.  Some (inline?)
+CFLAGS		+= -DVXWORKS -I$(WIND_BASE)/target/h -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -O -pipe -Wall
+#### Note: -f-no-implicit-templates doesn't seem to work well with
+####       g++ cygnus-2.7.2-960126 for pc486 target.  Some
 ####       member functions don't get instantiated.
 CCFLAGS		+= $(DCFLAGS) $(CFLAGS) #### -fno-implicit-templates
 DCFLAGS		+= -g
 INCLDIRS	+=
 LD		= $(CXX)
-#### Note: exit.o contains (empty, except for printouts) definitions of
-####       __cleanup and __exit.  For some reason, they're not provided in
-####       Wind River's libraries.  I have a TSR (#44826) open with them to
-####       investigate/solve this.
-LDFLAGS		+= -r -L$(LIB_DIR) -L$(GCCLIB_DIR) -lgcc .obj/__ctordtor.o $(TARGET_DIR)/config/pc486/temp/exit.o
+LDFLAGS		+= -r -L$(LIB_DIR) -L$(GCCLIB_DIR) -lgcc .obj/__ctordtor.o
 PIC		=
 AR		= ar$(TOOLENV)
 ARFLAGS		= rv
@@ -63,10 +72,9 @@ PRELIB	= (echo "main() { }" > gcctemp.c && \
                                 -L$(GCCLIB_DIR) -lgcc $(LIBS); \
 	  status=$$?; rm -f gcctemp.* a.out; exit $$status)
 PRELINK		= nm$(TOOLENV) .obj/$@.o $(WRAPPER_ROOT)/ace/libACE.a | munch | egrep -v '\.cpp' > __ctordtor.c; $(COMPILE.c) -traditional -o .obj/__ctordtor.o __ctordtor.c; /bin/rm __ctordtor.c;
+COMPILE.cc	= $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
+LINK.cc		= $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PTDIRS)
 
 #### don't build shared objects:
 BUILD           = $(VOBJS) $(VLIB) $(VBIN)
-
-COMPILE.cc	= $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
-LINK.cc		= $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PTDIRS)
 
