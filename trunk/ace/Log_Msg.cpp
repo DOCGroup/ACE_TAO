@@ -576,6 +576,7 @@ ACE_Log_Msg::open (const char *prog_name,
 //   'a': exit the program at this point (var-argument is the exit status!)
 //   'c': print a character
 //   'i', 'd': print a decimal number
+//   'I', indent according to nesting depth
 //   'e', 'E', 'f', 'F', 'g', 'G': print a double
 //   'l', print line number where an error occurred.
 //   'N': print file name where the error occurred.
@@ -678,7 +679,7 @@ ACE_Log_Msg::log (const char *format_str,
 	  int  w[2];		// width/precision vals 
 
 	  // % starts a format specification that ends with one of
-	  // "arnPpSsdciouxXfFeEgG".  An optional width and/or precision
+	  // "arnPpSsdciIouxXfFeEgG".  An optional width and/or precision
 	  // (indicated by an "*") may be encountered prior to the
 	  // nend of the specification, each consumes an int arg.
 	  // A call to sprintf() does the actual conversion. 
@@ -768,6 +769,16 @@ ACE_Log_Msg::log (const char *format_str,
 		  this->op_status (va_arg (argp, int));
 		  ACE_OS::sprintf (bp, "%d", this->op_status ());
 		  break;
+
+		case 'I': // Indent with nesting_depth*width spaces
+		  type = SKIP_SPRINTF;
+		  if (!wpc) w[wpc++] = 1;
+		  w[wpc-1] *=	this->trace_depth_;
+		  memset(bp, ' ', w[wpc-1]);
+		  bp += w[wpc-1];
+		  *bp = '\0';
+		  break;
+
 		case 'r': // Run (invoke) this subroutine. 
 		  {
 		    int osave = ACE_Log_Msg::msg_off_;
