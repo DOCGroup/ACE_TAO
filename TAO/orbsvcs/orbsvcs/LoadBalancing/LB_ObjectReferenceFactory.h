@@ -31,6 +31,7 @@
 #include "orbsvcs/CosLoadBalancingC.h"
 
 #include "ace/Array_Base.h"
+#include "ace/Hash_Map_Manager_T.h"
 
 
 /**
