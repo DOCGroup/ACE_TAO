@@ -4,6 +4,7 @@
  * @file Server_init.h
  *
  * Initializing CIAO Server side ORB, if they need to.
+ * I'm also puting some utilities functions here.
  *
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
@@ -29,6 +30,15 @@ namespace CIAO
    * to register these stuff automatically.
    */
   CIAO_SERVER_Export int Server_init (CORBA::ORB_ptr o);
+
+  namespace Utility
+  {
+    /// Write a string (usually a stringified IOR) to a file
+    /// designated by the @c pathname.  The file named will always get
+    /// overwritten.
+    CIAO_SERVER_Export int write_IOR (const char *pathname,
+                                      const char *IOR);
+  }
 }
 
 #include "ace/post.h"

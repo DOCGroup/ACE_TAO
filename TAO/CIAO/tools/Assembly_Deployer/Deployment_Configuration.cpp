@@ -28,7 +28,10 @@ CIAO::Deployment_Configuration::init (const char *filename)
   FILE *inf = ACE_OS::fopen (filename, "r");
 
   if (inf == NULL)
-    ACE_ERROR_RETURN ((LM_ERROR, "Fail to open data file.\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Fail to open activator map data file: %s.\n",
+                       filename),
+                      -1);
 
   char destination[NAME_BUFSIZE], ior[NAME_BUFSIZE];
 
