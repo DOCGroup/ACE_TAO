@@ -1,3 +1,12 @@
+Sat Nov  4 18:59:00 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Makefile: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ui.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.cpp: 
+
+	  Fixed compile and link errors.
+	
+
 Sat Nov  4 18:04:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_typedef.cpp:
