@@ -1,3 +1,10 @@
+Tue Mar 21 17:13:48 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+	  Somehow this change of mine got lost or was not commited when it
+	  should have.
+          Fixed the export macro to fit the new standard set by Darrell.
+
 Tue Mar 21 19:06:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_scope.cpp:
