@@ -87,7 +87,7 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 
-INSTALL_CHECK = $(ACE_ROOT)/lib
+INSTALL_CHECK = ../../../lib
 ifeq ($(INSTALL_CHECK),.)
   INSLIB = $(PWD)
 else
@@ -98,7 +98,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-CPPFLAGS     += -I$(ACE_ROOT)/Kokyu -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao -I$(ACE_ROOT)
+CPPFLAGS     += -I../../../Kokyu -I../../orbsvcs -I../.. -I../../tao -I../../..
 ifeq ($(shared_libs),1)
   ifneq ($(SHLIB),)
     CPPFLAGS += -DKOKYU_DSRT_SCHEDULERS_BUILD_DLL
@@ -111,7 +111,7 @@ ifeq ($(static_libs),1)
 endif
 
 
-LDFLAGS      += -L$(ACE_ROOT)/lib
+LDFLAGS      += -L../../../lib
 
 #----------------------------------------------------------------------------
 #       Local targets
@@ -120,8 +120,8 @@ require_warning:
 	@echo This project will not be built due to one of the following missing features:
 	@echo rt_corba
 
-$(ACE_ROOT)/lib:
-	-@mkdir -p "$(ACE_ROOT)/lib"
+../../../lib:
+	-@mkdir -p "../../../lib"
 
 
 realclean: clean 
