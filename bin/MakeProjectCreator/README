@@ -325,6 +325,11 @@ flag_overrides  Used to determine flags that have been overridden on a per
                 file basis.
 custom_types    The list of custom file types that may have been defined
                 in the mpc file or a base project.
+fornotlast      Insert the text on every foreach iteration except the last.
+forlast         Insert the text only on the last foreach iteration.
+fornotfirst     Insert the text on every foreach iteration except the first.
+forfirst        Insert the text only on the first foreach iteration.
+forcount        A one based index number of the foreach iterations.
 
 Workspaces
 ----------
