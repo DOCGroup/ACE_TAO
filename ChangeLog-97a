@@ -28,7 +28,8 @@ Fri May 23 21:27:05 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/{IOStream.*,README},
 	  tests/IOStream_Test.cpp,
 	  examples/IOStream/client/iostream_client.cpp,
-	  examples/IOStream/server/iostream_server.cpp:
+	  examples/IOStream/server/iostream_server.cpp,
+	  config-hpux-9.x*.h:
 	  Added ACE_LACKS_ACE_IOSTREAM protection
 	  so that these can easily be built on platforms that have
 	  trouble with ACE_IOStream.
