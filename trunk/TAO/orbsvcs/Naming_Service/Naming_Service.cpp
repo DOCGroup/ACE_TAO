@@ -54,16 +54,16 @@ Naming_Service::parse_args (int argc,
                              get_opts.optarg), -1);
         break;
       case 'p':
-	this->pid_file_name_ = get_opts.optarg;
-	break;
+        this->pid_file_name_ = get_opts.optarg;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-NScontextname <contextname> "
                            "-o <ior_output_file> "
-			   "-p <pid_file_name> "
-			   "\n",
+                           "-p <pid_file_name> "
+                           "\n",
                            argv [0]),
                           -1);
         break;
@@ -92,9 +92,9 @@ Naming_Service::init (int argc,
       child_poa = this->orb_manager_.child_poa ();
 
       result = this->my_naming_server_.init (orb.in (),
-                                             child_poa,
-					     argc,
-					     argv);
+                                             child_poa.in (),
+                                             argc,
+                                             argv);
       TAO_CHECK_ENV;
       if (result < 0)
         return result;
@@ -126,10 +126,10 @@ Naming_Service::init (int argc,
     {
       FILE* pidf = fopen (this->pid_file_name_, "w");
       if (pidf != 0)
-	{
-	  ACE_OS::fprintf (pidf, "%d\n", ACE_OS::getpid ());
-	  ACE_OS::fclose (pidf);
-	}
+        {
+          ACE_OS::fprintf (pidf, "%d\n", ACE_OS::getpid ());
+          ACE_OS::fclose (pidf);
+        }
     }
   return 0;
 }
