@@ -102,7 +102,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Read_Buffer.i CC_client.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ CC_client.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/corba.h \
@@ -145,6 +146,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -202,8 +206,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -212,15 +214,18 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -235,11 +240,13 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  CC_tests.h CC_naming_service.h
 .obj/CC_tests.o .obj/CC_tests.so .shobj/CC_tests.o .shobj/CC_tests.so: CC_tests.cpp CC_tests.h \
@@ -289,6 +296,24 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -301,27 +326,20 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -333,14 +351,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
@@ -387,8 +397,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -397,15 +405,18 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -420,11 +431,13 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  CC_naming_service.h
 .obj/CC_naming_service.o .obj/CC_naming_service.so .shobj/CC_naming_service.o .shobj/CC_naming_service.so: CC_naming_service.cpp CC_naming_service.h \
@@ -474,6 +487,24 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -486,27 +517,20 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -518,14 +542,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
@@ -572,8 +588,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -582,15 +596,18 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -605,11 +622,13 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
 .obj/tmplinst.o .obj/tmplinst.so .shobj/tmplinst.o .shobj/tmplinst.so: tmplinst.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
@@ -659,6 +678,24 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -671,27 +708,20 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -703,14 +733,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
@@ -757,8 +779,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
@@ -767,15 +787,18 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
- $(TAO_ROOT)/tao/PolicyS.h \
- $(TAO_ROOT)/tao/PolicyS.i \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -790,7 +813,10 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
