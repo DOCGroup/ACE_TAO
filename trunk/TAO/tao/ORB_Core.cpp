@@ -1484,7 +1484,12 @@ TAO_Resource_Factory::App_Allocated::App_Allocated (void)
 
 TAO_Resource_Factory::App_Allocated::~App_Allocated (void)
 {
+  if (this->input_cdr_dblock_allocator_ != 0)
+    this->input_cdr_dblock_allocator_->remove ();
   delete this->input_cdr_dblock_allocator_;
+
+  if (this->input_cdr_buffer_allocator_ != 0)
+    this->input_cdr_buffer_allocator_->remove ();
   delete this->input_cdr_buffer_allocator_;
 }
 
