@@ -1,0 +1,11 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoexe, portableserver {
+  Source_Files {
+    Hello.cpp
+    server.cpp
+  }
+}
+
+

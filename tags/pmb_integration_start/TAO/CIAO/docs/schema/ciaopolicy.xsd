@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="www.dre.vanderbilt.edu"
+           xmlns:ciao="www.dre.vanderbilt.edu"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <xs:element name="orbPolicies">
+    <xs:annotation>
+      <xs:documentation>
+        The root element of the schema. Contains zero or more policies.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="policy" type="ciao:policyType" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:complexType name="policyType">
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="threadPoolPolicy" type="ciao:threadPoolPolicyType" />
+        <xs:element name="serverProtocolPolicy" type="ciao:serverProtocolPolicyType" />
+        <xs:element name="clientProtocolPolicy" type="ciao:clientProtocolPolicyType" />
+        <xs:element name="privateConnectionPolicy" type="ciao:privateConnectionPolicyType" />
+        <xs:element name="priorityBandedPolicy" type="=ciao:priorityBandedPolicyType" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+    
+  <xs:complexType name="policyBase" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        This is the base policy type.  All policies
+        should be an extension of this type.  
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="override" type="ciao:overrideType" />
+      <xs:element name="scope" type="ciao:scopeType" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="scopeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ORB" />
+      <xs:enumeration value="THREAD" />
+      <xs:enumeration value="OBJECT" />
+      <xs:enumeration value="POA" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="policyIDType">
+    <xs:annotation>
+      <xs:documentation>
+        This type represents the policy ID.  
+        Need to add a restriction.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="overrideType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SET_OVERRIDE" />
+      <xs:enumeration value="ADD_OVERRIDE" />
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  
+  <!-- The following are extensions of policyBase, one each for each policy 
+       we may want to group these into seperate schema documents, for our
+       own sanity.
+  -->
+
+  <!-- threadPoolPolicy -->
+
+  <xs:complexType name="threadPoolPolicyType">
+    <xs:annotation>
+      <xs:documentation>
+        Represents the ThreadPool policy, ID 41
+      </xs:documentation>
+    </xs:annotation>
+    
+    <xs:complexContent>
+      <xs:extension base="ciao:policyBase">
+        <xs:sequence>
+          <xs:element name="threadPoolID" type="xs:integer" />
+        </xs:sequence>
+        <xs:attribute name="typeID" type="xs:integer" use="required" fixed="41" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  
+  <!-- serverProtocolPolicy -->
+
+  <xs:complexType name="serverProtocolPolicyType">
+    <xs:annotation>
+      <xs:documentation>
+        Represents the Server Protocol policy, ID 42
+      </xs:documentation>
+    </xs:annotation>
+    
+    <xs:complexContent>
+      <xs:extension base="ciao:policyBase">
+        <xs:sequence>
+          <xs:element name="protocol" type="ciao:protocolType"
+                      minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="typeID" type="xs:integer" use="required" fixed="42" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  
+  <!-- clientProtocolPolicy -->
+  <xs:complexType name="clientProtocolPolicyType">
+    <xs:annotation>
+      <xs:documentation>
+        Represents the Client Protocol policy, ID 43
+      </xs:documentation>
+    </xs:annotation>
+    
+    <xs:complexContent>
+      <xs:extension base="ciao:policyBase">
+        <xs:sequence>
+          <xs:element name="protocol" type="ciao:protocolType"
+                      minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="typeID" type="xs:integer" use="required" fixed="43" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+
+  <!-- Protocol definitions for client and server Protocol properties types. -->
+  <xs:complexType name="protocolType">
+    <xs:sequence>
+      <xs:element name="protocolType" type="xs:integer" />
+      <xs:element name="orbProtocolProperties" type="ciao:protocolPropertyType" />
+      <xs:element name="transportProtocolProperties" type="ciao:protocolPropertyType" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="protocolPropertyType">
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="tcpProtocolProperties" type="ciao:tcpProtocolPropertiesType" />
+        <xs:element name="giopProtocolProperties" type="ciao:giopProtocolPropertiesType" />
+        <xs:element name="unixDomainProtocolProperties" type="unixDomainProtocolPropertiesType" />
+        <xs:element name="sharedMemoryProtocolProperties" type="sharedMemoryProtocolPropertiesType" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="protocolPropertyBase" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        Base type for all protocol properties.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="type" type="xs:string" use="required" />
+  </xs:complexType>
+  
+  <xs:complexType name="tcpProtocolPropertiesType">
+    <xs:complexContent>
+      <xs:extension base="ciao:protocolPropertyBase">
+        <xs:sequence>
+          <xs:element name="sendBufferSize" type="xs:integer" />
+          <xs:element name="recvBufferSize" type="xs:integer" />
+          <xs:element name="keepAlive" type="xs:boolean" />
+          <xs:element name="dontRoute" type="xs:boolean" />
+          <xs:element name="noDelay" type="xs:boolean" />
+          <xs:element name="enableNetworkPriority" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="giopProtocolProperties">
+    <xs:complexContent>
+      <xs:extension base="ciao:protocolPropertyBase" />
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="unixDomainProtocolProperties">
+    <xs:complexContent>
+      <xs:extension base="ciao:protocolProperyBase">
+        <xs:sequence>
+          <xs:element name="sendBufferSize" type="xs:integer" />
+          <xs:element name="recvBufferSize" type="xs:integer" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="sharedMemoryProtocolProperties">
+    <xs:complexContent>
+      <xs:extension base="ciao:protocolPropertyBase">
+        <xs:sequence>
+          <xs:element name="preallocateBufferSize" type="xs:integer" />
+          <xs:element name="mmapFilename" type="xs:string" />
+          <xs:element name="mmapLockname" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+        
+  <!-- TODO:  Provide other protocolProperties types -->
+
+  <!-- privateConnectionPolicy -->
+  <xs:complexType name="privateConnectionPolicyType">
+    <xs:complexContent>
+      <xs:extension base="ciao:policyBase">
+        <xs:attribute name="typeID" type="xs:integer" use="required" fixed="44" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  
+  <!-- priorityBandedPolicy -->
+  <xs:complexType name="priorityBandedPolicyType">
+    <xs:annotation>
+      <xs:documentation>
+        priorityBandedPolicy extension of policyBase, ID 45
+      </xs:documentation>
+    </xs:annotation>
+    
+    <xs:complexContent>
+      <xs:extension base="ciao:policyBase">
+        <xs:sequence>
+          <xs:element name="priorityBand" type="ciao:priorityBandType"
+                      minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="typeID" type="xs:integer" use="required" fixed="45" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  
+  <xs:complexType name="priorityBandType">
+    <xs:annotation>
+      <xs:documentation>
+        Represents the PriorityBand struct for the priorityBandedPolicy element.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="low" type="xs:integer" />
+      <xs:element name="high" type="xs:integer" />
+    </xs:sequence>
+  </xs:complexType>
+  
+
+
+</xs:schema>

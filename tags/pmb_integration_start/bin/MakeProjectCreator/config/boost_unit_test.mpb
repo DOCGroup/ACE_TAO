@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  requires += boost
+  lit_libs += boost_unit_test_framework
+}

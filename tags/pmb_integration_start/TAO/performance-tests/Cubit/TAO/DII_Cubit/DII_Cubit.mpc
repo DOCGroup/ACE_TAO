@@ -1,0 +1,12 @@
+// -*- MPC -*-
+// $Id$
+
+project(*client): taoexe, portableserver, strategies, dynamicinterface, minimum_corba {
+  after    += IDL_Cubit_Server
+  idlflags += -Gd
+
+  Source_Files {
+    cubitC.cpp
+    client.cpp
+  }
+}
