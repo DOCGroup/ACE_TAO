@@ -1,3 +1,9 @@
+Wed Jan 9 00:48:48 2002  Don Hinton <dhinton@gmx.net>
+
+        * ace/Get_Opt.cpp:  Make sure to cast away constness
+	  before deleting an ACE_TCHAR array.  Thanks to 
+	  Bala for reporting this.
+	
 Tue Jan  8 17:29:33 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_SOCK_Connector.cpp: Don't try to dereference a 0
