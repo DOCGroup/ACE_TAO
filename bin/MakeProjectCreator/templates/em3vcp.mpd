@@ -275,8 +275,8 @@ BuildCmds= \
 # End Custom Build
 
 <%endfor%>
-<%endfor%>
 !ENDIF
+<%endfor%>
 
 # End Source File
 <%endif%>

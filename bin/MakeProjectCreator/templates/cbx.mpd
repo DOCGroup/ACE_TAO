@@ -89,14 +89,14 @@
   <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.1" value="_DEBUG"/>
   <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.2" value="_RTLDLL"/>
 <%if(type_is_dynamic)%>
- <%foreach(dynamicflags)%>
+<%foreach(dynamicflags)%>
   <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.3" value="<%dynamicflag%>"/>
- <%endfor%>
+<%endfor%>
 <%endif%>
 <%if(need_staticflags)%>
- <%foreach(staticflags)%>
+<%foreach(staticflags)%>
   <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.3" value="<%libflag%>"/>
- <%endfor%>
+<%endfor%>
 <%endif%>
 <%foreach(defines common_defines macros)%>
   <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.3" value="<%define%>"/>
@@ -203,6 +203,18 @@
 <%endfor%>
   </node>
 <%endif%>
+<%foreach(custom_types)%>
+<%if(custom_type->input_files)%>
+  <node name="<%custom_type%>" type="Folder">
+    <property category="unique" name="id"/>
+<%foreach(custom_type->input_files)%>
+      <file path="<%custom_type->input_file%>">
+        <property category="unique" name="id"/>
+      </file>
+<%endfor%>
+  </node>
+<%endif%>
+<%endfor%>
 <%if(template_files)%>
   <node name="Template files" type="Folder">
     <property category="unique" name="id"/>
