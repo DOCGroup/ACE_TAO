@@ -1951,6 +1951,10 @@ struct stat
 #   endif
 # endif /* ACE_HAS_WINCE */
 
+
+#if defined (ACE_HAS_NO_THROW_SPEC)
+#   define ACE_THROW_SPEC(X) 
+#else
 # if defined (ACE_HAS_EXCEPTIONS)
 #   define ACE_THROW_SPEC(X) throw X
 #   if defined (ACE_WIN32)
@@ -1961,6 +1965,8 @@ struct stat
 # else  /* ! ACE_HAS_EXCEPTIONS */
 #   define ACE_THROW_SPEC(X)
 # endif /* ! ACE_HAS_EXCEPTIONS */
+#endif /*ACE_HAS_NO_THROW_SPEC*/
+
 
 #if defined (ACE_HAS_PRIOCNTL)
   // Need to #include these before #defining USYNC_PROCESS on SunOS 5.x.
