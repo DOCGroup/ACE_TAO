@@ -1,10 +1,7 @@
 // -*- C++ -*-
-// HTTP_Server.h
 
 #if !defined (HTTP_SERVER_H)
 #define HTTP_SERVER_H
-
-class ACE_Proactor;
 
 #include "ace/Service_Object.h"
 #include "ace/Thread_Manager.h"
@@ -12,30 +9,28 @@ class ACE_Proactor;
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Task.h"
 #include "ace/Asynch_IO.h"
-
 #include "JAWS/server/HTTP_Handler.h"
 
 // Include the templates here.
 #include "JAWS/server/HTTP_Server_T.h"
 
-#if defined (ACE_WIN32)
+// Forward declaration.
+class ACE_Proactor;
+
+#if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
 typedef LOCK_SOCK_Acceptor<ACE_Null_Mutex> HTTP_SOCK_Acceptor;
 #else
-typedef LOCK_SOCK_Acceptor<ACE_Thread_Mutex> HTTP_SOCK_Acceptor;
-#endif /* ACE_WIN32 */
+typedef LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX> HTTP_SOCK_Acceptor;
+#endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 
 typedef HTTP_SOCK_Acceptor HTTP_Acceptor;
 
 class HTTP_Server : public ACE_Service_Object
-  //     
   // = TITLE
-  //
   //     This server is used to create HTTP Handlers for the Web
   //     server
   // 
   // = DESCRIPTION
-  //     
-  //     
 {
 public:
   virtual int init (int argc, char *argv[]);
@@ -45,13 +40,13 @@ public:
   // Exit hooks
 
 protected:
-  virtual int thread_per_request ();
+  virtual int thread_per_request (void);
   // Thread Per Request implementation
 
-  virtual int asynch_thread_pool ();
+  virtual int asynch_thread_pool (void);
   // Asynch Thread Pool implementation
   
-  virtual int synch_thread_pool ();
+  virtual int synch_thread_pool (void);
   // Synch Thread Pool implementation
   
   void setup_signal_handler (void);
@@ -66,14 +61,10 @@ private:
 };
 
 class Synch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
-  //     
   // = TITLE
-  //
   //     Used to implement Synch Thread Pool
   // 
   // = DESCRIPTION
-  //     
-  //     
 {
 public:
   Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor, ACE_Thread_Manager &tm);
@@ -85,14 +76,10 @@ private:
 };
 
 class Thread_Per_Request_Task : public ACE_Task<ACE_NULL_SYNCH>
-  //     
   // = TITLE
-  //
   //     Used to implement Thread Per Request
   // 
   // = DESCRIPTION
-  //     
-  //     
 {
 public:
   Thread_Per_Request_Task (ACE_HANDLE handle, ACE_Thread_Manager &tm);
@@ -107,14 +94,10 @@ private:
 // This only works on Win32
 #if defined (ACE_WIN32)
 class Asynch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
-  //     
   // = TITLE
-  //
   //     Used to implement Asynch Thread Pool
   // 
   // = DESCRIPTION
-  //     
-  //     
 {
 public:
   Asynch_Thread_Pool_Task (ACE_Proactor &proactor, ACE_Thread_Manager &tm);

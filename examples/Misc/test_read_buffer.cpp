@@ -1,6 +1,6 @@
-#include "ace/Service_Config.h"
 // $Id$
 
+#include "ace/Service_Config.h"
 #include "ace/Read_Buffer.h"
 
 int 
@@ -22,9 +22,3 @@ main (int argc, char *argv[])
     }
   return 0;
 }
-
-#if 0
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Stream<ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-#endif

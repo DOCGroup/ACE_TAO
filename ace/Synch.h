@@ -39,7 +39,7 @@ class ACE_Lock
   //     This class is typically used in conjunction with the
   //     <ACE_Lock_Adapter> in order to provide a polymorphic
   //     interface to the ACE synchronization mechanisms (e.g.,
-  //     <ACE_Mutex>, <ACE_Semaphore>, <ACE_RW_Lock>, etc).  Note that
+  //     <ACE_Mutex>, <ACE_Semaphore>, <ACE_RW_Mutex>, etc).  Note that
   //     the reason that all of ACE doesn't use polymorphic locks is
   //     that (1) they add ~20% extra overhead for virtual function
   //     calls and (2) objects with virtual functions can't be placed
@@ -750,7 +750,8 @@ public:
   // Declare the dynamic allocation hooks
 };
 
-#if defined (ACE_HAS_THREADS) /* ACE platform supports some form of threading. */
+// ACE platform supports some form of threading.
+#if defined (ACE_HAS_THREADS) 
 
 class ACE_Export ACE_Thread_Mutex
   // = TITLE

@@ -15,7 +15,7 @@ static char* request_strings [] =
 static int total = 2;
 
 int
-main()
+main ()
 {
   int index = 0;
   HTTP_Request request;

@@ -16,7 +16,7 @@
 //      command line arguments are needed to run the test.
 //
 // = AUTHOR
-//    Douglas C. Schmidt and Prashant Jain
+//    Douglas C. Schmidt, Prashant Jain, and Darrell Brunsch
 // 
 // ============================================================================
 
@@ -45,7 +45,7 @@ randomize_array (int array[], size_t size)
 }
 
 // Number of iterations for the performance tests.
-static int max_iterations =  ACE_DEFAULT_TIMERS * 100 ;
+static int max_iterations = ACE_DEFAULT_TIMERS * 100;
 
 // Keep track of the timer ids that were assigned to us.
 static int *timer_ids = 0;
@@ -283,16 +283,16 @@ main (int argc, char *argv[])
   if (argc > 1)
     max_iterations = ACE_OS::atoi (argv[1]);
 
+  // = Perform initializations.
+
   // Preallocate memory.
   ACE_NEW_RETURN (timer_queues[0].queue_,
 		  ACE_Timer_Heap (ACE_DEFAULT_TIMERS, 1),
-//		  ACE_Timer_Heap (max_iterations, 1),
 		  -1);
 
   // Don't preallocate memory.
   ACE_NEW_RETURN (timer_queues[1].queue_,
 		  ACE_Timer_Heap,
-//		  ACE_Timer_Heap (max_iterations),
 		  -1);
 
   // Preallocate memory.
