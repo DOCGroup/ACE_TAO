@@ -1,5 +1,11 @@
 Sun Jul  4 12:34:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Timer_Heap_T.cpp: Reformatted this code to conform to 
+	  the ACE programming guidelines.
+	
+	* ace/Timer_Heap_T.cpp (schedule): Replaced an ad hoc check for
+	  allocator failure with the ACE_ALLOCATOR_RETURN macro.
+
 	* ace/RB_Tree.cpp: Modified Carlo's change so that we add an
 	  extra set of parens rather than using a new macro.  This is
  	  consistent with how we deal with this problem in other parts of
