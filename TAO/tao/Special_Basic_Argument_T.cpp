@@ -5,16 +5,13 @@
 
 #include "tao/Special_Basic_Argument_T.h"
 
+#if !defined (__ACE_INLINE__)
+#include "tao/Special_Basic_Argument_T.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID (tao,
            Special_Basic_Argument_T,
            "$Id$")
-
-template<typename S, typename to_S, typename from_S>
-TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::In_Special_Basic_Argument_T (
-     S const & x
-  )
-  : x_ (x)
-{}
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
@@ -35,18 +32,14 @@ TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_param (
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
-TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_replace (CORBA::Any & any)
+TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_replace (
+    CORBA::Any & any
+  )
 {
   return any >>= to_S (ACE_const_cast (S &, this->x_));
 }
 
 // ===========================================================
-
-template<typename S, typename to_S, typename from_S>
-TAO::Inout_Special_Basic_Argument_T<S,to_S,from_S>::
-Inout_Special_Basic_Argument_T (S & x)
-  : x_ (x)
-{}
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
@@ -78,18 +71,14 @@ TAO::Inout_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_param (
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
-TAO::Inout_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_replace (CORBA::Any & any)
+TAO::Inout_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_replace (
+    CORBA::Any & any
+  )
 {
   return any >>= to_S (this->x_);
 }
 
 // ==============================================================
-
-template<typename S, typename to_S, typename from_S>
-TAO::Out_Special_Basic_Argument_T<S,to_S,from_S>::
-Out_Special_Basic_Argument_T (S & x)
-  : x_ (x)
-{}
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
@@ -101,12 +90,6 @@ TAO::Out_Special_Basic_Argument_T<S,to_S,from_S>::demarshal (
 }
 
 // ============================================================
-
-template<typename S, typename to_S, typename from_S>
-TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::
-Ret_Special_Basic_Argument_T (void)
-{
-}
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
@@ -128,31 +111,14 @@ TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_result (
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
-TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_replace (CORBA::Any & any)
+TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_replace (
+    CORBA::Any & any
+  )
 {
   return any >>= to_S (this->x_);
 }
 
-template<typename S, typename to_S, typename from_S>
-S
-TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::excp (void)
-{
-  return this->x_;
-}
-
-template<typename S, typename to_S, typename from_S>
-S
-TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::retn (void)
-{
-  return this->x_;
-}
-
 // ============================================================
-
-template<typename S, typename to_S, typename from_S>
-TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::
-In_Special_Basic_SArgument_T (void)
-{}
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
@@ -175,24 +141,14 @@ TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_param (
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
-TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_replace (CORBA::Any & any)
+TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_replace (
+    CORBA::Any & any
+  )
 {
   return any >>= to_S (this->x_);
 }
 
-template<typename S, typename to_S, typename from_S>
-S
-TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::arg (void) const
-{
-  return this->x_;
-}
-
 // ===========================================================
-
-template<typename S, typename to_S, typename from_S>
-TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S>::
-Inout_Special_Basic_SArgument_T (void)
-{}
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
@@ -224,24 +180,14 @@ TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_param (
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
-TAO::Inout_Special_Basic_SArgument_T <S,to_S,from_S>::interceptor_replace (CORBA::Any & any)
+TAO::Inout_Special_Basic_SArgument_T <S,to_S,from_S>::interceptor_replace (
+    CORBA::Any & any
+  )
 {
   return any >>= to_S (this->x_);
 }
 
-template<typename S, typename to_S, typename from_S>
-S &
-TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S>::arg (void)
-{
-  return this->x_;
-}
-
 // ==============================================================
-
-template<typename S, typename to_S, typename from_S>
-TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S>::
-Out_Special_Basic_SArgument_T (void)
-{}
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
@@ -252,20 +198,7 @@ TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S>::marshal (
   return cdr << from_S (this->x_);
 }
 
-template<typename S, typename to_S, typename from_S>
-S &
-TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S>::arg (void)
-{
-  return this->x_;
-}
-
 // ==============================================================
-
-template<typename S, typename to_S, typename from_S>
-TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::
-Ret_Special_Basic_SArgument_T (void)
-{
-}
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
@@ -287,16 +220,11 @@ TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_result (
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
-TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_replace (CORBA::Any & any)
+TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_replace (
+    CORBA::Any & any
+  )
 {
   return any >>= to_S (this->x_);
-}
-
-template<typename S, typename to_S, typename from_S>
-S &
-TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::arg (void)
-{
-  return this->x_;
 }
 
 #endif /* TAO_SPECIAL_BASIC_ARGUMENT_T_C */

@@ -2104,6 +2104,14 @@ SOURCE=.\Base_Transport_Property.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_Argument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.i
 # End Source File
 # Begin Source File
@@ -2229,6 +2237,14 @@ SOURCE=.\Fault_Tolerance_Service.i
 # Begin Source File
 
 SOURCE=.\FILE_Parser.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Array_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_Argument_T.inl
 # End Source File
 # Begin Source File
 
@@ -2420,6 +2436,10 @@ SOURCE=.\object.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_Argument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Object_KeyC.i
 # End Source File
 # Begin Source File
@@ -2568,6 +2588,10 @@ SOURCE=.\ServicesC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Special_Basic_Argument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\StringSeqC.i
 # End Source File
 # Begin Source File
@@ -2645,6 +2669,18 @@ SOURCE=.\Transport_Descriptor_Interface.inl
 # Begin Source File
 
 SOURCE=.\typecode.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_Argument_T.inl
 # End Source File
 # Begin Source File
 
