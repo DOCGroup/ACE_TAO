@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableInterceptorC.h"
+#include "ServerRequestInterceptorC.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
@@ -55,21 +55,23 @@
  * See the README file for test details.
  */
 class Server_Request_Interceptor
-  : public virtual PortableInterceptor::ServerRequestInterceptor,
+  : public virtual ForwardRequestTest::ServerRequestInterceptor,
     public virtual TAO_Local_RefCounted_Object
 {
 public:
 
-  /// Constructorl
+  /// Constructor.
   Server_Request_Interceptor (void);
 
   /// Destructor.
   ~Server_Request_Interceptor (void);
 
   /// Set the references to which requests will be forwarded.
-  void forward_references (CORBA::Object_ptr obj1,
-                           CORBA::Object_ptr obj2,
-                           CORBA::Environment &ACE_TRY_ENV);
+  virtual void forward_references (CORBA::Object_ptr obj1,
+                                   CORBA::Object_ptr obj2,
+                                   CORBA::Environment &ACE_TRY_ENV =
+                                     TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -82,6 +84,9 @@ public:
   //@{
   /// Return the name of this ServerRequestinterceptor.
   virtual char * name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_request_service_contexts (

@@ -33,6 +33,9 @@ public:
   test_i (CORBA::Short num,
           CORBA::ORB_ptr orb);
 
+  /// Destructor.
+  ~test_i (void);
+
   /// Return the number assigned to this object.
   virtual CORBA::Short number (CORBA::Environment &ACE_TRY_ENV =
                                  TAO_default_environment ())

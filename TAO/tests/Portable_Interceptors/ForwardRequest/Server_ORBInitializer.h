@@ -61,13 +61,13 @@ public:
 
   /// Return the created server request interceptor.  Only valid after
   /// post_init(), i.e. ORB_init(), has been called.
-  Server_Request_Interceptor *server_interceptor (void);
+  PortableInterceptor::ServerRequestInterceptor_ptr server_interceptor (void);
 
 private:
 
   /// Pointer to the server request interceptor.  ORB is responsible
   /// for storage.
-  Server_Request_Interceptor *server_interceptor_;
+  PortableInterceptor::ServerRequestInterceptor_var server_interceptor_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

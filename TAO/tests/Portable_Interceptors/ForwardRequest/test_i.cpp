@@ -13,6 +13,12 @@ test_i::test_i (CORBA::Short num,
 {
 }
 
+test_i::~test_i (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "Servant destructor invoked.\n"));
+}
+
 CORBA::Short
 test_i::number (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))

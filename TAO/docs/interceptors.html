@@ -339,14 +339,23 @@ module PortableInterceptor
       mechanism since they can't be stringified and registered via
       <CODE>-ORBInitRef</CODE> ORB option.
   <li>Basically, all <CODE>ORBInitInfo</CODE> methods have been
-      implemented except <CODE>allocate_slot_id</CODE> and
-      <CODE>codec_factory</CODE>.
+      implemented except <CODE>allocate_slot_id</CODE>.
   <li>Implemented most of the remaining
       <CODE>ClientRequestInfo</CODE>, <CODE>ServerRequestInfo</CODE>
       and <CODE>IORInfo</CODE> methods.
   <li>Added support for the
       <CODE>PortableInterceptor::ForwardRequest</CODE>
       exception on both the client and server sides.
+  <li>Implemented the <CODE>IOP::CodecFactory</CODE> and the CDR
+      encapsulation <CODE>IOP::Codec</CODE> objects.  The CDR
+      encapsulation <CODE>Codec</CODE> is useful for embedding data in
+      an <CODE>octet</CODE> sequence that conforms to the CDR
+      encapsulation rules.  For example, it could be used to marshal
+      data into the <CODE>octet</CODE> sequence that is part of an
+      <CODE>IOP::ServiceContext</CODE> or an
+      <CODE>IOP::TaggedComponent</CODE>.  This means that it could
+      compliment the IOR interceptor support, and the service context
+      manipulation support found in request interceptors.
 </ul>
 
 <hr><P>
@@ -358,15 +367,6 @@ module PortableInterceptor
       chain.
   <li>Implement the <CODE>PortableInterceptor::Current</CODE>
       interface.  Useful for passing data between interceptors.
-  <li>Implement the <CODE>CodecFactory</CODE> interface, and an
-      accompanying CDR encapsulation <CODE>Codec</CODE>.
-      Implementations of each are almost ready and should be available
-      soon.  The CDR encapsulation <CODE>Codec</CODE> is useful for
-      embedding data in an <CODE>octet</CODE> sequence that conforms
-      to the CDR encapsulation rules.  For example, it could be used
-      to create the <CODE>octet</CODE> sequence that is part of an
-      <CODE>IOP::TaggedComponent</CODE>.  This means that it could
-      compliment the IOR interceptor support.
   <li>The <CODE>send_poll</CODE> request interception point
       implementation will most likely be deferred until TII is
       supported in TAO.
@@ -385,12 +385,10 @@ module PortableInterceptor
 <hr><P>
 <H3><a name="ref">References</a></H3>
 <UL>
-  <LI><p><a href="ftp://ftp.omg.org/pub/docs/orbos/99-12-02.pdf">
-      99-12-02</a> Portable Interceptors -- Joint Revised
-      Submission.</p>
-  <LI><p><a href="ftp://ftp.omg.org/pub/docs/orbos/99-12-14.zip">
-      99-12-14</a> Portable Interceptors related IDL files (in zip
-      format.) </p>
+  <LI><A
+HREF="ftp://ftp.omg.org/pub/docs/ptc/00-04-05.pdf">ptc/2000-04-05</A>
+Portable Interceptors -- final published draft</LI>
+
 </UL>
 <hr>
 

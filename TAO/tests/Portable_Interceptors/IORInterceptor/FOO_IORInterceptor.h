@@ -59,6 +59,10 @@ public:
   virtual char * name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Cleanup resources acquired by this IORInterceptor.
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   /// Add the tagged components to the IOR.
   virtual void establish_components (
       PortableInterceptor::IORInfo_ptr info

@@ -30,6 +30,11 @@ how to run the following tests:
           This directory contains several tests for the CDR stream
           class.
 
+        . Codec
+
+          This test verifies that CodecFactory and CDR encapsulation
+          Codec support is working properly.
+
         . Collocation
 
           This program performs a series of sanity check on the
@@ -46,7 +51,7 @@ how to run the following tests:
           A simple test for the DSI/DII gateway support. TAO can
           optimize some demarshaling/marshaling and data copying in
           the implementation of DSI/DII based gateways.
-          
+
         . DynAny_Test
 
           Tests TAO's DynAny feature, which allows composition and
@@ -64,7 +69,7 @@ how to run the following tests:
           This tests the methods work_pending() and perform_work()
           methods of the orb.
 
-        . Explosed_Policies          
+        . Exposed_Policies          
           
           This directory contains a test case used to verify that the
           client exposed policies get embedded correctly in the IOR
