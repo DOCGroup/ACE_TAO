@@ -723,7 +723,7 @@ ACE_Process_Options::~ACE_Process_Options (void)
     }
 #endif /* ACE_WIN32 */
 
-  delete command_line_buf_;
+  delete [] command_line_buf_;
 }
 
 int
