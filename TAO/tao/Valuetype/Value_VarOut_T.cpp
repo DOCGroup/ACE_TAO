@@ -6,7 +6,6 @@
 #include "tao/Valuetype/Value_VarOut_T.h"
 #include "tao/Valuetype/Value_CORBA_methods.h"
 
-
 ACE_RCSID (Valuetype,
            Value_VarOut_T,
            "$Id$")

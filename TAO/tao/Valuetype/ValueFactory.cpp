@@ -1,12 +1,7 @@
 #include "ValueFactory.h"
 #include "ace/Guard_T.h"
 
-#if !defined (__ACE_INLINE__)
-# include "ValueFactory.inl"
-#endif /* ! __ACE_INLINE__ */
-
-
-ACE_RCSID (tao,
+ACE_RCSID (Valuetype,
            ValueFactory,
            "$Id$")
 
