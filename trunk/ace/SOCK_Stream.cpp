@@ -22,8 +22,7 @@ ACE_SOCK_Stream::close (void)
   // do this on UNIX since it doesn't have this "feature".  Moreover,
   // this will cause subtle problems on UNIX due to the way that
   // fork() works.
-  if (this->get_handle () != ACE_INVALID_HANDLE)
-    this->close_writer ();
+  this->close_writer ();
 #endif /* ACE_WIN32 */
   // Close down the socket.
   return ACE_SOCK::close ();
