@@ -1,3 +1,15 @@
+Wed Sep 27 18:54:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+
+	  Added code generation for the const version of the
+	  [] operator for the sequence _var classes. According
+	  to H & V, page 212 and 214, both versions must be
+	  there for sequences. We were generating only the 
+	  non-const version. Thanks to Michael Rinne 
+	  <Michael.Rinne@ZN-AG.de> for reporting this.
+
 Wed Sep 27 17:44:12 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/PortableServer/Strategized_Object_Proxy_Broker.h:
