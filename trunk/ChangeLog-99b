@@ -1,5 +1,5 @@
 Sun May 23 11:33:07 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>b
-			
+
 	 Changes for the following enhancement in the Proactor
 	 implementation. 
 	 Enhanced the semantics of the <end_event_loop>, so that when it
@@ -31,6 +31,11 @@ Sun May 23 11:33:07 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>b
 	* ace/WIN32_Proactor.h
 		
 	Changes for posting wakeup completions.			
+
+	* examples/Reactor/Proactor/test_end_event_loop.cpp:
+	* examples/Reactor/Proactor/Makefile: 
+
+	Test file the <end_event_loop> enhancement.
 	
 Sat May 22 16:57:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
