@@ -4,7 +4,7 @@
 #include "Notification_Receiver_i.h"
 #include "Notifier_i.h"
 
-#if defined (ACE_HAS_ORBIX)
+#if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
 class Notification_Receiver_Entry
   // = TITLE

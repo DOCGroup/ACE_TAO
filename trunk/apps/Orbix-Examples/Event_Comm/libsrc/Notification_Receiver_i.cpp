@@ -4,7 +4,7 @@
 #include "ace/Service_Config.h"
 #include "Notification_Receiver_i.h"
 
-#if defined (ACE_HAS_ORBIX)
+#if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
 Notification_Receiver_i::Notification_Receiver_i (void)
 {
@@ -33,7 +33,7 @@ Notification_Receiver_i::disconnect (const char *reason,
 				     CORBA::Environment &IT_env)
 {
   ACE_DEBUG ((LM_DEBUG, "**** got disconnected due to %s\n", reason));
-  ACE_Service_Config::end_reactor_event_loop ();
+  ACE_Reactor::end_event_loop();
 }
 
 #endif /* ACE_HAS_ORBIX */

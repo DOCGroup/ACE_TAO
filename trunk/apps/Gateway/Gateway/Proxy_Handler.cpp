@@ -164,7 +164,7 @@ Proxy_Handler::open (void *)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enable"), -1);
 
   // Register ourselves to receive input events.
-  else if (ACE_Service_Config::reactor ()->register_handler 
+  else if (ACE_Reactor::instance()->register_handler 
       (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
   else

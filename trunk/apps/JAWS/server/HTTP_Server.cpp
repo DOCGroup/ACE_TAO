@@ -10,8 +10,6 @@
 //DONE// James, please make sure that you don't have "free floating"
 //DONE// enums since they will inevitably cause portability problems.
 
-static int JAWS_THREAD_FLAGS = 0;
-
 class HTTP_Server_Anchor
 {
 public:
@@ -35,7 +33,7 @@ HTTP_Server::parse_args (int argc,
   int c;
   int thr_strategy = 0;
   int io_strategy = 0;
-  const char *prog = argc > 0 ? argv[0] : "Sock_Server";
+  char *prog = argc > 0 ? argv[0] : "Sock_Server";
 
   // Set some defaults
   this->port_ = 0;
@@ -73,15 +71,14 @@ HTTP_Server::parse_args (int argc,
 	break;
       case 'f':
         if (ACE_OS::strcmp (get_opt.optarg, "THR_BOUND") == 0)
-          JAWS_THREAD_FLAGS ^= THR_BOUND;
+          {
+          }
         else if (ACE_OS::strcmp (get_opt.optarg, "THR_DAEMON") == 0)
-          JAWS_THREAD_FLAGS ^= THR_DAEMON;
+          {
+          }
         else if (ACE_OS::strcmp (get_opt.optarg, "THR_DETACHED") == 0)
-          JAWS_THREAD_FLAGS ^= THR_DETACHED;
-        else if (ACE_OS::strcmp (get_opt.optarg, "THR_NEW_LWP") == 0)
-          JAWS_THREAD_FLAGS ^= THR_NEW_LWP;
-
-        break;
+          {
+          }
       case 'i':
 	// SYNCH  -> synchronous I/O
 	// ASYNCH -> asynchronous I/O
@@ -177,7 +174,7 @@ Synch_Thread_Pool_Task::open (void *args)
 {
   ACE_UNUSED_ARG (args);
 
-  if (this->activate (JAWS_THREAD_FLAGS) == -1) 
+  if (this->activate (THR_DETACHED | THR_NEW_LWP) == -1) 
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Synch_Thread_Pool_Task::open"),
                       -1);
 
@@ -241,6 +238,7 @@ HTTP_Server::thread_per_request (void)
                                                   this->tm_),
                       -1);
 
+
       if (t->open (&grp_id) != 0) 
 	ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n", "Thread_Per_Request_Task::open"),
@@ -254,7 +252,6 @@ HTTP_Server::thread_per_request (void)
       // This works because each task has only one thread.
       while (this->tm_.num_tasks_in_group (grp_id) > this->threads_)
 	this->tm_.wait (&wait_time);
-
     }
 
   // This stinks, because I am afraid that if I remove this line, some
@@ -277,7 +274,6 @@ Thread_Per_Request_Task::Thread_Per_Request_Task (ACE_HANDLE handle,
 int
 Thread_Per_Request_Task::open (void *args)
 {
-  return this->svc ();
   int status = -1;
   int *grp_id = &status;
 
@@ -285,9 +281,9 @@ Thread_Per_Request_Task::open (void *args)
     grp_id = (int *) args;
 
   if (*grp_id == -1)
-    status = *grp_id = this->activate (JAWS_THREAD_FLAGS);
+    status = *grp_id = this->activate (THR_DETACHED | THR_NEW_LWP);
   else
-    status = this->activate (JAWS_THREAD_FLAGS, 1, 0, -1, *grp_id, 0);
+    status = this->activate (THR_DETACHED | THR_NEW_LWP, 1, 0, -1, *grp_id, 0);
 
   if (status == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Per_Request_Task::open"),
@@ -313,8 +309,7 @@ Thread_Per_Request_Task::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
 	      " (%t) Thread_Per_Request_Task::svc, dying\n"));
-  // delete this;
-  // ACE_OS::thr_exit ();
+  delete this;
   return 0;
 }
 
@@ -355,7 +350,7 @@ HTTP_Server::asynch_thread_pool (void)
       // Register threads with the proactor and thread manager.
       Asynch_Thread_Pool_Task *t;
       ACE_NEW_RETURN (t,
-		      Asynch_Thread_Pool_Task (*ACE_Service_Config::proactor (),
+		      Asynch_Thread_Pool_Task (*ACE_Proactor::instance(),
 					       this->tm_),
 		      -1);
       if (t->open () != 0) 
@@ -383,7 +378,7 @@ Asynch_Thread_Pool_Task::Asynch_Thread_Pool_Task (ACE_Proactor &proactor,
 int
 Asynch_Thread_Pool_Task::open (void *args)
 {
-  if (this->activate (JAWS_THREAD_FLAGS) == -1) 
+  if (this->activate () == -1) 
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Asynch_Thread_Pool_Task::open"),
                       -1);
 

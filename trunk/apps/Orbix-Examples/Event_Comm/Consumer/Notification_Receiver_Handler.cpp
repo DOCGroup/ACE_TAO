@@ -2,9 +2,9 @@
 
 #include "Notification_Receiver_Handler.h"
 
-#if defined (ACE_HAS_ORBIX)
+#if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
-#if defined (ACE_HAS_MT_ORBIX)
+#if defined (ACE_HAS_MT_ORBIX) && (ACE_HAS_MT_ORBIX != 0)
 typedef ACE_MT_CORBA_Handler CORBA_HANDLER;
 #else
 typedef ACE_ST_CORBA_Handler CORBA_HANDLER;

@@ -3,7 +3,7 @@
 
 #include "Notification_Receiver_Handler.h"
 
-#if defined (ACE_HAS_ORBIX)
+#if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
 Input_Handler::~Input_Handler (void)
 {
@@ -52,7 +52,7 @@ Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
       } ENDTRY;
     }
   // Don't execute a callback here otherwise we'll recurse indefinitely!
-  if (ACE_Service_Config::reactor ()->remove_handler 
+  if (ACE_Reactor::instance()->remove_handler 
       (this, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "remove_handler"));
 
@@ -67,7 +67,7 @@ Input_Handler::Input_Handler (Notification_Receiver_Handler *ch,
     handle_ (handle),
     consumer_initiated_shutdown_ (0)
 {
-  if (ACE_Service_Config::reactor ()->register_handler 
+  if (ACE_Reactor::instance()->register_handler 
       (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR ((LM_ERROR, "Input_Handler::Input_Handler\n"));
 }
@@ -108,7 +108,7 @@ Input_Handler::handle_input (ACE_HANDLE h)
       this->consumer_initiated_shutdown (1);
 
       // Tell the main event loop to shutdown. 
-      ACE_Service_Config::end_reactor_event_loop ();
+      ACE_Reactor::end_event_loop();
     }
   else
     {
