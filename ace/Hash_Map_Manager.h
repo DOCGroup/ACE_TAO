@@ -223,6 +223,8 @@ private:
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *sentinel_;
   // Sentinel node that improves lookup time.
+  EXT_ID sentinel_ext_id_fakenull_;
+  // Cleanup sentinel when it is through.
 };
 
 template <class EXT_ID, class INT_ID, class LOCK>

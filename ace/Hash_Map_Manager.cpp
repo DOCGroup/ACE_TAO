@@ -220,6 +220,8 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::bind_i (const EXT_ID &ext_id,
        temp = temp->next_)
     continue;
 
+  this->sentinel_->ext_id_ = sentinel_ext_id_fakenull_;
+
   if (temp == this->sentinel_) 
     {
       void *ptr;
@@ -259,6 +261,8 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::trybind_i (const EXT_ID &ext_id,
        this->equal (temp->ext_id_, ext_id) == 0;
        temp = temp->next_)
     continue;
+
+  this->sentinel_->ext_id_ = sentinel_ext_id_fakenull_;
 
   if (temp == this->sentinel_) 
     {
@@ -304,6 +308,8 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind_i (const EXT_ID &ext_id,
        this->equal (temp->ext_id_, ext_id) == 0;
        temp = temp->next_)
     prev = temp;
+
+  this->sentinel_->ext_id_ = sentinel_ext_id_fakenull_;
 
   if (temp == this->sentinel_) 
     {
@@ -360,6 +366,8 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id,
        this->equal (temp->ext_id_, ext_id) == 0;
        temp = temp->next_)
     continue;
+
+  this->sentinel_->ext_id_ = sentinel_ext_id_fakenull_;
 
   if (temp != this->sentinel_)
     {
