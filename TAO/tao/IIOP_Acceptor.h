@@ -62,8 +62,10 @@ public:
   typedef TAO_Concurrency_Strategy<TAO_IIOP_Connection_Handler> TAO_IIOP_CONCURRENCY_STRATEGY;
   typedef TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_ACCEPT_STRATEGY;
 
-  // = The TAO_Acceptor methods, check the documentation in
-  //   Pluggable.h for details.
+  /**
+   * The TAO_Acceptor methods, check the documentation in
+   * Pluggable.h for details.
+   */
   virtual int open (TAO_ORB_Core *orb_core,
                     int version_major,
                     int version_minor,
@@ -82,10 +84,25 @@ public:
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key);
 
-  /// Set the host name for the given addr.
+  /**
+   * Set the host name for the given addr.
+   * A hostname may be forced by using specified_hostname.  This
+   * is useful if the given address corresponds to more than one
+   * hostname and the desired one cannot be determined in any
+   * other way.
+   */
   int hostname (TAO_ORB_Core *orb_core,
                 ACE_INET_Addr &addr,
-                char *&host);
+                char *&host,
+                const char *specified_hostname = 0);
+
+  /**
+   * Set the host name for the given address using the dotted decimal
+   * format.
+   */
+  int dotted_decimal_address (ACE_INET_Addr &addr,
+                              char *&host);
+
 protected:
 
   /**
