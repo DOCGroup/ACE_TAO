@@ -24,7 +24,7 @@ ACE_OS::creat (const ACE_TCHAR *filename, mode_t mode)
   ACE_UNUSED_ARG (mode);
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::creat (filename, mode),
+  ACE_OSCALL_RETURN (::creat (ACE_TEXT_ALWAYS_CHAR (filename), mode),
                      ACE_HANDLE, ACE_INVALID_HANDLE);
 #endif /* ACE_WIN32 */
 }
@@ -137,7 +137,7 @@ ACE_OS::filesize (const ACE_TCHAR *filename)
 }
 
 ACE_INLINE int
-ACE_OS::lstat (const ACE_TCHAR *file, ACE_stat *stp)
+ACE_OS::lstat (const char *file, ACE_stat *stp)
 {
   ACE_OS_TRACE ("ACE_OS::lstat");
 # if defined (ACE_LACKS_LSTAT)
@@ -150,6 +150,19 @@ ACE_OS::lstat (const ACE_TCHAR *file, ACE_stat *stp)
   ACE_OSCALL_RETURN (::lstat (file, stp), int, -1);
 # endif /* ACE_LACKS_LSTAT */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::lstat (const wchar_t *file, ACE_stat *stp)
+{
+  ACE_OS_TRACE ("ACE_OS::lstat");
+# if defined (ACE_LACKS_LSTAT)
+  return ACE_OS::stat (file, stp);
+# else
+  return ACE_OS::lstat (ACE_Wide_To_Ascii (file).char_rep (), stp);
+# endif /* ACE_LACKS_LSTAT */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::mkdir (const char *path, mode_t mode)
@@ -241,7 +254,7 @@ ACE_OS::mkfifo (const ACE_TCHAR *file, mode_t mode)
   ACE_UNUSED_ARG (mode);
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::mkfifo (file, mode), int, -1);
+  ACE_OSCALL_RETURN (::mkfifo (ACE_TEXT_ALWAYS_CHAR (file), mode), int, -1);
 #endif /* ACE_LACKS_MKFIFO */
 }
 

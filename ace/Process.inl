@@ -247,7 +247,7 @@ ACE_INLINE int
 ACE_Process_Options::setreugid (const ACE_TCHAR* user)
 {
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
-  struct passwd *ent = ACE_OS::getpwnam (user);
+  struct passwd *ent = ACE_OS::getpwnam (ACE_TEXT_ALWAYS_CHAR (user));
 
   if (ent != 0)
     {

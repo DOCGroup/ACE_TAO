@@ -76,9 +76,16 @@ spawn_child (const ACE_TCHAR *argv0,
              ACE_Process_Manager &mgr,
              int sleep_time = 0)
 {
+#if defined (ACE_WIN32)
+const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" %s %d");
+#elif !defined (ACE_USES_WCHAR)
+const ACE_TCHAR *cmdline_format = ACE_TEXT("%s %s %d");
+#else
+const ACE_TCHAR *cmdline_format = ACE_TEXT("%ls %ls %d");
+#endif
   ACE_Process_Options opts;
 
-  opts.command_line (ACE_TEXT("%s %s %d"),
+  opts.command_line (cmdline_format,
                      argv0,
                      debug_test ? ACE_TEXT ("-d") : ACE_TEXT (""),
                      sleep_time);

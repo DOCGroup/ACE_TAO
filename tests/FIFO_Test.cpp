@@ -36,8 +36,7 @@ ACE_RCSID(tests, SOCK_Test, "$Id$")
 
 #if !defined (ACE_WIN32)
 
-static const ACE_TCHAR ACE_ALPHABET[] =
-  ACE_TEXT ("abcdefghijklmnopqrstuvwxyz");
+static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 // This length is used for the "big buffer" send/receive.
 static const size_t big_size = (BUFSIZ * 4);
@@ -225,7 +224,7 @@ test_fifo_msg (void)
   int status = 0;    // Test status; innocent until proven guilty.
 
 #if !defined (ACE_LACKS_FORK)
-  switch (ACE_OS::fork ("child"))
+  switch (ACE_OS::fork (ACE_TEXT ("child")))
     {
     case -1:
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("fork failed")));

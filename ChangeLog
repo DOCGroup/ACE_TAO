@@ -1,3 +1,211 @@
+Tue Aug 24 14:07:22 2004  Steve Huston  <shuston@riverace.com>
+
+	Changes to improve the functionality of wide-char operation on
+	non-Windows platforms:
+
+	* ace/ace_wchar.h: If ACE_HAS_XPG4_MULTIBYTE_CHAR is defined, but not
+	  ACE_HAS_WCHAR, set ACE_HAS_WCHAR.
+
+        * ace/ACE.cpp (timestamp): Use ACE_TCHAR for temp char arrays,
+          not char. If ACE_USES_WCHAR on non-Windows, use %ls for printf
+	  strings, not %s.
+
+        * ace/ARGV.cpp (constructor): Replaced most of the body with a call
+          to ACE_OS::argv_to_string().
+
+	* ace/Basic_Types.h:
+	* ace/Cleanup.h:
+	* ace/Object_Manager_Base.h:
+	* ace/OS_NS_string.h:
+	* ace/os_include/os_float.h:
+	* ace/os_include/os_inttypes.h:
+	* ace/os_include/os_limits.h:
+	* ace/os_include/os_signal.h:
+	* ace/os_include/os_stdint.h:
+	* ace/os_include/os_stdlib.h:
+	* ace/os_include/os_time.h:
+	* ace/os_include/os_ucontext.h:
+	* ace/os_include/os_unistd.h:
+	* ace/os_include/sys/os_ipc.h:
+	* ace/os_include/sys/os_mman.h:
+	* ace/os_include/sys/os_msg.h:
+	* ace/os_include/sys/os_resource.h:
+	* ace/os_include/sys/os_select.h:
+	* ace/os_include/sys/os_sem.h:
+	* ace/os_include/sys/os_shm.h:
+	* ace/os_include/sys/os_socket.h:
+	* ace/os_include/sys/os_stat.h:
+	* ace/os_include/sys/os_statvfs.h:
+	* ace/os_include/sys/os_timeb.h:
+	* ace/os_include/sys/os_time.h:
+	* ace/os_include/sys/os_times.h:
+	* ace/os_include/sys/os_types.h:
+	* ace/os_include/sys/os_uio.h:
+	* ace/os_include/sys/os_un.h:
+	* ace/os_include/sys/os_utsname.h:
+	* ace/os_include/sys/os_wait.h:	#include "config-lite.h" rather than
+	  "config-all.h". Only need the user config.h and "lite" things.
+	  Including config-all.h introduces a circular include
+	  dependency from OS_main.h.
+
+	* ace/Default_Constants.h: Add ACE_LIB_TEXT() to ACE_DEFAULT_SVC_CONF
+	  strings.
+
+	* ace/Env_Value_T.i (fetch_value): For non-Win32, force the env var
+	  name to narrow-char then convert the result back to ACE_TCHAR.
+
+	* ace/FILE_Connector.cpp (connect): When generating a temp name,
+	  convert it to ACE_TCHAR for ACE_FILE_Addr.
+
+        * ace/Get_Opt.cpp (constructor): When checking for POSIXLY_CORRECT,
+          must always use char *, not ACE_TCHAR*, on non-Win32.
+
+	* ace/High_Res_Timer.cpp: Added ACE_LIB_TEXT to naked string literals.
+	  Use 'char' when it must be narrow char; ACE_TCHAR when it has to
+	  change based on ACE_USES_WCHAR.
+
+	* ace/Lib_Find.cpp (ldfind, get_temp_dir): Environment variables on
+	  non-Windows are always narrow char, so account for that.
+
+        * ace/Log_Msg_UNIX_Syslog.cpp: Operate internally with all narrow
+          chars because the underlying OS APIs are only narrow char.
+
+	* ace/Log_Msg.cpp (log): For 'D', 'M', 'm', 'N', and 'p', use the
+	  proper 's' format code for the platform/char width. Similar to
+	  Log_Record.cpp below.
+
+	* ace/Log_Msg.h (ACE_ASSERT): Convert __FILE__ name to proper char
+	  width when necessary.
+
+	* ace/Log_Record.cpp: When formatting log strings, have to change
+	  printf formats if using wide chars on non-Windows. Wide-char
+	  strings are printed with %ls, whereas Windows uses %s for
+	  wide-char strings if the format is wide-char.
+
+	* ace/Memory_Pool.cpp (ctor): Change backing_store_name to narrow
+	  char when needed to pass it to sscanf().
+
+	* ace/Object_Manager_Base.cpp (print_error_message): Add
+	  ACE_TEXT_ALWAYS_CHAR to the message arg to convert on wide-char
+	  builds.
+
+	* ace/OS_main.h: For ACE_MAIN on non-Windows ACE_USES_WCHAR platforms,
+	  convert the argv to wchar_t, and pass the wide-char strings to the
+	  ACE_TCHAR[]-expecting real main program.
+
+	* ace/OS_NS_dirent.inl (opendir): Moved the const_cast-needing
+	  VxWorks part to its own #elif section. Added ACE_TEXT_ALWAYS_CHAR
+	  to the other invocation of ::opendir().
+
+	* ace/OS_NS_dlfcn.inl (dlerror, dlopen, dlsym): Corrected use of
+	  narrow/wide-char.
+
+	* ace/OS_NS_stdio.inl (cuserid, fdopen, freopen): Don't use
+	  ACE_TCHAR when a char is always needed.
+	  (fgets, fputs, perror, puts): Changed to have both narrow- and
+	  wide-char variants.
+	  (checkUnicodeFormat): Use a platform-neutral 2-byte type to
+	  read 2 bytes. Need a non-Windows 'whence' arg for fseek().
+	  (vsprintf (wchar_t)): Added the non-Windows, XPG5 code for this to
+	  use the XPG5 vswprintf() when equippped.
+
+	* ace/OS_NS_stdlib.{h inl cpp}:
+	  (ACE_OS::mktemp() and mkstemp()): Changed to have both narrow-
+	  and wide-char variants for the !ACE_LACKS_MKTEMP case.
+	  Offering both for the ACE_LACKS_MKTEMP case is a low-return
+	  use of time since the wide-char variant will probably never be used.
+	  (strenvdup): Handle ACE_USES_WCHAR on non-Windows by converting
+	  back and forth to narrow-char.
+	  (system): On non-Windows, convert command line string to narrow-char.
+	  (getcwd): Changed to have both narrow- and wide-char variants.
+
+	* ace/OS_NS_sys_stat.inl (creat, mkfifo): For non-Windows, convert
+	  name to narrow-char when needed.
+	  (lstat): Change from a single ACE_TCHAR-based interface to both
+	  char* and wchar_t*.
+
+	* ace/OS_NS_time.inl (ctime, ctime_r): Corrected narrow/wide char
+	  usage.
+
+	* ace/OS_NS_unistd.inl (truncate): For non-Windows, convert the path
+	  to narrow-char when needed.
+	  (realpath): Changed to have both narrow- and wide-char variants.
+
+	* ace/OS_NS_unistd.{h inl cpp}:
+	  (rmdir): Changed to have both narrow- and wide-char variants.
+	  (argv_to_string): Handle narrow and wide-char environment variables.
+	  (fork_exec): Convert path and argv to narrow-char when needed.
+
+	* ace/Process.cpp (spawn): Convert argv, procname, env vars to narrow
+	  char for non-Windows wide-char builds.
+
+	* ace/Process.i (setreugid): Convert user name to narrow char for
+          getpwnam().
+
+	* ace/Process_Mutex.cpp (ctor): Don't convert name to ACE_TCHAR for
+	  ACE_SV_Semaphore case - it requires char*.
+
+	* ace/Process_Semaphore.cpp (ctor): Convert name to narrow char
+	  for ACE_SV_Semaphore_Complex case.
+
+	* ace/Sock_Connect.cpp (get_bcast_addr):
+	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): Host name needs to be
+	  converted to narrow-char for wide-char builds.
+
+	* ace/SOCK_Dgram_Mcast.cpp (make_multicast_ifaddr): Interface name
+	  needs to be converted to narrow-char for wide-char builds.
+
+	* ace/SV_Semaphore_Simple.{h,i,cpp}: Added wide-char versions of
+	  the named constructor and open() methods. They forward to the
+	  narrow-char versions.
+
+	* tests/Dirent_Test.cpp: Account for dirent's d_name is an ACE_TCHAR
+	  when ACE_LACKS_STRUCT_DIR and a char* otherwise.
+
+	* tests/FIFO_Test.cpp: Change ACE_ALPHABET to char[].
+
+	* tests/Proactor_Test.cpp: Change complete_message from ACE_TCHAR
+	  to char. This is easier to handle; as ACE_TCHAR, we'd need to
+	  correct all the message block pointer adjustments to take the
+	  charset width into account.
+
+	* tests/Log_Msg_Test.cpp:
+	* tests/MEM_Stream_Test.cpp:
+	* tests/Message_Queue_Test.cpp:
+	* tests/Pipe_Test.cpp:
+	* tests/Process_Manager_Test.cpp:
+	* tests/Process_Mutex_Test.cpp:
+	* tests/Process_Strategy_Test.cpp:
+	* tests/Signal_Test.cpp:
+	* tests/SOCK_Connector_Test.cpp:
+	* tests/SOCK_Dgram_Test.cpp:
+	* tests/SOCK_Send_Recv_Test.cpp:
+	* tests/SOCK_Test.cpp:
+	* tests/SV_Shared_Memory_Test.cpp: Char width correction.
+
+	* tests/Service_Config_Test.cpp:
+	* tests/Service_Config_Test.WCHAR_T.conf:
+	* tests/Service_Config_Test.WCHAR_T.conf.xml: Added WCHAR_T-coded
+	  versions of the test input file and changed the test to use
+	  them on non-Windows ACE_USES_WCHAR builds.
+
+	* tests/Test_Output.cpp (set_output): Handle env var and filepath
+	  building correctly even on wide-char non-Windows builds.
+
+	* ACEXML/common/XML_Types.h: typedef ACEXML_Char as ACE_TCHAR, else
+	  it doesn't match any char interfaces when wchar_t is not 2 bytes.
+
+	* ACEXML/parser/parser/Parser.cpp (parse_char_reference): Add the
+	  case where wide-char is 4 bytes.
+
+	Also brought in this fix:
+	Mon Mar  8 15:52:33 2004  Steve Huston  <shuston@riverace.com>
+
+        * ace/POSIX_Proactor.cpp: Comment out the signal setup; this should
+          not be necessary and, indeed, is erroneous, at least on Linux.
+          It's commented out instead of removed in case further testing on
+          other platforms determines that it is needed sometimes.
+
 Tue Aug 24 10:22:18 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-linux-common.h: Added ACE_HAS_SCANDIR and a new

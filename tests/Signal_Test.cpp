@@ -244,7 +244,7 @@ worker_parent (void *arg)
   // Store the parent's process id so we can pass it to the child
   // portably.  Also, pass the test number, as well.
   ACE_OS::sprintf (pid_str,
-                   "-p %ld -t %d",
+                   ACE_TEXT ("-p %ld -t %d"),
                    ACE_static_cast (long, parent_pid),
                    test_number);
 
@@ -370,9 +370,9 @@ run_test (ACE_THR_FUNC worker,
 // Parse the command-line arguments and set options.
 
 static void
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "i:chp:t:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("i:chp:t:"));
 
   int c;
 

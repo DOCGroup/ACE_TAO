@@ -55,14 +55,30 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
 
   for (int i = 0; argv[i] != 0; i++)
     {
-      ACE_TCHAR *temp = 0;
-
 #if !defined (ACE_LACKS_ENV)
       // Account for environment variables.
-      if (substitute_env_args
-          && (argv[i][0] == '$'
-              && (temp = ACE_OS::getenv (&argv[i][1])) != 0))
-        buf_len += ACE_OS::strlen (temp);
+      if (substitute_env_args && argv[i][0] == ACE_LIB_TEXT ('$'))
+        {
+#  if defined (ACE_WIN32) || !defined (ACE_HAS_WCHAR)
+          ACE_TCHAR *temp = 0;
+          // Win32 is the only platform with a wide-char ACE_OS::getenv().
+          if ((temp = ACE_OS::getenv (&argv[i][1])) != 0)
+            buf_len += ACE_OS::strlen (temp);
+          else
+            buf_len += ACE_OS::strlen (argv[i]);
+#  else
+          // This is an ACE_HAS_WCHAR platform and not ACE_WIN32.
+          // Convert the env variable name for getenv(), then add
+          // the length of the returned char *string. Later, when we
+          // actually use the returned env variable value, convert it
+          // as well.
+          char *ctemp = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (&argv[i][1]));
+          if (ctemp == 0)
+            buf_len += ACE_OS::strlen (argv[i]);
+          else
+            buf_len += ACE_OS::strlen (ctemp);
+#  endif /* ACE_WIN32 || !ACE_HAS_WCHAR */
+        }
       else
 #endif /* ACE_LACKS_ENV */
         buf_len += ACE_OS::strlen (argv[i]);
@@ -85,14 +101,29 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
 
   for (j = 0; argv[j] != 0; j++)
     {
-      ACE_TCHAR *temp = 0;
 
 #if !defined (ACE_LACKS_ENV)
       // Account for environment variables.
-      if (substitute_env_args
-      && (argv[j][0] == '$'
-              && (temp = ACE_OS::getenv (&argv[j][1])) != 0))
-        end = ACE_OS::strecpy (end, temp);
+      if (substitute_env_args && argv[j][0] == ACE_LIB_TEXT ('$'))
+        {
+#  if defined (ACE_WIN32) || !defined (ACE_HAS_WCHAR)
+          // Win32 is the only platform with a wide-char ACE_OS::getenv().
+          ACE_TCHAR *temp = ACE_OS::getenv (&argv[j][1]);
+          if (temp != 0)
+            end = ACE_OS::strecpy (end, temp);
+          else
+            end = ACE_OS::strecpy (end, argv[j]);
+#  else
+          // This is an ACE_HAS_WCHAR platform and not ACE_WIN32.
+          // Convert the env variable name for getenv(), then convert
+          // the returned char *string back to wchar_t.
+          char *ctemp = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (&argv[j][1]));
+          if (ctemp == 0)
+            end = ACE_OS::strecpy (end, argv[j]);
+          else
+            end = ACE_OS::strecpy (end, ACE_TEXT_CHAR_TO_TCHAR (ctemp));
+#  endif /* ACE_WIN32 || !ACE_HAS_WCHAR */
+        }
       else
 #endif /* ACE_LACKS_ENV */
         end = ACE_OS::strecpy (end, argv[j]);
@@ -229,6 +260,13 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 # else
       pid_t result = ACE_OS::fork ();
 
+#   if defined (ACE_USES_WCHAR)
+      // Wide-char builds need to convert the command-line args to
+      // narrow char strings for execv().
+      char **cargv;
+      int arg_count;
+#   endif /* ACE_HAS_WCHAR */
+
       switch (result)
         {
         case -1:
@@ -236,6 +274,22 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
           return -1;
         case 0:
           // Child process.
+#   if defined (ACE_USES_WCHAR)
+          for (arg_count = 0; argv[arg_count] != 0; ++arg_count)
+            ;
+          ++arg_count;    // Need a 0-pointer end-of-array marker
+          ACE_NEW_NORETURN (cargv, char*[arg_count]);
+          if (cargv == 0)
+            ACE_OS::exit (errno);
+          --arg_count;    // Back to 0-indexed
+          cargv[arg_count] = 0;
+          while (--arg_count >= 0)
+            cargv[arg_count] = ACE_Wide_To_Ascii::convert (argv[arg_count]);
+          // Don't worry about freeing the cargv or the strings it points to.
+          // Either the process will be replaced, or we'll exit.
+          if (ACE_OS::execv (cargv[0], cargv) == -1)
+            ACE_OS::exit (errno);
+#   else
           if (ACE_OS::execv (argv[0], argv) == -1)
             {
               // The OS layer should not print stuff out
@@ -245,6 +299,8 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
               // If the execv fails, this child needs to exit.
               ACE_OS::exit (errno);
             }
+#   endif /* ACE_HAS_WCHAR */
+
         default:
           // Server process.  The fork succeeded.
           return result;

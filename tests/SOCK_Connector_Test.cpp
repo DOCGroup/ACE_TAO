@@ -113,18 +113,20 @@ find_another_host (ACE_TCHAR other_host[])
       // an infinite loop on Linux --mas 03-08-2001
       while ((h = gethostent ()) != NULL)
         {
-          if (ACE_OS::strcmp (h->h_name, ACE_DEFAULT_SERVER_HOST) == 0)
+          if (ACE_OS::strcmp (h->h_name,
+                              ACE_TEXT_ALWAYS_CHAR (ACE_DEFAULT_SERVER_HOST)) == 0)
             continue;
           // AIX just _has_ to be different
           if (ACE_OS::strcmp (h->h_name, "loopback") == 0)
             continue;
 
           // If not me.
-          if (ACE_OS::strcmp (h->h_name, other_host) != 0
+          if (ACE_OS::strcmp
+                (h->h_name, ACE_TEXT_ALWAYS_CHAR (other_host)) != 0
               && ACE_OS::strcmp (h->h_name, un.nodename) != 0)
             {
                ACE_OS::strcpy (candidate[candidate_count].host_name,
-                               h->h_name);
+                               ACE_TEXT_CHAR_TO_TCHAR (h->h_name));
                if (++candidate_count >= MAX_CANDIDATES)
                  break;
             }

@@ -41,8 +41,16 @@ ACE_RCSID (tests,
 #define TEST_DIR "log"
 #define TEST_ENTRY ".."
 #else
-#define TEST_DIR "../tests"
-#define TEST_ENTRY "run_test.lst"
+#  define TEST_DIR "../tests"
+#  if defined (ACE_LACKS_STRUCT_DIR) || !defined (ACE_HAS_SCANDIR)
+#    define DIR_DOT ACE_TEXT (".")
+#    define DIR_DOT_DOT ACE_TEXT ("..")
+#    define TEST_ENTRY ACE_TEXT ("run_test.lst")
+#  else
+#    define DIR_DOT "."
+#    define DIR_DOT_DOT ".."
+#    define TEST_ENTRY "run_test.lst"
+#  endif /* ACE_LACKS_STRUCT_DIR */
 #endif /* VXWORKS || CHORUS */
 
 static const int RECURSION_INDENT = 3;
@@ -53,13 +61,13 @@ static int entrycount = 0;
 static int
 selector (const dirent *d)
 {
-  return ACE_OS_String::strcmp (d->d_name, ACE_TEXT (TEST_ENTRY)) == 0;
+  return ACE_OS::strcmp (d->d_name, TEST_ENTRY) == 0;
 }
 
 static int
 comparator (const dirent **d1, const dirent **d2)
 {
-  return ACE_OS_String::strcmp ((*d1)->d_name, (*d2)->d_name);
+  return ACE_OS::strcmp ((*d1)->d_name, (*d2)->d_name);
 }
 
 static int
@@ -79,7 +87,7 @@ dirent_selector_test (void)
 
   for (n = 0; n < sds.length (); ++n)
     ACE_DEBUG ((LM_DEBUG,
-                "Sorted: %d: %s\n",
+                ACE_TEXT ("Sorted: %d: %C\n"),
                 n,
                 sds[n]->d_name));
 
@@ -96,7 +104,7 @@ dirent_selector_test (void)
 
   for (n = 0; n < ds.length (); ++n)
     ACE_DEBUG ((LM_DEBUG,
-                "Entry %d: %s\n",
+                ACE_TEXT ("Entry %d: %C\n"),
                 n,
                 ds[n]->d_name));
 
@@ -115,24 +123,24 @@ dirent_test (void)
        (directory = dir.read ()) != 0;
        entrycount++)
     ACE_DEBUG ((LM_DEBUG,
-                "Entry %d: %s\n",
+                ACE_TEXT ("Entry %d: %C\n"),
                 entrycount,
                 directory->d_name));
   switch (entrycount)
     {
     case 0:
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "readdir failed to read anything\n"),
-                        -1);
+      ACE_ERROR_RETURN
+        ((LM_ERROR, ACE_TEXT ("readdir failed to read anything\n")), -1);
       /* NOTREACHED */
     case 1:
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "readdir failed, only matched directory name\n"),
-                        -1);
+      ACE_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT ("readdir failed, only matched directory name\n")),
+         -1);
       /* NOTREACHED */
     default:
       ACE_DEBUG ((LM_DEBUG,
-                  "readdir succeeded, read %d entries\n",
+                  ACE_TEXT ("readdir succeeded, read %d entries\n"),
                   entrycount));
     }
   return 0;
@@ -146,29 +154,42 @@ dirent_count (const ACE_TCHAR *dir_path,
 {
   if (ACE_OS::chdir (dir_path) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "chdir: %p\n",
+                       ACE_TEXT ("chdir: %p\n"),
                        dir_path),
                       -1);
   ACE_Dirent dir (ACE_TEXT ("."));
+
+  // Since the dir struct d_name type changes depending on the setting
+  // of ACE_LACKS_STRUCT_DIR, copy each name into a neutral format
+  // array to work on it.
+  const size_t maxnamlen = MAXNAMLEN;
+  ACE_TCHAR tname[maxnamlen + 1];
 
   int entry_count = 0;
 
   for (dirent *directory; (directory = dir.read ()) != 0;)
     {
       // Skip the ".." and "." files.
-      if (ACE_OS_String::strcmp (directory->d_name, ACE_TEXT (".")) == 0
-          || ACE_OS_String::strcmp (directory->d_name, ACE_TEXT ("..")) == 0)
+      if (ACE_OS::strcmp (directory->d_name, DIR_DOT) == 0
+          || ACE_OS::strcmp (directory->d_name, DIR_DOT_DOT) == 0)
         continue;
       entry_count++;
+
+#if !defined (ACE_LACKS_STRUCT_DIR)
+      ACE_OS::strncpy (tname,
+                       ACE_TEXT_CHAR_TO_TCHAR (directory->d_name),
+                       maxnamlen);
+#else
+      ACE_OS::strncpy (tname, directory->d_name, maxnamlen);
+#endif /* ACE_LACKS_STRUCT_DIR */
 
       int local_file_count = 0;
       int local_dir_count = 0;
       ACE_stat stat_buf;
-
       if (ACE_OS::lstat (directory->d_name, &stat_buf) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           directory->d_name),
+                           ACE_TEXT ("%p\n"),
+                           tname),
                           -1);
 
       switch (stat_buf.st_mode & S_IFMT)
@@ -180,8 +201,8 @@ dirent_count (const ACE_TCHAR *dir_path,
         case S_IFLNK: // Either a file or directory link, so let's find out.
           if (ACE_OS::stat (directory->d_name, &stat_buf) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "%p\n",
-                               directory->d_name),
+                               ACE_TEXT ("%p\n"),
+                               tname),
                               -1);
 
           if ((stat_buf.st_mode & S_IFMT) == S_IFDIR)
@@ -194,26 +215,27 @@ dirent_count (const ACE_TCHAR *dir_path,
         default: // Must be a directory.
           ACE_DEBUG ((LM_DEBUG, "%*sentering subdirectory %s\n",
                       recursion_level * RECURSION_INDENT,
-                      "",
-                      directory->d_name));
-          if (dirent_count (directory->d_name,
+                      ACE_TEXT (""),
+                      tname));
+          if (dirent_count (tname,
                             local_dir_count,
                             local_file_count,
                             recursion_level + 1) != -1)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "%*ssubdirectory %s has %d files and %d subdirectories.\n",
-                          recursion_level * RECURSION_INDENT,
-                          "",
-                          directory->d_name,
-                          local_file_count,
-                          local_dir_count));
+              ACE_DEBUG
+                ((LM_DEBUG,
+                  ACE_TEXT ("%*ssubdirectory %s has %d files and %d subdirectories.\n"),
+                  recursion_level * RECURSION_INDENT,
+                  ACE_TEXT (""),
+                  tname,
+                  local_file_count,
+                  local_dir_count));
               dir_count++;
 
               // Move back up a level.
               if (ACE_OS::chdir (ACE_TEXT ("..")) == -1)
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   "chdir: %p\n",
+                                   ACE_TEXT ("chdir: %p\n"),
                                    dir_path),
                                   -1);
             }
@@ -231,7 +253,7 @@ dirent_recurse_test (void)
   int total_files = 0;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Starting directory recursion test for %s\n",
+              ACE_TEXT ("Starting directory recursion test for %s\n"),
               ACE_TEXT (TEST_DIR)));
 
   if (dirent_count (ACE_TEXT (TEST_DIR),
@@ -239,11 +261,11 @@ dirent_recurse_test (void)
                     total_files,
                     1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Directory recursion test failed for %s\n",
+                       ACE_TEXT ("Directory recursion test failed for %s\n"),
                        ACE_TEXT (TEST_DIR)),
                       -1);
   ACE_DEBUG ((LM_DEBUG,
-              "Directory recursion test succeeded for %s, read %d files %d dirs\n",
+              ACE_TEXT ("Directory recursion test succeeded for %s, read %d files %d dirs\n"),
               ACE_TEXT (TEST_DIR),
               total_files,
               total_dirs));

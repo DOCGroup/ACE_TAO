@@ -500,9 +500,9 @@ const unsigned int ACE_CONNECTOR_HANDLER_MAP_SIZE = 16;
  // Used for dynamic linking.
 #if !defined (ACE_DEFAULT_SVC_CONF)
 #  if (ACE_USES_CLASSIC_SVC_CONF == 1)
-#    define ACE_DEFAULT_SVC_CONF "./svc.conf"
+#    define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf")
 #  else
-#    define ACE_DEFAULT_SVC_CONF "./svc.conf.xml"
+#    define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf.xml")
 #  endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
 #endif /* ACE_DEFAULT_SVC_CONF */
 

@@ -309,12 +309,20 @@ ACE::ldfind (const ACE_TCHAR* filename,
           else if (pathlen > 0)
               return 0;
 #else
-          ACE_TCHAR *ld_path =
-#if defined ACE_DEFAULT_LD_SEARCH_PATH
-            ACE_DEFAULT_LD_SEARCH_PATH;
-#else
-            ACE_OS::getenv (ACE_LD_SEARCH_PATH);
-#endif /* ACE_DEFAULT_LD_SEARCH_PATH */
+          ACE_TCHAR *ld_path;
+#  if defined ACE_DEFAULT_LD_SEARCH_PATH
+          ld_path = ACE_DEFAULT_LD_SEARCH_PATH;
+#  else
+#    if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+          ld_path = ACE_OS::getenv (ACE_LD_SEARCH_PATH);
+#    else
+          // Wide-char, non-Windows only offers char * getenv. So capture
+          // it, translate to wide-char, and continue.
+          ACE_Ascii_To_Wide wide_ldpath
+            (ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (ACE_LD_SEARCH_PATH)));
+          ld_path = wide_ldpath.wchar_rep ();
+#    endif /* ACE_WIN32 || !ACE_USES_WCHAR */
+#  endif /* ACE_DEFAULT_LD_SEARCH_PATH */
 
 #if defined (ACE_HAS_WINCE)
             ACE_TCHAR *ld_path_temp = 0;
@@ -532,12 +540,16 @@ ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
 
 #else /* ACE_WIN32 */
 
+  // NOTE! Non-Windows platforms don't deal with wide chars for env.
+  // variables, so do this narrow-char and convert to wide for the
+  // caller if necessary.
+
   // On non-win32 platforms, check to see what the TMPDIR environment
   // variable is defined to be.  If it doesn't exist, just use /tmp
-  const ACE_TCHAR *tmpdir = ACE_OS::getenv (ACE_LIB_TEXT ("TMPDIR"));
+  const char *tmpdir = ACE_OS::getenv ("TMPDIR");
 
   if (tmpdir == 0)
-    tmpdir = ACE_LIB_TEXT ("/tmp");
+    tmpdir = "/tmp";
 
   size_t len = ACE_OS::strlen (tmpdir);
 
@@ -549,11 +561,11 @@ ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
     }
   else
     {
-      ACE_OS::strcpy (buffer, tmpdir);
+      ACE_OS::strcpy (buffer, ACE_TEXT_CHAR_TO_TCHAR (tmpdir));
 
       // Add a trailing slash because we cannot assume there is already one
       // at the end.  And having an extra one should not cause problems.
-      buffer[len] = '/';
+      buffer[len] = ACE_LIB_TEXT ('/');
       buffer[len + 1] = 0;
       result = 0;
     }

@@ -288,7 +288,12 @@ test_reactive (const ACE_TCHAR *prog,
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n ()")));
 #else
   ACE_Process_Options opts;
-  opts.command_line (ACE_TEXT ("%s -p%d -r"), prog, sport);
+#  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+  const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%s -p%d -r");
+#  else
+  const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%ls -p%d -r");
+#  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
+  opts.command_line (cmdline_fmt, prog, sport);
   if (ACE_Process_Manager::instance ()->spawn_n (NUMBER_OF_REACTIVE_CONNECTIONS,
                                                  opts) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n ()")));
@@ -374,7 +379,12 @@ test_concurrent (const ACE_TCHAR *prog,
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")));
 #else
   ACE_Process_Options opts;
-  opts.command_line (ACE_TEXT ("%s -p%d -m"), prog, sport);
+#  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+  const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%s -p%d -m");
+#  else
+  const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%ls -p%d -m");
+#  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
+  opts.command_line (cmdline_fmt, prog, sport);
   if (ACE_Process_Manager::instance ()->spawn_n (NUMBER_OF_MT_CONNECTIONS,
                                                  opts) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")));

@@ -91,10 +91,26 @@ ACE_OS::ctime (const time_t *t)
   return ACE_OS::ctime_r (t,
                           buf,
                           ctime_buf_size);
-#elif defined (ACE_USES_WCHAR)
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wctime (t), wchar_t *, 0);
 #else
+#  if defined (ACE_USES_WCHAR)   /* Not Win32, else it would do the above */
+  char *narrow_time;
+  ACE_OSCALL (::ctime (t), char *, 0, narrow_time);
+  if (narrow_time == 0)
+    return 0;
+  // ACE_Ascii_To_Wide::convert allocates (via new []) a wchar_t[]. If
+  // we've done this before, free the previous one. Yes, this leaves a
+  // small memory leak (26 characters) but there's no way around this
+  // that I know of. (Steve Huston, 12-Feb-2003).
+  static wchar_t *wide_time = 0;
+  if (wide_time != 0)
+    delete [] wide_time;
+  wide_time = ACE_Ascii_To_Wide::convert (narrow_time);
+  return wide_time;
+#  else
   ACE_OSCALL_RETURN (::ctime (t), char *, 0);
+#  endif /* ACE_USES_WCHAR */
 # endif /* ACE_HAS_BROKEN_CTIME */
 }
 
@@ -105,6 +121,15 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   ACE_OS_TRACE ("ACE_OS::ctime_r");
 
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
+
+  char *bufp = 0;
+#   if defined (ACE_USES_WCHAR)
+  char narrow_buf[ctime_buf_size];
+  bufp = narrow_buf;
+#   else
+  bufp = buf;
+#   endif /* ACE_USES_WCHAR */
+
 #   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   if (buflen < ctime_buf_size)
     {
@@ -112,20 +137,31 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
       return 0;
     }
 #      if defined (DIGITAL_UNIX)
-  ACE_OSCALL_RETURN (::_Pctime_r (t, buf), ACE_TCHAR *, 0);
+  ACE_OSCALL (::_Pctime_r (t, bufp), ACE_TCHAR *, 0, bufp);
 #      else /* DIGITAL_UNIX */
-  ACE_OSCALL_RETURN (::ctime_r (t, buf), ACE_TCHAR *, 0);
+  ACE_OSCALL (::ctime_r (t, bufp), char *, 0, bufp);
 #      endif /* DIGITAL_UNIX */
-  return buf;
 #   else /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 
 #      if defined (ACE_CTIME_R_RETURNS_INT)
-  return (::ctime_r (t, buf, buflen) == -1 ? 0 : buf);
+  bufp = ::ctime_r (t, bufp, buflen) == -1 ? 0 : bufp;
 #      else /* ACE_CTIME_R_RETURNS_INT */
-  ACE_OSCALL_RETURN (::ctime_r (t, buf, buflen), ACE_TCHAR *, 0);
+  bufp = ::ctime_r (t, bufp, buflen);
 #      endif /* ACE_CTIME_R_RETURNS_INT */
 
 #   endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
+
+  if (bufp == 0)
+    return 0;
+
+#   if defined (ACE_USES_WCHAR)
+  ACE_Ascii_To_Wide wide_buf (bufp);
+  ACE_OS_String::strcpy (buf, wide_buf.wchar_rep ());
+  return buf;
+#   else
+  return bufp;
+#   endif /* ACE_USES_WCHAR */
+
 #else /* ACE_HAS_REENTRANT_FUNCTIONS */
 #   if defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
   ACE_OS::strsncpy (buf, "ctime-return", buflen);

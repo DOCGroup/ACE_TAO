@@ -225,7 +225,7 @@ test_log_msg_features (const ACE_TCHAR *program)
   if (ACE_OS::open (badname,
                     O_RDONLY) == ACE_INVALID_HANDLE)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%n: (%x), can't open %s%r\n"),
+                ACE_TEXT ("%n: (%x), can't open %C%r\n"),
                 10000,
                 badname,
                 cleanup));
@@ -415,7 +415,7 @@ test_ostream (void)
 
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%s"),
+              ACE_TEXT ("%C"),
               buffer));
 
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */

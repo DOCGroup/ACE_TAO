@@ -142,7 +142,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
   //Get host ip address
   if (host_name)
     {
-      hostent *hp = ACE_OS::gethostbyname (host_name);
+      hostent *hp = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR (host_name));
 
       if (hp == 0)
         return -1;
