@@ -47,10 +47,12 @@ Task_State::Task_State (int argc, char **argv)
     argv_ (argv),
     thread_per_rate_ (0),
     global_jitter_array_ (0),
-    factory_ior_ (0)
+    factory_ior_ (0),
+    shutdown_ (0),
+    oneway_ (0)
 {
   ACE_OS::strcpy (server_host_, "localhost");
-  ACE_Get_Opt opts (argc, argv, "h:n:t:p:d:rk:");
+  ACE_Get_Opt opts (argc, argv, "h:n:t:p:d:rk:xo");
   int c;
   int datatype;
 
@@ -58,6 +60,12 @@ Task_State::Task_State (int argc, char **argv)
     switch (c) {
     case 'k':
       factory_ior_ = ACE_OS::strdup (opts.optarg);
+      break;
+    case 'o':
+      oneway_ = 1;
+      break;
+    case 'x':
+      shutdown_ = 1;
       break;
     case 'r':
       thread_per_rate_ = 1;
@@ -106,6 +114,8 @@ Task_State::Task_State (int argc, char **argv)
                   " [-p server_port_num]"
                   " [-t num_threads]"
                   " [-k factory_ior_key]"
+                  " [-x] // makes a call to servant to shutdown"
+                  " [-o] // makes client use oneway calls instead"
                   "\n", argv [0]));
     }
   // thread_count_ + 1 because there is one utilization thread also
@@ -414,10 +424,24 @@ Client::svc (void)
 
   ts_->barrier_->wait ();
   ACE_DEBUG ((LM_DEBUG, "(%t) Everyone's done, here I go!!\n"));
+  
+  if (ts_->oneway_ == 1)
+    ACE_DEBUG ((LM_DEBUG, "(%t) **** USING ONEWAY CALLS ****\n"));
 
   this->run_tests (cb, ts_->loop_count_, thread_id,
                    ts_->datatype_, frequency);
 
+  if (ts_->shutdown_)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%t) CALLING SHUTDOWN() ON THE SERVANT\n"));
+      cb->shutdown (env);
+      if (env.exception () != 0)
+	{
+	  ACE_ERROR ((LM_ERROR, "Shutdown of the server failed!\n"));
+	  env.print_exception ("shutdown() call failed.\n");
+	}
+    }
+  
   return 0;
 }
 
@@ -449,118 +473,131 @@ Client::run_tests (Cubit_ptr cb,
       ACE_OS::sleep (tv);
       timer.start ();
 #endif /* defined (VXWORKS) */
-      switch (datatype)
-        {
-        case CB_OCTET:
-          {
-            // Cube an octet.
-            CORBA::Octet arg_octet = func (i), ret_octet = 0;
+      if (ts_->oneway_ == 0)
+	{
+	  switch (datatype)
+	    {
+	    case CB_OCTET:
+	      {
+		// Cube an octet.
+		CORBA::Octet arg_octet = func (i), ret_octet = 0;
 
-            ret_octet = cb->cube_octet (arg_octet, env);
-            if (env.exception () != 0)
-              {
-                env.print_exception ("call to cube_octet()\n");
-                ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
-              }
+		ret_octet = cb->cube_octet (arg_octet, env);
+		if (env.exception () != 0)
+		  {
+		    env.print_exception ("call to cube_octet()\n");
+		    ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
+		  }
 
-            arg_octet = arg_octet * arg_octet * arg_octet;
+		arg_octet = arg_octet * arg_octet * arg_octet;
 
-            if (arg_octet != ret_octet)
-              {
-                ACE_DEBUG ((LM_DEBUG, "** cube_octet(%d)  (--> %d)\n", arg_octet , ret_octet));
-                error_count++;
-              }
-            call_count++;
-          }
-        break;
+		if (arg_octet != ret_octet)
+		  {
+		    ACE_DEBUG ((LM_DEBUG, "** cube_octet(%d)  (--> %d)\n", arg_octet , ret_octet));
+		    error_count++;
+		  }
+		call_count++;
+	      }
+	      break;
 
-        case CB_SHORT:
-          // Cube a short.
-          {
-            call_count++;
+	    case CB_SHORT:
+	      // Cube a short.
+	      {
+		call_count++;
 
-            CORBA::Short arg_short = func (i), ret_short;
+		CORBA::Short arg_short = func (i), ret_short;
 
-            ret_short = cb->cube_short (arg_short, env);
+		ret_short = cb->cube_short (arg_short, env);
 
-            if (env.exception () != 0)
-              {
-                env.print_exception ("call to cube_short()\n");
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "%s:Call failed\n",
-                                   env.exception ()),
-                                  2);
-              }
+		if (env.exception () != 0)
+		  {
+		    env.print_exception ("call to cube_short()\n");
+		    ACE_ERROR_RETURN ((LM_ERROR,
+				       "%s:Call failed\n",
+				       env.exception ()),
+				      2);
+		  }
 
-            arg_short = arg_short * arg_short * arg_short;
+		arg_short = arg_short * arg_short * arg_short;
 
-            if (arg_short != ret_short)
-              {
-                ACE_DEBUG ((LM_DEBUG, "** cube_short(%d)  (--> %d)\n", arg_short , ret_short));
-                error_count++;
-              }
-            break;
-          }
-        // Cube a long.
+		if (arg_short != ret_short)
+		  {
+		    ACE_DEBUG ((LM_DEBUG, "** cube_short(%d)  (--> %d)\n", arg_short , ret_short));
+		    error_count++;
+		  }
+		break;
+	      }
+	      // Cube a long.
 
-        case CB_LONG:
-          {
-            call_count++;
+	    case CB_LONG:
+	      {
+		call_count++;
 
-            CORBA::Long arg_long = func (i), ret_long;
+		CORBA::Long arg_long = func (i), ret_long;
 
-            ret_long = cb->cube_long (arg_long, env);
+		ret_long = cb->cube_long (arg_long, env);
 
-            if (env.exception () != 0)
-              {
-                env.print_exception ("call to cube_long()\n");
-                ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
-              }
+		if (env.exception () != 0)
+		  {
+		    env.print_exception ("call to cube_long()\n");
+		    ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
+		  }
 
-            arg_long = arg_long * arg_long * arg_long;
+		arg_long = arg_long * arg_long * arg_long;
 
-            if (arg_long != ret_long)
-              {
-                ACE_DEBUG ((LM_DEBUG, "** cube_long(%d)  (--> %d)\n", arg_long , ret_long));
-                error_count++;
-              }
-            break;
-          }
+		if (arg_long != ret_long)
+		  {
+		    ACE_DEBUG ((LM_DEBUG, "** cube_long(%d)  (--> %d)\n", arg_long , ret_long));
+		    error_count++;
+		  }
+		break;
+	      }
 
-        case CB_STRUCT:
-          // Cube a "struct" ...
-          {
-            Cubit::Many arg_struct, ret_struct;
+	    case CB_STRUCT:
+	      // Cube a "struct" ...
+	      {
+		Cubit::Many arg_struct, ret_struct;
 
-            call_count++;
+		call_count++;
 
-            arg_struct.l = func (i);
-            arg_struct.s = func (i);
-            arg_struct.o = func (i);
+		arg_struct.l = func (i);
+		arg_struct.s = func (i);
+		arg_struct.o = func (i);
 
-            ret_struct = cb->cube_struct (arg_struct, env);
+		ret_struct = cb->cube_struct (arg_struct, env);
 
-            if (env.exception () != 0)
-              {
-                env.print_exception ("call to cube_struct()\n");
-                ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
-              }
+		if (env.exception () != 0)
+		  {
+		    env.print_exception ("call to cube_struct()\n");
+		    ACE_ERROR_RETURN ((LM_ERROR,"%s:Call failed\n", env.exception ()), 2);
+		  }
 
-            arg_struct.l = arg_struct.l  * arg_struct.l  * arg_struct.l ;
-            arg_struct.s = arg_struct.s  * arg_struct.s  * arg_struct.s ;
-            arg_struct.o = arg_struct.o  * arg_struct.o  * arg_struct.o ;
+		arg_struct.l = arg_struct.l  * arg_struct.l  * arg_struct.l ;
+		arg_struct.s = arg_struct.s  * arg_struct.s  * arg_struct.s ;
+		arg_struct.o = arg_struct.o  * arg_struct.o  * arg_struct.o ;
 
-            if (arg_struct.l  != ret_struct.l
-              || arg_struct.s  != ret_struct.s
-              || arg_struct.o  != ret_struct.o )
-              {
-                ACE_DEBUG ((LM_DEBUG, "**cube_struct error!\n"));
-                error_count++;
-              }
+		if (arg_struct.l  != ret_struct.l
+		    || arg_struct.s  != ret_struct.s
+		    || arg_struct.o  != ret_struct.o )
+		  {
+		    ACE_DEBUG ((LM_DEBUG, "**cube_struct error!\n"));
+		    error_count++;
+		  }
 
-            break;
-          }
-        }
+		break;
+	      }
+	    }
+	}
+      else
+	{
+	  call_count++;
+	  cb->noop (env);
+	  if (env.exception () != 0)
+	    {
+	      env.print_exception ("oneway call noop()\n");
+	      ACE_ERROR_RETURN ((LM_ERROR,"(%t) noop() call failed\n"), 2);
+	    }
+	}
 
 #if defined (VXWORKS)
       TimeStamp(&stop[i]);

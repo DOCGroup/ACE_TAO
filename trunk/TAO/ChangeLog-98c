@@ -1,3 +1,15 @@
+Wed Feb 25 22:47:48 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/README::
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+	* tests/Cubit/TAO/MT_Cubit/cubit.idl:
+	* tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:		
+	* tests/Cubit/TAO/MT_Cubit/cubit_i.h: Made changes to have the
+ 	option to specify oneway calls instead of the usual two-way
+ 	cube_X() call.  Now, you can specify the "-o" argument on the
+ 	client side.
+	
 Wed Feb 25 22:47:16 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/client.cpp (parse_args): Similar to

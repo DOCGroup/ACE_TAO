@@ -38,7 +38,9 @@ public:
   virtual Cubit::Many cube_struct (const Cubit::Many &values,
                                    CORBA::Environment &env);
   
-  virtual void please_exit (CORBA::Environment &env);
+  virtual void noop (CORBA::Environment &env);
+
+  virtual void shutdown (CORBA::Environment &env);
 };
 
 class Cubit_Factory_i : public POA_Cubit_Factory

@@ -44,8 +44,15 @@ Cubit_i::cube_struct (const Cubit::Many &values,
   return out_values;
 }
 
-void Cubit_i::please_exit (CORBA::Environment &)
+void 
+Cubit_i::noop (CORBA::Environment &)
 {
+  // does nothing.
+}
+
+void Cubit_i::shutdown (CORBA::Environment &)
+{
+  TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
 
 // Constructor

@@ -120,6 +120,12 @@ public:
 
   char * factory_ior_;
   // Object reference string for the cubit factory.
+
+  u_int shutdown_;
+  // flag that indicates if we are going to call the shutdown methos for the servant
+
+  u_int oneway_;
+  // flag that indicates if we are going to use oneway calls instead of two-way
 };
 
 class Client : public ACE_Task<ACE_MT_SYNCH>
