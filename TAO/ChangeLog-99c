@@ -1,119 +1,125 @@
+Fri Feb 26 23:30:12 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/Makefile: removed the clean target, because it
+          deleted tao_idl.  The realclean target does that.  Thanks
+          to Tres Seaver <tseaver@palladion.com> for reporting this.
+
 Fri Feb 26 21:03:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	  Added support for forwarding in stubs generated with compiled
-	  marshaling.
-	  We use the new ACE_TRY macros to do this.
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+          Added support for forwarding in stubs generated with compiled
+          marshaling.
+          We use the new ACE_TRY macros to do this.
 
-	* TAO_IDL/be/be_union_branch.cpp:
-	* TAO_IDL/be/be_union_label.cpp:
-	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
-	* TAO_IDL/be_include/be_type.h:
-	* TAO_IDL/be_include/be_union_branch.h:
-	  Fixed code generation for unions whose discriminators are
-	  enums. It wasn't prefixing the enum label with the scope where
-	  the enum was generated i.e. for enums defined inside a module
-	  Foo it was using "value1" instead of "Foo::value1".
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be/be_union_label.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/be_include/be_union_branch.h:
+          Fixed code generation for unions whose discriminators are
+          enums. It wasn't prefixing the enum label with the scope where
+          the enum was generated i.e. for enums defined inside a module
+          Foo it was using "value1" instead of "Foo::value1".
 
-	* orbsvcs/orbsvcs/Event/Timer_Module.cpp: 
-	  Fixed Timeprobe use.
+        * orbsvcs/orbsvcs/Event/Timer_Module.cpp:
+          Fixed Timeprobe use.
 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin_T.cpp: 
-	  Minor cosmetic fixes.
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin_T.cpp:
+          Minor cosmetic fixes.
 
-	* orbsvcs/orbsvcs/Event/README: 
-	  Added more details, started a section that describes the
-	  interaction between the components.
+        * orbsvcs/orbsvcs/Event/README:
+          Added more details, started a section that describes the
+          interaction between the components.
 
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp: 
-	  The SupplierFiltering module splits an EventSet into single
-	  events before passing them to the ProxyPushSuppliers, this is
-	  needed so that filtering will work correctly.
+        * orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp:
+          The SupplierFiltering module splits an EventSet into single
+          events before passing them to the ProxyPushSuppliers, this is
+          needed so that filtering will work correctly.
 
 Fri Feb 26 18:29:04 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/Time/implrepo.conf
-	  tests/NestedUpcall/MT_Client_Test/client.conf
-	  examples/POA/On_Demand_Loading/svc.conf
-	  examples/Quoter/client.conf
-	  examples/Quoter/server.conf
-	  performance-tests/Cubit/TAO/MT_Cubit/svc.conf
-	  performance-tests/Thruput/TAO/svc.conf
+        * orbsvcs/tests/Time/implrepo.conf
+          tests/NestedUpcall/MT_Client_Test/client.conf
+          examples/POA/On_Demand_Loading/svc.conf
+          examples/Quoter/client.conf
+          examples/Quoter/server.conf
+          performance-tests/Cubit/TAO/MT_Cubit/svc.conf
+          performance-tests/Thruput/TAO/svc.conf
 
-	  Changed -ORBdemuxstrategy option to 
-	  -ORBsystemidpolicydemuxstrategy
+          Changed -ORBdemuxstrategy option to
+          -ORBsystemidpolicydemuxstrategy
 
-	
+
 Fri Feb 26 18:00:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Makefile:
-	* tao/TAO.dsp:
-	  Removed file Align.h from the repository, the makefile
-	  and the project file. All that stuff moved to OS.h
-	  with the CDR classes.
+        * tao/Makefile:
+        * tao/TAO.dsp:
+          Removed file Align.h from the repository, the makefile
+          and the project file. All that stuff moved to OS.h
+          with the CDR classes.
 
 Fri Feb 26 17:37:04 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
-	* Added the function next_profile_retry to stub object.
+        * Added the function next_profile_retry to stub object.
 
 Fri Feb 26 16:46:37 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
-	* Added some methods to Stub_Object for forwarding.
+        * Added some methods to Stub_Object for forwarding.
 
 Fri Feb 26 13:32:35 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/grid/README: 
-	New file for the benefit of the community. Thanks to Dr.Schmidt
-	for reminding me to do this.
+        * examples/Simple/grid/README:
+        New file for the benefit of the community. Thanks to Dr.Schmidt
+        for reminding me to do this.
 
 Fri Feb 26 12:44:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Param_Test/big_union.cpp: 
-	  Fixed some warnings for Linux/EGCS.
-	  check_validity was incomplete.
+        * tests/Param_Test/big_union.cpp:
+          Fixed some warnings for Linux/EGCS.
+          check_validity was incomplete.
 
-	* tests/Param_Test/svc.conf: 
-	  Removed obsolete options.
+        * tests/Param_Test/svc.conf:
+          Removed obsolete options.
 
 Fri Feb 26 11:35:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/Makefile:
-	* TAO_IDL/be/be_visitor_factory.cpp:
-	* TAO_IDL/be/be_visitor_union_branch.cpp:
-	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
-	* TAO_IDL/be_include/be_codegen.h:
-	* TAO_IDL/be_include/be_visitor_union/cdr_op_cs.h:
-	  Implemented compiled marshaling for unions.
-	  I also had to debug and fix parts of the union implementation
-	  too.
+        * TAO_IDL/Makefile:
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_visitor_union/cdr_op_cs.h:
+          Implemented compiled marshaling for unions.
+          I also had to debug and fix parts of the union implementation
+          too.
 
-	* tests/Param_Test/Makefile:
-	* tests/Param_Test/run_test.pl:
-	* tests/Param_Test/tests.h:
-	* tests/Param_Test/driver.cpp:
-	* tests/Param_Test/driver.h:
-	* tests/Param_Test/options.cpp:
-	* tests/Param_Test/options.h:
-	* tests/Param_Test/param_test.idl:
-	* tests/Param_Test/param_test_i.cpp:
-	* tests/Param_Test/param_test_i.h:
-	* tests/Param_Test/big_union.h:
-	* tests/Param_Test/big_union.cpp:
-	  Added a new test for unions, the union contains many basic
-	  types, sequences, arrays, variable and fixed sized structures,
-	  object references, sequences, strings, etc.
-	  I couldn't test unions inside unions because there seems to be a 
-	  bug with union code generator.
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/run_test.pl:
+        * tests/Param_Test/tests.h:
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/driver.h:
+        * tests/Param_Test/options.cpp:
+        * tests/Param_Test/options.h:
+        * tests/Param_Test/param_test.idl:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/big_union.h:
+        * tests/Param_Test/big_union.cpp:
+          Added a new test for unions, the union contains many basic
+          types, sequences, arrays, variable and fixed sized structures,
+          object references, sequences, strings, etc.
+          I couldn't test unions inside unions because there seems to be a
+          bug with union code generator.
 
 Fri Feb 26 10:06:57 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
@@ -121,9 +127,9 @@ Fri Feb 26 10:06:57 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
 Fri Feb 26 00:43:30 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs: Updated all the ORB services IDL files so that
- 	  they are protected by #ifndef ... #endifs.  Thanks to Lothar
- 	  Werzinger <werzinger.lothar@krones.de> for this suggestion.
+        * orbsvcs/orbsvcs: Updated all the ORB services IDL files so that
+          they are protected by #ifndef ... #endifs.  Thanks to Lothar
+          Werzinger <werzinger.lothar@krones.de> for this suggestion.
 
 Fri Feb 26 00:05:16 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -131,52 +137,52 @@ Fri Feb 26 00:05:16 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Feb 25 23:38:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/decode.cpp:
-	  Fixed another confusion between an Any's value and
-	  its message block. This one was in TAO_Marshal_Union.
-	  Maybe unions will work a little better now ;-).
+        * tao/decode.cpp:
+          Fixed another confusion between an Any's value and
+          its message block. This one was in TAO_Marshal_Union.
+          Maybe unions will work a little better now ;-).
 
 Thu Feb 25 20:19:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.h:
-	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
-	* performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
-	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
-	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
 
-	Modified these files so that they will compile if ACE was built
-	without thread support by changing ACE_MT_SYNCH macros to
-	ACE_SYNCH and by using the ACE_SYNCH_SEMAPHORE macro instead of
-	ACE_Thread_Semaphore.  Thanks to Doug for suggesting the ACE_SYNCH
-	changes.
+        Modified these files so that they will compile if ACE was built
+        without thread support by changing ACE_MT_SYNCH macros to
+        ACE_SYNCH and by using the ACE_SYNCH_SEMAPHORE macro instead of
+        ACE_Thread_Semaphore.  Thanks to Doug for suggesting the ACE_SYNCH
+        changes.
 
-	ACE_Condition in Task_Client.h for the unthreaded case will be
-	dealt with soon.
+        ACE_Condition in Task_Client.h for the unthreaded case will be
+        dealt with soon.
 
 Thu Feb 25 18:16:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp:
-	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	  IDL generated code was passing in the size instead of
-	  the length for bounded strings. Then CDR would add 1 
-	  to get back the size... Just subtracted 1 in the 
-	  appropriate spots in IDL compiler code. Checked out the
-	  new version in param_test and all seems to be ok. Thanks to
-	  Henrik Nordberg <hnordberg@lbl.gov> for reporting this bug.
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+          IDL generated code was passing in the size instead of
+          the length for bounded strings. Then CDR would add 1
+          to get back the size... Just subtracted 1 in the
+          appropriate spots in IDL compiler code. Checked out the
+          new version in param_test and all seems to be ok. Thanks to
+          Henrik Nordberg <hnordberg@lbl.gov> for reporting this bug.
 
 Thu Feb 25 16:06:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* rules.tao.GNU: Added make commands to generate dummy *S_T.*
- 	  files when building with Flick.
+        * rules.tao.GNU: Added make commands to generate dummy *S_T.*
+          files when building with Flick.
 
 Thu Feb 25 15:53:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* TAO_IDL/be
-	  TAO_IDL/driver
-	Changed the TAO_TRY macros with ACE_TRY macros in the
-	IDL generated stubs and skeletons
+        * TAO_IDL/be
+          TAO_IDL/driver
+        Changed the TAO_TRY macros with ACE_TRY macros in the
+        IDL generated stubs and skeletons
 
 Thu Feb 25 15:35:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
