@@ -1,3 +1,13 @@
+Wed Oct 13 20:23:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-WinCE.h: Added ACE_LACKS_ACE_TOKEN and
+	  ACE_LACKS_ACE_OTHER to reduce CE dll's footprint.
+
+	* ace/Memory_Pool.cpp (ACE_Pagefile_Memory_Pool::map): The
+	  SECURITY_DESCRIPTOR and its management routines are only
+	  supported on NT.  Changed to pass a NULL security attribute on
+	  non-NT platforms (95, 98, CE.)
+
 Wed Oct 13 10:50:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.sh: use uname -s without checking to
