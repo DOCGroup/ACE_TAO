@@ -16,21 +16,32 @@
 
 // IDL
 #pragma prefix "omg.org"
-module PortableServer
-{
-  typedef string Identifier;
-  typedef string RepositoryId;
-  interface CurrentBase{};
-  // ****change**** end   definitions from CORBA needed for standalone compile
 
-  // basic Policy definition
+// IDL
+module CORBA
+{
+  // Basic Policy definition
+
+  typedef unsigned long PolicyType;
+
   interface Policy
     {
+      readonly attribute PolicyType policy_type;
       Policy copy( );
       void destroy( );
     };
 
   typedef sequence <Policy>  PolicyList;
+
+  interface Current{};
+
+  // ....
+};
+
+module PortableServer
+{
+  typedef string Identifier;
+  typedef string RepositoryId;
 
   // forward reference
   interface POA;
@@ -52,7 +63,7 @@ module PortableServer
     ORB_CTRL_MODEL,
     SINGLE_THREAD_MODEL
   };
-  interface ThreadPolicy : Policy
+  interface ThreadPolicy : CORBA::Policy
     {
       readonly attribute ThreadPolicyValue value;
     };
@@ -61,7 +72,7 @@ module PortableServer
     TRANSIENT,
     PERSISTENT
   };
-  interface LifespanPolicy : Policy
+  interface LifespanPolicy : CORBA::Policy
     {
       readonly attribute LifespanPolicyValue value;
     };
@@ -70,7 +81,7 @@ module PortableServer
     UNIQUE_ID,
     MULTIPLE_ID
   };
-  interface IdUniquenessPolicy : Policy
+  interface IdUniquenessPolicy : CORBA::Policy
     {
       readonly attribute IdUniquenessPolicyValue value;
     };
@@ -79,7 +90,7 @@ module PortableServer
     USER_ID,
     SYSTEM_ID
   };
-  interface IdAssignmentPolicy : Policy
+  interface IdAssignmentPolicy : CORBA::Policy
     {
       readonly attribute IdAssignmentPolicyValue value;
     };
@@ -88,7 +99,7 @@ module PortableServer
     IMPLICIT_ACTIVATION,
     NO_IMPLICIT_ACTIVATION
   };
-  interface ImplicitActivationPolicy : Policy
+  interface ImplicitActivationPolicy : CORBA::Policy
     {
       readonly attribute ImplicitActivationPolicyValue value;
     };
@@ -97,7 +108,7 @@ module PortableServer
     RETAIN,
     NON_RETAIN
   };
-  interface ServantRetentionPolicy : Policy
+  interface ServantRetentionPolicy : CORBA::Policy
     {
       readonly attribute ServantRetentionPolicyValue value;
     };
@@ -107,7 +118,7 @@ module PortableServer
     USE_DEFAULT_SERVANT,
     USE_SERVANT_MANAGER
   };
-  interface RequestProcessingPolicy : Policy
+  interface RequestProcessingPolicy : CORBA::Policy
     {
       readonly attribute RequestProcessingPolicyValue value;
     };
@@ -216,7 +227,7 @@ module PortableServer
 
       POA create_POA(in string adapter_name,
 		     in POAManager a_POAManager,
-		     in PolicyList policies)
+		     in CORBA::PolicyList policies)
 	raises (AdapterAlreadyExists, InvalidPolicy);
 
       POA find_POA(in string adapter_name,  in boolean activate_it)
@@ -353,7 +364,7 @@ module PortableServer
   //
   // **************************************************
 
-  interface Current : CurrentBase
+  interface Current : CORBA::Current
     {
       exception NoContext { };
 

@@ -84,7 +84,7 @@ main (int argc, char *argv[])
         oa_ptr->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      PortableServer::PolicyList policies (2);
+      CORBA::PolicyList policies (2);
       policies.length (2);
       policies[0] =
         oa_ptr->create_id_assignment_policy (PortableServer::USER_ID,

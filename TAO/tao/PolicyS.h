@@ -14,12 +14,12 @@
 
 #include "PolicyC.h"
 
-class  POA_CORBA
+class TAO_Export  POA_CORBA
 {
 public:
   class Policy;
   typedef Policy *Policy_ptr;
-  class  Policy :  public virtual PortableServer::ServantBase
+  class TAO_Export  Policy :  public virtual PortableServer::ServantBase
   {
   protected:
     Policy (void);
@@ -73,7 +73,7 @@ public:
 #if !defined (_CORBA_POLICY___COLLOCATED_SH_)
 #define _CORBA_POLICY___COLLOCATED_SH_
 
-  class  _tao_collocated_Policy     : public virtual CORBA::Policy
+  class TAO_Export  _tao_collocated_Policy     : public virtual CORBA_Policy
   {
   public:
     _tao_collocated_Policy (

@@ -106,7 +106,7 @@ main (int argc, char **argv)
       return 1;
     }
 
-  PortableServer::PolicyList policies (2);
+  CORBA::PolicyList policies (2);
   policies.length (2);  
   policies[0] =
     root_poa->create_id_assignment_policy (PortableServer::USER_ID,
