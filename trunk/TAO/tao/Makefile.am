@@ -522,6 +522,7 @@ nobase_include_HEADERS += \
   PICurrent_ORBInitializer.h \
   PI_ForwardC.h \
   ParameterModeC.h \
+  ParameterModeS.h \
   Parser_Registry.h \
   Pluggable_Messaging.h \
   Pluggable_Messaging_Utils.h \
