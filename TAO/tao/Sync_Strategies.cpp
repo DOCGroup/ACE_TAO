@@ -284,7 +284,8 @@ TAO_None_Sync_Strategy::time_conversion (const TimeBase::TimeT &time)
 }
 
 int
-TAO_Flush_Sync_Strategy::buffering_constraints_reached (TAO_Stub &,
+TAO_Flush_Sync_Strategy::buffering_constraints_reached (TAO_Transport &,
+                                                        TAO_Stub &,
                                                         TAO_Transport_Buffering_Queue &)
 {
   // Always yes.

@@ -1,3 +1,10 @@
+Sat Oct 16 11:17:10 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* TAO/tao/Sync_Strategies.cpp (buffering_constraints_reached):
+	  Changed the signature of
+	  TAO_Flush_Sync_Strategy::buffering_constraints_reached() to
+	  match the base class.
+
 Fri Oct 15 17:28:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Connector.cpp (connect_i): Only close <new_sh> if we have a
