@@ -223,12 +223,9 @@
 
 #  define ACE_HAS_PTHREADS
 #  define ACE_HAS_PTHREADS_STD
-#  define ACE_HAS_PTHREAD_EQUAL
+#  define ACE_HAS_PTHREAD_SIGMASK
 
 #  define ACE_HAS_THREAD_SPECIFIC_STORAGE
-
-// Platform has pthread_sigmask defined
-#  define ACE_HAS_PTHREAD_SIGMASK
 #endif /* ACE_HAS_THREADS */
 
 #define ACE_HAS_POSIX_SEM

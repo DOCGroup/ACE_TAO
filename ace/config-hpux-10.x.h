@@ -191,7 +191,6 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 // will compile and link with this in place, but will not run.  HP says
 // the functions are not implemented.
 //#  define ACE_HAS_POSIX_SEM
-#  define ACE_HAS_PTHREAD_EQUAL
 
 #  define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
