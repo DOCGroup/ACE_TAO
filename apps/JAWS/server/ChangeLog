@@ -1,5 +1,24 @@
 Sat May 31 13:34:14 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
+	* jaws.auth:  This file is added to be a sample authorization
+	  file.  This is the file which JAWS is currently hardcoded to use
+	  to verify authenticated PUT requests.
+
+	* HTTP_Response.cpp:  Added code to normal_response () and to
+	  error_response () to better handle authentication.  Now, all PUT
+	  methods are required to be authenticated.  The strategy now is
+	  very simple, there is only one authorization file and only one
+	  realm of authorization.  This will be easy to bring up to spec
+	  later, though.
+
+	* HTTP_Helpers.h:  Added alphabet_ data member for the
+	  decode/encode base64 methods.
+
+	* HTTP_Helpers.cpp:  Added HTTP_decode_base64 and
+	  HTTP_encode_base64 methods.  HTTP_encode_base64 is currently not
+	  used, but HTTP_decode_base64 is being used for Basic
+	  authentication.
+
 	* *.h, *.cpp: Changed include lines from "JAWS/server/..." to
 	  "apps/JAWS/server/..." to fix an error reported by Rob Payne
 	  <repayne@jeeves.net>.  This was really due to a bug in the
