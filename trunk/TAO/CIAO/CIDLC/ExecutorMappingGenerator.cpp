@@ -910,19 +910,19 @@ namespace
     }
 
     virtual void
-    pre (InParameter& p)
+    pre (InParameter&)
     {
       os << "in ";
     }
 
     virtual void
-    pre (OutParameter& p)
+    pre (OutParameter&)
     {
       os << "out ";
     }
 
     virtual void
-    pre (InOutParameter& p)
+    pre (InOutParameter&)
     {
       os << "inout ";
     }
@@ -1038,7 +1038,7 @@ namespace
     }
 
     virtual void
-    names (Type& h)
+    names (Type&)
     {
       os<< "{"
         << "::Components::EnterpriseComponent "
@@ -1325,7 +1325,7 @@ namespace
     }
 
     virtual void
-    manages (Type& i)
+    manages (Type&)
     {
       /*
         os << "local interface " << name.simple () << "Context : "

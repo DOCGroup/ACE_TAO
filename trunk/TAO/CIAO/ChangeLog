@@ -1,3 +1,14 @@
+Wed Jan 21 11:16:31 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/Parsing/Recovery.hpp:
+	* CCF/CCF/IDL2/Traversal/ValueType.tpp:
+	* CCF/CCF/IDL3/Traversal/EventType.tpp:
+	* CIDLC/ExecutorMappingGenerator.cpp:
+	* CIDLC/ServantHeaderGenerator.cpp:
+	* CIDLC/ServantSourceGenerator.cpp:
+
+	  Cosmetic changes.
+	
 Wed Jan 21 10:17:22 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Makefile:
@@ -61,7 +72,7 @@ Wed Jan 21 10:17:22 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CCF/Documentation/Build.html:
 
 	  Fixed a typo.
-	
+
 Mon Jan 19 10:08:15 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/Makefile.alt:

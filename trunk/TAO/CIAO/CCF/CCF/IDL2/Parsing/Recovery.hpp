@@ -271,7 +271,7 @@ namespace CCF
                                       action_one,
                                       action_two)));
         }
-        
+
       };
 
       typedef

@@ -34,14 +34,14 @@ namespace CCF
 
       template <typename T>
       void ValueTypeTemplate<T>::
-      inherits (T& i, EdgeDispatcherBase&)
+      inherits (T&, EdgeDispatcherBase&)
       {
         //@@ TODO
       }
 
       template <typename T>
       void ValueTypeTemplate<T>::
-      inherits (T& i)
+      inherits (T&)
       {
         /*
         typename T::InheritsIterator
@@ -76,14 +76,14 @@ namespace CCF
 
       template <typename T>
       void ValueTypeTemplate<T>::
-      supports (T& i, EdgeDispatcherBase&)
+      supports (T&, EdgeDispatcherBase&)
       {
         //@@ TODO
       }
 
       template <typename T>
       void ValueTypeTemplate<T>::
-      supports (T& i)
+      supports (T&)
       {
         /*
         typename T::SupportsIterator
