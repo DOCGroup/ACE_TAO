@@ -178,8 +178,19 @@ UTL_String::compare (UTL_String *s)
    * Check that the names are typed consistently
    */
   if (result == I_TRUE && ACE_OS::strcmp (p_str, s->get_string ()) != 0)
-    idl_global->err ()->name_case_error (p_str, s->get_string ());
+    {
+      // Prevents redundant error reporting if we're in this branch.
+      result = I_FALSE;
 
+      if (idl_global->case_diff_error ())
+        {
+          idl_global->err ()->name_case_error (p_str, s->get_string ());
+        }
+      else
+        {
+          idl_global->err ()->name_case_warning (p_str, s->get_string ());
+        }
+    }
   return result;
 }
 
