@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver, messaging, portablegroup {
+project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver {
   sharedname   = TAO_FTORB_Utils
   idlflags    += -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance/FT_ORB_Utils_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
   dynamicflags = TAO_FT_ORB_UTILS_BUILD_DLL
@@ -11,13 +11,14 @@ project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver, messaging, po
   avoids      += minimum_corba
 
   IDL_Files {
-    FT_CORBA_ORB.idl
+    FT_CORBA_ORB.idl PortableGroup_Simple_DS.idl
   }
 
   Source_Files(ORBSVCS_COMPONENTS) {
     FTORB_Utils {
       FT_CORBA_ORBC.cpp
       FT_CORBA_ORBS.cpp
+      PortableGroup_Simple_DSC.cpp
       FaultTolerance/FT_IOGR_Property.cpp
     }
   }

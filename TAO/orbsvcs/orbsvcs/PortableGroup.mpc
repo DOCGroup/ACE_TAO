@@ -7,6 +7,7 @@ project(PortableGroup) : orbsvcslib, core, naming, svc_utils, portableserver, me
   dynamicflags = TAO_PORTABLEGROUP_BUILD_DLL
   tagchecks   += PortableGroup
   avoids      += minimum_corba
+  after       += FTORB_Utils
 
   IDL_Files {
     miop.idl
@@ -23,6 +24,7 @@ project(PortableGroup) : orbsvcslib, core, naming, svc_utils, portableserver, me
       miopS.cpp
       PortableGroupC.cpp
       PortableGroupS.cpp
+      PortableGroup_Simple_DSC.cpp
       PortableGroup
     }
   }

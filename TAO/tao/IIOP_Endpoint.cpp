@@ -24,7 +24,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
     , host_ ()
     , port_ (683) // default port (IANA assigned)
     , object_addr_ (addr)
-    , object_addr_set_ (0)
+    , object_addr_set_ (false)
     , next_ (0)
 {
   this->set (addr, use_dotted_decimal_addresses);
@@ -39,7 +39,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
     , host_ ()
     , port_ (port)
     , object_addr_ (addr)
-    , object_addr_set_ (0)
+    , object_addr_set_ (false)
     , next_ (0)
 {
   if (host != 0)
@@ -51,7 +51,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (void)
     , host_ ()
     , port_ (683)  // default port (IANA assigned)
     , object_addr_ ()
-    , object_addr_set_ (0)
+    , object_addr_set_ (false)
     , next_ (0)
 {
 }
@@ -63,7 +63,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
     , host_ ()
     , port_ (port)
     , object_addr_ ()
-    , object_addr_set_ (0)
+    , object_addr_set_ (false)
     , next_ (0)
 {
   if (host != 0)
@@ -173,27 +173,35 @@ TAO_IIOP_Endpoint::object_addr (void) const
 
       if (!this->object_addr_set_)
         {
-          if (this->object_addr_.set (this->port_,
-                                      this->host_.in ()) == -1)
-            {
-              // If this call fails, it most likely due a hostname
-              // lookup failure caused by a DNS misconfiguration.  If
-              // a request is made to the object at the given host and
-              // port, then a CORBA::TRANSIENT() exception should be
-              // thrown.
-
-              // Invalidate the ACE_INET_Addr.  This is used as a flag
-              // to denote that ACE_INET_Addr initialization failed.
-              this->object_addr_.set_type (-1);
-            }
-          else
-            {
-              this->object_addr_set_ = 1;
-            }
+          (void) this->object_addr_i ();
         }
     }
 
   return this->object_addr_;
+}
+
+void
+TAO_IIOP_Endpoint::object_addr_i (void) const
+{
+  // We should have already held the lock
+
+  if (this->object_addr_.set (this->port_,
+                              this->host_.in ()) == -1)
+    {
+      // If this call fails, it most likely due a hostname
+      // lookup failure caused by a DNS misconfiguration.  If
+      // a request is made to the object at the given host and
+      // port, then a CORBA::TRANSIENT() exception should be
+      // thrown.
+
+      // Invalidate the ACE_INET_Addr.  This is used as a flag
+      // to denote that ACE_INET_Addr initialization failed.
+      this->object_addr_.set_type (-1);
+    }
+  else
+    {
+      this->object_addr_set_ = true;
+    }
 }
 
 CORBA::Boolean
@@ -214,9 +222,30 @@ TAO_IIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 CORBA::ULong
 TAO_IIOP_Endpoint::hash (void)
 {
-  // We could call ACE_INET_Addr::hash() since it does much the same
-  // thing except that it converts the port from network byte order to
-  // host byte order.  As such, this implementation is actually less
-  // costly.
-  return this->object_addr ().get_ip_address () + this->port ();
+  if (this->hash_val_ != 0)
+    return this->hash_val_;
+
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->addr_lookup_lock_,
+                      this->hash_val_);
+    // .. DCL
+    if (this->hash_val_ != 0)
+      return this->hash_val_;
+
+    // A few comments about this optimization. The call below will
+    // deadlock if the object_addr_set is false. If you don't belive
+
+    if (!this->object_addr_set_)
+      {
+        // Set the object_addr first
+        (void) this->object_addr_i ();
+      }
+
+    this->hash_val_ =
+      this->object_addr_.get_ip_address () + this->port ();
+  }
+
+  return this->hash_val_;
 }
