@@ -23,11 +23,16 @@
 
 #include "SSLIOP_X509.h"
 
+#ifndef NO_RSA
+# include "SSLIOP_RSA.h"
+#endif  /* !NO_RSA */
+
+// #ifndef NO_DSA
+// # include "SSLIOP_DSA.h"
+// #endif  /* !NO_DSA */
+
 #include "orbsvcs/SecurityLevel2C.h"
 
-/// Forward declarations.
-struct x509_st;
-typedef x509_st X509;
 
 class TAO_SSLIOP_Credentials;
 typedef TAO_SSLIOP_Credentials* TAO_SSLIOP_Credentials_ptr;
@@ -107,6 +112,16 @@ public:
 
   /// Constructor
   TAO_SSLIOP_Credentials (X509 *cert);
+
+#ifndef NO_RSA
+  /// Constructor
+  TAO_SSLIOP_Credentials (X509 *cert, RSA *rsa);
+#endif  /* !NO_RSA */
+
+// #ifndef NO_DSA
+//   /// Constructor
+//   TAO_SSLIOP_Credentials (X509 *cert, DSA *dsa);
+// #endif  /* !NO_DSA */
 
   /// Return a duplicate (specifically a deep copy) of this credential
   /// object.
@@ -219,6 +234,32 @@ public:
   X509 *x509 (void);
   //@}
 
+#ifndef NO_RSA
+  //@{
+  /// Return a pointer to the underlying RSA key.
+  /**
+   * @return Non-zero value if RSA key is used.
+   *
+   * @note Caller owns the returned object.  Use a
+   *       TAO_SSLIOP_RSA_var.
+   */
+  RSA *rsa (void);
+  //@}
+#endif  /* !NO_RSA */
+
+// #ifndef NO_DSA
+//   //@{
+//   /// Return a pointer to the underlying DSA key.
+//   /**
+//    * @return Non-zero value if DSA key is used.
+//    *
+//    * @note Caller owns the returned object.  Use a
+//    *       TAO_SSLIOP_DSA_var.
+//    */
+//   DSA *dsa (void);
+//   //@}
+// #endif  /* !NO_DSA */
+
   //@{
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
   typedef TAO_SSLIOP_Credentials_ptr _ptr_type;
@@ -291,6 +332,14 @@ protected:
   /// Reference to the X.509 certificate associated with this SSLIOP
   /// Credentials object.
   TAO_SSLIOP_X509_var x509_;
+
+#ifndef NO_RSA
+  TAO_SSLIOP_RSA_var rsa_;
+#endif  /* !NO_RSA */
+
+// #ifndef NO_DSA
+//   TAO_SSLIOP_DSA_var dsa_;
+// #endif  /* !NO_DSA */
 
 };
 
