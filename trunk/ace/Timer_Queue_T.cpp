@@ -40,7 +40,7 @@ ACE_Timer_Node_T<TYPE, FUNCTOR>::ACE_Timer_Node_T (const TYPE &type,
 						   const ACE_Time_Value &t, 
 						   const ACE_Time_Value &i, 
 						   ACE_Timer_Node_T<TYPE, FUNCTOR> *n,
-						   int timer_id)
+						   long timer_id)
   : type_ (type), 
     act_ (a), 
     timer_value_ (t), 
@@ -59,7 +59,7 @@ ACE_Timer_Node_T<TYPE, FUNCTOR>::ACE_Timer_Node_T (const TYPE &type,
 						   const ACE_Time_Value &i, 
 						   ACE_Timer_Node_T<TYPE, FUNCTOR> *p,
                                                    ACE_Timer_Node_T<TYPE, FUNCTOR> *n,
-						   int timer_id)
+						   long timer_id)
   : type_ (type), 
     act_ (a), 
     timer_value_ (t), 
