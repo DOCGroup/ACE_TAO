@@ -184,6 +184,9 @@ protected:
   /// Contained instance.
   ACE_TSS_TYPE (TYPE) instance_;
 
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_TSS_Singleton (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &))
+
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
