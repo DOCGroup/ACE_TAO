@@ -1,3 +1,9 @@
+Tue Jun 17 11:02:19 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Hello/README: Updated the obsolete
+	  instructions to test run this component.  Thanks to Jesse
+	  Greenwald <jesse@cis.ksu.edu> for reporting this.
+
 Mon Jun 16 11:16:52 2003  Chris Cleeland  <cleeland@ociweb.com>
 
         * CIAO version 0.3.3 released.
