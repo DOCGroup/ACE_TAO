@@ -1,3 +1,10 @@
+Mon Oct 29 20:04:40 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Proactor_Test.cpp:
+
+	  More patches from Alexander Libman.  The Proactor_Test appears
+	  to finally work on Linux.
+
 Mon Oct 29 17:49:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp: Added some error checks at places where
