@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*- 
+//
 // $Id$
 
 // ============================================================================
@@ -28,6 +29,7 @@
 #include "ace/Naming_Context.h"
 #include "ace/Name_Request_Reply.h"
 #include "ace/Singleton.h"
+#include "ace/svc_export.h"
 
 class Naming_Context : public ACE_Naming_Context
 {

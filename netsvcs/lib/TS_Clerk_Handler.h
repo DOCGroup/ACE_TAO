@@ -25,6 +25,7 @@
 #include "ace/Connector.h"
 #include "ace/Malloc.h"
 #include "ace/Time_Request_Reply.h"
+#include "ace/svc_export.h"
 
 class ACE_Time_Info
 {
@@ -123,7 +124,7 @@ protected:
 
   enum
     {
-      MAX_RETRY_TIMEOUT = 300 
+      MAX_RETRY_TIMEOUT = 300
       // 5 minutes is the maximum timeout.
     };
 
