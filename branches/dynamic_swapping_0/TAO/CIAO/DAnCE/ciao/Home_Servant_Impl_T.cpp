@@ -48,6 +48,12 @@ namespace CIAO
                     COMP_EXEC_VAR,
                     COMP_SVNT>::~Home_Servant_Impl (void)
   {
+    const obj_iterator end (this->objref_map_.end ());
+    for (obj_iterator iter (this->objref_map_.begin ());
+         iter != end; ++iter)
+      {
+        this->remove_component ((*iter).int_id_);
+      }
   }
 
   // Operations for CCMHome interface.
