@@ -1,3 +1,10 @@
+Sat Apr 27 22:19:06 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
+
+	* tests/ORB_init/ORB_init.cpp:
+	* orbsvcs/tests/Concurrency/CC_command.cpp: Changed the
+	  CORBA::Exception::_id () call in these files to the new spec
+	  defined CORBA::Exception::_rep_id () call.
+	
 Sat Apr 27 18:27:19 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
