@@ -1,3 +1,13 @@
+Tue Nov 19 18:14:10 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* bin/auto_run_tests.lst:
+	  Modified Notify configurations.
+	
+	* bin/auto_run_tests.pl:
+	  Checkin on behalf of Irfan - Changed logic so that it checks for
+	  the existence of the executable and not of the parameters passed
+	  to the executable.
+
 Tue Nov 19 07:09:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Tests not runnable in minimum

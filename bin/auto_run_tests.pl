@@ -65,10 +65,22 @@ foreach $test ($config_list->valid_entries ()) {
     chdir ($ACE_ROOT."/$directory")
         || die "Error: Cannot chdir to $ACE_ROOT/$directory";
 
-    if (! -e $program) {
-        print STDERR "Error: $test does not exist\n";
-        next;
-    }
+    if ($program =~ /(.*?) (.*)/)
+      {
+        if (! -e $1)
+          {
+            print STDERR "Error: $directory.$1 does not exist\n";
+            next;
+          }
+      }
+    else
+      {
+        if (! -e $program)
+          {
+            print STDERR "Error: $directory.$program does not exist\n";
+            next;
+          }
+      }
 
     ### Genrate the -ExeSubDir and -Config options
     my $inherited_options = " -ExeSubDir $PerlACE::Process::ExeSubDir ";
