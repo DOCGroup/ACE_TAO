@@ -324,7 +324,7 @@ typedef ptrdiff_t ptr_arith_t;
   ACE_reinterpret_cast (PTR_TYPE, L.lo ())
 #else  /* ! ACE_LACKS_LONGLONG_T */
 # define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
-  ACE_reinterpret_cast (PTR_TYPE, ACE_static_cast (ptr_arith_t, L))
+  ACE_reinterpret_cast (PTR_TYPE, ACE_static_cast (ptrdiff_t, L))
 #endif /* ! ACE_LACKS_LONGLONG_T */
 
 // If the platform lacks a long long, define one.
