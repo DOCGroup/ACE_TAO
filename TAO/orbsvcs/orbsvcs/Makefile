@@ -48,7 +48,6 @@ ifndef TAO_ORBSVCS
   TAO_ORBSVCS = Naming \
                 ImplRepo \
                 Time \
-                Concurrency \
                 Property \
                 Trader \
                 LifeCycle \
@@ -57,6 +56,11 @@ ifndef TAO_ORBSVCS
                 CosEvent \
                 Event2 \
                 AV
+
+# This services is not compiled by default, it is rarely used and it
+# is not prepared to deal with exceptions
+#                Concurrency \
+
 endif # TAO_ORBSVCS
 
 ####

@@ -29,14 +29,12 @@ main (int argc, char *argv[])
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_UNUSED_ARG (sysex);
-      ACE_TRY_ENV.print_exception ("System Exception");
+      ACE_PRINT_EXCEPTION (sysex, "System Exception");
       return -1;
     }
   ACE_CATCH (CORBA::UserException, userex)
     {
-      ACE_UNUSED_ARG (userex);
-      ACE_TRY_ENV.print_exception ("User Exception");
+      ACE_PRINT_EXCEPTION (userex, "User Exception");
       return -1;
     }
   ACE_ENDTRY;
@@ -49,4 +47,3 @@ template class Server<Checkpoint_i>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate Server<Checkpoint_i>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

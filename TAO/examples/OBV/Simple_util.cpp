@@ -161,7 +161,8 @@ Server<Servant>::init (const char *servant_name,
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("\tException in activation of POA");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+                           "Exception in activation of POA");
       return -1;
     }
   ACE_ENDTRY;
@@ -318,7 +319,7 @@ Client<InterfaceObj, Var>::init (const char *name,
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Client_i::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client_i::init");
       return -1;
     }
   ACE_ENDTRY;
