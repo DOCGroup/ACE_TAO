@@ -48,10 +48,10 @@ int
 ACE_Object_Manager::cleanup_i (void *object,
                                ACE_CLEANUP_FUNC cleanup_hook,
                                void *param,
-                               ACE_hthread_t thread_handle)
+                               int thread_lifetime)
 {
   // Only process-wide cleanup is currently implemented.
-  if (thread_handle != (ACE_hthread_t) -1)
+  if (thread_lifetime)
     {
       ACE_NOTSUP_RETURN (-1);
     }
