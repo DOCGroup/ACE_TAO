@@ -346,16 +346,6 @@ TAO_IIOP_Transport::get_listen_point (
        index <= count;
        index++)
     {
-      ACE_INET_Addr tmp_addr;
-      CORBA::String_var acceptor_interface;
-
-      // Get the listen point on that acceptor if it has the same
-      // interface on which this connection is established
-      if (iiop_acceptor->hostname (this->orb_core_,
-                                   tmp_addr,
-                                   acceptor_interface.out ()) == -1)
-          continue;
-
       if (local_addr.get_ip_address()
           == endpoint_addr[index].get_ip_address())
         {

@@ -1,3 +1,12 @@
+Mon Nov 12 12:15:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	* tao/IIOP_Transport.cpp (get_listen_point): Removed some code
+	  that was there for more historic reasons. 
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Added a
+	  debug statement.
+
 Mon Nov 12 09:59:50 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp
