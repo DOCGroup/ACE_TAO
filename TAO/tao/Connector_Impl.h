@@ -13,6 +13,7 @@
 #ifndef TAO_CONNECTOR_IMPL_H
 #define TAO_CONNECTOR_IMPL_H
 #include "ace/pre.h"
+#include "tao/corbafwd.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -31,9 +31,12 @@
 #include "ace/SString.h"
 #include "tao/ORB.h"
 //#include "tao/Principal.h"
-#include "tao/GIOP_Message_Base.h"
+//#include "tao/GIOP_Message_Base.h"
 #include "tao/Tagged_Profile.h"
 #include "tao/OctetSeqC.h"
+
+class TAO_Pluggable_Messaging;
+class TAO_Transport;
 
 class TAO_Export TAO_ServerRequest
 {

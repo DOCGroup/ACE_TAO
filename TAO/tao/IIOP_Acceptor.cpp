@@ -19,27 +19,27 @@ ACE_RCSID(tao, IIOP_Acceptor, "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Acceptor<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Accept_Strategy<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Creation_Strategy<TAO_IIOP_Server_Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO_IIOP_Server_Connection_Handler>;
-template class ACE_Scheduling_Strategy<TAO_IIOP_Server_Connection_Handler>;
-template class TAO_Creation_Strategy<TAO_IIOP_Server_Connection_Handler>;
-template class TAO_Concurrency_Strategy<TAO_IIOP_Server_Connection_Handler>;
-template class TAO_Accept_Strategy<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Creation_Strategy<TAO_IIOP_Connection_Handler>;
+template class ACE_Concurrency_Strategy<TAO_IIOP_Connection_Handler>;
+template class ACE_Scheduling_Strategy<TAO_IIOP_Connection_Handler>;
+template class TAO_Creation_Strategy<TAO_IIOP_Connection_Handler>;
+template class TAO_Concurrency_Strategy<TAO_IIOP_Connection_Handler>;
+template class TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Acceptor<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Strategy_Acceptor<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<TAO_IIOP_Server_Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_IIOP_Server_Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO_IIOP_Server_Connection_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO_IIOP_Server_Connection_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO_IIOP_Server_Connection_Handler>
-#pragma instantiate TAO_Accept_Strategy<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Creation_Strategy<TAO_IIOP_Connection_Handler>
+#pragma instantiate ACE_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
+#pragma instantiate ACE_Scheduling_Strategy<TAO_IIOP_Connection_Handler>
+#pragma instantiate TAO_Creation_Strategy<TAO_IIOP_Connection_Handler>
+#pragma instantiate TAO_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
+#pragma instantiate TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -160,7 +160,7 @@ TAO_IIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
         iiop_profile = ACE_dynamic_cast (TAO_IIOP_Profile *,
                                          pfile);
         break;
-      }      
+      }
     }
 
   // If <mprofile> doesn't contain a IIOP_Profile, we need to create
@@ -183,11 +183,11 @@ TAO_IIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
           iiop_profile = 0;
           return -1;
         }
-      
+
       if (this->orb_core_->orb_params ()->std_profile_components () != 0)
         {
           iiop_profile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
-      
+
           CONV_FRAME::CodeSetComponentInfo code_set_info;
           code_set_info.ForCharData.native_code_set  =
             TAO_DEFAULT_CHAR_CODESET_ID;
@@ -200,8 +200,8 @@ TAO_IIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
     }
 
   // Add any remaining acceptor endpoints to the IIOP_Profile.
-  for (; 
-       index < this->endpoint_count_; 
+  for (;
+       index < this->endpoint_count_;
        ++index)
     {
       TAO_IIOP_Endpoint *endpoint = 0;
@@ -212,8 +212,8 @@ TAO_IIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
                       -1);
       endpoint->priority (this->priority_);
       iiop_profile->add_endpoint (endpoint);
-    }  
-  
+    }
+
   return 0;
 }
 
