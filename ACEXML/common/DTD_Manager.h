@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    DTDManager.h
+ *  @file    DTD_Manager.h
  *
  *  $Id$
  *
@@ -16,10 +16,15 @@
 #include "common/Element_Def_Builder.h"
 #include "common/Validator.h"
 
-class ACEXML_Export ACEXML_DTDManager
+/**
+ * @ class ACEXML_DTD_Manager DTD_Manager.h "common/DTD_Manager.h"
+ *
+ * @ todo Fill in the blank.
+ */
+class ACEXML_Export ACEXML_DTD_Manager
 {
 public:
-  virtual ~ACEXML_DTDManager () = 0;
+  virtual ~ACEXML_DTD_Manager () = 0;
 
   /**
    * Acquire a pointer to an element definition builder.
