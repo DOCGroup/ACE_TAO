@@ -1,3 +1,19 @@
+Mon Nov  5 13:07:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/IDL_Test/typedef.idl:
+
+          Changed declaration names to strings less likely to have
+          a name clash with a system or runtime variable name. Thanks
+          to Steve Osselton <steve@prismtechnologies.com> for reporting
+          such an occurrence on HP-UX 11.11.
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Added format strings to ACE_ERROR macros that I overlooked
+          in the last checkin of changes to this file. Thanks to
+          Chris Kohlhoff <kohlhoff@pop.ihug.com.au> for sending these
+          in.
+
 Mon Nov  5 12:56:15 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Concurrency/CC_LockSet.h:
