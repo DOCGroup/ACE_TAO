@@ -35,13 +35,12 @@ public:
             char **argv, 
             CORBA_Environment &env);
   // Initialize the ORB/POA, using the supplied command line
-  // arguments. 
+  // arguments or the default ORB components.
       
   CORBA::String activate (PortableServer::Servant servant,
                           CORBA_Environment &env);
-  // Activate <servant>, using the POA activate_object () call
-  // Users can call this method multiple times to activate multiple
-  // objects.
+  // Activate <servant>, using the POA <activate_object> call.  Users
+  // can call this method multiple times to activate multiple objects.
       
   int run (CORBA_Environment &env,
            ACE_Time_Value *tv = 0);
@@ -50,7 +49,7 @@ public:
   CORBA::ORB_ptr orb (void);
   // Accessor which returns the ORB pointer.
   
-  ~TAO_ORB_Manager ();
+  ~TAO_ORB_Manager (void);
   // Destructor
       
 protected:
