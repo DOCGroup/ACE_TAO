@@ -13,7 +13,7 @@ Timer_imp::Timer_imp (XtAppContext &app,
 }
 
 void 
-Timer_imp::start(void)
+Timer_imp::start (void)
 {
   // Reset the elapsed time
   this->counter_ = 0;
@@ -26,7 +26,7 @@ Timer_imp::start(void)
     }
   
   // Register a function to be called in interval_ milliseconds
-  this->id_ = XtAppAddTimeOut ( this->app_, 
+  this->id_ = XtAppAddTimeOut (this->app_, 
                                this->interval_, 
                                &Timer_imp::tick_callback, 
                                (XtPointer) this );
@@ -45,12 +45,12 @@ Timer_imp::stop (void)
 CORBA::Float
 Timer_imp::elapsed_time(void)
 {
-    return ( (CORBA::Float) counter_ * interval_ / 1000.0 );
+    return ((CORBA::Float) counter_ * interval_ / 1000.0 );
 }
 
 void 
 Timer_imp::tick_callback (XtPointer client_data, 
-                      XtIntervalId * )
+                          XtIntervalId * )
 {
   // Get the object pointer and call the corresponding tick function
   Timer_imp *obj = ACE_static_cast (Timer_imp *, client_data);

@@ -51,6 +51,6 @@ private:
 #include "test_i.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_HAS_FL */
+#endif /* ACE_HAS_XT */
 
-#endif /* TAO_FL_SERVER_TEST_I_H */
+#endif /* SERVER_TEST_I_H */
