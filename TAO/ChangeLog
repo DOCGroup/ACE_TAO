@@ -1,3 +1,8 @@
+Tue Jul  9 16:31:58 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/tests/Security/Big_Request/Makefile:
+	  Updated the dependencies to fix the compiler issues.
+
 Tue Jul  9 14:05:25 2002  Chad Elliott  <elliott_c@ociweb.com>
         * orbsvcs/orbsvcs/Loadbalancing.mpc:
         * tao/tao.mpc:
