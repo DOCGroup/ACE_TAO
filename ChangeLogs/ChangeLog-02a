@@ -1,3 +1,8 @@
+Mon Oct 29 17:49:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp: Added some error checks at places where
+	  token where acquired. 
+
 Mon Oct 29 16:59:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp (acquire_token): The acquire_token () called
