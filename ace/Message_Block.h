@@ -201,10 +201,10 @@ public:
   // before calling <_duplicate> on them.
 
   ACE_Message_Block *release (void);
-  // Decrease the shared reference count by 1.  If the reference count
-  // is > 0 then return this; else if reference count == 0 then delete
-  // <this> and return 0.  Behavior is undefined if reference count <
-  // 0.
+  // Decrease the shared ACE_Data_Block's reference count by 1.  If the
+  // ACE_Data_Block's reference count goes to 0, it is deleted.
+  // In all cases, this ACE_Message_Block is deleted - it must have come
+  // from the heap, or there will be trouble.
 
   static ACE_Message_Block *release (ACE_Message_Block *mb);
   // This behaves like the non-static method <release>, except that it
