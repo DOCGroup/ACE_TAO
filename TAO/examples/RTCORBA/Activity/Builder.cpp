@@ -65,7 +65,7 @@ Builder::init (int argc, char *argv[])
 
           ACE_NEW_RETURN (task, Thread_Task (), -1);
 
-          if (task->init (arg_shifter) == -1)
+          if (task->init_task (arg_shifter) == -1)
             return -1;
 
           task_list_[task_count++] = task;
