@@ -102,20 +102,18 @@ main (int argc, char *argv[])
                              ior),
                             1);
         }
-//for (size_t loop = 0; loop < 1000; ++loop)
-{
+
       Client client (server.in (), niterations);
-OutputDebugString ( "activating\n");
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate client threads\n"),
                           1);
-OutputDebugString ( "waiting\n");
+
       client.thr_mgr ()->wait ();
-OutputDebugString ( "threads finished\n");
+
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
-}
+
       if (server_shutdown)
         {
           server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -186,6 +184,5 @@ Client::svc (void)
                            "MT_Client: exception raised");
     }
   ACE_ENDTRY;
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("(%P|%t) thread exits.\n")));
   return 0;
 }
