@@ -1,3 +1,18 @@
+Wed Jul 28 18:26:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR_Stream.cpp:
+	* ace/Message_Block.h:
+	* ace/Message_Block.cpp:
+	* ace/Message_Block_T.h:
+	* ace/Message_Block_T.cpp:
+	  Re-implemented the clone() method without data copies in a
+	  backwards compatible way, a new clone_nocopy() method was added
+	  so classes that inherit from Data_Block and only override
+	  clone() will work correctly.
+	  Also fixed the implementation of Locked_Data_Blocked because it
+	  is used in TAO and we need zero-copy clone() operations in that
+	  case.
+
 Wed Jul 28 16:16:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (set): Fixed a unsigned/signed conversion problem

@@ -1032,5 +1032,5 @@ ACE_InputCDR::steal_contents (void)
 void
 ACE_InputCDR::reset_contents (void)
 {
-  this->start_.data_block (this->start_.data_block ()->clone (0, 0));
+  this->start_.data_block (this->start_.data_block ()->clone_nocopy ());
 }

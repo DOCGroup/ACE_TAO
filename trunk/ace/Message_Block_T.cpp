@@ -18,7 +18,7 @@ ACE_Locked_Data_Block<ACE_LOCK>::~ACE_Locked_Data_Block (void)
 }
 
 template<class L> ACE_Data_Block *
-ACE_Locked_Data_Block<L>::clone (ACE_Message_Block::Message_Flags mask) const
+ACE_Locked_Data_Block<L>::clone_nocopy (ACE_Message_Block::Message_Flags mask) const
 {
   ACE_TRACE ("ACE_Data_Block::clone");
 
@@ -39,9 +39,6 @@ ACE_Locked_Data_Block<L>::clone (ACE_Message_Block::Message_Flags mask) const
                                                    this->flags (),
                                                    this->data_block_allocator ()),
                          0);
-
-  // Copy all of the payload memory into the new object.
-  ACE_OS::memcpy (nb->base (), this->base (), this->size ());
 
   // Set new flags minus the mask...
   nb->clr_flags (mask | always_clear);
