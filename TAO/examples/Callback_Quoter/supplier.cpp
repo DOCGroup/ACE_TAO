@@ -10,7 +10,7 @@ main (int argc, char **argv)
   Supplier supplier;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\tMarketFeed Daemon\n\n"));
+              "\n\tMarket Status Supplier Daemon\n\n"));
 
   if (supplier.init (argc, argv) == -1)
     return -1;

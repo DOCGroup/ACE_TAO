@@ -43,10 +43,6 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE)
       if (buf[strlen -1] == '\n')
 	buf[strlen -1] = '\0';
 
-      ACE_DEBUG ((LM_DEBUG,
-		  "%s",
-		  buf));
-
       switch (tolower (buf[0]))
 	{
 	case 'r':

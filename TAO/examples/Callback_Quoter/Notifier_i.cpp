@@ -50,15 +50,23 @@ Notifier_i::register_callback (const char *stock_name,
 
   CONSUMERS *consumers = 0;
 
-  // @@ Please add a comment explaining what you're doing ;-)
+  // *done* @@ Please add a comment explaining what you're doing ;-)
+  // The consumer_map consists of the stockname and various consumers with their
+  // threshold values. To register a consumer into this map, first the stockname
+  // is matched with an existing one (if any) and the consumer and the threshold
+  // value is attached. Else, a new entry is created for the stockname.
+
   if (this->consumer_map_.find (stock_name, consumers) == 0)
     {
       // @@ Always make sure to check the return values of all
       // calls...
-      consumers->insert (consumer_data);
+     if ( consumers->insert (consumer_data) == -1)
+       ACE_ERROR ((LM_ERROR,
+		   "register_callback: Insert failed!/n"));
 
+     else
       ACE_DEBUG ((LM_DEBUG,
-		  "inserted map entry: stockname %s threshold %d",
+		  "Inserted map entry: stockname %s threshold %d",
 		  stock_name,
 		  threshold_value));
     }
@@ -68,14 +76,18 @@ Notifier_i::register_callback (const char *stock_name,
       // CORBA exceptions...
       consumers = new CONSUMERS;
 
-      // @@ Always make sure to check the return values of all
+      // *done* @@ Always make sure to check the return values of all
       // calls...
-      consumers->insert (consumer_data);
+      if (consumers->insert (consumer_data) == -1)
+	ACE_ERROR ((LM_ERROR,
+		   "register_callback: Insert failed!/n"));
 
-      // @@ Always make sure to check the return values of all
+      // *done* @@ Always make sure to check the return values of all
       // calls...
-      this->consumer_map_.bind (stock_name, consumers);
-
+      if (this->consumer_map_.bind (stock_name, consumers) == -1)
+         ACE_ERROR ((LM_ERROR,
+		   "register_callback: Bind failed!/n"));
+      else
       ACE_DEBUG ((LM_DEBUG,
 		  "new map entry: stockname %s threshold %d",
 		  stock_name,
@@ -98,7 +110,13 @@ void
 Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
 				       CORBA::Environment &TAO_TRY_ENV)
 {
-  // @@ Make sure to add a comment here.
+  // *done* @@ Make sure to add a comment here.
+
+  // The consumer_map consists of a map of stocknames with consumers
+  // and their threshold values attached to it. To unregister a consumer
+  // it is necessary to remove that entry from the map. Hence, the map
+  // is iterated till the consumer entry to be removed is found and then
+  // removed from the map.
 
   for (CONSUMER_MAP::ITERATOR iter = this->consumer_map_.begin ();
        iter!= this->consumer_map_.end ();
@@ -117,9 +135,11 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
        // will check only the consumer pointers.  If match found it
        // will be removed from the set.
 
-       // @@ Make sure to check the return value.
-        (*iter).int_id_->remove (consumer_to_remove);
-
+       // *done*  @@ Make sure to check the return value.
+       if ((*iter).int_id_->remove (consumer_to_remove) == -1)
+	 ACE_ERROR ((LM_ERROR,
+		     "unregister_callback: Remove failed!/n"));
+       else
         ACE_DEBUG ((LM_DEBUG,
 		    "unregister_callback:consumer removed\n"));
     }
@@ -164,7 +184,8 @@ Notifier_i::market_status (const char *stock_name,
 	      ACE_DEBUG ((LM_DEBUG,
 			  "pushing information to consumer\n"));
 
-	      // @@ Please add a comment.
+	      // *done* @@ Please add a comment.
+	      // The status desired by the consumer is then passed to it.
               (*iter).consumer_->push (interested_consumer_data);
 
 	    }
@@ -182,11 +203,13 @@ Notifier_i::market_status (const char *stock_name,
 void
 Notifier_i::shutdown (CORBA::Environment &)
 {
-  if (this->consumer_map_.current_size () > 0)
-    {
-        this->consumer_map_.close ();
+  /* if (this->consumer_map_.current_size () > 0)
+     {*/
+       if ( this->consumer_map_.close () == -1)
+	 ACE_ERROR ((LM_ERROR,
+		     "Consumer_map_close error!\n"));
 
-    }
+       // }
 
       /* for (CONSUMER_MAP::ITERATOR iter = this->consumer_map_.begin ();
 	   iter!= this->consumer_map_.end ();
