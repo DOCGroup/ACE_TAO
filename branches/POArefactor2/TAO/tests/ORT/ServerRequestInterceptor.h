@@ -27,6 +27,7 @@
 #include "tao/CORBA_String.h"
 
 #include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableServer/PS_CurrentC.h"
 
 
 #if defined(_MSC_VER)
