@@ -1,5 +1,9 @@
 Wed Nov 19 07:54:44 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/ACE.cpp (crc32): Reverted the COMPUTE macro back to its
+ 	  original value.  For some reason, the version given by Valik was
+ 	  failing.
+
 	* ace/SV_Semaphore_Complex.cpp (open): Make sure initialize the
  	  sem_number_ data member, though this isn't actually used for
  	  anything.
