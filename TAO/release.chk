@@ -1,0 +1,42 @@
+# $Id$
+
+Platform:
+	[] Solaris/CC
+	[] NT (MSVC++ 5.0)
+	[] Solaris/g++
+	[] IRIX
+	[] Linux/g++
+	[] Other (Linux/egcs, Solaris/egcs, etc.)
+
+[]   libTAO and TAO_IDL compile.
+[]   IDL_Cubit compiles
+	[] Runs
+[]   Param_Test compiles and runs for
+	[] DII short
+	[] DII ubstring
+	[] DII fixed_struct
+	[] DII strseq
+	[] DII var_struct
+	[] DII nested_struct
+	[] DII struct_seq
+	[] DII objref
+
+	[] SII short
+	[] SII ubstring
+	[] SII fixed_struct
+	[] SII strseq
+	[] SII var_struct
+	[] SII nested_struct
+	[] SII struct_seq
+	[] SII objref
+[] MT_Test compiles
+	[] runs for Octet
+	[] runs for Short
+	[] runs for Long
+	[] runs for Struct
+[] orbsvcs compiles
+	[] Event_Latency runs
+	[] Simple_Naming runs
+	[] Logger runs
+
+
