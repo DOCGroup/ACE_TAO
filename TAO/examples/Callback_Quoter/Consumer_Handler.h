@@ -64,7 +64,7 @@ public:
   int run (void);
   // Start the ORB object.
 
-  char *stock_name_;
+  const char *stock_name_;
   // the name of the stock the consumer is interested in.
 
   int threshold_value_;
@@ -78,7 +78,6 @@ public:
 
   Callback_Quoter::Consumer_var consumer_var_;
   // Pointer to the consumer object registered with the ORB.
-
 
   ACE_Reactor* reactor_used (void) const;
   // This method gives the reactor pointer.
