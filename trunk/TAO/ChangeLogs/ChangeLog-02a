@@ -1,407 +1,456 @@
+Fri Mar 30 11:20:25 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/AMI/FL_Callback/Makefile:
+        * examples/Content_Server/AMI_Iterator/Makefile:
+        * examples/Content_Server/AMI_Observer/Makefile:
+        * examples/Content_Server/SMI_Iterator/Makefile:
+        * examples/Event_Comm/Makefile:
+        * examples/Logging/Makefile:
+        * examples/Quoter/Makefile:
+        * examples/Simple/grid/Makefile:
+        * orbsvcs/examples/CosEC/Factory/Makefile:
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Makefile.av:
+        * orbsvcs/orbsvcs/Makefile.CosNaming:
+        * orbsvcs/orbsvcs/Makefile.CosTime:
+        * orbsvcs/orbsvcs/Makefile.CosTrading:
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/Makefile.SSLIOP:
+        * orbsvcs/orbsvcs/Makefile.Svc_Utils:
+        * orbsvcs/tests/AVStreams/benchmark/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/client/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Makefile:
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile:
+        * orbsvcs/tests/Interoperable_Naming/Makefile:
+        * orbsvcs/tests/LoadBalancing/Makefile:
+        * orbsvcs/tests/Security/Secure_Invocation/Makefile:
+        * orbsvcs/tests/Simple_Naming/Makefile:
+        * orbsvcs/tests/ior_corbaname/Makefile:
+        * performance-tests/Cubit/TAO/DII_Cubit/Makefile:
+          Generate dependencies again... the dependencies madness is
+          absurd!
+
+        * examples/AMI/FL_Callback/Progress_i.cpp:
+          Fixed double to int conversion warnings
+
+        * orbsvcs/IFR_Service/Makefile:
+        * orbsvcs/IFR_Service/Makefile.IFR_Service:
+        * TAO_IDL/Makefile:
+        * TAO_IDL/Makefile.dependencies:
+        * tests/Collocation/Makefile:
+          Fixed warnings during recursive 'make idl_stubs'
+
+        * tests/RTCORBA/Client_Propagated/client.bor:
+          Add missing object files.
+
 Fri Mar 30 11:26:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Load_Balancing/Load_Balancer_i.cpp:
-	* examples/Load_Balancing/Identity_i.cpp:
-	* examples/Load_Balancing_persistent/Identity_i.cpp:
-	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp: Fixed
-	  fuzz warnings.
+        * examples/Load_Balancing/Load_Balancer_i.cpp:
+        * examples/Load_Balancing/Identity_i.cpp:
+        * examples/Load_Balancing_persistent/Identity_i.cpp:
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp: Fixed
+          fuzz warnings.
 
 Fri Mar 30 10:48:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/Trading/Makefile: Updated dependencies.
+        * orbsvcs/tests/Trading/Makefile: Updated dependencies.
 
 Fri Mar 30 10:33:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Makefile:
-	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: Updated
-	  dependencies.  
+        * performance-tests/Cubit/TAO/MT_Cubit/Makefile:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Makefile: Updated
+          dependencies.
 
 Fri Mar 30 10:32:06 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test_client.dsp
-	* orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test_server.dsp:
-	* orbsvcs/tests/InterfaceRepo/Application_Test/README:
-	* orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
-	* orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.h:
-	* orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
-	* orbsvcs/tests/InterfaceRepo/Application_Test/test_i.h:
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.h:
-	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
-	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.h:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test_server.dsp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/README:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.h:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/test_i.h:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.h:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.h:
 
-	  Test code modified re IFR CORBA 2.4 compatibility changes, and
-	  Application_Test changed to use CORBA::Object::_get_interface()
-	  by default.
+          Test code modified re IFR CORBA 2.4 compatibility changes, and
+          Application_Test changed to use CORBA::Object::_get_interface()
+          by default.
 
-	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
-	* orbsvcs/IFR_Service/TCF_Export.h:
-	* orbsvcs/IFR_Service/TCF_Loader.cpp:
-	* orbsvcs/IFR_Service/TCF_Loader.h:
-	* orbsvcs/IFR_Service/TypeCodeFactory_DLL.bor:
-	* orbsvcs/IFR_Service/TypeCodeFactory_DLL.dsp:
-	* orbsvcs/IFR_Service/TypeCodeFactoryC.h:
-	* orbsvcs/IFR_Service/TypeCodeFactoryC.i:
-	* orbsvcs/IFR_Service/TypeCodeFactoryC.cpp:
-	* orbsvcs/IFR_Service/TypeCodeFactory_i.h:
-	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
+        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+        * orbsvcs/IFR_Service/TCF_Export.h:
+        * orbsvcs/IFR_Service/TCF_Loader.cpp:
+        * orbsvcs/IFR_Service/TCF_Loader.h:
+        * orbsvcs/IFR_Service/TypeCodeFactory_DLL.bor:
+        * orbsvcs/IFR_Service/TypeCodeFactory_DLL.dsp:
+        * orbsvcs/IFR_Service/TypeCodeFactoryC.h:
+        * orbsvcs/IFR_Service/TypeCodeFactoryC.i:
+        * orbsvcs/IFR_Service/TypeCodeFactoryC.cpp:
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.h:
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
 
-	  TypeCodeFactory related files removed from directory.
+          TypeCodeFactory related files removed from directory.
 
-	* orbsvcs/IFR_Service/IFR.dsw:
+        * orbsvcs/IFR_Service/IFR.dsw:
 
-	  TypeCodeFactory project removed from workspace.
+          TypeCodeFactory project removed from workspace.
 
-	* orbsvcs/IFR_Service/AbstractInterfaceDef_i.cpp:
-	* orbsvcs/IFR_Service/AbstractInterfaceDef_i.h:
-	* orbsvcs/IFR_Service/LocalInterfaceDef_i.cpp:
-	* orbsvcs/IFR_Service/LocalInterfaceDef_i.h:
+        * orbsvcs/IFR_Service/AbstractInterfaceDef_i.cpp:
+        * orbsvcs/IFR_Service/AbstractInterfaceDef_i.h:
+        * orbsvcs/IFR_Service/LocalInterfaceDef_i.cpp:
+        * orbsvcs/IFR_Service/LocalInterfaceDef_i.h:
 
-	  Files added to IFR_Service for IFR CORBA 2.4 version interfaces.
+          Files added to IFR_Service for IFR CORBA 2.4 version interfaces.
 
-	* orbsvcs/IFR_Service/IFR_BaseS.cpp:
-	* orbsvcs/IFR_Service/IFR_BaseS.h:
-	* orbsvcs/IFR_Service/IFR_BaseS.i:
-	* orbsvcs/IFR_Service/IFR_BaseS_T.cpp:
-	* orbsvcs/IFR_Service/IFR_BaseS_T.h:
-	* orbsvcs/IFR_Service/IFR_BaseS_T.i:
-	* orbsvcs/IFR_Service/IFR_BasicS.cpp:
-	* orbsvcs/IFR_Service/IFR_BasicS.h:
-	* orbsvcs/IFR_Service/IFR_BasicS.i:
-	* orbsvcs/IFR_Service/IFR_BasicS_T.cpp:
-	* orbsvcs/IFR_Service/IFR_BasicS_T.h:
-	* orbsvcs/IFR_Service/IFR_BasicS_T.i:
-	* orbsvcs/IFR_Service/IFR_ComponentsS.cpp:
-	* orbsvcs/IFR_Service/IFR_ComponentsS.h:
-	* orbsvcs/IFR_Service/IFR_ComponentsS.i:
-	* orbsvcs/IFR_Service/IFR_ComponentsS_T.cpp:
-	* orbsvcs/IFR_Service/IFR_ComponentsS_T.h:
-	* orbsvcs/IFR_Service/IFR_ComponentsS_T.i:
-	* orbsvcs/IFR_Service/IFR_ExtendedS.cpp:
-	* orbsvcs/IFR_Service/IFR_ExtendedS.h:
-	* orbsvcs/IFR_Service/IFR_ExtendedS.i:
-	* orbsvcs/IFR_Service/IFR_ExtendedS_T.cpp:
-	* orbsvcs/IFR_Service/IFR_ExtendedS_T.h:
-	* orbsvcs/IFR_Service/IFR_ExtendedS_T.i:
+        * orbsvcs/IFR_Service/IFR_BaseS.cpp:
+        * orbsvcs/IFR_Service/IFR_BaseS.h:
+        * orbsvcs/IFR_Service/IFR_BaseS.i:
+        * orbsvcs/IFR_Service/IFR_BaseS_T.cpp:
+        * orbsvcs/IFR_Service/IFR_BaseS_T.h:
+        * orbsvcs/IFR_Service/IFR_BaseS_T.i:
+        * orbsvcs/IFR_Service/IFR_BasicS.cpp:
+        * orbsvcs/IFR_Service/IFR_BasicS.h:
+        * orbsvcs/IFR_Service/IFR_BasicS.i:
+        * orbsvcs/IFR_Service/IFR_BasicS_T.cpp:
+        * orbsvcs/IFR_Service/IFR_BasicS_T.h:
+        * orbsvcs/IFR_Service/IFR_BasicS_T.i:
+        * orbsvcs/IFR_Service/IFR_ComponentsS.cpp:
+        * orbsvcs/IFR_Service/IFR_ComponentsS.h:
+        * orbsvcs/IFR_Service/IFR_ComponentsS.i:
+        * orbsvcs/IFR_Service/IFR_ComponentsS_T.cpp:
+        * orbsvcs/IFR_Service/IFR_ComponentsS_T.h:
+        * orbsvcs/IFR_Service/IFR_ComponentsS_T.i:
+        * orbsvcs/IFR_Service/IFR_ExtendedS.cpp:
+        * orbsvcs/IFR_Service/IFR_ExtendedS.h:
+        * orbsvcs/IFR_Service/IFR_ExtendedS.i:
+        * orbsvcs/IFR_Service/IFR_ExtendedS_T.cpp:
+        * orbsvcs/IFR_Service/IFR_ExtendedS_T.h:
+        * orbsvcs/IFR_Service/IFR_ExtendedS_T.i:
 
-	  New skeleton files have been added. Interface.pidl has been 
-	  split into four smaller files (see below) to make the files 
-	  generated from this large interface more manageable and 
-	  reduce compile time.
+          New skeleton files have been added. Interface.pidl has been
+          split into four smaller files (see below) to make the files
+          generated from this large interface more manageable and
+          reduce compile time.
 
-	* orbsvcs/IFR_Service/InterfaceS.cpp:
-	* orbsvcs/IFR_Service/InterfaceS.h:
-	* orbsvcs/IFR_Service/InterfaceS.i:
-	* orbsvcs/IFR_Service/InterfaceS_T.cpp:
-	* orbsvcs/IFR_Service/InterfaceS_T.h:
-	* orbsvcs/IFR_Service/InterfaceS_T.i:
+        * orbsvcs/IFR_Service/InterfaceS.cpp:
+        * orbsvcs/IFR_Service/InterfaceS.h:
+        * orbsvcs/IFR_Service/InterfaceS.i:
+        * orbsvcs/IFR_Service/InterfaceS_T.cpp:
+        * orbsvcs/IFR_Service/InterfaceS_T.h:
+        * orbsvcs/IFR_Service/InterfaceS_T.i:
 
-	  Removed from directory.
+          Removed from directory.
 
-	* orbsvcs/IFR_Service/AliasDef_i.cpp:
-	* orbsvcs/IFR_Service/AliasDef_i.h:
-	* orbsvcs/IFR_Service/ArrayDef_i.cpp:
-	* orbsvcs/IFR_Service/ArrayDef_i.h:
-	* orbsvcs/IFR_Service/AttributeDef_i.cpp:
-	* orbsvcs/IFR_Service/AttributeDef_i.h:
-	* orbsvcs/IFR_Service/ComponentDef_i.cpp:
-	* orbsvcs/IFR_Service/ComponentDef_i.h:
-	* orbsvcs/IFR_Service/ComponentRepository_i.cpp:
-	* orbsvcs/IFR_Service/ComponentRepository_i.h:
-	* orbsvcs/IFR_Service/concrete_classes.h:
-	* orbsvcs/IFR_Service/ConstantDef_i.cpp:
-	* orbsvcs/IFR_Service/ConstantDef_i.h:
-	* orbsvcs/IFR_Service/ConsumesDef_i.cpp:
-	* orbsvcs/IFR_Service/ConsumesDef_i.h:
-	* orbsvcs/IFR_Service/Contained_i.cpp:
-	* orbsvcs/IFR_Service/Contained_i.h:
-	* orbsvcs/IFR_Service/Container_i.cpp:
-	* orbsvcs/IFR_Service/Container_i.h:
-	* orbsvcs/IFR_Service/EmitsDef_i.cpp:
-	* orbsvcs/IFR_Service/EmitsDef_i.h:
-	* orbsvcs/IFR_Service/EnumDef_i.cpp:
-	* orbsvcs/IFR_Service/EnumDef_i.h:
-	* orbsvcs/IFR_Service/EventDef_i.cpp:
-	* orbsvcs/IFR_Service/EventDef_i.h:
-	* orbsvcs/IFR_Service/ExceptionDef_i.cpp:
-	* orbsvcs/IFR_Service/ExceptionDef_i.h:
-	* orbsvcs/IFR_Service/FactoryDef_i.cpp:
-	* orbsvcs/IFR_Service/FactoryDef_i.h:
-	* orbsvcs/IFR_Service/FinderDef_i.cpp:
-	* orbsvcs/IFR_Service/FinderDef_i.h:
-	* orbsvcs/IFR_Service/FixedDef_i.cpp:
-	* orbsvcs/IFR_Service/FixedDef_i.h:
-	* orbsvcs/IFR_Service/HomeDef_i.cpp:
-	* orbsvcs/IFR_Service/HomeDef_i.h:
-	* orbsvcs/IFR_Service/IDLType_i.h:
-	* orbsvcs/IFR_Service/IFR_Service.bor:
-	* orbsvcs/IFR_Service/IFR_Service.cpp:
-	* orbsvcs/IFR_Service/IFR_Service.dsp:
-	* orbsvcs/IFR_Service/IFR_Service.h:
-	* orbsvcs/IFR_Service/IRObject_i.cpp:
-	* orbsvcs/IFR_Service/IRObject_i.h:
-	* orbsvcs/IFR_Service/InterfaceDef_i.cpp:
-	* orbsvcs/IFR_Service/InterfaceDef_i.h:
-	* orbsvcs/IFR_Service/Makefile:
-	* orbsvcs/IFR_Service/Makefile.IFR_Service:
-	* orbsvcs/IFR_Service/Makefile.am:
-	* orbsvcs/IFR_Service/Makefile.bor:
-	* orbsvcs/IFR_Service/ModuleDef_i.cpp:
-	* orbsvcs/IFR_Service/ModuleDef_i.h:
-	* orbsvcs/IFR_Service/NativeDef_i.cpp:
-	* orbsvcs/IFR_Service/NativeDef_i.h:
-	* orbsvcs/IFR_Service/OperationDef_i.cpp:
-	* orbsvcs/IFR_Service/OperationDef_i.h:
-	* orbsvcs/IFR_Service/PrimaryKeyDef_i.cpp:
-	* orbsvcs/IFR_Service/PrimaryKeyDef_i.h:
-	* orbsvcs/IFR_Service/PrimitiveDef_i.cpp:
-	* orbsvcs/IFR_Service/PrimitiveDef_i.h:
-	* orbsvcs/IFR_Service/ProvidesDef_i.cpp:
-	* orbsvcs/IFR_Service/ProvidesDef_i.h:
-	* orbsvcs/IFR_Service/PublishesDef_i.cpp:
-	* orbsvcs/IFR_Service/PublishesDef_i.h:
-	* orbsvcs/IFR_Service/README:
-	* orbsvcs/IFR_Service/Repository_i.cpp:
-	* orbsvcs/IFR_Service/Repository_i.h:
-	* orbsvcs/IFR_Service/SequenceDef_i.cpp:
-	* orbsvcs/IFR_Service/SequenceDef_i.h:
-	* orbsvcs/IFR_Service/Servant_Factory.cpp:
-	* orbsvcs/IFR_Service/Servant_Factory.h:
-	* orbsvcs/IFR_Service/Servant_Locator.cpp:
-	* orbsvcs/IFR_Service/Servant_Locator.h:
-	* orbsvcs/IFR_Service/StringDef_i.cpp:
-	* orbsvcs/IFR_Service/StringDef_i.h:
-	* orbsvcs/IFR_Service/StructDef_i.cpp:
-	* orbsvcs/IFR_Service/StructDef_i.h:
-	* orbsvcs/IFR_Service/tmplinst.cpp:
-	* orbsvcs/IFR_Service/TypedefDef_i.cpp:
-	* orbsvcs/IFR_Service/TypedefDef_i.h:
-	* orbsvcs/IFR_Service/UnionDef_i.cpp:
-	* orbsvcs/IFR_Service/UnionDef_i.h:
-	* orbsvcs/IFR_Service/UsesDef_i.cpp:
-	* orbsvcs/IFR_Service/UsesDef_i.h:
-	* orbsvcs/IFR_Service/ValueBoxDef_i.cpp:
-	* orbsvcs/IFR_Service/ValueBoxDef_i.h:
-	* orbsvcs/IFR_Service/ValueDef_i.cpp:
-	* orbsvcs/IFR_Service/ValueDef_i.h:
-	* orbsvcs/IFR_Service/ValueMemberDef_i.cpp:
-	* orbsvcs/IFR_Service/ValueMemberDef_i.h:
-	* orbsvcs/IFR_Service/WstringDef_i.cpp:
-	* orbsvcs/IFR_Service/WstringDef_i.h:
+        * orbsvcs/IFR_Service/AliasDef_i.cpp:
+        * orbsvcs/IFR_Service/AliasDef_i.h:
+        * orbsvcs/IFR_Service/ArrayDef_i.cpp:
+        * orbsvcs/IFR_Service/ArrayDef_i.h:
+        * orbsvcs/IFR_Service/AttributeDef_i.cpp:
+        * orbsvcs/IFR_Service/AttributeDef_i.h:
+        * orbsvcs/IFR_Service/ComponentDef_i.cpp:
+        * orbsvcs/IFR_Service/ComponentDef_i.h:
+        * orbsvcs/IFR_Service/ComponentRepository_i.cpp:
+        * orbsvcs/IFR_Service/ComponentRepository_i.h:
+        * orbsvcs/IFR_Service/concrete_classes.h:
+        * orbsvcs/IFR_Service/ConstantDef_i.cpp:
+        * orbsvcs/IFR_Service/ConstantDef_i.h:
+        * orbsvcs/IFR_Service/ConsumesDef_i.cpp:
+        * orbsvcs/IFR_Service/ConsumesDef_i.h:
+        * orbsvcs/IFR_Service/Contained_i.cpp:
+        * orbsvcs/IFR_Service/Contained_i.h:
+        * orbsvcs/IFR_Service/Container_i.cpp:
+        * orbsvcs/IFR_Service/Container_i.h:
+        * orbsvcs/IFR_Service/EmitsDef_i.cpp:
+        * orbsvcs/IFR_Service/EmitsDef_i.h:
+        * orbsvcs/IFR_Service/EnumDef_i.cpp:
+        * orbsvcs/IFR_Service/EnumDef_i.h:
+        * orbsvcs/IFR_Service/EventDef_i.cpp:
+        * orbsvcs/IFR_Service/EventDef_i.h:
+        * orbsvcs/IFR_Service/ExceptionDef_i.cpp:
+        * orbsvcs/IFR_Service/ExceptionDef_i.h:
+        * orbsvcs/IFR_Service/FactoryDef_i.cpp:
+        * orbsvcs/IFR_Service/FactoryDef_i.h:
+        * orbsvcs/IFR_Service/FinderDef_i.cpp:
+        * orbsvcs/IFR_Service/FinderDef_i.h:
+        * orbsvcs/IFR_Service/FixedDef_i.cpp:
+        * orbsvcs/IFR_Service/FixedDef_i.h:
+        * orbsvcs/IFR_Service/HomeDef_i.cpp:
+        * orbsvcs/IFR_Service/HomeDef_i.h:
+        * orbsvcs/IFR_Service/IDLType_i.h:
+        * orbsvcs/IFR_Service/IFR_Service.bor:
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.dsp:
+        * orbsvcs/IFR_Service/IFR_Service.h:
+        * orbsvcs/IFR_Service/IRObject_i.cpp:
+        * orbsvcs/IFR_Service/IRObject_i.h:
+        * orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+        * orbsvcs/IFR_Service/InterfaceDef_i.h:
+        * orbsvcs/IFR_Service/Makefile:
+        * orbsvcs/IFR_Service/Makefile.IFR_Service:
+        * orbsvcs/IFR_Service/Makefile.am:
+        * orbsvcs/IFR_Service/Makefile.bor:
+        * orbsvcs/IFR_Service/ModuleDef_i.cpp:
+        * orbsvcs/IFR_Service/ModuleDef_i.h:
+        * orbsvcs/IFR_Service/NativeDef_i.cpp:
+        * orbsvcs/IFR_Service/NativeDef_i.h:
+        * orbsvcs/IFR_Service/OperationDef_i.cpp:
+        * orbsvcs/IFR_Service/OperationDef_i.h:
+        * orbsvcs/IFR_Service/PrimaryKeyDef_i.cpp:
+        * orbsvcs/IFR_Service/PrimaryKeyDef_i.h:
+        * orbsvcs/IFR_Service/PrimitiveDef_i.cpp:
+        * orbsvcs/IFR_Service/PrimitiveDef_i.h:
+        * orbsvcs/IFR_Service/ProvidesDef_i.cpp:
+        * orbsvcs/IFR_Service/ProvidesDef_i.h:
+        * orbsvcs/IFR_Service/PublishesDef_i.cpp:
+        * orbsvcs/IFR_Service/PublishesDef_i.h:
+        * orbsvcs/IFR_Service/README:
+        * orbsvcs/IFR_Service/Repository_i.cpp:
+        * orbsvcs/IFR_Service/Repository_i.h:
+        * orbsvcs/IFR_Service/SequenceDef_i.cpp:
+        * orbsvcs/IFR_Service/SequenceDef_i.h:
+        * orbsvcs/IFR_Service/Servant_Factory.cpp:
+        * orbsvcs/IFR_Service/Servant_Factory.h:
+        * orbsvcs/IFR_Service/Servant_Locator.cpp:
+        * orbsvcs/IFR_Service/Servant_Locator.h:
+        * orbsvcs/IFR_Service/StringDef_i.cpp:
+        * orbsvcs/IFR_Service/StringDef_i.h:
+        * orbsvcs/IFR_Service/StructDef_i.cpp:
+        * orbsvcs/IFR_Service/StructDef_i.h:
+        * orbsvcs/IFR_Service/tmplinst.cpp:
+        * orbsvcs/IFR_Service/TypedefDef_i.cpp:
+        * orbsvcs/IFR_Service/TypedefDef_i.h:
+        * orbsvcs/IFR_Service/UnionDef_i.cpp:
+        * orbsvcs/IFR_Service/UnionDef_i.h:
+        * orbsvcs/IFR_Service/UsesDef_i.cpp:
+        * orbsvcs/IFR_Service/UsesDef_i.h:
+        * orbsvcs/IFR_Service/ValueBoxDef_i.cpp:
+        * orbsvcs/IFR_Service/ValueBoxDef_i.h:
+        * orbsvcs/IFR_Service/ValueDef_i.cpp:
+        * orbsvcs/IFR_Service/ValueDef_i.h:
+        * orbsvcs/IFR_Service/ValueMemberDef_i.cpp:
+        * orbsvcs/IFR_Service/ValueMemberDef_i.h:
+        * orbsvcs/IFR_Service/WstringDef_i.cpp:
+        * orbsvcs/IFR_Service/WstringDef_i.h:
 
-	  IFR_Service files modified for CORBA 2.4 compatibility.
+          IFR_Service files modified for CORBA 2.4 compatibility.
 
-	* orbsvcs/IFR_Service/be_global.cpp:
-	* orbsvcs/IFR_Service/be_global.h:
-	* orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor.h:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_operation.h:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
-	* orbsvcs/IFR_Service/ifr_removing_visitor.cpp:
-	* orbsvcs/IFR_Service/ifr_visitor.cpp:
+        * orbsvcs/IFR_Service/be_global.cpp:
+        * orbsvcs/IFR_Service/be_global.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
+        * orbsvcs/IFR_Service/ifr_removing_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
 
-	  tao_ifr files modified for CORBA 2.4 compatibility.
+          tao_ifr files modified for CORBA 2.4 compatibility.
 
-	* TAO_IDL/be/be_codegen.cpp:
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
 
-	  IDL compiler files modified for implementation of
-	  CORBA::Object::_get_interface().
+          IDL compiler files modified for implementation of
+          CORBA::Object::_get_interface().
 
-	* tao/TypeCodeFactory/Makefile:
-	* tao/TypeCodeFactory/Makefile.bor:
-	* tao/TypeCodeFactory/TypeCodeFactory.dsp:
-	* tao/TypeCodeFactory/TypeCodeFactorC.h:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.inl:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactory_i.h:
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactory_Loader.h:
-	* tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp:
-	* tao/TypeCodeFactory/typecodefactory_export.h:
+        * tao/TypeCodeFactory/Makefile:
+        * tao/TypeCodeFactory/Makefile.bor:
+        * tao/TypeCodeFactory/TypeCodeFactory.dsp:
+        * tao/TypeCodeFactory/TypeCodeFactorC.h:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.inl:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_Loader.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp:
+        * tao/TypeCodeFactory/typecodefactory_export.h:
 
-	  Files moved from orbsvcs/IFR_Service to a new library.
-	  Some have been renamed to correspond to the naming
-	  conventions that we have developed for these satellite libraries.
+          Files moved from orbsvcs/IFR_Service to a new library.
+          Some have been renamed to correspond to the naming
+          conventions that we have developed for these satellite libraries.
 
-	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h:
-	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp:
 
-	  New file containing concrete dynamic service class to handle 
-	  the CORBA::ORB::create_*_tc methods.
+          New file containing concrete dynamic service class to handle
+          the CORBA::ORB::create_*_tc methods.
 
-	* tao/TypeCodeFactory/TypeCodeFactory.pidl:
+        * tao/TypeCodeFactory/TypeCodeFactory.pidl:
 
-	  IDL file split off from Interface.idl, containing just the 
-	  TypeCodeFactory interface and a few necessary typedefs. The 
-	  TypeCodeFactoryinterface has been made local. The stub files 
-	  above can now be regenerated from this file.
+          IDL file split off from Interface.idl, containing just the
+          TypeCodeFactory interface and a few necessary typedefs. The
+          TypeCodeFactoryinterface has been made local. The stub files
+          above can now be regenerated from this file.
 
-	* tao/TypeCodeFactory/diffs/TypeCodeFactoryC.h.diff:
-	* tao/TypeCodeFactory/diffs/TypeCodeFactoryC.i.diff:
-	* tao/TypeCodeFactory/diffs/TypeCodeFactoryC.cpp.diff:
+        * tao/TypeCodeFactory/diffs/TypeCodeFactoryC.h.diff:
+        * tao/TypeCodeFactory/diffs/TypeCodeFactoryC.i.diff:
+        * tao/TypeCodeFactory/diffs/TypeCodeFactoryC.cpp.diff:
 
-	  Added diff files for regenerating the TypeCodeFactory stub files.
+          Added diff files for regenerating the TypeCodeFactory stub files.
 
-	* tao/IFR_Client/IFR_Base.pidl:
+        * tao/IFR_Client/IFR_Base.pidl:
 
-	  Piece of Interface.pidl containing IFR abstract base interfaces
-	  and some non-interface datatypes used by all interfaces.
+          Piece of Interface.pidl containing IFR abstract base interfaces
+          and some non-interface datatypes used by all interfaces.
 
-	* tao/IFR_Client/IFR_Basic.pidl:
+        * tao/IFR_Client/IFR_Basic.pidl:
 
-	  Piece of Interface.pidl containing all interfaces and related
-	  datatypes, except those related to fixed types valuetypes and
- 	  CORBA components.
+          Piece of Interface.pidl containing all interfaces and related
+          datatypes, except those related to fixed types valuetypes and
+          CORBA components.
 
-	* tao/IFR_Client/IFR_Extended.pidl:
+        * tao/IFR_Client/IFR_Extended.pidl:
 
-	  Piece of Interface.pidl containing interfaces and related 
-	  datatypes pertaining to fixed types and valuetypes.
+          Piece of Interface.pidl containing interfaces and related
+          datatypes pertaining to fixed types and valuetypes.
 
-	* tao/IFR_Client/IFR_Components.pidl:
+        * tao/IFR_Client/IFR_Components.pidl:
 
-	  Piece of Interface.pidl containing interfaces and related
-	  datatypes pertaining to CORBA components.
-	  
-	* tao/IFR_Client/IFR_BaseC.cpp:
-	* tao/IFR_Client/IFR_BaseC.h:
-	* tao/IFR_Client/IFR_BaseC.i:
-	* tao/IFR_Client/IFR_BasicC.cpp:
-	* tao/IFR_Client/IFR_BasicC.h:
-	* tao/IFR_Client/IFR_BasicC.i:
-	* tao/IFR_Client/IFR_ComponentsC.cpp:
-	* tao/IFR_Client/IFR_ComponentsC.h:
-	* tao/IFR_Client/IFR_ComponentsC.i:
-	* tao/IFR_Client/IFR_ExtendedC.cpp:
-	* tao/IFR_Client/IFR_ExtendedC.h:
-	* tao/IFR_Client/IFR_ExtendedC.i:
+          Piece of Interface.pidl containing interfaces and related
+          datatypes pertaining to CORBA components.
 
-	  Stub files generated from the above .pidl files. The motivation
-	  for this split of .pidl files and generated files is twofold.
-	  First, the stub files are now much smaller. Their former huge
-	  size was causing extra long compile and link times, as well as
-	  extreme memory requirements. Second, this scheme will simplify 
-	  further modularization in the future.
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BaseC.i:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IFR_Client/IFR_BasicC.i:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * tao/IFR_Client/IFR_ComponentsC.i:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.h:
+        * tao/IFR_Client/IFR_ExtendedC.i:
 
-	* tao/IFR_Client/ifrfwd.h:
-	* tao/IFR_Client/InterfaceC.cpp:
-	* tao/IFR_Client/InterfaceC.h:
-	* tao/IFR_Client/InterfaceC.i:
+          Stub files generated from the above .pidl files. The motivation
+          for this split of .pidl files and generated files is twofold.
+          First, the stub files are now much smaller. Their former huge
+          size was causing extra long compile and link times, as well as
+          extreme memory requirements. Second, this scheme will simplify
+          further modularization in the future.
 
-	  Removed from IFR_Client directory.
+        * tao/IFR_Client/ifrfwd.h:
+        * tao/IFR_Client/InterfaceC.cpp:
+        * tao/IFR_Client/InterfaceC.h:
+        * tao/IFR_Client/InterfaceC.i:
 
-	* tao/IFR_Client/Interface.pidl:
+          Removed from IFR_Client directory.
 
-	  Kept around to show the entire IFR interface in one
-	  piece (except for TypeCodeFactory) with annotations
-	  showing the differences between the CORBA 2.x version
-	  and the CORBA Components version.
+        * tao/IFR_Client/Interface.pidl:
 
-	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
-	* tao/IFR_Client/IFR_Client_Adapter_Impl.h:
-	* tao/IFR_Client/Makefile:
-	* tao/IFR_Client/Makefile.bor:
-	* tao/IFR_Client/TAO_IFR_Client.dsp:
+          Kept around to show the entire IFR interface in one
+          piece (except for TypeCodeFactory) with annotations
+          showing the differences between the CORBA 2.x version
+          and the CORBA Components version.
 
-	  IFR_Client files modified for CORBA 2.4 compatibility
-	  and to reflect the changes above.
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+        * tao/IFR_Client/Makefile:
+        * tao/IFR_Client/Makefile.bor:
+        * tao/IFR_Client/TAO_IFR_Client.dsp:
 
-	* tao/Domain/DomainS.cpp:
-	* tao/Domain/DomainS.h:
+          IFR_Client files modified for CORBA 2.4 compatibility
+          and to reflect the changes above.
 
-	  TAO_Domain library files modified for IFR CORBA 2.4
-	  compatibility.
+        * tao/Domain/DomainS.cpp:
+        * tao/Domain/DomainS.h:
 
-	* tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
-	* tao/PortableServer/Direct_Object_Proxy_Impl.h:
-	* tao/PortableServer/Servant_Base.cpp:
-	* tao/PortableServer/Servant_Base.h:
-	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
-	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
+          TAO_Domain library files modified for IFR CORBA 2.4
+          compatibility.
 
-	  TAO_PortableServer library files modified as part of
-	  CORBA::Object::_get_interface() implementation.
+        * tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
+        * tao/PortableServer/Direct_Object_Proxy_Impl.h:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
+        * tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
 
-	* tao/TypeCodeFactory_Adapter.cpp:
-	* tao/TypeCodeFactory_Adapter.h:
+          TAO_PortableServer library files modified as part of
+          CORBA::Object::_get_interface() implementation.
 
-	  New files containing the base class for the TypeCodeFactory
-	  library dynamic service object.
+        * tao/TypeCodeFactory_Adapter.cpp:
+        * tao/TypeCodeFactory_Adapter.h:
 
-	* tao/Abstract_Servant_Base.h:
-	* tao/DomainC.cpp:
-	* tao/DomainC.h:
-	* tao/IFR_Client_Adapter.cpp:
-	* tao/IFR_Client_Adapter.h:
-	* tao/IFR_TypeCodes.cpp:
-	* tao/LocalObject.cpp:
-	* tao/LocalObject.h:
-	* tao/Makefile:
-	* tao/Makefile.bor:
-	* tao/ORB.cpp:
-	* tao/ORB.h:
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i:
-	* tao/Object.cpp:
-	* tao/Object.h:
-	* tao/Object_Proxy_Impl.h:
-	* tao/Remote_Object_Proxy_Broker.cpp:
-	* tao/Remote_Object_Proxy_Impl.cpp:
-	* tao/Remote_Object_Proxy_Impl.h:
-	* tao/TAO.dsp:
-	* tao/corbafwd.h:
+          New files containing the base class for the TypeCodeFactory
+          library dynamic service object.
 
-	  TAO files modified as part of one or more of the general
-	  changes described above, which are:
+        * tao/Abstract_Servant_Base.h:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/IFR_Client_Adapter.cpp:
+        * tao/IFR_Client_Adapter.h:
+        * tao/IFR_TypeCodes.cpp:
+        * tao/LocalObject.cpp:
+        * tao/LocalObject.h:
+        * tao/Makefile:
+        * tao/Makefile.bor:
+        * tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Object_Proxy_Impl.h:
+        * tao/Remote_Object_Proxy_Broker.cpp:
+        * tao/Remote_Object_Proxy_Impl.cpp:
+        * tao/Remote_Object_Proxy_Impl.h:
+        * tao/TAO.dsp:
+        * tao/corbafwd.h:
 
-	  - TypeCodeFactory moved to new location.
+          TAO files modified as part of one or more of the general
+          changes described above, which are:
 
-	  - Interface Repository now CORBA 2.4 compliant.
+          - TypeCodeFactory moved to new location.
 
-	  - CORBA::ORB::create_*_tc() methods implemented.
+          - Interface Repository now CORBA 2.4 compliant.
 
-	  - CORBA::Object::_get_interface() method implemented.
+          - CORBA::ORB::create_*_tc() methods implemented.
+
+          - CORBA::Object::_get_interface() method implemented.
 
 Thu Mar 29 19:17:56 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/Security/SecurityLevel1/README: 
-	  Forgot to add the pass phrase for the certificates.
+        * orbsvcs/tests/Security/SecurityLevel1/README:
+          Forgot to add the pass phrase for the certificates.
 
 Thu Mar 29 19:06:36 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/Security/SecurityLevel1/client.cpp : 
-	* orbsvcs/tests/Security/SecurityLevel1/server.cpp : 
-	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp : 
-	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.h: 
-	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test.idl: 
-	* orbsvcs/tests/Security/SecurityLevel1/Makefile: 
-	* orbsvcs/tests/Security/SecurityLevel1/README: 
-	  Completed the test for the SecurityLevel1 interface.
+        * orbsvcs/tests/Security/SecurityLevel1/client.cpp :
+        * orbsvcs/tests/Security/SecurityLevel1/server.cpp :
+        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp :
+        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.h:
+        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test.idl:
+        * orbsvcs/tests/Security/SecurityLevel1/Makefile:
+        * orbsvcs/tests/Security/SecurityLevel1/README:
+          Completed the test for the SecurityLevel1 interface.
 
-	* orbsvcs/tests/Security/SecurityLevel1/client_key.pem: 
-	* orbsvcs/tests/Security/SecurityLevel1/server_key.pem: 
-	* orbsvcs/tests/Security/SecurityLevel1/server_cert.pem: 
-	* orbsvcs/tests/Security/SecurityLevel1/client_cert.pem: 
-	* orbsvcs/tests/Security/SecurityLevel1/ca.pem: 
-	  The newly generated certificates and keys.
-	
-	* orbsvcs/tests/Security/SecurityLevel1/run_test.pl: 
-	  Added the perl script as well.
+        * orbsvcs/tests/Security/SecurityLevel1/client_key.pem:
+        * orbsvcs/tests/Security/SecurityLevel1/server_key.pem:
+        * orbsvcs/tests/Security/SecurityLevel1/server_cert.pem:
+        * orbsvcs/tests/Security/SecurityLevel1/client_cert.pem:
+        * orbsvcs/tests/Security/SecurityLevel1/ca.pem:
+          The newly generated certificates and keys.
 
-	* orbsvcs/tests/Security/SecurityLevel1/client.conf: 
-	* orbsvcs/tests/Security/SecurityLevel1/server.conf: 
-	  The server and client conf files. 
-	
+        * orbsvcs/tests/Security/SecurityLevel1/run_test.pl:
+          Added the perl script as well.
+
+        * orbsvcs/tests/Security/SecurityLevel1/client.conf:
+        * orbsvcs/tests/Security/SecurityLevel1/server.conf:
+          The server and client conf files.
+
 Thu Mar 29 17:58:30 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Sequence_T.h:
@@ -413,7 +462,7 @@ Thu Mar 29 17:58:30 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Mon Mar 26 22:34:39 2001  Jeff Parsons <parsons@cs.wustl.edu>.
 
-          Again, thanks to Derek Dominish <Derek.Dominish@Australia.Boeing.com> 
+          Again, thanks to Derek Dominish <Derek.Dominish@Australia.Boeing.com>
           for pointing this out.
 
 Thu Mar 29 14:18:53 2001  Carlos O'Ryan  <coryan@uci.edu>

@@ -45,6 +45,4 @@ libTAO_IDL_BE_DLL.a:
 
 endif # static_libs_only
 
-clean realclean:
-
-depend:
+depend idl_stubs clean realclean:
