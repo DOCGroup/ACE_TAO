@@ -1,0 +1,412 @@
+// $Id$
+
+// POA related IDL from "ORB Portability Joint Submission", orbos/97-04-14,
+//    Section 3.4
+//
+// Changes to IDL in that section:
+//   1.  Take out "..." in CORBA module which indicated "everything else
+//       in the CORBA module".
+//   2.  Add some definition from the full CORBA module which are needed
+//       for compiling the PortableServer module.
+//   3.  Add fake definitions of "native" since it does not yet exist
+//       in IDL. These fake definitions allow the rest of the module to
+//       compile as if "native" were indeed an IDL keyword.
+//   4.  Took out an extra semi-colon accidentally added during last
+//       editing pass
+// These changes (except removal of "...") are marked with beginning and
+//   ending comment lines containing "****change****".
+
+// IDL
+#pragma prefix "omg.org"
+
+// IDL
+module CORBA
+{
+  typedef string Identifier;
+  typedef string RepositoryId;
+
+  interface Current{};
+
+  // Basic Policy definition
+  typedef unsigned long PolicyType;
+
+  interface Policy
+    {
+      readonly attribute PolicyType policy_type;
+      Policy copy( );
+      void destroy( );
+    };
+
+  typedef sequence <Policy>  PolicyList;
+
+  // ....
+};
+
+module PortableServer
+{
+  // forward reference
+  interface POA;
+
+  native Servant;
+  typedef sequence<octet> ObjectId;
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+  exception ForwardRequest
+    {
+      Object forward_reference;
+    };
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  const CORBA::PolicyType THREAD_POLICY_ID = 16;
+  const CORBA::PolicyType LIFESPAN_POLICY_ID = 17;
+  const CORBA::PolicyType ID_UNIQUENESS_POLICY_ID = 18;
+  const CORBA::PolicyType ID_ASSIGNMENT_POLICY_ID = 19;
+  const CORBA::PolicyType IMPLICIT_ACTIVATION_POLICY_ID = 20;
+  const CORBA::PolicyType SERVANT_RETENTION_POLICY_ID = 21;
+  const CORBA::PolicyType REQUEST_PROCESSING_POLICY_ID = 22;
+
+  // **********************************************
+  //
+  // Policy interfaces
+  //
+  // **********************************************
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+  enum ThreadPolicyValue {
+    ORB_CTRL_MODEL,
+    SINGLE_THREAD_MODEL
+  };
+  interface ThreadPolicy : CORBA::Policy
+    {
+      readonly attribute ThreadPolicyValue value;
+    };
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  enum LifespanPolicyValue {
+    TRANSIENT,
+    PERSISTENT
+  };
+  interface LifespanPolicy : CORBA::Policy
+    {
+      readonly attribute LifespanPolicyValue value;
+    };
+
+  enum IdUniquenessPolicyValue {
+    UNIQUE_ID,
+    MULTIPLE_ID
+  };
+  interface IdUniquenessPolicy : CORBA::Policy
+    {
+      readonly attribute IdUniquenessPolicyValue value;
+    };
+
+  enum IdAssignmentPolicyValue {
+    USER_ID,
+    SYSTEM_ID
+  };
+  interface IdAssignmentPolicy : CORBA::Policy
+    {
+      readonly attribute IdAssignmentPolicyValue value;
+    };
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+  enum ImplicitActivationPolicyValue {
+    IMPLICIT_ACTIVATION,
+    NO_IMPLICIT_ACTIVATION
+  };
+  interface ImplicitActivationPolicy : CORBA::Policy
+    {
+      readonly attribute ImplicitActivationPolicyValue value;
+    };
+
+  enum ServantRetentionPolicyValue {
+    RETAIN,
+    NON_RETAIN
+  };
+  interface ServantRetentionPolicy : CORBA::Policy
+    {
+      readonly attribute ServantRetentionPolicyValue value;
+    };
+
+  enum RequestProcessingPolicyValue {
+    USE_ACTIVE_OBJECT_MAP_ONLY,
+    USE_DEFAULT_SERVANT,
+    USE_SERVANT_MANAGER
+  };
+  interface RequestProcessingPolicy : CORBA::Policy
+    {
+      readonly attribute RequestProcessingPolicyValue value;
+    };
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  // **************************************************
+  //
+  // POAManager interface
+  //
+  // **************************************************
+
+  interface POAManager
+    {
+      enum State
+      {
+        HOLDING,
+        ACTIVE,
+        DISCARDING,
+        INACTIVE
+      };
+      exception AdapterInactive{};
+
+      void activate()
+        raises(AdapterInactive);
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+      void hold_requests(in boolean wait_for_completion)
+        raises(AdapterInactive);
+      void discard_requests(in boolean wait_for_completion)
+        raises(AdapterInactive);
+      void deactivate(  in boolean etherealize_objects,
+                        in boolean wait_for_completion)
+        raises(AdapterInactive);
+#endif /* TAO_HAS_MINIMUM_CORBA */
+      State get_state ();
+    };
+
+  // **************************************************
+  //
+  // AdapterActivator interface
+  //
+  // **************************************************
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+  interface AdapterActivator
+    {
+      boolean unknown_adapter(in POA parent, in string name);
+    };
+
+  // **************************************************
+  //
+  // ServantManager interface
+  //
+  // **************************************************
+
+  interface ServantManager
+    { };
+
+  interface ServantActivator : ServantManager {
+    Servant incarnate (
+                       in ObjectId      oid,
+                       in POA   adapter )
+      raises (ForwardRequest);
+
+    void etherealize (
+                      in ObjectId       oid,
+                      in POA    adapter,
+                      in Servant        serv,
+                      in boolean        cleanup_in_progress,
+                      in boolean        remaining_activations );
+  };
+
+  interface ServantLocator : ServantManager {
+    native      Cookie;
+
+    Servant preinvoke(
+                      in ObjectId       oid,
+                      in POA    adapter,
+                      in CORBA::Identifier     operation,
+                      out Cookie        the_cookie )
+      raises (ForwardRequest);
+
+    void postinvoke(
+                    in ObjectId         oid,
+                    in POA      adapter,
+                    in CORBA::Identifier       operation,
+                    in Cookie   the_cookie,
+                    in Servant  the_servant     );
+  };
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+
+  // **************************************************
+  //
+  // POA interface
+  //
+  // **************************************************
+
+  interface POA
+    {
+      exception AdapterAlreadyExists {};
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+      exception AdapterInactive {};
+#endif /* TAO_HAS_MINIMUM_CORBA */
+      exception AdapterNonExistent {};
+      exception InvalidPolicy { unsigned short index; };
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+      exception NoServant {};
+#endif /* TAO_HAS_MINIMUM_CORBA */
+      exception ObjectAlreadyActive {};
+      exception ObjectNotActive {};
+      exception ServantAlreadyActive {};
+      exception ServantNotActive {};
+      exception WrongAdapter {};
+      exception WrongPolicy {};
+
+      //--------------------------------------------------
+      //
+      // POA creation and destruction
+      //
+      //--------------------------------------------------
+
+      POA create_POA(in string adapter_name,
+                     in POAManager a_POAManager,
+                     in CORBA::PolicyList policies)
+        raises (AdapterAlreadyExists, InvalidPolicy);
+
+      POA find_POA(in string adapter_name,  in boolean activate_it)
+        raises (AdapterNonExistent);
+
+      void destroy(     in boolean etherealize_objects,
+                        in boolean wait_for_completion);
+
+      // **************************************************
+      //
+      // Factories for Policy objects
+      //
+      // **************************************************
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+      ThreadPolicy
+        create_thread_policy(in ThreadPolicyValue value);
+#endif /* TAO_HAS_MINIMUM_CORBA */
+      LifespanPolicy
+        create_lifespan_policy(in LifespanPolicyValue value);
+      IdUniquenessPolicy
+        create_id_uniqueness_policy
+        (in IdUniquenessPolicyValue value);
+      IdAssignmentPolicy
+        create_id_assignment_policy
+        (in IdAssignmentPolicyValue value);
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+      ImplicitActivationPolicy
+        create_implicit_activation_policy
+        (in ImplicitActivationPolicyValue value);
+      ServantRetentionPolicy
+        create_servant_retention_policy
+        (in ServantRetentionPolicyValue value);
+      RequestProcessingPolicy
+        create_request_processing_policy
+        (in RequestProcessingPolicyValue value);
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+      //--------------------------------------------------
+      //
+      // POA attributes
+      //
+      //--------------------------------------------------
+
+      readonly attribute string the_name;
+      readonly attribute POA the_parent;
+      readonly attribute POAManager the_POAManager;
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+      attribute AdapterActivator the_activator;
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+
+      //--------------------------------------------------
+      //
+      // Servant Manager registration:
+      //
+      //--------------------------------------------------
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+      ServantManager get_servant_manager()
+        raises (WrongPolicy);
+
+      void set_servant_manager( in ServantManager imgr)
+        raises (WrongPolicy);
+
+      //--------------------------------------------------
+      //
+      // operations for the USE_DEFAULT_SERVANT policy
+      //
+      //--------------------------------------------------
+
+      Servant get_servant()
+        raises (NoServant, WrongPolicy);
+
+      void set_servant( in Servant p_servant)
+        raises (WrongPolicy);
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+      // **************************************************
+      //
+      // object activation and deactivation
+      //
+      // **************************************************
+
+      ObjectId activate_object( in Servant p_servant )
+        raises (ServantAlreadyActive, WrongPolicy);
+
+      void activate_object_with_id(
+                                   in ObjectId id,
+                                   in Servant p_servant)
+        raises (ServantAlreadyActive, ObjectAlreadyActive,
+                WrongPolicy);
+
+      void deactivate_object(in ObjectId oid)
+        raises (ObjectNotActive, WrongPolicy);
+
+      // **************************************************
+      //
+      // reference creation operations
+      //
+      // **************************************************
+
+      Object create_reference (
+                               in CORBA::RepositoryId intf )
+        raises (WrongPolicy);
+
+      Object create_reference_with_id (
+                                       in ObjectId oid,
+                                       in CORBA::RepositoryId intf )
+        raises (WrongPolicy);
+
+
+      //--------------------------------------------------
+      //
+      // Identity mapping operations:
+      //
+      //--------------------------------------------------
+
+      ObjectId servant_to_id(in Servant p_servant)
+        raises (ServantNotActive, WrongPolicy);
+
+      Object servant_to_reference(in Servant p_servant)
+        raises (ServantNotActive, WrongPolicy);
+
+      Servant reference_to_servant(in Object reference)
+        raises (ObjectNotActive, WrongAdapter, WrongPolicy);
+
+      ObjectId reference_to_id(in Object reference)
+        raises (WrongAdapter, WrongPolicy);
+
+      Servant id_to_servant(in ObjectId oid)
+        raises (ObjectNotActive, WrongPolicy);
+
+      Object id_to_reference(in ObjectId oid)
+        raises (ObjectNotActive, WrongPolicy);
+
+    };
+
+
+  // **************************************************
+  //
+  // Current interface
+  //
+  // **************************************************
+
+  interface Current : CORBA::Current
+    {
+      exception NoContext { };
+
+      POA get_POA() raises (NoContext);
+      ObjectId get_object_id() raises (NoContext);
+    };
+
+};
