@@ -4,9 +4,8 @@
 // ============================================================================
 //
 // = DESCRIPTION
-//   This test to measure how many events per minute can the EC
-//   process, it also serves as an example how how to encode complex
-//   data types in a octet sequence.
+//   This is a helper class for the throughput tests of the Event
+//   Channel.
 //
 // ============================================================================
 
@@ -43,8 +42,8 @@ public:
                 int burst_size,
                 int event_size,
                 int burst_pause,
-                int event_a,
-                int event_b,
+                int type_start,
+                int type_count,
                 RtecEventChannelAdmin::EventChannel_ptr ec,
                 CORBA::Environment& _env);
   // This method connects the supplier to the EC.
@@ -89,8 +88,8 @@ private:
   int burst_size_;
   int event_size_;
   int burst_pause_;
-  int event_a_;
-  int event_b_;
+  int type_start_;
+  int type_count_;
   // The test data.
 };
 

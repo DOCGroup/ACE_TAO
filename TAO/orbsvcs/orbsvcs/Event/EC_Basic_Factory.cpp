@@ -3,7 +3,7 @@
 #include "EC_Basic_Factory.h"
 #include "EC_Dispatching.h"
 #include "EC_Basic_Filter_Builder.h"
-#include "EC_ConsumerAdmin.h"
+#include "EC_ConsumerAdmin_T.h"
 #include "EC_SupplierAdmin.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_ProxySupplier.h"
@@ -50,7 +50,7 @@ TAO_EC_Basic_Factory::destroy_filter_builder (TAO_EC_Filter_Builder *x)
 TAO_EC_ConsumerAdmin*
 TAO_EC_Basic_Factory::create_consumer_admin (TAO_EC_Event_Channel *ec)
 {
-  return new TAO_EC_ConsumerAdmin (ec);
+  return new TAO_EC_ConsumerAdmin_Delayed<ACE_MT_SYNCH> (ec);
 }
 
 void
@@ -114,9 +114,11 @@ TAO_EC_Basic_Factory::destroy_timer_module (TAO_EC_Timer_Module *x)
 }
 
 TAO_EC_ObserverStrategy*
-TAO_EC_Basic_Factory::create_observer_strategy (TAO_EC_Event_Channel *)
+TAO_EC_Basic_Factory::create_observer_strategy (TAO_EC_Event_Channel *ec)
 {
-  return new TAO_EC_Null_ObserverStrategy;
+  ACE_Lock* lock;
+  ACE_NEW_RETURN (lock, ACE_Lock_Adapter<ACE_SYNCH_MUTEX>, 0);
+  return new TAO_EC_Basic_ObserverStrategy (ec, lock);
 }
 
 void
@@ -184,3 +186,19 @@ TAO_EC_Basic_Factory::destroy_supplier_admin_lock (ACE_Lock* x)
 {
   delete x;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class TAO_EC_ConsumerAdmin_Delayed<ACE_MT_SYNCH>;
+template class TAO_EC_ConsumerAdmin_T<ACE_MT_SYNCH>;
+template class ACE_Node<ACE_Command_Base*>;
+template class ACE_Unbounded_Queue<ACE_Command_Base*>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_EC_ConsumerAdmin_Delayed<ACE_MT_SYNCH>
+#pragma instantiate TAO_EC_ConsumerAdmin_T<ACE_MT_SYNCH>
+#pragma instantiate ACE_Node<ACE_Command_Base*>
+#pragma instantiate ACE_Unbounded_Queue<ACE_Command_Base*>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
