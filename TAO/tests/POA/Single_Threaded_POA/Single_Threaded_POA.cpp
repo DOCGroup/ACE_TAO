@@ -71,7 +71,7 @@ test_i::method (CORBA::Environment &ACE_TRY_ENV)
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (CORBA_Environment &ACE_TRY_ENV)
+test_i::_default_POA (CORBA_Environment &)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
