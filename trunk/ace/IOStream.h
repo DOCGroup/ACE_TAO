@@ -345,8 +345,8 @@ public:
 #endif /* __GNUG__ */
 
   // = Using the macros to provide get/set operators.
-  ACE_OPERATORG_SET (ACE_IOStream);
-  ACE_OPERATORP_SET (ACE_IOStream);
+  ACE_OPERATORG_SET (ACE_IOStream<STREAM>);
+  ACE_OPERATORP_SET (ACE_IOStream<STREAM>);
 
   // = These are handy to have around for overriding.
 
