@@ -161,7 +161,8 @@ Grid_Factory_i::Grid_Factory_i (void)
 
 // Copy Constructor
 
-Grid_Factory_i::Grid_Factory_i (Grid_Factory_i &)
+Grid_Factory_i::Grid_Factory_i (Grid_Factory_i &grid)
+  :POA_Grid_Factory (grid)
 {
   // no-op
 }
