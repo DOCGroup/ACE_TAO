@@ -46,12 +46,26 @@ MyImpl::RoundTripClient_exec_i::set_session_context (Components::SessionContext_
 
 //Start the collocated test here
 void
+MyImpl::RoundTripClient_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
+}
+
+void
 MyImpl::RoundTripClient_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTripClient_exec_i::ccm_activate\n"));
+}
+
+void
+MyImpl::RoundTripClient_exec_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
 }
 
 void
