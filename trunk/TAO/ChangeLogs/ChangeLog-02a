@@ -1,3 +1,10 @@
+Wed Oct 11 22:39:59 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP_Profile.cpp:
+
+	  Removed duplicate definition of <encode_endpoints> method left
+	  from the previous modification.
+
 Wed Oct 11 19:13:23 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (fini):
@@ -222,7 +229,6 @@ Tue Oct 10 16:59:18 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  files.  Many of these static project configurations were
 	  completely broken.
 
->>>>>>> 1.1678
 Tue Oct 10 14:52:16 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.h:
