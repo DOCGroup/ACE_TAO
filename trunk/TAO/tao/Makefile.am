@@ -779,7 +779,6 @@ nobase_include_HEADERS += \
   ObjectIdListC.inl \
   Object_Argument_T.inl \
   Object_KeyC.inl \
-  Object_Loader.i \
   Object_SArgument_T.inl \
   Objref_VarOut_T.inl \
   OctetSeqC.inl \
