@@ -280,11 +280,15 @@ public:
                              CORBA::ULong request_id);
   // default copy ctor, dtor and operator=
 
-  u_long hash (void) const;
+  // The ACE_INLINE macros here are to keep g++ 2.7.X happy,
+  // otherwise it thinks they are used as inline functions before
+  // beign used as such.... Apparently in the template code for the
+  // Hash_Map_Manager.
+  ACE_INLINE u_long hash (void) const;
   // Return a hash value...
 
-  int operator== (const TAO_ECG_UDP_Request_Index& rhs) const;
-  int operator!= (const TAO_ECG_UDP_Request_Index& rhs) const;
+  ACE_INLINE int operator== (const TAO_ECG_UDP_Request_Index& rhs) const;
+  ACE_INLINE int operator!= (const TAO_ECG_UDP_Request_Index& rhs) const;
   // Compare
 
   ACE_INET_Addr from;

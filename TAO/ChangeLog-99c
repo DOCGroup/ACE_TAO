@@ -1,3 +1,9 @@
+Fri Jun 18 18:00:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+	  Fixed old g++ warnings 
+
 Fri Jun 18 16:22:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/InterOp-Naming/INS_i.cpp:
