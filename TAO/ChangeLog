@@ -1,3 +1,9 @@
+Sat Jan 31 18:24:02 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* rules.tao.GNU:
+
+	  Added -I$(TAO_ROOT) to TAO_IDLFLAGS by default. 
+
 Fri Jan 30 16:43:43 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.h:
