@@ -1,3 +1,11 @@
+Thu Feb 07 17:17:01 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	* tao/PortableServer/TAO_PortableServer.dsp:
+	* tao/PortableServer/TAO_PortableServer_Static.dsp:
+	  Add new files to MSVC projects.
+
 Thu Feb  7 17:06:24 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Exception.h:

@@ -695,6 +695,10 @@ SOURCE=.\Pluggable_Messaging_Utils.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Policy_ForwardC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Policy_Manager.cpp
 # End Source File
 # Begin Source File
@@ -1495,6 +1499,10 @@ SOURCE=.\Pluggable_Messaging_Utils.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Policy_ForwardC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Policy_Manager.h
 # End Source File
 # Begin Source File
@@ -2148,6 +2156,10 @@ SOURCE=.\Pluggable_Messaging.i
 # Begin Source File
 
 SOURCE=.\Pluggable_Messaging_Utils.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_ForwardC.i
 # End Source File
 # Begin Source File
 
