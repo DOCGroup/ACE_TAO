@@ -12,6 +12,16 @@ The client and server by default make use of the Naming Service.
 The cubit server now has its own NamingServer implementation and hence
 you don't have to start the NamingService before starting the client
 and server.
+
+The collocation_test demonstrates how the performance improves when
+objects are collocated.  The test runs both server and client in
+different threads.  To run it, simply run collocation_test.  It
+accepts any command line arguments for the client side, but there is
+not way to specify command line arguments for the server side at this
+moment.  This may be changed in the future.  At this moment, the
+collocation_test must use Naming_Service to resolve object
+references.  This may be changed later, also.
+
 	You just have to use the -s flags on both the server and
 client if you don't want to use the naming service.
 
@@ -82,6 +92,13 @@ using this just run
 
         %IDL_Cubit_Test       
 
+collocation_test:
+-----------------
+
+        This test demonstrates how collocation optimization improve
+performance of collocated objects.  Run the test without any argument
+to see results with collocation optimization.  Run it with
+<-ORBcollocation no> to perform the same test without the optimization.
 
 Sample Run- Using files to communicate IOR:
 ------------------------------------------
