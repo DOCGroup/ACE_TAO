@@ -154,6 +154,11 @@ public:
   static int ace_isspace (const ACE_TCHAR s);
   static int ace_isprint (const ACE_TCHAR s);
 
+  static char *itoa (int value, char *string, int radix);
+#if defined (ACE_HAS_WCHAR)
+  static wchar_t *itoa (int value, wchar_t *string, int radix);
+#endif /* ACE_HAS_WCHAR */
+
 private:
   // = These are emulation or platform specific versions of methods.
   static const void *memchr_emulation (const void *s, int c, size_t len);
@@ -166,6 +171,7 @@ private:
   static int strcasecmp_emulation (const char *s, const char *t);
   static int strncasecmp_emulation (const char *s, const char *t, size_t len);
   static char *strtok_r_emulation (char *s, const char *tokens, char **lasts);
+  static char *itoa_emulation (int value, char *string, int radix);
 
 #if defined (ACE_HAS_WCHAR)
   static wchar_t *strrchr_emulation (wchar_t *s, wint_t c);
@@ -174,6 +180,7 @@ private:
   static int strncasecmp_emulation (const wchar_t *s, 
                                     const wchar_t *t, 
                                     size_t len);
+  static wchar_t *itoa_emulation (int value, wchar_t *string, int radix);
 #endif /* ACE_HAS_WCHAR */
 };  
 

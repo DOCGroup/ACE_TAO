@@ -650,3 +650,23 @@ ACE_OS_String::ace_isprint (const ACE_TCHAR s)
   return isprint (s);
 #endif /* ACE_HAS_WINCE */
 }
+
+ACE_INLINE char *
+ACE_OS_String::itoa (int value, char *string, int radix)
+{
+#if defined (ACE_HAS_ITOA)
+  return ::_itoa (value, string, radix);
+#else 
+  return ACE_OS_String::itoa_emulation (value, string, radix);
+#endif /* ACE_HAS_ITOA */
+}
+
+ACE_INLINE wchar_t *
+ACE_OS_String::itoa (int value, wchar_t *string, int radix)
+{
+#if defined (ACE_HAS_ITOA)
+  return ::_itow (value, string, radix);
+#else 
+  return ACE_OS_String::itoa_emulation (value, string, radix);
+#endif /* ACE_HAS_ITOA */
+}
