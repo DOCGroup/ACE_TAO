@@ -1048,33 +1048,26 @@ UTL_Scope::look_in_inherited (UTL_ScopedName *e,
               // Conflict against further results?
 	            if (d != d_before)  
                 {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-		                  "warning in %s line %d: ",
-                      idl_global->filename ()->get_string (),
-		                  idl_global->lineno ()
-                    ),
-                    0
-                  );
+                  ACE_ERROR ((LM_ERROR,
+		                          "warning in %s line %d: ",
+                              idl_global->filename ()->get_string (),
+		                          idl_global->lineno ()));
 
 		              e->dump (*ACE_DEFAULT_LOG_STREAM);
 
-                  ACE_ERROR_RETURN ((LM_ERROR,
-		                                 " is ambiguous in scope.\n"
-                                     "Found "),
-                                    0);
+                  ACE_ERROR ((LM_ERROR,
+		                          " is ambiguous in scope.\n"
+                              "Found "));
 
 	              	d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
 
-                  ACE_ERROR_RETURN ((LM_ERROR,
-		                                 " and "),
-                                    0);
+                  ACE_ERROR ((LM_ERROR,
+		                          " and "));
 
 		              d_before->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
 
-                  ACE_ERROR_RETURN ((LM_ERROR,
-		                                 ".\n"),
-                                    0);
+                  ACE_ERROR ((LM_ERROR,
+		                          ".\n"));
 	              }
 	          }
         }
