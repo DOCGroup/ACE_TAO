@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//
 // $Id$
 //
 // ============================================================================
@@ -24,7 +23,6 @@
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-
 //////////////////////
 // Helper Functions //
 //////////////////////
@@ -43,6 +41,50 @@ class Task_Entry_Link;
 class Dispatch_Entry;
 class Dispatch_Entry_Link;
 class Dispatch_Proxy_Iterator;
+
+
+class TAO_ORBSVCS_Export Dispatch_Entry_Link
+// = TITLE
+//        Dispatch Entry Link
+//
+// = DESCRIPTION
+//    Light-weight sortable "smart pointer" to a dispatch entry.
+//
+{
+public:
+
+  typedef RtecScheduler::handle_t handle_t;
+  typedef RtecScheduler::Dependency_Info Dependency_Info;
+  typedef RtecScheduler::Preemption_Priority Preemption_Priority;
+  typedef RtecScheduler::OS_Priority OS_Priority;
+  typedef RtecScheduler::Sub_Priority Sub_Priority;
+  typedef RtecScheduler::RT_Info RT_Info;
+  typedef RtecScheduler::Time Time;
+  typedef RtecScheduler::Period Period;
+  typedef RtecScheduler::Info_Type Info_Type;
+  typedef RtecScheduler::Dependency_Type Dependency_Type;
+
+  Dispatch_Entry_Link (Dispatch_Entry &d);
+    // ctor
+
+  Dispatch_Entry_Link (const Dispatch_Entry_Link &d);
+    // copy ctor
+
+  ~Dispatch_Entry_Link ();
+    // dtor
+
+  // TBD - make this a global comparison operator
+  // instead of a class member function
+  int operator < (const Dispatch_Entry_Link &d) const;
+    // LT comparator
+
+  Dispatch_Entry &dispatch_entry () const;
+    // accessor for reference to dispatch entry
+
+private:
+
+  Dispatch_Entry &dispatch_entry_;
+};
 
 
 // Wrapper for the RT_Info, which aggregates all its dispatches
@@ -92,7 +134,7 @@ public:
   // set/get time when node was finished in DFS traversal
   void finished (long l);
   long finished () const;
- 
+
   // set/get DFS traversal status of node
   void dfs_status (DFS_Status ds);
   DFS_Status dfs_status () const;
@@ -109,7 +151,7 @@ public:
 
   // get set of arrivals in the effective period
   ACE_Ordered_MultiSet<Dispatch_Entry_Link> &dispatches ();
-      
+
   // get the type of Info the entry wraps
   Info_Type info_type () const;
 
@@ -126,12 +168,12 @@ private:
   // Returns 0 if all is well, or -1 if an error has occurred.
   int prohibit_dispatches (Dependency_Type dt);
 
-  // performs disjunctive merge of arrival times of calls of the given 
+  // performs disjunctive merge of arrival times of calls of the given
   // type: all arrival times of all callers of that type are duplicated by
   // the multiplier and repetition over the new frame size and merged.
   // Returns 0 if all is well, or -1 if an error has occurred.
   int disjunctive_merge (
-    Dependency_Type dt, 
+    Dependency_Type dt,
     ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries);
 
   // perform conjunctive merge of arrival times of calls of the given
@@ -142,7 +184,7 @@ private:
   // over all queues, and ends when any queue ends).  Returns 0 if
   // all is well, or -1 if an error has occurred.
   int conjunctive_merge (
-    Dependency_Type dt, 
+    Dependency_Type dt,
     ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries);
 
 
@@ -153,7 +195,7 @@ private:
   // to a new period, 0 if the set was not changed (the new period
   // was not a multiple of the old one), or -1 if an error occurred.
   static int reframe (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
-                      Task_Entry &owner, 
+                      Task_Entry &owner,
                       ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
                       u_long &set_period, u_long new_period);
 
@@ -164,7 +206,7 @@ private:
   // the source set was correctly merged into the destination set,
   // 0 if nothing happened, and -1 if an error occurred.
   static int merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
-                           Task_Entry &owner, 
+                           Task_Entry &owner,
                            ACE_Ordered_MultiSet <Dispatch_Entry_Link> &dest,
                            ACE_Ordered_MultiSet <Dispatch_Entry_Link> &src,
                            u_long &dest_period,
@@ -180,7 +222,7 @@ private:
 
   // set of arrivals in the effective period
   ACE_Ordered_MultiSet<Dispatch_Entry_Link> dispatches_;
-      
+
   // count of the arrivals in the effective period
   u_long arrival_count_;
 
@@ -228,7 +270,7 @@ public:
 
   // accessor: calling task entry
   Task_Entry &caller () const;
-  
+
   // accessor: called task entry
   Task_Entry &called () const;
 
@@ -251,7 +293,7 @@ private:
 class TAO_ORBSVCS_Export Dispatch_Entry
 {
 // = TITLE
-//	  Dispatch Entry
+//        Dispatch Entry
 //
 // = DESCRIPTION
 //     Descriptor object for a single dispatch of an operation.
@@ -355,58 +397,15 @@ private:
 
 };
 
-class TAO_ORBSVCS_Export Dispatch_Entry_Link
-// = TITLE
-//	  Dispatch Entry Link
-//
-// = DESCRIPTION
-//    Light-weight sortable "smart pointer" to a dispatch entry.
-//
-{
-public:
-
-  typedef RtecScheduler::handle_t handle_t;
-  typedef RtecScheduler::Dependency_Info Dependency_Info;
-  typedef RtecScheduler::Preemption_Priority Preemption_Priority;
-  typedef RtecScheduler::OS_Priority OS_Priority;
-  typedef RtecScheduler::Sub_Priority Sub_Priority;
-  typedef RtecScheduler::RT_Info RT_Info;
-  typedef RtecScheduler::Time Time;
-  typedef RtecScheduler::Period Period;
-  typedef RtecScheduler::Info_Type Info_Type;
-  typedef RtecScheduler::Dependency_Type Dependency_Type;
-
-  Dispatch_Entry_Link (Dispatch_Entry &d);
-    // ctor
-
-  Dispatch_Entry_Link (const Dispatch_Entry_Link &d);
-    // copy ctor
-
-  ~Dispatch_Entry_Link ();
-    // dtor
-
-  // TBD - make this a global comparison operator
-  // instead of a class member function
-  int operator < (const Dispatch_Entry_Link &d) const;
-    // LT comparator
-
-  Dispatch_Entry &dispatch_entry () const;
-    // accessor for reference to dispatch entry
-
-private:
-
-  Dispatch_Entry &dispatch_entry_;
-};
-
 class TAO_ORBSVCS_Export Dispatch_Proxy_Iterator
 // = TITLE
 //   This class implements an iterator abstraction over a virtual
-//   frame size and number of calls, using an actual ordered 
+//   frame size and number of calls, using an actual ordered
 //   multiset of dispatch entries over an actual frame size.
 //   It also serves as a proxy for the virtual dispatch to which
 //   it refers.  Rhetorical question: is it possible to separate
 //   the iterator and proxy abstractions here without defeating the
-//   purpose of the design, which is to avoid constructing 
+//   purpose of the design, which is to avoid constructing
 //   superfluous dispatch entries (per the conjunctive merge use case) ?
 {
 public:
@@ -425,7 +424,7 @@ public:
   Dispatch_Proxy_Iterator (ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
                            u_long actual_frame_size,
                            u_long virtual_frame_size,
-                           u_long number_of_calls_ = 1, 
+                           u_long number_of_calls_ = 1,
                            u_long starting_sub_frame = 0);
     // ctor
 
@@ -437,7 +436,7 @@ public:
     // returns 0 if there are more entries to see, 1 if not
 
   int first (u_int sub_frame = 0);
-    // positions the iterator at the first entry of the passed 
+    // positions the iterator at the first entry of the passed
     // sub-frame, returns 1 if it could position the iterator
     // correctly, 0 if not, and -1 if an error occurred.
 
@@ -468,7 +467,7 @@ public:
 
   Preemption_Priority priority () const;
     // returns the scheduler priority of the virtual entry
-                 
+
 
 private:
 
@@ -485,7 +484,7 @@ private:
     // the virtaul frame size over which to iterate
 
   u_long current_frame_offset_;
-    // the current offset into the virtual frame 
+    // the current offset into the virtual frame
     // (should be a multiple of the actual frame size)
 
   ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> iter_;
@@ -508,7 +507,7 @@ public:
   typedef RtecScheduler::Info_Type Info_Type;
   typedef RtecScheduler::Dependency_Type Dependency_Type;
 
-  // time slice constructor 
+  // time slice constructor
   TimeLine_Entry (Dispatch_Entry &dispatch_entry,
                   u_long start,
                   u_long stop,
@@ -521,10 +520,10 @@ public:
   Dispatch_Entry &dispatch_entry () const;
 
   // accessors for time slice start and stop times (100 nanoseconds)
-  u_long start () const;  
-  u_long stop () const; 
-  u_long arrival () const;  
-  u_long deadline () const; 
+  u_long start () const;
+  u_long stop () const;
+  u_long arrival () const;
+  u_long deadline () const;
 
   // accessor and mutator for next and prev slices for this dispatch
   TimeLine_Entry *next (void) const;
@@ -541,9 +540,9 @@ private:
 
   // priority time slice times (100 nanoseconds)
   u_long start_;
-  u_long stop_; 
-  u_long arrival_;  
-  u_long deadline_; 
+  u_long stop_;
+  u_long arrival_;
+  u_long deadline_;
 
   // next and previous priority time slices for this dispatch entry
   TimeLine_Entry *next_;
@@ -571,7 +570,7 @@ public:
 
   TimeLine_Entry &entry () const;
   // accessor for the underlying entry
- 
+
   int operator < (const TimeLine_Entry_Link&) const;
   // comparison operator
 

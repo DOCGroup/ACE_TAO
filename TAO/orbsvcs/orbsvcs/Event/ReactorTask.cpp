@@ -53,13 +53,16 @@ ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period &period)
         TAO_TRY
           {
             ACE_Scheduler_Factory::server()->set(rt_info_,
+                                                 RtecScheduler::VERY_HIGH_CRITICALITY,
                                                  ORBSVCS_Time::zero,
                                                  ORBSVCS_Time::zero,
                                                  ORBSVCS_Time::zero,
                                                  period,
                                                  RtecScheduler::VERY_LOW_IMPORTANCE,
                                                  ORBSVCS_Time::zero,
-                                                 1, TAO_TRY_ENV);
+                                                 1,
+                                                 RtecScheduler::OPERATION,
+                                                 TAO_TRY_ENV);
             TAO_CHECK_ENV;
           }
         TAO_CATCHANY

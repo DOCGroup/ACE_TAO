@@ -60,6 +60,7 @@ ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle,
 }
 
 void ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
+                                 const RtecScheduler::Criticality criticality,
                                  const RtecScheduler::Time &time,
                                  const RtecScheduler::Time &typical_time,
                                  const RtecScheduler::Time &cached_time,
@@ -67,6 +68,7 @@ void ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
                                  RtecScheduler::Importance importance,
                                  const RtecScheduler::Quantum &quantum,
                                  CORBA::Long threads,
+                                 const RtecScheduler::Info_Type info_type,
                                  CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK))
@@ -78,12 +80,14 @@ void ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
       TAO_THROW (RtecScheduler::UNKNOWN_TASK);
       ACE_NOTREACHED (return);
     }
-  if (rt_info_[handle]->worst_case_execution_time != time
+  if (rt_info_[handle]->criticality != criticality
+      || rt_info_[handle]->worst_case_execution_time != time
       || rt_info_[handle]->typical_execution_time != typical_time
       || rt_info_[handle]->cached_execution_time != cached_time
       || rt_info_[handle]->period != period
       || rt_info_[handle]->importance != importance
       || rt_info_[handle]->quantum != quantum
+      || rt_info_[handle]->info_type != info_type
       || rt_info_[handle]->threads != threads)
     {
       ACE_ERROR ((LM_ERROR, "invalid data for RT_Info: %s\n",
@@ -108,7 +112,7 @@ void ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
       ACE_NOTREACHED (return);
     }
   priority = rt_info_[handle]->priority;
-  subpriority = rt_info_[handle]->subpriority;
+  subpriority = rt_info_[handle]->static_subpriority;
   p_priority = rt_info_[handle]->preemption_priority;
 }
 
@@ -133,6 +137,8 @@ void ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
 void ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
                                             RtecScheduler::handle_t dependency,
                                             CORBA::Long number_of_calls,
+                                            RtecScheduler::Dependency_Type
+                                              dependency_type,
                                             CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK))
@@ -147,7 +153,8 @@ void ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
   for (CORBA::ULong i = 0; i < deps.length (); ++i)
     {
       if (deps[i].rt_info == dependency
-          && deps[i].number_of_calls == number_of_calls)
+          && deps[i].number_of_calls == number_of_calls
+          && deps[i].dependency_type == dependency_type)
         {
           return;
         }

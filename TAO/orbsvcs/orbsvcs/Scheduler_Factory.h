@@ -1,8 +1,4 @@
-// ============================================================================
-//
 // $Id$
-//
-// ============================================================================
 
 #ifndef ACE_SCHEDULER_FACTORY_H
 #define ACE_SCHEDULER_FACTORY_H
@@ -43,10 +39,11 @@ public:
     RtecScheduler::Quantum quantum;
     CORBA::Long threads;
     RtecScheduler::OS_Priority priority;
-    RtecScheduler::Sub_Priority subpriority;
+    RtecScheduler::Sub_Priority static_subpriority;
+    RtecScheduler::Sub_Priority dynamic_subpriority;
     RtecScheduler::Preemption_Priority preemption_priority;
   };
-  
+
   static int use_config (CosNaming::NamingContext_ptr naming);
   // Setup the variables needed for a config run, using the
   // NamingContext to locate a Scheduler.
@@ -56,7 +53,7 @@ public:
   // variable to locate a Scheduler.
 
   static int use_runtime (int entry_count,
-			  POD_RT_Info rt_info[]);
+                          POD_RT_Info rt_info[]);
   // Disable config runs in the Factory and setups the precomputed
   // scheduling.
 
@@ -70,7 +67,7 @@ public:
   // resolve_initial_references.
 
   static int dump_schedule (const RtecScheduler::RT_Info_Set& infos,
-			    const char* file_name = 0);
+                            const char* file_name = 0);
   // This helper function will dump the schedule returned by a
   // RtecScheduler::Scheduler into a file, the file can be compiled to
   // create an efficient local implementation of the Scheduler.

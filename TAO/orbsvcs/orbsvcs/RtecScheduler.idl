@@ -10,6 +10,17 @@ module RtecScheduler
 
   typedef long Period; // 100 nanoseconds
 
+  enum Criticality
+  // Defines the criticality of the operation.
+  // For use with Dynamic Scheduler.
+  {
+    VERY_LOW_CRITICALITY,
+    LOW_CRITICALITY,
+    MEDIUM_CRITICALITY,
+    HIGH_CRITICALITY,
+    VERY_HIGH_CRITICALITY
+  };
+
   enum Importance
   // Defines the importance of the operation,
   // which can be used by the Scheduler as a
@@ -23,12 +34,28 @@ module RtecScheduler
     VERY_HIGH_IMPORTANCE
   };
 
+  enum Info_Type
+  // Defines type of operation information.
+  {
+    OPERATION,
+    CONJUNCTION,
+    DISJUNCTION
+  };
+
+  enum Dependency_Type
+  // Specify one-way or two-way call.
+  {
+    ONE_WAY_CALL,
+    TWO_WAY_CALL
+  };
+
   typedef long handle_t;
   // RT_Info's are assigned per-application
   // unique identifiers.
 
   struct Dependency_Info
   {
+    Dependency_Type dependency_type;
     long number_of_calls;
     handle_t rt_info;
     // Notice the reference to the RT_Info we
@@ -71,6 +98,9 @@ module RtecScheduler
     // called.
     Period period;
 
+    // Operation Criticality (user assigned significance).
+    Criticality criticality;
+
     // Operation importance, used to "break ties".
     Importance importance;
 
@@ -93,10 +123,21 @@ module RtecScheduler
     OS_Priority priority;
 
     // For ordering RT_Info's with equal priority.
-    Sub_Priority subpriority;
+    Sub_Priority dynamic_subpriority;
+
+    // For ordering RT_Info's with equal priority.
+    Sub_Priority static_subpriority;
 
     // The queue number for this RT_Info.
     Preemption_Priority preemption_priority;
+
+    // Info_Type
+    Info_Type info_type;
+
+    // Token reserved for the scheduler's internal use:
+    // information placed here from outside the scheduler
+    // implementation is prone to be overwritten.
+    unsigned long volatile_token;
   };
 
   exception DUPLICATE_NAME {};
@@ -154,22 +195,27 @@ module RtecScheduler
     // Retrieve information about an RT_Info.
 
     void set (in handle_t handle,
+              in Criticality criticality,
               in Time time,
               in Time typical_time,
               in Time cached_time,
               in Period period,
               in Importance importance,
               in Quantum quantum,
-              in long threads)
+              in long threads,
+              in Info_Type info_type)
       raises (UNKNOWN_TASK);
     // Set the attributes of an RT_Info.
     // Notice that some values may not be modified (like priority).
+    // Criticality and Info_Type are only used with the Dynamic Scheduler.
 
     void add_dependency (in handle_t handle,
                          in handle_t dependency,
-                         in long number_of_calls)
+                         in long number_of_calls,
+                         in Dependency_Type dependency_type)
       raises (UNKNOWN_TASK);
-    // Adds <dependency> to <handle>
+    // Adds <dependency> to <handle>.
+    // Dependency_Type is only used with the Dynamic Scheduler.
 
     void priority (in handle_t handle,
                        out OS_Priority priority,
@@ -206,6 +252,7 @@ module RtecScheduler
     //
     // struct Dependency {
     //   long number_of_calls;
+    //   Dependency_Type dependency_type;
     //   handle_t dependency;
     // };
     // typedef sequence<Dependency> Dependency_Set;
