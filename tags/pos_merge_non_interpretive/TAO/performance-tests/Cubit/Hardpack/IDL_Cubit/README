@@ -1,0 +1,43 @@
+The IDL_Cubit test for Hardpack ORB
+------------------------------------
+
+Compiling
+---------
+
+setup the HARDPACK_ROOT environment variables before compiling.
+
+The following is an  example configuration for SunOS_5.5.1:
+
+setenv HARDPACK_ROOT /project/doc/pkg/Hardpack/dsi_5.1
+setenv PATH ${HARDPACK_ROOT}/bin:${HARDPACK_ROOT}/SunOS_5.5.1/bin:${PATH}        
+setenv LD_LIBRARY_PATH ${HARDPACK_ROOT}/SunOS_5.5.1/lib:${LD_LIBRARY_PATH}
+
+1. Hardpack provides a build tool to build the Makefile from the Imakefile. 
+You should set the BUILD variable in the Imakefile to the directory of
+your Hardpack for your platform.
+
+2.To build and compile 
+
+ $build SUN
+
+ $build clean 
+        will clean the object files and executables and also the Makefile.
+
+To Run:
+------
+
+1. Edit the initref.cfg file in this directory by putting the hostname
+on which  you want the name  server to run.
+
+2. Run the Hardpack nameserver
+
+   $nameserver
+
+3. Run the server
+        
+   $server
+
+4. Run the client
+        
+   $client
+
