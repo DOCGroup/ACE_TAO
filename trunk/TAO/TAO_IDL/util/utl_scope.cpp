@@ -1954,9 +1954,6 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
       this->pd_referenced = tmp;
     }
 
-  // Insert new decl.
-  this->pd_referenced[this->pd_referenced_used++] = e;
-
   // Insert new reference.
   if (ex == 0)
     {
@@ -1968,7 +1965,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
         {
           this->pd_referenced[i] = this->pd_referenced[i - 1];
 
-          if (this->pd_referenced[i-1] == ex)
+          if (this->pd_referenced[i - 1] == ex)
             {
               this->pd_referenced[i] = e;
               break;
