@@ -15,7 +15,7 @@ ACE_Method_Request::~ACE_Method_Request (void)
 }
 
 u_long
-ACE_Method_Request::priority (void)
+ACE_Method_Request::priority (void) const
 {
   return this->priority_;
 }

@@ -440,10 +440,13 @@ public:
                                 ACE_Sig_Action *old_disp = 0);
 
   /**
-   * Remove the ACE_Event_Handler currently associated with <signum>.
-   * Install the new disposition (if given) and return the previous
-   * disposition (if desired by the caller).  Returns 0 on success and
-   * -1 if <signum> is invalid.
+   * Remove an <ACE_Event_Handler> currently associated with <signum>.
+   * We remove the handler if (1) its <sigkey> matches the <sigkey>
+   * passed as a parameter or (2) if we've been told to remove all the
+   * handlers, i.e., <sigkey> == -1.  If a new disposition is given it
+   * is installed and the previous disposition is returned (if desired
+   * by the caller).  Returns 0 on success and -1 if <signum> is
+   * invalid.
    */
   virtual int remove_handler (int signum,
                               ACE_Sig_Action *new_disp = 0,
