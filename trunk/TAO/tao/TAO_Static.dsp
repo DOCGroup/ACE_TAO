@@ -102,6 +102,10 @@ SOURCE=.\append.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Invocation.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CDR.cpp
 # End Source File
 # Begin Source File
@@ -382,6 +386,14 @@ SOURCE=.\PolicyS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PollableC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PollableS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Principal.cpp
 # End Source File
 # Begin Source File
@@ -503,6 +515,10 @@ SOURCE=.\any.h
 # Begin Source File
 
 SOURCE=.\arg_shifter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Asynch_Invocation.h
 # End Source File
 # Begin Source File
 
@@ -779,6 +795,14 @@ SOURCE=.\Policy_Manager.h
 # Begin Source File
 
 SOURCE=.\PolicyC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PollableC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PollableS.h
 # End Source File
 # Begin Source File
 
