@@ -1,58 +1,62 @@
+Fri May 14 23:05:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Log_Record.h: removed unnecessary #include of ace/SString.h.
+
 Fri May 14 21:11:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Task_T.h:
-	* ace/Task_T.cpp:
-	  Fixed syntax errors in ACE_Buffered_Task
+        * ace/Task_T.h:
+        * ace/Task_T.cpp:
+          Fixed syntax errors in ACE_Buffered_Task
 
 Fri May 14 21:03:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* netsvcs/lib/Log_Message_Receiver.cpp:
-	  Changed ACE_Guard instantiations with ACE_GUARD() macros to
-	  avoid some warnings with egcs, similar to the problem that David 
-	  had with Message_Queue_T.cpp
+        * netsvcs/lib/Log_Message_Receiver.cpp:
+          Changed ACE_Guard instantiations with ACE_GUARD() macros to
+          avoid some warnings with egcs, similar to the problem that David
+          had with Message_Queue_T.cpp
 
 Fri May 14 19:31:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Message_Block.cpp (total_size): 
+        * ace/Message_Block.cpp (total_size):
 
-	  Corrected warning caused by assignment to non-const from const.
+          Corrected warning caused by assignment to non-const from const.
 
-	* ace/Message_Queue_T.cpp (close): 
+        * ace/Message_Queue_T.cpp (close):
 
-	  Temporary variable wasn't declared.
+          Temporary variable wasn't declared.
 
-	* ace/Message_Queue_T.cpp (remove_messages): 
+        * ace/Message_Queue_T.cpp (remove_messages):
 
-	  Removed unused variable.
+          Removed unused variable.
 
 Fri May 14 19:16:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Task_T.cpp (put, flush):  
+        * ace/Task_T.cpp (put, flush):
 
-	  Corrected syntax errors where return type was placed before
-	  template keyword.
+          Corrected syntax errors where return type was placed before
+          template keyword.
 
 Fri May 14 16:46:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Task_T: Added a new class called ACE_Buffered_Task that
- 	  buffers up its ACE_Message_Blocks until (1) the buffer is full
- 	  or (2) a timeout elapses, at which point the buffers are written
- 	  out using some type of writev()-like mechanism.
-	  
-	* ace/OS.h: Added a new macro called ACE_DEFAULT_WRITEV_MAX, which
- 	  defaults to the maximum value that writev() can have.
+        * ace/Task_T: Added a new class called ACE_Buffered_Task that
+          buffers up its ACE_Message_Blocks until (1) the buffer is full
+          or (2) a timeout elapses, at which point the buffers are written
+          out using some type of writev()-like mechanism.
 
-	* ace/Message_Block.cpp: Added a new method called total_size()
- 	  that returns the total number of bytes in a composite
- 	  Message_Block (i.e., a Message_Block that has a chain of
- 	  Message_Blocks).
+        * ace/OS.h: Added a new macro called ACE_DEFAULT_WRITEV_MAX, which
+          defaults to the maximum value that writev() can have.
 
-	* ace/Message_Queue_T.cpp: Reimplemented all the hand-coded loops
- 	  to use the new ACE_Message_Block::total_size() method.
+        * ace/Message_Block.cpp: Added a new method called total_size()
+          that returns the total number of bytes in a composite
+          Message_Block (i.e., a Message_Block that has a chain of
+          Message_Blocks).
+
+        * ace/Message_Queue_T.cpp: Reimplemented all the hand-coded loops
+          to use the new ACE_Message_Block::total_size() method.
 
 Fri May 14 16:17:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Synch.h (ACE_Null_Mutex>): Conditionally compiles ~ACE_Guard()
+        * ace/Synch.h (ACE_Null_Mutex>): Conditionally compiles ~ACE_Guard()
           destructor.  Win32 needs this definition.
 
 Fri May 14 16:10:29 1999  David L. Levine  <levine@cs.wustl.edu>
