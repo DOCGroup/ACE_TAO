@@ -14,6 +14,10 @@ Tue Nov 20 11:44:50 2001  Carlos O'Ryan  <coryan@uci.edu>
           because each workspace listed the dependency explicitly, but
           doing so is error prone and hard to maintain.
 
+        * orbsvcs/orbsvcs/SSLIOP.dsp:
+          Fixed export file name, it was taking advantage of NT
+          case-insensitive behavior.
+
 Tue Nov 20 11:36:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tests/Xt_Stopwatch/Control.cpp: Fixed some warnings with Sun CC
@@ -1170,7 +1174,7 @@ Tue Oct  9 17:46:07 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
         * orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp:
         * orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
 
-          Added missing $Id$. This will fix the FUZZ build.
+          Added missing RCS Id. This will fix the FUZZ build.
 
 Tue Oct 09 14:00:46 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
