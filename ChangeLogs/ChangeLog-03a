@@ -1,3 +1,10 @@
+Fri Oct  4 21:32:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Service_Manager.cpp (list_services): Correct compiler
+          warning about sign/unsigned comparison. Don't bother for checking
+          transfer count != requested, since send_n always reports
+          an error (0 or -1) if there was a fail before the whole 'n' sent.
+
 Fri Oct  4 20:22:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/ace_dll64.mak: Removed the /wd4267 to re-enable the
