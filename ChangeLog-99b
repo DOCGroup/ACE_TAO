@@ -1,3 +1,12 @@
+Fri May 21 11:27:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Map_Manager.h (class ACE_Map_Iterator_Base): Changed the
+	  ACE_Map_Manager reference to a pointer.  This way there is no
+	  problem in reinitializing <map_man_>, and hence the compiler
+	  will not have a problem in providing us a default assignment
+	  operator.  Thanks to Knut Johannessen <knutj@funcom.com> for
+	  pointing out this problem.
+
 Fri May 21 10:34:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/gethrtime.cpp,Makefile (gethrtime on Green

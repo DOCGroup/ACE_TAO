@@ -182,7 +182,7 @@ public:
   // attempt is made to bind an existing entry, and returns -1 if
   // failures occur.
 
-  int find (const EXT_ID &ext_id, 
+  int find (const EXT_ID &ext_id,
             INT_ID &int_id);
   // Locate <ext_id> and pass out parameter via <int_id>.  If found,
   // returns and non-negative integer; returns -1 if not found.
@@ -196,7 +196,7 @@ public:
   // <int_id>s are *not* dynamically allocated...)  Returns 0 if
   // successful, else -1.
 
-  int unbind (const EXT_ID &ext_id, 
+  int unbind (const EXT_ID &ext_id,
               INT_ID &int_id);
   // Break any association of <ext_id>.  Returns the value of <int_id>
   // in case the caller needs to deallocate memory.  Returns 0 if
@@ -239,40 +239,40 @@ protected:
   // These methods assume that the locks are held by the private
   // methods.
 
-  int bind_i (const EXT_ID &ext_id, 
+  int bind_i (const EXT_ID &ext_id,
               const INT_ID &int_id);
   // Performs the binding of <ext_id> to <int_id>.  Must be called
   // with locks held.
 
-  int shared_bind (const EXT_ID &ext_id, 
+  int shared_bind (const EXT_ID &ext_id,
                    const INT_ID &int_id);
   // Bind an entry (without finding first).  Must be called with locks
   // held.
 
-  int rebind_i (const EXT_ID &ext_id, 
+  int rebind_i (const EXT_ID &ext_id,
                 const INT_ID &int_id,
-                EXT_ID &old_ext_id, 
+                EXT_ID &old_ext_id,
                 INT_ID &old_int_id);
   // Performs a rebinding of <ext_it> to <int_id>.  Also, recovers old
   // values.  Must be called with locks held.
 
-  int rebind_i (const EXT_ID &ext_id, 
+  int rebind_i (const EXT_ID &ext_id,
                 const INT_ID &int_id,
                 INT_ID &old_int_id);
   // Performs a rebinding of <ext_it> to <int_id>.  Also, recovers old
   // values.  Must be called with locks held.
 
-  int rebind_i (const EXT_ID &ext_id, 
+  int rebind_i (const EXT_ID &ext_id,
                 const INT_ID &int_id);
   // Performs a rebinding of <ext_it> to <int_id>.  Must be called
   // with locks held.
 
-  int trybind_i (const EXT_ID &ext_id, 
+  int trybind_i (const EXT_ID &ext_id,
                  INT_ID &int_id);
   // Performs a conditional bind of <int_id> using <ext_id> as the
   // key.  Must be called with locks held.
 
-  int find_i (const EXT_ID &ext_id, 
+  int find_i (const EXT_ID &ext_id,
               INT_ID &int_id);
   // Performs a find of <int_id> using <ext_id> as the key.  Must be
   // called with locks held.
@@ -282,7 +282,7 @@ protected:
   // Performs a find using <ext_id> as the key.  Must be called with
   // locks held.
 
-  int unbind_i (const EXT_ID &ext_id, 
+  int unbind_i (const EXT_ID &ext_id,
                 INT_ID &int_id);
   // Performs an unbind of <int_id> using <ext_id> as the key.  Must
   // be called with locks held.
@@ -424,7 +424,7 @@ protected:
   void dump_i (void) const;
   // Dump the state of an object.
 
-  ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &map_man_;
+  ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> *map_man_;
   // Map we are iterating over.
 
   size_t next_;

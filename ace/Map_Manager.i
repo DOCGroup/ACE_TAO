@@ -266,17 +266,17 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rend (void)
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator_Base (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm)
-  : map_man_ (mm),
-    next_ (this->map_man_.occupied_list_id ())
+  : map_man_ (&mm),
+    next_ (this->map_man_->occupied_list_id ())
 {
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_ID, INT_ID> *&mm) const
 {
-  if (this->next_ != this->map_man_.occupied_list_id ())
+  if (this->next_ != this->map_man_->occupied_list_id ())
     {
-      mm = &this->map_man_.search_structure_[this->next_];
+      mm = &this->map_man_->search_structure_[this->next_];
       return 1;
     }
   else
@@ -288,37 +288,37 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_ID, INT
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::done (void) const
 {
-  return this->next_ == this->map_man_.occupied_list_id ();
+  return this->next_ == this->map_man_->occupied_list_id ();
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i (void)
 {
-  if (this->next_ == this->map_man_.occupied_list_id ())
+  if (this->next_ == this->map_man_->occupied_list_id ())
     {
-      this->next_ = this->map_man_.occupied_list_.next ();
+      this->next_ = this->map_man_->occupied_list_.next ();
     }
   else
     {
-      this->next_ = this->map_man_.search_structure_[this->next_].next ();
+      this->next_ = this->map_man_->search_structure_[this->next_].next ();
     }
 
-  return this->next_ != this->map_man_.occupied_list_id ();
+  return this->next_ != this->map_man_->occupied_list_id ();
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i (void)
 {
-  if (this->next_ == this->map_man_.occupied_list_id ())
+  if (this->next_ == this->map_man_->occupied_list_id ())
     {
-      this->next_ = this->map_man_.occupied_list_.prev ();
+      this->next_ = this->map_man_->occupied_list_.prev ();
     }
   else
     {
-      this->next_ = this->map_man_.search_structure_[this->next_].prev ();
+      this->next_ = this->map_man_->search_structure_[this->next_].prev ();
     }
 
-  return this->next_ != this->map_man_.occupied_list_id ();
+  return this->next_ != this->map_man_->occupied_list_id ();
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
