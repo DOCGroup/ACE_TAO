@@ -5,7 +5,6 @@ ACE_RCSID (ace,
            Countdown_Time,
            "$Id$")
 
-//
 ACE_Countdown_Time::ACE_Countdown_Time (ACE_Time_Value *max_wait_time)
   : max_wait_time_ (max_wait_time),
     stopped_ (0)
@@ -18,7 +17,6 @@ ACE_Countdown_Time::~ACE_Countdown_Time (void)
   this->stop ();
 }
 
-//
 int
 ACE_Countdown_Time::start (void)
 {
@@ -30,14 +28,12 @@ ACE_Countdown_Time::start (void)
   return 0;
 }
 
-//
 int
 ACE_Countdown_Time::stopped (void) const
 {
   return stopped_;
 }
 
-//
 int
 ACE_Countdown_Time::stop (void)
 {
@@ -59,7 +55,6 @@ ACE_Countdown_Time::stop (void)
   return 0;
 }
 
-//
 int
 ACE_Countdown_Time::update (void)
 {
