@@ -3,14 +3,6 @@
 //    The generated filename for files using this template shoule be
 //       GPSGS.cpp       GS --> GlueSession
 
-// @@ Notice: [ciao module name] can expand to either CIAO_GLUE or
-//    CIAO_GLUE_[module name] as defined in the header file.
-
-/// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-/// @@@ Notice that all component and interface names need to be
-/// fully qualified as we are creating a new namespace for the CIAO's
-/// container glue code.
-/// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 #include "GPS_svnt.h"
 #include "../HUDisplay_svnt.h"

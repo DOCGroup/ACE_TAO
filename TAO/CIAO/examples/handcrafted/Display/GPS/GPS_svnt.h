@@ -4,12 +4,14 @@
 //
 // @file GPS_svnt.h
 //
-//    This is a pseudo-meta generic servant implementations template
-//    for CIAO's CIDL compiler.  It demonstrates how a servant
-//    implementation for a session component should look like.
+//    Servant Glue code (supposedly should be) generated using CIAO'S
+//    CIDL compiler.  This file implement the servants that bridge the
+//    executor and the container.
 //
-//    The generated filename for files using this template shoule be
-//       GPS_svnt.h
+//    This file is "generated" using the template code under
+//      $(CIAO_ROOT)/docs/templates/
+//
+//    Remember to refect any changes back to the code templates.
 //
 // @author Nanbor Wang <nanbor@cs.wustl.edu>
 //
@@ -110,9 +112,9 @@ namespace CIAO_GLUE_HUDisplay
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::ExceededConnectionLimit));
 
-      HUDisplay::tickConsumer_ptr
-      unsubscribe_Ready (::Components::Cookie_ptr ck
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    HUDisplay::tickConsumer_ptr
+    unsubscribe_Ready (::Components::Cookie_ptr ck
+                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::InvalidConnection));
 

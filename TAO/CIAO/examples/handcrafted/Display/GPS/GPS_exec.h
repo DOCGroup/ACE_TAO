@@ -4,7 +4,8 @@
  * @file GPS_exec.h
  *
  * Header file for the actual GPS and GPSHome component
- * implementations.
+ * implementations.  These classes are the implementations of local
+ * interfaces defined in GPSEI.idl.
  *
  * @author Nanbor Wang <nanbor@cse.wustl.edu>
  */
@@ -15,23 +16,29 @@
 #include "GPSEIC.h"
 #include "tao/LocalObject.h"
 
+// The namespace name for the actual implementation classes doesn't
+// really matter.  Since there may be several different
+// implementations for a component, they can very well be in different
+// namespaces.
 namespace MyImpl
 {
   /**
-   * @class GPS_exec_impl
+   * @class GPS_exec_i
    *
-   * RateGen executor implementation class.
+   * An example RateGen executor implementation class.
    */
-  class GPS_EXEC_Export GPS_exec_impl :
+  class GPS_EXEC_Export GPS_exec_i :
     public virtual HUDisplay::GPS_Exec,
+    // CIAO container implementation depends on correct reference
+    // counting of local interfaces, so we take a short cut to
     public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default constructor.
-    GPS_exec_impl ();
+    GPS_exec_i ();
 
     /// Default destructor.
-    ~GPS_exec_impl ();
+    ~GPS_exec_i ();
 
     // Operations from HUDisplay::GPS
 
@@ -85,20 +92,20 @@ namespace MyImpl
   };
 
   /**
-   * @class GPSHome_exec_impl
+   * @class GPSHome_exec_i
    *
    * GPS home executor implementation class.
    */
-  class GPS_EXEC_Export GPSHome_exec_impl :
+  class GPS_EXEC_Export GPSHome_exec_i :
     public virtual HUDisplay::CCM_GPSHome,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default ctor.
-    GPSHome_exec_impl ();
+    GPSHome_exec_i ();
 
     /// Default dtor.
-    ~GPSHome_exec_impl ();
+    ~GPSHome_exec_i ();
 
     // Explicit home operations.
 
@@ -112,6 +119,8 @@ namespace MyImpl
 
 }
 
+// Executor DLL entry point.  CIAO's deployment and assembly framework
+// invokes this function on the resulting DLL to get the home executor.
 extern "C" GPS_EXEC_Export ::Components::HomeExecutorBase_ptr
 createGPSHome_Impl (void);
 

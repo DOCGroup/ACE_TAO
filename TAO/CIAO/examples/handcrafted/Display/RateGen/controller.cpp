@@ -3,6 +3,14 @@
 #include "RateGenC.h"
 #include "ace/Get_Opt.h"
 
+/**
+ * @file controller.cpp
+ *
+ * This program interact with a RateGen component, using its supported
+ * interface "opmode" to switch it on/off, and set the rate of the
+ * RateGen.
+ */
+
 char *rategen_ior_ = 0;
 int rate = 2;
 int turn_on = 1;

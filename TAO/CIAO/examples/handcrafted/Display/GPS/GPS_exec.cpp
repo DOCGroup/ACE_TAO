@@ -5,7 +5,7 @@
 #define DISPLACEMENT 256
 
 /// Default constructor.
-MyImpl::GPS_exec_impl::GPS_exec_impl ()
+MyImpl::GPS_exec_i::GPS_exec_i ()
 {
   ACE_OS::srand ((u_int) ACE_OS::time ());
   this->positionx_ = ACE_OS::rand ();
@@ -13,22 +13,22 @@ MyImpl::GPS_exec_impl::GPS_exec_impl ()
 }
 
 /// Default destructor.
-MyImpl::GPS_exec_impl::~GPS_exec_impl ()
+MyImpl::GPS_exec_i::~GPS_exec_i ()
 {
 }
 
 // Operations from HUDisplay::GPS
 
 HUDisplay::CCM_position_ptr
-MyImpl::GPS_exec_impl::get_MyLocation (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPS_exec_i::get_MyLocation (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return HUDisplay::CCM_position::_duplicate (this);
 }
 
 void
-MyImpl::GPS_exec_impl::push_Refresh (HUDisplay::tick_ptr ev
-                                     ACE_ENV_ARG_DECL)
+MyImpl::GPS_exec_i::push_Refresh (HUDisplay::tick_ptr ev
+                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Refresh position
@@ -45,14 +45,14 @@ MyImpl::GPS_exec_impl::push_Refresh (HUDisplay::tick_ptr ev
 // Operations from HUDisplay::position
 
 CORBA::Long
-MyImpl::GPS_exec_impl::posx (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPS_exec_i::posx (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->positionx_;
 }
 
 CORBA::Long
-MyImpl::GPS_exec_impl::posy (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPS_exec_i::posy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->positiony_;
@@ -60,12 +60,12 @@ MyImpl::GPS_exec_impl::posy (ACE_ENV_SINGLE_ARG_DECL)
 
 // Operations from Components::SessionComponent
 void
-MyImpl::GPS_exec_impl::set_session_context (Components::SessionContext_ptr ctx
-                                            ACE_ENV_ARG_DECL)
+MyImpl::GPS_exec_i::set_session_context (Components::SessionContext_ptr ctx
+                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_impl::set_session_context\n"));
+  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::set_session_context\n"));
 
   this->context_ =
     HUDisplay::CCM_GPS_Context::_narrow (ctx
@@ -78,36 +78,36 @@ MyImpl::GPS_exec_impl::set_session_context (Components::SessionContext_ptr ctx
 }
 
 void
-MyImpl::GPS_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::GPS_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_impl::ccm_activate\n"));
+  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_activate\n"));
 }
 
 void
-MyImpl::GPS_exec_impl::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::GPS_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_impl::ccm_passivate\n"));
+  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_passivate\n"));
 }
 
 void
-MyImpl::GPS_exec_impl::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::GPS_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_impl::ccm_remove\n"));
+  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_remove\n"));
 }
 
 /// Default ctor.
-MyImpl::GPSHome_exec_impl::GPSHome_exec_impl ()
+MyImpl::GPSHome_exec_i::GPSHome_exec_i ()
 {
 }
 
 /// Default dtor.
-MyImpl::GPSHome_exec_impl::~GPSHome_exec_impl ()
+MyImpl::GPSHome_exec_i::~GPSHome_exec_i ()
 {
 }
 
@@ -116,16 +116,16 @@ MyImpl::GPSHome_exec_impl::~GPSHome_exec_impl ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::GPSHome_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPSHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CreateFailure))
 {
-  return new MyImpl::GPS_exec_impl;
+  return new MyImpl::GPS_exec_i;
 }
 
 
 extern "C" GPS_EXEC_Export ::Components::HomeExecutorBase_ptr
 createGPSHome_Impl (void)
 {
-  return new MyImpl::GPSHome_exec_impl;
+  return new MyImpl::GPSHome_exec_i;
 }

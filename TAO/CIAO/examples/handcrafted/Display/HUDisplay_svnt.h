@@ -4,12 +4,14 @@
 //
 // @file HUDisplay_svnt.h
 //
-//    This is a pseudo-meta generic servant implementations template
-//    for CIAO's CIDL compiler.  It demonstrates how a servant
-//    implementation for a session component should look like.
+//    Servant Glue code (supposedly should be) generated using CIAO'S
+//    CIDL compiler.  This file implement the servants that bridge the
+//    executor and the container.
 //
-//    The generated filename for files using this template shoule be
-//       [idl-basename]GS.h         GS --> GlueSession
+//    This file is "generated" using the template code under
+//      $(CIAO_ROOT)/docs/templates/
+//
+//    Remember to refect any changes back to the code templates.
 //
 // @author Nanbor Wang <nanbor@cs.wustl.edu>
 //

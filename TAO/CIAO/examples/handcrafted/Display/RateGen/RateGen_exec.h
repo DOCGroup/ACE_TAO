@@ -15,21 +15,21 @@
 #include "RateGenEIC.h"
 #include "tao/LocalObject.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Event_Handler.h"
+#include "ace/Task.h"
 
 namespace MyImpl
 {
   // Forward decl.
-  class RateGen_exec_impl;
+  class RateGen_exec_i;
 
   /**
    * @brief Active pulse generater
    */
-  class Pulse_Handler : public ACE_Event_Handler
+  class Pulse_Handler : public ACE_Task_Base
   {
   public:
     // Default constructor
-    Pulse_Handler (RateGen_exec_impl *cb);
+    Pulse_Handler (RateGen_exec_i *cb);
     ~Pulse_Handler ();
 
     int open (void);
@@ -50,40 +50,41 @@ namespace MyImpl
     virtual int handle_close (ACE_HANDLE handle,
                               ACE_Reactor_Mask close_mask);
 
-    static ACE_THR_FUNC_RETURN svc_run (void *args);
+    virtual int svc (void);
 
   private:
+    /// Tracking whether we are actively generating pulse or not.
     long active_;
 
-    long count_;
-
+    /// Flag to indicate completion of this active object.
     int done_;
 
+    /// The timer id we are waiting.
     int tid_;
 
-    RateGen_exec_impl *pulse_callback_;
+    RateGen_exec_i *pulse_callback_;
 
     ACE_Thread_Manager thr_mgr_;
   };
 
   /**
-   * @class RateGen_exec_impl
+   * @class RateGen_exec_i
    *
    * RateGen executor implementation class.
    */
-  class RATEGEN_EXEC_Export RateGen_exec_impl :
+  class RATEGEN_EXEC_Export RateGen_exec_i :
     public virtual HUDisplay::RateGen_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default constructor.
-    RateGen_exec_impl ();
+    RateGen_exec_i ();
 
     /// Initialize with a default frequency.
-    RateGen_exec_impl (CORBA::Long hz);
+    RateGen_exec_i (CORBA::Long hz);
 
     /// Default destructor.
-    ~RateGen_exec_impl ();
+    ~RateGen_exec_i ();
 
     // Attribute operations.
 
@@ -134,25 +135,26 @@ namespace MyImpl
     /// Copmponent specific context
     HUDisplay::CCM_RateGen_Context_var context_;
 
-    ///
+    /// An active object that actually trigger the generation of
+    /// periodic events.
     Pulse_Handler pulser_;
   };
 
   /**
-   * @class RateGenHome_exec_impl
+   * @class RateGenHome_exec_i
    *
    * RateGen home executor implementation class.
    */
-  class RATEGEN_EXEC_Export RateGenHome_exec_impl :
+  class RATEGEN_EXEC_Export RateGenHome_exec_i :
     public virtual HUDisplay::CCM_RateGenHome,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default ctor.
-    RateGenHome_exec_impl ();
+    RateGenHome_exec_i ();
 
     /// Default dtor.
-    ~RateGenHome_exec_impl ();
+    ~RateGenHome_exec_i ();
 
     // Explicit home operations.
 

@@ -1,3 +1,32 @@
+Mon Apr 14 17:06:37 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/HUDisplay_svnt.cpp:
+	* examples/handcrafted/Display/HUDisplay_svnt.h:
+	* examples/handcrafted/Display/GPS/GPS_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_exec.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/GPS/GPS_svnt.h:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.h:
+	* examples/handcrafted/Display/RateGen/client.cpp:
+	* examples/handcrafted/Display/RateGen/controller.cpp:
+	* examples/handcrafted/Display/RateGen/run_test.pl:
+	* examples/handcrafted/Display/descriptors/NOTE.txt: Updated
+	  docuemntation.  Changed to inherit Pulse_Handler from
+	  ACE_Task_Base.  Reworked controller.cpp so that it won't look
+	  like the process that actually generates the events.
+
+Mon Apr 14 14:57:51 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/RateGen/controller.cpp: Changed to
+	  perform only one action in each exection of this program.  I.e.,
+	  it either switch on or off the RateGen component and exit
+	  immediately.  This is to avoid the mis-conception that the
+	  controller actually generates the Rate.
+
 Sat Apr 12 12:36:08 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* CIDLC/parser_examples/cidl/cidl.vcproj:

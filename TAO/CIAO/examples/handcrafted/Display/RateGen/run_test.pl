@@ -5,6 +5,10 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
+#
+# @@ Run this script from ../descriptors/ instead.
+#
+
 use lib "../../../../../../bin";
 use PerlACE::Run_Test;
 
@@ -18,7 +22,7 @@ unlink $svr_ior;
 unlink $home_ior;
 
 # CIAO Daemon command line arguments
-$daemon_args = "-o $daemon_ior -i ../CIAO_Installation_Data.ini -n ../../../../tools/ComponentServer/ComponentServer";
+$daemon_args = "-o $daemon_ior -i CIAO_Installation_Data.ini -n ../../../../tools/ComponentServer/ComponentServer";
 
 # CIAO Daemon Controller location:
 $controller = "../../../../tools/Daemon/DaemonController";
@@ -43,7 +47,7 @@ $DS = new PerlACE::Process ("../../../../tools/Daemon/CIAO_Daemon",
                             "$daemon_args");
 
 # Client process definition
-$CL = new PerlACE::Process ("client",
+$CL = new PerlACE::Process ("../RateGen/client",
                             "$cl_args");
 
 ## Starting up the CIAO daemon

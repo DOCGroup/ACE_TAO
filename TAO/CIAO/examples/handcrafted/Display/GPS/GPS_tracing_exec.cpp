@@ -5,7 +5,7 @@
 #define DISPLACEMENT 256
 
 /// Default constructor.
-MyImpl::GPS_tracing_exec_impl::GPS_tracing_exec_impl () : dx_(1), dy_(1)
+MyImpl::GPS_tracing_exec_i::GPS_tracing_exec_i () : dx_(1), dy_(1)
 {
   ACE_OS::srand ((u_int) ACE_OS::time ());
 
@@ -14,22 +14,22 @@ MyImpl::GPS_tracing_exec_impl::GPS_tracing_exec_impl () : dx_(1), dy_(1)
 }
 
 /// Default destructor.
-MyImpl::GPS_tracing_exec_impl::~GPS_tracing_exec_impl ()
+MyImpl::GPS_tracing_exec_i::~GPS_tracing_exec_i ()
 {
 }
 
 // Operations from HUDisplay::GPS
 
 HUDisplay::CCM_position_ptr
-MyImpl::GPS_tracing_exec_impl::get_MyLocation (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPS_tracing_exec_i::get_MyLocation (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return HUDisplay::CCM_position::_duplicate (this);
 }
 
 void
-MyImpl::GPS_tracing_exec_impl::push_Refresh (HUDisplay::tick_ptr ev
-                                             ACE_ENV_ARG_DECL)
+MyImpl::GPS_tracing_exec_i::push_Refresh (HUDisplay::tick_ptr ev
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Refresh position
@@ -51,14 +51,14 @@ MyImpl::GPS_tracing_exec_impl::push_Refresh (HUDisplay::tick_ptr ev
 // Operations from HUDisplay::position
 
 CORBA::Long
-MyImpl::GPS_tracing_exec_impl::posx (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPS_tracing_exec_i::posx (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->positionx_;
 }
 
 CORBA::Long
-MyImpl::GPS_tracing_exec_impl::posy (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPS_tracing_exec_i::posy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->positiony_;
@@ -66,12 +66,12 @@ MyImpl::GPS_tracing_exec_impl::posy (ACE_ENV_SINGLE_ARG_DECL)
 
 // Operations from Components::SessionComponent
 void
-MyImpl::GPS_tracing_exec_impl::set_session_context (Components::SessionContext_ptr ctx
-                                                    ACE_ENV_ARG_DECL)
+MyImpl::GPS_tracing_exec_i::set_session_context (Components::SessionContext_ptr ctx
+                                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_tracing_exec_impl::set_session_context\n"));
+  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_tracing_exec_i::set_session_context\n"));
 
   this->context_ =
     HUDisplay::CCM_GPS_Context::_narrow (ctx
@@ -84,36 +84,36 @@ MyImpl::GPS_tracing_exec_impl::set_session_context (Components::SessionContext_p
 }
 
 void
-MyImpl::GPS_tracing_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::GPS_tracing_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_tracing_exec_impl::ccm_activate\n"));
+  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_tracing_exec_i::ccm_activate\n"));
 }
 
 void
-MyImpl::GPS_tracing_exec_impl::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::GPS_tracing_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_tracing_exec_impl::ccm_passivate\n"));
+  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_tracing_exec_i::ccm_passivate\n"));
 }
 
 void
-MyImpl::GPS_tracing_exec_impl::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::GPS_tracing_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_tracing_exec_impl::ccm_remove\n"));
+  ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_tracing_exec_i::ccm_remove\n"));
 }
 
 /// Default ctor.
-MyImpl::GPSHome_tracing_exec_impl::GPSHome_tracing_exec_impl ()
+MyImpl::GPSHome_tracing_exec_i::GPSHome_tracing_exec_i ()
 {
 }
 
 /// Default dtor.
-MyImpl::GPSHome_tracing_exec_impl::~GPSHome_tracing_exec_impl ()
+MyImpl::GPSHome_tracing_exec_i::~GPSHome_tracing_exec_i ()
 {
 }
 
@@ -122,16 +122,16 @@ MyImpl::GPSHome_tracing_exec_impl::~GPSHome_tracing_exec_impl ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::GPSHome_tracing_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPSHome_tracing_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CreateFailure))
 {
-  return new MyImpl::GPS_tracing_exec_impl;
+  return new MyImpl::GPS_tracing_exec_i;
 }
 
 
 extern "C" GPS_EXEC_Export ::Components::HomeExecutorBase_ptr
 createGPSHome_Tracing_Impl (void)
 {
-  return new MyImpl::GPSHome_tracing_exec_impl;
+  return new MyImpl::GPSHome_tracing_exec_i;
 }
