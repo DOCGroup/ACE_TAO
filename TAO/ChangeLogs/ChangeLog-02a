@@ -1,3 +1,9 @@
+Wed Jan  9 18:07:55 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TO_IDL/fe/fe_init.cpp (populate_global_scope):
+
+          Removed the guards around the calls related to valuetypes.
+
 Wed Jan  9 11:35:58 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (init):
