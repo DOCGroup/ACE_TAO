@@ -1,3 +1,11 @@
+Wed Nov 24 13:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Typecode_typesC.h:
+        * tao/Typecode.h:
+          Use the correct template for the template for TypeCode_var and
+          TypeCode_out, and move it from the generated file to the normal
+          file. This fixes the runtime problems with typecodes.
+
 Wed Nov 24 10:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/*C.*:
