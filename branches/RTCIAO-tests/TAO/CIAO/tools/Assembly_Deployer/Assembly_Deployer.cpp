@@ -82,7 +82,7 @@ main (int argc, char *argv[])
         }
 
 
-      ACE_DEBUG ((LM_DEBUG, "Try creating an Assembly with %s\n", cad));
+      ACE_DEBUG ((LM_DEBUG, "Creating an Assembly with %s\n", cad));
 
       Components::Cookie_var ck =
         factory->create_assembly (cad

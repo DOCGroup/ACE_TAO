@@ -1,4 +1,4 @@
-project(XML_Helpers): acelib, acexml, rtcorba {
+project(XML_Helpers): acelib, acexml, rtcorba, ciao_client {
   sharedname=CIAO_XML_Helpers
   idlflags  += -Sc -Wb,export_include=XML_Helpers_Export.h
   idlflags  += -Wb,export_macro=CIAO_XML_HELPERS_Export

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "RTConfig_Handlers.h"
+#include "CIAO_common.h"
 
 #if !defined (__ACE_INLINE__)
 # include "RTConfig_Handlers.inl"
@@ -29,7 +30,8 @@ CIAO::RTConfig_Handler::startElement (const ACEXML_Char *,
         }
       else if (ACE_OS::strcmp (qName, "rtcad_ext") == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "Start parsing RT cad file extension\n"));
+          if (CIAO::debug_level () > 10)
+            ACE_DEBUG ((LM_DEBUG, "Start parsing RT cad file extension\n"));
         }
       else
         ACEXML_THROW (ACEXML_SAXException
@@ -163,7 +165,8 @@ CIAO::RTConfig_Handler::endElement (const ACEXML_Char *,
     case START:
       if (ACE_OS::strcmp (qName, "rtcad_ext") == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "End parsing RT cad file extension\n"));
+          if (CIAO::debug_level () > 10)
+            ACE_DEBUG ((LM_DEBUG, "End parsing RT cad file extension\n"));
         }
       return;
 

@@ -10,6 +10,7 @@
 #include "ComponentServer_Impl.h"
 #include "CIAO_ServersC.h"
 #include "Server_init.h"
+#include "CIAO_common.h"
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 
@@ -163,12 +164,15 @@ main (int argc, char *argv[])
                                                      ACE_ENV_ARG_PARAMETER);
 
       CIAO::Utility::write_IOR (ior_file_name_, str.in ());
-      ACE_DEBUG ((LM_INFO, "ComponentServer IOR: %s\n", str.in ()));
 
       // End Deployment part
+      if (CIAO::debug_level () > 10)
+        {
+          ACE_DEBUG ((LM_INFO, "ComponentServer IOR: %s\n", str.in ()));
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Running ComponentServer...\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Running ComponentServer...\n"));
+        }
 
       // Run the main event loop for the ORB.
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
