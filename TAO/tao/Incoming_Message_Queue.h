@@ -43,7 +43,7 @@ public:
 
   /// @@Bala:Docu
   int add_message (ACE_Message_Block *block,
-                   size_t missing_data,
+                   ssize_t missing_data,
                    CORBA::Octet byte_order);
 
   void copy_message (ACE_Message_Block &block);
@@ -58,11 +58,6 @@ public:
   char *wr_ptr (void) const;
   ACE_Message_Block *dequeue_head (CORBA::Octet &byte_order);
 
-private:
-
-  friend class TAO_Transport;
-
-  /// @@Bala:Docu
   class TAO_Export TAO_Queued_Data
   {
   public:
@@ -75,8 +70,20 @@ private:
 
     CORBA::Octet byte_order_;
 
+    CORBA::Octet major_version_;
+
+    CORBA::Octet minor_version_;
+
     TAO_Queued_Data *next_;
   };
+
+private:
+
+  friend class TAO_Transport;
+
+  /// @@Bala:Docu
+
+
 
   TAO_Queued_Data* get_node (void);
   int add_node (TAO_Queued_Data *nd);

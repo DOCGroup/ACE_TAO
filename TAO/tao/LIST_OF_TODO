@@ -1,4 +1,5 @@
 - Fragmentation
+- GIOP Lite
 - test for Muli-threaded client & server (muxing tests)
 - test LongUpCalls
 - Problem with two messages coming in two diffrent GIOP versions..
