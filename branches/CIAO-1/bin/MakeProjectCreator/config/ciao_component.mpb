@@ -1,5 +1,5 @@
 project : ciao_client {
   depends += CIAO_Container
   libs       += TAO_PortableServer TAO_Security CIAO_Container
-  include_dir += orbsvcs/orbsvcs
+  include_dir += $(TAO_ROOT)/orbsvcs/orbsvcs
 }
