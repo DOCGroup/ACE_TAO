@@ -114,7 +114,7 @@ clean </td>
 <tr NAME="Wb">
 <td><tt>-Wb,</tt><i>option_list</i></EM</TD></td>
 
-<td>Pass options to the backend.</td>
+<td>Pass options to the TAO IDL compiler backend.</td>
 </tr>
 
 <tr NAME="export_macro">
@@ -135,7 +135,18 @@ is just a space on unix platforms.&nbsp;</td>
 
 <td>The compiler will generate code to include <i>include_path</i> at the
 top of the client header, this is usually a good place to define the export
-macro.&nbsp;</td>
+macro.</td>
+</tr>
+
+<tr NAME="pch_include">
+<td></td>
+
+<td><tt>pch_include=</tt><i>include_path</i></td>
+
+<td>The compiler will generate code to include <i>include_path</i> at the
+top of all TAO IDL compiler generated files.  This can be used with a
+precompiled header mechanism, such as those provided by Borland
+C++Builder or MSVC++.</td>
 </tr>
 
 <tr NAME="E">
