@@ -1,3 +1,9 @@
+Fri Aug 21 14:27:27 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.{h,cpp}: Added virtual 
+	  destructors to all the classes. Thanks to Carlos for reporting
+  	  this. Fixed a few template warnings.
+
 Fri Aug 21 13:47:27 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tao/Typecode.cpp:
