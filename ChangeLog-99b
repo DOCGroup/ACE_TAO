@@ -165,9 +165,9 @@ Sat Jan 23 04:53:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
           This performance of this map is truely awesome:
 
-          - inserts O(1)
-          - lookups O(1)
-          - deletes O(1)
+          - inserts O(1) worse case
+          - lookups O(1) worse case
+          - deletes O(1) worse case
 
         * ace/Map_Manager: Completely reworked the internals of the
           Map_Manager.  A number of problems were addressed:
