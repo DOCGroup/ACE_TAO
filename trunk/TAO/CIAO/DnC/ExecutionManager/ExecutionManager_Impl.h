@@ -120,7 +120,7 @@ namespace CIAO
       // Internal Hashtable
       // Table table_;
 
-      /      // Path to the initialization file
+      // Path to the initialization file
       ACE_CString init_file_;
 
       Deployment::DomainApplicationManager_var dam_;
