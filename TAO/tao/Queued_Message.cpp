@@ -2,7 +2,6 @@
 // $Id$
 
 #include "Queued_Message.h"
-#include "Message_Sent_Callback.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Queued_Message.inl"
@@ -10,11 +9,10 @@
 
 ACE_RCSID(tao, Queued_Message, "$Id$")
 
-TAO_Queued_Message::TAO_Queued_Message (TAO_Message_Sent_Callback *callback)
+TAO_Queued_Message::TAO_Queued_Message (void)
   : connection_closed_ (0)
   , send_failure_ (0)
   , timeout_ (0)
-  , callback_ (callback)
   , next_ (0)
   , prev_ (0)
 {
@@ -28,22 +26,18 @@ void
 TAO_Queued_Message::connection_closed (void)
 {
   this->connection_closed_ = 1;
-
-  if (this->callback_ != 0)
-    {
-      this->callback_->connection_closed ();
-    }
 }
 
 void
 TAO_Queued_Message::send_failure (void)
 {
   this->send_failure_ = 1;
+}
 
-  if (this->callback_ != 0)
-    {
-      this->callback_->send_failed ();
-    }
+void
+TAO_Queued_Message::timeout (void)
+{
+  this->timeout_ = 1;
 }
 
 void

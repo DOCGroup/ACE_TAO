@@ -244,8 +244,7 @@ ORB_CORE_FILES = \
   Reactive_Flushing_Strategy \
   Queued_Message \
   Synch_Queued_Message \
-  Asynch_Queued_Message \
-  Message_Sent_Callback
+  Asynch_Queued_Message
 
 DYNAMIC_ANY_FILES =
 

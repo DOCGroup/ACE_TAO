@@ -5,6 +5,7 @@
 #include "tao/Buffering_Constraint_Policy.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
+#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Sync_Strategies.i"
@@ -138,6 +139,15 @@ TAO_Eager_Buffering_Sync_Strategy::
       || current_deadline >= now)
     {
       return 0;
+    }
+
+  if (TAO_debug_level > 6)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - TAO_Eager_Buffering_Sync_Strategy::timer_check, "
+                  "Now = %u, Current = %u, New = %u\n",
+                  now.msec (), current_deadline.msec (),
+                  new_deadline.msec ()));
     }
 
   return 1;

@@ -137,6 +137,8 @@ TAO_Transport::handle_output ()
         this->orb_core ()->flushing_strategy ();
 
       flushing_strategy->cancel_output (this);
+
+      this->current_deadline_ = ACE_Time_Value::zero;
       return 0;
     }
 
@@ -1023,8 +1025,7 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
                                                           set_timer,
                                                           new_deadline);
 
-  // ... it is not time to flush yet, but maybe we need to set a
-  // timer ...
+  // ... check if we need to set a timer ...
   if (set_timer)
     {
       this->current_deadline_ = new_deadline;

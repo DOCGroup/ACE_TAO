@@ -1,3 +1,23 @@
+Tue Apr 17 19:12:31 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp:
+          Reset the current deadline as soon as the queue is empty.
+
+        * tao/Sync_Strategies.cpp:
+          Add debugging messages
+
+        * tao/Makefile:
+        * tao/Message_Sent_Callback.h:
+        * tao/Message_Sent_Callback.inl:
+        * tao/Message_Sent_Callback.cpp:
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.cpp:
+          Removed the TAO_Message_Sent_Callback class, it was not required
+          at all.
+
+        * tao/Strategies/UIOP_Transport.cpp:
+          Add missing function (removed during the merge).
+
 Tue Apr 17 14:21:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Queued_Message.h:

@@ -21,7 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Message_Block;
-class TAO_Message_Sent_Callback;
 
 /**
  * @class TAO_Queued_Message
@@ -70,7 +69,7 @@ public:
    * threads about the status of the message.  It is null if there are
    * no waiting threads.
    */
-  TAO_Queued_Message (TAO_Message_Sent_Callback *callback = 0);
+  TAO_Queued_Message (void);
 
   /// Destructor
   virtual ~TAO_Queued_Message (void);
@@ -81,6 +80,9 @@ public:
 
   /// There was an error while sending the data.
   void send_failure (void);
+
+  /// There was a timeout while sending the data
+  void timeout (void);
 
   /** @name Intrusive list manipulation
    *
@@ -193,14 +195,6 @@ protected:
   int timeout_;
 
 private:
-  /// If not null, this is the object that we signal to indicate that
-  /// the message was sent.
-  /**
-   * The signaling mechanism used to wakeup the thread waiting for
-   * this message to complete changes
-   */
-  TAO_Message_Sent_Callback *callback_;
-
   /// Implement an intrusive double-linked list for the message queue
   TAO_Queued_Message *next_;
   TAO_Queued_Message *prev_;
