@@ -1,3 +1,15 @@
+Wed Oct 29 12:16:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+          Reverted the changes in 
+
+          Wed Oct 29 11:00:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          since the original motivation was from warnings in gcc 3.2,
+          whereas the chanages in question produced errors in gcc 3.3.
+
 Wed Oct 29 12:15:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IIOP_Transport.cpp: Cosmetic fix.
