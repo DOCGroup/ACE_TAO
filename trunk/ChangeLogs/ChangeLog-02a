@@ -1,3 +1,10 @@
+Wed Jan 19 23:21:07 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Thread_Pool_Test.cpp (test_queue_deactivation_shutdown): Make
+	  sure to release the message block once we've decided to shutdown
+ 	  the message queue to avoid a memory leak.  Thanks to David
+ 	  Levine for reporting this.
+
 Tue Jan 19 13:33:08 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * ace/ATM_Addr.cpp, ATM_QoS.cpp:

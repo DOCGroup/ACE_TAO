@@ -178,7 +178,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue");
 
   if (this->open (hwm, lwm, ns) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("open")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("open")));
 }
 
 template <ACE_SYNCH_DECL>
@@ -186,7 +187,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue");
   if (this->head_ != 0 && this->close () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("close")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("close")));
 }
 
 // Don't bother locking since if someone calls this function more than
@@ -251,7 +253,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
 
   int res = this->deactivate_i ();
 
-  // Free up the remaining message on the list
+  // Free up the remaining messages on the queue.
 
   for (this->tail_ = 0; this->head_ != 0; )
     {
@@ -1354,10 +1356,10 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_pending_queue (const ACE_Time_
               else if (current_status != ACE_Dynamic_Message_Strategy::LATE)
                 {
                   // if we got here, something is *seriously* wrong with the queue
-                  ACE_ERROR_RETURN((LM_ERROR,
-                                    ASYS_TEXT ("Unexpected message priority status [%d] (expected LATE)"),
-                                    (int) current_status),
-                                   -1);
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ASYS_TEXT ("Unexpected message priority status [%d] (expected LATE)"),
+                                     (int) current_status),
+                                    -1);
                 }
               /* FALLTHRU */
             }
@@ -1474,10 +1476,10 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_late_queue (const ACE_Time_Val
                 }
               else if (current_status != ACE_Dynamic_Message_Strategy::LATE)
                 // if we got here, something is *seriously* wrong with the queue
-                ACE_ERROR_RETURN((LM_ERROR,
-                                  ASYS_TEXT ("Unexpected message priority status [%d] (expected LATE)"),
-                                  (int) current_status),
-                                 -1);
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ASYS_TEXT ("Unexpected message priority status [%d] (expected LATE)"),
+                                   (int) current_status),
+                                  -1);
             }
           else
             {
@@ -1495,17 +1497,17 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_late_queue (const ACE_Time_Val
 
         case ACE_Dynamic_Message_Strategy::PENDING:
           // if we got here, something is *seriously* wrong with the queue
-          ACE_ERROR_RETURN((LM_ERROR,
-                            ASYS_TEXT ("Unexpected message priority status ")
-                            ASYS_TEXT ("[%d] (expected LATE or BEYOND_LATE)"),
-                            (int) current_status),
-                           -1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ASYS_TEXT ("Unexpected message priority status ")
+                             ASYS_TEXT ("[%d] (expected LATE or BEYOND_LATE)"),
+                             (int) current_status),
+                            -1);
         default:
           // if we got here, something is *seriously* wrong with the queue
-          ACE_ERROR_RETURN((LM_ERROR,
-                            ASYS_TEXT ("Unknown message priority status [%d]"),
-                            (int) current_status),
-                           -1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ASYS_TEXT ("Unknown message priority status [%d]"),
+                             (int) current_status),
+                            -1);
         }
     }
 
