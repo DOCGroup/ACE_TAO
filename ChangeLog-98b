@@ -1,58 +1,65 @@
+Sat Nov 21 08:34:44 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: added ACE_LACKS_IP_ADD_MEMBERSHIP, for internal
+          use only.  If IP_ADD_MEMBERSHIP isn't defined, ACE defines
+          ACE_LACKS_IP_ADD_MEMBERSHIP for subsequent use in
+          determining whether to define ip_mreq.
+
 Fri Nov 20 00:58:35 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/DLL.h (ACE_DLL): Added a new constructor which allows auto
-	  opening of the dynamically linked library.
+        * ace/DLL.h (ACE_DLL): Added a new constructor which allows auto
+          opening of the dynamically linked library.
 
-	* ace/DLL.h (get_handle): Added a method which returns teh handle
-	  to the user.
-	
-	* ace/DLL.cpp (ACE_DLL): Added the auto-open feature taking care
-	  of more than one open calls.
+        * ace/DLL.h (get_handle): Added a method which returns teh handle
+          to the user.
 
-	* ace/DLL.cpp (get_handle): The orphan flag decides whether the 
-	  handle is orphaned or given to the user temporarily.
-	
-	* ace/DLL.cpp (open): Added a check so that a already existing
-	  handle is closed before the next open is done.
-		
+        * ace/DLL.cpp (ACE_DLL): Added the auto-open feature taking care
+          of more than one open calls.
+
+        * ace/DLL.cpp (get_handle): The orphan flag decides whether the
+          handle is orphaned or given to the user temporarily.
+
+        * ace/DLL.cpp (open): Added a check so that a already existing
+          handle is closed before the next open is done.
+
 Fri Nov 20 23:40:12 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/00[567]/client_handler.cpp :
-	* docs/tutorials/00[56]/page0[45].html
-	* docs/tutorials/007/page0[56].html
-	Rework the interaction of handle_input(), handle_close() and
-	close().  I had this all wrong by making handle_close() invoke
-	remove_handler() when it was unnecessary.
-	
+        * docs/tutorials/00[567]/client_handler.cpp :
+        * docs/tutorials/00[56]/page0[45].html
+        * docs/tutorials/007/page0[56].html
+        Rework the interaction of handle_input(), handle_close() and
+        close().  I had this all wrong by making handle_close() invoke
+        remove_handler() when it was unnecessary.
+
 Fri Nov 20 22:12:03 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Makefile: Added an entry for DLL.{h,cpp}.
+        * ace/Makefile: Added an entry for DLL.{h,cpp}.
 
 Fri Nov 20 15:49:04 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.h: Added ACE_SHLIB_INVALID_HANDLE which is used to
- 	  indicate a invalid shared library handle.
+        * ace/OS.h: Added ACE_SHLIB_INVALID_HANDLE which is used to
+          indicate a invalid shared library handle.
 
-	* examples/Reactor/WFMO_Reactor/test_handle_close.cpp: This
- 	  application tests whether handle_close() gets called and if the
- 	  correct masks are passed along.  The handler should get
- 	  handle_close() called for all three masks (READ, WRITE, and
- 	  EXCEPT).
+        * examples/Reactor/WFMO_Reactor/test_handle_close.cpp: This
+          application tests whether handle_close() gets called and if the
+          correct masks are passed along.  The handler should get
+          handle_close() called for all three masks (READ, WRITE, and
+          EXCEPT).
 
-	* ace/WFMO_Reactor.cpp (remove_handler_i,
- 	  remove_suspended_handler_i, and remove_to_be_added_handler_i):
- 	  There was a bug in WFMO_Reactor where handle_close() was not
- 	  called when it is not a complete removal. Added a call to
- 	  handle_close() for all the masks that were removed.  Note that
- 	  partial removals do not change the state of the internal tables
- 	  of the reactor.
+        * ace/WFMO_Reactor.cpp (remove_handler_i,
+          remove_suspended_handler_i, and remove_to_be_added_handler_i):
+          There was a bug in WFMO_Reactor where handle_close() was not
+          called when it is not a complete removal. Added a call to
+          handle_close() for all the masks that were removed.  Note that
+          partial removals do not change the state of the internal tables
+          of the reactor.
 
-	* ace/OS.i (recvfrom): There is a bug in the Win32 implementation
- 	  of this function.  It reports an error (with errno=WSAEMSGSIZE),
- 	  even MSG_PEEK is specified, when the message was too large to
- 	  fit into the specified buffer and was truncated.  So we fixed it
- 	  by returning the length of the recv request when
- 	  errno=WSAEMSGSIZE and the MSG_PEEK flag was specified.
+        * ace/OS.i (recvfrom): There is a bug in the Win32 implementation
+          of this function.  It reports an error (with errno=WSAEMSGSIZE),
+          even MSG_PEEK is specified, when the message was too large to
+          fit into the specified buffer and was truncated.  So we fixed it
+          by returning the length of the recv request when
+          errno=WSAEMSGSIZE and the MSG_PEEK flag was specified.
 
 Fri Nov 20 11:15:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
