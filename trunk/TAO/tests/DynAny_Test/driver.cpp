@@ -140,7 +140,7 @@ Driver::parse_args (int argc, char* argv[])
 int
 Driver::run (void)
 {
-  int retstatus;
+  int retstatus = 0;
 
   switch (this->test_type_)
     {

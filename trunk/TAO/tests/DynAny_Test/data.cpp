@@ -19,8 +19,7 @@
 #include "data.h"
 
 Data::Data (CORBA::ORB_var orb)
-  : orb_ (orb),
-    m_bool1 (1),                                m_bool2 (0),
+  : m_bool1 (1),                                m_bool2 (0),
     m_octet1 (8),                               m_octet2 (0),
     m_char1 ('z'),                              m_char2 (0),
     m_short1 (-5),                              m_short2 (0),
@@ -37,7 +36,8 @@ Data::Data (CORBA::ORB_var orb)
     m_typecode2 (CORBA::TypeCode::_duplicate (CORBA::_tc_null)),
 
     m_wchar1 (666),                             m_wchar2 (0),
-    m_any1 (CORBA::_tc_long)
+    m_any1 (CORBA::_tc_long),
+    orb_ (orb)
 {
   CORBA::Environment env;
 
