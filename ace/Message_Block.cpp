@@ -183,7 +183,7 @@ ACE_Data_Block::~ACE_Data_Block (void)
   if (this->delete_allocator_strategy_)
     {
       delete this->allocator_strategy_;
-      this->allocator_strategy_;
+      this->allocator_strategy_ = 0;
     }
 }
 
@@ -661,6 +661,6 @@ ACE_Message_Block::operator= (const ACE_Message_Block &)
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Malloc <ACE_Local_Memory_Pool, ACE_Null_Mutex>;
-template class ACE_Allocator_Adapter <ACE_Malloc <ACE_Local_Memory_Pool, ACE_Null_Mutex>;
+template class ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
+template class ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
