@@ -535,6 +535,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -644,9 +645,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -675,6 +673,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -775,6 +778,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -845,8 +849,7 @@ realclean:
  PortableServerC.i \
  Key_Adapters.i
 
-.obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
+.obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -964,6 +967,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -1047,9 +1051,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -1078,6 +1079,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -1206,6 +1212,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CurrentC.h \
  Object.h \
@@ -1230,8 +1237,7 @@ realclean:
  Environment.i \
  PolicyC.i \
  Any.h \
- Any.i \
- PortableServerC.i \
+ Any.i PortableServerC.i \
  ORB.h \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1401,6 +1407,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CurrentC.h \
  Object.h \
@@ -1582,6 +1589,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -1748,6 +1756,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  PortableServerC.h \
  CurrentC.h \
@@ -1804,6 +1813,11 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  ORB_Core.h \
  ORB.h \
  IOR_LookupTable.h \
@@ -1827,9 +1841,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -1998,6 +2009,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  PortableServerC.h \
  CurrentC.h \
@@ -2161,6 +2173,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Object.i \
  Managed_Types.h \
@@ -2180,8 +2193,12 @@ realclean:
  Typecode.h \
  Typecode.i \
  Any.i \
- ImplRepoC.i \
- Stub.h \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ ImplRepoC.i Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -2273,9 +2290,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -2317,8 +2331,7 @@ realclean:
  Invocation.i
 
 .obj/ImplRepoS.o .obj/ImplRepoS.so .shobj/ImplRepoS.o .shobj/ImplRepoS.so: ImplRepoS.cpp ImplRepoS.h \
- $(ACE_ROOT)/ace/pre.h \
- ImplRepoC.h \
+ $(ACE_ROOT)/ace/pre.h ImplRepoC.h \
  Object.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -2406,6 +2419,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Object.i \
  Managed_Types.h \
@@ -2425,6 +2439,11 @@ realclean:
  Typecode.h \
  Typecode.i \
  Any.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  ImplRepoC.i \
  PortableServerC.h \
  CurrentC.h \
@@ -2566,9 +2585,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -2669,6 +2685,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -2776,14 +2793,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -2888,6 +2907,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Tagged_Components.h \
  IOPC.h \
@@ -2933,6 +2953,11 @@ realclean:
  PollableC.i \
  Smart_Proxies.h \
  Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  Policy_Factory.h \
  Policy_Factory.i \
@@ -3111,6 +3136,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  ORB.h \
  Exception.h \
@@ -3187,9 +3213,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -3218,6 +3241,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -3324,6 +3352,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -3432,12 +3461,14 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -3587,6 +3618,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -3744,6 +3776,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -3850,13 +3883,15 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -4030,6 +4065,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -4136,13 +4172,15 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -4271,6 +4309,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Tagged_Components.h \
  IOPC.h \
@@ -4426,14 +4465,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -4561,6 +4602,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -4735,14 +4777,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -4930,6 +4974,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -5034,12 +5079,14 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -5138,6 +5185,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -5289,14 +5337,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -5489,6 +5539,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Wait_Strategy.h \
  IIOP_Transport.h \
@@ -5562,14 +5613,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -5745,6 +5798,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -5852,13 +5906,15 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -6033,6 +6089,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -6140,13 +6197,15 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -6274,6 +6333,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Tagged_Components.h \
  IOPC.h \
@@ -6432,14 +6492,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -6567,6 +6629,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -6744,14 +6807,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -6858,6 +6923,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -7048,12 +7114,14 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -7151,6 +7219,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -7303,14 +7372,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -7425,6 +7496,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -7573,14 +7645,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -7712,6 +7786,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Protocol_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -7870,13 +7945,15 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -8004,6 +8081,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Profile.h \
  Tagged_Components.h \
@@ -8166,14 +8244,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -8300,6 +8380,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -8481,14 +8562,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -8594,6 +8677,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -8788,12 +8872,14 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -8891,6 +8977,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -9047,14 +9134,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -9168,6 +9257,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -9323,14 +9413,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -9459,6 +9551,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Object.h \
  Object.i \
@@ -9472,8 +9565,7 @@ realclean:
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
- Sequence_T.cpp \
- IORC.i
+ Sequence_T.cpp IORC.i
 
 .obj/IORManipulation.o .obj/IORManipulation.so .shobj/IORManipulation.o .shobj/IORManipulation.so: IORManipulation.cpp \
  IORManipulation.h \
@@ -9565,6 +9657,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Object.h \
  Object.i \
@@ -9673,14 +9766,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -9785,6 +9880,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Config.i \
@@ -9859,9 +9955,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -9890,6 +9983,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -10000,6 +10098,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -10078,9 +10177,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -10109,6 +10205,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -10232,6 +10333,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -10310,12 +10412,14 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -10487,6 +10591,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -10645,6 +10750,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -10775,6 +10881,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Typecode.h \
  Exception.h \
@@ -10935,6 +11042,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Typecode.h \
  Exception.h \
@@ -11094,6 +11202,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Typecode.h \
  Exception.h \
@@ -11254,6 +11363,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Managed_Types.i \
  ORB.h \
@@ -11420,6 +11530,12 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Export.h \
+ TAO_Singleton_Manager.inl \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -11474,8 +11590,7 @@ realclean:
  PolicyC.i \
  ORB.i
 
-.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp \
- Any.h \
+.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp Any.h \
  $(ACE_ROOT)/ace/pre.h \
  CDR.h \
  corbafwd.h \
@@ -11564,6 +11679,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Environment.h \
@@ -11643,9 +11759,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -11674,6 +11787,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -11772,6 +11890,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Object.i \
  CurrentC.i \
@@ -11872,6 +11991,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Exception.i \
  Typecode.h \
@@ -11974,6 +12094,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Exception.h \
  Exception.i \
@@ -12071,6 +12192,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Environment.i \
  ORB_Core.h \
@@ -12147,9 +12269,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -12178,6 +12297,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -12274,6 +12398,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Object.i \
  Object_Adapter.h \
@@ -12418,6 +12543,11 @@ realclean:
  PollableC.i \
  Smart_Proxies.h \
  Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  Request.i \
  ORB_Core.h \
@@ -12427,9 +12557,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -12555,6 +12682,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Object.h \
  Object.i \
@@ -12699,6 +12827,11 @@ realclean:
  PollableC.i \
  Smart_Proxies.h \
  Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  Request.i \
  ORB_Core.h \
@@ -12708,9 +12841,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -12839,6 +12969,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -12907,8 +13038,7 @@ realclean:
  Any.h \
  Any.i
 
-.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp \
- ORB.h \
+.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp ORB.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -12996,6 +13126,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Exception.h \
  Exception.i \
@@ -13059,7 +13190,7 @@ realclean:
  Typecode.i \
  PolicyC.i \
  ORB.i \
- Acceptor_Registry.h \
+ Connector_Registry.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -13083,10 +13214,6 @@ realclean:
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i \
- Resource_Factory.h \
- Protocol_Factory.h \
- Acceptor_Registry.i \
- Connector_Registry.h \
  params.h \
  params.i \
  Connector_Registry.i \
@@ -13142,12 +13269,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  ORB_Core.h \
  Policy_Manager.h \
  Policy_Manager.i \
+ Resource_Factory.h \
+ Protocol_Factory.h \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -13323,6 +13454,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i
 
 .obj/PolicyC.o .obj/PolicyC.so .shobj/PolicyC.o .shobj/PolicyC.so: PolicyC.cpp \
@@ -13416,6 +13548,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Object.i \
  CurrentC.i \
@@ -13524,14 +13657,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -13659,6 +13794,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Object.i \
  CurrentC.i \
@@ -13705,6 +13841,11 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  Server_Request.h \
  IOPC.h \
  IOPC.i \
@@ -13771,9 +13912,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Object_Adapter.h \
  Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
@@ -13902,6 +14040,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i
 
 .obj/Policy_Factory.o .obj/Policy_Factory.so .shobj/Policy_Factory.o .shobj/Policy_Factory.so: Policy_Factory.cpp \
@@ -13993,6 +14132,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  PolicyC.h \
  CurrentC.h \
@@ -14134,6 +14274,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  PolicyC.h \
  CurrentC.h \
@@ -14244,14 +14385,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -14374,6 +14517,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  PolicyC.h \
  CurrentC.h \
@@ -14426,6 +14570,11 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  Server_Request.h \
  IOPC.h \
  IOPC.i \
@@ -14440,9 +14589,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -14549,6 +14695,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Environment.h \
@@ -14659,6 +14806,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Environment.h \
@@ -14765,6 +14913,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -14866,6 +15015,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Managed_Types.h \
  Managed_Types.i \
@@ -14963,6 +15113,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  IOPC.h \
  CDR.h \
@@ -15047,9 +15198,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -15078,6 +15226,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -15176,6 +15329,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Profile.h \
  Tagged_Components.h \
@@ -15257,8 +15411,7 @@ realclean:
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i
 
-.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp \
- Stub.h \
+.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp Stub.h \
  $(ACE_ROOT)/ace/pre.h \
  Pluggable.h \
  corbafwd.h \
@@ -15347,6 +15500,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -15458,14 +15612,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -15642,6 +15798,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Exception.i \
  Typecode.i \
@@ -15801,6 +15958,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  ORB.h \
@@ -15877,9 +16035,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -15908,6 +16063,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -16006,6 +16166,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  ValueFactory.i
 
@@ -16111,6 +16272,12 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Export.h \
+ TAO_Singleton_Manager.inl \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -16257,6 +16424,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  ORB_Core.h \
@@ -16333,9 +16501,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -16364,6 +16529,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -16464,6 +16634,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i
 
 .obj/debug.o .obj/debug.so .shobj/debug.o .shobj/debug.so: debug.cpp \
@@ -16555,6 +16726,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i
 
 .obj/Object_KeyC.o .obj/Object_KeyC.so .shobj/Object_KeyC.o .shobj/Object_KeyC.so: Object_KeyC.cpp \
@@ -16646,6 +16818,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -16750,6 +16923,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  ORB_Core.h \
@@ -16826,9 +17000,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -16857,6 +17028,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -17034,6 +17210,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  ORB_Core.h \
@@ -17110,9 +17287,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -17141,6 +17315,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -17292,6 +17471,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  ORB_Core.h \
@@ -17368,9 +17548,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -17399,6 +17576,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -17555,6 +17737,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  IOPC.h \
  CDR.h \
@@ -17661,6 +17844,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Interceptor.h \
  InterceptorC.h \
@@ -17774,6 +17958,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -17882,6 +18067,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Object.i \
  Smart_Proxies.i
@@ -17975,6 +18161,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  ORB.h \
  Exception.h \
@@ -18051,9 +18238,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18082,6 +18266,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -18271,6 +18460,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  ORB.h \
  Exception.h \
@@ -18347,9 +18537,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18378,6 +18565,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -18475,6 +18667,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Reactor_Registry.i
 
@@ -18568,6 +18761,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Reactor_Registry.i \
  Single_Reactor.i \
@@ -18647,9 +18841,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18678,6 +18869,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -18777,6 +18973,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Reactor_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -18859,9 +19056,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18890,6 +19084,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -18986,6 +19185,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -19139,6 +19339,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -19210,12 +19411,14 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -19311,6 +19514,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -19406,6 +19610,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -19529,14 +19734,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -19633,6 +19840,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -19801,6 +20009,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Exception.i \
  Typecode.i \
@@ -19994,6 +20203,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  ObjectIDList.h \
  Sequence.h \
@@ -20010,8 +20220,7 @@ realclean:
  Environment.i \
  debug.h
 
-.obj/TAO.o .obj/TAO.so .shobj/TAO.o .shobj/TAO.so: TAO.cpp \
- TAO.h \
+.obj/TAO.o .obj/TAO.so .shobj/TAO.o .shobj/TAO.so: TAO.cpp TAO.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -20099,6 +20308,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  PortableServerC.h \
  CurrentC.h \
@@ -20257,6 +20467,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i
 
 .obj/Wait_On_Read.o .obj/Wait_On_Read.so .shobj/Wait_On_Read.o .shobj/Wait_On_Read.so: Wait_On_Read.cpp \
@@ -20349,6 +20560,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -20504,6 +20716,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -20604,14 +20817,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -20709,6 +20924,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -20809,14 +21025,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -20918,6 +21136,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -21023,6 +21242,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -21187,6 +21407,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -21350,6 +21571,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -21454,6 +21676,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -21537,9 +21760,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -21568,6 +21788,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -21668,6 +21893,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -21705,6 +21931,11 @@ realclean:
  PollableC.i \
  Smart_Proxies.h \
  Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  Asynch_Reply_Dispatcher.i \
  GIOP_Message_State.h \
@@ -21763,9 +21994,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -21896,6 +22124,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -22007,12 +22236,16 @@ realclean:
  PollableC.i \
  Smart_Proxies.h \
  Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  Request.i \
  debug.h
 
-.obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp \
- IOPC.h \
+.obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp IOPC.h \
  $(ACE_ROOT)/ace/pre.h \
  CDR.h \
  corbafwd.h \
@@ -22101,6 +22334,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -22122,8 +22356,7 @@ realclean:
  Typecode.i \
  Any.i
 
-.obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp \
- IOPS.h \
+.obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp IOPS.h \
  $(ACE_ROOT)/ace/pre.h \
  IOPC.h \
  CDR.h \
@@ -22213,6 +22446,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -22316,14 +22550,14 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Object.h \
  Object.i \
  Exception.h \
  Exception.i \
  CDR.h \
- CDR.i \
- PollableC.i \
+ CDR.i PollableC.i \
  POA_CORBA.h \
  PolicyC.h \
  CurrentC.h \
@@ -22351,9 +22585,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -22436,6 +22667,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -22558,14 +22794,15 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Object.h \
  Object.i \
  Exception.h \
  Exception.i \
  CDR.h \
- CDR.i \
- PollableC.i PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
+ CDR.i PollableC.i \
+ PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
 
 .obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.so .shobj/CONV_FRAMEC.o .shobj/CONV_FRAMEC.so: CONV_FRAMEC.cpp \
  CONV_FRAMEC.h \
@@ -22657,6 +22894,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -22769,6 +23007,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -22875,6 +23114,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -22978,6 +23218,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  IOPC.h \
  CDR.h \
@@ -23093,6 +23334,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Exception.h \
  Exception.i \
@@ -23108,8 +23350,7 @@ realclean:
  Any.i \
  BoundsC.i
 
-.obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp TAOC.h \
- $(ACE_ROOT)/ace/pre.h \
+.obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp TAOC.h $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -23196,6 +23437,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  PolicyC.h \
  CurrentC.h \
@@ -23233,8 +23475,7 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  Priority_Mapping_Manager.i \
- TAOC.i \
- TAOS.h \
+ TAOC.i TAOS.h \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -23328,8 +23569,9 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
- corbafwd.i \
- TAOS_T.h TAOS_T.i TAOS_T.cpp TAOS.i
+ TAO_Export.h \
+ corbafwd.i TAOS_T.h \
+ TAOS_T.i TAOS_T.cpp TAOS.i
 
 .obj/Object_Loader.o .obj/Object_Loader.so .shobj/Object_Loader.o .shobj/Object_Loader.so: Object_Loader.cpp \
  Object_Loader.h \
@@ -23420,6 +23662,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -23444,6 +23687,295 @@ realclean:
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Service_Repository.i
+
+.obj/TAO_Singleton_Manager.o .obj/TAO_Singleton_Manager.so .shobj/TAO_Singleton_Manager.o .shobj/TAO_Singleton_Manager.so: TAO_Singleton_Manager.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Export.h \
+ TAO_Singleton_Manager.inl \
+ Exception.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ try_macros.h \
+ orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
+ corbafwd.i \
+ Exception.i \
+ Typecode.h \
+ Typecode.i
+
+.obj/DLL_ORB.o .obj/DLL_ORB.so .shobj/DLL_ORB.o .shobj/DLL_ORB.so: DLL_ORB.cpp $(ACE_ROOT)/ace/ARGV.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/ARGV.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ DLL_ORB.h \
+ $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
+ ORB.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ try_macros.h \
+ orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
+ TAO_Export.h \
+ corbafwd.i \
+ Exception.h \
+ Exception.i \
+ IOR_LookupTable.h \
+ Services.h \
+ Sequence.h \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
+ Services.i \
+ IORManipulation.h \
+ LocalObject.h \
+ Object.h \
+ Object.i \
+ LocalObject.i \
+ IORC.h \
+ Environment.h \
+ Environment.i \
+ IORC.i \
+ Interceptor.h \
+ InterceptorC.h \
+ IOPC.h \
+ CDR.h \
+ CDR.i \
+ IOPC.i \
+ InterceptorC.i \
+ Interceptor.i \
+ PolicyC.h \
+ CurrentC.h \
+ CurrentC.i \
+ Encodable.h \
+ Typecode.h \
+ Typecode.i \
+ PolicyC.i \
+ ORB.i \
+ DLL_ORB.inl \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl
 
 .obj/Context.o .obj/Context.so .shobj/Context.o .shobj/Context.so: Context.cpp \
  Context.h \
@@ -23534,6 +24066,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Context.i \
  Typecode.h \
@@ -23693,6 +24226,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  ORB.h \
  Exception.h \
@@ -23774,6 +24308,11 @@ realclean:
  PollableC.i \
  Smart_Proxies.h \
  Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  Request.i \
  Stub.h \
@@ -23902,6 +24441,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Managed_Types.h \
  Managed_Types.i \
@@ -24014,6 +24554,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Environment.h \
@@ -24179,6 +24720,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  ValueBase.i \
  ValueFactory.h \
@@ -24215,6 +24757,11 @@ realclean:
  PollableC.i \
  Smart_Proxies.h \
  Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  MessagingS.h \
  TimeBaseS.h \
@@ -24311,9 +24858,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -24373,9 +24917,8 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- MessagingS.h orbconf.h TimeBaseS.h \
- TimeBaseC.h \
+ $(ACE_ROOT)/ace/OS.i MessagingS.h orbconf.h \
+ TimeBaseS.h TimeBaseC.h \
  Any.h \
  CDR.h \
  corbafwd.h \
@@ -24443,6 +24986,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Environment.h \
@@ -24458,8 +25002,7 @@ realclean:
  TimeBaseS_T.h \
  TimeBaseS_T.i \
  TimeBaseS_T.cpp \
- TimeBaseS.i \
- MessagingC.h \
+ TimeBaseS.i MessagingC.h \
  ValueBase.h \
  ValueBase.i \
  ValueFactory.h \
@@ -24482,6 +25025,11 @@ realclean:
  PollableC.i \
  Smart_Proxies.h \
  Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i PortableServerC.h PortableServerC.i Servant_Base.h \
  PortableServerC.h \
  Servant_Base.i \
@@ -24515,8 +25063,7 @@ realclean:
  Server_Request.h \
  Object_KeyC.h \
  Object_KeyC.i \
- Server_Request.i \
- Stub.h \
+ Server_Request.i Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -24562,8 +25109,7 @@ realclean:
  InterceptorC.i \
  Interceptor.i \
  ORB.i \
- Stub.i \
- ORB_Core.h \
+ Stub.i ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
  DynAnyC.h \
@@ -24571,9 +25117,6 @@ realclean:
  DomainC.h \
  DomainC.i \
  Servant_Base.h \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -24699,6 +25242,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  PolicyC.h \
  CurrentC.h \
@@ -24732,9 +25276,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  LocalObject.h \
  LocalObject.i \
  Policy_Manager.i \
@@ -24805,6 +25346,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -24946,6 +25492,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  ValueBase.i \
  ValueFactory.h \
@@ -24982,6 +25529,11 @@ realclean:
  PollableC.i \
  Smart_Proxies.h \
  Smart_Proxies.i \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
  MessagingC.i \
  LocalObject.h \
  LocalObject.i \
@@ -25078,6 +25630,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  PolicyC.h \
  CurrentC.h \
@@ -25208,6 +25761,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  PolicyC.h \
  CurrentC.h \
@@ -25338,6 +25892,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  IOPC.h \
  CDR.h \
@@ -25459,6 +26014,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Priority_Mapping.h \
  RTCORBAC.h \
@@ -25587,6 +26143,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  IOPC.h \
  CDR.h \
@@ -25714,6 +26271,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  IOPC.h \
  CDR.h \
@@ -25843,6 +26401,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -25969,14 +26528,16 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -26079,6 +26640,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -26218,6 +26780,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -26357,6 +26920,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -26496,6 +27060,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  ORB.h \
  Exception.h \
@@ -26605,9 +27170,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -26615,6 +27177,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -26657,8 +27224,7 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- corbafwd.h \
+ $(ACE_ROOT)/ace/OS.i corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -26723,8 +27289,8 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
- corbafwd.i \
- IOPC.h \
+ TAO_Export.h \
+ corbafwd.i IOPC.h \
  CDR.h \
  corbafwd.h \
  CDR.i \
@@ -26748,12 +27314,10 @@ realclean:
  Typecode.i \
  Environment.h \
  Environment.i \
- PolicyC.i \
- TimeBaseC.h \
+ PolicyC.i TimeBaseC.h \
  Any.h \
  Any.i \
- TimeBaseC.i \
- RTCORBAC.i \
+ TimeBaseC.i RTCORBAC.i \
  TAOS.h \
  TAOS_T.h \
  TAOS_T.i \
@@ -26782,9 +27346,8 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- RTCORBAS.h orbconf.h IOPS.h \
- IOPC.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBAS.h orbconf.h \
+ IOPS.h IOPC.h \
  CDR.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -26851,6 +27414,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -26864,8 +27428,7 @@ realclean:
  IOPS_T.h \
  IOPS_T.i \
  IOPS_T.cpp \
- IOPS.i \
- TimeBaseS.h \
+ IOPS.i TimeBaseS.h \
  TimeBaseC.h \
  Any.h \
  Environment.h \
@@ -26881,15 +27444,14 @@ realclean:
  TimeBaseS_T.h \
  TimeBaseS_T.i \
  TimeBaseS_T.cpp \
- TimeBaseS.i \
- RTCORBAC.h corbafwd.h IOPC.h \
+ TimeBaseS.i RTCORBAC.h \
+ corbafwd.h IOPC.h \
  PolicyC.h \
  CurrentC.h \
  CurrentC.i \
  Encodable.h \
- PolicyC.i \
- TimeBaseC.h RTCORBAC.i RTCORBAS_T.h RTCORBAS_T.i RTCORBAS_T.cpp \
- RTCORBAS.i
+ PolicyC.i TimeBaseC.h \
+ RTCORBAC.i RTCORBAS_T.h RTCORBAS_T.i RTCORBAS_T.cpp RTCORBAS.i
 
 .obj/DynAnyC.o .obj/DynAnyC.so .shobj/DynAnyC.o .shobj/DynAnyC.so: DynAnyC.cpp \
  DynAnyC.h \
@@ -26980,6 +27542,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Any.h \
  CDR.h \
@@ -27086,10 +27649,7 @@ realclean:
  Servant_Base.i \
  POA_CORBA.h \
  DomainC.h \
- DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i
+ DomainC.i
 
 .obj/DynAnyS.o .obj/DynAnyS.so .shobj/DynAnyS.o .shobj/DynAnyS.so: DynAnyS.cpp \
  DynAnyC.h \
@@ -27180,6 +27740,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Any.h \
  CDR.h \
@@ -27212,10 +27773,7 @@ realclean:
  Servant_Base.h \
  PortableServerC.h \
  PortableServerC.i \
- Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i
+ Servant_Base.i
 
 .obj/DynAny_i.o .obj/DynAny_i.so .shobj/DynAny_i.o .shobj/DynAny_i.so: DynAny_i.cpp \
  DynAny_i.h \
@@ -27306,6 +27864,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  POA_CORBA.h \
  PolicyC.h \
@@ -27340,9 +27899,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  DynStruct_i.h \
  DynSequence_i.h \
  DynEnum_i.h \
@@ -27444,6 +28000,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  POA_CORBA.h \
  PolicyC.h \
@@ -27478,9 +28035,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  DynArray_i.h \
  InconsistentTypeCodeC.h \
  Marshal.h \
@@ -27618,6 +28172,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  POA_CORBA.h \
  PolicyC.h \
@@ -27652,9 +28207,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  DynEnum_i.h \
  InconsistentTypeCodeC.h
 
@@ -27747,6 +28299,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  POA_CORBA.h \
  PolicyC.h \
@@ -27781,9 +28334,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  DynSequence_i.h \
  InconsistentTypeCodeC.h \
  Marshal.h \
@@ -27921,6 +28471,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  POA_CORBA.h \
  PolicyC.h \
@@ -27955,9 +28506,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  DynStruct_i.h \
  InconsistentTypeCodeC.h \
  ORB.h \
@@ -28095,6 +28643,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  POA_CORBA.h \
  PolicyC.h \
@@ -28129,9 +28678,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  DynUnion_i.h \
  DynUnion_i_T.h \
  DynUnion_i_T.cpp \
@@ -28272,6 +28818,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Exception.i \
  ORB.h \
@@ -28338,14 +28885,12 @@ realclean:
 
 .obj/InterfaceC.o .obj/InterfaceC.so .shobj/InterfaceC.o .shobj/InterfaceC.so: InterfaceC.cpp InterfaceC.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ TAO_Singleton.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -28361,15 +28906,19 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
  $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
@@ -28379,13 +28928,9 @@ realclean:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
+ TAO_Singleton_Manager.h \
+ TAO_Export.h \
+ TAO_Singleton_Manager.inl \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -28395,6 +28940,14 @@ realclean:
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
  $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -28444,140 +28997,7 @@ realclean:
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
- Sequence_T.cpp \
- InterfaceC.i \
- Stub.h \
- Pluggable.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
- IOPC.h \
- IOPC.i \
- Pluggable.i \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Encodable.h \
- PolicyC.i \
- Profile.i \
- MProfile.i \
- ORB.h \
- IOR_LookupTable.h \
- Services.h \
- Services.i \
- IORManipulation.h \
- LocalObject.h \
- LocalObject.i \
- IORC.h \
- IORC.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
- ORB.i \
- Stub.i \
- Invocation.h \
- ORB_Core.h \
- Policy_Manager.h \
- POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
- DomainC.h \
- DomainC.i \
- Servant_Base.h \
- PortableServerC.h \
- PortableServerC.i \
- Servant_Base.i \
- InterfaceC.h \
- Policy_Manager.i \
- Resource_Factory.h \
- Protocol_Factory.h \
- params.h \
- params.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- GIOP_Message_State.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_State.i \
- Synch_Reply_Dispatcher.i \
- TAOC.h \
- TimeBaseC.h \
- TimeBaseC.i \
- Priority_Mapping_Manager.h \
- Priority_Mapping.h \
- RTCORBAC.h \
- RTCORBAC.i \
- Priority_Mapping.i \
- Priority_Mapping_Manager.i \
- TAOC.i \
- operation_details.h \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- NVList.h \
- NVList.i
+ Sequence_T.cpp
 
 .obj/Pluggable_Messaging.o .obj/Pluggable_Messaging.so .shobj/Pluggable_Messaging.o .shobj/Pluggable_Messaging.so: Pluggable_Messaging.cpp \
  Pluggable_Messaging.h \
@@ -28671,6 +29091,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -28828,6 +29249,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -28934,6 +29356,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -29107,6 +29530,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -29258,6 +29682,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -29347,9 +29772,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -29378,6 +29800,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -29519,6 +29946,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -29699,6 +30127,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  GIOP_Utils.h \
  Pluggable_Messaging.h \
@@ -29782,9 +30211,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -29813,6 +30239,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -29912,6 +30343,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -30019,6 +30451,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -30123,6 +30556,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  Server_Request.h \
  IOPC.h \
@@ -30224,9 +30658,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -30255,6 +30686,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -30391,6 +30827,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  GIOP_Utils.h \
@@ -30475,9 +30912,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -30506,6 +30940,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -30663,6 +31102,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -30743,9 +31183,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -30774,6 +31211,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -30872,6 +31314,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
+ TAO_Export.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -30952,9 +31395,6 @@ realclean:
  PortableServerC.h \
  PortableServerC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -30983,6 +31423,11 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
