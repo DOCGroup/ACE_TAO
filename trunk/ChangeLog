@@ -1,3 +1,8 @@
+Fri Aug  6 19:13:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-openvms.h:
+        Added ACE_HAS_VOIDPTR_GETTIMEOFDAY.
+        
 Fri Aug  6 08:17:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace.m4:
