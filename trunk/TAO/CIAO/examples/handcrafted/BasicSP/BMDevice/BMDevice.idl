@@ -1,0 +1,16 @@
+//$Id$
+#include "../BasicSP.idl"
+
+module BasicSP
+{
+  component BMDevice
+    {
+      provides ReadData dataOut;
+      publishes DataAvailable outDataAvailable;
+      consumes TimeOut timeOut20;
+    };
+
+  home BMDeviceHome manages BMDevice
+    {
+    };
+};
