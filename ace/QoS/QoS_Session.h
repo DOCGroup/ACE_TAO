@@ -37,7 +37,7 @@ typedef int ACE_Protocol_ID;
  * API. Current [RAPI,GQoS] and future implementations will conform to this
  * interface.
  */
-class ACE_Export ACE_QoS_Session
+class ACE_QoS_Export ACE_QoS_Session
 {
 
 public:
