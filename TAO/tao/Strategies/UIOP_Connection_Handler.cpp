@@ -238,7 +238,7 @@ TAO_UIOP_Connection_Handler::handle_input (ACE_HANDLE)
   this->incr_pending_upcalls ();
 
   TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->fetch_handle ());
+                                    this->get_handle ());
 
   int retval =
     this->transport ()->handle_input_i (resume_handle);
