@@ -1,3 +1,11 @@
+Thu Sep 04 10:26:11 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Token_Manager.{h,cpp}: register ACE_Token_Manager singleton
+	  for deletion with ACE_Object_Manager.
+
+	* ace/Token_Invariants.{h,cpp}: register ACE_Token_Invariant_Manager
+	  singleton for deletion with ACE_Object_Manager.
+
 Thu Sep 04 09:39:08 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ACE version 4.3.3, released Thu Sep 04 09:39:08 1997.
@@ -108,7 +116,7 @@ Wed Sep 03 15:21:46 1997  David L. Levine  <levine@cs.wustl.edu>
 	  been used for template instantiations, but they were moved.)
 	  Also, removed unused #include of ace/Object_Manager.h.
 
-	* ace/Svc_Handler.{h,cpp}: register the Svc_Handler instance for
+	* ace/Svc_Handler.{h,cpp}: register Svc_Handler singleton for
 	  deletion with the ACE_Object_Manager.
 
 	* tests/Process_Strategy_Test (Options): added a destructor so that
