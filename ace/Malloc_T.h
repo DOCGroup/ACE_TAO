@@ -72,7 +72,7 @@ public:
 private:
   T *pool_;
 
-  ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node_T<T>, LOCK> free_list_ (ACE_Locked_Free_List::ACE_PURE_FREE_LIST);
+  ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node_T<T>, LOCK> free_list_ ;
 };
 
 template <class MALLOC>
