@@ -23,22 +23,9 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Synch.h"
 #include "test_config.h"
+#include "Map_Manager_Test_Key.h"
 
 typedef ACE_Null_Mutex MUTEX;
-
-class KEY
-{
-public:
-  KEY (size_t v = 0): value_ (v)
-  { }
-
-  size_t hash (void) const { return this->value_; }
-  operator size_t () const { return this->value_; }
-
-private:
-  size_t value_;
-};
-
 typedef size_t VALUE;
 
 typedef ACE_Map_Manager <KEY, VALUE, MUTEX> MAP_MANAGER;
