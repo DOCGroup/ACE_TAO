@@ -1,3 +1,11 @@
+Sat May 13 19:05:23 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/SString.cpp:
+
+          Forgot to add a base member initialization for the allocator
+          in the new ACE_USHORT16 constructor for ACE_WString.  Thanks
+          to Chris Kohlhoff <chris@kohlhoff.com> for noticeing this.
+
 Sat May 13 19:07:32 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-kcc-common.h: Added ACE_HAS_STRING_CLASS.  This fixed
