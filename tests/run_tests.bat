@@ -22,6 +22,7 @@ if not "%arg%" == "" goto runtest
 
 :runall
 
+call %0 %dopure% ACE_Init_Test
 call %0 %dopure% Atomic_Op_Test
 call %0 %dopure% Barrier_Test
 call %0 %dopure% Basic_Types_Test
