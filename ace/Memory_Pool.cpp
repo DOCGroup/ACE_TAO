@@ -485,12 +485,6 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (const void *base_add
   // for backwards compatability
   if (base_addr_ == 0 && use_fixed_addr_ == ALWAYS_FIXED)
     use_fixed_addr_ = FIRSTCALL_FIXED;
-
-  // HP-UX 11, 64-bit bug workaround.
-#if defined (__hpux) && defined (__LP64__)
-  long temp = ACE_DEFAULT_BASE_ADDRL;
-  base_addr_ = (void *) temp;
-#endif /* defined (__hpux) && defined (__LP64__) */
 }
 
 // Handle SIGSEGV and SIGBUS signals to remap memory properly.  When a
@@ -634,11 +628,6 @@ ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (const char *base
     segment_size_ (segment_size)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options");
-  // HP-UX 11, 64-bit bug workaround
-#if defined (__hpux) && defined (__LP64__)
-  long temp = ACE_DEFAULT_BASE_ADDRL;
-  base_addr_ = (char *) temp;
-#endif /* defined (__hpux) && defined (__LP64__) */
 }
 
 void

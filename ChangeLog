@@ -1,3 +1,12 @@
+Thu Sep 16 08:14:14 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Memory_Pool.cpp:
+        * ace/config-hpux-11.00.h:
+
+          Removed a bug workaround for aCC A.03.04.  It is no longer a
+          problem to specify other mmap base addresses when running
+          64-bit HP-UX applications.
+
 Thu Sep 16 07:47:09 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
