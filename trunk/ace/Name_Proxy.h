@@ -32,6 +32,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Synch_Options.h"
 #include "ace/Name_Request_Reply.h"
+#include "ace/Event_Handler.h"
 
 /**
  * @class ACE_Name_Proxy

@@ -21,8 +21,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Handle_Set.h"
-#include "ace/os_include/sys/os_types.h"
 #include "ace/Global_Macros.h"
+#include "ace/os_include/sys/os_types.h"
 
 // Forward declaration
 class ACE_Time_Value;
@@ -596,8 +596,6 @@ private:
   /// Keep G++ happy...
   friend class ace_dewarn_gplusplus;
 };
-
-#include "ace/SString.h"
 
 #if defined (__ACE_INLINE__)
 #include "ace/Process.inl"
