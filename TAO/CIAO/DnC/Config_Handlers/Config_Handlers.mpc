@@ -24,8 +24,6 @@ project (Config_Handlers) : taolib {
     ERE_Handler.cpp
     CompIntrDesc_Handler.cpp
     CompPkgDesc_Handler.cpp
-    CompPortDesc_Handler.cpp
-    CompPropDesc_Handler.cpp
     PC_Handler.cpp
     PCI_Handler.cpp
     Cap_Handler.cpp
