@@ -1,3 +1,9 @@
+Wed Mar 28 09:45:30 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/Naming_Service/NT_Naming_Service.cpp:
+          Borland uses the standard scope rules for variables declared
+          inside for() statements, MSVC is more forgiving.
+
 Wed Mar 28 09:31:54 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:

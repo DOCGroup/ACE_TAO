@@ -98,7 +98,8 @@ TAO_NT_Naming_Service::init (int argc,
       argv_save_ = (char **) ACE_OS::malloc (sizeof (char *) * (argc + args.argc ()));
 
       // Copy the values into the internal args buffer.
-      for (int i = 0; i < argc; i++)
+      int i;
+      for (i = 0; i < argc; i++)
         argv_save_[i] = ACE_OS::strdup (argv[i]);
 
       int j = 0;
