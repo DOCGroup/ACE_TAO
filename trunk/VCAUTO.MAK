@@ -12,6 +12,6 @@ ACE_TARGET = Debug
 
 #ACE_ACTION = clean
 
-DIR_LIST = ace.dir netsvcs.dir tests.dir #apps.dir
+DIR_LIST = ace.dir netsvcs.dir tests.dir TAO.dir
 
 !INCLUDE <$(ACE_ROOT)\include\makeinclude\VC50_DIR.MAK>
