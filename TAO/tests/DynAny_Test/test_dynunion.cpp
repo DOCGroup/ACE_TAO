@@ -124,14 +124,16 @@ Test_DynUnion::run_test (void)
       else
         ++this->error_count_;
 
+      // Not yet implemented.
+#if 0
       ACE_DEBUG ((LM_DEBUG,
-                 "testing: set_as_default\n"));
+                 "testing: set_to_default_member\n"));
 
       ftc1->set_to_default_member (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
                   "++ OK ++\n"));
-
+#endif
       ACE_DEBUG ((LM_DEBUG,
                  "testing:discriminator/discriminator_kind\n"));
 
