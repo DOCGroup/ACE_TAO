@@ -30,13 +30,15 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
       bytes_sent += iov[i].iov_len;     // Gets ignored on error anyway
     }
 
-  if (result == -1) bytes_sent = -1;
+  if (result == -1)
+    return -1;
+
   return bytes_sent;
 }
 
 ssize_t
 ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
-                            const ACE_Time_Value *timeout = 0) const
+                            const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recvv");
 
@@ -241,16 +243,15 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf,
                       len - bytes_transferred,
                       flags,
                       timeout);
-//       if (n == -1)
-//         if (errno == EWOULDBLOCK)
-//           n = 0; // Keep trying to send
-//         else
-//           return -1;
+
       if (n == -1)
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
-            n = 0;
+            {
+              n = 0;
+              continue;
+            }
 
           //
           // No timeouts in this version.
@@ -260,7 +261,7 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf,
           return -1;
         }
       else if (n == 0)
-        return 0;
+        break;
     }
 
   return bytes_transferred;
@@ -297,7 +298,10 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf,
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
-            n = 0;
+            {
+              n = 0;
+              continue;
+            }
 
           //
           // No timeouts in this version.
@@ -307,7 +311,7 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf,
           return -1;
         }
       else if (n == 0)
-        return 0;
+        break;
     }
 
   return bytes_transferred;
@@ -334,20 +338,15 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf, int len, int flags) const
       n = this->recv ((char*) buf + bytes_transferred,
                       len - bytes_transferred,
                       flags);
-//       if (n == -1)
-//         {
-//           if (errno == EWOULDBLOCK)
-//             n = 0; //Keep trying
-//           else
-//             return -1;
-//         }
-//       else if (n == 0)
-//         break;
+
       if (n == -1)
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
-            n = 0;
+            {
+              n = 0;
+              continue;
+            }
 
           //
           // No timeouts in this version.
@@ -357,7 +356,7 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf, int len, int flags) const
           return -1;
         }
       else if (n == 0)
-        return 0;
+        break;
     }
 
   return bytes_transferred;
@@ -383,18 +382,15 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf, int len, int flags) const
       n = this->send ((const char*) buf + bytes_transferred,
                       len - bytes_transferred,
                       flags);
-//       if (n == -1)
-//         {
-//           if (errno == EWOULDBLOCK)
-//             n = 0; //Keep trying to send.
-//           else
-//             return -1;
-//         }
+
       if (n == -1)
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
-            n = 0;
+            {
+              n = 0;
+              continue;
+            }
 
           //
           // No timeouts in this version.
@@ -404,7 +400,7 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf, int len, int flags) const
           return -1;
         }
       else if (n == 0)
-        return 0;
+        break;
     }
 
   return bytes_transferred;
@@ -421,7 +417,7 @@ ACE_SSL_SOCK_Stream::sendv_n (const iovec iov[], size_t n) const
 
   // Determine the total length of all the buffers in <iov>.
   for (i = 0; i < n; i++)
-    if (ACE_static_cast (int, iov[i].iov_len) < 0)
+    if (ACE_static_cast (const int, iov[i].iov_len) < 0)
       return -1;
     else
       length += iov[i].iov_len;
@@ -486,7 +482,8 @@ ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t n) const
            i++)
         {
           ACE_OS::memcpy (iov[i].iov_base, ptr,
-                          // iov_len is int on some platforms, size_t on others
+                          // iov_len is int on some platforms, size_t
+                          // on others
                           copyn > (int) iov[i].iov_len
                             ? (size_t) iov[i].iov_len
                             : (size_t) copyn);
@@ -508,8 +505,10 @@ ACE_SSL_SOCK_Stream::enable (int value) const
   ACE_TRACE ("ACE_SSL_SOCK_Stream::enable");
   switch (value)
     {
+#ifdef SIGURG
     case SIGURG:
     case ACE_SIGURG:
+#endif  /* SIGURG */
     case SIGIO:
     case ACE_SIGIO:
     case ACE_CLOEXEC:
@@ -528,8 +527,10 @@ ACE_SSL_SOCK_Stream::disable (int value) const
   ACE_TRACE("ACE_SSL_SOCK_Stream::disable");
   switch (value)
     {
+#ifdef SIGURG
     case SIGURG:
     case ACE_SIGURG:
+#endif  /* SIGURG */
     case SIGIO:
     case ACE_SIGIO:
     case ACE_CLOEXEC:

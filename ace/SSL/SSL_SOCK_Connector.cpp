@@ -227,7 +227,7 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
       if (new_stream.get_SSL_fd () != new_stream.get_handle ())
         {
           if (new_stream.set_SSL_fd (new_stream.get_handle ())
-              == ACE_INVALID_HANDLE)
+              == -1)
             ACE_ERROR ((LM_ERROR,
                         ASYS_TEXT ("ACE_SSL_SOCK_Connector::"
                                    "ACE_SSL_SOCK_Connector: "
@@ -258,8 +258,8 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
 					ACE_QoS_Params qos_params,
 					ACE_Time_Value *timeout,
 					const ACE_Addr &local_sap,
-                                        ACE_Protocol_Info *protocolinfo = 0,
-                                        ACE_SOCK_GROUP g = 0,
+                                        ACE_Protocol_Info *protocolinfo,
+                                        ACE_SOCK_GROUP g,
                                         u_long flags,
 					int reuse_addr,
 					int perms,
@@ -292,7 +292,7 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
       if (new_stream.get_SSL_fd () != new_stream.get_handle())
         {
           if (new_stream.set_SSL_fd (new_stream.get_handle ())
-              == ACE_INVALID_HANDLE)
+              == -1)
             ACE_ERROR ((LM_ERROR,
                         ASYS_TEXT ("ACE_SSL_SOCK_Connector::"
                                    "ACE_SSL_SOCK_Connector: "

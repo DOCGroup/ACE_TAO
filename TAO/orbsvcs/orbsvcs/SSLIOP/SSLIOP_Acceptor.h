@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO
+//    TAO_SSLIOP
 //
 // = FILENAME
 //    SSLIOP_Acceptor.h
@@ -13,7 +13,8 @@
 //   IIOP/SSL specific acceptor processing
 //
 // = AUTHOR
-//    Fred Kuhns
+//    Carlos O'Ryan <coryan@ece.uci.edu>
+//    Ossama Othman <ossama@ece.uci.edu>
 //
 // ============================================================================
 
@@ -32,13 +33,13 @@
 
 // TAO SSLIOP_Acceptor concrete call definition
 
-class TAO_Export TAO_SSLIOP_Acceptor : public TAO_IIOP_Acceptor
+class TAO_SSLIOP_Export TAO_SSLIOP_Acceptor : public TAO_IIOP_Acceptor
 {
   // = TITLE
   //   TAO_SSLIOP_Acceptor
   //
   // = DESCRIPTION
-  //   The IIOP-specific bridge class for the concrete acceptor.
+  //   The SSLIOP-specific bridge class for the concrete acceptor.
   //
 public:
   TAO_SSLIOP_Acceptor (void);

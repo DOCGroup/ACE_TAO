@@ -30,8 +30,9 @@
 
 #include <openssl/ssl.h>
 
-// @@ We need another export for this library!
-class ACE_Export ACE_SSL_Data_File
+#include "SSL_Export.h"
+
+class ACE_SSL_Export ACE_SSL_Data_File
 {
 public:
   ACE_SSL_Data_File ();
@@ -59,7 +60,7 @@ private:
 
 // ****************************************************************
 
-class ACE_Export ACE_SSL_Context
+class ACE_SSL_Export ACE_SSL_Context
 {
   // = TITLE
   //   A wrapper for the ACE_SSL_Context class.

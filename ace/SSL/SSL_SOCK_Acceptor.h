@@ -26,7 +26,7 @@
 
 #if defined (ACE_HAS_SSL)
 
-class ACE_Export ACE_SSL_SOCK_Acceptor
+class ACE_SSL_Export ACE_SSL_SOCK_Acceptor
 {
   // = TITLE
   //   Defines a factory that creates new <ACE_SSL_SOCK_Stream>s passively.

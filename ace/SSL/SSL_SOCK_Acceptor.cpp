@@ -132,10 +132,10 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
     }
 
   if(!new_stream.ssl_init_finished ()
-     && new_stream.get_SSL_fd() != new_stream.get_handle ())
+     && new_stream.get_SSL_fd () != new_stream.get_handle ())
     {
-      if (new_stream.set_SSL_fd ((int)new_stream.get_handle ())
-          == ACE_INVALID_HANDLE)
+      if (new_stream.set_SSL_fd (new_stream.get_handle ())
+          == -1)
         return -1;
     }
 
@@ -198,8 +198,8 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
   if(!new_stream.ssl_init_finished ()
      && new_stream.get_SSL_fd () != new_stream.get_handle ())
     {
-      if (new_stream.set_SSL_fd ((int)new_stream.get_handle ())
-          == ACE_INVALID_HANDLE)
+      if (new_stream.set_SSL_fd (new_stream.get_handle ())
+          == -1)
         return -1;
     }
 
@@ -218,8 +218,10 @@ ACE_SSL_SOCK_Acceptor::enable (int value) const
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::enable");
   switch (value)
     {
+#ifdef SIGURG
     case SIGURG:
     case ACE_SIGURG:
+#endif  /* SIGURG */
     case SIGIO:
     case ACE_SIGIO:
     case ACE_CLOEXEC:
@@ -237,8 +239,10 @@ ACE_SSL_SOCK_Acceptor::disable (int value) const
   ACE_TRACE("ACE_SSL_SOCK_Acceptor::disable");
   switch (value)
     {
+#ifdef SIGURG
     case SIGURG:
     case ACE_SIGURG:
+#endif  /* SIGURG */
     case SIGIO:
     case ACE_SIGIO:
     case ACE_CLOEXEC:

@@ -29,7 +29,7 @@
 
 #if defined (ACE_HAS_SSL)
 
-class ACE_Export ACE_SSL_SOCK_Connector
+class ACE_SSL_Export ACE_SSL_SOCK_Connector
 {
   // = TITLE
   //   Defines a factory that creates new <ACE_Stream>s actively.

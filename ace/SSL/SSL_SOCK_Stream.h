@@ -29,7 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_Export ACE_SSL_SOCK_Stream : public ACE_SSL
+class ACE_SSL_Export ACE_SSL_SOCK_Stream : public ACE_SSL
 {
   // = TITLE
   //    Defines methods in the <ACE_SSL_SOCK_Stream> abstraction.
