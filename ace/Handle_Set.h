@@ -10,7 +10,7 @@
 //    Handle_Set.h
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -26,7 +26,13 @@
 class ACE_Export ACE_Handle_Set
 {
   // = TITLE
-  //     C++ wrapper for the socket <fd_set> abstraction.
+  //     C++ wrapper facade for the socket <fd_set> abstraction.
+  // 
+  // = DESCRIPTION
+  //     This abstraction is a very efficient wrapper facade over
+  //     <fd_set>.  In particular, no range checking is performed, so
+  //     it's important not to set or clear bits that are outside the
+  //     <ACE_DEFAULT_SELECT_REACTOR_SIZE>.
 public:
   friend class ACE_Handle_Set_Iterator;
 
@@ -52,14 +58,18 @@ public:
   void reset (void);
   // Initialize the bitmask to all 0s and reset the associated fields.
 
-  int is_set (ACE_HANDLE) const;
-  // Checks whether handle is enabled.
+  int is_set (ACE_HANDLE handle) const;
+  // Checks whether <handle> is enabled.  No range checking is
+  // performed so <handle> must be less than
+  // <ACE_DEFAULT_SELECT_REACTOR_SIZE>.
 
-  void set_bit (ACE_HANDLE);
-  // Enables the handle.
+  void set_bit (ACE_HANDLE handle);
+  // Enables the <handle>.  No range checking is performed so <handle>
+  // must be less than <ACE_DEFAULT_SELECT_REACTOR_SIZE>.
 
-  void clr_bit (ACE_HANDLE);
-  // Disables the handle.
+  void clr_bit (ACE_HANDLE handle);
+  // Disables the <handle>.  No range checking is performed so
+  // <handle> must be less than <ACE_DEFAULT_SELECT_REACTOR_SIZE>.
 
   int num_set (void) const;
   // Returns a count of the number of enabled bits.
@@ -116,11 +126,12 @@ private:
 
 #if defined (ACE_HAS_BIG_FD_SET)
   static int bitpos (u_long bit);
-  // Find the bitpos in bit counting of right to left.
+  // Find the position of the bit counting from right to left.
 #endif /* ACE_HAS_BIG_FD_SET */
 
   void set_max (ACE_HANDLE max);
-  // Resets the MAX_FD after a clear of the original MAX_FD.
+  // Resets the <max_handle_> after a clear of the original
+  // <max_handle_>.
 
   static const char nbits_[NBITS];
   // Table that maps bytes to counts of the enabled bits in each value

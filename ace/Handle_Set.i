@@ -17,10 +17,12 @@ ACE_INLINE void
 ACE_Handle_Set::reset (void)
 {
   ACE_TRACE ("ACE_Handle_Set::reset");
-  this->max_handle_ = ACE_INVALID_HANDLE;
+  this->max_handle_ =
+    ACE_INVALID_HANDLE;
 #if defined (ACE_HAS_BIG_FD_SET)
-  this->min_handle_ = NUM_WORDS * WORDSIZE;
-#endif
+  this->min_handle_ =
+    NUM_WORDS * WORDSIZE;
+#endif /* ACE_HAS_BIG_FD_SET */
   this->size_ = 0;
 #if !defined (ACE_HAS_BIG_FD_SET)
   FD_ZERO (&this->mask_);
@@ -35,10 +37,14 @@ ACE_Handle_Set::operator= (const ACE_Handle_Set &rhs)
 
   if (rhs.size_ > 0)
     {
-      this->size_ = rhs.size_;
-      this->max_handle_ = rhs.max_handle_;
-      this->min_handle_ = rhs.min_handle_;
-      this->mask_ = rhs.mask_;
+      this->size_ =
+        rhs.size_;
+      this->max_handle_ =
+        rhs.max_handle_;
+      this->min_handle_ =
+        rhs.min_handle_;
+      this->mask_ =
+        rhs.mask_;
     }
   else
     this->reset ();
@@ -63,9 +69,12 @@ ACE_Handle_Set::is_set (ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_Handle_Set::is_set");
 #if defined (ACE_HAS_BIG_FD_SET)
-  return FD_ISSET (handle, &this->mask_) && this->size_ > 0;
+  return FD_ISSET (handle,
+                   &this->mask_) 
+    && this->size_ > 0;
 #else
-  return FD_ISSET (handle, &this->mask_);
+  return FD_ISSET (handle,
+                   &this->mask_);
 #endif /* ACE_HAS_BIG_FD_SET */
 }
 
@@ -78,7 +87,8 @@ ACE_Handle_Set::set_bit (ACE_HANDLE handle)
   if (!this->is_set (handle))
     {
 #if defined (ACE_WIN32)
-      FD_SET ((SOCKET) handle, &this->mask_);
+      FD_SET ((SOCKET) handle,
+              &this->mask_);
       this->size_++;
 #else /* ACE_WIN32 */
 #if defined (ACE_HAS_BIG_FD_SET)
@@ -89,7 +99,8 @@ ACE_Handle_Set::set_bit (ACE_HANDLE handle)
         this->min_handle_ = handle;
 #endif /* ACE_HAS_BIG_FD_SET */
       
-      FD_SET (handle, &this->mask_);
+      FD_SET (handle,
+              &this->mask_);
       this->size_++;
       
       if (handle > this->max_handle_)
@@ -107,7 +118,8 @@ ACE_Handle_Set::clr_bit (ACE_HANDLE handle)
 
   if (this->is_set (handle))
     {
-      FD_CLR ((ACE_SOCKET) handle, &this->mask_);
+      FD_CLR ((ACE_SOCKET) handle,
+              &this->mask_);
       this->size_--;
       
 #if !defined (ACE_WIN32)
@@ -138,9 +150,9 @@ ACE_Handle_Set::operator fd_set *()
   ACE_TRACE ("ACE_Handle_Set::operator ACE_FD_SET_TYPE *");
 
   if (this->size_ > 0)
-    return (fd_set*) &this->mask_;
+    return (fd_set *) &this->mask_;
   else
-    return (fd_set*) NULL;
+    return (fd_set *) NULL;
 }
 
 ACE_INLINE

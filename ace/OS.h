@@ -4423,9 +4423,8 @@ union semun
 // Max size of an ACE Token client ID.
 # define ACE_MAXCLIENTIDLEN MAXHOSTNAMELEN + 20
 
-//
 // Create some useful typedefs.
-//
+
 typedef const char **SYS_SIGLIST;
 typedef void *(*ACE_THR_FUNC)(void *);
 // This is for C++ static methods.
