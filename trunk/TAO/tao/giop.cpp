@@ -625,18 +625,25 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   // we remove it?
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, guard, lock_));
 
-  // Get a CORBA::Object_ptr from _data using QueryInterface ()
   CORBA::Object_ptr obj = 0;
 
- (void) data_->QueryInterface (IID_CORBA_Object, (void **)&obj);
+  // Get a CORBA::Object_ptr from _data using <QueryInterface>.
+ (void) this->data_->QueryInterface (IID_CORBA_Object, (void **) &obj);
 
   // Get a pointer to the orb from the object
-  CORBA::ORB_ptr orb = obj->orb ();
+  CORBA::ORB_ptr orb;
 
-  // Get a reference to the client connector
-  //  TAO_Client_Factory::CONNECTOR* con = 0;
-  TAO_CONNECTOR *con = 0;
-  con = orb->client_factory ()->connector ();
+#if (TAO_HAS_TSS_ORBCORE)
+  // Get the connector from thread-specific storage.
+  orb = TAO_ORB_Core_instance ()->orb ();
+  assert (orb == obj->orb ());
+#else
+  orb = obj->orb ();
+  // con = orb->client_factory ()->connector ();
+#endif /* 0 */
+
+  // Get a pointer to the client connector.
+  TAO_CONNECTOR *con = orb->connector ();
 
   // Determine the object key and the address to which we'll need a
   // connection.

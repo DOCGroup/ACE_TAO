@@ -62,4 +62,9 @@ CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion)
   return;
 }
 
+ACE_INLINE TAO_CONNECTOR *
+CORBA_ORB::connector (void)
+{
+  return &this->peer_connector_;
+}
 

@@ -1,8 +1,27 @@
 Sun Oct 12 15:38:35 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tao/orbobj.cpp (perform_work): Updated the run() and perform_work()
-	  methods to take optional ACE_Time_Value *'s and to return error
-	  flags if things go wrong.
+	* tao/client_factory: Gutted the client factory code related to
+ 	  the Strategy_Connector so that it's either in the CORBA_ORB
+ 	  class in orbobj.* or in the connect.*.
+
+	* tao/default_client.h: Removed the connector() from the
+ 	  Default_Client_Factory entirely since it's all been put into the
+ 	  CORBA_ORB now.
+
+	* tao/giop.cpp (start): Hacked up the code so that we extract our
+ 	  connector from thread-specific storage if we're using the
+ 	  thread-per-rate concurrency model.  This needs to be integrated
+ 	  more cleverly in the ORB.
+
+	* tao/orbobj.h: Put an instance of the TAO_CONNECTOR into each
+ 	  CORBA_ORB object so that we don't have to share these things
+ 	  among all of the threads in a process, but instead can have them
+ 	  be located in thread-specific storage.
+
+	* tao/orbobj.cpp (perform_work): Updated the run() and
+ 	  perform_work() methods to take optional ACE_Time_Value *'s (so
+ 	  they can return from timeouts) and to return error flags if
+ 	  things go wrong.
 
 	* tao/orbobj.h (CORBA_ORB): Changed the set_up_for_listening()
  	  call to open(), which is more consistent with other usage in
