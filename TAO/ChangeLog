@@ -4,6 +4,9 @@ Mon Feb 24 09:15:04 2003  Ossama Othman  <ossama@uci.edu>
 
 	  Fixed "better conversion" warning.
 
+	  Fixed incorrect emulated exception macro usage.
+	  "ACE_TRY_CHECK", not "ACE_CHECK" should have been used.
+
 	  Added missing ACE_CHECK after ACE_ENDTRY.  Without it, the
 	  re-thrown emulated exception in the ACE_CATCHANY block will be
 	  ignored, incorrectly allowing code after that block to be
