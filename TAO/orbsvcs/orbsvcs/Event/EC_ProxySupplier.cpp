@@ -145,6 +145,10 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
     poa->deactivate_object (id.in (), ACE_TRY_ENV);
     ACE_CHECK;
   }
+
+  // Notify the event channel...
+  this->event_channel_->disconnected (this, ACE_TRY_ENV);
+
   this->_decr_refcnt ();
 }
 

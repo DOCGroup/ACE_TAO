@@ -19,7 +19,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_Module_Factory;
-class TAO_EC_Factory;
 
 class Event_Service : public POA_RtecEventChannelAdmin::EventChannel
 {
@@ -58,8 +57,7 @@ private:
   // parse the command line args
 
   enum {
-    ES_NULL_FILTERING, // Single threaded, no-filtering
-    ES_REACTIVE,       // Thread-safe, reactive, filtering
+    ES_NEW, // Use the Service Configurator to find factory
     ES_OLD_REACTIVE,   // Reactive dispatching, old EC.
     ES_OLD_MT          // Prioritized dispatching, old EC.
   };
@@ -67,9 +65,6 @@ private:
 private:
   TAO_Module_Factory *module_factory_;
   // The module factory for the EC.
-
-  TAO_EC_Factory *factory_;
-  // The factory for the new EC.
 
   POA_RtecScheduler::Scheduler *sched_impl_;
   // The Scheduler implementation.

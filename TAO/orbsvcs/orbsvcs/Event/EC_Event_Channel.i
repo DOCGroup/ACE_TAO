@@ -78,6 +78,18 @@ TAO_EC_Event_Channel::consumer_poa (CORBA::Environment &ACE_TRY_ENV)
   return this->factory_->consumer_poa (ACE_TRY_ENV);
 }
 
+ACE_INLINE int
+TAO_EC_Event_Channel::supplier_poa (PortableServer::POA_ptr poa)
+{
+  return this->factory_->supplier_poa (poa);
+}
+
+ACE_INLINE int
+TAO_EC_Event_Channel::consumer_poa (PortableServer::POA_ptr poa)
+{
+  return this->factory_->consumer_poa (poa);
+}
+
 ACE_INLINE ACE_Lock*
 TAO_EC_Event_Channel::create_consumer_lock (void)
 {
