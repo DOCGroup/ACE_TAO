@@ -45,6 +45,7 @@ ACE_Cache_Map_Manager<T_2>::ACE_Cache_Map_Manager (size_t size,
 template <T_1>
 ACE_Cache_Map_Manager<T_2>::~ACE_Cache_Map_Manager (void)
 {
+  this->close ();
 }
 
 template <T_1> int
@@ -65,26 +66,22 @@ ACE_Cache_Map_Manager<T_2>::open (size_t length,
       this->delete_caching_strategy_ == 1 &&
       caching_s != 0)
     {
-
       delete this->caching_strategy_;
-
       this->caching_strategy_ = 0;
-
-      this->delete_caching_strategy_ = delete_caching_strategy;
-
+      this->delete_caching_strategy_ = 0;
     }
 
   if (caching_s != 0)
-    this->caching_strategy_ = caching_s;
+    {
+      this->caching_strategy_ = caching_s;
+      this->delete_caching_strategy_ = delete_caching_strategy;
+    }
   else if (this->caching_strategy_ == 0)
     {
-
       ACE_NEW_RETURN (this->caching_strategy_,
                       CACHING_STRATEGY,
                       -1);
-
-      this->delete_caching_strategy_ = delete_caching_strategy;
-    
+      this->delete_caching_strategy_ = 1;
     }
     
   return 0;
@@ -95,9 +92,7 @@ ACE_Cache_Map_Manager<T_2>::close (void)
 {
   if (this->delete_caching_strategy_ == 1)
     delete this->caching_strategy_;
-
   this->delete_caching_strategy_ = 0;
-
   this->caching_strategy_ = 0;
 
   return this->map_.close ();
