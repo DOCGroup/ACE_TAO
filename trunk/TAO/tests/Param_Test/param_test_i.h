@@ -23,8 +23,7 @@ class Coffee_i : public POA_Coffee
 
 {
 public:
-  Coffee_i (const char *name,
-            const char *obj_name = 0);
+  Coffee_i (const char *name);
   // constructor
 
   ~Coffee_i (void);
@@ -118,7 +117,7 @@ public:
   // test for object references
 
 private:
-  Coffee_var obj_;
+  Coffee_i obj_;
   // the coffee object reference we maintain
 };
 
