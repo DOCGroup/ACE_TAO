@@ -19,6 +19,46 @@ CORBA::TypeCode_ptr TAO_Exceptions::sys_exceptions[TAO_Exceptions::NUM_SYS_EXCEP
 
 CORBA::ExceptionList TAO_Exceptions::system_exceptions;
 
+void
+CORBA_Environment::exception (CORBA::Exception *ex)
+{
+  if (ex != this->exception_)
+    {
+      this->clear ();
+      this->exception_ = ex;
+      this->exception_->AddRef ();
+    }
+}
+
+CORBA_Environment::~CORBA_Environment (void)
+{
+  this->clear ();
+}
+
+void
+CORBA_Environment::clear (void)
+{
+  if (this->exception_)
+    this->exception_->Release ();
+}
+
+void
+CORBA_Exception::operator delete (void *p)
+{
+  ::operator delete (p);
+}
+
+CORBA_Environment::CORBA_Environment (void)
+  : exception_ (0)
+{
+}
+
+void *
+CORBA_Exception::operator new (size_t s)
+{
+  return ::operator new (s);
+}
+
 CORBA_Exception::CORBA_Exception (CORBA::TypeCode_ptr tc)
   : type_ (tc),
     refcount_ (0)

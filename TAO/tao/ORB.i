@@ -11,12 +11,6 @@ CORBA::string_alloc (CORBA::ULong len)
   return new CORBA::Char[size_t (len + 1)];
 }
 
-ACE_INLINE TAO_Export CORBA::String
-CORBA::string_dup (const CORBA::Char *str)
-{
-  return CORBA::string_copy (str);
-}
-
 ACE_INLINE TAO_Export void
 CORBA::string_free (CORBA::Char *str)
 {
@@ -34,34 +28,9 @@ CORBA::String_var::String_var (void)
 }
 
 ACE_INLINE
-CORBA::String_var::~String_var (void)
-{
-  if (this->ptr_ != 0)
-    {
-      CORBA::string_free (this->ptr_);
-      this->ptr_ = 0;
-    }
-}
-
-ACE_INLINE
-CORBA::String_var::String_var (char *p)
-  : ptr_ (p)
-{
-  // NOTE: According to the CORBA spec this string must *not* be
-  // copied, but it is non-compliant to use it/release it in the
-  // calling code.  argument is consumed. p should never be NULL
-}
-
-ACE_INLINE
 CORBA::String_var::String_var (const char *p)
   : ptr_ (CORBA::string_dup ((char *) p))
 {
-}
-
-ACE_INLINE
-CORBA::String_var::String_var (const CORBA::String_var& r)
-{
-  this->ptr_ = CORBA::string_dup (r.ptr_);
 }
 
 ACE_INLINE CORBA::Char &
