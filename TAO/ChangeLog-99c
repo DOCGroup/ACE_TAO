@@ -1,3 +1,15 @@
+Wed Sep 29 10:41:39 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Exception.cpp (CORBA_UnknownUserException):
+
+	  Copy constructor should explicitly initialize the
+	  CORBA_UserException base class.  Thanks to gcc 2.95.2 for
+	  picking this up.
+
+	* tao/TAO.cpp (init):
+
+	  Check for exception after call to resolve_initial_references().
+
 Wed Sep 29 04:01:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_interface/ami_exception_holder_cs.cpp,
