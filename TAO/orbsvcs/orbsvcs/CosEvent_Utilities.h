@@ -25,9 +25,13 @@
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "orbsvcs/Event_Utilities.h"
 
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_CosEC_EventChannel_i;
 
-class CosEC_ServantBase :
+class TAO_ORBSVCS_Export CosEC_ServantBase :
   public virtual POA_CosEventChannelAdmin::EventChannel,
   public virtual PortableServer::RefCountServantBase
 {
@@ -148,4 +152,10 @@ class CosEC_ServantBase :
   // e.g "1 4 2 5 3 6" where (1,4) (2,5) and (3,6) from source id,
   // event id pairs.
 };
+
+
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */
+
 #endif /* TAO_COSEVENT_UTILITIES_H */
