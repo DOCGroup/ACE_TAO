@@ -1,3 +1,9 @@
+Tue Nov 12 13:31:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+          Made the argument of addressing_mode() same as in header file so that
+          doxygen documentation is generated for this method.
+
 Mon Nov 11 23:04:34 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Application_Controlled.dsw:
