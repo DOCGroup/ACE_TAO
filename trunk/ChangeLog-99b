@@ -1,3 +1,8 @@
+Fri Aug 06 15:20:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ACE-INSTALL.html: added information about compilation on
+	  SunOS5.6 using egcs1.1.2.
+	
 Fri Aug 06 13:47:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added note about disabling optimization
