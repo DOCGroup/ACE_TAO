@@ -55,7 +55,9 @@ void
 ACE_Message_Block::data_block (ACE_Data_Block *db)
 {
   ACE_TRACE ("ACE_Message_Block::data_block");
-  if (this->data_block_ != 0)
+  if (ACE_BIT_DISABLED (this->flags_,
+                        ACE_Message_Block::DONT_DELETE)
+      && this->data_block_ != 0)
     this->data_block_->release ();
 
   this->data_block_ = db;
@@ -321,7 +323,8 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
 ACE_Message_Block::ACE_Message_Block (const char *data,
                                       size_t size,
                                       u_long priority)
-  : data_block_ (0)
+  : flags_ (0),
+    data_block_ (0)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -343,7 +346,8 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
 }
 
 ACE_Message_Block::ACE_Message_Block (ACE_Allocator *message_block_allocator)
-  : data_block_ (0)
+  : flags_ (0),
+    data_block_ (0)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -375,7 +379,8 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       const ACE_Time_Value &deadline_time,
                                       ACE_Allocator *data_block_allocator,
                                       ACE_Allocator *message_block_allocator)
-  : data_block_ (0)
+  :flags_ (0),
+   data_block_ (0)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -461,7 +466,8 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       ACE_Data_Block *db,
                                       ACE_Allocator *data_block_allocator,
                                       ACE_Allocator *message_block_allocator)
-  : data_block_ (0)
+  : flags_ (0),
+    data_block_ (0)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -483,8 +489,10 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
 }
 
 ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block,
+                                      ACE_Message_Block::Message_Flags flags,
                                       ACE_Allocator *message_block_allocator)
-  : data_block_ (0)
+  : flags_ (flags),
+    data_block_ (0)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -747,7 +755,9 @@ ACE_Message_Block::release_i (ACE_Lock *lock)
 
   int result = 0;
 
-  if (this->data_block ())
+  if (ACE_BIT_DISABLED (this->flags_,
+                        ACE_Message_Block::DONT_DELETE) &&
+      this->data_block ())
     {
       if (this->data_block ()->release_no_delete (lock) == 0)
         result = 1;
@@ -781,7 +791,9 @@ ACE_Message_Block::~ACE_Message_Block (void)
 {
   ACE_TRACE ("ACE_Message_Block::~ACE_Message_Block");
 
-  if (this->data_block ())
+  if (ACE_BIT_DISABLED (this->flags_,
+                        ACE_Message_Block::DONT_DELETE)&&
+      this->data_block ())
     this->data_block ()->release ();
 
   this->prev_ = 0;

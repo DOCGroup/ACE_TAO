@@ -10,6 +10,32 @@ ACE_Message_Block::data_block (void) const
   return this->data_block_;
 }
 
+ACE_INLINE ACE_Message_Block::Message_Flags
+ACE_Message_Block::set_self_flags (ACE_Message_Block::Message_Flags more_flags)
+{
+  ACE_TRACE ("ACE_Message_Block::set_flags");
+  // Later we might mask more_glags so that user can't change internal
+  // ones: more_flags &= ~(USER_FLAGS -1).
+  return ACE_SET_BITS (this->flags_, more_flags);
+}
+
+ACE_INLINE ACE_Message_Block::Message_Flags
+ACE_Message_Block::clr_self_flags (ACE_Message_Block::Message_Flags less_flags)
+{
+  ACE_TRACE ("ACE_Message_Block::clr_flags");
+  // Later we might mask more_flags so that user can't change internal
+  // ones: less_flags &= ~(USER_FLAGS -1).
+  return ACE_CLR_BITS (this->flags_, less_flags);
+}
+
+ACE_INLINE ACE_Message_Block::Message_Flags
+ACE_Message_Block::self_flags (void) const
+{
+  ACE_TRACE ("ACE_Message_Block::flags");
+  return this->flags_;
+}
+
+
 // This function must comes before ACE_Message_Block::reference_count
 // to avoid a g++ warning.
 ACE_INLINE int
@@ -206,7 +232,7 @@ ACE_Message_Block::msg_execution_time (void) const
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   return this->execution_time_;
 #else
-  return ACE_Time_Value::zero; 
+  return ACE_Time_Value::zero;
 #endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 }
 
@@ -463,7 +489,7 @@ ACE_Dynamic_Message_Strategy::static_bit_field_mask (void) const
   // get static bit field mask
 
 ACE_INLINE void
-ACE_Dynamic_Message_Strategy::static_bit_field_mask (u_long ul) 
+ACE_Dynamic_Message_Strategy::static_bit_field_mask (u_long ul)
 {
   static_bit_field_mask_ = ul;
 }

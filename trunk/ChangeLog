@@ -1,3 +1,25 @@
+Sat Jun 16 10:36:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Message_Block.h:
+	* ace/Message_Block.cpp:
+	* ace/Message_Block.i: 	This set of changes are to get around one 
+	  of the problems that we have with the message blocks. For some
+	  reason the message blocks assume that the underlying data blocks
+	  are always allocated of the heap. If we try to construct a
+	  message block using a data block on the stack, the message
+	  blocks tries to delete that data block which gives problems. We
+	  have now added a flag in the class that indicates whether the
+	  data_block can be deleted or not. An extra flag argument has
+	  been added to the constructor that constructs a message block
+	  from a data block. The default value is from the heap. Added
+	  more methods to the ACE_Message_Block to query and change the
+	  flag values.
+
+	* ace/CDR_Stream.cpp:
+	* ace/CDR_Stream.h: Added an extra flag argument to the
+	  constructors which constructs a InputCDR stream from a
+	  ACE_Data_Block.  
+	
 Sat Jun 16 00:09:14 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* bin/nightlybuilds/builds.lst (WEB):
