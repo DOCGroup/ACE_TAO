@@ -30,7 +30,7 @@ FILES = \
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
-LDLIBS = -lKokyu_DSRT_Schedulers -lKokyu -lTAO_RTCORBA -lTAO -lACE
+LDLIBS = -lKokyu_DSRT_Schedulers -lTAO_RTScheduler -lKokyu -lTAO_RTCORBA -lTAO -lACE
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
 ACELIB =

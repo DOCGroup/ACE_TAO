@@ -1,3 +1,12 @@
+Mon Nov 10 22:43:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/Kokyu_dsrt_schedulers/fp_example/Makefile.fp_client:
+        * examples/Kokyu_dsrt_schedulers/fp_example/Makefile.fp_server:
+        * examples/Kokyu_dsrt_schedulers/mif_example/Makefile.mif_client:
+        * examples/Kokyu_dsrt_schedulers/mif_example/Makefile.mif_server:
+          Added -lTAO_RTScheduler to LDLIBS needed by
+          libTAO_Kokyu_DSRT_Schedulers.
+
 Mon Nov 10 22:07:56 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/Abstract_Interface/server.cpp:
