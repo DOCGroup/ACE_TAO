@@ -43,6 +43,10 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
                                             TAO_GIOP_ServiceContextList& reply_ctx,
                                             TAO_GIOP_Message_State* message_state)
 {
+# if defined (ACE_NDEBUG)
+    ACE_UNUSED_ARG (message_state);
+# endif /* ACE_NDEBUG */
+
   ACE_ASSERT (message_state == this->message_state_);
   // @@ Notice that the message is ignored because we assume that
   //    the message_state is the same we are giving down to the ORB to
