@@ -1191,7 +1191,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #if defined (ACE_HAS_SYS_SIGLIST)
                     if (sig >= 0 && sig < ACE_NSIG)
                       {
-                        ACE_OS::strcpy (fp, ACE_LIB_TEXT (s));
+                        ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
                         ACE_OS::sprintf (bp, format, _sys_siglist[sig]);
                       }
                     else
