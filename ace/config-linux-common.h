@@ -101,6 +101,9 @@
 #if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1
 # define ACE_HAS_P_READ_WRITE
 # define ACE_LACKS_PREAD_PROTOTYPE
+// Use ACE's alternate cuserid() implementation since the use of the
+// system cuserid() is discouraged.
+# define ACE_HAS_ALT_CUSERID
 #endif /* __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 */
 
 
