@@ -106,7 +106,7 @@ public:
   ~TAO_Notify_AnyEvent ();
 
   /// return this
-  virtual const TAO_Notify_Event * copy_on_heap (ACE_ENV_SINGLE_ARG_DECL)const;
+  virtual const TAO_Notify_Event * queueable_copy (ACE_ENV_SINGLE_ARG_DECL)const;
 
 protected:
   /// Copy of the Event.

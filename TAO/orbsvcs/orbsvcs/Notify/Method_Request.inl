@@ -3,17 +3,17 @@
 #include "ace/OS_NS_sys_time.h"
 
 
-TAO_Notify_Method_Request::TAO_Notify_Method_Request()
+TAO_Notify_Method_Request_Queueable::TAO_Notify_Method_Request_Queueable()
 {
 }
 
-TAO_Notify_Method_Request::TAO_Notify_Method_Request(const TAO_Notify_Event * event)
+TAO_Notify_Method_Request_Queueable::TAO_Notify_Method_Request_Queueable(const TAO_Notify_Event * event)
 {
   this->init (event);
 }
 
 ACE_INLINE void
-TAO_Notify_Method_Request::init (const TAO_Notify_Event * event)
+TAO_Notify_Method_Request_Queueable::init (const TAO_Notify_Event * event)
 {
   // Set the parameters that affect queuing in the message queue.
   // The ACE_Message_Block priorities go from 0 (lowest) to ULONG_MAX

@@ -14,7 +14,7 @@ ACE_RCSID (Notify, TAO_Notify_SequencePushConsumer, "$Id$")
 #include "../ProxySupplier.h"
 #include "../Worker_Task.h"
 #include "../Consumer.h"
-#include "../Method_Request_Dispatch_Base.h"
+#include "../Method_Request_Dispatch.h"
 #include "../Method_Request_Event.h"
 #include "../Timer.h"
 #include "../Proxy.h"
@@ -82,7 +82,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
     Request_Queue completed;
 
     CORBA::Long pos = 0;
-    TAO_Notify_Method_Request_Event * request;
+    TAO_Notify_Method_Request_Event_Queueable * request;
     while (pos < batch_size && requests.dequeue_head (request) == 0)
     {
   if (DEBUG_LEVEL > 0) ACE_DEBUG ( (LM_DEBUG,
@@ -107,7 +107,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
     {
       case DISPATCH_SUCCESS:
       {
-        TAO_Notify_Method_Request_Event * request;
+        TAO_Notify_Method_Request_Event_Queueable * request;
         while (completed.dequeue_head (request) == 0)
         {
           request->complete ();
@@ -121,7 +121,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
       case DISPATCH_DISCARD:
       case DISPATCH_RETRY:
       {
-        TAO_Notify_Method_Request_Event *  request;
+        TAO_Notify_Method_Request_Event_Queueable *  request;
         while (completed.dequeue_head (request) == 0)
         {
           if (request->should_retry ())
@@ -162,7 +162,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
 
 bool
 TAO_Notify_SequencePushConsumer::enqueue_if_necessary (
-    TAO_Notify_Method_Request_Event_Base * request
+    TAO_Notify_Method_Request_Event * request
     ACE_ENV_ARG_DECL)
 {
   if (DEBUG_LEVEL > 0)

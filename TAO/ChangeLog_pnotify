@@ -1,3 +1,60 @@
+Mon Oct 25 20:41:00 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.h:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Event.h:
+        * orbsvcs/orbsvcs/Notify/Event.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Worker_Task.h:
+          Rename Method_Request classes for consistency and self-documentation.
+          Naming convention:
+          Base classes have no suffix (i.e. TAO_Notify_Method_Request)
+          Uncopied classes (on stack) keep their No_Copy suffix.
+          Copied classes (on heap) have a _Queueable suffix.
+
+
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_Base.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_Base.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_Base.cpp:
+          Removed these files.
+
 Mon Oct 25 14:51:09 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/CosNotification.mpc:

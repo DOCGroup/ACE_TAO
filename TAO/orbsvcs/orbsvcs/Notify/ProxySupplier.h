@@ -26,7 +26,7 @@
 
 class TAO_Notify_Consumer;
 class TAO_Notify_ConsumerAdmin;
-class TAO_Notify_Method_Request_Base;
+class TAO_Notify_Method_Request;
 /**
  * @class TAO_Notify_ProxySupplier
  *
@@ -57,7 +57,7 @@ public:
   void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Dispatch Event to consumer
-  virtual void deliver (TAO_Notify_Method_Request_Base & request ACE_ENV_ARG_DECL);
+  virtual void deliver (TAO_Notify_Method_Request & request ACE_ENV_ARG_DECL);
 
   /// Override TAO_Notify_Container_T::shutdown  method
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);

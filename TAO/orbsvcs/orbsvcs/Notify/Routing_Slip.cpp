@@ -830,7 +830,7 @@ Routing_Slip::reconnect (ACE_ENV_SINGLE_ARG_DECL)
   size_t count = this->delivery_methods_.size ();
   for (size_t nmethod = 0; nmethod < count; ++nmethod)
   {
-    this->delivery_methods_[nmethod] ->execute (TAO_Notify_Method_Request::EXECUTE ACE_ENV_ARG_PARAMETER);
+    this->delivery_methods_[nmethod] ->execute (TAO_Notify_Method_Request_Queueable::EXECUTE ACE_ENV_ARG_PARAMETER);
   }
   this->delivery_methods_.clear ();
 }

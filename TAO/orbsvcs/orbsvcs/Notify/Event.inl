@@ -48,7 +48,7 @@ TAO_Notify_Event_Copy_var::TAO_Notify_Event_Copy_var (const TAO_Notify_Event* ev
 
 ACE_INLINE
 const TAO_Notify_Event *
-TAO_Notify_Event::copy_on_heap (ACE_ENV_SINGLE_ARG_DECL) const
+TAO_Notify_Event::queueable_copy (ACE_ENV_SINGLE_ARG_DECL) const
 {
   if (this->event_on_heap_ == 0)
   {
