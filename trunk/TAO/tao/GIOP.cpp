@@ -267,8 +267,8 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
       // iovec, there we should set TAO_WRITEV_MAX to that limit.
       if (iovcnt == TAO_WRITEV_MAX)
         {
-          ssize_t n = peer.send_n (iov,
-                                   iovcnt);
+          ssize_t n = peer.sendv_n (iov,
+                                    iovcnt);
           if (n == -1)
             {
               if (TAO_orbdebug)
@@ -296,8 +296,8 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
 
   if (iovcnt != 0)
     {
-      ssize_t n = peer.send_n (iov,
-                               iovcnt);
+      ssize_t n = peer.sendv_n (iov,
+                                iovcnt);
       if (n == -1)
         {
           if (TAO_orbdebug)
