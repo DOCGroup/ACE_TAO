@@ -1,3 +1,10 @@
+Fri Jun 20 16:42:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+	  Fixed more typos. Thanks to Danta Cannarozzi <djc2@cse.wustl.edu>
+	  for reporting the problem.
+
 Fri Jun 20 15:42:14 2003  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* performance-tests/Sequence_Latency/Deferred/run_test.pl

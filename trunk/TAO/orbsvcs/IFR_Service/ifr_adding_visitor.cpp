@@ -732,7 +732,7 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
               CORBA::ExtInitializerSeq initializers;
               this->fill_initializers (initializers,
                                        node
-                                       ACE_ENV_ARG_PARAMETER)
+                                       ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               extant_def->ext_initializers (initializers
@@ -1435,7 +1435,7 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
               CORBA::ExtInitializerSeq initializers;
               this->fill_initializers (initializers,
                                        node
-                                       ACE_ENV_ARG_PARAMETER)
+                                       ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               extant_def->ext_initializers (initializers
@@ -2807,29 +2807,40 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
   // Construct a list of the parents.
   for (CORBA::ULong i = 0; i < n_parents; ++i)
     {
-      // If we got to visit_interface() from a forward declared interface,
-      // this node may not yet be in the repository. If it is, this
-      // call will merely update ir_current_.
-      if (this->visit_interface (parents[i]) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-              ACE_TEXT ("create_interface_def - call for parent ")
-              ACE_TEXT ("node failed\n")
-            ),
-            -1
-          );
-        }
-
       result =
         be_global->repository ()->lookup_id (parents[i]->repoID ()
                                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
-      bases[i] = CORBA::InterfaceDef::_narrow (result.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      // If we got to visit_interface() from a forward declared interface,
+      // this node may not yet be in the repository.
+      if (CORBA::is_nil (result.in ()))
+        {
+          int status = this->create_interface_def (parents[i]
+                                                   ACE_ENV_ARG_PARAMETER);
+
+          if (status != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("create_interface_def -")
+                  ACE_TEXT (" parent interfacedef creation failed\n")
+                ),
+                -1
+              );
+            }
+            
+          bases[i] = CORBA::InterfaceDef::_narrow (this->ir_current_.in ()
+                                                   ACE_ENV_ARG_PARAMETER);    
+          ACE_CHECK_RETURN (-1);
+        }
+      else
+        {
+          bases[i] = CORBA::InterfaceDef::_narrow (result.in ()
+                                                   ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+        }
 
       if (CORBA::is_nil (bases[i].in ()))
         {
