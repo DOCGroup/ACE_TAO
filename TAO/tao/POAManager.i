@@ -10,6 +10,8 @@ TAO_POA_Manager::lock (void)
 
 ACE_INLINE void
 TAO_POA_Manager::activate (CORBA_Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POAManager::AdapterInactive))
 {
   // Lock access to the POAManager for the duration of this transaction
   TAO_OBJECT_ADAPTER_GUARD;
@@ -22,6 +24,8 @@ TAO_POA_Manager::activate (CORBA_Environment &ACE_TRY_ENV)
 ACE_INLINE void
 TAO_POA_Manager::hold_requests (CORBA::Boolean wait_for_completion,
                                 CORBA_Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POAManager::AdapterInactive))
 {
   // Lock access to the POAManager for the duration of this transaction
   TAO_OBJECT_ADAPTER_GUARD;
@@ -32,6 +36,8 @@ TAO_POA_Manager::hold_requests (CORBA::Boolean wait_for_completion,
 ACE_INLINE void
 TAO_POA_Manager::discard_requests (CORBA::Boolean wait_for_completion,
                                    CORBA_Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POAManager::AdapterInactive))
 {
   // Lock access to the POAManager for the duration of this transaction
   TAO_OBJECT_ADAPTER_GUARD;
@@ -43,6 +49,8 @@ ACE_INLINE void
 TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
                              CORBA::Boolean wait_for_completion,
                              CORBA_Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POAManager::AdapterInactive))
 {
   // Lock access to the POAManager for the duration of this transaction
   TAO_OBJECT_ADAPTER_GUARD;
@@ -56,12 +64,14 @@ TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
 
 ACE_INLINE PortableServer::POAManager::State
 TAO_POA_Manager::get_state_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->state_;
 }
 
 ACE_INLINE PortableServer::POAManager::State
 TAO_POA_Manager::get_state (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Lock access to the POAManager for the duration of this transaction
   TAO_OBJECT_ADAPTER_GUARD_RETURN (this->state_);

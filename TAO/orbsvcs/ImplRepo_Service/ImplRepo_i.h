@@ -50,7 +50,8 @@ public:
   virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
                                           const char *name,
                                           CORBA_Environment &ACE_TRY_ENV
-                                            = TAO_default_environment ());
+                                            = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException);
   // Called by the POA when the incoming requested object/POA isn't found.  This will
   // create POAs when needed and will also put a DSI object (IMR_Forwarder) in that POA
   // as a default servant to handle that request

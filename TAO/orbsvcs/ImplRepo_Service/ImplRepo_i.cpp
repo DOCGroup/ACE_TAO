@@ -1251,6 +1251,7 @@ CORBA::Boolean
 IMR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                        const char *name,
                                        CORBA_Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException)
 {
   CORBA::PolicyList policies (4);
   policies.length (4);

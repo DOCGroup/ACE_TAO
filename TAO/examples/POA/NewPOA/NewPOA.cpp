@@ -31,7 +31,7 @@ print_poa (PortableServer::POA_ptr poa,
 {
   CORBA::String_var poa_name =
     poa->the_name (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "%s\n",
@@ -39,7 +39,7 @@ print_poa (PortableServer::POA_ptr poa,
 
   PortableServer::POAList_var children =
     poa->the_children (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   for (CORBA::ULong index = 0;
        index != children->length ();
@@ -47,7 +47,7 @@ print_poa (PortableServer::POA_ptr poa,
     {
       print_poa (children[index].in (),
                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
     }
 }
 

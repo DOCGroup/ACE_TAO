@@ -1,5 +1,5 @@
---- PolicyS.cpp	Sat Jun 24 03:24:53 2000
-+++ PolicyS.cpp.mod	Sat Jun 24 03:23:51 2000
+--- PolicyS.cpp	Fri Jul 14 06:18:45 2000
++++ PolicyS.cpp.mod	Fri Jul 14 06:18:30 2000
 @@ -7,12 +7,16 @@
  // Information about TAO is available at:
  //                 http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -164,7 +164,7 @@
      const char* value,
      CORBA::Environment &ACE_TRY_ENV
    )
-@@ -479,18 +483,18 @@
+@@ -479,29 +483,29 @@
        return 0;
  }
  
@@ -184,10 +184,7 @@
 -void POA_CORBA_Policy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 +void POA_CORBA::Policy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
  {
-   TAO_Skeleton skel; // pointer to skeleton for operation
-   const char *opname = req.operation (); // retrieve operation name
-@@ -504,13 +508,13 @@
-     skel (req, this, context, ACE_TRY_ENV);
+   this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
  }
  
 -const char* POA_CORBA_Policy::_interface_repository_id (void) const
@@ -202,7 +199,7 @@
  {
    TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
    ACE_CHECK_RETURN (0);
-@@ -522,7 +526,7 @@
+@@ -513,7 +517,7 @@
            ::CORBA_Policy_ptr retval = 0;
            ACE_NEW_RETURN (
                retval,
@@ -211,7 +208,7 @@
                0
              );
            return retval;
-@@ -542,14 +546,14 @@
+@@ -533,14 +537,14 @@
      }
  }
  
@@ -228,7 +225,7 @@
      const CORBA::Char *logical_type_id,
      CORBA_Environment &ACE_TRY_ENV
    )
-@@ -565,7 +569,7 @@
+@@ -556,7 +560,7 @@
      );
    ACE_CHECK_RETURN (0);
    return ACE_reinterpret_cast (
@@ -237,7 +234,7 @@
        servant_upcall.servant ()->_downcast (
            "IDL:omg.org/CORBA_Policy:1.0"
          )
-@@ -573,7 +577,7 @@
+@@ -564,7 +568,7 @@
  }
  
  
@@ -246,7 +243,7 @@
      CORBA_Environment &ACE_TRY_ENV
    )
  
-@@ -588,7 +592,7 @@
+@@ -579,7 +583,7 @@
      );
    ACE_CHECK_RETURN (0);
    return ACE_reinterpret_cast (
@@ -255,7 +252,7 @@
        servant_upcall.servant ()->_downcast (
            "IDL:omg.org/CORBA_Policy:1.0"
          )
-@@ -596,7 +600,7 @@
+@@ -587,7 +591,7 @@
  }
  
  
@@ -264,7 +261,7 @@
      CORBA::Environment &ACE_TRY_ENV
    )
    ACE_THROW_SPEC ((
-@@ -615,7 +619,7 @@
+@@ -606,7 +610,7 @@
      );
    ACE_CHECK_RETURN  (_tao_retval);
    return ACE_reinterpret_cast (
@@ -273,7 +270,7 @@
        servant_upcall.servant ()->_downcast (
            "IDL:omg.org/CORBA_Policy:1.0"
          )
-@@ -625,7 +629,7 @@
+@@ -616,7 +620,7 @@
  
  }
  
@@ -282,7 +279,7 @@
      CORBA::Environment &ACE_TRY_ENV
    )
    ACE_THROW_SPEC ((
-@@ -644,7 +648,7 @@
+@@ -635,7 +639,7 @@
      );
    ACE_CHECK_RETURN (0);
    return ACE_reinterpret_cast (
@@ -291,7 +288,7 @@
        servant_upcall.servant ()->_downcast (
            "IDL:omg.org/CORBA_Policy:1.0"
          )
-@@ -654,7 +658,7 @@
+@@ -645,7 +649,7 @@
  
  }
  
@@ -300,7 +297,7 @@
      CORBA::Environment &ACE_TRY_ENV
    )
    ACE_THROW_SPEC ((
-@@ -671,7 +675,7 @@
+@@ -662,7 +666,7 @@
      );
    ACE_CHECK;
    ACE_reinterpret_cast (
@@ -309,7 +306,7 @@
        servant_upcall.servant ()->_downcast (
            "IDL:omg.org/CORBA_Policy:1.0"
          )
-@@ -680,6 +684,3 @@
+@@ -671,6 +675,3 @@
      );
    return;
  }
