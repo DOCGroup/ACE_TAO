@@ -1,3 +1,12 @@
+Tue Aug 13 10:25:36 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/DLL_ORB/Makefile (CLIENT_MODULE_LIB, SERVER_MODULE_LIB):
+
+	  Added dependencies on the corresponding sources to these
+	  targets.  Without them, changes to the source files would not
+	  cause a top-level "make" to rebuild the libraries built by these
+	  targets.
+
 Tue Aug 13 09:16:44 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Makefile.bor (DIRS):
