@@ -8,6 +8,9 @@
 const char * const
 HTTP_Helper::months_[12]= { "Jan", "Feb", "Mar", "Apr", "May", "Jun",
                             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+char const *
+HTTP_Helper::alphabet_
+= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 #if !defined (ACE_HAS_REENTRANT_LIBC)
 #if defined (ACE_HAS_THREADS)  
@@ -149,6 +152,140 @@ HTTP_Helper::HTTP_decode_string (char *path)
   path[j] = path[i];
 
   return path;
+}
+
+char *
+HTTP_Helper::HTTP_decode_base64 (char *data)
+{
+  char * indata, * outdata;
+  char inalphabet[256], decoder[256];
+  int i, bits, c, char_count, errors = 0;
+
+  for (i = (sizeof HTTP_Helper::alphabet_) - 1; i >= 0 ; i--)
+    {
+      inalphabet[(unsigned int) HTTP_Helper::alphabet_[i]] = 1;
+      decoder[(unsigned int) HTTP_Helper::alphabet_[i]] = i;
+    }
+
+  indata = data;
+  outdata = data;
+  char_count = 0;
+  bits = 0;
+  while ((c = *indata++) != '\0')
+    {
+      if (c == '=')
+        break;
+      if (c > 255 || ! inalphabet[c])
+        continue;
+      bits += decoder[c];
+      char_count++;
+      if (char_count == 4)
+        {
+          *outdata++ = (bits >> 16);
+          *outdata++ = ((bits >> 8) & 0xff);
+          *outdata++ = (bits & 0xff);
+          bits = 0;
+          char_count = 0;
+        }
+      else
+        {
+          bits <<= 6;
+        }
+    }
+
+  if (c == '\0')
+    {
+      if (char_count)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "base64 encoding incomplete: at least %d bits truncated",
+                     ((4 - char_count) * 6)));
+            errors++;
+        }
+    }
+  else
+    {
+      /* c == '=' */
+      switch (char_count)
+        {
+        case 1:
+          ACE_DEBUG ((LM_DEBUG,
+                      "base64 encoding incomplete: at least 2 bits missing"));
+          errors++;
+          break;
+        case 2:
+          *outdata++ = (bits >> 10);
+          break;
+        case 3:
+          *outdata++ = (bits >> 16);
+          *outdata++ = ((bits >> 8) & 0xff);
+          break;
+        }
+    }
+  *outdata = '\0';
+  return (errors ? 0 : data);
+}
+
+char *
+HTTP_Helper::HTTP_encode_base64 (char *data)
+{
+  char buf[BUFSIZ];
+  char *indata, *outdata;
+  int bits, c, char_count, error;
+
+  char_count = 0;
+  bits = 0;
+  error = 0;
+  indata = data;
+  outdata = buf;
+  while ((c = *indata++) != '\0')
+    {
+      if (c > 255)
+        {
+          ACE_DEBUG ((LM_DEBUG, "encountered char > 255 (decimal %d)", c));
+          error++;
+          break;
+        }
+      bits += c;
+      char_count++;
+      if (char_count == 3)
+        {
+          *outdata++ = HTTP_Helper::alphabet_[bits >> 18];
+          *outdata++ = HTTP_Helper::alphabet_[(bits >> 12) & 0x3f];
+          *outdata++ = HTTP_Helper::alphabet_[(bits >> 6) & 0x3f];
+          *outdata++ = HTTP_Helper::alphabet_[bits & 0x3f];
+          bits = 0;
+          char_count = 0;
+        }
+      else
+        {
+          bits <<= 8;
+        }
+    }
+
+  if (!error)
+    {
+      if (char_count != 0)
+        {
+          bits <<= 16 - (8 * char_count);
+          *outdata++ = HTTP_Helper::alphabet_[bits >> 18];
+          *outdata++ = HTTP_Helper::alphabet_[(bits >> 12) & 0x3f];
+          if (char_count == 1)
+            {
+              *outdata++ = '=';
+              *outdata++ = '=';
+            }
+          else
+            {
+              *outdata++ = HTTP_Helper::alphabet_[(bits >> 6) & 0x3f];
+              *outdata++ = '=';
+            }
+        }
+      *outdata = '\0';
+      ACE_OS::strcpy (data, buf);
+    }
+  
+  return (error ? 0 : data);
 }
 
 int
