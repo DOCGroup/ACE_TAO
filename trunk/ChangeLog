@@ -5,6 +5,25 @@ Wed Nov 26 17:41:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Nov 26 10:11:20 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* tests/ARGV_Test.cpp: Added new functions to test the fixes by
+	  Duane Binder below.
+
+	* ace/Argv_Type_Converter.cpp (cleanup): Ensure we don't try to
+	  delete memory that wasn't allocated dynamically.  Thanks to
+ 	  Duane Binder <duane.binder@veritas.com> for reporting this and
+ 	  providing a fix.  This fixes bugid 1658.
+
+	* ace/Log_Msg_NT_Event_Log.cpp (open):
+	  ACE_Log_Msg_NT_Event_Log::open() has a problem with passing the
+ 	  program name to ACE_TEXT_RegSetValueEx.  It is passing
+ 	  msg_file_length.  msg_file_length is defined as
+ 	  ACE_OS::strlen(msg_file).  Unfortunately, this is 1/2 the
+ 	  required buffer length since this argument is defined in bytes,
+ 	  not in characters. End result - the event log message file entry
+ 	  is truncated resulting in the log message file not found.
+  	  Thanks to Duane Binder <duane.binder@veritas.com> for reporting
+ 	  this and providing a fix.  This fixes bugid 1659.
+
 	* ace/POSIX_Proactor.cpp: Changed sig_handler() to be extern "C".
 	  Thanks to Chris Cleeland for suggesting this fix.
 
