@@ -1,3 +1,18 @@
+Thu May 13 09:55:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Makefile:
+	* orbsvcs/examples/Makefile:
+	* orbsvcs/examples/CosEC/Makefile:
+	* orbsvcs/examples/CosEC/Factory/Makefile:
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:
+	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+	* orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.cpp:
+	* orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.h:
+	* orbsvcs/examples/CosEC/Factory/FactoryDriver.h:
+	  Added several @@ comments in the new CosEC/Factory example.
+
 Thu May 13 00:42:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB.h (CORBA_ORB): Rewrote the comments for <perform_work>.
