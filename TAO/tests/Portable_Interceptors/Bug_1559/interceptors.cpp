@@ -82,8 +82,7 @@ Echo_Client_Request_Interceptor::send_request (
               operation.in (),
               ior.in ()));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       ri->get_request_service_context (::service_id ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -608,7 +607,7 @@ Echo_Server_Request_Interceptor::send_other (
   ACE_DEBUG ((LM_DEBUG,
               "%s.send_other from \"%s\"\n",
               this->myname_,
-              ri->operation ()));
+              operation.in ()));
 
   // Check that the request service context hasn't been changed.
   IOP::ServiceContext_var sc =
