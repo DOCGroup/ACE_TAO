@@ -219,13 +219,14 @@
            [EM] Runs successfully
            [SH] Hangs at halfway.  (Can't have two server threads
                 running at the same time.) 
+                I managed the test to run to completion when setting n_server = 1 and 
+                n_client = 4.  But I don't think that considered a successful run.
     [X] Enum_Interfaces_Test
           Sort of working right.
            [EM] Report get_ip_interface error
            [SH] Report get_ip_interface error
     [N] Env_Value_Test
     [X] Future_Test
-           Runs successfully after reducing the number of iterations.
            [EM] Runs successfully
            [SH] Runs successfully
     [X] Handle_Set_Test

@@ -1,3 +1,21 @@
+Thu May 21 15:28:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/test_config.h: Modified to write output from tests into
+	  log file.  Notice that log files on CE have extension name
+	  ".txt" instead of ".log".  
+
+	* ace/OS.i (strrchr): Added UNICODE version of this function.
+
+	* ace/Log_Record.{h,cpp}: Generalized message formatting on CE by
+	  adding a new method format_msg().
+
+	* ace/Reactor_Impl.h: Removed an extra comma.
+
+	* ace/XtReactor.cpp: Include "ace/Reactor.h"
+
+	* tests/Recursive_Mutex_Test.cpp:
+	* tests/Future.cpp: Removed iteration restriction on CE.
+
 Thu May 21 12:13:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_{dll,lib}.dsp: Added Stats.cpp into projects.
@@ -31,6 +49,13 @@ Wed May 20 10:42:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Misc/context_switch_time.cpp: use
           ACE_Stats to calculate standard deviations.
+
+Tue May 19 21:24:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Future_Test.cpp: Reduced the number of iterations on CE.
+
+	* ace/Synch.i: Added #ifdef (ACE_HAS_THREADS) to make it compile
+ 	  on non-threaded platforms.
 
 Tue May 19 10:05:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
