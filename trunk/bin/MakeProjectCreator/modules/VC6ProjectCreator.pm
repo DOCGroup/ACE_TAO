@@ -137,6 +137,12 @@ sub override_exclude_component_extensions {
 }
 
 
+sub get_env_accessor {
+  #my($self) = shift;
+  return ('%', '%');
+}
+
+
 sub get_dll_exe_template_input_file {
   #my($self) = shift;
   return 'vc6dspdllexe';

@@ -738,6 +738,15 @@ sub parse_define_custom {
               if (!defined $self->{'generated_exts'}->{$tag}) {
                 $self->{'generated_exts'}->{$tag} = {};
               }
+              if ($value =~ /\$\(.*\)/) {
+                my($envstart, $envend) = $self->get_env_accessor();
+                if (defined $envstart) {
+                  if (!defined $envend) {
+                    $envend = '';
+                  }
+                  $value =~ s/\$\(([^\)]+)\)/$envstart$1$envend/g;
+                }
+              }
               if ($name eq 'command'      || $name eq 'automatic'     ||
                   $name eq 'commandflags' || $name eq 'output_option' ||
                   $name eq 'pch_option') {
@@ -2141,6 +2150,11 @@ sub override_exclude_component_extensions {
   return undef;
 }
 
+
+sub get_env_accessor {
+  #my($self) = shift;
+  return ();
+}
 
 sub get_dll_exe_template_input_file {
   #my($self) = shift;
