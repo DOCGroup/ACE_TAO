@@ -26,7 +26,7 @@ TAO_EC_Filter::matches (const RtecEventComm::EventHeader& rhs,
   if (rhs.type == 0 || lhs.type == 0)
     return rhs.source == lhs.source;
 
-  return (rhs.type == lhs.type && rhs.source == lhs.type);
+  return (rhs.type == lhs.type && rhs.source == lhs.source);
 }
 
 // ****************************************************************

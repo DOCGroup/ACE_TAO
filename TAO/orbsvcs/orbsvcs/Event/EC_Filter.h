@@ -46,7 +46,7 @@
 
 class TAO_EC_QOS_Info;
 
-class TAO_EC_Filter
+class TAO_ORBSVCS_Export TAO_EC_Filter
 {
   // = TITLE
   //   Abstract base class for the filter hierarchy.
@@ -116,7 +116,7 @@ private:
 
 // ****************************************************************
 
-class TAO_EC_Null_Filter : public TAO_EC_Filter
+class TAO_ORBSVCS_Export TAO_EC_Null_Filter : public TAO_EC_Filter
 {
   // = TITLE
   //   A null filter

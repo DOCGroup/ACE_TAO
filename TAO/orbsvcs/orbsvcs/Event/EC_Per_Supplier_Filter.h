@@ -37,7 +37,7 @@
 
 class TAO_EC_ProxyPushSupplier_Set;
 
-class TAO_EC_Per_Supplier_Filter : public TAO_EC_SupplierFiltering
+class TAO_ORBSVCS_Export TAO_EC_Per_Supplier_Filter : public TAO_EC_SupplierFiltering
 {
   // = TITLE
   //   Filter the events on each supplier.
@@ -53,7 +53,7 @@ class TAO_EC_Per_Supplier_Filter : public TAO_EC_SupplierFiltering
 public:
   TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel* ec);
   // Constructor
- 
+
   virtual ~TAO_EC_Per_Supplier_Filter (void);
   // Destructor
 
