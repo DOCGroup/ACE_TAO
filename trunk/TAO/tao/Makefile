@@ -187,6 +187,7 @@ ifneq (,$(findstring Dynamic_Any,$(TAO_COMPONENTS)))
 endif # Dynamic_Any
 
 LSRC    = $(addsuffix .cpp,$(FILES))
+BUILD   += TAO_COMPONENTS
 
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
@@ -214,6 +215,13 @@ LDFLAGS += $(RLDFLAGS)
 
 .PRECIOUS: Object_KeyC.h Object_KeyC.i Object_KeyC.cpp
 .PRECIOUS: POAS.h POAS.i POAS.cpp POAC.h POAC.i POAC.cpp
+
+.PHONY: TAO_COMPONENTS
+TAO_COMPONENTS:
+	@$(ACE_ROOT)/bin/ace_components --tao --set " $(TAO_COMPONENTS) "
+
+realclean:
+	@$(ACE_ROOT)/bin/ace_components --tao --remove
 
 #----------------------------------------------------------------------------
 #	Dependencies
