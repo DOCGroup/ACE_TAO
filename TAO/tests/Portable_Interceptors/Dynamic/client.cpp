@@ -41,7 +41,8 @@ void
 run_test (Test_Interceptors::Visual_ptr server
           ACE_ENV_ARG_DECL)
 {
-  server->normal (10 ACE_ENV_ARG_PARAMETER);
+  server->normal (10
+                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Long one = 1, two = 1, result = 0;
@@ -51,9 +52,19 @@ run_test (Test_Interceptors::Visual_ptr server
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
-              "result = %d\n",
+              "calculate() result = %d\n",
               result));
 
+  Test_Interceptors::Visual::VarLenStruct_var v =
+    server->the_structure (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "the_structure() result is:\n"
+              "  flag    = %d\n"
+              "  message = %s\n",
+              v->flag,
+              v->message.in ()));
 
   ACE_TRY
     {
@@ -77,6 +88,7 @@ run_test (Test_Interceptors::Visual_ptr server
       ACE_DEBUG ((LM_DEBUG, "Caught CORBA::INV_OBJREF\n"));
     }
   ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 int
