@@ -1177,7 +1177,7 @@ ExecImplHeaderEmitter::ExecImplHeaderEmitter (std::ostream& os_,
 {}
 
 void
-ExecImplHeaderEmitter::pre (TranslationUnit& u)
+ExecImplHeaderEmitter::pre (TranslationUnit&)
 {
   os << COPYRIGHT;
 
@@ -1300,7 +1300,7 @@ ExecImplHeaderEmitter::generate (TranslationUnit& u)
 }
 
 void
-ExecImplHeaderEmitter::post (TranslationUnit& u)
+ExecImplHeaderEmitter::post (TranslationUnit&)
 {
   if (file_.empty ()) return;
   
