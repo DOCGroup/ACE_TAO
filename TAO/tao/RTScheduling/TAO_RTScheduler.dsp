@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib TAO.lib /nologo /dll /map /debug /machine:I386 /out:"..\..\..\bin\TAO_RTScheduler.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_RTCORBA.lib TAO_PortableServer.lib /nologo /dll /map /debug /machine:I386 /out:"..\..\..\bin\TAO_RTScheduler.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\RTCORBA" /libpath:"..\..\tao\PortableServer"
 
 !ELSEIF  "$(CFG)" == "RTScheduler - Win32 Debug"
 
@@ -83,7 +83,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib aced.lib TAO_RTCORBAd.lib TAO_PortableServerd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_RTSchedulerd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\RTCORBA" /libpath:"..\..\tao\PortableServer"
+# ADD LINK32 TAOd.lib aced.lib TAO_RTCORBAd.lib TAO_PortableServerd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_RTSchedulerd.dll" /pdbtype:sept /libpath:"..\..\tao\RTCORBA" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "RTScheduler - Win32 MFC Debug"
 
@@ -112,7 +112,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 TAOd.lib aced.lib TAO_Svc_Utilsd.lib TAO_RTEventd.lib TAO_RTSchedd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_RTSchedulerd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 TAOmfcd.lib acemfcd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_RTSchedulermfcd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOmfcd.lib acemfcd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_RTSchedulermfcd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\RTCORBA" /libpath:"..\..\tao\PortableServer"
 
 !ELSEIF  "$(CFG)" == "RTScheduler - Win32 MFC Release"
 
@@ -141,7 +141,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib TAO_Svc_Utils.lib TAO_RTEvent.lib TAO_RTSched.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_RTScheduler.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 TAOmfc.lib acemfc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /map /debug /machine:I386 /out:"..\..\..\bin\TAO_RTSchedulermfc.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOmfc.lib acemfc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /map /debug /machine:I386 /out:"..\..\..\bin\TAO_RTSchedulermfc.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\RTCORBA" /libpath:"..\..\tao\PortableServer"
 
 !ENDIF 
 

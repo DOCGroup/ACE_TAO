@@ -1,3 +1,14 @@
+Fri Sep 12 12:14:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAOACE.dsw:
+
+          Added dependencies on PortableServer and RTCORBA for 
+          RTScheduler.
+
+        * tao/RTScheduling/TAO_RTScheduler.dsp:
+
+          Fixed release settings.
+
 Fri Sep 12 11:55:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTScheduling/TAO_RTScheduler.dsp:
