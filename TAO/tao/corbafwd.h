@@ -70,30 +70,6 @@ class CORBA_Any_var;
 class CORBA_Any_out;
 typedef class CORBA_Any *CORBA_Any_ptr;
 
-class CORBA_DynAny;
-class CORBA_DynAny_var;
-typedef class CORBA_DynAny *CORBA_DynAny_ptr;
-
-class CORBA_DynStruct;
-class CORBA_DynStruct_var;
-typedef CORBA_DynStruct *CORBA_DynStruct_ptr;
-
-class CORBA_DynSequence;
-class CORBA_DynSequence_var;
-typedef CORBA_DynSequence *CORBA_DynSequence_ptr;
-
-class CORBA_DynArray;
-class CORBA_DynArray_var;
-typedef CORBA_DynArray *CORBA_DynArray_ptr;
-
-class CORBA_DynUnion;
-class CORBA_DynUnion_var;
-typedef CORBA_DynUnion *CORBA_DynUnion_ptr;
-
-class CORBA_DynEnum;
-class CORBA_DynEnum_var;
-typedef CORBA_DynEnum *CORBA_DynEnum_ptr;
-
 class CORBA_TypeCode;
 class CORBA_TypeCode_var;
 class CORBA_TypeCode_out;
@@ -157,11 +133,6 @@ TAO_SYSTEM_EXCEPTION_LIST
 class CORBA_WrongTransaction;
 typedef CORBA_WrongTransaction *CORBA_WrongTransaction_ptr;
 
-struct CORBA_NameValuePair;
-class CORBA_NameValuePair_var;
-class CORBA_NameValuePair_out;
-typedef CORBA_NameValuePair *CORBA_NameValuePair_ptr;
-
 class CORBA_Request;
 class CORBA_Request_var;
 class CORBA_Request_out;
@@ -196,16 +167,6 @@ class CORBA_ConstructionPolicy;
 class CORBA_ConstructionPolicy_var;
 class CORBA_ConstructionPolicy_out;
 typedef class CORBA_ConstructionPolicy *CORBA_ConstructionPolicy_ptr;
-
-class CORBA_AnySeq;
-class CORBA_AnySeq_var;
-class CORBA_AnySeq_out;
-
-// Forward declarations.
-class CORBA_NameValuePairSeq;
-class CORBA_NameValuePairSeq_var;
-class CORBA_NameValuePairSeq_out;
-typedef CORBA_NameValuePairSeq *CORBA_NameValuePairSeq_ptr;
 
 #endif /* ! TAO_HAS_MINIMUM_CORBA */
 
@@ -468,30 +429,6 @@ TAO_NAMESPACE CORBA
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-  typedef CORBA_DynAny DynAny;
-  typedef DynAny *DynAny_ptr;
-  typedef CORBA_DynAny_var DynAny_var;
-
-  typedef CORBA_DynArray DynArray;
-  typedef DynAny *DynArray_ptr;
-  typedef CORBA_DynArray_var DynArray_var;
-
-  typedef CORBA_DynEnum DynEnum;
-  typedef DynAny *DynEnum_ptr;
-  typedef CORBA_DynEnum_var DynEnum_var;
-
-  typedef CORBA_DynSequence DynSequence;
-  typedef DynAny *DynSequence_ptr;
-  typedef CORBA_DynSequence_var DynSequence_var;
-
-  typedef CORBA_DynStruct DynStruct;
-  typedef DynAny *DynStruct_ptr;
-  typedef CORBA_DynStruct_var DynStruct_var;
-
-  typedef CORBA_DynUnion DynUnion;
-  typedef DynAny *DynUnion_ptr;
-  typedef CORBA_DynUnion_var DynUnion_var;
-
   typedef CORBA_Request Request;
   typedef Request *Request_ptr;
   typedef CORBA_Request_var Request_var;
@@ -580,6 +517,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_Bounds *Bounds_ptr;
 #ifdef TAO_HAS_VALUETYPE
   typedef CORBA_ValueBase ValueBase;
+  typedef CORBA_ValueBase *ValueBase_ptr;
   typedef CORBA_ValueFactoryBase ValueFactoryBase;
   typedef CORBA_ValueFactoryBase *ValueFactory;
   // as CORBA 2.3a C++ map. 20.17.10 says
@@ -889,27 +827,10 @@ TAO_NAMESPACE CORBA
   typedef WrongTransaction *WrongTransaction_ptr;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_WrongTransaction;
 
-  typedef CORBA_AnySeq AnySeq;
-  typedef CORBA_AnySeq_var AnySeq_var;
-  typedef CORBA_AnySeq_out AnySeq_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AnySeq;
-
   typedef CORBA_FieldName FieldName;
   typedef CORBA_FieldName_var FieldName_var;
   typedef CORBA_FieldName_out FieldName_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FieldName;
-
-  typedef CORBA_NameValuePair NameValuePair;
-  typedef CORBA_NameValuePair *NameValuePair_ptr;
-  typedef CORBA_NameValuePair_var NameValuePair_var;
-  typedef CORBA_NameValuePair_out NameValuePair_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_NameValuePair;
-
-  typedef CORBA_NameValuePairSeq NameValuePairSeq;
-  typedef CORBA_NameValuePairSeq *NameValuePairSeq_ptr;
-  typedef CORBA_NameValuePairSeq_var NameValuePairSeq_var;
-  typedef CORBA_NameValuePairSeq_out NameValuePairSeq_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_NameValuePairSeq;
 
 #endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */
 

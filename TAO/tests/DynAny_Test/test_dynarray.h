@@ -38,4 +38,3 @@ private:
 };
 
 #endif /* TEST_DYNARRAY_H */
-

@@ -22,7 +22,7 @@
 
 #include "Trader.h"
 #include "Offer_Database.h"
-#include "tao/DynSequence_i.h"
+#include "ace/Containers.h"
 
   // *************************************************************
   // TAO_Trader
@@ -34,6 +34,8 @@
 #endif /* _MSC_VER >= 1200 */
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
+
+class TAO_DynSequence_i;
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Trader : public TAO_Trader_Base

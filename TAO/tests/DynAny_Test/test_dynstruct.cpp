@@ -19,6 +19,7 @@
 #include "test_dynstruct.h"
 #include "da_testsC.h"
 #include "data.h"
+#include "tao/DynamicAny/DynamicAny.h"
 
 Test_DynStruct::Test_DynStruct (CORBA::ORB_var orb)
   : orb_ (orb),
@@ -35,7 +36,7 @@ Test_DynStruct::~Test_DynStruct (void)
 
 const char*
 Test_DynStruct::test_name (void) const
-{ 
+{
   return this->test_name_;
 }
 
@@ -55,14 +56,29 @@ Test_DynStruct::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(Any)/insert/get/next/seek/rewind/current_component\n"));
 
-      CORBA_Any in_any1;
-      in_any1 <<= ts;
-      CORBA_DynAny_var dp1 = 
-        this->orb_->create_dyn_any (in_any1,
-                                    ACE_TRY_ENV);
+      CORBA::Object_var factory_obj =
+        this->orb_->resolve_initial_references ("DynAnyFactory",
+                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_DynStruct_var fa1 = CORBA_DynStruct::_narrow (dp1.in (),
-                                                          ACE_TRY_ENV);
+
+      DynamicAny::DynAnyFactory_var dynany_factory =
+        DynamicAny::DynAnyFactory::_narrow (factory_obj.in (),
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (CORBA::is_nil (dynany_factory.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Nil dynamic any factory after narrow\n"),
+                          -1);
+
+      CORBA::Any in_any1;
+      in_any1 <<= ts;
+      DynamicAny::DynAny_var dp1 =
+        dynany_factory->create_dyn_any (in_any1,
+                                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      DynamicAny::DynStruct_var fa1 =
+        DynamicAny::DynStruct::_narrow (dp1.in (),
+                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
       fa1->insert_char (data.m_char1,
                         ACE_TRY_ENV);
@@ -71,7 +87,7 @@ Test_DynStruct::run_test (void)
                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::DynAny_var cc = fa1->current_component (ACE_TRY_ENV);
+      DynamicAny::DynAny_var cc = fa1->current_component (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       cc->insert_float (data.m_float1,
                         ACE_TRY_ENV);
@@ -115,14 +131,25 @@ Test_DynStruct::run_test (void)
       if (this->error_count_ == 0)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
- 
+
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
-      CORBA_DynStruct_var ftc1 = 
-        this->orb_->create_dyn_struct (DynAnyTests::_tc_test_struct,
-                                       ACE_TRY_ENV);
+      DynamicAny::DynAny_var ftc1_base =
+        dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_struct,
+                                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      DynamicAny::DynStruct_var ftc1 =
+        DynamicAny::DynStruct::_narrow (ftc1_base.in (),
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (ftc1.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "DynStruct::_narrow() returned nil\n"),
+                          -1);
+
       ts.c = data.m_char1;
       ts.l = data.m_long1;
       ts.es.f = data.m_float1;
@@ -139,7 +166,7 @@ Test_DynStruct::run_test (void)
       if (ts_out->es.s == data.m_short1)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
-      else 
+      else
         ++this->error_count_;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -158,20 +185,31 @@ Test_DynStruct::run_test (void)
         ++this->error_count_;
       if (this->error_count_ == 0)
         ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n")); 
+                   "++ OK ++\n"));
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: get_members/set_members\n"));
 
-      CORBA::NameValuePairSeq_var nvps = fa1->get_members (ACE_TRY_ENV);
-      CORBA_DynStruct_var sm =
-        this->orb_->create_dyn_struct (DynAnyTests::_tc_test_struct,
-                                       ACE_TRY_ENV);
+      DynamicAny::NameValuePairSeq_var nvps = fa1->get_members (ACE_TRY_ENV);
+      DynamicAny::DynAny_var sm_base =
+        dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_struct,
+                                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      DynamicAny::DynStruct_var sm =
+        DynamicAny::DynStruct::_narrow (sm_base.in (),
+                                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (sm.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "DynStruct::_narrow()[2] returned nil\n"),
+                          -1);
+
       sm->set_members (nvps.in (),
                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::NameValuePairSeq_var gm = sm->get_members (ACE_TRY_ENV);
+      DynamicAny::NameValuePairSeq_var gm = sm->get_members (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::ULong index = 2;
       if (ACE_OS::strcmp (gm[index].id, "es"))
@@ -198,4 +236,3 @@ Test_DynStruct::run_test (void)
 
   return 0;
 }
-

@@ -30,14 +30,6 @@ OBJFILES = \
 	$(OBJDIR)\DLL_ORB.obj \
 	$(OBJDIR)\DomainC.obj \
 	$(OBJDIR)\DomainS.obj \
-	$(OBJDIR)\DynAny_i.obj \
-	$(OBJDIR)\DynAnyC.obj \
-	$(OBJDIR)\DynAnyS.obj \
-	$(OBJDIR)\DynArray_i.obj \
-	$(OBJDIR)\DynEnum_i.obj \
-	$(OBJDIR)\DynSequence_i.obj \
-	$(OBJDIR)\DynStruct_i.obj \
-	$(OBJDIR)\DynUnion_i.obj \
 	$(OBJDIR)\Encodable.obj \
 	$(OBJDIR)\Environment.obj \
 	$(OBJDIR)\Exception.obj \
@@ -61,7 +53,6 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_Transport.obj \
 	$(OBJDIR)\ImplRepoC.obj \
 	$(OBJDIR)\ImplRepoS.obj \
-	$(OBJDIR)\InconsistentTypeCodeC.obj \
 	$(OBJDIR)\Interceptor.obj \
 	$(OBJDIR)\InterceptorC.obj \
 	$(OBJDIR)\InterfaceC.obj \

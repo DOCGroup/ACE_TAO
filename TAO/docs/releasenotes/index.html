@@ -1049,8 +1049,12 @@ encounter an object whose interface was not known when the program was
 compiled, yet, be able to determine what operations are valid on the
 object and make invocations on it using the DII.
 
-<p>Current Status (as of July 22, 2000): 
+<p>Current Status (as of August 27, 2000): 
 <ul>
+
+<LI><P>First pass implementing the new Dynamic Any interfaces.
+  </P>
+</LI>
 
 <li> Implementation of Interface.idl completed, for types fully supported
 by TAO. This excludes valuetypes and all types related to components. </li><p>
@@ -2202,8 +2206,6 @@ Here is a summary of TAO's conformance issues with CORBA 2.3.1:<br>
 
   <li>The full OBV (valueboxes, valuetypes in all sorts of things, value
    graphs, Anys and value types, abstract interfaces, etc. etc.)
-
-  <li>The new DynAny interface
 
   <li>The old (2.3.1) IfR interface (we support a 3.0 draft, which is
    non-backwards compatible, and it is going to be changed).

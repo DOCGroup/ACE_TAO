@@ -20,6 +20,9 @@
 
 #include "orbsvcs/Trader/Interpreter_Utils.h"
 #include "orbsvcs/Trader/trading_export.h"
+#include "ace/Containers.h"
+
+class TAO_DynSequence_i;
 
 class TAO_Constraint;
 class TAO_Unary_Constraint;
@@ -341,8 +344,6 @@ protected:
   Operand_Queue queue_;
   // The result of a non_boolean operation.
 };
-
-#include "tao/DynSequence_i.h"
 
 // Forward declaration
 template <class ELEMENT_TYPE> class TAO_Element_Equal;
