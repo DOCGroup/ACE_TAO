@@ -1,3 +1,13 @@
+Sun Dec  5 14:49:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/TP_Reactor_Test.cpp:
+
+	  The test creates some listeners in the one button test, if that
+	  exceeds SOMAXCONN the test fails. We now reset the number of
+	  senders in the test to SOMAXCONN if they exceed
+	  SOMAXCONN. Thanks to Frare Steven <stevefr at avaya dot com> for
+	  the patch. 
+
 Fri Dec  3 07:37:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* MakeProjectCreator/config/dsnotifylogadmin_serv.mpb:

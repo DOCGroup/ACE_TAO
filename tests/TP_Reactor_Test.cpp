@@ -1065,6 +1065,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
       senders = 20;           // number of senders
       loglevel = 1;           // log level : 0 full/ 1 only errors
       seconds = 20;           // time to run in seconds
+#if defined(SOMAXCONN) // The test is invalid if senders > SOMAXCONN
+      if(SOMAXCONN < senders)
+        senders = SOMAXCONN;
+#endif
       return 0;
     }
 
