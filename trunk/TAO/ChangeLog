@@ -1,3 +1,8 @@
+Thu Feb 13 19:30:55 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/RTCORBA/Persistent_IOR/Makefile: Linked the client with
+	  RTCORBA library. 
+
 Thu Feb 13 15:15:29 2003  Priyanka Gontla  <pgontla@ociweb.com>
 
 	* tao/MCAST_Parser.cpp (multicast_query): 
