@@ -41,15 +41,27 @@ Sun Jul 06 21:40:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* examples/OEP/Display/descriptors/svcmap.dat: Added an example
 	  svcconf-id to svc.conf filename mapping file.
 
-	* tools/Assembly_Deployer/Assembly_Visitors.cpp:
+	* tools/Assembly_Deployer/Assembly_Visitors.cpp: Extend the the
+	  syntax of <destination> tag.  It can now contain an optional '|'
+	  delimited svc.conf id to provide the CIAO Daemon the logical
+	  svc.conf file should use.
 
 	* tools/Assembly_Deployer/Deployment_Configuration.cpp: Enhanced
 	  to provide a more comprehensive error message.
 
-	* tools/ComponentServer/ComponentServer.cpp:
 	* tools/Daemon/CIAO_Daemon.cpp:
-	* tools/Daemon/README:
-	* tools/Simple_Component_Server/Simple_Component_Server.cpp:
+	* tools/Daemon/README: Extended CIAODaemon's command line options
+	  to pass in the default svc.conf filename and the (id, svc.conf)
+	  mapping data file.
+
+	* tools/ComponentServer/ComponentServer.cpp: Changed to update
+	  this component server's ConfigValues after calling back to the
+	  ServerActivator.  Removed the old write_IOR function and changed
+	  to use the global function in CIAO::Utility namespace.
+
+	* tools/Simple_Component_Server/Simple_Component_Server.cpp: Some
+	  minor memory leaks were identified in this file, but I didn't
+	  have time to fix them yet.  So added comments to identify them.
 
 Sun Jul 06 19:41:06 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
