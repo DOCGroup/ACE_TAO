@@ -39,6 +39,8 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   if (this->lowwater_ > this->highwater_)
     this->lowwater_ = this->highwater_ / 2;
 
+  // @@ James, please don't use "magic numbers" like 1024.  Make sure
+  // you use the same symbolic constants as the other places...
   if (this->maxobjsize_ > (this->highwater_ - this->lowwater_) * 1024)
     this->maxobjsize_ = (this->highwater_ - this->lowwater_) * (1024/2);
 
@@ -55,6 +57,8 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
                   (Cache_Hash *)
                   this->allocator_->malloc (sizeof (Cache_Hash)),
                   Cache_Hash (alloc, hashsize));
+  // @@ James, please check the ACE_NEW_MALLOC macro -- it should do
+  // this check and bailout if this->hash_ == 0...
 
   if (this->hash_ == 0)
     {
@@ -67,6 +71,9 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
                   this->allocator_->malloc (sizeof (Cache_Heap)),
                   Cache_Heap (alloc, maxsize));
 
+  // @@ James, please check the ACE_NEW_MALLOC macro -- it should do
+  // this check and bailout if this->hash_ == 0...
+
   if (this->heap_ == 0)
     {
       this->maxsize_ = 0;
@@ -76,7 +83,6 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
       this->hashsize_ = 0;
     }
 }
-
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
@@ -121,6 +127,7 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   if (this->factory_ == 0)
     this->factory_ = Object_Factory::instance ();
 
+  // @@ James, please use the ACE_NEW_MALLOC_RETURN macro here.
   this->hash_ = (Cache_Hash *) this->allocator_->malloc (sizeof (Cache_Hash));
   if (this->hash_ == 0)
     {
@@ -129,9 +136,13 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
       return -1;
     }
+
+  // @@ James, please use the ACE_NEW_*_RETURN macro here.
   new (this->hash_) Cache_Hash (alloc, hashsize);
 
+  // @@ James, please use the ACE_NEW_MALLOC_RETURN macro here.
   this->heap_ = (Cache_Heap *) this->allocator_->malloc (sizeof (Cache_Heap));
+
   if (this->heap_ == 0)
     {
       errno = ENOMEM;
@@ -143,6 +154,8 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
       return -1;
     }
+
+  // @@ James, please use the ACE_NEW_*_RETURN macro here.
   new (this->heap_) Cache_Heap (alloc, maxsize);
 
   return 0;
@@ -299,6 +312,7 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 ::MAKE (const void *data, size_t size, ACE_Cache_Object *&obj)
 {
   // verify object is within cacheable range
+  // @@ James, please don't use these magic numbers...
   if (size/1024 > this->maxobjsize_ || size/1024 < this->minobjsize_)
     return -1;
 
@@ -308,14 +322,10 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
   // make sure we have sufficient memory
   if (this->waterlevel_ + size > this->highwater_ * (1024 * 1024))
-    {
-      do
-        {
-          if (this->FLUSH_i () == -1)
-            return -1;
-        }
-      while (this->waterlevel_ > this->lowwater_ * (1024 * 1024));
-    }
+    do
+      if (this->FLUSH_i () == -1)
+        return -1;
+    while (this->waterlevel_ > this->lowwater_ * (1024 * 1024));
 
   obj = this->factory_->create (data, size);
   if (this->TAKE (obj) == -1)
@@ -409,6 +419,5 @@ ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::operator DATA * (void) const
 {
   return this->data ();
 }
-
 
 #endif /* ACE_CACHE_MANAGER_T_CPP */
