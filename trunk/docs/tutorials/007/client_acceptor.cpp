@@ -13,7 +13,7 @@ Client_Acceptor::Client_Acceptor (int concurrency)
 /* Construct ourselves with a reference to somebody else' Thread_Pool.
    Obvioulsy our concurrency strategy is "thread_pool_" at this point.  */
 Client_Acceptor::Client_Acceptor (Thread_Pool &thread_pool)
-  : concurrency_ (thread_pool),
+  : concurrency_ (thread_pool_),
     the_thread_pool_ (thread_pool)
 {
 }
