@@ -19,7 +19,7 @@
 
 #include /**/ "event_export.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

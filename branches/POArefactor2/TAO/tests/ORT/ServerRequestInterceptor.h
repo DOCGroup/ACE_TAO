@@ -26,7 +26,7 @@
 #include "tao/LocalObject.h"
 #include "tao/CORBA_String.h"
 
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/PS_CurrentC.h"
 
 

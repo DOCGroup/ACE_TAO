@@ -26,7 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/PortableServerC.h"
 #include "tao/Objref_VarOut_T.h"
 
 #include "orbsvcs/CosEvent/event_serv_export.h"
@@ -42,6 +41,11 @@ class TAO_CEC_TypedProxyPushConsumer;
 namespace CORBA
 {
   class SystemException;
+}
+
+namespace PortableServer
+{
+  class ServantBase;
 }
 
 /**
