@@ -1,3 +1,24 @@
+Mon Jul 13 16:35:50 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* ace/Message_Block.{cpp, h, i}
+	  ace/Message_Queue_T.{cpp, h}:
+
+          Removed automatic deletion of beyond messages, replaced this
+	  with a remove_messages method to be called by an external 
+	  "reaper" if at all.  Reorganized dynamic message queues
+	  to remove sources of overhead, especially in checking
+	  message status while refreshing the queue: added separate
+	  head and tail pointers for pending, late, and beyond late
+          protions of queue: only move these pointers, not messages
+	  (except at enqueue).
+	
+	* tests/Dynamic_Priority_Test.cpp:
+
+	  Added performance tests for static and dynamic queues
+	  which do best case, worst case, and randomized ordering
+          of messages, presenting each ordering to all queues
+	  and clocking enqueue and dequeue performance.
+	
 Mon Jul 13 11:11:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Svc_Handler.h (ACE_SYNCH_USE>): Changed type of member

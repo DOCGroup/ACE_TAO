@@ -539,9 +539,18 @@ class ACE_Export ACE_Dynamic_Message_Strategy
   //     class memebers before using the static member functions.  
 public:
 
+  enum Priority_Status
+  {
+    PENDING     = 0x01, // message can still make its deadline
+    LATE        = 0x02, // message cannot make its deadline
+    BEYOND_LATE = 0x04, // message is so late its priority is undefined
+    ANY_STATUS  = 0x07  // mask to match any priority status 
+  };
+  // message priority status: values are defined as bit flags
+  // so that status combinations may be specified easily.
+
   ACE_Dynamic_Message_Strategy (u_long static_bit_field_mask,
                                 u_long static_bit_field_shift,
-                                u_long pending_threshold,
                                 u_long dynamic_priority_max,
                                 u_long dynamic_priority_offset);
   // ctor
@@ -549,25 +558,9 @@ public:
   virtual ~ACE_Dynamic_Message_Strategy ();
   // virtual dtor
 
-  virtual int update_priority (ACE_Message_Block & mb, 
-                               const ACE_Time_Value & tv) = 0;
-  // abstract dynamic priority evaluation function:
-  // updates the synamic priority bit field but does not
-  // alter the static priority bit field
-
-  int is_pending (const ACE_Message_Block & mb,
-                  const ACE_Time_Value & tv);
-  // returns true if the message has a pending (not late) priority value
-
-  virtual int is_beyond_late (const ACE_Message_Block & mb, 
-                              const ACE_Time_Value & tv) = 0;
-  // returns true if the message is later than can can be represented
-
-  virtual int drop_message (ACE_Message_Block * &mb);
-  // cleanup policy for a message that is later than can be represented,
-  // and is being dropped from a dynamic message queue (this is a default
-  // method definition that does nothing, which derived classes may override
-  // to do things like deleting the message block object, etc).
+  Priority_Status priority_status (ACE_Message_Block & mb,
+                                   const ACE_Time_Value & tv);
+  // updates the message's priority and returns its priority status
 
   u_long static_bit_field_mask (void);
   // get static bit field mask
@@ -581,12 +574,6 @@ public:
   void static_bit_field_shift (u_long);
   // set left shift value to make room for static bit field
 
-  u_long pending_threshold (void);
-  // get pending threshold priority value
-
-  void pending_threshold (u_long);
-  // set pending threshold priority value
-
   u_long dynamic_priority_max (void);
   // get maximum supported priority value
 
@@ -594,12 +581,19 @@ public:
   // set maximum supported priority value
 
   u_long dynamic_priority_offset (void);
-  // get axis shift to map signed range into unsigned range
+  // get offset to boundary between signed range and unsigned range
 
   void dynamic_priority_offset (u_long);
-  // set axis shift to map signed range into unsigned range
+  // set offset to boundary between signed range and unsigned range
+
+  virtual void dump (void) const;
+  // Dump the state of the strategy.
 
 protected:
+
+  virtual void convert_priority (ACE_Time_Value & priority, 
+                                 const ACE_Message_Block & mb) = 0;
+  // hook method for dynamic priority conversion
 
   u_long static_bit_field_mask_;
   // this is a bit mask with all ones in the static bit field
@@ -609,60 +603,41 @@ protected:
   // field: this value should be the logarithm base 2 of
   // (static_bit_field_mask_ + 1)
 
-  u_long pending_threshold_;
-  // threshold priority value below which a message is considered late
-
   u_long dynamic_priority_max_;
   // maximum supported priority value
 
   u_long dynamic_priority_offset_;
-  // axis shift added to all values, in order to map signed 
-  // range into unsigned range (priority is an unsigned value).
+  // offset to boundary between signed range and unsigned range
+
+  ACE_Time_Value max_late_;
+  // maximum late time value that can be represented
+ 
+  ACE_Time_Value min_pending_;
+  // minimum pending time value that can be represented
+
+  ACE_Time_Value pending_shift_;
+  // time value by which to shift pending priority 
 };
 
 class ACE_Export ACE_Deadline_Message_Strategy : public ACE_Dynamic_Message_Strategy
 {
 public:
 
-  ACE_Deadline_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
-                                 u_long static_bit_field_shift = 10,            // 10 low order bits
-                                 u_long pending_threshold = 0x200000UL,         // 2^(22-1)
-                                 u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
-                                 u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
+  ACE_Deadline_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
+                                 u_long static_bit_field_shift = 10,           // 10 low order bits
+                                 u_long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
+                                 u_long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
   // ctor, with all arguments defaulted
 
   virtual ~ACE_Deadline_Message_Strategy ();
   // virtual dtor
 
-  virtual int update_priority (ACE_Message_Block & mb, 
-                            const ACE_Time_Value & tv);
-  // dynamic priority evaluation function based on time to
-  // deadline: updates the synamic priority bit field but
-  // does not alter the static priority bit field
+  virtual void convert_priority (ACE_Time_Value & priority, 
+                                 const ACE_Message_Block & mb);
+  // dynamic priority conversion function based on time to deadline
 
-  int is_beyond_late (const ACE_Message_Block & mb,
-                      const ACE_Time_Value & tv);
-  // returns true if the message is later than can can be represented  
-};
-
-
-class ACE_Export ACE_Deadline_Cleanup_Message_Strategy : public ACE_Deadline_Message_Strategy
-{
-public:
-
-  ACE_Deadline_Cleanup_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,  // 2^(10) - 1
-                                         u_long static_bit_field_shift = 10,      // 10 low order bits
-                                         u_long pending_threshold = 0x200000UL,        // 2^(22-1)
-                                         u_long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
-                                         u_long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
-  // ctor, with all arguments defaulted
-
-  virtual ~ACE_Deadline_Cleanup_Message_Strategy ();
-  // virtual dtor
-
-  virtual int drop_message (ACE_Message_Block * &mb);
-  // deletion cleanup policy for a message that is later than can be 
-  // represented, and is being dropped from a dynamic message queue
+  virtual void dump (void) const;
+  // Dump the state of the strategy.
 };
 
 
@@ -670,47 +645,24 @@ class ACE_Export ACE_Laxity_Message_Strategy : public ACE_Dynamic_Message_Strate
 {
 public:
 
-  ACE_Laxity_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
-                               u_long static_bit_field_shift = 10,            // 10 low order bits
-                               u_long pending_threshold = 0x200000UL,         // 2^(22-1)
-                               u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
-                               u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
+  ACE_Laxity_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
+                               u_long static_bit_field_shift = 10,           // 10 low order bits
+                               u_long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
+                               u_long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
   // ctor, with all arguments defaulted
 
   virtual ~ACE_Laxity_Message_Strategy ();
   // virtual dtor
 
-  virtual int update_priority (ACE_Message_Block & mb, 
-                            const ACE_Time_Value & tv);
-  // dynamic priority evaluation function based on laxity
-  // (time to deadline minus execution time): updates the
-  // dynamic priority bit field but does not alter the 
-  // static priority bit field
-  
-  int is_beyond_late (const ACE_Message_Block & mb,
-                      const ACE_Time_Value & tv);
-  // returns true if the message is later than can can be represented  
+
+  virtual void convert_priority (ACE_Time_Value & priority, 
+                                 const ACE_Message_Block & mb);
+  // dynamic priority conversion function based on laxity
+
+  virtual void dump (void) const;
+  // Dump the state of the strategy.
 };
 
-
-class ACE_Export ACE_Laxity_Cleanup_Message_Strategy : public ACE_Laxity_Message_Strategy
-{
-public:
-
-  ACE_Laxity_Cleanup_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,  // 2^(10) - 1
-                                       u_long static_bit_field_shift = 10,      // 10 low order bits
-                                       u_long pending_threshold = 0x200000UL,        // 2^(22-1)
-                                       u_long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
-                                       u_long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
-  // ctor, with all arguments defaulted
-
-  virtual ~ACE_Laxity_Cleanup_Message_Strategy ();
-  // virtual dtor
-
-  virtual int drop_message (ACE_Message_Block * &mb);
-  // deletion cleanup policy for a message that is later than can be 
-  // represented, and is being dropped from a dynamic message queue
-};
 
 
 #if defined (__ACE_INLINE__)
