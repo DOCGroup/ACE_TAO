@@ -1,3 +1,19 @@
+Thu May 31 08:33:50 2001  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	  (visit_operation):
+
+	  Fixed an unused argument warning in the generated skeleton.
+
+	* tao/PortableServer/PolicyS.cpp:
+
+	  Fixed unused argument warnings.
+
+	* tao/DomainS.h:
+	* tao/DomainS.cpp:
+
+	  Fixed compile-time errors that occured on minimum CORBA builds.
+
 Thu May 31 02:54:43 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/ServerInterceptorAdapter.h:

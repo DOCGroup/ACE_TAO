@@ -153,13 +153,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << intf->full_skel_name () << " *, _tao_object_reference);"
       << be_uidt_nl << be_nl;
 
-  // Cast the Servant_Upcall pointer.
-  *os << "TAO_Object_Adapter::Servant_Upcall *_tao_upcall =" << be_idt_nl
-      << "ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, "
-      << "_tao_servant_upcall);"
-      << be_uidt_nl << be_nl;
-
-
   // Declare a return type variable.
   be_visitor_context ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS);
@@ -232,8 +225,15 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // Fish out the interceptors.
-  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
-      << "TAO_ServerRequestInterceptor_Adapter _tao_vfr ("
+  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+
+  // Cast the Servant_Upcall pointer.
+  *os << "TAO_Object_Adapter::Servant_Upcall *_tao_upcall =" << be_idt_nl
+      << "ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, "
+      << "_tao_servant_upcall);"
+      << be_uidt_nl << be_nl;
+
+  *os << "TAO_ServerRequestInterceptor_Adapter _tao_vfr ("
       << be_idt << be_idt_nl
       << "_tao_server_request.orb_core ()->server_request_interceptors (),"
       << be_nl
@@ -465,6 +465,10 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                          "gen_marshal_params failed\n"),
                         -1);
     }
+
+  *os << "// In case _tao_servant_upcall is not used in this function"
+      << be_nl 
+      << "ACE_UNUSED_ARG (_tao_servant_upcall);" << be_nl << be_nl;
 
   *os << "// In case ACE_TRY_ENV is not used in this function" << be_nl
       << "ACE_UNUSED_ARG (ACE_TRY_ENV);" << be_uidt_nl
