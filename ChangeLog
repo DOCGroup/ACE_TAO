@@ -1,3 +1,15 @@
+Mon Nov 22 13:45:05 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/GNUmakefile.clone:
+
+          Renamed GNUmakefile to GNUmakefile.clone to avoid being
+          overwritten when bin.mpc is processed.
+
+        * ACE-INSTALL.html:
+
+          Changed documentation on building clone.cpp to take the above into
+          account.
+
 Mon Nov 22 19:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
@@ -32,11 +44,11 @@ Mon Nov 22 07:44:23 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Sun Nov 21 10:34:42 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Message_Queue_T.h: Changed the access control specifier
-	  of ACE_Message_Queue_Ex::queue_ from private to protected to
- 	  enabled subclasses to access it.  Thanks to Nuno Silva
- 	  <Nuno.Silva@edisoft.pt> for this suggestion.  This change fixes
- 	  bugid 1984.
+        * ace/Message_Queue_T.h: Changed the access control specifier
+          of ACE_Message_Queue_Ex::queue_ from private to protected to
+          enabled subclasses to access it.  Thanks to Nuno Silva
+          <Nuno.Silva@edisoft.pt> for this suggestion.  This change fixes
+          bugid 1984.
 
 Sat Nov 20 18:12:55 UTC 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
