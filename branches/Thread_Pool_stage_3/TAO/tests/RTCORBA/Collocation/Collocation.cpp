@@ -635,6 +635,7 @@ main (int argc, char *argv[])
   return 0;
 }
 
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Array_Base<Test_Object_And_Servant>;
 template class ACE_Array_Iterator<Test_Object_And_Servant>;
