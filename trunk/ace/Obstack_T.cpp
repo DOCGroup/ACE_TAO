@@ -161,5 +161,5 @@ ACE_Obstack_T<CHAR>::release (void)
   ACE_TRACE ("ACE_Obstack_T<CHAR>::release");
 
   this->curr_ = this->head_;
-  this->curr_->cur_ = this->curr_->contents_;
+  this->curr_->block_ = this->curr_->cur_ = this->curr_->contents_;
 }
