@@ -89,6 +89,7 @@ chdir $log_directory  ||
 
 (my $log_files = ( `$find . -name '*.log' -daystart -ctime 0 -print` )) =~
   tr [\n] [ ];
+$log_files =~ s%\./(make)%$1%g;  #### Remove leading ./ from each filename.
 
 
 ####
@@ -154,9 +155,7 @@ if ($#output == -1) {
     #### Print URL for each log file, using $urlprefix.
     print "They are also available at:\n";
 
-    my @logs = split /\s+/, $log_files;
-    foreach my $log (@logs) {
-      $log =~ s%^\./%%;  #### Remove leading ./
+    foreach my $log (split /\s+/, $log_files) {
       print "  $urlprefix$log\n";
     }
   }
