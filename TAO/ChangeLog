@@ -1,3 +1,16 @@
+Tue Jun 29 11:13:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        
+          Removed unused local variables.
+          
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        
+          Modified TAO_IFR_EXE project to remove dependency on TAO
+          and IFR_Client libraries, and added include paths to
+          enable the preprocessor to find some TAO header files
+          that are unavoidably included via be_global.h.
+
 Mon Jun 28 23:48:55 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Xt_Stopwatch/Stopwatch_display.cpp (ACE_RCSID):
