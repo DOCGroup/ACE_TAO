@@ -9,6 +9,11 @@ Tue Mar 18 08:12:22 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Thanks to Kumar Neelakantan <kneelaka@painewebber.com> for
 	  reporting this problem.
 
+	* ace/OS.h,README,config-*.h: removed ACE_HAS_RTLD_LAZY_V, and
+	  replaced with #define of RTLD_LAZY macro only if it's not
+	  already defined (and if ACE_HAS_SVR4_DYNAMIC_LINKING is defined).
+	  Thanks to Chris Lahey <CLahey@cccis.com> for providing this fix.
+
 	* tests/IOStream_test.cpp: added checks for receipt of proper values.
 
 Tue Mar 18 01:38:14 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
