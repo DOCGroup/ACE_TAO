@@ -98,7 +98,12 @@ CFLAGS          += -mthreads -pipe -ansi -Wpointer-arith
 ifeq (2.5.0,$(VERSION))
   CFLAGS += -Wall
 endif # VERSION
-CCFLAGS         += $(CFLAGS) -fno-implicit-templates
+
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS         += -g
 DLD             = $(CXX)
 LD              = $(CXX)

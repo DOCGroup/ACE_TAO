@@ -5,7 +5,12 @@
 CC              = cc
 CXX             = c++
 CFLAGS          += -Wall -Wpointer-arith -pipe
-CCFLAGS         += $(CFLAGS) -fimplicit-templates 
+
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS         += -g
 DLD             = libtool
 LD              = $(CXX)
@@ -16,5 +21,3 @@ RANLIB          = ranlib
 SOEXT		= dylib
 SOFLAGS = -dynamic
 SOBUILD = -o $(VSHDIR)$*.dylib $<
-
-
