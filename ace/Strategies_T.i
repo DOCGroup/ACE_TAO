@@ -104,7 +104,7 @@ ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy (const char dll_name[],
                   svc_name,
                   svc_rep,
                   thr_mgr) == -1)
-    ACE_ERROR ((LM_ERROR,  
+    ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("open")));
 }
@@ -224,8 +224,9 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy (voi
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy");
 
-  if (this->acceptor_.close () == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("(%P|%t) %p\n"),  ACE_LIB_TEXT ("close")));
+  // Close the underlying acceptor.
+  this->acceptor_.close ();
+
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> ASYS_INLINE ACE_PEER_CONNECTOR &

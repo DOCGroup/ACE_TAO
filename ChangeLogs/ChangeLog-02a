@@ -1,3 +1,11 @@
+Mon May 14 11:02:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Strategies_T.i: Removed the ACE_ERROR statement from the
+	  destructor of ACE_Accept_Strategy. This created problems when
+	  the destructor was called during shutdown if the object was
+	  statically allocated. Thanks to Jonathan Reis <reis@stentor.com>
+	  for reporting this problem. 
+
 Mon May 14 07:48:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Proces_Mutex.{h,cpp,inl}: Reverted the change "Thu May 10
