@@ -87,19 +87,19 @@ public:
   // = Initialization methods.
   ACE_Sig_Action (void);
   ACE_Sig_Action (ACE_SignalHandler handler,
-		  sigset_t *sigmask = 0,
-		  int flags = 0);
+                  sigset_t *sigmask = 0,
+                  int flags = 0);
   ACE_Sig_Action (ACE_SignalHandler handler,
-		  ACE_Sig_Set &sigmask,
-		  int flags = 0);
+                  ACE_Sig_Set &sigmask,
+                  int flags = 0);
   ACE_Sig_Action (ACE_SignalHandler handler,
-		  int signum,
-		  sigset_t *sigmask = 0,
-		  int flags = 0);
+                  int signum,
+                  sigset_t *sigmask = 0,
+                  int flags = 0);
   ACE_Sig_Action (ACE_SignalHandler handler,
-		  int signum,
-		  ACE_Sig_Set &sigmask,
-		  int flags = 0);
+                  int signum,
+                  ACE_Sig_Set &sigmask,
+                  int flags = 0);
   ACE_Sig_Action (const ACE_Sig_Action &s);
   ACE_Sig_Action (struct sigaction *);
 
@@ -185,19 +185,19 @@ class ACE_Export ACE_Sig_Handler
 public:
   // = Registration and removal methods.
   virtual int register_handler (int signum, 
-				ACE_Event_Handler *new_sh, 
-				ACE_Sig_Action *new_disp = 0, 
-				ACE_Event_Handler **old_sh = 0,
-				ACE_Sig_Action *old_disp = 0);
+                                ACE_Event_Handler *new_sh, 
+                                ACE_Sig_Action *new_disp = 0, 
+                                ACE_Event_Handler **old_sh = 0,
+                                ACE_Sig_Action *old_disp = 0);
   // Add a new <ACE_Event_Handler> and a new sigaction associated with
   // <signum>.  Passes back the existing ACE_Event_Handler and its
   // sigaction if pointers are non-zero.  Returns -1 on failure and >=
   // 0 on success.
 
   virtual int remove_handler (int signum, 
-			      ACE_Sig_Action *new_disp = 0,
-			      ACE_Sig_Action *old_disp = 0,
-			      int sigkey = -1);
+                              ACE_Sig_Action *new_disp = 0,
+                              ACE_Sig_Action *old_disp = 0,
+                              int sigkey = -1);
   // Remove the <ACE_Event_Handler> currently associated with
   // <signum>.  <sigkey> is ignored in this implementation since there
   // is only one instance of a signal handler.  Install the new
@@ -241,10 +241,6 @@ protected:
   static sig_atomic_t sig_pending_;
   // Keeps track of whether a signal is pending. 
   
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  static ACE_Recursive_Thread_Mutex ace_sig_handler_lock_;
-#endif /* ACE_MT_SAFE */
-
 private:
   static ACE_Event_Handler *signal_handlers_[NSIG];
   // Array used to store one user-defined Event_Handler for every
@@ -311,19 +307,19 @@ class ACE_Export ACE_Sig_Handlers : public ACE_Sig_Handler
 public:
   // = Registration and removal methods.
   virtual int register_handler (int signum, 
-				ACE_Event_Handler *new_sh, 
-				ACE_Sig_Action *new_disp = 0, 
-				ACE_Event_Handler **old_sh = 0,
-				ACE_Sig_Action *old_disp = 0);
+                                ACE_Event_Handler *new_sh, 
+                                ACE_Sig_Action *new_disp = 0, 
+                                ACE_Event_Handler **old_sh = 0,
+                                ACE_Sig_Action *old_disp = 0);
   // Add a new ACE_Event_Handler and a new sigaction associated with
   // <signum>.  Passes back the existing ACE_Event_Handler and its
   // sigaction if pointers are non-zero.  Returns -1 on failure and 
   // a <sigkey> that is >= 0 on success.
 
   virtual int remove_handler (int signum,
-			      ACE_Sig_Action *new_disp = 0,
-			      ACE_Sig_Action *old_disp = 0,
-			      int sigkey = -1);
+                              ACE_Sig_Action *new_disp = 0,
+                              ACE_Sig_Action *old_disp = 0,
+                              int sigkey = -1);
   // Remove the ACE_Event_Handler currently associated with <signum>.
   // Install the new disposition (if given) and return the previous
   // disposition (if desired by the caller).  Returns 0 on success and
