@@ -754,7 +754,7 @@ ECM_Consumer::ECM_Consumer (ECM_Local_Federation *federation)
 }
 
 void
-ECM_Consumer::open (const char* name,
+ECM_Consumer::open (const char*,
                     RtecEventChannelAdmin::EventChannel_ptr ec,
                     ACE_RANDR_TYPE &seed,
                     CORBA::Environment& TAO_IN_ENV)
