@@ -45,9 +45,10 @@ protected:
   virtual int recv (ACE_Message_Block *&);
   // Receive an event from a Supplier.
 
-  int forward (ACE_Message_Block *event);
-  // Forward the <event> to its appropriate Consumer.  This delegates
-  // to the <Event_Channel> to do the actual forwarding.
+  int process (ACE_Message_Block *event);
+  // This delegates to the <Event_Channel> to do the actual
+  // processing.  Typically, it forwards the <event> to its
+  // appropriate Consumer.
 
   ACE_Message_Block *msg_frag_;
   // Keep track of event fragment to handle non-blocking recv's from

@@ -71,18 +71,24 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *event)
     {
       ACE_DEBUG ((LM_DEBUG, 
 		  "(%t) queueing activated on handle %d to routing id %d\n",
-                 this->get_handle (),
+                  this->get_handle (),
                   this->connection_id ()));
 
       // ACE_Queue in *front* of the list to preserve order.
       if (this->msg_queue ()->enqueue_head 
 	  (event, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enqueue_head"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%t) %p\n",
+                           "enqueue_head"),
+                          -1);
       
       // Tell ACE_Reactor to call us back when we can send again.
       else if (ACE_Reactor::instance ()->schedule_wakeup 
 	       (this, ACE_Event_Handler::WRITE_MASK) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "schedule_wakeup"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%t) %p\n",
+                           "schedule_wakeup"),
+                          -1);
       return 0;
     }
   else
@@ -144,7 +150,9 @@ Consumer_Handler::handle_output (ACE_HANDLE)
           // We are responsible for releasing an ACE_Message_Block if
           // failures occur.
           event->release ();
-          ACE_ERROR ((LM_ERROR, "(%t) %p\n", "transmission failure"));
+          ACE_ERROR ((LM_ERROR,
+                      "(%t) %p\n",
+                      "transmission failure"));
 
           /* FALLTHROUGH */
         default: // Sent the whole thing.
@@ -165,19 +173,24 @@ Consumer_Handler::handle_output (ACE_HANDLE)
 
               if (ACE_Reactor::instance ()->cancel_wakeup 
 		  (this, ACE_Event_Handler::WRITE_MASK) == -1)
-                ACE_ERROR ((LM_ERROR, "(%t) %p\n", "cancel_wakeup"));
+                ACE_ERROR ((LM_ERROR,
+                            "(%t) %p\n",
+                            "cancel_wakeup"));
             }
         }
     }
   else 
-    ACE_ERROR ((LM_ERROR, "(%t) %p\n", "dequeue_head"));
+    ACE_ERROR ((LM_ERROR,
+                "(%t) %p\n",
+                "dequeue_head"));
   return 0;      
 }
 
 // Send an event to a Consumer (may queue if necessary).
 
 int 
-Consumer_Handler::put (ACE_Message_Block *event, ACE_Time_Value *)
+Consumer_Handler::put (ACE_Message_Block *event,
+                       ACE_Time_Value *)
 {
   if (this->msg_queue ()->is_empty ())
     // Try to send the event *without* blocking!
@@ -371,9 +384,9 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
 int 
 Supplier_Handler::handle_input (ACE_HANDLE)
 {
-  ACE_Message_Block *forward_addr = 0;
+  ACE_Message_Block *event_key = 0;
 
-  switch (this->recv (forward_addr))
+  switch (this->recv (event_key))
     {
     case 0:
       // Note that a peer shouldn't initiate a shutdown by closing the
@@ -400,17 +413,17 @@ Supplier_Handler::handle_input (ACE_HANDLE)
       /* NOTREACHED */
     default:
       // Route messages to Consumers.
-      return this->forward (forward_addr);
+      return this->process (event_key);
     }
 }
 
-// Forward an event to its appropriate Consumer(s).  This delegates to
-// the <Event_Channel> to do the actual forwarding.
+// This delegates to the <Event_Channel> to do the actual processing.
+// Typically, this forwards the event to its appropriate Consumer(s).
 
 int
-Supplier_Handler::forward (ACE_Message_Block *forward_addr)
+Supplier_Handler::process (ACE_Message_Block *event_key)
 {
-  return this->event_channel_->put (forward_addr);
+  return this->event_channel_->put (event_key);
 }
 
 Thr_Consumer_Handler::Thr_Consumer_Handler (const Connection_Config_Info &pci)

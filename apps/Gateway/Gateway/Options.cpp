@@ -31,7 +31,8 @@ Options::Options (void)
     supplier_connector_port_ (DEFAULT_PEER_SUPPLIER_PORT),
     consumer_connector_port_ (DEFAULT_PEER_CONSUMER_PORT),
     max_timeout_ (MAX_TIMEOUT),
-    max_queue_size_ (MAX_QUEUE_SIZE)
+    max_queue_size_ (MAX_QUEUE_SIZE),
+    connection_id_ (1)
 {
   ACE_OS::strcpy (this->connection_config_file_, "connection_config");
   ACE_OS::strcpy (this->consumer_config_file_, "consumer_config");
@@ -64,6 +65,12 @@ int
 Options::performance_window (void) const
 {
   return this->performance_window_;
+}
+
+CONNECTION_ID &
+Options::connection_id (void)
+{
+  return this->connection_id_;
 }
 
 long

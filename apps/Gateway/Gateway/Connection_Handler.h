@@ -47,16 +47,6 @@ public:
   // Initialize and activate a single-threaded <Connection_Handler>
   // (called by <ACE_Connector::handle_output>).
 
-  const ACE_INET_Addr &remote_addr (void);
-  // Returns the peer's routing address.
-
-  const ACE_INET_Addr &local_addr (void);
-  // Returns our local address.
-
-  // = Set/get connection id.
-  CONNECTION_ID connection_id (void);
-  void connection_id (CONNECTION_ID);
-
   // = The current state of the Connection_Handler.
   enum State
   {
@@ -69,7 +59,19 @@ public:
 
   // = Set/get the current state.
   void state (State);
-  State state (void);
+  State state (void) const;
+
+  // = Set/get remote INET addr.
+  void remote_addr (ACE_INET_Addr &);
+  const ACE_INET_Addr &remote_addr (void) const;
+
+  // = Set/get local INET addr.
+  void local_addr (ACE_INET_Addr &);
+  const ACE_INET_Addr &local_addr (void) const;
+
+  // = Set/get connection id.
+  void connection_id (CONNECTION_ID);
+  CONNECTION_ID connection_id (void) const;
 
   // = Set/get the current retry timeout delay.
   void timeout (int);
@@ -77,17 +79,22 @@ public:
 
   // = Set/get the maximum retry timeout delay.
   void max_timeout (int);
-  int max_timeout (void);
+  int max_timeout (void) const;
 
   // = Set/get proxy role (i.e., 'S' for Supplier and 'C' for Consumer
   // (necessary for error checking).
   void connection_role (char);
-  char connection_role (void);
+  char connection_role (void) const;
+
+  // = Set/get the <Event_Channel> *. 
+  void event_channel (Event_Channel *);
+  Event_Channel *event_channel (void) const;
 
   // = The total number of bytes sent/received on this proxy.
-  size_t total_bytes (void);
   void total_bytes (size_t bytes);
   // Increment count by <bytes>.
+  size_t total_bytes (void) const;
+  // Return the current byte count.
 
   virtual int handle_timeout (const ACE_Time_Value &, const void *arg);
   // Perform timer-based Connection_Handler reconnection.

@@ -32,12 +32,21 @@ class Connection_Handler_Acceptor : public ACE_Acceptor<Connection_Handler, ACE_
   //     work...
 public:
   Connection_Handler_Acceptor (Event_Channel &, 
-                          char connection_role);
+                               char connection_role);
+  // Constructor.
 
-  virtual int make_svc_handler (Connection_Handler *&ph);
+  virtual int make_svc_handler (Connection_Handler *&ch);
   // Hook method for creating an appropriate <Connection_Handler>.
 
+  virtual int accept_svc_handler (Connection_Handler *ch);
+  // Hook method for accepting a connection into the
+  // <Connection_Handler>.
+
 protected:  
+  typedef ACE_Acceptor<Connection_Handler, ACE_SOCK_ACCEPTOR>
+          inherited;
+  // Make life easier later on.
+
   Event_Channel &event_channel_;
   // Reference to the event channel.
   
