@@ -1,3 +1,9 @@
+Tue May 28 23:13:45 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/Framework_Component_DLL.cpp:
+
+	  Added missing ";" to end of template instantiation statements.
+
 Tue May 28 22:34:03 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/DLL.cpp:  Added missing ACE_const_cast().
