@@ -1,3 +1,9 @@
+Wed Jun 16 19:08:01 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* src/Key_List.cpp: Fixed the key_word table generation so that it
+	generates the "default fill" string for the null entries in the
+	table. Thanks to Irfan and Naga for helping in this. 
+
 Sun Jun  6 15:47:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
 	* src/Key_List.cpp (output_switch): Make sure to generate "const
