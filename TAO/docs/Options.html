@@ -442,8 +442,10 @@ Service. </a></td>
         <td><a name="-ORBDottedDecimalAddresses"></a>Use the dotted
 decimal notation for addresses. This option can be used to workaround
 broken DNS implementations and may also reduce the time spent resolving
-IP addresses. By default, this option is disabled (<code>0</code>)
-since domain names are the standard address notation for IORs.</td>
+IP addresses.  This option is enabled (<code>1</code>) by default on
+Windows since DNS is often misconfigured there.  On other platforms
+this option is disabled (<code>0</code>) since domain names are 
+more flexible address notations for IORs.</td> 
       </tr>
       <tr>
         <td><code>-ORBEndpoint</code> <em>endpoint</em></td>
