@@ -1,3 +1,11 @@
+Tue Nov 26 14:21:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.h:
+	* docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp:
+	  Fixed compile errors by adding dummy implementations for the
+	  base interface methods in interface Stock{}; This should fix
+	  compile errors on many platforms. 	  
+
 Tue Nov 26 13:41:21 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
@@ -58,7 +66,7 @@ Mon Nov 25 15:09:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* docs/tutorials/Quoter/AMI/Handler_i.cpp:
 	* docs/tutorials/Quoter/AMI/Handler_i.h: Fixed compile errors by
 	  adding dummy implementations for the base interface methods in
-	  interface Stock{}; This shoudl fix compile errors on many
+	  interface Stock{}; This should fix compile errors on many
 	  platforms. 
 	
 Mon Nov 25 12:25:47 2002  Pradeep Gore  <pradeep@oomworks.com>
