@@ -1,3 +1,11 @@
+Thu Jun 10 13:18:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Request.h: Inline functions must be included *before*
+	  RequestSeq to avoid inline functions being used before declared
+	  inline warnings.
+
+	* tao/Request.{i,cpp} (release): Re-inlined release method.
+
 Thu Jun 10 13:03:14 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/IIOP_Connect.cpp (handle_input): Must return from
