@@ -1,5 +1,8 @@
 Wed Nov 26 10:11:20 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/POSIX_Proactor.cpp: Changed sig_handler() to be extern "C".
+	  Thanks to Chris Cleeland for suggesting this fix.
+
 	* ace/Process.{h,cpp}: Fixed the ACE_Process_Options::command_line_argv() 
 	  method so that it doesn't modify the command_line_buf_ parameter
  	  directly since this messes things up when process_name() is
