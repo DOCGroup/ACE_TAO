@@ -1,3 +1,11 @@
+Tue Jul 10 13:37:31 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/OS_Dirent.cpp (readdir_emulation):
+
+          Removed the hard cast to char* of one of the two arguments in
+          a call to strcpy. In the WChar win32 build, this cast was
+          causing the source and target strings to be of different widths.
+
 Tue Jul 10 11:32:26 2001  Tibor Kiss  <tkiss@mindmaker.hu>
   
         * ace/Log_Msg.cpp:
