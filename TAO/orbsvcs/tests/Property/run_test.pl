@@ -1,8 +1,9 @@
-# $Id$
-# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
+
+# $Id$
+# -*- perl -*-
 
 $tao_root = $ENV{TAO_ROOT};
 # This is a Perl script that runs the Naming Service, client and servers
@@ -22,7 +23,7 @@ sub name_server
 {
     my $args = "-ORBnameserviceport $nsport";
     my $prog = "$tao_root/orbsvcs/Naming_Service/Naming_Service"
-	.$Process::EXE_EXT;
+        .$Process::EXE_EXT;
     print ("\nNaming_Service: $prog$Process::EXE_EXT $args\n");
     $NS = Process::Create ($prog, $args);
 }

@@ -1,8 +1,9 @@
-# $Id$
-# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
+
+# $Id$
+# -*- perl -*-
 
 unshift @INC, '../../../../bin';
 require Process;
@@ -15,17 +16,17 @@ $ior2file = "serverb.ior";
 unlink $ior1file;
 unlink $ior2file;
 
-$SV1 = Process::Create ($EXEPREFIX."server_A".$Process::EXE_EXT, 
+$SV1 = Process::Create ($EXEPREFIX."server_A".$Process::EXE_EXT,
                         "-o $ior1file -ORBobjrefstyle url");
 
-$SV2 = Process::Create ($EXEPREFIX."server_B".$Process::EXE_EXT, 
+$SV2 = Process::Create ($EXEPREFIX."server_B".$Process::EXE_EXT,
                         "-o $ior2file -ORBobjrefstyle url");
 
 ACE::waitforfile ($ior1file);
 ACE::waitforfile ($ior2file);
 
 $status = system ($EXEPREFIX."initiator".$Process::EXE_EXT.
-		  " -f $ior1file -g $ior2file");
+                  " -f $ior1file -g $ior2file");
 
 $SV1->Kill (); $SV1->Wait ();
 $SV2->Kill (); $SV2->Wait ();

@@ -1,8 +1,9 @@
-# $Id$
-# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
+
+# $Id$
+# -*- perl -*-
 
 # This is a Perl script that runs the client and all the other servers that
 # are needed.
@@ -70,7 +71,7 @@ sub lifecycle_server
   my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."orbsvcs$DIR_SEPARATOR".
              "LifeCycle_Service$DIR_SEPARATOR".
              "LifeCycle_Service$Process::EXE_EXT";
-  
+
   $LC = Process::Create ($prog, $args);
 }
 
