@@ -18,12 +18,29 @@
 ####   % cd TAO
 ####   % make release
 ####
-#### To see what make release* would do without actually doing it, add
-#### CHECK=-n to the invocation.
+#### There are some other release/releaseall options [default value is in
+#### brackets]:
+####   ACE_TAG [ACE version in your workspace]: prepend tag with -ta
+####   TAO_TAG [TAO version in your workspace]: prepend tag with -tt
 ####
-#### By default, make release* will regenerate the contents of the man
-#### directory.  To suppress that, add GENERATE_MAN_PAGES= to your
-#### make release or make releaseall invocation.
+####   NOTE: the ACE and TAO versions will be updated automatically
+####   by release/releaseall.  ACE_TAG and TAO_TAG can be overridden
+####   to kit a particular version.
+####
+####   APPLY_NEW_TAG [enabled]: set to null to disable
+####   CHECK [disabled]: set to -n to see what make_release will do, but not
+####     do it
+####   GENERATE_MAN_PAGES [enabled]: set to null to disable regeneration of
+####     the ACE_wrappers/man/ hierarchy
+####   INSTALL_KIT [enabled]: set to null to not install in public
+####     ftp/http directory on host ace
+####   REL [beta]: set to minor or major, optionally, when applying a new tag
+####   ZIP_FILES [enabled]: set to -z to disable creation of .zip files
+####
+#### Example creation of ACE-only kit, version ACE-5_0_1 from current
+#### workspace:
+#### make release ACE_TAG='-ta ACE-5_0_1' APPLY_NEW_TAG= \
+####   GENERATE_MAN_PAGES= INSTALL_KIT= ZIP_FILES=-z
 
 #----------------------------------------------------------------------------
 #       Local macros
@@ -152,16 +169,21 @@ RELEASE_LIB_FILES = \
 
 .PHONY: release releasetao releaseall tag
 
-REL = beta
+ACE_TAG = -ta `head -1 VERSION | perl -ne \
+               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "ACE-$$_";'`
+TAO_TAG = -tt `head -1 TAO/VERSION | perl -ne \
+               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "TAO-$$_";'`
+APPLY_NEW_TAG = tag
 CHECK =
 GENERATE_MAN_PAGES = -g
+INSTALL_KIT = -i
+REL = beta
+ZIP_FILES =
 
 #### The release target creates the ACE (only) kit.
-release: tag
-	@$(ACE_ROOT)/bin/make_release $(CHECK) -i -k ace -v $(REL) \
-          $(GENERATE_MAN_PAGES) \
-	  -ta `head -1 VERSION | perl -ne \
-               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "ACE-$$_";'`
+release: $(APPLY_NEW_TAG)
+	@$(ACE_ROOT)/bin/make_release -k ace $(ACE_TAG) \
+          $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
 
 tag:
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -v $(REL) -u
@@ -170,12 +192,8 @@ tag:
 #### be called directly from the command line.  The releasetao target
 #### creates the combined ACE-TAO kit.
 releasetao:
-	@$(ACE_ROOT)/bin/make_release $(CHECK) -i -k ace+tao -v $(REL) \
-          $(GENERATE_MAN_PAGES) \
-	  -ta `head -1 VERSION | perl -ne \
-               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "ACE-$$_";'` \
-	  -tt `head -1 TAO/VERSION | perl -ne \
-               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "TAO-$$_";'`
+	@$(ACE_ROOT)/bin/make_release -k ace+tao $(ACE_TAG) $(TAO_TAG) \
+          $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
 
 #### The releaseall target:
 ####   1) Creates the ACE kit.
@@ -183,7 +201,7 @@ releasetao:
 ####      recursively invoking make release in the TAO directory.
 ####      The make then recursively invokes make releasetao in this
 ####      directory to create the combined ACE-TAO kit.
-releaseall: tag
+releaseall: $(APPLY_NEW_TAG)
 	@cd TAO  &&  $(MAKE) -s release REL=$(REL)
 
 .PHONY: show_controlled_files show_release_files show_release_lib_files
