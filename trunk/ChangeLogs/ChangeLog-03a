@@ -1,3 +1,177 @@
+Thu Jan 18 23:50:35 2001  Rick Stille  <stille_r@ociweb.com>
+
+	The Green Hills(GHS) Native x86 compiler does not provide support for 64-bit integers,
+	structural exceptions, or DLL's. Thus the keywords __int64, __try, __dllimport, etc.,
+	are not defined. In addition, exceptions do not work in a multi-threaded environment. 
+	The following changes were made to address these shortcomings.
+
+	* ace/Basic_Types.h: Because the GHS compiler has both ACE_LACKS_LONGLONG_T and 
+	  ACE_WIN32 defined, the ACE_LACKS_LONGLONG_T macro must appear first, so the order
+	  of these two macros has been reversed in the defines of both ACE_UINT64_LITERAL(n)
+	  and ACE_UINT64_DBLCAST_ADAPTER(n).
+	
+	* ace/config-win32-common.h: The typedef of ACE_UINT64 as an unsigned __int64 and the
+	  define of ACE_HAS_LLSEEK are blocked out for ghs. 
+	
+	* ace/config-win32-ghs.h: This is the new configuration file for Green Hills/Win32.
+
+	* ace/Configuration.cpp(resolve_key): The "return 0" at the end of this function
+	  has been blocked out for ghs to eliminate an "unreachable code" warning.
+
+	* ace/Event_Handler_T.h(handle_signal): The type of the "signum" parameter has been
+	  changed to "int" so that it matches the type in the Event_Handler class.
+
+	* ace/Event_Handler_T.i(handle_signal): The type of the "signum" parameter has been
+	  changed to "int" so that it matches the type in the Event_Handler class.
+
+	* ace/High_Res_Timer.cpp(global_scale_factor): The Native x86 compiler defines 
+	  "QuadPart" in the LARGE_INTEGER union as a "double," so it cannot be used in the 
+	  calculation of "global_scale_factor." Instead, for GHS, the low and high parts 
+	  of the LARGE_INTEGER structure are copied into an ACE_UINT64 structure (which is
+  	  actually an ACE_U_LongLong) and the ACE_U_LongLong operators are used. The code
+	  segment
+		if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
+            // Failed to retrieve CPU speed from system, so calculate it.
+            ACE_High_Res_Timer::calibrate ();
+	  is unreachable hen ACE_WIN32 is defined, so it has been blocked out for Win32
+	  platforms to silence the Green Hills "unreachable code" warning.
+
+	* ace/High_Res_Timer.i(hrtime_to_tv): There is no assignment operator that converts
+	  an ACE_U_LongLong to a "long," so an intermediate ACE_U_LongLong variable
+	  "usec64" has been introduced. The type of "msec" and "usec" have been changed from
+	  "long" to ACE_UINT32, as have been the casts. The conversion is then carried out
+	  by using the lower part of "usec64."
+
+	* ace/Local_Name_Space_T.cpp(remap): The "DWORD" cast has been removed from both 
+	  EXCEPTION_CONTINUE_SEARCH and EXCEPTION_CONTINUE_EXECUTION beause the function
+	  return value is of type "int" and the cast was causing an "integer conversion
+	  resulted in a change of sign" warning.
+
+	* ace/Memory_Pool.cpp(map): Removed references to the "mem_offset" variable because
+	  it was not being used and the compiler was issuing a warning to this effect.
+
+	* ace/NT_Service.cpp(startup): This function was returning "-1" when svc_sc_handle()
+	  failed, and returning a "0" when QueryServiceConfig() failed. Since the return
+	  type of this function is "DWORD," the compiler was issuing an "integer conversion
+	  resulted in a change of sign" warning for the "-1" value. Upon investigation of 
+	  this issue, it was discovered that "0" is a valid service type value, and thus the
+	  use of "0" to indicate failure is a bug. The return value for svc_sc_handle()
+	  failure has been changed to "MAXDWORD - 1," which is the DWORD equivalent of "-2,"
+	  and the return value for failure of QueryServiceConfig() has been changed to 
+	  "MAXDWORD," which is the DWORD equivalent of -1.
+
+	* ace/OS.cpp: The compiler cannot handle a 64-bit literal, so the literal passed to 
+	  FILETIME_to_timval_skew has been created as ACE_U_LongLong(0xd53e8000, 0x19db1de).
+
+	* ace/OS.cpp(set): The Native x86 compiler defines "QuadPart" in the LARGE_INTEGER 
+	  union as a "double," so it cannot be used in the calculations of tv_sec and tv_usec.
+ 	  Instead, the low and high parts of the LARGE_INTEGER structure are copied into
+	  an ACE_U_LongLong structure, and the ACE_U_LongLong operators are used. 
+
+	* ace/OS.cpp(operator FILETIME): The Native x86 compiler defines "QuadPart" in the 
+	  LARGE_INTEGER union as a "double," so it cannot be used in the calculation of
+ 	  file_time. Instead, tv_sec and tv_usec are converted iinto ACE_U_LongLong structures
+	  and the ACE_U_LongLong operators are used.  
+
+	* ace/OS.cpp(uname): The Native x86 compiler names both the union and the structure 
+	  within the SYSTEM_INFO structure, so the "wProcessorArchitecture" member within
+	  the "s" structure, which is itself within the "u" union, must be accessed by
+	  using ".u.s."
+
+	* ace/OS.cpp(ACE_BEGINTHREADEX): Green Hills compiler gets confused when __stdcall 
+	  is imbedded in parameter list, so the type ACE_WIN32THRFUNC_T has been defined,
+	  then used within the parameter list of ::_beginthreadex().
+
+	* ace/OS.h(ACE_Time_Value): The Native x86 compiler defines "DWORDLONG" as type
+	  "double," so FILETIME_to_timval_skew is instead defined as type ACE_U_LongLong.
+
+	* ace/OS.h: The pragmas "#pragma warning( disable : ... " are unknown to the Native
+	  x86 compiler, so it produces warnings to this effect. These pragma have been 
+	  blocked out for ghs.
+
+	* ace/OS.h: Because the Native x86 compiler does not support the __int64 keyword,
+	  the typedef of ACE_hrtime_t has been changed from "unsigned __int64" to 
+	  "ACE_UINT64" for ghs. Because no usage of "ACE_QWORD" could be foound, its 
+	  definition has been blocked out for ghs.
+
+	* ace/OS.i(gettimeofday):The code at the end of this function is not reachable if 
+	  either ACE_HAS_WINCE or ACE_WIN32 is defined. In order to quiet the Green Hills 
+	  compiler warnings about unreachable code, this code has been blocked out for 
+	  ACE_HAS_WINCE and ACE_WIN32. With this code blocked out, however, the variables
+	  "tv" and "result" are not used, and the compiler warns about about variables 
+	  defined, but never used. In order to quiet these warnings, the definitions of 
+	  these two variables have been blocked out for ACE_HAS_WINCE and ACE_WIN32.
+
+	* ace/OS.i(gethrtime): The ACE_gethrtime() function is not meant to be used by a 
+	  Win32 platform, but because both "ghs" and "ACE_HAS_PENTIUM" are defined for
+	  the Native x86 platform, a call to ACE_gethrtime() was included in the code.
+	  This problem has been solved by adding "&& !defined(ACE_WIN32)" to the two 
+	  "... defined (ghs) && defined (ACE_HAS_PENTIUM)" statements which block out
+	  references to ACE_gethrtime().
+	
+	  The Native x86 compiler defines "QuadPart" in the LARGE_INTEGER union as a 
+	  "double," so it cannot be used as the return value. Instead, because the return
+	  type is "ACE_hrtime_t," which is type "ACE_UINT64," the low and high parts of the
+	  LARGE_INTEGER structure are copied into an ACE_UINT64, which is then returned. 
+
+	* ace/Process_Manager.cpp(wait): The "result >= WAIT_OBJECT_0"  test within the 
+	  ACE_ASSERT statement causes the Native x86 compiler to produce a “pointless 
+	  comparison of unsigned integer with zero” warning because "result" is of type 
+	  "DWORD," which is defined by the Native x86 compiler as type "unsigned int." 
+	  This test has been blocked out for ghs.
+
+	* ace/Profile_Timer.cpp(elapsed_time): Because the "__int64" keyword is not defined
+	  by the Native x86 compiler, it cannot be used to cast the value of "delta_t" in 
+	  the calculation of "real_time." But "delta_t" is of type "ACE_hrtime_t," and 
+	  ACE_hrtime_t is typedefed as ACE_U_LongLong, so the division operator defined 
+	  for in the ACE_U_LongLong class can be used directly with a divisor of type 
+	  "double." Thus the "__int64" cast has been removed for ghs.
+
+	* ace/Sock_Connect.cpp(get_reg_value): This function is used within the function 
+	  get_ip_interfaces() function only when either ACE_HAS_WINSOCK2 is not defined or 
+	  when ACE_HAS_WINSOCK2 is defined as "0." Because ACE_HAS_WINSOCK2 is defined on 
+	  the Native x86 platform, the compiler was issuing a “defined, but never used” 
+	  warning. This warning has been eliminated by blocking out the definition of 
+	  get_reg_value() when ACE_HAS_WINSOCK2 is defined as a value other than "0."
+
+	* ace/Stats.cpp(accumulate): The comparison "rhs.samples_count () == 0" was 
+	  producing a warning because rhs.samples_count() returns an ACE_UINT32, but is 
+	  being compared to the signed literal "0." The "0" has been changed to "0u." 
+
+	* ace/WFMO_Reactor.cpp(ok_to_wait): The comparison of the "switch" statement 
+	  parameter "result" to "DWORD" values in the case statements elicited an 
+	  "integer conversion resulted in a change of sign" warning from the compiler, so 	
+	  the type of "result" has been changed to "DWORD." 
+
+	* ace/WFMO_Reactor.cpp(dispatch): The comparison of the "switch" statement 
+	  parameter "wait_status" to "DWORD" values in the case statements elicited an 
+	  "integer conversion resulted in a change of sign" warning from the compiler, so 	
+	  the type of "wait_status" has been cast to "DWORD."
+
+	* ace/WFMO_Reactor.cpp(dispatch_handles): The "wait_status >= WAIT_OBJECT_0" 
+	  comparison was producing a “pointless comparison of unsigned integer with zero” 
+	  warning because "wait_status" is an unsigned integer. This was a known problem
+	  with Borland, so the blocking out of this comparison has been extende to ghs.
+
+	* tests/Basic_Types_Test.cpp(main): Because both the ACE_LACKS_LONGLONG_T and 
+	  ACE_WIN32 macros are defined, the ACE_LACKS_LONGLONG_T macro must appear first, 
+	  so the order of these two macros has been reversed.
+
+	* tests/Cached_Accept_Conn_Test.cpp: The template class ACE_Node<ACE_HANDLE> must
+	  be explicitly instantiated for this platform.
+
+	* tests/Cached_Conn_Test.cpp: The template class ACE_Node<ACE_HANDLE> must be
+	  explicitly instantiated for this platform.
+
+	* tests/Handle_Set_Test.cpp: The template class ACE_Node<ACE_HANDLE> must be
+	  explicitly instantiated for this platform. This was already being done for the
+	  _CRAYMPP, so it has been extended to ghs.
+
+	* tests/Malloc_Test.cpp: Because the Native x86 compiler does not support structural
+	  exceptions, it cannot support the "remap" function, so the blocking of the 
+	  ACE_TEST_REMAP_ON_FAULT macro definition, which was already in effect for linux,
+	  has been extended to ghs.
+
 Thu Jan 18 12:49:53 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/SUN_Proactor.cpp: Added support for cancel_aiocb().  Thanks
