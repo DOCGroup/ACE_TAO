@@ -1,3 +1,9 @@
+Mon Jan 14 14:46:54 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* docs/tutorials/Quoter/Event_Service/Makefile:
+	* docs/tutorials/Quoter/RT_Event_Service/Makefile:
+	  Update dependencies.
+
 Mon Jan 14 14:44:31 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.av:
