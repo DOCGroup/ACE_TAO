@@ -57,7 +57,8 @@ public:
 
   ACE_ARGV (int substitute_env_args = 1);
   // Entry point for creating an ASYS_TCHAR *[] command line
-  // iteratively via the <add> method.  The <argv> and <buf> methods
+  // iteratively via the <add> method.  When this constructor is used,
+  // the <ITERATIVE> state is enabled.  The <argv> and <buf> methods
   // are allowed, and the result is recreated when called multiple
   // times.  The subscript operator is not allowed.
 
@@ -88,7 +89,13 @@ public:
   // Declare the dynamic allocation hooks.
 
   int add (const ASYS_TCHAR *next_arg);
-  // Add another argument.  This only works in the ITERATIVE state.
+  // Add another argument.  This only works in the <ITERATIVE> state.
+  // Returns -1 on failure and 0 on success.
+
+  int add (ASYS_TCHAR *argv[]);
+  // Add another <argv> array.  The <argv> parameter must be NULL
+  // terminated.  This only works in the <ITERATIVE> state.  Returns
+  // -1 on failure and 0 on success.
 
   int state (void) const;
   // What state is this ACE_ARGV in?
