@@ -4045,6 +4045,17 @@ ACE_OS::readv (ACE_HANDLE handle,
   ACE_OSCALL_RETURN (::readv (handle, iov, iovlen), ssize_t, -1);
 }
 
+ACE_INLINE int
+ACE_OS::clock_gettime (clockid_t clockid, struct timespec *ts)
+{
+  // ACE_TRACE ("ACE_OS::clock_gettime");
+#if defined ACE_HAS_POSIX_TIME
+  ACE_OSCALL_RETURN (::clock_gettime (clockid, ts), int, -1);
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_POSIX_TIME */
+}
+
 ACE_INLINE ACE_Time_Value
 ACE_OS::gettimeofday (void)
 {
@@ -4089,9 +4100,8 @@ ACE_OS::gettimeofday (void)
   // Assumes that struct timespec is same size as struct timeval,
   // which assumes that time_t is a long: it currently (VxWorks 5.2/5.3) is.
   struct timespec ts;
-  
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::clock_gettime (CLOCK_REALTIME, &ts), result),
-              int, -1, result);
+
+  ACE_OS::clock_gettime (CLOCK_REALTIME, &ts);
 
   tv.tv_sec = ts.tv_sec;
   tv.tv_usec = ts.tv_nsec / 1000L;  // timespec has nsec, but timeval has usec
