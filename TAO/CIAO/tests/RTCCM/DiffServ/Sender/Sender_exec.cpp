@@ -5,6 +5,7 @@
 #include "tao/RTCORBA/Network_Priority_Mapping.h"
 #include "Custom_Network_Priority_Mapping.h"
 #include "Sender_exec.h"
+#include "ace/OS_NS_unistd.h"
 
 SenderImpl::SenderExec_i::SenderExec_i (void)
 {

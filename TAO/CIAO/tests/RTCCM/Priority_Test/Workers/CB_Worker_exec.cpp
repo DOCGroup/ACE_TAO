@@ -20,7 +20,7 @@ MyImpl::CB_Worker_exec::~CB_Worker_exec ()
 // Operations from Priority_Test::Worker
 
 Priority_Test::CCM_Common_Ops_ptr
-MyImpl::CB_Worker_exec::get_some_device (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::CB_Worker_exec::get_some_device (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Priority_Test::CCM_Common_Ops::_duplicate (this);
@@ -31,7 +31,7 @@ MyImpl::CB_Worker_exec::get_some_device (ACE_ENV_SINGLE_ARG_DECL)
 CORBA::Long
 MyImpl::CB_Worker_exec::do_work (CORBA::Long work,
                                  CORBA::Long aux
-                                 ACE_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // aux is not use for now, so do something with it.
@@ -126,7 +126,7 @@ MyImpl::CB_Worker_Home_exec::~CB_Worker_Home_exec ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::CB_Worker_Home_exec::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::CB_Worker_Home_exec::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

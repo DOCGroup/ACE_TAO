@@ -16,7 +16,7 @@ MyImpl::IOB_Worker_exec::~IOB_Worker_exec ()
 // Operations from Priority_Test::Worker
 
 Priority_Test::CCM_Common_Ops_ptr
-MyImpl::IOB_Worker_exec::get_some_device (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::IOB_Worker_exec::get_some_device (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Priority_Test::CCM_Common_Ops::_duplicate (this);
@@ -27,7 +27,7 @@ MyImpl::IOB_Worker_exec::get_some_device (ACE_ENV_SINGLE_ARG_DECL)
 CORBA::Long
 MyImpl::IOB_Worker_exec::do_work (CORBA::Long work,
                                   CORBA::Long aux
-                                  ACE_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong retv = work - aux;
@@ -40,8 +40,9 @@ MyImpl::IOB_Worker_exec::do_work (CORBA::Long work,
 
 // Operations from Components::SessionComponent
 void
-MyImpl::IOB_Worker_exec::set_session_context (Components::SessionContext_ptr ctx
-                                             ACE_ENV_ARG_DECL)
+MyImpl::IOB_Worker_exec::set_session_context (
+    Components::SessionContext_ptr ctx
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -114,7 +115,7 @@ MyImpl::IOB_Worker_Home_exec::~IOB_Worker_Home_exec ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::IOB_Worker_Home_exec::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::IOB_Worker_Home_exec::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

@@ -39,7 +39,7 @@ MyImpl::Pulse_Handler::close ()
     {
       ACE_DEBUG ((LM_DEBUG, "Waiting\n"));
     }
-    
+
   return this->wait ();
 }
 
@@ -262,7 +262,7 @@ MyImpl::RateGen_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::RateGen_exec_i::ccm_passivate\n"));
     }
-    
+
   this->pulser_.close ();
 }
 
@@ -318,13 +318,15 @@ MyImpl::RateGenHome_exec_i::new_RateGen (CORBA::Long /* hertz */
 {
   Components::EnterpriseComponent_ptr tmp = 0;
   ACE_NEW_THROW_EX (tmp,
-		                MyImpl::RateGen_exec_i,
-		                CORBA::NO_MEMORY ());
+                    MyImpl::RateGen_exec_i,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (tmp);
+
   return tmp;
 }
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::RateGenHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::RateGenHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
