@@ -12,74 +12,33 @@
 using std::cerr;
 using std::endl;
 
-namespace CIAO
+BEGIN_DEPLOYMENT_NAMESPACE
+
+/// handle the package configuration and populate it
+void PCI_Handler::process_PackagedComponentImplementation
+(::Deployment::PackagedComponentImplementation &pci)
 {
-  namespace Config_Handler
-  {
-    PCI_Handler::PCI_Handler (DOMDocument* doc, unsigned long filter)
-      : doc_ (doc),
-        root_ (doc->getDocumentElement()),
-        filter_ (filter),
-        iter_ (doc_->createNodeIterator (this->root_,
-                                              this->filter_,
-                                              0,
-                                              true)),
-        release_ (true)
-    {}
-
-    PCI_Handler::PCI_Handler (DOMNodeIterator* iter, bool release)
-      : doc_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
-    {}
-
-
-    PCI_Handler::~PCI_Handler()
+  for (DOMNode* node = this->iter_->nextNode();
+       node != 0;
+       node = this->iter_->nextNode())
     {
-      if (this->release_)
-        this->iter_->release();
-    }
+      XStr node_name (node->getNodeName());
 
-    /// handle the package configuration and populate it
-    void PCI_Handler::process_PackagedComponentImplementation
-      (::Deployment::PackagedComponentImplementation &pci)
-    {
-      for (DOMNode* node = this->iter_->nextNode();
-           node != 0;
-           node = this->iter_->nextNode())
+      if (false);
+      else if
+        (process_string(this->iter_, node_name, "name", pci.name));
+      else if
+        (process_element_remote<Deployment::ComponentImplementationDescription, CompImplDesc_Handler>
+         (this->doc_, this->iter_, node,
+          node_name, "referencedImplementation", pci.referencedImplementation,
+          &CompImplDesc_Handler::process_ComponentImplementationDescription, this->id_map_));
+      else
         {
-          XStr node_name (node->getNodeName());
-          if (node_name == XStr (ACE_TEXT ("name")))
-            {
-              // Fetch the text node which contains the "label"
-              node = this->iter_->nextNode();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_name (text->getNodeValue(), pci);
-            }
-          else if (node_name == XStr (ACE_TEXT ("referencedImplementation")))
-            {
-              // fetch the component package reference handler
-              CompImplDesc_Handler compimpldesc_handler (iter_, false);
-
-              // delegate the populating process
-              compimpldesc_handler.process_ComponentImplementationDescription (pci.referencedImplementation);
-            }
-          else
-            {
-              // ??? How did we get here ???
-              ACE_THROW (CORBA::INTERNAL());
-            }
-        }
-      return;
-    }
-
-    /// handle name attribute
-    void PCI_Handler::process_name
-      (const XMLCh* name, ::Deployment::PackagedComponentImplementation &pci)
-    {
-      if (name)
-        {
-          pci.name = XMLString::transcode (name);
+          // ??? How did we get here ???
+          ACE_THROW (CORBA::INTERNAL());
         }
     }
-
-  }
+  return;
 }
+
+END_DEPLOYMENT_NAMESPACE

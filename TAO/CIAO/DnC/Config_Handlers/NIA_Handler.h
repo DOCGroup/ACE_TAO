@@ -14,6 +14,7 @@
 
 #include "DeploymentC.h"
 #include "Config_Handler_export.h"
+#include "Basic_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -43,49 +44,25 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace CIAO
+BEGIN_DEPLOY_REQUIREMENT
+
+class NIA_Handler: public Basic_Handler
 {
-  namespace Config_Handler
-    {
+public:
 
-      class NIA_Handler
-        {
-        public:
+  /// constructor
+  NIA_Handler (DOMDocument* doc, unsigned long filter_)
+    : Basic_Handler (doc, filter_) { }
 
-          /// constructor
-          NIA_Handler (DOMDocument* doc, unsigned long filter_);
+  /// constructor
+  NIA_Handler (DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (iter, release) { }
 
-          /// constructor
-          NIA_Handler (DOMNodeIterator* iter, bool release = false);
+  /// Process the package configuration
+  void process_NamedImplementationArtifact (::Deployment::NamedImplementationArtifact &nia);
+};
 
-          /// destructor
-          ~NIA_Handler();
-
-          /// Process the package configuration
-          void process_NamedImplementationArtifact (::Deployment::NamedImplementationArtifact &nia);
-
-        protected:
-
-          /// Process the name attribute
-          void process_name (const XMLCh* name, ::Deployment::NamedImplementationArtifact &nia);
-
-        private:
-
-          DOMDocument* doc_;
-
-          DOMNode* root_;
-
-          unsigned long filter_;
-
-          DOMNodeIterator* iter_;
-
-          bool release_;
-
-        };
-
-    }
-
-}
+END_DEPLOY_REQUIREMENT
 
 #include /**/ "ace/post.h"
 
