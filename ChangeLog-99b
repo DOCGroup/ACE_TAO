@@ -1,14 +1,21 @@
 Fri Jan 08 19:19:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Applied ACE_TEXT to the definition of
-	  ACE_DEFAULT_TEMP_FILE on Win32.  Thanks to
-	  <gwross@west.raytheon.com> for reporting this.
+        * ace/OS.h: Applied ACE_TEXT to the definition of
+          ACE_DEFAULT_TEMP_FILE on Win32.  Thanks to
+          <gwross@west.raytheon.com> for reporting this.
 
 Fri Jan 08 13:24:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Synch.h (ACE_Process_Mutex): made data members
           private instead of public.  Thanks to Peter Gross
           <pgross@signalsoftcorp.com> for reporting this.
+
+        * examples/Threads/reader_writer.cpp: removed volatile
+          qualifier from declaration of "shared_thr_id", so that
+          the file will compile on DU 4.0 with DCE threads.  The
+          volatile qualifier caused a type mismatch with
+          ACE_thread_t.  And, it's not necessary, because all
+          access of the shared_thr_id is guarded.
 
 Thu Jan 07 09:05:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
