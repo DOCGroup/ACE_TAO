@@ -14,6 +14,7 @@
 ACE_RCSID(tao, Principal, "$Id$")
 
 CORBA_Principal::CORBA_Principal (void)
+  : refcount_ (1)
 {
 }
 
