@@ -1,3 +1,10 @@
+Fri Apr 25 06:18:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+        * ace/config-borland-common.h:
+          Cleanup of duplicate stuff. Moved ACE_CC_PREPROCESSOR to
+          win32 file.
+
 Thu Apr 24 23:20:16 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/DSRT_Dispatcher_Impl.cpp:
@@ -14,7 +21,7 @@ Thu Apr 24 23:20:16 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	  Made the importance value continuous instead of discrete to make
 	  it more compatible with DSRT MIF scheduler. Made the MIF
 	  scheduler accept max and min importance thru the svc.conf file.
-	
+
 Thu Apr 24 20:17:44 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/DSRT_Dispatcher_Impl.cpp:
