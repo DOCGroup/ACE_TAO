@@ -123,9 +123,6 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 
   for (curarg = 0; curarg < argc; ++curarg)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "The curr arg is [%s] \n",
-                  argv[curarg]));
       if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_TEXT("-ORBReactorMaskSignals")) == 0)
       {
