@@ -1,3 +1,5 @@
+/* -*- C++ -*- */
+
 // $Id$
 
 #ifndef TAO_AV_ENDPOINT_STRATEGY_T_H
@@ -7,11 +9,12 @@
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy
-  : public TAO_AV_Endpoint_Strategy
-// = DESCRIPTION
-//    Reactive strategy base class
+: public TAO_AV_Endpoint_Strategy
 {
- protected:
+  // = DESCRIPTION
+  //    Reactive strategy base class
+
+protected:
   TAO_AV_Endpoint_Reactive_Strategy (TAO_ORB_Manager *orb_manager);
   // Constructor
 
@@ -44,17 +47,18 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy
 
   TAO_ORB_Manager *orb_manager_;
   // ORB manager, used to activate the objects
-
+  
 };
 // ----------------------------------------------------------------------
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_A
   : public TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev , T_MediaCtrl>
-// = DESCRIPTION
-//    Reactive strategy
 {
- public:
+  // = DESCRIPTION
+  //    Reactive strategy
+
+public:
   TAO_AV_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager);
   // Constructor
 
@@ -70,17 +74,16 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_A
                         CORBA::Environment &env);
   // Called by the MMDevice, when it needs to create an A type endpoint
 
-
 };
 
 // ----------------------------------------------------------------------
 template <class T_StreamEndpoint, class T_Vdev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_B
   : public TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_Vdev, T_MediaCtrl>
-// = DESCRIPTION
-//    Reactive strategy
 {
- public:
+  // = DESCRIPTION
+  //    Reactive strategy
+public:
   TAO_AV_Endpoint_Reactive_Strategy_B (TAO_ORB_Manager *);
   // Constructor.
 
@@ -101,9 +104,10 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_B
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Child_Process
-// = DESCRIPTION
-//    Helper class for the child process created in TAO_AV_Endpoint_Process_Strategy
 {
+  // = DESCRIPTION
+  //    Helper class for the child process created in TAO_AV_Endpoint_Process_Strategy
+
 public:
   TAO_AV_Child_Process ();
   // Constructor
@@ -118,7 +122,7 @@ public:
   int run (ACE_Time_Value *tv = 0);
   // runs the ORB event loop
 
- protected:
+protected:
   int activate_objects (int argc,
                         char **argv,
                         CORBA::Environment &env);
@@ -184,9 +188,10 @@ public:
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Child_Process_A
   : public TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
-// = DESCRIPTION
-//    Helper class for the child process created in TAO_AV_Child_Process
 {
+  // = DESCRIPTION
+  //    Helper class for the child process created in TAO_AV_Child_Process
+
 public:
   TAO_AV_Child_Process_A (void);
   // Constructor.
@@ -200,9 +205,9 @@ public:
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Child_Process_B
   : public TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
-// = DESCRIPTION
-//    Helper class for the child process created in TAO_AV_Child_Process
 {
+  // = DESCRIPTION
+  //    Helper class for the child process created in TAO_AV_Child_Process
 public:
   TAO_AV_Child_Process_B (void);
   // Constructor.
