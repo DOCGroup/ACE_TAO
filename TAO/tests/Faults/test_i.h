@@ -18,7 +18,9 @@
 
 #include "testS.h"
 
-class Callback_i : public POA_Callback
+class Callback_i
+  : public virtual POA_Callback,
+  , public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   A callback object to shutdown the "client"
