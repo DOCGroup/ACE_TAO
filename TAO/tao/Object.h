@@ -209,28 +209,35 @@ public:
 #endif /* __GNUC__ */
   // Useful for template programming.
 
-  // = Reference count managment.
+  /**
+   * @name Reference Count Managment
+   *
+   * These are the standard CORBA object reference count manipulations
+   * methods.
+   */
+  //@{
   /// Increment the reference count.
   virtual void _add_ref (void);
 
   /// Decrement the reference count.
   virtual void _remove_ref (void);
+  //@}
 
-  // = TAO extensions
-
+  /// Constructor
   CORBA_Object (TAO_Stub *p = 0,
                 CORBA::Boolean collocated = 0,
                 TAO_Abstract_ServantBase *servant = 0);
 
 
-  /// get the underlying stub object
+  /// Get the underlying stub object.
   virtual TAO_Stub *_stubobj (void) const;
 
-  /// Sets the proxy broker.
+  /// Set the proxy broker.
   virtual void _proxy_broker (TAO_Object_Proxy_Broker *proxy_broker);
 
-  /// Gets the proxy broker.
+  /// Get the proxy broker.
   virtual TAO_Object_Proxy_Broker *_proxy_broker (void);
+  //@}
 
 protected:
 
@@ -255,11 +262,8 @@ protected:
   /// Specify whether this is a local object or not.
   CORBA::Boolean is_local_;
 
-  /**
-   * Pointer to the Proxy Broker i.e. the instance
-   * that takes care of getting the right proxy
-   * for performing a given call.
-   */
+  /// Pointer to the Proxy Broker i.e. the instance that takes care of
+  /// getting the right proxy for performing a given call.
   TAO_Object_Proxy_Broker *proxy_broker_;
 
 private:
@@ -270,7 +274,22 @@ private:
    * The protocol proxy is (potentially) shared among several
    * CORBA_Objects
    */
-  TAO_Stub *protocol_proxy_;
+  TAO_Stub * protocol_proxy_;
+
+  /// Number of outstanding references to this object.
+  CORBA::ULong refcount_;
+    
+  /// Protect reference count manipulation from race conditions.
+  /**
+   * This lock is only instantiated for unconstrained objects.  The
+   * reason for this is that locality-constrained objects that do not
+   * require reference counting (the default) may be instantiated in
+   * the critical path.
+   *
+   * @note This assumes that unconstrained objects will not be
+   *       instantiated in the critical path.
+   */
+  TAO_SYNCH_MUTEX * refcount_lock_;
 
 };
 

@@ -1,3 +1,37 @@
+Sat Mar 16 00:47:58 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Object.h (refcount_):
+
+	  The CORBA::Object implementation will once again retain its own
+	  reference count.
+
+	  (refcount_lock_):
+
+	  The reference count lock member is now instantiated on the
+	  heap.  It will only be instantiated if the object is an
+	  unconstrained object (as opposed to locality-constrained).  This
+	  retains the same proven reference count semantics that existed
+	  prior to the object reference instantiation optimization changes
+	  from Wed Mar  6 21:55:11 2002  Ossama Othman  <ossama@uci.edu>,
+	  and simultaneously retains the optimization without the subtle
+	  reference count issues incurred by coupling the object reference
+	  reference count with the TAO_Stub reference count.
+
+	* tao/Object.i (CORBA_Object):
+	* tao/Object.cpp (CORBA_Object):
+
+	  Initialize the reference count to one, and the reference count
+	  lock pointer to zero.
+
+	  (_add_ref, _remove_ref):
+
+	  If the reference count lock pointer is non-zero then, perform
+	  the appropriate reference count manipulation.
+
+	  (~CORBA_Object):
+
+	  Deallocate the reference count lock instance.
+
 Sat Mar 16 01:58:21 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IFR_Client/IFR_BaseC.cpp:
