@@ -56,8 +56,6 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       default_client.cpp
       default_server.cpp
       default_resource.cpp
-      xt_resource.cpp
-      qt_resource.cpp
     }
     Interpretive_Marshaling {
       append.cpp

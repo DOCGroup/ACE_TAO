@@ -1,0 +1,7 @@
+// -*- MPC -*-
+
+project : acelib, ace_qt, qt_moc {
+  requires += qt_reactor
+  after    += ACE_QtReactor
+  libs     += ACE_QtReactor
+}

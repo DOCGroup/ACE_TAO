@@ -1,0 +1,13 @@
+// -*- MPC -*-
+// ace_x11.mpb,v
+
+feature(ace_with_x11) {
+  requires += ace_with_x11
+
+  // Depends on configration from include/makeinclude/platform_*.GNU
+  verbatim(gnuace,local) {
+	CPPFLAGS += $(PLATFORM_X11_CPPFLAGS)
+	LIBS += $(PLATFORM_X11_LIBS)
+	LDFLAGS += $(PLATFORM_X11_LDFLAGS)
+  }
+}

@@ -1,0 +1,13 @@
+// -*- MPC -*-
+// ace_gl.mpb,v
+
+project : ace_x11 {
+  requires += ace_with_gl
+
+  // Depends on configration from include/makeinclude/platform_*.GNU
+  verbatim(gnuace,local) {
+    CPPFLAGS += $(PLATFORM_GL_CPPFLAGS)
+    LIBS += $(PLATFORM_GL_LIBS)
+    LDFLAGS += $(PLATFORM_GL_LDFLAGS)
+  }
+}

@@ -1,0 +1,13 @@
+// -*- MPC -*-
+// ace_xt.mpb,v
+
+project : ace_x11 {
+  macros   += ACE_HAS_XT
+
+  // Depends on configration from include/makeinclude/platform_*.GNU
+  verbatim(gnuace,local) {
+	CPPFLAGS += $(PLATFORM_XT_CPPFLAGS) $(PLATFORM_X11_CPPFLAGS)
+	LIBS += $(PLATFORM_XT_LIBS) $(PLATFORM_X11_LIBS)
+	LDFLAGS += $(PLATFORM_XT_LDFLAGS) $(PLATFORM_X11_LDFLAGS)
+  }
+}
