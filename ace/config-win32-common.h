@@ -7,9 +7,9 @@
 #ifndef ACE_WIN32_COMMON_H
 #define ACE_WIN32_COMMON_H
 
-// Define WIN32 if not already defined.
+// Complain if WIN32 if not already defined.
 #ifndef WIN32
-#define WIN32
+#error Please define WIN32 in your project settings.
 #endif /* WIN32 */
 
 // ---------------- platform features or lack of them -------------
@@ -248,8 +248,19 @@ typedef unsigned __int64 ACE_UINT64;
         // features from win32 headers
         #if !defined(_MT)
                 #error You must link ACE against multi-threaded libraries.
-        #endif
-#endif
+        #endif /* _MT */
+#endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
+
+#if defined(ACE_HAS_DLL) && (ACE_HAS_DLL != 0)
+        #if !defined(_DLL)
+                #error You must link against (Debug) Multithreaded DLL run-time libraries.
+        #endif /* !_DLL */
+#else /* ACE_HAS_DLL && ACE_HAS_DLL != 0 */
+        #if defined(_DLL)
+                #error You cannot link against (Debug) Multithreaded DLL run-time libraries.
+                #error Link against Single Threaded or Multithreaded (static) run-time libraries.
+        #endif  /* _DLL */
+#endif  /* ACE_HAS_DLL && ACE_HAS_DLL != 0 */
 
 // We are using STL's min and max (in algobase.h).  Therefore the
 // macros in window.h are extra
