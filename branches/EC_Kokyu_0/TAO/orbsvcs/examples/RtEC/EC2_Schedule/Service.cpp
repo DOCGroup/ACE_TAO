@@ -3,12 +3,11 @@
 #include "orbsvcs/Sched/Reconfig_Scheduler.h"
 #include "orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/Event/Module_Factory.h"
-//#include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
-#include "orbsvcs/Event/EC_Sched_Factory.h"
+#include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "Consumer.h"
 #include "Supplier.h"
 
@@ -31,7 +30,7 @@ main (int argc, char* argv[])
 {
   //TAO_EC_Default_Factory::init_svcs ();
 
-  TAO_EC_Sched_Factory::init_svcs ();
+  TAO_EC_Kokyu_Factory::init_svcs ();
 
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -134,10 +133,10 @@ main (int argc, char* argv[])
       attributes.scheduler = scheduler.in (); // no need to dup
 
       TAO_EC_Event_Channel ec_impl (attributes);
-      ACE_DEBUG ((LM_DEBUG, "activating EC\n"));
-      ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG, "EC activated\n"));
+      //ACE_DEBUG ((LM_DEBUG, "activating EC\n"));
+      //ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      //ACE_TRY_CHECK;
+      //ACE_DEBUG ((LM_DEBUG, "EC activated\n"));
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
         ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -372,6 +371,11 @@ main (int argc, char* argv[])
         }
 
       // ****************************************************************
+
+      ACE_DEBUG ((LM_DEBUG, "activating EC\n"));
+      ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "EC activated\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Pushing events\n"));
 
