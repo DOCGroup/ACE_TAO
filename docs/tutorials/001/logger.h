@@ -95,7 +95,7 @@ protected:
       Create and initialize a small receive buffer.  The extra byte is 
       there to allow us to have a null-terminated string when it's over.
      */
-    char buf[128+1];
+    char buf[BUFSIZ+1];
 
     /*
       Invoke the recv() method of the ACE_SOCK_Stream to get some data.  It will
@@ -121,7 +121,7 @@ protected:
       and the header sys/socket.h for the gory details.
      */
     ssize_t retval;
-    switch( retval = this->cli_stream_.recv(buf,sizeof(buf)-1) )
+    switch( retval = this->cli_stream_.recv(buf,BUFSIZ) )
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p bad read\n", "client logger"), -1);
