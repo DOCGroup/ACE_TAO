@@ -1,10 +1,23 @@
+Sat Jun  8 14:46:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Array_Base.h: Replaced 
+	
+	  #include "Global_Macros.h"
+	  
+	  with 
+	  
+	  #include "ace/Global_Macros.h"
+	  
+	  Thanks to Bill Fulton <Bill_A_Fulton@raytheon.com> for reporting
+ 	  this.
+
 Fri Jun  7 19:00:31 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_String.inl (strstr): Also see:
-	Thu May 30 16:45:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+	  Thu May 30 16:45:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-        HP-UX 11.00 doesn't supply wcsstr(), only wcswcs (), so
-        special-case that one with #if defined (HPUX).
+	  HP-UX 11.00 doesn't supply wcsstr(), only wcswcs (), so
+	  special-case that one with #if defined (HPUX).
 
 Fri Jun  7 16:42:29 2002  Steve Huston  <shuston@riverace.com>
 
