@@ -1,3 +1,12 @@
+Tue Oct  5 20:01:17 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/string_traits_base.hpp:
+	  Some platforms apparently support bool, namespaces, templates
+	  but not wchar_t.  Sounds more likely that the platform supports
+	  wchar_t but the ACE configuration is out of date.  In any case,
+	  I tweaked the code so it would compile when ACE_HAS_WCHAR (and
+	  its sibling ACE_HAS_XPG4_MULTIBYTE_CHAR) are not defined.
+
 Tue Oct  5 15:27:45 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h:
