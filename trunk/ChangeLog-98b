@@ -1,10 +1,10 @@
 Wed Jan 06 15:15:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (process_directive,close): Moved the
-	  deletion of <svc_conf_file_queue_> into close method.
-	  Otherwise, there's no way to reconfigure the service
-	  configuration once it get started.  Thanks to Mike Goldman
-	  <whig@by.net> for reporting the problem.
+        * ace/Service_Config.cpp (process_directive,close): Moved the
+          deletion of <svc_conf_file_queue_> into close method.
+          Otherwise, there's no way to reconfigure the service
+          configuration once it get started.  Thanks to Mike Goldman
+          <whig@by.net> for reporting the problem.
 
 Wed Jan  6 14:27:24 EST 1999  James CE Johnson  <jcej@lads.com
 
@@ -17,37 +17,37 @@ Wed Jan  6 14:27:24 EST 1999  James CE Johnson  <jcej@lads.com
 
 Tue Jan 05 22:55:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Strategies_T.cpp (cleanup_hint_i and check_hint_i): Since we
- 	  are holding the connection cache lock in these methods, the
- 	  Svc_Handler should not call purge().  If it does, a deadlock
- 	  will occur (unless we have recursive locks) since we are already
- 	  holding the connection cache lock.  Therefore, we zero out the
- 	  recycler before calling svc_handler->close() and purge out the
- 	  svc_handler entry ourself (through purge_i()).
+        * ace/Strategies_T.cpp (cleanup_hint_i and check_hint_i): Since we
+          are holding the connection cache lock in these methods, the
+          Svc_Handler should not call purge().  If it does, a deadlock
+          will occur (unless we have recursive locks) since we are already
+          holding the connection cache lock.  Therefore, we zero out the
+          recycler before calling svc_handler->close() and purge out the
+          svc_handler entry ourself (through purge_i()).
 
-	  Thanks to Mark L. Boriack <mboriack@std.saic.com> for providing
- 	  a precise example illustrating this bug.
+          Thanks to Mark L. Boriack <mboriack@std.saic.com> for providing
+          a precise example illustrating this bug.
 
 Tue Jan  5 18:48:47  James CE Johnson  <jcej@lads.com>
 
-	* docs/tutorials/templates.html:
-	Fixed a number of problems here.  Thanks to Amos Shapira
-	<Amos_Shapira@icomverse.com> for pointing them out.
+        * docs/tutorials/templates.html:
+        Fixed a number of problems here.  Thanks to Amos Shapira
+        <Amos_Shapira@icomverse.com> for pointing them out.
 
-	* docs/tutorials/colorize:
-	I pulled out the colorization code from combine into this
-	standalone script.  One of these days I'll fix combine so that the
-	code isn't duplicated...
+        * docs/tutorials/colorize:
+        I pulled out the colorization code from combine into this
+        standalone script.  One of these days I'll fix combine so that the
+        code isn't duplicated...
 
 Tue Jan  5 16:14:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix6.x-common.h:
-	  Added ACE_TIMER_SKEW definition.
+        * ace/config-irix6.x-common.h:
+          Added ACE_TIMER_SKEW definition.
 
-	* ace/FILE.cpp:
-	  Fixed the seek() prototype, is was declared as taking a "off_t"
-	  argument, but is was defined with a "long" argument,
-	  unfortunately in most platforms this was not a problem.
+        * ace/FILE.cpp:
+          Fixed the seek() prototype, is was declared as taking a "off_t"
+          argument, but is was defined with a "long" argument,
+          unfortunately in most platforms this was not a problem.
 
 Tue Jan 05 13:15:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
