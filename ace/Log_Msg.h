@@ -26,9 +26,11 @@
 #define	ACE_ASSERT(x)
 #else
 #define	ACE_ASSERT(X) \
-  do { if(!(X)) { int __ace_error = errno; ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
+  do { if(!(X)) { \
+  int __ace_error = ACE_OS::last_error (); \
+  ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
   ace___->set (__FILE__, __LINE__, -1, __ace_error, ace___->restart (), ace___->msg_ostream ()); \
-  ace___->log (LM_ERROR, "(%P|%t) ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n", #X, -1); \
+  ace___->log (LM_ERROR, "ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n", #X, -1); \
   } } while (0)
 #endif	/* ACE_NDEBUG */
 
@@ -42,32 +44,37 @@
 #define ACE_ERROR_INIT(VALUE, FLAGS)
 #else
 #define ACE_HEX_DUMP(X) \
-  do { int __ace_error = errno; \
+  do { \
+    int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->set (__FILE__, __LINE__, 0, __ace_error, ace___->restart (), \
     ace___->msg_ostream ()); \
     ace___->log_hexdump X; \
    } while (0)
 #define ACE_RETURN(Y) \
-  do { int __ace_error = errno; \
+  do { \
+    int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg::instance ()->set (__FILE__, __LINE__, Y, __ace_error); \
     return Y; \
   } while (0)
 #define ACE_ERROR_RETURN(X, Y) \
-  do { int __ace_error = errno; \
+  do { \
+    int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->set (__FILE__, __LINE__, Y, __ace_error, ace___->restart (), ace___->msg_ostream ()); \
     ace___->log X; \
     return Y; \
   } while (0)
 #define ACE_ERROR(X) \
-  do { int __ace_error = errno; \
+  do { \
+    int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->set (__FILE__, __LINE__, -1, __ace_error, ace___->restart (), ace___->msg_ostream ()); \
     ace___->log X; \
   } while (0)
 #define ACE_DEBUG(X) \
-  do { int __ace_error = errno; \
+  do { \
+    int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->set (__FILE__, __LINE__, 0, __ace_error, ace___->restart (), ace___->msg_ostream ()); \
     ace___->log X; \
@@ -121,8 +128,6 @@ public:
 
   ACE_Log_Msg (void);
   // Initialize logger.
-
-  ~ACE_Log_Msg (void);
 
   int open (const char *prog_name, 
 	    u_long options_flags = ACE_Log_Msg::STDERR, 

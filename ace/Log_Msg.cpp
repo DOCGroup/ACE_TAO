@@ -59,7 +59,7 @@ extern "C"
 void
 ACE_TSS_cleanup (void *ptr)
 {
-  delete (ACE_Log_Msg *) ptr;
+  delete ptr;
 }
 #endif /* ACE_MT_SAFE */
 
@@ -295,10 +295,6 @@ ACE_Log_Msg::ACE_Log_Msg (void)
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
 }
 
-ACE_Log_Msg::~ACE_Log_Msg (void)
-{
-}
-
 // Open the sender-side of the Message ACE_Queue.
 
 int
@@ -508,13 +504,33 @@ ACE_Log_Msg::log (const char *format_str,
 		case 'p': // Format the string assocated with the value of errno. 
 		  {
 		    type = SKIP_SPRINTF;
-		    errno = ACE::map_errno (errno);
+		    errno = ACE::map_errno (this->errnum ());
 		    if (errno >= 0 && errno < sys_nerr)
 		      ACE_OS::sprintf (bp, "%s: %s", 
 				       va_arg (argp, char *), strerror (errno));
 		    else
-		      ACE_OS::sprintf (bp, "%s: <unknown error> = %d", 
+		      {
+#if defined (ACE_WIN32)			
+			LPVOID lpMsgBuf;
+ 
+			FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+				      NULL,
+				      errno,
+				      MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+				      (LPTSTR) &lpMsgBuf,
+				      0,
+				      NULL);
+
+			ACE_OS::sprintf (bp, "%s: %s", 
+					 va_arg (argp, char *), lpMsgBuf);
+
+			// Free the buffer.
+			LocalFree( lpMsgBuf );
+#else
+			ACE_OS::sprintf (bp, "%s: <unknown error> = %d",
 				       va_arg (argp, char *), errno);
+#endif /* ACE_WIN32 */		       
+		      }
 		    break;
 		  }
 		case 'R': // Format the return status of the operation.
