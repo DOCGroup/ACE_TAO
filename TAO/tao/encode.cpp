@@ -100,16 +100,14 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
 {
   CORBA::Any *any = (CORBA::Any *) data;
 
-  // Typecode of the element that makes the Any.
-  CORBA::TypeCode_ptr elem_tc;
-
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
   // Status of encode operation
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
 
-  elem_tc = any->type ();
+  // Typecode of the element that makes the Any.
+  CORBA::TypeCode_ptr elem_tc = any->type_;
 
   // Encode the typecode description for the element.
   if (stream->encode (CORBA::_tc_TypeCode, &elem_tc, 0, env)
@@ -531,7 +529,8 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                           if (env.exception () == 0)
                             {
                               // do the matching
-                              switch (member_label->type ()->kind (env))
+			      CORBA::TypeCode_var type = member_label->type ();
+                              switch (type->kind (env))
                                 {
                                 case CORBA::tk_short:
                                   {

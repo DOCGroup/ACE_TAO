@@ -61,13 +61,14 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "else // copy" << be_idt_nl
       << "_tao_any.replace (" << node->tc_name () << ", " << node->name ()
       << "_dup (_tao_elem.ptr ()), 1, _tao_env);" << be_uidt_nl
-      << be_uidt_nl << "}" << be_nl;
+      << be_uidt_nl << "}\n" << be_nl;
 
   *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
       << node->name () << "_forany &_tao_elem)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::Environment _tao_env;" << be_nl
-      << "if (!_tao_any.type ()->equal (" << node->tc_name ()
+      << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
+      << "if (!type->equal (" << node->tc_name ()
       << ", _tao_env)) return 0; // not equal" << be_nl
       << "if (_tao_any.any_owns_data ())" << be_nl
       << "{" << be_idt_nl
@@ -80,9 +81,8 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << ", _tao_elem_ptr, 0, _tao_env)" << be_nl
       << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
       << "{" << be_idt_nl
-      << "((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), "
-      << "_tao_elem_ptr, 1, _tao_env);"
-      << be_nl
+      << "((CORBA::Any *)&_tao_any)->replace ("
+      << node->tc_name () << ", _tao_elem_ptr, 1, _tao_env);" << be_nl
       << "  return 1;" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl  // decode failed
