@@ -413,6 +413,8 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init(int &argc, char **argv, const char *boa_identi
 
 	  argc -= 1;
 	}
+      else
+	i++;
     }
   
   // create a INET_Addr

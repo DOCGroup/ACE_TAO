@@ -130,6 +130,7 @@ public:
 						void	**ppv
 						);
 
+  virtual CORBA_String  _get_name(CORBA_Environment &env);
 private:
   CORBA_Object		base;
   ACE_Thread_Mutex lock_;

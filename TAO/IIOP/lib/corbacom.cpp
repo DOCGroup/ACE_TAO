@@ -45,7 +45,7 @@ CORBA_string_dup (const CORBA_Char *const str)
 void
 CORBA_string_free (CORBA_Char *const str)
 {
-    delete []str;
+    delete str;
 }
 
 // ----------------------------------------------------------------------
@@ -65,14 +65,9 @@ CORBA_String_var::~CORBA_String_var()
 }
 
 CORBA_String_var::CORBA_String_var(char* p)
+  :ptr_(p)
 {
   // argument is consumed. p should never be NULL
-  if (this->ptr_ != p){
-    if (this->ptr_ != 0){
-      CORBA_string_free(this->ptr_);
-    }
-    this->ptr_ = p;
-  }
 }
 
 CORBA_String_var::CORBA_String_var(const char* p)

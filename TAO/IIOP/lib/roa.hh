@@ -120,6 +120,7 @@ public:
       CORBA_Environment& env);
   virtual ~ROA();
 
+  virtual ACE_INET_Addr get_addr() const { return addr; }
 private:
   ACE_INET_Addr addr;		// The address of the endpoint
 				// on which we're listening for
