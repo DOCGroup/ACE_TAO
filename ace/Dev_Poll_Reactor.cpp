@@ -9,23 +9,20 @@ ACE_RCSID (ace,
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
 
-#  if defined (ACE_HAS_EVENT_POLL) && defined (linux)
+# if defined (ACE_HAS_EVENT_POLL)
+#  include "ace/OS_NS_unistd.h"
+#  include "ace/OS_NS_fcntl.h"
+# endif
 
-#    include "ace/OS_NS_unistd.h"
-#    include "ace/OS_NS_fcntl.h"
-
-#    include /**/ <sys/epoll.h>
-
-#  elif defined (ACE_HAS_DEV_POLL)
-
+# if defined (ACE_HAS_EVENT_POLL) && defined (linux)
+#  include /**/ <sys/epoll.h>
+# elif defined (ACE_HAS_DEV_POLL)
 #    if defined (sun)
 #      include /**/ <sys/devpoll.h>
 #    elif defined (linux)
 #      include /**/ <linux/devpoll.h>
 #    endif  /* sun */
-
-#  endif  /* ACE_HAS_DEV_POLL */
-
+# endif  /* ACE_HAS_DEV_POLL */
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Dev_Poll_Reactor.inl"
