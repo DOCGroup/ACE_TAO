@@ -173,10 +173,12 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       // be null.  Initialize it now
       *os << "if (!this->is_evaluated ())" << be_idt_nl
           << "{" << be_idt_nl
-          << "ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);" << be_nl
-          << "this->" << intf->flat_name ()
-          << "_setup_collocation (" << be_idt << be_idt_nl
-          << "this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()" 
+          << "ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);" << be_uidt_nl << be_nl
+          << "}" << be_uidt_nl
+          << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"<< be_idt_nl
+          << "{" << be_idt_nl
+          << intf->flat_name () << "_setup_collocation (" << be_idt << be_idt_nl
+          << "this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()"
           << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
