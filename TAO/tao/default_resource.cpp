@@ -860,6 +860,7 @@ template class ACE_Lock_Adapter<ACE_Select_Reactor_Token_T<ACE_Noop_Token> >;
 template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >;
 
 template class auto_ptr<TAO_Protocol_Factory>;
+template class ACE_Auto_Basic_Ptr<TAO_Protocol_Factory>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -868,5 +869,6 @@ template class auto_ptr<TAO_Protocol_Factory>;
 #pragma instantiate ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
 
 #pragma instantiate auto_ptr<TAO_Protocol_Factory>
+#pragma ACE_Auto_Basic_Ptr<TAO_Protocol_Factory>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
