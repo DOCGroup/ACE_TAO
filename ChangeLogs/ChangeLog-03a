@@ -1,6 +1,11 @@
+Mon Oct 23 10:02:36 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Malloc_T.h:
+          Add missing prototype, now the code actually compiles.
+
 Mon Oct 23 10:59:21 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/OS_String.cpp: Fixed a compile error in gcc 2.95.2. 
+	* ace/OS_String.cpp: Fixed a compile error in gcc 2.95.2.
 
 	* ace/Cached_Connect_Strategy_T.h
 	* ace/Cached_Connect_Strategy_T.cpp: Added fixes provided by Edan
@@ -15,7 +20,7 @@ Mon Oct 23 08:37:49 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
  	  standard library.  Thanks to Shourya Sarcar
  	  <Shourya.Sarcar@geind.ge.com> for reporting this.
 
-	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp (handle_input): 
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp (handle_input):
 	  Fixed a mistake where we were calling release() via a NULL
  	  pointer!  Thanks to Pedro Brandao <pbrandao@inescn.pt> for
  	  reporting this.
@@ -31,12 +36,12 @@ Sun Oct 22 17:30:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ACE.i:
 
-          wcslen was used directly here, changed it to 
+          wcslen was used directly here, changed it to
           ACE_OS_String::strlen.
 
         * ace/ace_wchar.inl:
 
-          Moved around some of the inline functions to 
+          Moved around some of the inline functions to
           remove warnings.
 
         * ace/config-vxworks5.x.h:
@@ -48,7 +53,7 @@ Sun Oct 22 17:22:32 2000  Darrell Brunsch <brunsch@uci.edu>
         * tests/OS_Test.cpp:
 
           Borland complained about memchr (NULL, ...), since
-          it couldn't figure out whether to use the void * or 
+          it couldn't figure out whether to use the void * or
           const void* verison of ACE_OS_String::memchr.
           Added an explicit cast to help out.
 
@@ -56,12 +61,12 @@ Sun Oct 22 17:09:26 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/MT_SOCK_Test.cpp:
 
-          Missed an ACE_ALPHABET in a previous checkin.  
+          Missed an ACE_ALPHABET in a previous checkin.
 
           And based on this part of the description in the file:
 
-          "Note that most of the connections will fail since 
-           we're overrunning the size of the listen queue for 
+          "Note that most of the connections will fail since
+           we're overrunning the size of the listen queue for
            the acceptor-mode socket."
 
           I changed the connection_failed ACE_ERROR_RETURN to an
@@ -75,14 +80,14 @@ Sun Oct 22 16:32:24 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/OS_String.inl:
         * ace/config-linux-common.h:
 
-          Renamed ACE_HAS_SAFE_WCSTOK to ACE_LACKS_WCSTOK to be 
+          Renamed ACE_HAS_SAFE_WCSTOK to ACE_LACKS_WCSTOK to be
           consistent with the rest of the ACE_LACKS_WCS* macros.
-          
+
           Fixed a signature for wcsncmp_emulation, as it was taking
-          in const wchar_t as the first arg instead of const 
+          in const wchar_t as the first arg instead of const
           wchar_t *.
 
-          Added wcscspn_emulation and an implementation for 
+          Added wcscspn_emulation and an implementation for
           wcsncmp_emulation.
 
 Sun Oct 22 15:35:38 2000  Darrell Brunsch <brunsch@uci.edu>
@@ -107,22 +112,22 @@ Sun Oct 22 15:07:42 2000  Darrell Brunsch <brunsch@uci.edu>
           often do not exist on platforms.  Since these wcs* functions
           just play with wchar_t's, they are not difficult to put in.
           Some, such as to_upper and strtod/l/ul are more difficult,
-          so they are not present on platforms without support for 
-          them.  
+          so they are not present on platforms without support for
+          them.
 
-          Also updated the docs to doxygen style.  Someday I'll get 
+          Also updated the docs to doxygen style.  Someday I'll get
           around to writing a script to do this...
 
         * ace/config-win32-borland.h:
         * ace/config-win32-msvc.h:
 
           Added a couple of macros:
-          - ACE_HAS_STRCASECMP_EQUIVALENT 
+          - ACE_HAS_STRCASECMP_EQUIVALENT
           - ACE_HAS_STRNCASECMP_EQUIVALENT
           - ACE_ITOA_EQUIVALENT
-          
+
           These are used to specify different names for functions
-          that differ in names across different compilers.   
+          that differ in names across different compilers.
 
         * tests/OS_Test.cpp:
 
@@ -141,7 +146,7 @@ Sun Oct 22 15:07:42 2000  Darrell Brunsch <brunsch@uci.edu>
         * tests/test_config.h:
 
           In order to get the test_config.h to work when a project
-          has more than one .cpp file that includes it (and some 
+          has more than one .cpp file that includes it (and some
           compilers give warnings about a static char[]) I moved
           ACE_ALPHABET into the tests that need it.  Also I changed
           it to a static const char[] in places that allowed it.
@@ -151,7 +156,7 @@ Sun Oct 22 15:07:42 2000  Darrell Brunsch <brunsch@uci.edu>
           sure that will keep all compilers from complaining.
 
         * tests/run_test.lst:
-          
+
           Added OS_Test to the list of tests run.
 
 Sun Oct 22 17:11:16 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
