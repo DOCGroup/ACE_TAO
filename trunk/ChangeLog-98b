@@ -1,28 +1,33 @@
+Tue Aug 11 22:47:49 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/TP_Reactor.cpp (dispatch_io_set): added
+          ACE_UNUSED_ARG (ready_mask).
+
 Tue Aug 11 17:30:32 1998  Steve Huston  <shuston@riverace.com>
 
-	* tests/test_config.h: Fixed ACE_Test_Output to get torn down clean
-	  in all cases by changing it from a static to an ACE_Singleton.
-	  Re-enabled it for Win32, non-WinCE.
+        * tests/test_config.h: Fixed ACE_Test_Output to get torn down clean
+          in all cases by changing it from a static to an ACE_Singleton.
+          Re-enabled it for Win32, non-WinCE.
 
 Tue Aug 11 15:51:47 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/XtReactor.h (ACE_XtReactor): Changed the constructor so that
- 	  the XtAppContext can be passed later.  This scheme allows for a
- 	  default constructor.  Thanks to J-M Strauss
- 	  <strauss@limeil.cea.fr> for suggesting this.
+        * ace/XtReactor.h (ACE_XtReactor): Changed the constructor so that
+          the XtAppContext can be passed later.  This scheme allows for a
+          default constructor.  Thanks to J-M Strauss
+          <strauss@limeil.cea.fr> for suggesting this.
 
 Tue Aug 11 12:35:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (fopen): On WinCE, reset the handle to 0 if CreateFile
- 	  fails so we can detect errors when using the emulated FILE
-	  pointer on CE.
+        * ace/OS.i (fopen): On WinCE, reset the handle to 0 if CreateFile
+          fails so we can detect errors when using the emulated FILE
+          pointer on CE.
 
-	* tests/test_config.h (~ACE_Test_Output): Changed !defined
-	  (ACE_HAS_WINCE) to !defined (ACE_WIN32).  When using non-static
-	  object manager, the singleton ACE_Log_Msg may no longer exist
-	  here and the reseting here just causes access violations.  Other
-	  platforms which use non-static might suffer the same sympton.
-	  
+        * tests/test_config.h (~ACE_Test_Output): Changed !defined
+          (ACE_HAS_WINCE) to !defined (ACE_WIN32).  When using non-static
+          object manager, the singleton ACE_Log_Msg may no longer exist
+          here and the reseting here just causes access violations.  Other
+          platforms which use non-static might suffer the same sympton.
+
 Tue Aug 11 12:29:03 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * os-patches/linux-patches.html: the gas patch on alphas
