@@ -1,7 +1,24 @@
+Fri Jan  7 12:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
+          Replaced ACE_Unbounded_Set_Ex with ACE_Unbounded_Set, the Ex version
+          gives the wrong feeling about safety when using it. This belongs to
+          the change below:
+          Thu Jan  6 08:24:39 2005  Carlos O'Ryan  <coryan@atdesk.com>
+          After a last check for ACE_Unbounded_Set_Ex this template will be
+          removed from ACE
+
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h:
+          Replaced ACE_Unbounded_Set_Ex with ACE_Unbounded_Set in comments
+
 Fri Jan  7 08:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.h:
         * tao/orb_typesC.h:
+        * tao/orb_typesA.cpp:
           Temporarily commented out the ObjectId typedefs in the orb_typesC.h,
           when someone uses using namespace CORBA and PortableServer we get
           ambiguity because ObjectId is in the CORBA and PortableServer
