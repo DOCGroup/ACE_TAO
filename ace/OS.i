@@ -2679,6 +2679,8 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
       ACE_OS::memcpy ((void *) addr, (void *) &ip_addr, sizeof ip_addr);
       return 1;
     }
+  else
+    return 1;
 }
 
 ACE_INLINE char *
