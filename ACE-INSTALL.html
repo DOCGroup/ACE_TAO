@@ -116,7 +116,7 @@ try to help you fix the problems.
       </pre><p>
 
       There are likely to be build problems with older versions or
-      different patchlevels.<p>
+      different patchlevels of Sun C++.<p>
 
       Thanks to Susan Liebeskind &lt;shl@janis.gtri.gatech.edu&gt;
       for providing the following useful information:<p>
@@ -125,6 +125,17 @@ try to help you fix the problems.
       <a href="http://access1.sun.com">http://access1.sun.com</a>.
       Searching for 104631 will bring you to a page allowing you to access
       the latest version of the C++ 4.2 patches.<p>
+
+      By default, ACE uses both the Solaris and POSIX thread interface.
+      To disable use of the Solaris thread interface, add
+      <code>-D_POSIX_PTHREAD_SEMANTICS</code> to the <code>CFLAGS</code>
+      in your
+      <code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code>.
+      See the Solaris Intro (3) man page for more information.<p>
+
+      To disable ACE thread support completely, build with the
+      <code>threads=0</code> make flag.  See the <a href="#flags">Makefile
+      Flags</a> section below for more information on make flags.<p>
 
   <LI><B> Sun OS 4.1.x using Centerline C++ 2.x, Sun CC 3.x, and Lucid
       Energize 3.2. </B> <P>
@@ -388,8 +399,8 @@ make: *** [libACE.so] Error 8
       ACE tests seg fault when attempting to do that.<p>
 
       Please see the comments in the
-      <a href="include/makeinclude/platform_lynxos.GNU">
-      ACE platform_lynxos.GNU file</a> for information on, and an
+      <a href="include/makeinclude/platform_lynxos.GNU">ACE
+      platform_lynxos.GNU file</a> for information on, and an
       example of, tailoring for your particular platform.<p>
 
       We actively maintain ACE on LynxOS 3.0.0.  It should build and
@@ -1257,8 +1268,8 @@ Here's what you need to do:<P>
       netsvcs static and shared object libraries should be built
       automatically.  In addition, the server driver program
       (<CODE>main</CODE>) contained in <A
-      HREF="netsvcs/servers/main.cpp">
-      $ACE_ROOT/netsvcs/servers/main.cpp</A> should also be compiled and ready to run.<P>
+      HREF="netsvcs/servers/main.cpp">$ACE_ROOT/netsvcs/servers/main.cpp</A>
+      should also be compiled and ready to run.<P>
 
   <LI>Set your LD_LIBRARY_PATH environment variable to where the binary
       version of the ACE netsvcs library.  For example, you probably
@@ -1272,11 +1283,11 @@ Here's what you need to do:<P>
       are linked into the <CODE>main</CODE> driver program dynamically.
       To specify which services should be linked in and executed, edit the
       <A
-      HREF="netsvcs/servers/svc.conf">
-      $ACE_ROOT/netsvcs/servers/svc.conf</A> file.  During your editing,
-      you should update information (such as the default service port
-      numbers) that affects the initialization of services in this
-      file.  Refer to the <A HREF="ACE-papers.html#config">Service Configurator</A>
+      HREF="netsvcs/servers/svc.conf">$ACE_ROOT/netsvcs/servers/svc.conf</A>
+      file.  During your editing, you should update information (such as the
+      default service port numbers) that affects the initialization of
+      services in this file.  Refer to the
+      <A HREF="ACE-papers.html#config">Service Configurator</A>
       documentation to learn how the configuration file is parsed and
       how the services are dynamically linked and executed.  In
       addition, refer to the <A HREF="ACE-netsvcs.html">Network
