@@ -20,6 +20,13 @@ Mon Jun 22 09:04:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/TSS_Test.cpp: demonstrate/test use of ACE_TSS_Type_Adapter.
 
+        * ace/Timeprobe.h: added semicolon to end of
+          ACE_TIMEPROBE_EVENT_DESCRIPTIONS definition, when it's non-null.
+
+        * tests/Timeprobe_Test.cpp (main): removed trailing semicolon
+          from ACE_TIMEPROBE_EVENT_DESCRIPTIONS, and added ACE_UNUSED_ARGs
+          to avoid compilation warnings about unused variables.
+
 Mon Jun 22 04:49:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * man/windex: Removed ACE_Service_Record from all the

@@ -1,44 +1,44 @@
 Mon Jun 22 21:30:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * TAO_IDL/be/be_sequence.cpp
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: Making
-	  a special treatment for sequence of octets. 
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: Making
+          a special treatment for sequence of octets.
 
 Mon Jun 22 20:32:25 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Attributes.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Attributes_T.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Attributes_T.{h,cpp}:
         * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.{h,cpp}:
         * orbsvcs/orbsvcs/Trader/Constraint_Nodes.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Constraint_l.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Constraint_y.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.{h,cpp}:
         * orbsvcs/orbsvcs/Trader/Dynamic_Property.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Offer_Database.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Offer_Database.{h,cpp}:
         * orbsvcs/orbsvcs/Trader/Offer_Iterators.{h,cpp}:
         * orbsvcs/orbsvcs/Trader/Offer_Iterators_T.{h,cpp}:
         * orbsvcs/orbsvcs/Trader/Service_Type_Repository.{h,cpp}:
         * orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
         * orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
-	* orbsvcs/orbsvcs/Makefile:
-	By having related classes share a file, reduced the number of
-	files in the Trading Service by half. Updated the Makefile to
-	reflect the changes.
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
+        * orbsvcs/orbsvcs/Makefile:
+        By having related classes share a file, reduced the number of
+        files in the Trading Service by half. Updated the Makefile to
+        reflect the changes.
 
-	* orbsvcs/tests/Trading/Makefile:
-	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
-	* orbsvcs/tests/Trading/Offer_Importer.cpp: 
-	* orbsvcs/tests/Trading/TT_Info.cpp:
-	* orbsvcs/tests/Trading/export_test.cpp:
-	Updated the Trading tests to use the new header file scheme.	
+        * orbsvcs/tests/Trading/Makefile:
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp:
+        * orbsvcs/tests/Trading/Offer_Importer.cpp:
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+        * orbsvcs/tests/Trading/export_test.cpp:
+        Updated the Trading tests to use the new header file scheme.
 
 Mon Jun 22 11:54:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Makefile: 
-	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
-	  Updated dependencies.
+        * tests/Cubit/TAO/MT_Cubit/Makefile:
+        * tests/Cubit/TAO/IDL_Cubit/Makefile:
+          Updated dependencies.
 
 Mon Jun 22 11:32:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
@@ -102,6 +102,15 @@ Mon Jun 22 11:12:54 1998  David L. Levine  <levine@cs.wustl.edu>
           J. Russell Noteworthy <rnosewor@objectsciences.com> for
           reporting this, and to Carlos for recommending the use of
           reinterpret cast.
+
+        * tao/GIOP.cpp,ORB.cpp,IIOP_Object.cpp,POA.cpp,Server_Request.cpp,
+            Connect.cpp,
+          orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp,Event_Channel.cpp,
+            RT_Task.cpp,ReactorTask.cpp,
+          orbsvcs/tests/Event_Latency/Event_Latency.cpp,
+          tests/Cubit/TAO/IDL_Cubit/client_i.cpp,cubit_i.cpp:
+          removed trailing semicolon from ACE_TIMEPROBE_EVENT_DESCRIPTIONS,
+          now that it is part of the macro definition.
 
 Mon Jun 22 09:19:40 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
