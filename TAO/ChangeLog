@@ -32,9 +32,6 @@ Fri Mar 26 14:32:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  a "_var" automated the memory management for us, thus cleaning
 	  up the leaks.
 
-	* tao/Makefile.tao:
-	* tao/IORInterceptor/Makefile:
-
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp (open):
 
           By default, OpenSSL attempts to send the entire chunk of data.
