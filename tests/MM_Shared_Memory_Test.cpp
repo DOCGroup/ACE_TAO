@@ -27,7 +27,7 @@
 #include "test_config.h"
 
 const int SHMSZ = 27;
-static char shm_key[] = ACE_TEMP_FILE_NAME "XXXXXX";
+static LPTSTR shm_key = ACE_TEMP_FILE_NAME __TEXT ("XXXXXX");
 
 // Global thread manager.
 static ACE_Thread_Manager thr_mgr;

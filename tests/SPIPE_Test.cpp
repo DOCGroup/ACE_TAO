@@ -49,7 +49,7 @@ client (void *)
 
   ACE_OS::sleep (3);
 
-  if (con.connect (cli_stream, ACE_SPIPE_Addr (rendezvous)) == -1)
+  if (con.connect (cli_stream, ACE_SPIPE_Addr (ACE_WIDE_STRING (rendezvous))) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", rendezvous));
 
   for (char c = 'a'; c <= 'z'; c++)
@@ -82,7 +82,7 @@ server (void *)
 
   // Initialize named pipe listener.
 
-  if (acceptor.open (ACE_SPIPE_Addr (rendezvous)) == -1)
+  if (acceptor.open (ACE_SPIPE_Addr (ACE_WIDE_STRING (rendezvous))) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "open"));
 
   ACE_DEBUG ((LM_DEBUG, "waiting for connection\n"));

@@ -190,9 +190,9 @@ main (int, char *[])
   char *s_argv[4];
 
   s_argv[0] = 
-    ".." ACE_DIRECTORY_SEPARATOR_STR 
-    "netsvcs" ACE_DIRECTORY_SEPARATOR_STR 
-    "servers" ACE_DIRECTORY_SEPARATOR_STR 
+    ".." ACE_DIRECTORY_SEPARATOR_STR_A
+    "netsvcs" ACE_DIRECTORY_SEPARATOR_STR_A
+    "servers" ACE_DIRECTORY_SEPARATOR_STR_A
     "main" ACE_PLATFORM_EXE_SUFFIX;
 
   s_argv[1] = "-f";
