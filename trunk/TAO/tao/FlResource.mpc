@@ -2,17 +2,30 @@
 // $Id$
 
 project(TAO_FlResource) : acelib, taolib, taoversion, core, tao_output, taodefaults, ace_flreactor {
+
   sharedname   = TAO_FlResource
   dynamicflags += TAO_FLRESOURCE_BUILD_DLL
+
+  Source_Files {
+    FlResource_Factory.cpp
+    FlResource_Loader.cpp
+  }
+
   Header_Files {
     FlResource_Factory.h
     FlResource_Loader.h
     TAO_FlResource_Export.h
   }
-  Source_Files(TAO_COMPONENTS) {
-    Default_Resources {
-      FlResource_Factory.cpp
-      FlResource_Loader.cpp
-    }
+
+  Inline_Files {
+  }
+
+  Template_Files {
+  }
+
+  Resource_Files {
+  }
+
+  PIDL_Files {
   }
 }
