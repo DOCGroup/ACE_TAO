@@ -1,3 +1,9 @@
+Tue Dec 23 20:14:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/Makefile:
+          Reformatted the inter-library dependencies to make them more
+          human readable, and fit on an 80 character line.
+
 Tue Dec 23 11:52:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp:
