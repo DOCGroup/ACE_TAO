@@ -1,3 +1,35 @@
+Tue May 28 20:24:16 CDT 2002 Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Collection.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Collection.h:
+	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Event.h:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
+	  
+	  Fix for bug: http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1134
+	  Proxy Suppliers are subscribed for all events (special) by default.
+
+	* orbsvcs/tests/Notify/Basic/Events_Test.cpp:
+	* orbsvcs/tests/Notify/Basic/Simple.cpp:
+	* orbsvcs/tests/Notify/Blocking/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+	* orbsvcs/examples/Notify/Filter/Filter.cpp:
+	* orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
+
+	  Removed extraneous call to subscription_change.
+
 Tue May 28 14:15:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
