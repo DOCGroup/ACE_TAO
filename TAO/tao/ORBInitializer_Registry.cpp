@@ -142,6 +142,6 @@ template class ACE_Array_Base<PortableInterceptor::ORBInitializer_var>;
 
 #elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 
-template TAO_Singleton<TAO::ORBInitializer_Registry, TAO_SYNCH_MUTEX> * TAO_Singleton<TAO_ORBInitializer_Registry, TAO_SYNCH_MUTEX>::singleton_;
+template TAO_Singleton<TAO::ORBInitializer_Registry, TAO_SYNCH_MUTEX> * TAO_Singleton<TAO::ORBInitializer_Registry, TAO_SYNCH_MUTEX>::singleton_;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
