@@ -138,9 +138,11 @@ public:
   // The following methods are documented in the base class.
   virtual void close (CORBA::Environment& _env);
   virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
-                                CORBA::Environment& env);
+                                CORBA::Environment& env)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub,
-                                CORBA::Environment& env);
+                                CORBA::Environment& env)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   void close_i (CORBA::Environment& );

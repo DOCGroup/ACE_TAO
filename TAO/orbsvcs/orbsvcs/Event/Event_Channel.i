@@ -90,12 +90,14 @@ ACE_EventChannel::get_ref (CORBA::Environment &env)
 
 ACE_INLINE RtecEventChannelAdmin::SupplierAdmin_ptr
 ACE_EventChannel::for_suppliers (CORBA::Environment &env)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return supplier_module_->get_ref (env);
 }
 
 ACE_INLINE RtecEventChannelAdmin::ConsumerAdmin_ptr
 ACE_EventChannel::for_consumers (CORBA::Environment &env)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return consumer_module_->get_ref (env);
 }
@@ -111,7 +113,7 @@ ACE_EventChannel::timer_module (void) const
 // Makes a temporary Event_var and appends it to the <dest>.
 ACE_INLINE void
 operator += (TAO_EC_Event_Array &dest,
-	     const TAO_EC_Event &item)
+             const TAO_EC_Event &item)
 {
   int length = dest.size ();
   dest.size (length + 1);
@@ -120,7 +122,7 @@ operator += (TAO_EC_Event_Array &dest,
 
 ACE_INLINE int
 operator == (const RtecEventComm::Event &event1,
-	     const RtecEventComm::Event &event2)
+             const RtecEventComm::Event &event2)
 {
   // Check if the sources are equal.  0 is a wildcard.
   if ((event1.header.source != 0)
@@ -179,7 +181,7 @@ ACE_ES_Disjunction_Group::reschedule_deadline (void)
   if (deadline_timer_rep_ != 0)
     {
       if (correlation_module_->reschedule_timeout (deadline_timer_rep_) == -1)
-	ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_ES_Disjunction_Group::reschedule_deadline"));
+        ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_ES_Disjunction_Group::reschedule_deadline"));
     }
 }
 
@@ -196,8 +198,8 @@ ACE_ES_Disjunction_Group::set_deadline_timeout (ACE_ES_Consumer_Rep_Timeout *cr)
 
 ACE_INLINE void
 ACE_ES_Disjunction_Group::add_events (TAO_EC_Event_Array *outbox,
-				      TAO_EC_Event_Array *,
-				      u_long &)
+                                      TAO_EC_Event_Array *,
+                                      u_long &)
 {
   // Append the act.
   if (!this->act_.empty ())
@@ -236,7 +238,7 @@ ACE_ES_Consumer_Rep::ACE_ES_Consumer_Rep (void) :
 
 ACE_INLINE void
 ACE_ES_Consumer_Rep::init (ACE_ES_Consumer_Correlation *correlation,
-			   RtecEventChannelAdmin::Dependency& dependency)
+                           RtecEventChannelAdmin::Dependency& dependency)
 {
   dependency_ = &dependency;
   correlation_ = correlation;
@@ -283,7 +285,7 @@ ACE_ES_Consumer_Rep::add_disjunction_group (ACE_ES_Disjunction_Group &dg)
 {
   if (disjunction_group_ != 0)
     ACE_ERROR ((LM_ERROR, "ACE_ES_Consumer_Rep::add_disjunction_group: "
-		"disjunction_group already set!\n"));
+                "disjunction_group already set!\n"));
   disjunction_group_ = &dg;
   return 0;
 }
@@ -377,7 +379,7 @@ ACE_RTU_Manager::should_preempt (void)
       // This routine was dead-code, but I'll leave it here until I
       // find out what it is supposed to do.
       ACE_ERROR ((LM_WARNING,
-		  "EC (%t) RTU_Manager::should_preempt - obsolete\n"));
+                  "EC (%t) RTU_Manager::should_preempt - obsolete\n"));
 
       int should_preempt = should_preempt_;
       should_preempt_ = 0;
@@ -429,7 +431,7 @@ ACE_ES_Consumer_Rep_Timeout::ACE_ES_Consumer_Rep_Timeout (void)
 
 ACE_INLINE void
 ACE_ES_Consumer_Rep_Timeout::init (ACE_ES_Consumer_Correlation *correlation,
-				   RtecEventChannelAdmin::Dependency &dep)
+                                   RtecEventChannelAdmin::Dependency &dep)
 {
   TAO_EC_Event_Set *temp = TAO_EC_Event_Set::_create (dep.event);
   // @@ TODO throw an exception
@@ -527,28 +529,28 @@ ACE_ES_Dependency_Iterator::parse (void)
   for (CORBA::ULong x = 0; x < rep_.length (); x++)
     {
       if (rt_info_ == 0)
-	rt_info_ = rep_[x].rt_info;
+        rt_info_ = rep_[x].rt_info;
 
       switch (rep_[x].event.header.type)
-	{
-	case ACE_ES_CONJUNCTION_DESIGNATOR:
-	  n_conjunctions_++;
-	  break;
+        {
+        case ACE_ES_CONJUNCTION_DESIGNATOR:
+          n_conjunctions_++;
+          break;
 
-	case ACE_ES_DISJUNCTION_DESIGNATOR:
-	  n_disjunctions_++;
-	  break;
+        case ACE_ES_DISJUNCTION_DESIGNATOR:
+          n_disjunctions_++;
+          break;
 
-	case ACE_ES_EVENT_TIMEOUT:
-	case ACE_ES_EVENT_INTERVAL_TIMEOUT:
-	case ACE_ES_EVENT_DEADLINE_TIMEOUT:
-	  n_timeouts_++;
-	  break;
+        case ACE_ES_EVENT_TIMEOUT:
+        case ACE_ES_EVENT_INTERVAL_TIMEOUT:
+        case ACE_ES_EVENT_DEADLINE_TIMEOUT:
+          n_timeouts_++;
+          break;
 
-	default:
-	  n_events_++;
-	  break;
-	}
+        default:
+          n_events_++;
+          break;
+        }
     }
 
   return 0;
@@ -619,8 +621,8 @@ ACE_ES_Conjunction_Group::should_forward (u_long pending_flags)
 
 ACE_INLINE void
 ACE_ES_Conjunction_Group::add_events (TAO_EC_Event_Array *outbox,
-				      TAO_EC_Event_Array *pending_events,
-				      u_long &pending_flags)
+                                      TAO_EC_Event_Array *pending_events,
+                                      u_long &pending_flags)
 {
   // Append the act first.
   if (!this->act_.empty ())
@@ -633,9 +635,9 @@ ACE_ES_Conjunction_Group::add_events (TAO_EC_Event_Array *outbox,
       // If this type_id is part of the correlation, then append each
       // event pending to the outbox.
       if (ACE_BIT_ENABLED (forward_value_, ACE_INT2BIT[x]))
-	{
-	  // Step through each of the pending events.
-	  TAO_EC_Event_Array &pending = pending_events[x];
+        {
+          // Step through each of the pending events.
+          TAO_EC_Event_Array &pending = pending_events[x];
 
           size_t outbox_end = 0;
           if (outbox != 0)
@@ -643,27 +645,27 @@ ACE_ES_Conjunction_Group::add_events (TAO_EC_Event_Array *outbox,
               outbox_end = outbox->size ();
               outbox->size (outbox_end + pending.size ());
             }
-	  for (CORBA::ULong i = 0; i < pending.size (); ++i)
-	    {
+          for (CORBA::ULong i = 0; i < pending.size (); ++i)
+            {
               if (pending[i].empty ())
                 continue;
 
-	      // Add the pending event to the outbox.
-	      if (outbox != 0)
+              // Add the pending event to the outbox.
+              if (outbox != 0)
                 outbox->set (pending[i], outbox_end++);
 
-	      // Remove the event from the pending events array.
-	      pending[i].clear ();
-	    }
+              // Remove the event from the pending events array.
+              pending[i].clear ();
+            }
 
-	  // Reset the array length.
-	  pending.size (0);
-	  // Since we just emptied the events for this type, clear the
-	  // x^th bit in pending flags.
-	  ACE_CLR_BITS (pending_flags, ACE_INT2BIT[x]);
-	  // Clear the x^th bit in fv.
-	  ACE_CLR_BITS (fv, ACE_INT2BIT[x]);
-	}
+          // Reset the array length.
+          pending.size (0);
+          // Since we just emptied the events for this type, clear the
+          // x^th bit in pending flags.
+          ACE_CLR_BITS (pending_flags, ACE_INT2BIT[x]);
+          // Clear the x^th bit in fv.
+          ACE_CLR_BITS (fv, ACE_INT2BIT[x]);
+        }
 
       x++;
     }
@@ -673,10 +675,10 @@ ACE_ES_Conjunction_Group::add_events (TAO_EC_Event_Array *outbox,
 
 ACE_INLINE int
 ACE_EventChannel::schedule_timer (RtecScheduler::handle_t rt_info,
-				  const ACE_Command_Base *act,
-				  RtecScheduler::Preemption_Priority_t preemption_priority,
-				  const RtecScheduler::Time &delta,
-				  const RtecScheduler::Time &interval)
+                                  const ACE_Command_Base *act,
+                                  RtecScheduler::Preemption_Priority_t preemption_priority,
+                                  const RtecScheduler::Time &delta,
+                                  const RtecScheduler::Time &interval)
 {
   if (rt_info != 0)
     {
@@ -695,10 +697,10 @@ ACE_EventChannel::schedule_timer (RtecScheduler::handle_t rt_info,
 #else
           ACE_Scheduler_Factory::server()->add_dependency
             (rt_info,
-	     timer_rtinfo,
-	     1,
-	     RtecScheduler::ONE_WAY_CALL,
-	     TAO_TRY_ENV);
+             timer_rtinfo,
+             1,
+             RtecScheduler::ONE_WAY_CALL,
+             TAO_TRY_ENV);
 #endif
           TAO_CHECK_ENV;
         }
@@ -717,15 +719,15 @@ ACE_EventChannel::schedule_timer (RtecScheduler::handle_t rt_info,
   ORBSVCS_Time::TimeT_to_Time_Value (tv_interval, interval);
 
   return this->timer_module ()->schedule_timer (preemption_priority,
-						ACE_const_cast(ACE_Command_Base*,act),
-						tv_delta,
+                                                ACE_const_cast(ACE_Command_Base*,act),
+                                                tv_delta,
                                                 tv_interval);
 }
 
 ACE_INLINE int
 ACE_EventChannel::cancel_timer (RtecScheduler::OS_Priority preemption_priority,
-				int id,
-				ACE_Command_Base *&act)
+                                int id,
+                                ACE_Command_Base *&act)
 {
     return this->timer_module ()->cancel_timer (preemption_priority,
                                                 id,

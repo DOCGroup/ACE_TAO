@@ -1,3 +1,35 @@
+Sat Jun 12 18:42:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Channel_Clients_T.cpp:
+	* orbsvcs/orbsvcs/Channel_Clients_T.h:
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp:
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.h:
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.h:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Gateway.h:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_UDP_Admin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_UDP_Admin.h:
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Event/Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/Event_Channel.i:
+	  Fixed throw specifications for all the event channel and
+	  concurrency service files.
+
 Sat Jun 12 18:08:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/GIOP.i:

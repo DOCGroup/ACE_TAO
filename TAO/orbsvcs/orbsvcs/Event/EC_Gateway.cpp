@@ -190,6 +190,7 @@ void
 TAO_EC_Gateway_IIOP::update_consumer (
     const RtecEventChannelAdmin::ConsumerQOS& c_qos,
     CORBA::Environment& ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (c_qos.dependencies.length () <= 1)
     return;
@@ -371,6 +372,7 @@ void
 TAO_EC_Gateway_IIOP::update_supplier (
     const RtecEventChannelAdmin::SupplierQOS&,
     CORBA::Environment&)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do nothing...
 }
