@@ -256,9 +256,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // Use TCP_NODELAY.
   size_t nodelay = 1;
 
-  // Use Multicast
-  size_t multicast = 1;
-
   // Should we skip the <ACE_Service_Config::open> method, e.g., if we
   // already being configured by the ACE Service Configurator.
   int skip_service_config_open = 0;
@@ -886,15 +883,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                ("-ORBMulticast")))
-        {
-          // Use Multicast or not.
-          multicast =
-            ACE_OS::atoi (current_arg);
-
-          arg_shifter.consume_arg ();
-        }
 
       ////////////////////////////////////////////////////////////////
       // catch all the remaining -ORB args                          //
@@ -1096,7 +1084,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   this->orb_params ()->use_lite_protocol (giop_lite);
 
   this->orb_params ()->std_profile_components (std_profile_components);
-  this->orb_params ()->use_multicast (multicast);
 
   // Set up the pluggable protocol infrastructure.  First get a
   // pointer to the protocol factories set, then obtain pointers to
