@@ -5,7 +5,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Pluggable.h"
-#include "tao/Priority_Mapping.h"
+#include "tao/Priority_Mapping_Manager.h"
 #include "tao/debug.h"
 #include "ace/Sched_Params.h"
 
@@ -44,7 +44,7 @@ TAO_Pool_Per_Endpoint::run (CORBA::Environment &ACE_TRY_ENV)
 
 #if (TAO_HAS_RT_CORBA == 1)
       RTCORBA::PriorityMapping *pm =
-        this->orb_->orb_core ()->priority_mapping ();
+        this->orb_->orb_core ()->priority_mapping_manager ()->mapping ();
       const CORBA::Short corba_priority = (*i)->priority ();
       CORBA::Short native_priority;
       if (pm->to_native (corba_priority, native_priority) == 1)

@@ -325,6 +325,9 @@
 #define TAO_OBJID_TRANSACTIONCURRENT  "TransactionCurrent"
 #define TAO_OBJID_DYNANYFACTORY       "DynAnyFactory"
 #define TAO_OBJID_TYPECODEFACTORY     "TypeCodeFactory"
+#define TAO_OBJID_RTORB               "RTORB"
+#define TAO_OBJID_RTCURRENT               "RTCurrent"
+#define TAO_OBJID_PRIORITYMAPPINGMANAGER  "PriorityMappingManager"
 
 // Comma separated list of the above ObjectIDs.
 // DO NOT include unimplemented services!

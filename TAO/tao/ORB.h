@@ -720,6 +720,15 @@ protected:
   CORBA_Object_ptr resolve_ior_manipulation (CORBA::Environment&);
   // Resolve the IOR Manipulation reference for this ORB.
 
+  CORBA_Object_ptr resolve_rt_orb (CORBA_Environment &ACE_TRY_ENV);
+  // Resolve the RTORB.
+
+  CORBA_Object_ptr resolve_rt_current (CORBA_Environment &ACE_TRY_ENV);
+  // Resolve the RT Current.
+
+  CORBA_Object_ptr resolve_priority_mapping_manager (CORBA_Environment &ACE_TRY_ENV);
+  // Resolve the Priority_Mapping_Manager.
+
 private:
 
   CORBA_Object_ptr resolve_service (MCAST_SERVICEID service_id,
