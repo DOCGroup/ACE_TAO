@@ -43,36 +43,36 @@ CORBA_TypeCode::kind (CORBA::Environment &) const
 // Returns true if the two typecodes are identical
 ACE_INLINE CORBA::Boolean
 CORBA_TypeCode::equal (const CORBA::TypeCode_ptr tc,
-                       CORBA::Environment &env) const
+                       CORBA::Environment &ACE_TRY_ENV) const
 {
-  if (this->kind_ != tc->kind (env))
+  if (this->kind_ != tc->kind (ACE_TRY_ENV))
     // simple case
     return 0;
   else
     // typecode kinds are same
-    return this->private_equal (tc, env);
+    return this->private_equal (tc, ACE_TRY_ENV);
 }
 
 // returns the Repository ID
 ACE_INLINE const char *
-CORBA_TypeCode::id (CORBA::Environment &env) const
+CORBA_TypeCode::id (CORBA::Environment &ACE_TRY_ENV) const
 {
   // if already precomputed
   if (this->private_state_->tc_id_known_)
     return this->private_state_->tc_id_;
   else
-    return this->private_id (env);
+    return this->private_id (ACE_TRY_ENV);
 }
 
 // returns the string name
 ACE_INLINE const char *
-CORBA_TypeCode::name (CORBA::Environment &env) const
+CORBA_TypeCode::name (CORBA::Environment &ACE_TRY_ENV) const
 {
   // if already precomputed
   if (this->private_state_->tc_name_known_)
     return this->private_state_->tc_name_;
   else
-    return this->private_name (env);
+    return this->private_name (ACE_TRY_ENV);
 }
 
 // Return the number of members defined by this typecode
@@ -81,33 +81,33 @@ CORBA_TypeCode::name (CORBA::Environment &env) const
 // For the rest of the cases, raises the BadKind exception.
 
 ACE_INLINE CORBA::ULong
-CORBA_TypeCode::member_count (CORBA::Environment &env) const
+CORBA_TypeCode::member_count (CORBA::Environment &ACE_TRY_ENV) const
 {
   // if already precomputed
   if (this->private_state_->tc_member_count_known_)
     return this->private_state_->tc_member_count_;
   else
-    return this->private_member_count (env);
+    return this->private_member_count (ACE_TRY_ENV);
 }
 
 // calculate size of the typecode
 ACE_INLINE size_t
-CORBA_TypeCode::size (CORBA::Environment &env)
+CORBA_TypeCode::size (CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->private_state_->tc_size_known_)
     return this->private_state_->tc_size_;
   else
-    return this->private_size (env);
+    return this->private_size (ACE_TRY_ENV);
 }
 
 // calculate alignment requirements of the typecode
 ACE_INLINE size_t
-CORBA_TypeCode::alignment (CORBA::Environment &env)
+CORBA_TypeCode::alignment (CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->private_state_->tc_alignment_known_)
     return this->private_state_->tc_alignment_;
   else
-    return this->private_alignment (env);
+    return this->private_alignment (ACE_TRY_ENV);
 }
 
 // ************************************************************

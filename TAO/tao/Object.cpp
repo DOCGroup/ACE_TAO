@@ -87,9 +87,10 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
 
 
   // Loop until we succeed or we raise an exception.
+  // @@ Nanbor: Do we still need to clear the environment variable?
+  //  ACE_TRY_ENV.clear ();         
   for (;;)
     {
-      ACE_TRY_ENV.clear ();
       _tao_call.start (ACE_TRY_ENV);
       ACE_CHECK_RETURN (_tao_retval);
 
@@ -115,9 +116,7 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
       break;
     }
   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
-  if (!(
-    (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
-  ))
+  if (!(_tao_in >> CORBA::Any::to_boolean (_tao_retval)))
     ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
@@ -145,9 +144,9 @@ CORBA_Object::_is_collocated (void) const
 
 CORBA::ULong
 CORBA_Object::_hash (CORBA::ULong maximum,
-                     CORBA::Environment &env)
+                     CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->_stubobj ()->hash (maximum, env);
+  return this->_stubobj ()->hash (maximum, ACE_TRY_ENV);
 }
 
 // Compare two object references to see if they point to the same
@@ -158,21 +157,21 @@ CORBA_Object::_hash (CORBA::ULong maximum,
 
 CORBA::Boolean
 CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
-                              CORBA::Environment &env)
+                              CORBA::Environment &ACE_TRY_ENV)
 {
   if (other_obj == this)
     {
-      env.clear ();
+      //      env.clear ();
       return 1;
     }
 
-  return this->_stubobj ()->is_equivalent (other_obj, env);
+  return this->_stubobj ()->is_equivalent (other_obj, ACE_TRY_ENV);
 }
 
 // TAO's extensions
 
 TAO_ObjectKey *
-CORBA::Object::_key (CORBA::Environment &env)
+CORBA::Object::_key (CORBA::Environment &)
 {
   if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
     return this->_stubobj ()->profile_in_use ()->_key ();
@@ -218,9 +217,9 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
     );
 
 
+  // ACE_TRY_ENV.clear ();
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
@@ -256,20 +255,20 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                                CORBA::NamedValue_ptr result,
                                CORBA::Request_ptr &request,
                                CORBA::Flags req_flags,
-                               CORBA::Environment &TAO_IN_ENV)
+                               CORBA::Environment &ACE_TRY_ENV)
 {
   // Since we don't really support Context, anything but a null pointer
   // is a no-no.
   if (ctx)
     {
-      TAO_THROW (CORBA::NO_IMPLEMENT ());
+      ACE_THROW (CORBA::NO_IMPLEMENT ());
     }
   request = new CORBA::Request (this,
                                 operation,
                                 arg_list,
                                 result,
                                 req_flags,
-                                TAO_IN_ENV);
+                                ACE_TRY_ENV);
 }
 
 void
@@ -281,30 +280,30 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                                CORBA::ContextList_ptr,
                                CORBA::Request_ptr &request,
                                CORBA::Flags req_flags,
-                               CORBA::Environment &TAO_IN_ENV)
+                               CORBA::Environment &ACE_TRY_ENV)
 {
   // Since we don't really support Context, anything but a null pointer
   // is a no-no.
   if (ctx)
     {
-      TAO_THROW (CORBA::NO_IMPLEMENT ());
+      ACE_THROW (CORBA::NO_IMPLEMENT ());
     }
   request = new CORBA::Request (this,
                                 operation,
                                 arg_list,
                                 result,
                                 req_flags,
-                                TAO_IN_ENV);
+                                ACE_TRY_ENV);
 }
 
 CORBA::Request_ptr
 CORBA_Object::_request (const CORBA::Char *operation,
-                        CORBA::Environment &TAO_IN_ENV)
+                        CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_IN_ENV.clear ();
+  //  ACE_TRY_ENV.clear ();
   return new CORBA::Request (this,
                              operation,
-                             TAO_IN_ENV);
+                             ACE_TRY_ENV);
 }
 
 CORBA::InterfaceDef_ptr
