@@ -19,7 +19,7 @@
  *
  * and then:
  *
- * patch < diffs/WrongTransaction.diff
+ * cp orig/WrongTransactionC.{h,inl,cpp} .
  *
  */
 #ifndef TAO_CORBA_WRONGTRANSACTION_PIDL
