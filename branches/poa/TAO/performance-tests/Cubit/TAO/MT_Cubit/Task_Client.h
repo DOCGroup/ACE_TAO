@@ -104,6 +104,9 @@ public:
   char **argv_;
   // command line arguments
 
+  u_int thread_per_rate_;
+  // Flag for the thread_per_rate test
+
   double **global_jitter_array_;
   // this array stores the latency seen by each client for each
   // request, to be used later to compute jitter

@@ -32,7 +32,8 @@ TAO_CodeGen::TAO_CodeGen (void)
     curr_os_ (0),
     state_ (new TAO_CodeGen::CG_STATE [CHUNK]),
     top_ (0),
-    size_ (CHUNK)
+    size_ (CHUNK),
+    visitor_factory_ (0)
 {
   // set the current code generation state
   this->state_ [this->top_++] = TAO_CodeGen::TAO_INITIAL;
@@ -41,14 +42,23 @@ TAO_CodeGen::TAO_CodeGen (void)
 // destructor
 TAO_CodeGen::~TAO_CodeGen (void)
 {
-  delete client_header_;
-  delete server_header_;
-  delete client_stubs_;
-  delete server_skeletons_;
-  delete client_inline_;
-  delete server_inline_;
-  curr_os_ = 0;
-  delete [] state_;
+  delete this->client_header_;
+  delete this->server_header_;
+  delete this->client_stubs_;
+  delete this->server_skeletons_;
+  delete this->client_inline_;
+  delete this->server_inline_;
+  this->curr_os_ = 0;
+  delete [] this->state_;
+  delete this->visitor_factory_;
+}
+
+// visitor factory method
+be_visitor *
+TAO_CodeGen::make_visitor (TAO_CodeGen::CG_STATE st)
+{
+  ACE_ASSERT (this->visitor_factory_ != 0);
+  return this->visitor_factory_->make_visitor (st);
 }
 
 // factory method
@@ -524,4 +534,10 @@ be_decl *
 TAO_CodeGen::node (void)
 {
   return this->node_;
+}
+
+void
+TAO_CodeGen::visitor_factory (TAO_Visitor_Factory *f)
+{
+  this->visitor_factory_ = f;
 }

@@ -154,6 +154,10 @@ struct TAO_GIOP_MessageHeader
 };
 
 // defined by GIOP 1.0 protocol
+// @@ Is this portable? The structure above could have some padding on
+// machines with absurd padding requirements (like 8 byte boundaries);
+// hence the size of it may not match th size of the header on the
+// wire.
 #define	TAO_GIOP_HEADER_LEN sizeof (TAO_GIOP_MessageHeader)
 
 // Support for Implicit ORB Service Context

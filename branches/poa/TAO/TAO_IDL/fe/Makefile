@@ -78,7 +78,7 @@ lex.yy.cpp: idl.ll y.tab.h
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/fe_declarator.o .shobj/fe_declarator.so: fe_declarator.cpp ../include/idl.h \
+.obj/fe_declarator.o .obj/fe_declarator.so .shobj/fe_declarator.o .shobj/fe_declarator.so: fe_declarator.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -122,7 +122,7 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h ../include/fe_private.h \
  ../include/fe_interface_header.h ../include/fe_declarator.h
-.obj/fe_private.o .shobj/fe_private.so: fe_private.cpp ../include/idl.h \
+.obj/fe_private.o .obj/fe_private.so .shobj/fe_private.o .shobj/fe_private.so: fe_private.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -166,7 +166,7 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h ../include/fe_private.h \
  ../include/fe_interface_header.h ../include/fe_declarator.h
-.obj/fe_init.o .shobj/fe_init.so: fe_init.cpp ../include/idl.h \
+.obj/fe_init.o .obj/fe_init.so .shobj/fe_init.o .shobj/fe_init.so: fe_init.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -210,7 +210,7 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h ../include/fe_private.h \
  ../include/fe_interface_header.h ../include/fe_declarator.h
-.obj/fe_extern.o .shobj/fe_extern.so: fe_extern.cpp ../include/idl.h \
+.obj/fe_extern.o .obj/fe_extern.so .shobj/fe_extern.o .shobj/fe_extern.so: fe_extern.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -254,7 +254,7 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h ../include/fe_private.h \
  ../include/fe_interface_header.h ../include/fe_declarator.h
-.obj/fe_interface_header.o .shobj/fe_interface_header.so: fe_interface_header.cpp ../include/idl.h \
+.obj/fe_interface_header.o .obj/fe_interface_header.so .shobj/fe_interface_header.o .shobj/fe_interface_header.so: fe_interface_header.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -298,7 +298,7 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h ../include/fe_private.h \
  ../include/fe_interface_header.h ../include/fe_declarator.h
-.obj/y.tab.o .shobj/y.tab.so: y.tab.cpp ../include/idl.h \
+.obj/y.tab.o .obj/y.tab.so .shobj/y.tab.o .shobj/y.tab.so: y.tab.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -342,7 +342,7 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h ../include/fe_private.h \
  ../include/fe_interface_header.h ../include/fe_declarator.h
-.obj/lex.yy.o .shobj/lex.yy.so: lex.yy.cpp ../include/idl.h \
+.obj/lex.yy.o .obj/lex.yy.so .shobj/lex.yy.o .shobj/lex.yy.so: lex.yy.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \

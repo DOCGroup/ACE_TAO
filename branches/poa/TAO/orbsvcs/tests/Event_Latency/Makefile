@@ -68,7 +68,7 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/Event_Latency.o .shobj/Event_Latency.: Event_Latency.cpp \
+.obj/Event_Latency.o .obj/Event_Latency. .shobj/Event_Latency.o .shobj/Event_Latency.: Event_Latency.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -197,7 +197,8 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
  $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/sequence_T.h \
+ $(TAO_ROOT)/tao/sequence_T.i \
  $(TAO_ROOT)/tao/any.h \
  $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
@@ -228,6 +229,7 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \

@@ -20,6 +20,7 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
+#include "be_visitor_sequence.h"
 
 /*
  * BE_Sequence
@@ -50,6 +51,12 @@ be_sequence::be_sequence (AST_Expression *v, AST_Type *t)
 
   this->size_type (be_decl::VARIABLE); // a sequence data type is always
                                        // VARIABLE
+}
+
+idl_bool
+be_sequence::unbounded (void) const
+{
+  return this->unbounded_;
 }
 
 // helper to create_name
@@ -209,6 +216,19 @@ be_sequence::gen_client_header (void)
                             -1);
         }
 
+      be_visitor *visitor_seq_ch = cg->make_visitor
+        (TAO_CodeGen::TAO_SEQUENCE_BODY_CH);
+
+      if (this->accept (visitor_seq_ch) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_sequence - "
+                             "gen_client_header"
+                             "\n"),
+                            -1);
+        }
+
+#if 0 /* visitor code */
       ch = cg->client_header ();
 
       // generate the ifdefined macro for the sequence type
@@ -392,7 +412,6 @@ be_sequence::gen_client_header (void)
       ch->indent ();
       *ch << "typedef " << this->local_name () << "* "
 	  << this->local_name () << "_ptr;\n";
-
       // Generate the typecode decl
       if (this->is_nested ())
         {
@@ -440,6 +459,7 @@ be_sequence::gen_client_header (void)
       ch->gen_endif ();
 
       cg->pop ();
+#endif /* visitor code */
 
       this->cli_hdr_gen_ = I_TRUE;
     } // if (cli_hdr_gen_)
@@ -460,7 +480,10 @@ be_sequence::gen_client_stubs (void)
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
       cs = cg->client_stubs (); // retrieve the client stubs stream
+      // generate the ifdefined macro for the sequence type
+      cs->gen_ifdef_macro (this->flatname ());
 
+#if 0 // visitor code
       // retrieve base type
       bt = be_type::narrow_from_decl (this->base_type ());
       if (!bt)
@@ -487,9 +510,6 @@ be_sequence::gen_client_stubs (void)
         }
 
       cg->pop ();
-
-      // generate the ifdefined macro for the sequence type
-      cs->gen_ifdef_macro (this->flatname ());
 
       // generate the methods of the sequence C++ mapping
       cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY_CS);
@@ -885,7 +905,7 @@ be_sequence::gen_client_stubs (void)
           cs->decr_indent ();
           *cs << "}\n\n";
         }
-
+#endif
       // generate the typecode information here
       cs->indent (); // start from current indentation level
       *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
@@ -911,7 +931,9 @@ be_sequence::gen_client_stubs (void)
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
         this->flatname () << ";\n\n";
 
+#if 0
       cg->pop ();
+#endif
       this->cli_stub_gen_ = I_TRUE;
 
       cs->gen_endif ();
@@ -934,7 +956,7 @@ be_sequence::gen_client_inline (void)
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
       ci = cg->client_inline ();
-
+#if 0
       // retrieve base type
       bt = be_type::narrow_from_decl (this->base_type ());
       if (!bt)
@@ -1122,7 +1144,7 @@ be_sequence::gen_client_inline (void)
       *ci << "}\n\n";
       cg->pop ();
       ci->gen_endif (); // endif macro
-
+#endif
       // generate the ifdefined macro for the var type
       ci->gen_ifdef_macro (this->flatname (), "_var");
 
@@ -1261,6 +1283,7 @@ be_sequence::gen_var_defn (void)
 
   // overloaded [] operator. The const version is not required for sequences
 
+#if 0
   switch (this->managed_type ())
     {
     case be_sequence::MNG_STRING:
@@ -1296,6 +1319,17 @@ be_sequence::gen_var_defn (void)
                             -1);
         }
       *ch << " &";
+    }
+#endif
+
+  be_visitor_sequence_elemtype elemtype (ch, this, bt);
+  if (bt->accept (&elemtype) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_sequence::"
+                         "gen_var_defn - "
+                         "[] ret type gen failed\n"),
+                        -1);
     }
 
   *ch << "operator[] (CORBA::ULong index);" << nl;
@@ -1380,7 +1414,7 @@ be_sequence::gen_var_impl (void)
   // constr from a _ptr
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << name () << "_ptr p)" << nl;
+  *ci << fname << "::" << lname << " (" << name () << " *p)" << nl;
   *ci << "\t: ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
@@ -1490,6 +1524,8 @@ be_sequence::gen_var_impl (void)
   // operator []
   ci->indent ();
   *ci << "ACE_INLINE ";
+
+#if 0
   switch (this->managed_type ())
     {
     case be_sequence::MNG_STRING:
@@ -1510,6 +1546,18 @@ be_sequence::gen_var_impl (void)
         }
       *ci << " &";
     }
+#endif
+
+  be_visitor_sequence_elemtype elemtype (ci, this, bt);
+  if (bt->accept (&elemtype) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_sequence::"
+                         "gen_var_defn - "
+                         "[] ret type gen failed\n"),
+                        -1);
+    }
+
 
   *ci << nl;
   *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
@@ -1643,6 +1691,7 @@ be_sequence::gen_out_defn (void)
   // overloaded [] operator only for sequence. The const version is not
   // required
 
+#if 0
   switch (this->managed_type ())
     {
     case be_sequence::MNG_STRING:
@@ -1679,6 +1728,17 @@ be_sequence::gen_out_defn (void)
         }
       *ch << " &";
     }
+#endif
+  be_visitor_sequence_elemtype elemtype(ch, this, bt);
+  if (bt->accept (&elemtype) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_sequence::"
+                         "gen_var_defn - "
+                         "[] ret type gen failed\n"),
+                        -1);
+    }
+
 
   *ch << "operator[] (CORBA::ULong index);" << nl;
   *ch << "\n";
@@ -1832,6 +1892,7 @@ be_sequence::gen_out_impl (void)
   // sequence has an additional method
   ci->indent ();
   *ci << "ACE_INLINE ";
+#if 0
   switch (this->managed_type ())
     {
     case be_sequence::MNG_STRING:
@@ -1852,6 +1913,18 @@ be_sequence::gen_out_impl (void)
         }
       *ci << " &";
     }
+#endif
+
+  be_visitor_sequence_elemtype elemtype (ci, this, bt);
+  if (bt->accept (&elemtype) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_sequence::"
+                         "gen_var_defn - "
+                         "[] ret type gen failed\n"),
+                        -1);
+    }
+
 
   *ci << nl;
   *ci << fname << "::operator[] (CORBA::ULong index)" << nl;

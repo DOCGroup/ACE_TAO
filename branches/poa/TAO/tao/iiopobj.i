@@ -15,7 +15,6 @@ ACE_INLINE
 IIOP::Profile::~Profile (void)
 {
   delete [] this->host;
-  // delete [] this->object_key.buffer;
 }
 
 ACE_INLINE void

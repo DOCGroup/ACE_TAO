@@ -214,18 +214,17 @@ IIOP_Object::hash (CORBA::ULong max,
   return hashval % max;
 }
 
-int
-operator== (const TAO::ObjectKey &l,
-	    const TAO::ObjectKey &r)
+int operator==(const TAO_opaque& rhs,
+	       const TAO_opaque& lhs)
 {
-  if (l.length () != r.length ())
+  if (rhs.length () != lhs.length ())
     return 0;
 
   for (CORBA::ULong i = 0;
-       i < l.length ();
+       i < rhs.length ();
        ++i)
     {
-      if (l[i] != r[i])
+      if (rhs[i] != lhs[i])
 	return 0;
     }
   return 1;
@@ -260,7 +259,7 @@ IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
 
   ACE_ASSERT (body->object_key.length () < UINT_MAX);
 
-  return body->object_key ==  body2->object_key
+  return body->object_key == body2->object_key
     && body->port == body2->port
     && ACE_OS::strcmp (body->host, body2->host) == 0
     && body->iiop_version.minor == body2->iiop_version.minor
@@ -327,27 +326,12 @@ IIOP_Object::QueryInterface (REFIID riid,
   return TAO_NOERROR;
 }
 
-// TAO extensions
-TAO::ObjectKey_ptr
-IIOP_Object::key (CORBA::Environment &e)
+//TAO extensions
+const char *
+IIOP_Object::_get_name (CORBA::Environment &)
 {
-  return new TAO::ObjectKey (this->profile.object_key);
-#if 0
-  register CORBA::ULong len = this->profile.object_key.length ();
-  
-  CORBA::Octet *buf = TAO::ObjectKey::allocbuf (len);
-  if (buf == 0)
-    {
-      e.exception (new CORBA::NO_MEMORY(CORBA::COMPLETED_NO) );
-      return 0;
-    }
-  
-  (void) ACE_OS::memcpy (buf, this->profile.object_key.buffer, len);
-
-  // Create a new instance and transfer ownership and responsibility
-  // to the caller
-  return new TAO::ObjectKey (len, len, buf, CORBA::B_TRUE);
-#endif
+  // @@ We need access to the underlying buffer.
+  return (const char *) &(this->profile.object_key[0]);
 }
 
 // It will usually be used by the _bind call.

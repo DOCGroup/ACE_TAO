@@ -58,7 +58,7 @@ tags:
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/tao_idl.o .shobj/tao_idl.: tao_idl.cpp include/idl.h \
+.obj/tao_idl.o .obj/tao_idl. .shobj/tao_idl.o .shobj/tao_idl.: tao_idl.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \

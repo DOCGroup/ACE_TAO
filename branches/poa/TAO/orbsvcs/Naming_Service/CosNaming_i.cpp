@@ -92,6 +92,7 @@ NS_NamingContext::bind (const CosNaming::Name& n,
 {
   IT_env.clear ();
 
+  cout << "sizeof Naming Component = %d\n" << sizeof (CosNaming::NameComponent) << endl;
   // get the length of the name
   CORBA::ULong len = n.length ();
 
@@ -417,7 +418,6 @@ NS_NamingContext::list (CORBA::ULong how_many,
 			CosNaming::BindingIterator_out bi, 
 			CORBA::Environment &) 
 {
-
   // Dynamically allocate hash map iterator.
   NS_NamingContext::HASH_MAP::ITERATOR *hash_iter =
     new NS_NamingContext::HASH_MAP::ITERATOR (context_);

@@ -733,18 +733,18 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
 			case CORBA::tk_wchar:
 			  continue_decoding = stream->get_wchar (*(CORBA::WChar *) data);
 			  break;
+			case CORBA::tk_string:
+			case CORBA::tk_wstring:
 			case CORBA::tk_any:
 			case CORBA::tk_TypeCode:
 			case CORBA::tk_Principal:
 			case CORBA::tk_objref:
 			case CORBA::tk_struct:
 			case CORBA::tk_union:
-			case CORBA::tk_string:
 			case CORBA::tk_sequence:
 			case CORBA::tk_array:
 			case CORBA::tk_alias:
 			case CORBA::tk_except:
-			case CORBA::tk_wstring:
 			  retval = stream->decode (param, data, 0, env);
 			  break;
 			default:
@@ -954,17 +954,19 @@ TAO_Marshal_String::decode (CORBA::TypeCode_ptr,
   // but we will accept them when it's clear how to do so.
 
   continue_decoding = stream->get_ulong (len);
-  // note that the encoded length is 1 more than the length of the string
-  // because it also accounts for the terminating NULL character
-  *((CORBA::String *) data) = str = CORBA::string_alloc (len - 1);
-
   if (len != 0)
     {
-    while (continue_decoding != CORBA::B_FALSE && len-- != 0)
-      {
-        continue_decoding = stream->get_char (*(CORBA::Char *) str);
-        str++;
-      }
+      // note that the encoded length is 1 more than the length of the string
+      // because it also accounts for the terminating NULL character
+      
+      str = (*(char **) data) = CORBA::string_alloc (len - 1);
+      // only allocate the string *after* the length was validated.
+
+      while (continue_decoding != CORBA::B_FALSE && len-- != 0)
+	{
+	  continue_decoding = stream->get_char (*(CORBA::Char *) str);
+	  str++;
+	}
     }
   if (continue_decoding == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -986,11 +988,8 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
 {
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
   CDR *stream = (CDR *) context;
-  // @@ (ANDY) This *should* continue to work because I hacked the
-  // layout of the CORBA_SEQUENCE<> template.  This doesn't seem like
-  // a good long-term solution, however.  Is there a way we can make
-  // the generated code grnt acess to its private data members?
-  CORBA::OctetSeq *seq = (CORBA::OctetSeq *) data;
+  TAO_Base_Sequence *seq = (TAO_Base_Sequence *)data;
+
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;  // return status
   CORBA::TypeCode_ptr    tc2;  // typecode of the element
@@ -1002,15 +1001,15 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
   // here, on the "be gracious in what you accept" principle.  We
   // don't generate illegal sequences (i.e. length > bounds).
 
-  continue_decoding = stream->get_ulong (seq->length);
-  seq->maximum = seq->length;
-  seq->release = 1;
-  seq->buffer = 0;
+  continue_decoding = stream->get_ulong (seq->length_);
+  seq->maximum_ = seq->length_;
+  seq->release_ = 1;
+  seq->buffer_ = 0;
 
   if (continue_decoding)
     {
       // no point decoding an empty sequence
-      if (seq->length > 0)
+      if (seq->length_ > 0)
         {
           // get element typecode
           tc2 = tc->content_type (env);
@@ -1021,11 +1020,19 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
 
               if (env.exception () == 0)
                 {
-                  bounds = seq->length;
-                  // allocate a buffer to hold the sequence
-                  seq->buffer = new CORBA::Octet [size *(size_t) seq->maximum];
+                  bounds = seq->length_;
+
+                  // Allocate the buffer using the virtual
+		  // _allocate_buffer method, hence the right
+		  // constructors are invoked and size for the array
+		  // is OK.
                   // @@ Who will free this memory?
-                  value = (char *) seq->buffer;
+		  // (coryan): the sequence will release it, since its
+		  // release_ field is 1.
+                  seq->_allocate_buffer (bounds);
+
+                  value = (char *) seq->buffer_;
+
                   switch (tc2->kind_)
                     {
                     case CORBA::tk_null:
@@ -1381,19 +1388,19 @@ TAO_Marshal_Alias::decode (CORBA::TypeCode_ptr  tc,
       case CORBA::tk_wchar:
         continue_decoding = stream->get_wchar (*(CORBA::WChar *) value);
         break;
+      case CORBA::tk_string:
+      case CORBA::tk_wstring:
       case CORBA::tk_any:
       case CORBA::tk_TypeCode:
       case CORBA::tk_Principal:
       case CORBA::tk_objref:
       case CORBA::tk_struct:
       case CORBA::tk_union:
-      case CORBA::tk_string:
       case CORBA::tk_sequence:
       case CORBA::tk_array:
       case CORBA::tk_alias:
       case CORBA::tk_except:
-      case CORBA::tk_wstring:
-        retval = stream->decode (tc2, value, 0, env);
+        retval = stream->decode (tc2, data, 0, env);
         break;
       default:
         // anything else is an error
