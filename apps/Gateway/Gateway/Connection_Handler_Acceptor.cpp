@@ -1,5 +1,7 @@
 // $Id$
 
+#define ACE_BUILD_SVC_DLL
+
 #include "Event_Channel.h"
 #include "Connection_Handler_Acceptor.h"
 
