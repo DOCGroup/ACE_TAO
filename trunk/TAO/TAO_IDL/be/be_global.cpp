@@ -67,11 +67,7 @@ BE_GlobalData::BE_GlobalData (void)
       opt_tc_ (I_FALSE),
       ami_call_back_ (I_FALSE),
       gen_tie_classes_ (I_TRUE),
-#if (TAO_HAS_SMART_PROXIES == 1)
-      gen_smart_proxies_ (I_TRUE),
-#else
       gen_smart_proxies_ (I_FALSE),
-#endif /* TAO_HAS_SMART_PROXIES == 1 */
       lookup_strategy_ (TAO_PERFECT_HASH)
 {
 }

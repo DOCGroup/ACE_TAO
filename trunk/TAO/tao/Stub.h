@@ -65,19 +65,6 @@ class TAO_PrivateConnectionPolicy;
 
 // Descriptions of parameters.
 
-enum TAO_Param_Type
-{
-  // = TITLE
-  //    TAO_Param_Type
-  //
-  // = DESCRIPTION
-  //    Parameter mode of a given parameter.
-  PARAM_IN,
-  PARAM_OUT,
-  PARAM_INOUT,
-  PARAM_RETURN  // = PARAM_OUT
-};
-
 class TAO_Profile;
 
 // Function pointer returning a pointer to CORBA::Exception. This is used to

@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 TAO_PortableServer.lib ace.lib TAO.lib coll_test_stubs.lib /nologo /dll /machine:I386 /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer"
+# ADD LINK32 TAO_PortableServer.lib ace.lib TAO.lib coll_test_stubs.lib /nologo /dll /machine:I386 /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\SmartProxies"
 
 !ELSEIF  "$(CFG)" == "Diamond Library - Win32 Debug"
 
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib TAO_PortableServerd.lib aced.lib coll_test_stubsd.lib /nologo /dll /debug /machine:I386 /out:"Diamondd.dll" /pdbtype:sept /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer"
+# ADD LINK32 coll_test_stubsd.lib TAO_SmartProxiesd.lib TAO_PortableServerd.lib TAOd.lib aced.lib coll_test_stubsd.lib /nologo /dll /debug /machine:I386 /out:"Diamondd.dll" /pdbtype:sept /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\SmartProxies"
 
 !ENDIF 
 
@@ -145,7 +145,7 @@ InputPath=.\Diamond.idl
 InputName=Diamond
 
 BuildCmds= \
-	..\..\..\..\bin\release\tao_idl.exe -Ge 1 -Gd  -Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export  -Wb,skel_export_include=diamond_export.h -Wb,stub_export_include=stub_export.h  $(InputName).idl
+	..\..\..\..\bin\release\tao_idl.exe -Ge 1 -Gsp -Gd  -Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export  -Wb,skel_export_include=diamond_export.h -Wb,stub_export_include=stub_export.h  $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -184,7 +184,7 @@ InputPath=.\Diamond.idl
 InputName=Diamond
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl.exe -Ge 1 -Gd -Wb,skel_export_macro=Diamond_Export  -Wb,stub_export_macro=MY_Stub_Export -Wb,skel_export_include=diamond_export.h  -Wb,stub_export_include=stub_export.h $(InputName).idl
+	..\..\..\..\bin\tao_idl.exe -Ge 1 -Gsp -Gd -Wb,skel_export_macro=Diamond_Export  -Wb,stub_export_macro=MY_Stub_Export -Wb,skel_export_include=diamond_export.h  -Wb,stub_export_include=stub_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

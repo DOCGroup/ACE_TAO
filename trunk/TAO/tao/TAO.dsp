@@ -2817,25 +2817,6 @@ SOURCE=.\skip.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Smart_Proxies.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\StringSeqC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3915,10 +3896,6 @@ SOURCE=.\singletons.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Smart_Proxies.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\StringSeqC.h
 # End Source File
 # Begin Source File
@@ -4500,10 +4477,6 @@ SOURCE=.\Services.i
 # Begin Source File
 
 SOURCE=.\Single_Reactor.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Smart_Proxies.i
 # End Source File
 # Begin Source File
 
