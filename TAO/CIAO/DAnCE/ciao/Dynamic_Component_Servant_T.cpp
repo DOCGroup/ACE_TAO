@@ -97,9 +97,9 @@ namespace CIAO
 
     if (component_removed_ == 1)
       {
-        svt->ciao_preactivate ();
-        svt->ciao_activate ();
-        svt->ciao_postactivate ();
+        // svt->ciao_preactivate ();
+        // svt->ciao_activate ();
+        // svt->ciao_postactivate ();
         component_removed_ = 0;
       }
 

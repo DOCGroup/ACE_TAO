@@ -91,10 +91,19 @@ namespace CIAO
     _ciao_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    CORBA::Boolean
+    is_activated (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   protected: 
+
+    CORBA::Boolean activated_;  
+    CORBA::Boolean pre_activated_;  
+    CORBA::Boolean post_activated_;  
+
     EXEC_VAR executor_;    
     
-    CONTEXT * context_;  
+    CONTEXT * context_;
   };
 }
 
