@@ -128,12 +128,20 @@ Test_Supplier::disconnect (CORBA::Environment &TAO_IN_ENV)
 int
 Test_Supplier::svc ()
 {
+  int min_priority =
+    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+
+  if (ACE_OS::thr_setprio (min_priority) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "Test_Supplier::svc (%P|%t) "
+                  "thr_setprio failed\n"));
+    }
+
   TAO_TRY
     {
-      // Initialize a time value to pace the test
       ACE_Time_Value tv (0, this->burst_pause_);
 
-      // Pre-allocate a message to send
       ACE_Message_Block mb (this->event_size_);
       mb.wr_ptr (this->event_size_);
 
@@ -144,8 +152,8 @@ Test_Supplier::svc ()
 
       ACE_hrtime_t t = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
-      event[0].header.ec_recv_time = ORBSVCS_Time::zero ();
-      event[0].header.ec_send_time = ORBSVCS_Time::zero ();
+      event[0].header.ec_recv_time = ORBSVCS_Time::zero;
+      event[0].header.ec_send_time = ORBSVCS_Time::zero;
 
       event[0].data.x = 0;
       event[0].data.y = 0;
@@ -155,7 +163,7 @@ Test_Supplier::svc ()
       event[0].data.payload.replace (this->event_size_,
                                      &mb);
 
-      this->throughput_.start ();
+      this->timer_.start ();
       for (int i = 0; i < this->burst_count_; ++i)
         {
           for (int j = 0; j < this->burst_size_; ++j)
@@ -171,28 +179,14 @@ Test_Supplier::svc ()
 
               TAO_CHECK_ENV;
             }
-          this->throughput_.sample ();
-
-          if (TAO_debug_level > 0
-              && i % 100 == 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "ECT_Supplier (%P|%t): %d bursts sent\n",
-                          i));
-            }
-
           ACE_OS::sleep (tv);
         }
 
       // Send one event shutdown from each supplier
       event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
-      ACE_hrtime_t now = ACE_OS::gethrtime ();
-      ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
-                                     now);
       this->consumer_proxy ()->push(event, TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      this->throughput_.sample ();
-      this->throughput_.stop ();
+      this->timer_.stop ();
 
     }
   TAO_CATCH (CORBA::SystemException, sys_ex)
@@ -204,10 +198,6 @@ Test_Supplier::svc ()
       TAO_TRY_ENV.print_exception ("NON SYS EX");
     }
   TAO_ENDTRY;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Supplier %4.4x completed\n",
-              this->supplier_id_));
   return 0;
 }
 
@@ -230,13 +220,22 @@ Test_Supplier::consumer_proxy (void)
 void
 Test_Supplier::dump_results (const char* name)
 {
-  this->throughput_.dump_results ("ECT_Supplier", name);
-}
+  ACE_Time_Value tv;
+  this->timer_.elapsed_time (tv);
 
-void
-Test_Supplier::accumulate (ECT_Driver::Throughput_Stats& stats) const
-{
-  stats.accumulate (this->throughput_);
+  int event_count = this->burst_count_ * this->burst_size_ + 1;
+  double f = 1.0 / (tv.sec () + tv.usec () / 1000000.0);
+  double eps = event_count * f;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "ECT_Supplier (%s):\n"
+              "    Total time: %d.%08.8d (secs.usecs)\n"
+              "    Total events: %d\n"
+              "    Events per second: %.3f\n",
+              name,
+              tv.sec (), tv.usec (),
+              event_count,
+              eps));
 }
 
 // ****************************************************************

@@ -32,18 +32,22 @@ TAO_IIOP_Connector::TAO_IIOP_Connector (void)
 {
 }
 
-int
+TAO_Transport *
 TAO_IIOP_Connector::connect (TAO_Profile *profile,
-                             TAO_Transport *& transport)
+                             CORBA::Environment &env)
 {
   if (profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
-    return -1;
-
+    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
+                          env,
+                          0);
   TAO_IIOP_Profile *iiop_profile =
-    ACE_dynamic_cast (TAO_IIOP_Profile *, profile);
+    ACE_dynamic_cast (TAO_IIOP_Profile *,
+                      profile);
 
   if (iiop_profile == 0)
-    return -1;
+    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
+                          env,
+                          0);
 
 // Establish the connection and get back a <Client_Connection_Handler>.
 // @@ We do not have the ORB core
@@ -68,23 +72,18 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
 //                    iiop_profile->addr_to_string (),
 //                    "errno"));
 //
-//        TAO_THROW_ENV_RETURN_VOID (CORBA::TRANSIENT (), env);
+//        TAO_THROW_ENV_RETURN_VOID (CORBA::TRANSIENT (CORBA::COMPLETED_NO), env);
 //        }
 //    }
 //  else
 //#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
 
-  const ACE_INET_Addr &oa = iiop_profile->object_addr ();
+  // @@ think about making this a friend class!  FRED
+  const ACE_INET_Addr &oa =
+    ACE_dynamic_cast (const ACE_INET_Addr &,
+                      iiop_profile->object_addr ());
 
-  TAO_Client_Connection_Handler* result;
-
-  // the connect call will set the hint () stored in the Profile
-  // object; but we obtain the transport in the <result>
-  // variable. Other threads may modify the hint, but we are not
-  // affected.
-  if (this->base_connector_.connect (iiop_profile->hint (),
-                                     result,
-                                     oa) == -1)
+  if (base_connector_.connect (iiop_profile->hint (), oa) == -1)
     { // Give users a clue to the problem.
       if (TAO_orbdebug)
         ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
@@ -94,22 +93,20 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
                     profile->addr_to_string (),
                     "errno"));
 
-      return -1;
+      TAO_THROW_ENV_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO),
+                            env,
+                            0);
     }
 
-  transport = result->transport ();
+  // the connect call will set the hint () stored in the Profile
+  // object.
 
-  return 0;
+  return iiop_profile->transport ();
 }
 
 int
-TAO_IIOP_Connector::open (TAO_Resource_Factory *trf,
-                          ACE_Reactor *reactor)
+TAO_IIOP_Connector::open(TAO_Resource_Factory *trf, ACE_Reactor *reactor)
 {
-  // @@ Fred: why not just
-  //
-  // return this->base_connector_.open (....); ????
-  //
   if (this->base_connector_.open (reactor,
                                   trf->get_null_creation_strategy (),
                                   trf->get_cached_connect_strategy (),
@@ -252,17 +249,3 @@ TAO_IIOP_Connector::preconnect (char *preconnections)
 #endif /* 0 */
   return successes;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Node<ACE_INET_Addr>;
-template class ACE_Unbounded_Stack<ACE_INET_Addr>;
-template class ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<ACE_INET_Addr>
-#pragma instantiate ACE_Unbounded_Stack<ACE_INET_Addr>
-#pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

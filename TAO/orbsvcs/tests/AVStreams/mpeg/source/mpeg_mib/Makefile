@@ -6,11 +6,11 @@
 
 MAKEFILE = Makefile
 LIBNAME  = libmpeg_mib
-LIB2     = $(LIBNAME).a
-SHLIB2   = $(LIBNAME).$(SOEXT)
+LIB      = $(LIBNAME).a
+SHLIB    = $(LIBNAME).$(SOEXT)
 
 ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
+TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 # On non-Windows environment, we should at least define
@@ -34,16 +34,6 @@ LSRC	= $(addsuffix .cpp,$(FILES))
 
 ##LIBS 	+= -lTAO -lACE
 
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
-  LIB = $(LIB2)
-  SHLIB = $(SHLIB2)
-else
-  override INSTALL =
-endif # ! AV
-
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
@@ -64,8 +54,11 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 LDFLAGS +=  -L/project/doc/pkg/X11/lib/ -lXm -lXt -lXext -lSM -lICE -lX11 -L/project/doc/pkg/X11/lib -lsocket -lnsl -ldl
 CPPFLAGS += -DSH_MEM -DNDEBUG  -I/project/doc/pkg/X11/include
 
+clean:
+	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
+
 realclean: clean
-	-$(RM) $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
+	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

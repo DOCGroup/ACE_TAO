@@ -22,18 +22,9 @@
 #include "tao/Servant_Base.h"
 #include "tao/POA_CORBA.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_Export
-#if defined(_MSC_VER)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-TAO_NAMESPACE POA_PortableServer
+class TAO_Export POA_PortableServer
 {
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+public:
 
   class ThreadPolicy;
   typedef ThreadPolicy *ThreadPolicy_ptr;
@@ -50,16 +41,15 @@ TAO_NAMESPACE POA_PortableServer
                              const char* logical_type_id
                              );
     virtual PortableServer::ThreadPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
-
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _get_policy_type_skel (
                                        CORBA::ServerRequest &_tao_req,
@@ -67,9 +57,6 @@ TAO_NAMESPACE POA_PortableServer
                                        void *_tao_context,
                                        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                        );
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-
-    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     PortableServer::ThreadPolicy *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
@@ -85,7 +72,7 @@ TAO_NAMESPACE POA_PortableServer
   public:
     _tao_collocated_ThreadPolicy (
                                   ThreadPolicy_ptr  servant,
-                                  TAO_Stub *stub
+                                  STUB_Object *stub
                                   );
     ThreadPolicy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -111,7 +98,6 @@ TAO_NAMESPACE POA_PortableServer
 
 #endif // end #if !defined
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
   class LifespanPolicy;
   typedef LifespanPolicy *LifespanPolicy_ptr;
@@ -128,17 +114,15 @@ TAO_NAMESPACE POA_PortableServer
                              const char* logical_type_id
                              );
     virtual PortableServer::LifespanPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
-
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
-
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _get_policy_type_skel (
                                        CORBA::ServerRequest &_tao_req,
@@ -146,9 +130,7 @@ TAO_NAMESPACE POA_PortableServer
                                        void *_tao_context,
                                        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                        );
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
-    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     PortableServer::LifespanPolicy *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
@@ -164,7 +146,7 @@ TAO_NAMESPACE POA_PortableServer
   public:
     _tao_collocated_LifespanPolicy (
                                     LifespanPolicy_ptr  servant,
-                                    TAO_Stub *stub
+                                    STUB_Object *stub
                                     );
     LifespanPolicy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -207,17 +189,15 @@ TAO_NAMESPACE POA_PortableServer
                              const char* logical_type_id
                              );
     virtual PortableServer::IdUniquenessPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
-
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
-
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _get_policy_type_skel (
                                        CORBA::ServerRequest &_tao_req,
@@ -225,9 +205,7 @@ TAO_NAMESPACE POA_PortableServer
                                        void *_tao_context,
                                        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                        );
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
-    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     PortableServer::IdUniquenessPolicy *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
@@ -243,7 +221,7 @@ TAO_NAMESPACE POA_PortableServer
   public:
     _tao_collocated_IdUniquenessPolicy (
                                         IdUniquenessPolicy_ptr  servant,
-                                        TAO_Stub *stub
+                                        STUB_Object *stub
                                         );
     IdUniquenessPolicy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -286,17 +264,15 @@ TAO_NAMESPACE POA_PortableServer
                              const char* logical_type_id
                              );
     virtual PortableServer::IdAssignmentPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
-
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
-
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _get_policy_type_skel (
                                        CORBA::ServerRequest &_tao_req,
@@ -304,9 +280,7 @@ TAO_NAMESPACE POA_PortableServer
                                        void *_tao_context,
                                        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                        );
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
-    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     PortableServer::IdAssignmentPolicy *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
@@ -322,7 +296,7 @@ TAO_NAMESPACE POA_PortableServer
   public:
     _tao_collocated_IdAssignmentPolicy (
                                         IdAssignmentPolicy_ptr  servant,
-                                        TAO_Stub *stub
+                                        STUB_Object *stub
                                         );
     IdAssignmentPolicy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -350,8 +324,6 @@ TAO_NAMESPACE POA_PortableServer
 #endif // end #if !defined
 
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
   class ImplicitActivationPolicy;
   typedef ImplicitActivationPolicy *ImplicitActivationPolicy_ptr;
   class TAO_Export ImplicitActivationPolicy : public virtual POA_CORBA::Policy
@@ -367,17 +339,15 @@ TAO_NAMESPACE POA_PortableServer
                              const char* logical_type_id
                              );
     virtual PortableServer::ImplicitActivationPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
-
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
-
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _get_policy_type_skel (
                                        CORBA::ServerRequest &_tao_req,
@@ -385,9 +355,7 @@ TAO_NAMESPACE POA_PortableServer
                                        void *_tao_context,
                                        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                        );
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
-    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     PortableServer::ImplicitActivationPolicy *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
@@ -403,7 +371,7 @@ TAO_NAMESPACE POA_PortableServer
   public:
     _tao_collocated_ImplicitActivationPolicy (
                                               ImplicitActivationPolicy_ptr  servant,
-                                              TAO_Stub *stub
+                                              STUB_Object *stub
                                               );
     ImplicitActivationPolicy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -446,17 +414,15 @@ TAO_NAMESPACE POA_PortableServer
                              const char* logical_type_id
                              );
     virtual PortableServer::ServantRetentionPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
-
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
-
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _get_policy_type_skel (
                                        CORBA::ServerRequest &_tao_req,
@@ -464,9 +430,7 @@ TAO_NAMESPACE POA_PortableServer
                                        void *_tao_context,
                                        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                        );
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
-    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     PortableServer::ServantRetentionPolicy *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
@@ -482,7 +446,7 @@ TAO_NAMESPACE POA_PortableServer
   public:
     _tao_collocated_ServantRetentionPolicy (
                                             ServantRetentionPolicy_ptr  servant,
-                                            TAO_Stub *stub
+                                            STUB_Object *stub
                                             );
     ServantRetentionPolicy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -525,17 +489,15 @@ TAO_NAMESPACE POA_PortableServer
                              const char* logical_type_id
                              );
     virtual PortableServer::RequestProcessingPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
-
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
-
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _get_policy_type_skel (
                                        CORBA::ServerRequest &_tao_req,
@@ -543,9 +505,7 @@ TAO_NAMESPACE POA_PortableServer
                                        void *_tao_context,
                                        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                        );
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
-    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     PortableServer::RequestProcessingPolicy *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
@@ -561,7 +521,7 @@ TAO_NAMESPACE POA_PortableServer
   public:
     _tao_collocated_RequestProcessingPolicy (
                                              RequestProcessingPolicy_ptr  servant,
-                                             TAO_Stub *stub
+                                             STUB_Object *stub
                                              );
     RequestProcessingPolicy_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -588,7 +548,86 @@ TAO_NAMESPACE POA_PortableServer
 
 #endif // end #if !defined
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  // **************************************************
+  //
+  // TAO spcific POA locking policy (non-standard)
+  //
+  // **************************************************
+
+  class SynchronizationPolicy;
+  typedef SynchronizationPolicy *SynchronizationPolicy_ptr;
+  class TAO_Export SynchronizationPolicy : public virtual POA_CORBA::Policy
+  {
+  protected:
+    SynchronizationPolicy (void);
+  public:
+    virtual ~SynchronizationPolicy (void);
+    virtual CORBA::Boolean _is_a (
+                                  const char* logical_type_id,
+                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual void* _downcast (
+                             const char* logical_type_id
+                             );
+    virtual PortableServer::SynchronizationPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    static void _get_policy_type_skel (
+                                       CORBA::ServerRequest &_tao_req,
+                                       void *_tao_obj,
+                                       void *_tao_context,
+                                       CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+                                       );
+
+
+    PortableServer::SynchronizationPolicy *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual const char* _interface_repository_id (void) const;
+  };
+
+
+#if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY___COLLOCATED_SH_)
+#define _PORTABLESERVER_SYNCHRONIZATIONPOLICY___COLLOCATED_SH_
+
+  class TAO_Export _tao_collocated_SynchronizationPolicy    : public virtual PortableServer::SynchronizationPolicy,
+                                                              public virtual POA_CORBA::_tao_collocated_Policy
+  {
+  public:
+    _tao_collocated_SynchronizationPolicy (
+                                           SynchronizationPolicy_ptr  servant,
+                                           STUB_Object *stub
+                                           );
+    SynchronizationPolicy_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+                                  const char *logical_type_id,
+                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+                                  );
+    virtual PortableServer::SynchronizationPolicyValue value (
+                                                              CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+                                                              );
+    virtual CORBA::Policy_ptr copy (
+                                    CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+                                    );
+    virtual void destroy (
+                          CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+                          );
+    virtual CORBA::PolicyType policy_type (
+                                           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+                                           );
+
+  private:
+    SynchronizationPolicy_ptr servant_;
+  };
+
+
+#endif // end #if !defined
 
 
   class POAManager;
@@ -607,17 +646,13 @@ TAO_NAMESPACE POA_PortableServer
                              );
     virtual void activate ( CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
     virtual void hold_requests (CORBA::Boolean wait_for_completion,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
     virtual void discard_requests (CORBA::Boolean wait_for_completion,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
     virtual void deactivate (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-    virtual PortableServer::POAManager::State get_state (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
@@ -634,7 +669,7 @@ TAO_NAMESPACE POA_PortableServer
   public:
     _tao_collocated_POAManager (
                                 POAManager_ptr  servant,
-                                TAO_Stub *stub
+                                STUB_Object *stub
                                 );
     POAManager_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -644,9 +679,6 @@ TAO_NAMESPACE POA_PortableServer
     virtual void activate (
                            CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                            );
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
     virtual void hold_requests (
                                 CORBA::Boolean wait_for_completion,
                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
@@ -661,10 +693,6 @@ TAO_NAMESPACE POA_PortableServer
                              CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                              );
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-    virtual PortableServer::POAManager::State get_state (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-
   private:
     POAManager_ptr servant_;
   };
@@ -672,8 +700,6 @@ TAO_NAMESPACE POA_PortableServer
 
 #endif // end #if !defined
 
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   class AdapterActivator;
   typedef AdapterActivator *AdapterActivator_ptr;
@@ -691,6 +717,8 @@ TAO_NAMESPACE POA_PortableServer
                              );
     virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent, const char *name,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
     virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     PortableServer::AdapterActivator *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -706,7 +734,7 @@ TAO_NAMESPACE POA_PortableServer
   public:
     _tao_collocated_AdapterActivator (
                                       AdapterActivator_ptr  servant,
-                                      TAO_Stub *stub
+                                      STUB_Object *stub
                                       );
     AdapterActivator_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -741,6 +769,7 @@ TAO_NAMESPACE POA_PortableServer
     virtual void* _downcast (
                              const char* logical_type_id
                              );
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
@@ -757,7 +786,7 @@ TAO_NAMESPACE POA_PortableServer
   public:
     _tao_collocated_ServantManager (
                                     ServantManager_ptr  servant,
-                                    TAO_Stub *stub
+                                    STUB_Object *stub
                                     );
     ServantManager_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -791,6 +820,8 @@ TAO_NAMESPACE POA_PortableServer
 
     virtual void etherealize (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, PortableServer::Servant serv, CORBA::Boolean cleanup_in_progress, CORBA::Boolean remaining_activations,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
     virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     PortableServer::ServantActivator *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -807,7 +838,7 @@ TAO_NAMESPACE POA_PortableServer
   public:
     _tao_collocated_ServantActivator (
                                       ServantActivator_ptr  servant,
-                                      TAO_Stub *stub
+                                      STUB_Object *stub
                                       );
     ServantActivator_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -858,6 +889,8 @@ TAO_NAMESPACE POA_PortableServer
 
     virtual void postinvoke (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, const char *operation, PortableServer::ServantLocator::Cookie the_cookie, PortableServer::Servant the_servant,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
     virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     PortableServer::ServantLocator *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -874,7 +907,7 @@ TAO_NAMESPACE POA_PortableServer
   public:
     _tao_collocated_ServantLocator (
                                     ServantLocator_ptr  servant,
-                                    TAO_Stub *stub
+                                    STUB_Object *stub
                                     );
     ServantLocator_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -904,7 +937,6 @@ TAO_NAMESPACE POA_PortableServer
 
 #endif // end #if !defined
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
   class POA;
   typedef POA *POA_ptr;
@@ -926,11 +958,7 @@ TAO_NAMESPACE POA_PortableServer
 
     virtual void destroy (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
     virtual PortableServer::ThreadPolicy_ptr  create_thread_policy (PortableServer::ThreadPolicyValue value,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
     virtual PortableServer::LifespanPolicy_ptr  create_lifespan_policy (PortableServer::LifespanPolicyValue value,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
@@ -938,23 +966,25 @@ TAO_NAMESPACE POA_PortableServer
 
     virtual PortableServer::IdAssignmentPolicy_ptr  create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
     virtual PortableServer::ImplicitActivationPolicy_ptr  create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
     virtual PortableServer::ServantRetentionPolicy_ptr  create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
     virtual PortableServer::RequestProcessingPolicy_ptr  create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+    // **************************************************
+    //
+    // TAO spcific POA locking policy (non-standard)
+    //
+    // **************************************************
+
+    virtual PortableServer::SynchronizationPolicy_ptr  create_synchronization_policy (PortableServer::SynchronizationPolicyValue value,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
     virtual char * the_name (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
 
     virtual PortableServer::POA_ptr  the_parent (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
 
     virtual PortableServer::POAManager_ptr  the_POAManager (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
 
     virtual PortableServer::AdapterActivator_ptr  the_activator (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
 
@@ -967,8 +997,6 @@ TAO_NAMESPACE POA_PortableServer
     virtual PortableServer::Servant get_servant ( CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
     virtual void set_servant (PortableServer::Servant p_servant,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
     virtual PortableServer::ObjectId * activate_object (PortableServer::Servant p_servant,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
@@ -992,6 +1020,8 @@ TAO_NAMESPACE POA_PortableServer
 
     virtual CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid,  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
 
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
     virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     PortableServer::POA *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -1007,7 +1037,7 @@ TAO_NAMESPACE POA_PortableServer
   public:
     _tao_collocated_POA (
                          POA_ptr  servant,
-                         TAO_Stub *stub
+                         STUB_Object *stub
                          );
     POA_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -1030,16 +1060,10 @@ TAO_NAMESPACE POA_PortableServer
                           CORBA::Boolean wait_for_completion,
                           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                           );
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
     virtual PortableServer::ThreadPolicy_ptr create_thread_policy (
                                                                    PortableServer::ThreadPolicyValue value,
                                                                    CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                                                    );
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
     virtual PortableServer::LifespanPolicy_ptr create_lifespan_policy (
                                                                        PortableServer::LifespanPolicyValue value,
                                                                        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
@@ -1052,8 +1076,6 @@ TAO_NAMESPACE POA_PortableServer
                                                                                 PortableServer::IdAssignmentPolicyValue value,
                                                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                                                                 );
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
     virtual PortableServer::ImplicitActivationPolicy_ptr create_implicit_activation_policy (
                                                                                             PortableServer::ImplicitActivationPolicyValue value,
                                                                                             CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
@@ -1066,8 +1088,17 @@ TAO_NAMESPACE POA_PortableServer
                                                                                           PortableServer::RequestProcessingPolicyValue value,
                                                                                           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                                                                           );
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
+    // **************************************************
+    //
+    // TAO spcific POA locking policy (non-standard)
+    //
+    // **************************************************
+
+    virtual PortableServer::SynchronizationPolicy_ptr create_synchronization_policy (
+                                                                                     PortableServer::SynchronizationPolicyValue value,
+                                                                                     CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+                                                                                     );
 
     virtual char*  the_name (
                              CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
@@ -1078,8 +1109,6 @@ TAO_NAMESPACE POA_PortableServer
     virtual PortableServer::POAManager_ptr the_POAManager (
                                                            CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                                            );
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
     virtual PortableServer::AdapterActivator_ptr the_activator (
                                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                                                 );
@@ -1100,9 +1129,6 @@ TAO_NAMESPACE POA_PortableServer
                               PortableServer::Servant p_servant,
                               CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                               );
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
     virtual PortableServer::ObjectId * activate_object (
                                                         PortableServer::Servant p_servant,
                                                         CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
@@ -1173,8 +1199,12 @@ TAO_NAMESPACE POA_PortableServer
                              const char* logical_type_id
                              );
     virtual PortableServer::POA_ptr  get_POA ( CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
+    static void get_POA_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     virtual PortableServer::ObjectId * get_object_id ( CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0; // pure virtual
+    static void get_object_id_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
@@ -1192,7 +1222,7 @@ TAO_NAMESPACE POA_PortableServer
   public:
     _tao_collocated_Current (
                              Current_ptr  servant,
-                             TAO_Stub *stub
+                             STUB_Object *stub
                              );
     Current_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
@@ -1221,8 +1251,5 @@ TAO_NAMESPACE POA_PortableServer
 #include "POAS.i"
 #endif // defined INLINE
 
-#if defined(_MSC_VER)
-#pragma warning(default:4250)
-#endif /* _MSC_VER */
 
 #endif /* TAO_IDL_POAS_H */

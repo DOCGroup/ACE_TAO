@@ -97,10 +97,6 @@ public:
   // AST Dumping
   virtual void                  dump(ostream &o);
 
-  // involved in OBV_ namespace generation
-  void set_has_nested_valuetype ();
-  idl_bool has_nested_valuetype ();
-
 private:
   friend void fe_populate(AST_Module *m);
   friend int tao_yyparse();
@@ -120,7 +116,6 @@ private:
   virtual AST_Typedef           *fe_add_typedef(AST_Typedef             *t);
   virtual AST_Native            *fe_add_native (AST_Native      *n);
 
-  idl_bool pd_has_nested_valuetype;
 };
 
 #endif           // _AST_MODULE_AST_MODULE_HH

@@ -10,7 +10,7 @@
 #include "orbsvcs/Time_Utilities.h"
 
 #include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event/EC_Basic_Factory.h"
 
 #include "EC_Mcast.h"
 
@@ -118,9 +118,9 @@ ECM_Driver::run (int argc, char* argv[])
             }
         }
 
-      TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
-                                            root_poa.in ());
-      TAO_EC_Event_Channel ec_impl (attr);
+      TAO_EC_Basic_Factory ec_factory (root_poa.in ());
+
+      TAO_EC_Event_Channel ec_impl (&ec_factory);
 
       // Register Event_Service with the Naming Service.
       RtecEventChannelAdmin::EventChannel_var ec =
@@ -252,7 +252,7 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec,
   if (this->endpoint_.dgram ().open (ACE_Addr::sap_any) == -1)
     {
       // @@ TODO throw an application specific exception.
-      TAO_IN_ENV.exception (new CORBA::COMM_FAILURE ());
+      TAO_IN_ENV.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
       return;
     }
   ACE_INET_Addr ignore_from;
@@ -754,7 +754,7 @@ ECM_Consumer::ECM_Consumer (ECM_Local_Federation *federation)
 }
 
 void
-ECM_Consumer::open (const char*,
+ECM_Consumer::open (const char* name,
                     RtecEventChannelAdmin::EventChannel_ptr ec,
                     ACE_RANDR_TYPE &seed,
                     CORBA::Environment& TAO_IN_ENV)
@@ -789,8 +789,7 @@ ECM_Consumer::connect (ACE_RANDR_TYPE &seed,
   const ECM_Federation* federation = this->federation_->federation ();
   for (int i = 0; i < federation->consumer_types (); ++i)
     {
-      unsigned int x = ACE_OS::rand_r (seed);
-      if (x < RAND_MAX / 2)
+      if (ACE_OS::rand_r (seed) < RAND_MAX / 2)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Federation %s leaves group %s\n",
@@ -933,8 +932,8 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
 
   ACE_hrtime_t t = ACE_OS::gethrtime ();
   ORBSVCS_Time::hrtime_to_TimeT (s.header.creation_time, t);
-  s.header.ec_recv_time = ORBSVCS_Time::zero ();
-  s.header.ec_send_time = ORBSVCS_Time::zero ();
+  s.header.ec_recv_time = ORBSVCS_Time::zero;
+  s.header.ec_send_time = ORBSVCS_Time::zero;
 
   s.data.x = 0;
   s.data.y = 0;
@@ -960,15 +959,14 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
   ACE_Time_Value delta = ACE_OS::gettimeofday () -
     this->last_subscription_change_;
 
-  unsigned int x = ACE_OS::rand_r (this->seed_);
-  double p = double (x) / RAND_MAX;
+  double p = double (ACE_OS::rand_r (this->seed_)) / RAND_MAX;
   double maxp = double (delta.msec ()) / this->subscription_change_period_;
 
   if (4 * p < maxp)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Reconfiguring federation %s: %f %f [%d]\n",
-                  this->name (), p, maxp, x));
+                  "Reconfiguring federation %s: %f %f\n",
+                  this->name (), p, maxp));
       this->consumer_.disconnect (TAO_IN_ENV);
       TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
       this->consumer_.connect (this->seed_, TAO_IN_ENV);
@@ -1122,8 +1120,6 @@ ECM_Local_Federation::subscribed_bit (int i) const
 int
 main (int argc, char *argv [])
 {
-  TAO_EC_Default_Factory::init_svcs ();
-
   ECM_Driver driver;
   return driver.run (argc, argv);
 }

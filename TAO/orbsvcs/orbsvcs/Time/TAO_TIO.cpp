@@ -33,35 +33,30 @@ TAO_TIO::time_interval (CORBA::Environment &)
 CosTime::OverlapType
 TAO_TIO::spans (CosTime::UTO_ptr uto,
 		CosTime::TIO_out overlap,
-		CORBA::Environment &ACE_TRY_ENV)
+		CORBA::Environment &)
 {
   TAO_TIO *tio = 0;
-  
-  ACE_TRY
+
+  TAO_TRY
     {
       TimeBase::TimeT lb1 =
-	this->time_interval (ACE_TRY_ENV).lower_bound;
-      ACE_TRY_CHECK;
-      
+	this->time_interval (TAO_TRY_ENV).lower_bound;
       TimeBase::TimeT up1 =
-	this->time_interval (ACE_TRY_ENV).upper_bound;
-      ACE_TRY_CHECK;
-      
+	this->time_interval (TAO_TRY_ENV).upper_bound;
       TimeBase::TimeT lb2 =
-	uto->time (ACE_TRY_ENV) - uto->inaccuracy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      
+	uto->time (TAO_TRY_ENV) - uto->inaccuracy (TAO_TRY_ENV);
       TimeBase::TimeT up2 =
-	uto->time (ACE_TRY_ENV) + uto->inaccuracy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      
+	uto->time (TAO_TRY_ENV) + uto->inaccuracy (TAO_TRY_ENV);
+
+      TAO_CHECK_ENV;
+
       if (lb1 == lb2 && up1 == up2)
 	{
 	  ACE_NEW_RETURN (tio,
 			  TAO_TIO (lb1, up1),
 			  CosTime::OTNoOverlap);
 	  overlap = tio->_this ();
-	  
+
 	  return CosTime::OTOverlap;
 	}
       else if (lb1 > lb2 && up1 < up2)
@@ -69,7 +64,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
 	  ACE_NEW_RETURN (tio,
 			  TAO_TIO (lb1, up1),
 			  CosTime::OTNoOverlap);
-	  
+
 	  overlap = tio->_this ();
 
 	  return CosTime::OTContained;
@@ -127,13 +122,12 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
 
 	}
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
+      TAO_TRY_ENV.print_exception ("Exception:");
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CosTime::OTNoOverlap);
-  
+  TAO_ENDTRY;
+
   return CosTime::OTNoOverlap;
 }
 
@@ -146,22 +140,22 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
 CosTime::OverlapType
 TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 		   CosTime::TIO_out overlap,
-		   CORBA::Environment &ACE_TRY_ENV)
+		   CORBA::Environment &)
 {
   TAO_TIO *tio_i = 0;
-  
-  ACE_TRY
+
+  TAO_TRY
     {
       TimeBase::TimeT lb1 =
-	this->time_interval (ACE_TRY_ENV).lower_bound;
+	this->time_interval (TAO_TRY_ENV).lower_bound;
       TimeBase::TimeT up1 =
-	this->time_interval (ACE_TRY_ENV).upper_bound;
+	this->time_interval (TAO_TRY_ENV).upper_bound;
       TimeBase::TimeT lb2 =
-	tio->time_interval (ACE_TRY_ENV).lower_bound;
+	tio->time_interval (TAO_TRY_ENV).lower_bound;
       TimeBase::TimeT up2 =
-	tio->time_interval (ACE_TRY_ENV).upper_bound;
+	tio->time_interval (TAO_TRY_ENV).upper_bound;
 
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
       if (lb1 == lb2 && up1 == up2)
 	{
@@ -170,7 +164,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 			  CosTime::OTNoOverlap);
 
 	  overlap = tio_i->_this ();
-	  
+
 	  return CosTime::OTOverlap;
 	}
       else if (lb1 > lb2 && up1 < up2)
@@ -180,7 +174,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 			  CosTime::OTNoOverlap);
 
 	  overlap = tio_i->_this ();
-	  
+
 	  return CosTime::OTContained;
 	}
       else if (lb1 < lb2 && up1 > up2)
@@ -236,31 +230,37 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 
 	}
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Exception:");
+      TAO_TRY_ENV.print_exception ("Exception:");
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CosTime::OTNoOverlap);
-  
+  TAO_ENDTRY;
+
   return CosTime::OTNoOverlap;
 }
 
 CosTime::UTO_ptr
-TAO_TIO::time (CORBA::Environment &ACE_TRY_ENV)
+TAO_TIO::time (CORBA::Environment &TAO_IN_ENV)
 {
   TAO_UTO *uto = 0;
-  
-  ACE_NEW_THROW_EX (uto,
-		    TAO_UTO ((this->time_interval (ACE_TRY_ENV).upper_bound -
-			      this->time_interval (ACE_TRY_ENV).lower_bound) / 2,
-			     this->time_interval (ACE_TRY_ENV).upper_bound -
-			     this->time_interval (ACE_TRY_ENV).lower_bound,
-			     0),
-		    CORBA::NO_MEMORY ());
-  
-  ACE_CHECK_RETURN (CosTime::UTO::_nil ());
-  
+
+  TAO_TRY
+    {
+      ACE_NEW_THROW_RETURN (uto,
+			    TAO_UTO ((this->time_interval (TAO_TRY_ENV).upper_bound -
+				      this->time_interval (TAO_TRY_ENV).lower_bound) / 2,
+				     this->time_interval (TAO_TRY_ENV).upper_bound -
+				     this->time_interval (TAO_TRY_ENV).lower_bound,
+				     0),
+			    CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
+			    CosTime::UTO::_nil ());
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Exception:");
+      return CosTime::UTO::_nil ();
+    }
+  TAO_ENDTRY;
   return uto->_this ();
 }
-

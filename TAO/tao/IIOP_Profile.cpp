@@ -8,7 +8,6 @@
 #include "tao/ORB.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
-#include "tao/POA.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, IIOP_Profile, "$Id$")
@@ -30,7 +29,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     object_addr_ (addr),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
   this->set(addr);
   int l = ACE_OS::strlen (object_key);
@@ -53,7 +53,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     object_addr_ (addr),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
   this->set(addr);
   this->create_body ();
@@ -71,7 +72,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     object_addr_ (addr),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
   this->set(addr);
   int l = ACE_OS::strlen (object_key);
@@ -95,7 +97,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
     object_addr_ (addr),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
   this->set(addr);
   this->create_body ();
@@ -113,7 +116,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
     object_addr_ (port, host),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
 
   if (host)
@@ -139,7 +143,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
     object_addr_ (addr),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
 
   if (host)
@@ -165,7 +170,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
     object_addr_ (port, host),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
   ACE_UNUSED_ARG (version);
 
@@ -186,7 +192,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile *pfile)
     object_addr_(pfile->object_addr_),
     hint_(0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
 
   ACE_NEW (this->host_,
@@ -206,7 +213,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
     object_addr_(pfile.object_addr_),
     hint_(0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
 
   ACE_NEW (this->host_,
@@ -226,7 +234,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IOP_Version &version)
     object_addr_ (),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
 }
 
@@ -240,7 +249,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string, CORBA::Environment &env)
     object_addr_ (),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
   parse_string (string, env);
 }
@@ -255,7 +265,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (void)
     object_addr_ (),
     hint_ (0),
     // what about refcount_lock_ (),
-    refcount_ (1)
+    refcount_ (1),
+    forward_to_ (0)
 {
 }
 
@@ -297,6 +308,22 @@ TAO_IIOP_Profile::~TAO_IIOP_Profile (void)
 
   delete [] this->host_;
   this->host_ = 0;
+
+  if (forward_to_)
+    {
+      delete forward_to_;
+    }
+
+}
+
+TAO_Transport *
+TAO_IIOP_Profile::transport (void)
+{
+  // do I need to do a dynamic cast here?
+  if (hint_)
+    return hint_->transport ();
+  else
+    return 0;
 }
 
 // return codes:
@@ -368,7 +395,7 @@ TAO_IIOP_Profile::parse (TAO_InputCDR& cdr,
 
 int
 TAO_IIOP_Profile::parse_string (const char *string,
-                                CORBA::Environment &ACE_TRY_ENV)
+                                CORBA::Environment &env)
 {
   if (!string || !*string)
     return 0;
@@ -389,12 +416,18 @@ TAO_IIOP_Profile::parse_string (const char *string,
       string += 5;
     }
   else
-    ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+    // @@ AFAIK the right kind of exception to raise here is
+    // CORBA_MARSHAL: CORBA_DATA_CONVERSION is reserved for failure
+    // to translate *values* (such as character set mismatches,
+    // fixed<> types, floats, etc.)
+    env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
 
   if (this->version_.major != TAO_IIOP_Profile::DEF_IIOP_MAJOR
       || this->version_.minor  > TAO_IIOP_Profile::DEF_IIOP_MINOR)
     {
-      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+      // @@ Same thing here....
+      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return -1;
     }
 
   // Pull off the "hostname:port/" part of the objref
@@ -406,7 +439,8 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   if (cp == 0)
     {
-      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return -1;
     }
 
   if (this->host_)
@@ -434,8 +468,9 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   if (cp == 0)
     {
+      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       CORBA::string_free (this->host_);
-      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+      return -1;
     }
 
   this->port_ = (CORBA::UShort) ACE_OS::atoi (start);
@@ -526,6 +561,21 @@ TAO_IIOP_Profile::hash (CORBA::ULong max,
     }
 
   return hashval % max;
+}
+
+ACE_Addr &
+TAO_IIOP_Profile::object_addr (const ACE_Addr *addr)
+{
+  const ACE_INET_Addr *inet_addr =
+    ACE_dynamic_cast (const ACE_INET_Addr *,
+                      addr);
+
+  if (inet_addr != 0)
+    this->object_addr_ = *inet_addr;
+  else if (this->host_)
+    this->object_addr_.set (this->port_,
+                            this->host_);
+  return this->object_addr_;
 }
 
 char *
@@ -625,6 +675,30 @@ TAO_IIOP_Profile::_decr_refcnt (void)
   return 0;
 }
 
+
+void
+TAO_IIOP_Profile::forward_to (TAO_MProfile *mprofiles)
+{
+  // we assume ownership of the profile list!!
+  if (forward_to_)
+    delete this->forward_to_;
+
+  ACE_NEW (this->forward_to_,
+           TAO_MProfile (mprofiles));
+
+}
+
+TAO_MProfile *
+TAO_IIOP_Profile::forward_to (void)
+{
+  TAO_MProfile *temp;
+
+  ACE_NEW_RETURN (temp,
+                  TAO_MProfile (this->forward_to_),
+                  0);
+  return temp;
+}
+
 CORBA::String
 TAO_IIOP_Profile::to_string (CORBA::Environment &env)
 {
@@ -673,7 +747,7 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR &stream) const
   // do we write the TAG here? That's generic code and should be
   // handled by the object reference writer (IMHO).
   stream.write_ulong (TAO_IOP_TAG_INTERNET_IOP);
-
+ 
   // UNSIGNED LONG, number of succeeding bytes in the
   // encapsulation.  We don't actually need to make the
   // encapsulation, as nothing needs stronger alignment than

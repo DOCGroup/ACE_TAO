@@ -2,7 +2,7 @@
 // $Id$
 
 #include "ImplRepo_i.h"
-#include "Options.h"
+#include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Process.h"
 #include "tao/IIOP_Profile.h"
@@ -11,9 +11,11 @@
 
 ImplRepo_i::ImplRepo_i (void)
   : forwarder_impl_ (0),
-    activator_ (0)
+    activator_ (0),
+    ior_output_file_ (0),
+    server_key_ (0),
+    debug_level_ (1)
 {
-  // Nothing
 }
 
 // Starts up the server associated with the object pointer and returns
@@ -23,10 +25,10 @@ CORBA::Object_ptr
 ImplRepo_i::activate_object (CORBA::Object_ptr obj,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  /* Implementation_Repository::INET_Addr *new_addr; */
-  TAO_Stub *new_stub_obj = 0;
+  Implementation_Repository::INET_Addr *new_addr;
+  IIOP_Object *new_iiop_obj = 0;
 
-  if (OPTIONS::instance()->debug () >= 1)
+  if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "Activating Object: %s\n",
                 this->orb_manager_.orb ()->object_to_string (obj)));
@@ -34,44 +36,45 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
   ACE_TRY
     {
       // @@ Where to get the poa name from?
-      /* new_addr = */ this->activate_server (0, ACE_TRY_ENV);
+      new_addr = this->activate_server (0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // @@ Use auto_ptr<> to avoid memory leaks!
-      TAO_Stub *stub_obj = obj->_stubobj ();
+      IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *,
+                                                obj->_stubobj ());
       TAO_IIOP_Profile *iiop_pfile =
                 ACE_dynamic_cast (TAO_IIOP_Profile *,
-                                  stub_obj->profile_in_use ());
+                                  iiop_obj->profile_in_use ());
 
-      TAO_MProfile mp(1);
-
-      TAO_Profile *new_pfile;
+      TAO_IIOP_Profile *new_pfile;
       // @@ Would new_addr->host_ be different from object_addr()?
       // if so I will add another ctor  fred
       ACE_NEW_RETURN (new_pfile,
-                      TAO_IIOP_Profile (iiop_pfile->object_addr (),
+                      TAO_IIOP_Profile (new_addr->host_,
+                                        new_addr->port_,
                                         iiop_pfile->object_key ()),
-                      CORBA::Object::_nil ());
+                      0);
 
-      mp.give_profile (new_pfile);
+      // over write and possibly change the value set from
+      // that set by new_addr!
+      new_pfile->object_addr (&iiop_pfile->object_addr ());
 
       // create new obj, pfile will be copied!
-      new_stub_obj = new TAO_Stub (stub_obj->type_id,
-                                   mp,
-                                   stub_obj->orb_core ());
+      new_iiop_obj = new IIOP_Object (iiop_obj->type_id, new_pfile);
 
-      if (new_stub_obj == 0)
-        return CORBA::Object::_nil ();
+      delete new_pfile;
+
+      if (new_iiop_obj == 0)
+        return 0;
     }
   ACE_CATCHANY
     {
       ACE_RETHROW;
     }
   ACE_ENDTRY;
+  
+  ACE_CHECK_RETURN (0);
 
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  return new CORBA_Object (new_stub_obj,
+  return new CORBA_Object (new_iiop_obj,
                            obj->_servant ());
 }
 
@@ -82,13 +85,13 @@ ImplRepo_i::activate_server (const char *server,
                              CORBA::Environment &ACE_TRY_ENV)
 {
   int start = 0;
-  ASYS_TCHAR *ping_ior;
+  char *ping_ior;
   Implementation_Repository::INET_Addr *address =
     new Implementation_Repository::INET_Addr;
   address->port_ = 0;
   address->host_ = CORBA::string_dup ("");
 
-  if (OPTIONS::instance()->debug () >= 1)
+  if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "Activating Server: %s\n",
                 server));
@@ -151,7 +154,7 @@ ImplRepo_i::activate_server (const char *server,
 
       if (status == 0)
         {
-          if (OPTIONS::instance()->debug () >= 1)
+          if (this->debug_level_ >= 1)
             ACE_DEBUG ((LM_DEBUG,
                         "Starting %s\n",
                         server));
@@ -213,22 +216,13 @@ ImplRepo_i::register_server (const char *server,
                              const Implementation_Repository::Process_Options &options,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  if (OPTIONS::instance()->debug () >= 2)
-        ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
-                              "Command Line: %s\n"
-                              "Environment: %s\n"
-                              "Working Directory: %s\n\n",
-                              server,
-                              options.command_line_.in (),
-                              options.environment_.in (),
-                              options.working_directory_.in ()));
-
-  Repository_Record rec (options.command_line_,
-                         options.environment_,
-                         options.working_directory_,
-                         "",
-                         0,
-                         "");
+  Repository::Record rec;
+  rec.comm_line = CORBA::string_dup (options.command_line_);
+  rec.env = CORBA::string_dup (options.environment_);
+  rec.wdir = CORBA::string_dup (options.working_directory_);
+  rec.host = "";
+  rec.port = 0;
+  rec.ping_ior = "";
 
   int status = this->repository_.add (server, rec);
 
@@ -241,16 +235,15 @@ ImplRepo_i::register_server (const char *server,
     }
   else
     {
-      if (OPTIONS::instance()->debug () >= 1)
+      if (this->debug_level_ >= 1)
         ACE_DEBUG ((LM_DEBUG,
                     "register_server: Server %s Successfully Registered\n",
                     server));
-      if (OPTIONS::instance()->debug () >= 2)
+      if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                               "Command Line: %s\n"
                               "Environment: %s\n"
                               "Working Directory: %s\n\n",
-                              server,
                               rec.comm_line,
                               rec.env,
                               rec.wdir));
@@ -266,25 +259,28 @@ ImplRepo_i::reregister_server (const char *server,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
-  Repository_Record rec (options.command_line_,
-                         options.environment_,
-                         options.working_directory_,
-                         "",
-                         0,
-                         "");
+  Repository::Record rec;
+  // @@ Darrell, please make sure to use the ACE_ALLOCATOR and
+  // ACE_ALLOCATOR_RETURN macros for all of these string_dup() calls
+  // in your code.
+  rec.comm_line = CORBA::string_dup (options.command_line_);
+  rec.env = CORBA::string_dup (options.environment_);
+  rec.wdir = CORBA::string_dup (options.working_directory_);
+  rec.host = "";
+  rec.port = 0;
+  rec.ping_ior = "";
 
   this->repository_.update (server, rec);
 
-  if (OPTIONS::instance()->debug () >= 1)
+  if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "Server %s Successfully Registered\n",
                 server));
-  if (OPTIONS::instance()->debug () >= 2)
+  if (this->debug_level_ >= 2)
     ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                           "Command Line: %s\n"
                           "Environment: %s\n"
                           "Working Directory: %s\n\n",
-                          server,
                           rec.comm_line,
                           rec.env,
                           rec.wdir));
@@ -298,7 +294,7 @@ ImplRepo_i::remove_server (const char *server,
 {
   if (this->repository_.remove (server) == 0)
     {
-      if (OPTIONS::instance()->debug () >= 1)
+      if (this->debug_level_ >= 1)
         ACE_DEBUG ((LM_DEBUG,
                     "Successfully Removed Server\n"));
     }
@@ -322,14 +318,13 @@ ImplRepo_i::server_is_running (const char *server,
   Implementation_Repository::INET_Addr *new_addr =
     new Implementation_Repository::INET_Addr;
 
-  if (OPTIONS::instance()->debug () >= 1)
+  if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "Server <%s> is running\n",
                 server));
 
   // Update the record in the repository
-  Repository_Record rec;
-
+  Repository::Record rec;
   if (this->repository_.resolve (server, rec) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -343,19 +338,15 @@ ImplRepo_i::server_is_running (const char *server,
   delete [] rec.ping_ior;
   delete [] rec.host;
 
-  ACE_NEW_RETURN (rec.host, ASYS_TCHAR[ACE_OS::strlen (addr.host_.in ()) + 1], 0);
-  ACE_OS::strcpy (rec.host, addr.host_.in ());
+  rec.host = ACE::strnew (addr.host_.in ());
   rec.port = addr.port_;
-
-  ASYS_TCHAR *ping_ior = this->orb_manager_.orb ()->object_to_string (ping, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  ACE_NEW_RETURN (rec.ping_ior, ASYS_TCHAR[ACE_OS::strlen (ping_ior) + 1], 0);
-  ACE_OS::strcpy (rec.ping_ior, ping_ior);
+  rec.ping_ior = ACE::strnew (this->orb_manager_.orb ()->object_to_string (ping,
+                                                                           ACE_TRY_ENV));
+  this->repository_.update (server, rec);
 
   if (this->repository_.update (server, rec) == 0)
     {
-      if (OPTIONS::instance()->debug () >= 1)
+      if (this->debug_level_ >= 1)
         ACE_DEBUG ((LM_DEBUG,
                     "Successful server_is_running () of <%s>\n",
                     server));
@@ -365,10 +356,10 @@ ImplRepo_i::server_is_running (const char *server,
       ACE_ERROR ((LM_ERROR,
                  "Error: While updating Repository while server_is_running () %s\n",
                  server));
-      return new_addr;
+      return new_addr;  
     }
 
-  if (OPTIONS::instance()->debug () >= 2)
+  if (this->debug_level_ >= 2)
     ACE_DEBUG ((LM_DEBUG,
                 "The old host/port was: %Lu:%hu\n",
                 rec.host,
@@ -380,7 +371,7 @@ ImplRepo_i::server_is_running (const char *server,
   new_addr->host_ = CORBA::string_dup (my_addr.get_host_name ());
   new_addr->port_ = my_addr.get_port_number ();
 
-  if (OPTIONS::instance()->debug () >= 2)
+  if (this->debug_level_ >= 2)
     ACE_DEBUG ((LM_DEBUG,
                 "The new host/port is: %Lu:%hu\n",
                 new_addr->host_.inout (),
@@ -396,17 +387,17 @@ ImplRepo_i::server_is_shutting_down (const char *server,
                                      CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
-  Repository_Record rec;
+  Repository::Record rec;
 
   if (this->repository_.resolve (server, rec) == 0)
     {
-      ACE_OS::strcpy (rec.host, ASYS_TEXT (""));
+      rec.host = "";
       rec.port = 0;
-      ACE_OS::strcpy (rec.ping_ior, ASYS_TEXT (""));
+      rec.ping_ior = "";
 
       if (this->repository_.update (server, rec) == 0)
         {
-          if (OPTIONS::instance()->debug () >= 1)
+          if (this->debug_level_ >= 1)
             ACE_DEBUG ((LM_DEBUG,
                         "Successful server_is_shutting_down () of <%s>\n",
                         server));
@@ -427,6 +418,69 @@ ImplRepo_i::server_is_shutting_down (const char *server,
     }
 }
 
+// Reads the Server factory ior from a file
+
+int
+ImplRepo_i::read_ior (char *filename)
+{
+  // Open the file for reading.
+  ACE_HANDLE f_handle_ = ACE_OS::open (filename, 0);
+
+  if (f_handle_ == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error: Unable to open %s for writing: %p\n",
+                       filename),
+                      -1);
+  ACE_Read_Buffer ior_buffer (f_handle_);
+  this->server_key_ = ior_buffer.read ();
+
+  if (this->server_key_ == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error: Unable to allocate memory to read ior: %p\n"),
+                      -1);
+
+  ACE_OS::close (f_handle_);
+  return 0;
+}
+
+int
+ImplRepo_i::parse_args (void)
+{
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "d:f:o:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'd':  // debug flag.
+        this->debug_level_ = ACE_OS::atoi (get_opts.optarg);
+        break;
+      case 'o':  // output the IOR to a file.
+        this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
+        if (this->ior_output_file_ == 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error: Unable to open %s for writing: %p\n",
+                             get_opts.optarg), -1);
+        break;
+      case 'f': // read the IOR from the file.
+        this->server_input_file_ = ACE::strnew (get_opts.optarg);
+        break;
+      case '?':  // display help for use of the server.
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Usage:  %s"
+                           " [-d] <debug_level>"
+                           " [-f] <server_ior_file>"
+                           " [-o] <ior_output_file>"
+                           "\n",
+                           argv_ [0]),
+                          1);
+      }
+
+  // Indicates successful parsing of command line.
+  return 0;
+}
+
 int
 ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
 {
@@ -444,7 +498,10 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
                           -1);
       ACE_TRY_CHECK;
 
-      int retval = OPTIONS::instance()->parse_args (argc, argv);
+      this->argc_ = argc;
+      this->argv_ = argv;
+
+      int retval = this->parse_args ();
 
       if (retval != 0)
         return retval;
@@ -457,17 +514,17 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
 
       CORBA::String_var str  =
         this->orb_manager_.activate (this->forwarder_impl_);
-      if (OPTIONS::instance()->debug () >= 2)
+      if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "The server IOR is: <%s>\n",
                     str.in ()));
 
-      if (OPTIONS::instance()->output_file ())
+      if (this->ior_output_file_)
         {
-          ACE_OS::fprintf (OPTIONS::instance()->output_file (),
+          ACE_OS::fprintf (this->ior_output_file_,
                            "%s",
                            str.in ());
-          ACE_OS::fclose (OPTIONS::instance()->output_file ());
+          ACE_OS::fclose (this->ior_output_file_);
         }
 
       CORBA::String_var ir_var  =
@@ -476,7 +533,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (OPTIONS::instance()->debug () >= 2)
+      if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "The IR IOR is: <%s>\n",
                     ir_var.in ()));
@@ -625,7 +682,7 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
     }
   ACE_CATCHANY
     {
-      ACE_ERROR ((LM_ERROR, "IR_Adapter_Activator::unknown_adapter - %s\n", exception_message));
+      ACE_ERROR ((LM_ERROR, "IR_Adapter_Activator::unknown_adapter - %s\n", exception_message)); 
       ACE_TRY_ENV.print_exception ("SYS_EX");
       return 0;
     }
@@ -657,45 +714,69 @@ void
 IR_Forwarder::invoke (CORBA::ServerRequest_ptr /* request */,
                       CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_ORB_Core *orb_core = this->orb_var_->orb_core ();
-  TAO_POA_Current_Impl *poa_current_impl = orb_core->poa_current ().implementation ();
+  // Get the POA Current object reference
+  CORBA::Object_var obj = this->orb_var_->resolve_initial_references ("POACurrent");
+
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
+  TAO_POA_Current *poa_current = orb_core->poa_current ();
+
+  if (ACE_TRY_ENV.exception () != 0)
+    {
+      ACE_TRY_ENV.print_exception ("PortableServer::Current::_narrow");
+      return;
+    }
 
   // The servant determines the key associated with the database entry
   // represented by self
-  PortableServer::ObjectId_var oid = poa_current_impl->get_object_id (ACE_TRY_ENV);
-  ACE_CHECK;
+  PortableServer::ObjectId_var oid = poa_current->get_object_id (ACE_TRY_ENV);
+  if (ACE_TRY_ENV.exception () != 0)
+    return;
 
   // Now convert the id into a string
   CORBA::String_var key = PortableServer::ObjectId_to_string (oid.in ());
 
-  PortableServer::POA_ptr poa = poa_current_impl->get_POA (ACE_TRY_ENV);
-  ACE_CHECK;
+  PortableServer::POA_ptr poa = poa_current->get_POA (ACE_TRY_ENV);
+  if (ACE_TRY_ENV.exception () != 0)
+    return;
 
   // Now FORWARD!!!
 
   Implementation_Repository::INET_Addr *new_addr = 0;
-  new_addr = this->ir_impl_->activate_server (poa->the_name (),
-                                              ACE_TRY_ENV);
-  ACE_CHECK;
+
+  ACE_TRY
+    {
+      new_addr = this->ir_impl_->activate_server (poa->the_name (),
+                                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_RETHROW;
+    }
+  ACE_ENDTRY;
 
   CORBA_Object_ptr forward_object =
-    this->orb_var_->key_to_object (poa_current_impl->object_key (),
+    this->orb_var_->key_to_object (poa_current->object_key (),
                                    0,
                                    ACE_TRY_ENV);
-  ACE_CHECK;
 
-  TAO_Stub *stub_obj = ACE_dynamic_cast (TAO_Stub *,
-                                         forward_object->_stubobj ());
+  IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *,
+                                            forward_object->_stubobj ());
 
   TAO_IIOP_Profile *iiop_pfile =
             ACE_dynamic_cast (TAO_IIOP_Profile *,
-                              stub_obj->profile_in_use ());
+                              iiop_obj->profile_in_use ());
 
   iiop_pfile->port (new_addr->port_);
   iiop_pfile->host (new_addr->host_);
 
+//  if (TAO_debug_level > 0)
+//    ACE_DEBUG ((LM_DEBUG,
+//                "The forward_to is <%s>\n",
+//                this->orb_var_->object_to_string (forward_object, ACE_TRY_ENV)));
+
   if (!CORBA::is_nil (forward_object))
-    ACE_THROW (PortableServer::ForwardRequest (forward_object));
+    ACE_TRY_ENV.exception (new PortableServer::ForwardRequest (forward_object));
   else
     ACE_ERROR ((LM_ERROR,
                 "Error: Forward_to reference is nil.\n"));

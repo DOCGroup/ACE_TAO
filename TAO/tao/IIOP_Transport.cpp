@@ -8,34 +8,30 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_Transport_Timeprobe_Description[] =
-  {
-    "IIOP_Transport::send - start",
-    "IIOP_Transport::send - end",
-
-    "IIOP_Transport::receive - start",
-    "IIOP_Transport::recieve - end",
-
-    "IIOP_Client_Transport::send_request - start",
-    "IIOP_Client_Transport::send_request - end"
-  };
+  static const char *TAO_Transport_Timeprobe_Description[] =
+{
+  "IIOP_Client_Transport::send_request - start",
+  "IIOP_Client_Transport::send_request - end",
+  "IIOP_Transport::send - start",
+  "IIOP_Transport::send - end",
+  "IIOP_Transport::receive - start",
+  "IIOP_Transport::recieve - end"
+};
 
 enum
-  {
-    TAO_IIOP_TRANSPORT_SEND_START = 1200,
-    TAO_IIOP_TRANSPORT_SEND_END,
-
-    TAO_IIOP_TRANSPORT_RECEIVE_START,
-    TAO_IIOP_TRANSPORT_RECEIVE_END,
-
-    TAO_IIOP_CLIENT_TRANSPORT_SEND_REQUEST_START,
-    TAO_IIOP_CLIENT_TRANSPORT_SEND_REQUEST_END
-  };
+{
+  TAO_IIOP_CLIENT_TRANSPORT_SEND_REQUEST_START = 1200,
+  TAO_IIOP_CLIENT_TRANSPORT_SEND_REQUEST_END,
+  TAO_IIOP_TRANSPORT_SEND_START,
+  TAO_IIOP_TRANSPORT_SEND_END,
+  TAO_IIOP_TRANSPORT_RECEIVE_START,
+  TAO_IIOP_TRANSPORT_RECEIVE_END
+};
 
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Transport_Timeprobe_Description,
-                                  TAO_IIOP_TRANSPORT_SEND_START);
+                                  TAO_IIOP_CLIENT_TRANSPORT_SEND_REQUEST_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
@@ -117,7 +113,10 @@ TAO_IIOP_Transport::_nil (void)
 void
 TAO_IIOP_Transport::resume_connection (ACE_Reactor *reactor)
 {
-  this->handler_->resume_handler (reactor);
+  int result = reactor->resume_handler (this->handler_);
+  // @@ Are these needed!!
+  ACE_UNUSED_ARG (result);
+  ACE_ASSERT (result == 0);
 }
 
 void
@@ -152,7 +151,7 @@ TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
 ssize_t
 TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
+  ACE_FUNCTION_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
 
   ACE_UNUSED_ARG (s);
 
@@ -161,7 +160,8 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
 
   // @@ Fred, this should NOT be a local constant...  It should use a
   // macro defined in OS.h...
-  iovec iov[IOV_MAX];
+  const int TAO_WRITEV_MAX = 16;
+  iovec iov[TAO_WRITEV_MAX];
   int iovcnt = 0;
   ssize_t n = 0;
   ssize_t nbytes = 0;
@@ -182,8 +182,8 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
           // platforms do not implement writev() there we should copy
           // the data into a buffer and call send_n(). In other cases
           // there may be some limits on the size of the iovec, there
-          // we should set IOV_MAX to that limit.
-          if (iovcnt == IOV_MAX)
+          // we should set TAO_WRITEV_MAX to that limit.
+          if (iovcnt == TAO_WRITEV_MAX)
             {
               n = this->handler_->peer ().sendv_n ((const iovec *) iov,
                                                    iovcnt);
@@ -201,8 +201,8 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
     {
       n = this->handler_->peer ().sendv_n ((const iovec *) iov,
                                            iovcnt);
-      if (n < 1)
-        return n;
+      if (n < 0 )
+        return 0;
 
       nbytes += n;
     }
@@ -215,8 +215,8 @@ TAO_IIOP_Transport::send (const u_char *buf,
                           size_t len,
                           ACE_Time_Value *s)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
-
+  ACE_FUNCTION_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
+  
   ACE_UNUSED_ARG (s);
   return this->handler_->peer ().send_n (buf, len);
 }
@@ -226,8 +226,8 @@ TAO_IIOP_Transport::send (const iovec *iov,
                           int iovcnt,
                           ACE_Time_Value *s)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
-
+  ACE_FUNCTION_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
+  
   ACE_UNUSED_ARG (s);
   return this->handler_->peer ().sendv_n ((const iovec *) iov,
                                           iovcnt);
@@ -238,7 +238,7 @@ TAO_IIOP_Transport::recv (char *buf,
                           size_t len,
                           ACE_Time_Value *s)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_RECEIVE_START);
+  ACE_FUNCTION_TIMEPROBE (TAO_IIOP_TRANSPORT_RECEIVE_START);
 
   ACE_UNUSED_ARG (s);
   return this->handler_->peer ().recv_n (buf, len);
@@ -250,7 +250,7 @@ TAO_IIOP_Transport::recv (char *buf,
                           int flags,
                           ACE_Time_Value *s)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_RECEIVE_START);
+  ACE_FUNCTION_TIMEPROBE (TAO_IIOP_TRANSPORT_RECEIVE_START);
 
   ACE_UNUSED_ARG (s);
   return this->handler_->peer ().recv_n (buf,
@@ -263,7 +263,7 @@ TAO_IIOP_Transport::recv (iovec *iov,
                           int iovcnt,
                           ACE_Time_Value *s)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_RECEIVE_START);
+  ACE_FUNCTION_TIMEPROBE (TAO_IIOP_TRANSPORT_RECEIVE_START);
 
   ACE_UNUSED_ARG (s);
   return handler_->peer ().recvv_n (iov, iovcnt);

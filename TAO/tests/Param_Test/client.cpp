@@ -49,6 +49,7 @@ template <class T> int
 Param_Test_Client<T>::run_sii_test (void)
 {
   CORBA::ULong i;  // loop index
+  CORBA::Environment env; // to track errors
   Options *opt = OPTIONS::instance (); // get the options
   const char *opname = this->test_object_->opname (); // operation
 
@@ -61,62 +62,50 @@ Param_Test_Client<T>::run_sii_test (void)
   this->results_.error_count (0);
   this->results_.iterations (opt->loop_count ());
 
-  // Declare the Env
-  ACE_DECLARE_NEW_CORBA_ENV;
   // Initialize parameters for the test.
-  if (this->test_object_->init_parameters (this->param_test_, ACE_TRY_ENV) == -1)
+  if (this->test_object_->init_parameters (this->param_test_, env) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%N:%l) client.cpp - run_sii_test:"
                        "init_parameters failed for opname - %s",
                        opname), -1);
 
-
   // Make the calls in a loop.
   for (i = 0; i < opt->loop_count (); i++)
     {
-      ACE_TRY
+      this->results_.call_count (this->results_.call_count () + 1);
+      if (opt->debug ())
+        ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
+
+      // start the timing
+      this->results_.start_timer ();
+
+      // make the call
+      if (this->test_object_->run_sii_test (this->param_test_, env) == -1)
         {
-          this->results_.call_count (this->results_.call_count () + 1);
-          if (opt->debug ())
-            ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
-
-          // start the timing
-          this->results_.start_timer ();
-
-          // make the call
-          this->test_object_->run_sii_test (this->param_test_, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          // stop the timer.
-          this->results_.stop_timer ();
-
-          // now check if the values returned are as expected
-          if (opt->debug ())
-            {
-              ACE_DEBUG ((LM_DEBUG, "\n****** After call values *****\n"));
-              this->test_object_->print_values ();
-            }
-        }
-      ACE_CATCHANY
-        {
-
           this->results_.error_count (this->results_.error_count () + 1);
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, opname);
+          env.print_exception (opname);
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) client.cpp - run_sii_test:"
                       "run_sii_test exception in iteration %d",
                       i));
-          goto loop_around;
-
+          continue;
         }
-      ACE_ENDTRY;
+      // stop the timer.
+      this->results_.stop_timer ();
+
+      // now check if the values returned are as expected
+      if (opt->debug ())
+        {
+          ACE_DEBUG ((LM_DEBUG, "\n****** After call values *****\n"));
+          this->test_object_->print_values ();
+        }
 
       if (!this->test_object_->check_validity ())
         {
           this->results_.error_count (this->results_.error_count () + 1);
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) client.cpp - run_sii_test: "
-                      "Invalid results in iteration %d\n",
+                      "Invalid results in iteration %d - ",
                       i));
           continue;
         }
@@ -126,7 +115,6 @@ Param_Test_Client<T>::run_sii_test (void)
                            "(%N:%l) client.cpp - run_sii_test:"
                            "init_parameters failed for opname - %s",
                            opname), -1);
-    loop_around: continue;
     }
 
   // print statistics
@@ -152,6 +140,8 @@ Param_Test_Client<T>::run_dii_test (void)
 {
   const char *opname = this->test_object_->opname ();
   Options *opt = OPTIONS::instance ();
+  CORBA::Environment env; // environment
+
   ACE_DEBUG ((LM_DEBUG,
               "********** %s DII *********\n",
               opname));
@@ -161,16 +151,14 @@ Param_Test_Client<T>::run_dii_test (void)
   this->results_.error_count (0);
   this->results_.iterations (opt->loop_count ());
 
-  // Environment variable
-  ACE_DECLARE_NEW_CORBA_ENV;
   // initialize parameters for the test
-  if (this->test_object_->init_parameters (this->param_test_, ACE_TRY_ENV) == -1)
+  if (this->test_object_->init_parameters (this->param_test_, env) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%N:%l) client.cpp - run_dii_test:"
                        "init_parameters failed for opname - %s",
                        opname), -1);
 
-      // Make the calls in a loop.
+  // Make the calls in a loop.
   for (CORBA::ULong i = 0; i < opt->loop_count (); i++)
     {
       this->results_.call_count (this->results_.call_count () + 1);
@@ -188,48 +176,51 @@ Param_Test_Client<T>::run_dii_test (void)
       CORBA::NVList_var retval;
       this->orb_->create_list (1, retval.out ());
 
-      // create the request
-      CORBA::Request_var req;
-
-      ACE_TRY
-        {
-          // add arguments and typecode for return valueto the NVList
-          this->test_object_->add_args (nvlist,
+      // add arguments and typecode for return valueto the NVList
+      if (this->test_object_->add_args (nvlist,
 					retval.in (),
-					ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          CORBA::NamedValue_ptr result =
-            CORBA::NamedValue::_duplicate (retval->item (0, ACE_TRY_ENV));
-          ACE_TRY_CHECK;
-
-          this->param_test_->_create_request (CORBA_Context::_nil (),
-                                              opname,
-                                              nvlist,
-                                              result,
-                                              req.out (),
-                                              0, //CORBA::OUT_LIST_MEMORY,
-                                              ACE_TRY_ENV);
-          // The OUT_LIST_MEMORY is to be used when the ORB assumes that
-          // we will provide the top-level storage. With 0, the returned
-          // values for ret, inout, and out parameters are all owned by
-          // the ORB and hence we must not free them explicitly.
-          ACE_TRY_CHECK;
-
-          if (opt->debug ())
-            ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
-
-          // Make the invocation, verify the result.
-          this->test_object_->dii_req_invoke (req, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
+					env) == -1)
         {
           this->results_.error_count (this->results_.error_count () + 1);
-          ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,opname);
-          goto loop_around;
+          env.print_exception (opname);
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) client.cpp - "
+                      "Failed to add args in iteration %d",
+                      i));
+          continue;
         }
-      ACE_ENDTRY;
+
+      // create the request
+      CORBA::Request_var req;
+      CORBA::NamedValue_ptr result =
+	CORBA::NamedValue::_duplicate (retval->item (0, env));
+      this->param_test_->_create_request (opname,
+                                          nvlist,
+                                          result,
+                                          req.out (),
+                                          0, //CORBA::OUT_LIST_MEMORY,
+                                          env);
+      // The OUT_LIST_MEMORY is to be used when the ORB assumes that
+      // we will provide the top-level storage. With 0, the returned
+      // values for ret, inout, and out parameters are all owned by
+      // the ORB and hence we must not free them explicitly.
+
+      if (opt->debug ())
+        ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
+
+      // Make the invocation, verify the result.
+      TAO_TRY_VAR (*req->env ())
+        {
+          this->test_object_->dii_req_invoke (req);
+          TAO_CHECK_ENV;
+        }
+      TAO_CATCHANY
+        {
+          this->results_.error_count (this->results_.error_count () + 1);
+          req->env ()->print_exception (opname);
+          continue;
+        }
+      TAO_ENDTRY;
 
       if (opt->debug ())
         {
@@ -253,7 +244,6 @@ Param_Test_Client<T>::run_dii_test (void)
       // reset parameters for the test
       this->test_object_->reset_parameters ();
 
-    loop_around:continue;
     } // for loop
 
   // print statistics
