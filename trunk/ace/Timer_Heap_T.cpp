@@ -641,7 +641,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::remove_first (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Timer_Node_T <TYPE> *
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::get_first (void)
 {
-  ACE_TRACE ("ACE_Timer_Heap_T::remove_first");
+  ACE_TRACE ("ACE_Timer_Heap_T::get_first");
 
   return this->cur_size_ == 0  ?  0  :  this->heap_[0];
 }
