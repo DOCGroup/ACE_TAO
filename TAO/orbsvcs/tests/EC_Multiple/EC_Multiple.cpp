@@ -8,6 +8,7 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "EC_Multiple.h"
 
@@ -249,10 +250,14 @@ Test_ECP::connect_supplier (RtecEventChannelAdmin::EventChannel_ptr local_ec,
         server->create (buf, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      server->set (rt_info, 1, 1, 1,
+      server->set (rt_info,
+		   ORBSVCS_Time::zero,
+		   ORBSVCS_Time::zero,
+		   ORBSVCS_Time::zero,
                    this->interval_ * 10000, // @@ Make it parametric
                    RtecScheduler::VERY_LOW,
-                   RtecScheduler::NO_QUANTUM, 1,
+		   ORBSVCS_Time::zero,
+                   1,
                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -311,19 +316,27 @@ Test_ECP::connect_consumer (RtecEventChannelAdmin::EventChannel_ptr local_ec,
         server->create (buf, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      server->set (rt_info, 1, 1, 1,
+      server->set (rt_info,
+		   ORBSVCS_Time::zero,
+		   ORBSVCS_Time::zero,
+		   ORBSVCS_Time::zero,
                    this->interval_ * 10000, // @@ Make it parametric
                    RtecScheduler::VERY_LOW,
-                   RtecScheduler::NO_QUANTUM, 1,
+		   ORBSVCS_Time::zero,
+                   1,
                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      ACE_Time_Value tv_timeout (0, this->interval_ * 1000);
+      TimeBase::TimeT timeout;
+      ORBSVCS_Time::Time_Value_to_TimeT (timeout, tv_timeout);
 
       ACE_ConsumerQOS_Factory qos;
       qos.start_disjunction_group ();
       qos.insert_type (ACE_ES_EVENT_SHUTDOWN,
                        rt_info);
       qos.insert_time (ACE_ES_EVENT_INTERVAL_TIMEOUT,
-                       this->interval_ * 10000,
+                       timeout,
                        rt_info);
       qos.insert_type (ACE_ES_EVENT_UNDEFINED + this->event_a_,
                        rt_info);
@@ -376,10 +389,14 @@ Test_ECP::connect_ecp (RtecEventChannelAdmin::EventChannel_ptr local_ec,
         server->create (rmt, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      server->set (rmt_info, 1, 1, 1,
+      server->set (rmt_info,
+		   ORBSVCS_Time::zero,
+		   ORBSVCS_Time::zero,
+		   ORBSVCS_Time::zero,
                    this->interval_ * 10000,
                    RtecScheduler::VERY_LOW,
-                   RtecScheduler::NO_QUANTUM, 1,
+		   ORBSVCS_Time::zero,
+                   1,
                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -400,10 +417,14 @@ Test_ECP::connect_ecp (RtecEventChannelAdmin::EventChannel_ptr local_ec,
         server->create (lcl, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      server->set (lcl_info, 1, 1, 1,
+      server->set (lcl_info,
+		   ORBSVCS_Time::zero,
+		   ORBSVCS_Time::zero,
+		   ORBSVCS_Time::zero,
                    this->interval_ * 10000,
                    RtecScheduler::VERY_LOW,
-                   RtecScheduler::NO_QUANTUM, 1,
+		   ORBSVCS_Time::zero,
+                   1,
                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -478,10 +499,9 @@ Test_ECP::push (const RtecEventComm::EventSet &events,
 
               // @@ TOTAL HACK
               ACE_hrtime_t t = ACE_OS::gethrtime ();
-              ACE_OS::memcpy (&s.creation_time_, &t,
-                              sizeof (s.creation_time_));
-              s.ec_recv_time_ = 0;
-              s.ec_send_time_ = 0;
+	      ORBSVCS_Time::hrtime_to_TimeT (s.creation_time_, t);
+              s.ec_recv_time_ = ORBSVCS_Time::zero;
+              s.ec_send_time_ = ORBSVCS_Time::zero;
 
               s.data_.x = 0;
               s.data_.y = 0;

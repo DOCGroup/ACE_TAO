@@ -4,6 +4,7 @@
 //
 // ============================================================================
 
+#include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Runtime_Scheduler.h"
 
 #if defined (__ACE_INLINE__)
@@ -59,12 +60,12 @@ ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle,
 }
 
 void ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
-				 RtecScheduler::Time time,
-				 RtecScheduler::Time typical_time,
-				 RtecScheduler::Time cached_time,
+				 const RtecScheduler::Time &time,
+				 const RtecScheduler::Time &typical_time,
+				 const RtecScheduler::Time &cached_time,
 				 RtecScheduler::Period period,
 				 RtecScheduler::Importance importance,
-				 RtecScheduler::Quantum quantum,
+				 const RtecScheduler::Quantum &quantum,
 				 CORBA::Long threads,
 				 CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,

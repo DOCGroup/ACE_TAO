@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "ace/Sched_Params.h"
+#include "orbsvcs/Time_Utilities.h"
 #include "Scheduler.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -217,12 +218,12 @@ void ACE_Scheduler::export(RT_Info& info, FILE* file)
                           "# begin dependencies\n%d\n",
                           (const char*)info.entry_point,
                           info.handle,
-                          info.worst_case_execution_time / 1,
-                          info.typical_execution_time / 1,
-                          info.cached_execution_time / 1,
+                          ORBSVCS_Time::to_hrtime (info.worst_case_execution_time) / 1,
+                          ORBSVCS_Time::to_hrtime (info.typical_execution_time) / 1,
+			  ORBSVCS_Time::to_hrtime (info.cached_execution_time) / 1,
                           info.period,
                           info.importance,
-                          info.quantum / 1,
+                          ORBSVCS_Time::to_hrtime (info.quantum) / 1,
                           info.threads,
                           number_of_dependencies(info));
 

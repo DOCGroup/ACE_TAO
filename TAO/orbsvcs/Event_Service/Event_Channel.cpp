@@ -174,8 +174,8 @@ public:
   int schedule_timer (RtecScheduler::handle_t rt_info,
 		      const ACE_ES_Timer_ACT *act,
 		      RtecScheduler::OS_Priority preemption_priority,
-		      RtecScheduler::Time delta,
-		      RtecScheduler::Time interval = 0);
+		      const RtecScheduler::Time& delta,
+		      const RtecScheduler::Time& interval = ORBSVCS_Time::zero);
   // Schedule a timer at the appropriate priority for <preemption_priority>.
   // Returns the preemption priority used on success, -1 on failure.
 
@@ -239,8 +239,8 @@ ACE_INLINE int
 ACE_ES_Priority_Timer::schedule_timer (RtecScheduler::handle_t rt_info,
 				       const ACE_ES_Timer_ACT *act,
 				       RtecScheduler::OS_Priority preemption_priority,
-				       RtecScheduler::Time delta,
-				       RtecScheduler::Time interval)
+				       const RtecScheduler::Time &delta,
+				       const RtecScheduler::Time &interval)
 {
   if (rt_info != 0)
     {
@@ -253,10 +253,6 @@ ACE_ES_Priority_Timer::schedule_timer (RtecScheduler::handle_t rt_info,
 	  ACE_Scheduler_Factory::server()->add_dependency
 	    (rt_info, timer_rtinfo, 1, TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
-
-	  ACE_DEBUG ((LM_ERROR, "ACE_ES_Priority_Timer::schedule_timer - "
-		      "add_dependency (%d,%d,%d)\n",
-		      rt_info, timer_rtinfo, 1));
 	}
       TAO_CATCHANY
 	{
@@ -267,17 +263,10 @@ ACE_ES_Priority_Timer::schedule_timer (RtecScheduler::handle_t rt_info,
 
   // @@ We're losing resolution here.
   ACE_Time_Value tv_delta;
-  tv_delta.usec (int (delta / 10));
-  if (tv_delta.usec () == 0)
-    tv_delta.usec (1);
+  ORBSVCS_Time::TimeT_to_Time_Value (tv_delta, delta);
 
   ACE_Time_Value tv_interval;
-  if (interval > 0)
-    {
-      tv_interval.usec (int (interval / 10));
-      if (tv_interval.usec () == 0)
-	tv_interval.usec (1);
-    }
+  ORBSVCS_Time::TimeT_to_Time_Value (tv_interval, interval);
 
   return ACE_Task_Manager::instance()->
     GetReactorTask (preemption_priority)->
@@ -417,9 +406,9 @@ ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
   ACE_hrtime_t ec_recv = ACE_OS::gethrtime ();
   for (CORBA::ULong i = 0; i < event.length (); ++i)
     {
-      ACE_OS::memcpy
-	(ACE_const_cast(void*,&event[i].ec_recv_time_),
-	 &ec_recv, sizeof (RtecEventComm::Time));
+      RtecEventComm::Event& ev = 
+	ACE_const_cast(RtecEventComm::Event&,event[i]);
+      ORBSVCS_Time::hrtime_to_TimeT (ev.ec_recv_time_, ec_recv);
     }
   supplier_module_->push (this, event, _env);
 }
@@ -992,11 +981,14 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
   ACE_DEBUG ((LM_DEBUG, "(%t) initiating consumer disconnect.\n"));
 
   // Set a 100ns timer.
+  TimeBase::TimeT ns100;
+  ORBSVCS_Time::hrtime_to_TimeT (ns100, 100);
   if (channel_->timer ()->schedule_timer (0, // no rt_info
 					  act,
 					  // ::Preemption_Priority (consumer->qos ().rt_info_),
 					  ACE_Scheduler_MIN_PREEMPTION_PRIORITY,
-					  100, 0) == -1)
+					  ns100,
+					  ORBSVCS_Time::zero) == -1)
     {
       ACE_ERROR ((LM_ERROR, "%p queue_request failed.\n", "ACE_ES_Consumer_Module"));
       delete sc;
@@ -1020,12 +1012,12 @@ ACE_ES_Consumer_Module::push (const ACE_ES_Dispatch_Request *request,
   request->make_copy (event_set);
 
   // Forward the event set.
-  // @@ TOTAL HACK
   ACE_hrtime_t ec_send = ACE_OS::gethrtime ();
   for (CORBA::ULong i = 0; i < event_set.length (); ++i)
     {
-      ACE_OS::memcpy (&event_set[i].ec_send_time_, &ec_send,
-		      sizeof (RtecEventComm::Time));
+      RtecEventComm::Event& ev = 
+	ACE_const_cast(RtecEventComm::Event&,event_set[i]);
+      ORBSVCS_Time::hrtime_to_TimeT (ev.ec_send_time_, ec_send);
     }
   request->consumer ()->push (event_set, _env);
   ACE_TIMEPROBE ("  leave ES_Consumer_Module::push");
@@ -1752,8 +1744,8 @@ ACE_ES_Consumer_Rep_Timeout::execute (void)
     {
       CORBA::Environment __env;
       ACE_Time_Value tv = ACE_OS::gettimeofday ();
-      timeout_event_->creation_time_ =
-	tv.sec () * 10000000 + tv.usec () * 10;
+      ORBSVCS_Time::Time_Value_to_TimeT
+	(timeout_event_->creation_time_, tv);
       correlation_->correlation_module_->push (this, timeout_event_, __env);
       if (__env.exception () != 0)
 	ACE_ERROR ((LM_ERROR, "ACE_ES_Consumer_Rep_Timeout::execute: unexpected exception.\n"));
@@ -1864,11 +1856,6 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
 		   new_subscribers->dependency_info_->rt_info,
 		   new_subscribers->dependency_info_->number_of_calls,
 		   _env);
-		ACE_DEBUG ((LM_DEBUG, "%s - add_dependency (%d,%d,%d)\n",
-			    "ACE_ES_Priority_Timer::schedule_timer",
-			    (*proxy)->dependency()->rt_info,
-			    new_subscribers->dependency_info_->rt_info,
-			    new_subscribers->dependency_info_->number_of_calls));
 		if (_env.exception () != 0)
 		  return;
 		// @@ TODO use the TAO_TRY macros.
@@ -2029,12 +2016,6 @@ ACE_ES_Subscription_Module::subscribe_source (ACE_ES_Consumer_Rep *consumer,
 			   TAO_TRY_ENV);
 			TAO_CHECK_ENV;
 
-			ACE_DEBUG ((LM_DEBUG,
-				    "%s - add_dependency (%d,%d,%d)\n",
-				    "ACE_ES_Priority_Timer::subscribe_source",
-				    consumer->dependency()->rt_info,
-				    temp->int_id_->dependency_info_->rt_info,
-				    temp->int_id_->dependency_info_->number_of_calls));
 		      }
 		    TAO_CATCHANY
 		      {
@@ -2104,11 +2085,6 @@ ACE_ES_Subscription_Module::subscribe_type (ACE_ES_Consumer_Rep *consumer,
 		 dependency_info->rt_info,
 		 dependency_info->number_of_calls,
 		 TAO_TRY_ENV);
-	      ACE_DEBUG ((LM_ERROR, "%s - add_dependency (%d,%d,%d)\n",
-			  "ACE_ES_Priority_Timer::schedule_timer - ",
-			  consumer->dependency ()->rt_info,
-			  dependency_info->rt_info,
-			  dependency_info->number_of_calls));
 	      TAO_CHECK_ENV;
 	    }
 	  TAO_CATCHANY
@@ -2170,11 +2146,6 @@ ACE_ES_Subscription_Module::subscribe_source_type (ACE_ES_Consumer_Rep *consumer
 		       dependency_info->rt_info,
 		       dependency_info->number_of_calls,
 		       TAO_TRY_ENV);
-		    ACE_DEBUG ((LM_ERROR, "%s - add_dependency (%d,%d,%d)\n",
-				"ACE_Subscription_Module::subscribe_source_type - ",
-				consumer->dependency ()->rt_info,
-				dependency_info->rt_info,
-				dependency_info->number_of_calls));
 		    TAO_CHECK_ENV;
 		  }
 		TAO_CATCHANY
@@ -2709,7 +2680,7 @@ dump_event (const RtecEventComm::Event &event)
 	      (void*)event.source_,
 	      event.type_,
 	      // The divide-by-1 is for ACE_U_LongLong support.
-	      event.creation_time_ / 1));
+	      ORBSVCS_Time::to_hrtime (event.creation_time_) / 1));
 }
 
 // ************************************************************
