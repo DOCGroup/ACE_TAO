@@ -59,6 +59,16 @@ if (-d '/pkg/gnu/bin') {
   $gnu = '';
 }
 
+my $gnu2;
+if (-d '/project/danzon/pkg/gnu/bin') {
+  $gnu2 = '/project/danzon/pkg/gnu/bin/';
+  #### Insert it at head of PATH, so that proper GNU utilities are used.
+  $ENV{'PATH'} = "/project/danzon/pkg/gnu/bin:" . $ENV{'PATH'};
+} else {
+  #### The default utilities had better be GNU.
+  $gnu2 = '';
+}
+
 my $export_dir = '/project/ftp-doc/pub/ACE';
 my $diffs_dir = "$export_dir/diffs";
 my $exec_prefix = '';
@@ -172,7 +182,7 @@ my $gzip = "${gnu}gzip";
 my $make = "${gnu}make -s";
 my $mv = '/bin/mv -f';
 my $rm = "${gnu}/rm -f";
-my $md5sum = '/project/danzon/pkg/gnu/bin/md5sum';
+my $md5sum = '${gnu2}/md5sum';
 chop (my $now = `$date +"%a %b %d %T %Y"`);
 
 unless ("$controlled_files") {
@@ -666,8 +676,9 @@ sub create_kit () {
 
   my $md5sum_command =
     "for p in $archives; do " .
-      "$rm $dest/\$p.md5; " .
-      "$md5sum \$p > $dest/\$p.md5; " .
+      "$rm \$p.md5; " .
+      "$md5sum \$p > \$p.md5; " .
+      "$dispose \$p.md5 $dest; " .
       "done";
 
   &ex ($build_command);
