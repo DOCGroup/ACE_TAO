@@ -19,6 +19,8 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/CDR_Stream.h"
 #include "ace/FILE_Connector.h"
 #include "ace/Auto_Ptr.h"

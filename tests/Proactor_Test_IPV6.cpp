@@ -33,10 +33,12 @@
 #include "ace/Asynch_Connector.h"
 #include "ace/Task.h"
 #include "ace/Thread_Semaphore.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_socket.h"
 #include "ace/os_include/netinet/os_tcp.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
@@ -1735,7 +1737,7 @@ set_proactor_type (const ACE_TCHAR *ptype)
   if (!ptype)
     return 0;
 
-  switch (toupper (*ptype))
+  switch (ACE_OS::to_upper (*ptype))
     {
     case 'D':
       proactor_type = DEFAULT;

@@ -9,6 +9,7 @@
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
 
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_socket.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Asynch_Connector.h"
 #include "ace/Asynch_IO.h"
