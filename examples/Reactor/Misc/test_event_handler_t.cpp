@@ -48,7 +48,7 @@ template class ACE_Event_Handler_T<ACE_Test_Sig_Handler>;
 
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "your platform does not support template typedefs\n"), 1);
 }
