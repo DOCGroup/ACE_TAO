@@ -127,6 +127,10 @@ sub run_program ($)
     }
 
     check_log ($program);
+
+    if (defined $opt_c) {
+    	check_codeguard_log ($program);
+    }
 }
 
 ################################################################################
@@ -285,6 +289,28 @@ sub check_log ($)
     }
 }
 
+sub check_codeguard_log ($)
+{
+    my $program = shift;
+
+    ### Check the logs
+
+    local $log = $program.".cgl";
+
+    if (-e $log ) {
+       print STDERR "======= Begin Codeguard Log File \n";
+       if (open (LOG, "<".$log) == 0) {
+           print STDERR "Error: Cannot open codeguard log file $log\n";
+       }
+       else {
+           my @log = <LOG>;
+           print STDERR @log;
+           close (LOG);
+       }
+       print STDERR "======= End Codeguard Log File \n";
+    }
+}
+
 ################################################################################
 
 sub delete_temp_files ()
@@ -312,14 +338,15 @@ sub delete_temp_files ()
 
 $config_list->load ("run_test.lst");
 
-if (!getopts ('dhtvo:') || $opt_h) {
-    print "run_test.pl [-h] [-v] [-o <output file>] [-t file1 file2 ...]\n";
+if (!getopts ('cdhtvo:') || $opt_h) {
+    print "run_test.pl [-h] [-c] [-v] [-o <output file>] [-t file1 file2 ...]\n";
     print "\n";
     print "Runs the tests listed in run_test.lst\n";
     print "\n";
     print "Options:\n";
     print "    -d         Debug mode (do not run tests)\n";
     print "    -h         Display this help\n";
+    print "    -c         Look for codeguard logs\n";
     print "    -t         Runs all the tests passed via the cmd line\n";
     print "    -v         Generate commands for VxWorks\n";
     print "    -o         Put VxWorks commands in output file\n";
@@ -334,6 +361,7 @@ if (!getopts ('dhtvo:') || $opt_h) {
 ## since we can't use "our" to get rid of warnings.
 $opt_h = $opt_h if (defined $opt_h);
 $opt_t = $opt_t if (defined $opt_t);
+$opt_c = $opt_c if (defined $opt_c);
 
 if (!($tmp = $ENV{TMP}) && !($tmp = $ENV{TEMP})) {
     $tmp="/tmp";
