@@ -1945,8 +1945,10 @@ complex_declarator :
 // complex_declarator : array_declarator
           UTL_ScopedName *sn = 0;
           ACE_NEW_RETURN (sn,
-                          UTL_ScopedName ($1->local_name (),
-                                          0),
+                          UTL_ScopedName (
+                              $1->local_name ()->copy (),
+                              0
+                            ),
                           1);
           ACE_NEW_RETURN ($$,
                           FE_Declarator (sn,

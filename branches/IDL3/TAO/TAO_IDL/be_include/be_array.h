@@ -63,13 +63,6 @@ protected:
 
   virtual int create_name (void);
   // Create a name for us.
-
-  const char* tao_name (void);
-
-private:
-  char* tao_name_;
-  // We need a name to generate typecodes and other objects, but it
-  // must be different from the typedef name.
 };
 
 #endif

@@ -237,24 +237,6 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
           this->pd_name->nconc (conc_name);
         }
     }
-  else
-    {/*
-      if (this->pd_name == 0)
-        {
-          ACE_NEW (this->pd_name,
-                   UTL_ScopedName (0,
-                                   0));
-        }
-      else
-        {
-          UTL_ScopedName *conc_name = 0;
-          ACE_NEW (conc_name,
-                   UTL_ScopedName (0,
-                                   0));
-
-          this->pd_name->nconc (conc_name);
-        }*/
-    }
 }
 
 void
