@@ -1,3 +1,12 @@
+Wed Jun  7 20:04:11 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/ExposedPolicies/Client.cpp
+	* tests/ExposedPolicies/Counter.idl
+	* tests/ExposedPolicies/Counter_i.cpp
+	* tests/ExposedPolicies/Counter_i.h
+	* tests/ExposedPolicies/server.cpp:
+	  Stylistic changes + comments for Angelo from our code review.
+
 Wed Jun  7 16:37:28 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * rules.tao.GNU:
