@@ -1,3 +1,12 @@
+Tue Oct 13 00:19:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Hash_Map_Manager,
+	  ace/Map_Manager:
+	  Added a public mutex() accessor that allows us to return a
+ 	  reference to the lock_.  This is useful for cases where we're
+ 	  using ACE_Process_Mutex and need to call remove().  Thanks to
+ 	  Bob McWhirter <bob@netwrench.com> for this suggestion.
+
 Mon Oct 12 23:03:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Mem_Map.cpp (map_it): Added a minor fix to handle the fact
