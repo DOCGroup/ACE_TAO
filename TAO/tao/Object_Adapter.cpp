@@ -360,9 +360,20 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
        iterator != end;
        ++iterator)
     {
-      TAO_POA *current = parent->find_POA_i (*iterator,
-                                             1,
-                                             ACE_TRY_ENV);
+      TAO_POA *current = 0;
+
+      ACE_TRY
+        {
+          current = parent->find_POA_i (*iterator,
+                                        1,
+                                        ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (PortableServer::POA::AdapterNonExistent, ex)
+        {
+          return -1;
+        }
+      ACE_ENDTRY;
       ACE_CHECK_RETURN (-1);
 
       parent = current;
@@ -1096,7 +1107,7 @@ PortableServer::ObjectId *
 TAO_POA_Current_Impl::get_object_id (CORBA::Environment &)
 {
   PortableServer::ObjectId *objid = 0;
-  
+
   // Create a new one and pass it back
   ACE_NEW_RETURN (objid,
                   PortableServer::ObjectId (this->object_id_),
