@@ -30,7 +30,6 @@
 
 
 #include "CONV_FRAMEC.h"
-#include "ace/OS.h"
 #include "Typecode.h"
 
 #if defined (__BORLANDC__)

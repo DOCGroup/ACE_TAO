@@ -23,6 +23,8 @@
 
 #include "ace/CORBA_macros.h"
 
+class TAO_OutputCDR;
+
 namespace TAO
 {
   /**

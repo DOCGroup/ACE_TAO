@@ -604,6 +604,22 @@ TAO::Collocation_Proxy_Broker *
 // Traits specializations.
 namespace TAO
 {
+  // Hand crafted.
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Export Objref_Traits<CORBA::PolicyCurrent>
+  {
+    static CORBA::PolicyCurrent_ptr tao_duplicate (
+        CORBA::PolicyCurrent_ptr
+      );
+    static void tao_release (
+        CORBA::PolicyCurrent_ptr
+      );
+    static CORBA::PolicyCurrent_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        CORBA::PolicyCurrent_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
 };
 
 // TAO_IDL - Generated from

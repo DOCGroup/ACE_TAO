@@ -9,6 +9,8 @@
 #include "tao/UB_String_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "tao/DynamicC.h"
+
 ACE_RCSID (tao,
            UB_String_Argument_T,
            "$Id$")

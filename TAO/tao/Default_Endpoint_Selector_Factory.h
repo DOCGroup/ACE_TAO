@@ -16,14 +16,15 @@
 
 #ifndef TAO_DEFAULT_ENDPOINT_SELECTOR_FACTORY_H
 #define TAO_DEFAULT_ENDPOINT_SELECTOR_FACTORY_H
-#include /**/ "ace/pre.h"
 
-#include "tao/Endpoint_Selector_Factory.h"
+#include /**/ "ace/pre.h"
 #include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Endpoint_Selector_Factory.h"
 
 // Forward references
 class TAO_Default_Endpoint_Selector;

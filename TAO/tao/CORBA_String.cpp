@@ -1,13 +1,13 @@
 #include "CORBA_String.h"
 #include "Managed_Types.h"
-#include "ace/OS.h"
+
+#include "ace/OS_String.h"
+#include "ace/OS_Memory.h"
 #include "ace/streams.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CORBA_String.inl"
 #endif /* ! __ACE_INLINE__ */
-
-
 
 ACE_RCSID (tao,
            CORBA_String,
@@ -22,7 +22,7 @@ CORBA::string_dup (const char *str)
       return 0;
     }
 
-  size_t len = ACE_OS::strlen (str);
+  size_t len = ACE_OS_String::strlen (str);
 
   // This allocates an extra byte for the '\0';
   char * copy = CORBA::string_alloc (ACE_static_cast (CORBA::ULong, len));
@@ -33,9 +33,9 @@ CORBA::string_dup (const char *str)
       return 0;
     }
 
-  ACE_OS::memcpy (copy,
-                  str,
-                  len + 1);
+  ACE_OS_String::memcpy (copy,
+                         str,
+                         len + 1);
   return copy;
 }
 
@@ -69,7 +69,7 @@ CORBA::wstring_dup (const WChar *const str)
       return 0;
     }
 
-  CORBA::WChar* retval = CORBA::wstring_alloc (ACE_OS::wslen (str));
+  CORBA::WChar* retval = CORBA::wstring_alloc (ACE_OS_String::strlen (str));
 
   // The wscpy() below assumes that the destination is a valid buffer.
   if (retval == 0)
@@ -77,8 +77,8 @@ CORBA::wstring_dup (const WChar *const str)
       return 0;
     }
 
-  return ACE_OS::wscpy (retval,
-                        str);
+  return ACE_OS_String::strcpy (retval,
+                                str);
 }
 
 CORBA::WChar*
@@ -267,7 +267,7 @@ operator>> (istream &is, CORBA::String_out &so)
 ostream &
 operator<< (ostream &os, const CORBA::WString_var &wsv)
 {
-  const CORBA::ULong len = ACE_OS::wslen (wsv.in ());
+  const CORBA::ULong len = ACE_OS_String::strlen (wsv.in ());
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -306,7 +306,7 @@ ostream &
 operator<< (ostream &os, CORBA::WString_out &wso)
 {
   CORBA::WChar *tmp = wso.ptr ();
-  const CORBA::ULong len = ACE_OS::wslen (tmp);
+  const CORBA::ULong len = ACE_OS_String::strlen (tmp);
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {

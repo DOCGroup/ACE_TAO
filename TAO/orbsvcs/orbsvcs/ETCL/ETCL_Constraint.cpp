@@ -8,12 +8,15 @@
 #include "tao/Managed_Types.h"
 #include "tao/Environment.h"
 #include "tao/CDR.h"
+#include "tao/Typecode.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "ETCL_Constraint.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ETCL, ETCL_Constraint, "$Id$")
+ACE_RCSID (ETCL, 
+           ETCL_Constraint, 
+           "$Id$")
 
 TAO_ETCL_Constraint::TAO_ETCL_Constraint (void)
 {

@@ -12,14 +12,13 @@
 #define TAO_DEFAULT_THREAD_LANE_RESOURCES_MANAGER_H
 
 #include /**/ "ace/pre.h"
-#include "tao/orbconf.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Thread_Lane_Resources_Manager.h"
-#include "ace/Service_Config.h"
 
 /**
  * @class TAO_Default_Thread_Lane_Resources_Manager

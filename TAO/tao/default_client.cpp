@@ -11,18 +11,14 @@
 #include "LF_Connect_Strategy.h"
 
 #include "ace/Lock_Adapter_T.h"
-#include "ace/Recursive_Thread_Mutex.h"
-
 
 #if !defined (__ACE_INLINE__)
 # include "tao/default_client.i"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            default_client,
            "$Id$")
-
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   : profile_lock_type_ (TAO_THREAD_LOCK)

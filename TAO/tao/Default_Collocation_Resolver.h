@@ -12,14 +12,13 @@
 #define TAO_DEFAULT_COLLOCATION_RESOLVER_H
 
 #include /**/ "ace/pre.h"
-#include "tao/orbconf.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Collocation_Resolver.h"
-#include "ace/Service_Config.h"
 
 namespace CORBA
 {

@@ -1,21 +1,18 @@
 // $Id$
+
 #include "tao/Codeset_Manager.h"
-#include "tao/debug.h"
-#include "tao/CDR.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/operation_details.h"
 #include "tao/Transport.h"
 #include "tao/Profile.h"
-#include "tao/Exception.h"
-#include "tao/corbafwd.h"
 #include "tao/Codeset_Translator_Factory.h"
-#include "tao/TAO_Server_Request.h"
-#include "tao/Tagged_Components.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Codeset_Registry.h"
 
-ACE_RCSID(tao, Codeset_Manager, "$Id$")
+ACE_RCSID (tao, 
+           Codeset_Manager, 
+           "$Id$")
 
 /// NCS for char is defaulted to ISO 8859-1:1987; Latin Alphabet No. 1
 CONV_FRAME::CodeSetId

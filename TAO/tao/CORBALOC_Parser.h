@@ -11,18 +11,17 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CORBALOC_PARSER_H
 #define TAO_CORBALOC_PARSER_H
-#include /**/ "ace/pre.h"
 
-#include "tao/IOR_Parser.h"
+#include /**/ "ace/pre.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Config.h"
+#include "tao/IOR_Parser.h"
 
 class TAO_MProfile;
 

@@ -7,7 +7,6 @@
 #endif /* defined INLINE */
 
 #include "ClientRequestInfo.h"
-#include "ClientRequestInfo_i.h"
 #include "Invocation_Base.h"
 #include "ORB_Core.h"
 
@@ -32,9 +31,11 @@ namespace TAO
         // Only perform the TSS access if interceptors were registered
         // with the ORB.
         if (this->len_ > 0)
-        this->info_ =
-          this->invocation_->orb_core ()->
-          get_tss_resources ()->client_request_info_;
+          {
+            TAO_ORB_Core *orb_core = this->invocation_->orb_core ();
+            this->info_ =
+              orb_core->get_tss_resources ()->client_request_info_;
+          }
 
         TAO_ClientRequestInfo_Guard info_guard (this->info_, ri);
 

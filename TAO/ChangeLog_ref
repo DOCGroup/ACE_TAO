@@ -1,3 +1,89 @@
+Thu Sep 18 21:00:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp (visit_sequence):
+
+	  Changed #ifdef guard generation to use the flat name of
+	  the sequence typedef (anonymous sequences can't be used
+	  as operation arguments).
+
+        * orbsvcs/orbsvcs/CosEvent.dsp:
+        * orbsvcs/orbsvcs/CosNaming.dsp:
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+        * orbsvcs/orbsvcs/FT_ORB.dsp:
+        * tao/IORManipulation/TAO_IORManip.dsp:
+
+	  Turned on RTTI, and in some cases add a link to the 
+	  TAO_Valuetype library.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/event_export.h:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * tao/DynamicAny/DynamicAnyC.h:
+
+	  Changes to eliminate compile and link errors in CosNotification.
+
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CORBALOC_Parser.cpp:
+        * tao/CORBALOC_Parser.h:
+        * tao/CORBANAME_Parser.cpp:
+        * tao/CORBANAME_Parser.h:
+        * tao/CORBA_String.cpp:
+        * tao/ClientRequestInterceptor_Adapter.cpp:
+        * tao/CodecFactory.h:
+        * tao/CodecFactory_ORBInitializer.h:
+        * tao/Codeset_Manager.cpp:
+        * tao/Codeset_Manager.h:
+        * tao/Codeset_Translator_Factory.cpp:
+        * tao/Collocated_Invocation.h:
+        * tao/Collocation_Resolver.cpp:
+        * tao/Collocation_Resolver.h:
+        * tao/Connect_Strategy.cpp:
+        * tao/Connect_Strategy.h:
+        * tao/Connection_Handler.cpp:
+        * tao/Connection_Handler.h:
+        * tao/Connection_Purging_Strategy.cpp:
+        * tao/Connection_Purging_Strategy.h:
+        * tao/Connector_Registry.cpp:
+        * tao/Connector_Registry.h:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/DLL_ORB.cpp:
+        * tao/DLL_ORB.h:
+        * tao/DLL_Parser.cpp:
+        * tao/DLL_Parser.h:
+        * tao/Default_Collocation_Resolver.cpp:
+        * tao/Default_Collocation_Resolver.h:
+        * tao/Default_Endpoint_Selector_Factory.cpp:
+        * tao/Default_Endpoint_Selector_Factory.h:
+        * tao/Default_Protocols_Hooks.cpp:
+        * tao/Default_Protocols_Hooks.h:
+        * tao/Default_Stub_Factory.cpp:
+        * tao/Default_Stub_Factory.h:
+        * tao/Default_Thread_Lane_Resources_Manager.cpp:
+        * tao/Default_Thread_Lane_Resources_Manager.h:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/Objref_VarOut_T.h:
+        * tao/PolicyC.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/debug.h:
+        * tao/default_client.cpp:
+        * tao/default_client.h:
+        * tao/default_resource.cpp:
+        * tao/default_resource.h:
+        * tao/default_server.cpp:
+        * tao/default_server.h:
+
+	  Cleaned up #include structure.
+
 Thu Sep 18 12:13:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp (visit_sequence):

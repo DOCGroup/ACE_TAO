@@ -256,6 +256,10 @@ SOURCE=.\Naming\Naming_Context_Interface.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Naming\naming_export.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Naming\Naming_Loader.h
 # End Source File
 # Begin Source File

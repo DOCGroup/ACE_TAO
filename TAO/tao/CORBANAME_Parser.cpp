@@ -1,8 +1,7 @@
 // $Id$
 
 #include "CORBANAME_Parser.h"
-#include "Stub.h"
-#include "DynamicC.h"
+#include "ORB.h"
 #include "Object.h"
 #include "UB_String_Arguments.h"
 #include "Invocation_Adapter.h"
@@ -12,7 +11,9 @@
 #include "CORBANAME_Parser.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, CORBANAME_Parser, "$Id$")
+ACE_RCSID (tao, 
+           CORBANAME_Parser, 
+           "$Id$")
 
 TAO_CORBANAME_Parser::~TAO_CORBANAME_Parser (void)
 {
