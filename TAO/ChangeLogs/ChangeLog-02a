@@ -1,3 +1,7 @@
+Mon Apr  9 07:13:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/Loader/Server_Manager.cpp: Fixed warnings with g++.  
+
 Mon Apr  9 06:54:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Handler.cpp : Was aligning a buffer that was
