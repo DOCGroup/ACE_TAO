@@ -1,3 +1,10 @@
+Mon Dec 31 09:32:59 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Hash_Map_Manager_T.h: Added ACE_UNIMPLEMENTED_FUNC() for the
+	  assignment operator and copy constructor of class
+ 	  ACE_Hash_Map_Manager_Ex.  Thanks to Johnny Willemsen for
+ 	  reporting this.
+
 Mon Dec 31 16:33:17 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/OS.{h,i}:

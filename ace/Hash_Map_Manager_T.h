@@ -455,6 +455,10 @@ private:
   /// Current number of entries in the table (note that this can be
   /// larger than <total_size_> due to the bucket chaining).
   size_t cur_size_;
+
+  // = Disallow these operations.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID,  HASH_KEY, COMPARE_KEYS, ACE_LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Hash_Map_Manager_Ex (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID,  HASH_KEY, COMPARE_KEYS, ACE_LOCK> &))
 };
 
 /**
