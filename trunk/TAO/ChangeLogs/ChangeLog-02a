@@ -1,3 +1,12 @@
+Mon Feb 11 17:56:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Base_Transport_Property.h:
+	* tao/Cache_Entries.h:
+	* tao/Policy_Manager.h:
+	* tao/Transport_Cache_Manager.h:
+	* tao/Transport_Descriptor_Interface.h: Fixed Fuzz errors from
+	  #pragma warnings.
+
 Mon Feb 11 16:04:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Fault_Tolerance_Service.h: 
