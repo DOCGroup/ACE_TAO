@@ -1,3 +1,8 @@
+Fri May 30 14:15:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* VERSION: 
+	* PROBLEM-REPORT-FORM (Subject): Files needed for the release.
+
 Fri May 30 14:11:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/Version.h: Changed the version info to be 0.3.1 instead of
