@@ -1,7 +1,9 @@
 <HTML>
 <TITLE>Portable Interceptors</TITLE>
 <BODY>
-<CENTER><H1>Portable Interceptors</H1></CENTER>
+
+<Hr><P>
+<H3>Portable Interceptors</H3>
 
 <BODY text = "#000000"
 link="#000fff"
@@ -18,6 +20,7 @@ once we have the new mechanism in place.</p>
 
 <p>The revised interceptor implementation will be available shortly.</p>
 
+<Hr><P>
 <h3><a name="toc">Table of Contents</a></h3>
 <ul>
   <li><a href="#context">Context</a>
@@ -27,6 +30,7 @@ once we have the new mechanism in place.</p>
   <li><a href="#ref">References</a>
 </ul>
 
+<Hr><P>
 <h2><a name="context">Context</a></h2>
 
 <p>Interceptors allow you to interpose other CORBA services to the ORB
@@ -43,8 +47,9 @@ Portable Interceptor</a>" specification which will remedy the problems
 and allow application users to use interceptos from different venders
 with their ORBs. </p>
 
-<h2><a name="implement">TAO's Implementation of "Portable
-Interceptors"</a></h2>
+<Hr><P>
+<h3><a name="implement">TAO's Implementation of "Portable
+Interceptors"</a></h3>
 
 <p>TAO's portable interceptor implementation was developped before
 even a joint submission was available.  There were several proposed
@@ -60,8 +65,9 @@ finalized.</p>
 proposed spec., this document provide some guidelines on how you can
 revise your portable interceptors to work with the "standard." </p>
 
-<h2><a name="api">Guide for Transitting from TAO's Old "Portable"
-Interceptor APIs to the Standard Portable Interceptor APIs</a></h2>
+<Hr><P>
+<h3><a name="api">Guide for Transitting from TAO's Old "Portable"
+Interceptor APIs to the Standard Portable Interceptor APIs</a></h3>
 
 <p>Please refer to the working draft for details on the proposed
 Portable Interceptor interfaces.</p>
@@ -261,13 +267,15 @@ module PortableInterceptor
 #pragma prefix ""
 </pre>
 
-<h2><a name="status">Current Status</a></h2>
+<Hr><P>
+<h3><a name="status">Current Status</a></h3>
 <ul>
   <li>We will change the temporary interceptor implementation to
       conform with the proposed spec. shortly.
 </ul>
 
-<h2><a name="future">Future Works</a></h2>
+<Hr><P>
+<h2><a name="future">Future Work</a></h2>
 <ol>
   <li><p>There will only be request-level interceptors.</p></li>
 
@@ -276,7 +284,8 @@ module PortableInterceptor
   <li><p>Add support for "standard" portable interceptors.</p></li>
 </ol>
 
-<H3><a name="ref">References:</a></H3>
+<Hr><P>
+<H3><a name="ref">References</a></H3>
 <UL>
   <LI><a href="ftp://ftp.omg.org/pub/docs/orbos/99-10-01.pdf">
       99-10-01</a> Portable Interceptors Working Draft -- Joint Revised

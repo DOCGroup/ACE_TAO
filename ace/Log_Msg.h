@@ -104,7 +104,7 @@
 class ACE_Export ACE_Log_Msg_Callback
 {
   // = TITLE
-  //     An interface class used for getting logging callbacks.
+  //     An interface class used to get logging callbacks.
   //
   // = DESCRIPTION
   //     Users who are interested in getting the logging messages
@@ -122,7 +122,9 @@ class ACE_Export ACE_Log_Msg_Callback
   //     Therefore, you may need to register your callback object with
   //     many <ACE_Log_Msg> objects (and have the correct
   //     synchronization in the <log> method) or have a separate
-  //     callback object per Log_Msg object.
+  //     callback object per Log_Msg object.  Moreover,
+  //     <ACE_Log_Msg_Callbacks> are not inherited when a new thread
+  //     is spawned, so you'll need to reset these in each new thread.
 public:
   virtual ~ACE_Log_Msg_Callback (void);
   // No-op virtual destructor.
@@ -289,7 +291,9 @@ public:
   ACE_Log_Msg_Callback *msg_callback (ACE_Log_Msg_Callback *c);
   ACE_Log_Msg_Callback *msg_callback (void) const;
   // Set a new callback object and return the existing callback to
-  // allow "chaining".
+  // allow "chaining".  Note that <ACE_Log_Msg_Callback>s are not
+  // inherited when spawning a new thread, so you'll need to reset
+  // them in each thread.
 
   // = Nesting depth increment and decrement.
   int inc (void);

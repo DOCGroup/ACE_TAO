@@ -20,8 +20,12 @@
 <P>
  
 <H1 ALIGN="CENTER">Implementing Pluggable Protocols for TAO</H1>
-<P ALIGN="CENTER"><STRONG>Fred Kuhns, Douglas C. Schmidt, Carlos
-	O'Ryan, Ossama Othman, Bruce Trask</STRONG></P>
+<P ALIGN="CENTER"><STRONG>
+<A HREF="http://www.cs.wustl.edu/~fredk">Fred Kuhns</A>, 
+<A HREF="http://www.eng.uci.edu/~schmidt/">Douglas C. Schmidt</A>,
+<A HREF="http://www.cs.wustl.edu/~coryan">Carlos O'Ryan</A>, 
+<A HREF="http://www.cs.wustl.edu/~othman/">Ossama Othman</A>,
+and <A HREF="mailto:BTRASK@contactsystems.com">Bruce Trask</A></STRONG></P>
 
 
 <P ALIGN="CENTER">
@@ -29,9 +33,35 @@ Center for Distributed Object Computing<BR>
 Washington University at St.Louis
 </P>
 
+<P><HR><P>
+<H3>Overview</H3><P>
+
+To be an effective platform for performance-sensitive real-time and
+embedded applications, off-the-shelf CORBA middleware must preserve
+the communication-layer quality of service (QoS) properties of
+applications end-to-end.  However, the standard CORBA GIOP/IIOP
+interoperability protocols are not well suited for applications that
+cannot tolerate the message footprint size, latency, and jitter
+associated with general-purpose messaging and transport protocols.  It
+is essential, therefore, to develop standard <EM>pluggable protocols
+frameworks</em> that allow custom messaging and transport protocols to
+be configured flexibly and used transparently by applications. 
+This document explains how to develop pluggable protocols using TAO's
+pluggable protocols framework. <P>
+
+Here are some links that describe TAO's pluggable protocols framework,
+though not how to implement one: <BLOCKQUOTE> 
+<A
+HREF="../releasenotes/index.html#pp">http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/index.html#pp</A><BR>
+
+<A HREF="http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz">http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz</A><BR>
+<A
+HREF="http://www.cs.wustl.edu/~schmidt/pluggable_protocols.ps.gz">http://www.cs.wustl.edu/~schmidt/pluggable_protocols.ps.gz</A>
+</BLOCKQUOTE>
+
 <P>
-<BR><HR>
-<!-- Table of Contents -->
+<HR>
+<H3>Table of Contents</H3><P>
 <UL>
 <LI><A NAME="TOC_SECTION100" HREF="#SECTION100">Overview of Implementation of Pluggable Protocols for TAO</A>
 <UL>
@@ -189,7 +219,8 @@ For example, ACE wraps the <I>socket</I> API to create an <TT>ACE_INET_Addr</TT>
 protocol layer 4, aka <I>TP4</I>, should be implemented similarly. A TP4 implementation
 could have an <TT>ACE_TP4_Addr</TT>, <TT>ACE_TP4_Acceptor</TT>, <TT>ACE_TP4_Connector</TT>
 and an <TT>ACE_TP4_Stream</TT>. Any new implementation should retain the interface
-provided by the base <TT>IPC_SAP</TT> classes in ACE.</LI>
+provided by the base <TT>IPC_SAP</TT> classes in ACE.</LI> <P>
+
 <LI>Once the above ACE <TT>IPC_SAP</TT> components have been implemented, creating
 the necessary TAO pluggable protocol components should be fairly easy. In fact,
 much of the code can be ``cut and pasted'' from existing TAO pluggable protocol
@@ -2631,34 +2662,33 @@ TAO's existing pluggable protocols use those ACE classes/interfaces.
 
 As long as you use the same interface for your protocol as the
 interface for ace/ACE_SOCK* and tao/IIOP* then you shouldn't have much
-of a problem.</BLOCKQUOTE> <P>Here are some links that describe
-the pluggable protocols framework, though not how to implement one:
-<BLOCKQUOTE> <A
-HREF="../releasenotes/index.html#pp">http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/index.html#pp</A><BR>
+of a problem.</BLOCKQUOTE> <P>Note also that the TAO files pluggable.*
+are important to review and understand as they contain the abstract
+classes that form the common inteface for TAO's pluggable protocol
+framework.  <BR> <P>Getting a full understanding on how IIOP was
+implemented (GIOP over TCP/IP) and also seeing how provisions were
+made to add UIOP, was very helpful to adding my own protocol.  In
+understanding IIOP, I needed to review the section of the OMG CORBA
+spec on GIOP, IIOP and Object references and see how this would apply
+to my protocol.  <BR>
 
-<A HREF="http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz">http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz</A>
-<A
-HREF="http://www.cs.wustl.edu/~schmidt/pluggable_protocols.ps.gz">http://www.cs.wustl.edu/~schmidt/pluggable_protocols.ps.gz</A>
-</BLOCKQUOTE>
+<P>In my case, I added a transport layer that uses SCRAMNet (from
+Systran Corp) replicated shared memory hardware.  This is actual
+physical memory cards located on two different machines.  When a
+change is made to one memory then that change appears very quickly
+(very low latency here) in the other memory.  I decided that I would
+implement GIOP over SCRAMNet as this seemed to be the simplest.  With
+SCRAMNet, one could implement this transport layer into the TAO ORB in
+a few different ways, GIOP over SCRAMNet, Environment-specific
+inter-ORB protocol (ESIOP) or using collocation (since it is shared
+replicated memory).  I have not done the latter two, only GIOP over
+SCRAMNet just to get a proof of concept working.
 
-<P>Note also that the TAO files pluggable.* are important to review and understand as they contain
-the abstract classes that form the common inteface for TAO's pluggable protocol framework.
-<BR>
-<P>Getting a full understanding on how IIOP was implemented (GIOP over TCP/IP) and also seeing
-how provisions were made to add UIOP, was very helpful to adding my own protocol.
-In understanding IIOP, I needed to review the section of the OMG CORBA spec on GIOP, 
-IIOP and Object references and see how this would apply to my protocol.
-<BR>
-<P>In my case, I added a transport layer that uses SCRAMNet (from Systran Corp) replicated shared memory hardware.  This is actual physical memory cards located on two different machines.  When a change is made to one memory then that change appears very quickly (very low latency here) in
-the other memory.  I decided that I would implement GIOP over SCRAMNet as this seemed
-to be the simplest.  With SCRAMNet, one could implement this transport layer into the TAO ORB
-in a few different ways, GIOP over SCRAMNet, Environment-specific inter-ORB protocol (ESIOP)
-or using collocation (since it is shared replicated memory).  I have not done the latter two, only
-GIOP over SCRAMNet just to get a proof of concept working.
-<BR><P>
-For a graphical representation of the extensions for the new SCRAMNet classes I have may a skeletal
-Rose diagram showing (at this point) the inheritance relationships of the new and existing classes.
+<BR><P> For a graphical representation of the extensions for the new
+SCRAMNet classes I have may a skeletal Rose diagram showing (at this
+point) the inheritance relationships of the new and existing classes.
 See (TBD) ftp site for this Rose diagram.
+
 <BR><P>
 The new classes created were.
 <BR>
@@ -3254,6 +3284,26 @@ H. Hueni, R. Johnson, and R. Engel, ``A Framework for Network Protocol
 F. Buschmann, R. Meunier, H. Rohnert, P. Sommerlad, and M. Stal, <EM>  Pattern-Oriented Software Architecture - A System of Patterns</EM>.
 <BR>Wiley and Sons, 1996.
 
+<P></P><DT><A NAME="Schmidt:99x">6</A>
+<DD>
+Carlos O'Ryan, Fred Kuhns, Douglas C. Schmidt, Ossama Othman, and Jeff
+Parsons, <A
+HREF="http://www.cs.wustl.edu/~schmidt/pluggable_protocols.ps.gz"> The
+Design and Performance of a Pluggable Protocols Framework for
+Real-time Distributed Object Computing Middleware</A>, Proceedings of
+the IFIP/ACM <A
+HREF="://www.research.ibm.com/Middleware2000/">Middleware 2000</A>
+Conference, Pallisades, New York, April 3-7, 2000. <P>
+
+<P></P><DT><A NAME="Schmidt:99c">7</A> <DD> Fred Kuhns, Carlos O'Ryan,
+Douglas C. Schmidt, Ossama Othman, and Jeff Parsons, <A
+HREF="http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz">The Design and
+Performance of a Pluggable Protocols Framework for Object Request
+Broker Middleware,</A> Proceedings of the <A
+HREF="http://www.isi.edu/pfhsn99/call.html">IFIP Sixth International
+Workshop on Protocols For High-Speed Networks (PfHSN '99)</A>, Salem,
+MA, August 25--27, 1999. <P>
+
 </DL>
 
 <P>
@@ -3270,7 +3320,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:othman@cs.wustl.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Sat Dec 18 14:39:35 CST 1999
+Last modified: Sun Dec 19 13:26:43 CST 1999
 <!-- hhmts end -->
 </BODY>
 </HTML>

@@ -44,31 +44,38 @@ ACE to support only those <a href =
 "http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/ACE-subsets.html">components</a>
 that are required by TAO. Secondly, we <a href =
 "http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/TAO-INSTALL.html">configure</a>
-TAO to only support the components specified by the <em>minimumCORBA</em>
-specification.  The following two tables show the footprint reduction
-achieved.  Note that the IDL Compiler column refers to the code
-required to collaborate between the IDL compiler and the ORB, and not
-to the code for the IDL compiler itself.
-
+TAO to only support the components specified by the
+<em>minimumCORBA</em> specification.  The following two tables show
+the footprint reduction achieved.  Note that the IDL Compiler column
+refers to the code required to collaborate between the IDL compiler
+and the ORB, and not to the code for the IDL compiler itself.
 <p>
 <hr>
 <p>
 
-<em>Note: All measurement are for ACE 5.0 and TAO 1.0 using
-egcs-2.91.60 on SunOS5.7<br>
+Note: All measurement are for ACE 5.0 and TAO 1.0 using egcs-2.91.60
+on SunOS5.7<P>
 
-Make options used were:
+The <a
+href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html#flags">make
+flags</a> options used were: <P>
 
-<code> debug=0 optimize=1 static_libs_only=1 DEFFLAGS=-DACE_USE_RCSID=0 </code> <br>
+<code> debug=0 optimize=1 static_libs_only=1 DEFFLAGS=-DACE_USE_RCSID=0 </code> <P>
 
-The above make options translate into:
+These options translate into:<P>
+<UL>
+<LI> No debugging
+<LI> Optimization is set to -O2
+<LI> Static ACE and TAO libraries
+<LI> Use of RCS Ids is turned off
+</UL>
+<p>
 
-(a) No debugging,
-(b) Optimization is set to -O2,
-(c) Static ACE and TAO libraries, and
-(d) Use of RCS Ids is turned off. <br>
-
-<p></em>
+To build a TAO static library, if shared libraries are the default,
+use <code>make static_libs_only=1</code> (make sure to do this for
+ACE, as well).  If you're using recent versions of GNU GCC, you can
+use the <A HREF="../ACE-INSTALL.html#repo">-frepo</A> option, which
+typically reduces the footprint by another 25 percent. <P>
 
 <p>
 <hr>

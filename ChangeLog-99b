@@ -1,3 +1,9 @@
+Tue Dec 21 08:02:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Log_Msg.h (ACE_Log_Msg): Clarified that the ACE_Log_Msg_Callbacks
+	  are not inherited when a new thread is spawned.  Thanks to Airat
+ 	  A. Sadreev <airat@hq.tatenergo.ru> for reporting this.
+
 Tue Dec 21 11:31:18 1999  bala  <bala@cs.wustl.edu>
 
         * ACE version 5.0.10 released.
