@@ -822,6 +822,30 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
 
     }
 
+  // Prepare the request header
+  os->indent ();
+  *os << "_tao_call.prepare_header (";
+  switch (node->flags ())
+    {
+    case AST_Operation::OP_oneway:
+      *os << "0";
+      break;
+    default:
+      *os << "1";
+    }
+  *os << ", ACE_TRY_ENV);\n";
+  // check if there is an exception
+  if (this->gen_check_interceptor_exception (bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for checking exception failed\n"),
+                        -1);
+
+    }
+
+
   // now make sure that we have some in and inout parameters. Otherwise, there
   // is nothing to be marshaled in
   if (this->has_param_type (node, AST_Argument::dir_IN) ||

@@ -60,10 +60,6 @@ TAO_GIOP_Twoway_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
   this->transport_->start_request (this->orb_core_,
                                    this->profile_,
-                                   this->opname_,
-                                   this->request_id_,
-                                   this->service_info_,
-                                   1,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }

@@ -51,12 +51,12 @@ CORBA_Pollable_ptr CORBA_Pollable::_narrow (
   if (servant == 0)
     {
       CORBA_Pollable_ptr rval = CORBA_Pollable::_nil ();
-      
+
       ACE_NEW_RETURN (rval,
-                      CORBA_Pollable (stub),  
+                      CORBA_Pollable (stub),
                       CORBA_Pollable::_nil ());
-                     
-      return rval; 
+
+      return rval;
     }
 
   CORBA_Pollable_ptr retval = CORBA_Pollable::_nil ();
@@ -64,7 +64,7 @@ CORBA_Pollable_ptr CORBA_Pollable::_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_CORBA::_tao_collocated_Pollable (
-          ACE_reinterpret_cast (POA_CORBA::Pollable_ptr, 
+          ACE_reinterpret_cast (POA_CORBA::Pollable_ptr,
                                 servant),
           stub
         ),
@@ -89,12 +89,12 @@ CORBA_Pollable_ptr CORBA_Pollable::_unchecked_narrow (
   if (servant == 0)
     {
       CORBA_Pollable_ptr rval = CORBA_Pollable::_nil ();
-      
+
       ACE_NEW_RETURN (rval,
-                      CORBA_Pollable (stub),  
+                      CORBA_Pollable (stub),
                       CORBA_Pollable::_nil ());
-                     
-      return rval; 
+
+      return rval;
     }
 
   CORBA_Pollable_ptr retval = CORBA_Pollable::_nil ();
@@ -102,7 +102,7 @@ CORBA_Pollable_ptr CORBA_Pollable::_unchecked_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_CORBA::_tao_collocated_Pollable (
-          ACE_reinterpret_cast (POA_CORBA::Pollable_ptr, 
+          ACE_reinterpret_cast (POA_CORBA::Pollable_ptr,
                                 servant),
           stub
         ),
@@ -136,6 +136,9 @@ CORBA::Boolean CORBA_Pollable::is_ready (
     ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
     if (!(
@@ -190,6 +193,9 @@ CORBA_PollableSet_ptr CORBA_Pollable::create_pollable_set (
     ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -249,12 +255,12 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_narrow (
   if (servant == 0)
     {
       CORBA::DIIPollable_ptr rval = CORBA_Pollable::_nil ();
-      
+
       ACE_NEW_RETURN (rval,
-                      CORBA::DIIPollable (stub),  
+                      CORBA::DIIPollable (stub),
                       CORBA::DIIPollable::_nil ());
-                     
-      return rval; 
+
+      return rval;
     }
 
   CORBA::DIIPollable_ptr retval = CORBA::DIIPollable::_nil ();
@@ -262,7 +268,7 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_CORBA::_tao_collocated_DIIPollable (
-          ACE_reinterpret_cast (POA_CORBA::DIIPollable_ptr, 
+          ACE_reinterpret_cast (POA_CORBA::DIIPollable_ptr,
                                 servant),
           stub
         ),
@@ -287,12 +293,12 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_unchecked_narrow (
   if (servant == 0)
     {
       CORBA::DIIPollable_ptr rval = CORBA_Pollable::_nil ();
-      
+
       ACE_NEW_RETURN (rval,
-                      CORBA::DIIPollable (stub),  
+                      CORBA::DIIPollable (stub),
                       CORBA::DIIPollable::_nil ());
-                     
-      return rval; 
+
+      return rval;
     }
 
   CORBA::DIIPollable_ptr retval = CORBA::DIIPollable::_nil ();
@@ -300,7 +306,7 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_unchecked_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_CORBA::_tao_collocated_DIIPollable (
-          ACE_reinterpret_cast (POA_CORBA::DIIPollable_ptr, 
+          ACE_reinterpret_cast (POA_CORBA::DIIPollable_ptr,
                                 servant),
           stub
         ),
@@ -345,12 +351,12 @@ CORBA_PollableSet_ptr CORBA_PollableSet::_narrow (
   if (servant == 0)
     {
       CORBA_PollableSet_ptr rval = CORBA_PollableSet::_nil ();
-      
+
       ACE_NEW_RETURN (rval,
-                      CORBA_PollableSet (stub),  
+                      CORBA_PollableSet (stub),
                       CORBA_PollableSet::_nil ());
-                     
-      return rval; 
+
+      return rval;
     }
 
   CORBA_PollableSet_ptr retval = CORBA_PollableSet::_nil ();
@@ -358,7 +364,7 @@ CORBA_PollableSet_ptr CORBA_PollableSet::_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_CORBA::_tao_collocated_PollableSet (
-          ACE_reinterpret_cast (POA_CORBA::PollableSet_ptr, 
+          ACE_reinterpret_cast (POA_CORBA::PollableSet_ptr,
                                 servant),
           stub
         ),
@@ -383,12 +389,12 @@ CORBA_PollableSet_ptr CORBA_PollableSet::_unchecked_narrow (
   if (servant == 0)
     {
       CORBA_PollableSet_ptr rval = CORBA_PollableSet::_nil ();
-      
+
       ACE_NEW_RETURN (rval,
-                      CORBA_PollableSet (stub),  
+                      CORBA_PollableSet (stub),
                       CORBA_PollableSet::_nil ());
-                     
-      return rval; 
+
+      return rval;
     }
 
   CORBA_PollableSet_ptr retval = CORBA_PollableSet::_nil ();
@@ -396,7 +402,7 @@ CORBA_PollableSet_ptr CORBA_PollableSet::_unchecked_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_CORBA::_tao_collocated_PollableSet (
-          ACE_reinterpret_cast (POA_CORBA::PollableSet_ptr, 
+          ACE_reinterpret_cast (POA_CORBA::PollableSet_ptr,
                                 servant),
           stub
         ),
@@ -558,6 +564,9 @@ CORBA::DIIPollable_ptr CORBA_PollableSet::create_dii_pollable (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
+
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
@@ -605,6 +614,9 @@ void CORBA_PollableSet::add_pollable (
     ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK;
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK;
 
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
     if (!(
@@ -660,6 +672,9 @@ CORBA_Pollable_ptr CORBA_PollableSet::poll (
     ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
     if (!(
@@ -720,6 +735,9 @@ void CORBA_PollableSet::remove (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK;
 
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK;
+
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
     if (!(
           (_tao_out << potential)
@@ -768,6 +786,9 @@ CORBA::UShort CORBA_PollableSet::number_left (
     ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);

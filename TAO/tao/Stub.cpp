@@ -426,6 +426,9 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
+          call.prepare_header (0, ACE_TRY_ENV);
+          ACE_CHECK;
+
           this->put_params (ACE_TRY_ENV, info, call, args);
           ACE_CHECK;
 
@@ -527,6 +530,9 @@ TAO_Stub::do_dynamic_call (const char *opname,
       for (;;)
         {
           call.start (ACE_TRY_ENV);
+          ACE_CHECK;
+
+          call.prepare_header (1, ACE_TRY_ENV);
           ACE_CHECK;
 
           this->put_params (call, args, ACE_TRY_ENV);
@@ -740,6 +746,9 @@ TAO_Stub::do_dynamic_call (const char *opname,
       for (;;)
         {
           call.start (ACE_TRY_ENV);
+          ACE_CHECK;
+
+          call.prepare_header (0, ACE_TRY_ENV);
           ACE_CHECK;
 
           this->put_params (call, args, ACE_TRY_ENV);

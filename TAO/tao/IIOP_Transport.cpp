@@ -121,10 +121,6 @@ TAO_IIOP_Client_Transport::client_handler (void)
 void
 TAO_IIOP_Client_Transport::start_request (TAO_ORB_Core *orb_core,
                                           const TAO_Profile* pfile,
-                                          const char* opname,
-                                          CORBA::ULong request_id,
-                                          const IOP::ServiceContextList &ctx,
-                                          CORBA::Boolean is_roundtrip,
                                           TAO_OutputCDR &output,
                                           CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -143,31 +139,6 @@ TAO_IIOP_Client_Transport::start_request (TAO_ORB_Core *orb_core,
                                TAO_GIOP::Request,
                                output,
                                orb_core) == 0)
-    ACE_THROW (CORBA::MARSHAL ());
-
-  // Then fill in the rest of the RequestHeader
-  //
-  // The first element of header is service context list;
-  // transactional context would be acquired here using the
-  // transaction service APIs.  Other kinds of context are as yet
-  // undefined.
-  //
-  // Last element of request header is the principal; no portable way
-  // to get it, we just pass empty principal (convention: indicates
-  // "anybody").  Steps upward in security include passing an
-  // unverified user ID, and then verifying the message (i.e. a dummy
-  // service context entry is set up to hold a digital signature for
-  // this message, then patched shortly before it's sent).
-  static CORBA::Principal_ptr principal = 0;
-
-  if (TAO_GIOP::write_request_header (ctx,
-                                      request_id,
-                                      is_roundtrip,
-                                      key,
-                                      opname,
-                                      principal,
-                                      output,
-                                      orb_core) == 0)
     ACE_THROW (CORBA::MARSHAL ());
 }
 

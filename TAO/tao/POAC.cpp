@@ -312,14 +312,14 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
       return rval;
     }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  
+
   PortableServer::ThreadPolicy_ptr retval =
     PortableServer::ThreadPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_PortableServer::_tao_collocated_ThreadPolicy (
-          ACE_reinterpret_cast (POA_PortableServer::ThreadPolicy_ptr, 
+          ACE_reinterpret_cast (POA_PortableServer::ThreadPolicy_ptr,
                                 servant),
           stub
         ),
@@ -350,6 +350,9 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
   {
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -469,14 +472,14 @@ PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (
       return rval;
     }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  
+
   PortableServer::LifespanPolicy_ptr retval =
     PortableServer::LifespanPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_PortableServer::_tao_collocated_LifespanPolicy (
-          ACE_reinterpret_cast (POA_PortableServer::LifespanPolicy_ptr, 
+          ACE_reinterpret_cast (POA_PortableServer::LifespanPolicy_ptr,
                                 servant),
           stub
         ),
@@ -507,6 +510,9 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
   {
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -626,14 +632,14 @@ PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narr
       return rval;
     }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  
+
   PortableServer::IdUniquenessPolicy_ptr retval =
     PortableServer::IdUniquenessPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_PortableServer::_tao_collocated_IdUniquenessPolicy (
-          ACE_reinterpret_cast (POA_PortableServer::IdUniquenessPolicy_ptr, 
+          ACE_reinterpret_cast (POA_PortableServer::IdUniquenessPolicy_ptr,
                                 servant),
           stub
         ),
@@ -664,6 +670,9 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
   {
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -782,14 +791,14 @@ PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narr
       return rval;
     }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  
+
   PortableServer::IdAssignmentPolicy_ptr retval =
     PortableServer::IdAssignmentPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_PortableServer::_tao_collocated_IdAssignmentPolicy (
-          ACE_reinterpret_cast (POA_PortableServer::IdAssignmentPolicy_ptr, 
+          ACE_reinterpret_cast (POA_PortableServer::IdAssignmentPolicy_ptr,
                                 servant),
           stub
         ),
@@ -820,6 +829,9 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
   {
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -941,14 +953,14 @@ PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationP
       return rval;
     }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  
+
   PortableServer::ImplicitActivationPolicy_ptr retval =
     PortableServer::ImplicitActivationPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_PortableServer::_tao_collocated_ImplicitActivationPolicy (
-          ACE_reinterpret_cast (POA_PortableServer::ImplicitActivationPolicy_ptr, 
+          ACE_reinterpret_cast (POA_PortableServer::ImplicitActivationPolicy_ptr,
                                 servant),
           stub
         ),
@@ -979,6 +991,9 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
   {
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -1098,14 +1113,14 @@ PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolic
       return rval;
     }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  
+
   PortableServer::ServantRetentionPolicy_ptr retval =
     PortableServer::ServantRetentionPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_PortableServer::_tao_collocated_ServantRetentionPolicy (
-          ACE_reinterpret_cast (POA_PortableServer::ServantRetentionPolicy_ptr, 
+          ACE_reinterpret_cast (POA_PortableServer::ServantRetentionPolicy_ptr,
                                 servant),
           stub
         ),
@@ -1136,6 +1151,9 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
   {
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -1255,14 +1273,14 @@ PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPol
       return rval;
     }
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  
+
   PortableServer::RequestProcessingPolicy_ptr retval =
     PortableServer::RequestProcessingPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_PortableServer::_tao_collocated_RequestProcessingPolicy (
-          ACE_reinterpret_cast (POA_PortableServer::RequestProcessingPolicy_ptr, 
+          ACE_reinterpret_cast (POA_PortableServer::RequestProcessingPolicy_ptr,
                                 servant),
           stub
         ),
@@ -1293,6 +1311,9 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
   {
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -1380,13 +1401,13 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
       // This can only be colocated
       ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::POAManager::_nil ());
 
-  PortableServer::POAManager_ptr retval = 
+  PortableServer::POAManager_ptr retval =
     PortableServer::POAManager::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_PortableServer::_tao_collocated_POAManager (
-          ACE_reinterpret_cast (POA_PortableServer::POAManager_ptr, 
+          ACE_reinterpret_cast (POA_PortableServer::POAManager_ptr,
                                 servant),
           0
         ),
@@ -1593,7 +1614,7 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_PortableServer::_tao_collocated_AdapterActivator (
-          ACE_reinterpret_cast (POA_PortableServer::AdapterActivator_ptr, 
+          ACE_reinterpret_cast (POA_PortableServer::AdapterActivator_ptr,
                                 servant),
           0
         ),
@@ -1666,7 +1687,7 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_PortableServer::_tao_collocated_ServantManager (
-          ACE_reinterpret_cast (POA_PortableServer::ServantManager_ptr, 
+          ACE_reinterpret_cast (POA_PortableServer::ServantManager_ptr,
                                 servant),
           0
         ),
@@ -1739,7 +1760,7 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_PortableServer::_tao_collocated_ServantActivator (
-          ACE_reinterpret_cast (POA_PortableServer::ServantActivator_ptr, 
+          ACE_reinterpret_cast (POA_PortableServer::ServantActivator_ptr,
                                 servant),
           0
         ),
@@ -1813,7 +1834,7 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_PortableServer::_tao_collocated_ServantLocator (
-          ACE_reinterpret_cast (POA_PortableServer::ServantLocator_ptr, 
+          ACE_reinterpret_cast (POA_PortableServer::ServantLocator_ptr,
                                 servant),
           0
         ),
@@ -1889,7 +1910,7 @@ PortableServer::POA_ptr PortableServer::POA::_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_PortableServer::_tao_collocated_POA (
-          ACE_reinterpret_cast (POA_PortableServer::POA_ptr, 
+          ACE_reinterpret_cast (POA_PortableServer::POA_ptr,
                                 servant),
           0
         ),
@@ -3436,7 +3457,7 @@ PortableServer::Current_ptr PortableServer::Current::_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_PortableServer::_tao_collocated_Current (
-          ACE_reinterpret_cast (POA_PortableServer::Current_ptr, 
+          ACE_reinterpret_cast (POA_PortableServer::Current_ptr,
                                 servant),
           0
         ),
@@ -3611,6 +3632,9 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
   {
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (_tao_PortableServer_Current_get_object_id_exceptiondata, 1, ACE_TRY_ENV);

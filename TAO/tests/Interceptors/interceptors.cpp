@@ -35,7 +35,6 @@ Echo_Client_Request_Interceptor::preinvoke (CORBA::ULong rid,
               op,
               rid));
 
-#if defined (TEST_SERVICECONTEXT)
   CORBA::ULong length = sc.length ();
   sc.length (length + 1);
 
@@ -46,10 +45,8 @@ Echo_Client_Request_Interceptor::preinvoke (CORBA::ULong rid,
   ACE_NEW (buf,
            CORBA::Octet [string_len]);
 
+  ACE_OS::strcpy (ACE_static_cast (char *, buf), request_msg);
   sc[length].context_data.replace (string_len, string_len, buf, 1);
-#else
-  ACE_UNUSED_ARG (sc);
-#endif /* TEST_SERVICECONTEXT */
 }
 
 void
@@ -67,18 +64,14 @@ Echo_Client_Request_Interceptor::postinvoke (CORBA::ULong rid,
               op,
               rid));
 
-#if defined (TEST_SERVICECONTEXT)
   for (CORBA::ULong size = 0; size < sc.length (); ++size)
-    if (sc[size].context_id == request_ctx_id)
+    if (sc[size].context_id == reply_ctx_id)
       {
         const char *buf = ACE_static_cast (const char *, sc[size].context_data.get_buffer ());
         ACE_DEBUG ((LM_DEBUG,
                     "  Received service context: %s\n",
                     buf));
       }
-#else
-  ACE_UNUSED_ARG (sc);
-#endif /* TEST_SERVICECONTEXT */
 }
 
 void
@@ -121,7 +114,6 @@ Echo_Server_Request_Interceptor::preinvoke (CORBA::ULong rid,
               op,
               rid));
 
-#if defined (TEST_SERVICECONTEXT)
   for (CORBA::ULong size = 0; size < sc.length (); ++size)
     if (sc[size].context_id == request_ctx_id)
       {
@@ -130,9 +122,6 @@ Echo_Server_Request_Interceptor::preinvoke (CORBA::ULong rid,
                     "  Received service context: %s\n",
                     buf));
       }
-#else
-  ACE_UNUSED_ARG (sc);
-#endif /* TEST_SERVICECONTEXT */
 }
 
 void
@@ -150,7 +139,6 @@ Echo_Server_Request_Interceptor::postinvoke (CORBA::ULong rid,
               op,
               rid));
 
-#if defined (TEST_SERVICECONTEXT)
   CORBA::ULong length = sc.length ();
   sc.length (length + 1);
 
@@ -161,10 +149,8 @@ Echo_Server_Request_Interceptor::postinvoke (CORBA::ULong rid,
   ACE_NEW (buf,
            CORBA::Octet [string_len]);
 
+  ACE_OS::strcpy (ACE_static_cast (char *, buf), reply_msg);
   sc[length].context_data.replace (string_len, string_len, buf, 1);
-#else
-  ACE_UNUSED_ARG (sc);
-#endif /* TEST_SERVICECONTEXT */
 }
 
 void

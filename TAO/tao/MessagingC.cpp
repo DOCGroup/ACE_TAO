@@ -197,13 +197,13 @@ Messaging::RebindPolicy_ptr Messaging::RebindPolicy::_unchecked_narrow (
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RebindPolicy::_nil ());
 
-  Messaging::RebindPolicy_ptr retval = 
+  Messaging::RebindPolicy_ptr retval =
     Messaging::RebindPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_RebindPolicy (
-          ACE_reinterpret_cast (POA_Messaging::RebindPolicy_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::RebindPolicy_ptr,
                                 servant),
           stub
         ),
@@ -275,13 +275,13 @@ Messaging::SyncScopePolicy_ptr Messaging::SyncScopePolicy::_unchecked_narrow (
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::SyncScopePolicy::_nil ());
 
-  Messaging::SyncScopePolicy_ptr retval = 
+  Messaging::SyncScopePolicy_ptr retval =
     Messaging::SyncScopePolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_SyncScopePolicy (
-          ACE_reinterpret_cast (POA_Messaging::SyncScopePolicy_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::SyncScopePolicy_ptr,
                                 servant),
           stub
         ),
@@ -381,13 +381,13 @@ Messaging::RequestPriorityPolicy_ptr Messaging::RequestPriorityPolicy::_unchecke
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RequestPriorityPolicy::_nil ());
 
-  Messaging::RequestPriorityPolicy_ptr retval = 
+  Messaging::RequestPriorityPolicy_ptr retval =
     Messaging::RequestPriorityPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_RequestPriorityPolicy (
-          ACE_reinterpret_cast (POA_Messaging::RequestPriorityPolicy_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::RequestPriorityPolicy_ptr,
                                 servant),
           stub
         ),
@@ -459,13 +459,13 @@ Messaging::ReplyPriorityPolicy_ptr Messaging::ReplyPriorityPolicy::_unchecked_na
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::ReplyPriorityPolicy::_nil ());
 
-  Messaging::ReplyPriorityPolicy_ptr retval = 
+  Messaging::ReplyPriorityPolicy_ptr retval =
     Messaging::ReplyPriorityPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_ReplyPriorityPolicy (
-          ACE_reinterpret_cast (POA_Messaging::ReplyPriorityPolicy_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::ReplyPriorityPolicy_ptr,
                                 servant),
           stub
         ),
@@ -537,13 +537,13 @@ Messaging::RequestStartTimePolicy_ptr Messaging::RequestStartTimePolicy::_unchec
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RequestStartTimePolicy::_nil ());
 
-  Messaging::RequestStartTimePolicy_ptr retval = 
+  Messaging::RequestStartTimePolicy_ptr retval =
     Messaging::RequestStartTimePolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_RequestStartTimePolicy (
-          ACE_reinterpret_cast (POA_Messaging::RequestStartTimePolicy_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::RequestStartTimePolicy_ptr,
                                 servant),
           stub
         ),
@@ -615,13 +615,13 @@ Messaging::RequestEndTimePolicy_ptr Messaging::RequestEndTimePolicy::_unchecked_
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RequestEndTimePolicy::_nil ());
 
-  Messaging::RequestEndTimePolicy_ptr retval = 
+  Messaging::RequestEndTimePolicy_ptr retval =
     Messaging::RequestEndTimePolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_RequestEndTimePolicy (
-          ACE_reinterpret_cast (POA_Messaging::RequestEndTimePolicy_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::RequestEndTimePolicy_ptr,
                                 servant),
           stub
         ),
@@ -693,13 +693,13 @@ Messaging::ReplyStartTimePolicy_ptr Messaging::ReplyStartTimePolicy::_unchecked_
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::ReplyStartTimePolicy::_nil ());
 
-  Messaging::ReplyStartTimePolicy_ptr retval = 
+  Messaging::ReplyStartTimePolicy_ptr retval =
     Messaging::ReplyStartTimePolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_ReplyStartTimePolicy (
-          ACE_reinterpret_cast (POA_Messaging::ReplyStartTimePolicy_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::ReplyStartTimePolicy_ptr,
                                 servant),
           stub
         ),
@@ -771,13 +771,13 @@ Messaging::ReplyEndTimePolicy_ptr Messaging::ReplyEndTimePolicy::_unchecked_narr
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::ReplyEndTimePolicy::_nil ());
 
-  Messaging::ReplyEndTimePolicy_ptr retval = 
+  Messaging::ReplyEndTimePolicy_ptr retval =
     Messaging::ReplyEndTimePolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_ReplyEndTimePolicy (
-          ACE_reinterpret_cast (POA_Messaging::ReplyEndTimePolicy_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::ReplyEndTimePolicy_ptr,
                                 servant),
           stub
         ),
@@ -849,13 +849,13 @@ Messaging::RelativeRequestTimeoutPolicy_ptr Messaging::RelativeRequestTimeoutPol
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RelativeRequestTimeoutPolicy::_nil ());
 
-  Messaging::RelativeRequestTimeoutPolicy_ptr retval = 
+  Messaging::RelativeRequestTimeoutPolicy_ptr retval =
     Messaging::RelativeRequestTimeoutPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy (
-          ACE_reinterpret_cast (POA_Messaging::RelativeRequestTimeoutPolicy_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::RelativeRequestTimeoutPolicy_ptr,
                                 servant),
           stub
         ),
@@ -928,13 +928,13 @@ Messaging::RelativeRoundtripTimeoutPolicy_ptr Messaging::RelativeRoundtripTimeou
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RelativeRoundtripTimeoutPolicy::_nil ());
 
-  Messaging::RelativeRoundtripTimeoutPolicy_ptr retval = 
+  Messaging::RelativeRoundtripTimeoutPolicy_ptr retval =
     Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy (
-          ACE_reinterpret_cast (POA_Messaging::RelativeRoundtripTimeoutPolicy_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::RelativeRoundtripTimeoutPolicy_ptr,
                                 servant),
           stub
         ),
@@ -1034,13 +1034,13 @@ Messaging::RoutingPolicy_ptr Messaging::RoutingPolicy::_unchecked_narrow (
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RoutingPolicy::_nil ());
 
-  Messaging::RoutingPolicy_ptr retval = 
+  Messaging::RoutingPolicy_ptr retval =
     Messaging::RoutingPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_RoutingPolicy (
-          ACE_reinterpret_cast (POA_Messaging::RoutingPolicy_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::RoutingPolicy_ptr,
                                 servant),
           stub
         ),
@@ -1112,13 +1112,13 @@ Messaging::MaxHopsPolicy_ptr Messaging::MaxHopsPolicy::_unchecked_narrow (
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::MaxHopsPolicy::_nil ());
 
-  Messaging::MaxHopsPolicy_ptr retval = 
+  Messaging::MaxHopsPolicy_ptr retval =
     Messaging::MaxHopsPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_MaxHopsPolicy (
-          ACE_reinterpret_cast (POA_Messaging::MaxHopsPolicy_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::MaxHopsPolicy_ptr,
                                 servant),
           stub
         ),
@@ -1190,13 +1190,13 @@ Messaging::QueueOrderPolicy_ptr Messaging::QueueOrderPolicy::_unchecked_narrow (
   if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::QueueOrderPolicy::_nil ());
 
-  Messaging::QueueOrderPolicy_ptr retval = 
+  Messaging::QueueOrderPolicy_ptr retval =
     Messaging::QueueOrderPolicy::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_QueueOrderPolicy (
-          ACE_reinterpret_cast (POA_Messaging::QueueOrderPolicy_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::QueueOrderPolicy_ptr,
                                 servant),
           stub
         ),
@@ -1452,7 +1452,7 @@ Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_unchecked_narrow (
     servant = obj->_servant()->_downcast ("IDL:Messaging/ReplyHandler:1.0");
   if (servant == 0)
     {
-      Messaging::ReplyHandler_ptr rval = 
+      Messaging::ReplyHandler_ptr rval =
         Messaging::ReplyHandler::_nil ();
 
       ACE_NEW_RETURN (rval,
@@ -1462,13 +1462,13 @@ Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_unchecked_narrow (
       return rval;
     }
 
-  Messaging::ReplyHandler_ptr retval = 
+  Messaging::ReplyHandler_ptr retval =
     Messaging::ReplyHandler::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_ReplyHandler (
-          ACE_reinterpret_cast (POA_Messaging::ReplyHandler_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::ReplyHandler_ptr,
                                 servant),
           stub
         ),
@@ -1547,13 +1547,13 @@ Messaging::Poller_ptr Messaging::Poller::_unchecked_narrow (
       return rval;
     }
 
-  Messaging::Poller_ptr retval = 
+  Messaging::Poller_ptr retval =
     Messaging::Poller::_nil ();
 
   ACE_NEW_RETURN (
       retval,
       POA_Messaging::_tao_collocated_Poller (
-          ACE_reinterpret_cast (POA_Messaging::Poller_ptr, 
+          ACE_reinterpret_cast (POA_Messaging::Poller_ptr,
                                 servant),
           stub
         ),
@@ -1586,6 +1586,9 @@ CORBA::Object_ptr Messaging::Poller::operation_target (
     ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -1635,6 +1638,9 @@ char * Messaging::Poller::operation_name (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
+
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
@@ -1683,6 +1689,9 @@ Messaging::ReplyHandler_ptr Messaging::Poller::associated_handler (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
+
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
@@ -1730,6 +1739,9 @@ void Messaging::Poller::associated_handler (
     ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK;
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK;
 
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
     if (!(
@@ -1780,6 +1792,9 @@ CORBA::Boolean Messaging::Poller::is_from_poller (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
+
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
@@ -1828,6 +1843,9 @@ CORBA::Object_ptr Messaging::Poller::target (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
+
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
@@ -1875,6 +1893,9 @@ char * Messaging::Poller::op_name (
     ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);

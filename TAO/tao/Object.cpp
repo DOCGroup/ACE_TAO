@@ -115,6 +115,9 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
       _tao_call.start (ACE_TRY_ENV);
       ACE_CHECK_RETURN (_tao_retval);
 
+      _tao_call.prepare_header (1, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (_tao_retval);
+
       TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
       if (!(
           (_tao_out << type_id)
@@ -277,6 +280,9 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
+
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
@@ -387,6 +393,9 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
   for (;;)
   {
     _tao_call.start (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
+
+    _tao_call.prepare_header (1, ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
