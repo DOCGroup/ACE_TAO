@@ -1,0 +1,10 @@
+# Conn ID  Hostname     Remote Port  Direction  Max Retry Delay  Local Port
+# -------  --------	----         ---------  ---------------  ----------
+   1       tango.cs	10004	     I          32		 20000
+#  2       tango.cs	10004	     O          32               
+   3       merengue.cs	10004	     O          32		 20001
+#  4       mambo.cs	10004	     O          32		 20000
+#  5       lambada.cs	10004	     O          32		 20000
+#  6       tango.cs	10004	     O          32		 20000
+#  7       tango.cs	5001	     I          32               
+#  8       tango.cs	5002	     O          32               
