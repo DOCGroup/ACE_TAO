@@ -55,8 +55,10 @@ public:
   /// Destructor.
   virtual ~ACE_Recyclable (void);
 
-  // = Set/Get the recyclable bit
+  /// Get the recyclable bit
   ACE_Recyclable_State recycle_state (void) const;
+
+  /// Set the recyclable bit
   void recycle_state (ACE_Recyclable_State new_state);
 
 protected:

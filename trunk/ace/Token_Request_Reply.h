@@ -78,29 +78,42 @@ public:
                      const ACE_TCHAR client_id[],
                      const ACE_Synch_Options &options);
 
-  // = Set/get the length of the encoded/decoded message.
+  /// Get the length of the encoded/decoded message.
   ACE_UINT32 length (void) const;
+
+  /// Set the length of the encoded/decoded message.
   void length (ACE_UINT32);
 
-  // = Set/get the type of proxy
+  /// Get the type of proxy
   int proxy_type (void) const;
+
+  /// Set the type of proxy
   void proxy_type (int proxy_type);
 
-  // = Set/get the type of token
+  /// Get the type of token
   int token_type (void) const;
+
+  /// Set the type of token
   void token_type (int token_type);
 
-  // = Set/get the type of the operation.
+  /// Get the type of the operation.
   ACE_UINT32 operation_type (void) const;
+
+  /// Set the type of the operation.
   void operation_type (ACE_UINT32);
 
-  // = Set/get the requeue position.  These should be used when renew
-  // is the operation type.
+  /// Get the requeue position.  These should be used when renew
+  /// is the operation type.
   ACE_UINT32 requeue_position (void) const;
+
+  /// Set the requeue position.  These should be used when renew
+  /// is the operation type.
   void requeue_position (ACE_UINT32);
 
-  // = Set/get notify.  These should be used when acquire is the operation type.
+  /// Get notify.  These should be used when acquire is the operation type.
   ACE_UINT32 notify (void) const;
+
+  /// Set notify.  These should be used when acquire is the operation type.
   void notify (ACE_UINT32);
 
   // = Set/get the timeout.
@@ -131,43 +144,43 @@ private:
 
   struct Transfer
   {
+    /// Length of entire request.
     ACE_UINT32 length_;
-    // Length of entire request.
 
+    /// Type of the request (i.e., MUTEX, RLOCK, WLOCK...
     ACE_UINT32 token_type_;
-    // Type of the request (i.e., MUTEX, RLOCK, WLOCK...
 
+    /// Type of the request (i.e., MUTEX, RLOCK, WLOCK...
     ACE_UINT32 proxy_type_;
-    // Type of the request (i.e., MUTEX, RLOCK, WLOCK...
 
+    /// Type of the request (i.e., <ACQUIRE>, <RELEASE>, <RENEW>, and <REMOVE>).
     ACE_UINT32 operation_type_;
-    // Type of the request (i.e., <ACQUIRE>, <RELEASE>, <RENEW>, and <REMOVE>).
 
+    /// this only makes sense when operation type is renew
     ACE_UINT32 requeue_position_;
-    // this only makes sense when operation type is renew
 
+    /// this only makes sense when operation type is renew
     ACE_UINT32 notify_;
-    // this only makes sense when operation type is renew
 
     // = ACE_Synch_Options stuff
 
+    /// Indicates if we should block forever.  If 1, then <secTimeout_>
+    /// and <usecTimeout_> indicates how long we should wait.  If 0,
+    /// then we block forever.
     ACE_UINT32 use_timeout_;
-    // Indicates if we should block forever.  If 1, then <secTimeout_>
-    // and <usecTimeout_> indicates how long we should wait.  If 0,
-    // then we block forever.
 
+    /// Max seconds willing to wait for token if not blocking forever.
     ACE_UINT32 sec_;
-    // Max seconds willing to wait for token if not blocking forever.
 
+    /// Max micro seconds to wait for token if not blocking forever.
     ACE_UINT32 usec_;
-    // Max micro seconds to wait for token if not blocking forever.
 
+    /// value returned in <Token_Reply::arg>;
     ACE_UINT32 arg_;
-    // value returned in <Token_Reply::arg>;
 
+    /// The data portion contains the <tokenName_> including a 0 terminator,
+    /// a ':', then the <clientId> including a 0 terminator
     ACE_TCHAR data_[ACE_MAXTOKENNAMELEN + ACE_MAXCLIENTIDLEN + 3];
-    // The data portion contains the <tokenName_> including a 0 terminator,
-    // a ':', then the <clientId> including a 0 terminator
   } transfer_;
 
   /// Pointer to the beginning of the token name in this->data_.
@@ -194,16 +207,22 @@ public:
   /// Default constructor.
   ACE_Token_Reply (void);
 
-  // = Set/get the length of the encoded/decoded message.
+  /// Get the length of the encoded/decoded message.
   ACE_UINT32 length (void) const;
+
+  /// Set the length of the encoded/decoded message.
   void length (ACE_UINT32);
 
-  // = Set/get the errno of a reply.
+  /// Get the errno of a reply.
   ACE_UINT32 errnum (void) const;
+
+  /// Set the errno of a reply.
   void errnum (ACE_UINT32);
 
-  // = Set/get the arg of a reply.
+  /// Get the arg of a reply.
   ACE_UINT32 arg (void) const;
+
+  /// Set the arg of a reply.
   void arg (ACE_UINT32);
 
   /// Encode the message before transfer.
@@ -220,19 +239,19 @@ private:
 
   struct Transfer
   {
+    /// Length of entire reply.
     ACE_UINT32 length_;
-    // Length of entire reply.
 
+    /// Indicates why error occurred if <this->type_> == <FAILURE>.
+    /// Typical reasons include:
+    ///   <EWOULDBLOCK> (if client requested a non-blocking check for the token).
+    ///   <ETIME> (if the client timed out after waiting for the token).
+    ///   <ENOLCK> (if the token lock was removed out from underneath a waiter).
+    ///   <EACCES> (attempt to renew a token that isn't owned by the client).
     ACE_UINT32 errno_;
-    // Indicates why error occurred if <this->type_> == <FAILURE>.
-    // Typical reasons include:
-    //   <EWOULDBLOCK> (if client requested a non-blocking check for the token).
-    //   <ETIME> (if the client timed out after waiting for the token).
-    //   <ENOLCK> (if the token lock was removed out from underneath a waiter).
-    //   <EACCES> (attempt to renew a token that isn't owned by the client).
 
+    /// magic cookie
     ACE_UINT32 arg_;
-    // magic cookie
 
   } transfer_;
 };

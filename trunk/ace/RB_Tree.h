@@ -390,8 +390,8 @@ public:
    */
   int remove (const EXT_ID &k);
 
-  /// Destroys all nodes and sets the root pointer null.
   /// @deprecated
+  /// Destroys all nodes and sets the root pointer null.
   void clear (void);
 
 protected:
@@ -677,34 +677,34 @@ public:
 
   // = DEPRECATED methods.  Please migrate your code to use the new methods instead
 
+  /// @deprecated
   /// Accessor for key of node under iterator (if any).
-  /// DEPRECATED
   EXT_ID *key (void);
 
+  /// @deprecated
   /// Accessor for item of node under iterator (if any).
-  /// DEPRECATED
   INT_ID *item (void);
 
+  /// @deprecated
   /// Move to the first item in the iteration (and in the tree).
-  /// DEPRECATED
   int first (void);
 
+  /// @deprecated
   /// Move to the last item in the iteration (and in the tree).
-  /// DEPRECATED
   int last (void);
 
+  /// @deprecated
   /// Move to the next item in the iteration (and in the tree).
-  /// DEPRECATED
   int next (void);
 
+  /// @deprecated
   /// Move to the previous item in the iteration (and in the tree).
-  /// DEPRECATED
   int previous (void);
 
   /**
+   * @deprecated: use the base class <done> method instead.
    * Returns 0 if the iterator is positioned over a valid ACE_RB_Tree
    * node, returns 1 if not.
-   * DEPRECATED: use the base class <done> method instead.
    */
   int is_done (void);
 

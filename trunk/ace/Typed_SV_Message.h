@@ -42,20 +42,28 @@ public:
                         int max_size = sizeof (T));
   ~ACE_Typed_SV_Message (void);
 
-  // = Get/set the type of the message.
+  /// Get the type of the message.
   long type (void) const;
+
+  /// Set the type of the message.
   void type (long type);
 
-  // = Get/set the length of the message.
+  /// Get the length of the message.
   int length (void) const;
+
+  /// Set the length of the message.
   void length (int l);
 
-  // = Get/set the maximum size of the message.
+  /// Get the maximum size of the message.
   int max_size (void) const;
+
+  /// Set the maximum size of the message.
   void max_size (int m);
 
-  // = Get/set a pointer to the data in the message.
+  /// Get a pointer to the data in the message.
   T &data (void);
+
+  /// Set a pointer to the data in the message.
   void data (const T &data);
 
   /// Dump the state of an object.

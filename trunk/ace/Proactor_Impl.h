@@ -75,8 +75,10 @@ public:
   /// Close all dispatch threads.
   virtual int close_dispatch_threads (int wait) = 0;
 
-  /// Number of thread used as a parameter to CreatIoCompletionPort.
+  /// Get number of thread used as a parameter to CreatIoCompletionPort.
   virtual size_t number_of_threads (void) const = 0;
+
+  /// Set number of thread used as a parameter to CreatIoCompletionPort.
   virtual void number_of_threads (size_t threads) = 0;
 
   /// Get the event handle.
@@ -178,7 +180,7 @@ public:
                                                                               ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                               int priority = 0,
                                                                               int signal_number = ACE_SIGRTMIN) = 0;
-  
+
   /// Create the correct implementation class for ACE_Asynch_Write_Dgram::Result.
   virtual ACE_Asynch_Write_Dgram_Result_Impl *create_asynch_write_dgram_result (ACE_Handler &handler,
                                                                                 ACE_HANDLE handle,

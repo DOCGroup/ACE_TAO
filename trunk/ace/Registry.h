@@ -56,7 +56,7 @@ public:
   // The <id_> field is used,
   // but the <kind_> field is currently ignored
 
-  // A Name is an ordered collections of components (ids)
+  /// A Name is an ordered collections of components (ids)
   typedef ACE_Unbounded_Set<Name_Component> Name;
 
   /// Separator for components in a name
@@ -94,9 +94,10 @@ public:
     /// (Name version)
     void name (Name &name);
 
-    /// Name accessors
-    /// (String version)
+    /// Set Name (String version)
     void name (ACE_TString &name);
+
+    /// Get Name (String version)
     ACE_TString name (void);
 
     /// Type accessor
@@ -139,16 +140,22 @@ public:
             u_long size = 0,
             u_long type = REG_NONE);
 
-    /// Set/Get data
+    /// Set data
     void data (void *data);
+
+    /// Get data
     void *data (void) const;
 
-    /// Set/Get size
+    /// Set size
     void size (u_long size);
+
+    /// Get size
     u_long size (void) const;
 
-    /// Set/Get type
+    /// Set type
     void type (u_long type);
+
+    /// Get type
     u_long type (void) const;
 
   private:
@@ -366,9 +373,10 @@ public:
     /// (Name version)
     void name (Name &name);
 
-    /// Get name
-    /// (String version)
+    /// Set name (String version)
     void name (ACE_TString &name);
+
+    /// Get name (String version)
     ACE_TString name (void);
 
   protected:
@@ -515,8 +523,10 @@ public:
     /// Pointer to current state
     Iteration_State *current_enumeration_;
 
-    /// Set/Get current_enumeration
+    /// Set current_enumeration
     void current_enumeration (Iteration_State& current_enumeration);
+
+    /// Get current_enumeration
     Iteration_State &current_enumeration (void);
   };
 };

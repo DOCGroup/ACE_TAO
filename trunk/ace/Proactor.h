@@ -339,12 +339,16 @@ public:
   /// Close all dispatch threads.
   int close_dispatch_threads (int wait);
 
-  /// Number of thread used as a parameter to CreatIoCompletionPort.
+  /// Get number of thread used as a parameter to CreatIoCompletionPort.
   size_t number_of_threads (void) const;
+
+  /// Set number of thread used as a parameter to CreatIoCompletionPort.
   void number_of_threads (size_t threads);
 
-  /// Get/Set timer queue.
+  /// Get timer queue.
   TIMER_QUEUE *timer_queue (void) const;
+
+  /// Set timer queue.
   void timer_queue (TIMER_QUEUE *timer_queue);
 
   /**
