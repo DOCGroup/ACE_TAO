@@ -1,37 +1,37 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Top-level Makefile for the ACE toolkit libraries, tests, and
+#       Top-level Makefile for the ACE toolkit libraries, tests, and
 #       applications
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
-INFO	= README \
-	  VERSION
+INFO    = README \
+          VERSION
 
-DIRS	= ace \
-	  netsvcs \
-	  tests \
+DIRS    = ace \
+          netsvcs \
+          tests \
           apps \
-	  examples \
-	  performance-tests
+          examples \
+          performance-tests
 
-CLONE	= Makefile \
-	  ace \
-	  apps \
-	  bin \
-	  etc \
-	  examples \
-	  include \
-	  netsvcs \
-	  performance-tests \
-	  tests
+CLONE   = Makefile \
+          ace \
+          apps \
+          bin \
+          etc \
+          examples \
+          include \
+          netsvcs \
+          performance-tests \
+          tests
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -46,46 +46,46 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 
 clone:
 	@for dir in $(CLONE); \
-	do \
-		(clone -s $(ACE_ROOT)/$$dir $$dir) \
-	done
+        do \
+                (clone -s $(ACE_ROOT)/$$dir $$dir) \
+        done
 
 RELEASE_FILES = ACE_wrappers/ACE-INSTALL.html \
-		ACE_wrappers/ACE-categories \
-	        ACE_wrappers/ACE-install.sh \
-	        ACE_wrappers/ACE-lessons.html \
-		ACE_wrappers/ASNMP \
-	        ACE_wrappers/BIBLIOGRAPHY \
-	        ACE_wrappers/ChangeLog \
-	        ACE_wrappers/ChangeLog-97a \
-	        ACE_wrappers/ChangeLog-96b \
-	        ACE_wrappers/ChangeLog-96a \
-	        ACE_wrappers/ChangeLog-95 \
-	        ACE_wrappers/ChangeLog-94 \
-	        ACE_wrappers/ChangeLog-93 \
-		ACE_wrappers/FAQ \
-		ACE_wrappers/Makefile \
-		ACE_wrappers/README \
-		ACE_wrappers/STL \
-		ACE_wrappers/VERSION \
-		ACE_wrappers/ace \
-		ACE_wrappers/apps \
-		ACE_wrappers/bin \
-		ACE_wrappers/etc \
-		ACE_wrappers/examples \
-		ACE_wrappers/include \
-		ACE_wrappers/man \
-		ACE_wrappers/netsvcs \
-		ACE_wrappers/performance-tests \
-		ACE_wrappers/tests
+                ACE_wrappers/ACE-categories \
+                ACE_wrappers/ACE-install.sh \
+                ACE_wrappers/ACE-lessons.html \
+                ACE_wrappers/ASNMP \
+                ACE_wrappers/BIBLIOGRAPHY \
+                ACE_wrappers/ChangeLog \
+                ACE_wrappers/ChangeLog-97a \
+                ACE_wrappers/ChangeLog-96b \
+                ACE_wrappers/ChangeLog-96a \
+                ACE_wrappers/ChangeLog-95 \
+                ACE_wrappers/ChangeLog-94 \
+                ACE_wrappers/ChangeLog-93 \
+                ACE_wrappers/FAQ \
+                ACE_wrappers/Makefile \
+                ACE_wrappers/README \
+                ACE_wrappers/STL \
+                ACE_wrappers/VERSION \
+                ACE_wrappers/ace \
+                ACE_wrappers/apps \
+                ACE_wrappers/bin \
+                ACE_wrappers/etc \
+                ACE_wrappers/examples \
+                ACE_wrappers/include \
+                ACE_wrappers/man \
+                ACE_wrappers/netsvcs \
+                ACE_wrappers/performance-tests \
+                ACE_wrappers/tests
 
 RELEASE_LIB_FILES = \
-		ACE_wrappers/STL \
-		ACE_wrappers/VERSION \
-		ACE_wrappers/ace \
-		ACE_wrappers/include \
-		ACE_wrappers/netsvcs \
-		ACE_wrappers/tests
+                ACE_wrappers/STL \
+                ACE_wrappers/VERSION \
+                ACE_wrappers/ace \
+                ACE_wrappers/include \
+                ACE_wrappers/netsvcs \
+                ACE_wrappers/tests
 
 #### If creating the "official" ACE release:
 #### 1) Check that the workspace is up-to-date, and bail out if not.
@@ -103,11 +103,11 @@ RELEASE_LIB_FILES = \
 ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
   TIMESTAMP = (CHANGELOG='ChangeLog'; export CHANGELOG; \
               if [ -z "$$CHANGELOG" ]; then \
-		echo unable to find latest ChangeLog file; exit 1; fi; \
+                echo unable to find latest ChangeLog file; exit 1; fi; \
               DATE=`/usr/bin/date +"%a %b %d %T %Y"`; export DATE; \
               cd ..; UPTODATE=`cvs -nq update $(RELEASE_FILES) | \
-		egrep -v '/tests/log/' | perl -pi -e 's%/ACE_wrappers%%g; \
-		s/$$/\\\n  /g'`; cd ACE_wrappers; \
+                egrep -v '/tests/log/' | perl -pi -e 's%/ACE_wrappers%%g; \
+                s/$$/\\\n  /g'`; cd ACE_wrappers; \
               if [ "$$UPTODATE" ]; then /pkg/gnu/bin/echo -e ERROR: workspace must be updated, and/or non-controlled files must be removed or added/committed: $$UPTODATE; exit 1; fi; \
               ACE_VERSION=`perl -pi -e \
                 'BEGIN { $$date=$$ENV{"DATE"} } \
@@ -140,12 +140,12 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                 ace/Version.h; \
               cvs commit -m"$$ACE_VERSION" VERSION $$CHANGELOG ace/Version.h; \
               chmod 644 VERSION $$CHANGELOG ace/Version.h; \
-	      VERSION_TAG=ACE_`perl -ne  'if (/ACE version/) \
+              VERSION_TAG=ACE_`perl -ne  'if (/ACE version/) \
                 { s/[^0-9]+(\d+)\.(\d+)\.(\d+).+/\1_\2_\3/ ; print }' VERSION`;\
-	      export VERSION_TAG; \
-	      CURRENT_TAG=Current; export CURRENT_TAG; \
-	      cvs tag $$VERSION_TAG $(RELEASE_FILES) ; \
-	      cvs tag -F $$CURRENT_TAG $(RELEASE_FILES)) &&
+              export VERSION_TAG; \
+              CURRENT_TAG=Current; export CURRENT_TAG; \
+              cd ..; cvs tag $$VERSION_TAG $(RELEASE_FILES); \
+              cvs tag -F $$CURRENT_TAG $(RELEASE_FILES); cd ACE_wrappers) &&
 else
   TIMESTAMP =
 endif
@@ -154,22 +154,23 @@ endif
 #### Old versions of cpio might not, but the version that's shipped with
 #### Solaris 2.5.1, and gnu cpio 2.3, do support that option.
 
-FILTER = -name CVS -prune -o ! -name '.\#*' ! -name '\#*' ! -name '*~' ! -name '*.MAK' -print
+FILTER = -name CVS -prune -o ! -name '.\#*' ! -name '\#*' ! -name '*~' \
+         ! -name '*.MAK' -print
 
 cleanrelease: ACE-INSTALL
 	@$(TIMESTAMP) (make realclean; cd ..; \
-	 find $(RELEASE_FILES) ACE_wrappers/ACE-INSTALL $(FILTER) | \
-	   cpio -o -H tar | gzip -9 > ACE.tar.gz; \
-	 chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
+         find $(RELEASE_FILES) ACE_wrappers/ACE-INSTALL $(FILTER) | \
+           cpio -o -H tar | gzip -9 > ACE.tar.gz; \
+         chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
 
 release: ACE-INSTALL
 	@$(TIMESTAMP) (cd ..; \
-	 find $(RELEASE_FILES) ACE_wrappers/ACE-INSTALL $(FILTER) | \
-	   cpio -o -H tar | gzip -9 > ACE.tar.gz; \
-	 find $(RELEASE_LIB_FILES) $(FILTER) | \
-	   cpio -o -H tar | gzip -9 > ACE-lib.tar.gz; \
-	 chmod a+r ACE.tar.gz ACE-lib.tar.gz; \
-	 mv ACE.tar.gz ACE-lib.tar.gz ./ACE_wrappers/)
+         find $(RELEASE_FILES) ACE_wrappers/ACE-INSTALL $(FILTER) | \
+           cpio -o -H tar | gzip -9 > ACE.tar.gz; \
+         find $(RELEASE_LIB_FILES) $(FILTER) | \
+           cpio -o -H tar | gzip -9 > ACE-lib.tar.gz; \
+         chmod a+r ACE.tar.gz ACE-lib.tar.gz; \
+         mv ACE.tar.gz ACE-lib.tar.gz ./ACE_wrappers/)
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@
