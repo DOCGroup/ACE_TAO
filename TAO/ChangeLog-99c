@@ -1,3 +1,8 @@
+Wed Jun 23 00:07:51 1999  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* orbsvcs/tests/Time/run_test.pl: Changed all instances of server
+	    and clerk to Time_Service_Server and Time_Service_Clerk.
+
 Tue Jun 22 22:11:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/default_resource.cpp:
