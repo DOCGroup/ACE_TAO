@@ -102,15 +102,15 @@ public:
   int destroy (void);
 
 private:
+  /// Our path name.
   ACEXML_Char *path_name_;
-  // Our path name.
 
+  /// The dynamically created address string that's used for the
+  /// <addr_to_string> method.
   ACEXML_Char *addr_string_;
-  // The dynamically created address string that's used for the
-  // <addr_to_string> method.
 
+  /// Current length of the <addr_string_>
   size_t addr_string_len_;
-  // Current length of the <addr_string_>
 };
 
 #endif /* _ACEXML_URL_ADDR_H */
