@@ -1,3 +1,14 @@
+Wed Apr 14 13:10:48 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/POSIX_Proactor.cpp:
+ 	* ace/WIN32_Asynch_IO.h:
+	* ace/WIN32_Asynch_IO.cpp:
+	* ace/WIN32_Proactor.h:
+	* ace/WIN32_Proactor.cpp:
+	* ace/Proactor_Impl.h:
+	Completed committing changes related to the <signal_number>
+	additions done earlier. 	
+
 Wed Apr 14 09:07:38 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* ace/POSIX_Proactor.cpp:
