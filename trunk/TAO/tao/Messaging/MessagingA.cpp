@@ -32,7 +32,7 @@
 #include "tao/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be/be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_Messaging_ExceptionHolder[] =
 {
@@ -120,12 +120,12 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_ExceptionHolder (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_ExceptionHolder =
+  ::CORBA::TypeCode_ptr const _tc_ExceptionHolder =
     &_tc_TAO_tc_Messaging_ExceptionHolder;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be/be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_Messaging_ReplyHandler[] =
 {
@@ -158,12 +158,12 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_ReplyHandler (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_ReplyHandler =
+  ::CORBA::TypeCode_ptr const _tc_ReplyHandler =
     &_tc_TAO_tc_Messaging_ReplyHandler;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_valuetype/any_op_cs.cpp:57
+// be/be_visitor_valuetype/any_op_cs.cpp:57
 
 template<>
 CORBA::Boolean
@@ -219,7 +219,7 @@ operator>>= (
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean

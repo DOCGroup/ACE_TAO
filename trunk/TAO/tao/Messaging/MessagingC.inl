@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_valuetype/valuetype_ci.cpp:56
+// be/be_visitor_valuetype/valuetype_ci.cpp:56
 
 ACE_INLINE
 Messaging::ExceptionHolder::ExceptionHolder (void)
@@ -44,7 +44,7 @@ Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_MESSAGING_REPLYHANDLER___CI_)
 #define _MESSAGING_REPLYHANDLER___CI_

@@ -26,17 +26,16 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:390
+// be/be_codegen.cpp:390
 
 #ifndef _TAO_IDL_ORIG_MESSAGINGS_H_
 #define _TAO_IDL_ORIG_MESSAGINGS_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PollableS.h"
 #include "tao/Messaging/Messaging.h"
+#include "tao/PollableS.h"
 #include "tao/OctetSeqS.h"
-#include "MessagingC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -56,19 +55,18 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_sh.cpp:49
+// be/be_visitor_module/module_sh.cpp:49
 
 namespace POA_Messaging
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_interface/interface_sh.cpp:87
+  // be/be_visitor_interface/interface_sh.cpp:87
   
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
   
-  class _TAO_ReplyHandler_ThruPOA_Proxy_Impl;
   class _TAO_ReplyHandler_Direct_Proxy_Impl;
   class _TAO_ReplyHandler_Strategized_Proxy_Broker;
   
@@ -92,41 +90,37 @@ namespace POA_Messaging
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -142,7 +136,7 @@ namespace POA_Messaging
   //
   
   // TAO_IDL - Generated from
-  // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
+  // be/be_visitor_interface/strategized_proxy_broker_sh.cpp:36
   
   class TAO_Messaging_Export _TAO_ReplyHandler_Strategized_Proxy_Broker
     : public virtual TAO::Collocation_Proxy_Broker
@@ -181,27 +175,9 @@ namespace POA_Messaging
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class TAO_Messaging_Export _TAO_ReplyHandler_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_ReplyHandler_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_ReplyHandler_ThruPOA_Proxy_Impl (void) {}
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from 
-  // be\be_visitor_interface/direct_proxy_impl_sh.cpp:31
+  // be/be_visitor_interface/direct_proxy_impl_sh.cpp:31
   
   ///////////////////////////////////////////////////////////////////////
   //                    Direct  Impl. Declaration
@@ -222,12 +198,12 @@ namespace POA_Messaging
   
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_sh.cpp:80
+// be/be_visitor_module/module_sh.cpp:80
 
 } // module Messaging
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:997
+// be/be_codegen.cpp:997
 
 #include "MessagingS_T.h"
 
