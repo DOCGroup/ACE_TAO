@@ -18,7 +18,8 @@
 #define ACE_CONTAINERS_H
 
 #include "ace/ACE.h"
-#include "ace/Malloc_T.h"
+
+class ACE_Allocator;
 
 template <class T>
 class ACE_Bounded_Stack 
