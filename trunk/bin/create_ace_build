@@ -285,15 +285,21 @@ else {
 #### Done: print message.
 ####
 print "\nCompleted creation of $build/.\n";
-
+my($msg) = '';
 if (! -e "$build/ace/config.h") {
-  print "Be sure to setup $build/ace/config.h";
+  $msg .= "$build/ace/config.h";
 }
 
 if ($^O ne 'MSWin32' &&
     ! -e "$build/include/makeinclude/platform_macros.GNU") {
-  print " and\n$build/include/makeinclude/platform_macros.GNU";
+  if ($msg ne '') {
+    $msg .= " and\n";
+  }
+  $msg .= "$build/include/makeinclude/platform_macros.GNU";
 }
-print ".\n";
+
+if ($msg ne '') {
+  print "Be sure to setup $msg.\n";
+}
 
 #### EOF
