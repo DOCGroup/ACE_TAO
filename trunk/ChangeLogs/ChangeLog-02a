@@ -11,12 +11,13 @@ Wed May  8 10:58:15 2002  Alex Libman <AlexL@rumblegroup.com>
 	  
 Wed May  8 06:14:08 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Proactor.h (ACE_Proactor): Fixed a comment that said "ACE_Reactor"
-	  rather than "ACE_Proactor" (cut+paste error ;-)).  Thanks to Don
- 	  Hinton for reporting this.	  
+	* ace/Proactor.h (ACE_Proactor): Fixed a comment that said
+	  "ACE_Reactor"  rather than "ACE_Proactor" (cut+paste error ;-)).
+	  Thanks to Don Hinton for reporting this.	  
 
-	* ace/Filecache.cpp (R_MASK): Allow file sharing by default.  Thanks to
-	  Peter Kullmann" <P.Kullmann@rog.de> for reporting this.
+	* ace/Filecache.cpp (R_MASK): Allow file sharing by default.
+	  Thanks to Peter Kullmann" <P.Kullmann@rog.de> for reporting
+	  this. 
 
 Tue May 07 21:03:01 2002  Ossama Othman  <ossama@uci.edu>
 
