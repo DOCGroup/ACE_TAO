@@ -24,51 +24,90 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-template<class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> class TAO_Acceptor_Impl : public ACE_Acceptor<SVC_HANDLER,ACE_PEER_ACCEPTOR_2>
+// Forward declaration.
+class TAO_IIOP_Connector;
+
+template <class SVC_HANDLER>
+class TAO_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
   // = TITLE
-  //   Helper class to implement the acceptors in TAO
-  //
-  // = DESCRIPTION
-  //   TAO pluggable protocols framework provide an abstraction to
-  //   represent any kind of acceptor object, the implementation of
-  //   that acceptor is left for the pluggable protocol implementor,
-  //   but the most common case would be to use an ACE_Acceptor<>
-  //   instantiated over the right Svc_Handlers.
-  //   But the Svc_Handlers must inherit the <orb_core> that owns the
-  //   acceptor, though this could be implemented in each pluggable
-  //   protocol we believe that this class would simplify that task
-  //   and work in most cases.  Pluggable protocol implementors are,
-  //   of course, free to use something else.
-  //
+  //     Creates a Svc_Handler and set the ORB_Core pointer on it.
 public:
-  // = Initialization and termination methods.
-  TAO_Acceptor_Impl (ACE_Reactor * = 0,
-                     int use_select = 1);
+  TAO_Creation_Strategy (TAO_ORB_Core *orb_core);
   // Constructor.
 
-  TAO_Acceptor_Impl (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-                     ACE_Reactor * = ACE_Reactor::instance (),
-                     int flags = 0,
-                     int use_select = 1,
-                     int reuse_addr = 1);
-  // The constructors, just delegate to the base class.
-
-  int open (TAO_ORB_Core* orb_core,
-            const ACE_PEER_ACCEPTOR_ADDR &,
-            int flags = 0,
-            int use_select = 1,
-            int reuse_addr = 1);
-  // Initialize the ORB_Core.
+  int make_svc_handler (SVC_HANDLER *&sh);
+  // Create a SVC_HANDLER  and set the ORB_Core pointer on it.
 
 protected:
-  // = See $ACE_ROOT/ace/Acceptor.h for the documentation.
-  virtual int make_svc_handler (SVC_HANDLER *&sh);
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
-
-private:
   TAO_ORB_Core *orb_core_;
   // Pointer to the ORB Core.
+};
+
+template <class SVC_HANDLER>
+class TAO_Concurrency_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
+{
+  // = TITLE
+  //     Activates the Svc_Handler, and then if specified by the
+  //     TAO_Server_Strategy_Factory, it activates the Svc_Handler to
+  //     run in its own thread.
+public:
+  TAO_Concurrency_Strategy (TAO_ORB_Core *orb_core);
+  // Constructor.
+
+  int activate_svc_handler (SVC_HANDLER *svc_handler,
+                            void *arg);
+  // Activates the Svc_Handler, and then if specified by the
+  // TAO_Server_Strategy_Factory, it activates the Svc_Handler to run
+  // in its own thread.
+
+protected:
+  TAO_ORB_Core *orb_core_;
+  // Pointer to the ORB Core.
+};
+
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1, class TAO_PEER_CONNECTOR>
+class TAO_Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
+{
+  // = TITLE
+  //    This strategy tunes the acceptance of connections. When the
+  //    process is out of descriptors needed to accept a connection, it
+  //    requests the Connector to remove entries from its conenction
+  //    cache. This is done based on the caching strategy specified at
+  //    runtime.
+
+public:
+
+  TAO_Accept_Strategy (TAO_ORB_Core *orb_core,
+                       const CORBA::ULong &tag);
+  // Constructor.
+
+  virtual int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+                    int restart = 0);
+  // initialize acceptor for this address.
+
+  virtual int accept_svc_handler (SVC_HANDLER *);
+  // The default behavior delegates to the <accept> method of the
+  // PEER_ACCEPTOR.
+
+protected:
+
+  typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY_BASE;
+
+  TAO_PEER_CONNECTOR *get_connector (void);
+  // Obtain the connector needed for access to the connection strategy
+  // which removes entries from the connection cache on demand.
+
+  int out_of_sockets_handler (void);
+  // Takes care when the process runs out of descriptors.
+
+private:
+
+  TAO_ORB_Core *orb_core_;
+  // ORB Core.
+
+  CORBA::ULong tag_;
+  // The OMG specified tag for the concrete Acceptor.
 };
 
 #if defined(__ACE_INLINE__)
