@@ -4245,6 +4245,12 @@ extern "C" {
   typedef int (*ACE_COMPARE_FUNC)(const void *, const void *);
 }
 
+# if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+typedef WSABUF ACE_IO_Vector_Base;
+# else
+typedef iovec ACE_IO_Vector_Base;
+# endif /* ACE_HAS_WINSOCK2 */
+
 class ACE_Export ACE_OS
 {
   // = TITLE
@@ -6120,12 +6126,6 @@ private:
 # else
 #   define ACE_INLINE_FOR_GNUC
 # endif /* ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS */
-
-# if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-typedef WSABUF ACE_IO_Vector_Base;
-# else
-typedef iovec ACE_IO_Vector_Base;
-# endif /* ACE_HAS_WINSOCK2 */
 
 class ACE_Export ACE_IO_Vector : public ACE_IO_Vector_Base
 {
