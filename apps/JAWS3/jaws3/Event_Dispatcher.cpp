@@ -6,7 +6,9 @@
 #include "ace/Proactor.h"
 #include "ace/POSIX_Proactor.h"
 
+#ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
+#endif /*JAWS_BUILD_DLL*/
 
 #include "jaws3/Event_Dispatcher.h"
 

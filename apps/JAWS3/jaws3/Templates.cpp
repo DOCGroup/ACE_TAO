@@ -7,7 +7,9 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/LSOCK_Stream.h"
 
+#ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
+#endif
 
 #include "jaws3/Asynch_IO.h"
 #include "jaws3/Concurrency.h"
