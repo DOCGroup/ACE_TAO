@@ -1,3 +1,12 @@
+Thu Nov 12 14:21:41 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/tests/Logger/README: Made a few edits to reflect added
+	  tests for the twoway methods and included sample output
+	* orbsvcs/tests/Logger/Logging_Test_i.cpp: Added tests for new
+	  twoway methods log2() and logv2(). 
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp: Changed formating of messages
+	  for log2() and logv2 ().
+
 Thu Nov 12 14:03:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/RtecScheduler.idl
