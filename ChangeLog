@@ -1,3 +1,21 @@
+Mon Jun  5 09:55:20 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_String.h:
+        * ace/OS_String.inl:
+        * ace/OS_String.cpp:
+
+          Removed some unnecessary *_emulation methods, and fixed some
+          other miscellaneous mistakes (like using ACE_OS instead of
+          ACE_OS_String).
+
+          During my last checkin, it seems like the strncasecmp_emulation
+          versions were lost, so I resurrected them.
+
+          Also changed the use of u_char in memchr_emulation to unsigned
+          char, since we shouldn't depend on definitions of u_char (since
+          on some platforms we don't have a definition of u_char at that
+          time).  Thanks to David Levine for reporting this.
+        
 Sun Jun  4 14:58:37 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * apps/Orbix-Examples/Event_Comm/include/Event_Comm.hh:

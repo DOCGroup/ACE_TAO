@@ -217,10 +217,8 @@ ACE_OS_String::strecpy (wchar_t *s, const wchar_t *t)
 }
 #endif /* ACE_HAS_WCHAR */
 
-#if defined (ACE_HAS_WINCE)
-// ACE_HAS_WINCE version in .cpp file
 size_t
-ACE_OS_String::strcspn (const char *s, const char *reject)
+ACE_OS_String::strcspn_emulation (const char *s, const char *reject)
 {
   const char *scan;
   const char *rej_scan;
@@ -238,7 +236,6 @@ ACE_OS_String::strcspn (const char *s, const char *reject)
 
   return count;
 }
-#endif /* ACE_HAS_WINCE */
 
 int
 ACE_OS_String::strcasecmp_emulation (const char *s, const char *t)
@@ -269,7 +266,6 @@ ACE_OS_String::strcasecmp_emulation (const char *s, const char *t)
 }
 
 #if defined (ACE_HAS_WCHAR)
-// ACE_WIN32 version in .cpp file
 int
 ACE_OS_String::strcasecmp_emulation (const wchar_t *s, const wchar_t *t)
 {
@@ -283,6 +279,78 @@ ACE_OS_String::strcasecmp_emulation (const wchar_t *s, const wchar_t *t)
       ++scan1;
       ++scan2;
     }
+
+  // The following case analysis is necessary so that characters which
+  // look negative collate low against normal characters but high
+  // against the end-of-string NUL.
+
+  if (*scan1 == '\0' && *scan2 == '\0')
+    return 0;
+  else if (*scan1 == '\0')
+    return -1;
+  else if (*scan2 == '\0')
+    return 1;
+  else
+    return ACE_OS_String::to_lower (*scan1) - ACE_OS_String::to_lower (*scan2);
+}
+#endif /* ACE_HAS_WCHAR */
+
+int
+ACE_OS_String::strncasecmp_emulation (const char *s, 
+                                      const char *t, 
+                                      size_t len)
+{
+  const char *scan1 = s;
+  const char *scan2 = t;
+  size_t count = 0;
+
+  while (count++ < len
+         && *scan1 != 0
+         && ACE_OS_String::to_lower (*scan1) 
+            == ACE_OS_String::to_lower (*scan2))
+    {
+      ++scan1;
+      ++scan2;
+    }
+
+  if (count > len)
+    return 0;
+
+  // The following case analysis is necessary so that characters which
+  // look negative collate low against normal characters but high
+  // against the end-of-string NUL.
+
+  if (*scan1 == '\0' && *scan2 == '\0')
+    return 0;
+  else if (*scan1 == '\0')
+    return -1;
+  else if (*scan2 == '\0')
+    return 1;
+  else
+    return ACE_OS_String::to_lower (*scan1) - ACE_OS_String::to_lower (*scan2);
+}
+
+#if defined (ACE_HAS_WCHAR)
+int
+ACE_OS_String::strncasecmp_emulation (const wchar_t *s, 
+                                      const wchar_t *t, 
+                                      size_t len)
+{
+  const wchar_t *scan1 = s;
+  const wchar_t *scan2 = t;
+  size_t count = 0;
+
+  while (count++ > len
+         && *scan1 != 0
+         && ACE_OS_String::to_lower (*scan1) 
+            == ACE_OS_String::to_lower (*scan2))
+    {
+      ++scan1;
+      ++scan2;
+    }
+
+  if (count > len)
+    return 0;
 
   // The following case analysis is necessary so that characters which
   // look negative collate low against normal characters but high
@@ -319,8 +387,8 @@ ACE_OS_String::strtok_r_emulation (char *s, const char *tokens, char **lasts)
 const void *
 ACE_OS_String::memchr_emulation (const void *s, int c, size_t len)
 {
-  const u_char *t = (const u_char *) s;
-  const u_char *e = (const u_char *) s + len;
+  const unsigned char *t = (const unsigned char *) s;
+  const unsigned char *e = (const unsigned char *) s + len;
 
   while (t < e)
     if (((int) *t) == c)
