@@ -84,6 +84,7 @@ run Pipe_Test                   # uses Pipe
 run Process_Mutex_Test          # uses Process_Mutex
 run Service_Config_Test         # uses Service_Config
 run Priority_Task_Test          # uses Task with priorities
+run IOStream_Test               # uses ACE_IOStream and ACE_SOCK_Stream
 
 echo "Tests complete..."
 
