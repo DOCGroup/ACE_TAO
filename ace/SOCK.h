@@ -89,9 +89,9 @@ public:
   // Wrapper around the QoS-enabled <WSASocket> function.
 
   int join_qos_session (ACE_QoS_Session *qos_session);
-  // Join the given QoS session. A socket can join multiple QoS sessions. 
-  // This call adds the given QoS session to the list of QoS sessions 
-  // that the socket has already joined.
+  // Join the given QoS session. A socket can join multiple QoS
+  // sessions.  This call adds the given QoS session to the list of
+  // QoS sessions that the socket has already joined.
 
   typedef ACE_Unbounded_Set <ACE_QoS_Session *> ACE_QOS_SESSION_SET;
 
@@ -122,7 +122,6 @@ protected:
 
   ACE_QOS_SESSION_SET qos_session_set_;
   // Set of QoS sessions that this socket has joined.
-
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
