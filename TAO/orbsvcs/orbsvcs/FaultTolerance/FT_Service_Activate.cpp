@@ -1,6 +1,8 @@
 #include "FT_Service_Activate.h"
 #include "FT_Service_Callbacks.h"
 #include "FT_ORBInitializer.h"
+#include "FT_Endpoint_Selector_Factory.h"
+#include "tao/ORB_Core.h"
 #include "tao/Service_Callbacks.h"
 #include "ace/Dynamic_Service.h"
 
@@ -34,6 +36,10 @@ TAO_FT_Service_Activate::init (int /*argc*/,
 
   PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
+  // Set the name of the endpoint selector factory
+  TAO_ORB_Core::set_endpoint_selector_factory ("FT_Endpoint_Selector_Factory");
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_FT_Endpoint_Selector_Factory);
+
   return 0;
 }
 
@@ -48,6 +54,7 @@ TAO_FT_Service_Activate::activate_services (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (ft_service_callback,
                   TAO_FT_Service_Callbacks (orb_core),
                   0);
+
 
   return ft_service_callback;
 }

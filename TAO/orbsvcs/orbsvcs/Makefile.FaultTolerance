@@ -39,6 +39,8 @@ IDL_FILES += FT_CORBA
 CPP_SRCS += \
         FaultTolerance/FT_Service_Callbacks \
 	FaultTolerance/FT_IOGR_Property \
+	FaultTolerance/FT_Endpoint_Selector_Factory \
+	FaultTolerance/FT_Invocation_Endpoint_Selectors \
 	FaultTolerance/FT_Service_Activate \
 	FaultTolerance/FT_ORBInitializer \
 	FaultTolerance/FT_PolicyFactory \

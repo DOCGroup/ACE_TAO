@@ -805,6 +805,21 @@ TAO_GIOP_Twoway_Invocation::start (CORBA_Environment &ACE_TRY_ENV)
   this->rd_.state_changed (TAO_LF_Event::LFS_ACTIVE);
 }
 
+
+void
+TAO_GIOP_Twoway_Invocation::reset_states (void)
+{
+  // Reset all the states. This is called by the FT service.
+  this->rd_.reset_state (TAO_LF_Event::LFS_IDLE);
+
+  this->profile (0);
+  this->endpoint (0);
+  this->restart_flag_ = 0;
+  this->received_location_forward_ = 0;
+
+  // Anything else that needs resetting??
+}
+
 // Send request, block until any reply comes back, and unmarshal reply
 // parameters as appropriate.
 
