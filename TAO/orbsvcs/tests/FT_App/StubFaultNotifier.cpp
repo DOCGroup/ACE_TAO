@@ -23,7 +23,7 @@ StubFaultNotifier::~StubFaultNotifier ()
 
 ::PortableServer::POA_ptr StubFaultNotifier::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
-  return ::PortableServer::POA::_duplicate(this->poa_ ACE_ENV_ARG_PARAMETER);
+  return ::PortableServer::POA::_duplicate(this->poa_.in () ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ObjectId StubFaultNotifier::objectId()const
