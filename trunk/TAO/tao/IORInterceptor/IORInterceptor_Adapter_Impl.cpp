@@ -50,6 +50,7 @@ TAO_IORInterceptor_Adapter_Impl::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
       // deallocated.
       inter.size (ilen);
     }
+  delete this;
 }
 
 TAO_IORInterceptor_List*
@@ -58,30 +59,3 @@ TAO_IORInterceptor_Adapter_Impl::interceptor_list (void)
 {
   return &this->ior_interceptor_list_;
 }
-// *********************************************************************
-
-// Initialization and registration of dynamic service object.
-
-int
-TAO_IORInterceptor_Adapter_Impl::Initializer (void)
-{
-  TAO_ORB_Core::iorinterceptor_adapter_name (
-      "Concrete_IORInterceptor_Adapter"
-    );
-
-  return
-    ACE_Service_Config::process_directive (
-        ace_svc_desc_TAO_IORInterceptor_Adapter_Impl
-      );
-}
-
-ACE_STATIC_SVC_DEFINE (
-    TAO_IORInterceptor_Adapter_Impl,
-    ACE_TEXT ("Concrete_IORInterceptor_Adapter"),
-    ACE_SVC_OBJ_T,
-    &ACE_SVC_NAME (TAO_IORInterceptor_Adapter_Impl),
-    ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-    0
-  )
-
-ACE_FACTORY_DEFINE (TAO_IORInterceptor, TAO_IORInterceptor_Adapter_Impl)

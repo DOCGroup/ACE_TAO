@@ -53,33 +53,11 @@ public:
   virtual TAO_IORInterceptor_List *interceptor_list (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  // Used to force the initialization of the ORB code.
-  static int Initializer (void);
-
 private:
 
   /// List of IOR interceptors maintained
   TAO_IORInterceptor_List ior_interceptor_list_;
 };
-
-ACE_STATIC_SVC_DECLARE (TAO_IORInterceptor_Adapter_Impl)
-ACE_FACTORY_DECLARE (TAO_IORInterceptor, TAO_IORInterceptor_Adapter_Impl)
-
-#if defined (ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
-
-typedef int (*TAO_Module_Initializer) (void);
-
-static TAO_Module_Initializer
-TAO_Requires_IORInterceptor_Initializer =
-  &TAO_IORInterceptor_Adapter_Impl::Initializer;
-
-#else
-
-static int
-TAO_Requires_IORInterceptor_Initializer =
-  TAO_IORInterceptor_Adapter_Impl::Initializer ();
-
-#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 #include "ace/post.h"
 

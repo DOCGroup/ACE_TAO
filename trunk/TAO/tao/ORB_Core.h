@@ -431,11 +431,11 @@ public:
   /// Gets the value of TAO_ORB_Core::typecodefactory_adapter_name_.
   static const char *typecodefactory_adapter_name (void);
 
-  /// Sets the value of TAO_ORB_Core::iorinterceptor_adapter_name_.
-  static void iorinterceptor_adapter_name (const char *name);
+  /// Sets the value of TAO_ORB_Core::iorinterceptor_adapter_factory_name_.
+  static void iorinterceptor_adapter_factory_name (const char *name);
 
-  /// Gets the value of TAO_ORB_Core::iorinterceptor_adapter_name_.
-  static const char *iorinterceptor_adapter_name (void);
+  /// Gets the value of TAO_ORB_Core::iorinterceptor_adapter_factory_name_.
+  static const char *iorinterceptor_adapter_factory_name (void);
 
   /// Sets the value of TAO_ORB_Core::valuetype_adapter_name.
   static void valuetype_adapter_name (const char *name);
@@ -1379,13 +1379,13 @@ public:
   // the value to "Concrete_TypeCodeFactory_Adapter".
   ACE_CString typecodefactory_adapter_name_;
 
-  // Name of the service object used to adapt function calls on
+  // Name of the factory object used to adapt function calls on
   // the PortableInterceptor interfaces IORInfo and IORInterceptor.
-  // The default value is "IORInterceptor_Adapter". If the
+  // The default value is "IORInterceptor_Adapter_Factory". If the
   // IORInterceptor library is linked, the corresponding accessor
-  // function iorinterceptor_adapter_name() will be called to set
-  // the value to "Concrete_IORInterceptor_Adapter".
-  ACE_CString iorinterceptor_adapter_name_;
+  // function iorinterceptor_adapter_factory_name() will be called to set
+  // the value to "Concrete_IORInterceptor_Adapter_Factory".
+  ACE_CString iorinterceptor_adapter_factory_name_;
 
   // Name of the service object used to adapt function calls on
   // the valuetype-related interfaces.
