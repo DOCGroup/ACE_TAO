@@ -11,6 +11,9 @@ Tue Apr 28 06:49:50 1998  David L. Levine  <levine@cs.wustl.edu>
           of parenthesis in ppc check.  Thanks to Brian Mendel
           <bmendel@mdc.com> for reporting this.
 
+        * ace/High_Res_Timer.cpp: initialize global_scale_factor_ to 1000
+          on Linux.
+
 Mon Apr 27 07:18:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Service_Types.cpp: Changes to use typedef
