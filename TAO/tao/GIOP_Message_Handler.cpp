@@ -32,11 +32,13 @@ TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core)
 int
 TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
 {
-  // Read the message from the transport
+  // Read the message from the transport. The size of the message read
+  // is the maximum size of the buffer that we have less the amount of
+  // data that has already been read in to the buffer.
+  size_t sp = this->current_buffer_.space ();
   ssize_t n = transport->read (this->current_buffer_.wr_ptr (),
-                               this->message_size_ - this->current_buffer_.length ());
+                               this->current_buffer_.space ());
 
-  cout << "The value of n is " << n <<endl;
   if (n == -1)
     {
       if (errno == EWOULDBLOCK)
@@ -273,12 +275,9 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
     {
       size_t len = this->current_buffer_.length ();
 
-      cout << "The length is " << len <<endl;
-
       if (len == this->message_state_.message_size)
 
         {
-          cout << "Amba 1" <<endl;
           // If the buffer length is equal to the size of the payload we
           // have exactly one message. Check whether we have received
           // only the first part of the fragment.
@@ -287,7 +286,6 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
         }
       else if (len > this->message_state_.message_size)
         {
-          cout << "Amba 2" <<endl;
           // If the length is greater we have received some X messages
           // and a part of X + 1  messages (probably) with X varying
           // from  1 to N.
@@ -305,8 +303,6 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
           return this->message_state_.is_complete (this->supp_buffer_);
         }
     }
-
-  cout << "Amba 3" <<endl;
 
   // Just return allowing the reactor to call us back to get the rest
   // of the info
