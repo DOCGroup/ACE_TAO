@@ -13,6 +13,9 @@ Wed Sep 10 11:04:08 1997  David L. Levine  <levine@cs.wustl.edu>
 	  disabled.  Thanks to Per Andersson and James CE Johnson
 	  for noticing this deficiency.
 
+	* ace/config-sunos5.5-g++.h: added
+	  ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS.
+
 Wed Sep 10 10:35:06 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ACE version 4.3.5, released Wed Sep 10 10:35:06 1997.
