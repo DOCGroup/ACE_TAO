@@ -37,7 +37,7 @@ const int SOURCE_ID = 1001;
 static const char usage [] = 
 "[-? |\n"
 "            [-O[RBport] ORB port number]"
-"            [-m <count> of messages to send [100]]"
+"            [-m <count> of messages to send [100]"
 "            [-f name of schedler input data file]]";
 
 static u_int total_messages = 100;
