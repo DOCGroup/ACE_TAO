@@ -88,6 +88,18 @@ ACE_WIN32_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor)
   return win32_proactor->post_completion (this);
 }
 
+void
+ACE_WIN32_Asynch_Result::set_bytes_transferred (u_long nbytes)
+{
+  this->bytes_transferred_ = nbytes;
+}
+
+void
+ACE_WIN32_Asynch_Result::set_error (u_long errcode)
+{
+  this->error_ = errcode;
+}
+
 ACE_WIN32_Asynch_Result::~ACE_WIN32_Asynch_Result (void)
 {
 }
@@ -364,6 +376,8 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
 {
   u_long bytes_read;
 
+  result->set_error (0); // Clear error before starting IO.
+
   // Initiate the read
   int initiate_result = ::ReadFile (result->handle (),
                                     result->message_block ().wr_ptr (),
@@ -600,6 +614,8 @@ int
 ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Result *result)
 {
   u_long bytes_written;
+
+  result->set_error (0); // Clear error before starting IO.
 
   // Initiate the write
   int initiate_result = ::WriteFile (result->handle (),
@@ -2152,7 +2168,7 @@ ACE_WIN32_Asynch_Write_Dgram_Result::complete (u_long bytes_transferred,
     }
     else
     {
-      size_t len = mb->length (); 
+      size_t len = mb->length ();
       mb->rd_ptr (len);
       bytes_transferred -= len;
     }
