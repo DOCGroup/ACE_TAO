@@ -1,6 +1,0 @@
-project(ACEXML_Parser): acelib {
-  sharedname    = ACEXML_Parser
-  after        += ACEXML
-  libs         += ACEXML
-  dynamicflags += ACEXML_PARSER_BUILD_DLL
-}

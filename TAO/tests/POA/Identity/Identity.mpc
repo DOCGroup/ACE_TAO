@@ -1,3 +1,0 @@
-project(POA Identity): taoserver {
-  exename = Identity
-}

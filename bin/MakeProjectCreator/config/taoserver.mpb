@@ -1,3 +1,0 @@
-project : taoexe, portableserver {
-  exename  = server
-}

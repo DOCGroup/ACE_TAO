@@ -1,3 +1,0 @@
-project(POA Non Servant Upcalls): taoserver {
-  exename = Non_Servant_Upcalls
-}

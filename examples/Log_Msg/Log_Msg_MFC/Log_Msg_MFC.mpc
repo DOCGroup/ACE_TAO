@@ -1,5 +1,0 @@
-project : aceexe {
-  macros += _AFXDLL
-  pch_header = StdAfx.h
-  pch_source = StdAfx.cpp
-}
