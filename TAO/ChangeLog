@@ -1,21 +1,29 @@
+Fri Feb 20 15:43:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h:
+	  Added missing export macro to fix link errors in BCB build
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.h:
+	  Made includes consistent with the other files of LoadBalancing
+
 Thu Feb 19 20:25:10 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trader.cpp:
 	  TAO_Trader_Factory::manufacture_trader was not applying
-	  import_attributes and support_attributes correctly. 
+	  import_attributes and support_attributes correctly.
 	  Thanks to Jean-Marc Prud'homme <JPrudhomme@interstarinc.com>
 	  for contributing this fix.
 
 Thu Feb 19 18:55:13 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h: 	
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (protocol_object_set): 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (is_protocol_object_set): 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (protocol_object_set):
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (is_protocol_object_set):
 
 	  Added the above methods in order to set/get a flag that shows if
 	  the protocol_object is set and hence if the mmdevices are bound
 	  successfully.
-	  
+
 	  The problem of the ACE_Acceptor::handle_input () not being
 	  called manifested when running the AVStreams tests on a single
 	  host (for eg. daily builds). The problem on a single host (and
@@ -47,14 +55,14 @@ Thu Feb 19 18:55:13 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  process the pending requests which could be the expected connect
 	  request.
 
-	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp: 
-	* orbsvcs/orbsvcs/AV/RTP.cpp: 
-	* orbsvcs/orbsvcs/AV/TCP.cpp: 
-	* orbsvcs/orbsvcs/AV/UDP.cpp: 
+	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:
+	* orbsvcs/orbsvcs/AV/RTP.cpp:
+	* orbsvcs/orbsvcs/AV/TCP.cpp:
+	* orbsvcs/orbsvcs/AV/UDP.cpp:
 
 	  Set the protocol object set flag when the protocol object is created.
-	
-	* orbsvcs/orbsvcs/AV/Transport.cpp (close_all): 
+
+	* orbsvcs/orbsvcs/AV/Transport.cpp (close_all):
 
 	  Fixed an incorrect deletion of connector objects in the
 	  Connector Registry.
@@ -66,7 +74,7 @@ Thu Feb 19 18:55:13 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 Thu Feb 19 15:17:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_sequence.cpp:
-        
+
           Fixed code generation in the base class constructor call for
           sequences of eventtypes and components. Thanks to Patrick
           Lardieri <plardier@atl.lmco.com> for reporting the problem.
