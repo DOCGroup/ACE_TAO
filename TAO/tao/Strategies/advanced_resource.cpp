@@ -108,7 +108,6 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
                              ACE_LIB_TEXT("-ORBReactorRegistry no longer supported\n")),
                             -1);
 
-          arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_LIB_TEXT("-ORBReactorLock"))))
