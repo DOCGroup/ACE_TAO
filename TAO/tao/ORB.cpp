@@ -180,7 +180,7 @@ CORBA_ORB::~CORBA_ORB (void)
   // This destructor is only invoked when the last ORB reference (not
   // instance) is being destroyed.
 
-# ifdef TAO_HAS_VALUETYPE
+# if defined (TAO_HAS_VALUETYPE)
   // delete valuetype_factory_map_;
   // @@ not really, its a singleton
 # endif /* TAO_HAS_VALUETYPE */
@@ -1990,13 +1990,12 @@ CORBA_ORB::set_timeout (ACE_Time_Value *timeout)
 // Valuetype factory operations
 // *************************************************************
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
 
-CORBA::ValueFactory_ptr
-CORBA_ORB::register_value_factory (
-  const char *repository_id,
-  CORBA::ValueFactory_ptr factory
-  ACE_ENV_ARG_DECL)
+CORBA::ValueFactory
+CORBA_ORB::register_value_factory (const char *repository_id,
+                                   CORBA::ValueFactory factory
+                                   ACE_ENV_ARG_DECL)
 {
 // %! guard, and ACE_Null_Mutex in the map
 // do _add_ref here not in map->rebind
@@ -2031,7 +2030,7 @@ CORBA_ORB::unregister_value_factory (const char * /* repository_id */
   // %! TODO
 }
 
-CORBA::ValueFactory_ptr
+CORBA::ValueFactory
 CORBA_ORB::lookup_value_factory (const char *repository_id
                                  ACE_ENV_ARG_DECL_NOT_USED)
 {
@@ -2039,10 +2038,15 @@ CORBA_ORB::lookup_value_factory (const char *repository_id
 // do _add_ref here not in map->find
   if (valuetype_factory_map_)
     {
-      CORBA::ValueFactory_ptr factory;
-      int result = valuetype_factory_map_->find (repository_id, factory);
+      CORBA::ValueFactory factory;
+      int result = valuetype_factory_map_->find (repository_id, 
+                                                 factory);
+
       if (result == -1)
-        factory = 0;  // %! raise exception !
+        {
+          factory = 0;  // %! raise exception !
+        }
+
       return factory;
     }
   else

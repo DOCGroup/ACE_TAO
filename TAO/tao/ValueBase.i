@@ -25,6 +25,174 @@ CORBA_ValueBase::CORBA_ValueBase (void)
 {
 }
 
+// *************************************************************
+// Inline operations for class CORBA_ValueBase_var
+// *************************************************************
+
+ACE_INLINE
+CORBA_ValueBase_var::CORBA_ValueBase_var (void)
+  : ptr_ (0)
+{
+}
+
+ACE_INLINE
+CORBA_ValueBase_var::CORBA_ValueBase_var (CORBA::ValueBase *p)
+  : ptr_ (p)
+{
+}
+
+ACE_INLINE
+CORBA_ValueBase_var::~CORBA_ValueBase_var (void)
+{
+  CORBA::remove_ref (this->ptr_);
+}
+
+ACE_INLINE CORBA::ValueBase *
+CORBA_ValueBase_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA_ValueBase_var::CORBA_ValueBase_var (const CORBA_ValueBase_var &p)
+  : ptr_ (p.ptr_)
+{
+  p.ptr_->_add_ref ();
+}
+
+ACE_INLINE CORBA_ValueBase_var &
+CORBA_ValueBase_var::operator= (CORBA::ValueBase *p)
+{
+  CORBA::remove_ref (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE CORBA_ValueBase_var &
+CORBA_ValueBase_var::operator= (const CORBA_ValueBase_var &p)
+{
+  if (this != &p)
+    {
+      CORBA::remove_ref (this->ptr_);
+      p.ptr_->_add_ref ();
+      this->ptr_ = p.ptr_;
+    }
+
+  return *this;
+}
+
+ACE_INLINE
+CORBA_ValueBase_var::operator const CORBA::ValueBase *&() const // cast
+{
+  return ACE_const_cast (const CORBA::ValueBase *&,
+                         this->ptr_);
+}
+
+ACE_INLINE
+CORBA_ValueBase_var::operator CORBA::ValueBase *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA::ValueBase *
+CORBA_ValueBase_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA::ValueBase *
+CORBA_ValueBase_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA::ValueBase *&
+CORBA_ValueBase_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA::ValueBase *&
+CORBA_ValueBase_var::out (void)
+{
+  CORBA::remove_ref (this->ptr_);
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA::ValueBase *
+CORBA_ValueBase_var::_retn (void)
+{
+  // Yield ownership of valuebase.
+  CORBA::ValueBase *val = this->ptr_;
+  this->ptr_ = 0;
+  return val;
+}
+
+// *************************************************************
+// Inline operations for class CORBA_ValueBase_out
+// *************************************************************
+
+ACE_INLINE
+CORBA_ValueBase_out::CORBA_ValueBase_out (CORBA::ValueBase *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+CORBA_ValueBase_out::CORBA_ValueBase_out (CORBA_ValueBase_var &p)
+  : ptr_ (p.out ())
+{
+  this->ptr_->_remove_ref ();
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+CORBA_ValueBase_out::CORBA_ValueBase_out (const CORBA_ValueBase_out &p)
+  : ptr_ (p.ptr_)
+{
+}
+
+ACE_INLINE CORBA_ValueBase_out &
+CORBA_ValueBase_out::operator= (const CORBA_ValueBase_out &p)
+{
+  this->ptr_ = p.ptr_;
+  return *this;
+}
+
+ACE_INLINE CORBA_ValueBase_out &
+CORBA_ValueBase_out::operator= (const CORBA_ValueBase_var &p)
+{
+  p.ptr ()->_add_ref ();
+  this->ptr_ = p.ptr ();
+  return *this;
+}
+
+ACE_INLINE CORBA_ValueBase_out &
+CORBA_ValueBase_out::operator= (CORBA::ValueBase *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+CORBA_ValueBase_out::operator CORBA::ValueBase *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA::ValueBase *&
+CORBA_ValueBase_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA::ValueBase *
+CORBA_ValueBase_out::operator-> (void)
+{
+  return this->ptr_;
+}
 
 // ===========================================================
 
@@ -134,3 +302,26 @@ TAO_OBV_GIOP_Flags::is_end_tag (CORBA::ULong tag)
 {
   return (0x80000000L < tag  && tag <= 0xFFFFFFFFL);
 }
+
+// ===========================================================
+
+ACE_INLINE CORBA::Boolean
+operator<< (TAO_OutputCDR &strm, 
+            const CORBA_ValueBase *_tao_valuetype)
+{
+  return CORBA_ValueBase::_tao_marshal (
+             strm,
+             ACE_const_cast (CORBA_ValueBase *, 
+                             _tao_valuetype),
+             (ptr_arith_t) &CORBA_ValueBase::_downcast
+           );
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (TAO_InputCDR &strm, 
+            CORBA_ValueBase *&_tao_valuetype)
+{
+  return CORBA_ValueBase::_tao_unmarshal (strm, 
+                                          _tao_valuetype);
+}
+

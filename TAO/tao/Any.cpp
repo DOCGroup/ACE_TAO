@@ -11,6 +11,7 @@
 #include "tao/Marshal.h"
 #include "tao/ORB_Core.h"
 #include "tao/Object.h"
+#include "tao/AbstractBase.h"
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
@@ -1611,7 +1612,7 @@ CORBA_Any::operator>>= (to_object obj) const
       // is only useful to implement the >>=(to_object) operator,
       // which is very rarely used.
       // It is better to just demarshal the object everytime,
-      // specially because the caller is owns the returned object.
+      // specially because the caller owns the returned object.
       //
       // if (this->any_owns_data_ && this->value_)
       //  {
@@ -1642,6 +1643,104 @@ CORBA_Any::operator>>= (to_object obj) const
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Exception in CORBA::Object_ptr extraction\n")));
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (to_abstract_base obj) const
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      CORBA::ULong kind =
+        this->type_->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::TypeCode_var tcvar =
+        CORBA::TypeCode::_duplicate (this->type_.in ());
+
+      while (kind == CORBA::tk_alias)
+        {
+          tcvar = tcvar->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          kind = tcvar->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
+      if (kind != CORBA::tk_abstract_interface)
+        {
+          return 0;
+        }
+
+      // @@ This uses ORB_Core instance because we need one to
+      // demarshal objects (to create the right profiles for that
+      // object), but the Any does not belong to any ORB.
+      TAO_InputCDR stream (this->cdr_,
+                           this->byte_order_,
+                           TAO_DEF_GIOP_MAJOR,
+                           TAO_DEF_GIOP_MINOR,
+                           TAO_ORB_Core_instance ());
+
+      if (stream >> obj.ref_)
+        {
+          return 1;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Exception in CORBA::AbstractBase extraction\n")));
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (to_value obj) const
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      CORBA::ULong kind =
+        this->type_->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::TypeCode_var tcvar =
+        CORBA::TypeCode::_duplicate (this->type_.in ());
+
+      while (kind == CORBA::tk_alias)
+        {
+          tcvar = tcvar->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          kind = tcvar->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
+      if (kind != CORBA::tk_value)
+        {
+          return 0;
+        }
+
+      TAO_InputCDR stream (this->cdr_,
+                           this->byte_order_);
+
+      if (stream >> obj.ref_)
+        {
+          return 1;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Exception in CORBA::ValueBase extraction\n")));
     }
   ACE_ENDTRY;
 

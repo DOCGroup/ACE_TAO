@@ -229,12 +229,21 @@ typedef class CORBA_Principal *CORBA_Principal_ptr;
 
 typedef class CORBA_ImplementationDef *CORBA_ImplementationDef_ptr;
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
 class CORBA_ValueBase;
+class CORBA_ValueBase_var;
+class CORBA_ValueBase_out;
 class CORBA_ValueFactoryBase;
-typedef CORBA_ValueFactoryBase *CORBA_ValueFactory_ptr;
+class CORBA_ValueFactoryBase_var;
+typedef CORBA_ValueFactoryBase *CORBA_ValueFactory;
+typedef CORBA_ValueFactoryBase_var CORBA_ValueFactory_var;
 class CORBA_DefaultValueRefCountBase;
 #endif /* TAO_HAS_VALUETYPE */
+
+class CORBA_AbstractBase;
+typedef CORBA_AbstractBase *CORBA_AbstractBase_ptr;
+class CORBA_AbstractBase_var;
+class CORBA_AbstractBase_out;
 
 class CORBA_String_var;
 class CORBA_String_out;
@@ -746,17 +755,25 @@ TAO_NAMESPACE CORBA
   typedef CORBA_TypeCodeFactory_var TypeCodeFactory_var;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TypeCodeFactory;
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
   typedef CORBA_ValueBase ValueBase;
   typedef CORBA_ValueBase *ValueBase_ptr;
+  typedef CORBA_ValueBase_var ValueBase_var;
+  typedef CORBA_ValueBase_out ValueBase_out;
   typedef CORBA_ValueFactoryBase ValueFactoryBase;
   typedef CORBA_ValueFactoryBase *ValueFactory;
   // as CORBA 2.3a C++ map. 20.17.10 says
-  typedef CORBA_ValueFactoryBase *ValueFactory_ptr;
+  typedef CORBA_ValueFactoryBase *ValueFactory;
+  typedef CORBA_ValueFactory_var ValueFactory_var;
   // own invention, more readable
   typedef CORBA_DefaultValueRefCountBase  DefaultValueRefCountBase;
   TAO_NAMESPACE_INLINE_FUNCTION void add_ref (ValueBase *);
   TAO_NAMESPACE_INLINE_FUNCTION void remove_ref (ValueBase *);
+
+  typedef CORBA_AbstractBase AbstractBase;
+  typedef CORBA_AbstractBase *AbstractBase_ptr;
+  typedef CORBA_AbstractBase_var AbstractBase_var;
+  typedef CORBA_AbstractBase_out AbstractBase_out;
 #endif /* TAO_HAS_VALUETYPE */
 
   // enum values defined in nvlist.hh, bitwise ORed.
@@ -792,6 +809,7 @@ TAO_NAMESPACE CORBA
 
   // = all the CORBA::is_nil methods.
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Object_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (AbstractBase_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Environment_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ORB_ptr);
@@ -804,6 +822,7 @@ TAO_NAMESPACE CORBA
 
   // = all the CORBA release methods.
   TAO_NAMESPACE_INLINE_FUNCTION void release (Object_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (AbstractBase_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (Environment_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (Principal_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);

@@ -25,7 +25,7 @@
 #include "ace/Synch.h"
 #include "tao/corbafwd.h"
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
 
 class TAO_ValueFactory_Map
 {
@@ -42,25 +42,25 @@ public:
    * Returns -1 on failure, 0 on success and 1 if a previous factory
    * is found (and returned in factory).
    */
-  int rebind (const char *repo_id, CORBA_ValueFactory_ptr &factory);
+  int rebind (const char *repo_id, CORBA_ValueFactory &factory);
 
   /// Removes entry for repo_id from the map and sets factory to
   /// the tied one.
-  int unbind (const char *repo_id, CORBA_ValueFactory_ptr &factory);
+  int unbind (const char *repo_id, CORBA_ValueFactory &factory);
 
   /**
    * Lookup a matching factory for repo_id.
    * Invokes _add_ref () on the factory if found.
    * Returns -1 on failure and 0 on success.
    */
-  int find (const char *repo_id, CORBA_ValueFactory_ptr &factory);
+  int find (const char *repo_id, CORBA_ValueFactory &factory);
 
   void dump (void);
 private:
 
   /// The hash table data structure.
   typedef ACE_Hash_Map_Manager_Ex<const char *,
-                                  CORBA_ValueFactory_ptr,
+                                  CORBA_ValueFactory,
                                   ACE_Hash<const char *>,
                                   ACE_Equal_To<const char *>,
                                   TAO_SYNCH_RW_MUTEX>

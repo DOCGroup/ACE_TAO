@@ -17,7 +17,7 @@
 #include "tao/ValueFactory.h"
 #include "tao/ORB.h"
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ValueFactory_Map.i"
@@ -55,32 +55,35 @@ TAO_ValueFactory_Map::~TAO_ValueFactory_Map ()
 
 int
 TAO_ValueFactory_Map::rebind (const char *repo_id,
-                              CORBA_ValueFactory_ptr &factory)
+                              CORBA_ValueFactory &factory)
 {
 //  ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, map_->mutex(),-1);
 //   --- but must be recursive
   const char *prev_repo_id;
-  CORBA_ValueFactory_ptr prev_factory;
+  CORBA_ValueFactory prev_factory;
   int ret = 0;
   ret = this->map_.rebind (CORBA::string_dup (repo_id),
                            factory,
                            prev_repo_id, 
                            prev_factory);
+
   if (ret > -1)   // ok, no error
     {
       factory->_add_ref ();    // The map owns one reference.
+
       if (ret == 1)    // there was a previous factory
         {
           factory = prev_factory;
           CORBA::string_free (ACE_const_cast(char*,prev_repo_id));
         }
     }
+
   return ret;
 }
 
 int
 TAO_ValueFactory_Map::unbind (const char *repo_id,
-                              CORBA_ValueFactory_ptr &factory)
+                              CORBA_ValueFactory &factory)
 {
   // ACE_Hash_Map_Entry<const char *, CORBA_ValueFactory_ptr> *prev_entry;
   FACTORY_MAP_MANAGER::ENTRY *prev_entry;
@@ -104,7 +107,7 @@ TAO_ValueFactory_Map::unbind (const char *repo_id,
 // %! perhaps inline
 int
 TAO_ValueFactory_Map::find (const char *repo_id,
-                            CORBA_ValueFactory_ptr &factory)
+                            CORBA_ValueFactory &factory)
 {
   int ret = 0;
   ret = this->map_.find (repo_id, 
