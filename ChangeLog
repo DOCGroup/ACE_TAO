@@ -1,3 +1,11 @@
+Wed Mar  5 06:32:40 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* ace/Makefile.bor:
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+
+	Added codeset registry files and fixed spelling error in Makefile.bor.
+	
 Wed Mar  5 06:10:48 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
        * ace/Makefile.bor: 
