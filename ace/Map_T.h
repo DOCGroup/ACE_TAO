@@ -1429,7 +1429,7 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "Map_T.cpp"
+#pragma implementation ("Map_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_MAP_T_H */
