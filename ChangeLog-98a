@@ -7,9 +7,9 @@ Mon Jan 12 13:03:07 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Mon Jan 12 12:30:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * config-linux-common.h: moved ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-          so that it isn't used with egcs.  Thanks to Gonzo for
-          testing this.
+        * ace/config-linux-common.h: moved
+          ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES so that it isn't used
+          with egcs.  Thanks to Gonzo for testing this.
 
         * tests/MT_Sock_Test.cpp (spawn): changed type of local variable i
           to int to avoid signed/unsigned comparison.  Thanks to Gonzo for
@@ -18,6 +18,10 @@ Mon Jan 12 12:30:34 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Service_Config.test: changed type of VARIETIES to u_int to
           avoid signed/unsigned comparison in main.  Thanks to Gonzo for
           reporting this.
+
+        * ace/config-linux-common.h: added ACE_HAS_TEMPLATE_TYPEDEFS and
+          ACE_HAS_TYPENAME_KEYWORD.  Thanks to Oleg Krivosheev
+          <kriol@fnal.gov> for reporting these.
 
         * ace/config-vxworks5.x.h: merged the two VxWorks configs (g++ and
           ghs) into this new config for easier maintenance.  Added
