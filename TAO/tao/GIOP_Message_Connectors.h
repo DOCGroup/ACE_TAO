@@ -22,7 +22,7 @@
 #include "ace/pre.h"
 
 #include "tao/GIOP_Message_Base.h"
-
+#include "tao/Exception.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,25 +42,25 @@ class TAO_Export TAO_GIOP_Message_Connectors: public TAO_GIOP_Message_Base
   //   This class provides methods and code for the connector specific
   //   functionality of GIOP.The motivation for this class is to hold
   //   common code between different versions of GIOP in a single
-  //   class. 
+  //   class.
 public:
-  
+
   CORBA::Boolean write_reply_header (TAO_OutputCDR &cdr,
                                      TAO_Pluggable_Reply_Params &reply,
                                      CORBA::Environment &ACE_TRY_ENV =
                                      TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This would not be used now. So it will be returning an error
-  // message. 
-  // @@ This will be implemented once we get to the Bi-Dir GIOP.  
+  // message.
+  // @@ This will be implemented once we get to the Bi-Dir GIOP.
   //   class.
 
 protected:
   int parse_reply (TAO_Message_State_Factory &mesg_state,
                    TAO_Pluggable_Reply_Params &params);
   // Parse the reply message from the server
-  
-  
+
+
   int parse_locate_reply (TAO_GIOP_Message_State &state,
                           TAO_Pluggable_Reply_Params &params);
   // Parse the locate reply message
@@ -106,9 +106,9 @@ public:
 
   TAO_GIOP_Message_Connector_10 (void);
   // Ctor
-  
+
 private:
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
   write_request_header (const TAO_Operation_Details &opdetails,
                         TAO_Target_Specification &spec,
                         TAO_OutputCDR &msg);
@@ -161,9 +161,9 @@ public:
 
   TAO_GIOP_Message_Connector_12 (void);
   // Ctor
-  
+
 private:
-  CORBA::Boolean 
+  CORBA::Boolean
   write_request_header (const TAO_Operation_Details &opdetails,
                         TAO_Target_Specification &spec,
                         TAO_OutputCDR &msg);
@@ -174,21 +174,21 @@ private:
                                TAO_Target_Specification &spec,
                                TAO_OutputCDR &msg);
   // Write the locate request header in to the <msg>
-  
+
   int parse_reply (TAO_Message_State_Factory &mesg_state,
                    TAO_Pluggable_Reply_Params &params);
   // Parse the reply messages from the server
 
   CORBA::Octet major_version (void);
   CORBA::Octet minor_version (void);
-  // Our minor and major versions  
-  
+  // Our minor and major versions
+
   CORBA::Boolean marshall_target_spec (TAO_Target_Specification &spec,
                                        TAO_OutputCDR &msg);
   // This is a helper method that would be used by the method,
   // write_request_header (). This method extracts the the correct
   // specification details from <spec> and marshalls the details in to
-  // <msg> 
+  // <msg>
 
 };
 
