@@ -1,12 +1,4 @@
 // $Id$
-
-/**
- * @file NodeApplication.cpp
- *
- * @brief CIAO's NodeApplication implementation
- *
- */
-
 #include "NodeApplication_Impl.h"
 #include "NodeApplication_CallBackC.h"
 #include "ciao/Server_init.h"
@@ -17,9 +9,8 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
-char *ior_file_name_ = 0;
-char *callback_ior_ = 0;
-int use_callback = 1;
+const char *ior_file_name = 0;
+const char *callback_ior = 0;
 
 int
 parse_args (int argc, char *argv[])
@@ -30,16 +21,12 @@ parse_args (int argc, char *argv[])
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'n':
-        use_callback = 0;
+      case 'o':  // get the file name to write to
+        ior_file_name = get_opts.opt_arg ();
         break;
 
-      case 'o':  // get the file name to write to
-       ior_file_name_ = get_opts.opt_arg ();
-       break;
-
       case 'k':  // get the activator callback IOR
-       callback_ior_ = get_opts.opt_arg ();
+       callback_ior = get_opts.opt_arg ();
        break;
 
       case '?':  // display help for use of the server.
@@ -54,8 +41,9 @@ parse_args (int argc, char *argv[])
                           -1);
       }
 
-  if (use_callback && callback_ior_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Callback IOR to NodeApplicationManager is required.\n"),
+  if (callback_ior == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Callback IOR to NodeApplicationManager is required.\n"),
                       -1);
 
   return 0;
@@ -64,41 +52,16 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  //@@ I will ignor this config done at WashU for now. --Tao
-  // Define CIAO_FIFO_SCHED=1 to run component server in FIFO_SCHED class
-  /* ACE_Env_Value<int> envar ("CIAO_FIFO_SCHED", 0);
-  if (envar != 0)
-    {
-      int priority =
-        (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-         + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority);
-      // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  ACE_DECLARE_NEW_CORBA_ENV;
 
-      if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
-                                                  priority,
-                                                  ACE_SCOPE_PROCESS)) != 0)
-        {
-          if (ACE_OS::last_error () == EPERM)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "ComponentServer (%P|%t): user is not superuser, "
-                          "test runs in time-shared class\n"));
-            }
-          else
-            ACE_ERROR ((LM_ERROR,
-                        "ComponentServer (%P|%t): sched_params failed\n"));
-        }
-      }*/
-
-  ACE_TRY_NEW_ENV
+  ACE_TRY
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc,
+                         argv,
+                         ""
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CIAO::Server_init (orb.in ());
@@ -146,7 +109,7 @@ main (int argc, char *argv[])
 
       Deployment::NodeApplication_var nodeapp_obj =
         Deployment::NodeApplication::_narrow (obj.in ()
-					      ACE_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (nodeapp_obj.in ()))
@@ -158,25 +121,22 @@ main (int argc, char *argv[])
       Deployment::NodeApplicationManager_var nodeapp_man;
       Deployment::Properties_var prop = new Deployment::Properties;
 
-      if (use_callback)
-        {
-          obj = orb->string_to_object (callback_ior_
-                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+      obj = orb->string_to_object (callback_ior
+                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-          CIAO::NodeApplication_Callback_var nam_callback
-            = CIAO::NodeApplication_Callback::_narrow (obj.in ()
-						       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+      CIAO::NodeApplication_Callback_var nam_callback
+        = CIAO::NodeApplication_Callback::_narrow (obj.in ()
+                                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-          Deployment::Properties_out properties_out (prop.out ());
+      Deployment::Properties_out properties_out (prop.out ());
 
-          nodeapp_man
-            = nam_callback->register_node_application (nodeapp_obj.in (),
-                                                       properties_out
-                                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
+      nodeapp_man
+        = nam_callback->register_node_application (nodeapp_obj.in (),
+                                                   properties_out
+                                                   ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       /** @@ We need to call NodeApplication servant's init method.
        * But it's not sure to me where exactly we can get the
@@ -188,16 +148,17 @@ main (int argc, char *argv[])
 
       if (nodeapp_servant->init (ACE_ENV_SINGLE_ARG_PARAMETER))
       {
-	ACE_DEBUG ((LM_DEBUG, "NodeApplication Failed on creating and\
+        ACE_DEBUG ((LM_DEBUG, "NodeApplication Failed on creating and\
                                initializing the session container!"));
-	return 1;
+        return 1;
       }
       ACE_TRY_CHECK;
 
       CORBA::String_var str = orb->object_to_string (nodeapp_obj.in ()
                                                      ACE_ENV_ARG_PARAMETER);
 
-      CIAO::Utility::write_IOR (ior_file_name_, str.in ());
+      CIAO::Utility::write_IOR (ior_file_name,
+                                str.in ());
 
       // End Deployment part
       if (CIAO::debug_level () > 10)
