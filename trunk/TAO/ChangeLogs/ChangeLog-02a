@@ -1,3 +1,50 @@
+Mon Dec 10 17:57:59 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/AV.dsp:
+	* orbsvcs/orbsvcs/CosConcurrency.dsp:
+	* orbsvcs/orbsvcs/CosEvent.dsp:
+	* orbsvcs/orbsvcs/CosLifeCycle.dsp:
+	* orbsvcs/orbsvcs/CosNaming.dsp:
+	* orbsvcs/orbsvcs/CosNotification.dsp:
+	* orbsvcs/orbsvcs/CosProperty.dsp:
+	* orbsvcs/orbsvcs/CosTime.dsp:
+	* orbsvcs/orbsvcs/CosTrading.dsp:
+	* orbsvcs/orbsvcs/DsLogAdmin.dsp:
+	* orbsvcs/orbsvcs/Fault_Tolerance.dsp:
+	* orbsvcs/orbsvcs/LoadBalancing.dsp:
+	* orbsvcs/orbsvcs/RTEvent.dsp:
+	* orbsvcs/orbsvcs/RTOLDEvent.dsp:
+	* orbsvcs/orbsvcs/RTSched.dsp:
+	* orbsvcs/orbsvcs/RTSchedEvent.dsp:
+	* orbsvcs/orbsvcs/SSLIOP.dsp:
+	* orbsvcs/orbsvcs/Svc_Utils.dsp:
+
+	  Modified these projects to use the new
+	  resource files below.
+
+	* orbsvcs/orbsvcs/Svc_Utils.rc:
+	* orbsvcs/orbsvcs/AV.rc:
+	* orbsvcs/orbsvcs/CosConcurrency.rc:
+	* orbsvcs/orbsvcs/CosEvent.rc:
+	* orbsvcs/orbsvcs/CosLifeCycle.rc:
+	* orbsvcs/orbsvcs/CosNaming.rc:
+	* orbsvcs/orbsvcs/CosNotification.rc:
+	* orbsvcs/orbsvcs/CosProperty.rc:
+	* orbsvcs/orbsvcs/CosTime.rc:
+	* orbsvcs/orbsvcs/CosTrading.rc:
+	* orbsvcs/orbsvcs/DsLogAdmin.rc:
+	* orbsvcs/orbsvcs/FaultTolerance.rc:
+	* orbsvcs/orbsvcs/LoadBalancing.rc:
+	* orbsvcs/orbsvcs/RTEvent.rc:
+	* orbsvcs/orbsvcs/RTOldEvent.rc:
+	* orbsvcs/orbsvcs/RTSched.rc:
+	* orbsvcs/orbsvcs/RTSchedEvent.rc:
+	* orbsvcs/orbsvcs/SSLIOP.rc:
+
+	  New files to aid in displaying version information.
+	  Thanks to David Hauck <davidh@netacquire.com> for
+	  submitting all of the above.
+
 Mon Dec 10 16:33:39 2001  Justin Michel  <michel_j@ociweb.com>
 
         * TAO/tests/TAO_Tests.dsw
