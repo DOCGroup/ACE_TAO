@@ -27,6 +27,52 @@
 #include "ace/config.h"
 #endif /* ACE_USER_CONFIG_H */
 
+// Include the new standard headers (like cstdio) if using the
+// new standard.
+
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+# if defined (_MSC_VER)
+#   pragma warning(disable: 4018 4114 4146 4245)
+#   pragma warning(disable: 4663 4664 4665 4511 4512)
+# endif /* _MSC_VER */
+
+# include /**/ <cassert>
+# include /**/ <climits>
+# include /**/ <cstdio>
+# include /**/ <new>
+# include /**/ <cctype>
+# include /**/ <csignal>
+# include /**/ <cstring>
+# include /**/ <cstdarg>
+# include /**/ <cerrno>
+# include /**/ <cstdlib>
+
+# if defined (_MSC_VER)
+#   pragma warning(4: 4018 4114 4146 4245)
+#   pragma warning(4: 4663 4664 4665 4512 4511)
+# endif /* _MSC_VER */
+
+#else /* ACE_HAS_STANDARD_CPP_LIBRARY && ACE_HAS_STANDARD_CPP_LIBRARY */
+
+# include /**/ <assert.h>
+# include /**/ <limits.h>
+// NOTE: stdarg.h must be #included before stdio.h on LynxOS.
+# include /**/ <stdarg.h>
+# include /**/ <stdio.h>
+# include /**/ <new.h>
+# include /**/ <ctype.h>
+# include /**/ <signal.h>
+# include /**/ <string.h>
+# include /**/ <errno.h>
+# include /**/ <stdlib.h>
+
+#endif /* ACE_HAS_STANDARD_CPP_LIBRARY && ACE_HAS_STANDARD_CPP_LIBRARY */
+
+#endif /* ACE_STDCPP_H */
+
+#if !defined (ACE_HAS_MINIMUM_STREAMH_INCLUSION)
+# if !defined (ACE_STDCPP_STREAMS)
+#   define ACE_STDCPP_STREAMS
 # if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 
 #   if defined (_MSC_VER)
@@ -35,7 +81,7 @@
 #   endif /* _MSC_VER */
 
     // For some reason, The Standard C++ Library has decided to save space
-    // and ommit the file extensions.
+    // and omit the file extensions.
 #   include /**/ <iomanip>
 #   include /**/ <ios>
 #   include /**/ <iostream>
@@ -96,45 +142,6 @@
 
 # endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
-// Now include the new standard headers (like cstdio) if using the
-// new standard.
+# endif /* ACE_STDCPP_STREAMS */
 
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
-# if defined (_MSC_VER)
-#   pragma warning(disable: 4018 4114 4146 4245)
-#   pragma warning(disable: 4663 4664 4665 4511 4512)
-# endif /* _MSC_VER */
-
-# include /**/ <cassert>
-# include /**/ <climits>
-# include /**/ <cstdio>
-# include /**/ <new>
-# include /**/ <cctype>
-# include /**/ <csignal>
-# include /**/ <cstring>
-# include /**/ <cstdarg>
-# include /**/ <cerrno>
-# include /**/ <cstdlib>
-
-# if defined (_MSC_VER)
-#   pragma warning(4: 4018 4114 4146 4245)
-#   pragma warning(4: 4663 4664 4665 4512 4511)
-# endif /* _MSC_VER */
-
-#else /* ACE_HAS_STANDARD_CPP_LIBRARY && ACE_HAS_STANDARD_CPP_LIBRARY */
-
-# include /**/ <assert.h>
-# include /**/ <limits.h>
-// NOTE: stdarg.h must be #included before stdio.h on LynxOS.
-# include /**/ <stdarg.h>
-# include /**/ <stdio.h>
-# include /**/ <new.h>
-# include /**/ <ctype.h>
-# include /**/ <signal.h>
-# include /**/ <string.h>
-# include /**/ <errno.h>
-# include /**/ <stdlib.h>
-
-#endif /* ACE_HAS_STANDARD_CPP_LIBRARY && ACE_HAS_STANDARD_CPP_LIBRARY */
-
-#endif /* ACE_STDCPP_H */
+#endif /* ACE_HAS_MINIMUM_STREAM_INCLUSION */
