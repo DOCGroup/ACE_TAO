@@ -1,3 +1,16 @@
+Sat Jul 08 18:08:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* test/Exposed_Policies/server.cpp:
+
+	  Fixed compilation error.
+
+	* Exposed_Policies.dsw:
+	* Server.dsp:
+	* Client.dsp:
+
+	  Changed project setting to eliminate fix some compilation
+	  errors. Added setting for release build.
+
 Sat Jul  8 17:45:00 2000  Bruce Trask  <brucetrask@aol.com>
 
       * tao/DomainS.cpp:
