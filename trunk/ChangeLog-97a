@@ -1,3 +1,12 @@
+Mon Mar 24 13:21:31 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/High_Res_Timer.cpp (elapsed_time): Added an
+	  ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanosecond)
+	  method that returns the number of elapsed nanoseconds.  This is
+	  accomplished even with the scale factors converting to
+	  microseconds.  It also does not use floating point
+	  calculations.
+
 Mon Mar 24 08:20:45 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* netsvcs/lib/TS_Clerk_Handler.cpp (handle_close): added
