@@ -53,13 +53,13 @@ CORBA_Any::type (CORBA::TypeCode_ptr tc,
 const void *
 CORBA_Any::value (void) const
 {
-  if (this->cdr_ != 0 || this->value_ != 0)
+  if (this->any_owns_data_)
     {
-      return this;
+      return this->value_;
     }
   else
     {
-      return 0;
+      return this->cdr_;
     }
 }
 
