@@ -7,7 +7,7 @@
 
 //#include "ThreadAction.h"
 
-ACE_Atomic_Op<ACE_Thread_Mutex, long> guid_counter;
+ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;
 
 u_long
 TAO_DTId_Hash::operator () (const IdType &id) const
@@ -136,7 +136,8 @@ TAO_RTScheduler_Current::end_scheduling_segment (const char * name
 }
 
 RTScheduling::DistributableThread_ptr 
-TAO_RTScheduler_Current::lookup(const RTScheduling::Current::IdType & id)
+TAO_RTScheduler_Current::lookup(const RTScheduling::Current::IdType & id
+				ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTScheduling::DistributableThread_var DT;
