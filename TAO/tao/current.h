@@ -24,6 +24,9 @@ class TAO_POA_Current : public POA_PortableServer::Current
   // = TITLE
   // Implementation of the PortableServer::Current object.
   //
+  // = EXPOSURE
+  // Internal to ORB Core
+  //
   // = DESCRIPTION
   //
   // Objects of this class hold state information regarding the
