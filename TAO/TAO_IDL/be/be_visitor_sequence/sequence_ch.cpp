@@ -157,7 +157,18 @@ be_visitor_sequence_ch::instantiate_sequence (be_sequence *node)
       break;
     default: // not a managed type
       if (node->unbounded ())
-        this->gen_unbounded_sequence (node);
+      {
+          // @@ This needs to be fixed. (Michael)
+          be_predefined_type * bpt = 
+            be_predefined_type::narrow_from_decl (node->base_type());
+          if (bpt)
+          {
+            if (bpt->pt() != AST_PredefinedType::PT_octet)
+              this->gen_unbounded_sequence (node);
+          }
+          else
+            this->gen_unbounded_sequence (node);
+      }
       else
         this->gen_bounded_sequence (node);
       break;
