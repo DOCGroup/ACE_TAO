@@ -1,3 +1,15 @@
+Tue Oct 12 11:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/create_persistent_poa.h:
+          Include PortableServer.h instead of PortableServerC.h
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_MemberLocator.h:
+          Include ServantLocatorC.h instead of PortableServerC.h
+
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+          Use a dynamic_cast to get the TAO_POA, the _tao_downcast has been
+          zapped with this rework
+
 Tue Oct 12 10:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Policy_Forward.*:
