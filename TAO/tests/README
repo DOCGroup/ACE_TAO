@@ -21,7 +21,7 @@ how to run the following tests:
           when the process runs out of descriptors.
 
         . DynAny_Test
-        
+
           Tests TAO's DynAny feature, which allows composition and
           decomposition of arbitrarily complex CORBA::Any values at
           runtime, without requiring any compile-time knowledge of the
@@ -139,15 +139,20 @@ how to run the following tests:
           interfaces and their usage scenarios.
 
         . Param_Test
- 
+
           Tests all the features of TAO's protocol engine.
+
+        . RTCORBA
+
+          A collection of tests exercising features from RTCORBA 1.0
+          specification.
 
         . QtTests
 
           This example illustrates the usage of the QtReactor from TAO.
 
         . Smart Proxies
-        
+
           Tests the smart proxy feature which allows the user to
           specify a proxy in plaec of the default proxy (stub).
 

@@ -1,4 +1,11 @@
-Mon Aug 28 21:32:42 2000  Marina Spivak  <marina@cs.wustl.edu>
+Mon Aug 28 22:14:51 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/README
+	* tests/RTCORBA/README:
+
+	  Include info on new RTCORBA tests.
+
+Mon Aug 28 21:32:40 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Protocol_Factory.cpp:
 
