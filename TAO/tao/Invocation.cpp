@@ -98,6 +98,7 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
 {
 #if (TAO_HAS_CORBA_MESSAGING == 0)
 
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   this->profile_ = this->stub_->profile_in_use ();
   return this->profile_;
 

@@ -1,6 +1,19 @@
+Thu Dec 23 16:37:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Buffering_Constraint_Policy.h:
+	* tao/Buffering_Constraint_Policy.cpp:
+
+	  Inclusion of Buffering_Constraint_Policy.i should be moved into
+	  the TAO_HAS_CORBA_MESSAGING == 1 section.
+
+	* tao/Invocation.cpp (TAO_GIOP_Invocation):
+	* tao/ORB.cpp (resolve_policy_current and resolve_policy_manager):
+
+	  Fixed unused arg warnings for minimum CORBA build.
+
 Thu Dec 23 12:33:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/orbconf.h: 
+	* tao/orbconf.h:
 
 	  - Changed the following variables to have a [0/1]
 	  definition. Simply being defined or undefined was not powerful
@@ -21,7 +34,7 @@ Thu Dec 23 12:33:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  - Nanbor should probably think about doing the same to
 	  TAO_HAS_INTERCEPTORS.  Also, somebody should look into
 	  TAO_HAS_VALUETYPE.
-	
+
 	  - TAO_HAS_AMI is new and is similar to the <ami> make rule.
 
 	  - The following files were changed to comply with the above
@@ -89,8 +102,8 @@ Thu Dec 23 12:33:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
             default_resource.cpp
             rtcorbafwd.cpp
             rtcorbafwd.h
-	
-	* rules.tao.GNU: 
+
+	* rules.tao.GNU:
 
 	  - If <minimum_corba> is enabled, disable <rt_corba> and
 	  <corba_messaging> by default.  Users can still override this to
@@ -113,12 +126,12 @@ Thu Dec 23 12:33:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  - Changed -DTAO_HAS_CORBA_MESSAGING to -DTAO_HAS_CORBA_MESSAGING=1
 
 	  - Changed -DTAO_HAS_INTERFACE_REPOSITORY to -DTAO_HAS_INTERFACE_REPOSITORY=1
-	
+
 	  - Added -DTAO_HAS_RT_CORBA=1 when rt_corba=1
-	 
+
 	  - Added -DTAO_HAS_CORBA_MESSAGING=0 when corba_messaging=0
 
-	* TAO: Changed 
+	* TAO: Changed
 
 	  ifndef minimum_corba
 
@@ -138,7 +151,7 @@ Thu Dec 23 12:33:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  - performance-tests/Cubit/TAO/Makefile
 	  - tao/Makefile
 	  - tests/Makefile
-	
+
 	* examples/Buffered_AMI/client.cpp (setup_buffering_constraints):
 	  Changed all ACE_TRY_CHECK to be ACE_CHECK. This is because we
 	  are not in a try block.
@@ -149,7 +162,7 @@ Thu Dec 23 12:33:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tests/Makefile (DIRS): Compile the AMI test if <ami_callback> is 1.
 
 Thu Dec 23 12:16:38 1999  Christopher Kohlhoff <chris@kohlhoff.com>
-  
+
 	* TAO/orbsvcs/orbsvcs/: Modified Makefile.bor to include new
 	  source files, and to ensure tao_idl is executed for all .idl
  	  files before compiling any .cpp files. This change should also
@@ -162,7 +175,7 @@ Thu Dec 23 12:16:38 1999  Christopher Kohlhoff <chris@kohlhoff.com>
  	  removed the need for the extra flag. ]
 
         * TAO/tao: Added files ImplRepo[CS].cpp to Makefile.bor.
-  
+
 Thu Dec 23 12:06:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* utils/NamingViewer/StdAfx.h: Moved the inclusion of corba.h.
