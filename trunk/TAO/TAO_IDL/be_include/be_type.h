@@ -65,8 +65,7 @@ public:
   // If any one of the argument is 0, then use the name giin this
   // node, else use the arguments.
 
-  UTL_ScopedName *tc_name (const char *prefix = 0,
-                           const char *suffix = 0);
+  UTL_ScopedName *tc_name (void);
   // Return the typecode name. When both, the prefix and the suffix
   // are non null, it computes and returns a tc name. Else, it also
   // stores the result in a member variable.
@@ -101,10 +100,6 @@ public:
 protected:
   virtual void compute_tc_name (void);
   // Computes the fully scoped typecode name.
-
-  virtual UTL_ScopedName * compute_tc_name (const char *prefix,
-                                            const char *suffix);
-  // Compute and return the value.
 
   virtual const char *nested_name (const char* local_name,
                                    const char* full_name,

@@ -52,10 +52,6 @@ public:
 protected:
   virtual void compute_tc_name (void);
   // Overridden method to compute typecode name.
-
-  virtual UTL_ScopedName * compute_tc_name (const char *prefix,
-                                            const char *suffix);
-  // Compute and return the value.
 };
 
 #endif

@@ -45,10 +45,6 @@ be_visitor_typecode_decl::visit_type (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Generate the typecode decl.
-  const char *prefix = 0;
-  const char *postfix = 0;
-
   if (node->is_nested ())
     {
       // We have a scoped name.
@@ -65,7 +61,7 @@ be_visitor_typecode_decl::visit_type (be_type *node)
         }
 
       *os << "CORBA::TypeCode_ptr "
-          << node->tc_name (prefix, postfix)->last_component () 
+          << node->tc_name ()->last_component () 
           << ";" << be_nl << be_nl;
     }
   else
@@ -73,7 +69,7 @@ be_visitor_typecode_decl::visit_type (be_type *node)
       // We are in the ROOT scope.
       *os << "extern " << be_global->stub_export_macro () 
           << " CORBA::TypeCode_ptr "
-          << " " << node->tc_name (prefix, postfix)->last_component () 
+          << " " << node->tc_name ()->last_component () 
           << ";" << be_nl << be_nl;
     }
 
