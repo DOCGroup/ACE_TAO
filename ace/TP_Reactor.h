@@ -143,6 +143,8 @@ public:
 
   virtual int handle_events (ACE_Time_Value &max_wait_time);
 
+  virtual int work_pending (const ACE_Time_Value &timeout);
+
   virtual int mask_ops (ACE_Event_Handler *eh,
                         ACE_Reactor_Mask mask,
                         int ops);

@@ -109,6 +109,26 @@ ACE_TP_Reactor::dispatch_io_set (int number_of_active_handles,
 }
 
 int
+ACE_TP_Reactor::work_pending (const ACE_Time_Value &timeout)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token,
+          ace_mon, this->token_, -1));
+
+  u_long width = (u_long) this->handler_rep_.max_handlep1 ();
+
+  ACE_Select_Reactor_Handle_Set fd_set;
+  fd_set.rd_mask_ = this->wait_set_.rd_mask_;
+  fd_set.wr_mask_ = this->wait_set_.wr_mask_;
+  fd_set.ex_mask_ = this->wait_set_.ex_mask_;
+
+  return ACE_OS::select (int (width),
+                         fd_set.rd_mask_,
+                         fd_set.wr_mask_,
+                         fd_set.ex_mask_,
+                         timeout);
+}
+
+int
 ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_TP_Reactor::handle_events");

@@ -1,5 +1,8 @@
 Thu Jan 13 20:11:55 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/TP_Reactor.cpp (work_pending): This version is similar to
+	  the select reactor except there is no owner check.
+
 	* ace/Select_Reactor_T.cpp (work_pending): The handle set must be
 	  copied before calling select().
 
