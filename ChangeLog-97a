@@ -1,3 +1,10 @@
+Mon May 12 17:11:50 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
+
+	* ace/Process.h: Changed ACE_Process::start to
+	  ACE_Process::spawn.  Added new argv-style methods for
+	  ACE_Process::setenv and ACE_Process::command_line.  These new
+	  argv-style methods do not have implementations yet.
+
 Mon May 12 15:27:41 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-aix-4.[12].x.h: Added ACE_HAS_EXCEPTIONS to
