@@ -159,6 +159,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "FT_ORB"=.\FT_ORB.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Fault Tolerance"=.\Fault_Tolerance.dsp - Package Owner=<4>
 
 Package=<5>
@@ -167,6 +179,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name FT_ORB
+    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name CosNotification
     End Project Dependency
