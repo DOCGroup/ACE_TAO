@@ -21,9 +21,9 @@ TAO_Notify_StructuredProxyPushConsumer_i::get_ref (CORBA::Environment &ACE_TRY_E
 
 void
 TAO_Notify_StructuredProxyPushConsumer_i::connect_structured_push_supplier (
-    CosNotifyComm::StructuredPushSupplier_ptr push_supplier,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                            CosNotifyComm::StructuredPushSupplier_ptr push_supplier,
+                                                                            CORBA::Environment & //ACE_TRY_ENV
+                                                                            )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
     CosEventChannelAdmin::AlreadyConnected
@@ -58,8 +58,8 @@ TAO_Notify_StructuredProxyPushConsumer_i::push_structured_event (
 
 void
 TAO_Notify_StructuredProxyPushConsumer_i::disconnect_structured_push_consumer (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                               CORBA::Environment & //ACE_TRY_ENV
+                                                                               )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))

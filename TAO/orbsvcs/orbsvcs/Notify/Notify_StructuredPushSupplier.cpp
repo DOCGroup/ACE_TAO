@@ -18,7 +18,7 @@ TAO_Notify_StructuredPushSupplier::get_ref (void)
 void
 TAO_Notify_StructuredPushSupplier::open
 (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin,
- CORBA::Environment& ACE_TRY_ENV)
+ CORBA::Environment& /*ACE_TRY_ENV*/)
 {
   supplier_admin_ =
     CosNotifyChannelAdmin::SupplierAdmin::_duplicate (supplier_admin);
@@ -81,9 +81,9 @@ TAO_Notify_StructuredPushSupplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_Notify_StructuredPushSupplier::subscription_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed,
-        CORBA::Environment &ACE_TRY_ENV
+                                                        const CosNotification::EventTypeSeq & /*added*/,
+                                                        const CosNotification::EventTypeSeq & /*removed */,
+                                                        CORBA::Environment & //ACE_TRY_ENV
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
