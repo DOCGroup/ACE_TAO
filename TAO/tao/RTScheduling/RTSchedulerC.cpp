@@ -35,7 +35,7 @@
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode.h"
-#include "tao/TypeCode_Non_Default_Case.h"
+#include "tao/TypeCode_Enumerator.h"
 #include "tao/Enum_TypeCode.h"
 #include "tao/Objref_TypeCode.h"
 #include "tao/Sequence_TypeCode.h"
