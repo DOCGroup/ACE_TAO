@@ -56,6 +56,8 @@
 // OctetSeq
 #include "tao/OctetSeqC.h"
 
+#include "tao/PortableServer/ObjectReferenceTemplate_Adapter.h"
+
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
@@ -131,12 +133,7 @@ protected:
 class ServerObject_i;
 class TAO_Acceptor_Filter;
 class TAO_Acceptor_Registry;
-class TAO_ObjectReferenceTemplate_Adapter;
 class TAO_ObjectReferenceTemplate_Adapter_Factory;
-
-typedef
-ACE_Array_Base<PortableInterceptor::ObjectReferenceTemplate*> TAO_ObjectReferenceTemplate_Array;
-
 
 namespace PortableInterceptor
 {
@@ -274,10 +271,10 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Accessor methods to ObjectReferenceTemplate
-  PortableInterceptor::ObjectReferenceTemplate * get_adapter_template (void);
+  PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void);
 
   /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
-  PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory (void);
+  PortableInterceptor::ObjectReferenceFactory *get_obj_ref_factory (void);
 
   /// Set the object reference factory
   void set_obj_ref_factory (
