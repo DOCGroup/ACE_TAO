@@ -73,13 +73,15 @@ public:
   const ACE_TCHAR *get_path_name (void) const;
 
   /// Get user id.
-  /// Set user id.
   uid_t user_id (void) const;
+
+  /// Set user id.
   void user_id (uid_t uid);
 
   /// Set group ids.
-  /// Get group ids.
   void group_id (gid_t gid);
+
+  /// Get group ids.
   gid_t group_id (void) const;
 
   /// Dump the state of an object.
@@ -92,14 +94,14 @@ private:
   /// Contains security attributes.
   struct SPIPE_Addr
   {
+    /// Group id.
     gid_t gid_;
-    // Group id.
 
+    /// User id.
     uid_t uid_;
-    // User id.
 
+    /// Pathname in the file system.
     ACE_TCHAR rendezvous_[MAXNAMLEN + 1];
-    // Pathname in the file system.
 
   } SPIPE_addr_;
   // Contents of an SPIPE address.
