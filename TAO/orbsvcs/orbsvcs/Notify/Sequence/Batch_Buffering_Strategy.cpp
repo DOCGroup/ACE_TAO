@@ -4,10 +4,6 @@
 #include "../Method_Request_Event.h"
 #include "ace/Null_Condition.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Batch_Buffering_Strategy.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (Notify, TAO_Notify_Batch_Buffering_Strategy, "$Id$")
 
 TAO_Notify_Batch_Buffering_Strategy::TAO_Notify_Batch_Buffering_Strategy (TAO_Notify_Message_Queue& msg_queue, TAO_Notify_AdminProperties_var& admin_properties, CORBA::Long batch_size)

@@ -2,12 +2,8 @@
 
 #include "Default_Factory.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Default_Factory.inl"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID (Notify, 
-           TAO_Notify_Default_Factory, 
+ACE_RCSID (Notify,
+           TAO_Notify_Default_Factory,
            "$Id$")
 
 #include "orbsvcs/ESF/ESF_Proxy_List.h"

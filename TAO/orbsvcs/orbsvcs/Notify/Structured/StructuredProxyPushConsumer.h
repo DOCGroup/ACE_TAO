@@ -95,10 +95,6 @@ protected:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#if defined (__ACE_INLINE__)
-#include "StructuredProxyPushConsumer.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_Notify_STRUCTUREDPROXYPUSHCONSUMER_H */

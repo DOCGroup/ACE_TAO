@@ -97,9 +97,5 @@ private:
   TAO_Notify_Event_var event_var_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "Method_Request_Event.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_METHOD_REQUEST_EVENT_H */

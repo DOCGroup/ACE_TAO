@@ -2,10 +2,6 @@
 
 #include "StructuredProxyPushConsumer.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "StructuredProxyPushConsumer.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(RT_Notify, TAO_Notify_StructuredProxyPushConsumer, "$Id$")
 
 #include "ace/Refcounted_Auto_Ptr.h"

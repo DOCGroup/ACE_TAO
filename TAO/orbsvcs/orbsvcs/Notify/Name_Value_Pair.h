@@ -94,9 +94,5 @@ namespace TAO_Notify
   };
 } // namespace TAO_Notify
 
-#if defined (__ACE_INLINE__)
-#include "Name_Value_Pair.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* NAME_VALUE_PAIR_H */

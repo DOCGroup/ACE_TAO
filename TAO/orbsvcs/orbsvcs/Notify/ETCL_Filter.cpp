@@ -2,10 +2,6 @@
 
 #include "ETCL_Filter.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "ETCL_Filter.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_ETCL_Filter, "$Id$")
 
 #include "ace/Auto_Ptr.h"

@@ -30,8 +30,8 @@
  *
  */
 template <class SERVANT_TYPE>
-class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer_T 
-  : public virtual TAO_Notify_Proxy_T <SERVANT_TYPE>, 
+class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer_T
+  : public virtual TAO_Notify_Proxy_T <SERVANT_TYPE>,
     public virtual TAO_Notify_ProxyConsumer
 {
 public:
@@ -70,10 +70,6 @@ public:
   ));
 
 };
-
-#if defined (__ACE_INLINE__)
-#include "ProxyConsumer_T.inl"
-#endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ProxyConsumer_T.cpp"

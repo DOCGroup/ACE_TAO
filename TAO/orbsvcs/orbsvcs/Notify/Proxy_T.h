@@ -143,10 +143,6 @@ template class TAO_Notify_Serv_Export
 TAO_Notify_Proxy_T<POA_CosEventChannelAdmin::ProxyPushConsumer>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
-#if defined (__ACE_INLINE__)
-#include "Proxy_T.inl"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Proxy_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

@@ -63,9 +63,5 @@ protected:
   virtual ~TAO_Notify_Worker_Task ();
 };
 
-#if defined (__ACE_INLINE__)
-#include "Worker_Task.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_WORKER_TASK_H */

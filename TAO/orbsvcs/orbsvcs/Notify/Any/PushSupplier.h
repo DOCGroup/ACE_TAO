@@ -54,9 +54,5 @@ protected:
   CosEventComm::PushSupplier_var push_supplier_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "PushSupplier.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_PUSHSUPPLIER_H */

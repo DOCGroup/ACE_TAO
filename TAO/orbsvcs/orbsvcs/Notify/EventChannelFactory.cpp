@@ -2,10 +2,6 @@
 
 #include "EventChannelFactory.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EventChannelFactory.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_EventChannelFactory, "$Id$")
 
 #include "ace/Dynamic_Service.h"

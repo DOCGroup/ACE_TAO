@@ -2,10 +2,6 @@
 
 #include "AnyEvent.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "AnyEvent.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (Notify, TAO_Notify_AnyEvent, "$Id$")
 
 #include "../Consumer.h"

@@ -1,10 +1,6 @@
 // $Id$
 #include "Builder.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Builder.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (Notify,
            Builder,
            "$Id$")
