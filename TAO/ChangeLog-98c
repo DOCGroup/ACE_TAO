@@ -25,13 +25,17 @@ Thu Feb 12 10:21:47 1998  David L. Levine  <levine@cs.wustl.edu>
           added default case to switch statement, which sets "os" to 0, to
           avoid compiler warning about possible unitialized use.
 
-        * TAO/tests/POA/Default_Servant/File_i.cpp (lseek): changed type
+        * tests/POA/Default_Servant/File_i.cpp (lseek): changed type
           of "result" to CORBA::Long to avoid signed/unsigned comparison
           with -1.  Cast it to CORBA::ULong on return.  Also, added a
           couple of ACE_UNUSED_ARG (env)'s.
 
-        * TAO/tests/Param_Test/server.cpp (main): initialize local
+        * tests/Param_Test/server.cpp (main): initialize local
           "param_test" to 0 to avoid warning about unitialized use.
+
+        * orbsvcs/Scheduling_Service (compute_scheduling): added cast
+          of impl->tasks () to RtecScheduler::handle_t to avoid signed/
+          unsigned comparison.  Also, added a bunch of ACE_UNUSED_ARG (env)'s.
 
 Wed Feb 11 11:20:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
