@@ -3,7 +3,7 @@
 #include "tao/default_client.h"
 #include "tao/ORB_Core.h"
 #include "tao/Wait_Strategy.h"
-#include "tao/Request_Mux_Strategy.h"
+#include "tao/Transport_Mux_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/default_client.i"
@@ -21,11 +21,11 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
 #endif /* TAO_USE_ST_CLIENT_CONNECTION_HANDLER */
 
-#if defined (TAO_USE_MUXED_REQUEST_MUX_STRATEGY)
-  this->request_mux_strategy_ = TAO_MUXED_RMS;
+#if defined (TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY)
+  this->transport_mux_strategy_ = TAO_MUXED_TMS;
 #else
-  this->request_mux_strategy_ = TAO_EXCLUSIVE_RMS;
-#endif /* TAO_USE_MUXED_REQUEST_MUX_STRATEGY */
+  this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;
+#endif /* TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY */
 
 // #if defined (TAO_USE_WAIT_ON_READ)
 //   this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
@@ -98,9 +98,9 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
               char *name = argv[curarg];
 
               if (ACE_OS::strcasecmp (name, "MUXED") == 0)
-                this->request_mux_strategy_ = TAO_MUXED_RMS;
+                this->transport_mux_strategy_ = TAO_MUXED_TMS;
               else if (ACE_OS::strcasecmp (name, "EXCLUSIVE") == 0)
-                this->request_mux_strategy_ = TAO_EXCLUSIVE_RMS;
+                this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;
             }
         }
     }
@@ -124,32 +124,32 @@ TAO_Default_Client_Strategy_Factory::create_iiop_profile_lock (void)
   return the_lock;
 }
 
-// @@ Alex: implement the WS and RMS methods here, similar to the
+// @@ Alex: implement the WS and TMS methods here, similar to the
 //    create_iiop_profile_lock above...
 // @@ Alex: remember your idea of using the
 //    -ORBclientconnectionhandler option to implement the WS factory,
-//    but you need new options for the RMS...
+//    but you need new options for the TMS...
 
 // Create the correct client request muxing strategy.
-TAO_Request_Mux_Strategy *
-TAO_Default_Client_Strategy_Factory::create_request_mux_strategy (void)
+TAO_Transport_Mux_Strategy *
+TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (void)
 {
-  TAO_Request_Mux_Strategy *rms = 0;
+  TAO_Transport_Mux_Strategy *tms = 0;
 
-  if (this->request_mux_strategy_ == TAO_MUXED_RMS)
+  if (this->transport_mux_strategy_ == TAO_MUXED_TMS)
     {
-      ACE_NEW_RETURN (rms,
-                      TAO_Muxed_RMS,
+      ACE_NEW_RETURN (tms,
+                      TAO_Muxed_TMS,
                       0);
     }
   else
     {
-      ACE_NEW_RETURN (rms,
-                      TAO_Exclusive_RMS,
+      ACE_NEW_RETURN (tms,
+                      TAO_Exclusive_TMS,
                       0);
     }
 
-  return rms;
+  return tms;
 }
 
 TAO_Wait_Strategy *

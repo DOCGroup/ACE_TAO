@@ -18,8 +18,8 @@ TAO_Client_Strategy_Factory::create_iiop_profile_lock (void)
   return 0;
 }
 
-TAO_Request_Mux_Strategy *
-TAO_Client_Strategy_Factory::create_request_mux_strategy (void)
+TAO_Transport_Mux_Strategy *
+TAO_Client_Strategy_Factory::create_transport_mux_strategy (void)
 {
   return 0;
 }

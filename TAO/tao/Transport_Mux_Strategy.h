@@ -6,18 +6,18 @@
 //     TAO
 //
 // = FILENAME
-//     Request_Mux_Strategy.h
+//     Transport_Mux_Strategy.h
 //
 // = DESCRIPTION
-//     IIOP Request Mux Strategies.
+//     IIOP Transport Mux Strategies.
 //
 // = AUTHOR
 //     Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
 // ============================================================================
 
-#ifndef TAO_REQUEST_MUX_STRATEGY_H
-#define TAO_REQUEST_MUX_STRATEGY_H
+#ifndef TAO_TRANSPORT_MUX_STRATEGY_H
+#define TAO_TRANSPORT_MUX_STRATEGY_H
 
 #include "tao/GIOP.h"
 
@@ -29,7 +29,7 @@ class TAO_Reply_Dispatcher;
 struct TAO_GIOP_Version;
 class TAO_InputCDR;
 
-class TAO_Export TAO_Request_Mux_Strategy
+class TAO_Export TAO_Transport_Mux_Strategy
 {
   // = TITLE
   //
@@ -41,10 +41,10 @@ class TAO_Export TAO_Request_Mux_Strategy
   //
 
 public:
-  TAO_Request_Mux_Strategy (void);
+  TAO_Transport_Mux_Strategy (void);
   // Base class constructor.
 
-  virtual ~TAO_Request_Mux_Strategy (void);
+  virtual ~TAO_Transport_Mux_Strategy (void);
   // Base class destructor.
 
   virtual CORBA::ULong request_id (void)  = 0;
@@ -78,7 +78,7 @@ public:
   // Destroy a CDR stream.
 };
 
-class TAO_Export TAO_Muxed_RMS : public  TAO_Request_Mux_Strategy
+class TAO_Export TAO_Muxed_TMS : public  TAO_Transport_Mux_Strategy
 {
   // = TITLE
   //
@@ -88,10 +88,10 @@ class TAO_Export TAO_Muxed_RMS : public  TAO_Request_Mux_Strategy
   //
 
 public:
-  TAO_Muxed_RMS (void);
+  TAO_Muxed_TMS (void);
   // Constructor.
 
-  virtual ~TAO_Muxed_RMS (void);
+  virtual ~TAO_Muxed_TMS (void);
   // Destructor.
 
   // = The TAO Request Strategy methods...
@@ -110,7 +110,7 @@ protected:
   // @@ HASH TABLE???
 };
 
-class TAO_Export TAO_Exclusive_RMS : public TAO_Request_Mux_Strategy
+class TAO_Export TAO_Exclusive_TMS : public TAO_Transport_Mux_Strategy
 {
   // = TITLE
   //
@@ -120,10 +120,10 @@ class TAO_Export TAO_Exclusive_RMS : public TAO_Request_Mux_Strategy
   //
 
 public:
-  TAO_Exclusive_RMS (void);
+  TAO_Exclusive_TMS (void);
   // Constructor.
 
-  virtual ~TAO_Exclusive_RMS (void);
+  virtual ~TAO_Exclusive_TMS (void);
   // Destructor.
 
   // = The TAO Request Strategy methods...
@@ -153,4 +153,4 @@ protected:
   // Reply Dispatcher corresponding to the request.
 };
 
-#endif /* REQUEST_MUX_STRATEGY_H */
+#endif /* TRANSPORT_MUX_STRATEGY_H */
