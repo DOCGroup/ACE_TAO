@@ -2,6 +2,7 @@
 // $Id$
 //
 #include "ace/High_Res_Timer.h"
+#include "tao/Timeprobe.h"
 
 #include "Scheduler_Factory.h"
 #include "ReactorTask.h"
@@ -80,8 +81,10 @@ ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period &period)
 
 int ACE_ES_Reactor_Task::svc_one()
 {
+  ACE_TIMEPROBE (" Reactor_Task - waiting for events");
   if (reactor_.handle_events() == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p.\n", "ACE_ES_Reactor_Task::svc"));
+  ACE_TIMEPROBE (" Reactor_Task - events handled");
 
   if (done_)
     ACE_DEBUG ((LM_DEBUG, "(%t) Timer Task is done.\n"));

@@ -1551,30 +1551,27 @@ Scheduler_Internal::calculate_thread_properties (RT_Info &thread_info,
       return rt_info;
     }
 
-#if 0
   for (i = 0; i < number_of_dependencies (rt_info); ++i )
     {
       // TODO:
-      if (rt_info.dependencies[i].rt_info.value() != 0)
+      if (rt_info.dependencies[i].rt_info != 0)
         {
-	  RT_Info info;
-	  rt_info.dependencies[i].rt_info >>= &info;
+	  RT_Info* info;
+	  this->lookup_rt_info (rt_info.dependencies[i].rt_info, info);
           if (output_level () >= 4)
             {
               ACE_OS::printf ("calculate_thread_properties (): recurse on "
                               "dependency %s\n",
-			      (const char*)info.entry_point);
+			      (const char*)info->entry_point);
             }
 
 	  RT_Info& ret = 
 	    calculate_thread_properties (thread_info,
-					 info,
-					 rt_info.dependencies[i].
-                                         number_of_calls);
+					 *info,
+					 rt_info.dependencies[i].number_of_calls);
           return ret;
         }
     }
-#endif /* 0 */
 
   ACE_ASSERT (! "should never reach this!");  // should never get here!
   return rt_info;  // to avoid compilation warning

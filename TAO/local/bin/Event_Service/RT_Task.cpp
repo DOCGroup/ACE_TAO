@@ -212,12 +212,14 @@ ACE_RT_Task::synch_threads (size_t threads)
       ACE_TRY
 	{
 	  // @@ TODO handle exceptions
+	  ACE_TIMEPROBE ("  synch_threads - priority requested");
 	  ACE_Scheduler_Factory::server ()->priority
 	    (rt_info_,
 	     thread_priority,
 	     subpriority,
 	     preemption_priority, ACE_TRY_ENV);
 	  ACE_CHECK_ENV;
+	  ACE_TIMEPROBE ("  synch_threads - priority obtained");
 
 	  ACE_DEBUG ((LM_DEBUG, "(%t) spawning %d threads at os thread"
 		      " priority %d.\n",

@@ -225,12 +225,15 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
 
   if (request->rt_info () != 0)
     {
+      // @@ TODO use ACE_TRY&friends
+      ACE_TIMEPROBE ("  Priority_Dispatching::push - priority requested");
       ACE_Scheduler_Factory::server ()->priority
 	(request->rt_info (),
 	 thread_priority,
 	 subpriority,
 	 preemption_priority,
 	 _env);
+      ACE_TIMEPROBE ("  Priority_Dispatching::push - priority obtained");
       if (_env.exception ())
 	{
 	  return;
