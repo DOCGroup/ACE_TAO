@@ -6,6 +6,10 @@
 
 ACE_RCSID(tao, MProfile, "$Id$")
 
+#if !defined (__ACE_INLINE__)
+# include "tao/MProfile.i"
+#endif /* __ACE_INLINE__ */
+
 int
 TAO_MProfile::set (CORBA::ULong sz)
 {
@@ -14,7 +18,7 @@ TAO_MProfile::set (CORBA::ULong sz)
       // We do, so release all of our profiles.
       for (TAO_PHandle h = 0; h < this->size_; h++ )
         {
-          if (this->pfiles_[h]) 
+          if (this->pfiles_[h])
             {
               this->pfiles_[h]->_decr_refcnt ();
               this->pfiles_[h] = 0;
@@ -23,10 +27,10 @@ TAO_MProfile::set (CORBA::ULong sz)
 
       if (size_)
         delete [] this->pfiles_;
-  
+
     if (fwded_mprofile_)
       delete fwded_mprofile_;
-  
+
     pfiles_ = 0;
     current_ = 0;
     size_ = 0;
@@ -39,27 +43,27 @@ TAO_MProfile::set (CORBA::ULong sz)
   // or if we need to get ridof what we have
   if (size_)
     {
-      
+
       // We do, so release all of our profiles.
       for (TAO_PHandle h = 0; h < size_; h++)
         {
-          if (this->pfiles_[h]) 
+          if (this->pfiles_[h])
             {
               this->pfiles_[h]->_decr_refcnt ();
               this->pfiles_[h] = 0;
             }
         }
-  
+
       // Next see if we can reuse our profile list memory Since
       if (this->size_ != sz)
         {
           // we cant reuse memory since the array sized are different!
           delete [] this->pfiles_;
-  
+
           ACE_NEW_RETURN (this->pfiles_,
                           TAO_Profile_ptr [sz],
                           -1);
-        } 
+        }
     }
   else
     {
@@ -83,7 +87,7 @@ TAO_MProfile::set (CORBA::ULong sz)
 
   return size_;
 }
-  
+
 int
 TAO_MProfile::set (TAO_MProfile *mprofile)
 {
@@ -98,7 +102,7 @@ TAO_MProfile::set (TAO_MProfile *mprofile)
 
   // set indexes ...
   this->last_ = mprofile->last_;
-  
+
   // these are set in set (ULong);
   // this->current_ = 0;
   // this->fwded_mprofile_ = 0;
@@ -106,7 +110,7 @@ TAO_MProfile::set (TAO_MProfile *mprofile)
   // Now reference all profiles.
   for (TAO_PHandle h = 0 ; h < this->size_ ; h++ )
     {
-      if (mprofile->pfiles_[h]) 
+      if (mprofile->pfiles_[h])
         {
           this->pfiles_[h] = mprofile->pfiles_[h];
           this->pfiles_[h]->_incr_refcnt ();
