@@ -57,8 +57,7 @@ public:
   virtual int write_reply_header (
       TAO_OutputCDR &output,
       TAO_Pluggable_Reply_Params &reply,
-      CORBA::Environment &ACE_TRY_ENV =
-      TAO_default_environment ())
+      CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Writes the locate _reply message in to the <output>
