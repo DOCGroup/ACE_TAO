@@ -61,7 +61,7 @@ EventChannel_i::for_suppliers (CORBA::Environment &TAO_TRY_ENV)
   // @@ Pradeep: you must make a copy here, because the caller is
   // responsible of removing this object, same here..
   return
-    CosEventChannelAdmin::SupplierAdmin::_duplicatet (his->supplieradmin_);
+    CosEventChannelAdmin::SupplierAdmin::_duplicate (this->supplieradmin_);
 }
 
 void
