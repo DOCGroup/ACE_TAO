@@ -1,3 +1,11 @@
+Thu Jul 08 21:47:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp
+          orbsvcs/orbsvcs/Sched/SchedEntry.cpp
+          orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp
+          orbsvcs/orbsvcs/Time/TAO_UTO.cpp: made constants unsigned, added
+          explicit type casts to resolve type promotion ambiguities.
+
 Thu Jul  8 21:31:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Typecode.cpp:

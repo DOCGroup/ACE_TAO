@@ -23,7 +23,9 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
 #if defined (ACE_LACKS_U_LONGLONG_T)
   this->attr_utc_time_.inacchi = 0;
 #else
-  this->attr_utc_time_.inacchi = ACE_static_cast (CORBA::UShort, (inaccuracy >> 32) & 0xFFFF);
+  this->attr_utc_time_.inacchi =
+    ACE_static_cast (CORBA::UShort,
+                     (inaccuracy >> 32U) & 0xFFFF);
 
 #endif /* ACE_LACKS_U_LONGLONG_T */
 
@@ -118,7 +120,8 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
       else if (this->time (ACE_TRY_ENV) == uto->time (ACE_TRY_ENV))
         {
           ACE_TRY_CHECK;
-          if (this->inaccuracy (ACE_TRY_ENV) == 0 && uto->inaccuracy (ACE_TRY_ENV) == 0)
+          if (this->inaccuracy (ACE_TRY_ENV) == 0U
+              && uto->inaccuracy (ACE_TRY_ENV) == 0U)
             {
               ACE_TRY_CHECK;
               return CosTime::TCEqualTo;

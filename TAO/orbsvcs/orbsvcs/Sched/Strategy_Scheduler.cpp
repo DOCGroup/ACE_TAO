@@ -130,15 +130,15 @@ ACE_Strategy_Scheduler::assign_priorities (
         {
           // If we have run out of priority levels to assign, indicate
           // this in the return status, unless a more severe problem is
-          // already reflected there.  Log an anomaly but keep right on 
-          // assigning the minimum OS priority in the range to the remaining 
+          // already reflected there.  Log an anomaly but keep right on
+          // assigning the minimum OS priority in the range to the remaining
           // tasks.
-          status = (status == SUCCEEDED) 
+          status = (status == SUCCEEDED)
                    ? ST_INSUFFICIENT_THREAD_PRIORITY_LEVELS
-                   : status; 
+                   : status;
 
           // Log the anomaly.
-          anomaly = 
+          anomaly =
             create_anomaly (ST_INSUFFICIENT_THREAD_PRIORITY_LEVELS);
           if (anomaly)
             {
@@ -186,7 +186,7 @@ ACE_Strategy_Scheduler::assign_priorities (
           status = ACE_DynScheduler::ST_INVALID_PRIORITY_ORDERING;
 
           // Log the anomaly.
-          anomaly = 
+          anomaly =
             create_anomaly (ST_INVALID_PRIORITY_ORDERING);
           if (anomaly)
             {
@@ -326,7 +326,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
                   status = ST_INVALID_PRIORITY_ORDERING;
 
                   // Log the anomaly.
-                  anomaly = 
+                  anomaly =
                     create_anomaly (ST_INVALID_PRIORITY_ORDERING);
                   if (anomaly)
                     {
@@ -352,7 +352,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
               status = ACE_DynScheduler::ST_INVALID_PRIORITY_ORDERING;
 
               // Log the anomaly.
-              anomaly = 
+              anomaly =
                 create_anomaly (ST_INVALID_PRIORITY_ORDERING);
               if (anomaly)
                 {
@@ -381,7 +381,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
         status = ACE_DynScheduler::ST_INVALID_PRIORITY_ORDERING;
 
         // Log the anomaly.
-        anomaly = 
+        anomaly =
           create_anomaly (ST_INVALID_PRIORITY_ORDERING);
         if (anomaly)
           {
@@ -441,7 +441,7 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
   TimeLine_Entry *last_entry = 0;
   TimeLine_Entry *current_entry = 0;
   ACE_Ordered_MultiSet_Iterator <TimeLine_Entry_Link> iter (*timeline_);
-  for (iter.first (); (remaining_time > 0) && (iter.done () == 0);
+  for (iter.first (); (remaining_time > 0U) && (iter.done () == 0);
        iter.advance ())
   {
     TimeLine_Entry_Link *link;
@@ -560,7 +560,7 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
 
   // If there is still dispatch time remaining, and we've
   // reached the end of the list, insert what's left.
-  if (remaining_time > 0)
+  if (remaining_time > 0U)
   {
     ACE_NEW_RETURN (
       current_entry,
@@ -691,7 +691,7 @@ ACE_Scheduler_Strategy::static_subpriority_comp (
 }
 
 
-// = Base class supplies default behavior: returns 0 
+// = Base class supplies default behavior: returns 0
 //   for minimum critical priority number.
 
 ACE_DynScheduler::Preemption_Priority
@@ -1023,7 +1023,7 @@ ACE_MLF_Scheduler_Strategy::instance ()
 }
 
 
-// = Just returns 0, as all dispatch entries are of equivalent 
+// = Just returns 0, as all dispatch entries are of equivalent
 //   static priority under MLF.
 
 int
@@ -1157,7 +1157,7 @@ ACE_EDF_Scheduler_Strategy::instance ()
   return ACE_EDF_Scheduler_Strategy::instance_;
 }
 
-// = Just returns 0, as all dispatch entries are of 
+// = Just returns 0, as all dispatch entries are of
 //   equivalent static priority under EDF.
 
 int
@@ -1263,7 +1263,7 @@ ACE_EDF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
 //   static data member initializations     //
 //////////////////////////////////////////////
 
-ACE_Criticality_Scheduler_Strategy * 
+ACE_Criticality_Scheduler_Strategy *
 ACE_Criticality_Scheduler_Strategy::instance_ = 0;
 
 ///////////////////////////////////////////////////////////////
