@@ -31,24 +31,24 @@ ACE_RCSID(tests, XtReactor_Test, "$Id$")
 
 #if defined (ACE_HAS_XT)
 
-#include <ace/XtReactor.h>
-#include <ace/Event_Handler.h>
-#include <ace/Acceptor.h>
-#include <ace/SOCK_Acceptor.h>
-#include <ace/SOCK_Connector.h>
-#include <ace/Service_Config.h>
-#include <ace/Thread_Manager.h>
+#include "ace/XtReactor.h"
+#include "ace/Event_Handler.h"
+#include "ace/Acceptor.h"
+#include "ace/SOCK_Acceptor.h"
+#include "ace/SOCK_Connector.h"
+#include "ace/Service_Config.h"
+#include "ace/Thread_Manager.h"
 
-#include <X11/Intrinsic.h>
-#include <X11/Xatom.h>
-#include <X11/Shell.h>
+#include /**/ <X11/Intrinsic.h>
+#include /**/ <X11/Xatom.h>
+#include /**/ <X11/Shell.h>
 
 #if !defined (ACE_LACKS_MOTIF)
 
-#include <Xm/Xm.h>
-#include <Xm/Label.h>
-#include <Xm/PushB.h>
-#include <Xm/RowColumn.h>
+#include /**/ <Xm/Xm.h>
+#include /**/ <Xm/Label.h>
+#include /**/ <Xm/PushB.h>
+#include /**/ <Xm/RowColumn.h>
 
 static void set_label(Widget w, const char *p)
 {
@@ -72,10 +72,10 @@ static Widget create_box(Widget parent, const char *name)
 
 #else  // Athena Widgets
 
-#include <X11/Xaw/Command.h>
-#include <X11/Xaw/Label.h>
-#include <X11/Xaw/Box.h>
-#include <X11/StringDefs.h>
+#include /**/ <X11/Xaw/Command.h>
+#include /**/ <X11/Xaw/Label.h>
+#include /**/ <X11/Xaw/Box.h>
+#include /**/ <X11/StringDefs.h>
 
 static void set_label(Widget w, const char *p)
 {
