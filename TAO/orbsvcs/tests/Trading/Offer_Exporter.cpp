@@ -167,31 +167,31 @@ TAO_Offer_Exporter::export_offers_to_all (CORBA::Environment& ACE_TRY_ENV)
                     " traders.\n"));
       }
 
-  for (int i = link_name_seq->length () - 1; i >= 0; i--)
+  for (CORBA::ULong i = link_name_seq->length () - 1; i > 0; i--)
     {
       ACE_TRY
         {
           if (this->verbose_)
             {
               ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
-                          ACE_static_cast (const char*, link_name_seq[iu])));
+                          ACE_static_cast (const char*, link_name_seq[i])));
             }
 
           CosTrading::Link::LinkInfo_var link_info =
-            link_if->describe_link (link_name_seq[iu], ACE_TRY_ENV);
+            link_if->describe_link (link_name_seq[i], ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           for (int j = 0; j < NUM_OFFERS; j++)
             {
-              this->props_plotters_[j][4].value <<= link_name_seq[iu];
-              this->props_printers_[j][4].value <<= link_name_seq[iu];
-              this->props_fs_[j][4].value <<= link_name_seq[iu];
+              this->props_plotters_[j][4].value <<= link_name_seq[i];
+              this->props_printers_[j][4].value <<= link_name_seq[i];
+              this->props_fs_[j][4].value <<= link_name_seq[i];
             }
 
           if (this->verbose_)
             {
               ACE_DEBUG ((LM_DEBUG, "Exporting offers to %s\n",
-                          ACE_static_cast (const char*, link_name_seq[iu])));
+                          ACE_static_cast (const char*, link_name_seq[i])));
             }
 
           this->export_to (link_info->target_reg.in (), ACE_TRY_ENV);

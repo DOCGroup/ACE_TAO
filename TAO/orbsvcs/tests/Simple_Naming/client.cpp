@@ -987,13 +987,13 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
       ACE_TRY_CHECK;
       if (CORBA::is_nil (iter.in ())
           || bindings_list->length () != 1
-          || bindings_list[0].binding_type != CosNaming::nobject)
+          || bindings_list[0u].binding_type != CosNaming::nobject)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "CosNaming::list does not function properly\n"),
                           -1);
       ACE_DEBUG ((LM_DEBUG,
                   "First binding: %s\n",
-                  bindings_list[0].binding_name[0].id.in ()));
+                  bindings_list[0].binding_name[0u].id.in ()));
 
       // Invoke operations on the iterator.
       CosNaming::Binding_var binding;
@@ -1011,16 +1011,16 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
       iter->next_n (2, bindings_list.out (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (bindings_list->length () != 2
-          || bindings_list[0].binding_type != CosNaming::nobject
-          || bindings_list[1].binding_type != CosNaming::nobject)
+          || bindings_list[0u].binding_type != CosNaming::nobject
+          || bindings_list[1u].binding_type != CosNaming::nobject)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "CosNaming::BindingIterator does not function properly\n"),
                           -1);
       ACE_DEBUG ((LM_DEBUG,
                   "Third binding: %s\n"
                   "Fourth binding: %s\n",
-                  bindings_list[0].binding_name[0].id.in (),
-                  bindings_list[1].binding_name[0].id.in ()));
+                  bindings_list[0u].binding_name[0].id.in (),
+                  bindings_list[1u].binding_name[0].id.in ()));
 
       // We already iterated over all the bindings, so the following
       // should return false.
