@@ -1,3 +1,13 @@
+Tue Oct 10 22:14:47 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAOACE_Static.dsw: Added Event_Service_Static project.
+
+	* examples/Simple/time/client_static.dsp:
+	* examples/Simple/time/server_static.dsp:
+	* orbsvcs/Event_Service/Event_Service_static.dsp: Added
+	  TAO_IORTable and TAO_PortableServer into the list of libraries
+	  these projects require.
+
 Tue Oct 10 19:08:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DomainC.h:
