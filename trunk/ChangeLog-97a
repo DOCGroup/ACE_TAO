@@ -1,3 +1,10 @@
+Tue May 27 18:47:34 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* tests/*.cpp: Various changes for EBCIDIC compatibility.
+
+	* tests/test_config.h: Added ACE_ALPHABET to aid a-z sending and
+	  comparing.
+
 Tue May 27 15:03:25 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/Future_Test.cpp: added ACE_Future{_Rep}<int> template
