@@ -17,3 +17,17 @@ TAO_Notify_Admin::filter_operator (void)
 {
   return this->filter_operator_;
 }
+
+ACE_INLINE
+void
+TAO_Notify_Admin::set_default (bool is_default)
+{
+  this->is_default_ = is_default;
+}
+
+ACE_INLINE
+bool
+TAO_Notify_Admin::is_default (void) const
+{
+  return this->is_default_;
+}

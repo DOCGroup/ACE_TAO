@@ -63,7 +63,7 @@ namespace TAO_NOTIFY
     // documented in ace/Shared_Object.h
     virtual int init (int argc, ACE_TCHAR *argv[]);
     virtual int fini ();
- 
+
    private:
     ACE_CString save_base_path_;
     ACE_CString load_base_path_;

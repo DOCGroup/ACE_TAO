@@ -40,7 +40,7 @@ TAO_Notify_ProxyConsumer::peer (void)
 void
 TAO_Notify_ProxyConsumer::init (TAO_Notify_SupplierAdmin* supplier_admin ACE_ENV_ARG_DECL)
 {
-  TAO_Notify_Object::init (supplier_admin);
+  TAO_NOTIFY::Topology_Object::init (supplier_admin);
 
   this->supplier_admin_ = supplier_admin;
 
@@ -70,17 +70,30 @@ TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier ACE_ENV_ARG_DEC
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                         CORBA::INTERNAL ());
     ACE_CHECK;
+    TAO_Notify_Supplier* deleted_supplier = 0;
 
     if (this->is_connected ())
       {
-        supplier->release ();
-        ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
+        if (TAO_Notify_PROPERTIES::instance()->allow_reconnect())
+          {
+            deleted_supplier = this->supplier_;
+          }
+        else
+          {
+            supplier->release ();
+            ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
+          }
       }
 
-    supplier_ = supplier;
+    this->supplier_ = supplier;
 
     this->supplier_admin_->subscribed_types (this->subscribed_types_ ACE_ENV_ARG_PARAMETER); // get the parents subscribed types.
     ACE_CHECK;
+
+    if (deleted_supplier != 0)
+      {
+        deleted_supplier->_decr_refcnt();
+      }
   }
 
   // Inform QoS values.

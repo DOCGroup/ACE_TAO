@@ -104,6 +104,11 @@ TAO_CosNotify_Service::init (int argc, char *argv[])
           task_per_proxy = 1;
           arg_shifter.consume_arg ();
         }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-AllowReconnect")) == 0)
+      {
+        arg_shifter.consume_arg ();
+        TAO_Notify_PROPERTIES::instance()->allow_reconnect (true);
+      }
     }
 
   // Init the EC QoS
