@@ -221,7 +221,11 @@ private:
     ACE_Token_Queue (void);
 
     void remove_entry (ACE_Token_Queue_Entry *);
-    // Remove a waiter from the queue (used when a timeout occurs).
+    // Remove a waiter from the queue.
+
+    void insert_entry (ACE_Token_Queue_Entry &entry,
+                       int requeue_position = -1);
+    // Insert a waiter into the queue.
 
     ACE_Token_Queue_Entry *head_;
     // Head of the list of waiting threads.
@@ -235,6 +239,9 @@ private:
                       ACE_Time_Value *timeout,
                       ACE_Token_Op_Type op_type);
   // Implements the <acquire> and <tryacquire> methods above.
+
+  void wakeup_next_waiter (void);
+  // Wake next in line for ownership.
 
   ACE_Token_Queue writers_;
   // A queue of writer threads.
