@@ -1,3 +1,13 @@
+Sun Jan 18 09:55:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/msvc_auto_compile.pl:
+	  Added tests/Test_Output.dsp to the list of libs to be build first
+	  when building statically. Removed the code for the non-MPC static
+	  build, the projects for this are removed before the 1.4 release.
+
+	* bin/msvc_static_order.lst:
+	  Added tests/Test_Output.dsp to the list of libs to be build first.
+
 Sun Jan 18 08:52:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ASNMP/asnmp/ctr64.h:
