@@ -71,6 +71,7 @@ Hash_Map_Bucket_Iterator_Test
 Map_Test
 Message_Queue_Notifications_Test
 chorus/Message_Queue_Test
+chorus/Message_Queue_Test_Ex
 chorus/Simple_Message_Block_Test
 chorus/Message_Block_Test
 chorus/Pipe_Test
