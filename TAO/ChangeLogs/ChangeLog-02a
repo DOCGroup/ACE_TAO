@@ -1,3 +1,16 @@
+Sun Sep  3 12:16:00 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+          The compiler was generating some code for smart proxies even when
+          smart proxy code generation was not enabled.
+          It seems like the default settings are not working, i.e. even
+          when TAO_HAS_SMART_PROXIES is enabled the compiler does not
+          generate smart proxies support code by default.
+
+        * tests/Smart_Proxies/Makefile:
+        * tests/Smart_Proxies/On_Demand/Makefile:
+          Add the PortableServer library to this test.
+
 Sat Sep 02 16:47:29 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/DomainC.cpp:
