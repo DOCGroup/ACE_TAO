@@ -1,3 +1,24 @@
+Sat Nov 22 08:34:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile:
+	* orbsvcs/examples/Notify/Lanes/Makefile:
+	* orbsvcs/examples/Notify/ThreadPool/Makefile:
+	* examples/Callback_Quoter/Makefile:
+	* examples/Event_Comm/Makefile:
+	* examples/Logging/Makefile:
+	* examples/Simple/bank/Makefile:
+	* examples/Simple/echo/Makefile:
+	* examples/Simple/time/Makefile:
+	* examples/Simple/time-date/Makefile:
+	* performance-tests/POA/Demux/Makefile:
+
+	  Fixed the above Makefiles to link in the messaging
+	  library. Fallout due to the change from Simon. 
+
+	* orbsvcs/tests/Notify/RT_lib/RT_Notify_lib.mpc:
+
+	  Do not build if minimum_corba is enabled. 
+
 Sat Nov 22 07:42:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Smart_Proxies/On_Demand/Makefile:
