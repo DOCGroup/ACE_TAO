@@ -69,14 +69,14 @@ schedulerserviceport=0
 eventserviceport=0
 
 cd $TAO_ROOT/orbsvcs/Naming_Service
-echo $ ./Naming_Service -ORBport $nameserviceport -ORBobjrefstyle url \
+echo $ ./Naming_Service -ORBport $nameserviceport \
        -o /tmp/nameserviceior_$login \
        -p /tmp/nameservicepid_$login >> /tmp/logfile_$login
-./Naming_Service -ORBport $nameserviceport -ORBobjrefstyle url \
+./Naming_Service -ORBport $nameserviceport \
        -o /tmp/nameserviceior_$login \
        -p /tmp/nameservicepid_$login > /tmp/logfile_Naming_Service_$login 2>&1  &
 
-sleep 5
+sleep 8
 
 IOR=`cat /tmp/nameserviceior_$login`
 
