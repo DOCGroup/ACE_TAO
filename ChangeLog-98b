@@ -1,10 +1,10 @@
 Thu Jul 23 15:30:41 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Token.{h,i,cpp}: On platforms that support timed acquire
-	  semaphores, changed to use semaphores for signaling mechanism
-	  for better performance.
-	  (shared_acquire,renew): Give priority to acquire_write over
-	  acquire_read.
+        * ace/Token.{h,i,cpp}: On platforms that support timed acquire
+          semaphores, changed to use semaphores for signaling mechanism
+          for better performance.
+          (shared_acquire,renew): Give priority to acquire_write over
+          acquire_read.
 
 Thu Jul 23 14:05:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -12,6 +12,12 @@ Thu Jul 23 14:05:20 1998  David L. Levine  <levine@cs.wustl.edu>
           helped yield test on VxWorks by timing each yield.
           Added half-second delay between outer interations to give
           LynxOS (w/ ACE_LACKS_SETDETACH) a chance to cleanup exited threads.
+
+        * ace/config-sunos5.5.h: added support for _POSIX_PTHREAD_SEMANTICS.
+          If it is #defined, then #define ACE_HAS_PTHREADS_1003_DOT_1C
+          instead of ACE_HAS_STHREADS.  Thanks to Doug Anderson
+          <doug@clark.net> for investigating this and providing the
+          update.
 
 Wed Jul 22 19:20:43 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
