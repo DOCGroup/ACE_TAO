@@ -23,8 +23,8 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (be, 
-           be_global, 
+ACE_RCSID (be,
+           be_global,
            "$Id$")
 
 TAO_IDL_BE_Export BE_GlobalData *be_global = 0;
@@ -938,7 +938,7 @@ void
 BE_GlobalData::void_type (AST_PredefinedType *val)
 {
   this->void_type_ = val;
-};
+}
 
 be_interface *
 BE_GlobalData::ccmobject (void) const
