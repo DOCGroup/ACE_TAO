@@ -4,7 +4,10 @@
 
 #include "tao/IIOP_Transport.h"
 #include "tao/IIOP_Connection_Handler.h"
+#include "tao/IIOP_Acceptor.h"
 #include "tao/IIOP_Profile.h"
+#include "tao/Acceptor_Registry.h"
+#include "tao/operation_details.h"
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
 #include "tao/Transport_Mux_Strategy.h"
@@ -15,6 +18,7 @@
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Message_Lite.h"
+
 
 
 #if !defined (__ACE_INLINE__)
@@ -300,12 +304,15 @@ TAO_IIOP_Transport::send_request_header (TAO_Operation_Details &opdetails,
                                          TAO_Target_Specification &spec,
                                          TAO_OutputCDR &msg)
 {
-  // Check whether we have a Bi Dir IIOP policy set
+  // Check whether we have a Bi Dir IIOP policy set, whether the
+  // messaging objects are ready to handle bidirectional connections
+  // and also make sure that we have not recd. or sent any information
+  // regarding this before...
   if (this->orb_core ()->bidir_giop_policy () &&
       this->messaging_object_->is_ready_for_bidirectional () &&
       this->bidirectional_flag_ == 0)
     {
-      this->set_bidirectional_context_info (opdetails);
+      this->set_bidir_context_info (opdetails);
     }
 
   // We are going to pass on this request to the underlying messaging
@@ -441,7 +448,120 @@ TAO_IIOP_Transport::process_message (void)
 
 
 void
-TAO_IIOP_Transport::set_bidirectional_context_info (TAO_Operation_Details &opdetails)
+TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 {
-  //
+
+  // Get a handle on to the acceptor registry
+  TAO_Acceptor_Registry * ar =
+    this->orb_core ()->acceptor_registry ();
+
+
+  // Get the first acceptor in the registry
+  TAO_AcceptorSetIterator acceptor = ar->begin ();
+
+  IIOP::ListenPointList listen_point_list;
+
+  for (;
+       acceptor != ar->end ();
+       acceptor++)
+    {
+      // Check whether it is a IIOP acceptor
+      if ((*acceptor)->tag () == TAO_TAG_IIOP_PROFILE)
+        {
+          this->get_listen_point (listen_point_list,
+                                  *acceptor);
+        }
+    }
+
+  // We have the ListenPointList at this point. Create a output CDR
+  // stream at this point
+  TAO_OutputCDR cdr;
+
+  // Marshall the information into the stream
+  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)== 0)
+      || (cdr << listen_point_list) == 0)
+    return;
+
+  // Add this info in to the svc_list
+  opdetails.service_context ().set_context (IOP::BI_DIR_IIOP,
+                                            cdr);
+
+  return;
+}
+
+
+int
+TAO_IIOP_Transport::get_listen_point (
+    IIOP::ListenPointList &listen_point_list,
+    TAO_Acceptor *acceptor)
+{
+  TAO_IIOP_Acceptor *iiop_acceptor =
+    ACE_dynamic_cast (TAO_IIOP_Acceptor *,
+                      acceptor );
+
+  // Get the array of endpoints serviced by <iiop_acceptor>
+  const ACE_INET_Addr *endpoint_addr =
+    iiop_acceptor->endpoints ();
+
+  // Get the count
+  size_t count =
+    iiop_acceptor->endpoint_count ();
+
+  // Get the local address of the connection
+  ACE_INET_Addr local_addr;
+
+  if (this->connection_handler_->peer ().get_local_addr (local_addr)
+      == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Could not resolve local host")
+                         ACE_TEXT (" address in set_bidir_context_info () \n")),
+                        -1);
+    }
+
+  for (size_t index = 0;
+       index <= count;
+       index++)
+    {
+      // Get the listen point on that acceptor if it has the same
+      // interface on which this connection is established
+
+      // Note: Looks like there is no point in sending the list of
+      // endpoints on interfaces on which this connection has not
+      // been established. If this is wrong, please correct me.
+      char local_interface[MAXHOSTNAMELEN];
+      char acceptor_interface[MAXHOSTNAMELEN];
+
+      if (endpoint_addr[index].get_host_name (acceptor_interface,
+                                              MAXHOSTNAMELEN) ==
+          -1)
+        continue;
+
+      if (local_addr.get_host_name (local_interface,
+                                    MAXHOSTNAMELEN) == -1)
+        continue;
+
+      // @@ This is very bad for performance, but it is a one time
+      // affair
+      if (ACE_OS::strcmp (local_interface,
+                          acceptor_interface) == 0)
+        {
+          // We have the connection and the acceptor endpoint on the
+          // same interface
+          IIOP::ListenPoint point;
+          point.host = CORBA::string_dup (local_interface);
+          point.port = endpoint_addr[index].get_port_number ();
+
+          // Get the count of the number of elements
+          CORBA::ULong len = listen_point_list.length ();
+
+          // Increase the length by 1
+          listen_point_list.length (len + 1);
+
+          // Add the new length to the list
+          listen_point_list[len] = point;
+        }
+    }
+
+  return 1;
 }

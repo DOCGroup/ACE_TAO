@@ -57,6 +57,9 @@ public:
   // @@ Helper method for the implementation repository, should go
   //    away
 
+  const ACE_INET_Addr *endpoints (void);
+  // Returns the array of endpoints in this acceptor
+
   typedef ACE_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_IIOP_Connection_Handler> TAO_IIOP_CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_IIOP_Connection_Handler> TAO_IIOP_CONCURRENCY_STRATEGY;

@@ -25,6 +25,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
+#include "tao/IIOPC.h"
 
 
 // Forward decls.
@@ -32,6 +33,7 @@ class TAO_IIOP_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Operation_Details;
 class TAO_Pluggable_Messaging;
+
 
 // Service Handler for this transport
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -147,8 +149,13 @@ private:
   int process_message (void);
 
   /// Set the Bidirectional context info in the service context list
-  void set_bidirectional_context_info (TAO_Operation_Details &opdetails);
+  void set_bidir_context_info (TAO_Operation_Details &opdetails);
 
+  /// Add the listen points in <acceptor> to the <listen_point_list>
+  /// if this connection is in the same interface as that of the
+  /// endpoints in the <acceptor>
+  int get_listen_point (IIOP::ListenPointList &listen_point_list,
+                        TAO_Acceptor *acceptor);
 private:
 
   /// The connection service handler used for accessing lower layer
