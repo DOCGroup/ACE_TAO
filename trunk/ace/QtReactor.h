@@ -14,8 +14,8 @@
 //    integrated in to ACE by Balachandran Natarajan <bala@cs.wustl.edu>
 // ============================================================================
 #ifndef ACE_QTREACTOR_H
-#include "ace/pre.h"
 #define ACE_QTREACTOR_H
+#include "ace/pre.h"
 
 
 #include "ace/Select_Reactor.h"

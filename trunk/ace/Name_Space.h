@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_NAME_SPACE_H
-#include "ace/pre.h"
 #define ACE_NAME_SPACE_H
+#include "ace/pre.h"
 
 #include "ace/ACE.h"
 

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_IO_CNTL_MSG_H
-#include "ace/pre.h"
 #define ACE_IO_CNTL_MSG_H
+#include "ace/pre.h"
 
 class ACE_Export ACE_IO_Cntl_Msg
 {

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_XTI_ATM_MCAST_H
-#include "ace/pre.h"
 #define ACE_XTI_ATM_MCAST_H
+#include "ace/pre.h"
 
 #include "ace/TLI_Connector.h"
 #include "ace/ATM_Addr.h"

@@ -6,8 +6,8 @@
 // to all Green Hills platforms.
 
 #ifndef ACE_GHS_COMMON_H
-#include "ace/pre.h"
 #define ACE_GHS_COMMON_H
+#include "ace/pre.h"
 
 #if !defined (ACE_CONFIG_INCLUDE_GHS_COMMON)
 # error ace/config-ghs-common.h: ACE configuration error!  Do not #include this file directly!

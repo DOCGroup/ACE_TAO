@@ -5,8 +5,8 @@
 // 88k SVR4 platforms using pthreads from Florida State (ACE_HAS_FSU_PTHREADS).
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__

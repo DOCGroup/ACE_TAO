@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_SERVICE_REPOSITORY_H
-#include "ace/pre.h"
 #define ACE_SERVICE_REPOSITORY_H
+#include "ace/pre.h"
 
 #include "ace/Service_Types.h"
 

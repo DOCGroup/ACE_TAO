@@ -1,8 +1,8 @@
 // $Id$
 
 #ifndef ACE_CONFIG_WINCE_H
-#include "ace/pre.h"
 #define ACE_CONFIG_WINCE_H
+#include "ace/pre.h"
 
 #if !defined (ACE_HAS_WINCE)
 #define ACE_HAS_WINCE 1

@@ -24,8 +24,8 @@
 // Macros for handling CORBA exceptions.
 
 #ifndef ACE_CORBA_MACROS_H
-#include "ace/pre.h"
 #define ACE_CORBA_MACROS_H
+#include "ace/pre.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once

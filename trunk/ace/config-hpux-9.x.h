@@ -5,8 +5,8 @@
 // for HP platforms running HP/UX 9.x.
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 // Compiling for HPUX.
 #if !defined (HPUX)

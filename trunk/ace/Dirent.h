@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef ACE_DIRENT_H
-#include "ace/pre.h"
 #define ACE_DIRENT_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 

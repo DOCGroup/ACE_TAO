@@ -5,8 +5,8 @@
 // platforms running HP/UX 9.x.  Dave added Orbix stuff
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 // Compiling for HPUX.
 #if !defined (HPUX)

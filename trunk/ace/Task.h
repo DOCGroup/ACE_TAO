@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_TASK_H
-#include "ace/pre.h"
 #define ACE_TASK_H
+#include "ace/pre.h"
 
 #include "ace/Service_Object.h"
 

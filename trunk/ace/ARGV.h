@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_ARGUMENT_VECTOR_H
-#include "ace/pre.h"
 #define ACE_ARGUMENT_VECTOR_H
+#include "ace/pre.h"
 
 #include "ace/ACE.h"
 

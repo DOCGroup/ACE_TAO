@@ -2,8 +2,8 @@
 // $Id$
 
 #ifndef ACE_CONFIG_SCO_5_0_0_H
-#include "ace/pre.h"
 #define ACE_CONFIG_SCO_5_0_0_H
+#include "ace/pre.h"
 
 // Compiling for SCO.
 #if !defined (SCO)

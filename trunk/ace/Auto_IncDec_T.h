@@ -15,8 +15,8 @@
 //============================================================================
 
 #ifndef ACE_AUTO_INCDEC_T_H
-#include "ace/pre.h"
 #define ACE_AUTO_INCDEC_T_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 

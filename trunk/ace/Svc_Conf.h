@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_SVC_CONF_H
-#include "ace/pre.h"
 #define ACE_SVC_CONF_H
+#include "ace/pre.h"
 
 // Globally visible macros, type decls, and extern var decls for
 // Service Configurator utility.

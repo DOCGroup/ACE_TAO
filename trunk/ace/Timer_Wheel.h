@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef ACE_TIMER_WHEEL_H
-#include "ace/pre.h"
 #define ACE_TIMER_WHEEL_H
+#include "ace/pre.h"
 
 #include "ace/Timer_Wheel_T.h"
 

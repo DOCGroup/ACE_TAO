@@ -34,8 +34,8 @@
 // ============================================================================
 
 #ifndef ACE_CDR_H
-#include "ace/pre.h"
 #define ACE_CDR_H
+#include "ace/pre.h"
 
 #include "ace/Message_Block.h"
 #include "ace/SString.h"

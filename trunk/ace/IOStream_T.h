@@ -20,8 +20,8 @@
 // ============================================================================
 
 #ifndef ACE_IOSTREAM_T_H
-#include "ace/pre.h"
 #define ACE_IOSTREAM_T_H
+#include "ace/pre.h"
 
 #include "ace/IOStream.h"
 

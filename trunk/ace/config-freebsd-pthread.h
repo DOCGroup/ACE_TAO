@@ -7,8 +7,8 @@
 // Notice that the threaded version of ACE is only supported for -current.
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 #include <osreldate.h>
 // Make sure we source in the OS version.

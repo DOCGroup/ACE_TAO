@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_TIMER_HASH_H
-#include "ace/pre.h"
 #define ACE_TIMER_HASH_H
+#include "ace/pre.h"
 
 #include "ace/Timer_Hash_T.h"
 

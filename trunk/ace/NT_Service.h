@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_NT_SERVICE_H
-#include "ace/pre.h"
 #define ACE_NT_SERVICE_H
+#include "ace/pre.h"
 
 #include "ace/inc_user_config.h"
 

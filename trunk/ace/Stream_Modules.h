@@ -22,8 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #ifndef ACE_STREAM_MODULES
-#include "ace/pre.h"
 #define ACE_STREAM_MODULES
+#include "ace/pre.h"
 
 template <ACE_SYNCH_DECL>
 class ACE_Stream_Head : public ACE_Task<ACE_SYNCH_USE>

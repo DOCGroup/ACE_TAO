@@ -6,8 +6,8 @@
 // compilers 2.0, 4.0, 4.1, 4.2, 5.0 and 6.0
 
 #ifndef ACE_WIN32_COMMON_H
-#include "ace/pre.h"
 #define ACE_WIN32_COMMON_H
+#include "ace/pre.h"
 
 // Complain if WIN32 is not already defined.
 #if !defined (WIN32) && !defined (ACE_HAS_WINCE)

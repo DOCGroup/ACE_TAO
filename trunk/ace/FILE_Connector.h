@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_FILE_CONNECTOR_H
-#include "ace/pre.h"
 #define ACE_FILE_CONNECTOR_H
+#include "ace/pre.h"
 
 #include "ace/FILE_IO.h"
 

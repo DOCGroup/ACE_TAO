@@ -17,8 +17,8 @@
 #define HPUX_11
 
 #ifndef _HPUX_SOURCE
-#include "ace/pre.h"
 #define _HPUX_SOURCE
+#include "ace/pre.h"
 #endif
 
 #include /**/ <sys/stdsyms.h>

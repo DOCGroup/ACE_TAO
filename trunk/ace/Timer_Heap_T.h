@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_TIMER_HEAP_T_H
-#include "ace/pre.h"
 #define ACE_TIMER_HEAP_T_H
+#include "ace/pre.h"
 
 #include "ace/Timer_Queue_T.h"
 

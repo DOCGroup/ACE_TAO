@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_SPIPE_STREAM_H
-#include "ace/pre.h"
 #define ACE_SPIPE_STREAM_H
+#include "ace/pre.h"
 
 #include "ace/SPIPE.h"
 

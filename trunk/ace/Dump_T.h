@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_DUMP_T_H
-#include "ace/pre.h"
 #define ACE_DUMP_T_H
+#include "ace/pre.h"
 
 #include "ace/Dump.h"
 

@@ -7,8 +7,8 @@
 // 2) The Green Hills 1.8.8 (not 1.8.7!!!!) and 1.8.9 compilers.
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 #if ! defined (VXWORKS)
 # define VXWORKS

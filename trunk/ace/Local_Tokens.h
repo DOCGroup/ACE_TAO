@@ -45,8 +45,8 @@
 // ============================================================================
 
 #ifndef ACE_LOCAL_MUTEX_H
-#include "ace/pre.h"
 #define ACE_LOCAL_MUTEX_H
+#include "ace/pre.h"
 
 #include "ace/Synch_T.h"
 

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_SERVICE_OBJECT_H
-#include "ace/pre.h"
 #define ACE_SERVICE_OBJECT_H
+#include "ace/pre.h"
 
 #include "ace/Shared_Object.h"
 

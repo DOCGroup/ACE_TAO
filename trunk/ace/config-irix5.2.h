@@ -6,8 +6,8 @@
 // and libg++ v2.6.x.
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 // Platform supports STREAM pipes (note that this is disabled by
 // default, see the manual page on pipe(2) to find out how to enable

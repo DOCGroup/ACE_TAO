@@ -5,8 +5,8 @@
 // for SunOS4 platforms using the SunC++ 4.x compiler.
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_SETPGID

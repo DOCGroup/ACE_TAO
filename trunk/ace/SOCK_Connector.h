@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_SOCK_CONNECTOR_H
-#include "ace/pre.h"
 #define ACE_SOCK_CONNECTOR_H
+#include "ace/pre.h"
 
 #include "ace/SOCK_Stream.h"
 

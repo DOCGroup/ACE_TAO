@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_PRIORITY_REACTOR_H
-#include "ace/pre.h"
 #define ACE_PRIORITY_REACTOR_H
+#include "ace/pre.h"
 
 #include "ace/Containers.h"
 

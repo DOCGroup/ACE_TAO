@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef ACE_SINGLETON_H
-#include "ace/pre.h"
 #define ACE_SINGLETON_H
+#include "ace/pre.h"
 
 #include "ace/Synch.h"
 

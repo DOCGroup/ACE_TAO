@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_MEM_IO_H
-#include "ace/pre.h"
 #define ACE_MEM_IO_H
+#include "ace/pre.h"
 
 #include "ace/SOCK.h"
 #include "ace/MEM_SAP.h"

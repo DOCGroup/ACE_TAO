@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_TOKEN_MANAGER_H
-#include "ace/pre.h"
 #define ACE_TOKEN_MANAGER_H
+#include "ace/pre.h"
 
 #include "ace/Synch.h"
 

@@ -1,8 +1,8 @@
 // $Id$
 
 #ifndef ACE_CXX_COMMON_H
-#include "ace/pre.h"
 #define ACE_CXX_COMMON_H
+#include "ace/pre.h"
 
 #if !defined (ACE_CONFIG_INCLUDE_CXX_COMMON)
 # error ace/config-cxx-common.h: ACE configuration error!  Do not #include this file directly!

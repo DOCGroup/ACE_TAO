@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_ACE_H
-#include "ace/pre.h"
 #define ACE_ACE_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 

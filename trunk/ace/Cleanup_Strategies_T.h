@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef CLEANUP_STRATEGIES_H
-#include "ace/pre.h"
 #define CLEANUP_STRATEGIES_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 

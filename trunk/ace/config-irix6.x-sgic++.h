@@ -5,8 +5,8 @@
 // installed.
 
 #ifndef ACE_CONFIG_IRIX6X_H
-#include "ace/pre.h"
 #define ACE_CONFIG_IRIX6X_H
+#include "ace/pre.h"
 
 // Include basic (non-threaded) configuration
 #include "ace/config-irix6.x-sgic++-nothreads.h"

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_GET_OPT_H
-#include "ace/pre.h"
 #define ACE_GET_OPT_H
+#include "ace/pre.h"
 
 #include "ace/ACE.h"
 

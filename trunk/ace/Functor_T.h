@@ -34,8 +34,8 @@
 // ============================================================================
 
 #ifndef ACE_FUNCTOR_T_H
-#include "ace/pre.h"
 #define ACE_FUNCTOR_T_H
+#include "ace/pre.h"
 
 #include "ace/Functor.h"
 

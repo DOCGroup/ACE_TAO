@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_PAIR_T_H
-#include "ace/pre.h"
 #define ACE_PAIR_T_H
+#include "ace/pre.h"
 
 #include "ace/Pair.h"
 

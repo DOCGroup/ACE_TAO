@@ -16,8 +16,8 @@
 // Janne (Jan.Perman@osd.Ericsson.se)
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__

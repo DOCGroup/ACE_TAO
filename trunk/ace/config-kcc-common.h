@@ -22,8 +22,8 @@
 //
 
 #ifndef ACE_KCC_COMMON_H
-#include "ace/pre.h"
 #define ACE_KCC_COMMON_H
+#include "ace/pre.h"
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
 # define ACE_SIZEOF_LONG_DOUBLE 12

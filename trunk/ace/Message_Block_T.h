@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_MESSAGE_BLOCK_T_H
-#include "ace/pre.h"
 #define ACE_MESSAGE_BLOCK_T_H
+#include "ace/pre.h"
 
 #include "ace/Message_Block.h"
 

@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef ACE_ARRAY_H
-#include "ace/pre.h"
 #define ACE_ARRAY_H
+#include "ace/pre.h"
 
 #include "ace/Containers.h"
 

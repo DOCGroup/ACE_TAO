@@ -5,8 +5,8 @@
 // with xlC.  Thanks to Bob Olson <olson@mcs.anl.gov> for this.
 
 #ifndef ACE_CONFIG_H
-#include "ace/pre.h"
 #define ACE_CONFIG_H
+#include "ace/pre.h"
 
 /*#define ACE_HAS_PTHREADS*/
 
