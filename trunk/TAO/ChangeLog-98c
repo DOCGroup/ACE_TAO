@@ -1,8 +1,16 @@
+Tue Sep 22 15:33:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.h: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
+	  Added simple support for dynamic reconfiguration of the consumer
+	  subscriptions; we still have to propagate this to the multicast
+	  groups that we join.
+
 Tue Sep 22 14:29:29 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Made changes to the ACE_DEBUG to print the server/client Process ID/ thread ID
-	for all messages to console. Also modified README to include the description of \
-	tests done by client.
+	Made changes to the ACE_DEBUG to print the server/client Process
+	ID/ thread ID for all messages to console. Also modified README to
+	include the description of tests done by client.
 
 	* examples/Simple/bank/README:
 	* examples/Simple/bank/ AccountManager_i.cpp

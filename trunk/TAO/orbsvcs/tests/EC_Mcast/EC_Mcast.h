@@ -215,11 +215,18 @@ public:
   void open (const char* name,
 	     RtecEventChannelAdmin::EventChannel_ptr event_channel,
 	     RtecScheduler::Scheduler_ptr scheduler,
+	     ACE_RANDR_TYPE &seed,
 	     CORBA::Environment& _env);
   // This method connects the consumer to the EC.
 
   void close (CORBA::Environment &_env);
   // Disconnect from the EC.
+
+  void connect (ACE_RANDR_TYPE& seed,
+		CORBA::Environment &_env);
+  void disconnect (CORBA::Environment &_env);
+  // Disconnect from the supplier, but do not forget about it or close
+  // it.
 
   // = The POA_RtecEventComm::PushComsumer methods.
   virtual void push (const RtecEventComm::EventSet& events,
@@ -230,7 +237,13 @@ private:
   ECM_Local_Federation* federation_;
   // To callback.
 
+  RtecScheduler::handle_t rt_info_;
+  // The handle for our RT_Info description.
+
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
+  // We talk to the EC using this proxy.
+
+  RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
   // We talk to the EC using this proxy.
 };
 
@@ -244,6 +257,8 @@ public:
   ECM_Local_Federation (ECM_Federation *federation,
 			ECM_Driver *driver);
   // Constructor.
+  ~ECM_Local_Federation (void);
+  // Destructor
 
   void open (int event_count,
 	     RtecScheduler::Period period,
@@ -283,6 +298,12 @@ public:
 
   void dump_results (void) const;
   // Report the results back to the user...
+
+  void subscribed_bit (CORBA::ULong i,
+		       CORBA::Boolean x);
+  CORBA::Boolean subscribed_bit (CORBA::ULong i) const;
+  // Set&Get the subscribed bit; this defines the subset of events
+  // that we actually publish.
 
   // = Delegate on the federation description
   const char* name (void) const;
@@ -344,6 +365,18 @@ private:
   // dispatching of the event.
   // @@ TODO Eventually we may need several of this objects to handle
   // OS limitations on the number of multicast groups per socket.
+
+  ACE_RANDR_TYPE seed_;
+  // The seed for a random number generator.
+
+  CORBA::ULong subscription_change_period_;
+  // The (average) period between subscription changes, in usecs
+
+  CORBA::ULong publication_change_period_;
+  // The (average) period between publication changes, in usecs
+
+  CORBA::Boolean* subscription_subset_;
+  // The events we are actually subscribed to.
 };
 
 class ECM_Driver
@@ -439,9 +472,6 @@ private:
   // Dump the results to the standard output.
 			  
 private:
-  char* lcl_name_;
-  // The name of the "local" EC.
-
   int event_period_;
   // The events are generated using this interval.
 
