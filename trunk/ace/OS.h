@@ -20,7 +20,10 @@
 
 // This file should be a link to the platform/compiler-specific
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).
+#if !defined (ACE_CONFIG_H)
+#define ACE_CONFIG_H
 #include "ace/config.h"
+#endif /* ACE_CONFIG_H */
 
 #if defined (ACE_HAS_ANSI_CASTS)
 # define ACE_static_cast(TYPE, EXPR)       static_cast<TYPE> (EXPR)
@@ -2048,7 +2051,7 @@ typedef DWORD nlink_t;
 // 64-bit quad-word definitions.
 typedef unsigned __int64 ACE_QWORD;
 // VC++ won't convert unsigned __int64 to double.
-typedef signed __int64 ACE_hrtime_t;  
+typedef signed __int64 ACE_hrtime_t;
 inline ACE_QWORD ACE_MAKE_QWORD (DWORD lo, DWORD hi) { return ACE_QWORD (lo) | (ACE_QWORD (hi) << 32); }
 inline DWORD ACE_LOW_DWORD  (ACE_QWORD q) { return (DWORD) q; }
 inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
@@ -2339,7 +2342,7 @@ struct  in_addr inet_makeaddr(const int, const int);
 unsigned long inet_network(const char *);
 #else
 #include /**/ <arpa/inet.h>
-#endif /* VXWORKS && ghs */  
+#endif /* VXWORKS && ghs */
 }
 #if !defined (ACE_LACKS_TCP_H)
 #include /**/ <netinet/tcp.h>
