@@ -1,11 +1,16 @@
+Sun Dec 13 08:32:04 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp (remove_all_types):
+          removed unused label "remove_type_label".
+
 1998-12-12  Seth Widoff  <swidoff@cs.cmu.edu>
 
-	* orbsvcs/tests/Trader/README:
-	* orbsvcs/tests/Trader/Service_Type_Exporter.cpp:
-	  The trader test no longer prints an exception message in the
-	  unexceptional case that the trader has unregistred test types
-	  when the export_test first tries to remove them. Updated the
-	  expected output in the README file to reflect the change.
+        * orbsvcs/tests/Trader/README:
+        * orbsvcs/tests/Trader/Service_Type_Exporter.cpp:
+          The trader test no longer prints an exception message in the
+          unexceptional case that the trader has unregistred test types
+          when the export_test first tries to remove them. Updated the
+          expected output in the README file to reflect the change.
 
 Sat Dec 12 11:29:38 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
@@ -16,9 +21,9 @@ Sat Dec 12 11:29:38 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-lab
           TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
           TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
 
-	  The generated signatures of various methods contained default
-	  arguments which should only appear in the class definition. This
-	  has been fixed. Thanks to David Levine for reporting the problem.
+          The generated signatures of various methods contained default
+          arguments which should only appear in the class definition. This
+          has been fixed. Thanks to David Levine for reporting the problem.
 
 Sat Dec 12 09:15:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
