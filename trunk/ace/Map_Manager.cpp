@@ -201,9 +201,6 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
   // This assertion is here to help track a situation that shouldn't happen
   ACE_ASSERT (size != 0);
 
-  // Calling this->close_i () to ensure we release previous allocated
-  // memory before allocating new one.
-  this->close_i ();
   return this->resize_i (size);
 }
 
