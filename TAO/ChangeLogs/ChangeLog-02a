@@ -1,3 +1,10 @@
+Wed May  9 11:56:55 2001  Ossama Othman  <ossama@uci.edu>
+
+	* docs/interceptors.html (HREF):
+
+	  Updated link to Portable Interceptors spec to point to the
+	  latest revision (ptc/2001-03-04).
+
 Wed May 09 10:04:24 2001  Balachandran  <bala@cs.wustl.edu>
 
         * TAO version 1.1.15 released.
