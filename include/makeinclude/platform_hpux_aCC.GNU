@@ -14,8 +14,8 @@ HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= /bin/cc
 CXX		= /opt/aCC/bin/aCC
-CCFLAGS		+= $(CFLAGS)
-DCFLAGS		+= -g -D_THREAD_SAFE -D_REENTRANT -DHPUX_VERS=$(HPUX_VERS)
+CCFLAGS		+= $(CFLAGS) -D_THREAD_SAFE -D_REENTRANT -DHPUX_VERS=$(HPUX_VERS)
+DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX) 
 PIC		= +Z
