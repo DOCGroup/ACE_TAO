@@ -36,6 +36,12 @@ class ACE_Timer_Heap_T;
 template <class TYPE, class FUNCTOR>
 class ACE_Timer_Heap_Iterator_T;
 
+template <class TYPE, class FUNCTOR>
+class ACE_Timer_Wheel_T;
+
+template <class TYPE, class FUNCTOR>
+class ACE_Timer_Wheel_Iterator_T;
+
 // This should be nested within the ACE_Timer_Queue class but some C++
 // compilers still don't like this...
 
@@ -50,7 +56,9 @@ class ACE_Timer_Node_T
   friend class ACE_Timer_List_Iterator_T<TYPE, FUNCTOR>;
   friend class ACE_Timer_Heap_T<TYPE, FUNCTOR>;
   friend class ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR>;
-  
+  friend class ACE_Timer_Wheel_T<TYPE, FUNCTOR>;
+  friend class ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR>;
+
   typedef ACE_Timer_Node_T<TYPE, FUNCTOR> NODE;
   // Typedef for self
 
@@ -62,7 +70,17 @@ class ACE_Timer_Node_T
 		    NODE *n, 
 		    int timer_id);
   // Constructor.
-  
+
+  ACE_Timer_Node_T (const TYPE &type, 
+		    const void *a, 
+		    const ACE_Time_Value &t, 
+		    const ACE_Time_Value &i, 
+		    NODE *p,
+                    NODE *n, 
+		    int timer_id);
+  // Constructor for the doubly linked list version.
+
+
   ACE_Timer_Node_T (void);
   // Default constructor.
   
@@ -78,6 +96,9 @@ class ACE_Timer_Node_T
   ACE_Time_Value interval_;
   // If this is a periodic timer this holds the time until the next
   // timeout.
+
+  NODE *prev_;
+  // Pointer to previous timer.
 
   NODE *next_;
   // Pointer to next timer.
