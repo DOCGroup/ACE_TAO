@@ -227,7 +227,7 @@ pacevx_pthread_run_cleanup (WIND_TCB *pTcb)
  */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pacevx_pthread_queue_add(pace_pthread_t pthread)
+pacevx_pthread_queue_add (pace_pthread_t pthread)
 {
   int key;
   pthread_q_entry * entry;
@@ -266,7 +266,7 @@ pacevx_pthread_queue_add(pace_pthread_t pthread)
  */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pacevx_pthread_queue_remove(pace_pthread_t pthread)
+pacevx_pthread_queue_remove (pace_pthread_t pthread)
 {
   int key;
   pthread_q_entry * entry1;
@@ -337,7 +337,7 @@ pacevx_pthread_queue_remove(pace_pthread_t pthread)
  */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 void
-pacevx_pthread_cleanup_popall(pace_pthread_t thread)
+pacevx_pthread_cleanup_popall (pace_pthread_t thread)
 {
   int count;
   int i;
@@ -358,7 +358,7 @@ pacevx_pthread_cleanup_popall(pace_pthread_t thread)
  */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 int
-pacevx_pthread_key_validate(pace_pthread_key_t key)
+pacevx_pthread_key_validate (pace_pthread_key_t key)
 {
   int intkey;
 

@@ -121,8 +121,8 @@ pace_fgetc (FILE * stream)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_fgetpos(PACE_FILE * stream,
-             pace_fpos_t * pos)
+pace_fgetpos (PACE_FILE * stream,
+              pace_fpos_t * pos)
 {
   PACE_TRACE("pace_fgetpos");
 
@@ -247,7 +247,7 @@ pace_fseek (FILE * stream,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_fsetpos(PACE_FILE *stream, const pace_fpos_t *pos)
+pace_fsetpos (PACE_FILE *stream, const pace_fpos_t *pos)
 {
   PACE_TRACE("pace_fsetpos");
 
@@ -294,9 +294,9 @@ pace_funlockfile (FILE * file)
 #if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 pace_size_t
-pace_fwrite(const void * ptr,
-            pace_size_t size, pace_size_t nmemb,
-            PACE_FILE * stream)
+pace_fwrite (const void * ptr,
+             pace_size_t size, pace_size_t nmemb,
+             PACE_FILE * stream)
 {
   PACE_TRACE("pace_fwrite");
 
@@ -483,9 +483,9 @@ pace_setbuf (FILE * stream, char * buf)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_setvbuf(PACE_FILE * stream,
-             char * buf,
-             int mode, pace_size_t size)
+pace_setvbuf (PACE_FILE * stream,
+              char * buf,
+              int mode, pace_size_t size)
 {
   PACE_TRACE("pace_setvbuf");
 
