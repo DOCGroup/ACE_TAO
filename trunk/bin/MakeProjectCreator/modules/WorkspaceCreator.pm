@@ -235,7 +235,7 @@ sub parse_exclude {
                    'for exclusions';
   }
   else {
-    my(@types)   = split(/\s+/, $typestr);
+    my(@types)   = split(/\s*,\s*/, $typestr);
     my(@exclude) = ();
 
     while(<$fh>) {
