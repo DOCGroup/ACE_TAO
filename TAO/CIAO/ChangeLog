@@ -1,3 +1,12 @@
+Mon Jun  7 14:23:38 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+	* DnC/Config_Handlers/DnC_Dump.cpp: 
+
+	Fixed an error causing segmentation fault by changing
+	Dump_Obj::desc_map_ template argument from "const char*"
+	to "std::string".
+
+
 Mon Jun  7 12:10:31 2004  Gan Deng <gan.dengg@vanderbilt.edu>
 
 	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
