@@ -102,13 +102,14 @@ extern CORBA::TypeCode TC_opaque;
 #include "tao/params.h"
 #include "tao/client_factory.h"
 #include "tao/client_factory.h"
-#include "tao/server_factory.h"
 #include "tao/default_client.h"
 #include "tao/default_server.h"
+#include "tao/server_factory.h"
 
 #include "tao/except.h"
-#include "tao/orbobj.h"
+#include "tao/interp.h"
 #include "tao/nvlist.h"
+#include "tao/orbobj.h"
 #include "tao/object.h"
 #include "tao/orbobj.h"
 #include "tao/principa.h"
@@ -141,7 +142,6 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/iiopobj.h"
 #include "tao/iioporb.h"
 #include "tao/giop.h"
-#include "tao/interp.h"
 
 // The following *.i files are always included here
 #  if !defined(__ACE_INLINE__)
