@@ -6,7 +6,7 @@
 #include "ESF_Immediate_Changes.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ESF_Proxy_Collection.i"
+#include "ESF_Immediate_Changes.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ESF_Worker.h"

@@ -39,7 +39,7 @@ class TAO_EC_ProxyPushConsumer;
 
 class TAO_RTEvent_Export TAO_EC_ConsumerAdmin
   : public POA_RtecEventChannelAdmin::ConsumerAdmin
-  , public TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushSupplier,TAO_EC_ProxyPushConsumer> 
+  , public TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushSupplier,RtecEventChannelAdmin::ProxyPushSupplier,TAO_EC_ProxyPushConsumer>
 {
   // = TITLE
   //   ConsumerAdmin

@@ -1,3 +1,56 @@
+Tue Apr 11 20:58:16 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.cpp:
+	  The .i file name was incorrect, but only builds with inlining
+	  disabled would detect that.
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.i:
+	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+	  Workaround several MSVC 6 compiler bugs related to templates and
+	  traits.  Nasty stuff.
+
+	* orbsvcs/orbsvcs/RTEvent.dsp:
+	  Remove all the files that are not in the repo anymore.
+
+	* orbsvcs/orbsvcs/AV.dsp:
+	* orbsvcs/orbsvcs/CosConcurrency.dsp:
+	* orbsvcs/orbsvcs/CosEvent.dsp:
+	* orbsvcs/orbsvcs/CosLifeCycle.dsp:
+	* orbsvcs/orbsvcs/CosNaming.dsp:
+	* orbsvcs/orbsvcs/CosNotification.dsp:
+	* orbsvcs/orbsvcs/CosProperty.dsp:
+	* orbsvcs/orbsvcs/CosTime.dsp:
+	* orbsvcs/orbsvcs/CosTrading.dsp:
+	* orbsvcs/orbsvcs/DsLogAdmin.dsp:
+	* orbsvcs/orbsvcs/RTEvent.dsp:
+	* orbsvcs/orbsvcs/RTSched.dsp:
+	* orbsvcs/orbsvcs/Svc_Utils.dsp:
+	  Disable precompiled headers for all this project files. We don't
+	  use them in ACE+TAO.
+
 Tue Apr 11 21:41:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Lite.cpp (TAO_GIOP_Message_Lite): 
