@@ -1,3 +1,10 @@
+Sun Dec 09 13:52:46 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/lib.dsw:
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/TAO_RTEC_COSEC.dsp:
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/TAO_RTEC_COSEC_static.dsp:
+	  Adjusted name to make nightly Win32 builds happy.
+
 Sun Dec  9 20:53:01 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* TAO/tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h
@@ -24,7 +31,7 @@ Sat Dec  8 11:47:37 2001  Ossama Othman  <ossama@uci.edu>
 Thu Dec  7 17:39:14 2001  Justin Michel <michel_j@ociweb.com>
 
         * TAO/tests/ORB_init/Portspan/portspan.dsp
-        
+
         Fixed the Release configuration.
 
 Fri Dec  7 16:38:22 2001  Jeff Parsons <parsons@cs.wustl.edu>
@@ -67,7 +74,7 @@ Fri Dec 07 11:44:24 2001  Carlos O'Ryan  <coryan@uci.edu>
 	  Add missing MSVC6 projects and workspaces.
 
 Fri Dec 07 09:58:43 2001  Carlos O'Ryan  <coryan@uci.edu>
-  
+
 	* orbsvcs/performance-tests/EC_Federated_Latency/EC_Federated_Latency.dsw:
 	* orbsvcs/performance-tests/EC_Federated_Latency/client.dsp:
 	* orbsvcs/performance-tests/EC_Federated_Latency/server.dsp:
@@ -98,7 +105,7 @@ Fri Dec  7 09:00:00 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* TAO/TAO_IDL/fe/lex.yy.cpp
 	  fixed warnings for unreachable statement
-	
+
 Thu Dec  6 15:34:45 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/EC_Federated_Scalability/Coordinator.cpp:
@@ -288,7 +295,7 @@ Mon Dec  3 19:12:58 2001  Carlos O'Ryan  <coryan@uci.edu>
           My change was not that great after all, it generated warnings on
 	  the Linux build with exceptions enabled.  I have fixed the
 	  problem by taking advantage of a TAO_ENV_EMIT_CODE macro.
-	
+
 Mon Dec  3 16:27:08 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/Makefile:
