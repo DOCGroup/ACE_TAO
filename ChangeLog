@@ -1,3 +1,12 @@
+Thu Jun 22 12:46:43 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace: Added Logging_Strategy.{h,cpp} to ACE and the Makefile.
+
+	* netsvcs/lib: Zapped the Logging_Strategy.{h,cpp}
+	  files from netsvcs and moved them into ACE, where they can be
+ 	  reused more readily.  Thanks to Martin Krumpolec
+ 	  <krumpo@pobox.sk> for this suggestion.
+
 Thu Jun 22 13:29:22 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.cpp (ACE_Thread_Adapter::invoke): Added cleanup code for
