@@ -1,3 +1,44 @@
+Tue Jan 16 20:43:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+
+          Modified body of _var assingment from another _var.
+          In the case where an uninitialized _var is assigned
+          to another, there is a dereference of a null pointer.
+          This change was needed only for structs, unions and
+          sequences. It was not necessary for interfaces (which
+          use _duplicate and CORBA::release), valuetypes (which
+          use add_ref and remove_ref) or arrays (which use
+          *_free and *_dup). The new versions have the added
+          benefits of propagating any exceptions that may arise
+          from the heap allocation or from the constructor call,
+          and of leaving the state of the _var unchanged if there
+          is any problem. Added benefits are thanks to Carlos and
+          thanks to Sathish Tiptur <Sathish.Tiptur@geind.ge.com> 
+          for reporting this bug.
+
+        * tao/CONV_FRAMEC.i:
+        * tao/DomainC.i:
+        * tao/DynamicC.i:
+        * tao/GIOPC.i:
+        * tao/IIOPC.i:
+        * tao/IOPC.i:
+        * tao/MessagingC.i:
+        * tao/Object_KeyC.i:
+        * tao/OctetSeqC.i:
+        * tao/PolicyC.i:
+        * tao/RTCORBAC.i:
+        * tao/StringSeqC.i:
+        * tao/TAOC.i:
+        * tao/TimeBaseC.i:
+        * tao/DynamicAny/DynamicAnyC.i:
+        * tao/IORManipulation/IORC.i:
+        * tao/PortableServer/PortableServerC.i:
+
+          Corresponding mods to hand-drafted files.
+
 Tue Jan 16 15:38:29 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO.dsp:
