@@ -2,6 +2,7 @@
 
 NAME = VoidData
 
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -I $(TAO_ROOT)
 
 OBJFILES = \
 	$(OBJDIR)\testC.obj \
@@ -37,8 +38,25 @@ CFLAGS = \
 
 CPPDIR = .
 
+IDLDIR = .
+
 INCLUDES = \
 	testC.h \
 	testC.i
 
+IDLFILES = \
+   $(IDLDIR)\test.idl
+
+all: idl_src_files
+
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+# IDL File Directory: .
+$(IDLDIR)\testS.cpp $(IDLDIR)\testC.cpp: $(IDLDIR)\test.idl
+   $(TAO_IDL) -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $**
