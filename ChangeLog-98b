@@ -1,3 +1,11 @@
+Fri Sep 18 00:07:31 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/ACE.h (ACE):  
+	* ace/ACE.cpp (open_temp_file): Added this method to do open for
+	the temp files, so that they will get deleted when they are
+	closed. 
+	Thanks to Nanbor and Carlos. 
+
 Thu Sep 17 23:01:50 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Containers.i: resurrected the file properly.
