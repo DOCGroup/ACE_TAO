@@ -11,6 +11,7 @@
 #include "ace/Synch.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
+#include "ace/Singleton.h"
 
 #include <openssl/x509.h>
 #include <openssl/err.h>
@@ -45,6 +46,12 @@ ACE_SSL_Context::~ACE_SSL_Context (void)
     }
 
   ACE_SSL_Context::ssl_library_fini ();
+}
+
+ACE_SSL_Context *
+ACE_SSL_Context::instance (void)
+{
+  return ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::instance ();
 }
 
 void

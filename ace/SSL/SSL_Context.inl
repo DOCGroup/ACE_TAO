@@ -31,12 +31,6 @@ ACE_SSL_Data_File::type (void) const
 
 // ****************************************************************
 
-ACE_INLINE ACE_SSL_Context *
-ACE_SSL_Context::instance (void)
-{
-  return ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::instance ();
-}
-
 ACE_INLINE void
 ACE_SSL_Context::check_context (void)
 {
