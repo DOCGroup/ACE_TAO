@@ -123,7 +123,8 @@ static ACE_HANDLE
 open_new_endpoint (ACE_HANDLE listen_handle,
                    const char dev[],
                    struct t_call *callp,
-                   int rwf)
+                   int rwf,
+                   ACE_Addr *remote_sap = 0)
 {
   ACE_TRACE ("open_new_endpoint");
 #if defined (ACE_PSOS)
@@ -136,8 +137,18 @@ open_new_endpoint (ACE_HANDLE listen_handle,
                                   0);
 #endif /* ACE_PSOS */
 
+   struct t_bind req, *req_p = 0;
+   if (remote_sap != 0)
+     {
+       req.qlen = 0;
+       req.addr.buf = (char *) remote_sap->get_addr ();
+       req.addr.len = remote_sap->get_size ();
+       req.addr.maxlen = remote_sap->get_size ();
+       req_p = &req;
+     }
+
   if (fd == ACE_INVALID_HANDLE
-      || ACE_OS::t_bind (fd, 0, 0) == -1)
+      || ACE_OS::t_bind (fd, rep_p, 0) == -1)
     fd = ACE_INVALID_HANDLE;
 #if defined (I_PUSH) && !defined (ACE_HAS_FORE_ATM_XTI)
   else if (rwf != 0 && ACE_OS::ioctl (fd,
@@ -349,15 +360,14 @@ ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
         req.addr.len = 0;
       else
         {
-          req.addr.len = remote_sap.get_size ();
           req.addr.buf = (char *) remote_sap.get_addr ();
+          req.addr.len = remote_sap.get_size ();
         }
 
-      int bind_res = ACE_OS::t_bind (this->get_handle (), 
-                                     &req,
-                                     0);
+      res = (ACE_HANDLE) ACE_OS::t_bind (this->get_handle (), 
+                                         &req,
+                                         0);
       if (res != ACE_INVALID_HANDLE)
-      if (bind_res != -1) // Geisler: see above
         {
           ACE_NEW_RETURN (this->queue_,
                           ACE_TLI_Request_Queue,
@@ -473,7 +483,11 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
         req->handle_ = open_new_endpoint (this->get_handle (), 
                                           this->device_,
                                           req->callp_,
-                                          rwf);
+                                          rwf
+#if defined (ACE_WIN32)
+                                          , remote_addr
+#endif /* ACE_WIN32 */
+                                          );
         if (req->handle_ == ACE_INVALID_HANDLE)
           res = -1;
         else

@@ -31,16 +31,16 @@ ACE_TLI_Connector::ACE_TLI_Connector (void)
 
 int
 ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream, 
-			    const ACE_Addr &remote_sap, 
-			    ACE_Time_Value *timeout,
-			    const ACE_Addr &local_sap, 
-			    int reuse_addr,
-			    int flags,
-			    int /* perms */,
-			    const char device[], 
-			    struct t_info *info, 
-			    int rwf,
-			    netbuf *udata,
+                            const ACE_Addr &remote_sap, 
+                            ACE_Time_Value *timeout,
+                            const ACE_Addr &local_sap, 
+                            int reuse_addr,
+                            int flags,
+                            int /* perms */,
+                            const char device[], 
+                            struct t_info *info, 
+                            int rwf,
+                            netbuf *udata,
                             netbuf *opt)
 {
   ACE_TRACE ("ACE_TLI_Connector::connect");
@@ -59,13 +59,13 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
       struct t_bind *localaddr;
 
       localaddr = (struct t_bind *) 
-	ACE_OS::t_alloc (new_stream.get_handle (), T_BIND, T_ADDR);
+        ACE_OS::t_alloc (new_stream.get_handle (), T_BIND, T_ADDR);
 
       if (localaddr == 0)
-	result = -1;
+        result = -1;
       else
-	{
-	  int one = 1;
+        {
+          int one = 1;
 #if !defined (ACE_HAS_FORE_ATM_XTI)
           // Reusing the address causes problems with FORE's API. The
           // issue may be that t_optmgmt isn't fully supported by
@@ -73,38 +73,36 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
           // maybe options are configured differently for XTI than for
           // TLI (at least for FORE's implementation - XTI is supposed
           // to be a superset of TLI).
-	  if (reuse_addr 
+          if (reuse_addr 
               && new_stream.set_option (SOL_SOCKET,
                                         SO_REUSEADDR,
                                         &one,
                                         sizeof one) == -1)
-	    result = -1;
-	  else
+            result = -1;
+          else
 #endif /* ACE_HAS_FORE_ATM_XTI */
-	    {
-	      // localaddr->glen = 0;
-	      //localaddr->addr.maxlen = local_sap.get_size ();
-	      localaddr->addr.len = local_sap.get_size ();
+            {
+              void *addr_buf = local_sap.get_addr ();
+              localaddr->addr.len = local_sap.get_size ();
               ACE_OS::memcpy(localaddr->addr.buf,
-                             local_sap.get_addr (),
+                             addr_buf,
                              localaddr->addr.len);
-              //localaddr->addr.buf = (char *) local_sap.get_addr ();
 
-	      if (ACE_OS::t_bind (new_stream.get_handle (),
+              if (ACE_OS::t_bind (new_stream.get_handle (),
                                   localaddr,
                                   localaddr) == -1)
-		result = -1;
+                result = -1;
 
-	      ACE_OS::t_free ((char *) localaddr,
+              ACE_OS::t_free ((char *) localaddr,
                               T_BIND);
-	    }
-	}
+            }
+        }
 
       if (result == -1)
-	{
-	  new_stream.close ();
-	  return -1;
-	}
+        {
+          new_stream.close ();
+          return -1;
+        }
     }
   // Let TLI select the local endpoint addr.
   else if (ACE_OS::t_bind (new_stream.get_handle (), 0, 0) == -1)
@@ -120,11 +118,12 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
       new_stream.close ();
       return -1;
     }
-  //callptr->addr.maxlen = remote_sap.get_size ();
+
+  void *addr_buf = remote_sap.get_addr ();
   callptr->addr.len = remote_sap.get_size ();
-  ACE_OS::memcpy(callptr->addr.buf,
-                 remote_sap.get_addr (),
-                 callptr->addr.len);
+  ACE_OS::memcpy (callptr->addr.buf,
+                  addr_buf,
+                  callptr->addr.len);
   //callptr->addr.buf = (char *) remote_sap.get_addr ();
 
   if (udata != 0)
@@ -142,25 +141,25 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
   if (timeout != 0)   // Enable non-blocking, if required.
     {
       if (new_stream.enable (ACE_NONBLOCK) == -1)
-	result = -1;
+        result = -1;
       
       // Do a non-blocking connect.
       if (ACE_OS::t_connect (new_stream.get_handle (), callptr, 0) == -1)
-	{
-	  result = -1;
-	  
-	  // Check to see if we simply haven't connected yet on a
-	  // non-blocking handle or whether there's really an error.
-	  if (t_errno == TNODATA) 
-	    {
-	      if (timeout->sec () == 0 && timeout->usec () == 0)
-		errno = EWOULDBLOCK;
-	      else 
-		result = this->complete (new_stream, 0, timeout);
-	    }
-	  else if (t_errno == TLOOK && new_stream.look () == T_DISCONNECT)
-	    new_stream.rcvdis ();
-	}
+        {
+          result = -1;
+          
+          // Check to see if we simply haven't connected yet on a
+          // non-blocking handle or whether there's really an error.
+          if (t_errno == TNODATA) 
+            {
+              if (timeout->sec () == 0 && timeout->usec () == 0)
+                errno = EWOULDBLOCK;
+              else 
+                result = this->complete (new_stream, 0, timeout);
+            }
+          else if (t_errno == TLOOK && new_stream.look () == T_DISCONNECT)
+            new_stream.rcvdis ();
+        }
     }
   // Do a blocking connect to the server.
   else if (ACE_OS::t_connect (new_stream.get_handle (), callptr, 0) == -1)
@@ -171,7 +170,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
       new_stream.set_rwflag (rwf);
 #if defined (I_PUSH) && !defined (ACE_HAS_FORE_ATM_XTI)
       if (new_stream.get_rwflag ())
-	result = ACE_OS::ioctl (new_stream.get_handle (),
+        result = ACE_OS::ioctl (new_stream.get_handle (),
                                 I_PUSH,
                                 ACE_const_cast (char *, "tirdwr"));
 #endif /* I_PUSH */
@@ -192,10 +191,21 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 
 int
 ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream, 
-			     ACE_Addr *remote_sap,
-			     ACE_Time_Value *tv)
+                             ACE_Addr *remote_sap,
+                             ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_TLI_Connector::complete");
+#if defined (ACE_WIN32)
+   if (WaitForSingleObject (new_stream.get_handle(), tv->msec()) == WAIT_OBJECT_0)
+    {
+      if (ACE_OS::t_look (new_stream.get_handle()) == T_CONNECT)
+        return ACE_OS::t_rcvconnect (new_stream.get_handle(), 0);
+      else
+        return -1;
+    }
+  else
+    return -1;
+#else
   ACE_HANDLE h = ACE::handle_timed_complete (new_stream.get_handle (),
                                              tv,
                                              1);
@@ -204,33 +214,34 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
       new_stream.close ();
       return -1;
     }
-  else 	  // We've successfully connected!
+  else    // We've successfully connected!
     {
       if (remote_sap != 0)
-	{
+        {
 #if defined (ACE_HAS_SVR4_TLI)
-	  struct netbuf name;
+          struct netbuf name;
 
-	  name.maxlen = remote_sap->get_size ();
-	  name.buf    = (char *) remote_sap->get_addr ();
+          name.maxlen = remote_sap->get_size ();
+          name.buf    = (char *) remote_sap->get_addr ();
 
-	  if (ACE_OS::ioctl (new_stream.get_handle (),
+          if (ACE_OS::ioctl (new_stream.get_handle (),
                              TI_GETPEERNAME,
                              &name) == -1) 
 #else /* SunOS4 */
-	  if (0)
+          if (0)
 #endif /* ACE_HAS_SVR4_TLI */  
-	    {
-	      new_stream.close ();
-	      return -1;
-	    }
-	}
+            {
+              new_stream.close ();
+              return -1;
+            }
+        }
 
       // Start out with non-blocking disabled on the <new_stream>.
       new_stream.disable (ACE_NONBLOCK);
 
       return 0;
     }
+#endif /* ACE_WIN32 */
 }
 
 #endif /* ACE_HAS_TLI */
