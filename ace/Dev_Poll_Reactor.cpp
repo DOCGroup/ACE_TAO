@@ -44,6 +44,9 @@ ACE_RCSID (ace,
 #include "ace/Reactor.h"
 #include "ace/Timer_Heap.h"
 #include "ace/ACE.h"
+#include "ace/Reverse_Lock_T.h"
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 
 ACE_Dev_Poll_Reactor_Notify::ACE_Dev_Poll_Reactor_Notify (void)

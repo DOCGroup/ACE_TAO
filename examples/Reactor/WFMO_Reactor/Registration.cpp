@@ -38,6 +38,7 @@
 #if defined (ACE_WIN32)
 
 #include "ace/Reactor.h"
+#include "ace/Auto_Event.h"
 
 ACE_RCSID(WFMO_Reactor, Registration, "$Id$")
 

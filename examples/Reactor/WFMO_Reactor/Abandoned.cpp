@@ -25,6 +25,7 @@
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Process_Mutex.h"
+#include "ace/Auto_Event.h"
 
 ACE_RCSID(WFMO_Reactor, Abandoned, "$Id$")
 
