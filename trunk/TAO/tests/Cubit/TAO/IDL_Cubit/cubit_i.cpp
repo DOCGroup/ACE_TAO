@@ -21,8 +21,8 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *Cubit_i_Timeprobe_Description[] = 
-{ 
+static const char *Cubit_i_Timeprobe_Description[] =
+{
   "Cubit_i::cube_octet - start",
   "Cubit_i::cube_octet - end",
 
@@ -42,7 +42,7 @@ static const char *Cubit_i_Timeprobe_Description[] =
   "Cubit_i::cube_sequence - end"
 };
 
-enum 
+enum
 {
   CUBIT_I_CUBE_OCTET_START = 10000,
   CUBIT_I_CUBE_OCTET_END,
@@ -66,7 +66,7 @@ enum
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_i_Timeprobe_Description, 
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_i_Timeprobe_Description,
                                   CUBIT_I_CUBE_OCTET_START);
 
 // Constructor
@@ -83,7 +83,7 @@ Cubit_Factory_i::~Cubit_Factory_i (void)
 
 Cubit_ptr
 Cubit_Factory_i::make_cubit (const char *,
-			     CORBA::Environment &env)
+                             CORBA::Environment &env)
 {
   return my_cubit_._this (env);
 }
@@ -191,8 +191,8 @@ Cubit_i::cube_union (const Cubit::oneof &values,
 // Cube a sequence
 void
 Cubit_i::cube_sequence(const Cubit::vector &input,
-		       Cubit::vector_out output,
-		       CORBA::Environment &)
+                       Cubit::vector_out output,
+                       CORBA::Environment &)
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_SEQUENCE_START);
 
@@ -217,15 +217,15 @@ Cubit_i::cube_sequence(const Cubit::vector &input,
 // Cube an octet sequence
 void
 Cubit_i::cube_raw (const Cubit::Raw &input,
-		   Cubit::Raw_out output,
-		   CORBA::Environment &)
+                   Cubit::Raw_out output,
+                   CORBA::Environment &)
 {
   if (output.ptr () == 0)
     {
       ACE_Message_Block mb (input.length ());
       mb.wr_ptr (input.length ());
       TAO_Unbounded_Sequence<CORBA::Octet>* tmp =
-	new TAO_Unbounded_Sequence<CORBA::Octet> (&mb);
+        new TAO_Unbounded_Sequence<CORBA::Octet> (&mb);
       // @@ TODO this is a temporary hack until the IDL compiler
       // generates the constructor taking a Message_Block.
       output = (Cubit::Raw*)tmp;
@@ -252,13 +252,9 @@ void Cubit_i::shutdown (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
 
-  ACE_DEBUG ((LM_DEBUG, 
-              "%s",
-	      "I have been asked to shut down "));
-	      
+  ACE_DEBUG ((LM_DEBUG,
+              "%s\n",
+              "Cubit_i is shutting down"));
+
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
-
-
-
-
