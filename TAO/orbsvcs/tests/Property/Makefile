@@ -5,40 +5,11 @@
 #
 #----------------------------------------------------------------------------
 
-#---------------
-#   STL (start)
-#---------------
-
-include $(STL_ROOT)/config/local.cfg
-
-CC_INCLUDES += -I$(STD)
-CC_INCLUDES += -pta
-
-CPPFLAGS += \
-	-I$(TOOLKIT) \
-	$(CC_INCLUDES) \
-	$(CC_FLAGS) \
-	$(CC_DEFINES) \
-	$(CC_EH) \
-	$(CC_MT)
-
-ifndef exceptions
-CPPFLAGS += -DOS_NO_EXCEPTION_SPECIFIER
-else
-CPPFLAGS += -DOS_STL_ASSERT
-endif
-
-LDFLAGS += -L$(STL_ROOT)/lib
-
-#---------------
-#   STL (end)
-#---------------
-
 #----------------------------------------------------------------------------
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS     = -lorbsvcs -lospace -lTAO -lrpcsvc
+LDLIBS     = -lorbsvcs -lTAO 
 
 AVStreams_SERVER_OBJS = server.o
 AVStreams_CLIENT_OBJS = client.o
@@ -83,9 +54,3 @@ realclean: clean
 
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
-
-
-
-
-
-
