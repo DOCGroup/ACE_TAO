@@ -1,3 +1,13 @@
+Fri Sep 15 16:18:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/tao_idl_static.dsp:
+	* TAO_IDL/TAO_IDL_FE_LIB.dsp:
+	* TAO_IDL/TAO_IDL_BE_LIB.dsp:
+
+	  Fixed problems with the static builds of the IDL compiler.
+	  Thanks to Erik Johannes <ejohannes@oresis.com> for
+	  pointing this out.
+
 Fri Sep 15 14:37:22 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP.dsp:
