@@ -1,3 +1,17 @@
+Thu Apr 12 17:02:41 2001  Steve Huston  <shuston@riverace.com>
+
+        * examples/QOS/Change_Sender_TSpec/sender.dsp:
+        * examples/QOS/Change_Sender_TSpec/receiver.dsp:
+        * examples/QOS/Change_Receiver_FlowSpec/sender.dsp:
+        * examples/QOS/Change_Receiver_FlowSpec/receiver.dsp:
+        * examples/QOS/Simple/sender.dsp:
+        * examples/QOS/Simple/receiver.dsp: Changed project names from 002
+          and 003 to sender and receiver. Corrected relative paths for include
+          and library lookup (add another ..).
+
+        * examples/QOS/QOS.dsw: Change project names from 002/003 to sender
+          and receiver.
+
 Thu Apr 12 15:48:22 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * ace/CDR_Stream.i (length):
