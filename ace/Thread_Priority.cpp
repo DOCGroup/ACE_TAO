@@ -336,7 +336,7 @@ ACE_Thread_Priority::convert_to_os_priority (void)
    ACE_REALTIME_PRIORITY_CLASS    0 .. 6           FIFO           21..27
  */
 
-long
+int
 ACE_Thread_Priority::convert_to_os_priority (void)
 {
   switch (priority_class_)
