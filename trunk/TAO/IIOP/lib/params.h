@@ -30,8 +30,6 @@ class ROA;
 typedef ROA* ROA_ptr;
 class TAO_OA_Connection_Handler;
 
-// @@ Please prefix all these classes with TAO_...
-
 class TAO_ORB_Parameters
 // = TITLE
 //    Parameters that are specific to the ORB.  These parameters can be
@@ -121,8 +119,7 @@ public:
   ACE_INET_Addr addr (void);
   // Get the address on which we're listening.
 
-  // @@ CAn you please finish documenting these methods?
-  void demux_strategy (char *strategy);
+  void demux_strategy (const char *strategy);
   // Specify the demultiplexing strategy to be used via <{strategy}>.
   // Valid values are one of (case matters) "linear", "dynamic_hash",
   // "user_def", or "active_demux".  If the value is not valid, then

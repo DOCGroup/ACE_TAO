@@ -73,17 +73,18 @@ TAO_Linear_ObjTable::find (const CORBA_OctetSeq &key,
 
   for (CORBA_ULong i = 0;
        i < this->next_;
-       i++;
+       i++)
     {
       if (!ACE_OS::memcmp (key.buffer, this->tbl_[i].key.buffer, key.length))
 	{
 	  obj = this->tbl_[i].obj;
           return 1;
 	}
+    }
   return -1;  // not found
 }
 
-TAO_Linear_ObjTable_Entry::TAO_Linear_ObjTable_Entry ()
+TAO_Linear_ObjTable_Entry::TAO_Linear_ObjTable_Entry(void)
 {
   this->key.buffer = 0;
   this->key.length = this->key.maximum = 0;

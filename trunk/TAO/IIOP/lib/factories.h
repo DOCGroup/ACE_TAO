@@ -57,9 +57,10 @@ class TAO_Client_Factory
   //    strategies used on the client side.
 {
 public:
-  typedef ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
-  typedef ACE_NOOP_Creation_Strategy<Svc_Handler> NULL_CREATION_STRATEGY;
-  typedef ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_RW_Thread_Mutex> CACHED_CONNECT_STRATEGY;
+  typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
+  typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler> NULL_CREATION_STRATEGY;
+  typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler,
+    ACE_SOCK_CONNECTOR, ACE_RW_Thread_Mutex> CACHED_CONNECT_STRATEGY;
 
 #if defined(TAO_HAS_CLIENT_CONCURRENCY)
   CONCURRENCY_STRATEGY *concurrency_strategy (void);
@@ -69,6 +70,7 @@ public:
   // Return a pointer to a connector using appropriate strategies.
 
   TAO_Client_Factory (void);
+  ~TAO_Client_Factory (void);
   
 private:
 #if defined(TAO_HAS_CLIENT_CONCURRENCY)
@@ -104,9 +106,10 @@ public:
   
 private:
   // = COMMON
-  // @@ Please add comments.
   ACE_Thread_Strategy<TAO_OA_Connection_Handler> threaded_strategy_;
+  // The threaded strategy used for passively establishing connections.
   ACE_Reactive_Strategy<TAO_OA_Connection_Handler> reactive_strategy_;
+  // A strategy for passively establishing connections which utilizes the Reactor.
 
   // = SERVER
   CONCURRENCY_STRATEGY *concurrency_strategy_;

@@ -100,9 +100,9 @@ TAO_OA_Parameters::demux_strategy (DEMUX_STRATEGY strategy)
 }
 
 ACE_INLINE
-void TAO_OA_Parameters::demux_strategy (char* strategy)
+void TAO_OA_Parameters::demux_strategy (const char* strategy)
 {
-  // @@ Can you please add a comment for this?
+  // Determine the demux strategy based on the given name
   if (!ACE_OS::strcmp (strategy, "linear"))
     {
       this->demux_ = TAO_LINEAR;

@@ -54,3 +54,9 @@ TAO_Server_Factory::object_lookup_strategy (TAO_Object_Table *ot)
 {
   this->objtable_ = ot;  // we assume ownership
 }
+
+ACE_INLINE TAO_Client_Factory::CONNECTOR*
+TAO_Client_Factory::connector(void)
+{
+  return &connector_;
+}

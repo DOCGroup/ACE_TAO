@@ -33,10 +33,10 @@ extern "C" char *strerror (int);
 // "tao_debug_level", etc. to protect the namespace.
 
 // 0 to ??; higher == more
-extern u_int debug_level;	
+extern u_int TAO_debug_level;	
 
 // set by getopt
-extern char *debug_filter;
+extern char *TAO_debug_filter;
 
 // These are just simple 0, 1, and 2 argument messages that will
 // appear when debugging's enabled, regardless of category.  They also
@@ -48,21 +48,21 @@ extern char *debug_filter;
 #include <string.h>
 
 // 1, 2, 3 argument messages -- generic
-#define dmsg(s)		{ if (debug_level) dmsg_v (s); }
-#define dmsg1(s,a1)	{ if (debug_level) dmsg_v (s, a1); }
-#define dmsg2(s,a1,a2)	{ if (debug_level) dmsg_v (s, a1, a2); }
+#define dmsg(s)		{ if (TAO_debug_level) dmsg_v (s); }
+#define dmsg1(s,a1)	{ if (TAO_debug_level) dmsg_v (s, a1); }
+#define dmsg2(s,a1,a2)	{ if (TAO_debug_level) dmsg_v (s, a1, a2); }
 
 // dump CORBA_Exception, if any, with id tag
-#define dexc(env,s)	{ if (debug_level && env.exception ()) \
+#define dexc(env,s)	{ if (TAO_debug_level && env.exception ()) \
 				_dmsg_x (env, s); }
 
 // dump POSIX error indication, if any, with ID tag
-#define dperror(str)	{ if (debug_level) dmsg_v ("%s: %s", \
+#define dperror(str)	{ if (TAO_debug_level) dmsg_v ("%s: %s", \
 				str, strerror (errno)); }
 
 // dump socket error indication, if any, with ID tag
 #if defined (_WINSOCKAPI_)
-#define	dsockerr(s)	{ if (debug_level) dmsg_v ("%s:  winsock error %d", \
+#define	dsockerr(s)	{ if (TAO_debug_level) dmsg_v ("%s:  winsock error %d", \
 				s, WSAGetLastError()); }
 #else
 #define	dsockerr(s)	dperror(s)
@@ -85,15 +85,15 @@ extern char *debug_filter;
 #if defined (DEBUG)
 
 // This is like an fprintf statement except the filter is a set of
-// characters (string).  If debug_level is nonzero and any characters
-// in that string are in the "debug_filter" string, the message is
+// characters (string).  If TAO_debug_level is nonzero and any characters
+// in that string are in the "TAO_debug_filter" string, the message is
 // then printed.  Assign thosee characters as needed.
 
 extern void _EXPFUNC dmsg_filter (const char *_FAR filter,
 				  const char *_FAR fmt, ...);
 
-// Filter according to debug_level instead of category.  (For speed,
-// test against debug_level directly.)
+// Filter according to TAO_debug_level instead of category.  (For speed,
+// test against TAO_debug_level directly.)
 
 extern void _EXPFUNC dmsg_filter (u_int level, 
 				  const char *_FAR fmt, ...);

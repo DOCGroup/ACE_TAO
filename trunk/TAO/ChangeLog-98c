@@ -1,3 +1,69 @@
+Fri May 16 17:30:31 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* IIOP/lib/svrrqst.*: Corrected some comments, adjusted some
+ 	argument type names to reflect their new, namespace-sanitized
+ 	names, and moved short methods into a new inline file.
+
+	* IIOP/lib/stub.h: Corrected some comments and adjusted some
+ 	argument type names to reflect their new, namespace-sanitized
+ 	names.
+
+	* IIOP/lib/roa.cpp: Corrected syntax error and fixed up typedef.
+
+	* IIOP/lib/params.*: Removed extraneous comments and fixed
+ 	argument type on demux_strategy().
+
+	* IIOP/lib/orbobj.*: Added comments, removed static pointer to
+ 	the ORB.
+
+	* IIOP/lib/optable.h: Removed extraneous comments and fixed
+ 	typedefs.
+
+	* IIOP/lib/objtable.cpp: Fixed some syntax errors introduced by
+ 	reformating.
+
+	* IIOP/lib/object.cpp: Adjusted some argument type names to
+ 	reflect their new, namespace-sanitized names.
+
+	* IIOP/lib/invoke.cpp: Removed crufty #includes and adjusted some
+ 	argument type names to reflect their new, namespace-sanitized
+ 	names.
+
+	* IIOP/lib/iioporb.*: Moved short methods into inline file, added
+ 	IIOP_ORB_ptr typedef, and changed data member to conform to ace
+ 	standards.
+
+	* IIOP/lib/iiopobj.*: Added the second CTOR that I forgot last
+ 	time and adjusted some argument type names to reflect their new,
+ 	namespace-sanitized names.
+
+	* IIOP/lib/giop.h: Added comments for various enums and
+ 	structures.
+
+	* IIOP/lib/giop.cpp: Switched various GIOP::Invocation methods to
+ 	use handler_->peer() for socket communication rather than going
+ 	through a file descriptor.  Also began the arduous (no other word
+ 	could explain it!) process of converting the homegrown debugging
+ 	message macro uses into ACE_DEBUG() uses.
+
+	* IIOP/lib/factories.*: Added explicit DTOR for TAO_Client_Factory
+ 	and completed all the darn explicit template instantiations.
+  	Changed 'Svc_Handler' to 'TAO_Client_Connection_Handler', and
+ 	added the forgotton TAO_Client_Factory::connector() method.
+
+	* IIOP/lib/debug.*: Added 'TAO_' prefix to global debug state
+ 	variables and removed crufty #includes.
+
+	* IIOP/lib/connect.cpp: Change ROA_Handler to
+ 	TOA_OA_Connection_Handler (missed these the last time through).
+
+	* IIOP/lib/cdr.cpp: Added responsive commentary.
+
+	* IIOP/lib/boa.cpp: Added comments to the dispatching code.
+
+	* IIOP/lib/{any,boa,request,typecode}.cpp: Removed references to
+ 	thread.h/connmgr.*.
+
 Thu May 15 19:08:16 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* Finished updating all the reformatting.

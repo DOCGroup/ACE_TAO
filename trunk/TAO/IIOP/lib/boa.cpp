@@ -10,23 +10,22 @@
 // the modules knowing about IIOP.  In the future, a looser coupling
 // between OA initialiszation and protocol components is desired.
 
-#include	<assert.h>
-#include	<stdio.h>
-#include	<string.h>
+#include <assert.h>
+#include <stdio.h>
+#include <string.h>
 
-#include	<orb.h>
-#include	<boa.h>
+#include <orb.h>
+#include <boa.h>
 
-#include	"thread.h"
-#include	"debug.h"
+#include "debug.h"
 
 // XXX this should not know implementation or other details of any
 // protocol modules!  This is an implementation shortcut only.
 
-#include	"iioporb.h"
-#include	"roa.h"
+#include "iioporb.h"
+#include "roa.h"
 
-#include	<initguid.h>
+#include <initguid.h>
 
 
 // {A201E4C8-F258-11ce-9598-0000C07CA898}
@@ -164,12 +163,16 @@ void CORBA_BOA::dispatch (CORBA_OctetSeq &key,
   // @@ Please add more comments here.  This is a very important part
   // of the code.
 
+  // Find the object based on the key
   if (this->find (key, obj) != -1) 
     {
       opname = req.op_name ();
 
-      if (obj->find (opname, skel) != -1) 
-	skel (req, obj, env); // really should be scheduled .
+      // Find the skeleton "glue" function based on the operation name
+      if (obj->find (opname, skel) != -1)
+        // Schedule the upcall.  This is the degenerate case of scheduling...
+        // using a "do it now!" scheduler
+	skel (req, obj, env);
       else
 	{
 	  // this may fail in which case, we must try out the default

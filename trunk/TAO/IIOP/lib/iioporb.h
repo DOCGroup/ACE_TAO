@@ -37,7 +37,7 @@ class ACE_Svc_Export IIOP_ORB : public CORBA_ORB
 public:
   IIOP_ORB(void);
 
-  ~IIOP_ORB (void) {}
+  ~IIOP_ORB (void);
 
   CORBA_Object_ptr string_to_object (CORBA_String str,
 				     CORBA_Environment &env);
@@ -61,6 +61,8 @@ private:
   IIOP_ORB (const IIOP_ORB &);
   IIOP_ORB &operator = (const IIOP_ORB &);
 };
+
+typedef IIOP_ORB* IIOP_ORB_ptr;
 
 // Create a type for the singleton.
 typedef ACE_Singleton<IIOP_ORB, ACE_Thread_Mutex> TAO_ORB;

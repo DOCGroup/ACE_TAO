@@ -31,3 +31,11 @@ IIOP_Object::IIOP_Object (char *repository_id)
     _refcount (1)
 {}
 
+ACE_INLINE
+IIOP_Object::IIOP_Object (char *repository_id, IIOP::ProfileBody& a_profile)
+  : fwd_profile (0),
+    base (this),
+    STUB_Object (repository_id),
+    _refcount (1),
+    profile(a_profile)
+{}

@@ -4,14 +4,13 @@
 //
 // Implementation of Dynamic Invocation Interface
 //
-#include	<orb.h>
-#include	<stub.h>
+#include <orb.h>
+#include <stub.h>
 
-#include        <initguid.h>
+#include <initguid.h>
 
-#include	"debug.h"
-#include	"cdr.h"
-#include	"thread.h"
+#include "debug.h"
+#include "cdr.h"
 
 // {77420085-F276-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_CORBA_Request,

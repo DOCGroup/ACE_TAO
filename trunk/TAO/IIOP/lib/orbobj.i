@@ -1,3 +1,5 @@
+// $Id$
+
 // Constructor and destructor are accessible to subclasses
 ACE_INLINE
 CORBA_ORB::CORBA_ORB (void)
@@ -48,4 +50,25 @@ CORBA_ORB::AddRef (void)
   ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
 
   return _refcount++;
+}
+
+ACE_INLINE
+TAO_Client_Factory&
+CORBA_ORB::client_factory(void)
+{
+  return client_factory_;
+}
+
+ACE_INLINE
+TAO_Server_Factory&
+CORBA_ORB::server_factory(void)
+{
+  return server_factory_;
+}
+
+ACE_INLINE
+TAO_ORB_Parameters&
+CORBA_ORB::params(void)
+{
+  return params_;
 }

@@ -16,19 +16,20 @@
 #include	<string.h>
 #include	<orb.h>
 
-#include	"thread.h"
-#include	"debug.h"
+#include "debug.h"
 
-#include	<ctype.h>
-#include	<stdio.h>
-#include	<stdarg.h>
+#include <ctype.h>
+#include <stdio.h>
+#include <stdarg.h>
 
+#if 0
 #if	unix
-#include	<sys/types.h>
+#include <sys/types.h>
 
 #elif	defined (_WIN32)
 #	include	<windows.h>
 
+#endif
 #endif
 
 #ifndef	_POSIX_THREADS		// _POSIX_THREAD_SAFE_FUNCTIONS implied
@@ -36,8 +37,8 @@
 #define funlockfile (f)
 #endif	// _POSIX_THREADS
 
-u_int debug_level	= 0;
-char *debug_filter	= "l";
+u_int TAO_debug_level	= 0;
+char *TAO_debug_filter	= "l";
 static FILE *debug_stream = stderr;
 
 // The rest of this file is not needed without -DDEBUG, and unless the

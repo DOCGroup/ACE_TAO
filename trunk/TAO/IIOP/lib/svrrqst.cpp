@@ -4,15 +4,14 @@
 //
 // Implementation of the Dynamic Server Skeleton Interface
 
-#include	<orb.h>
+#include <orb.h>
 
-#include        <initguid.h>
+#include <initguid.h>
 
-#include	"debug.h"
-#include	"thread.h"
-#include	"cdr.h"
+#include "debug.h"
+#include "cdr.h"
 
-#include	"svrrqst.h"
+#include "svrrqst.h"
 
 // {77420086-F276-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_IIOP_ServerRequest,
@@ -21,6 +20,10 @@ DEFINE_GUID (IID_IIOP_ServerRequest,
 // {4B48D881-F7F0-11ce-9598-0000C07CA898}
 DEFINE_GUID(IID_CORBA_ServerRequest,
 0x4b48d881, 0xf7f0, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
+
+#if !defined(__ACE_INLINE__)
+#  include "svrrqst.i"
+#endif
 
 IIOP_ServerRequest::~IIOP_ServerRequest (void)
 {

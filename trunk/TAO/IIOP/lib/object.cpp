@@ -19,13 +19,13 @@
 // GET_INTERFACE ... send a simple call to the object, it returns
 // an InterfaceDef objref.
 
-static const paramdata Object_get_interface_params [] = 
+static const TAO_Param_Data Object_get_interface_params [] = 
 {
   { _tc_CORBA_Object, PARAM_RETURN, 0 }
   // XXX should be tc_InterfaceDef
 };
 
-static const calldata Object_get_interface_calldata = 
+static const TAO_Call_Data Object_get_interface_calldata = 
 {
   "_interface",
   CORBA_B_TRUE,
@@ -68,13 +68,13 @@ CORBA_Object::_get_interface (CORBA_Environment &env)
 // IS_A ... ask the object if it's an instance of the type whose
 // logical type ID is passed as a parameter.
 
-static const paramdata Object_is_a_params [] = 
+static const TAO_Param_Data Object_is_a_params [] = 
 {
   { _tc_CORBA_Boolean, PARAM_RETURN, 0 },
   { _tc_CORBA_String, PARAM_IN, 0 }
 };
 
-static const calldata Object_is_a_calldata = 
+static const TAO_Call_Data Object_is_a_calldata = 
 {
   "_is_a", CORBA_B_TRUE,
   2, &Object_is_a_params [0],
@@ -132,13 +132,13 @@ CORBA_Object::_is_a (const CORBA_Char *type_id,
 // GET_IMPLEMENTATION ... send a simple call to the object, it returns
 // an ImplementationDef objref.
 
-static const paramdata Object_get_implementation_params [] = 
+static const TAO_Param_Data Object_get_implementation_params [] = 
 {
   { _tc_CORBA_Object, PARAM_RETURN, 0 }
   // XXX should be tc_ImplementationDef
 };
 
-static const calldata Object_get_implementation_calldata = 
+static const TAO_Call_Data Object_get_implementation_calldata = 
 { 
   "_implementation",
   CORBA_B_TRUE,
@@ -169,12 +169,12 @@ CORBA_Object::_get_implementation (CORBA_Environment &env)
 // either elicit a FALSE response or a OBJECT_NOT_EXIST exception.  In
 // the latter case, return FALSE.
 
-static const paramdata Object_non_existent_params [] = 
+static const TAO_Param_Data Object_non_existent_params [] = 
 {
   { _tc_CORBA_Boolean, PARAM_RETURN, 0 }
 };
 
-static const calldata Object_non_existent_calldata = 
+static const TAO_Call_Data Object_non_existent_calldata = 
 { 
   "_non_existent", CORBA_B_TRUE,
   1, &Object_non_existent_params [0],

@@ -89,7 +89,7 @@ class ACE_Svc_Export IIOP_Object : public STUB_Object
 {
 public:
   void do_call (CORBA_Environment &env,
-		const calldata *info,
+		const TAO_Call_Data *info,
 		...);
   // Stub-based invocation.
 
@@ -125,7 +125,7 @@ public:
 
   IIOP_Object (char *repository_id);
   IIOP_Object (char *repository_id,
-               IIOP::ProfileBody profile);
+               IIOP::ProfileBody& profile);
 
   // = COM stuff
   ULONG __stdcall AddRef (void);

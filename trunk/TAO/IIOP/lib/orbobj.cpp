@@ -67,8 +67,6 @@ CORBA_ORB::Release (void)
 // registry.  Registry will be used to assign orb names and to
 // establish which is the default.
 
-static CORBA_ORB_ptr the_orb;
-
 CORBA_ORB_ptr
 CORBA_ORB_init (int &argc,
 		char *const *argv,
@@ -162,8 +160,8 @@ CORBA_ORB_init (int &argc,
     return 0;
 
   // Inititalize the "ORB" pseudo-object now.
-  the_orb = TAO_ORB::instance ();
-  the_orb->use_omg_ior_format (use_ior);
+  IIOP_ORB_ptr the_orb = TAO_ORB::instance ();
+  the_orb->use_omg_ior_format (CORBA_Boolean(use_ior));
   
   return the_orb;
 }
@@ -179,8 +177,8 @@ CORBA_ORB::create_list (CORBA_Long count,
     if (count != 0) {
 	retval->_len = 0;
 	retval->_max = (u_int) count;
-	retval->_values = (CORBA_NamedValue_ptr) ACEO_OS::calloc ((u_int) count,
-								  sizeof (CORBA_NamedValue));
+	retval->_values = (CORBA_NamedValue_ptr) ACE_OS::calloc ((u_int) count,
+                                                                 sizeof (CORBA_NamedValue));
     }
 }
 
@@ -194,7 +192,7 @@ CORBA_ORB::create_list (CORBA_Long count,
 CORBA_ORB_ptr
 _orb (void)
 {
-  return the_orb;
+  return TAO_ORB::instance();
 }
 
 CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
@@ -222,9 +220,12 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 
   while (i < argc)
     {
-      // @@ Can you please add comments describing each of these options?
+      // @@ Can you please add comments describing each of these options? --doug
+      // @@ Andy, could you review these since you wrote the code --cjc
+      
       if (ACE_OS::strcmp (argv[i], "-OAid") == 0)
         {
+          // Specify the name of the OA
 	  if (i + 1 < argc)
 	    id = CORBA_string_dup (argv[i + 1]);
 
@@ -235,6 +236,8 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
         }
       else if (ACE_OS::strcmp (argv[i], "-OAhost") == 0)
 	{
+          // Specify the name of the host (i.e., interface) on which
+          // the server should listen
 	  if (i + 1 < argc)
 	    host = CORBA_string_dup (argv[i + 1]);
 
@@ -245,7 +248,9 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAport") == 0)
 	{
+          // Specify the port number/name on which we should listen
 	  if (i + 1 < argc)
+            // @@ We shouldn't limit this to being specified as an int! --cjc
 	    port = ACE_OS::atoi (argv[i + 1]);
 
 	  for (int j = i ; j + 2 < argc ; j++)
@@ -255,6 +260,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAobjdemux") == 0)
 	{
+          // Specify the demultiplexing strategy to be used for object demultiplexing
 	  if (i + 1 < argc)
 	    demux = CORBA_string_dup (argv[i+1]);
 
@@ -265,6 +271,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAtablesize") == 0)
 	{
+          // @@ Specify the table size used for ????
 	  if (i + 1 < argc)
 	    tablesize = ACE_OS::atoi (argv[i+1]);
 
@@ -275,12 +282,15 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
 	}
       else if (ACE_OS::strcmp (argv[i], "-OArcvsock") == 0)
 	{
+          // Specify the size of the socket's receive buffer
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAsndsock") == 0)
 	{
+          // Specify the size of the socket's send buffer
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAthread") == 0)
 	{
+          // Specify whether or not threads should be used.
 	  use_threads = CORBA_B_TRUE;
 	  for (int j = i ; j + 1 < argc ; j++)
 	    argv[j] = argv[j + 1];

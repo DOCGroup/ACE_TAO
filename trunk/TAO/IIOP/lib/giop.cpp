@@ -40,31 +40,23 @@
 // error is detected when marshaling or unmarshaling, it should be
 // reported.
 
-#include	<assert.h>
-#include	<limits.h>
-#include	<stdio.h>
-#include	<stdlib.h>
-#include	<string.h>
+#include <assert.h>
+#include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+#include "ace/Log_Msg.h"
 #include "ace/SOCK_Stream.h"
 
-// @@ Are the following #include's necessary if we use ACE?
+#include "orbobj.h"
+#include "factories.h"
 
-#if	(unix) || defined (VXWORKS)
-#	include	<sys/types.h>
-#	include	<sys/socket.h>
+#include <orb.h>
 
-#else
-#	include	<winsock.h>
-
-#endif
-
-#include	<orb.h>
-
-#include	"cdr.h"
-#include	"debug.h"
-#include	"thread.h"
-#include	"giop.h"
+#include "cdr.h"
+#include "debug.h"
+#include "giop.h"
 
 // defined by GIOP 1.0 protocol
 #define	TAO_GIOP_HEADER_LEN 12		
@@ -97,7 +89,6 @@ start_message (GIOP::MsgType type,
   return CORBA_B_TRUE;
 }
 
-#ifdef	DEBUG
 static const char digits [] = "0123456789ABCD";
 static const char *names [] = 
 {
@@ -115,23 +106,18 @@ dump_msg (const char *label,
 	  const u_char *ptr,
 	  size_t len)
 {
-  if (debug_level >= 2) 
+  if (TAO_debug_level >= 2) 
     {
-      dmsg_v ("%s GIOP v%c.%c msg, %d data bytes, %s endian, %s\n",
-	      label, digits [ptr [4]], digits [ptr [5]],
-	      len - TAO_GIOP_HEADER_LEN,
-	      (ptr [6] == MY_BYTE_SEX) ? "my" : "other",
-	      (ptr [7] <= GIOP::MessageError)
-	      ? names [ptr [7]] : "UNKNOWN TYPE");
+      ACE_DEBUG ((LM_DEBUG, "%s GIOP v%c.%c msg, %d data bytes, %s endian, %s\n",
+                  label, digits[ptr[4]], digits[ptr[5]],
+                  len - TAO_GIOP_HEADER_LEN,
+                  (ptr[6] == MY_BYTE_SEX) ? "my" : "other",
+                  (ptr[7] <= GIOP::MessageError) ? names [ptr[7]] : "UNKNOWN TYPE"));
 
-      if (debug_level >= 4)
-	dmsg_opaque_full("data bytes", ptr, len);
+      if (TAO_debug_level >= 4)
+        ACE_HEX_DUMP ((LM_DEBUG, (const char*)ptr, len, "(%P|%t) data bytes"));
     }
 }
-
-#else	// !DEBUG
-#define	dump_msg(label,ptr,len)
-#endif	// !DEBUG
 
 CORBA_Boolean
 GIOP::send_message (CDR &stream,
@@ -176,8 +162,8 @@ GIOP::send_message (CDR &stream,
     {
       if (buflen > stream.length) 
 	{
-	  dmsg2 ("?? writebuf, buflen %u > length %u\n",
-		 buflen, stream.length);
+	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) ?? writebuf, buflen %u > length %u\n",
+                      buflen, stream.length));
 	  return CORBA_B_FALSE;
 	}
 
@@ -202,16 +188,15 @@ GIOP::send_message (CDR &stream,
 
       if (writelen == -1) 
 	{
-	  dsockerr ("OutgoingMessage::writebuf ()");
-	  dmsg1 ("closing conn %d after fault", connection);
+	  ACE_DEBUG ((LM_ERROR, "(%P|%t) OutgoingMessage::writebuf() $p"));
+	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) closing conn %d after fault", connection));
 	  ACE_OS::closesocket (connection);
 	  connection = ACE_INVALID_HANDLE;
 	  return CORBA_B_FALSE;
 	} 
       else if (writelen == 0) 
 	{
-	  dmsg1 ("OutgoingMessage::writebuf () ... EOF, closing conn %d",
-		 connection);
+	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) OutgoingMessage::writebuf () ... EOF, closing conn %d", connection));
 	  ACE_OS::closesocket (connection);
 	  connection = ACE_INVALID_HANDLE;
 	  return CORBA_B_FALSE;
@@ -280,7 +265,7 @@ GIOP::close_connection (ACE_HANDLE &handle,
   (void) ACE::send (handle, close_message, TAO_GIOP_HEADER_LEN);
   (void) ACE_OS::shutdown (handle, 2);
   (void) ACE_OS::closesocket (handle);
-  dmsg1 ("shut down socket %d", handle);
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) shut down socket %d", handle));
   handle = ACE_INVALID_HANDLE;
 }
 
@@ -308,7 +293,7 @@ send_error (ACE_HANDLE &handle)
   (void) ACE::send (handle, error_message, TAO_GIOP_HEADER_LEN);
   (void) ACE_OS::shutdown (handle, 2);
   (void) ACE_OS::closesocket (handle);
-  dmsg1 ("aborted socket %d", handle);
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) aborted socket %d", handle));
   handle = ACE_INVALID_HANDLE;
 }
 
@@ -415,8 +400,8 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
     {
       if (len == 0) 
 	{			// EOF
-	  dmsg1 ("Header EOF ... peer probably aborted connection %d", 
-		 connection);
+	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Header EOF ... peer probably aborted connection %d", 
+                      connection));
 	  return EndOfFile;
 	  // XXX should probably find some way to report this without
 	  // an exception, since for most servers it's not an error.
@@ -424,9 +409,9 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
 	  //
 	} 
       else if (len < 0) // error
-	dsockerr ("GIOP::read_message header");
+	ACE_DEBUG ((LM_ERROR, "(%P|%t) GIOP::read_message header socket error %p"));
       else // short read ... 
-	dmsg ("read message header failed (short)");
+	ACE_DEBUG ((LM_ERROR, "(%P|%t) read message header failed (short)"));
 
       env.exception (new CORBA_COMM_FAILURE (COMPLETED_MAYBE));
       return MessageError;
@@ -444,7 +429,7 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
 	&& msg.buffer [3] == 'P')) 
     {
       env.exception (new CORBA_MARSHAL (COMPLETED_MAYBE));	// header
-      dmsg ("bad header, magic word");
+      ACE_DEBUG((LM_DEBUG, "bad header, magic word"));
       return MessageError;
     }
 
@@ -454,7 +439,7 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
   if (!(msg.buffer [4] == MY_MAJOR && msg.buffer [5] <= MY_MINOR)) 
     {
       env.exception (new CORBA_MARSHAL (COMPLETED_MAYBE));	// header
-      dmsg ("bad header, version");
+      ACE_DEBUG((LM_DEBUG, "bad header, version"));
       return MessageError;
     }
 
@@ -491,15 +476,15 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
   if (len != (int) message_size) 
     {
       if (len == 0) 
-	dmsg1 ("read message body, EOF on handle %d", connection);
+	ACE_DEBUG ((LM_DEBUG, "(%P|%t) read message body, EOF on handle %d", connection));
       else if (len < 0) 
-	dperror ("GIOP::read_message () body");
+	ACE_DEBUG ((LM_ERROR, "(%P|%t) GIOP::read_message () body %p"));
       else 
-	dmsg2 ("short read, only %d of %d bytes", len, message_size);
+	ACE_DEBUG ((LM_ERROR, "(%P|%t) short read, only %d of %d bytes", len, message_size));
 
       // clean up, and ...
       env.exception (new CORBA_COMM_FAILURE (COMPLETED_MAYBE));	// body
-      dmsg ("couldn't read rest of message");
+      ACE_DEBUG ((LM_DEBUG, "couldn't read rest of message"));
       return MessageError;
     }
 
@@ -526,7 +511,7 @@ GIOP::read_message (ACE_SOCK_Stream &connection,
 GIOP::Invocation::Invocation (IIOP_Object *data,
 			      const char *operation,
 			      CORBA_Boolean is_roundtrip) 
-  : _data (data),
+  : data_ (data),
     opname (operation),
     do_rsvp (is_roundtrip),
     stream (&buffer [0], sizeof buffer)
@@ -547,7 +532,7 @@ GIOP::Invocation::Invocation (IIOP_Object *data,
 
 GIOP::Invocation::~Invocation (void)
 {
-  handle_.in_use (CORBA_B_FALSE);
+  handler_->in_use (CORBA_B_FALSE);
 }
 
 // Octet codes for the parameters of the "Opaque" (sequence of octet)
@@ -659,8 +644,7 @@ GIOP::Invocation::start (CORBA_Environment &env)
   // is not affected, the call will just be forwarded later than it
   // might be in a more complex implementation.
 
-  assert (endpoint == 0);
-  assert (_data != 0);
+  assert (data_ != 0);
 
   ACE_GUARD (ACE_Thread_Mutex, guard, lock_);
 
@@ -668,7 +652,7 @@ GIOP::Invocation::start (CORBA_Environment &env)
   // Get a CORBA_Object_ptr from _data using QueryInterface ()
   CORBA_Object_ptr obj = 0;
 
-  (void) _data->QueryInterface (IID_CORBA_Object, (void **)&obj);
+  (void) data_->QueryInterface (IID_CORBA_Object, (void **)&obj);
 
   // Get a pointer to the orb from the object
   CORBA_ORB_ptr orb = obj->orb ();
@@ -800,7 +784,7 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
 {
   // Send Request, return on error or if we're done
 
-  if (!GIOP::send_message (stream, endpoint->fd)) 
+  if (!GIOP::send_message (stream, handler_->peer())) 
     {
       // send_message () closed the connection; we just release it here.
       //
@@ -816,7 +800,7 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
       // point in the code however!  Some minor restructuring needs to
       // happen.
       //
-      endpoint = 0;
+      handler_ = 0;
       env.exception (new CORBA_COMM_FAILURE (COMPLETED_MAYBE));
       return SYSTEM_EXCEPTION;
     }
@@ -859,7 +843,7 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
   //
-  switch (GIOP::read_message (endpoint->fd, stream, env)) 
+  switch (GIOP::read_message (handler_->peer(), stream, env)) 
     {
     case Reply:
       // handle reply ... must be right one etc
@@ -878,12 +862,12 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
       {
 	ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, SYSTEM_EXCEPTION);
 
-	delete _data->fwd_profile;
-	_data->fwd_profile = 0;
+	delete data_->fwd_profile;
+	data_->fwd_profile = 0;
 
-	(void) ACE_OS::closesocket (endpoint->fd);
-	endpoint->fd = ACE_INVALID_HANDLE;
-	endpoint = 0;
+        handler_->peer().close();
+        handler_->in_use(CORBA_B_FALSE);
+        handler_ = 0;
 	return LOCATION_FORWARD;
       }
 
@@ -896,7 +880,7 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
       // be indicative of client bugs (lost track of input stream) or
       // server bugs; maybe the request was acted on, maybe not, we
       // can't tell.
-      dmsg ("illegal message in response to my Request!");
+      ACE_DEBUG((LM_DEBUG, "(%P|%t) illegal message in response to my Request!"));
       env.exception (new CORBA_COMM_FAILURE (COMPLETED_MAYBE));
       // FALLTHROUGH ...
 
@@ -904,7 +888,7 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
       // Couldn't read it for some reason ... exception's set already,
       // so just tell the other end about the trouble (closing the
       // connection) and return.
-      send_error (endpoint->fd);
+      send_error (handler_->peer());
       return SYSTEM_EXCEPTION;
     }
 
@@ -939,7 +923,7 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
   if (CDR::decoder (&TC_ServiceContextList, &reply_ctx, 0, &stream, env)
       != CORBA_TypeCode::TRAVERSE_CONTINUE) 
     {
-      send_error (endpoint->fd);
+      send_error (handler_->peer());
       return SYSTEM_EXCEPTION;
     }
   delete reply_ctx.buffer;
@@ -949,9 +933,9 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
       || !stream.get_ulong (reply_status)
       || reply_status > LOCATION_FORWARD) 
     {
-      send_error (endpoint->fd);
+      send_error (handler_->peer());
       env.exception (new CORBA_COMM_FAILURE (COMPLETED_MAYBE));
-      dmsg ("bad Response header");
+      ACE_DEBUG((LM_DEBUG, "(%P|%t) bad Response header"));
       return SYSTEM_EXCEPTION;
     }
 
@@ -992,7 +976,7 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
 	  if (stream.get_ulong (len) != CORBA_B_TRUE
 	      || len > stream.remaining) 
 	    {
-	      send_error (endpoint->fd);
+	      send_error (handler_->peer());
 	      env.exception (new CORBA_MARSHAL (COMPLETED_YES));
 	      return SYSTEM_EXCEPTION;
 	    }
@@ -1026,7 +1010,7 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
 	    if (env.exception () != 0) 
 	      {
 		dexc (env, "invoke (), get exception ID");
-		send_error (endpoint->fd);
+		send_error (handler_->peer());
 		return SYSTEM_EXCEPTION;
 	      }
 
@@ -1039,7 +1023,7 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
 		if (env.exception () != 0) 
 		  {
 		    dexc (env, "invoke (), get exception size");
-		    send_error (endpoint->fd);
+		    send_error (handler_->peer());
 		    return SYSTEM_EXCEPTION;
 		  }
 
@@ -1054,11 +1038,10 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
 		    != CORBA_TypeCode::TRAVERSE_CONTINUE) 
 		  {
 		    delete exception;
-		    dmsg2 ("invoke, unmarshal %s exception %s",
-			   (reply_status == USER_EXCEPTION)
-			   ? "user" : "system",
-			   exception_id);
-		    send_error (endpoint->fd);
+		    ACE_DEBUG((LM_ERROR, "(%P|%t) invoke, unmarshal %s exception %s",
+                               (reply_status == USER_EXCEPTION) ? "user" : "system",
+                               exception_id));
+		    send_error (handler_->peer());
 		    return SYSTEM_EXCEPTION;
 		  }
 		env.exception (exception);
@@ -1100,7 +1083,7 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
 				    (void **)&obj2) != NOERROR)
 	  {
 	    dexc (env, "invoke, location forward");
-	    send_error (endpoint->fd);
+	    send_error (handler_->peer());
 	    return SYSTEM_EXCEPTION;
 	  }
 	CORBA_release (obj);
@@ -1117,8 +1100,8 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
 
 	ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, SYSTEM_EXCEPTION);
 
-	delete _data->fwd_profile;
-	_data->fwd_profile = new IIOP::ProfileBody (obj2->profile);
+	delete data_->fwd_profile;
+	data_->fwd_profile = new IIOP::ProfileBody (obj2->profile);
 
 	obj2->Release ();
 
@@ -1127,7 +1110,7 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
 	//
 	// Make sure a new connection is used next time.
 	//
-	endpoint = 0;
+	handler_ = 0;           // not sure this is correct!
       }
     break;
     }
@@ -1180,7 +1163,7 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
     case LocateReply:
     case CloseConnection:
     default:					// Unknown message
-      dmsg ("Illegal message received by server");
+      ACE_DEBUG((LM_DEBUG, "(%P|%t) Illegal message received by server"));
       env.exception (new CORBA_COMM_FAILURE (COMPLETED_NO));
       // FALLTHROUGH
 
@@ -1203,7 +1186,7 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
     case Request:
       {
 	RequestHeader req;
-	CORBA _Boolean hdr_status;
+	CORBA_Boolean hdr_status;
 
 	// Tear out the service context ... we currently ignore it,
 	// but it should probably be passed to each ORB service as
@@ -1246,20 +1229,20 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 #ifdef	DEBUG
 	if (debug_level >= 3) 
 	  {
-	    dmsg_v ("%sRequest ID %#lx from FD %d",
-		    req.response_expected ? "" : "Oneway ",
-		    req.request_id, peer.get_handle ());
+            ACE_DEBUG((LM_DEBUG, "(%P|%t) %sRequest ID %#lx from FD %d",
+                       req.response_expected ? "" : "Oneway ",
+                       req.request_id, peer.get_handle ()));
 	    if (debug_level >= 4) 
 	      {
-		dmsg_opaque ("object key", req.object_key.buffer,
-			     req.object_key.length);
-		dmsg_v (" opname '%s'", req.operation);
+		ACE_HEX_DUMP((LM_DEBUG, req.object_key.buffer,
+			     req.object_key.length, "(%P|%t) object key"));
+		ACE_DEBUG((LM_DEBUG, "(%P|%t) opname '%s'", req.operation);
 		if (req.requesting_principal) 
-		  dmsg_opaque ("client principal",
-			       req.requesting_principal->id.buffer,
-			       req.requesting_principal->id.length);
+		  ACE_HEX_DUMP((LM_DEBUG, req.requesting_principal->id.buffer,
+			       req.requesting_principal->id.length,
+                               "(%P|%t) client principal"));
 		else
-		  dmsg (" client principal (EMPTY)");
+		  ACE_DEBUG((LM_DEBUG, "(%P|%t) client principal (EMPTY)"));
 	      }
 
 	    // NOTE: describe any service context, and how many bytes
@@ -1304,7 +1287,7 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 		  } 
 		else if (status == OBJECT_FORWARD) 
 		  {
-		    dmsg ("forwarding Request message");
+		    ACE_DEBUG((LM_DEBUG, "(%P|%t) forwarding Request message"));
 		    response.put_ulong (LOCATION_FORWARD);
 		    CDR::encoder (_tc_CORBA_Object,
 				  &fwd_ref,
@@ -1392,7 +1375,7 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 	if (check_forward == 0) 
 	  {
 	    response.put_ulong (OBJECT_HERE);
-	    dmsg ("LocateRequest response:  object is (always) here!");
+	    ACE_DEBUG((LM_DEBUG, "(%P|%t) LocateRequest response:  object is (always) here!"));
 	  } 
 	else 
 	  {
@@ -1403,14 +1386,14 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 
 	    if (status == OBJECT_FORWARD) 
 	      {
-		dmsg ("LocateRequest response:  forward requests");
+		ACE_DEBUG((LM_DEBUG, "LocateRequest response:  forward requests"));
 		CDR::encoder (_tc_CORBA_Object, &fwd_ref, 0,
 			      &response, env);
 	      } 
 	    else if (status == OBJECT_HERE)
-	      dmsg ("LocateRequest response:  object is here!");
+	      ACE_DEBUG((LM_DEBUG, "LocateRequest response:  object is here!"));
 	    else 
-	      dmsg ("LocateRequest response:  no such object");
+	      ACE_DEBUG((LM_DEBUG, "LocateRequest response:  no such object"));
 	  }
 	(void) send_message (response, peer);
       }
@@ -1442,7 +1425,6 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class autorelease<client_endpoint>;
 template class CORBA_SEQUENCE<GIOP::ServiceContext>;
 template class CORBA_SEQUENCE<CORBA_Octet>;
 template class CORBA_SEQUENCE<CORBA_TypeCode*>;
