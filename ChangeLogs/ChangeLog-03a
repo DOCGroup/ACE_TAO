@@ -1,8 +1,21 @@
+Wed Nov 28 09:28:09 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/examples/IPC_SAP/SOCK_SAP/*
+        * ace/examples/IPC_SAP/SPIPE_SAP/*
+        * ace/examples/Misc/*
+        * ace/examples/Naming/*
+        * ace/examples/RMCast/Send_File/*
+        * ace/examples/Reactor/DGram/*
+        * ace/examples/Reactor/Ntalker/*
+        * ace/examples/Registry/*
+        * ace/examples/Threads/*
+          Made these examples compiling when ACE_USES_WCHAR is set
+
 Mon Nov 26 16:07:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/make_release: The distribution will be available in bzip2
 	  compressed format too. Made modifications to the release scripts
-	  to put out the beta in bzip2 compressed format. 
+	  to put out the beta in bzip2 compressed format.
 
 Sat Nov 24 10:23:00 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
@@ -44,7 +57,7 @@ Wed Nov 21 11:35:50 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  this change.
 	  The problem was that with the above mentioned change failed
 	  allocations would return 0 in either case, if exceptions were
-	  enabled by the platform or not. This was incosistent to the 
+	  enabled by the platform or not. This was incosistent to the
 	  behavior before, as new threw bad_alloc on allocation failure
 	  when exceptions were supported by the platform.
 
@@ -54,7 +67,7 @@ Wed Nov 21 11:35:50 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  - Keep the new calls wrapped by a ACE_NEW macro to allow
 	    users to eventually redefine the macro (using e.g. new (nothrow)
 
-	  As the ACE_NEW macros are quite restrictive in their supported 
+	  As the ACE_NEW macros are quite restrictive in their supported
 	  semantics, e.g. you can only return on error, we decided to introduce
 	  a new method (as inline) internal_create which does the allocation.
 	  internal_create is called by create which does the differentiation
@@ -68,7 +81,7 @@ Wed Nov 21 09:07:37 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  Don Hinton for contributing these.
 
 	* ace/Log_Msg_Callback.h: Improved the comments to explain why
-	  ACE_Log_Msg_Callback isn't inherited.  Thanks to 
+	  ACE_Log_Msg_Callback isn't inherited.  Thanks to
 	  Alexey Chalimov <alexey@allcharge.com> for motivating this.
 
 Tue Nov 20 15:36:52 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
@@ -89,7 +102,7 @@ Mon Nov 19 07:24:05 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  reporting this.
 
 	* docs/ACE-categories.html: Updated the Doxygen URLs to use the
-	  new format.  Thanks to Peter J. Mason <peter.mason@retriever.com.au> 
+	  new format.  Thanks to Peter J. Mason <peter.mason@retriever.com.au>
 	  for reporting the problem.
 
 Fri Nov 16 10:39:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
@@ -177,8 +190,8 @@ Mon Nov 19 20:35:44 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
  	  failed to work with more than one group.  For some strange
  	  reason it was storing the first multicast group subscription in
  	  a class member and using that member in all the paths for the
- 	  unsubscribe methods.	
-  
+ 	  unsubscribe methods.
+
 	  We have changed the unsubscribe(const ACE_INET_Addr&,...) method
  	  to work as adversited, i.e. unsubscribe the *given* multicast
  	  address, not the stored one, as an added benefit the method is
