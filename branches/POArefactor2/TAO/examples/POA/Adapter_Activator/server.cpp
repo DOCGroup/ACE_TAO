@@ -26,7 +26,7 @@
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-#include "tao/PortableServer/AdapterActivator.h"
+#include "tao/PortableServer/AdapterActivatorC.h"
 
 ACE_RCSID(Adapter_Activator, server, "$Id$")
 
