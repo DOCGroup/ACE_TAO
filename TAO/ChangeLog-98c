@@ -1,3 +1,13 @@
+Wed Sep 23 23:30:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: 
+	  TAO_THROW requires calls like this:
+	    TAO_THROW (Type());
+	  instead of simply
+	    TAO_THROW (Type);
+	  the latter works in platforms without native C++ exceptions the
+	  former does not.
+
 Wed Sep 23 10:02:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/summarize: fixed
