@@ -1,9 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(Repository_Manager): ciao_server_dnc,ciao_deployment_svnt, ciao_deployment_stub, taoexe, xerces {
+project(Repository_Manager): ciao_server_dnc,ciao_deployment_svnt, ciao_deployment_stub, taoexe, xerces, exceptions {
   exename = executor
-  requires += exceptions
   after += Config_Handlers ExecutionManager_stub NodeDaemon_stub
   includes += /usr/include
   libpaths += /usr/lib
