@@ -16,8 +16,6 @@
 
 #include "portableserver_export.h"
 #include "Policy_Strategy.h"
-#include "ace/Service_Config.h"
-
 #include "tao/Object_KeyC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

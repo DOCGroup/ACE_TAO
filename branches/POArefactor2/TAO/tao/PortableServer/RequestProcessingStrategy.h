@@ -16,27 +16,17 @@
 
 #include "portableserver_export.h"
 #include "PolicyFactory.h"
-#include "Active_Object_Map.h"
 #include "Policy_Strategy.h"
+#include "PortableServerC.h"
 #include "ace/Service_Config.h"
 
 #include "Servant_Location.h"
-
-#define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "PortableServerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-
-namespace CORBA
-{
-  class PolicyError;
-  class PolicyList;
-}
 
 namespace PortableServer
 {

@@ -18,6 +18,7 @@ ACE_RCSID (PortableServer,
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 #include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_string.h"
 #include "Creation_Time.h"
 
 namespace TAO

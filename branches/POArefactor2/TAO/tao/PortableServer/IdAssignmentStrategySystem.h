@@ -17,7 +17,6 @@
 #include "portableserver_export.h"
 #include "IdAssignmentStrategy.h"
 #include "ace/Service_Config.h"
-#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

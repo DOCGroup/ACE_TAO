@@ -17,19 +17,12 @@
 #include "portableserver_export.h"
 #include "PS_ForwardC.h"
 #include "IdUniquenessStrategy.h"
-#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-
-namespace CORBA
-{
-  class PolicyError;
-  class PolicyList;
-}
 
 namespace TAO
 {

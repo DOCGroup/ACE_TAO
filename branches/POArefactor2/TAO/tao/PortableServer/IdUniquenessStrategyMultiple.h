@@ -17,11 +17,12 @@
 #include "portableserver_export.h"
 #include "PS_ForwardC.h"
 #include "IdUniquenessStrategy.h"
-#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class TAO_POA;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 

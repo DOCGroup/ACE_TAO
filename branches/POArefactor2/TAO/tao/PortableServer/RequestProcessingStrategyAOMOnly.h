@@ -16,9 +16,7 @@
 
 #include "portableserver_export.h"
 #include "PolicyFactory.h"
-#include "Active_Object_Map.h"
 #include "RequestProcessingStrategy.h"
-#include "ace/Service_Config.h"
 
 #include "Servant_Location.h"
 
@@ -31,12 +29,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-
-namespace CORBA
-{
-  class PolicyError;
-  class PolicyList;
-}
 
 namespace PortableServer
 {
@@ -51,9 +43,7 @@ namespace PortableServer
   typedef TAO_Objref_Var_T<ServantLocator> ServantLocator_var;
 
   class ServantManager;
-
   typedef ServantManager *ServantManager_ptr;
-  typedef TAO_Objref_Var_T<ServantManager> ServantManager_var;
 }
 
 namespace TAO
@@ -106,17 +96,17 @@ namespace TAO
       virtual
       TAO_SERVANT_LOCATION
       locate_servant (const PortableServer::ObjectId &system_id,
-                        PortableServer::Servant &servant
-                        ACE_ENV_ARG_DECL);
+                      PortableServer::Servant &servant
+                      ACE_ENV_ARG_DECL);
 
       virtual
       PortableServer::Servant
       locate_servant (const char *operation,
-                        const PortableServer::ObjectId &system_id,
-                        TAO::Portable_Server::Servant_Upcall &servant_upcall,
-                        TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                        int &wait_occurred_restart_call
-                        ACE_ENV_ARG_DECL);
+                      const PortableServer::ObjectId &system_id,
+                      TAO::Portable_Server::Servant_Upcall &servant_upcall,
+                      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
+                      int &wait_occurred_restart_call
+                      ACE_ENV_ARG_DECL);
     };
   }
 }
