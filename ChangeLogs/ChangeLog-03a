@@ -1,3 +1,8 @@
+Sun Jan  6 21:09:10 2002  John Aughey  <jha@cs.wustl.edu>
+
+        * ace/INET_Addr.cpp ace/INET_Addr.h: Reverted to January 1 version
+          until I have time to put the set_host_name method in correctly.
+
 Sun Jan  6 20:01:10 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/run_test.lst: Commented out Conn_Test from the daily
