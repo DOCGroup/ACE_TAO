@@ -1,3 +1,11 @@
+Fri Sep 15 13:32:50 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Portable_Interceptors/Benchmark/test_i.cpp: Fixed more
+	  unused argument warnings.
+
+	* tests/Portable_Interceptors/Benchmark/client.cpp: Fixed in
+	  proper uses of ACE_TRY_CHECK.
+
 Fri Sep 15 13:11:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/arglist.cpp:
@@ -66,32 +74,32 @@ Thu Sep 14 16:39:12 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  soon corbaname IOR styles, as well as a framework to dynamically
 	  load IOR parsers into the ORB.  This will be useful in the
 	  future to add such IOR styles like http:, ftp: or ipmcast:
-	
+
 	Wed Sep 13 11:13:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/default_resource.cpp (get_parser_names): 
+	* tao/default_resource.cpp (get_parser_names):
 	  Assigned the CORBALOC and CORBANAME parsers to the list of
 	  parsers without any condition.
 
 	Wed Sep 13 10:43:32 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/default_resource.cpp (get_parser_names): 
+	* tao/default_resource.cpp (get_parser_names):
 	  Modified the assignment value of number_of_names so that only the
 	  number of parsers that are instantiated correctly is assigned to
 	  it.
-	
+
 	Tue Sep 12 17:00:58 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ior_corbaname/CORBANAME_Parser.cpp: 
-	* tao/ior_corbaloc/CORBALOC_Parser.cpp: 
-	* tao/FILE_Parser.cpp (TAO_FILE_Parser): 
-	  
+	* tao/ior_corbaname/CORBANAME_Parser.cpp:
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp:
+	* tao/FILE_Parser.cpp (TAO_FILE_Parser):
+
 	  Corrected some typos.
-	
-	* tao/Makefile: 
-	  
+
+	* tao/Makefile:
+
 	  Updated dependencies.
-	
+
 	Tue Sep 12 15:41:48 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/IIOP_Profile.cpp (parse_string):
