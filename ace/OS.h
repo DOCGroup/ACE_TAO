@@ -3867,7 +3867,11 @@ typedef fd_set ACE_FD_SET_TYPE;
 # endif /* INET6_ADDRSTRLEN */
 
 # if defined (ACE_LACKS_SIGSET)
+#    if defined (ACE_HAS_PACE)
+typedef pace_sigset_t sigset_t;
+#    else
 typedef u_int sigset_t;
+#    endif /* ACE_HAS_PACE */
 # endif /* ACE_LACKS_SIGSET */
 
 # if defined (ACE_LACKS_SIGACTION)
@@ -4220,6 +4224,9 @@ typedef const ACE_TCHAR * ACE_DL_TYPE;
 # endif /* ACE_HAS_CHARPTR_DL */
 
 # if !defined (ACE_HAS_SIGINFO_T)
+#    if defined (ACE_HAS_PACE)
+typedef pace_siginfo_t siginfo_t;
+#    else
 struct ACE_Export siginfo_t
 {
   siginfo_t (ACE_HANDLE handle);
@@ -4231,6 +4238,7 @@ struct ACE_Export siginfo_t
   ACE_HANDLE *si_handles_;
   // Array of Win32 HANDLEs all of which have become signaled.
 };
+#    endif /* ACE_HAS_PACE */
 # endif /* ACE_HAS_SIGINFO_T */
 
 // Typedef for the null handler func.
