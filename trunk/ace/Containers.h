@@ -92,7 +92,7 @@ private:
 
 //----------------------------------------
 
-template <class T, size_t SIZE>
+template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Stack
 {
   // = TITLE
@@ -106,10 +106,10 @@ public:
   ACE_Fixed_Stack (void);
   // Initialize a new stack so that it is empty.
 
-  ACE_Fixed_Stack (const ACE_Fixed_Stack<T, SIZE> &s);
+  ACE_Fixed_Stack (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
   // The copy constructor (performs initialization).
 
-  void operator= (const ACE_Fixed_Stack<T, SIZE> &s);
+  void operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
   // Assignment operator (performs assignment).
 
   ~ACE_Fixed_Stack (void);
@@ -156,7 +156,7 @@ private:
   size_t top_;
   // Keeps track of the current top of stack.
 
-  T stack_[SIZE];
+  T stack_[ACE_SIZE];
   // Holds the stack's contents.
 };
 
@@ -822,10 +822,10 @@ private:
 };
 
 // Forward declaration.
-template <class T, size_t SIZE>
+template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set;
 
-template <class T, size_t SIZE>
+template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set_Iterator
 {
   // = TITLE
@@ -836,7 +836,7 @@ class ACE_Fixed_Set_Iterator
   //     Allows deletions while iteration is occurring.
 public:
   // = Initialization method.
-  ACE_Fixed_Set_Iterator (ACE_Fixed_Set<T, SIZE> &s);
+  ACE_Fixed_Set_Iterator (ACE_Fixed_Set<T, ACE_SIZE> &s);
 
   // = Iteration methods.
 
@@ -862,36 +862,36 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Fixed_Set<T, SIZE> &s_;
+  ACE_Fixed_Set<T, ACE_SIZE> &s_;
   // Set we are iterating over.
 
   ssize_t next_;
   // How far we've advanced over the set.
 };
 
-template <class T, size_t SIZE>
+template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set
 {
   // = TITLE
-  //     Implement a simple unordered set of <T> with maximum <SIZE>.
+  //     Implement a simple unordered set of <T> with maximum <ACE_SIZE>.
   //
   // = DESCRIPTION
   //     This implementation of an unordered set uses a fixed array.
   //     This implementation does not allow duplicates...
 public:
-  friend class ACE_Fixed_Set_Iterator<T, SIZE>;
+  friend class ACE_Fixed_Set_Iterator<T, ACE_SIZE>;
 
   // Trait definition.
-  typedef ACE_Fixed_Set_Iterator<T, SIZE> ITERATOR;
+  typedef ACE_Fixed_Set_Iterator<T, ACE_SIZE> ITERATOR;
 
   // = Initialization and termination methods.
   ACE_Fixed_Set (void);
   // Constructor.
 
-  ACE_Fixed_Set (const ACE_Fixed_Set<T, SIZE> &);
+  ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &);
   // Copy constructor.
 
-  void operator= (const ACE_Fixed_Set<T, SIZE> &);
+  void operator= (const ACE_Fixed_Set<T, ACE_SIZE> &);
   // Assignment operator.
 
   ~ACE_Fixed_Set (void);
@@ -937,7 +937,7 @@ private:
 
     int is_free_;
     // Keeps track of whether this item is in use or not.
-  } search_structure_[SIZE];
+  } search_structure_[ACE_SIZE];
   // Holds the contents of the set.
 
   size_t cur_size_;
@@ -1089,7 +1089,7 @@ class ACE_Ordered_MultiSet_Iterator
 {
   // = TITLE
   //     Implement a bidirectional iterator over an ordered multiset.
-  //     This class template requires that < operator semantics be defined 
+  //     This class template requires that < operator semantics be defined
   //     for the parameterized type <T>, but does not impose any restriction
   //     on how that ordering operator is implemented.
 
@@ -1145,7 +1145,7 @@ class ACE_Ordered_MultiSet
 {
   // = TITLE
   //     Implement a simple ordered multiset of <T> of unbounded size.
-  //     This class template requires that < operator semantics be defined 
+  //     This class template requires that < operator semantics be defined
   //     for the parameterized type <T>, but does not impose any restriction
   //     on how that ordering operator is implemented.
   //
@@ -1188,8 +1188,8 @@ public:
   // Returns -1 if failures occur, else 0.
 
   int insert (const T &new_item, ITERATOR &iter);
-  // Insert <new_item> into the ordered multiset, starting its search at 
-  // the node pointed to by the iterator, and if insetion was successful, 
+  // Insert <new_item> into the ordered multiset, starting its search at
+  // the node pointed to by the iterator, and if insetion was successful,
   // updates the iterator to point to the newly inserted node.
   // Returns -1 if failures occur, else 0.
 
@@ -1217,20 +1217,20 @@ private:
   int insert_from (const T &item, ACE_DNode<T> *start_position,
                    ACE_DNode<T> **new_position);
   // Insert <item>, starting its search at the position given,
-  // and if successful updates the passed pointer to point to 
+  // and if successful updates the passed pointer to point to
   // the newly inserted item's node.
 
-  int locate (const T &item, ACE_DNode<T> *start_position, 
+  int locate (const T &item, ACE_DNode<T> *start_position,
               ACE_DNode<T> *&new_position) const;
-  // looks for first occurance of <item> in the ordered set, using the 
+  // looks for first occurance of <item> in the ordered set, using the
   // passed starting position as a hint: if there is such an instance, it
   // updates the new_position pointer to point to this node and returns 0;
-  // if there is no such node, then if there is a node before where the 
+  // if there is no such node, then if there is a node before where the
   // item would have been, it updates the new_position pointer to point
   // to this node and returns -1; if there is no such node, then if there
-  // is a node after where the item would have been, it updates the 
-  // new_position pointer to point to this node (or 0 if there is no such 
-  // node) and returns 1; 
+  // is a node after where the item would have been, it updates the
+  // new_position pointer to point to this node (or 0 if there is no such
+  // node) and returns 1;
 
   void delete_nodes (void);
   // Delete all the nodes in the Set.
