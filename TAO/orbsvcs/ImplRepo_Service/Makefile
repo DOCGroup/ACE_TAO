@@ -88,7 +88,7 @@ include $(TAO_ROOT)/taoconfig.mk
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
-LDLIBS = -lTAO_Svc_Utils -lTAO_IORTable $(TAO_SRVR_LIBS) -lACEXML_Parser -lACEXML
+LDLIBS = -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Strategies $(TAO_SRVR_LIBS) -lACEXML_Parser -lACEXML
 
 ImplRepo_Service: $(addprefix $(VDIR),$(IMPLREPO_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
