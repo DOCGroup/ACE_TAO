@@ -5,6 +5,8 @@
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
 
 ACE_RCSID (File_IO,
            server,

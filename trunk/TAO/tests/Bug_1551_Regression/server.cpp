@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 #include "Hello.h"
 #include "Server_Task.h"

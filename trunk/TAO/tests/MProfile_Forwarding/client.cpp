@@ -2,6 +2,7 @@
 
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 #include "testC.h"
 
 ACE_RCSID(MT_Server, client, "$Id$")

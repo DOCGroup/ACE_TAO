@@ -1,5 +1,7 @@
-//$Id$
+// $Id$
+
 #include "Thread_Task.h"
+#include "ace/OS_NS_unistd.h"
 #include "../Scheduler.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "tao/ORB_Core.h"
@@ -19,17 +21,17 @@ main (int argc, char* argv [])
       CORBA::Object_ptr manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
 								       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
-      
+
       TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj
 									      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
-      
+
       TAO_Scheduler scheduler (orb.in ());
-      
+
       manager->rtscheduler (&scheduler);
-      
+
       Thread_Task task;
-      
+
       task.activate_task (orb.in ());
 
       ACE_DEBUG ((LM_DEBUG,
@@ -45,11 +47,11 @@ main (int argc, char* argv [])
       CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current"
 								       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj
 									  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-            
+
       for (int i = 0; i < 4; i++)
 	{
 	  RTScheduling::DistributableThread_var DT = current->lookup ((task.guids ())[i]
@@ -69,8 +71,8 @@ main (int argc, char* argv [])
                            "Caught exception:");
       return 1;
     }
-  ACE_ENDTRY; 
-  
+  ACE_ENDTRY;
+
   return 0;
 }
 

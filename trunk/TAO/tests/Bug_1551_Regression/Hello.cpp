@@ -1,8 +1,7 @@
-//
 // $Id$
-//
 
 #include "Hello.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Bug_1XXX_Regression, Hello, "$Id$")
 
