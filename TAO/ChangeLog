@@ -2,6 +2,9 @@ Wed Feb 23 07:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Special_Basic_SArguments.h:
         * tao/PortableServer/UB_String_SArguments.h:
+        * tao/PortableServer/Basic_SArgument_T.h:
+        * tao/PortableServer/Special_Basic_SArgument_T.h:
+        * tao/PortableServer/UB_String_SArgument_T.h:
           Removed trailing ; after namespace closure to fix warnings
           on Tru64
 
