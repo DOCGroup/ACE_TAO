@@ -121,36 +121,30 @@ public:
   virtual void init (CORBA::Octet major,
                      CORBA::Octet minor) = 0;
 
-  /// Parse the incoming messages..
-  virtual int parse_incoming_messages (ACE_Message_Block &message_block) = 0;
-
-  /// Calculate the amount of data that is missing in the <incoming>
-  /// message block.
-  virtual ssize_t missing_data (ACE_Message_Block &incoming) = 0;
-
-  /// Get the details of the message parsed through the <qd>.
-  virtual void get_message_data (TAO_Queued_Data *qd) = 0;
-
-  /* Extract the details of the next message from the <incoming>
-   * through <qd>. Returns 1 if there are more messages and returns a
-   * 0 if there are no more messages in <incoming>.
-  */
-  virtual int extract_next_message (ACE_Message_Block &incoming,
-                                    TAO_Queued_Data *&qd) = 0;
-
-  /// Check whether the node <qd> needs consolidation from <incoming>
-  virtual int consolidate_node (TAO_Queued_Data *qd,
-                                ACE_Message_Block &incoming) = 0;
-
-  /// @@Bala:Docu??
-  virtual int consolidate_fragments (TAO_Queued_Data *dqd,
-                                     const TAO_Queued_Data *sqd) = 0;
-
   /// Parse the request message, make an upcall and send the reply back
   /// to the "request initiator"
   virtual int process_request_message (TAO_Transport *transport,
                                        TAO_Queued_Data *qd) = 0;
 
+  /*!
+    \brief Inspects the bytes in \param mb to see if they "look like" the beginning of a message.
+
+    Inspects the bytes in \param mb, beginning at \code mb.rd_ptr, to
+    see if they look like the beginning of a message.  Does
+   */
+  virtual int check_for_valid_header (const ACE_Message_Block &mb) const = 0;
+
+  /*!
+    \brief Set fields in \param qd based on values derived from \param mb.
+
+    This function sets fields in \param qd based on values derived
+    from \param mb.  It assumes that if the length of \param mb is
+    enough to hold a header, then the data in there can be trusted to
+    make sense.
+   */
+  virtual void set_queued_data_from_message_header (
+    TAO_Queued_Data *,
+    const ACE_Message_Block &mb) const = 0;
 
   /// Parse the reply message that we received and return the reply
   /// information though <reply_info>
