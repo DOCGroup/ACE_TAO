@@ -1236,6 +1236,9 @@ void
 TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (this->max_record_life_ == 0) {
+    return;
+  }
 
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, ACE_OS::gettimeofday ());

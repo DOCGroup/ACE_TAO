@@ -94,7 +94,6 @@ project(DsLogAdmin_Serv) : orbsvcslib, core, dslogadmin_skel, dynamicany, etcl, 
       Log/Log_Constraint_Interpreter.cpp
       Log/Log_Constraint_Visitors.cpp
       Log/Log_i.cpp
-      Log/PersistStore.cpp
     }
   }
 
