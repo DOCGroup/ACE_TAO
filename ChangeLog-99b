@@ -1,3 +1,9 @@
+Wed Jul 28 13:44:15 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Remind users to pick the right configurations
+	  when building from MSVC project files.  Thanks to Jerry D. De
+	  Master <jdemaste@ipdinc.com> for suggesting this.
+
 Wed Jul 28 13:26:36 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: for VxWorks (thru Tornado 1.0.1),
