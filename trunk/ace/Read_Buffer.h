@@ -41,31 +41,37 @@ class ACE_Export ACE_Read_Buffer
   //     efficiently.
 public:
   // = Initialization and termination methods.
-  ACE_Read_Buffer (FILE *fp, int close_on_delete = 0, ACE_Allocator * = 0);
+  ACE_Read_Buffer (FILE *fp,
+                   int close_on_delete = 0,
+                   ACE_Allocator * = 0);
   // Read from a FILE *.
 
-  ACE_Read_Buffer (ACE_HANDLE handle, int close_on_delete = 0, ACE_Allocator * = 0);
+  ACE_Read_Buffer (ACE_HANDLE handle,
+                   int close_on_delete = 0,
+                   ACE_Allocator * = 0);
   // Read from an open HANDLE.
 
   ~ACE_Read_Buffer (void);
   // Closes the FILE *.
 
-  // Returns a dynamically allocated pointer to n+1 bytes of data from
-  // the input stream up to (and including) the <terminator>.  If
-  // <search> is >= 0 then all occurrences of the <search> value are
-  // substituted with the <replace> value.  The last of the n+1 bytes
-  // of data is a 0, so that if data is test, strlen () can be used on
-  // it.
   char *read (int terminator = EOF,
               int search = '\n',
               int replace = '\0');
+  // Returns a pointer dynamically allocated with
+  // <ACE_Allocator::malloc> to data from the input stream up to (and
+  // including) the <terminator>.  If <search> is >= 0 then all
+  // occurrences of the <search> value are substituted with the
+  // <replace> value.  The last of the byte of data is a 0, so that
+  // <strlen> can be used on it.  The caller is responsible for
+  // freeing the pointer returned from this method using the
+  // <ACE_Allocator::free>.
 
   size_t replaced (void) const;
   // Returns the number of characters replaced during a <read>.
 
   size_t size (void) const;
-  // Returns the size of the allocated buffer obtained during a <read>,
-  // not including the null terminator.
+  // Returns the size of the allocated buffer obtained during a
+  // <read>, not including the null terminator.
 
   ACE_Allocator *alloc (void) const;
   // Returns a pointer to its allocator.
