@@ -1,3 +1,10 @@
+Wed Apr 07 15:17:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/POA_CORBA.h:
+	* tao/Typecode_Constants.cpp:
+	  Fixed problems with the (unimplemented) CORBA::Poller and
+	  friends. Thanks to Darrell for pointing this out.
+
 Wed Apr  7 15:13:23 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* configure.in:
