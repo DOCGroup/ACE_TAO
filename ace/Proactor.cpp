@@ -137,7 +137,6 @@ ACE_Proactor::run_event_loop (void)
 	return -1;
     }
 
-  /* NOTREACHED */
   return 0;
 }
 
@@ -161,7 +160,6 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
 	return result;
     }
 
-  /* NOTREACHED */
   return 0;
 }
 
