@@ -120,6 +120,10 @@ EC_Master::run (int argc, char* argv[])
           }
       }
 
+      this->root_poa_->destroy (1,
+                                1,
+                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
    }
   ACE_CATCHANY
     {
@@ -208,7 +212,8 @@ EC_Observer::EC_Observer (EC_Master *master,
                           int id)
   : master_ (master),
     seed_ (seed),
-    id_ (id)
+    id_ (id),
+    gwys_ (0)
 {
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->root_poa_ = PortableServer::POA::_duplicate (root_poa);

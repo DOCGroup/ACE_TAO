@@ -1,3 +1,19 @@
+Mon Jun 21 18:35:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/tests/Event/Basic/Observer.cpp: Added initialization of
+	  <gwys_>.
+
+	* tests/TAO_Tests.dsw
+	* tests/MT_Server/MT_Server.dsw
+	* tests/MT_Server/client.dsp
+	* tests/MT_Server/server.dsp
+	* tests/OctetSeq/OctetSeq.dsp
+	* tests/OctetSeq/OctetSeq.dsw
+	* tests/OctetSeq/client.dsp
+	* tests/OctetSeq/server.dsp
+
+	  New MSVC project files.
+
 Mon Jun 21 17:06:32 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* utils/IOR-parser/Makefile:
@@ -26,13 +42,15 @@ Mon Jun 21 17:06:32 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/POA/Forwarding/Makefile:
 	* examples/POA/Generic_Servant/Makefile:
 	* examples/POA/TIE/Makefile: Added -Ge 1 to these Makefiles.
-	
+
 Mon Jun 21 16:11:02 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
         * tao/IORManipultion.cpp
           Added workaround for the MS C++ lib which does not
           implement the auto_ptr::reset () method.
 
 Mon Jun 21 15:44:16 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
         * tao/IORManipultion.cpp
           added template instantion for auto_ptr
 
