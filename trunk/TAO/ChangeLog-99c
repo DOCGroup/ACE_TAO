@@ -40,7 +40,7 @@ Fri Jul 23 12:01:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	   anonymous sequence of the same type more than once,
 	   and the body of the CDR operators would also appear
 	   more than once in generated code, leading to C++ 
-	   compile errors. Thanks to Roger Egbers <regbers@isrglobal.com
+	   compile errors. Thanks to Roger Egbers <regbers@isrglobal.com>
 	   for sending in the example.
 
 Fri Jul 23 11:37:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
@@ -4334,8 +4334,7 @@ Sun Jun 27 20:29:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * tao/POA_CORBA.h (POA_CORBA): Added a no-op constructor for
           the _tao_collocated_Current class to work around a bug with
-          IBM's VisualAge C++ compiler.  Thanks to Rene Matteau
-          <matteau@ca.ibm.com> for reporting this.
+          IBM's VisualAge C++ compiler.  
 
         * tao/encode.cpp (encode): Borland's C++ Builder 4.0 doesn't seem
           to align caught exceptions along the correct boundaries!
