@@ -1,10 +1,18 @@
 /* -*- c++ -*- */
 // $Id$
 
+#include "ast_enum.h"
+#include "ast_expression.h"
+#include "ast_field.h"
+#include "ast_union.h"
+#include "utl_identifier.h"
+
 #include "ifr_adding_visitor_structure.h"
 #include "ifr_adding_visitor_union.h"
 
-ACE_RCSID(IFR_Service, ifr_adding_visitor_structure, "$Id$")
+ACE_RCSID (IFR_Service, 
+           ifr_adding_visitor_structure, 
+           "$Id$")
 
 ifr_adding_visitor_structure::ifr_adding_visitor_structure (
     AST_Decl *scope,

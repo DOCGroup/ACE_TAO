@@ -1,11 +1,20 @@
 /* -*- c++ -*- */
 // $Id$
 
+#include "ast_argument.h"
+#include "ast_exception.h"
+#include "ast_expression.h"
+#include "ast_operation.h"
+#include "utl_identifier.h"
+#include "utl_string.h"
+
 #include "ifr_adding_visitor_operation.h"
 #include "utl_exceptlist.h"
 #include "utl_strlist.h"
 
-ACE_RCSID(IFR_Service, ifr_adding_visitor_operation, "$Id$")
+ACE_RCSID (IFR_Service, 
+           ifr_adding_visitor_operation, 
+           "$Id$")
 
 ifr_adding_visitor_operation::ifr_adding_visitor_operation (AST_Decl *scope)
   : ifr_adding_visitor (scope),
@@ -209,6 +218,7 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 
       this->params_[this->index_].type_def =
         CORBA_IDLType::_duplicate (this->ir_current_.in ());
+
 
       switch (node->direction ())
       {

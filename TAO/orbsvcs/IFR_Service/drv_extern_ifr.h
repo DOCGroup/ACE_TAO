@@ -67,6 +67,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef TAO_IFR_DRV_EXTERN_H
 #define TAO_IFR_DRV_EXTERN_H
 
+// The ACE_Process_Options default size of 1024 is sometimes not enough.
+const unsigned long TAO_IDL_COMMAND_LINE_BUFFER_SIZE = 4 * 1024;
+
 // External functions for the IDL compiler driver program
 
 // Functions

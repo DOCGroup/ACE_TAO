@@ -1,14 +1,18 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "drv_private_ifr.h"
+#include "idl_defines.h"
+#include "global_extern.h"
 #include "drv_extern_ifr.h"
 #include "be_extern.h"
 #include "ace/Process.h"
 
-ACE_RCSID(IFR_Service, drv_args_ifr, "$Id$")
+ACE_RCSID (IFR_Service, 
+           drv_args_ifr, 
+           "$Id$")
+
+extern long DRV_nfiles;
+extern const char *DRV_files[];
 
 // Push a file into the list of files to be processed
 static void
