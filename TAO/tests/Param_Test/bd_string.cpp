@@ -66,8 +66,6 @@ Test_Bounded_String::init_parameters (Param_Test_ptr /*objref*/,
 				      CORBA::Environment &/*env*/)
 {
   Generator *gen = GENERATOR::instance (); // value generator
-  //ACE_UNUSED_ARG (objref);
-  //ACE_UNUSED_ARG (env);
 
   // release any previously occupied values
   CORBA::string_free (this->in_);

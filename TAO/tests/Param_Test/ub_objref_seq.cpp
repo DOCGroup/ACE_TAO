@@ -298,12 +298,12 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
               return 0;
             }
 
-          Coffee::Desc *desc1 = vs1->description (ACE_TRY_ENV);
+          Coffee::Desc_var desc1 = vs1->description (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           CORBA::String_var n1 = desc1->name.in ();
 
-          Coffee::Desc *desc2 = vs2->description (ACE_TRY_ENV);
+          Coffee::Desc_var desc2 = vs2->description (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           CORBA::String_var n2 = desc2->name.in ();
