@@ -1,3 +1,9 @@
+Tue Jul 27 13:28:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (getuid): removed extra ACE_TRACE with
+          ACE_WIN32 or CHORUS.  Thanks to Jerry D. De Master
+          <jdemaste@ipdinc.com> for reporting this.
+
 Tue Jul 27 11:10:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/System_V_IPC/Makefile: on VxWorks only, fixed

@@ -11802,7 +11802,6 @@ ACE_OS::getuid (void)
   // getuid() is not supported:  just one user anyways
   return 0;
 # elif defined (ACE_WIN32) || defined(CHORUS)
-  ACE_TRACE ("ACE_OS::getuid");
   ACE_NOTSUP_RETURN (ACE_static_cast (uid_t, -1));
 #else
   ACE_OSCALL_RETURN (::getuid (), uid_t, (uid_t) -1);
