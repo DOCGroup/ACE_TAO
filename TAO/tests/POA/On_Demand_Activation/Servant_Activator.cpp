@@ -1,10 +1,10 @@
-// $Id$
+f// $Id$
 //
 // = LIBRARY
 //     TAO/tests/POA/On_Demand_Activation/Servant_Activator
 //
 // = FILENAME
-//     FindPOA.cpp
+//     Servant_Activator.cpp
 //
 // = DESCRIPTION
 //     Implementation of MyFooServantActivator , which is used by a POA with a
