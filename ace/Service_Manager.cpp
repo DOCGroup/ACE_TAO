@@ -173,8 +173,8 @@ ACE_Service_Manager::list_services (void)
 
       ACE_OS::strcpy (buf, sr->name ());
       ACE_OS::strcat (buf, (sr->active ()) ?
-                      ACE_TEXT (" (active) ") :
-                      ACE_TEXT (" (paused) "));
+                      ACE_LIB_TEXT (" (active) ") :
+                      ACE_LIB_TEXT (" (paused) "));
 
       p[-1] = ' ';
       p[0]  = '\0';

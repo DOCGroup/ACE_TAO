@@ -84,7 +84,7 @@ find_last (void)
                    "%d",
                    n_entries - 1);
   ACE_CString cString (search_string);
-  Element* element_ptr;
+  Element *element_ptr = 0;
 
   for (ACE_Double_Linked_List_Iterator<Element> iterator (*linked_list_ptr);
        !iterator.done ();
@@ -287,7 +287,10 @@ Time_Calculation ::print_stats (void)
       elapsed_time.user_time /= iterations;
       elapsed_time.system_time /= iterations;
 
-      double tmp = 1000 / elapsed_time.real_time;
+      double tmp = 0.0;
+
+      if (elapsed_time.real_time != 0.0)
+        tmp = 1000 / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\n")
@@ -313,8 +316,8 @@ static int
 init (void)
 {
   char entry[MAX_STRING_SIZE];
-  ACE_CString *cString_ptr;
-  Element *element_ptr;
+  ACE_CString *cString_ptr = 0;
+  Element *element_ptr = 0;
 
   ACE_NEW_RETURN (linked_list_ptr,
                   Linked_List,
@@ -378,10 +381,10 @@ main (int argc, ACE_TCHAR *argv[])
   // for a nice start of all threads (for much contention)
 
   // Initialize the readers.
-  Reader_Task** reader_tasks;
+  Reader_Task **reader_tasks = 0;
 
   ACE_NEW_RETURN (reader_tasks,
-                  Reader_Task*[n_readers],
+                  Reader_Task *[n_readers],
                   -1);
   u_int i;
 
@@ -401,10 +404,10 @@ main (int argc, ACE_TCHAR *argv[])
     }
 
   // Create all the writers
-  Writer_Task** writer_tasks;
+  Writer_Task **writer_tasks = 0;
 
   ACE_NEW_RETURN (writer_tasks,
-                  Writer_Task*[n_writers],
+                  Writer_Task *[n_writers],
                   -1);
 
   for (i = 0;
@@ -454,8 +457,8 @@ main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT (" (%t) exiting main thread\n")));
 
   // Delete the memory of the Double_Linked_List
-  ACE_CString *cString_ptr;
-  Element *element_ptr;
+  ACE_CString *cString_ptr = 0;
+  Element *element_ptr = 0;
 
   for (i = 0;
        i < n_entries;
