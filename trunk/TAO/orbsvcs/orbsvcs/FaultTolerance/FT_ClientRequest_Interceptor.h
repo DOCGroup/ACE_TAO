@@ -10,7 +10,7 @@
 //=============================================================================
 #ifndef TAO_FT_CLIENT_REQUEST_INTERCEPTOR_H
 #define TAO_FT_CLIENT_REQUEST_INTERCEPTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "fault_tol_export.h"
 
@@ -108,5 +108,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_FT_CLIENT_REQUEST_INTERCEPTOR_H*/
