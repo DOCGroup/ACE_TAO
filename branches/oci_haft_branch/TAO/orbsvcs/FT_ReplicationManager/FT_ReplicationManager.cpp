@@ -6,7 +6,7 @@
  *  $Id$
  *
  *  This file is part of Fault Tolerant CORBA.
- *  This file implements the FT_ReplicationManager class as declared in 
+ *  This file implements the FT_ReplicationManager class as declared in
  *  FT_Replication_Manager.h.
  *
  *  @author Curt Hibbs <hibbs_c@ociweb.com>
@@ -27,6 +27,8 @@
 
 #include "tao/Messaging/Messaging.h"
 #include "tao/debug.h"
+
+#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 
 
 ACE_RCSID (FT_ReplicationManager,
@@ -110,7 +112,7 @@ int FT_ReplicationManager::write_IOR()
   return result;
 }
 
-int 
+int
 FT_ReplicationManager::init (TAO_ORB_Manager & orbManager
                              ACE_ENV_ARG_DECL)
 {
@@ -196,7 +198,7 @@ FT_ReplicationManager::init (TAO_ORB_Manager & orbManager
 // FT::ReplicationManager methods
 
 /// Registers the Fault Notifier with the Replication Manager.
-void 
+void
 FT_ReplicationManager::register_fault_notifier (
     FT::FaultNotifier_ptr fault_notifier
     ACE_ENV_ARG_DECL)
@@ -207,7 +209,7 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 
 
 /// Returns the reference of the Fault Notifier.
-FT::FaultNotifier_ptr 
+FT::FaultNotifier_ptr
 FT_ReplicationManager::get_fault_notifier (
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 ACE_THROW_SPEC ((
@@ -309,7 +311,7 @@ FT_ReplicationManager::set_properties_dynamically (
                    PortableGroup::ObjectGroupNotFound,
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
-{  
+{
   this->property_manager_.set_properties_dynamically (object_group,
                                                       overrides
                                                       ACE_ENV_ARG_PARAMETER);
@@ -334,7 +336,7 @@ FT_ReplicationManager::get_properties (
 // FT::FTObjectGroupManager methods
 
 /// Sets the primary member of a group.
-PortableGroup::ObjectGroup_ptr 
+PortableGroup::ObjectGroup_ptr
 FT_ReplicationManager::set_primary_member (
     FT::ObjectGroup_ptr object_group,
     const FT::Location & the_location
@@ -634,7 +636,7 @@ FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         encoder.encode(props_in);
       }
 
-      //TODO - eventually this will really create an IOGR and this whole test_iogr code 
+      //TODO - eventually this will really create an IOGR and this whole test_iogr code
       //       will no longer be needed.
       object_group_manager_.create_object_group(
         ft_tag_component.object_group_id,

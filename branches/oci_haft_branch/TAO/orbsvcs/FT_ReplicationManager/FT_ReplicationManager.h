@@ -19,6 +19,7 @@
 
 #include "orbsvcs/FT_ReplicationManagerS.h"
 #include "orbsvcs/FT_NotifierC.h"
+#include "tao/IORManipulation/IORC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -61,7 +62,7 @@ public:
 public:
 
   /**
-   * Initialize the replication manager, publish it's IOR, 
+   * Initialize the replication manager, publish it's IOR,
    * and otherwise start things rolling.
    * @param orbManager our ORB -- we keep var to it.
    * @return zero for success; nonzero is process return code for failure.
