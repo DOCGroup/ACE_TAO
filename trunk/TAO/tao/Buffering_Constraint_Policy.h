@@ -89,10 +89,10 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
 #if defined (__ACE_INLINE__)
 #include "tao/Buffering_Constraint_Policy.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #endif /* TAO_BUFFERING_CONSTRAINT_POLICY_H */
