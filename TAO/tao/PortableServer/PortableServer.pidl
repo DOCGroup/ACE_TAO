@@ -35,8 +35,9 @@
  *
  * Note: The diffs were generated using:
  *
+ *   rm diffs/PortableServer.diff
  *   for i in PortableServerC.{h,i,cpp}; do
- *     diff -wub orig/$i $i > diffs/PortableServer.diff
+ *     diff -wub orig/$i $i >> diffs/PortableServer.diff
  *   done
  */
 

@@ -1,3 +1,77 @@
+Fri Aug 23 11:23:07 2002  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_constant/constant_cs.cpp (visit_constant):
+
+	  Fixed unused argument warning.
+
+	* tao/PortableServer/ObjectReferenceTemplate.h
+	  (~TAO_ObjectReferenceTemplate):
+
+	  Made this destructor protected to enforce proper memory
+	  management through reference counting since this
+	  ObjectReferenceTemplate implementation is reference counted.
+
+	  (destroy):
+	* tao/PortableServer/ObjectReferenceTemplate.cpp (destroy):
+
+	  Removed this unused, unnecessary and useless method.
+
+	  (make_object):
+
+	  No need to store the created object reference in a temporary
+	  variable.  Just return it.
+
+	* tao/PortableServer/ObjectReferenceFactory.h:
+	* tao/PortableServer/ObjectReferenceFactory.i:
+	* tao/PortableServer/ObjectReferenceFactory.cpp:
+
+	  Removed these unused files.
+
+	* tao/PortableServer/Default_ORT.pidl:
+
+	  Removed default ObjectReferenceFactory ValueType.  It is no
+	  longer needed.
+
+	  Updated tao_idl invocation comments to not include any export
+	  commands.  There is no need to export the ValueType in the
+	  generated stub since it is only meant to be used internally by
+	  TAO's POA.
+
+	  Added comments explaining how to regenerate the Default_ORTC.*
+	  stub files.
+
+	* tao/PortableServer/Default_ORTC.h:
+	* tao/PortableServer/Default_ORTC.i:
+	* tao/PortableServer/Default_ORTC.cpp:
+
+	  Regenerated the stubs files.
+
+	* tao/PortableServer/POA.h:
+
+	  Removed unnecessary "friend class TAO_ObjectReferenceFactory"
+	  declaration.
+
+	* tao/PortableServer/POA.cpp:
+
+	  No need to include "ObjectReferenceFactory.h".  The class
+	  declared in that header was never used.
+
+	* tao/PortableServer/PortableServer.pidl:
+
+	  Corrected comments on patch generation.  The given shell code
+	  didn't work.
+
+	* tao/PortableServer/Makefile:
+	* tao/PortableServer/Makefile.bor:
+	* tao/PortableServer/TAO_PortableServer.dsp:
+
+	  Removed all references to the ObjectReferenceFactory.* files.
+
+	* tao/PortableServer/diffs/Default_ORT.diff:
+
+	  Regenerated this patch.  It has been improved to remove
+	  inclusion of several unnecessary headers.
+
 Fri Aug 23 10:34:36 2002  Ossama Othman  <ossama@uci.edu>
 
 	* examples/POA/Generic_Servant/client.cpp (main):

@@ -19,26 +19,15 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+// TAO_IDL - Generated from 
+// be/be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-TAO_Default_ORT::ObjectReferenceFactory::ObjectReferenceFactory () // default constructor
+TAO_Default_ORT::ObjectReferenceTemplate::ObjectReferenceTemplate (void)
 {}
 
 ACE_INLINE
-TAO_Default_ORT::ObjectReferenceFactory::~ObjectReferenceFactory () // destructor
-{}
-
-ACE_INLINE const char* 
-TAO_Default_ORT::ObjectReferenceFactory::_tao_obv_static_repository_id ()
-{
-  return "IDL:TAO_Default_ORT/ObjectReferenceFactory:1.0";
-}
-
-ACE_INLINE
-TAO_Default_ORT::ObjectReferenceTemplate::ObjectReferenceTemplate () // default constructor
-{}
-
-ACE_INLINE
-TAO_Default_ORT::ObjectReferenceTemplate::~ObjectReferenceTemplate () // destructor
+TAO_Default_ORT::ObjectReferenceTemplate::~ObjectReferenceTemplate (void)
 {}
 
 ACE_INLINE const char* 
@@ -47,25 +36,21 @@ TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_static_repository_id ()
   return "IDL:TAO_Default_ORT/ObjectReferenceTemplate:1.0";
 }
 
-//@@ Boris: begin experimental
+// TAO_IDL - Generated from
+// be/be_valuetype.cpp:714
+
+#if defined (__ACE_INLINE__)
 TAO_NAMESPACE CORBA
 {
-  void add_ref (TAO_Default_ORT::ObjectReferenceFactory *);
-  void remove_ref (TAO_Default_ORT::ObjectReferenceFactory *);
+  TAO_NAMESPACE_STORAGE_CLASS void add_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
+  TAO_NAMESPACE_STORAGE_CLASS void remove_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
+#endif /*__ACE_INLINE__*/
 
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_Default_ORT::ObjectReferenceFactory *);
-TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::ObjectReferenceFactory *&);
-//@@ Boris: begin experimental
-TAO_NAMESPACE CORBA
-{
-  void add_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
-  void remove_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
-}
-TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
+// TAO_IDL - Generated from
+// be/be_visitor_valuetype/cdr_op_ci.cpp:60
 
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_Default_ORT::ObjectReferenceTemplate *);
-TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::ObjectReferenceTemplate *&);
+ CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_Default_ORT::ObjectReferenceTemplate *);
+ CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::ObjectReferenceTemplate *&);
+

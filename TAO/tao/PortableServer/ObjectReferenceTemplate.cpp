@@ -1,26 +1,23 @@
-#include "tao/PortableServer/ObjectReferenceTemplate.h"
-#include "tao/PortableServer/POA.h"
-
-#include "tao/ORB_Core.h"
+#include "ObjectReferenceTemplate.h"
+#include "POA.h"
 
 ACE_RCSID (PortableServer,
            ObjectReferenceTemplate,
            "$Id$")
 
-TAO_ObjectReferenceTemplate::
-TAO_ObjectReferenceTemplate (const char *server_id,
-                             const char *orb_id,
-                             TAO_POA *poa)
+
+TAO_ObjectReferenceTemplate::TAO_ObjectReferenceTemplate (
+  const char *server_id,
+  const char *orb_id,
+  TAO_POA * poa)
   : server_id_ (server_id),
     orb_id_ (orb_id),
     poa_ (poa)
 {
-  /// Constructor
 }
 
 TAO_ObjectReferenceTemplate::~TAO_ObjectReferenceTemplate (void)
 {
-  /// Destructor
 }
 
 char *
@@ -46,7 +43,8 @@ TAO_ObjectReferenceTemplate::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
   if (this->adapter_name_ != 0)
     {
       ACE_NEW_THROW_EX (adapter_name,
-                        PortableInterceptor::AdapterName (*(this->adapter_name_)),
+                        PortableInterceptor::AdapterName (
+                          *(this->adapter_name_)),
                         CORBA::NO_MEMORY (
                            CORBA_SystemException::_tao_minor_code (
                               TAO_DEFAULT_MINOR_CODE,
@@ -63,7 +61,8 @@ TAO_ObjectReferenceTemplate::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK_RETURN (0);
 
       ACE_NEW_THROW_EX (adapter_name,
-                        PortableInterceptor::AdapterName (*(this->adapter_name_)),
+                        PortableInterceptor::AdapterName (
+                          *(this->adapter_name_)),
                         CORBA::NO_MEMORY (
                            CORBA_SystemException::_tao_minor_code (
                               TAO_DEFAULT_MINOR_CODE,
@@ -85,24 +84,12 @@ TAO_ObjectReferenceTemplate::make_object (
     ))
 {
   PortableServer::ObjectId oid;
-
   oid.replace (id.maximum (),
                id.length (),
-               ACE_const_cast (CORBA::Octet *,id.get_buffer ()),
+               ACE_const_cast (CORBA::Octet *, id.get_buffer ()),
                0);
 
-  // Create a reference
-  CORBA::Object_var object =
-    this->poa_->invoke_key_to_object (intf,
-                                      oid
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  return object._retn ();
-}
-
-void
-TAO_ObjectReferenceTemplate::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-{
-  CORBA::remove_ref (this);
+  return this->poa_->invoke_key_to_object (intf,
+                                           oid
+                                           ACE_ENV_ARG_PARAMETER);
 }

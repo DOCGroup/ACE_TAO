@@ -19,6 +19,10 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
+// TAO_IDL - Generated from
+// be/be_codegen.cpp:151
+
 #ifndef _TAO_IDL_ORIG_DEFAULT_ORTC_H_
 #define _TAO_IDL_ORIG_DEFAULT_ORTC_H_
 
@@ -29,19 +33,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portableserver_export.h"
 #include "tao/ObjectReferenceTemplateC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO TAO_PortableServer_Export
+#define TAO_EXPORT_MACRO
 
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)
 #    undef TAO_EXPORT_NESTED_MACRO
 #  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_PortableServer_Export
+#  define TAO_EXPORT_NESTED_MACRO
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
@@ -55,132 +58,15 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+// TAO_IDL - Generated from
+// be/be_visitor_module/module_ch.cpp:45
+
 TAO_NAMESPACE  TAO_Default_ORT
 {
-  // Valuetype class
-  class ObjectReferenceFactory;
 
-#if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCEFACTORY___PTR_CH_)
-#define _TAO_DEFAULT_ORT_OBJECTREFERENCEFACTORY___PTR_CH_
+  // TAO_IDL - Generated from
+  // be/be_visitor_valuetype/valuetype_ch.cpp:53
 
-  typedef ObjectReferenceFactory *ObjectReferenceFactory_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCEFACTORY___VAR_CH_)
-#define _TAO_DEFAULT_ORT_OBJECTREFERENCEFACTORY___VAR_CH_
-
-  class TAO_PortableServer_Export ObjectReferenceFactory_var
-  {
-  public:
-    ObjectReferenceFactory_var (void); // default constructor
-    ObjectReferenceFactory_var (ObjectReferenceFactory*);
-    ObjectReferenceFactory_var (const ObjectReferenceFactory*); // (TAO extension)
-    ObjectReferenceFactory_var (const ObjectReferenceFactory_var &); // copy constructor
-    ~ObjectReferenceFactory_var (void); // destructor
-
-    ObjectReferenceFactory_var &operator= (ObjectReferenceFactory*);
-    ObjectReferenceFactory_var &operator= (const ObjectReferenceFactory_var &);
-    ObjectReferenceFactory* operator-> (void) const;
-
-    operator const ObjectReferenceFactory* () const;
-    operator ObjectReferenceFactory* ();
-    // in, inout, out, _retn
-    ObjectReferenceFactory* in (void) const;
-    ObjectReferenceFactory* &inout (void);
-    ObjectReferenceFactory* &out (void);
-    ObjectReferenceFactory* _retn (void);
-    ObjectReferenceFactory* ptr (void) const;
-
-    // Hooks used by template sequence and valuetype manager classes
-    // for non-defined forward declared valuetypes.
-    static void tao_add_ref (ObjectReferenceFactory *);
-    static void tao_remove_ref (ObjectReferenceFactory *);
-
-  private:
-    ObjectReferenceFactory* ptr_;
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCEFACTORY___OUT_CH_)
-#define _TAO_DEFAULT_ORT_OBJECTREFERENCEFACTORY___OUT_CH_
-
-  class TAO_PortableServer_Export ObjectReferenceFactory_out
-  {
-  public:
-    ObjectReferenceFactory_out (ObjectReferenceFactory* &);
-    ObjectReferenceFactory_out (ObjectReferenceFactory_var &);
-    ObjectReferenceFactory_out (const ObjectReferenceFactory_out &);
-    ObjectReferenceFactory_out &operator= (const ObjectReferenceFactory_out &);
-    ObjectReferenceFactory_out &operator= (const ObjectReferenceFactory_var &);
-    ObjectReferenceFactory_out &operator= (ObjectReferenceFactory*);
-    operator ObjectReferenceFactory* &();
-    ObjectReferenceFactory* &ptr (void);
-    ObjectReferenceFactory* operator-> (void);
-
-  private:
-    ObjectReferenceFactory* &ptr_;
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCEFACTORY_CH_)
-#define _TAO_DEFAULT_ORT_OBJECTREFERENCEFACTORY_CH_
-
-  class TAO_PortableServer_Export ObjectReferenceFactory
-    : public virtual PortableInterceptor::ObjectReferenceFactory
-  {
-  public:
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef ObjectReferenceFactory* _ptr_type;
-    typedef ObjectReferenceFactory_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    static ObjectReferenceFactory* _downcast (CORBA::ValueBase* );
-    // The address of static _downcast is implicit used as type id
-
-    // (TAO extensions or internals)
-    static CORBA::Boolean _tao_unmarshal (
-        TAO_InputCDR &,
-        ObjectReferenceFactory *&
-      );
-    virtual const char* _tao_obv_repository_id () const;
-    static const char* _tao_obv_static_repository_id ();
-
-    static void _tao_any_destructor (void *);
-
-
-  protected:
-    ObjectReferenceFactory ();
-    virtual ~ObjectReferenceFactory ();
-
-    // TAO internals
-    virtual void *_tao_obv_narrow (ptr_arith_t);
-    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
-    virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-
-  private:
-    ObjectReferenceFactory (const ObjectReferenceFactory &);
-    void operator= (const ObjectReferenceFactory &);
-
-  protected:
-    virtual CORBA::Boolean _tao_marshal__TAO_Default_ORT_ObjectReferenceFactory (TAO_OutputCDR &) = 0;
-    virtual CORBA::Boolean _tao_unmarshal__TAO_Default_ORT_ObjectReferenceFactory (TAO_InputCDR &) = 0;
-
-  };
-
-#endif /* end #if !defined */
-
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceFactory;
-
-  // Valuetype class
   class ObjectReferenceTemplate;
 
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___PTR_CH_)
@@ -194,14 +80,17 @@ TAO_NAMESPACE  TAO_Default_ORT
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___VAR_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___VAR_CH_
 
-  class TAO_PortableServer_Export ObjectReferenceTemplate_var
+  // TAO_IDL - Generated from
+  // be/be_valuetype.cpp:182
+
+  class  ObjectReferenceTemplate_var
   {
   public:
-    ObjectReferenceTemplate_var (void); // default constructor
+    ObjectReferenceTemplate_var (void);
     ObjectReferenceTemplate_var (ObjectReferenceTemplate*);
     ObjectReferenceTemplate_var (const ObjectReferenceTemplate*); // (TAO extension)
-    ObjectReferenceTemplate_var (const ObjectReferenceTemplate_var &); // copy constructor
-    ~ObjectReferenceTemplate_var (void); // destructor
+    ObjectReferenceTemplate_var (const ObjectReferenceTemplate_var &);
+    ~ObjectReferenceTemplate_var (void);
 
     ObjectReferenceTemplate_var &operator= (ObjectReferenceTemplate*);
     ObjectReferenceTemplate_var &operator= (const ObjectReferenceTemplate_var &);
@@ -211,8 +100,8 @@ TAO_NAMESPACE  TAO_Default_ORT
     operator ObjectReferenceTemplate* ();
     // in, inout, out, _retn
     ObjectReferenceTemplate* in (void) const;
-    ObjectReferenceTemplate* &inout (void);
-    ObjectReferenceTemplate* &out (void);
+    ObjectReferenceTemplate*& inout (void);
+    ObjectReferenceTemplate*& out (void);
     ObjectReferenceTemplate* _retn (void);
     ObjectReferenceTemplate* ptr (void) const;
 
@@ -232,7 +121,10 @@ TAO_NAMESPACE  TAO_Default_ORT
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___OUT_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___OUT_CH_
 
-  class TAO_PortableServer_Export ObjectReferenceTemplate_out
+  // TAO_IDL - Generated from
+  // be/be_valuetype.cpp:491
+
+  class  ObjectReferenceTemplate_out
   {
   public:
     ObjectReferenceTemplate_out (ObjectReferenceTemplate* &);
@@ -241,8 +133,8 @@ TAO_NAMESPACE  TAO_Default_ORT
     ObjectReferenceTemplate_out &operator= (const ObjectReferenceTemplate_out &);
     ObjectReferenceTemplate_out &operator= (const ObjectReferenceTemplate_var &);
     ObjectReferenceTemplate_out &operator= (ObjectReferenceTemplate*);
-    operator ObjectReferenceTemplate* &();
-    ObjectReferenceTemplate* &ptr (void);
+    operator ObjectReferenceTemplate*& ();
+    ObjectReferenceTemplate*& ptr (void);
     ObjectReferenceTemplate* operator-> (void);
 
   private:
@@ -256,53 +148,58 @@ TAO_NAMESPACE  TAO_Default_ORT
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE_CH_
 
-  class TAO_PortableServer_Export ObjectReferenceTemplate
-    : public virtual PortableInterceptor::ObjectReferenceTemplate
-  {
-  public:
+  class  ObjectReferenceTemplate
+    : public virtual PortableInterceptor::ObjectReferenceTemplate,
+    public virtual CORBA_ValueBase
 
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef ObjectReferenceTemplate* _ptr_type;
-    typedef ObjectReferenceTemplate_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
+{
+public:
+  typedef ObjectReferenceTemplate_var _var_type;
+  static ObjectReferenceTemplate* _downcast (CORBA::ValueBase* );
+  // The address of static _downcast is implicit used as type id
 
-    static ObjectReferenceTemplate* _downcast (CORBA::ValueBase* );
-    // The address of static _downcast is implicit used as type id
+  // (TAO extensions or internals)
+  static CORBA::Boolean _tao_unmarshal (
+      TAO_InputCDR &,
+      ObjectReferenceTemplate *&
+    );
+  virtual const char* _tao_obv_repository_id (void) const;
+  static const char* _tao_obv_static_repository_id (void);
 
-    // (TAO extensions or internals)
-    static CORBA::Boolean _tao_unmarshal (
-        TAO_InputCDR &,
-        ObjectReferenceTemplate *&
-      );
-    virtual const char* _tao_obv_repository_id () const;
-    static const char* _tao_obv_static_repository_id ();
+  static void _tao_any_destructor (void *);
 
-    static void _tao_any_destructor (void *);
+  // TAO_IDL - Generated from
+  // be/be_visitor_valuetype/valuetype_ch.cpp:304
 
+protected:
+  ObjectReferenceTemplate (void);
+  virtual ~ObjectReferenceTemplate (void);
 
-  protected:
-    ObjectReferenceTemplate ();
-    virtual ~ObjectReferenceTemplate ();
+  // TAO internals
+  virtual void *_tao_obv_narrow (ptr_arith_t);
+  virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
+  virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
 
-    // TAO internals
-    virtual void *_tao_obv_narrow (ptr_arith_t);
-    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
-    virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
+private:
+  ObjectReferenceTemplate (const ObjectReferenceTemplate &);
+  void operator= (const ObjectReferenceTemplate &);
 
-  private:
-    ObjectReferenceTemplate (const ObjectReferenceTemplate &);
-    void operator= (const ObjectReferenceTemplate &);
+protected:
+  virtual CORBA::Boolean _tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &) = 0;
+  virtual CORBA::Boolean _tao_unmarshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_InputCDR &) = 0;
 
-  protected:
-    virtual CORBA::Boolean _tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &) = 0;
-    virtual CORBA::Boolean _tao_unmarshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_InputCDR &) = 0;
-
-  };
+};
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplate;
+// TAO_IDL - Generated from
+// be/be_visitor_typecode/typecode_decl.cpp:44
 
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplate;
+
+
+// TAO_IDL - Generated from
+// be/be_visitor_module/module_ch.cpp:66
 
 }
 TAO_NAMESPACE_CLOSE // module TAO_Default_ORT
@@ -315,36 +212,15 @@ TAO_NAMESPACE_CLOSE
 TAO_NAMESPACE  OBV_TAO_Default_ORT
 {
 
-#if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCEFACTORY___OBV_CH_)
-#define _TAO_DEFAULT_ORT_OBJECTREFERENCEFACTORY___OBV_CH_
-
-  // OBV_ class
-  class TAO_PortableServer_Export ObjectReferenceFactory
-    : public virtual TAO_Default_ORT::ObjectReferenceFactory
-  {
-  public:
-
-  protected:
-    virtual CORBA::Boolean _tao_marshal__TAO_Default_ORT_ObjectReferenceFactory (TAO_OutputCDR &);
-    virtual CORBA::Boolean _tao_unmarshal__TAO_Default_ORT_ObjectReferenceFactory (TAO_InputCDR &);
-    CORBA::Boolean _tao_marshal_state (TAO_OutputCDR &);
-    CORBA::Boolean _tao_unmarshal_state (TAO_InputCDR &);
-
-  private:
-
-  };
-
-#endif /* end #if !defined */
-
-
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___OBV_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___OBV_CH_
 
   // OBV_ class
-  class TAO_PortableServer_Export ObjectReferenceTemplate
+  class  ObjectReferenceTemplate
     : public virtual TAO_Default_ORT::ObjectReferenceTemplate
   {
   public:
+
 
   protected:
     virtual CORBA::Boolean _tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &);
@@ -353,7 +229,6 @@ TAO_NAMESPACE  OBV_TAO_Default_ORT
     CORBA::Boolean _tao_unmarshal_state (TAO_InputCDR &);
 
   private:
-
   };
 
 #endif /* end #if !defined */
@@ -361,42 +236,34 @@ TAO_NAMESPACE  OBV_TAO_Default_ORT
   }
 TAO_NAMESPACE_CLOSE
 
-// Any operators for valuetype TAO_Default_ORT::ObjectReferenceFactory
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, TAO_Default_ORT::ObjectReferenceFactory *); // copying
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, TAO_Default_ORT::ObjectReferenceFactory **); // non-copying
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO_Default_ORT::ObjectReferenceFactory *&);
 // Any operators for valuetype TAO_Default_ORT::ObjectReferenceTemplate
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, TAO_Default_ORT::ObjectReferenceTemplate *); // copying
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, TAO_Default_ORT::ObjectReferenceTemplate **); // non-copying
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO_Default_ORT::ObjectReferenceTemplate *&);
+ void operator<<= (CORBA::Any &, TAO_Default_ORT::ObjectReferenceTemplate *); // copying
+ void operator<<= (CORBA::Any &, TAO_Default_ORT::ObjectReferenceTemplate **); // non-copying
+ CORBA::Boolean operator>>= (const CORBA::Any &, TAO_Default_ORT::ObjectReferenceTemplate *&);
 
 #ifndef __ACE_INLINE__
 
-//@@ Boris: begin experimental
+
+// TAO_IDL - Generated from
+// be/be_valuetype.cpp:684
+
 TAO_NAMESPACE CORBA
 {
-  void add_ref (TAO_Default_ORT::ObjectReferenceFactory *);
-  void remove_ref (TAO_Default_ORT::ObjectReferenceFactory *);
+  TAO_NAMESPACE_STORAGE_CLASS void add_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
+  TAO_NAMESPACE_STORAGE_CLASS void remove_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_Default_ORT::ObjectReferenceFactory *);
-TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::ObjectReferenceFactory *&);
-//@@ Boris: begin experimental
-TAO_NAMESPACE CORBA
-{
-  void add_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
-  void remove_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
-}
-TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
+// TAO_IDL - Generated from
+// be/be_visitor_valuetype/cdr_op_ch.cpp:61
 
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_Default_ORT::ObjectReferenceTemplate *);
-TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::ObjectReferenceTemplate *&);
+ CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_Default_ORT::ObjectReferenceTemplate *);
+ CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::ObjectReferenceTemplate *&);
 
 #endif /* __ACE_INLINE__ */
 
+// TAO_IDL - Generated from
+// be/be_codegen.cpp:1002
 
 #if defined (__ACE_INLINE__)
 #include "Default_ORTC.i"

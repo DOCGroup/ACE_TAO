@@ -18,7 +18,6 @@ OBJFILES = \
         $(OBJDIR)\IORInfo.obj \
 	$(OBJDIR)\Key_Adapters.obj \
 	$(OBJDIR)\Object_Adapter.obj \
-        $(OBJDIR)\ObjectReferenceFactory.obj \
         $(OBJDIR)\ObjectReferenceTemplate.obj \
 	$(OBJDIR)\Operation_Table.obj \
 	$(OBJDIR)\ORB_Manager.obj \
