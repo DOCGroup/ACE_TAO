@@ -1,3 +1,12 @@
+Wed Apr 25 17:39:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/PortableServer/PortableServerC.h:
+        * tao/diffs/PortableServerC.h.diff:
+
+          Replace an overlooked ACE_TRY_ENV with
+          TAO_ENV_ARG_DECL_WITH_DEFAULTS, and updated the
+          .diff file. Thanks to Bala for pointing this out.
+
 Wed Apr 25 16:09:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Connection_Handler.h:
