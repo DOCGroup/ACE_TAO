@@ -1,4 +1,8 @@
-Tue Nov 12 13:13:05 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+Tue Nov 12 13:25:00 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/LF_CH_Event.cpp: Fixed compile error in no inline builds. 
+
+Tue Nov 12 13:13:05 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/TAO.dsp: 
 	* tao/TAO_Static.dsp: Added the new files.

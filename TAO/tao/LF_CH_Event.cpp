@@ -2,10 +2,6 @@
 #include "ace/Log_Msg.h"
 
 
-#if !defined (__ACE_INLINE__)
-# include "LF_CH_Event.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(tao,
           LF_Invocation_Event,
           "$Id$")
