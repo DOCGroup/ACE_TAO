@@ -63,6 +63,7 @@ DIRS = \
         Oneways_Invoking_Twoways \
 	ORB_destroy \
 	ORB_init \
+        ORB_shutdown \
         ORT \
 	Param_Test \
         POA \

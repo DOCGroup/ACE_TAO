@@ -1,3 +1,8 @@
+Sun Sep 15 09:38:42 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Makefile.bor:
+          Added ORB_shutdown directory.
+
 Sun Sep 15 09:29:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1269_Regression/Echo.h:
@@ -242,31 +247,31 @@ Sun Sep  8 11:57:47 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	  buffer is aligned before extraction.
 
 	  The methods have been changed to do the following
-	  
+
 	  - A message block is created and after proper alignment the
-	    buffer is copied. 
-	  
+	    buffer is copied.
+
 	  - The message block thus created is used to create a CDR stream
-	    for extraction. This helps to circumvent the problem seen. 
+	    for extraction. This helps to circumvent the problem seen.
 
 	* tests/Codec/test.idl:
 	* tests/Codec/client.cpp: Added a 8 byte variable to the struct
 	  that is used in the test. Adding this one opened up the problem
-	  mentioned above. 
+	  mentioned above.
 
 	  Thanks to Oleg Kraynov <mustafa@gema.ru> for reporting this and
 	  helping us debug the problem.
-	
+
 Fri Sep  6 09:03:50 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/ImplRepo_Service/Options.h:
-	* orbsvcs/ImplRepo_Service/Server_Repository.cpp: 
-	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp: 
-	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp: 
+	* orbsvcs/ImplRepo_Service/Server_Repository.cpp:
+	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
 	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
-	* orbsvcs/ImplRepo_Service/Repository_Configuration.cpp: 
-	* orbsvcs/ImplRepo_Service/Repository_Configuration.h: 
-	  For some reason, the above files didnt get committed yesterday. 
+	* orbsvcs/ImplRepo_Service/Repository_Configuration.cpp:
+	* orbsvcs/ImplRepo_Service/Repository_Configuration.h:
+	  For some reason, the above files didnt get committed yesterday.
 	  Recommitting them.
 
 Fri Sep  6 03:54:01 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
@@ -288,36 +293,36 @@ Thu Sep  5 23:28:29 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 Thu Sep  5 09:46:38 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h: 
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
 	  Fixed the mismatched ace/pre.h and post.h
 
 Thu Sep  5 09:37:12 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/ImplRepo/locked/run_test.pl: 
+	* orbsvcs/tests/ImplRepo/locked/run_test.pl:
 	  Replaced ImR_Locator with ImplRepo_Service. ImplRepo_Serive is
 	  the executable that performs the locator service.
 
 	* orbsvcs/ImplRepo_Service/Options.cpp:
 	* orbsvcs/ImplRepo_Service/Options.h:
-	* orbsvcs/ImplRepo_Service/Server_Repository.cpp: 
-	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp: 
-	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp: 
+	* orbsvcs/ImplRepo_Service/Server_Repository.cpp:
+	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
 	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
-	  Fixed the errors and warnings for Debian Full Reactor build.  
+	  Fixed the errors and warnings for Debian Full Reactor build.
 
-	* orbsvcs/ImplRepo_Service/Repository_Configuration.cpp: 
-	* orbsvcs/ImplRepo_Service/Repository_Configuration.h: 
+	* orbsvcs/ImplRepo_Service/Repository_Configuration.cpp:
+	* orbsvcs/ImplRepo_Service/Repository_Configuration.h:
 	  Modified the constructor to take in a const char * instead of a
 	  char *.
-	
+
 Thu Sep  5 09:54:04 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
-	* orbsvcs/ImplRepo_Service/Options.cpp (Options): 
+	* orbsvcs/ImplRepo_Service/Options.cpp (Options):
 	  Added a missing brace. Must have got deleted by mistake.
 
 Wed Sep  4 19:44:55 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
- 	* tao/Messaging/MessagingC.h: 
+ 	* tao/Messaging/MessagingC.h:
 	* tao/Messaging/diffs/Messaging.diff: Yet another hack -- #if 0
 	  the >> and << operators for OutputCDR.
 
@@ -327,11 +332,11 @@ Wed Sep  4 17:42:50 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* orbsvcs/ImplRepo_Service/implrepo.dsp:
 	* orbsvcs/ImplRepo_Service/ImplRepo.dsw:
 	   New dsp and modified existing to add new files and remove
-	   files. 
-	
+	   files.
+
 	* orbsvcs/ImplRepo_Service/Options.cpp:
 	* orbsvcs/ImplRepo_Service/NT_Service.cpp:
-	  Modified to get compiled on NT. Replaced ImplREpo_i 
+	  Modified to get compiled on NT. Replaced ImplREpo_i
 	  with ImR_Activator_i.
 
 Wed Sep  4 17:11:25 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
@@ -342,7 +347,7 @@ Wed Sep  4 17:11:25 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 Wed Sep  4 14:01:02 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/ImplRepo_Service/Forwarder.cpp: 
+	* orbsvcs/ImplRepo_Service/Forwarder.cpp:
 	  Included a header file. It got removed by mistake.
 
 Wed Sep  4 15:15:43 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
@@ -351,32 +356,32 @@ Wed Sep  4 15:15:43 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	  of second typedefs for anonymous sequences. Thanks to Jeff
 	  Parsons for suggesting this patch.
 
-	* tao/Messaging/MessagingC.h: 
+	* tao/Messaging/MessagingC.h:
 	* tao/Messaging/diffs/Messaging.diff: Regenerated these again with
 	  the above change.
 
 Wed Sep  4 13:59:14 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tao/Messaging/MessagingC.h: Removed another typedef declaration
-	  for the same data type. This was breaking the builds. 
-	  
+	  for the same data type. This was breaking the builds.
+
 	  We need to actually fix this in the IDL compiler, since we
 	  cannot have our IDL compiler generate uncompilable code. But
-	  this patch should help for the timebeing. 
+	  this patch should help for the timebeing.
 
 	* tao/Messaging/diffs/Messaging.diff: A new patch necessitated
 	  from the above chage.
-	
+
 Wed Sep  4 10:58:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/PortableServer/ImplRepo.pidl: 
+	* tao/PortableServer/ImplRepo.pidl:
 	* tao/PortableServer/ImR_Activator.pidl
 	* tao/PortableServer/ImR_Locator.pidl
 	  Split the original ImplRepo.pidl into the above three pidls.
 	  ImplRepo.pidl contains the common interfaces and the base
 	  interface for the locator and the activator interfaces which are
 	  defined in ImR_Locator.pidl and ImR_Activator.pidl respectively.
-	  
+
 	* tao/PortableServer/ImplRepoC.cpp:
 	* tao/PortableServer/ImplRepoC.h:
 	* tao/PortableServer/ImplRepoC.i:
@@ -405,10 +410,10 @@ Wed Sep  4 10:58:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* tao/PortableServer/ImR_LocatorS_T.cpp:
 	* tao/PortableServer/ImR_LocatorS_T.i:
 	  Related stubs and skeletons.
-	
+
 	* tao/PortableServer/Makefile:
 	  Added the new files.
-	
+
 	* tao/PortableServer/POA.cpp:
 	  The interface which is now visible to the application's using
 	  the ImR is ImplementationRepository::Locator. Modified
@@ -436,13 +441,13 @@ Wed Sep  4 10:58:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  ImplementationRepository::Activator interfaces respectively.
 
 	  Removed ImplRepo_i.h ImplRepo_i.cpp ImplRepo.cpp
-	
+
 	* orbsvcs/ImplRepo_Service/Repository_Configuration.cpp:
 	* orbsvcs/ImplRepo_Service/Repository_Configuration.h:
 	  This class acts as a wrapper around the ACE_Configuration_Heap
 	  class. This class is used to maintain the XML and the non-Win32
 	  registry server configuration.
-	
+
 	* orbsvcs/ImplRepo_Service/Server_Info.cpp:
 	* orbsvcs/ImplRepo_Service/Server_Info.h:
 	* orbsvcs/ImplRepo_Service/Server_Repository.cpp:
@@ -452,7 +457,7 @@ Wed Sep  4 10:58:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  Split Repository into two set of files,
 	  Server_Repository.{h,cpp} and Server_Info.{h,cpp} so that each
 	  of the new file will have to deal with only one
-	  interface. 
+	  interface.
 	  Removed the original Repository.{h,cpp}
 
 	* orbsvcs/ImplRepo_Service/XML_ContentHandler.cpp
@@ -460,13 +465,13 @@ Wed Sep  4 10:58:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  The class is used to help update the existing XML file that is
 	  used for storing the server configuration. Derives from
 	  ACEXML_DefaultHandler.
-	
+
 	* orbsvcs/ImplRepo_Service/repository.xml
 	  Contains the sample xml.
-  
+
 	* orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
 	  Cosmetic changes.
-	
+
 	* orbsvcs/ImplRepo_Service/Forwarder.cpp:
 	* orbsvcs/ImplRepo_Service/Forwarder.h:
 	  Modified the signature of the constructor to take in a reference
@@ -474,7 +479,7 @@ Wed Sep  4 10:58:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  Made class ImR_Locator_i forward declared instead of ImplRepo_i
 	  as the class ImplRepo_i no longer exists.
 	  Added a new private variable to save the ORB reference.
-	
+
 	* orbsvcs/ImplRepo_Service/Iterator.h:
 	  The previous Repository.h doesnt exist now. See the description
 	  for Repository.h. Included Server_Repository.h instead.
@@ -483,17 +488,17 @@ Wed Sep  4 10:58:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  Included ImR_Activator_i.h instead of ImplRepo_i.h. See the
 	  description for ImplRepo_i.h. Modified the constructor
 	  accordingly.
-	
+
 	* orbsvcs/ImplRepo_Service/Locator.h:
 	  Forward declared ImR_Activator_i instead of ImplRepo_i. class
 	  ImplRepo_i doesnt exist anymore. ImR_Activator_i does the related
 	  work.
-	
+
 	* orbsvcs/ImplRepo_Service/Makefile:
 	* orbsvcs/ImplRepo_Service/Makefile.am:
 	  Modified to remove and add the old and files
 	  respectively.
-	
+
 	* orbsvcs/ImplRepo_Service/Options.cpp:
 	* orbsvcs/ImplRepo_Service/Options.h:
 	  New option '-x' to specify that the file used to store the
