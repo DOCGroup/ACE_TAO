@@ -54,29 +54,6 @@ EC_Driver::EC_Driver (void)
 
 EC_Driver::~EC_Driver (void)
 {
-  delete this->ec_impl_;
-#if !defined(EC_DISABLE_OLD_EC)
-  delete this->scheduler_impl_;
-  delete this->module_factory_;
-#endif
-  if (this->tasks_ != 0)
-    {
-      for (int i = 0; i != this->n_suppliers_; ++i)
-        delete this->tasks_[i];
-      delete[] this->tasks_;
-    }
-  if (this->suppliers_ != 0)
-    {
-      for (int i = 0; i != this->n_suppliers_; ++i)
-        delete this->suppliers_[i];
-      delete[] this->suppliers_;
-    }
-  if (this->consumers_ != 0)
-    {
-      for (int i = 0; i != this->n_consumers_; ++i)
-        delete this->consumers_[i];
-      delete[] this->consumers_;
-    }
 }
 
 int
@@ -136,9 +113,6 @@ EC_Driver::run (int argc, char* argv[])
 
       this->dump_results ();
 
-      this->deactivate_ec (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       this->disconnect_consumers (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -151,11 +125,22 @@ EC_Driver::run (int argc, char* argv[])
       if (this->verbose ())
         ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) suppliers disconnected\n"));
 
-      this->event_channel_->destroy (ACE_TRY_ENV);
+      this->destroy_ec (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (this->verbose ())
         ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) channel destroyed\n"));
+
+      this->deactivate_ec (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (this->verbose ())
+        ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) channel deactivated\n"));
+
+      this->cleanup_tasks ();
+      this->cleanup_suppliers ();
+      this->cleanup_consumers ();
+      this->cleanup_ec ();
     }
   ACE_CATCHANY
     {
@@ -445,6 +430,13 @@ EC_Driver::deactivate_ec (CORBA::Environment& ACE_TRY_ENV)
         ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) scheduler deactivated\n"));
     }
 #endif
+}
+
+void
+EC_Driver::destroy_ec (CORBA::Environment& ACE_TRY_ENV)
+{
+  this->event_channel_->destroy (ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 int
@@ -935,6 +927,49 @@ EC_Driver::modify_attributes (TAO_EC_Event_Channel_Attributes&)
 }
 
 void
+EC_Driver::cleanup_tasks (void)
+{
+  if (this->tasks_ != 0)
+    {
+      for (int i = 0; i != this->n_suppliers_; ++i)
+        delete this->tasks_[i];
+      delete[] this->tasks_;
+    }
+}
+
+void
+EC_Driver::cleanup_suppliers (void)
+{
+  if (this->suppliers_ != 0)
+    {
+      for (int i = 0; i != this->n_suppliers_; ++i)
+        delete this->suppliers_[i];
+      delete[] this->suppliers_;
+    }
+}
+
+void
+EC_Driver::cleanup_consumers (void)
+{
+  if (this->consumers_ != 0)
+    {
+      for (int i = 0; i != this->n_consumers_; ++i)
+        delete this->consumers_[i];
+      delete[] this->consumers_;
+    }
+}
+
+void
+EC_Driver::cleanup_ec (void)
+{
+  delete this->ec_impl_;
+#if !defined(EC_DISABLE_OLD_EC)
+  delete this->scheduler_impl_;
+  delete this->module_factory_;
+#endif
+}
+
+void
 EC_Driver::consumer_push (void*,
                           const RtecEventComm::EventSet&,
                           CORBA::Environment&)
@@ -949,6 +984,12 @@ EC_Driver::consumer_shutdown (void*,
 
 void
 EC_Driver::consumer_disconnect (void*,
+                                CORBA::Environment&)
+{
+}
+
+void
+EC_Driver::supplier_disconnect (void*,
                                 CORBA::Environment&)
 {
 }

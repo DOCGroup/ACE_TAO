@@ -80,6 +80,10 @@ public:
   // Used to inform the EC that a Supplier has connected or
   // disconnected from it.
 
+  virtual void shutdown (CORBA::Environment&);
+  // The event channel is shutting down, inform all the consumers of
+  // this
+
   // = The RtecEventChannelAdmin::SupplierAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
       obtain_push_consumer (CORBA::Environment &);

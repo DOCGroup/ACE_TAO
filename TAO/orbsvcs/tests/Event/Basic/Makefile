@@ -12,7 +12,8 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-BIN2 =   Reconnect
+BIN2 =   Reconnect \
+	Shutdown
 
 #### If the orbsvcs library wasn't built with all components, don't
 #### try to build certain tests.
@@ -21,7 +22,7 @@ ifeq (Event2,$(findstring Event2,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
 endif # Event2
 
-SRC=$(addsuffix .cpp,$(BIN))
+PSRC=$(addsuffix .cpp,$(BIN))
 LIBS    += -lECTests -lorbsvcs -lTAO -lACE
 CPPFLAGS += -I../lib -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))

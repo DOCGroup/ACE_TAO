@@ -119,14 +119,23 @@ public:
   // and consumers, collect the latency and throughput results for
   // each and print the totals too.
 
-  virtual void deactivate_ec (CORBA::Environment& env);
-  // De-activate the EC (and its helper classes).
-
   virtual void disconnect_consumers (CORBA::Environment& env);
   // Disconnect all the consumers.
 
   virtual void disconnect_suppliers (CORBA::Environment& env);
   // Disconnect all the suppliers.
+
+  virtual void destroy_ec (CORBA::Environment& env);
+  // Call EC->destroy
+
+  virtual void deactivate_ec (CORBA::Environment& env);
+  // De-activate the EC (and its helper classes).
+
+  virtual void cleanup_ec (void);
+  virtual void cleanup_tasks (void);
+  virtual void cleanup_consumers (void);
+  virtual void cleanup_suppliers (void);
+  // Cleanup the resources
 
   virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
   // Allow modifications of the default EC attributes
@@ -143,6 +152,10 @@ public:
   virtual void consumer_disconnect (void* consumer_cookie,
                                     CORBA::Environment& ACE_TRY_ENV);
   // One of the consumers in the test has been disconnected from the EC
+
+  virtual void supplier_disconnect (void* supplier_cookie,
+                                    CORBA::Environment& ACE_TRY_ENV);
+  // One of the suppliers in the test has been disconnected from the EC
 
 #if !defined(EC_DISABLE_REMOTE_EC)
   virtual void obtain_remote_ec (CORBA::Environment& ACE_TRY_ENV);

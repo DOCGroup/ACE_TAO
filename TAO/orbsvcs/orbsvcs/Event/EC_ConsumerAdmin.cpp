@@ -88,6 +88,32 @@ TAO_EC_ConsumerAdmin::disconnected (TAO_EC_ProxyPushSupplier *supplier,
   this->supplier_set_->disconnected (supplier, ACE_TRY_ENV);
 }
 
+void
+TAO_EC_ConsumerAdmin::shutdown (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
+      ace_mon, this->busy_lock (),
+      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
+
+  SupplierSetIterator end = this->end ();
+  for (SupplierSetIterator i = this->begin ();
+       i != end;
+       ++i)
+    {
+      ACE_TRY
+        {
+          (*i)->shutdown (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          /* ignore all exceptions */
+        }
+      ACE_ENDTRY;
+    }
+}
+
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_EC_ConsumerAdmin::obtain_push_supplier (CORBA::Environment &ACE_TRY_ENV)
 {
