@@ -3,6 +3,12 @@ Mon Oct 26 08:22:18 1998  David L. Levine  <levine@cs.wustl.edu>
         * docs/ACE-guidelines.html: added recommendation and
           explanation re. use of #pragma once.
 
+        * tests/SV_Shared_Memory_Test.cpp: don't try to run this
+          test if ACE_LACKS_FORK, because it uses ACE_OS::fork ().
+          It allocates the shared memory segment before the fork,
+          of course, so that was leaked if the fork was attempted
+          but failed.
+
 Mon Oct 26 01:49:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/Env_Value_Test.cpp (main): Changed argv and envp to type
