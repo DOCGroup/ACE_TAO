@@ -391,7 +391,7 @@ ACE_String_Base<CHAR>::strstr (const ACE_String_Base<CHAR> &s) const
 template <class CHAR> ACE_INLINE ssize_t
 ACE_String_Base<CHAR>::rfind (CHAR c, ssize_t pos) const
 {
-  if (pos > ACE_static_cast (ssize_t, this->len_))
+  if (pos == npos || pos > ACE_static_cast (ssize_t, this->len_))
   {
     pos = ACE_static_cast (ssize_t, this->len_);
   }
