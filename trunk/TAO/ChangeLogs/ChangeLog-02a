@@ -1,3 +1,8 @@
+Sun Jan 27 15:04:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * Makefile.bor:
+          Added the XML library
+
 Sun Jan 27 00:52:49 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/ORT/ORT_test_IORInterceptor.cpp:
@@ -18,7 +23,7 @@ Sat Jan 26 23:09:56 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Moved template instantiations from `ORB.cpp' to this file. They
 	  aren't used in the former.
-	
+
 	* tao/Object_Ref_Table.h:
 	* tao/Object_Ref_Table.cpp:
 
