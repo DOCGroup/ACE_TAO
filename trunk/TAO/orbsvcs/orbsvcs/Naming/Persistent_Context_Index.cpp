@@ -28,7 +28,7 @@ TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::unbind (const char *poa_
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::bind (const char *poa_id,
                                                               ACE_UINT32 *&counter,
-                                                              CONTEXT *hash_map)
+                                                              TAO_Index::CONTEXT *hash_map)
 {
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
