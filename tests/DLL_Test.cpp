@@ -53,7 +53,7 @@ USELIB("..\ace\aced.lib");
 #endif /*ACE_WIN32*/
 
 
-static char const * 
+char const * 
 cdecl_decoration(char const * func_name)
 {
 #if defined(__BORLANDC__)
@@ -106,8 +106,9 @@ main (int argc, char *argv[])
   // function pointer. Doesnt allow:TC f = (TC) dll.symbol ("get_hello"); 
   void * foo;
 
-  foo = dll.symbol (cdecl_decoration("get_hello"));
-
+  char const *cdecl_str = cdecl_decoration("get_hello");
+  foo = dll.symbol (cdecl_str);
+  
   // Cast the void* to long first.
   long tmp = ACE_reinterpret_cast (long, foo);  
   TC f = ACE_reinterpret_cast (Hello * (*)(void), tmp);
