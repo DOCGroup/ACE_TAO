@@ -1,12 +1,12 @@
 /* $Id$ */
 
+#include "ace/OS.h"
 #include <stdio.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include "video.h"
 #include "proto.h"
 #include "ui.h"                         /* include user interface */
-#include "ace/OS.h"
 
 ACE_RCSID(mpeg_client, util32, "$Id$")
 

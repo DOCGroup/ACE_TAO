@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS.h"
 #include "Video_Control_State.h"
 #include "Video_Server.h"
 

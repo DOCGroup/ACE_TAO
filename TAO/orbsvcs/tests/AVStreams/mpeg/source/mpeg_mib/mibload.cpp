@@ -10,8 +10,8 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
 
 /* Author: Daeron Meyer */
 
-#include <stdlib.h>
 #include "mibload.h"
+#include <stdlib.h>
 #include "mibwidgets.h"
 
 ACE_RCSID(mpeg_mib, mibload, "$Id$")

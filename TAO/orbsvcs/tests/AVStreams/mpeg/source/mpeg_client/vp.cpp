@@ -46,6 +46,7 @@
  *         email: scen@cse.ogi.edu
  */
 
+#include "ace/OS.h"
 #include <stdio.h>
 #include <errno.h>
 #include <signal.h>

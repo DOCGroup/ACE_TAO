@@ -27,6 +27,7 @@
 
 extern int vdsp[2];
 
+#include "ace/OS.h"
 #include <stdio.h>
 #include <errno.h>
 #include <signal.h>

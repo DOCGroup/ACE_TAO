@@ -24,6 +24,8 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+#include "ace/OS.h"
+#include "include/common.h"
 #include <sys/types.h>
 #include <netdb.h>
 #include <string.h>
@@ -41,7 +43,6 @@
 #include <stdio.h>
 #include <errno.h>
 #include <signal.h>
-#include "include/common.h"
 #include "mpeg_shared/fileio.h"
 #include "mpeg_shared/routine.h"
 #include "mpeg_shared/com.h"
