@@ -503,8 +503,8 @@ ifneq ($(GENERATED_DIRTY),)
 ## ensure that those files are generated before we attempt to build anything
 ## else.
 ifeq ($(OBJS_DEPEND_ON_GENERATED),1)
-$(addprefix $(VDIR), $(OBJS)): $(GENERATED_DIRTY)
-$(VSHOBJS): $(GENERATED_DIRTY)
+$(VDIR)$(ACE_PCH_FILE) $(addprefix $(VDIR), $(OBJS)): $(GENERATED_DIRTY)
+$(VSHDIR)$(ACE_PCH_FILE) $(VSHOBJS): $(GENERATED_DIRTY)
 endif
 <%else%>
 <%foreach(requires)%>
