@@ -1518,7 +1518,7 @@ struct cancel_state
 # if defined (ACE_HAS_WINCE)
 #   include /**/ <types.h>
 
-typedef DWORD  nlink_t;
+//typedef DWORD  nlink_t;
 
 // CE's add-on for c-style fstat/stat functionalities.  This struct is
 // by no mean complete compared to what you usually find in UNIX
@@ -1527,15 +1527,27 @@ typedef DWORD  nlink_t;
 // non-supported members at compile time.  Time values are of type
 // ACE_Time_Value for easy comparison.
 
+// Since CE does not have _stat by default as NT/2000 does, the 'stat'
+// struct defined here will be used.  Also note that CE file system
+// struct is only for the CE 3.0 or later.
+// Refer to the WCHAR.H from Visual C++ and WIBASE.H from eVC 3.0.
+
+typedef unsigned int dev_t;
+
 struct stat
 {
-  //  mode_t   st_mode;    // UNIX styled file attribute
-  //  nlink_t  st_nlink;   // number of hard links
-  ACE_Time_Value st_atime; // time of last access
-  ACE_Time_Value st_mtime; // time of last data modification
-  off_t st_size;           // file size, in bytes
-  //  u_long   st_blksize; // optimal blocksize for I/O
-  //  u_long   st_flags;   // user defined flags for file
+    dev_t st_dev;             // always 0 on Windows platforms
+    dev_t st_rdev;            // always 0 on Windows platforms
+    unsigned short st_mode;   // file attribute
+    short st_nlink;           // number of hard links
+    ACE_Time_Value st_atime; // time of last access
+    ACE_Time_Value st_mtime; // time of last data modification
+    ACE_Time_Value st_ctime;  // time of creation
+    off_t st_size;           // file size, in bytes
+
+    // Following members do not have direct conversion in Window platforms.
+//    u_long st_blksize;        // optimal blocksize for I/O
+//    u_long st_flags;          // user defined flags for file
 };
 
 # else /* ! ACE_HAS_WINCE */
@@ -2948,9 +2960,15 @@ typedef void (*ACE_SignalHandlerV)(...);
 
 // The following are #defines and #includes that are specific to
 // WIN32.
+#   if defined (ACE_HAS_WINCE)
+#     define ACE_STDIN  _fileno (stdin)
+#     define ACE_STDOUT _fileno (stdout)
+#     define ACE_STDERR _fileno (stderr)
+#   else
 #   define ACE_STDIN GetStdHandle (STD_INPUT_HANDLE)
 #   define ACE_STDOUT GetStdHandle (STD_OUTPUT_HANDLE)
 #   define ACE_STDERR GetStdHandle (STD_ERROR_HANDLE)
+#   endif  // ACE_HAS_WINCE
 
 // Default semaphore key and mutex name
 #   if !defined (ACE_DEFAULT_SEM_KEY)
@@ -4723,10 +4741,12 @@ inline char *ace_cuserid(char *user)
 #define ACE_SHUTDOWN_BOTH 2
 #endif /* SD_RECEIVE */
 
+#if !defined (ACE_HAS_WINCE)
 // forward declarations of QoS data structures
 class ACE_QoS;
 class ACE_QoS_Params;
 class ACE_Accept_QoS_Params;
+#endif  // ACE_HAS_WINCE
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
@@ -4753,7 +4773,6 @@ typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (u_long error,
 typedef u_long ACE_SOCK_GROUP;
 
 #endif /* (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
-
 
 /**
  * @class ACE_OS
@@ -4807,7 +4826,7 @@ public:
    *
    * @brief OS file locking structure.
    */
-  class ace_flock_t
+  class ACE_OS_Export ace_flock_t
   {
   public:
   /// Dump state of the object.
@@ -5390,6 +5409,7 @@ public:
                     int cmd,
                     void * = 0);
 
+#if !defined (ACE_HAS_WINCE)
   /// QoS-enabled <ioctl>.
   static int ioctl (ACE_HANDLE socket,
                     u_long io_control_code,
@@ -5411,6 +5431,7 @@ public:
                     u_long buffer = 0,
                     ACE_OVERLAPPED *overlapped = 0,
                     ACE_OVERLAPPED_COMPLETION_FUNC func = 0);
+#endif  // ACE_HAS_WINCE
 
   static int isastream (ACE_HANDLE handle);
   static int isatty (int handle);
@@ -5729,6 +5750,7 @@ public:
                             struct sockaddr *addr,
                             int *addrlen);
 
+#if !defined (ACE_HAS_WINCE)
   /**
    * QoS-enabled <accept>, which passes <qos_params> to <accept>.  If
    * the OS platform doesn't support QoS-enabled <accept> then the
@@ -5738,10 +5760,14 @@ public:
                             struct sockaddr *addr,
                             int *addrlen,
                             const ACE_Accept_QoS_Params &qos_params);
+#endif  // ACE_HAS_WINCE
+
   /// BSD-style <connect> (no QoS).
   static int connect (ACE_HANDLE handle,
                       struct sockaddr *addr,
                       int addrlen);
+
+#if !defined (ACE_HAS_WINCE)
   /**
    * QoS-enabled <connect>, which passes <qos_params> to <connect>.
    * If the OS platform doesn't support QoS-enabled <connect> then the
@@ -5751,6 +5777,7 @@ public:
                       const sockaddr *addr,
                       int addrlen,
                       const ACE_QoS_Params &qos_params);
+#endif  // ACE_HAS_WINCE
 
   static int bind (ACE_HANDLE s,
                    struct sockaddr *name,
@@ -5816,11 +5843,15 @@ public:
   static int enum_protocols (int *protocols,
                              ACE_Protocol_Info *protocol_buffer,
                              u_long *buffer_length);
+
+#if !defined (ACE_HAS_WINCE)
   /// Joins a leaf node into a QoS-enabled multi-point session.
   static ACE_HANDLE join_leaf (ACE_HANDLE socket,
                                const sockaddr *name,
                                int namelen,
                                const ACE_QoS_Params &qos_params);
+#endif  // ACE_HAS_WINCE
+
   static int listen (ACE_HANDLE handle,
                      int backlog);
   static int recv (ACE_HANDLE handle,
@@ -7165,6 +7196,101 @@ ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
 } \
 int \
 ace_main_i
+#   elif defined (ACE_HAS_WINCE)
+/**
+ * @class ACE_CE_ARGV
+ *
+ * @brief This class is to hash input parameters, argc and argv, for WinCE platform.
+ *
+ * Since WinCE only supports wchar_t as an input from OS, some implementation detail,
+ * especially for CORBA spec, will not support ACE_TCHAR (wchar_t) type parameter.
+ * Moreover, WinCE's input parameter type is totally different than any other OS;
+ * all command line parameters will be stored in a single wide-character string with
+ * each unit parameter divided by blank space, and it does not provide the name of
+ * executable (generally known as argv[0]).
+ * This class is to convert CE's command line parameters and simulate as in the same
+ * manner as other general platforms, adding 'root' as a first argc, which is for the
+ * name of executable in other OS.
+ */
+class ACE_OS_Export ACE_CE_ARGV
+{
+public:
+    /**
+     * Ctor accepts CE command line as a paramter.
+     */
+    ACE_CE_ARGV(ACE_TCHAR* cmdLine);
+
+    /**
+     * Default Dtor that deletes any memory allocated for the converted string.
+     */
+    ~ACE_CE_ARGV(void);
+
+    /**
+     * Returns the number of command line paramters, same as argc on Unix.
+     */
+    int argc(void);
+
+    /**
+     * Returns the 'char**' that contains the converted command line parameters.
+     */
+    ACE_TCHAR** const argv(void);
+
+private:
+    /**
+     * Copy Ctor is not allowed.
+     */
+    ACE_CE_ARGV(void);
+
+    /**
+     * Copy Ctor is not allowed.
+     */
+    ACE_CE_ARGV(ACE_CE_ARGV&);
+
+    /**
+     * Pointer of converted command line paramters.
+     */
+    ACE_TCHAR** ce_argv_;
+
+    /**
+     * Integer that is same as argc on other OS's.
+     */
+    int ce_argc_;
+};
+
+#     define main \
+ace_main_i (int, ACE_TCHAR *[]);  /* forward declaration */ \
+int ACE_MAIN (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
+{ \
+  ACE_CE_ARGV ce_argv(lpCmdLine); \
+  ACE::init(); \
+  ACE_MAIN_OBJECT_MANAGER \
+  int i = ace_main_i (ce_argv.argc(), ce_argv.argv()); \
+  ACE::fini(); \
+  return i; \
+} \
+int ace_main_i
+
+#     define main_ce \
+ace_main_ce (int, ACE_TCHAR**); \
+extern BOOL InitInstance (HINSTANCE, int); \
+extern void InitSetup(); \
+int ACE_MAIN (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
+{ \
+    MSG msg; \
+    HACCEL hAccelTable; \
+    if (!InitInstance (hInstance, nCmdShow)) return FALSE; \
+    hAccelTable = LoadAccelerators(hInstance, (LPCTSTR)IDC_WINDOZECE); \
+    InitSetup(); \
+    while (GetMessage(&msg, NULL, 0, 0)) { \
+        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) { \
+            TranslateMessage(&msg); \
+            DispatchMessage(&msg); \
+        } \
+    } \
+    return msg.wParam; \
+} \
+int ace_main_ce
+
 #   else
 #     define main \
 ace_main_i (int, char *[]);                  /* forward declaration */ \
@@ -7190,80 +7316,6 @@ ace_main_i
 #     endif /* ACE_WIN32 && UNICODE */
 #   endif   /* ACE_PSOSIM */
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
-
-#if defined (ACE_HAS_WINCE)
-
-/**
- * @class ACE_CE_Bridge
- *
- * @brief This class bridges between ACE's default text output windows
- * and the original ACE program.
- *
- * As there is no such thing as text-based programs on Windows
- * CE.  We need to create a windows to read the command prompt
- * and bridge the output windows with the original ACE program
- * entry point.
- *
- * This class is obsolete and will be removed in the future version
- * of ACE.
- */
-class ACE_OS_Export ACE_CE_Bridge
-
-{
-public:
-  /// Default ctor.
-  ACE_CE_Bridge (void);
-
-  /// Construct and set the default windows.
-  ACE_CE_Bridge (HWND, int notification, int idc);
-
-  /// Default dtor.
-  ~ACE_CE_Bridge (void);
-
-  /// Specify which window to use.
-  void set_window (HWND, int notification, int idc);
-
-  /// Set the default window.
-  void set_self_default (void);
-
-  /// Access functions.
-  int notification (void);
-  int idc (void);
-  HWND window (void);
-
-  /// Get the reference of default ACE_CE_BRIDGE.
-  static ACE_CE_Bridge *get_default_winbridge (void);
-
-  /// Write a string to windows.
-  int write_msg (const ACE_TCHAR *str);
-
-#if 0
-  /// Write a CString to windows.  Notice that the CString object will
-  /// be freed by windows.
-  int write_msg (CString *cs);
-#endif /* 0 */
-private:
-  // @@ We should use a allocator here.
-
-  /// A pointer to the window that knows how to
-  /// handle ACE related messages.
-  HWND text_output_;
-
-  /// Notification of the window that receives WM_COMMAND when
-  /// outputing strings.
-  int notification_;
-
-  /// IDC code of the window that receives WM_COMMAND when
-  /// outputing strings.
-  int idc_;
-
-  ACE_TCHAR *cmdline_;
-
-  /// A pointer to the default ACE_CE_BRIDGE obj.
-  static ACE_CE_Bridge *default_text_bridge_;
-};
-
-# endif /* ACE_HAS_WINCE */
 
 # if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE) \
                          && ! defined (ACE_HAS_PHARLAP)

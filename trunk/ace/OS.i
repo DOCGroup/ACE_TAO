@@ -919,13 +919,11 @@ ACE_OS::fstat (ACE_HANDLE handle, ACE_stat *stp)
       stp->st_size = fdata.nFileSizeLow;
       stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
       stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
-#if !defined (ACE_HAS_WINCE)
       stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
       stp->st_nlink = ACE_static_cast (short, fdata.nNumberOfLinks);
       stp->st_dev = stp->st_rdev = 0; // No equivalent conversion.
       stp->st_mode = S_IXOTH | S_IROTH |
         (fdata.dwFileAttributes & FILE_ATTRIBUTE_READONLY ? 0 : S_IWOTH);
-#endif /* !ACE_HAS_WINCE */
     }
   return 0;
 # else /* 1 */
@@ -3296,7 +3294,9 @@ ACE_OS::mmap (void *addr,
 
   if (ACE_BIT_ENABLED (flags, MAP_PRIVATE))
     {
+#if !defined(ACE_HAS_WINCE)
       prot = PAGE_WRITECOPY;
+#endif  // ACE_HAS_WINCE
       nt_flags = FILE_MAP_COPY;
     }
   else if (ACE_BIT_ENABLED (flags, MAP_SHARED))
@@ -3362,6 +3362,11 @@ ACE_OS::mmap (void *addr,
                                         0,
                                         off,
                                         len);
+
+  if (addr_mapping != 0) {
+      addr = addr_mapping;
+  }
+
 # endif /* ! ACE_HAS_WINCE */
 
   // Only close this down if we used the temporary.
@@ -6014,13 +6019,9 @@ ACE_OS::fclose (FILE *fp)
 {
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_fclose (fp), int, -1);
-#elif !defined (ACE_HAS_WINCE)
+#else
   ACE_OS_TRACE ("ACE_OS::fclose");
   ACE_OSCALL_RETURN (::fclose (fp), int, -1);
-#else
-  // On CE, FILE * == void * == HANDLE
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL(::CloseHandle (fp), ace_result_),
-                        int, -1);
 #endif /* ACE_HAS_PACE */
 }
 
@@ -6063,11 +6064,6 @@ ACE_OS::freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream)
   ACE_OS_TRACE ("ACE_OS::freopen");
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_freopen (filename, mode, stream), FILE*, 0);
-#elif defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (filename);
-  ACE_UNUSED_ARG (mode);
-  ACE_UNUSED_ARG (stream);
-  ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wfreopen (filename, mode, stream), FILE *, 0);
 #else
@@ -6096,23 +6092,6 @@ ACE_OS::fread (void *ptr, size_t size, size_t nelems, FILE *fp)
   ACE_OS_TRACE ("ACE_OS::fread");
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_fread (ptr, size, nelems, fp), int, 0);
-#elif defined (ACE_HAS_WINCE)
-  DWORD len = 0;
-  size_t tlen = size * nelems;
-
-  if (::ReadFile (fp, ptr, tlen, &len, NULL) == FALSE)
-    {
-      ACE_OS::set_errno_to_last_error ();
-      return -1;
-    }
-  else if (tlen != len)
-    {
-      // only return length of multiple of <size>
-      len = (len / size) * size ;
-      // then rewind file pointer.
-      ::SetFilePointer (fp, (len - tlen), 0, FILE_CURRENT);
-    }
-  return len;
 #elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::fread ((char *) ptr, size, nelems, fp), int, 0);
 #else
@@ -6126,23 +6105,6 @@ ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
   ACE_OS_TRACE ("ACE_OS::fwrite");
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_fwrite (ptr, size, nitems, fp), int, 0);
-#elif defined (ACE_HAS_WINCE)
-  DWORD len = 0;
-  size_t tlen = size * nitems;
-
-  if (::WriteFile (fp, ptr, tlen, &len, NULL) == FALSE)
-    {
-      ACE_OS::set_errno_to_last_error ();
-      return -1;
-    }
-  else if (tlen != len)
-    {
-      // only return length of multiple of <size>
-      len = (len / size) * size ;
-      // then rewind file pointer.
-      ::SetFilePointer (fp, (len - tlen), 0, FILE_CURRENT);
-    }
-  return len;
 #elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::fwrite ((const char *) ptr, size, nitems, fp), int, 0);
 #else
@@ -6764,9 +6726,6 @@ ACE_OS::perror (const ACE_TCHAR *s)
 #endif /* ACE_HAS_PACE */
 }
 
-
-// @@ WINCE: Do we need to implement puts on WinCE???
-#if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
 ACE_OS::puts (const ACE_TCHAR *s)
 {
@@ -6792,7 +6751,6 @@ ACE_OS::fputs (const ACE_TCHAR *s, FILE *stream)
   ACE_OSCALL_RETURN (::fputs (s, stream), int, -1);
 #endif /* ACE_HAS_PACE */
 }
-#endif /* ! ACE_HAS_WINCE */
 
 ACE_INLINE ACE_SignalHandler
 ACE_OS::signal (int signum, ACE_SignalHandler func)
@@ -8181,17 +8139,19 @@ ACE_OS::access (const char *path, int amode)
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_access (path, amode), int, -1);
 #elif defined (ACE_LACKS_ACCESS)
-  ACE_UNUSED_ARG (path);
-  ACE_UNUSED_ARG (amode);
-  ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_HAS_WINCE)
+#  if defined (ACE_HAS_WINCE)
   // @@ WINCE: There should be a Win32 API that can do this.
   // Hard coded read access here.
-  FILE* handle = ACE_OS::fopen (path, ACE_LIB_TEXT ("r"));
+    FILE* handle = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(path), ACE_LIB_TEXT ("r"));
   ACE_UNUSED_ARG (amode);
 
   ACE_OS::fclose (handle);
   return (handle == ACE_INVALID_HANDLE ? -1 : 0);
+#  else
+    ACE_UNUSED_ARG (path);
+    ACE_UNUSED_ARG (amode);
+    ACE_NOTSUP_RETURN (-1);
+#  endif  // ACE_HAS_WINCE
 #else
   ACE_OSCALL_RETURN (::access (path, amode), int, -1);
 #endif /* ACE_HAS_PACE */
@@ -9883,13 +9843,14 @@ ACE_OS::execvp (const char *file,
 #endif /* ACE_HAS_PACE */
 }
 
-#if !defined (ACE_HAS_WINCE)
 ACE_INLINE FILE *
 ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fdopen");
 #if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_fdopen (handle, mode), FILE*, 0);
+# elif defined (ACE_HAS_WINCE)
+  ACE_OSCALL_RETURN (::_wfdopen (handle, mode), FILE*, 0);
 # elif defined (ACE_WIN32)
   // kernel file handle -> FILE* conversion...
   // Options: _O_APPEND, _O_RDONLY and _O_TEXT are lost
@@ -9930,7 +9891,6 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
   ACE_OSCALL_RETURN (::fdopen (handle, mode), FILE *, 0);
 # endif /* ACE_HAS_PACE */
 }
-#endif /* ! ACE_HAS_WINCE */
 
 ACE_INLINE int
 ACE_OS::getrlimit (int resource, struct rlimit *rl)
@@ -10455,9 +10415,7 @@ ACE_OS::fseek (FILE *fp, long offset, int whence)
 {
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_fseek (fp, offset, whence), int, -1);
-#elif defined (ACE_HAS_WINCE)
-  return ACE_OS::lseek (fp, offset, whence);
-#else /* ACE_HAS_WINCE */
+#else
 # if defined (ACE_WIN32)
 #   if SEEK_SET != FILE_BEGIN || SEEK_CUR != FILE_CURRENT || SEEK_END != FILE_END
   //#error Windows NT is evil AND rude!
@@ -10984,13 +10942,13 @@ ACE_INLINE int
 ACE_OS::putenv (const ACE_TCHAR *string)
 {
   ACE_OS_TRACE ("ACE_OS::putenv");
-#if defined (ACE_LACKS_ENV)
-  ACE_UNUSED_ARG (string);
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_WINCE) || defined (ACE_PSOS)
+#if defined (ACE_HAS_WINCE) || defined (ACE_PSOS)
   // WinCE and pSOS don't have the concept of environment variables.
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_ENV)
+  ACE_UNUSED_ARG (string);
+  ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wputenv (string), int, -1);
 #else /* ! ACE_HAS_WINCE && ! ACE_PSOS */
@@ -11591,12 +11549,12 @@ ACE_OS::fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode)
 ACE_INLINE ACE_TCHAR *
 ACE_OS::strenvdup (const ACE_TCHAR *str)
 {
-# if defined (ACE_LACKS_ENV)
-  ACE_UNUSED_ARG (str);
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE)
   // WinCE doesn't have environment variables so we just skip it.
   return ACE_OS::strdup (str);
+#elif defined (ACE_LACKS_ENV)
+  ACE_UNUSED_ARG (str);
+  ACE_NOTSUP_RETURN (0);
 #else
   ACE_TCHAR *temp = 0;
 
@@ -11665,3 +11623,17 @@ ACE_OS::set_win32_resource_module (HINSTANCE instance)
   ACE_OS::win32_resource_module_ = instance;
 }
 #endif /* ACE_WIN32 */
+
+#if defined (ACE_HAS_WINCE)
+ACE_INLINE int
+ACE_CE_ARGV::argc()
+{
+    return ce_argc_;
+}
+
+ACE_INLINE ACE_TCHAR** const
+ACE_CE_ARGV::argv()
+{
+    return ce_argv_;
+}
+#endif  // ACE_HAS_WINCE
