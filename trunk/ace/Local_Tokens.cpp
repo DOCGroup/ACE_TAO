@@ -1,4 +1,3 @@
-// Local_Tokens.cpp
 // $Id$
 
 #include "ace/Thread.h"
@@ -17,9 +16,9 @@ ACE_Tokens::dump (void) const
   ACE_TRACE ("ACE_Tokens::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Tokens::dump:\n")
-			ACE_TEXT (" reference_cont_ = %d\n")
-			ACE_TEXT (" token_name_ = %s\n"),
-			reference_count_, token_name_));
+                        ACE_TEXT (" reference_cont_ = %d\n")
+                        ACE_TEXT (" token_name_ = %s\n"),
+                        reference_count_, token_name_));
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiters_\n")));
   this->waiters_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -55,11 +54,11 @@ ACE_TPQ_Entry::dump (void) const
   ACE_TRACE ("ACE_TPQ_Entry::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("ACE_TPQ_Entry::dump:\n")
-	      ACE_TEXT (" nesting_level_ = %d\n")
-	      ACE_TEXT (" client_id_ = %s\n"),
-	      nesting_level_,
-	      client_id_));
+              ACE_TEXT ("ACE_TPQ_Entry::dump:\n")
+              ACE_TEXT (" nesting_level_ = %d\n")
+              ACE_TEXT (" client_id_ = %s\n"),
+              nesting_level_,
+              client_id_));
 
   if (next_ != 0)
     {
@@ -72,7 +71,7 @@ ACE_TPQ_Entry::dump (void) const
 }
 
 ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
-			      const ACE_TCHAR *client_id)
+                              const ACE_TCHAR *client_id)
   : cond_var_ (lock_),
     next_ (0),
     // This const typecast is safe.
@@ -92,10 +91,10 @@ ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
       ACE_OS::hostname (host_name, sizeof host_name);
 
       ACE_OS::sprintf (name,
-		       ACE_TEXT ("/%s/%u/%lu"),
-		       host_name,
-		       ACE_static_cast (unsigned int, ACE_OS::getpid ()),
-		       ACE_Thread::self ());
+                       ACE_TEXT ("/%s/%u/%lu"),
+                       host_name,
+                       ACE_static_cast (u_int, ACE_OS::getpid ()),
+                       ACE_static_cast (u_long, ACE_Thread::self ()));
 
       this->client_id (name);
     }
@@ -158,12 +157,12 @@ ACE_TSS_TPQ_Entry::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
   ACE_DEBUG ((LM_DEBUG,  (char *) "ACE_TSS_TPQ_Entry::dump:\n",
-			(char *) " client_id_ = %s\n",
-			(char *) client_id_ == 0 ? (char *) "0" : (char *) client_id_));
+                        (char *) " client_id_ = %s\n",
+                        (char *) client_id_ == 0 ? (char *) "0" : (char *) client_id_));
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_TSS_TPQ_Entry::dump:\n")
-			ACE_TEXT (" client_id_ = %s\n"),
-			client_id_ == 0 ? ACE_TEXT ("0") : client_id_));
+                        ACE_TEXT (" client_id_ = %s\n"),
+                        client_id_ == 0 ? ACE_TEXT ("0") : client_id_));
 #endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("base:\n")));
   ACE_TPQ_ENTRY::dump ();
@@ -171,7 +170,7 @@ ACE_TSS_TPQ_Entry::dump (void) const
 }
 
 ACE_TSS_TPQ_Entry::ACE_TSS_TPQ_Entry (const ACE_Token_Proxy *proxy,
-				      const ACE_TCHAR *client_id)
+                                      const ACE_TCHAR *client_id)
 : proxy_ (proxy),
   client_id_ (client_id)
 {
@@ -245,8 +244,8 @@ ACE_TPQ_Iterator::dump (void) const
   ACE_TRACE ("ACE_TPQ_Iterator::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_TPQ_Iterator::dump:\n")
-	      ACE_TEXT (" current_ = %d\n"),
-	      (long) this->current_));
+              ACE_TEXT (" current_ = %d\n"),
+              (long) this->current_));
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("head_ and tail_\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -257,8 +256,8 @@ ACE_Token_Proxy_Queue::dump (void) const
   ACE_TRACE ("ACE_Token_Proxy_Queue::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Token_Proxy_Queue::dump:\n")
-			ACE_TEXT (" size_ = %d\n"),
-			size_));
+                        ACE_TEXT (" size_ = %d\n"),
+                        size_));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("head_ and tail_\n")));
   if (this->head_ != 0)
     this->head_->dump ();
@@ -277,7 +276,7 @@ ACE_Token_Proxy_Queue::ACE_Token_Proxy_Queue (void)
 
 void
 ACE_Token_Proxy_Queue::enqueue (ACE_TPQ_Entry *tpq,
-				int position)
+                                int position)
 {
   ACE_TRACE ("ACE_Token_Proxy_Queue::enqueue");
   tpq->next_ = 0;
@@ -316,10 +315,10 @@ ACE_Token_Proxy_Queue::enqueue (ACE_TPQ_Entry *tpq,
     {
       // end of queue?
       if (temp->next_ == 0)
-	break;
+        break;
       // advance pointer
       else
-	temp = temp->next_;
+        temp = temp->next_;
     }
 
   // insert new tpq after temp
@@ -380,7 +379,7 @@ ACE_Token_Proxy_Queue::remove (const ACE_TPQ_Entry *remove_me)
     {
       this->head_ = this->head_->next_;
       if (this->head_ == 0)
-	this->tail_ = 0;
+        this->tail_ = 0;
 
       --this->size_;
       return;
@@ -393,17 +392,17 @@ ACE_Token_Proxy_Queue::remove (const ACE_TPQ_Entry *remove_me)
   while (temp != 0)
     {
       if (temp == remove_me)
-	{
-	  // previous should never be null since the first if
-	  // conditional should always be false
-	  previous->next_ = temp->next_;
-	  // is it the tail?
-	  if (this->tail_ == temp)
-	    this->tail_ = previous;
+        {
+          // previous should never be null since the first if
+          // conditional should always be false
+          previous->next_ = temp->next_;
+          // is it the tail?
+          if (this->tail_ == temp)
+            this->tail_ = previous;
 
-	  --this->size_;
-	  return;
-	}
+          --this->size_;
+          return;
+        }
 
       previous = temp;
       temp = temp->next_;
@@ -447,8 +446,8 @@ ACE_Mutex_Token::~ACE_Mutex_Token (void)
 
 int
 ACE_Mutex_Token::acquire (ACE_TPQ_Entry *caller,
-			  int ignore_deadlock,
-			  int notify)
+                          int ignore_deadlock,
+                          int notify)
 {
   ACE_TRACE ("ACE_Mutex_Token::acquire");
   // We need to acquire two locks. This one to ensure that only one
@@ -529,7 +528,7 @@ ACE_Mutex_Token::tryacquire (ACE_TPQ_Entry *caller)
 
 int
 ACE_Mutex_Token::renew (ACE_TPQ_Entry *caller,
-			int requeue_position)
+                        int requeue_position)
 {
   ACE_TRACE ("ACE_Mutex_Token::renew");
   ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_, -1);
@@ -582,14 +581,14 @@ ACE_Mutex_Token::release (ACE_TPQ_Entry *caller)
     {
       // Check the nesting level.
       if (caller->nesting_level () > 0)
-	caller->nesting_level (-1);
+        caller->nesting_level (-1);
       else
-	{
-	  this->waiters_.dequeue ();
-	  // Notify new owner.
-	  if (this->owner () != 0)
-	    this->owner ()->proxy ()->token_acquired (this->owner ());
-	}
+        {
+          this->waiters_.dequeue ();
+          // Notify new owner.
+          if (this->owner () != 0)
+            this->owner ()->proxy ()->token_acquired (this->owner ());
+        }
     }
   else
     this->remove (caller);
@@ -599,7 +598,7 @@ ACE_Mutex_Token::release (ACE_TPQ_Entry *caller)
 
 int
 ACE_Mutex_Token::owners (OWNER_STACK &stack,
-			 const ACE_TCHAR *id)
+                         const ACE_TCHAR *id)
 {
   ACE_TRACE ("ACE_Mutex_Token::owners");
   if (this->owner () != 0)
@@ -608,7 +607,7 @@ ACE_Mutex_Token::owners (OWNER_STACK &stack,
       // If an <id> is specified, return whether it is the owner being
       // returned.
       if (id != 0)
-	return this->owner ()->equal_client_id (id);
+        return this->owner ()->equal_client_id (id);
     }
 
   return 0;
@@ -630,7 +629,7 @@ ACE_Mutex_Token::is_waiting_for (const ACE_TCHAR *id)
        iterator.advance ())
     {
       if (temp->equal_client_id (id))
-	return 1;
+        return 1;
     }
 
   return 0;
@@ -654,7 +653,7 @@ ACE_RW_Token::dump (void) const
   ACE_TRACE ("ACE_RW_Token::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_RW_Token::dump:\n")
-			ACE_TEXT ("num_writers_ = %d\n"), num_writers_));
+                        ACE_TEXT ("num_writers_ = %d\n"), num_writers_));
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("lock_\n")));
   this->lock_.dump ();
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("base:\n")));
@@ -684,8 +683,8 @@ ACE_RW_Token::~ACE_RW_Token (void)
 
 int
 ACE_RW_Token::acquire (ACE_TPQ_Entry *caller,
-		       int ignore_deadlock,
-		       int notify)
+                       int ignore_deadlock,
+                       int notify)
 {
   ACE_TRACE ("ACE_RW_Token::acquire");
   // We need to acquire two locks. This one to ensure that only one
@@ -719,11 +718,11 @@ ACE_RW_Token::acquire (ACE_TPQ_Entry *caller,
     {
       // Are there any writers?
       if (this->num_writers_ == 0)
-	{
-	  // Queue the caller at the end of the queue.
-	  this->waiters_.enqueue (caller, -1);
-	  return 0;
-	}
+        {
+          // Queue the caller at the end of the queue.
+          this->waiters_.enqueue (caller, -1);
+          return 0;
+        }
       // Else failure.
     }
 
@@ -734,7 +733,7 @@ ACE_RW_Token::acquire (ACE_TPQ_Entry *caller,
       ACE_Token_Manager::instance ()->check_deadlock (caller->proxy ()) == 1)
     {
       if (caller->proxy ()->type () == ACE_RW_Token::WRITER)
-	this->num_writers_--;
+        this->num_writers_--;
       errno = EDEADLK;
       ACE_RETURN (-1);
     }
@@ -746,19 +745,19 @@ ACE_RW_Token::acquire (ACE_TPQ_Entry *caller,
     {
       // If it's a writer, just notify it.
       if (this->owner ()->proxy ()->type () == ACE_RW_Token::WRITER)
-	this->owner ()->call_sleep_hook ();
+        this->owner ()->call_sleep_hook ();
       else
-	{
-	  // Call back all reader owners.
-	  ACE_TPQ_Entry *temp = this->owner ();
-	  do
-	    {
-	      temp->call_sleep_hook ();
-	      temp = temp->next_;
-	    }
-	  while (temp != 0 &&
-		 temp->proxy ()->type () == ACE_RW_Token::READER);
-	}
+        {
+          // Call back all reader owners.
+          ACE_TPQ_Entry *temp = this->owner ();
+          do
+            {
+              temp->call_sleep_hook ();
+              temp = temp->next_;
+            }
+          while (temp != 0 &&
+                 temp->proxy ()->type () == ACE_RW_Token::READER);
+        }
     }
 
   errno = EWOULDBLOCK;
@@ -802,11 +801,11 @@ ACE_RW_Token::tryacquire (ACE_TPQ_Entry *caller)
     {
       // Are there any writers?
       if (this->num_writers_ == 0)
-	{
-	  // queue the caller at the end of the queue.
-	  this->waiters_.enqueue (caller, -1);
-	  return 0;
-	}
+        {
+          // queue the caller at the end of the queue.
+          this->waiters_.enqueue (caller, -1);
+          return 0;
+        }
       // Else, fail.
     }
   else // Writer.
@@ -822,7 +821,7 @@ ACE_RW_Token::tryacquire (ACE_TPQ_Entry *caller)
 
 int
 ACE_RW_Token::renew (ACE_TPQ_Entry *caller,
-		     int requeue_position)
+                     int requeue_position)
 {
   ACE_TRACE ("ACE_RW_Token::renew");
   ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_, -1);
@@ -850,7 +849,7 @@ ACE_RW_Token::renew (ACE_TPQ_Entry *caller,
       // If the caller got queued before any writers, the caller is
       // still the owner.
       if (this->is_owner (caller->client_id ()))
-	return 0; // success
+        return 0; // success
       // else fallthrough and return would block.
     }
   // Writers will always have to block since waiters_.size () == 1 or
@@ -906,23 +905,23 @@ ACE_RW_Token::notify_new_owner (ACE_TPQ_Entry *old_owner)
   if (this->owner ()->proxy ()->type () == ACE_RW_Token::READER)
     {
       if (old_owner->proxy ()->type () == ACE_RW_Token::READER)
-	// the owners already know that they're owners
-	return;
+        // the owners already know that they're owners
+        return;
 
       // The current owner is a reader and the previous owner was a
       // writer, so notify all waiting readers up to the first writer.
       // call back all reader owners.
       ACE_TPQ_Iterator iterator (waiters_);
       for (ACE_TPQ_Entry *temp = 0;
-	   iterator.next (temp) != 0;
-	   iterator.advance ())
-	{
-	  if (temp->proxy ()->type () == WRITER)
-	    // We've gone through all the readers.
-	    break;
+           iterator.next (temp) != 0;
+           iterator.advance ())
+        {
+          if (temp->proxy ()->type () == WRITER)
+            // We've gone through all the readers.
+            break;
 
-	  temp->proxy ()->token_acquired (temp);
-	}
+          temp->proxy ()->token_acquired (temp);
+        }
     }
   else // writer
     this->owner ()->proxy ()->token_acquired (this->owner ());
@@ -931,7 +930,7 @@ ACE_RW_Token::notify_new_owner (ACE_TPQ_Entry *old_owner)
 
 int
 ACE_RW_Token::owners (OWNER_STACK &stack,
-		      const ACE_TCHAR *id)
+                      const ACE_TCHAR *id)
 {
   ACE_TRACE ("ACE_RW_Token::owners");
 
@@ -947,8 +946,8 @@ ACE_RW_Token::owners (OWNER_STACK &stack,
       // If an <id> is specified, return whether it is the owner being
       // returned.
       if ((id != 0) &&
-	  (ACE_OS::strcmp (id, this->owner ()->client_id ()) == 0))
-	id_is_owner = 1;
+          (ACE_OS::strcmp (id, this->owner ()->client_id ()) == 0))
+        id_is_owner = 1;
     }
   // The first waiter is a reader, so there can be multiple owning
   // readers.
@@ -956,19 +955,19 @@ ACE_RW_Token::owners (OWNER_STACK &stack,
     {
       ACE_TPQ_Iterator iterator (waiters_);
       for (ACE_TPQ_Entry *temp = 0;
-	   iterator.next (temp) != 0;
-	   iterator.advance ())
-	{
-	  if (temp->proxy ()->type () == WRITER)
-	    // We've gone through all the readers.
-	    break;
+           iterator.next (temp) != 0;
+           iterator.advance ())
+        {
+          if (temp->proxy ()->type () == WRITER)
+            // We've gone through all the readers.
+            break;
 
-	  stack.push (temp);
+          stack.push (temp);
 
-	  if (!id_is_owner && (id != 0) &&
-	      (ACE_OS::strcmp (id, temp->client_id ()) == 0))
-	    id_is_owner = 1;
-	}
+          if (!id_is_owner && (id != 0) &&
+              (ACE_OS::strcmp (id, temp->client_id ()) == 0))
+            id_is_owner = 1;
+        }
     }
 
   return id_is_owner;
@@ -991,7 +990,7 @@ ACE_RW_Token::is_waiting_for (const ACE_TCHAR *id)
        iterator.advance ())
     {
       if (temp->equal_client_id (id))
-	return 1;
+        return 1;
     }
 
   return 0;
@@ -1017,10 +1016,10 @@ ACE_RW_Token::is_owner (const ACE_TCHAR *id)
        iterator.advance ())
     {
       if (temp->proxy ()->type () != ACE_RW_Token::READER)
-	break;
+        break;
 
       if (temp->equal_client_id (id))
-	return 1;
+        return 1;
     }
 
   return 0;
@@ -1032,10 +1031,10 @@ ACE_Token_Proxy::dump (void) const
   ACE_TRACE ("ACE_Token_Proxy::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Token_Proxy::dump:\n")
-			ACE_TEXT (" type = %d\n")
-			ACE_TEXT (" ignore_deadlock_ = %d\n")
-			ACE_TEXT (" debug_ = %d\n"),
-			(int) this->type (), ignore_deadlock_, debug_));
+                        ACE_TEXT (" type = %d\n")
+                        ACE_TEXT (" ignore_deadlock_ = %d\n")
+                        ACE_TEXT (" debug_ = %d\n"),
+                        (int) this->type (), ignore_deadlock_, debug_));
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("mutex_, and waiter_\n")));
 
   if (this->token_ != 0)
@@ -1115,8 +1114,8 @@ ACE_Token_Proxy::~ACE_Token_Proxy (void)
 
 int
 ACE_Token_Proxy::open (const ACE_TCHAR *token_name,
-		       int ignore_deadlock,
-		       int debug)
+                       int ignore_deadlock,
+                       int debug)
 {
   ACE_TRACE ("ACE_Token_Proxy::open");
 
@@ -1151,8 +1150,8 @@ ACE_Token_Proxy::open (const ACE_TCHAR *token_name,
 
 int
 ACE_Token_Proxy::acquire (int notify,
-			  void (*sleep_hook)(void *),
-			  ACE_Synch_Options &options)
+                          void (*sleep_hook)(void *),
+                          ACE_Synch_Options &options)
 {
   ACE_TRACE ("ACE_Token_Proxy::acquire");
   if (this->token_ == 0)
@@ -1175,52 +1174,52 @@ ACE_Token_Proxy::acquire (int notify,
     // acquire failed
     {
       switch (errno)
-	{
-	case EDEADLK :
-	  if (!ignore_deadlock_)
-	    {
-	      waiter_->cond_var_.mutex ().release ();
-	      errno = EDEADLK;
-	      ACE_RETURN (-1);
-	    }
-	  // Else, fallthrough and block!
+        {
+        case EDEADLK :
+          if (!ignore_deadlock_)
+            {
+              waiter_->cond_var_.mutex ().release ();
+              errno = EDEADLK;
+              ACE_RETURN (-1);
+            }
+          // Else, fallthrough and block!
 
-	case EWOULDBLOCK :
-	  if (this->debug_)
-	    ACE_DEBUG ((LM_DEBUG,
-			ACE_TEXT ("(%t) waiting for %s, owner is %s, ")
-			ACE_TEXT ("total waiters == %d\n"),
-			this->name (),
-			this->token_->owner_id (),
-			token_->no_of_waiters ()));
+        case EWOULDBLOCK :
+          if (this->debug_)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%t) waiting for %s, owner is %s, ")
+                        ACE_TEXT ("total waiters == %d\n"),
+                        this->name (),
+                        this->token_->owner_id (),
+                        token_->no_of_waiters ()));
 
-	  // no error, but would block, if error, return error (-1),
-	  // otherwise, return whether we called the holder or not.
-	  int return_value;
-	  if (this->handle_options (options,
+          // no error, but would block, if error, return error (-1),
+          // otherwise, return whether we called the holder or not.
+          int return_value;
+          if (this->handle_options (options,
                                     waiter_->cond_var_) == -1)
-	    return_value = -1;
-	  else
-	    return_value = notify == 1;
+            return_value = -1;
+          else
+            return_value = notify == 1;
 
-	  errno = EWOULDBLOCK;
-	  ACE_RETURN (return_value);
+          errno = EWOULDBLOCK;
+          ACE_RETURN (return_value);
 
-	default :
-	  waiter_->cond_var_.mutex ().release ();
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     ACE_TEXT ("%p\n"),
+        default :
+          waiter_->cond_var_.mutex ().release ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
                              ACE_TEXT ("Token Proxy acquire.")),
                             -1);
-	}
+        }
     }
   else
     // we have the token
     {
       if (debug_)
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) acquired %s\n"),
-		    this->name ()));
+                    this->name ()));
       waiter_->cond_var_.mutex ().release ();
     }
 
@@ -1246,7 +1245,7 @@ ACE_Token_Proxy::tryacquire (void (*sleep_hook)(void *))
 
 int
 ACE_Token_Proxy::renew (int requeue_position,
-			ACE_Synch_Options &options)
+                        ACE_Synch_Options &options)
 {
   ACE_TRACE ("ACE_Token_Proxy::renew");
   if (this->token_ == 0)
@@ -1265,13 +1264,13 @@ ACE_Token_Proxy::renew (int requeue_position,
     {
       // check for error
       if (errno != EWOULDBLOCK)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   ACE_TEXT ("%p renew failed\n"), ACE_TEXT ("ACE_Token_Proxy")), -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p renew failed\n"), ACE_TEXT ("ACE_Token_Proxy")), -1);
 
       if (this->debug_)
-	ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renew blocking for %s, owner is %s\n"),
-		    this->name (),
-		    token_->owner_id ()));
+        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renew blocking for %s, owner is %s\n"),
+                    this->name (),
+                    token_->owner_id ()));
 
       // no error, but would block, so block or return
       return this->handle_options (options, waiter_->cond_var_);
@@ -1280,8 +1279,8 @@ ACE_Token_Proxy::renew (int requeue_position,
     // we have the token
     {
       if (this->debug_)
-	ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renewed %s\n"),
-		    this->name ()));
+        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renewed %s\n"),
+                    this->name ()));
       waiter_->cond_var_.mutex ().release ();
       return 0;
     }
@@ -1289,7 +1288,7 @@ ACE_Token_Proxy::renew (int requeue_position,
 
 int
 ACE_Token_Proxy::handle_options (ACE_Synch_Options &options,
-				 ACE_TOKEN_CONST::COND_VAR &cv)
+                                 ACE_TOKEN_CONST::COND_VAR &cv)
 {
   // Some operation failed with EWOULDBLOCK.
   ACE_TRACE ("ACE_Token_Proxy::handle_options");
@@ -1307,21 +1306,21 @@ ACE_Token_Proxy::handle_options (ACE_Synch_Options &options,
     {
       // Block on condition variable.
       while (cv.wait ((ACE_Time_Value *) options.time_value ()) == -1)
-	{
-	  // Note, this should obey whatever thread-specific
-	  // interrupt policy is currently in place...
-	  if (errno == EINTR)
-	    continue;
-	  // We come here if a timeout occurs or some serious
-	  // ACE_Condition object error.
-	  cv.mutex ().release ();
-	  ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("condition variable wait")
-			     ACE_TEXT (" bombed.")), -1);
-	}
+        {
+          // Note, this should obey whatever thread-specific
+          // interrupt policy is currently in place...
+          if (errno == EINTR)
+            continue;
+          // We come here if a timeout occurs or some serious
+          // ACE_Condition object error.
+          cv.mutex ().release ();
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("condition variable wait")
+                             ACE_TEXT (" bombed.")), -1);
+        }
 
       if (this->debug_)
-	ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) unblocking.\n"),
-		    this->client_id ()));
+        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) unblocking.\n"),
+                    this->client_id ()));
       cv.mutex ().release ();
       return 0;       // operation succeeded
     }
@@ -1336,7 +1335,7 @@ ACE_Token_Proxy::release (ACE_Synch_Options &)
     {
       errno = ENOENT;
       if (debug_)
-	ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("Must open before releasing.\n")));
+        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("Must open before releasing.\n")));
       ACE_RETURN (-1);
     }
 
@@ -1345,15 +1344,15 @@ ACE_Token_Proxy::release (ACE_Synch_Options &)
       // Release failed.
       this->token_->remove (this->waiter_);
       if (debug_)
-	ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) %p.\n"), ACE_TEXT ("release failed")));
+        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) %p.\n"), ACE_TEXT ("release failed")));
       return -1;
     }
   else
     {
       if (this->debug_)
-	ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) released %s, owner is %s\n"),
-		    this->name (),
-		    token_->owner_id ()));
+        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) released %s, owner is %s\n"),
+                    this->name (),
+                    token_->owner_id ()));
 
       return 0;
     }
@@ -1413,12 +1412,12 @@ ACE_Token_Name::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
   ACE_DEBUG ((LM_DEBUG,  (char *) "ACE_Token_Name::dump:\n",
-			(char *) " token_name_ = %s\n",
-	      (char *) token_name_ == 0 ? (char *) "no name" : (char *) token_name_));
+                        (char *) " token_name_ = %s\n",
+              (char *) token_name_ == 0 ? (char *) "no name" : (char *) token_name_));
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Token_Name::dump:\n")
-			ACE_TEXT (" token_name_ = %s\n"),
-	      token_name_ == 0 ? ACE_TEXT ("no name") : token_name_));
+                        ACE_TEXT (" token_name_ = %s\n"),
+              token_name_ == 0 ? ACE_TEXT ("no name") : token_name_));
 #endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }

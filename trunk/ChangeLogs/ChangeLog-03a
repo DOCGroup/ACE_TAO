@@ -1,8 +1,14 @@
+Tue Jul 11 07:42:57 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Local_Tokens.cpp (ACE_TPQ_Entry ctor): cast result
+          to ACE_Thread::self () to u_long, to avoid mismatch with
+          %lu sprintf parameter.
+
 Tue Jul 11 06:21:35 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* apps/Gateway/Peer/Peer.cpp (transmit): The last two arguments to
-	  Event_Header were reversed!  Thanks to Kim Lester
- 	  <Kim_R_Lester@rta.nsw.gov.au> for reporting this.
+        * apps/Gateway/Peer/Peer.cpp (transmit): The last two arguments to
+          Event_Header were reversed!  Thanks to Kim Lester
+          <Kim_R_Lester@rta.nsw.gov.au> for reporting this.
 
 Mon Jul 10 20:35:08 2000 Marina Spivak  <marina@cs.wustl.edu>
 
@@ -10,16 +16,16 @@ Mon Jul 10 20:35:08 2000 Marina Spivak  <marina@cs.wustl.edu>
 
 Mon Jul 10 13:15:10 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/Makefile (ACE_SHLIBS):
+        * ace/SSL/Makefile (ACE_SHLIBS):
 
-	  Added "-lACE" to the list of libraries that should be linked in
-	  to libACE_SSL, since the ACE SSL wrappers depend on ACE.
+          Added "-lACE" to the list of libraries that should be linked in
+          to libACE_SSL, since the ACE SSL wrappers depend on ACE.
 
 Sun Jul 09 21:38:03 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/ACE_SSL.dsp:
+        * ace/SSL/ACE_SSL.dsp:
 
-	  Fixed library path in "Release" configuration.
+          Fixed library path in "Release" configuration.
 
 Sun Jul 09 14:20:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
@@ -35,56 +41,56 @@ Sun Jul 09 14:20:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
 Sun Jul 09 14:00:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
-	* ace/ace_wchar.h:
+        * ace/ace_wchar.h:
 
-	  Added two macros for straight out conversion of strings:
-	  ACE_TEXT_CHAR_TO_WCHAR and ACE_TEXT_WCHAR_TO_CHAR.
+          Added two macros for straight out conversion of strings:
+          ACE_TEXT_CHAR_TO_WCHAR and ACE_TEXT_WCHAR_TO_CHAR.
 
-	* ace/adapter/README: (Added)
-	* ace/adapter/ace/ACE.h: (Added)
-	* ace/adapter/ace/ARGV.h: (Added)
-	* ace/adapter/ace/Arg_Shifter.h: (Added)
-	* ace/adapter/ace/ATM_Addr.h: (Added)
-	* ace/adapter/ace/DEV_Addr.h: (Added)
-	* ace/adapter/ace/Dirent.h: (Added)
-	* ace/adapter/ace/DLL.h: (Added)
-	* ace/adapter/ace/Dynamic_Service.h: (Added)
-	* ace/adapter/ace/FIFO.h: (Added)
-	* ace/adapter/ace/FIFO_Recv.h: (Added)
-	* ace/adapter/ace/FIFO_Recv_Msg.h: (Added)
-	* ace/adapter/ace/FIFO_Send.h: (Added)
-	* ace/adapter/ace/FIFO_Send_Msg.h: (Added)
-	* ace/adapter/ace/FILE_Addr.h: (Added)
-	* ace/adapter/ace/Functor.h: (Added)
-	* ace/adapter/ace/High_Res_Timer.h: (Added)
-	* ace/adapter/ace/INET_Addr.h: (Added)
-	* ace/adapter/ace/Malloc_T.h: (Added)
-	* ace/adapter/ace/Memory_Pool.h: (Added)
-	* ace/adapter/ace/MEM_Addr.h: (Added)
-	* ace/adapter/ace/OS_Dirent.h: (Added)
-	* ace/adapter/ace/OS_String.h: (Added)
-	* ace/adapter/ace/Service_Config.h: (Added)
-	* ace/adapter/ace/Service_Object.h: (Added)
-	* ace/adapter/ace/SOCK_Dgram_Bcast.h: (Added)
-	* ace/adapter/ace/SOCK_Dgram_Mcast.h: (Added)
-	* ace/adapter/ace/SPIPE_Addr.h: (Added)
-	* ace/adapter/ace/System_Time.h: (Added)
-	* ace/adapter/ace/Task_T.h: (Added)
-	* ace/adapter/ace/Trace.h: (Added)
+        * ace/adapter/README: (Added)
+        * ace/adapter/ace/ACE.h: (Added)
+        * ace/adapter/ace/ARGV.h: (Added)
+        * ace/adapter/ace/Arg_Shifter.h: (Added)
+        * ace/adapter/ace/ATM_Addr.h: (Added)
+        * ace/adapter/ace/DEV_Addr.h: (Added)
+        * ace/adapter/ace/Dirent.h: (Added)
+        * ace/adapter/ace/DLL.h: (Added)
+        * ace/adapter/ace/Dynamic_Service.h: (Added)
+        * ace/adapter/ace/FIFO.h: (Added)
+        * ace/adapter/ace/FIFO_Recv.h: (Added)
+        * ace/adapter/ace/FIFO_Recv_Msg.h: (Added)
+        * ace/adapter/ace/FIFO_Send.h: (Added)
+        * ace/adapter/ace/FIFO_Send_Msg.h: (Added)
+        * ace/adapter/ace/FILE_Addr.h: (Added)
+        * ace/adapter/ace/Functor.h: (Added)
+        * ace/adapter/ace/High_Res_Timer.h: (Added)
+        * ace/adapter/ace/INET_Addr.h: (Added)
+        * ace/adapter/ace/Malloc_T.h: (Added)
+        * ace/adapter/ace/Memory_Pool.h: (Added)
+        * ace/adapter/ace/MEM_Addr.h: (Added)
+        * ace/adapter/ace/OS_Dirent.h: (Added)
+        * ace/adapter/ace/OS_String.h: (Added)
+        * ace/adapter/ace/Service_Config.h: (Added)
+        * ace/adapter/ace/Service_Object.h: (Added)
+        * ace/adapter/ace/SOCK_Dgram_Bcast.h: (Added)
+        * ace/adapter/ace/SOCK_Dgram_Mcast.h: (Added)
+        * ace/adapter/ace/SPIPE_Addr.h: (Added)
+        * ace/adapter/ace/System_Time.h: (Added)
+        * ace/adapter/ace/Task_T.h: (Added)
+        * ace/adapter/ace/Trace.h: (Added)
 
-	  This is a initial shot at the implementation of an adaptation
-	  layer for ACE that provides a Wide character interface with 
-	  a character library and vice versa.  
+          This is a initial shot at the implementation of an adaptation
+          layer for ACE that provides a Wide character interface with
+          a character library and vice versa.
 
-	  Right now the above files contain classes ending with _W that
-	  correspond to the actual classes (such as ACE_W).  This class
-	  will have methods that take in wchar_t instead of char, and 
-	  then convert the parameters and return value when calling
-	  the actual char implementation.
+          Right now the above files contain classes ending with _W that
+          correspond to the actual classes (such as ACE_W).  This class
+          will have methods that take in wchar_t instead of char, and
+          then convert the parameters and return value when calling
+          the actual char implementation.
 
-	  Note, this is an initial implementation that isn't complete
-	  across all interfaces and there are memory management issues that
-	  still must be dealt with.
+          Note, this is an initial implementation that isn't complete
+          across all interfaces and there are memory management issues that
+          still must be dealt with.
 
 Sat Jul 08 14:50:34 2000  David L. Levine  <levine@cs.wustl.edu>
 
@@ -92,9 +98,9 @@ Sat Jul 08 14:50:34 2000  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Jul  7 20:24:30 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Reactor/Multicast/server.cpp:  The last character 0x0D in the
-	  message was messing up the display.  Thanks to Zoran Ivanovic
- 	  <Zoran_Ivanovic@i2.com> for this fix.
+        * examples/Reactor/Multicast/server.cpp:  The last character 0x0D in the
+          message was messing up the display.  Thanks to Zoran Ivanovic
+          <Zoran_Ivanovic@i2.com> for this fix.
 
 Fri Jul 07 17:17:21 2000  George Reid <greid@entrenet.com>
 
