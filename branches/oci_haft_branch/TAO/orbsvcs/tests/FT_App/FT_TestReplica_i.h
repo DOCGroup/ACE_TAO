@@ -17,6 +17,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/pre.h"
 #include "FT_TestReplicaS.h"
 
 /**
@@ -86,7 +87,7 @@ private:
   ///////////////////////////
   // override PullMonitorable
 
-  virtual CORBA::Boolean is_alive ()
+  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   ///////////////////////////
@@ -141,5 +142,7 @@ private:
    */
   int identity_;
 };
+
+#include "ace/post.h"
 
 #endif /* FT_TESTREPLICA_I_H_  */

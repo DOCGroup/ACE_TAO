@@ -6,6 +6,7 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "ace/pre.h"
 
 #include "orbsvcs/FT_NotifierS.h"
 #include "orbsvcs/FT_FaultDetectorFactoryC.h"
@@ -67,57 +68,49 @@ public:
   ////////////////////////////////
   // CORBA interface FaultNotifier
 
+
   virtual void push_structured_fault (
       const CosNotification::StructuredEvent & event
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void push_sequence_fault (
     const CosNotification::EventBatch & events
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ));
+  ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual ::CosNotifyFilter::Filter_ptr create_subscription_filter (
     const char * constraint_grammar
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , CosNotifyFilter::InvalidGrammar
-  ));
+  ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyFilter::InvalidGrammar));
 
   virtual FT::FaultNotifier::ConsumerId connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ));
+  ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual FT::FaultNotifier::ConsumerId connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ));
+  ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void disconnect_consumer (
     FT::FaultNotifier::ConsumerId connection
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , CosEventComm::Disconnected
-  ));
+  ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
 
-  ////////////////////////////////
-  // CORBA interface PullMonitorable
-
-  virtual CORBA::Boolean is_alive ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  //////////////////////////////////////////
+  // CORBA interface PullMonitorable methods
+  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException));
 
   /////////////////
   // Implementation
@@ -144,7 +137,7 @@ private:
   const char * iorOutputFile_;
 
   /**
-   * A file from which the detecor's IOR should be written.
+   * A file from which the detecor's IOR should be read.
    */
   const char * iorDetectorFile_;
 
@@ -170,5 +163,6 @@ private:
 
 };
 
+#include "ace/post.h"
 
 #endif /* STUBFAULTNOTIFIER_H_  */

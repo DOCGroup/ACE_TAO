@@ -44,24 +44,42 @@
 FT_FaultNotifier_i::FT_FaultNotifier_i ()
   : ior_output_file_(0)
   , nsName_(0)
-  , verbose_(0)
+  , consumerConnects_(0)
+  , consumerDisconnects_(0)
+  , quitOnIdle_(0)
 {
 }
 
 // Implementation skeleton destructor
 FT_FaultNotifier_i::~FT_FaultNotifier_i ()
 {
-  shutdown_i ();
-  self_unregister ();
+  self_unregister (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
+
+int FT_FaultNotifier_i::idle(int &result ACE_ENV_ARG_DECL)
+{
+  ACE_UNUSED_ARG(result);
+  int quit = 0;
+  if (quitOnIdle_)
+  {
+    if ( consumerConnects_ != 0 
+      && consumerConnects_ == consumerDisconnects_)
+    {
+      quit = 1;
+      ACE_ERROR((LM_ERROR,
+        "FaultNotifier quit on idle: connects %d, disconnects %d\n",
+        ACE_static_cast (unsigned int, consumerConnects_),
+        ACE_static_cast (unsigned int, consumerDisconnects_)
+        ));
+    }
+  }
+  return quit;
+}
 
 ////////////////////////////////////////////
 // FT_FaultNotifier_i private methods
 
-void FT_FaultNotifier_i::shutdown_i()
-{
-}
 
 // TODO: find this a common home
 int FT_FaultNotifier_i::write_IOR()
@@ -77,7 +95,7 @@ int FT_FaultNotifier_i::write_IOR()
   else
   {
     ACE_ERROR ((LM_ERROR,
-      "Open failed for %s\n", ior_output_file_
+      "%T %n (%P|%t) Open failed for %s\n", ior_output_file_
     ));
   }
   return result;
@@ -88,7 +106,7 @@ int FT_FaultNotifier_i::write_IOR()
 
 int FT_FaultNotifier_i::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:v");
+  ACE_Get_Opt get_opts (argc, argv, "o:vq");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -100,9 +118,9 @@ int FT_FaultNotifier_i::parse_args (int argc, char * argv[])
         ior_output_file_ = get_opts.opt_arg ();
         break;
       }
-      case 'v':
+      case 'q':
       {
-        verbose_ = 1;
+        quitOnIdle_ = 1;
         break;
       }
       case '?':
@@ -112,7 +130,6 @@ int FT_FaultNotifier_i::parse_args (int argc, char * argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " -o <iorfile>"
-                           " -q{uit on idle}"
                            "\n",
                            argv [0]),
                           -1);
@@ -142,6 +159,9 @@ int FT_FaultNotifier_i::self_unregister (ACE_ENV_SINGLE_ARG_DECL)
                             ACE_ENV_ARG_PARAMETER);
     nsName_ = 0;
   }
+
+  int TODO_unregister_with_ReplicationManager;
+
   return 0;
 }
 
@@ -156,53 +176,14 @@ int FT_FaultNotifier_i::self_register (TAO_ORB_Manager & orbManager
       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  if (ior_output_file_ != 0)
+
+  ////////////////////////////////////////////////
+  // Register with coresident Notification Channel
+
+  result = orbManager.activate_poa_manager(ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  if (result == 0)
   {
-    identity_ = "file:";
-    identity_ += ior_output_file_;
-    result = write_IOR();
-  }
-  else
-  {
-    // if no IOR file specified,
-    // then always try to register with name service
-    nsName_ = "FT_FaultDetectorFactory";
-  }
-
-  if (nsName_ != 0)
-  {
-    identity_ = "name:";
-    identity_ += nsName_;
-
-    CORBA::Object_var naming_obj =
-      orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-
-    if (CORBA::is_nil(naming_obj.in ())){
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%T %n (%P|%t) Unable to find the Naming Service\n"),
-                        1);
-    }
-
-    naming_context_ =
-      CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-    if (CORBA::is_nil(naming_context_))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-         "%T %n (%P|%t) Should not occur: Can't narrow initial reference to naming context.\n"),
-        1);
-    }
-    this_name_.length (1);
-    this_name_[0].id = CORBA::string_dup (nsName_);
-
-    naming_context_->rebind (this_name_, _this()
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-
-    ////////////////////////////////////////////////
-    // Register with coresident Notification Channel
-
     PortableServer::POA_var poa = orbManager.root_poa();
 
     CosNotifyChannelAdmin::EventChannelFactory_var notify_factory =
@@ -211,7 +192,6 @@ int FT_FaultNotifier_i::self_register (TAO_ORB_Manager & orbManager
     ACE_CHECK_RETURN (-1);
     CosNotification::QoSProperties initial_qos;
     CosNotification::AdminProperties initial_admin;
-
     notify_channel_ =
       notify_factory->create_channel (initial_qos,
       initial_admin,
@@ -250,7 +230,7 @@ int FT_FaultNotifier_i::self_register (TAO_ORB_Manager & orbManager
         1);
     }
 
-    // todo: implement this if we want to receive disconnect notice
+    // todo: implement a push supplier if we want to receive disconnect notice
     // todo:  if not, is this call necessary?
     CosNotifyComm::StructuredPushSupplier_var stubPushSupplier =
       CosNotifyComm::StructuredPushSupplier::_nil();
@@ -294,8 +274,73 @@ int FT_FaultNotifier_i::self_register (TAO_ORB_Manager & orbManager
     // find the channel administrator for consumers
     consumerAdmin_ = notify_channel_->default_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
+    if (CORBA::is_nil (consumerAdmin_))
+    {
+      ACE_ERROR ((LM_ERROR,
+        "%T %n (%P|%t) NIL consumer admin\n"
+        ));
+      result = -1;
+    }
     // everything else happens when subscriber shows up
   }
+
+  ///////////////////////////////
+  // Set up and ready for action
+  // publish our IOR
+
+  if(result == 0)
+  {
+    if (ior_output_file_ != 0)
+    {
+      identity_ = "file:";
+      identity_ += ior_output_file_;
+      result = write_IOR();
+    }
+    else
+    {
+      // if no IOR file specified,
+      // then always try to register with name service
+      nsName_ = "FT_FaultNotifier";
+    }
+  }
+
+  if (result == 0)
+  {
+    if (nsName_ != 0)
+    {
+      identity_ = "name:";
+      identity_ += nsName_;
+
+      CORBA::Object_var naming_obj =
+        orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      if (CORBA::is_nil(naming_obj.in ())){
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%T %n (%P|%t) Unable to find the Naming Service\n"),
+                          1);
+      }
+
+      naming_context_ =
+        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+      if (CORBA::is_nil(naming_context_))
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+           "%T %n (%P|%t) Should not occur: Can't narrow initial reference to naming context.\n"),
+          1);
+      }
+      this_name_.length (1);
+      this_name_[0].id = CORBA::string_dup (nsName_);
+
+      naming_context_->rebind (this_name_, _this()
+                              ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+    }
+  }
+
+  int TODO_register_with_ReplicationManager;
+
   return result;
 }
 
@@ -304,15 +349,12 @@ int FT_FaultNotifier_i::self_register (TAO_ORB_Manager & orbManager
 
 void FT_FaultNotifier_i::push_structured_fault (
     const CosNotification::StructuredEvent & event
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_ENTRY(FT_FaultNotifier_i::push_structured_fault);
 
-  if (verbose_)
-  {
-    cout << "Fault Notifier: push fault" << endl;
-  }
   structuredProxyPushConsumer_->push_structured_event (event
     ACE_ENV_ARG_PARAMETER);
 
@@ -321,15 +363,12 @@ void FT_FaultNotifier_i::push_structured_fault (
 
 void FT_FaultNotifier_i::push_sequence_fault (
     const CosNotification::EventBatch & events
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_ENTRY(FT_FaultNotifier_i::push_sequence_fault);
 
-  if (verbose_)
-  {
-    cout << "Fault Notifier: push sequence fault" << endl;
-  }
   sequenceProxyPushConsumer_->push_structured_events (events
     ACE_ENV_ARG_PARAMETER);
 
@@ -338,15 +377,12 @@ void FT_FaultNotifier_i::push_sequence_fault (
 
 ::CosNotifyFilter::Filter_ptr FT_FaultNotifier_i::create_subscription_filter (
     const char * constraint_grammar
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyFilter::InvalidGrammar))
 {
   METHOD_ENTRY(FT_FaultNotifier_i::create_subscription_filter);
 
-  if (verbose_)
-  {
-    cout << "Fault Notifier: create filter" << endl;
-  }
   CosNotifyFilter::Filter_var filter = filter_factory_->create_filter ("ETCL");
   METHOD_RETURN(FT_FaultNotifier_i::create_subscription_filter)
     filter._retn ();
@@ -355,29 +391,44 @@ void FT_FaultNotifier_i::push_sequence_fault (
 FT::FaultNotifier::ConsumerId FT_FaultNotifier_i::connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_ENTRY(FT_FaultNotifier_i::connect_structured_fault_consumer);
 
-  if (verbose_)
+  /////////////////////////
+  // find a ProxyInfo entry
+  // use the first nil entry or a new entry if no nils found
+
+  size_t infoPos = 0;
+  int looking = 1;
+  for ( size_t pos = 0; looking && pos < proxyInfos_.size (); ++pos)
   {
-    cout << "Fault Notifier: connect structured consumer" << endl;
+    ProxyInfo & pi = proxyInfos_[pos];
+    if (CORBA::is_nil(pi.proxyVar_))
+    {
+      infoPos = pos;
+      looking = 0;
+    }
+  }
+  if (looking)
+  {
+    infoPos = proxyInfos_.size();
+    proxyInfos_.push_back(ProxyInfo());
   }
 
-  /////////////////////////////////////////
-  // get information about a proxy supplier
-  ProxyInfo info;
+  ///////////////////////////////////////
+  // Assign an ID, populate the ProxyInfo
+  FT::FaultNotifier::ConsumerId result = infoPos;
+  ProxyInfo & info = proxyInfos_[infoPos];
   info.proxyVar_
       = consumerAdmin_->obtain_notification_push_supplier (
       ::CosNotifyChannelAdmin::STRUCTURED_EVENT,
       info.proxyId_
       ACE_ENV_ARG_PARAMETER);
 
-  ////////////////
-  // Assign an ID
-  FT::FaultNotifier::ConsumerId result = proxyInfos_.size();
-  proxyInfos_.push_back(info);
+  consumerConnects_ += 1;
 
   ::CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxySupplier
     = ::CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow(info.proxyVar_
@@ -408,13 +459,11 @@ FT::FaultNotifier::ConsumerId FT_FaultNotifier_i::connect_structured_fault_consu
 FT::FaultNotifier::ConsumerId FT_FaultNotifier_i::connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (verbose_)
-  {
-    cout << "Fault Notifier: connect sequence consumer" << endl;
-  }
+  METHOD_ENTRY(FT_FaultNotifier_i::connect_sequence_fault_consumer);
   /////////////////////////
   // find a ProxyInfo entry
   // use the first nil entry or a new entry if no nils found
@@ -446,6 +495,7 @@ FT::FaultNotifier::ConsumerId FT_FaultNotifier_i::connect_sequence_fault_consume
       info.proxyId_
       ACE_ENV_ARG_PARAMETER);
 
+  consumerConnects_ += 1;
 
   ::CosNotifyChannelAdmin::SequenceProxyPushSupplier_var proxySupplier
     = ::CosNotifyChannelAdmin::SequenceProxyPushSupplier::_narrow(info.proxyVar_
@@ -473,13 +523,11 @@ FT::FaultNotifier::ConsumerId FT_FaultNotifier_i::connect_sequence_fault_consume
 
 void FT_FaultNotifier_i::disconnect_consumer (
     FT::FaultNotifier::ConsumerId connection
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected))
 {
-  if (verbose_)
-  {
-    cout << "Fault Notifier: disconnect consumer" << endl;
-  }
+  METHOD_ENTRY(FT_FaultNotifier_i::disconnect_consumer);
 
   size_t index = ACE_static_cast ( size_t, connection);
   if (index < proxyInfos_.size())
@@ -523,10 +571,13 @@ void FT_FaultNotifier_i::disconnect_consumer (
   {
     ACE_THROW(CosEventComm::Disconnected());
   }
+
+  consumerDisconnects_ += 1;
+
   METHOD_RETURN(FT_FaultNotifier_i::disconnect_consumer);
 }
 
-CORBA::Boolean FT_FaultNotifier_i::is_alive ()
+CORBA::Boolean FT_FaultNotifier_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_RETURN(FT_FaultNotifier_i::is_alive) 1;

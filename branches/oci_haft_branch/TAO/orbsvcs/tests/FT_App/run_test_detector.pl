@@ -25,7 +25,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #           client for TestReplica interface.
 #           client for PullMonitorable.
 #
-# Test Scenario (Testing: marks behavior being tested):
+# Test Scenario ( ***Test: marks behavior being tested):
 #   Phase 1:
 #     Start two FT_Replicas
 #       FT_Replicas write TestReplica IORs (FR#1 and FR#2) to files
@@ -43,15 +43,15 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #       FT_Client interacts with FR#1.
 #       FT_Client asks FR#1 to fault.  It does so.
 #       FT_Client notices fault and switches to FR#2. [1]
-#       Testing: FD#1 notices fault and notifies StubNotifier
-#       Testing: FD#1 terminates
+#       ***Test: FD#1 notices fault and notifies StubNotifier
+#       ***Test: FD#1 terminates
 #       FT_Client interacts with FR#2.
 #       FT_Client asks FR#2 to shut down.
 #       FT_Client shuts down.
-#       Testing: FD#2 notices FR2 is gone, interprets this
+#       ***Test: FD#2 notices FR2 is gone, interprets this
 #         as a fault, and notifies StubNotifier.
-#       Testing: FD#2 terminates.
-#       Testing: FDF is idle, so it terminates.
+#       ***Test: FD#2 terminates.
+#       ***Test: FDF is idle, so it terminates.
 #       StubNotifier sees FDF terminate, so it terminates
 #     Phase 4:
 #       Wait for all processes to terminate.
@@ -81,15 +81,22 @@ foreach $i (@ARGV) {
   }
   elsif ($i eq "-v")
   {
-    $verbose = 1;
+    $verbose += 1;
   }
 }
 
 
 my($build_directory) = "/Release";
-if ( debug_builds ) {
+if ( $debug_builds ) {
   $build_directory = "";
 }
+
+if ( $verbose > 1) {
+  print "verbose: $verbose\n";
+  print "debug_builds: $debug_builds -> $build_directory\n";
+  print "simulated: $simulated\n";
+}
+
 
 #define temp files
 my($replica1_ior) = PerlACE::LocalFile ("replica1.ior");
@@ -119,7 +126,7 @@ if (simulated) {
   $CL = new PerlACE::Process (".$build_directory/ft_client", "-f $replica1_iogr -c testscript");
 }
 
-print "TEST: starting replica1\n" if ($verbose);
+print "TEST: starting replica1 ". $REP1->Executable . "\n" if ($verbose);
 $REP1->Spawn ();
 
 print "TEST: waiting for replica 1's IOR\n" if ($verbose);
@@ -129,7 +136,7 @@ if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting replica2\n" if ($verbose);
+print "\nTEST: starting replica2" . $REP2->Executable . "\n" if ($verbose);
 $REP2->Spawn ();
 
 print "TEST: waiting for replica 2's IOR\n" if ($verbose);
@@ -140,7 +147,7 @@ if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting detector factory\n" if ($verbose);
+print "\nTEST: starting detector factory" . $DET->Executable . "\n" if ($verbose);
 $DET->Spawn ();
 
 print "TEST: waiting for detector's IOR\n" if ($verbose);
@@ -152,7 +159,7 @@ if (PerlACE::waitforfile_timed ($detector_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting notifier\n" if ($verbose);
+print "\nTEST: starting notifier" . $NOT->Executable . "\n" if ($verbose);
 $NOT->Spawn ();
 
 print "TEST: waiting for notifier's IOR\n" if ($verbose);
@@ -165,7 +172,7 @@ if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting client.\n" if ($verbose);
+print "\nTEST: starting client." . $CL->Executable . "\n" if ($verbose);
 $client = $CL->SpawnWaitKill (60);
 
 if ($client != 0) {

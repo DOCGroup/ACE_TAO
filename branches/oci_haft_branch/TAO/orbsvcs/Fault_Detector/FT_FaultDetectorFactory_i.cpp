@@ -64,7 +64,8 @@ FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
     // before this object disappears
     shutdown_i ();
   }
-  self_unregister ();
+  ACE_DECLARE_NEW_ENV;
+  self_unregister (ACE_ENV_SINGLE_ARG_PARAMETER);
   threadManager_.close ();
 }
 
@@ -263,6 +264,7 @@ void FT_FaultDetectorFactory_i::removeDetector(CORBA::ULong id, Fault_Detector_i
 
 void FT_FaultDetectorFactory_i::change_properties (
     const FT::Properties & property_set
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -301,7 +303,7 @@ void FT_FaultDetectorFactory_i::change_properties (
   METHOD_RETURN(FT_FaultDetectorFactory_i::change_properties);
 }
 
-void FT_FaultDetectorFactory_i::shutdown (  )
+void FT_FaultDetectorFactory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
@@ -316,6 +318,7 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
     const char * type_id,
     const FT::Criteria & the_criteria,
     FT::GenericFactory::FactoryCreationId_out factory_creation_id
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -467,6 +470,7 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
 
 void FT_FaultDetectorFactory_i::delete_object (
     const FT::GenericFactory::FactoryCreationId & factory_creation_id
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -497,7 +501,7 @@ void FT_FaultDetectorFactory_i::delete_object (
   METHOD_RETURN(FT_FaultDetectorFactory_i::delete_object);
 }
 
-CORBA::Boolean FT_FaultDetectorFactory_i::is_alive ()
+CORBA::Boolean FT_FaultDetectorFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_RETURN(FT_FaultDetectorFactory_i::is_alive)

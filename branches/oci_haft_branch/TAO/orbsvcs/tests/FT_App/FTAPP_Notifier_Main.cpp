@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-#include "ace/pre.h"
 #include "StubFaultNotifier.h"
 
 #include "tao/PortableServer/ORB_Manager.h"
@@ -39,9 +38,6 @@ int main (int argc, ACE_TCHAR * argv[] )
     int result = stub.parse_args (argc, argv);
     if (result == 0)
     {
-
-
-
         result = stub.self_register(orbManager ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
         if (result == 0)

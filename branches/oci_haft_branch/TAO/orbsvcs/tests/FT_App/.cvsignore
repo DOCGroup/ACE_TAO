@@ -1,3 +1,5 @@
+*.dsp
+*.dsw
 *.ilk
 *.pdb
 *.plg

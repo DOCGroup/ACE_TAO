@@ -20,16 +20,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Vector_T.h"
-
 //////////////////////////////////
 // Classes declared in this header
 class  FT_FaultDetectorFactory_i;
 
 /////////////////////////////////
 // Includes needed by this header
-#include "orbsvcs/FT_FaultDetectorFactoryS.h"
-#include "ace/Thread_Manager.h"
+#include <ace/Vector_T.h>
+#include <orbsvcs/FT_FaultDetectorFactoryS.h>
+#include <ace/Thread_Manager.h>
 
 /////////////////////
 // Forward references
@@ -114,7 +113,7 @@ public:
    * Revoke the publication of this objects IOR.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int self_unregister (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int self_unregister (ACE_ENV_SINGLE_ARG_DECL);
 
 
   /**
@@ -139,13 +138,14 @@ public:
   // CORBA interface FaultDetectorFactory methods
   virtual void change_properties (
       const FT::Properties & property_set
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
       , PortableGroup::InvalidProperty
     ));
 
-  virtual void shutdown ()
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
@@ -156,6 +156,7 @@ public:
     const char * type_id,
     const FT::Criteria & the_criteria,
     FT::GenericFactory::FactoryCreationId_out factory_creation_id
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -168,6 +169,7 @@ public:
 
   virtual void delete_object (
     const FT::GenericFactory::FactoryCreationId & factory_creation_id
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -177,7 +179,7 @@ public:
   //////////////////////////////////////////
   // CORBA interface PullMonitorable methods
 
-  virtual CORBA::Boolean is_alive ()
+  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /////////////////////////

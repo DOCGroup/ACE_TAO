@@ -184,7 +184,6 @@ FTClientMain::parse_args (int argc, char *argv[])
 
   // note: dfnkx are simple_util options
   // include them here so we can detect bad args
-  // todo: we also need to ignore TAO args
   ACE_Get_Opt get_opts (argc, argv, "c:df:g:nk:x");
   int c;
 

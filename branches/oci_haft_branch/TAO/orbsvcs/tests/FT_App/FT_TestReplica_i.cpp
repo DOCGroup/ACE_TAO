@@ -185,7 +185,7 @@ void FT_TestReplica_i::set_state (const FT::State & s)
 // implement FT_TEST::Replica
 
 void FT_TestReplica_i::set (CORBA::Long value
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN(BEFORE_STATE_CHANGE, set)
@@ -195,7 +195,7 @@ void FT_TestReplica_i::set (CORBA::Long value
 }
 
 CORBA::Long FT_TestReplica_i::increment (CORBA::Long delta
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN(BEFORE_STATE_CHANGE, increment)
@@ -206,7 +206,7 @@ CORBA::Long FT_TestReplica_i::increment (CORBA::Long delta
   return counter;
 }
 
-CORBA::Long FT_TestReplica_i::get (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CORBA::Long FT_TestReplica_i::get (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN_DURING(get)
@@ -214,7 +214,7 @@ CORBA::Long FT_TestReplica_i::get (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   return counter;
 }
 
-CORBA::Long FT_TestReplica_i::counter (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CORBA::Long FT_TestReplica_i::counter (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN_DURING([get]counter)
@@ -223,7 +223,7 @@ CORBA::Long FT_TestReplica_i::counter (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 }
 
 void FT_TestReplica_i::counter (CORBA::Long counter
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN(BEFORE_STATE_CHANGE, [set]counter)
@@ -232,14 +232,14 @@ void FT_TestReplica_i::counter (CORBA::Long counter
 }
 
 void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   death_pending_ = when;
   KEVORKIAN(RIGHT_NOW, die)
 }
 
-void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 //  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);

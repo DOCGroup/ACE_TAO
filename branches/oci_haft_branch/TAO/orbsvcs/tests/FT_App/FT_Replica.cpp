@@ -12,8 +12,6 @@
  */
 //=============================================================================
 
-#include "ace/pre.h"
-
 #include "FT_TestReplica_i.h"
 #include "ace/Get_Opt.h"
 #include "tao/PortableServer/ORB_Manager.h"
