@@ -1,3 +1,7 @@
+Thu May 21 21:55:09 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE version 4.5.7 released.
+
 Thu May 21 17:36:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.6.h: added support for POSIX 199506
