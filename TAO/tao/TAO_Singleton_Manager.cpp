@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/Synch.h"
 
@@ -92,7 +93,6 @@ TAO_Singleton_Manager::instance (void)
       ACE_ASSERT (instance_pointer == instance_);
 
       instance_pointer->dynamically_allocated_ = 1;
-
     }
 
   return instance_;
