@@ -469,7 +469,11 @@ PortableInterceptor::ObjectReferenceFactory_out::operator-> (void)
 
 PortableInterceptor::ObjectReferenceFactory* PortableInterceptor::ObjectReferenceFactory::_downcast (CORBA::ValueBase* v)
 {
-  if (v == 0) return 0;
+  if (v == 0)
+    {
+      return 0;
+    }
+
   return (ObjectReferenceFactory* ) v->_tao_obv_narrow ((ptr_arith_t) &_downcast);
 }
 
@@ -478,11 +482,25 @@ const char* PortableInterceptor::ObjectReferenceFactory::_tao_obv_repository_id 
   return this->_tao_obv_static_repository_id ();
 }
 
+#if defined (_MSC_VER)
+void *
+PortableInterceptor::ObjectReferenceFactory::PortableInterceptor_ObjectReferenceFactory_tao_obv_narrow (
+    ptr_arith_t type_id
+  )
+{
+  return this->_tao_obv_narrow (type_id);
+}
+#endif /* _MSC_VER */
+
 void* PortableInterceptor::ObjectReferenceFactory::_tao_obv_narrow (ptr_arith_t type_id)
 {
   if (type_id == (ptr_arith_t) &_downcast)
-    return this;
+    {
+      return this;
+    }
+
   void *rval = 0;
+
   return rval;
 }
 
@@ -782,7 +800,11 @@ PortableInterceptor::ObjectReferenceTemplate_out::operator-> (void)
 
 PortableInterceptor::ObjectReferenceTemplate* PortableInterceptor::ObjectReferenceTemplate::_downcast (CORBA::ValueBase* v)
 {
-  if (v == 0) return 0;
+  if (v == 0)
+    {
+      return 0;
+    }
+
   return (ObjectReferenceTemplate* ) v->_tao_obv_narrow ((ptr_arith_t) &_downcast);
 }
 
@@ -791,13 +813,34 @@ const char* PortableInterceptor::ObjectReferenceTemplate::_tao_obv_repository_id
   return this->_tao_obv_static_repository_id ();
 }
 
+#if defined (_MSC_VER)
+void *
+PortableInterceptor::ObjectReferenceTemplate::PortableInterceptor_ObjectReferenceTemplate_tao_obv_narrow (
+    ptr_arith_t type_id
+  )
+{
+  return this->_tao_obv_narrow (type_id);
+}
+#endif /* _MSC_VER */
+
 void* PortableInterceptor::ObjectReferenceTemplate::_tao_obv_narrow (ptr_arith_t type_id)
 {
   if (type_id == (ptr_arith_t) &_downcast)
-    return this;
+    {
+      return this;
+    }
+
   void *rval = 0;
+
   if (rval == 0)
-    rval = ACE_NESTED_CLASS (PortableInterceptor,ObjectReferenceFactory)::_tao_obv_narrow (type_id);
+    {
+#if defined (_MSC_VER)
+      rval = this->PortableInterceptor_ObjectReferenceFactory_tao_obv_narrow (type_id);
+#else
+      rval = this->PortableInterceptor::ObjectReferenceFactory::_tao_obv_narrow (type_id);
+#endif /* _MSC_VER */
+    }
+
   return rval;
 }
 

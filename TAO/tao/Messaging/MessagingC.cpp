@@ -343,6 +343,16 @@ Messaging::ExceptionHolder::_tao_obv_repository_id (void) const
   return this->_tao_obv_static_repository_id ();
 }
 
+#if defined (_MSC_VER)
+void *
+Messaging::ExceptionHolder::Messaging_ExceptionHolder_tao_obv_narrow (
+    ptr_arith_t type_id
+  )
+{
+  return this->_tao_obv_narrow (type_id);
+}
+#endif /* _MSC_VER */
+
 void *
 Messaging::ExceptionHolder::_tao_obv_narrow (ptr_arith_t type_id)
 {

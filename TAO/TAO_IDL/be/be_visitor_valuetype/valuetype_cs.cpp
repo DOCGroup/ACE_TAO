@@ -154,10 +154,18 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << node->name () << "::_tao_obv_repository_id (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_tao_obv_static_repository_id ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl;
 
   // The _tao_obv_narrow method
-  *os << "void *" << be_nl << node->name ()
+  *os << "\n#if defined (_MSC_VER)" << be_nl
+      << "void *" << be_nl
+      << node->name () << "::" << node->flat_name ()
+      << "_tao_obv_narrow (ptr_arith_t type_id)" << be_nl
+      << "{" << be_idt_nl
+      << "return this->_tao_obv_narrow (type_id);" << be_uidt_nl
+      << "}"
+      << "\n#endif /* _MSC_VER */" << be_uidt_nl << be_nl
+      << "void *" << be_nl << node->name ()
       << "::_tao_obv_narrow (ptr_arith_t type_id)" << be_nl
       << "{" << be_idt_nl
       << "if (type_id == (ptr_arith_t) &_downcast)" << be_idt_nl
@@ -180,32 +188,13 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       *os << be_nl
           << "if (rval == 0)" << be_idt_nl
           << "{"
-          << "\n#ifndef _MSC_VER" << be_idt_nl
-          << "rval = ";
-
-      AST_Decl::NodeType nt = 
-        inherited->defined_in ()->scope_node_type ();
-
-      if (nt == AST_Decl::NT_module)
-        {
-          be_scope *scope = 
-            be_scope::narrow_from_scope (inherited->defined_in ());
-          be_decl *scope_decl = scope->decl ();
-
-          *os << "ACE_NESTED_CLASS ("
-              << scope_decl->name () << ", "
-              << inherited->local_name () << ")";
-        }
-      else
-        {
-          *os << inherited->name ();
-        }
-
-      *os << "::_tao_obv_narrow (type_id);"
-          << "\n#else" << be_nl
+          << "\n#if defined (_MSC_VER)" << be_idt_nl
           << "rval = this->" << inherited->flat_name ()
           << "_tao_obv_narrow (type_id);"
-          << "\n#endif" << be_uidt_nl
+          << "\n#else" << be_nl
+          << "rval = this->" << inherited->name () << "::"
+          << "_tao_obv_narrow (type_id);"
+          << "\n#endif /* _MSC_VER */" << be_uidt_nl
           << "}" << be_uidt_nl;
     }
 
@@ -222,28 +211,15 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
             {
               *os << be_nl
                   << "if (rval == 0)" << be_idt_nl
-                  << "{" << be_idt_nl
-                  << "rval = ";
-
-              AST_Decl::NodeType supported_nt = 
-                supported->defined_in ()->scope_node_type ();
-
-              if (supported_nt == AST_Decl::NT_module)
-                {
-                  be_scope *supported_scope = 
-                    be_scope::narrow_from_scope (supported->defined_in ());
-                  be_decl *supported_scope_decl = supported_scope->decl ();
-
-                  *os << "ACE_NESTED_CLASS ("
-                      << supported_scope_decl->name () << ","
-                      << supported->local_name () << ")";
-                }
-              else
-                {
-                  *os << supported->name ();
-                }
-
-              *os << "::_tao_obv_narrow (type_id);" << be_uidt_nl
+                  << "{"
+                  << "\n#if defined (_MSC_VER)" << be_idt_nl
+                  << "rval = this->"
+                  << supported->flat_name () 
+                  << "_tao_obv_narrow (type_id);"
+                  << "\n#else" << be_nl
+                  << "rval = this->" << supported->name ()
+                  << "::_tao_obv_narrow (type_id);"
+                  << "\n#endif /* _MSC_VER */" << be_uidt_nl
                   << "}" << be_uidt_nl;
             }
         }
