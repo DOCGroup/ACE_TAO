@@ -1469,6 +1469,7 @@ ACE_Thread_Adapter::invoke (void)
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
   void *status = 0;
 
+#if 1
   ACE_SEH_TRY {
     status = (void*) (*func) (arg);  // Call thread entry point.
   }
@@ -1479,6 +1480,12 @@ ACE_Thread_Adapter::invoke (void)
     // so that we can make sure to clean up correctly when the thread
     // exits.
   }
+
+#else
+
+  status = (void*) (*func) (arg);  // Call thread entry point.
+
+#endif /* 0 */
 
 #if 0
   if (func == ACE_Task_Base::svc_run)

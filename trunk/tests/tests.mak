@@ -6350,6 +6350,8 @@ DEP_CPP_CONN_=\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
 	{$(INCLUDE)}"\ace\Free_List.h"\
 	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\Get_Opt.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\

@@ -867,7 +867,10 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cach
   for (CONNECTION_MAP_ITERATOR iterator (connection_cache_);
        iterator.next (entry);
        iterator.advance ())
-    entry->int_id_->close ();
+    {
+      entry->int_id_->recycler (0, 0);
+      entry->int_id_->close ();
+    }
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int

@@ -28,6 +28,7 @@
 #include "ace/Handle_Set.h"
 #include "ace/Connector.h"
 #include "ace/Strategies.h"
+#include "ace/Get_Opt.h"
 #include "Conn_Test.h"
 
 #if defined (DEC_CXX)
@@ -47,27 +48,12 @@ main (int, char *[])
 
 #else
 
-// Maximum number of concurrent servers.
-static const int MAX_SERVERS = 4;
-
-// Maximum number of concurrent clients.
-static const int MAX_CLIENTS = 10;
+// Default number of clients/servers.
+static int n_servers = 4;
+static int n_clients = 10;
 
 Svc_Handler::Svc_Handler (ACE_Thread_Manager *)
-  : in_use_ (0)
 {
-}
-
-int
-Svc_Handler::in_use (void)
-{
-  return this->in_use_;
-}
-
-void
-Svc_Handler::in_use (int use)
-{
-  this->in_use_ = use;
 }
 
 int
@@ -79,14 +65,6 @@ Svc_Handler::open (void *)
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "enable"), -1);
 
-  return 0;
-}
-
-int
-Svc_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
-{
-  // @@ Fix me!  We cannot currently call destroy: we are being
-  // cached...
   return 0;
 }
 
@@ -177,16 +155,9 @@ Svc_Handler::close (u_long side)
 // Template specializations!
 
 size_t
-ACE_Hash_Addr<ACE_INET_Addr, Svc_Handler>::hash_i (const ACE_INET_Addr &addr) const
+ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
 {
   return addr.get_ip_address () + addr.get_port_number ();
-}
-
-int
-ACE_Hash_Addr<ACE_INET_Addr, Svc_Handler>::compare_i (const ACE_INET_Addr &a1,
-                                                      const ACE_INET_Addr &a2) const
-{
-  return a1 != a2;
 }
 
 // ****************************************
@@ -195,7 +166,7 @@ typedef ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
 typedef ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> STRAT_CONNECTOR;
 typedef ACE_NOOP_Creation_Strategy<Svc_Handler> NULL_CREATION_STRATEGY;
-typedef ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_Null_Mutex> CACHED_CONNECT_STRATEGY;
+typedef ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX> CACHED_CONNECT_STRATEGY;
 
 // ****************************************
 
@@ -208,8 +179,6 @@ timed_blocking_connect (CONNECTOR &con,
 
   Svc_Handler *svc_handler;
   ACE_NEW (svc_handler, Svc_Handler);
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) **** starting timed-blocking connect\n"));
 
   // Perform a timed-blocking connect to the server (this should
   // connect quickly since we're in the same address space or same
@@ -232,8 +201,6 @@ blocking_connect (CONNECTOR &con,
   Svc_Handler *svc_handler;
   ACE_NEW (svc_handler, Svc_Handler);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) **** starting blocking connect\n"));
-
   // Perform a blocking connect to the server.
   if (con.connect (svc_handler, server_addr) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
@@ -246,7 +213,7 @@ blocking_connect (CONNECTOR &con,
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
 }
 
-typedef ACE_Hash_Addr<ACE_INET_Addr, Svc_Handler> EXT_ID;
+typedef ACE_Hash_Addr<ACE_INET_Addr> EXT_ID;
 typedef Svc_Handler *INT_ID;
 typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> MAP_ENTRY;
 
@@ -259,32 +226,39 @@ cached_connect (STRAT_CONNECTOR &con,
 {
   Svc_Handler *svc_handler = 0;
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) **** starting cached blocking connect\n"));
-
   // Perform a blocking connect to the server using the Strategy
   // Connector with a connection caching strategy.  Since we are
   // connecting to the same <server_addr> these calls will return the
   // same dynamically allocated <Svc_Handler> for each <connect>.
   if (con.connect (svc_handler, server_addr) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
-
+    {
+      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
+      return;
+    }
+  
   // Send the data to the server.
   svc_handler->send_data ();
-
-  // Mark this as being available.
-  svc_handler->in_use (0);
+  
+  // Svc_Handler is now idle.
+  svc_handler->idle (1);
+  
+  // Rest for a second
+  ACE_OS::sleep (1);
+  
   svc_handler = 0;
-
+  
   // Try to reconnect.
   if (con.connect (svc_handler, server_addr) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
-
+    {
+      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
+      return;
+    }
+  
   // Send the data to the server.
   svc_handler->send_data ();
 
-  // Close the connection completely.
-  if (svc_handler->close (1) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
+  // Svc_Handler is now idle.
+  svc_handler->idle (1);
 }
 
 struct Client_Info
@@ -313,6 +287,7 @@ client_connections (void *arg)
   Client_Info *info = (Client_Info *) arg;
 
   // Run the timed-blocking test.
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) **** starting timed-blocking connect\n"));
   timed_blocking_connect (*info->connector_,
                           *info->server_addr_);
 
@@ -322,6 +297,7 @@ client_connections (void *arg)
 #endif /* ACE_HAS_THREADS */
 
   // Run the blocking test.
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) **** starting blocking connect\n"));
   blocking_connect (*info->connector_,
                     *info->server_addr_);
 
@@ -331,6 +307,7 @@ client_connections (void *arg)
 #endif /* ACE_HAS_THREADS */
 
   // Run the cached blocking test.
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) **** starting cached blocking connect\n"));
   cached_connect (*info->strat_connector_,
                   *info->server_addr_);
 
@@ -361,7 +338,7 @@ client (void *arg)
   info.strat_connector_ = &strat_connector;
 
 #if defined (ACE_HAS_THREADS)
-  int n_threads = MAX_CLIENTS;
+  int n_threads = n_clients;
   ACE_Barrier barrier (n_threads);
   info.barrier_ = &barrier;
 
@@ -390,6 +367,8 @@ server (void *arg)
 {
   ACCEPTOR *acceptor = (ACCEPTOR *) arg;
   ACE_INET_Addr cli_addr;
+  const ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
+  ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
 
   Svc_Handler *svc_handler;
   ACE_NEW_RETURN (svc_handler, Svc_Handler, 0);
@@ -400,13 +379,22 @@ server (void *arg)
     {
       // Create a new <Svc_Handler> to consume the data.
 
-      int result = acceptor->accept (svc_handler, &cli_addr);
+      int result = acceptor->accept (svc_handler, 
+                                     &cli_addr
+// Timing out is the only way for threads to stop accepting, since we
+// don't have signals
+#if defined (ACE_WIN32) || defined (VXWORKS)                                     
+                                     , options
+#endif /* ACE_WIN32 || VXWORKS */                                     
+                                     );
 
       if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
-                           "accept failed, shutting down"),
-                          0);
-
+        {
+          svc_handler->close ();
+          ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
+                             "accept failed, shutting down"),
+                            0);
+        }
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client %s connected from %d\n",
                   cli_addr.get_host_name (),
                   cli_addr.get_port_number ()));
@@ -436,7 +424,7 @@ spawn_processes (ACCEPTOR *acceptor,
                  ACE_INET_Addr *server_addr)
 {
 #if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
-  const int max_servers = MAX_SERVERS;
+  const int max_servers = n_servers;
 #else
   const int max_servers = 1;
 #endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
@@ -499,23 +487,23 @@ spawn_threads (ACCEPTOR *acceptor,
 #if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
   // The OS allows multiple threads to block in accept().
   if (ACE_Thread_Manager::instance ()->spawn_n
-      (MAX_SERVERS,
+      (n_servers,
        ACE_THR_FUNC (server),
-       (void *) &acceptor,
+       (void *) acceptor,
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 #else
   // The OS only allow one thread to block in accept().
   if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (server),
-       (void *) &acceptor,
+       (void *) acceptor,
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 #endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 
   if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (client),
-       (void *) &server_addr,
+       (void *) server_addr,
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
@@ -525,9 +513,21 @@ spawn_threads (ACCEPTOR *acceptor,
 #endif /* (ACE_WIN32 || VXWORKS) && ACE_HAS_THREADS */
 
 int
-main (int, char *[])
+main (int argc, char *argv[])
 {
   ACE_START_TEST ("Conn_Test");
+
+  ACE_Get_Opt getopt (argc, argv, "c:s:", 1);
+  for (int c; (c = getopt ()) != -1; )
+    switch (c)
+      {
+      case 'c':
+        n_clients = atoi (getopt.optarg);
+	break;
+      case 's':
+        n_servers = atoi (getopt.optarg);
+	break;
+      }
 
   // Acceptor
   ACCEPTOR acceptor;
@@ -557,15 +557,15 @@ main (int, char *[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_Null_Mutex>;
-template class ACE_Hash_Addr<ACE_INET_Addr, Svc_Handler>;
+template class ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Addr<ACE_INET_Addr>;
 template class ACE_NOOP_Creation_Strategy<Svc_Handler>;
 template class ACE_Concurrency_Strategy<Svc_Handler>;
 template class ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Creation_Strategy<Svc_Handler>;
-template class ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr,Svc_Handler>, Svc_Handler *>;
-template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr,Svc_Handler>, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *>;
+template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
@@ -574,15 +574,15 @@ template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Tuple<Svc_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Addr<ACE_INET_Addr, Svc_Handler>
+#pragma instantiate ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Addr<ACE_INET_Addr>
 #pragma instantiate ACE_NOOP_Creation_Strategy<Svc_Handler>
 #pragma instantiate ACE_Concurrency_Strategy<Svc_Handler>
 #pragma instantiate ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Creation_Strategy<Svc_Handler>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr,Svc_Handler>, Svc_Handler *>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr,Svc_Handler>, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>
 #pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
