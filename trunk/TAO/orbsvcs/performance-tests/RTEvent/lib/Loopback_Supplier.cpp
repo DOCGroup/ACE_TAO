@@ -84,6 +84,7 @@ Loopback_Supplier::push (const RtecEventComm::EventSet &source
                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // ACE_DEBUG ((LM_DEBUG, "Loopback_Supplier pushing\n"));
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy;
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
