@@ -5,6 +5,7 @@
 <html>
   <head>
     <title>-ORBEndpoint Details</title>
+    <!-- Changed by: , 12-Jun-2002 -->
   </head>
 
   <body text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
@@ -17,6 +18,7 @@
       <LI><A HREF="#IIOP">IIOP Endpoints</A></LI>
       <LI><A HREF="#SHMIOP">SHMIOP Endpoints</A></LI>
       <LI><A HREF="#UIOP">UIOP Endpoints</A></LI>
+      <LI><A HREF="#DIOP">DIOP Endpoints</A></LI>
     </UL>
 
     <hr>
@@ -474,12 +476,39 @@
       <LI><CODE>-ORBEndpoint uiop://1.1@</CODE>
       <LI><CODE>-ORBEndpoint uiop://1.1@,1.0@/tmp/foo,1.1@</CODE>
     </UL>
+    <hr>
+
+
+    <P>
+    <h2><A NAME="DIOP">DIOP Endpoints</A></h2>
+    TAO's DIOP pluggable protocol utilizes UDP sockets instead TCP
+    sockets (IIOP) as its underlying transport mechanism.
+    <P>
+    <h3>DIOP Endpoint Overview</h3>
+    <P>
+      DIOP endpoints in TAO have the same form as IIOP endpoints, a
+      detailed description is therefore omitted. DIOP has no support
+      for endpoint-specific options.
+    <P>
+      It is recommended to explicitely set port numbers for endpoints,
+      as automatic selection of free endpoints is not supported for
+      UDP sockets. The ORB would try to use the same default port
+      number in every case.
+
+    <h3>DIOP Endpoint Examples</h3>
+    <P>
+      Here are some additional examples of DIOP endoints:
+    <UL>
+      <LI><CODE>-ORBEndpoint diop://1.0@foo1:2345</CODE>
+      <LI><CODE>-ORBEndpoint diop://1.1@:1234</CODE>
+    </UL>
 
     <hr>
+
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Thu May 18 08:37:25 PDT 2000 -->
 <!-- hhmts start -->
-Last modified: Mon Feb 12 00:21:48 Central Standard Time 2001
+Last modified: Wed June 11 00:21:48 Central Standard Time 2002
 <!-- hhmts end -->
   </body>
 </html>
