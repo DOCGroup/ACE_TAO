@@ -158,7 +158,7 @@ public:
   // objrefs, as well as how to marshal and unmarshal them ... as well
   // as provide their own QueryInterface.
 
-  int run (ACE_Time_Value &tv);
+  int run (const ACE_Time_Value &tv);
   // This is the same as the more "standard" <run> method, except that
   // you don't need to put the & in front of <tv>.
 

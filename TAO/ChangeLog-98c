@@ -1,8 +1,9 @@
 Wed Feb 25 22:53:56 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tests/NestedUpcall/client.cpp (main): Added a cast so that Sun
- 	  CC compiler doesn't complain about passing consts as non-const
- 	  arguments!
+	* tao/orbobj: Changed the signature of the run(ACE_Time_Value &)
+ 	  method to run(const ACE_Time_Value &) so we can pass the const
+ 	  ACE_Time_Value::zero to it.  Thanks to Chris Cleeland for
+ 	  suggesting this.
 
 	* orbsvcs/orbsvcs/Event/RT_Task.h: Changed the use of ACE_MT_SYNCH
  	  to ACE_SYNCH so that we can at least build the Event Channel on

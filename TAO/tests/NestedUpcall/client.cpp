@@ -138,7 +138,7 @@ main (int argc, char *argv[])
       // The bad thing is that we have to do something non-standard
       // such as call orb->run() with a zero timeout.  It would be
       // nice if the spec gave us a standard way to do this.
-      if (orb->run ((ACE_Time_Value &) ACE_Time_Value::zero) == -1)
+      if (orb->run (ACE_Time_Value::zero) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%s: %p\n",
                            argv[0], "unable to get the ORB Core to listen"),
