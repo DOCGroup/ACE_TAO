@@ -1,3 +1,12 @@
+Mon Jun 23 18:28:55 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/ACE.cpp: added auto_basic_array_ptr specialization.
+
+	* ace/Service_Config.cpp: added auto_basic_ptr specialization.
+
+	* include/makeinclude/platform_vxworks5.2_g++.GNU:
+	  reworked to supported different targets, instead of only PowerPC.
+
 Mon Jun 23 16:06:35 1997  James C. Hu  <jxh@swarm.cs.wustl.edu>
 
 	* ace/OS.i: Moved definition of sema_* methods to follow cond_*
