@@ -1,11 +1,16 @@
+Mon Aug 10 09:13:17 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp: added missing
+          ACE_Hash_Map_Iterator template instantiations.
+
 Sun Aug 09 23:36:31 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.3 released.
 
 Sun Aug  9 23:08:51 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Checked in a bunch of files/directories that I'd neglected
-	  to check in before.
+        * Checked in a bunch of files/directories that I'd neglected
+          to check in before.
 
 Sun Aug 09 23:12:33 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -13,590 +18,590 @@ Sun Aug 09 23:12:33 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Aug  9 19:46:33 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* Param_Test/var_array.cpp:
+        * Param_Test/var_array.cpp:
 
-	  Changed this->out_.out () in add_args to
-	  this->out_.inout (), which works with dii requests.
+          Changed this->out_.out () in add_args to
+          this->out_.inout (), which works with dii requests.
 
 Sun Aug  9 19:08:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: 
-	  Removed explicit template instantiation for
-	  ACE_Malloc<ACE_LOCAL_MEMPORY_POOL,ACE_Null_Mutex> and the
-	  corresponding ACE_Allocator_Adapter<> because it is already
-	  instantiated in ACE.
+        * tao/ORB_Core.cpp:
+          Removed explicit template instantiation for
+          ACE_Malloc<ACE_LOCAL_MEMPORY_POOL,ACE_Null_Mutex> and the
+          corresponding ACE_Allocator_Adapter<> because it is already
+          instantiated in ACE.
 
-	* tao/ORB.cpp: 
-	  Added missing instantiation of
-	  ACE_Guard<ACE_Cached_Connector_Lock>, event it is not directly
-	  used in TAO it is used by the ACE_Cached_Connector<> (when
-	  instantiated using that lock) and some compilers do no recursive
-	  instantiation.
+        * tao/ORB.cpp:
+          Added missing instantiation of
+          ACE_Guard<ACE_Cached_Connector_Lock>, event it is not directly
+          used in TAO it is used by the ACE_Cached_Connector<> (when
+          instantiated using that lock) and some compilers do no recursive
+          instantiation.
 
 Sun Aug  9 18:20:59 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tests/Simple/client_static.dsp:
-	* tests/Simple/server_static.dsp:
-	* TAOACE_Static.dsw:
-	* TAO_IDL/tao_idl.dsp:
-	* TAO_IDL/tao_idl.dsw:
-	* TAO_IDL/tao_idl_static.dsp:
-	* orbsvcs/orbsvcs/orbsvcs.dsw
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	* tao/TAO_Static.dsp:
-	* tests/Simple/Simple_Object.dsw:
-	* tests/Simple/client.dsp:
-	* tests/Simple/server.dsp:
-	  Added and updated projects for a static version of the 
-	  TAO libraries.
+        * tests/Simple/client_static.dsp:
+        * tests/Simple/server_static.dsp:
+        * TAOACE_Static.dsw:
+        * TAO_IDL/tao_idl.dsp:
+        * TAO_IDL/tao_idl.dsw:
+        * TAO_IDL/tao_idl_static.dsp:
+        * orbsvcs/orbsvcs/orbsvcs.dsw
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+        * tao/TAO_Static.dsp:
+        * tests/Simple/Simple_Object.dsw:
+        * tests/Simple/client.dsp:
+        * tests/Simple/server.dsp:
+          Added and updated projects for a static version of the
+          TAO libraries.
 
 Sun Aug  9 12:56:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Param_Test/fixed_struct.cpp: 
-	* tests/Param_Test/objref.cpp: 
-	* tests/Param_Test/ub_objref_seq.cpp: 
-	* tests/Param_Test/ub_string.cpp: 
-	* tests/Param_Test/var_array.cpp: 
-	  Added missing includes and fixed some T_var to base type
-	  translation problems (it wouldn't compile on Sun/CC otherwise).
+        * tests/Param_Test/fixed_struct.cpp:
+        * tests/Param_Test/objref.cpp:
+        * tests/Param_Test/ub_objref_seq.cpp:
+        * tests/Param_Test/ub_string.cpp:
+        * tests/Param_Test/var_array.cpp:
+          Added missing includes and fixed some T_var to base type
+          translation problems (it wouldn't compile on Sun/CC otherwise).
 
 Sun Aug  9 08:51:58 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader.cpp: Added a #include of
- 	  Offer_Iterators_T.h so that the code will compile on VxWorks.
-  	  Thanks to Sergio for reporting this.
+        * orbsvcs/orbsvcs/Trader/Trader.cpp: Added a #include of
+          Offer_Iterators_T.h so that the code will compile on VxWorks.
+          Thanks to Sergio for reporting this.
 
 Sun Aug  9 000:45:55 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* Param_Test/client.dsp:
+        * Param_Test/client.dsp:
 
-	  Added a missing header file to FileView and created separate
-	  client and server directories under Debug\ so separate .pdb
-	  files can be kept for client and server projects.
+          Added a missing header file to FileView and created separate
+          client and server directories under Debug\ so separate .pdb
+          files can be kept for client and server projects.
 
-	* Param_Test/ub_any_seq.{h,cpp}:
+        * Param_Test/ub_any_seq.{h,cpp}:
 
-	  DII test now works and is CORBA-compliant.
+          DII test now works and is CORBA-compliant.
 
-	* Param_Test/any.cpp:
-	* Param_Test/bd_long_seq.cpp:
-	* Param_Test/bd_short_seq.cpp:
-	* Param_Test/bd_str_seq.cpp:
-	* Param_Test/bd_struct_seq.cpp:
-	* Param_Test/client.cpp:
-	* Param_Test/driver,{h,cpp}:
-	* Param_Test/fixed_array.cpp:
-	* Param_Test/fixed_struct.cpp:
-	* Param_Test/nested_struct.cpp:
-	* Param_Test/objref.cpp:
-	* Param_Test/short.{h,cpp}:
-	* Param_Test/typecode.cpp:
-	* Param_Test/ub_long_seq.cpp:
-	* Param_Test/ub_objref_seq.cpp:
-	* Param_Test/ub_short_seq.cpp:
-	* Param_Test/ub_str_seq.cpp:
-	* Param_Test/ub_string.cpp:
-	* Param_Test/ub_struct_seq.cpp:
-	* Param_Test/var_array.cpp:
-	* Param_Test/var_struct.cpp:
+        * Param_Test/any.cpp:
+        * Param_Test/bd_long_seq.cpp:
+        * Param_Test/bd_short_seq.cpp:
+        * Param_Test/bd_str_seq.cpp:
+        * Param_Test/bd_struct_seq.cpp:
+        * Param_Test/client.cpp:
+        * Param_Test/driver,{h,cpp}:
+        * Param_Test/fixed_array.cpp:
+        * Param_Test/fixed_struct.cpp:
+        * Param_Test/nested_struct.cpp:
+        * Param_Test/objref.cpp:
+        * Param_Test/short.{h,cpp}:
+        * Param_Test/typecode.cpp:
+        * Param_Test/ub_long_seq.cpp:
+        * Param_Test/ub_objref_seq.cpp:
+        * Param_Test/ub_short_seq.cpp:
+        * Param_Test/ub_str_seq.cpp:
+        * Param_Test/ub_string.cpp:
+        * Param_Test/ub_struct_seq.cpp:
+        * Param_Test/var_array.cpp:
+        * Param_Test/var_struct.cpp:
 
-	  Made cosmetic changes to the code.
+          Made cosmetic changes to the code.
 
 
 Sat Aug  8 22:47:22 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* Param_Test/fixed_array.{h,cpp}:
-	* Param_Test/var_array.{h,cpp}:
-	* Param_Test/var_struct.{h,cpp}:
-	* Param_Test/nested_struct.{h,cpp}:
-	* Param_Test/any.{h,cpp}:
+        * Param_Test/fixed_array.{h,cpp}:
+        * Param_Test/var_array.{h,cpp}:
+        * Param_Test/var_struct.{h,cpp}:
+        * Param_Test/nested_struct.{h,cpp}:
+        * Param_Test/any.{h,cpp}:
 
-	  DII tests now work with _vars and are CORBA-compliant.
+          DII tests now work with _vars and are CORBA-compliant.
 
 Sat Aug  8 21:28:33 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Exception.h: 
-	* tao/Exception.i: 
-	* tao/Exception.cpp: 
-	  Removed superflous operator new and operator delete.
+        * tao/Exception.h:
+        * tao/Exception.i:
+        * tao/Exception.cpp:
+          Removed superflous operator new and operator delete.
 
-	* docs/releasenotes/TODO.html: 
-	  More updates.
+        * docs/releasenotes/TODO.html:
+          More updates.
 
-	* docs/configurations.html: 
-	  Added a few hints on when to use ORB-per-thread and what the
-	  consequences are.
+        * docs/configurations.html:
+          Added a few hints on when to use ORB-per-thread and what the
+          consequences are.
 
 Fri Aug  7 21:39:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/releasenotes/TODO.html: 
-	  Update the notes.
+        * docs/releasenotes/TODO.html:
+          Update the notes.
 
-	* docs/releasenotes/index.html: 
-	  Added a pointer to the TODO list.
+        * docs/releasenotes/index.html:
+          Added a pointer to the TODO list.
 
-	* orbsvcs/tests/EC_Throughput/run_test.pl: 
-	  We need to wait for the NamingService and the EventService after
-	  killing them. We also need a pause after starting up the
-	  consumer.
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+          We need to wait for the NamingService and the EventService after
+          killing them. We also need a pause after starting up the
+          consumer.
 
-	* tao/CDR.cpp: 
-	* tao/CDR.h: 
-	* tao/CDR.i: 
-	  The OutputCDR class receives allocators for the buffers and the
-	  data blocks.
+        * tao/CDR.cpp:
+        * tao/CDR.h:
+        * tao/CDR.i:
+          The OutputCDR class receives allocators for the buffers and the
+          data blocks.
 
-	* tao/Connect.cpp: 
-	  Minimize the number of calls to TAO_ORB_Core_instance() in the
-	  upcall.
+        * tao/Connect.cpp:
+          Minimize the number of calls to TAO_ORB_Core_instance() in the
+          upcall.
 
-	* tao/IIOP_Object.cpp: 
-	  Use the ORB_Core allocators for the outgoing CDR stream.
+        * tao/IIOP_Object.cpp:
+          Use the ORB_Core allocators for the outgoing CDR stream.
 
-	* tao/Invocation.cpp: 
-	* tao/Invocation.h: 
-	* tao/Invocation.i: 
-	  Receive the ORB_Core as an argument to minimize calls to
-	  TAO_ORB_Core_instance.
-	  Use allocators for the outgoing stream.
+        * tao/Invocation.cpp:
+        * tao/Invocation.h:
+        * tao/Invocation.i:
+          Receive the ORB_Core as an argument to minimize calls to
+          TAO_ORB_Core_instance.
+          Use allocators for the outgoing stream.
 
-	* tao/ORB_Core.cpp: 
-	* tao/ORB_Core.h: 
-	* tao/ORB_Core.i: 
-	  Added TSS allocators for the outgoing stream.
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+          Added TSS allocators for the outgoing stream.
 
-	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
-	  Fixed problems with Timeprobe registrations.
-	  Also made the <-x> option functional when -v or -o is used.
+        * tests/Cubit/TAO/IDL_Cubit/client_i.cpp:
+        * tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp:
+          Fixed problems with Timeprobe registrations.
+          Also made the <-x> option functional when -v or -o is used.
 
-	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
-	  Enabled GPERF support in the IDL compiler again.
+        * tests/Cubit/TAO/IDL_Cubit/Makefile:
+          Enabled GPERF support in the IDL compiler again.
 
 Fri Aug  7 18:00:22 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* Param_Test/bd_short_seq.{h,cpp}:
-	* Param_Test/bd_long_seq.{h,cpp}:
-	* Param_Test/bd_str_seq.{h,cpp}:
-	* Param_Test/bd_struct_seq.{h,cpp}:
-	* Param_Test/ub_short_seq.{h,cpp}:
-	* Param_Test/ub_long_seq.{h,cpp}:
-	* Param_Test/ub_str_seq.{h,cpp}:
-	* Param_Test/ub_struct_seq.{h,cpp}:
+        * Param_Test/bd_short_seq.{h,cpp}:
+        * Param_Test/bd_long_seq.{h,cpp}:
+        * Param_Test/bd_str_seq.{h,cpp}:
+        * Param_Test/bd_struct_seq.{h,cpp}:
+        * Param_Test/ub_short_seq.{h,cpp}:
+        * Param_Test/ub_long_seq.{h,cpp}:
+        * Param_Test/ub_str_seq.{h,cpp}:
+        * Param_Test/ub_struct_seq.{h,cpp}:
 
-	  DII tests now work with _vars.
+          DII tests now work with _vars.
 
 Fri Aug  7 15:30:06 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tests/Param_Test/typecode.{h,cpp}:
+        * tests/Param_Test/typecode.{h,cpp}:
 
-	  DII test now works.
+          DII test now works.
 
 Fri Aug 07 14:32:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init): Removed the public set function and
- 	  made the ORB_Core a friend.
+        * tao/ORB_Core.cpp (init): Removed the public set function and
+          made the ORB_Core a friend.
 
 Fri Aug  7 10:41:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init): Changed the code to use the new
- 	  shutdown_lock() accessor so TAO will compile.  Thanks to Andy
- 	  Gokhale for reporting this.
+        * tao/ORB_Core.cpp (init): Changed the code to use the new
+          shutdown_lock() accessor so TAO will compile.  Thanks to Andy
+          Gokhale for reporting this.
 
         * tao/ORB: Added an accessor to set the shutdown lock.
 
 Fri Aug 07 01:10:48 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB.cpp 
+        * tao/ORB.cpp
 
-	  (shutdown): Restored the <wait_for_completion> flag.  In
- 	  shutdown, we try to cancel all the threads in the ORB (e.g.,
- 	  threads from a thread-per-connection policy). If the
- 	  <wait_for_completion> flag is set, we wait for all threads to
- 	  exit.  Note that there is one problem with this: on platforms
- 	  that do not support thread cancellation, the threads won't get
- 	  cancelled.  Therefore, the only way they will wake up and
- 	  realize that the ORB has shutdown is that a client makes a
- 	  request to them.  Hence the <wait_for_completion> flag cannot
- 	  reliably used on platforms that do not have thread cancellation.
+          (shutdown): Restored the <wait_for_completion> flag.  In
+          shutdown, we try to cancel all the threads in the ORB (e.g.,
+          threads from a thread-per-connection policy). If the
+          <wait_for_completion> flag is set, we wait for all threads to
+          exit.  Note that there is one problem with this: on platforms
+          that do not support thread cancellation, the threads won't get
+          cancelled.  Therefore, the only way they will wake up and
+          realize that the ORB has shutdown is that a client makes a
+          request to them.  Hence the <wait_for_completion> flag cannot
+          reliably used on platforms that do not have thread cancellation.
 
-	  (run): Simplified code for accessing shutdown_lock_ and
- 	  should_shutdown_
+          (run): Simplified code for accessing shutdown_lock_ and
+          should_shutdown_
 
-	* tao/ORB.i (should_shutdown): Added set and get methods for the
- 	  should_shutdown_ flag.
+        * tao/ORB.i (should_shutdown): Added set and get methods for the
+          should_shutdown_ flag.
 
-	* tao/ORB_Core.cpp 
+        * tao/ORB_Core.cpp
 
-	  (Pre_Allocated): Added a constructor that makes sure that the
- 	  thread manager does not wait for threads by default.
+          (Pre_Allocated): Added a constructor that makes sure that the
+          thread manager does not wait for threads by default.
 
-	  (init): Set the <shutdown_lock_> for the ORB.
+          (init): Set the <shutdown_lock_> for the ORB.
 
-	* tao/Connect.cpp
+        * tao/Connect.cpp
 
-	  (handle_input): Check to see if we've been cancelled
- 	  cooperatively before executing the client request.
+          (handle_input): Check to see if we've been cancelled
+          cooperatively before executing the client request.
 
-  	  (TAO_Server_Connection_Handler::TAO_Server_Connection_Handler,
- 	  TAO_Client_Connection_Handler::TAO_Client_Connection_Handler) 
-	  If the thread manager of the svc_handlers is zero, set them to
- 	  TAO_ORB_Core_instance ()->thr_mgr () and not
- 	  ACE_Thread_Manager::instance ().
+          (TAO_Server_Connection_Handler::TAO_Server_Connection_Handler,
+          TAO_Client_Connection_Handler::TAO_Client_Connection_Handler)
+          If the thread manager of the svc_handlers is zero, set them to
+          TAO_ORB_Core_instance ()->thr_mgr () and not
+          ACE_Thread_Manager::instance ().
 
-	  (activate): There is no need to assign the thr_mgr (again) as it
- 	  was already set correctly at creation time.
+          (activate): There is no need to assign the thr_mgr (again) as it
+          was already set correctly at creation time.
 
-	  (TAO_Client_Connection_Handler::close): Removed this method. The
- 	  base class already does this.
+          (TAO_Client_Connection_Handler::close): Removed this method. The
+          base class already does this.
 
-	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp:
-	  tests/NestedUpcall/Reactor/NestedUpCalls_Test.cpp:
-	  Removed these tests since they have been superseded by the perl
- 	  scripts. Also updated the Makefiles.
+        * tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp:
+          tests/NestedUpcall/Reactor/NestedUpCalls_Test.cpp:
+          Removed these tests since they have been superseded by the perl
+          scripts. Also updated the Makefiles.
 
-	* tests/Cubit/CORBAplus/IDL_Cubit:
-	* tests/Cubit/TAO/IDL_Cubit:
-	  Removed references to TAO_ORB_Core_Instance.
+        * tests/Cubit/CORBAplus/IDL_Cubit:
+        * tests/Cubit/TAO/IDL_Cubit:
+          Removed references to TAO_ORB_Core_Instance.
 
-	* tests/Cubit/TAO/IDL_Cubit/svc.conf: Added back the tss flag for
- 	  ORBresources.  This is necessary because the collocation test
- 	  uses two threads.
+        * tests/Cubit/TAO/IDL_Cubit/svc.conf: Added back the tss flag for
+          ORBresources.  This is necessary because the collocation test
+          uses two threads.
 
-	* tests/Cubit/TAO/IDL_Cubit/cubit.idl: Removed the Cubit_Shutdown
- 	  object. It is not needed. Also removed the string from
- 	  make_cubit since it was not being used.
+        * tests/Cubit/TAO/IDL_Cubit/cubit.idl: Removed the Cubit_Shutdown
+          object. It is not needed. Also removed the string from
+          make_cubit since it was not being used.
 
-	* tests/Cubit/TAO/IDL_Cubit/server_i: 
+        * tests/Cubit/TAO/IDL_Cubit/server_i:
 
-	  Changed <factory_impl_> to a Cubit_Factory_i pointer and created
- 	  it dynamically so that we can pass it the ORB pointer.
+          Changed <factory_impl_> to a Cubit_Factory_i pointer and created
+          it dynamically so that we can pass it the ORB pointer.
 
-	  Removed <factory>, <shutdown_impl_>, <num_of_objs_> <shutdown_>,
- 	  <Cubit_i_ptr>, <Cubit_i_ref>, <Cubit_Factory_i_ptr>, <obj_name>
-	
-	* tests/Cubit/TAO/IDL_Cubit/client_i: 
+          Removed <factory>, <shutdown_impl_>, <num_of_objs_> <shutdown_>,
+          <Cubit_i_ptr>, <Cubit_i_ref>, <Cubit_Factory_i_ptr>, <obj_name>
 
-	  <cubit_key_> was removed since it was not needed anymore.
+        * tests/Cubit/TAO/IDL_Cubit/client_i:
 
-	  Changed <cubit_> to a Cubit_var from a Cubit_ptr.
+          <cubit_key_> was removed since it was not needed anymore.
 
-	  Fixed the memory management for <cubit_factory_key_>.
+          Changed <cubit_> to a Cubit_var from a Cubit_ptr.
 
-	  Instead of using the Cubit_Shutdown object, we simply turn off
- 	  collocation, reinit all our vars (converting them from
- 	  collocated to regular objects), and then call shutdown on the
- 	  cubit object.
+          Fixed the memory management for <cubit_factory_key_>.
+
+          Instead of using the Cubit_Shutdown object, we simply turn off
+          collocation, reinit all our vars (converting them from
+          collocated to regular objects), and then call shutdown on the
+          cubit object.
 
 Thu Aug  6 21:49:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/tests/Trading/Makefile: Changed
+        * orbsvcs/tests/Trading/Makefile: Changed
 
-	  LIBS    = -lorbsvcs -lTAO
-	  LDLIBS  = -lTTest $(LIBS)
+          LIBS    = -lorbsvcs -lTAO
+          LDLIBS  = -lTTest $(LIBS)
 
-	  to 
+          to
 
-	  LDLIBS = -lTTest -lorbsvcs -lTAO
+          LDLIBS = -lTTest -lorbsvcs -lTAO
 
-	  to work around weirdo bugs with the HP/UX GNU make...  Thanks to
- 	  John Mulhern <9107@mn3.lawson.lawson.com> for reporting this.
+          to work around weirdo bugs with the HP/UX GNU make...  Thanks to
+          John Mulhern <9107@mn3.lawson.lawson.com> for reporting this.
 
 Thu Aug  6 18:27:24 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tests/TAO_Tests.dsw: Added the Multiple Inheritance client
-	  and server projects.
+        * tests/TAO_Tests.dsw: Added the Multiple Inheritance client
+          and server projects.
 
-	* tests/Multiple_Inheritance/client.dsp:
-	* tests/Multiple_Inheritance/server.dsp:
-	  Updated the Release versions to be in synch with the rest
-	  of the tests.
+        * tests/Multiple_Inheritance/client.dsp:
+        * tests/Multiple_Inheritance/server.dsp:
+          Updated the Release versions to be in synch with the rest
+          of the tests.
 
 Thu Aug  6 18:11:20 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* TAO-INSTALL.html: Added instructions on how to create a
-	  static library for TAO.
+        * TAO-INSTALL.html: Added instructions on how to create a
+          static library for TAO.
 
-	* orbsvcs/orbsvcs/Sched/DynSched.cpp: Fixed a typo where
-	  there was a == when there should have been a =. This was
-	  in schedule_threads ().
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp: Fixed a typo where
+          there was a == when there should have been a =. This was
+          in schedule_threads ().
 
 Thu Aug  6 16:37:55 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tests/Param_Test/typecode.{h,cpp}:
-	  Moved the table of typecodes used for random
-	  selection to be local to init_parameters ().
-	  When it was global and static, the CORBA::
-	  typecodes could not be used - they weren't yet
-	  initialized.
+        * tests/Param_Test/typecode.{h,cpp}:
+          Moved the table of typecodes used for random
+          selection to be local to init_parameters ().
+          When it was global and static, the CORBA::
+          typecodes could not be used - they weren't yet
+          initialized.
 
 Thu Aug  6 14:24:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Cubit/TAO/DII_Cubit/client.cpp: 
-	  Removed warning about unreached statement.
+        * tests/Cubit/TAO/DII_Cubit/client.cpp:
+          Removed warning about unreached statement.
 
-	* orbsvcs/orbsvcs/Trader/Trader.cpp: 
-	  Removed duplicate instantiation of a template.
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+          Removed duplicate instantiation of a template.
 
 Thu Aug  6 13:39:32 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tao_idl/be/be_visitor_argument/vardecl_ss.cpp:
-	* tao_idl/be/be_visitor_argument/post_upcall_ss.cpp:
-	  Removed code from visit_predefined_type () in
-	  post_upcall_ss.cpp and changed vardecl_ss.cpp to
-	  accomplish the same thing in a less messy and more
-	  memory-robust manner. Applies to code generated for
-	  test_typecode_skel () in param_TestS.cpp.
+        * tao_idl/be/be_visitor_argument/vardecl_ss.cpp:
+        * tao_idl/be/be_visitor_argument/post_upcall_ss.cpp:
+          Removed code from visit_predefined_type () in
+          post_upcall_ss.cpp and changed vardecl_ss.cpp to
+          accomplish the same thing in a less messy and more
+          memory-robust manner. Applies to code generated for
+          test_typecode_skel () in param_TestS.cpp.
 
 Thu Aug 06 12:51:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/orbconf.h: Added a define for the type of reactor that TAO
- 	  will use.  By default, this is the Select_Reactor.
+        * tao/orbconf.h: Added a define for the type of reactor that TAO
+          will use.  By default, this is the Select_Reactor.
 
-	* tao/ORB_Core.cpp (TAO_Default_Reactor): Instantiate TAO_REACTOR
- 	  instead of the Select_Reactor. Also made ~TAO_Default_Reactor
- 	  virtual. BTW, there is no need to keep a pointer to the
- 	  Reactor_Impl class.  Simply ask the Reactor class to delete it
- 	  when its done.
+        * tao/ORB_Core.cpp (TAO_Default_Reactor): Instantiate TAO_REACTOR
+          instead of the Select_Reactor. Also made ~TAO_Default_Reactor
+          virtual. BTW, there is no need to keep a pointer to the
+          Reactor_Impl class.  Simply ask the Reactor class to delete it
+          when its done.
 
 Thu Aug  6 09:46:46 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp : Used the new ARGV
-	  constructor which creates a new ARGV with 2 argvs. Removed all
-	  usages of 3*BUFSIZ.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp : Used the new ARGV
+          constructor which creates a new ARGV with 2 argvs. Removed all
+          usages of 3*BUFSIZ.
 
 Wed Aug  5 22:14:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp,
- 	  orbsvcs/orbsvcs/Trader/Offer_Database.cpp: removed unnecessary
- 	  typenames.  Thanks to John Mulhern <9107@mn3.lawson.lawson.com>
- 	  for reporting this.
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp,
+          orbsvcs/orbsvcs/Trader/Offer_Database.cpp: removed unnecessary
+          typenames.  Thanks to John Mulhern <9107@mn3.lawson.lawson.com>
+          for reporting this.
 
 Wed Aug 05 17:34:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Invocation.h (TAO_GIOP_Invocation): Removed the
- 	  TAO_Client_Connection_Handler pointer from this class.  It was
- 	  moved into the IIOP_Object where it would be easier to recycle
-	  it since instances of TAO_GIOP_Invocation are transient while
-	  IIOP_Objects are not.
+        * tao/Invocation.h (TAO_GIOP_Invocation): Removed the
+          TAO_Client_Connection_Handler pointer from this class.  It was
+          moved into the IIOP_Object where it would be easier to recycle
+          it since instances of TAO_GIOP_Invocation are transient while
+          IIOP_Objects are not.
 
-	* tao/ORB_Core.cpp (TAO_Cached_Connector_Lock): Added a new
- 	  adaptive lock type TAO_Collocation_Table_Lock that will be used
- 	  to control the type of locking used by the connector in TAO.
+        * tao/ORB_Core.cpp (TAO_Cached_Connector_Lock): Added a new
+          adaptive lock type TAO_Collocation_Table_Lock that will be used
+          to control the type of locking used by the connector in TAO.
 
-	  Moved all the connect strategies from the ORB_Core to the
-	  resource factory.  If the strategies were left in the ORB_Core,
-	  each thread would get its own copy of the strategies since
-	  ORB_Core is TSS. 
- 	
-	  Removed all instances of TAO_HAS_CLIENT_CONCURRENCY.  They were
- 	  incomplete, not used, and annoying.
+          Moved all the connect strategies from the ORB_Core to the
+          resource factory.  If the strategies were left in the ORB_Core,
+          each thread would get its own copy of the strategies since
+          ORB_Core is TSS.
 
-	* tao/ORB.cpp: Changed the template instantiations of the
- 	  Connector to specify the new TAO_Cached_Connector_Lock instead
- 	  of ACE_SYNCH_NULL_MUTEX or ACE_SYNCH_MUTEX.
+          Removed all instances of TAO_HAS_CLIENT_CONCURRENCY.  They were
+          incomplete, not used, and annoying.
 
-	* tao/default_server.cpp (parse_args): Added a new option
- 	  (-ORBconnectorlock) to control the lock on the connector.  It
- 	  defaults to a thread lock, but can set to null.
+        * tao/ORB.cpp: Changed the template instantiations of the
+          Connector to specify the new TAO_Cached_Connector_Lock instead
+          of ACE_SYNCH_NULL_MUTEX or ACE_SYNCH_MUTEX.
 
-	  Also, changed the lock type of the collocation table from
- 	  ACE_SYNCH_RECURSIVE_MUTEX to ACE_SYNCH_MUTEX.
+        * tao/default_server.cpp (parse_args): Added a new option
+          (-ORBconnectorlock) to control the lock on the connector.  It
+          defaults to a thread lock, but can set to null.
 
-	* tests/Cubit/TAO/IDL_Cubit/svc.conf: Removed excessive options
- 	  from the svc.conf file. Also added -ORBconnectorlock null to
- 	  avoid locking in the connector.
+          Also, changed the lock type of the collocation table from
+          ACE_SYNCH_RECURSIVE_MUTEX to ACE_SYNCH_MUTEX.
 
-	* tao: Renamed all instances of coltbl to collocation_table.
+        * tests/Cubit/TAO/IDL_Cubit/svc.conf: Removed excessive options
+          from the svc.conf file. Also added -ORBconnectorlock null to
+          avoid locking in the connector.
+
+        * tao: Renamed all instances of coltbl to collocation_table.
 
 Wed Aug  5 17:48:31 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tests/Param_Test/var_struct.{h,cpp}:
-	* tests?param_Test/nested_struct.{h,cpp}:
-	  DII now works, but is non-compliant (OUT arg
-	  has to be extracted to get correct value).
+        * tests/Param_Test/var_struct.{h,cpp}:
+        * tests?param_Test/nested_struct.{h,cpp}:
+          DII now works, but is non-compliant (OUT arg
+          has to be extracted to get correct value).
 
 Wed Aug  5 17:05:36 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* TAO-INSTALL.html: Added instruction for the addition of 
-	  ACE_wrappers/ace to the executable directories under MSVC
-	  5, since this is needed for the TAO_IDL compiler to work 
-	  inside of MSVC.
+        * TAO-INSTALL.html: Added instruction for the addition of
+          ACE_wrappers/ace to the executable directories under MSVC
+          5, since this is needed for the TAO_IDL compiler to work
+          inside of MSVC.
 
 Wed Aug  5 16:43:38 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* docs/implrepo.html: Added information on the new POA policy where 
-	  the format of the persistent IOR can be changed from that of both 
-	  the last-known-server-IOR and Implementation Repository to that
+        * docs/implrepo.html: Added information on the new POA policy where
+          the format of the persistent IOR can be changed from that of both
+          the last-known-server-IOR and Implementation Repository to that
           just of the Implementation Repository.  Also added a note on the
-	  use of CLOEXEC to make TAO fork-safe.
+          use of CLOEXEC to make TAO fork-safe.
 
 Wed Aug  5 16:04:21 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.dsp:
+        * orbsvcs/Naming_Service/Naming_Service.dsp:
         * orbsvcs/orbsvcs/orbsvcs.dsp:
-	* tests/CDR/basic_types.dsp:
-	* tests/CDR/growth.dsp:
-	* tests/CDR/tc.dsp:
-	* tests/Cubit/TAO/DII_Cubit/client.dsp:
-	* tests/Cubit/TAO/IDL_Cubit/client.dsp:
-	* tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
-	* tests/Cubit/TAO/IDL_Cubit/server.dsp:
-	* tests/Cubit/TAO/MT_Cubit/client.dsp:
-	* tests/Cubit/TAO/MT_Cubit/server.dsp:
-	* tests/NestedUpcall/MT_Client_Test/client.dsp:
-	* tests/NestedUpcall/MT_Client_Test/server.dsp:
-	* tests/NestedUpcall/Reactor/client.dsp:
-	* tests/NestedUpcall/Reactor/server.dsp:
-	* tests/NestedUpcall/Triangle_Test/initiator.dsp:
-	* tests/NestedUpcall/Triangle_Test/server_A.dsp:
-	* tests/NestedUpcall/Triangle_Test/server_B.dsp:
-	* tests/OctetSeq/OctetSeq.dsp:
-	* tests/POA/DSI/client.dsp:
-	* tests/POA/DSI/server.dsp:
-	* tests/POA/Default_Servant/client.dsp:
-	* tests/POA/Default_Servant/server.dsp:
-	* tests/POA/Explicit_Activation/server.dsp:
-	* tests/POA/FindPOA/FindPOA.dsp:
-	* tests/POA/Forwarding/client.dsp:
-	* tests/POA/Forwarding/server.dsp:
-	* tests/POA/Generic_Servant/server.dsp:
-	* tests/POA/NewPOA/NewPOA.dsp:
-	* tests/POA/On_Demand_Activation/server.dsp:
-	* tests/POA/RootPOA/RootPOA.dsp:
-	* tests/POA/TIE/client.dsp:
-	* tests/POA/TIE/server.dsp:
-	* tests/POA/locking/locking.dsp:
-	* tests/Param_Test/client.dsp:
-	* tests/Param_Test/server.dsp:
-	* tests/Quoter/Factory_Finder.dsp:
-	* tests/Quoter/Generic_Factory.dsp:
-	* tests/Quoter/client.dsp:
-	* tests/Quoter/server.dsp:
-	* tests/Simple/client.dsp:
-	* tests/Simple/server.dsp:
-	  Updated all the Release versions of these projects.  I'll
-	  spend another session on converting the rest of the orbsvcs
-	  soon.  
+        * tests/CDR/basic_types.dsp:
+        * tests/CDR/growth.dsp:
+        * tests/CDR/tc.dsp:
+        * tests/Cubit/TAO/DII_Cubit/client.dsp:
+        * tests/Cubit/TAO/IDL_Cubit/client.dsp:
+        * tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+        * tests/Cubit/TAO/IDL_Cubit/server.dsp:
+        * tests/Cubit/TAO/MT_Cubit/client.dsp:
+        * tests/Cubit/TAO/MT_Cubit/server.dsp:
+        * tests/NestedUpcall/MT_Client_Test/client.dsp:
+        * tests/NestedUpcall/MT_Client_Test/server.dsp:
+        * tests/NestedUpcall/Reactor/client.dsp:
+        * tests/NestedUpcall/Reactor/server.dsp:
+        * tests/NestedUpcall/Triangle_Test/initiator.dsp:
+        * tests/NestedUpcall/Triangle_Test/server_A.dsp:
+        * tests/NestedUpcall/Triangle_Test/server_B.dsp:
+        * tests/OctetSeq/OctetSeq.dsp:
+        * tests/POA/DSI/client.dsp:
+        * tests/POA/DSI/server.dsp:
+        * tests/POA/Default_Servant/client.dsp:
+        * tests/POA/Default_Servant/server.dsp:
+        * tests/POA/Explicit_Activation/server.dsp:
+        * tests/POA/FindPOA/FindPOA.dsp:
+        * tests/POA/Forwarding/client.dsp:
+        * tests/POA/Forwarding/server.dsp:
+        * tests/POA/Generic_Servant/server.dsp:
+        * tests/POA/NewPOA/NewPOA.dsp:
+        * tests/POA/On_Demand_Activation/server.dsp:
+        * tests/POA/RootPOA/RootPOA.dsp:
+        * tests/POA/TIE/client.dsp:
+        * tests/POA/TIE/server.dsp:
+        * tests/POA/locking/locking.dsp:
+        * tests/Param_Test/client.dsp:
+        * tests/Param_Test/server.dsp:
+        * tests/Quoter/Factory_Finder.dsp:
+        * tests/Quoter/Generic_Factory.dsp:
+        * tests/Quoter/client.dsp:
+        * tests/Quoter/server.dsp:
+        * tests/Simple/client.dsp:
+        * tests/Simple/server.dsp:
+          Updated all the Release versions of these projects.  I'll
+          spend another session on converting the rest of the orbsvcs
+          soon.
 
-	  Note: Most of the run_test.pl's do not yet have support for
-	  running the Release version instead of the debug version.
-	
-	* tests/TAO_Tests.dsw: Inserted a dependency between DII_Cubit 
-	  and IDL_Cubit.
+          Note: Most of the run_test.pl's do not yet have support for
+          running the Release version instead of the debug version.
 
-	* tests/Cubit/TAO/IDL_Cubit/run_test.pl: New and improved script
-	  that supports more useful options.
+        * tests/TAO_Tests.dsw: Inserted a dependency between DII_Cubit
+          and IDL_Cubit.
 
-	* tests/Cubit/TAO/IDL_Cubit/README:  Added a reference to 
-	  run_test.pl and updated the "output" here to what it looks like
-	  now.
+        * tests/Cubit/TAO/IDL_Cubit/run_test.pl: New and improved script
+          that supports more useful options.
+
+        * tests/Cubit/TAO/IDL_Cubit/README:  Added a reference to
+          run_test.pl and updated the "output" here to what it looks like
+          now.
 
 Wed Aug  5 16:02:08 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp : 
-	  Used TAO_ORB_Manager to do the ORB and POA 
-	  initialization and activation of servants.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp :
+          Used TAO_ORB_Manager to do the ORB and POA
+          initialization and activation of servants.
 
 Wed Aug  5 15:38:34 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tests/Param_Test/fixed_array.{h,cpp}:
-	* tests/Param_Test/var_array.{h,cpp}:
-	  Fixed DII implementation.
+        * tests/Param_Test/fixed_array.{h,cpp}:
+        * tests/Param_Test/var_array.{h,cpp}:
+          Fixed DII implementation.
 
 Wed Aug  5 14:17:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp: 
-	  Added missing template instantiations.
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp:
+          Added missing template instantiations.
 
-	* orbsvcs/Logging_Service/Makefile: 
-	  Moved the TAO_ROOT definition to the top.
+        * orbsvcs/Logging_Service/Makefile:
+          Moved the TAO_ROOT definition to the top.
 
-	* orbsvcs/Logging_Service/Logging_Service_i.cpp: 
-	  Fixed usage message.
+        * orbsvcs/Logging_Service/Logging_Service_i.cpp:
+          Fixed usage message.
 
 Wed Aug  5 11:21:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp: 
-	  Fixed couple of minor bugs: assignment of a <const char*> to a
-	  <char*> and a misplaced close paren.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:
+          Fixed couple of minor bugs: assignment of a <const char*> to a
+          <char*> and a misplaced close paren.
 
-	* tests/Cubit/TAO/DII_Cubit/client.cpp: 
-	  Removed EGCS warning about implicit use of & with function
-	  pointers. 
+        * tests/Cubit/TAO/DII_Cubit/client.cpp:
+          Removed EGCS warning about implicit use of & with function
+          pointers.
 
-	* tests/Param_Test/bd_struct_seq.h: 
-	  Removed fully qualified name in method declaration.
+        * tests/Param_Test/bd_struct_seq.h:
+          Removed fully qualified name in method declaration.
 
 Tue Aug  4 22:23:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp: Cleaned up some of the code
-	  and the comments.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp: Cleaned up some of the code
+          and the comments.
 
 Tue Aug  4 21:20:35 1998  Nagarajan Surendrany  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp : 
-	  Replaced 3*BUFSIZ with ACE_DEFAULT_ARGV_BUFSIZ and
-	  allocated memory after calculating the length.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp :
+          Replaced 3*BUFSIZ with ACE_DEFAULT_ARGV_BUFSIZ and
+          allocated memory after calculating the length.
 
 Tue Aug  4 20:00:59 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* Param_Test/ub_any_seq.{h,cpp}:
-	  Added non-_var members for DII OUT arg and 
-	  return value. Test now works for DII and SII.
+        * Param_Test/ub_any_seq.{h,cpp}:
+          Added non-_var members for DII OUT arg and
+          return value. Test now works for DII and SII.
 
 Tue Aug  4 18:10:16 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* Param_Test/ub_short_seq.{h,cpp}:
-	  Param_Test/ub_long_seq.{h.cpp}:
-	  Param_Test/ub_str_seq.{h,cpp}:
-	  Param_Test/ub_struct_seq.{h,cpp}:
-	  Added non-_var members for DII OUT args and
-	  return values. Tests now work for DII and SII.
+        * Param_Test/ub_short_seq.{h,cpp}:
+          Param_Test/ub_long_seq.{h.cpp}:
+          Param_Test/ub_str_seq.{h,cpp}:
+          Param_Test/ub_struct_seq.{h,cpp}:
+          Added non-_var members for DII OUT args and
+          return values. Tests now work for DII and SII.
 
 Tue Aug  4 17:32:30 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/tests/Logger/Logging_Test_i.cpp: 
-	* orbsvcs/Logging_Service/Logging_Service_i.cpp: 
-	  Added some debugging code to test the <make_logger> hashing feature.
-	
-	* orbsvcs/orbsvcs/Log/Logger_i.{h,cpp}: Added ACE_Hash_Map
-	  code. Now calls to make_logger will use the <name> parameter as a
-	  hash key to return either a new Logger or a preexisting one. Added 
-	  some debugging code to the hash-relevant portions.	
+        * orbsvcs/tests/Logger/Logging_Test_i.cpp:
+        * orbsvcs/Logging_Service/Logging_Service_i.cpp:
+          Added some debugging code to test the <make_logger> hashing feature.
+
+        * orbsvcs/orbsvcs/Log/Logger_i.{h,cpp}: Added ACE_Hash_Map
+          code. Now calls to make_logger will use the <name> parameter as a
+          hash key to return either a new Logger or a preexisting one. Added
+          some debugging code to the hash-relevant portions.
 
 Tue Aug  4 17:23:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/tests/Trading/export_test.cpp,
- 	  orbsvcs/tests/Trading/Trading_Service.cpp: Changed all uses of
- 	  TAO_OBJID_TRADINGSERVICE to "TradingService" to be compliant
- 	  with the CORBA specification.
+        * orbsvcs/tests/Trading/export_test.cpp,
+          orbsvcs/tests/Trading/Trading_Service.cpp: Changed all uses of
+          TAO_OBJID_TRADINGSERVICE to "TradingService" to be compliant
+          with the CORBA specification.
 
 Tue Aug 04 16:42:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Multiple_Inheritance: This module is used as a test for
- 	  IDL interfaces that inherit from multiple interfaces.  The
- 	  "diamond of death" inheritance hierarchy is used in this example
- 	  where there is a common base class (A), two classes deriving
- 	  from the common base class (B and C) and then a final derived
- 	  class (D) that inherits from both B and C.
+        * tests/Multiple_Inheritance: This module is used as a test for
+          IDL interfaces that inherit from multiple interfaces.  The
+          "diamond of death" inheritance hierarchy is used in this example
+          where there is a common base class (A), two classes deriving
+          from the common base class (B and C) and then a final derived
+          class (D) that inherits from both B and C.
 
-	  The client starts off with CORBA Object, narrows to interface A,
- 	  then B, then C, and finally D. It calls all the methods on each
- 	  interface.
+          The client starts off with CORBA Object, narrows to interface A,
+          then B, then C, and finally D. It calls all the methods on each
+          interface.
 
 Tue Aug  4 16:00:16 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* TAO-INSTALL.html: Added a section on the use of <corba.h>
-	  instead of <tao/corba.h>.  Also cleaned up some other
-	  sections about TAOACE.dsw and adding a IDL file to a MSVC
-	  project.
+        * TAO-INSTALL.html: Added a section on the use of <corba.h>
+          instead of <tao/corba.h>.  Also cleaned up some other
+          sections about TAOACE.dsw and adding a IDL file to a MSVC
+          project.
 
 Tue Aug  4 15:56:34 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp : Changed BUFSIZ to
-	  3*BUFSIZ to fit the arguments. Made the default base orb port
-	  as 0.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp : Changed BUFSIZ to
+          3*BUFSIZ to fit the arguments. Made the default base orb port
+          as 0.
 
 Tue Aug  4 14:52:12 1998 Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -608,17 +613,17 @@ Tue Aug  4 14:52:12 1998 Jeff Parsons <jp4@cs.wustl.edu>
 
 Tue Aug  4 12:55:06 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/tests/Logger/run_test.pl: Revised test script to call
-	  the executables in the correct directories.
+        * orbsvcs/tests/Logger/run_test.pl: Revised test script to call
+          the executables in the correct directories.
 
 Tue Aug  4 12:11:55 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* docs/releasenotes/index.html: Added logging service section
+        * docs/releasenotes/index.html: Added logging service section
 
 Tue Aug 04 11:08:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/GenExportH.BAT: Moved it to where it really belong,
- 	  $ACE_ROOT/bin/.
+        * TAO_IDL/GenExportH.BAT: Moved it to where it really belong,
+          $ACE_ROOT/bin/.
 
 Mon Aug  3 19:46:55 1998 Jeff Parsons <jp4@cs.wuslt.edu>
 
@@ -638,847 +643,847 @@ Mon Aug  3 19:46:55 1998 Jeff Parsons <jp4@cs.wuslt.edu>
 
 Mon Aug  3 17:21:42 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* IIOP/test/clnt.cpp: 
-	* IIOP/test/cubit.cpp: 
-	* IIOP/test/cubitC.cpp: 
-	* IIOP/test/cubitS.cpp: 
-	* IIOP/test/cubit_i.cpp: 
-	* IIOP/test/svr.cpp: 
-	* IIOP/test/test1.cpp: 
-	* IIOP/test/test1_clnt.cpp: 
-	* IIOP/test/test1_svr.cpp: 
-	* IIOP/test/Orbeline/base_server/Profile_Timer.cpp: 
-	* IIOP/test/Orbeline/base_server/cubit_impl.cpp: 
-	* IIOP/test/Orbeline/base_server/server.cpp: 
-	* IIOP/test/Orbeline/client/Profile_Timer.cpp: 
-	* IIOP/test/Orbeline/client/client.cpp: 
-	* IIOP/test/Orbix/base_server/cubitC.cpp: 
-	* IIOP/test/Orbix/base_server/cubitS.cpp: 
-	* IIOP/test/Orbix/base_server/cubit_impl.cpp: 
-	* IIOP/test/Orbix/base_server/server.cpp: 
-	* IIOP/test/Orbix/base_server/tpr.cpp: 
-	* IIOP/test/Orbix/client/client.cpp: 
-	* IIOP/test/Orbix/client/cubitC.cpp: 
-	* IIOP/test/Orbix/factory_client/client.cpp: 
-	* IIOP/test/Orbix/factory_client/cubitC.cpp: 
-	* IIOP/test/Orbix/factory_client/cubitS.cpp: 
-	* IIOP/test/Orbix/tpool/cubitC.cpp: 
-	* IIOP/test/Orbix/tpool/cubitS.cpp: 
-	* IIOP/test/Orbix/tpool/cubit_impl.cpp: 
-	* IIOP/test/Orbix/tpool/server.cpp: 
-	* IIOP/test/Orbix/tpool/tpool.cpp: 
-	* IIOP/test/Orbix/tpr/cubitC.cpp: 
-	* IIOP/test/Orbix/tpr/cubitS.cpp: 
-	* IIOP/test/Orbix/tpr/cubit_impl.cpp: 
-	* IIOP/test/Orbix/tpr/server.cpp: 
-	* IIOP/test/Orbix/tpr/tpr.cpp: 
-	* IIOP/test/Orbix/tps/cubitC.cpp: 
-	* IIOP/test/Orbix/tps/cubitS.cpp: 
-	* IIOP/test/Orbix/tps/cubit_impl.cpp: 
-	* IIOP/test/Orbix/tps/server.cpp: 
-	* IIOP/test/Orbix/tps/tps.cpp: 
-	* IIOP/tests/Cubit/Orbix/base_server/cubitC.cpp: 
-	* IIOP/tests/Cubit/Orbix/base_server/cubitS.cpp: 
-	* IIOP/tests/Cubit/Orbix/base_server/cubit_impl.cpp: 
-	* IIOP/tests/Cubit/Orbix/base_server/server.cpp: 
-	* IIOP/tests/Cubit/Orbix/base_server/tpr.cpp: 
-	* IIOP/tests/Cubit/Orbix/client/client.cpp: 
-	* IIOP/tests/Cubit/Orbix/client/cubitC.cpp: 
-	* IIOP/tests/Cubit/Orbix/factory_client/client.cpp: 
-	* IIOP/tests/Cubit/Orbix/factory_client/cubitC.cpp: 
-	* IIOP/tests/Cubit/Orbix/factory_client/cubitS.cpp: 
-	* IIOP/tests/Cubit/Orbix/tpool/cubitC.cpp: 
-	* IIOP/tests/Cubit/Orbix/tpool/cubitS.cpp: 
-	* IIOP/tests/Cubit/Orbix/tpool/cubit_impl.cpp: 
-	* IIOP/tests/Cubit/Orbix/tpool/server.cpp: 
-	* IIOP/tests/Cubit/Orbix/tpool/tpool.cpp: 
-	* IIOP/tests/Cubit/Orbix/tpr/cubitC.cpp: 
-	* IIOP/tests/Cubit/Orbix/tpr/cubitS.cpp: 
-	* IIOP/tests/Cubit/Orbix/tpr/cubit_impl.cpp: 
-	* IIOP/tests/Cubit/Orbix/tpr/server.cpp: 
-	* IIOP/tests/Cubit/Orbix/tpr/tpr.cpp: 
-	* IIOP/tests/Cubit/Orbix/tps/cubitC.cpp: 
-	* IIOP/tests/Cubit/Orbix/tps/cubitS.cpp: 
-	* IIOP/tests/Cubit/Orbix/tps/cubit_impl.cpp: 
-	* IIOP/tests/Cubit/Orbix/tps/tps.cpp: 
-	* IIOP/tests/Cubit/TAO/clnt.cpp: 
-	* IIOP/tests/Cubit/TAO/cubit.cpp: 
-	* IIOP/tests/Cubit/TAO/cubitC.cpp: 
-	* IIOP/tests/Cubit/TAO/cubitS.cpp: 
-	* IIOP/tests/Cubit/TAO/cubit_i.cpp: 
-	* IIOP/tests/Cubit/TAO/svr.cpp: 
-	* IIOP/tests/Cubit/TAO/test1.cpp: 
-	* IIOP/tests/Cubit/TAO/test1_clnt.cpp: 
-	* IIOP/tests/Cubit/TAO/test1_svr.cpp: 
-	* IIOP/tests/Cubit/VisiBroker/base_server/Profile_Timer.cpp: 
-	* IIOP/tests/Cubit/VisiBroker/base_server/cubit_impl.cpp: 
-	* IIOP/tests/Cubit/VisiBroker/base_server/server.cpp: 
-	* IIOP/tests/Cubit/VisiBroker/client/Profile_Timer.cpp: 
-	* IIOP/tests/Cubit/VisiBroker/client/client.cpp: 
-	* IIOP/tests/Thruput_test/client.cpp: 
-	* IIOP/tests/Thruput_test/server.cpp: 
-	* IIOP/tests/Thruput_test/ttcpC.cpp: 
-	* IIOP/tests/Thruput_test/ttcpS.cpp: 
-	* IIOP/tests/Thruput_test/ttcp_i.cpp: 
-	* IIOP/tests/Thruput_test/utils.cpp: 
-	Added ACE_RCSID to these files.
+        * IIOP/test/clnt.cpp:
+        * IIOP/test/cubit.cpp:
+        * IIOP/test/cubitC.cpp:
+        * IIOP/test/cubitS.cpp:
+        * IIOP/test/cubit_i.cpp:
+        * IIOP/test/svr.cpp:
+        * IIOP/test/test1.cpp:
+        * IIOP/test/test1_clnt.cpp:
+        * IIOP/test/test1_svr.cpp:
+        * IIOP/test/Orbeline/base_server/Profile_Timer.cpp:
+        * IIOP/test/Orbeline/base_server/cubit_impl.cpp:
+        * IIOP/test/Orbeline/base_server/server.cpp:
+        * IIOP/test/Orbeline/client/Profile_Timer.cpp:
+        * IIOP/test/Orbeline/client/client.cpp:
+        * IIOP/test/Orbix/base_server/cubitC.cpp:
+        * IIOP/test/Orbix/base_server/cubitS.cpp:
+        * IIOP/test/Orbix/base_server/cubit_impl.cpp:
+        * IIOP/test/Orbix/base_server/server.cpp:
+        * IIOP/test/Orbix/base_server/tpr.cpp:
+        * IIOP/test/Orbix/client/client.cpp:
+        * IIOP/test/Orbix/client/cubitC.cpp:
+        * IIOP/test/Orbix/factory_client/client.cpp:
+        * IIOP/test/Orbix/factory_client/cubitC.cpp:
+        * IIOP/test/Orbix/factory_client/cubitS.cpp:
+        * IIOP/test/Orbix/tpool/cubitC.cpp:
+        * IIOP/test/Orbix/tpool/cubitS.cpp:
+        * IIOP/test/Orbix/tpool/cubit_impl.cpp:
+        * IIOP/test/Orbix/tpool/server.cpp:
+        * IIOP/test/Orbix/tpool/tpool.cpp:
+        * IIOP/test/Orbix/tpr/cubitC.cpp:
+        * IIOP/test/Orbix/tpr/cubitS.cpp:
+        * IIOP/test/Orbix/tpr/cubit_impl.cpp:
+        * IIOP/test/Orbix/tpr/server.cpp:
+        * IIOP/test/Orbix/tpr/tpr.cpp:
+        * IIOP/test/Orbix/tps/cubitC.cpp:
+        * IIOP/test/Orbix/tps/cubitS.cpp:
+        * IIOP/test/Orbix/tps/cubit_impl.cpp:
+        * IIOP/test/Orbix/tps/server.cpp:
+        * IIOP/test/Orbix/tps/tps.cpp:
+        * IIOP/tests/Cubit/Orbix/base_server/cubitC.cpp:
+        * IIOP/tests/Cubit/Orbix/base_server/cubitS.cpp:
+        * IIOP/tests/Cubit/Orbix/base_server/cubit_impl.cpp:
+        * IIOP/tests/Cubit/Orbix/base_server/server.cpp:
+        * IIOP/tests/Cubit/Orbix/base_server/tpr.cpp:
+        * IIOP/tests/Cubit/Orbix/client/client.cpp:
+        * IIOP/tests/Cubit/Orbix/client/cubitC.cpp:
+        * IIOP/tests/Cubit/Orbix/factory_client/client.cpp:
+        * IIOP/tests/Cubit/Orbix/factory_client/cubitC.cpp:
+        * IIOP/tests/Cubit/Orbix/factory_client/cubitS.cpp:
+        * IIOP/tests/Cubit/Orbix/tpool/cubitC.cpp:
+        * IIOP/tests/Cubit/Orbix/tpool/cubitS.cpp:
+        * IIOP/tests/Cubit/Orbix/tpool/cubit_impl.cpp:
+        * IIOP/tests/Cubit/Orbix/tpool/server.cpp:
+        * IIOP/tests/Cubit/Orbix/tpool/tpool.cpp:
+        * IIOP/tests/Cubit/Orbix/tpr/cubitC.cpp:
+        * IIOP/tests/Cubit/Orbix/tpr/cubitS.cpp:
+        * IIOP/tests/Cubit/Orbix/tpr/cubit_impl.cpp:
+        * IIOP/tests/Cubit/Orbix/tpr/server.cpp:
+        * IIOP/tests/Cubit/Orbix/tpr/tpr.cpp:
+        * IIOP/tests/Cubit/Orbix/tps/cubitC.cpp:
+        * IIOP/tests/Cubit/Orbix/tps/cubitS.cpp:
+        * IIOP/tests/Cubit/Orbix/tps/cubit_impl.cpp:
+        * IIOP/tests/Cubit/Orbix/tps/tps.cpp:
+        * IIOP/tests/Cubit/TAO/clnt.cpp:
+        * IIOP/tests/Cubit/TAO/cubit.cpp:
+        * IIOP/tests/Cubit/TAO/cubitC.cpp:
+        * IIOP/tests/Cubit/TAO/cubitS.cpp:
+        * IIOP/tests/Cubit/TAO/cubit_i.cpp:
+        * IIOP/tests/Cubit/TAO/svr.cpp:
+        * IIOP/tests/Cubit/TAO/test1.cpp:
+        * IIOP/tests/Cubit/TAO/test1_clnt.cpp:
+        * IIOP/tests/Cubit/TAO/test1_svr.cpp:
+        * IIOP/tests/Cubit/VisiBroker/base_server/Profile_Timer.cpp:
+        * IIOP/tests/Cubit/VisiBroker/base_server/cubit_impl.cpp:
+        * IIOP/tests/Cubit/VisiBroker/base_server/server.cpp:
+        * IIOP/tests/Cubit/VisiBroker/client/Profile_Timer.cpp:
+        * IIOP/tests/Cubit/VisiBroker/client/client.cpp:
+        * IIOP/tests/Thruput_test/client.cpp:
+        * IIOP/tests/Thruput_test/server.cpp:
+        * IIOP/tests/Thruput_test/ttcpC.cpp:
+        * IIOP/tests/Thruput_test/ttcpS.cpp:
+        * IIOP/tests/Thruput_test/ttcp_i.cpp:
+        * IIOP/tests/Thruput_test/utils.cpp:
+        Added ACE_RCSID to these files.
 
 Mon Aug  3 16:49:45 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* TAO_IDL/Makefile: 
-	We don't attempt to traverse any subdirectories now.
-	
-	* TAO_IDL/ast/Makefile: 
-	* TAO_IDL/be/Makefile: 
-	* TAO_IDL/be/be_state.cpp: 
-	* TAO_IDL/be/be_state_argument.cpp: 
-	* TAO_IDL/be/be_state_array.cpp: 
-	* TAO_IDL/be/be_state_attribute.cpp: 
-	* TAO_IDL/be/be_state_exception.cpp: 
-	* TAO_IDL/be/be_state_operation.cpp: 
-	* TAO_IDL/be/be_state_sequence.cpp: 
-	* TAO_IDL/be/be_state_structure.cpp: 
-	* TAO_IDL/be/be_state_typedef.cpp: 
-	* TAO_IDL/be/be_state_union.cpp: 
-	* TAO_IDL/driver/Makefile: 
-	* TAO_IDL/fe/Makefile: 
-	* TAO_IDL/narrow/Makefile: 
-	* TAO_IDL/util/Makefile: 
-	Erased these now useless files.
+        * TAO_IDL/Makefile:
+        We don't attempt to traverse any subdirectories now.
 
-	* Benchmark/Marshal_Test/Orbix/marshal.h: 
-	Added a RCS Id.
+        * TAO_IDL/ast/Makefile:
+        * TAO_IDL/be/Makefile:
+        * TAO_IDL/be/be_state.cpp:
+        * TAO_IDL/be/be_state_argument.cpp:
+        * TAO_IDL/be/be_state_array.cpp:
+        * TAO_IDL/be/be_state_attribute.cpp:
+        * TAO_IDL/be/be_state_exception.cpp:
+        * TAO_IDL/be/be_state_operation.cpp:
+        * TAO_IDL/be/be_state_sequence.cpp:
+        * TAO_IDL/be/be_state_structure.cpp:
+        * TAO_IDL/be/be_state_typedef.cpp:
+        * TAO_IDL/be/be_state_union.cpp:
+        * TAO_IDL/driver/Makefile:
+        * TAO_IDL/fe/Makefile:
+        * TAO_IDL/narrow/Makefile:
+        * TAO_IDL/util/Makefile:
+        Erased these now useless files.
 
-	* Benchmark/Marshal_Test/Orbix/client.cpp: 
-	* Benchmark/Marshal_Test/Orbix/marshal.h: 
-	* Benchmark/Marshal_Test/Orbix/orbix_marshal_client.cpp: 
-	* Benchmark/Marshal_Test/Orbix/orbix_marshal_impl.cpp: 
-	* Benchmark/Marshal_Test/Orbix/orbix_marshal_server.cpp: 
-	* Benchmark/Marshal_Test/Orbix/server.cpp: 
-	* Benchmark/Marshal_Test/TAO/client.cpp: 
-	* Benchmark/Marshal_Test/TAO/marshalC.cpp: 
-	* Benchmark/Marshal_Test/TAO/marshalS.cpp: 
-	* Benchmark/Marshal_Test/TAO/server.cpp: 
-	* Benchmark/Marshal_Test/TAO/tao_marshal_client.cpp: 
-	* Benchmark/Marshal_Test/TAO/tao_marshal_impl.cpp: 
-	* Benchmark/Marshal_Test/TAO/tao_marshal_server.cpp: 
-	* Benchmark/Marshal_Test/VisiBroker/client.cpp: 
-	* Benchmark/Marshal_Test/VisiBroker/server.cpp: 
-	* Benchmark/Marshal_Test/VisiBroker/visi_marshal_client.cpp: 
-	* Benchmark/Marshal_Test/VisiBroker/visi_marshal_impl.cpp: 
-	* Benchmark/Marshal_Test/VisiBroker/visi_marshal_server.cpp: 
-	* Benchmark/benchmark/driver.cpp: 
-	* Benchmark/benchmark/marshal_options.cpp: 
-	* Benchmark/benchmark/marshal_proxy.cpp: 
-	* Benchmark/benchmark/marshal_results.cpp: 
-	Added ACE_RCSID to these files.
+        * Benchmark/Marshal_Test/Orbix/marshal.h:
+        Added a RCS Id.
+
+        * Benchmark/Marshal_Test/Orbix/client.cpp:
+        * Benchmark/Marshal_Test/Orbix/marshal.h:
+        * Benchmark/Marshal_Test/Orbix/orbix_marshal_client.cpp:
+        * Benchmark/Marshal_Test/Orbix/orbix_marshal_impl.cpp:
+        * Benchmark/Marshal_Test/Orbix/orbix_marshal_server.cpp:
+        * Benchmark/Marshal_Test/Orbix/server.cpp:
+        * Benchmark/Marshal_Test/TAO/client.cpp:
+        * Benchmark/Marshal_Test/TAO/marshalC.cpp:
+        * Benchmark/Marshal_Test/TAO/marshalS.cpp:
+        * Benchmark/Marshal_Test/TAO/server.cpp:
+        * Benchmark/Marshal_Test/TAO/tao_marshal_client.cpp:
+        * Benchmark/Marshal_Test/TAO/tao_marshal_impl.cpp:
+        * Benchmark/Marshal_Test/TAO/tao_marshal_server.cpp:
+        * Benchmark/Marshal_Test/VisiBroker/client.cpp:
+        * Benchmark/Marshal_Test/VisiBroker/server.cpp:
+        * Benchmark/Marshal_Test/VisiBroker/visi_marshal_client.cpp:
+        * Benchmark/Marshal_Test/VisiBroker/visi_marshal_impl.cpp:
+        * Benchmark/Marshal_Test/VisiBroker/visi_marshal_server.cpp:
+        * Benchmark/benchmark/driver.cpp:
+        * Benchmark/benchmark/marshal_options.cpp:
+        * Benchmark/benchmark/marshal_proxy.cpp:
+        * Benchmark/benchmark/marshal_results.cpp:
+        Added ACE_RCSID to these files.
 
 Mon Aug  3 15:05:39 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/Makefile: Added this Makefile
-	which compiles the AVStreams mpeg application.
+        * orbsvcs/tests/AVStreams/mpeg/Makefile: Added this Makefile
+        which compiles the AVStreams mpeg application.
 
 Mon Aug  3 14:23:22 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* tests/CDR/basic_types.cpp: 
-	* tests/CDR/growth.cpp: 
-	* tests/CDR/tc.cpp: 
-	* tests/Cubit/COOL/IDL_Cubit/client.cpp: 
-	* tests/Cubit/COOL/IDL_Cubit/cubit_i.cpp: 
-	* tests/Cubit/COOL/IDL_Cubit/server.cpp: 
-	* tests/Cubit/COOL/IDL_Cubit/tmplinst.cpp: 
-	* tests/Cubit/COOL/MT_Cubit/Task_Client.cpp: 
-	* tests/Cubit/COOL/MT_Cubit/Util_Thread.cpp: 
-	* tests/Cubit/COOL/MT_Cubit/client.cpp: 
-	* tests/Cubit/COOL/MT_Cubit/cubit_impl.cpp: 
-	* tests/Cubit/COOL/MT_Cubit/pccTimer.cpp: 
-	* tests/Cubit/COOL/MT_Cubit/server.cpp: 
-	* tests/Cubit/CORBAplus/IDL_Cubit/clnt.cpp: 
-	* tests/Cubit/CORBAplus/IDL_Cubit/cubit_i.cpp: 
-	* tests/Cubit/CORBAplus/IDL_Cubit/svr.cpp: 
-	* tests/Cubit/CORBAplus/MT_Cubit/client/Task_Client.cpp: 
-	* tests/Cubit/CORBAplus/MT_Cubit/client/client.cpp: 
-	* tests/Cubit/CORBAplus/MT_Cubit/server/cubit_i.cpp: 
-	* tests/Cubit/CORBAplus/MT_Cubit/server/svr.cpp: 
-	* tests/Cubit/Hardpack/IDL_Cubit/client.cpp: 
-	* tests/Cubit/Hardpack/IDL_Cubit/client_i.cpp: 
-	* tests/Cubit/Hardpack/IDL_Cubit/server.cpp: 
-	* tests/Cubit/Hardpack/IDL_Cubit/server_i.cpp: 
-	* tests/Cubit/Orbix/base_server/cubit_impl.cpp: 
-	* tests/Cubit/Orbix/base_server/server.cpp: 
-	* tests/Cubit/Orbix/client/client.cpp: 
-	* tests/Cubit/Orbix/client/cubitC.cpp: 
-	* tests/Cubit/Orbix/factory_client/client.cpp: 
-	* tests/Cubit/Orbix/factory_client/cubitC.cpp: 
-	* tests/Cubit/Orbix/factory_client/cubitS.cpp: 
-	* tests/Cubit/Orbix/tpool/cubitC.cpp: 
-	* tests/Cubit/Orbix/tpool/cubitS.cpp: 
-	* tests/Cubit/Orbix/tpool/cubit_impl.cpp: 
-	* tests/Cubit/Orbix/tpool/server.cpp: 
-	* tests/Cubit/Orbix/tpool/tpool.cpp: 
-	* tests/Cubit/Orbix/tpr/cubitC.cpp: 
-	* tests/Cubit/Orbix/tpr/cubitS.cpp: 
-	* tests/Cubit/Orbix/tpr/cubit_impl.cpp: 
-	* tests/Cubit/Orbix/tpr/server.cpp: 
-	* tests/Cubit/Orbix/tpr/tpr.cpp: 
-	* tests/Cubit/Orbix/tps/cubitC.cpp: 
-	* tests/Cubit/Orbix/tps/cubitS.cpp: 
-	* tests/Cubit/Orbix/tps/cubit_impl.cpp: 
-	* tests/Cubit/Orbix/tps/tps.cpp: 
-	* tests/Cubit/TAO/DII_Cubit/client.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/client.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/server.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/server_i.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/tmplinst.cpp: 
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: 
-	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp: 
-	* tests/Cubit/TAO/MT_Cubit/client.cpp: 
-	* tests/Cubit/TAO/MT_Cubit/cubit_i.cpp: 
-	* tests/Cubit/TAO/MT_Cubit/pccTimer.cpp: 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp: 
-	* tests/Cubit/TAO/MT_Cubit/tmplinst.cpp: 
-	* tests/Cubit/VisiBroker/base_server/Profile_Timer.cpp: 
-	* tests/Cubit/VisiBroker/base_server/cubit_impl.cpp: 
-	* tests/Cubit/VisiBroker/base_server/server.cpp: 
-	* tests/Cubit/VisiBroker/client/Profile_Timer.cpp: 
-	* tests/Cubit/VisiBroker/client/client.cpp: 
-	* tests/Demux_Test/client.cpp: 
-	* tests/Demux_Test/server.cpp: 
-	* tests/Demux_Test/CodeGen/client.cpp: 
-	* tests/Demux_Test/CodeGen/gen.cpp: 
-	* tests/Demux_Test/CodeGen/impl.cpp: 
-	* tests/Demux_Test/CodeGen/objcreate.cpp: 
-	* tests/Demux_Test/CodeGen/perf.cpp: 
-	* tests/Demux_Test/CodeGen/skel.cpp: 
-	* tests/Demux_Test/CodeGen/stub.cpp: 
-	* tests/Demux_Test/CodeGen/tao.cpp: 
-	* tests/NestedUpcall/MT_Client_Test/MT_Object_Impl.cpp: 
-	* tests/NestedUpcall/MT_Client_Test/client.cpp: 
-	* tests/NestedUpcall/MT_Client_Test/local_server.cpp: 
-	* tests/NestedUpcall/MT_Client_Test/server.cpp: 
-	* tests/NestedUpcall/Reactor/NestedUpCalls_Test.cpp: 
-	* tests/NestedUpcall/Reactor/client.cpp: 
-	* tests/NestedUpcall/Reactor/eh_i.cpp: 
-	* tests/NestedUpcall/Reactor/reactor_i.cpp: 
-	* tests/NestedUpcall/Reactor/server.cpp: 
-	* tests/NestedUpcall/Triangle_Test/Initiator_Impl.cpp: 
-	* tests/NestedUpcall/Triangle_Test/Object_A_Impl.cpp: 
-	* tests/NestedUpcall/Triangle_Test/Object_B_Impl.cpp: 
-	* tests/NestedUpcall/Triangle_Test/initiator.cpp: 
-	* tests/NestedUpcall/Triangle_Test/server_A.cpp: 
-	* tests/NestedUpcall/Triangle_Test/server_B.cpp: 
-	* tests/OctetSeq/OctetSeq.cpp: 
-	* tests/POA/DSI/Database_i.cpp: 
-	* tests/POA/DSI/client.cpp: 
-	* tests/POA/DSI/server.cpp: 
-	* tests/POA/Default_Servant/File_i.cpp: 
-	* tests/POA/Default_Servant/client.cpp: 
-	* tests/POA/Default_Servant/server.cpp: 
-	* tests/POA/Explicit_Activation/server.cpp: 
-	* tests/POA/FindPOA/FindPOA.cpp: 
-	* tests/POA/Forwarding/MyFooServant.cpp: 
-	* tests/POA/Forwarding/Servant_Locator.cpp: 
-	* tests/POA/Forwarding/client.cpp: 
-	* tests/POA/Forwarding/server.cpp: 
-	* tests/POA/Generic_Servant/MyFooServant.cpp: 
-	* tests/POA/Generic_Servant/client.cpp: 
-	* tests/POA/NewPOA/NewPOA.cpp: 
-	* tests/POA/On_Demand_Activation/Servant_Activator.cpp: 
-	* tests/POA/On_Demand_Activation/Servant_Locator.cpp: 
-	* tests/POA/On_Demand_Activation/server.cpp: 
-	* tests/POA/RootPOA/RootPOA.cpp: 
-	* tests/POA/TIE/Foo_i.cpp: 
-	* tests/POA/TIE/client.cpp: 
-	* tests/POA/TIE/server.cpp: 
-	* tests/POA/locking/locking.cpp: 
-	* tests/Param_Test/any.cpp: 
-	* tests/Param_Test/bd_long_seq.cpp: 
-	* tests/Param_Test/bd_short_seq.cpp: 
-	* tests/Param_Test/bd_str_seq.cpp: 
-	* tests/Param_Test/bd_string.cpp: 
-	* tests/Param_Test/bd_struct_seq.cpp: 
-	* tests/Param_Test/client.cpp: 
-	* tests/Param_Test/driver.cpp: 
-	* tests/Param_Test/fixed_array.cpp: 
-	* tests/Param_Test/fixed_struct.cpp: 
-	* tests/Param_Test/helper.cpp: 
-	* tests/Param_Test/nested_struct.cpp: 
-	* tests/Param_Test/objref.cpp: 
-	* tests/Param_Test/options.cpp: 
-	* tests/Param_Test/param_test_i.cpp: 
-	* tests/Param_Test/results.cpp: 
-	* tests/Param_Test/server.cpp: 
-	* tests/Param_Test/short.cpp: 
-	* tests/Param_Test/tmplinst.cpp: 
-	* tests/Param_Test/typecode.cpp: 
-	* tests/Param_Test/ub_any_seq.cpp: 
-	* tests/Param_Test/ub_long_seq.cpp: 
-	* tests/Param_Test/ub_objref_seq.cpp: 
-	* tests/Param_Test/ub_short_seq.cpp: 
-	* tests/Param_Test/ub_str_seq.cpp: 
-	* tests/Param_Test/ub_string.cpp: 
-	* tests/Param_Test/ub_struct_seq.cpp: 
-	* tests/Param_Test/var_array.cpp: 
-	* tests/Param_Test/var_struct.cpp: 
-	* tests/Quoter/Factory_Finder.cpp: 
-	* tests/Quoter/Factory_Finder_Impl.cpp: 
-	* tests/Quoter/Generic_Factory.cpp: 
-	* tests/Quoter/Generic_Factory_Impl.cpp: 
-	* tests/Quoter/Quoter_Impl.cpp: 
-	* tests/Quoter/client.cpp: 
-	* tests/Quoter/server.cpp: 
-	* tests/Simple/client.cpp: 
-	* tests/Simple/client_impl.cpp: 
-	* tests/Simple/server.cpp: 
-	* tests/Simple/server_impl.cpp: 
-	* tests/Simple/simple_object_impl.cpp: 
-	* tests/Thruput/COOL/client.cpp: 
-	* tests/Thruput/COOL/server.cpp: 
-	* tests/Thruput/COOL/ttcp_i.cpp: 
-	* tests/Thruput/COOL/utils.cpp: 
-	* tests/Thruput/CORBAplus/client.cpp: 
-	* tests/Thruput/CORBAplus/server.cpp: 
-	* tests/Thruput/CORBAplus/ttcp_i.cpp: 
-	* tests/Thruput/CORBAplus/utils.cpp: 
-	* tests/Thruput/Orbix/Client.cpp: 
-	* tests/Thruput/Orbix/Srv_Main.cpp: 
-	* tests/Thruput/Orbix/ttcp_i.cpp: 
-	* tests/Thruput/Orbix/utils.cpp: 
-	* tests/Thruput/TAO/client.cpp: 
-	* tests/Thruput/TAO/server.cpp: 
-	* tests/Thruput/TAO/tmplinst.cpp: 
-	* tests/Thruput/TAO/ttcp_i.cpp: 
-	* tests/Thruput/TAO/utils.cpp: 
-	Added ACE_RCSID to these files.
+        * tests/CDR/basic_types.cpp:
+        * tests/CDR/growth.cpp:
+        * tests/CDR/tc.cpp:
+        * tests/Cubit/COOL/IDL_Cubit/client.cpp:
+        * tests/Cubit/COOL/IDL_Cubit/cubit_i.cpp:
+        * tests/Cubit/COOL/IDL_Cubit/server.cpp:
+        * tests/Cubit/COOL/IDL_Cubit/tmplinst.cpp:
+        * tests/Cubit/COOL/MT_Cubit/Task_Client.cpp:
+        * tests/Cubit/COOL/MT_Cubit/Util_Thread.cpp:
+        * tests/Cubit/COOL/MT_Cubit/client.cpp:
+        * tests/Cubit/COOL/MT_Cubit/cubit_impl.cpp:
+        * tests/Cubit/COOL/MT_Cubit/pccTimer.cpp:
+        * tests/Cubit/COOL/MT_Cubit/server.cpp:
+        * tests/Cubit/CORBAplus/IDL_Cubit/clnt.cpp:
+        * tests/Cubit/CORBAplus/IDL_Cubit/cubit_i.cpp:
+        * tests/Cubit/CORBAplus/IDL_Cubit/svr.cpp:
+        * tests/Cubit/CORBAplus/MT_Cubit/client/Task_Client.cpp:
+        * tests/Cubit/CORBAplus/MT_Cubit/client/client.cpp:
+        * tests/Cubit/CORBAplus/MT_Cubit/server/cubit_i.cpp:
+        * tests/Cubit/CORBAplus/MT_Cubit/server/svr.cpp:
+        * tests/Cubit/Hardpack/IDL_Cubit/client.cpp:
+        * tests/Cubit/Hardpack/IDL_Cubit/client_i.cpp:
+        * tests/Cubit/Hardpack/IDL_Cubit/server.cpp:
+        * tests/Cubit/Hardpack/IDL_Cubit/server_i.cpp:
+        * tests/Cubit/Orbix/base_server/cubit_impl.cpp:
+        * tests/Cubit/Orbix/base_server/server.cpp:
+        * tests/Cubit/Orbix/client/client.cpp:
+        * tests/Cubit/Orbix/client/cubitC.cpp:
+        * tests/Cubit/Orbix/factory_client/client.cpp:
+        * tests/Cubit/Orbix/factory_client/cubitC.cpp:
+        * tests/Cubit/Orbix/factory_client/cubitS.cpp:
+        * tests/Cubit/Orbix/tpool/cubitC.cpp:
+        * tests/Cubit/Orbix/tpool/cubitS.cpp:
+        * tests/Cubit/Orbix/tpool/cubit_impl.cpp:
+        * tests/Cubit/Orbix/tpool/server.cpp:
+        * tests/Cubit/Orbix/tpool/tpool.cpp:
+        * tests/Cubit/Orbix/tpr/cubitC.cpp:
+        * tests/Cubit/Orbix/tpr/cubitS.cpp:
+        * tests/Cubit/Orbix/tpr/cubit_impl.cpp:
+        * tests/Cubit/Orbix/tpr/server.cpp:
+        * tests/Cubit/Orbix/tpr/tpr.cpp:
+        * tests/Cubit/Orbix/tps/cubitC.cpp:
+        * tests/Cubit/Orbix/tps/cubitS.cpp:
+        * tests/Cubit/Orbix/tps/cubit_impl.cpp:
+        * tests/Cubit/Orbix/tps/tps.cpp:
+        * tests/Cubit/TAO/DII_Cubit/client.cpp:
+        * tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp:
+        * tests/Cubit/TAO/IDL_Cubit/client.cpp:
+        * tests/Cubit/TAO/IDL_Cubit/client_i.cpp:
+        * tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+        * tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp:
+        * tests/Cubit/TAO/IDL_Cubit/server.cpp:
+        * tests/Cubit/TAO/IDL_Cubit/server_i.cpp:
+        * tests/Cubit/TAO/IDL_Cubit/tmplinst.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
+        * tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
+        * tests/Cubit/TAO/MT_Cubit/pccTimer.cpp:
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * tests/Cubit/TAO/MT_Cubit/tmplinst.cpp:
+        * tests/Cubit/VisiBroker/base_server/Profile_Timer.cpp:
+        * tests/Cubit/VisiBroker/base_server/cubit_impl.cpp:
+        * tests/Cubit/VisiBroker/base_server/server.cpp:
+        * tests/Cubit/VisiBroker/client/Profile_Timer.cpp:
+        * tests/Cubit/VisiBroker/client/client.cpp:
+        * tests/Demux_Test/client.cpp:
+        * tests/Demux_Test/server.cpp:
+        * tests/Demux_Test/CodeGen/client.cpp:
+        * tests/Demux_Test/CodeGen/gen.cpp:
+        * tests/Demux_Test/CodeGen/impl.cpp:
+        * tests/Demux_Test/CodeGen/objcreate.cpp:
+        * tests/Demux_Test/CodeGen/perf.cpp:
+        * tests/Demux_Test/CodeGen/skel.cpp:
+        * tests/Demux_Test/CodeGen/stub.cpp:
+        * tests/Demux_Test/CodeGen/tao.cpp:
+        * tests/NestedUpcall/MT_Client_Test/MT_Object_Impl.cpp:
+        * tests/NestedUpcall/MT_Client_Test/client.cpp:
+        * tests/NestedUpcall/MT_Client_Test/local_server.cpp:
+        * tests/NestedUpcall/MT_Client_Test/server.cpp:
+        * tests/NestedUpcall/Reactor/NestedUpCalls_Test.cpp:
+        * tests/NestedUpcall/Reactor/client.cpp:
+        * tests/NestedUpcall/Reactor/eh_i.cpp:
+        * tests/NestedUpcall/Reactor/reactor_i.cpp:
+        * tests/NestedUpcall/Reactor/server.cpp:
+        * tests/NestedUpcall/Triangle_Test/Initiator_Impl.cpp:
+        * tests/NestedUpcall/Triangle_Test/Object_A_Impl.cpp:
+        * tests/NestedUpcall/Triangle_Test/Object_B_Impl.cpp:
+        * tests/NestedUpcall/Triangle_Test/initiator.cpp:
+        * tests/NestedUpcall/Triangle_Test/server_A.cpp:
+        * tests/NestedUpcall/Triangle_Test/server_B.cpp:
+        * tests/OctetSeq/OctetSeq.cpp:
+        * tests/POA/DSI/Database_i.cpp:
+        * tests/POA/DSI/client.cpp:
+        * tests/POA/DSI/server.cpp:
+        * tests/POA/Default_Servant/File_i.cpp:
+        * tests/POA/Default_Servant/client.cpp:
+        * tests/POA/Default_Servant/server.cpp:
+        * tests/POA/Explicit_Activation/server.cpp:
+        * tests/POA/FindPOA/FindPOA.cpp:
+        * tests/POA/Forwarding/MyFooServant.cpp:
+        * tests/POA/Forwarding/Servant_Locator.cpp:
+        * tests/POA/Forwarding/client.cpp:
+        * tests/POA/Forwarding/server.cpp:
+        * tests/POA/Generic_Servant/MyFooServant.cpp:
+        * tests/POA/Generic_Servant/client.cpp:
+        * tests/POA/NewPOA/NewPOA.cpp:
+        * tests/POA/On_Demand_Activation/Servant_Activator.cpp:
+        * tests/POA/On_Demand_Activation/Servant_Locator.cpp:
+        * tests/POA/On_Demand_Activation/server.cpp:
+        * tests/POA/RootPOA/RootPOA.cpp:
+        * tests/POA/TIE/Foo_i.cpp:
+        * tests/POA/TIE/client.cpp:
+        * tests/POA/TIE/server.cpp:
+        * tests/POA/locking/locking.cpp:
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/bd_long_seq.cpp:
+        * tests/Param_Test/bd_short_seq.cpp:
+        * tests/Param_Test/bd_str_seq.cpp:
+        * tests/Param_Test/bd_string.cpp:
+        * tests/Param_Test/bd_struct_seq.cpp:
+        * tests/Param_Test/client.cpp:
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/fixed_array.cpp:
+        * tests/Param_Test/fixed_struct.cpp:
+        * tests/Param_Test/helper.cpp:
+        * tests/Param_Test/nested_struct.cpp:
+        * tests/Param_Test/objref.cpp:
+        * tests/Param_Test/options.cpp:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/results.cpp:
+        * tests/Param_Test/server.cpp:
+        * tests/Param_Test/short.cpp:
+        * tests/Param_Test/tmplinst.cpp:
+        * tests/Param_Test/typecode.cpp:
+        * tests/Param_Test/ub_any_seq.cpp:
+        * tests/Param_Test/ub_long_seq.cpp:
+        * tests/Param_Test/ub_objref_seq.cpp:
+        * tests/Param_Test/ub_short_seq.cpp:
+        * tests/Param_Test/ub_str_seq.cpp:
+        * tests/Param_Test/ub_string.cpp:
+        * tests/Param_Test/ub_struct_seq.cpp:
+        * tests/Param_Test/var_array.cpp:
+        * tests/Param_Test/var_struct.cpp:
+        * tests/Quoter/Factory_Finder.cpp:
+        * tests/Quoter/Factory_Finder_Impl.cpp:
+        * tests/Quoter/Generic_Factory.cpp:
+        * tests/Quoter/Generic_Factory_Impl.cpp:
+        * tests/Quoter/Quoter_Impl.cpp:
+        * tests/Quoter/client.cpp:
+        * tests/Quoter/server.cpp:
+        * tests/Simple/client.cpp:
+        * tests/Simple/client_impl.cpp:
+        * tests/Simple/server.cpp:
+        * tests/Simple/server_impl.cpp:
+        * tests/Simple/simple_object_impl.cpp:
+        * tests/Thruput/COOL/client.cpp:
+        * tests/Thruput/COOL/server.cpp:
+        * tests/Thruput/COOL/ttcp_i.cpp:
+        * tests/Thruput/COOL/utils.cpp:
+        * tests/Thruput/CORBAplus/client.cpp:
+        * tests/Thruput/CORBAplus/server.cpp:
+        * tests/Thruput/CORBAplus/ttcp_i.cpp:
+        * tests/Thruput/CORBAplus/utils.cpp:
+        * tests/Thruput/Orbix/Client.cpp:
+        * tests/Thruput/Orbix/Srv_Main.cpp:
+        * tests/Thruput/Orbix/ttcp_i.cpp:
+        * tests/Thruput/Orbix/utils.cpp:
+        * tests/Thruput/TAO/client.cpp:
+        * tests/Thruput/TAO/server.cpp:
+        * tests/Thruput/TAO/tmplinst.cpp:
+        * tests/Thruput/TAO/ttcp_i.cpp:
+        * tests/Thruput/TAO/utils.cpp:
+        Added ACE_RCSID to these files.
 
 Mon Aug  3 13:51:27 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* orbsvcs/Makefile: 
-	* orbsvcs/Concurrency_Service/Concurrency_Service.cpp: 
-	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp: 
-	* orbsvcs/Event_Service/Event_Service.cpp: 
-	* orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp: 
-	* orbsvcs/LifeCycle_Service/Factory_Trader.cpp: 
-	* orbsvcs/LifeCycle_Service/Life_Cycle_Service.cpp: 
-	* orbsvcs/LifeCycle_Service/Life_Cycle_Service_Impl.cpp: 
-	* orbsvcs/Logging_Service/Logging_Service.cpp: 
-	* orbsvcs/Logging_Service/Logging_Service_i.cpp: 
-	* orbsvcs/Naming_Service/Naming_Service.cpp: 
-	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: 
-	* orbsvcs/Trading_Service/Trading_Service.cpp: 
-	* orbsvcs/orbsvcs/Channel_Clients.cpp: 
-	* orbsvcs/orbsvcs/Channel_Clients_T.cpp: 
-	* orbsvcs/orbsvcs/Event_Utilities.cpp: 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp: 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
-	* orbsvcs/orbsvcs/Scheduler_Utilities.cpp: 
-	* orbsvcs/orbsvcs/Time_Utilities.cpp: 
-	* orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp: 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp: 
-	* orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp: 
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp: 
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp: 
-	* orbsvcs/orbsvcs/Concurrency/Concurrency_Utils.cpp: 
-	* orbsvcs/orbsvcs/Event/BCU.cpp: 
-	* orbsvcs/orbsvcs/Event/CORBA_Utils_T.cpp: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	* orbsvcs/orbsvcs/Event/GPlot_File.cpp: 
-	* orbsvcs/orbsvcs/Event/Local_ESTypes.cpp: 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.cpp: 
-	* orbsvcs/orbsvcs/Event/Module_Factory.cpp: 
-	* orbsvcs/orbsvcs/Event/RT_Task.cpp: 
-	* orbsvcs/orbsvcs/Event/ReactorTask.cpp: 
-	* orbsvcs/orbsvcs/Event/Task_Manager.cpp: 
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp: 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: 
-	* orbsvcs/orbsvcs/Naming/Entries.cpp: 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp: 
-	* orbsvcs/orbsvcs/Sched/DynSched.cpp: 
-	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp: 
-	* orbsvcs/orbsvcs/Sched/Scheduler.cpp: 
-	* orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp: 
-	* orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp: 
-	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp: 
-	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp: 
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp: 
-	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp: 
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp: 
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp: 
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp: 
-	* orbsvcs/orbsvcs/Trader/Trader.cpp: 
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp: 
-	* orbsvcs/orbsvcs/Trader/Trader_T.cpp: 
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp: 
-	* orbsvcs/tests/AVStreams/benchmark/child.cpp: 
-	* orbsvcs/tests/AVStreams/benchmark/client.cpp: 
-	* orbsvcs/tests/AVStreams/benchmark/server.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/client/vcr.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/24bit.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/2x2.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ab.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/audio.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ctr.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/decoders.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/file.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs2.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs2fast.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs4.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/global.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/gray.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/hybrid.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/hybriderr.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/info.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/jrevdct.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/mb_ordered.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/mono.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/motionvector.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ordered.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ordered2.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/para.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/parseblock.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/prog.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ui.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/util.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/util32.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/vb.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/vd.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/video.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/vp.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibButton.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibDrawArea.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibFrame.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibLabel.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibList.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibMenu.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibRadioBox.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibScale.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibScrollBar.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibTextBig.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibTextBox.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibToggle.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibload.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_State.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_i.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Server.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Server.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/as.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/las.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/lvs.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/vs.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/filters.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/as.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/vcrs.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/vs.cpp: 
-	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.cpp: 
-	* orbsvcs/tests/AVStreams/server_discovery/Trader_Client.cpp: 
-	* orbsvcs/tests/AVStreams/server_discovery/main.cpp: 
-	* orbsvcs/tests/AVStreams/sfp/client.cpp: 
-	* orbsvcs/tests/Concurrency/CC_client.cpp: 
-	* orbsvcs/tests/Concurrency/CC_command.cpp: 
-	* orbsvcs/tests/Concurrency/CC_naming_service.cpp: 
-	* orbsvcs/tests/Concurrency/CC_test_utils.cpp: 
-	* orbsvcs/tests/Concurrency/CC_tests.cpp: 
-	* orbsvcs/tests/Concurrency/NS_client.cpp: 
-	* orbsvcs/tests/Concurrency/tmplinst.cpp: 
-	* orbsvcs/tests/CosPropertyService/client.cpp: 
-	* orbsvcs/tests/CosPropertyService/main.cpp: 
-	* orbsvcs/tests/CosPropertyService/server.cpp: 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Data.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
-	* orbsvcs/tests/ImplRepo/client.cpp: 
-	* orbsvcs/tests/ImplRepo/client_impl.cpp: 
-	* orbsvcs/tests/ImplRepo/ir_server.cpp: 
-	* orbsvcs/tests/ImplRepo/ir_server_impl.cpp: 
-	* orbsvcs/tests/ImplRepo/ir_simple_object_impl.cpp: 
-	* orbsvcs/tests/ImplRepo/server.cpp: 
-	* orbsvcs/tests/ImplRepo/server_impl.cpp: 
-	* orbsvcs/tests/ImplRepo/simple_object_impl.cpp: 
-	* orbsvcs/tests/Logger/Logging_Test.cpp: 
-	* orbsvcs/tests/Logger/Logging_Test_i.cpp: 
-	* orbsvcs/tests/Logger/client.cpp: 
-	* orbsvcs/tests/Logger/client_i.cpp: 
-	* orbsvcs/tests/Logger/server.cpp: 
-	* orbsvcs/tests/Logger/server_i.cpp: 
-	* orbsvcs/tests/Naming/ns_tree.cpp: 
-	* orbsvcs/tests/Property/client.cpp: 
-	* orbsvcs/tests/Property/main.cpp: 
-	* orbsvcs/tests/Property/server.cpp: 
-	* orbsvcs/tests/Sched/DynSched_Test.cpp: 
-	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp: 
-	* orbsvcs/tests/Simple_Naming/client.cpp: 
-	* orbsvcs/tests/Simulator/DOVEMIB/AnyAnalyser.cpp: 
-	* orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.cpp: 
-	* orbsvcs/tests/Simulator/DOVEMIB/Node.cpp: 
-	* orbsvcs/tests/Simulator/DOVEMIB/PrintVisitor.cpp: 
-	* orbsvcs/tests/Simulator/DOVEMIB/any_test_i.cpp: 
-	* orbsvcs/tests/Simulator/DOVEMIB/clnt.cpp: 
-	* orbsvcs/tests/Simulator/DOVEMIB/svr.cpp: 
-	* orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp: 
-	* orbsvcs/tests/Simulator/Event_Supplier/Event_Con.cpp: 
-	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp: 
-	* orbsvcs/tests/Trading/Offer_Exporter.cpp: 
-	* orbsvcs/tests/Trading/Offer_Importer.cpp: 
-	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp: 
-	* orbsvcs/tests/Trading/Simple_Dynamic.cpp: 
-	* orbsvcs/tests/Trading/TT_Info.cpp: 
-	* orbsvcs/tests/Trading/colocated_test.cpp: 
-	* orbsvcs/tests/Trading/export_test.cpp: 
-	* orbsvcs/tests/Trading/import_test.cpp: 
-	Added ACE_RCSID to these files.
+        * orbsvcs/Makefile:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
+        * orbsvcs/LifeCycle_Service/Factory_Trader.cpp:
+        * orbsvcs/LifeCycle_Service/Life_Cycle_Service.cpp:
+        * orbsvcs/LifeCycle_Service/Life_Cycle_Service_Impl.cpp:
+        * orbsvcs/Logging_Service/Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Logging_Service_i.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
+        * orbsvcs/orbsvcs/Channel_Clients.cpp:
+        * orbsvcs/orbsvcs/Channel_Clients_T.cpp:
+        * orbsvcs/orbsvcs/Event_Utilities.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+        * orbsvcs/orbsvcs/Scheduler_Utilities.cpp:
+        * orbsvcs/orbsvcs/Time_Utilities.cpp:
+        * orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+        * orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
+        * orbsvcs/orbsvcs/Concurrency/Concurrency_Utils.cpp:
+        * orbsvcs/orbsvcs/Event/BCU.cpp:
+        * orbsvcs/orbsvcs/Event/CORBA_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/GPlot_File.cpp:
+        * orbsvcs/orbsvcs/Event/Local_ESTypes.cpp:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.cpp:
+        * orbsvcs/orbsvcs/Event/Module_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+        * orbsvcs/orbsvcs/Event/ReactorTask.cpp:
+        * orbsvcs/orbsvcs/Event/Task_Manager.cpp:
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp:
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
+        * orbsvcs/orbsvcs/Naming/Entries.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.cpp:
+        * orbsvcs/orbsvcs/Sched/Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp:
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/child.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/client.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/server.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/client/vcr.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/24bit.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/2x2.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ab.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/audio.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ctr.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/decoders.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/file.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs2.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs2fast.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs4.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/global.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/gray.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/hybrid.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/hybriderr.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/info.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/jrevdct.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/mb_ordered.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/mono.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/motionvector.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ordered.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ordered2.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/para.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/parseblock.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/prog.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ui.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/util.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/util32.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/vb.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/vd.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/video.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/vp.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibButton.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibDrawArea.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibFrame.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibLabel.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibList.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibMenu.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibRadioBox.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibScale.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibScrollBar.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibTextBig.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibTextBox.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibToggle.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibload.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_State.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_i.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Server.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Server.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/as.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/las.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/lvs.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/vs.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/com.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/fileio.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/filters.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/as.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/vcrs.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/vs.cpp:
+        * orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.cpp:
+        * orbsvcs/tests/AVStreams/server_discovery/Trader_Client.cpp:
+        * orbsvcs/tests/AVStreams/server_discovery/main.cpp:
+        * orbsvcs/tests/AVStreams/sfp/client.cpp:
+        * orbsvcs/tests/Concurrency/CC_client.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.cpp:
+        * orbsvcs/tests/Concurrency/CC_naming_service.cpp:
+        * orbsvcs/tests/Concurrency/CC_test_utils.cpp:
+        * orbsvcs/tests/Concurrency/CC_tests.cpp:
+        * orbsvcs/tests/Concurrency/NS_client.cpp:
+        * orbsvcs/tests/Concurrency/tmplinst.cpp:
+        * orbsvcs/tests/CosPropertyService/client.cpp:
+        * orbsvcs/tests/CosPropertyService/main.cpp:
+        * orbsvcs/tests/CosPropertyService/server.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Data.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+        * orbsvcs/tests/ImplRepo/client.cpp:
+        * orbsvcs/tests/ImplRepo/client_impl.cpp:
+        * orbsvcs/tests/ImplRepo/ir_server.cpp:
+        * orbsvcs/tests/ImplRepo/ir_server_impl.cpp:
+        * orbsvcs/tests/ImplRepo/ir_simple_object_impl.cpp:
+        * orbsvcs/tests/ImplRepo/server.cpp:
+        * orbsvcs/tests/ImplRepo/server_impl.cpp:
+        * orbsvcs/tests/ImplRepo/simple_object_impl.cpp:
+        * orbsvcs/tests/Logger/Logging_Test.cpp:
+        * orbsvcs/tests/Logger/Logging_Test_i.cpp:
+        * orbsvcs/tests/Logger/client.cpp:
+        * orbsvcs/tests/Logger/client_i.cpp:
+        * orbsvcs/tests/Logger/server.cpp:
+        * orbsvcs/tests/Logger/server_i.cpp:
+        * orbsvcs/tests/Naming/ns_tree.cpp:
+        * orbsvcs/tests/Property/client.cpp:
+        * orbsvcs/tests/Property/main.cpp:
+        * orbsvcs/tests/Property/server.cpp:
+        * orbsvcs/tests/Sched/DynSched_Test.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+        * orbsvcs/tests/Simulator/DOVEMIB/AnyAnalyser.cpp:
+        * orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.cpp:
+        * orbsvcs/tests/Simulator/DOVEMIB/Node.cpp:
+        * orbsvcs/tests/Simulator/DOVEMIB/PrintVisitor.cpp:
+        * orbsvcs/tests/Simulator/DOVEMIB/any_test_i.cpp:
+        * orbsvcs/tests/Simulator/DOVEMIB/clnt.cpp:
+        * orbsvcs/tests/Simulator/DOVEMIB/svr.cpp:
+        * orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp:
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Con.cpp:
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp:
+        * orbsvcs/tests/Trading/Offer_Importer.cpp:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+        * orbsvcs/tests/Trading/Simple_Dynamic.cpp:
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+        * orbsvcs/tests/Trading/colocated_test.cpp:
+        * orbsvcs/tests/Trading/export_test.cpp:
+        * orbsvcs/tests/Trading/import_test.cpp:
+        Added ACE_RCSID to these files.
 
 Mon Aug  3 12:08:15 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* TAO_IDL/tao_idl.cpp: 
-	* TAO_IDL/ast/ast_argument.cpp: 
-	* TAO_IDL/ast/ast_array.cpp: 
-	* TAO_IDL/ast/ast_attribute.cpp: 
-	* TAO_IDL/ast/ast_check.cpp: 
-	* TAO_IDL/ast/ast_concrete_type.cpp: 
-	* TAO_IDL/ast/ast_constant.cpp: 
-	* TAO_IDL/ast/ast_decl.cpp: 
-	* TAO_IDL/ast/ast_enum.cpp: 
-	* TAO_IDL/ast/ast_enum_val.cpp: 
-	* TAO_IDL/ast/ast_exception.cpp: 
-	* TAO_IDL/ast/ast_expression.cpp: 
-	* TAO_IDL/ast/ast_field.cpp: 
-	* TAO_IDL/ast/ast_generator.cpp: 
-	* TAO_IDL/ast/ast_interface.cpp: 
-	* TAO_IDL/ast/ast_interface_fwd.cpp: 
-	* TAO_IDL/ast/ast_module.cpp: 
-	* TAO_IDL/ast/ast_native.cpp: 
-	* TAO_IDL/ast/ast_operation.cpp: 
-	* TAO_IDL/ast/ast_predefined_type.cpp: 
-	* TAO_IDL/ast/ast_recursive.cpp: 
-	* TAO_IDL/ast/ast_redef.cpp: 
-	* TAO_IDL/ast/ast_root.cpp: 
-	* TAO_IDL/ast/ast_sequence.cpp: 
-	* TAO_IDL/ast/ast_string.cpp: 
-	* TAO_IDL/ast/ast_structure.cpp: 
-	* TAO_IDL/ast/ast_type.cpp: 
-	* TAO_IDL/ast/ast_typedef.cpp: 
-	* TAO_IDL/ast/ast_union.cpp: 
-	* TAO_IDL/ast/ast_union_branch.cpp: 
-	* TAO_IDL/ast/ast_union_label.cpp: 
-	* TAO_IDL/be/be_args.cpp: 
-	* TAO_IDL/be/be_argument.cpp: 
-	* TAO_IDL/be/be_array.cpp: 
-	* TAO_IDL/be/be_attribute.cpp: 
-	* TAO_IDL/be/be_codegen.cpp: 
-	* TAO_IDL/be/be_constant.cpp: 
-	* TAO_IDL/be/be_decl.cpp: 
-	* TAO_IDL/be/be_enum.cpp: 
-	* TAO_IDL/be/be_enum_val.cpp: 
-	* TAO_IDL/be/be_exception.cpp: 
-	* TAO_IDL/be/be_expression.cpp: 
-	* TAO_IDL/be/be_factory.cpp: 
-	* TAO_IDL/be/be_field.cpp: 
-	* TAO_IDL/be/be_generator.cpp: 
-	* TAO_IDL/be/be_helper.cpp: 
-	* TAO_IDL/be/be_init.cpp: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_interface_fwd.cpp: 
-	* TAO_IDL/be/be_interpretive.cpp: 
-	* TAO_IDL/be/be_module.cpp: 
-	* TAO_IDL/be/be_native.cpp: 
-	* TAO_IDL/be/be_operation.cpp: 
-	* TAO_IDL/be/be_predefined_type.cpp: 
-	* TAO_IDL/be/be_produce.cpp: 
-	* TAO_IDL/be/be_root.cpp: 
-	* TAO_IDL/be/be_scope.cpp: 
-	* TAO_IDL/be/be_sequence.cpp: 
-	* TAO_IDL/be/be_state.cpp: 
-	* TAO_IDL/be/be_state_argument.cpp: 
-	* TAO_IDL/be/be_state_array.cpp: 
-	* TAO_IDL/be/be_state_attribute.cpp: 
-	* TAO_IDL/be/be_state_exception.cpp: 
-	* TAO_IDL/be/be_state_operation.cpp: 
-	* TAO_IDL/be/be_state_sequence.cpp: 
-	* TAO_IDL/be/be_state_structure.cpp: 
-	* TAO_IDL/be/be_state_typedef.cpp: 
-	* TAO_IDL/be/be_state_union.cpp: 
-	* TAO_IDL/be/be_string.cpp: 
-	* TAO_IDL/be/be_structure.cpp: 
-	* TAO_IDL/be/be_sunsoft.cpp: 
-	* TAO_IDL/be/be_type.cpp: 
-	* TAO_IDL/be/be_typedef.cpp: 
-	* TAO_IDL/be/be_union.cpp: 
-	* TAO_IDL/be/be_union_branch.cpp: 
-	* TAO_IDL/be/be_union_label.cpp: 
-	* TAO_IDL/be/be_visitor.cpp: 
-	* TAO_IDL/be/be_visitor_argument.cpp: 
-	* TAO_IDL/be/be_visitor_array.cpp: 
-	* TAO_IDL/be/be_visitor_attribute.cpp: 
-	* TAO_IDL/be/be_visitor_constant.cpp: 
-	* TAO_IDL/be/be_visitor_context.cpp: 
-	* TAO_IDL/be/be_visitor_decl.cpp: 
-	* TAO_IDL/be/be_visitor_enum.cpp: 
-	* TAO_IDL/be/be_visitor_exception.cpp: 
-	* TAO_IDL/be/be_visitor_field.cpp: 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
-	* TAO_IDL/be/be_visitor_interface_fwd.cpp: 
-	* TAO_IDL/be/be_visitor_module.cpp: 
-	* TAO_IDL/be/be_visitor_operation.cpp: 
-	* TAO_IDL/be/be_visitor_root.cpp: 
-	* TAO_IDL/be/be_visitor_scope.cpp: 
-	* TAO_IDL/be/be_visitor_sequence.cpp: 
-	* TAO_IDL/be/be_visitor_structure.cpp: 
-	* TAO_IDL/be/be_visitor_typecode.cpp: 
-	* TAO_IDL/be/be_visitor_typedef.cpp: 
-	* TAO_IDL/be/be_visitor_union.cpp: 
-	* TAO_IDL/be/be_visitor_union_branch.cpp: 
-	* TAO_IDL/be/be_visitor_argument/arglist.cpp: 
-	* TAO_IDL/be/be_visitor_argument/argument.cpp: 
-	* TAO_IDL/be/be_visitor_argument/docall_cs.cpp: 
-	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp: 
-	* TAO_IDL/be/be_visitor_argument/post_docall_cs.cpp: 
-	* TAO_IDL/be/be_visitor_argument/post_marshal_ss.cpp: 
-	* TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp: 
-	* TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp: 
-	* TAO_IDL/be/be_visitor_argument/pre_upcall_ss.cpp: 
-	* TAO_IDL/be/be_visitor_argument/upcall_ss.cpp: 
-	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp: 
-	* TAO_IDL/be/be_visitor_array/any_op_ch.cpp: 
-	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_array/array.cpp: 
-	* TAO_IDL/be/be_visitor_array/array_ch.cpp: 
-	* TAO_IDL/be/be_visitor_array/array_ci.cpp: 
-	* TAO_IDL/be/be_visitor_array/array_cs.cpp: 
-	* TAO_IDL/be/be_visitor_attribute/attribute.cpp: 
-	* TAO_IDL/be/be_visitor_constant/constant_ch.cpp: 
-	* TAO_IDL/be/be_visitor_constant/constant_cs.cpp: 
-	* TAO_IDL/be/be_visitor_enum/any_op_ch.cpp: 
-	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_enum/enum_ch.cpp: 
-	* TAO_IDL/be/be_visitor_enum/enum_cs.cpp: 
-	* TAO_IDL/be/be_visitor_exception/any_op_ch.cpp: 
-	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_exception/ctor_assign.cpp: 
-	* TAO_IDL/be/be_visitor_exception/exception.cpp: 
-	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp: 
-	* TAO_IDL/be/be_visitor_exception/exception_ci.cpp: 
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp: 
-	* TAO_IDL/be/be_visitor_exception/exception_ctor.cpp: 
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp: 
-	* TAO_IDL/be/be_visitor_field/field_ci.cpp: 
-	* TAO_IDL/be/be_visitor_field/field_cs.cpp: 
-	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp: 
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_interface/collocated_sh.cpp: 
-	* TAO_IDL/be/be_visitor_interface/collocated_ss.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_si.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: 
-	* TAO_IDL/be/be_visitor_interface/tie_sh.cpp: 
-	* TAO_IDL/be/be_visitor_interface/tie_si.cpp: 
-	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp: 
-	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp: 
-	* TAO_IDL/be/be_visitor_module/any_op.cpp: 
-	* TAO_IDL/be/be_visitor_module/module.cpp: 
-	* TAO_IDL/be/be_visitor_module/module_ch.cpp: 
-	* TAO_IDL/be/be_visitor_module/module_sh.cpp: 
-	* TAO_IDL/be/be_visitor_operation/arglist.cpp: 
-	* TAO_IDL/be/be_visitor_operation/argument.cpp: 
-	* TAO_IDL/be/be_visitor_operation/collocated_sh.cpp: 
-	* TAO_IDL/be/be_visitor_operation/collocated_ss.cpp: 
-	* TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp: 
-	* TAO_IDL/be/be_visitor_operation/operation_ch.cpp: 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: 
-	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp: 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp: 
-	* TAO_IDL/be/be_visitor_operation/rettype.cpp: 
-	* TAO_IDL/be/be_visitor_operation/rettype_assign_ss.cpp: 
-	* TAO_IDL/be/be_visitor_operation/rettype_docall_cs.cpp: 
-	* TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp: 
-	* TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp: 
-	* TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp: 
-	* TAO_IDL/be/be_visitor_operation/rettype_pre_docall_cs.cpp: 
-	* TAO_IDL/be/be_visitor_operation/rettype_return_cs.cpp: 
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp: 
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp: 
-	* TAO_IDL/be/be_visitor_operation/tie_sh.cpp: 
-	* TAO_IDL/be/be_visitor_operation/tie_si.cpp: 
-	* TAO_IDL/be/be_visitor_root/any_op.cpp: 
-	* TAO_IDL/be/be_visitor_root/root.cpp: 
-	* TAO_IDL/be/be_visitor_root/root_ch.cpp: 
-	* TAO_IDL/be/be_visitor_root/root_ci.cpp: 
-	* TAO_IDL/be/be_visitor_root/root_cs.cpp: 
-	* TAO_IDL/be/be_visitor_root/root_sh.cpp: 
-	* TAO_IDL/be/be_visitor_root/root_si.cpp: 
-	* TAO_IDL/be/be_visitor_root/root_ss.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/buffer_type.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/sequence_base.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp: 
-	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp: 
-	* TAO_IDL/be/be_visitor_structure/any_op_ch.cpp: 
-	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_structure/structure.cpp: 
-	* TAO_IDL/be/be_visitor_structure/structure_ch.cpp: 
-	* TAO_IDL/be/be_visitor_structure/structure_ci.cpp: 
-	* TAO_IDL/be/be_visitor_structure/structure_cs.cpp: 
-	* TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp: 
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp: 
-	* TAO_IDL/be/be_visitor_typedef/any_op_ch.cpp: 
-	* TAO_IDL/be/be_visitor_typedef/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_typedef/typedef.cpp: 
-	* TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp: 
-	* TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp: 
-	* TAO_IDL/be/be_visitor_typedef/typedef_cs.cpp: 
-	* TAO_IDL/be/be_visitor_union/any_op_ch.cpp: 
-	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp: 
-	* TAO_IDL/be/be_visitor_union/discriminant_ch.cpp: 
-	* TAO_IDL/be/be_visitor_union/discriminant_ci.cpp: 
-	* TAO_IDL/be/be_visitor_union/discriminant_cs.cpp: 
-	* TAO_IDL/be/be_visitor_union/union.cpp: 
-	* TAO_IDL/be/be_visitor_union/union_ch.cpp: 
-	* TAO_IDL/be/be_visitor_union/union_ci.cpp: 
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp: 
-	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp: 
-	* TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp: 
-	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp: 
-	* TAO_IDL/be/be_visitor_union_branch/public_ch.cpp: 
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp: 
-	* TAO_IDL/be/be_visitor_union_branch/public_cs.cpp: 
-	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp: 
-	* TAO_IDL/driver/drv_args.cpp: 
-	* TAO_IDL/driver/drv_fork.cpp: 
-	* TAO_IDL/driver/drv_init.cpp: 
-	* TAO_IDL/driver/drv_link.cpp: 
-	* TAO_IDL/driver/drv_preproc.cpp: 
-	* TAO_IDL/driver/drv_private.cpp: 
-	* TAO_IDL/fe/fe_declarator.cpp: 
-	* TAO_IDL/fe/fe_extern.cpp: 
-	* TAO_IDL/fe/fe_init.cpp: 
-	* TAO_IDL/fe/fe_interface_header.cpp: 
-	* TAO_IDL/fe/fe_private.cpp: 
-	* TAO_IDL/narrow/narrow.cpp: 
-	* TAO_IDL/util/utl_decllist.cpp: 
-	* TAO_IDL/util/utl_error.cpp: 
-	* TAO_IDL/util/utl_exceptlist.cpp: 
-	* TAO_IDL/util/utl_exprlist.cpp: 
-	* TAO_IDL/util/utl_global.cpp: 
-	* TAO_IDL/util/utl_identifier.cpp: 
-	* TAO_IDL/util/utl_idlist.cpp: 
-	* TAO_IDL/util/utl_indenter.cpp: 
-	* TAO_IDL/util/utl_labellist.cpp: 
-	* TAO_IDL/util/utl_list.cpp: 
-	* TAO_IDL/util/utl_namelist.cpp: 
-	* TAO_IDL/util/utl_scope.cpp: 
-	* TAO_IDL/util/utl_stack.cpp: 
-	* TAO_IDL/util/utl_string.cpp: 
-	* TAO_IDL/util/utl_strlist.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_decllist.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_exceptlist.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_exprlist.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_idlist.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_labellist.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_list.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_namelist.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_strlist.cpp: 
-	Added ACE_RCSID to these files.
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/ast/ast_argument.cpp:
+        * TAO_IDL/ast/ast_array.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_check.cpp:
+        * TAO_IDL/ast/ast_concrete_type.cpp:
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_enum_val.cpp:
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_native.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+        * TAO_IDL/ast/ast_recursive.cpp:
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+        * TAO_IDL/ast/ast_union_label.cpp:
+        * TAO_IDL/be/be_args.cpp:
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_attribute.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_constant.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_enum_val.cpp:
+        * TAO_IDL/be/be_exception.cpp:
+        * TAO_IDL/be/be_expression.cpp:
+        * TAO_IDL/be/be_factory.cpp:
+        * TAO_IDL/be/be_field.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_init.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
+        * TAO_IDL/be/be_interpretive.cpp:
+        * TAO_IDL/be/be_module.cpp:
+        * TAO_IDL/be/be_native.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_root.cpp:
+        * TAO_IDL/be/be_scope.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_state.cpp:
+        * TAO_IDL/be/be_state_argument.cpp:
+        * TAO_IDL/be/be_state_array.cpp:
+        * TAO_IDL/be/be_state_attribute.cpp:
+        * TAO_IDL/be/be_state_exception.cpp:
+        * TAO_IDL/be/be_state_operation.cpp:
+        * TAO_IDL/be/be_state_sequence.cpp:
+        * TAO_IDL/be/be_state_structure.cpp:
+        * TAO_IDL/be/be_state_typedef.cpp:
+        * TAO_IDL/be/be_state_union.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_sunsoft.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be/be_union_label.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be/be_visitor_argument.cpp:
+        * TAO_IDL/be/be_visitor_array.cpp:
+        * TAO_IDL/be/be_visitor_attribute.cpp:
+        * TAO_IDL/be/be_visitor_constant.cpp:
+        * TAO_IDL/be/be_visitor_context.cpp:
+        * TAO_IDL/be/be_visitor_decl.cpp:
+        * TAO_IDL/be/be_visitor_enum.cpp:
+        * TAO_IDL/be/be_visitor_exception.cpp:
+        * TAO_IDL/be/be_visitor_field.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd.cpp:
+        * TAO_IDL/be/be_visitor_module.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_structure.cpp:
+        * TAO_IDL/be/be_visitor_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typedef.cpp:
+        * TAO_IDL/be/be_visitor_union.cpp:
+        * TAO_IDL/be/be_visitor_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/argument.cpp:
+        * TAO_IDL/be/be_visitor_argument/docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/pre_upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/enum_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_field/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/collocated_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/collocated_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_si.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+        * TAO_IDL/be/be_visitor_module/any_op.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_module/module_ch.cpp:
+        * TAO_IDL/be/be_visitor_module/module_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument.cpp:
+        * TAO_IDL/be/be_visitor_operation/collocated_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/collocated_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_assign_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_pre_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_return_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/tie_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/tie_si.cpp:
+        * TAO_IDL/be/be_visitor_root/any_op.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ci.cpp:
+        * TAO_IDL/be/be_visitor_root/root_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_si.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ss.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_base.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ci.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_typedef/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_fork.cpp:
+        * TAO_IDL/driver/drv_init.cpp:
+        * TAO_IDL/driver/drv_link.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/driver/drv_private.cpp:
+        * TAO_IDL/fe/fe_declarator.cpp:
+        * TAO_IDL/fe/fe_extern.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/fe_private.cpp:
+        * TAO_IDL/narrow/narrow.cpp:
+        * TAO_IDL/util/utl_decllist.cpp:
+        * TAO_IDL/util/utl_error.cpp:
+        * TAO_IDL/util/utl_exceptlist.cpp:
+        * TAO_IDL/util/utl_exprlist.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_identifier.cpp:
+        * TAO_IDL/util/utl_idlist.cpp:
+        * TAO_IDL/util/utl_indenter.cpp:
+        * TAO_IDL/util/utl_labellist.cpp:
+        * TAO_IDL/util/utl_list.cpp:
+        * TAO_IDL/util/utl_namelist.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/util/utl_stack.cpp:
+        * TAO_IDL/util/utl_string.cpp:
+        * TAO_IDL/util/utl_strlist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_decllist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_exceptlist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_exprlist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_idlist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_labellist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_list.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_namelist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_strlist.cpp:
+        Added ACE_RCSID to these files.
 
 Mon Aug  3 09:27:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: 
-	  Bounded octet sequences do not have the Message_Block
-	  constructor, but we were generating it. Thanks to John Geiss
-	  <kim_john@sprynet.com> for reporting this problem.
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+          Bounded octet sequences do not have the Message_Block
+          constructor, but we were generating it. Thanks to John Geiss
+          <kim_john@sprynet.com> for reporting this problem.
 
 Fri Jul 31 20:34:27 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* tao/Any.cpp: 
-	* tao/CDR.cpp: 
-	* tao/Client_Strategy_Factory.cpp: 
-	* tao/Connect.cpp: 
-	* tao/CurrentC.cpp: 
-	* tao/CurrentS.cpp: 
-	* tao/Exception.cpp: 
-	* tao/Forwarding_Servant.cpp: 
-	* tao/GIOP.cpp: 
-	* tao/IIOP_Interpreter.cpp: 
-	* tao/IIOP_ORB.cpp: 
-	* tao/IIOP_Object.cpp: 
-	* tao/Invocation.cpp: 
-	* tao/Marshal.cpp: 
-	* tao/NVList.cpp: 
-	* tao/ORB.cpp: 
-	* tao/ORB_Core.cpp: 
-	* tao/ORB_Strategies_T.cpp: 
-	* tao/Object.cpp: 
-	* tao/Object_KeyC.cpp: 
-	* tao/Object_Table.cpp: 
-	* tao/Operation_Table.cpp: 
-	* tao/POA.cpp: 
-	* tao/POAC.cpp: 
-	* tao/POAS.cpp: 
-	* tao/PolicyC.cpp: 
-	* tao/PolicyS.cpp: 
-	* tao/Principal.cpp: 
-	* tao/Request.cpp: 
-	* tao/Sequence.cpp: 
-	* tao/Sequence_T.cpp: 
-	* tao/Servant_Base.cpp: 
-	* tao/Server_Request.cpp: 
-	* tao/Server_Strategy_Factory.cpp: 
-	* tao/Stub.cpp: 
-	* tao/TAO.cpp: 
-	* tao/TAO_Internal.cpp: 
-	* tao/Typecode.cpp: 
-	* tao/Typecode_Constants.cpp: 
-	* tao/Union.cpp: 
-	* tao/append.cpp: 
-	* tao/debug.cpp: 
-	* tao/decode.cpp: 
-	* tao/deep_free.cpp: 
-	* tao/default_client.cpp: 
-	* tao/default_server.cpp: 
-	* tao/encode.cpp: 
-	* tao/params.cpp: 
-	* tao/poa_T.cpp: 
-	* tao/skip.cpp: 
-	* tao/t-sizes.cpp: 
-	Added ACE_RCSID to these files.
+        * tao/Any.cpp:
+        * tao/CDR.cpp:
+        * tao/Client_Strategy_Factory.cpp:
+        * tao/Connect.cpp:
+        * tao/CurrentC.cpp:
+        * tao/CurrentS.cpp:
+        * tao/Exception.cpp:
+        * tao/Forwarding_Servant.cpp:
+        * tao/GIOP.cpp:
+        * tao/IIOP_Interpreter.cpp:
+        * tao/IIOP_ORB.cpp:
+        * tao/IIOP_Object.cpp:
+        * tao/Invocation.cpp:
+        * tao/Marshal.cpp:
+        * tao/NVList.cpp:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Strategies_T.cpp:
+        * tao/Object.cpp:
+        * tao/Object_KeyC.cpp:
+        * tao/Object_Table.cpp:
+        * tao/Operation_Table.cpp:
+        * tao/POA.cpp:
+        * tao/POAC.cpp:
+        * tao/POAS.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PolicyS.cpp:
+        * tao/Principal.cpp:
+        * tao/Request.cpp:
+        * tao/Sequence.cpp:
+        * tao/Sequence_T.cpp:
+        * tao/Servant_Base.cpp:
+        * tao/Server_Request.cpp:
+        * tao/Server_Strategy_Factory.cpp:
+        * tao/Stub.cpp:
+        * tao/TAO.cpp:
+        * tao/TAO_Internal.cpp:
+        * tao/Typecode.cpp:
+        * tao/Typecode_Constants.cpp:
+        * tao/Union.cpp:
+        * tao/append.cpp:
+        * tao/debug.cpp:
+        * tao/decode.cpp:
+        * tao/deep_free.cpp:
+        * tao/default_client.cpp:
+        * tao/default_server.cpp:
+        * tao/encode.cpp:
+        * tao/params.cpp:
+        * tao/poa_T.cpp:
+        * tao/skip.cpp:
+        * tao/t-sizes.cpp:
+        Added ACE_RCSID to these files.
 
 Fri Jul 31 15:34:55 1998 Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -1489,58 +1494,58 @@ Fri Jul 31 15:34:55 1998 Jeff Parsons <jp4@cs.wustl.edu>
 
 Fri Jul 31 15:10:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Any.h: 
-	* tao/Any.cpp: 
-	* tao/decode.cpp: 
-	  When decoding Any's the ORB was not releasing the memory already
-	  held by the Any.
+        * tao/Any.h:
+        * tao/Any.cpp:
+        * tao/decode.cpp:
+          When decoding Any's the ORB was not releasing the memory already
+          held by the Any.
 
 Fri Jul 31 13:51:46 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.h:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.idl:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.h:
-	Added comments and made other cosmetic changes.
-	
-	* orbsvcs/tests/AVStreams/server_discovery/Makefile:
-	* orbsvcs/tests/AVStreams/server_discovery/Queue.java:
-	* orbsvcs/tests/AVStreams/server_discovery/README:
-	* orbsvcs/tests/AVStreams/server_discovery/Server_0005fDiscovery_0005fUtil.h:
-	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.cpp:
-	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.java:
-	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Browser.java:
-	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Perf.java:
-	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Selection.java:
-	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Util.java:
-	* orbsvcs/tests/AVStreams/server_discovery/Strip_Chart.java:
-	* orbsvcs/tests/AVStreams/server_discovery/Trader_Client.cpp:
-	* orbsvcs/tests/AVStreams/server_discovery/Trader_Client.h:
-	* orbsvcs/tests/AVStreams/server_discovery/main.cpp:
-	This is the A/V Demo on the client side. The README file in this
-	directory details its design and current status, and includes a
-	description of the work that remains.
-	
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.h:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.idl:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.h:
+        Added comments and made other cosmetic changes.
+
+        * orbsvcs/tests/AVStreams/server_discovery/Makefile:
+        * orbsvcs/tests/AVStreams/server_discovery/Queue.java:
+        * orbsvcs/tests/AVStreams/server_discovery/README:
+        * orbsvcs/tests/AVStreams/server_discovery/Server_0005fDiscovery_0005fUtil.h:
+        * orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.cpp:
+        * orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.java:
+        * orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Browser.java:
+        * orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Perf.java:
+        * orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Selection.java:
+        * orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Util.java:
+        * orbsvcs/tests/AVStreams/server_discovery/Strip_Chart.java:
+        * orbsvcs/tests/AVStreams/server_discovery/Trader_Client.cpp:
+        * orbsvcs/tests/AVStreams/server_discovery/Trader_Client.h:
+        * orbsvcs/tests/AVStreams/server_discovery/main.cpp:
+        This is the A/V Demo on the client side. The README file in this
+        directory details its design and current status, and includes a
+        description of the work that remains.
+
 Fri Jul 31 14:06:22 1998  Jeff Parsons <jp4@cs.wustl.edu>
-         
+
         * tao_idl/be/be_visitor_argument/post_upcal_ss.cpp:
-          added an action to visit_predefined_type for the 
-          PT_pseudo case (OUT arg) that fixes the typecode 
+          added an action to visit_predefined_type for the
+          PT_pseudo case (OUT arg) that fixes the typecode
           sii param test.
 
 Fri Jul 31 07:58:36 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union_branch/{public_ci,
-	public_assign_cs}.cpp: The code for string members was using an
-	incorrect, undefined type for a _var variable. We now use
-	CORBA::String_var instead. Thanks to Kirk Ellett <kellet@mdc.com>
-	for reporting this problem.
+        * TAO_IDL/be/be_visitor_union_branch/{public_ci,
+        public_assign_cs}.cpp: The code for string members was using an
+        incorrect, undefined type for a _var variable. We now use
+        CORBA::String_var instead. Thanks to Kirk Ellett <kellet@mdc.com>
+        for reporting this problem.
 
-	* doc/releasenotes/index.html: Updated to indicate that anonymous
-	arrays are suppored inside structs but not inside unions.
+        * doc/releasenotes/index.html: Updated to indicate that anonymous
+        arrays are suppored inside structs but not inside unions.
 
 Thu Jul 30 17:05:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -1548,87 +1553,87 @@ Thu Jul 30 17:05:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Jul 30 16:40:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Multiple/run_test.pl:
-	* orbsvcs/tests/EC_Throughput/run_test.pl:
-	* orbsvcs/tests/Event_Latency/run_test.pl:
-	* orbsvcs/tests/Simple_Naming/run_test.pl:
-	* tests/Cubit/TAO/DII_Cubit/run_test.pl:
-	* tests/Cubit/TAO/IDL_Cubit/run_test.pl:
-	* tests/Cubit/TAO/MT_Cubit/run_test.pl:
-	* tests/NestedUpcall/MT_Client_Test/run_test.pl:
-	* tests/NestedUpcall/Triangle_Test/run_test.pl:
-	* tests/Param_Test/run_test.pl:
-	* tests/Quoter/run_test.pl:
-	* tests/Simple/run_test.pl:
-	  Removed the last calls to system("del") and minor cosmetic
-	  fixes.
+        * orbsvcs/tests/EC_Multiple/run_test.pl:
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+        * orbsvcs/tests/Event_Latency/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+        * tests/Cubit/TAO/DII_Cubit/run_test.pl:
+        * tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+        * tests/Cubit/TAO/MT_Cubit/run_test.pl:
+        * tests/NestedUpcall/MT_Client_Test/run_test.pl:
+        * tests/NestedUpcall/Triangle_Test/run_test.pl:
+        * tests/Param_Test/run_test.pl:
+        * tests/Quoter/run_test.pl:
+        * tests/Simple/run_test.pl:
+          Removed the last calls to system("del") and minor cosmetic
+          fixes.
 
 Thu Jul 30 15:38:52 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
-	* tao/ORB.cpp
-	  Made some debugging messages dependent on
-	  TAO_debug_level.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * tao/ORB.cpp
+          Made some debugging messages dependent on
+          TAO_debug_level.
 
 Thu Jul 30 13:46:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Concurrency/Makefile:
-	  The CC_command.tab.{h,cpp} and lex.CC_command.cpp files are
-	  distributed in the TAO release, there is no need for the users
-	  to generate them. We do include targets to warn of potentially
-	  outdated files, but this is only for our own purposes.
+        * orbsvcs/tests/Concurrency/Makefile:
+          The CC_command.tab.{h,cpp} and lex.CC_command.cpp files are
+          distributed in the TAO release, there is no need for the users
+          to generate them. We do include targets to warn of potentially
+          outdated files, but this is only for our own purposes.
 
-	* orbsvcs/tests/Concurrency/CC_command.y:
-	* orbsvcs/tests/Concurrency/CC_command.tab.h:
-	* orbsvcs/tests/Concurrency/CC_command.tab.cpp:
-	* orbsvcs/tests/Concurrency/CC_command.tab.cpp.diff:
-	  Generated using a modified version of yacc, that produces more
-	  portable code.
+        * orbsvcs/tests/Concurrency/CC_command.y:
+        * orbsvcs/tests/Concurrency/CC_command.tab.h:
+        * orbsvcs/tests/Concurrency/CC_command.tab.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.tab.cpp.diff:
+          Generated using a modified version of yacc, that produces more
+          portable code.
 
 Thu Jul 30 13:07:00 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/Makefile:
-	* orbsvcs/Logging_Service/Makefile: New file. Makefile for the
-	Logging service.
+        * orbsvcs/Makefile:
+        * orbsvcs/Logging_Service/Makefile: New file. Makefile for the
+        Logging service.
 
-	* orbsvcs/Logging_Service/Logging_Service_i.{h,cpp}: New files,
-	renamed from tests/Logger/server_i.{h,cpp}. Migrated from a test
-	to a service. Added ability to name the factory from the command
-	line.
+        * orbsvcs/Logging_Service/Logging_Service_i.{h,cpp}: New files,
+        renamed from tests/Logger/server_i.{h,cpp}. Migrated from a test
+        to a service. Added ability to name the factory from the command
+        line.
 
-	* orbsvcs/tests/Logger/Makefile: Eliminated server
-	compilation. Changed client name to Logging_Test
+        * orbsvcs/tests/Logger/Makefile: Eliminated server
+        compilation. Changed client name to Logging_Test
 
-	* orbsvcs/tests/Logger/Logging_Test_i.cpp: New file, renamed from
-	tests/Logger/client_i.cpp. Altered includes to reflect transition
-	of server from test server to actual service.
+        * orbsvcs/tests/Logger/Logging_Test_i.cpp: New file, renamed from
+        tests/Logger/client_i.cpp. Altered includes to reflect transition
+        of server from test server to actual service.
 
-	* orbsvcs/tests/Logger/Logging_Test_i.h: New file, renamed from
-	tests/Logger/client_i.h. Added multiple include protection.
+        * orbsvcs/tests/Logger/Logging_Test_i.h: New file, renamed from
+        tests/Logger/client_i.h. Added multiple include protection.
 
-	* orbsvcs/tests/Logger/Logging_Test.cpp: New file, renamed from
-	tests/Logger/server.cpp. Removed some debugging code.
+        * orbsvcs/tests/Logger/Logging_Test.cpp: New file, renamed from
+        tests/Logger/server.cpp. Removed some debugging code.
 
-	* orbsvcs/tests/Logger/Logging_Test.cpp: New file, renamed from
-	tests/Logger/client.cpp. Edited to reflect changed filenames.
+        * orbsvcs/tests/Logger/Logging_Test.cpp: New file, renamed from
+        tests/Logger/client.cpp. Edited to reflect changed filenames.
 
 
 Thu Jul 30 00:39:10 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/tests/Concurrency/{CC_command.tab,lex.CC_command}.cpp.diff:
- 	  Updated these files to prevent complains from lex and yacc.
-  	  Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
- 	  for reporting this fix.
+        * orbsvcs/tests/Concurrency/{CC_command.tab,lex.CC_command}.cpp.diff:
+          Updated these files to prevent complains from lex and yacc.
+          Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
+          for reporting this fix.
 
 Wed Jul 29 18:46:46 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * orbsvcs/tests/Concurrency: Touched the lex and yacc files so
- 	  that Make won't try to remake their *.cpp files.  This is just a
- 	  temporary fix until we get this working correctly.  Thanks to
- 	  J. Russell Noseworthy <rnosewor@objectsciences.com> for
- 	  reporting this and to Carlos for suggesting the fix.
+          that Make won't try to remake their *.cpp files.  This is just a
+          temporary fix until we get this working correctly.  Thanks to
+          J. Russell Noseworthy <rnosewor@objectsciences.com> for
+          reporting this and to Carlos for suggesting the fix.
 
 Wed Jul 29 18:46:46 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -1636,40 +1641,40 @@ Wed Jul 29 18:46:46 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Jul 29 13:55:20 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Connect.cpp: Fixed indentation.
+        * tao/Connect.cpp: Fixed indentation.
 
-	* tao/TAO_Internal.cpp (close_services): service_open_count_
- 	  should be reduced by one.
+        * tao/TAO_Internal.cpp (close_services): service_open_count_
+          should be reduced by one.
 
 Wed Jul 29 12:32:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Param_Test/run_test.pl:
-	* tests/NestedUpcall/Triangle_Test/run_test.pl:
-	* tests/NestedUpcall/MT_Client_Test/run_test.pl:
-	* tests/Simple/run_test.pl:
-	* tests/Cubit/TAO/IDL_Cubit/run_test.pl:
-	* tests/Cubit/TAO/DII_Cubit/run_test.pl:
-	  Use unlink instead of system("rm") or system("del").
+        * tests/Param_Test/run_test.pl:
+        * tests/NestedUpcall/Triangle_Test/run_test.pl:
+        * tests/NestedUpcall/MT_Client_Test/run_test.pl:
+        * tests/Simple/run_test.pl:
+        * tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+        * tests/Cubit/TAO/DII_Cubit/run_test.pl:
+          Use unlink instead of system("rm") or system("del").
 
-	* tests/Cubit/TAO/Makefile:
-	* tests/Cubit/TAO/DII_Cubit/Makefile:
-	  Added DII_Cubit to the default compilation.
+        * tests/Cubit/TAO/Makefile:
+        * tests/Cubit/TAO/DII_Cubit/Makefile:
+          Added DII_Cubit to the default compilation.
 
-	* tests/Cubit/TAO/MT_Cubit/run_test.pl:
-	  Added a one-button test.
+        * tests/Cubit/TAO/MT_Cubit/run_test.pl:
+          Added a one-button test.
 
-	* tests/NestedUpcall/MT_Client_Test/client.h:
-	* tests/NestedUpcall/MT_Client_Test/client.cpp:
-	  Instead of using the thread id to decide which server we use
-	  each client thread is assigned a number, even threads choose the
-	  first server, odd threads the second one.  The thread id
-	  approach was non-portable.
+        * tests/NestedUpcall/MT_Client_Test/client.h:
+        * tests/NestedUpcall/MT_Client_Test/client.cpp:
+          Instead of using the thread id to decide which server we use
+          each client thread is assigned a number, even threads choose the
+          first server, odd threads the second one.  The thread id
+          approach was non-portable.
 
-	* tests/POA/RootPOA/README:
-	* tests/POA/FindPOA/README:
-	* tests/POA/NewPOA/README:
-	  Updated this files, the tests don't print warning messages about
-	  the svc.conf file anymore (actually the ORB doesn't).
+        * tests/POA/RootPOA/README:
+        * tests/POA/FindPOA/README:
+        * tests/POA/NewPOA/README:
+          Updated this files, the tests don't print warning messages about
+          the svc.conf file anymore (actually the ORB doesn't).
 
 Wed Jul 29 08:58:01 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
