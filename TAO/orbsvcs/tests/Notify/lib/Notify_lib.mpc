@@ -11,14 +11,24 @@ project(TAO_NotifyTests): orbsvcslib, notify {
 
   dllflags    = TAO_NOTIFY_TEST_BUILD_DLL
 
-  IDL_Files {  
+  IDL_Files {
     Activation_Manager.idl
   }
 
   Source_Files{
-  Activation_Manager.cpp
   Activation_ManagerC.cpp
   Activation_ManagerS.cpp
+  Peer.cpp
+  StructuredPushConsumer.cpp
+  SequencePushConsumer.cpp
+  PushConsumer.cpp
+  StructuredPushSupplier.cpp
+  SequencePushSupplier.cpp
+  PushSupplier.cpp
+  Direct_Consumer.cpp
+  Direct_Supplier.cpp
+  Relay_Consumer.cpp
+  Activation_Manager.cpp
   Application_Command.cpp
   Command.cpp
   Command_Builder.cpp
@@ -31,12 +41,6 @@ project(TAO_NotifyTests): orbsvcslib, notify {
   Filter_Command.cpp
   LookupManager.cpp
   Name.cpp
-  Notify_PushConsumer.cpp
-  Notify_PushSupplier.cpp
-  Notify_SequencePushConsumer.cpp
-  Notify_SequencePushSupplier.cpp
-  Notify_StructuredPushConsumer.cpp
-  Notify_StructuredPushSupplier.cpp
   Notify_Test_Client.cpp
   Options_Parser.cpp
   Periodic_Consumer_Command.cpp
@@ -46,7 +50,6 @@ project(TAO_NotifyTests): orbsvcslib, notify {
   Priority_Mapping.cpp
   StructuredEvent.cpp
   SupplierAdmin_Command.cpp
-  Task_Stats.cpp  
+  Task_Stats.cpp
   }
 }
-

@@ -24,14 +24,17 @@ $Naming = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
 $Notification = new PerlACE::Process ("../../../Notify_Service/Notify_Service");
 
 $Notify_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $notify_ior -ORBSvcConf $notify_conf";
+#$Notify_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $notify_ior -ORBSvcConf $notify_conf -ORBDebugLevel 1";
 
 $Supplier = new PerlACE::Process ("../Driver/Notify_Tests_Driver");
 
 $Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $supplier_ior -ORBSvcConf $supplier_conf";
+#$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $supplier_ior -ORBSvcConf $supplier_conf -ORBDebugLevel 1";
 
 $Consumer = new PerlACE::Process ("../Driver/Notify_Tests_Driver");
 
 $Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$supplier_ior -ORBSvcConf $consumer_conf";
+#$Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$supplier_ior -ORBSvcConf $consumer_conf -ORBDebugLevel 1";
 
 unlink $naming_ior;
 $Naming->Spawn ();
@@ -83,7 +86,7 @@ if ($status != 0)
     exit 1;
   }
 
-$Supplier->Kill ();
+$Supplier->Wait ();
 unlink $supplier_ior;
 
 $Notification->Kill ();

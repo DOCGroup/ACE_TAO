@@ -58,6 +58,37 @@ private:
   TAO_NS_Command_Builder* cmd_builder_;
 };
 
+
+
+class TAO_NS_ORB_Run_Worker : public ACE_Task_Base
+{
+  // = TITLE
+  //   Run a server thread
+  //
+  // = DESCRIPTION
+  //   Use the ACE_Task_Base class to run server threads
+  //
+public:
+  TAO_NS_ORB_Run_Worker (void);
+  // ctor
+
+  void orb (CORBA::ORB_ptr orb);
+
+  /// Srt the run period.
+  void run_period (ACE_Time_Value run_period);
+
+  virtual int svc (void);
+  // The thread entry point.
+
+private:
+  /// The orb
+  CORBA::ORB_var orb_;
+
+  /// ORB Run Period.
+  ACE_Time_Value run_period_;
+};
+
+
 /**
  * @class TAO_NS_Driver
  *
@@ -94,6 +125,9 @@ protected:
 
   /// Thread in which to run commands.
   TAO_NS_Worker worker_;
+
+  /// Thread in which to run the orb.
+  TAO_NS_ORB_Run_Worker orb_run_worker_;
 
   /// The ORB we run.
   CORBA::ORB_var orb_;

@@ -1,28 +1,49 @@
-#$Id$
 #----------------------------------------------------------------------------
-#       GNU Makefile
+#
+# $Id$
+#
 #----------------------------------------------------------------------------
-MAKEFILE        = Makefile
-DEPENDENCY_FILE = .depend.Makefile
-LIB_UNCHECKED   = libTAO_NotifyTests.a
-SHLIB_UNCHECKED = libTAO_NotifyTests.$(SOEXT)
-
-LSRC   = $(addsuffix .cpp, $(FILES))
-ACELIB = -lACE
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
-endif
+endif # ! TAO_ROOT
+
+MAKEFILE = Makefile
+DEPENDENCY_FILE = .depend.Makefile
+LIBNAME  = libTAO_NotifyTests
+LIB2      = $(LIBNAME).a
+SHLIB2    = $(LIBNAME).$(SOEXT)
+
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+
+ifeq (Notify,$(findstring Notify,$(TAO_ORBSVCS)))
+  LIB = $(LIB2)
+  SHLIB = $(SHLIB2)
+endif # Notify
 
 IDL_FILES = Activation_Manager
 IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
+TAO_IDLFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Sc
 
+ACE_SHLIBS = -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO $(ACELIB)
 
-FILES = \
-  Activation_Manager \
+LDLIBS = -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO $(ACELIB)
+
+SRCS = \
   Activation_ManagerC \
   Activation_ManagerS \
+  Peer \
+  StructuredPushConsumer \
+  SequencePushConsumer \
+  PushConsumer \
+  StructuredPushSupplier \
+  SequencePushSupplier \
+  PushSupplier \
+  Direct_Consumer \
+  Direct_Supplier \
+  Relay_Consumer \
+  Activation_Manager \
   Application_Command \
   Command \
   Command_Builder \
@@ -35,12 +56,6 @@ FILES = \
   Filter_Command \
   LookupManager \
   Name \
-  Notify_PushConsumer \
-  Notify_PushSupplier \
-  Notify_SequencePushConsumer \
-  Notify_SequencePushSupplier \
-  Notify_StructuredPushConsumer \
-  Notify_StructuredPushSupplier \
   Notify_Test_Client \
   Options_Parser \
   Periodic_Consumer_Command \
@@ -52,47 +67,30 @@ FILES = \
   SupplierAdmin_Command \
   Task_Stats
 
+FILES = $(SRCS)
+DEFS  = $(addsuffix .h,$(FILES))
+LSRC  = $(addsuffix .cpp,$(FILES))
+
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
+
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
-CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Notify, $(findstring Notify, $(CURRENT_COMPONENTS)))
-ifeq (Naming, $(findstring Naming, $(CURRENT_COMPONENTS)))
-LIB   = $(LIB_UNCHECKED)
-SHLIB = $(SHLIB_UNCHECKED)
-endif
-endif
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-include $(TAO_ROOT)/taoconfig.mk
-
-CPPFLAGS     += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao -I$(ACE_ROOT)
-ifeq ($(shared_libs),1)
-ifneq ($(SHLIB),)
-CPPFLAGS     += -DTAO_NOTIFY_TEST_BUILD_DLL
-endif
-endif
-ifeq ($(static_libs),1)
-ifneq ($(LIB),)
-CPPFLAGS     += -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
-endif
-endif
-
-
-LDFLAGS      += -L$(TAO_ROOT)/tao/PortableServer -L$(TAO_ROOT)/tao/DynamicAny -L$(TAO_ROOT)/tao/IORTable -L$(TAO_ROOT)/orbsvcs/orbsvcs/ETCL -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
-TAO_IDLFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Sc
-
-ACE_SHLIBS = -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO $(ACELIB)
 
 #----------------------------------------------------------------------------
-#       Local targets
+#       Local targets (and local hacks)
 #----------------------------------------------------------------------------
+
+LDFLAGS  += -L$(TAO_ROOT)/tao
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 
 ADDITIONAL_IDL_TARGETS =
 
@@ -106,3 +104,13 @@ all: idl_stubs
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
+
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

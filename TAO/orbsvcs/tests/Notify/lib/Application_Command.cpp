@@ -12,6 +12,7 @@ ACE_RCSID(lib, TAO_Application_Command, "$id$")
 #include "Priority_Mapping.h"
 
 TAO_NS_Application_Command::TAO_NS_Application_Command (void)
+  : dump_samples_ (0)
 {
 }
 
@@ -66,6 +67,13 @@ TAO_NS_Application_Command::init (ACE_Arg_Shifter& arg_shifter)
           this->command_ = DUMP_STATE;
 
           arg_shifter.consume_arg ();
+
+          if (arg_shifter.cur_arg_strncasecmp ("-Samples") == 0)
+            {
+              this->dump_samples_ = 1;
+
+              arg_shifter.consume_arg ();
+            }
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-SignalPeer") == 0)
         {
@@ -134,7 +142,7 @@ TAO_NS_Application_Command::handle_dump_stats (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   TAO_NS_Activation_Manager* act_mgr = 0;
   LOOKUP_MANAGER->resolve (act_mgr);
 
-  act_mgr->dump_stats ();
+  act_mgr->dump_stats (this->dump_samples_);
 }
 
 void
