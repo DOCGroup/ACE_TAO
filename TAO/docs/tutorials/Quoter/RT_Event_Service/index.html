@@ -16,19 +16,19 @@
       <A HREF="../Event_Service/index.html">
 	TAO's COS Event Service
       </A>
-      to receive updated stock prices.
-      But what if we are not interested in all the stocks?
+      to receive updated stock prices,
+      but what if we are not interested in all the stocks?
       One approach is to use multiple event channels, each one
-      carrying different traffic,
-      for example,
+      carrying different traffic.
+      For example,
       each event channel could carry only a subset of the stocks.
       In this section we will explore another solution,
       using TAO's real-time Event Service to perform filtering for us.
       TAO's real-time Event Service can do many other things,
       like preserving priority end-to-end,
-      using multicast to conserver network resources,
-      generate timeout and interval events
-      and it can collaborate with the TAO's Scheduling Service to
+      using multicast to conserve network resources,
+      generating timeout and interval events,
+      and it can collaborate with TAO's Scheduling Service to
       analyze the schedulability of your system.
     </P>
 
@@ -36,20 +36,20 @@
 
     <P>For this example we will use the same data structures that we
       used in the previous example,
-      i.e. the events will be identical.
+      i.e., the events will be identical.
       TAO's RT Event Service can be configured to carry your events in 
       a type-safe manner,
       or you can use custom marshaling to send non-IDL structures in
       the event,
-      but it is easier to use it as the COS Event Service first.
+      but it is easier to use it like the COS Event Service first.
     </P>
 
     <H3>Connecting as a consumer</H3>
 
-    <P>Connecting as a consumer is very similar, some of the base
+    <P>Connecting as a consumer is very similar.  Some of the base
       classes and signatures change, but it is basically the same
       idea: 
-      First let us defined the consumer object:
+      First let us define the consumer object:
     </P>
 <PRE>
 class Stock_Consumer : public POA_RtecEventComm::PushConsumer {
@@ -62,8 +62,8 @@ public:
   // details omitted
 };
 </PRE>
-    <P>Notice that we receive an event set instead of a single event,
-      the event channel can use this feature to queue multiple events
+    <P>Notice that we receive an event set instead of a single event.
+      The event channel can use this feature to queue multiple events
       and push them in a single operation.
       First we need to extract the event data from the any:
     </P>
@@ -82,7 +82,7 @@ Stock_Consumer::push (const RtecEventComm::EventSet &data,
     <P>Notice that the events have more structure,
       they have a clearly separated header and data,
       and the data has more than just an any.
-      The header is used to provide filtering,
+      The header is used to provide filtering, and
       the event data field can be configured at compile time to carry
       whatever IDL structures you want.
       Now we can print out the new stock price:
@@ -104,7 +104,7 @@ Stock_Consumer::disconnect_push_consumer (CORBA::Environment &)
   this->supplier_proxy_ = CosEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
 </PRE>
-    <P>As with the COS Event Channel we can voluntarily disconnect
+    <P>As with the COS Event Channel we can voluntarily disconnect,
       too:
     </P>
 <PRE>
@@ -147,8 +147,8 @@ Stock_Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
     this->supplier_proxy_ =
       consumer_admin->obtain_push_supplier ();
 </PRE>
-    <P>Now we list the events that we want to receive,
-      we use a simple algorithm to assign an event type to each stock
+    <P>Now we list the events that we want to receive.
+      We use a simple algorithm to assign an event type to each stock
       symbol:
     </P>
 <PRE>
@@ -211,9 +211,9 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 {
    this->data_.price = new_price;
 </PRE>
-    <P>Next we prepare the event,
-      this time we must create a sequence, but we just have one
-      element on it:
+    <P>Next we prepare the event.
+      This time we must create a sequence, but we just have one
+      element in it:
     </P>
 <PRE>
    RtecEventComm::EventSet event (1);
@@ -269,7 +269,7 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
     this->consumer_proxy_ =
       supplier_admin->obtain_push_consumer ();
 </PRE>
-    <P>We build our publications, so the event channel can match
+    <P>We build our publications so the event channel can match
       consumers and suppliers based on their common events:
     </P>
 <PRE>
@@ -283,7 +283,7 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
    ACE_SupplierQOS_Factory publications;
    publications.insert_type (type, source, 0, 1);
 </PRE>
-    <P>finally we connect to the consumer proxy:
+    <P>Finally we connect to the consumer proxy:
     </P>
 <PRE>
     RtecEventComm::PushSupplier_var supplier =
@@ -314,7 +314,7 @@ Quoter_Stock_i::disconnect_push_supplier (CORBA::Environment &)
       along with a sample
       <A HREF="client.cpp">client.cpp</A>.
       And other support files
-      <A HREF="Quoter.idl">Quoter.idl</A>,
+      <A HREF="../Event_Service/Quoter.idl">Quoter.idl</A>,
       <A HREF="Makefile">Makefile</A>,
       <A HREF="Stock_i.h">Stock_i.h</A>,
       <A HREF="Stock_i.cpp">Stock_i.cpp</A>,
@@ -336,10 +336,10 @@ Quoter_Stock_i::disconnect_push_supplier (CORBA::Environment &)
 <PRE>
 $ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
 </PRE>
-    <P>TAO's RT Event Service
+    <P>The CORBA Event Service
     </P>
 <PRE>
-$ $TAO_ROOT/orbsvcs/Event_Service/Event_Service
+$ $TAO_ROOT/orbsvcs/Event_Service/Event_Service -ORBSvcConf ec.conf
 </PRE>
 
     <P>Now you can run your client:
@@ -352,7 +352,7 @@ $ client AAAA CCCC
 $ server MSFT BBBB CCCC < stock_list.txt
 </PRE>
     <P>Here is the
-      <A HREF="../Event_Service/stock_list.txt">stock_list.txt file</A>.
+      <A HREF="stock_list.txt">stock_list.txt file</A>.
     </P>
 
     <H3>Exercise 2</H3>
@@ -369,9 +369,9 @@ $ server QQQQ < stock_list2.txt
     <P>Do the clients receive all the events from both servers?
     </P>
     <P>Here are the
-      <A HREF="../Event_Service/stock_list.txt">stock_list1.txt</A>
+      <A HREF="stock_list1.txt">stock_list1.txt</A>
       and
-      <A HREF="../Event_Service/stock_list.txt">stock_list2.txt</A>
+      <A HREF="stock_list2.txt">stock_list2.txt</A>
       files.
     </P>
 
@@ -379,7 +379,7 @@ $ server QQQQ < stock_list2.txt
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Sat Nov 27 15:47:01 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Thu Mar 15 14:18:34 PST 2001
+Last modified: Sun Apr  1 14:17:17 PDT 2001
 <!-- hhmts end -->
   </body>
 </html>
