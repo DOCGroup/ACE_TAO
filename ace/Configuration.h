@@ -469,12 +469,12 @@ public:
                               int recursive);
 
   virtual int enumerate_values (const ACE_Configuration_Section_Key& key,
-                                int Index,
+                                int index,
                                 ACE_TString& name,
                                 VALUETYPE& type);
 
   virtual int enumerate_sections (const ACE_Configuration_Section_Key& key,
-                                  int Index,
+                                  int index,
                                   ACE_TString& name);
 
   virtual int set_string_value (const ACE_Configuration_Section_Key& key,
@@ -792,12 +792,12 @@ public:
                               int recursive);
 
   virtual int enumerate_values (const ACE_Configuration_Section_Key& key,
-                                int Index,
+                                int index,
                                 ACE_TString& name,
                                 VALUETYPE& type);
 
   virtual int enumerate_sections (const ACE_Configuration_Section_Key& key,
-                                  int Index,
+                                  int index,
                                   ACE_TString& name);
 
   virtual int set_string_value (const ACE_Configuration_Section_Key& key,
@@ -847,7 +847,7 @@ private:
   /// Helper for the <open> method.
   int create_index (void);
 
-  /// Helper for <create_index> method: places hash table into an
+  /// Helper for create_index() method: places hash table into an
   /// allocated space.
   int create_index_helper (void *buffer);
 

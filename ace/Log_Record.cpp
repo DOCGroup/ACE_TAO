@@ -159,7 +159,7 @@ ACE_Log_Record::ACE_Log_Record (void)
 }
 
 int
-ACE_Log_Record::format_msg (const ACE_TCHAR *host_name,
+ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
                             u_long verbose_flag,
                             ACE_TCHAR *verbose_msg)
 {
@@ -225,7 +225,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR *host_name,
 }
 
 int
-ACE_Log_Record::print (const ACE_TCHAR *host_name,
+ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        u_long verbose_flag,
                        FILE *fp)
 {
@@ -255,7 +255,7 @@ ACE_Log_Record::print (const ACE_TCHAR *host_name,
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
 int
-ACE_Log_Record::print (const ACE_TCHAR *host_name,
+ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        u_long verbose_flag,
                        ostream &s)
 {

@@ -1,3 +1,51 @@
+Wed Aug 21 07:43:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ATM_Addr.{h,i}:
+          Made the signature definition and implementation of set_selector()
+          and get_selector() the same.
+
+        * ace/CDR_Stream.cpp:
+          Made the read_string() signature the same as in the definition
+
+        * ace/config-doxygen.h:
+          Added ACE_HAS_XTI_ATM to the list of defines that must be set
+          when generating the doxygen documentation
+
+        * ace/config-win32-mingw.h:
+          Added extern "C" around the win32api methods ace uses but which
+          are not defined in the mingw win32api.
+
+        * ace/Lib_Find.cpp:
+          Made signature of ldfind method the same as in the definition
+
+        * ace/Log_Record.cpp:
+          Made signature of print method the same as in the definition
+
+        * ace/Multiplexor.i:
+          Added #ifdef 0/#endif around the contents of this file, because the
+          header and cpp file also do this. Doxygen parses now this .i file
+          and gives a lot of warnings about this file because it cannot find
+          the definition of the methods in this file.
+
+        * ace/Configuration.h:
+        * ace/Containers_T.cpp:
+        * ace/Lib_Find.h:
+        * ace/OS.h:
+        * ace/RMCast/RMCast_Reliable_Factory.h:
+        * ace/RMCast/RMCast_UDP_Proxy.h:
+          Small improvements for doxygen documentation.
+
+        * include/makeinclude/ace_flags.bor:
+          Added cflags and lib for TAO PSDL library
+
+        * include/makeinclude/platform_mingw32.GNU:
+          MingW doesn't support the adding of the version number after
+          the .dll, so set SONAME and SOVERSION to empty.
+
+        * examples/Connection/non_blocking/test_lsock_acceptor.cpp:
+        * examples/Connection/non_blocking/test_lsock_connector.cpp:
+          Added include of Log_Msg to fix compile errors with MingW
+
 Tue Aug 20 14:19:55 2002  Jaiganesh@doc  <bugzilla@cs.wustl.edu>
 
         * ACE version 5.2.4 released.

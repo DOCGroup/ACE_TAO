@@ -4785,13 +4785,6 @@ public:
   static void abort (void);
   static pid_t fork (void);
 
-  //@{
-  /// Forks and exec's a process in a manner that works on Solaris and
-  /// NT.  argv[0] must be the full path name to the executable.
-  static pid_t fork (const ACE_TCHAR *program_name);
-  static pid_t fork_exec (ACE_TCHAR *argv[]);
-  //@}
-
   static int getpagesize (void);
   static int allocation_granularity (void);
 
@@ -4807,6 +4800,13 @@ public:
   static int setreuid (uid_t ruid, uid_t euid);
   static int setregid (gid_t rgid, gid_t egid);
   static int system (const ACE_TCHAR *s);
+  //@}
+
+  //@{
+  /// Forks and exec's a process in a manner that works on Solaris and
+  /// NT.  argv[0] must be the full path name to the executable.
+  static pid_t fork (const ACE_TCHAR *program_name);
+  static pid_t fork_exec (ACE_TCHAR *argv[]);
   //@}
 
   /**

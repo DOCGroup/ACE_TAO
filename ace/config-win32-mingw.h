@@ -66,26 +66,30 @@
 // The MingW32 w32api version 1.50 and lower don't define these types and methods
 // but we need it in the Win32_Asynch_IO.cpp
 
-typedef void *PVOID,*LPVOID;
+extern "C" {
 
-/* FIXME for __WIN64 */
-#ifndef  __ptr64
-#define __ptr64
-#endif
-typedef void* __ptr64 PVOID64;
+   typedef void *PVOID,*LPVOID;
 
-//
-// Define segement buffer structure for scatter/gather read/write.
-//
-typedef union _FILE_SEGMENT_ELEMENT {
-           PVOID64 Buffer;
-           ULONGLONG Alignment;
-}FILE_SEGMENT_ELEMENT, *PFILE_SEGMENT_ELEMENT;
+   /* FIXME for __WIN64 */
+   #ifndef  __ptr64
+   #define __ptr64
+   #endif
+   typedef void* __ptr64 PVOID64;
+
+   //
+   // Define segement buffer structure for scatter/gather read/write.
+   //
+   typedef union _FILE_SEGMENT_ELEMENT {
+              PVOID64 Buffer;
+              ULONGLONG Alignment;
+   }FILE_SEGMENT_ELEMENT, *PFILE_SEGMENT_ELEMENT;
 
 
-BOOL WINAPI ReadFileScatter(HANDLE,FILE_SEGMENT_ELEMENT[],DWORD,LPDWORD,LPOVERLAPPED);
+   BOOL WINAPI ReadFileScatter(HANDLE,FILE_SEGMENT_ELEMENT*,DWORD,LPDWORD,LPOVERLAPPED);
 
-BOOL WINAPI WriteFileGather(HANDLE,FILE_SEGMENT_ELEMENT[],DWORD,LPDWORD,LPOVERLAPPED);
+   BOOL WINAPI WriteFileGather(HANDLE,FILE_SEGMENT_ELEMENT*,DWORD,LPDWORD,LPOVERLAPPED);
+}
+
 #endif
 
 #include "ace/post.h"
