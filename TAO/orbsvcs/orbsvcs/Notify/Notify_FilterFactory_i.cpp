@@ -1,0 +1,51 @@
+/* -*- C++ -*- $Id$ */
+
+#include "Notify_FilterFactory_i.h"
+#include "Notify_Filter_i.h"
+
+// Implementation skeleton constructor
+TAO_Notify_FilterFactory_i::TAO_Notify_FilterFactory_i (void)
+  {
+  }
+
+// Implementation skeleton destructor
+TAO_Notify_FilterFactory_i::~TAO_Notify_FilterFactory_i (void)
+  {
+  }
+
+CosNotifyFilter::Filter_ptr
+TAO_Notify_FilterFactory_i::create_filter (
+    const char *constraint_grammar,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyFilter::InvalidGrammar
+  ))
+{
+  // @@: change to "ExTCL" later.
+  if (ACE_OS::strcmp (constraint_grammar, "TCL") != 0)
+    ACE_THROW_RETURN (CosNotifyFilter::InvalidGrammar (), 0);
+
+  TAO_Notify_Filter_i* filter;
+
+  ACE_NEW_THROW_EX (filter,
+                    TAO_Notify_Filter_i,
+                    CORBA::NO_MEMORY ());
+
+  return filter->get_ref (ACE_TRY_ENV);
+}
+
+CosNotifyFilter::MappingFilter_ptr
+TAO_Notify_FilterFactory_i::create_mapping_filter (
+    const char * constraint_grammar,
+    const CORBA::Any & default_value,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyFilter::InvalidGrammar
+  ))
+{
+  return 0;
+}
