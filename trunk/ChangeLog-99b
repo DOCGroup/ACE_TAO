@@ -1,3 +1,10 @@
+Fri May 14 19:16:06 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Task_T.cpp (put, flush):  
+
+	  Corrected syntax errors where return type was placed before
+	  template keyword.
+
 Fri May 14 16:46:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Task_T: Added a new class called ACE_Buffered_Task that
