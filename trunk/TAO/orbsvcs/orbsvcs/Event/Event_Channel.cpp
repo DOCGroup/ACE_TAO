@@ -3073,7 +3073,7 @@ ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
       TAO_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR());
 
     up_->disconnecting (supplier, _env);
-    
+
     if (this->all_suppliers_.size () <= 0)
       {
 	// ACE_DEBUG ((LM_DEBUG, "EC (%t) No more suppliers connected.\n"));
@@ -3081,7 +3081,7 @@ ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
       }
 
     need_update = (supplier->qos ().is_gateway == 0);
-    
+
     // @@ TODO It would seem
     // IMHO this release is broken: supplier is a parameter, we never
     // actually increased its reference count, so we shouldn't decrease
@@ -3372,7 +3372,6 @@ template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Contai
 template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk>, ACE_Null_Mutex>;
 template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk> >;
 template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk> >;
-template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 
 template class ACE_ES_Array_Iterator<ACE_ES_Consumer_Rep *>;
 template class ACE_ES_Simple_Array<ACE_ES_Consumer_Rep *, 100>;
@@ -3420,7 +3419,6 @@ template class ACE_Unbounded_Set_Iterator<TAO_EC_Gateway*>;
 #pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk>, ACE_Null_Mutex>
 #pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk> >
 #pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk> >
-#pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_ES_Array_Iterator<ACE_ES_Consumer_Rep *>
 #pragma instantiate ACE_ES_Simple_Array<ACE_ES_Consumer_Rep *, 100>
 #pragma instantiate ACE_CORBA_var<ACE_ES_Event_Container>
