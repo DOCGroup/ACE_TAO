@@ -61,7 +61,7 @@ Wed Sep 16 15:25:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Globals.h (SCHED_PRIORITY):
           Changed the scheduling scheme in the macro to ACE_SCHED_FIFO on
-          Win32.
+          Win32.  Thanks to David's hint.
 
 Wed Sep 16 12:21:20 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
