@@ -115,4 +115,7 @@ private:
 
   u_int error_count_;
   // #  of errors incurred in the lifetime of the application.
+
+  FILE *cubit_factory_ior_file_;
+  // File from which to obtain the IOR.
 };

@@ -1,3 +1,8 @@
+Mon Feb 16 12:24:04 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.h (needed.): Added missing member
+ 	variable.  Things now compile.
+
 Mon Feb 16 10:18:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/poa.cpp (decode_string_to_sequence): moved declaration of
