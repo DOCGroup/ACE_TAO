@@ -21,7 +21,7 @@
 #include "ace/Object_Manager.h"
 #include "ace/Service_Config.h"
 
-static const int VARIETIES = 3;
+static const u_int VARIETIES = 3;
 
 static u_int error = 0;
 
@@ -71,8 +71,8 @@ Test_Singleton::instance (u_short variety)
     ACE_NEW_RETURN (instances[variety], Test_Singleton (variety), 0);
 
   ACE_Object_Manager::at_exit (instances[variety],
-			       test_singleton_cleanup,
-			       (void *) variety);
+                               test_singleton_cleanup,
+                               (void *) variety);
   return instances[variety];
 }
 
