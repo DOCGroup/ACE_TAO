@@ -1,3 +1,16 @@
+Sun Sep 20 21:20:05 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
+
+	* TAO/orbsvcs/orbsvcs/CosNaming.idl: added comments.
+
+	* TAO/orbsvcs/orbsvcs/Naming/*: 
+	renamed all classes NS_* to be TAO_*
+
+	* TAO/orbsvcs/orbsvcs/Naming/CosNaming_i.*:
+	modified implementation to support C++ exception via use of TAO's
+	portable exception macros. Updated destroy methods.  Created
+	<root_> flag, which can be set in the constructor to identify a
+	root context.
+
 1998-09-20  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* TAO/tests/Simple/bank : Checked in the final versions of the following files :
