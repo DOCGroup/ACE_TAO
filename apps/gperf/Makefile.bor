@@ -1,3 +1,0 @@
-DIRS = src
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
