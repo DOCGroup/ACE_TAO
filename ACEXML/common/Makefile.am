@@ -13,7 +13,7 @@ includedir = @includedir@/ACEXML/common
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.ACEXML.am 
+## Makefile.ACEXML.am
 lib_LTLIBRARIES = libACEXML.la
 
 libACEXML_la_CPPFLAGS = \
@@ -90,13 +90,10 @@ nobase_include_HEADERS = \
   XML_Types.h \
   ZipCharStream.h \
   AttributesImpl.i \
-  DefaultHandler.i \
   Env.i \
   Exception.i \
   LocatorImpl.i \
-  NamespaceSupport.i \
   SAXExceptions.i \
-  Transcode.i \
   URL_Addr.inl \
   XMLFilterImpl.i
 

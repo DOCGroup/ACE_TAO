@@ -167,10 +167,6 @@ public:
                            size_t len);
 };
 
-#if defined (__ACEXML_INLINE__)
-# include "ACEXML/common/Transcode.i"
-#endif /* __ACEXML_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* _ACEXML_TRANSCODE_H_ */

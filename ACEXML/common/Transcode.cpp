@@ -3,10 +3,6 @@
 #include "ACEXML/common/Transcode.h"
 #include "ace/OS_NS_string.h"
 
-#if !defined (__ACEXML_INLINE__)
-# include "ACEXML/common/Transcode.i"
-#endif /* __ACEXML_INLINE__ */
-
 int
 ACEXML_Transcoder::utf162utf8 (ACEXML_UTF16 src,
                                ACEXML_UTF8 *dst,

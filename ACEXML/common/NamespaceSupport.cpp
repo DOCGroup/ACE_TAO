@@ -3,10 +3,6 @@
 #include "ACEXML/common/NamespaceSupport.h"
 #include "ace/OS_NS_string.h"
 
-#if !defined (__ACEXML_INLINE__)
-# include "ACEXML/common/NamespaceSupport.i"
-#endif /* __ACEXML_INLINE__ */
-
 static const ACEXML_Char ACEXML_XMLNS_PREFIX_name[] = ACE_TEXT ("xmlns");
 
 const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS_PREFIX = ACEXML_XMLNS_PREFIX_name;
