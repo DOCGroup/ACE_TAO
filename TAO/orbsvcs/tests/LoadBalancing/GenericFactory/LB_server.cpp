@@ -7,31 +7,22 @@ ACE_RCSID (GenericFactory,
            LB_server,
            "$Id$")
 
-
-// @@  Jai why do you have this pragma here?
-//        1)  You probably don't need it at all.
-//        2)  It should be used before the class is declared, i.e the
-//            header in this case!
-#if defined (_MSC_VER)
-# pragma warning (disable : 4250)
-#endif /* _MSC_VER */
-
 LB_Basic_Test::LB_Basic_Test (int argc, char **argv)
   : argc_ (argc)
   , argv_ (argv)
 {
 }
 
-LB_Basic_Test::~LB_Basic_Test (void)
+int
+LB_Basic_Test::destroy (void)
 {
   ACE_TRY_NEW_ENV
     {
-      this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      this->lm_->delete_object (this->fcid_.in ()
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // @@ Jai, you're missing the ACE_ENV_ARG_PARAMETER in this
-      // call.  The ACE_TRY_CHECK below is useless without it.
-      this->lm_->delete_object (this->fcid_.in ());
+      this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -43,6 +34,26 @@ LB_Basic_Test::~LB_Basic_Test (void)
                            "Exception caught while destroying Basic_Test\n");
     }
   ACE_ENDTRY;
+
+  return 1;
+}
+
+CORBA::ORB_ptr
+LB_Basic_Test::orb (void)
+{
+  return this->orb_.in ();
+}
+
+CORBA::Object_ptr
+LB_Basic_Test::object_group (void)
+{
+  return this->object_group_.in ();
+}
+
+CosLoadBalancing::LoadManager_ptr
+LB_Basic_Test::load_manager (void)
+{
+  return this->lm_.in ();
 }
 
 int
@@ -142,11 +153,11 @@ LB_Basic_Test::create_object_group (void)
         PortableGroup::MEMB_APP_CTRL;
       property.val <<= msv;
 
-      // @@ Jai, you're missing the ACE_ENV_ARG_PARAMETER in this
-      // call, and the accompanying ACE_TRY_CHECK after it.
       this->object_group_ = this->lm_->create_object (repository_id,
                                                       criteria,
-                                                      this->fcid_.out ());
+                                                      this->fcid_.out ()
+                                                      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         this->orb_->object_to_string (this->object_group_.in ()
