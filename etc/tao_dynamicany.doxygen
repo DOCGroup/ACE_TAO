@@ -1,4 +1,7 @@
 # Doxyfile 1.1.5
+#
+# $Id$
+#
 
 PROJECT_NAME          = TAO_DynamicAny
 PROJECT_NUMBER        = Snapshot
@@ -113,7 +116,7 @@ ENABLE_PREPROCESSING  = YES
 MACRO_EXPANSION       = YES
 EXPAND_ONLY_PREDEF    = YES
 SEARCH_INCLUDES       = YES
-INCLUDE_PATH          = TAO ACE_wrappers
+INCLUDE_PATH          = TAO .
 PREDEFINED            = ACE_HAS_WCHAR \
 			ACE_LACKS_STRCASECMP \
 			ACE_LACKS_STRCSPN \
@@ -128,8 +131,8 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::addtions related to external references   
 #---------------------------------------------------------------------------
 
-TAGFILES              = ace_html/ACE.tag=../ace_html tao_html/TAO.tag=../tao_html
-GENERATE_TAGFILE      = tao_dynamicany_html/TAO_DynamicAny.tag
+TAGFILES              = html/ace/ACE.tag=../ace html/tao/TAO.tag=..
+GENERATE_TAGFILE      = html/tao/dynamicany/TAO_DynamicAny.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
@@ -191,4 +194,4 @@ BIN_ABSPATH           = /usr/bin
 # documentation generated for other projects. This allows doxysearch to search 
 # the documentation for these projects as well. 
 
-EXT_DOC_PATHS         = ace_html
+EXT_DOC_PATHS         = html/ace

@@ -1,4 +1,7 @@
 # Doxyfile 1.1.5
+#
+# $Id$
+#
 
 PROJECT_NAME          = ACE
 PROJECT_NUMBER        = Snapshot
@@ -113,7 +116,7 @@ ENABLE_PREPROCESSING  = YES
 MACRO_EXPANSION       = YES
 EXPAND_ONLY_PREDEF    = YES
 SEARCH_INCLUDES       = YES
-INCLUDE_PATH          = ACE_wrappers
+INCLUDE_PATH          = .
 PREDEFINED            = 
 EXPAND_AS_DEFINED     = ACE_RCSID \
 			ACE_UNIMPLEMENTED_FUNC
@@ -123,7 +126,7 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 #---------------------------------------------------------------------------
 
 TAGFILES              = 
-GENERATE_TAGFILE      = ace_html/ACE.tag
+GENERATE_TAGFILE      = html/ace/ACE.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 

@@ -1,4 +1,7 @@
 # Doxyfile 1.1.5
+#
+# $Id$
+#
 
 PROJECT_NAME          = TAO_RTEvent
 PROJECT_NUMBER        = Snapshot
@@ -121,7 +124,7 @@ ENABLE_PREPROCESSING  = YES
 MACRO_EXPANSION       = YES
 EXPAND_ONLY_PREDEF    = YES
 SEARCH_INCLUDES       = YES
-INCLUDE_PATH          = TAO/orbsvcs TAO ACE_wrappers
+INCLUDE_PATH          = TAO/orbsvcs TAO .
 PREDEFINED            = ACE_HAS_WCHAR \
 			ACE_LACKS_STRCASECMP \
 			ACE_LACKS_STRCSPN \
@@ -136,8 +139,11 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::addtions related to external references   
 #---------------------------------------------------------------------------
 
-TAGFILES              = ace_html/ACE.tag=../ace_html tao_html/TAO.tag=../tao_html tao_portableserver_html/TAO_PortableServer.tag=../tao_portableserver_html tao_esf_html/TAO_ESF.tag=../tao_esf_html
-GENERATE_TAGFILE      = tao_rtevent_html/TAO_RTEvent.tag
+TAGFILES              = html/ace/ACE.tag=../ace \
+	html/tao/TAO.tag=.. \
+	html/tao/portableserver/TAO_PortableServer.tag=../portableserver \
+	html/tao/esf/TAO_ESF.tag=../esf
+GENERATE_TAGFILE      = html/tao/rtevent/TAO_RTEvent.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
@@ -199,4 +205,4 @@ BIN_ABSPATH           = /usr/bin
 # documentation generated for other projects. This allows doxysearch to search 
 # the documentation for these projects as well. 
 
-EXT_DOC_PATHS         = ace_html
+EXT_DOC_PATHS         = html/ace
