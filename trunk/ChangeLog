@@ -1,3 +1,28 @@
+Thu Nov 20 17:30:18 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/os_include/sys/socket.h: HP-UX supplies the socklen_t type
+	  unless some feature set less than _XOPEN_SOURCE_EXTENDED is
+	  specifically requested. However, it only actually uses the
+	  socklen_t type in supplied socket functions if
+	  _XOPEN_SOURCE_EXTENDED is specifically requested. So, for example,
+	  the compile options ACE usually uses (includes -mt) cause
+	  _HPUX_SOURCE to be set, which sets _INCLUDE_XOPEN_SOURCE_EXTENDED
+	  (causing socklen_t to be defined) but _not_ _XOPEN_SOURCE_EXTENDED
+	  (causing socket functions to use int, not socklen_t).
+
+	* ace/OS_NS_Thread.h (ACE_rwlock_t): Uncomment the two lines that
+	  set "typedef pthread_rwlock_t ACE_rwlock_t" for
+	  ACE_HAS_PTHREADS_UNIX98_EXT.
+
+	* ace/OS_NS_Thread.inl (rw_trywrlock_upgrade): Add "defined
+	  (ACE_HAS_PTHREADS_UNIX98_EXT)" to the platforms that return
+	  ENOTSUP for this. Avoids tripping over the code that emulates it
+	  without having the emulated lock type set up.
+
+	* ace/OS_NS_sys_stat.h: Change #include "ace/os_include/sys/os_types.h"
+	  to "ace/os_include/sys/os_stat.h" to get the proper struct stat
+	  definition for the platform. Fixes compile error on HP-UX.
+
 Thu Nov 20 09:35:01 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * bin/MakeProjectCreator/config/fault_tolerance.mpb:
@@ -9,10 +34,10 @@ Thu Nov 20 09:35:01 2003  Dale Wilson  <wilson_d@ociweb.com>
 
 Thu Nov 20 07:51:59 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-  * ace/OS_NS_sys_uio.cpp: "Short-circuit the readv_emulation() and
-    writev_emulation() for the case where there's just a single
-    element in the iovec.  Thanks to Edan Ayal <edanayal@yahoo.com>
-    for contributing this.
+	* ace/OS_NS_sys_uio.cpp: "Short-circuit the readv_emulation() and
+	  writev_emulation() for the case where there's just a single
+	  element in the iovec.  Thanks to Edan Ayal <edanayal@yahoo.com>
+	  for contributing this.
 
 Wed Nov 19 11:55:43 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
