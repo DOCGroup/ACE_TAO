@@ -100,8 +100,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     dynany_factory_ (CORBA::Object::_nil ()),
     ior_manip_factory_ (CORBA::Object::_nil ()),
     ior_table_ (CORBA::Object::_nil ()),
-    rt_orb_ (CORBA::Object::_nil ()),
-    rt_current_ (CORBA::Object::_nil ()),
     orb_ (),
     root_poa_ (),
     orb_params_ (),
@@ -1140,10 +1138,6 @@ TAO_ORB_Core::fini (void)
   CORBA::release (this->ior_manip_factory_);
 
   CORBA::release (this->ior_table_);
-
-  CORBA::release (this->rt_orb_);
-
-  CORBA::release (this->rt_current_);
 
   if (TAO_debug_level >= 3)
     {
@@ -2310,58 +2304,6 @@ TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
   this->open_called_ = 1;
 
   return 0;
-}
-
-void
-TAO_ORB_Core::resolve_rt_orb_i (CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_Object_Loader *loader =
-    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_ORB_Loader");
-
-  if (loader == 0)
-    {
-      // The Loader has not been statically configured, try to
-      // dynamically load it...
-      ACE_Service_Config::process_directive (
-        "dynamic RT_ORB_Loader Service_Object *"
-        "TAO_RTCORBA:_make_TAO_RT_ORB_Loader()"
-        );
-
-      loader =
-        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_ORB_Loader");
-      if (loader == 0)
-        ACE_THROW (CORBA::ORB::InvalidName ());
-    }
-
-  // Create RTORB object.
-  this->rt_orb_ =
-    loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
-}
-
-void
-TAO_ORB_Core::resolve_rt_current_i (CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_Object_Loader *loader =
-    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_Current_Loader");
-
-  if (loader == 0)
-    {
-      // The Loader has not been statically configured, try to
-      // dynamically load it...
-      ACE_Service_Config::process_directive (
-        "dynamic RT_Current_Loader Service_Object *"
-        "TAO_RTCORBA:_make_TAO_RT_Current_Loader()"
-        );
-
-      loader =
-        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_Current_Loader");
-      if (loader == 0)
-        ACE_THROW (CORBA::ORB::InvalidName ());
-    }
-
-  // Create RT_Current object.
-  this->rt_current_ =
-    loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
 }
 
 void

@@ -1,3 +1,79 @@
+Thu Jul 12 17:30:42 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tao/orbconf.h:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+
+          Removed the RTORB and RTCurrent from the hardcoded list of 
+          initial references.  Now, both get added dynamically when the
+          RTCORBA library is loaded using the PortableInterceptors.
+
+          This should fix a segfault that was reported by Max
+          Voronoy <M.Voronoy@telesenskscl.com.ua> and investigated by
+          Ossama. 
+
+        * tao/RTCORBA/RTCORBA.cpp:
+        * tao/RTCORBA/RT_ORB.cpp:
+        * tao/RTCORBA/RT_ORB.h:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.h:
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+        * tao/RTCORBA/RT_ORB_Loader.h:
+        * tao/RTCORBA/Thread_Pool.cpp:
+        * tao/RTCORBA/Thread_Pool.h:
+
+          Code changes necessary to support creating the RTORB and
+          RTCurrent in the pre_init method rather than on demand.
+          This is necessary to add both objects to the initial
+          references list using the PortableInterceptors.
+
+        * tests/RTCORBA/Makefile:
+        * tests/RTCORBA/Makefile.bor:
+        * tests/RTCORBA/README:
+        * tests/RTCORBA/ORB_init/Makefile:
+        * tests/RTCORBA/ORB_init/Makefile.bor:
+        * tests/RTCORBA/ORB_init/ORB_init.cpp:
+        * tests/RTCORBA/ORB_init/ORB_init.dsp:
+        * tests/RTCORBA/ORB_init/README:
+        * tests/RTCORBA/ORB_init/run_test.pl:
+          
+          Added unit test to check for correct processing when
+          instantiating multiple RT enabled ORBs.  Looking at some
+          of the RT code indicated that there might be a problem,
+          and there actually was.  Thanks to Irfan for writing
+          the test.
+
+        * tao/TAO_Internal.cpp:
+
+          Added check to automatically initialize RTCORBA if it
+          has been linked in.  This should fix a common source
+          of RTCORBA errors.  Thanks to Irfan for the suggestion.
+  
+        * tests/RTCORBA/Private_Connection/svc.conf:
+        * tests/RTCORBA/Server_Declared/server.conf:
+        * tests/RTCORBA/Server_Declared/svc.conf:
+        * tests/RTCORBA/Server_Protocol/server_iiop.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
+        * tests/RTCORBA/Server_Protocol/server_shmiop.conf:
+        * tests/RTCORBA/Server_Protocol/svc.conf:
+        * tests/RTCORBA/Thread_Pool/svc.conf:
+        * tests/Exposed_Policies/server.conf:
+        * tests/Exposed_Policies/svc.conf:
+        * tests/RTCORBA/Banded_Connections/server.conf:
+        * tests/RTCORBA/Banded_Connections/svc.conf:
+        * tests/RTCORBA/Client_Propagated/svc.conf:
+        * tests/RTCORBA/Client_Protocol/svc.conf:
+        * tests/RTCORBA/Explicit_Binding/svc.conf:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.conf:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/svc.conf:
+
+          Updated configuration files to remove RT_ORB initialization
+          to test out the above change.
+          
+
 Thu Jul 12 15:10:52 2001  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc):

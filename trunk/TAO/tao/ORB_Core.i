@@ -545,27 +545,42 @@ TAO_ORB_Core::default_environment (CORBA_Environment *env)
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
-                    CORBA::Object::_nil ());
-  if (CORBA::is_nil (this->rt_orb_))
+  if (CORBA::is_nil (this->rt_orb_.in ()))
     {
-      this->resolve_rt_orb_i (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
+                        CORBA::Object::_nil ());
+      if (CORBA::is_nil (this->rt_orb_.in ()))
+        {
+          // Save a reference to the priority mapping manager.
+          this->rt_orb_ = 
+              this->object_ref_table ().resolve_initial_references (
+              TAO_OBJID_RTORB,
+              ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
     }
-  return CORBA::Object::_duplicate (this->rt_orb_);
+
+  return CORBA::Object::_duplicate (this->rt_orb_.in ());
 }
 
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_rt_current (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
-                    CORBA::Object::_nil ());
-  if (CORBA::is_nil (this->rt_current_))
+  if (CORBA::is_nil (this->rt_current_.in ()))
     {
-      this->resolve_rt_current_i (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
+                        CORBA::Object::_nil ());
+      if (CORBA::is_nil (this->rt_current_.in ()))
+        {
+          // Save a reference to the priority mapping manager.
+          this->rt_current_ = 
+              this->object_ref_table ().resolve_initial_references (
+              TAO_OBJID_RTCURRENT,
+              ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
     }
-  return CORBA::Object::_duplicate (this->rt_current_);
+  return CORBA::Object::_duplicate (this->rt_current_.in ());
 }
 
 #if (TAO_HAS_INTERCEPTORS == 1)

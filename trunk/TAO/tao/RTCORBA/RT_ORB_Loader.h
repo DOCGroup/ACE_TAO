@@ -31,13 +31,6 @@ class TAO_ORB_Core;
 class TAO_RTCORBA_Export TAO_RT_ORB_Loader : public TAO_Object_Loader
 {
 public:
-  // = Priority mapping types
-  enum
-  {
-    TAO_PRIORITY_MAPPING_LINEAR,
-    TAO_PRIORITY_MAPPING_DIRECT
-  };
-
   /// Constructor.
   TAO_RT_ORB_Loader (void);
 
@@ -48,42 +41,21 @@ public:
   virtual int init (int argc,
                     char* []);
 
-  /// Creates a RT_ORB and returns it.
+  /// Create the object (unused)
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           char *argv [],
-                                           CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         int argc,
+                                         char *argv [],
+                                         CORBA::Environment &)
+     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
 
-private:
-
-  /// Flag to indicate whether the RT_ORB_Loader has been initialized.
-  /// If it hasn't, it should give back an RTORB since not all of the
-  /// RTCORBA hooks are in place.
-  int initialized_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_ORB_Loader)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_ORB_Loader)
 
-
-class TAO_RTCORBA_Export TAO_RT_Current_Loader : public TAO_Object_Loader
-{
-public:
-  /// Creates an RT_Current flyweight object and returns it.
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           char *argv [],
-                                           CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-};
-
-
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Current_Loader)
-ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_Current_Loader)
 
 // #if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
 
