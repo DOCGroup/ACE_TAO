@@ -97,7 +97,7 @@ TAO_Internal::open_services (int &argc, ACE_TCHAR **argv)
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO_debug_level == %d"), TAO_debug_level));
+                    ACE_TEXT ("TAO_debug_level == %d\n"), TAO_debug_level));
       }
   }
 #endif  /* TAO_DEBUG && !ACE_HAS_WINCE */

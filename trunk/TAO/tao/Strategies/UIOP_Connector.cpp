@@ -279,10 +279,8 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %s:%u, connection to ")
+                      ACE_TEXT ("(%P|%t) %N:%l, connection to ")
                       ACE_TEXT ("%s failed (%p)\n"),
-                      __FILE__,
-                      __LINE__,
                       uiop_endpoint->rendezvous_point (),
                       ACE_TEXT ("errno")));
         }

@@ -1339,10 +1339,9 @@ CORBA::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
       || sizeof (void *) != ACE_SIZEOF_VOID_P)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s; ERROR: unexpected basic type size; "
+                  "%N; ERROR: unexpected basic type size; "
                   "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n"
                   "please reconfigure TAO\n",
-                  __FILE__,
                   sizeof (CORBA::Short),
                   sizeof (CORBA::Long),
                   sizeof (CORBA::LongLong),

@@ -518,8 +518,8 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL)
 
                       if (TAO_debug_level >= 5)
                         ACE_DEBUG ((LM_DEBUG,
-                                    ACE_TEXT ("The IOR contains unsupported "
-                                              "policies.\n")));
+                                    ACE_TEXT ("The IOR contains unsupported ")
+                                    ACE_TEXT ("policies.\n")));
                     }
                 }
               ACE_CATCHANY
