@@ -16,9 +16,6 @@
 
 // Static initializers.
 
-CORBA::TypeCode_ptr
-TAO_Exceptions::sys_exceptions[TAO_Exceptions::NUM_SYS_EXCEPTIONS];
-
 CORBA::ExceptionList *TAO_Exceptions::system_exceptions;
 
 // TAO specific typecode
@@ -312,7 +309,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                              stream.length (),
                              stream.buffer (),
                              CORBA::B_TRUE);
-
+  
   TAO_Exceptions::system_exceptions->add (tcp);
   assert (tcp->length_ <= TAO_Exceptions::TC_BUFLEN);
   return;
@@ -380,6 +377,22 @@ TAO_Exceptions::init (CORBA::Environment &env)
                                            sizeof tc_buf_ ## name, env);
   STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
+
+  // Register POA exceptions as system exceptions
+  TAO_Exceptions::system_exceptions->add (PortableServer::_tc_ForwardRequest);
+  TAO_Exceptions::system_exceptions->add (PortableServer::POAManager::_tc_AdapterInactive);
+  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_AdapterAlreadyExists);
+  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_AdapterInactive);
+  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_AdapterNonExistent);
+  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_InvalidPolicy);
+  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_NoServant);
+  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_ObjectAlreadyActive);
+  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_ObjectNotActive);
+  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_ServantAlreadyActive);
+  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_ServantNotActive);
+  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_WrongAdapter);
+  TAO_Exceptions::system_exceptions->add (PortableServer::POA::_tc_WrongPolicy );
+  TAO_Exceptions::system_exceptions->add (PortableServer::Current::_tc_NoContext);
 }
 
 void
@@ -418,6 +431,7 @@ CORBA::Environment::exception_type (void) const
 {
   static char sysex_prefix [] = "IDL:omg.org/CORBA/";
   static char typecode_extra [] = "TypeCode/";
+  static char poa_prefix [] = "IDL:PortableServer/";
 
   if (!this->exception_)
     return CORBA::NO_EXCEPTION;
@@ -428,11 +442,12 @@ CORBA::Environment::exception_type (void) const
 
   const char *id = this->exception_->_id ();
 
-  if (ACE_OS::strncmp (id, sysex_prefix, sizeof sysex_prefix - 1) == 0
-      && ACE_OS::strncmp (id + sizeof sysex_prefix - 1,
-                          typecode_extra, sizeof typecode_extra - 1) != 0)
+  if ((ACE_OS::strncmp (id, sysex_prefix, sizeof sysex_prefix - 1) == 0
+       && ACE_OS::strncmp (id + sizeof sysex_prefix - 1,
+                           typecode_extra, sizeof typecode_extra - 1) != 0)
+      || ACE_OS::strncmp (id, poa_prefix, sizeof poa_prefix - 1) == 0)
     return CORBA::SYSTEM_EXCEPTION;
-
+  
   return CORBA::USER_EXCEPTION;
 }
 
@@ -450,8 +465,7 @@ CORBA::Environment::print_exception (const char *info,
   // @@ get rid of this logic, and rely on some member function on
   // Exception to say if it's user or system exception.
 
-  if (ACE_OS::strncmp ((char *) id, "IDL:omg.org/CORBA/", 10) == 0
-      && ACE_OS::strncmp ((char *) id, "IDL:omg.org/CORBA/TypeCode/", 19) != 0)
+  if (this->exception_type () == CORBA::SYSTEM_EXCEPTION)
     {
       // @@ this should be a QueryInterface call instead.
       CORBA::SystemException *x2 =

@@ -193,11 +193,11 @@ enum TAO_GIOP_ReplyStatusType
   TAO_GIOP_NO_EXCEPTION,
   // Request completed successfully
 
-  TAO_GIOP_USER_EXCEPTION,
-  // Request terminated with user exception
-
   TAO_GIOP_SYSTEM_EXCEPTION,
   // Request terminated with system exception
+
+  TAO_GIOP_USER_EXCEPTION,
+  // Request terminated with user exception
 
   TAO_GIOP_LOCATION_FORWARD
   // Reply is a location forward type
@@ -406,6 +406,9 @@ public:
 
   static const char *message_name (TAO_GIOP::Message_Type which);
   // Returns the stringified <MsgType>.
+
+  static TAO_GIOP_ReplyStatusType convert_CORBA_to_GIOP_exception (CORBA::ExceptionType corba_type);
+  // Convert the exception type from CORBA to GIOP 
 };
 
 #if defined (__ACE_INLINE__)
