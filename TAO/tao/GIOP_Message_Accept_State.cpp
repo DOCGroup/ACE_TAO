@@ -194,13 +194,14 @@ write_locate_reply_mesg (TAO_OutputCDR &output,
   return 1;
 }
 
-ACE_INLINE CORBA::Octet
+
+CORBA::Octet
 TAO_GIOP_Message_Accept_State_10::major_version (void)
 {
   return (CORBA::Octet) 1;
 }
 
-ACE_INLINE CORBA::Octet
+CORBA::Octet
 TAO_GIOP_Message_Accept_State_10::minor_version (void)
 {
   return (CORBA::Octet) 0;
