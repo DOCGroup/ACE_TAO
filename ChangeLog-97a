@@ -1,3 +1,15 @@
+Mon Feb 17 22:37:35 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/Log_Msg.h (ACE_RETURN): Modified all ACE_RETURN macros to
+	  use ACE_OS::last_error instead of errno.  This makes these more
+	  portable to Win32.
+
+	* ace/Log_Msg.cpp (log): Modified Win32 version to use
+	  FormatMessage if errnum is greater than sys_nerr.
+
+	* ace/OS.i (last_error): Modified Win32 version to return
+	  GetLastError if errno == 0.
+
 Mon Feb 17 18:32:29 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.h: Protected the #ifdef for CLOCK_REALTIME so that it
