@@ -1,3 +1,22 @@
+Sun Nov 11 10:00:56 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.h (ACE_SSL_SOCK_Stream):
+
+	  Removed unused class members.
+
+	* ace/SSL/SSL_SOCK_Stream.cpp (sendv):
+
+	  If an error occurs but data was sent on a previous loop
+	  iteration then return the amount of bytes sent, not the error.
+	  This extends previous check for EWOULDBLOCK and ETIME.  All
+	  errors are now caught.  The caller must always know if any data
+	  was successfully sent.
+
+	  Do not continue on to the next loop iteration if the amount of
+	  data sent was less than the amount data given.  This avoids a
+	  subtle problem where "holes" in the data stream would occur if
+	  partial sends of a given buffer in the iovec array occured.
+
 Sun Nov 11 07:58:07 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Stream.cpp (sendv):
