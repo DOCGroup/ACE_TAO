@@ -91,7 +91,7 @@ protected:
   // register with the default POA
 };
 
-class TAO_DynamicImplementation : public virtual TAO_ServantBase
+class TAO_Export TAO_DynamicImplementation : public virtual TAO_ServantBase
   // = TITLE
   //   Base class for DSI.
   //
