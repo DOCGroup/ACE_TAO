@@ -563,8 +563,8 @@ AST_Union::fe_add_union (AST_Union *t)
         }
     }
 
-  // Add it to scope.
-  this->add_to_scope (t);
+  // Add it to local types.
+  this->add_to_local_types (t);
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t, 
@@ -609,8 +609,8 @@ AST_Union::fe_add_structure (AST_Structure *t)
         }
     }
 
-  // Add it to scope.
-  this->add_to_scope (t);
+  // Add it to local types.
+  this->add_to_local_types (t);
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t, 
@@ -655,8 +655,8 @@ AST_Union::fe_add_enum (AST_Enum *t)
         }
     }
 
-  // Add it to scope.
-  this->add_to_scope (t);
+  // Add it to local types.
+  this->add_to_local_types (t);
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t, 
