@@ -136,7 +136,7 @@ CORBA_Policy_ptr _TAO_collocation_POA_CORBA_Policy_Stub_Factory (
       CORBA_Policy_ptr retval = 0;
       ACE_NEW_RETURN (
           retval,
-          POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy (stub),
+          POA_CORBA::_tao_thru_poa_collocated_Policy (stub),
           0
         );
       return retval;
@@ -343,7 +343,7 @@ POA_CORBA::Policy::_this (CORBA_Environment &ACE_TRY_ENV)
           ::CORBA_Policy_ptr retval = 0;
           ACE_NEW_RETURN (
               retval,
-              POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy (stub),
+              POA_CORBA::_tao_thru_poa_collocated_Policy (stub),
               0
             );
           return retval;
@@ -363,14 +363,14 @@ POA_CORBA::Policy::_this (CORBA_Environment &ACE_TRY_ENV)
     }
 }
 
-POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy::_tao_thru_poa_collocated_CORBA_Policy (
+POA_CORBA::_tao_thru_poa_collocated_Policy::_tao_thru_poa_collocated_Policy (
   TAO_Stub *stub
 )
   :  CORBA_Object (stub, 1)
 {
 }
 
-CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy::_is_a(
+CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_Policy::_is_a(
     const CORBA::Char *logical_type_id,
     CORBA_Environment &ACE_TRY_ENV
   )
@@ -394,7 +394,7 @@ CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy::_is_a(
 }
 
 
-CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy::_non_existent(
+CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_Policy::_non_existent(
     CORBA_Environment &ACE_TRY_ENV
   )
 
@@ -417,7 +417,7 @@ CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy::_non_existent(
 }
 
 
-CORBA::PolicyType POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy::policy_type  (
+CORBA::PolicyType POA_CORBA::_tao_thru_poa_collocated_Policy::policy_type  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -446,7 +446,7 @@ CORBA::PolicyType POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy::policy_type 
 
 }
 
-CORBA_Policy_ptr POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy::copy  (
+CORBA_Policy_ptr POA_CORBA::_tao_thru_poa_collocated_Policy::copy  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -475,7 +475,7 @@ CORBA_Policy_ptr POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy::copy  (
 
 }
 
-void POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy::destroy  (
+void POA_CORBA::_tao_thru_poa_collocated_Policy::destroy  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((

@@ -1,9 +1,17 @@
+Wed Sep 13 13:15:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/PortableServer/PolicyS.cpp (destroy):
+	* tao/PortableServer/POA_CORBA.h: Changed the name of the class
+	  POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy as
+	  POA_CORBA::_tao_thru_poa_collocated_Policy. This is what the
+	  generated code from TAO_IDL looks for.
+
 Wed Sep 13 11:16:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_scope.cpp:
 
 	  Turned out my change to lookup_by_name_local() yesterday
-	  was not only unnecessary (the change to 
+	  was not only unnecessary (the change to
 	  AST_Module::look_in_previous() was enough by itself), but
 	  also caused other problems (in lookup of recursive members
 	  of structs and unions), so I removed it.
@@ -17,10 +25,10 @@ Wed Sep 13 02:11:09 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  to the same ORB as this POA, the BAD_INV_ORDER system exception
 	  with standard minor code 3 is raised.
 
-	* tao/PortableServer/POAManager.cpp (discard_requests_i): 
-	* tao/PortableServer/POAManager.cpp (deactivate_i): 
-	* tao/PortableServer/POAManager.cpp (hold_requests_i): 
-	* tao/PortableServer/Object_Adapter.cpp (check_close): 
+	* tao/PortableServer/POAManager.cpp (discard_requests_i):
+	* tao/PortableServer/POAManager.cpp (deactivate_i):
+	* tao/PortableServer/POAManager.cpp (hold_requests_i):
+	* tao/PortableServer/Object_Adapter.cpp (check_close):
 
 	  Updated to check for the correct ORB for <wait_for_completions>.
 
