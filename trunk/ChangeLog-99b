@@ -1,85 +1,91 @@
+Wed Jan 13 22:30:49 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_chorus_ghs.GNU: removed
+          explicit link with libedgnoe.a, because GreenHills adds
+          that implicitly.
+
 Wed Jan 13 18:48:30 EST 1999  James CE Johnson  <jcej@lads.com>
 
-	* docs/tutorials/004/client.cpp:
-	  docs/tutorials/010/message_queue.cp:
-	  docs/tutorials/011/message_queue.cpp:
-	  docs/tutorials/012/message_queue.cpp:
-	  docs/tutorials/013/message_queue.cpp:
-	  docs/tutorials/014/EndTask.h:
-	  docs/tutorials/019/client.cpp:
-	  docs/tutorials/019/client2.cpp:
-	  docs/tutorials/019/server.cpp:
-	  docs/tutorials/019/server2.cpp:
-	  docs/tutorials/019/shmem.cpp:
-	  docs/tutorials/020/client.cpp:
-	  docs/tutorials/020/server.cpp:
-	  docs/tutorials/021/client.cpp:
-	  docs/tutorials/021/mpool.cpp:
-	  docs/tutorials/021/mpool.h:
-	  docs/tutorials/021/server.cpp:
-		Fixed many NT issues found by Irfan.  Most are related to the
-		fact that NT doesn't have SysV shared memory.
+        * docs/tutorials/004/client.cpp:
+          docs/tutorials/010/message_queue.cp:
+          docs/tutorials/011/message_queue.cpp:
+          docs/tutorials/012/message_queue.cpp:
+          docs/tutorials/013/message_queue.cpp:
+          docs/tutorials/014/EndTask.h:
+          docs/tutorials/019/client.cpp:
+          docs/tutorials/019/client2.cpp:
+          docs/tutorials/019/server.cpp:
+          docs/tutorials/019/server2.cpp:
+          docs/tutorials/019/shmem.cpp:
+          docs/tutorials/020/client.cpp:
+          docs/tutorials/020/server.cpp:
+          docs/tutorials/021/client.cpp:
+          docs/tutorials/021/mpool.cpp:
+          docs/tutorials/021/mpool.h:
+          docs/tutorials/021/server.cpp:
+                Fixed many NT issues found by Irfan.  Most are related to the
+                fact that NT doesn't have SysV shared memory.
 
 Wed Jan 13 16:40:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Reversed the definitions for ACE_DES_FREE_TEMPLATE*
-	  for directive ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR.  The default
-	  definitions should be the only valid case.  If a compiler need
-	  to define ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR, then it is a bug
-	  of the compiler and memory leaks may arise if this directive is
-	  defined.
+        * ace/OS.h: Reversed the definitions for ACE_DES_FREE_TEMPLATE*
+          for directive ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR.  The default
+          definitions should be the only valid case.  If a compiler need
+          to define ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR, then it is a bug
+          of the compiler and memory leaks may arise if this directive is
+          defined.
 
-	* config-g++-common.h:
-	* config-osf1-4.0.h:
-	* config-psos-diab.h:
-	* config-psos-tm.h: Commented out all occurances of
-	  ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR.  Theoretically, no compiler
-	  should have it defined.
+        * config-g++-common.h:
+        * config-osf1-4.0.h:
+        * config-psos-diab.h:
+        * config-psos-tm.h: Commented out all occurances of
+          ACE_HAS_BROKEXPLICIT_DESTRUCTOR.  Theoretically, no compiler
+          should have it defined.
 
 Wed Jan 13 04:45:59 1999  James C Hu  <jxh@cs.wustl.edu>
 
-	* ace/Cache_Object.{h,cpp}:
-	* ace/Cache_Manager.{h,cpp}:
-	* ace/Cache_Manager_T.{h,cpp}:
-	* ace/Cache_Hash_T.{h,cpp}:
-	* ace/Cache_Heap_T.{h,cpp}:
-	* ace/Hash_Bucket_T.{h,cpp}:
-	  Supporting infrastructure for the new Filecache.  These classes
+        * ace/Cache_Object.{h,cpp}:
+        * ace/Cache_Manager.{h,cpp}:
+        * ace/Cache_Manager_T.{h,cpp}:
+        * ace/Cache_Hash_T.{h,cpp}:
+        * ace/Cache_Heap_T.{h,cpp}:
+        * ace/Hash_Bucket_T.{h,cpp}:
+          Supporting infrastructure for the new Filecache.  These classes
           form the basis of a generic in memory cache engine.
 
 Wed Jan 13 02:17:57 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.cpp (writev): This function should use ACE::write_n
- 	  instead of ACE::send_n.  Similarly, readv() should use
- 	  ACE::read_n instead of ACE::recv_n.
+        * ace/OS.cpp (writev): This function should use ACE::write_n
+          instead of ACE::send_n.  Similarly, readv() should use
+          ACE::read_n instead of ACE::recv_n.
 
-	* ace/ACE.cpp (send): This function should use ACE_OS::sendv
- 	  instead of ACE_OS::writev.  Similarly, recv() should use
-	  ACE_OS::recvv instead of ACE_OS::readv.
+        * ace/ACE.cpp (send): This function should use ACE_OS::sendv
+          instead of ACE_OS::writev.  Similarly, recv() should use
+          ACE_OS::recvv instead of ACE_OS::readv.
 
-	* docs/tutorials:  Fixed all the NT project files.
+        * docs/tutorials:  Fixed all the NT project files.
 
 Tue Jan 12 22:41:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-freebsd.h: Uncommented ACE_HAS_SIGWAIT.  This is
-	  required for FreeBSD 2.2.8. Thanks to John Aughey
-	  <jha@FreeBSD.ORG> for reporting this.
+        * ace/config-freebsd.h: Uncommented ACE_HAS_SIGWAIT.  This is
+          required for FreeBSD 2.2.8. Thanks to John Aughey
+          <jha@FreeBSD.ORG> for reporting this.
 
-	* ace/SOCK_IO.{h,i}:
-	* ace/SOCK_Stream.{h,i} (sendv_n/recvv_n): Moved these functions
-	  from SOCK_IO to SOCK_Stream where it makes more sense to have
-	  the semantic of sending/receiving <n> bytes.
+        * ace/SOCK_IO.{h,i}:
+        * ace/SOCK_Stream.{h,i} (sendv_n/recvv_n): Moved these functions
+          from SOCK_IO to SOCK_Stream where it makes more sense to have
+          the semantic of sending/receiving <n> bytes.
 
 Tue Jan 12 19:52:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACE-INSTALL.html: Added more info on dynamically linking
-	  run-time libraries.
+        * ACE-INSTALL.html: Added more info on dynamically linking
+          run-time libraries.
 
-	* ace/SOCK_IO.{h,i,cpp} (sendv,recvv,sendv_n,recvv_n): Renamed
-	  vector send/recv.  There were name clashing since these methods
-	  have similar signatures to some send_n/recv_n in
-	  ACE_SOCK_Stream, they got hidden by the derived methods.
-	  Renaming them solve the problem.
+        * ace/SOCK_IO.{h,i,cpp} (sendv,recvv,sendv_n,recvv_n): Renamed
+          vector send/recv.  There were name clashing since these methods
+          have similar signatures to some send_n/recv_n in
+          ACE_SOCK_Stream, they got hidden by the derived methods.
+          Renaming them solve the problem.
 
 Tue Jan 12 10:59:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
