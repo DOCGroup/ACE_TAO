@@ -73,6 +73,19 @@ public:
     RtecScheduler::Dispatching_Type dispatching_type;
   };
 
+    struct POD_Scheduling_Anomaly
+    // = TITLE
+    //   Plain Old Data for scheduling anomaly information.
+    //
+    // = DESCRIPTION
+    //   This class provide us with a plain old data version of
+    //   scheduling anomalies, which is used to generate error
+    //   and warning lines in the runtime scheduling header output.
+  {
+    const char* description;
+    RtecScheduler::Anomaly_Severity severity;
+  };
+
   static int use_config (CosNaming::NamingContext_ptr naming);
   // Setup the variables needed for a config run, using the
   // NamingContext to locate a Scheduler.
@@ -101,6 +114,7 @@ public:
 
   static int dump_schedule (const RtecScheduler::RT_Info_Set& infos,
                             const RtecScheduler::Config_Info_Set& configs,
+                            const RtecScheduler::Scheduling_Anomaly_Set& anomalies,
                             const char* file_name = 0,
                             const char* rt_info_format = 0,
                             const char* config_info_format = 0);

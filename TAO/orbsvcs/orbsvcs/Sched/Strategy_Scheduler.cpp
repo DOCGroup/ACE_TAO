@@ -67,11 +67,15 @@ ACE_Strategy_Scheduler::sort_dispatches (Dispatch_Entry **dispatches,
   //   by the strategy's comparison operators
 
 ACE_DynScheduler::status_t
-ACE_Strategy_Scheduler::assign_priorities (Dispatch_Entry **dispatches,
-                                           u_int count)
+ACE_Strategy_Scheduler::assign_priorities (
+  Dispatch_Entry **dispatches,
+  u_int count,
+  ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
   // start with happy status
-  ACE_DynScheduler::status_t status = ACE_DynScheduler::SUCCEEDED;
+  ACE_DynScheduler::status_t status = SUCCEEDED;
+
+  RtecScheduler::Scheduling_Anomaly * anomaly = 0;
 
   // start with the highest OS priority in the given range and work downward:
   // if we run out of values to assign, return an error.
@@ -87,7 +91,7 @@ ACE_Strategy_Scheduler::assign_priorities (Dispatch_Entry **dispatches,
 
   // store the dispatch configuration for the highest priority level
   Config_Info *config_ptr;
-  ACE_NEW_RETURN(config_ptr, Config_Info, ST_VIRTUAL_MEMORY_EXHAUSTED);
+  ACE_NEW_RETURN (config_ptr, Config_Info, ST_VIRTUAL_MEMORY_EXHAUSTED);
   config_ptr->preemption_priority = current_scheduler_priority;
   config_ptr->thread_priority = current_OS_priority;
   config_ptr->dispatching_type = strategy_.dispatch_type (*(dispatches[0]));
@@ -119,10 +123,26 @@ ACE_Strategy_Scheduler::assign_priorities (Dispatch_Entry **dispatches,
                                       current_OS_priority,
                                       ACE_SCOPE_PROCESS)))
         {
-          // if we have run out of priority levels to assign, indicate
-          // this in the return status, but keep right on assigning the
-          // minimum OS priority in the range to the remaining tasks.
-          status = ACE_DynScheduler::ST_INSUFFICIENT_THREAD_PRIORITY_LEVELS;
+          // If we have run out of priority levels to assign, indicate
+          // this in the return status, unless a more severe problem is
+          // already reflected there.  Log an anomaly but keep right on 
+          // assigning the minimum OS priority in the range to the remaining 
+          // tasks.
+          status = (status == SUCCEEDED) 
+                   ? ST_INSUFFICIENT_THREAD_PRIORITY_LEVELS
+                   : status; 
+
+          // Log the anomaly.
+          anomaly = 
+            create_anomaly (ST_INSUFFICIENT_THREAD_PRIORITY_LEVELS);
+          if (anomaly)
+            {
+              anomaly_set.insert (anomaly);
+            }
+          else
+            {
+              return ST_VIRTUAL_MEMORY_EXHAUSTED;
+            }
         }
         else
         {
@@ -149,15 +169,28 @@ ACE_Strategy_Scheduler::assign_priorities (Dispatch_Entry **dispatches,
 
         break;
 
-      default: // should never reach here: something *bad* has happened
+      default: // Should never reach here: something *bad* has happened.
 
-        ACE_ERROR_RETURN ((
+        ACE_ERROR ((
           LM_ERROR,
           "Priority assignment failure: tasks"
           " \"%s\" and \"%s\" are out of order.\n",
           dispatches [i-1]->task_entry ().rt_info ()->entry_point.in (),
-          dispatches [i]->task_entry ().rt_info ()->entry_point.in ()),
-          ACE_DynScheduler::ST_INVALID_PRIORITY_ORDERING);
+          dispatches [i]->task_entry ().rt_info ()->entry_point.in ()));
+
+          status = ACE_DynScheduler::ST_INVALID_PRIORITY_ORDERING;
+
+          // Log the anomaly.
+          anomaly = 
+            create_anomaly (ST_INVALID_PRIORITY_ORDERING);
+          if (anomaly)
+            {
+              anomaly_set.insert (anomaly);
+            }
+          else
+            {
+              return ST_VIRTUAL_MEMORY_EXHAUSTED;
+            }
     }
 
     // set OS priority of the current dispatch entry
@@ -173,9 +206,14 @@ ACE_Strategy_Scheduler::assign_priorities (Dispatch_Entry **dispatches,
   //   according to the strategy's priority comparison operator.
 
 ACE_DynScheduler::status_t
-ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
-                                              u_int count)
+ACE_Strategy_Scheduler::assign_subpriorities (
+  Dispatch_Entry **dispatches,
+  u_int count,
+  ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
+  ACE_DynScheduler::status_t status = ACE_DynScheduler::SUCCEEDED;
+  RtecScheduler::Scheduling_Anomaly * anomaly = 0;
+
   // start subpriority levels and element counts at 1, set level values in
   // the first entry, increment the static subpriority level,
   Sub_Priority dynamic_subpriority_level = 0;
@@ -252,7 +290,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
 
           case 0:  // still at the same dynamic subpriority level
 
-                         {
+          {
             switch (strategy_.static_subpriority_comp (*(dispatches[i-1]),
                                                        *(dispatches[i])))
             {
@@ -272,27 +310,52 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
 
               default: // should never reach here: something *bad* has happened
 
-                ACE_ERROR_RETURN ((
+                ACE_ERROR ((
                   LM_ERROR,
                   "Static subpriority assignment failure: tasks"
                   " \"%s\" and \"%s\" are out of order.\n",
                   dispatches [i-1]->task_entry ().rt_info ()->entry_point.in (),
-                  dispatches [i]->task_entry ().rt_info ()->entry_point.in ()),
-                  ACE_DynScheduler::ST_INVALID_PRIORITY_ORDERING);
-            }
+                  dispatches [i]->task_entry ().rt_info ()->entry_point.in ()));
 
+                  status = ST_INVALID_PRIORITY_ORDERING;
+
+                  // Log the anomaly.
+                  anomaly = 
+                    create_anomaly (ST_INVALID_PRIORITY_ORDERING);
+                  if (anomaly)
+                    {
+                      anomaly_set.insert (anomaly);
+                    }
+                  else
+                    {
+                      return ST_VIRTUAL_MEMORY_EXHAUSTED;
+                    }
+            }
             break;
-                         }
+          }
 
           default: // should never reach here: something *bad* has happened
 
-            ACE_ERROR_RETURN ((
+            ACE_ERROR ((
               LM_ERROR,
               "Dynamic subpriority assignment failure: tasks"
               " \"%s\" and \"%s\" are out of order.\n",
               dispatches [i-1]->task_entry ().rt_info ()->entry_point.in (),
-              dispatches [i]->task_entry ().rt_info ()->entry_point.in ()),
-              ACE_DynScheduler::ST_INVALID_PRIORITY_ORDERING);
+              dispatches [i]->task_entry ().rt_info ()->entry_point.in ()));
+
+              status = ACE_DynScheduler::ST_INVALID_PRIORITY_ORDERING;
+
+              // Log the anomaly.
+              anomaly = 
+                create_anomaly (ST_INVALID_PRIORITY_ORDERING);
+              if (anomaly)
+                {
+                  anomaly_set.insert (anomaly);
+                }
+              else
+                {
+                  return ST_VIRTUAL_MEMORY_EXHAUSTED;
+                }
         }
 
         dispatches [i]->dynamic_subpriority (dynamic_subpriority_level);
@@ -302,13 +365,26 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
 
       default: // should never reach here: something *bad* has happened
 
-        ACE_ERROR_RETURN ((
+        ACE_ERROR ((
           LM_ERROR,
           "Priority assignment failure: tasks"
           " \"%s\" and \"%s\" are out of order.\n",
           dispatches [i-1]->task_entry ().rt_info ()->entry_point.in (),
-          dispatches [i]->task_entry ().rt_info ()->entry_point.in ()),
-          ACE_DynScheduler::ST_INVALID_PRIORITY_ORDERING);
+          dispatches [i]->task_entry ().rt_info ()->entry_point.in ()));
+
+        status = ACE_DynScheduler::ST_INVALID_PRIORITY_ORDERING;
+
+        // Log the anomaly.
+        anomaly = 
+          create_anomaly (ST_INVALID_PRIORITY_ORDERING);
+        if (anomaly)
+          {
+            anomaly_set.insert (anomaly);
+          }
+        else
+          {
+            return ST_VIRTUAL_MEMORY_EXHAUSTED;
+          }
     }
   }
 
@@ -328,7 +404,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
                           dispatches [i - j]->static_subpriority () - 1);
   }
 
-  return ACE_DynScheduler::SUCCEEDED;
+  return status;
 }
 
 

@@ -113,7 +113,7 @@ ACE_Config_Scheduler::get (RtecScheduler::handle_t handle,
     {
     case BaseSchedImplType::SUCCEEDED:
       {
-        // IDL memory managment semantics require the we return a copy
+        // IDL memory managment semantics require that we return a copy.
         RtecScheduler::RT_Info* copy;
         ACE_NEW_RETURN (copy, RtecScheduler::RT_Info (*rt_info), 0);
         return copy;
@@ -243,6 +243,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
                                                CORBA::Long maximum_priority,
                                                RtecScheduler::RT_Info_Set_out infos,
                                                RtecScheduler::Config_Info_Set_out configs,
+                                               RtecScheduler::Scheduling_Anomaly_Set_out anomalies,
                                                CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
@@ -251,35 +252,128 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 {
   ACE_UNUSED_ARG (_env);
 
+  // Initialize the scheduler implementation.
   impl->init (minimum_priority, maximum_priority);
 
+  // Construct an unbounded set to hold any scheduling anomalies.
+  ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> anomaly_set;
+
+  // Invoke the imlementation's scheduling method.
   BaseSchedImplType::status_t schedule_status;
-  schedule_status = impl->schedule ();
-  switch (schedule_status)
+  schedule_status = impl->schedule (anomaly_set);
+
+  // Iterate over the set of anomalies, reporting each one, storing
+  // it in the set of anomalies to return, and determining the worst
+  // anomaly severity.
+  RtecScheduler::Anomaly_Severity severity = RtecScheduler::ANOMALY_NONE;
+  RtecScheduler::Scheduling_Anomaly **anomaly = 0;
+  char *anomaly_severity_msg = "NONE";
+  CORBA::ULong anomaly_index = 0;
+  if (anomalies.ptr () == 0)
     {
-      // If we succeeded with no warnings, do nothing.
-      case BaseSchedImplType::SUCCEEDED:
-        break;
+      anomalies = 
+        new RtecScheduler::Scheduling_Anomaly_Set (anomaly_set.size ());
+    }
+  anomalies->length (anomaly_set.size ());
+  ACE_Unbounded_Set_Iterator<RtecScheduler::Scheduling_Anomaly *> 
+    anomaly_iter (anomaly_set);
+  for (anomaly_iter.first (), anomaly_index = 0; 
+       anomaly_iter.next (anomaly); 
+       anomaly_iter.advance (), ++anomaly_index)
+    {
+      if (0 == *anomaly)
+        {
+          // if for some reason we stored a null anomaly pointer, 
+          // just give default values to that entry in the sequence.
+          anomalies[anomaly_index].severity = RtecScheduler::ANOMALY_NONE;
+          anomalies[anomaly_index].description = "";
+          continue;
+        }
 
-      // Issue a warning if there were unresolved remote dependencies.
-      case BaseSchedImplType::ST_UNRESOLVED_REMOTE_DEPENDENCIES:
+      // Keep track of the *worst* anomaly severity
+      switch ((*anomaly)->severity)
+        {
+          case RtecScheduler::ANOMALY_FATAL:
+            anomaly_severity_msg = "FATAL";
+            severity = RtecScheduler::ANOMALY_FATAL;
+            break;
+
+          case RtecScheduler::ANOMALY_ERROR:
+            anomaly_severity_msg = "ERROR";
+            if (severity != RtecScheduler::ANOMALY_FATAL)
+              {
+                severity = RtecScheduler::ANOMALY_ERROR;
+              }
+            break;
+
+          case RtecScheduler::ANOMALY_WARNING:
+            anomaly_severity_msg = "WARNING";
+            if ((severity != RtecScheduler::ANOMALY_FATAL) &&
+                (severity != RtecScheduler::ANOMALY_ERROR))
+              {
+                severity = RtecScheduler::ANOMALY_WARNING;
+              }
+            break;
+
+          case RtecScheduler::ANOMALY_NONE:
+            anomaly_severity_msg = "UNKNOWN";
+            break;
+        }
+ 
+        // Output the anomaly message
         ACE_DEBUG ((LM_DEBUG, 
-                    "Warning: schedule has unresolved "
-                    "remote dependencies\n."));
-        break;
+                    "%s: %s\n",
+                    anomaly_severity_msg,
+                    (*anomaly)->description));
 
-      // Issue a warning if the schedule is not feasible.
-      case BaseSchedImplType::ST_UTILIZATION_BOUND_EXCEEDED:
-        ACE_DEBUG ((LM_DEBUG, 
-                    "Warning: schedule exceeds utilization bound\n."));
-        break;
+        // Store the anomaly in the anomaly sequence out parameter
+        anomalies[anomaly_index] = **anomaly;
 
-      // On any other kind of scheduling error, 
-      // abort without generating a schedule. 
-      default:
+        // Release the anomaly node.
+        delete (*anomaly);
+    }
+
+  switch (severity)
+    {
+      // On a fatal anomaly abort without generating a schedule. 
+      case RtecScheduler::ANOMALY_FATAL:
         // TODO: throw something.
-        ACE_ERROR ((LM_ERROR, "Schedule failed\n"));
+        ACE_ERROR ((LM_ERROR, "Schedule failed due to FATAL anomaly.\n"));
         return;
+
+      // Otherwise, make sure we didn't get a fatal return type.      
+      default:
+        switch (schedule_status)
+        {
+          case BaseSchedImplType::ST_BAD_INTERNAL_POINTER :
+            // TODO: throw something.
+            ACE_ERROR ((LM_ERROR, 
+                        "Schedule failed due to bad internal pointer.\n"));
+            return;
+
+          case BaseSchedImplType::ST_VIRTUAL_MEMORY_EXHAUSTED :
+            // TODO: throw something.
+            ACE_ERROR ((LM_ERROR, 
+                        "Schedule failed due to insufficient memory.\n"));
+            return;
+
+          case BaseSchedImplType::THREAD_COUNT_MISMATCH :
+            // TODO: throw something.
+            ACE_ERROR ((LM_ERROR, 
+                        "Schedule failed due to thread count mismatch.\n"));
+            return;
+
+          case BaseSchedImplType::TASK_COUNT_MISMATCH :
+            // TODO: throw something.
+            ACE_ERROR ((LM_ERROR, 
+                        "Schedule failed due to task count mismatch.\n"));
+            return;
+
+          // Otherwise, go ahead and generate a schedule.
+          default:
+            break;
+        }
+        break;
     }
 
   // return the set of scheduled RT_Infos
@@ -312,11 +406,13 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   // return the set of scheduled Config_Infos
   if (configs.ptr () == 0)
     {
-      configs = new RtecScheduler::Config_Info_Set(impl->minimum_priority_queue () + 1);
+      configs = 
+        new RtecScheduler::Config_Info_Set(impl->minimum_priority_queue () + 1);
     }
   configs->length (impl->minimum_priority_queue () + 1);
   for (RtecScheduler::Preemption_Priority priority = 0;
-       priority <= (RtecScheduler::Preemption_Priority) impl->minimum_priority_queue ();
+       priority <= 
+         (RtecScheduler::Preemption_Priority) impl->minimum_priority_queue ();
        ++priority)
     {
       RtecScheduler::Config_Info* config_info = 0;
@@ -330,17 +426,18 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         case BaseSchedImplType::ST_UNKNOWN_TASK:
         default:
           ACE_ERROR ((LM_ERROR,
-                      "Config_Scheduler::schedule - lookup_config_info failed\n"));
+                      "Config_Scheduler::schedule - "
+                      "lookup_config_info failed\n"));
           // TODO: throw something.
           break;
         }
     }
 
-  ACE_DEBUG ((LM_DEBUG, "schedule prepared\n"));
-
-  ACE_DEBUG ((LM_DEBUG, "dumping to stdout\n"));
-  ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()), *(configs.ptr()), 0);
-  ACE_DEBUG ((LM_DEBUG, "dump done\n"));
+  ACE_DEBUG ((LM_DEBUG, "Schedule prepared.\n"));
+  ACE_DEBUG ((LM_DEBUG, "Dumping to stdout.\n"));
+  ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()), *(configs.ptr()), 
+	                                    *(anomalies.ptr()), 0);
+  ACE_DEBUG ((LM_DEBUG, "Dump done.\n"));
 }
 
 

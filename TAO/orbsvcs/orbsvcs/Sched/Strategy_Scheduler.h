@@ -47,11 +47,15 @@ public:
   virtual ~ACE_Strategy_Scheduler ();
     // = virtual dtor
 
-  status_t assign_priorities (Dispatch_Entry **dispatches, u_int count);
+  status_t assign_priorities (
+    Dispatch_Entry **dispatches, u_int count,
+    ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set);
     // = assigns priorities to the sorted dispatch schedule,
     //   according to the strategy's priority comparison operator.
 
-  status_t assign_subpriorities (Dispatch_Entry **dispatches, u_int count);
+  status_t assign_subpriorities (
+    Dispatch_Entry **dispatches, u_int count,
+    ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set);
     // = assigns dynamic and static sub-priorities to the sorted dispatch
     //   schedule, according to the strategy's subpriority comparisons.
 
