@@ -83,8 +83,11 @@
 #include "tao/DomainC.h"
 #include "tao/WrongTransactionC.h"
 
+#ifdef TAO_HAS_INTERFACE_REPOSITORY
 // Interface repository
 #include "tao/InterfaceC.h"
+
+#endif /*TAO_HAS_INTERFACE_REPOSITORY */
 
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)
