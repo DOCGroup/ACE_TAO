@@ -22,6 +22,7 @@ DIRS  = Generic_Servant \
 	On_Demand_Activation \
 	On_Demand_Loading \
 	NewPOA \
+        POA_BiDir \
 	TIE
 
 ifndef TAO_ROOT
