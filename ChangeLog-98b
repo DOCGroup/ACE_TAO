@@ -1,3 +1,8 @@
+Wed Oct 21 18:44:26 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/run_tests.sh: Changed egrep Chorus to CHORUS to identify a
+	  Chorus vme board.
+
 Wed Oct 21 17:51:52 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (get_ip_interfaces): If compiling on Win32 w/ Winsock 2,
