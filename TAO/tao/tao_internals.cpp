@@ -38,8 +38,14 @@ TAO_Internal::fake_service_entries_i (void)
                   TAO_Default_Client_Strategy_Factory,
                   0, client_args);
   
-  char* server_args[] = { "-T", "-L", "dynamic", "-o", "128", 0 };
-  FAKE_SVC_ENTRY ("Server_Strategy_Factory",
+char* server_args[] = {
+#if ! defined(TAO_HAS_TSS_ORBCORE)
+  "-T",
+#else
+  "-R",
+#endif  
+  "-L", "dynamic", "-o", "128", 0 };
+FAKE_SVC_ENTRY ("Server_Strategy_Factory",
                   TAO_Default_Server_Strategy_Factory,
                   sizeof(server_args)/sizeof(server_args[0]), server_args);
 

@@ -623,8 +623,6 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
 
   // @@ Why is this lock here, i.e., what is it protecting?  Can
   // we remove it?
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, guard, lock_));
-
   CORBA::Object_ptr obj = 0;
 
   // Get a CORBA::Object_ptr from _data using <QueryInterface>.
@@ -637,27 +635,30 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   // Determine the object key and the address to which we'll need a
   // connection.
   ACE_INET_Addr server_addr;
-    
-  // @@ We can probably remove the lock for this since it's in the
-  // same thread as the connection manager? 
-  if (data_->fwd_profile != 0)
-    {
-      key = &data_->fwd_profile->object_key;
-      server_addr.set (data_->fwd_profile->port,
-		       data_->fwd_profile->host);
-    }
-  else
-    {
-      key = &data_->profile.object_key;
-      server_addr.set (data_->profile.port,
-		       data_->profile.host);
-    }
+  
+  {
+    // Begin a new scope so we keep this lock only as long as
+    // necessary
+    ACE_MT (ACE_GUARD (ACE_Thread_Mutex, guard, data_->fwd_profile_lock ()));
+    if (data_->fwd_profile_i () != 0)
+      {
+        key = &data_->fwd_profile_i ()->object_key;
+        server_addr.set (data_->fwd_profile_i ()->port,
+                         data_->fwd_profile_i ()->host);
+      }
+    else
+      {
+        key = &data_->profile.object_key;
+        server_addr.set (data_->profile.port,
+                         data_->profile.host);
+      }
+  }
     
   // Establish the connection and get back a Client_Connection_Handler
   if (con->connect (handler_, server_addr) == -1)
     // @@ Need to figure out which exception to set...this one is
     // pretty vague.
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+    env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
 
   // Use the ACE_SOCK_Stream from the Client_Connection_Handler for
   // communication inplace of the endpoint used below.
@@ -719,14 +720,14 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
     }
 
   if (stream.encode (&TC_opaque,
-		    key, 0, 
-		    env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+                     key, 0, 
+                     env) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_string, 
-		       &opname, 0, 
-		       env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+                        &opname, 0, 
+                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_Principal, 
-		       &anybody, 0, 
-		       env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+                        &anybody, 0, 
+                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
     return; // right after fault
   else
     return; // no fault reported
@@ -820,10 +821,10 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // not just the connection.  Without reinitializing, we'd give
       // false error reports to applications.
       {
-	ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, TAO_GIOP_SYSTEM_EXCEPTION));
+	ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
 
-	delete data_->fwd_profile;
-	data_->fwd_profile = 0;
+        IIOP::ProfileBody *old = data_->fwd_profile_i (0);
+	delete old;
 
         handler_->peer ().close ();
         handler_->in_use (CORBA::B_FALSE);
@@ -1059,10 +1060,10 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	// be recorded here. (This is just an optimization, and is not
 	// related to correctness.)
 
-	ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, TAO_GIOP_SYSTEM_EXCEPTION);
+	ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION);
 
-	delete data_->fwd_profile;
-	data_->fwd_profile = new IIOP::ProfileBody (obj2->profile);
+        IIOP::ProfileBody *old = data_->fwd_profile_i (new IIOP::ProfileBody (obj2->profile));
+        delete old;
 
 	obj2->Release ();
 
