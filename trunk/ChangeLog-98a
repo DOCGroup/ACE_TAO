@@ -1,3 +1,9 @@
+Sat Apr 11 22:20:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Thread_Manager_Test.cpp (main): Don't execute kill_grp if
+ 	  we are running on Win32 platforms.  thr_kill is not supported
+ 	  there.
+
 Sat Apr 11 20:00:12 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.39, released Sat Apr 11 20:00:12 1998.

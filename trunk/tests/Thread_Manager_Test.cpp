@@ -159,6 +159,8 @@ main (int, char *[])
 
 #if !defined (ACE_HAS_WTHREADS)
   ACE_ASSERT (thr_mgr->kill_grp (grp_id, SIGINT) != -1);
+#else
+  thr_mgr->kill_grp (grp_id, SIGINT);
 #endif /* ACE_HAS_WTHREADS */
 
   // Wait for 1 more second and then cancel all the threads.
