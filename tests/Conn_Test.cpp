@@ -525,11 +525,10 @@ server (void *arg)
 
   // Create a new <Svc_Handler> to consume the data.
       
-  for (int result; 
-       (result = acceptor->accept (svc_handler, 
-				   &cli_addr,
-				   options)) != -1
-	 ;)
+  int result;
+  while ((result = acceptor->accept (svc_handler, 
+                                     &cli_addr,
+                                     options)) != -1)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client %s connected from %d\n", 
 		  cli_addr.get_host_name (), 
@@ -624,29 +623,24 @@ main (int, char *[])
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Message_Queue<ACE_NULL_SYNCH>;
-template class ACE_Svc_Tuple<Svc_Handler>;
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<Svc_Handler> *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Svc_Handler> *, ACE_Null_Mutex>;
-template class ACE_Write_Guard<ACE_Null_Mutex>;
-template class ACE_Read_Guard<ACE_Null_Mutex>;
-template class ACE_Guard<ACE_Null_Mutex>;
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<Svc_Handler> *, ACE_RW_Mutex>;
-template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Svc_Handler> *, ACE_RW_Mutex>;
-template class ACE_Write_Guard<ACE_RW_Mutex>;
-template class ACE_Read_Guard<ACE_RW_Mutex>;
-template class ACE_Guard<ACE_RW_Mutex>;
 template class ACE_Concurrency_Strategy<Svc_Handler>;
+template class ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Creation_Strategy<Svc_Handler>;
+template class ACE_Guard<ACE_RW_Mutex>;
+template class ACE_Hash_Map_Entry<Hash_Addr, Svc_Handler *>;
+template class ACE_Hash_Map_Manager<Hash_Addr, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Svc_Handler> *, ACE_RW_Mutex>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<Svc_Handler> *, ACE_RW_Mutex>;
+template class ACE_Message_Queue<ACE_NULL_SYNCH>;
+template class ACE_Module<ACE_NULL_SYNCH>;
+template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Read_Guard<ACE_RW_Mutex>;
+template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Svc_Tuple<Svc_Handler>;
 template class ACE_TSS<ACE_Dynamic>;
 template class ACE_Task<ACE_NULL_SYNCH>;
-template class ACE_Module<ACE_NULL_SYNCH>;
 template class ACE_Thru_Task<ACE_NULL_SYNCH>;
-template class ACE_Hash_Map_Manager<Hash_Addr, Svc_Handler *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<Hash_Addr, Svc_Handler*>;
-template class ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Creation_Strategy<Svc_Handler>;
+template class ACE_Write_Guard<ACE_RW_Mutex>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
