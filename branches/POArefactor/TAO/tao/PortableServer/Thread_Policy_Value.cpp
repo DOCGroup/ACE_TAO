@@ -21,14 +21,14 @@ namespace TAO
   }
 
   PortableServer::ThreadPolicyValue
-  ORB_CTRL_Thread_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ORB_CTRL_Thread_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return PortableServer::ORB_CTRL_MODEL;
   }
 
   PortableServer::ThreadPolicyValue
-  SINGLE_THREAD_Thread_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  SINGLE_THREAD_Thread_Policy::policy_type (ACE_ENV_SINGLE_ARG_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return PortableServer::SINGLE_THREAD_MODEL;

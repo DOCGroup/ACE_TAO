@@ -63,7 +63,7 @@ namespace TAO
   }
 
   void
-  POA_ThreadPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL)
+  POA_ThreadPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
@@ -76,7 +76,7 @@ namespace TAO
   }
 
   CORBA::PolicyType
-  POA_ThreadPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL)
+  POA_ThreadPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return PortableServer::THREAD_POLICY_ID;
