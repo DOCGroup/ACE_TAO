@@ -348,7 +348,12 @@ ifneq ($(ace_with_x11),)
 endif # ace_with_x11
 
 
-ifdef exceptions
+ifeq ($(exceptions),)
+  ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
+    #### Disable the default exception handling of g++ >= 2.8.0.
+    CCFLAGS += -fno-exceptions -fcheck-new
+  endif # ! ACE_HAS_GNUG_PRE_2_8
+else  # exceptions
   CPPFLAGS += -DACE_HAS_EXCEPTIONS
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
     #### Enable exception handling with g++ < 2.8.0.  Not recommended,
@@ -361,12 +366,7 @@ ifdef exceptions
     CFLAGS += -Wno-uninitialized
   endif # g++ > 2.8.0
   endif # ! ACE_HAS_GNUG_PRE_2_8
-else  # ! exceptions
-  ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
-    #### Disable the default exception handling of g++ >= 2.8.0.
-    CCFLAGS += -fno-exceptions -fcheck-new
-  endif # ! ACE_HAS_GNUG_PRE_2_8
-endif # ! exceptions
+endif # exceptions
 
 ifeq ($(profile),0)
   override profile =
