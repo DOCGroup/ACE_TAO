@@ -32,7 +32,7 @@
           <componentinstantiation id="a_CAOC">
         </componentinstantiation>
       </homeplacement>
-     <destination>CAOCSHost</destination>
+     <destination>CAOCHost</destination>
     </processcollocation> 
 
   </partitioning>
