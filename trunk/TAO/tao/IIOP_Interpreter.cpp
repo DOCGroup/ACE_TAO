@@ -889,8 +889,10 @@ TAO_IIOP_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
     }
   else
     {
-      declare_entry (TAO_Unbounded_Sequence<CORBA::Long>, tk_sequence);
-      size = sizeof (TAO_Unbounded_Sequence<CORBA::Long>);
+      // Note: GHS can't handle TAO_Unbounded_Sequence<CORBA::Long> below.
+      // Instead, use TAO_Unbounded_String_Sequence.
+      declare_entry (TAO_Unbounded_String_Sequence, tk_sequence);
+      size = sizeof (TAO_Unbounded_String_Sequence);
       align_struct_tk_sequence align;
 #if defined (TAO_HAS_FIXED_BYTE_ALIGNMENT)
       alignment = 1;
