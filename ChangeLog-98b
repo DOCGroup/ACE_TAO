@@ -1,12 +1,12 @@
 Mon Jun 29 14:48:58 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (invoke): Added a return at the end to keep AIX
- 	  happy.  Thanks to CLahey@cccis.com for reporting this.
+        * ace/OS.cpp (invoke): Added a return at the end to keep AIX
+          happy.  Thanks to CLahey@cccis.com for reporting this.
 
 Mon Jun 29 11:37:28 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/ACE.cpp: Added a 'const' to initialized ASYS_TCHAR * - string
-	  literal conversion to char * is deprecated in C++.
+        * ace/ACE.cpp: Added a 'const' to initialized ASYS_TCHAR * - string
+          literal conversion to char * is deprecated in C++.
 
 Sun Jun 28 22:16:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -20,6 +20,10 @@ Sun Jun 28 22:16:51 1998  David L. Levine  <levine@cs.wustl.edu>
           references so that it will compile with aCC 1.07 on HPUX 10.20.
           Thanks to Avi Nash <anash@RedBrick.COM> for reporting this
           problem.
+
+        * acer/Message_Queue.{h,cpp} (ACE_Message_Queue_Vx:enqueue_head/tail):
+          implement these for VxWorks.  enqueue_head_i just calls
+          enqueue_tail_i.
 
 Sat Jun 27 18:13:05 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
