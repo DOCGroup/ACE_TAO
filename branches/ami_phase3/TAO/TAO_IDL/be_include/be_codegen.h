@@ -317,6 +317,22 @@ public:
     TAO_AMI_OPERATION_ARG_INVOKE_CS,         // Invoke arguments for AMI's sendc method.
 
     TAO_AMI_ARGUMENT_INVOKE_CS,
+    
+    TAO_AMI_HANDLER_SKELETON_CS,
+    
+    TAO_AMI_HANDLER_OPERATION_RETVAL_DECL_CS,        // Result argument declaration.
+
+    TAO_AMI_HANDLER_OPERATION_ARG_DECL_CS,           // Argument declartion.
+
+    TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS,             // State derived out of the above
+    
+    TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS,         // Argument list for the upcall
+                                                     // (only out and inout arguments)
+    TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS,              // State derived out of the above
+
+    TAO_AMI_HANDLER_OPERATION_RETVAL_DEMARSHAL_CS,   // Demarshalling the return value
+
+    TAO_AMI_HANDLER_OPERATION_ARG_DEMARSHAL_CS,      // Demarshalling the inout and out arguments
 
     TAO_AMI_HANDLER_SKELETON_CS,
 
