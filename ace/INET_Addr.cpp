@@ -132,11 +132,11 @@ ACE_INET_Addr::string_to_addr (const char s[])
 
   if (port_p == 0) // Assume it's a port number.
     {
-      if (ACE_OS::strspn (ip_addr, "1234567890") == ACE_OS::strlen (ip_addr))
-        { // port number
-          u_short port = (u_short) ACE_OS::atoi (ip_addr);
-          result = this->set (port, ACE_UINT32 (INADDR_ANY));
-        }
+      char *endp = 0;
+      u_short port = ACE_static_cast (u_short,
+                                      ACE_OS_String::strtol (ip_addr, &endp, 10));
+      if (port > 0 && *endp == '\0')
+        result = this->set (port, ACE_UINT32 (INADDR_ANY));
       else // port name
         result = this->set (ip_addr, ACE_UINT32 (INADDR_ANY));
     }
@@ -144,11 +144,11 @@ ACE_INET_Addr::string_to_addr (const char s[])
     {
       *port_p = '\0'; ++port_p; // skip over ':'
 
-      if (ACE_OS::strspn (port_p, "1234567890") == ACE_OS::strlen (port_p))
-        {
-          u_short port = (u_short) ACE_OS::atoi (port_p);
-          result = this->set (port, ip_addr);
-        }
+      char *endp = 0;
+      u_short port = ACE_static_cast (u_short,
+                                      ACE_OS_String::strtol (port_p, &endp, 10));
+      if (port > 0 && *endp == '\0')
+        result = this->set (port, ip_addr);
       else
         result = this->set (port_p, ip_addr);
     }
@@ -301,6 +301,47 @@ ACE_INET_Addr::set (u_short port_number,
 #endif /* ACE_HAS_IPV6 */
 }
 
+// Helper function to get a port number from a port name.
+
+static int get_port_number_from_name (const char port_name[],
+                                      const char protocol[])
+{
+  int port_number = 0;
+
+  // Maybe port_name is directly a port number?
+  char *endp = 0;
+  port_number = ACE_static_cast (int,
+                                 ACE_OS_String::strtol (port_name, &endp, 10));
+  if (port_number > 0 && *endp == '\0')
+    {
+      // Ok, port_name was really a number, and nothing else.  We
+      // store that value as the port number.  NOTE: this number must
+      // be returned in network byte order!
+      u_short n = ACE_static_cast (u_short, port_number);
+      n = htons (n);
+      return n;
+    }
+
+  // We try to resolve port number from its name.
+
+#if defined (VXWORKS) || defined (CHORUS) || defined (ACE_LACKS_GETSERVBYNAME)
+  port_number = -1;
+  ACE_UNUSED_ARG (host_name);
+  ACE_UNUSED_ARG (protocol);
+#else
+  port_number = 0;
+  servent sentry;
+  ACE_SERVENT_DATA buf;
+  servent *sp = ACE_OS::getservbyname_r (port_name,
+                                         protocol,
+                                         &sentry,
+                                         buf);
+  if (sp != 0)
+    port_number = sp->s_port;
+#endif /* VXWORKS */
+
+  return port_number;
+}
 
 // Initializes a ACE_INET_Addr from a <port_name> and the remote
 // <host_name>.
@@ -312,21 +353,12 @@ ACE_INET_Addr::set (const char port_name[],
 {
   ACE_TRACE ("ACE_INET_Addr::set");
 
-#if defined (VXWORKS) || defined (CHORUS) || defined (ACE_LACKS_GETSERVBYNAME)
-  ACE_UNUSED_ARG (port_name);
-  ACE_UNUSED_ARG (host_name);
-  ACE_UNUSED_ARG (protocol);
-  ACE_NOTSUP_RETURN (-1);
-#else
-  servent sentry;
-  ACE_SERVENT_DATA buf;
-
-  servent *sp = ACE_OS::getservbyname_r (port_name,
-                                         protocol,
-                                         &sentry,
-                                         buf);
-  if (sp == 0)
-    return -1;
+  int port_number = get_port_number_from_name (port_name, protocol);
+  if (port_number < 0)
+    {
+      ACE_UNUSED_ARG (host_name);
+      ACE_NOTSUP_RETURN (-1);
+    }
 
   int address_family = PF_UNSPEC;
 #  if defined (ACE_HAS_IPV6)
@@ -334,12 +366,12 @@ ACE_INET_Addr::set (const char port_name[],
     address_family = AF_INET6;
 #  endif /* ACE_HAS_IPV6 */
 
-  return this->set (sp->s_port, host_name, 0, address_family);
-#endif /* VXWORKS */
+  return this->set (ACE_static_cast (u_short, port_number),
+                    host_name, 0, address_family);
 }
 
-// Initializes a ACE_INET_Addr from a <port_name> and a 32 bit Internet
-// address.
+// Initializes a ACE_INET_Addr from a <port_name> and a 32 bit
+// Internet address.
 
 int
 ACE_INET_Addr::set (const char port_name[],
@@ -348,29 +380,19 @@ ACE_INET_Addr::set (const char port_name[],
 {
   ACE_TRACE ("ACE_INET_Addr::set");
 
-#if defined (VXWORKS) || defined (CHORUS) || defined (ACE_LACKS_GETSERVBYNAME)
-  ACE_UNUSED_ARG (port_name);
-  ACE_UNUSED_ARG (inet_address);
-  ACE_UNUSED_ARG (protocol);
-  ACE_NOTSUP_RETURN (-1);
-#else
-  servent sentry;
-  ACE_SERVENT_DATA buf;
+  int port_number = get_port_number_from_name (port_name, protocol);
+  if (port_number < 0)
+    {
+      ACE_UNUSED_ARG (inet_address);
+      ACE_NOTSUP_RETURN (-1);
+    }
 
-  servent *sp = ACE_OS::getservbyname_r (port_name,
-                                         protocol,
-                                         &sentry,
-                                         buf);
-  if (sp == 0)
-    return -1;
-  else
-    return this->set (sp->s_port, inet_address, 0);
-#endif /* VXWORKS */
+  return this->set (ACE_static_cast (u_short, port_number),
+                    inet_address, 0);
 }
 
 // Creates a ACE_INET_Addr from a PORT_NUMBER and the remote
 // HOST_NAME.
-
 
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                               const char host_name[],
@@ -479,7 +501,6 @@ ACE_INET_Addr::set_addr (void *addr, int /* len */)
 
 // Creates a ACE_INET_Addr from a sockaddr_in structure.
 
-
 ACE_INET_Addr::ACE_INET_Addr (const sockaddr_in *addr, int len)
   : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
 {
@@ -489,7 +510,6 @@ ACE_INET_Addr::ACE_INET_Addr (const sockaddr_in *addr, int len)
 }
 
 // Creates a ACE_INET_Addr from a PORT_NUMBER and an Internet address.
-
 
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                               ACE_UINT32 inet_address)
@@ -538,7 +558,6 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
 
 // Creates a ACE_INET_Addr from a PORT_NAME and an Internet address.
 
-
 ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
                               ACE_UINT32 inet_address,
                               const char protocol[])
@@ -582,10 +601,8 @@ ACE_INET_Addr::get_host_name (char hostname[],
       if (result < 0)
         {
           if (result == -2)
-            {
-              result = -1;
-              // We know that hostname is nul-terminated
-            }
+            // We know that hostname is nul-terminated
+            result = -1;
           else
             {
               //result == -1;
@@ -597,9 +614,7 @@ ACE_INET_Addr::get_host_name (char hostname[],
   else
     {
       if (len == 1)
-        {
-          hostname[0] = '\0';
-        }
+        hostname[0] = '\0';
       result = -1;
     }
 
