@@ -38,7 +38,9 @@ reverse_file (ACE_HANDLE file_handle,
               int size)
 {
   int count = 0;
-  int i = size;
+  // LynxOS 3.0.0/PowerPC needs the volatile qualifier, with -O2
+  // optimization enabled and without ACE_HAS_INLINE.
+  volatile int i = size;
   --i;
 
   if (array[i] == '\0')
