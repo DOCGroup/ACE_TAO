@@ -1,3 +1,8 @@
+Wed Nov 26 15:58:07 UTC 2003  Don Hinton  <dhinton@dresytems.com>
+
+        * ace/config-WinCE.h:
+          Added #define ACE_LACKS_SIGNAL_H and ACE_LACKS_SYS_STAT_H.
+
 Wed Nov 26 14:52:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/IPC_SAP/SSL_SAP/SSL-server.cpp:

@@ -262,7 +262,8 @@ typedef long off_t;
 // Not sure if this is true for all versions.  dhinton
 #define ACE_LACKS_ERRNO_H
 #define ACE_LACKS_TIME_H
-
-#include /**/ "ace/post.h"
+#define ACE_LACKS_SIGNAL_H
+#define ACE_LACKS_SYS_STAT_H
+include /**/ "ace/post.h"
 
 #endif  // ACE_CONFIG_WINCE_H
