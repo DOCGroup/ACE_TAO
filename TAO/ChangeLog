@@ -1,3 +1,25 @@
+Fri Mar  7 10:43:57 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/DynamicInterface/Request.h:
+
+	  Explicitly qualify the TAO_Dynamic_Adapter_Impl friend
+	  declaration with a global scope qualifier in an attempt to work
+	  around a problem where some compilers assume that the friend
+	  declaration refers to a class in the local scope or current
+	  namespace.
+
+	  Moved the CORBA_ORB_RequestSeq class into the CORBA namespace.
+
+	* tao/ORB.h:
+	* tao/ObjectIDList.h:
+	* tao/ObjectIDList.i:
+	* tao/ObjectIDList.cpp:
+	* tao/DynamicInterface/Request.cpp:
+
+	  Neglected to put the CORBA_ORB_ObjectIdList and
+	  CORBA_ORB_RequestSeq types into the CORBA namespace, as was
+	  done with all of the other types in the CORBA namespace.
+
 Fri Mar  7 09:34:06 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/be/be_visitor_operation/operation.cpp:

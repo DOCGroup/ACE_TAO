@@ -41,66 +41,68 @@
 // ObjectIdList
 // *************************************************************
 
-class TAO_Export CORBA_ORB_ObjectIdList : public
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_String_Sequence
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+namespace CORBA
 {
-public:
- CORBA_ORB_ObjectIdList (void); // default ctor
- CORBA_ORB_ObjectIdList (CORBA::ULong max); // uses max size
- CORBA_ORB_ObjectIdList (
-               CORBA::ULong max,
-               CORBA::ULong length,
-               char * *buffer,
-               CORBA::Boolean release=0
-               );
- CORBA_ORB_ObjectIdList (const CORBA_ORB_ObjectIdList &); // copy ctor
- ~CORBA_ORB_ObjectIdList (void); // dtor
+  class TAO_Export ORB_ObjectIdList : public
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  TAO_Unbounded_String_Sequence
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_String_Sequence
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+  {
+  public:
+    ORB_ObjectIdList (void); // default ctor
+    ORB_ObjectIdList (CORBA::ULong max); // uses max size
+    ORB_ObjectIdList (
+                            CORBA::ULong max,
+                            CORBA::ULong length,
+                            char * *buffer,
+                            CORBA::Boolean release=0
+                            );
+    ORB_ObjectIdList (const ORB_ObjectIdList &); // copy ctor
+    ~ORB_ObjectIdList (void); // dtor
 
-  static void _tao_any_destructor (void*);
-};
+    static void _tao_any_destructor (void*);
+  };
 
-typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;
+  typedef ORB_ObjectIdList *ORB_ObjectIdList_ptr;
 
 #endif /* end #if !defined */
 
 #if !defined (_CORBA_ORB_OBJECTIDLIST___VAR_CH_)
 #define _CORBA_ORB_OBJECTIDLIST___VAR_CH_
 
-// *************************************************************
-// class CORBA::ORB::ObjectIdList_var
-// *************************************************************
+  // *************************************************************
+  // class CORBA::ORB::ObjectIdList_var
+  // *************************************************************
 
-class TAO_Export CORBA_ORB_ObjectIdList_var
-{
-public:
-  CORBA_ORB_ObjectIdList_var (void); // default constructor
-  CORBA_ORB_ObjectIdList_var (CORBA_ORB_ObjectIdList *);
-  CORBA_ORB_ObjectIdList_var (const CORBA_ORB_ObjectIdList_var &); // copy constructor
-  ~CORBA_ORB_ObjectIdList_var (void); // destructor
+  class TAO_Export ORB_ObjectIdList_var
+  {
+  public:
+    ORB_ObjectIdList_var (void); // default constructor
+    ORB_ObjectIdList_var (ORB_ObjectIdList *);
+    ORB_ObjectIdList_var (const ORB_ObjectIdList_var &); // copy constructor
+    ~ORB_ObjectIdList_var (void); // destructor
 
-  CORBA_ORB_ObjectIdList_var &operator= (CORBA_ORB_ObjectIdList *);
-  CORBA_ORB_ObjectIdList_var &operator= (const CORBA_ORB_ObjectIdList_var &);
-  CORBA_ORB_ObjectIdList *operator-> (void);
-  const CORBA_ORB_ObjectIdList *operator-> (void) const;
+    ORB_ObjectIdList_var &operator= (ORB_ObjectIdList *);
+    ORB_ObjectIdList_var &operator= (const ORB_ObjectIdList_var &);
+    ORB_ObjectIdList *operator-> (void);
+    const ORB_ObjectIdList *operator-> (void) const;
 
-  operator const CORBA_ORB_ObjectIdList &() const;
-  operator CORBA_ORB_ObjectIdList &();
-  operator CORBA_ORB_ObjectIdList &() const;
-  TAO_SeqElem_String_Manager operator[] (CORBA::ULong slot);
-  // in, inout, out, _retn
-  const CORBA_ORB_ObjectIdList &in (void) const;
-  CORBA_ORB_ObjectIdList &inout (void);
-  CORBA_ORB_ObjectIdList *&out (void);
-  CORBA_ORB_ObjectIdList *_retn (void);
-  CORBA_ORB_ObjectIdList *ptr (void) const;
+    operator const ORB_ObjectIdList &() const;
+    operator ORB_ObjectIdList &();
+    operator ORB_ObjectIdList &() const;
+    TAO_SeqElem_String_Manager operator[] (CORBA::ULong slot);
+    // in, inout, out, _retn
+    const ORB_ObjectIdList &in (void) const;
+    ORB_ObjectIdList &inout (void);
+    ORB_ObjectIdList *&out (void);
+    ORB_ObjectIdList *_retn (void);
+    ORB_ObjectIdList *ptr (void) const;
 
-private:
-  CORBA_ORB_ObjectIdList *ptr_;
-};
+  private:
+    ORB_ObjectIdList *ptr_;
+  };
 
 #endif /* end #if !defined */
 
@@ -108,29 +110,30 @@ private:
 #if !defined (_CORBA_ORB_OBJECTIDLIST___OUT_CH_)
 #define _CORBA_ORB_OBJECTIDLIST___OUT_CH_
 
-class TAO_Export CORBA_ORB_ObjectIdList_out
-{
-public:
-  CORBA_ORB_ObjectIdList_out (CORBA_ORB_ObjectIdList *&);
-  CORBA_ORB_ObjectIdList_out (CORBA_ORB_ObjectIdList_var &);
-  CORBA_ORB_ObjectIdList_out (const CORBA_ORB_ObjectIdList_out &);
-  CORBA_ORB_ObjectIdList_out &operator= (const CORBA_ORB_ObjectIdList_out &);
-  CORBA_ORB_ObjectIdList_out &operator= (CORBA_ORB_ObjectIdList *);
-  operator CORBA_ORB_ObjectIdList *&();
-  CORBA_ORB_ObjectIdList *&ptr (void);
-  CORBA_ORB_ObjectIdList *operator-> (void);
-  TAO_SeqElem_String_Manager operator[] (CORBA::ULong slot);
+  class TAO_Export ORB_ObjectIdList_out
+  {
+  public:
+    ORB_ObjectIdList_out (ORB_ObjectIdList *&);
+    ORB_ObjectIdList_out (ORB_ObjectIdList_var &);
+    ORB_ObjectIdList_out (const ORB_ObjectIdList_out &);
+    ORB_ObjectIdList_out &operator= (const ORB_ObjectIdList_out &);
+    ORB_ObjectIdList_out &operator= (ORB_ObjectIdList *);
+    operator ORB_ObjectIdList *&();
+    ORB_ObjectIdList *&ptr (void);
+    ORB_ObjectIdList *operator-> (void);
+    TAO_SeqElem_String_Manager operator[] (CORBA::ULong slot);
 
-private:
-  CORBA_ORB_ObjectIdList *&ptr_;
-  // assignment from T_var not allowed
-  void operator= (const CORBA_ORB_ObjectIdList_var &);
-};
+  private:
+    ORB_ObjectIdList *&ptr_;
+    // assignment from T_var not allowed
+    void operator= (const ORB_ObjectIdList_var &);
+  };
 
 #endif /* end #if !defined */
+}  // End CORBA namespace.
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ORB_ObjectIdList &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ORB_ObjectIdList &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ORB_ObjectIdList &); //
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ORB_ObjectIdList &);
 
 #if defined (__ACE_INLINE__)
 #include "tao/ObjectIDList.i"
