@@ -170,7 +170,6 @@ ACE_Object_Manager_Base::ACE_Object_Manager_Base (void)
   , singleton_rw_locks_ (0)
 # endif /* ACE_MT_SAFE */
 {
-  // ::fprintf (stderr, "ACE_Object_Manager_Base, this: %p\n", this); // ????
 }
 
 int
@@ -221,8 +220,6 @@ ACE_Object_Manager::init (void)
       // ACE_Static_Object_Lock::instance () gets changed . . .
       ACE_NEW_RETURN (instance_->registered_objects_,
                       ACE_Unbounded_Queue<ACE_Cleanup_Info>, -1);
-      // ::fprintf (stderr, "init:  allocated registered_objects_ for"
-      //           " %p\n", instance_); // ????
 
       // Hooks for preallocated objects and arrays provided by application.
       ACE_APPLICATION_PREALLOCATED_OBJECT_DEFINITIONS
@@ -449,10 +446,6 @@ ACE_Object_Manager::at_exit_i (void *object,
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
     *instance_->internal_lock_, -1));
-
-  // ::fprintf (stderr, "at_exit_i, this: %p, registered_objects_ is %p\n",
-  //           this,
-  //           registered_objects_); // ????
 
   if (shutting_down ())
     {
