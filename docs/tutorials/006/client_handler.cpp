@@ -165,6 +165,23 @@ int Client_Handler::open (void *_acceptor)
 }
 
 /*
+   As mentioned in the header, the typical way to close an object in a threaded
+   context is to invoke it's close() method.  Since we already have a handle_close()
+   method built to cleanup after us, we'll just forward the request on to that
+   object.
+ */
+int Client_Handler::close(u_long flags)
+{
+	this->handle_close(ACE_INVALID_HANDLE,0);
+
+	/*
+	   After we've taken care of ourselves, call the baseclass method
+	   to do any other necessary cleanup.
+	 */
+	return inherited::close();
+}
+
+/*
    In the open() method, we registered with the reactor and requested to be
    notified when there is data to be read.  When the reactor sees that activity
    it will invoke this handle_input() method on us.  As I mentioned, the _handle
