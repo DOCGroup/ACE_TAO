@@ -156,9 +156,6 @@ TAO_ORB_Core::init (int& argc, char** argv)
 
   char *preconnections = 0;
 
-  // Should debugging be on (1) or off (0)?
-  int debugging = 0;
-
   while (arg_shifter.is_anything_left ())
     {
       char *current_arg = arg_shifter.get_current ();
@@ -187,7 +184,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
       else if (ACE_OS::strcmp (current_arg, "-ORBdebug") == 0)
         {
           // Turn on debugging
-          debugging = 1;
+          ACE::debug (1);
           TAO_orbdebug = 1;
           arg_shifter.consume_arg ();
         }
@@ -394,9 +391,6 @@ TAO_ORB_Core::init (int& argc, char** argv)
      else
        arg_shifter.ignore_arg ();
    }
-
-   if (debugging != 0)
-     svc_config_argv[svc_config_argc++] = CORBA::string_dup ("-d");
 
 
 #if defined (DEBUG)
