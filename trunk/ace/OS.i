@@ -1731,7 +1731,7 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
   return (::sm_delete (*m) == 0) ? 0 : -1;
 # elif defined (VXWORKS)
   return ::semDelete (*m) == OK ? 0 : -1;
-# endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+# endif /* Threads variety case */
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
@@ -1782,7 +1782,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
   return (::sm_p (*m, SM_WAIT, 0) == 0) ? 0 : -1;
 # elif defined (VXWORKS)
   return ::semTake (*m, WAIT_FOREVER) == OK ? 0 : -1;
-# endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+# endif /* Threads variety case */
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
@@ -1845,7 +1845,7 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_trylock (m), ace_result_),
                      int, -1);
-#   endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
 # elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_trylock (m), ace_result_), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
@@ -1903,7 +1903,7 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
   else
     // got the semaphore
     return 0;
-# endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+# endif /* Threads variety case */
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
@@ -1961,7 +1961,7 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_unlock (m), ace_result_),
                      int, -1);
-#   endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
 # elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_unlock (m), ace_result_), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
@@ -1982,7 +1982,7 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
   return (::sm_v (*m) == 0) ? 0 : -1;
 # elif defined (VXWORKS)
   return ::semGive (*m) == OK ? 0 : -1;
-# endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+# endif /* Threads variety case */
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
@@ -2010,7 +2010,7 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
   return 0;
 # elif defined (VXWORKS) || defined (ACE_PSOS)
   return mutex_init (m, type, name, arg);
-# endif /* ACE_HAS_STHREADS || ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+# endif /* Threads variety case */
 #else
   ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (type);
@@ -2032,7 +2032,7 @@ ACE_OS::thread_mutex_destroy (ACE_thread_mutex_t *m)
   return 0;
 # elif defined (VXWORKS) || defined (ACE_PSOS)
   return mutex_destroy (m);
-# endif /* ACE_HAS_STHREADS || ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+# endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
@@ -2051,7 +2051,7 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m)
   return 0;
 #elif defined (VXWORKS) || defined (ACE_PSOS)
   return mutex_lock (m);
-# endif /* ACE_HAS_STHREADS || ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+# endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
@@ -2081,7 +2081,7 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
 #   endif /* ACE_HAS_WIN32_TRYLOCK */
 # elif defined (VXWORKS) || defined (ACE_PSOS)
   return ACE_OS::mutex_trylock (m);
-# endif /* ACE_HAS_STHREADS || ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+# endif /* Threads variety case */
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
@@ -2100,7 +2100,7 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
   return 0;
 # elif defined (VXWORKS) || defined (ACE_PSOS)
   return ACE_OS::mutex_unlock (m);
-# endif /* ACE_HAS_STHREADS || ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+# endif /* Threads variety case */
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
@@ -2164,7 +2164,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
       && ::pthread_condattr_setkind_np (&attributes, type) == 0
 #       endif /* ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP */
       && ::pthread_cond_init (cv, &attributes) == 0
-#     endif /* ACE_HAS_DCETHREADS */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
       )
      result = 0;
   else
@@ -2308,7 +2308,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
               int, -1, result);
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6*/
   // We need to adjust this to make the POSIX and Solaris return
-  // values consistent.  EAGAIN is from DCE DRAFT4 (HP-UX 10.20 and
+  // values consistent.  EAGAIN is from Pthreads DRAFT4 (HP-UX 10.20 and
   // down).
   if (result == -1 && (errno == ETIMEDOUT || errno == EAGAIN))
     errno = ETIME;
@@ -3681,7 +3681,7 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
     ACE_OS::mutex_unlock (&rw->lock_);
 #   if defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
-#   endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
+#   endif /* defined (ACE_HAS_PTHREADS) */
   return 0;
 # endif /* ! ACE_LACKS_RWLOCK_T */
 #else
@@ -5323,7 +5323,7 @@ ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
 #else /* For both STHREADS and WTHREADS... */
   // Hum, Do we need to treat WTHREAD differently?
   return t1 == t2;
-#endif /* ACE_HAS_DCETHREADS */
+#endif /* Threads variety case */
 }
 
 ACE_INLINE int
@@ -5341,7 +5341,7 @@ ACE_OS::thr_cmp (ACE_hthread_t t1, ACE_hthread_t t2)
 #else /* For STHREADS, WTHREADS, and VXWORKS ... */
   // Hum, Do we need to treat WTHREAD differently?
   return t1 == t2;
-#endif /* ACE_HAS_DCETHREADS */
+#endif /* Threads variety case */
 }
 
 ACE_INLINE int
@@ -5857,7 +5857,7 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cancel (thr_id),
                                        ace_result_),
                      int, -1);
-#   endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
 # else /* Could be ACE_HAS_PTHREADS && ACE_LACKS_PTHREAD_CANCEL */
   ACE_UNUSED_ARG (thr_id);
   ACE_NOTSUP_RETURN (-1);
@@ -6187,7 +6187,7 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, policy, &param),
                                        result),
                      int, -1);
-#   endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
 # elif defined (ACE_HAS_WTHREADS)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (thr_id, prio),
                                           ace_result_),
