@@ -1,8 +1,14 @@
+Fri Sep  3 19:35:48 2004  Olli Savia  <ops@iki.fi>
+
+        * ace/Log_Msg.h:
+          Removed broken macro redefinition code to prevent people 
+          thinking that it actually works. Cleaned up #undef's. 
+
 Fri Sep  3 19:30:18 2004  Olli Savia  <ops@iki.fi>
 
         * ace/Global_Macros.h:
           LynxOS no longer needs special macro handling.
-        
+
 Fri Sep  3 19:13:24 2004  Olli Savia  <ops@iki.fi>
 
         * apps/drwho/File_Manager.cpp:
