@@ -15,6 +15,10 @@ Sat Mar 03 22:56:20 2001  Ossama Othman  <ossama@uci.edu>
 
 	  Corrected spelling.  "Caught," not "Catched!"
 
+	* tests/AMI_Timeouts/Makefile:
+
+	  Added missing dependencies.
+
 Sat Mar  3 16:31:31 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * docs/TAO-metrics.html:
