@@ -1,4 +1,4 @@
-$Id
+$Id:
 
 This is a simple chat application that uses the TAO CORBA ORB.
 It consists of a client and server programs.
@@ -6,8 +6,7 @@ It consists of a client and server programs.
 The server broadcasts messages from one client to all the clients registered with it.
 
 The client(s) register with a running server. It has a very simple user interface that accepts strings from the user and sends it across to the server.
-The client code also demonstrates the use of the ACE_Event_Handler class
-to accept user input events.
+The client code also demonstrates the use of the ACE_Event_Handlerclass to accept user input events.
 
 server:
 -------
@@ -19,6 +18,8 @@ Options:
 -o    Outputs the server ior to the file specified.
 
 On successfull initialization, the server displays a message that it is running and waits for clients to register with it.
+
+if the [-o <ior_output_file>] option is not specified on the command line then the the server will write the IOR of the server CORBA object to a default file - "chat.ior".
 
 client:
 -------
@@ -32,3 +33,5 @@ Options:
 
 The nickname specified by the user is displayed by the chat server to all the clients.
 To quit the chat, type "quit".
+
+if the [-f <ior_input_file>] option is not specified on the command line then the client will attempt to read the IOR of the server CORBA object from the default file - "chat.ior".
