@@ -1,3 +1,10 @@
+Wed Jan 23 09:30:19 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Current.pidl:
+
+	  Removed backslashes in comments.  Some compilers correctly flag
+	  them as potential problems through warnings.
+
 Wed Jan 23 09:25:31 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
