@@ -130,7 +130,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
           // It is true ssl profile, i.e., not just IIOP, so must have
           // ssl endpoints encoded.
 
-          if (this->decode_endpoints () == -1)
+          if (this->decode_tagged_endpoints () == -1)
             return -1;
 
           return 1;
@@ -268,7 +268,7 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_SSLIOP_Profile::decode_endpoints (void)
+TAO_SSLIOP_Profile::decode_tagged_endpoints (void)
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_SSL_ENDPOINTS;
