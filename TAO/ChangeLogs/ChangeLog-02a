@@ -1,3 +1,9 @@
+Thu Mar  2 11:58:56 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+	  In the extraction operator, removed an extra
+	  assignment of the rhs to 0.
+
 Thu Mar  2 09:24:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Object.h:
