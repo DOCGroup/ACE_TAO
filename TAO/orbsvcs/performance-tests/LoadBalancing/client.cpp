@@ -131,7 +131,7 @@ main (int argc, char *argv[])
 
       ACE_Time_Value tv (0, ACE_static_cast (const long, usecs));
 
-      const timespec ts = tv;
+      // const timespec ts = tv;
 
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
       for (int i = 0; i < niterations; ++i)
