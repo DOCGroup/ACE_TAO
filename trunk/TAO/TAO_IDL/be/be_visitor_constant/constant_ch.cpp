@@ -93,7 +93,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         {
           if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
             {
-              *os << "extern ";
+              *os << "TAO_NAMESPACE_STORAGE_CLASS ";
             }
           else
             {
