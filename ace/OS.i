@@ -6377,7 +6377,7 @@ ACE_OS::t_free (char *ptr, int struct_type)
 {
   // ACE_TRACE ("ACE_OS::t_free");
 #if defined (ACE_HAS_TLI)
-  if (ptr != 0)
+  if (ptr == 0)
     return 0;
   ACE_OSCALL_RETURN (::t_free (ptr, struct_type), int, -1);
 #else
