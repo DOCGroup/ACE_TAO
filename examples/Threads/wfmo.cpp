@@ -37,7 +37,9 @@ int
 WFMO_Test::open (void *arg)
 {
   int thread_count = int (arg);
-  ACE_ASSERT (this->activate (0, thread_count) != -1);
+  int result = this->activate (0, thread_count);
+
+  ACE_ASSERT (result != -1);
   return 0;
 }
 
@@ -48,26 +50,29 @@ WFMO_Test::svc (void)
     {
       int result = ::WaitForMultipleObjects (2, this->sema_handles_, 
 					     FALSE, INFINITE);
-
       if (result == WAIT_OBJECT_0)
-	// Signal the other semaphore just to see if we can get
-	// another thread to wakeup.
-	ACE_ASSERT (ACE_OS::sema_post (&sema_handles_[1]) != -1);
+        {
+          // Signal the other semaphore just to see if we can get
+          // another thread to wakeup.
+          result = ACE_OS::sema_post (&sema_handles_[1]);
+          ACE_ASSERT (result != -1);
+        }
       else if (result == WAIT_OBJECT_0 + 1)
 	;
       else
 	{
-	  ACE_DEBUG ((LM_DEBUG, "Error in WaitForMultipleObejcts\n"));
+	  ACE_ERROR ((LM_ERROR, "Error in WaitForMultipleObejcts\n"));
 	  ACE_OS::exit (0);
 	}
 
-      // semaphore_count_ will be displayed by the "main" thread.  It's
-      // value must be 2.  Note that although this is a shared
+      // semaphore_count_ will be displayed by the "main" thread.
+      // It's value must be 2.  Note that although this is a shared
       // resource it's not protected via a mutex because the ++
       // operation on Intel is atomic.
 
       semaphore_count_++;
-      ACE_DEBUG ((LM_DEBUG, "(%t) thread has been signaled.\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) thread has been signaled.\n"));
 
       // Yield this thread so that the other one(s) have a chance to
       // run.
@@ -88,16 +93,18 @@ main (int argc, char *argv[])
   wfmo_test.open ((void *) thread_count);
 
   // Initialize the semaphores.
-  ACE_ASSERT (ACE_OS::sema_init (&wfmo_test.sema_handles_[0], thread_count + 5)
-	      != -1);
-  ACE_ASSERT (ACE_OS::sema_init (&wfmo_test.sema_handles_[1], thread_count + 5)
-	      != -1);
+  int result = ACE_OS::sema_init (&wfmo_test.sema_handles_[0], thread_count + 5);
+  ACE_ASSERT (result != -1);
+
+  result = ACE_OS::sema_init (&wfmo_test.sema_handles_[1], thread_count + 5);
+  ACE_ASSERT (result != -1);
 
   for (int i = 0; i < MAX_ITERATIONS; i++)
     {
       wfmo_test.semaphore_count_ = 0;
 
-      ACE_ASSERT (ACE_OS::sema_post (&wfmo_test.sema_handles_[0]) != -1);
+      result = ACE_OS::sema_post (&wfmo_test.sema_handles_[0]);
+      ACE_ASSERT (result != -1);
 
       // No real synchronization here. Just sleep enough so that at
       // least one (or two threads) run as a result of the semaphore.
