@@ -32,6 +32,9 @@
 #include "tao/Typecode_typesC.h"
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
+#include "tao/Object_Argument_T.h"
+#include "tao/Arg_Traits_T.h"
+
 
 namespace CORBA
 {
@@ -502,6 +505,32 @@ namespace TAO
   TAO_Export CORBA::TCKind unaliased_kind (CORBA::TypeCode_ptr tc
                                            ACE_ENV_ARG_DECL);
 
+}
+
+// ---------------------------------------------------------------
+
+namespace TAO
+{
+  // Used in generated code if CORBA::TypeCode is an argument or
+  // return type.
+  template<>
+  class TAO_Export Arg_Traits<CORBA::TypeCode>
+    : public Object_Arg_Traits_T<CORBA::TypeCode_ptr,
+                                 CORBA::TypeCode_var,
+                                 CORBA::TypeCode_out,
+                                 TAO::Objref_Traits<CORBA::TypeCode> >
+  {
+  };
+
+  template<>
+  struct TAO_Export Objref_Traits< ::CORBA::TypeCode>
+  {
+    static ::CORBA::TypeCode_ptr duplicate (::CORBA::TypeCode_ptr);
+    static void release (::CORBA::TypeCode_ptr);
+    static ::CORBA::TypeCode_ptr nil (void);
+    static CORBA::Boolean marshal (::CORBA::TypeCode_ptr p,
+                                   TAO_OutputCDR & cdr);
+  };
 }
 
 
