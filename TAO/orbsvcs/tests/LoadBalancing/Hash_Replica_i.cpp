@@ -21,6 +21,7 @@ Hash_Replica_Impl::do_hash (const char *str,
   if (this->reject_requests_)
     {
       this->control_->request_rejected (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
       return 0;
     }
 
