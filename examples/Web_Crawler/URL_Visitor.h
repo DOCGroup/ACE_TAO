@@ -28,6 +28,7 @@
 #include "ace/Caching_Strategies_T.h"
 #include "ace/Cached_Connect_Strategy_T.h"
 #include "Options.h"
+#include "ace/Pair_T.h"
 
 // Forward declarations.
 class URL_Validation_Visitor;
@@ -224,6 +225,7 @@ protected:
   // Make the appropriate <URL_Visitation_Strategy_Factory>.
 };
 
+
 class URL_Validation_Visitor : public URL_Visitor
 {
   // = TITLE
@@ -269,24 +271,31 @@ public:
                                   ACE_Pair<Svc_Handler *, int>,\
                                   ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, \
                                   ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,\
-                                 ACE_Null_Mutex> 
-    CONNECTION_HASH_MAP;
+                                  ACE_Null_Mutex> 
+          CONNECTION_HASH_MAP;
   typedef ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,\
                                   ACE_Pair<Svc_Handler *, int>,\
                                   ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, \
                                   ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,\
-                                 ACE_Null_Mutex> 
-    CONNECTION_HASH_MAP_ITERATOR;
+                                  ACE_Null_Mutex> 
+          CONNECTION_HASH_MAP_ITERATOR;
   typedef ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,\
                                   ACE_Pair<Svc_Handler *, int>,\
                                   ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, \
                                   ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,\
-                                 ACE_Null_Mutex> 
-    CONNECTION_HASH_MAP_REVERSE_ITERATOR;
-  typedef ACE_LRU_Caching_Strategy<CONNECTION_HASH_MAP>
-         LRU;
+                                  ACE_Null_Mutex> 
+          CONNECTION_HASH_MAP_REVERSE_ITERATOR;
+  typedef ACE_Svc_Caching_Strategy_Utility <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, \
+                                            ACE_Pair<Svc_Handler *, int>, \
+                                            CONNECTION_HASH_MAP,int > 
+          SVC_CACHING_STRATEGY_UTILITY;
+  typedef ACE_LRU_Caching_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,\
+                                   ACE_Pair<Svc_Handler *, int>,\
+                                   CONNECTION_HASH_MAP, int,\
+                                   SVC_CACHING_STRATEGY_UTILITY >
+          LRU;
   typedef ACE_Cached_Connect_Strategy_Ex<Svc_Handler,ACE_SOCK_CONNECTOR, LRU, ACE_SYNCH_NULL_MUTEX>
-         CACHED_CONNECT_STRATEGY;
+          CACHED_CONNECT_STRATEGY;
 
 protected:
   virtual ~URL_Validation_Visitor (void);
@@ -310,6 +319,7 @@ protected:
 
   STRAT_CONNECTOR *strat_connector_;  
 };
+
 
 class URL_Download_Visitor : public URL_Visitor
 {
@@ -365,6 +375,5 @@ public:
 private:
   T *t_;
 };
-
 
 #endif /* _URL_VISITOR_H */
