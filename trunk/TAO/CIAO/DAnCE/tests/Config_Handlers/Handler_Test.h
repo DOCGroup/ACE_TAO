@@ -42,9 +42,7 @@ using xercesc::DOMNodeFilter;
 template <typename HANDLER, typename DATA>
 int run_test (int argc, ACE_TCHAR *argv[], void (HANDLER::*func) (DATA&));
 
-#include "Handler_Test.i"
 
 #endif // ACE_HAS_BROKEN_NESTED_TEMPLATES
 
 #endif // HANDLER_TEST_H
-
