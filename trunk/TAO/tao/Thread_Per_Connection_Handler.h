@@ -23,9 +23,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 
 class TAO_Connection_Handler;
+class TAO_ORB_Core;
 
 typedef ACE_Task<ACE_NULL_SYNCH> TAO_TPC_BASE;
 
@@ -42,7 +43,8 @@ typedef ACE_Task<ACE_NULL_SYNCH> TAO_TPC_BASE;
 class TAO_Export TAO_Thread_Per_Connection_Handler : public TAO_TPC_BASE
 {
 public:
-  TAO_Thread_Per_Connection_Handler (TAO_Connection_Handler *ch);
+  TAO_Thread_Per_Connection_Handler (TAO_Connection_Handler *ch,
+                                     TAO_ORB_Core *oc);
 
   ~TAO_Thread_Per_Connection_Handler (void);
 
