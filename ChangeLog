@@ -1,17 +1,37 @@
+Wed Jan  7 12:13:12 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/orbsvcs_output.mpb:
+        * bin/MakeProjectCreator/config/orbsvcsexe.mpb:
+        * bin/MakeProjectCreator/config/tao_output.mpb:
+        * bin/MakeProjectCreator/config/taodefaults.mpb:
+        * bin/MakeProjectCreator/config/taoexe.mpb:
+        * bin/MakeProjectCreator/config/taolib.mpb:
+
+          Factored staticflags, includes and libpaths common to TAO based   
+          projects into a taodefaults base project and modified other base  
+          projects in accordance.
+
+        * bin/MakeProjectCreator/config/orbsvcslib.mpb:
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb: 
+        * bin/MakeProjectCreator/config/taolib_with_idl.mpb:
+
+          Factored common idlflags and after settings into a taoidldefaults 
+          base project and modified other base projects in accordance.
+
 Wed Jan  7 17:50:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* apps/gperf/tests/c++-res.exp:
-	* apps/gperf/tests/c++.gperf:
-	* apps/gperf/tests/cpp-res.exp:
-	* apps/gperf/tests/cpp.gperf:
-	  Removed the c++ files and added them with cpp again. The BCB makefile
-	  environment can't handle files with a + in the name. Because we are
-	  using MPC this test is now also build with Borland.
+        * apps/gperf/tests/c++-res.exp:
+        * apps/gperf/tests/c++.gperf:
+        * apps/gperf/tests/cpp-res.exp:
+        * apps/gperf/tests/cpp.gperf:
+          Removed the c++ files and added them with cpp again. The BCB makefile
+          environment can't handle files with a + in the name. Because we are
+          using MPC this test is now also build with Borland.
 
-	* apps/gperf/tests/Makefile:
-	* apps/gperf/tests/Makefile.am:
-	* apps/gperf/tests/tests.mpc:
-	  Updated these files to reflect the change above.
+        * apps/gperf/tests/Makefile:
+        * apps/gperf/tests/Makefile.am:
+        * apps/gperf/tests/tests.mpc:
+          Updated these files to reflect the change above.
 
 Wed Jan  7 10:34:29 2004  Chad Elliott  <elliott_c@ociweb.com>
 
