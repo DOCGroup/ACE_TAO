@@ -58,8 +58,6 @@ test_i::method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 
-static int servant_activation_succeeded = 0;
-
 class Object_Activator : public ACE_Task_Base
 {
 public:
@@ -163,11 +161,11 @@ Servant_Activator::incarnate (const PortableServer::ObjectId &,
   this->id_ =
     this->poa_->activate_object (servant
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   this->poa_->deactivate_object (this->id_.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   int result =
     global_object_activator->activate ();
