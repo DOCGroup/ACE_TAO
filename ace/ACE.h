@@ -28,7 +28,6 @@ class ACE_Event_Handler;
 class ACE_INET_Addr;
 
 class ACE_Export ACE
-{
   // = TITLE
   //     Contains value added ACE methods that extend the behavior
   //     of the UNIX and Win32 OS calls.
@@ -38,6 +37,9 @@ class ACE_Export ACE
   //     single place in order to manage the namespace better.  These
   //     methods are put here rather than in ACE_OS in order to
   //     separate concerns.
+{
+  ACE_CLASS_IS_NAMESPACE (ACE);
+  
 public:
   // = ACE version information.
   static u_int major_version ();
@@ -519,9 +521,6 @@ public:
   // Computes the base 2 logarithm of <num>.
 
 private:
-  ACE (void);
-  // Ensure we can't define an instance of this class...
-
   static int enter_recv_timedwait (ACE_HANDLE handle,
                                    const ACE_Time_Value *timeout,
                                    int &val);
