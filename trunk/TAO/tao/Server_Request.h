@@ -171,6 +171,9 @@ public:
 
   virtual TAO_OutputCDR &outgoing (void) = 0;
   // Retrieve the outgoing stream.
+
+  virtual CORBA::Boolean response_expected (void) const = 0;
+  // is the response expected
 };
 
 class TAO_Export IIOP_ServerRequest : public CORBA_ServerRequest
@@ -244,6 +247,9 @@ public:
 
   virtual TAO_OutputCDR &outgoing (void);
   // Retrieve the outgoing stream.
+
+  virtual CORBA::Boolean response_expected (void) const;
+  // is the response expected
 
   // = Stuff required for memory management and COM
   ULONG  AddRef (void);

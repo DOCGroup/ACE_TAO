@@ -46,3 +46,9 @@ IIOP_ServerRequest::oa (void)
 {
   return poa_;
 }
+
+ACE_INLINE CORBA::Boolean
+IIOP_ServerRequest::response_expected (void) const
+{
+  return this->response_expected_;
+}
