@@ -1584,6 +1584,21 @@ ACE_Unbounded_Set<T>::remove (const T &item)
     }
 }
 
+template <class T> ACE_Unbounded_Set_Iterator<T>
+ACE_Unbounded_Set<T>::begin (void)
+{
+  // ACE_TRACE ("ACE_Unbounded_Set<T>::begin");
+  return ACE_Unbounded_Set_Iterator<T> (*this);
+}
+
+template <class T> ACE_Unbounded_Set_Iterator<T>
+ACE_Unbounded_Set<T>::end (void)
+{
+  // ACE_TRACE ("ACE_Unbounded_Set<T>::end");
+  return ACE_Unbounded_Set_Iterator<T> (*this, 1);
+}
+
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set_Iterator)
 
 template <class T> void
@@ -1593,11 +1608,13 @@ ACE_Unbounded_Set_Iterator<T>::dump (void) const
 }
 
 template <class T>
-ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s)
+ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, int end)
     : current_ (s.head_->next_),
-      set_ (s)
+      set_ (&s)
 {
 // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator");
+  if (end != 0)
+    this->current_ = s.head_;
 }
 
 template <class T> int
@@ -1605,7 +1622,7 @@ ACE_Unbounded_Set_Iterator<T>::advance (void)
 {
 // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::advance");
   this->current_ = this->current_->next_;
-  return this->current_ != this->set_.head_;
+  return this->current_ != this->set_->head_;
 }
 
 template <class T> int
@@ -1613,20 +1630,62 @@ ACE_Unbounded_Set_Iterator<T>::done (void) const
 {
   ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::done");
 
-  return this->current_ == this->set_.head_;
+  return this->current_ == this->set_->head_;
 }
 
 template <class T> int
 ACE_Unbounded_Set_Iterator<T>::next (T *&item)
 {
 // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::next");
-  if (this->current_ == this->set_.head_)
+  if (this->current_ == this->set_->head_)
     return 0;
   else
     {
       item = &this->current_->item_;
       return 1;
     }
+}
+
+template <class T> ACE_Unbounded_Set_Iterator<T>
+ACE_Unbounded_Set_Iterator<T>::operator++ (void)
+{
+  //ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::operator++ ()");
+  ACE_Unbounded_Set_Iterator<T> retv (*this);
+
+  this->advance ();
+  return retv;
+}
+
+template <class T> ACE_Unbounded_Set_Iterator<T>&
+ACE_Unbounded_Set_Iterator<T>::operator++ (int)
+{
+  // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::operator++ (int)");
+  this->advance ();
+  return *this;
+}
+
+template <class T> T&
+ACE_Unbounded_Set_Iterator<T>::operator* (void)
+{
+  //ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::operator*");
+  T *retv;
+
+  ACE_ASSERT (this->next (retv) != 0);
+  return *retv;
+}
+
+template <class T> int
+ACE_Unbounded_Set_Iterator<T>::operator== (const ACE_Unbounded_Set_Iterator<T> &rhs) const
+{
+  //ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::operator==");
+  return (this->set_ == rhs.set_ && this->current_ == rhs.current_);
+}
+
+template <class T> int
+ACE_Unbounded_Set_Iterator<T>::operator!= (const ACE_Unbounded_Set_Iterator<T> &rhs) const
+{
+  //ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::operator!=");
+  return (this->set_ != rhs.set_ || this->current_ != rhs.current_);
 }
 
 template <class T> void
