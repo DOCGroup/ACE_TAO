@@ -26,7 +26,7 @@ if (PerlACE::waitforfile_timed ($iorfile, 250) == -1) {
 }
 
 local $start_time = time();
-local $max_running_time = 300;
+local $max_running_time = 60;
 local $elapsed = time() - $start_time;
 my $p = $SV->{'PROCESS'};
 
@@ -56,7 +56,7 @@ if (!$server_died) {
   my $shutdown = $SH->Spawn();
   $SH->WaitKill(10) unless $shutdown < 0;
 
-  $server = $SV->WaitKill (5);
+  $server = $SV->WaitKill (30);
 }
 
 if ($server != 0) {
