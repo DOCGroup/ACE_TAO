@@ -1,0 +1,23 @@
+#
+# Makefile for building the Naming Service executable
+# 
+
+NAME = Naming_Service
+
+OBJFILES = \
+        $(OBJDIR)\Naming_Service.obj
+        
+CFLAGS = -I..\..\.. -I..\.. -I.. \
+        $(ACE_CFLAGS) $(TAO_CFLAGS) $(ORBSVCS_CFLAGS)
+        
+LIBFILES = \
+        $(ACE_ROOT)\bin\ace$(LIB_DECORATOR).lib \
+        $(ACE_ROOT)\bin\tao$(LIB_DECORATOR).lib \
+        $(ACE_ROOT)\bin\orbsvcs$(LIB_DECORATOR).lib
+
+CPPDIR = .
+BINDIR = $(ACE_ROOT)\bin
+BASE_OBJDIR = .\bor\obj
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+

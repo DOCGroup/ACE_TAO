@@ -1,0 +1,47 @@
+
+#
+# Makefile for building ACE and TAO 
+#
+
+!ifdef DEBUG
+DEBUG_FLAG = -DDEBUG 
+!endif
+
+!ifdef STATIC
+STATIC_FLAG = -DSTATIC
+!endif
+
+!ifdef PASCAL
+PASCAL_FLAG = -DPASCAL
+!endif
+
+FLAGS = $(DEBUG_FLAG) $(STATIC_FLAG) $(PASCAL_FLAG)
+
+ace_tao:
+	cd $(ACE_ROOT)\ace
+	$(MAKE) -f Makefile.bor $(FLAGS)
+	cd $(ACE_ROOT)\TAO\tao
+	$(MAKE) -f Makefile.bor $(FLAGS)
+	cd $(ACE_ROOT)\TAO\tao_idl
+	$(MAKE) -f Makefile.bor $(FLAGS)
+	cd $(ACE_ROOT)\apps\gperf\src
+	$(MAKE) -f Makefile.bor $(FLAGS)
+	cd $(ACE_ROOT)\TAO\orbsvcs\orbsvcs
+	$(MAKE) -f Makefile.bor $(FLAGS)
+	cd $(ACE_ROOT)\TAO\orbsvcs\Naming_Service
+	$(MAKE) -f Makefile.bor $(FLAGS)
+
+examples:
+	cd $(ACE_ROOT)\TAO\examples\simple\echo
+	$(MAKE) -f Makefile.bor $(FLAGS)
+	cd $(ACE_ROOT)\TAO\examples\simple\chat
+	$(MAKE) -f Makefile.bor $(FLAGS)
+	cd $(ACE_ROOT)\TAO\examples\simple\bank
+	$(MAKE) -f Makefile.bor $(FLAGS)
+	cd $(ACE_ROOT)\TAO\examples\simple\grid
+	$(MAKE) -f Makefile.bor $(FLAGS)
+	cd $(ACE_ROOT)\TAO\examples\simple\time
+	$(MAKE) -f Makefile.bor $(FLAGS)
+	cd $(ACE_ROOT)\TAO\examples\Callback_Quoter
+	$(MAKE) -f Makefile.bor $(FLAGS)
+
