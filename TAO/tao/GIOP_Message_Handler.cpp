@@ -335,6 +335,7 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
 
           return this->message_state_.is_complete (this->current_buffer_);
         }
+#if 0
       // @@ This is the ultimate hack for SHMIOP and related protocols
       // @@ that uses the reactor for signalling rather than for data
       // @@ transfer. This hack was done in the at the last minute for
@@ -342,13 +343,30 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
       // @@ next beta - Bala
       else if (transport->reactor_signalling ())
         {
+          if (TAO_debug_level > 4)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - "
+                          "TAO_GIOP_Message_Handler::is_message_ready, "
+                          " disgusting reactor signalling  hack!!!!\n"));
+            }
+
           if (this->read_messages (transport) == -1)
             return -1;
+
+          if (TAO_debug_level > 4)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - "
+                          "TAO_GIOP_Message_Handler::is_message_ready, "
+                          " read_messages called\n"));
+            }
 
           // By now we should be having the whole message read in.
           this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
           return this->message_state_.is_complete (this->current_buffer_);
         }
+#endif /* 0 */
     }
 
   // Just return allowing the reactor to call us back to get the rest
@@ -486,10 +504,7 @@ TAO_GIOP_Message_Handler::read_messages (TAO_Transport *transport)
       return -1;
     }
 
-  // Now we have a succesful read. First adjust the write pointer
-  this->current_buffer_.wr_ptr (n);
-
-  if (TAO_debug_level == 2)
+  if (TAO_debug_level == 5)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - GIOP_Message_Handler::read_messages"
@@ -509,6 +524,9 @@ TAO_GIOP_Message_Handler::read_messages (TAO_Transport *transport)
         }
       ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes \n", n));
     }
+
+  // Now we have a succesful read. First adjust the write pointer
+  this->current_buffer_.wr_ptr (n);
 
   // Success
   return 1;

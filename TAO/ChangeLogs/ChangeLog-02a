@@ -1,3 +1,17 @@
+Tue Apr 24 22:58:00 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/GIOP_Message_Handler.cpp:
+          Enable message dumping only at debug level 5, same as the output
+          data path.
+          Dump the messages *before* updating wr_ptr(), otherwise the dump
+          makes no sense.
+          Removed Bala's hack made on Mon Feb 19 12:11:23 2001, this was
+          supposed to support SHMIOP, but with the changes on the sending
+          side it actually break things.
+          After this change the IDL_Cubit regression test works, but there
+          are some scenarios that may not, more detailed documentation in
+          http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=884
+
 Tue Apr 24 19:42:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/BiDir_GIOP/diffs/BiDirPolicyC.cpp.diff:
@@ -61,7 +75,7 @@ Tue Apr 24 18:35:31 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Removed unnecessary 'extern' from the declaration of the
           global hooks for defined interfaces, and uninlined the
-          implementation of those hooks. Egcs, for one, can't 
+          implementation of those hooks. Egcs, for one, can't
           handle an inline function that isn't declared in the
           same file. The other compilers probably disable inlining
           in such a case anyway.
