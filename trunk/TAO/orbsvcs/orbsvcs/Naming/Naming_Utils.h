@@ -32,11 +32,9 @@ class TAO_Persistent_Context_Index;
 class TAO_ORBSVCS_Export TAO_Naming_Server
 {
   // = TITLE
-  //
   //    Defines a wrapper class that holds the root Naming Context.
   //
   // = DESCRIPTION
-  //
   //    This class either finds an existing Naming Service (if the
   //    <resolve_for_existing_naming_service> flag is set) or creates
   //    one (if <resolve_for_existing_naming_service> flag isn't set or
