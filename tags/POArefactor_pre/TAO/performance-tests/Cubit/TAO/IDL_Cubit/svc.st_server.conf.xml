@@ -1,0 +1,10 @@
+<?xml version='1.0'?>
+<!-- Converted from ./performance-tests/Cubit/TAO/IDL_Cubit/svc.st_server.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!--  $Id$ -->
+ <!--  -->
+ <!--  Please see $TAO_ROOT/docs/Options.html for details on these options. -->
+ <!--  -->
+ <static id="Advanced_Resource_Factory" params="-ORBReactorType select_st  -ORBInputCDRAllocator null"/>
+ <static id="Server_Strategy_Factory" params="-ORBPOALock null -ORBAllowReactivationOfSystemids 0"/>
+</ACE_Svc_Conf>
