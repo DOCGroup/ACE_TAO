@@ -1,3 +1,8 @@
+Sat May  6 11:04:08 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* rules.tao.GNU: Removed the use of (BIN_TRUE).  Using "true"
+	  works just fine.  Thanks to David for pointing this out.
+
 Sat May  6 16:44:46 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Any.cpp:
