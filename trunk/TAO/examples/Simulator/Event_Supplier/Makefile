@@ -26,7 +26,7 @@ BIN2 = Event_Sup Logging_Sup DualEC_Sup Event_Con
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
-TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Event,$(findstring Event,$(TAO_ORBSVCS)))
   ifeq (Sched,$(findstring Sched,$(TAO_ORBSVCS)))
     ifeq (Time,$(findstring Time,$(TAO_ORBSVCS)))

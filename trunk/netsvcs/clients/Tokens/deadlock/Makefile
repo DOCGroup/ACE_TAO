@@ -18,7 +18,7 @@ BIN2    = deadlock_detection_test
 
 #### If the ACE library wasn't built with sufficient components, don't
 #### try to build here.
-ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
+ACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --ace)
 ifeq (Token,$(findstring Token,$(ACE_BUILD_COMPONENTS)))
   BIN = $(BIN2)
 endif # Token
