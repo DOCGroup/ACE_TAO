@@ -5,6 +5,7 @@
 #include "tao/Follower.h"
 #include "tao/Follower_Auto_Ptr.h"
 #include "tao/LF_Event.h"
+#include "tao/LF_Event_Binder.h"
 
 #include "tao/Transport.h"
 
@@ -204,7 +205,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
         // Bound the follower and the LF_Event, this is important to
         // get a signal when the event terminates
-        event->bind (follower.get ());
+        TAO_LF_Event_Binder event_binder (event, follower.get ());
 
         while (event->keep_waiting () &&
                this->leader_available ())
@@ -323,7 +324,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
         // FALLTHROUGH
         // We only get here if we woke up but the reply is not
         // complete yet, time to assume the leader role....
-        // i.e. ACE_ASSERT (reply_received == 0);
+        // i.e. ACE_ASSERT (event->successful () == 0);
       }
 
     // = Leader Code.

@@ -62,6 +62,9 @@ public:
    */
   int bind (TAO_Follower *follower);
 
+  /// Unbind the follower
+  int unbind (void);
+
   //@{
   /** @name State management
    *

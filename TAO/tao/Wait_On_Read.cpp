@@ -23,7 +23,7 @@ int
 TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
                         TAO_Synch_Reply_Dispatcher &rd)
 {
-  rd.reply_received () = 0;
+  rd.state_changed (TAO_LF_Event::LFS_ACTIVE);
 
   // Do the same sort of looping that is done in other wait
   // strategies.
@@ -38,7 +38,7 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
 
       // If we got our reply, no need to run the loop any
       // further.
-      if (rd.reply_received ())
+      if (!rd.keep_waiting ())
         break;
 
       // @@ We are not checking for timeouts here...
@@ -48,12 +48,18 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
         break;
     }
 
-  if (rd.reply_received () == -1 || retval == -1)
+  if (rd.error_detected () == -1 || retval == -1)
     {
       this->transport_->close_connection ();
     }
 
-  return (rd.reply_received () == 1 ? 0 : rd.reply_received ());
+  if (rd.successful ())
+    return 0;
+
+  if (rd.error_detected ())
+    return -1;
+
+  return 1;
 }
 
 // No-op.

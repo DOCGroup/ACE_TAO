@@ -471,6 +471,10 @@ SOURCE=.\LF_Event.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Event_Binder.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Event_Loop_Thread_Helper.h
 # End Source File
 # Begin Source File
@@ -1171,6 +1175,10 @@ SOURCE=.\LF_Event.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Event_Binder.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Event_Loop_Thread_Helper.inl
 # End Source File
 # Begin Source File
@@ -1820,6 +1828,10 @@ SOURCE=.\Leader_Follower.cpp
 # Begin Source File
 
 SOURCE=.\LF_Event.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Binder.cpp
 # End Source File
 # Begin Source File
 

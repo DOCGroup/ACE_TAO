@@ -14,7 +14,6 @@ TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
     IOP::ServiceContextList &sc
   )
   : reply_service_info_ (sc),
-    reply_received_ (0),
     orb_core_ (orb_core),
     db_ (sizeof buf_,
          ACE_Message_Block::MB_DATA,
@@ -43,12 +42,6 @@ TAO_InputCDR &
 TAO_Synch_Reply_Dispatcher::reply_cdr (void)
 {
   return this->reply_cdr_;
-}
-
-int&
-TAO_Synch_Reply_Dispatcher::reply_received (void)
-{
-  return this->reply_received_;
 }
 
 int

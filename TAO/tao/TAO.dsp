@@ -527,6 +527,10 @@ SOURCE=.\Leader_Follower_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LF_Event_Binder.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LF_Event_Loop_Thread_Helper.cpp
 # End Source File
 # Begin Source File
@@ -1304,6 +1308,14 @@ SOURCE=.\Leader_Follower.h
 # Begin Source File
 
 SOURCE=.\Leader_Follower_Flushing_Strategy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Binder.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Binder.inl
 # End Source File
 # Begin Source File
 

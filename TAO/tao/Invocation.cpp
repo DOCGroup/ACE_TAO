@@ -804,7 +804,7 @@ TAO_GIOP_Twoway_Invocation::start (CORBA_Environment &ACE_TRY_ENV)
   TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->rd_.reply_received () = 0;
+  this->rd_.state_changed (TAO_LF_Event::LFS_ACTIVE);
 }
 
 // Send request, block until any reply comes back, and unmarshal reply
@@ -984,7 +984,7 @@ TAO_GIOP_Locate_Request_Invocation::start (CORBA_Environment &ACE_TRY_ENV)
   this->transport_->generate_locate_request (this->target_spec_,
                                              this->op_details_,
                                              this->out_stream_);
-  this->rd_.reply_received () = 0;
+  this->rd_.state_changed (TAO_LF_Event::LFS_ACTIVE);
 }
 
 // Send request, block until any reply comes back.
