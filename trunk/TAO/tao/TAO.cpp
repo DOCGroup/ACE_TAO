@@ -206,7 +206,7 @@ TAO_ORB_Manager::run (CORBA_Environment &env,
 
   if (this->orb_->run (tv) == -1)
     ACE_ERROR_RETURN ( (LM_ERROR,
-                       "%p\n",
+                       "(%P|%t) TAO_ORB_Manager %p\n",
                        "run"),
                        -1);
 
