@@ -39,7 +39,7 @@ TAO_TypeCodeFactory_i::create_struct_tc (
     {
       cdr << members[index].name;
 
-      cdr << members[index].type;
+      cdr << members[index].type.in ();
     }
 
   CORBA::TypeCode_ptr struct_typecode = 
@@ -153,7 +153,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
       cdr << members[index].name;
 
-      cdr << members[index].type;
+      cdr << members[index].type.in ();
     }
 
   CORBA::TypeCode_ptr union_typecode = 
@@ -276,7 +276,7 @@ TAO_TypeCodeFactory_i::create_exception_tc (
 
       cdr << struct_member.name;
 
-      cdr << struct_member.type;
+      cdr << struct_member.type.in ();
     }
 
   CORBA::TypeCode_ptr exception_typecode = 
