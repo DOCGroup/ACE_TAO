@@ -22,6 +22,7 @@ CIAO::NodeApplication_Impl::finishLaunch (
 {
   ACE_TRY
     {
+      ACE_DEBUG ((LM_DEBUG, "i am here to finish launch\n"));
       const CORBA::ULong length = providedReference.length ();
 
       // For every connection struct we finish the connection.
@@ -190,9 +191,13 @@ CIAO::NodeApplication_Impl::install (
 
      for (CORBA::ULong i = 0; i < len; ++i)
        {
+
+         ACE_DEBUG ((LM_DEBUG, "about to install home\n"));
          home = this->install_home (impl_infos[i]
                                     ACE_ENV_ARG_PARAMETER);
          ACE_TRY_CHECK;
+
+         ACE_DEBUG ((LM_DEBUG, "installed the  home\n"));
 
          Components::KeylessCCMHome_var kh =
            Components::KeylessCCMHome::_narrow (home.in ()
@@ -204,8 +209,11 @@ CIAO::NodeApplication_Impl::install (
 
          // @@ Note, here we are missing the CreateFailure.
          // Sometime I will come back to add exception rethrow.
+         ACE_DEBUG ((LM_DEBUG, "creating the component\n"));
          comp = kh->create_component (ACE_ENV_SINGLE_ARG_PARAMETER);
          ACE_TRY_CHECK;
+
+         ACE_DEBUG ((LM_DEBUG, "created the component\n"));
 
          if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
                                         Components::CCMObject::_duplicate (comp.in ())))
@@ -216,6 +224,8 @@ CIAO::NodeApplication_Impl::install (
            = impl_infos[i].component_instance_name.in ();
 
          (*retv)[i].component_ref = Components::CCMObject::_duplicate (comp.in ());
+
+          ACE_DEBUG ((LM_DEBUG, "duplicated the component\n"));
 
          // Deal with Component instance related Properties.
          // Now I am only concerning about the COMPOENTIOR and here is only

@@ -79,8 +79,6 @@ namespace CIAO
     <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, 
      EXEC, EXEC_VAR, COMP>::create (PortableServer::ObjectId &oid)
   {
-    ACE_DEBUG ((LM_DEBUG, 
-                "i am being asked to create a new servant here\n\n"));
     CIAO::Swap_Exec_var swap_exec = CIAO::Swap_Exec::_narrow
        (this->executor_.in ()
         ACE_ENV_ARG_PARAMETER);
@@ -97,8 +95,6 @@ namespace CIAO
                                    this->home_servant_,
                                    this->container_);
 
-    ACE_DEBUG ((LM_DEBUG, "after calling the session context\n"));
-
     if (component_removed_ == 1)
       {
         svt->ciao_preactivate ();
@@ -106,6 +102,7 @@ namespace CIAO
         svt->ciao_postactivate ();
         component_removed_ = 0;
       }
+
     PortableServer::ServantBase_var safe (svt);
     this->servant_map_.bind (oid, svt);
     return safe._retn ();
