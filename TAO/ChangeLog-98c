@@ -1,3 +1,7 @@
+Sat Oct 25 00:05:05 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.15, released Sat Oct 25 00:05:05 1997.
+
 Fri Oct 24 19:18:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao: Changed remaining uses of BOA to POA.
