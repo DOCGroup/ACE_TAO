@@ -1292,10 +1292,12 @@ Using the Cygnus tools, this approach should work:
 INSTALL=
 </pre><p>
   <li>Create an <code>ACE_wrappers/ace/config.h</code> file that looks
-    something like:
+    something like the following.  tao_idl should be built to not support
+    native exception handling, because that's not available on VxWorks.
 <pre>
 #if defined (__BORLANDC__) || defined (_MSC_VER)
 # include &lt;ace/config-win32.h&gt;
+# undef ACE_HAS_EXCEPTIONS
 #else
 # include &lt;ace/config-vxworks.h&gt;
 #endif

@@ -1,11 +1,19 @@
+Sun Jul 04 18:57:13 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: when building tao_idl on NT to be
+          used for generating code for VxWorks, build without
+          ACE_HAS_EXCEPTIONS.  Otherwise, TAO_IDLFLAGS must
+          be overridden to be null instead of -Ge 1.  Thanks to
+          Carlos for this suggestion.
+
 Sun Jul  4 17:06:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Notify_Performance_Test.cpp,
-	  tests/Message_Block_Test.cpp,
-	  tests/Priority_Task_Test.cpp,
-	  tests/Thread_Pool_Reactor_Test.cpp: Fixed a couple of
-	  warnings related to initializing char *'s with const char *'s.
-  	  Thanks to SunC++ 5.0 for reporting this.
+        * tests/Notify_Performance_Test.cpp,
+          tests/Message_Block_Test.cpp,
+          tests/Priority_Task_Test.cpp,
+          tests/Thread_Pool_Reactor_Test.cpp: Fixed a couple of
+          warnings related to initializing char *'s with const char *'s.
+          Thanks to SunC++ 5.0 for reporting this.
 
 Sun Jul 04 16:07:33 1999  David L. Levine  <levine@cs.wustl.edu>
 

@@ -1,3 +1,7 @@
+Sun Jul 04 18:57:13 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO-INSTALL.html: added link to ACE-INSTALL#VxWorks/NT.
+
 Sun Jul 04 15:41:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * many Makefiles: call ace_components via sh, instead of
