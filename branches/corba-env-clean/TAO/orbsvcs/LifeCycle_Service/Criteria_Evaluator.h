@@ -28,16 +28,16 @@ public:
   Criteria_Evaluator (const CosLifeCycle::Criteria &criteria);
   ~Criteria_Evaluator (void);
 
-  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getInitialization (CORBA::Environment &);
+  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getInitialization (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
-  char * getFilter (CORBA::Environment &);
+  char * getFilter (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
-  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getLogicalLocation (CORBA::Environment &)
+  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getLogicalLocation (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
       return 0;
     }
 
-  char * getPreferences (CORBA::Environment &)
+  char * getPreferences (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
       return 0;
     }

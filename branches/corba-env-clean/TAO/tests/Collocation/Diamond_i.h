@@ -17,7 +17,7 @@ public:
   ~Top_i (void);
   // Ctor and dtor.
 
-  virtual char * shape (CORBA::Environment &)
+  virtual char * shape (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the shape of this object (interface.)
 };
@@ -29,11 +29,11 @@ public:
   ~Left_i (void);
   // Ctor, dtor.
 
-  virtual char * shape (CORBA::Environment &)
+  virtual char * shape (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the shape of this object (interface.)
 
-  virtual char * color (CORBA::Environment &)
+  virtual char * color (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the color of this object (interface.)
 };
@@ -45,15 +45,15 @@ public:
   ~Right_i (void);
   // Ctor, dtor.
 
-  virtual char * shape (CORBA::Environment &)
+  virtual char * shape (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the shape of this object (interface.)
 
-  virtual char * color (CORBA::Environment &)
+  virtual char * color (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the color of this object (interface.)
 
-  virtual CORBA::Long width (CORBA::Environment &)
+  virtual CORBA::Long width (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the width of the stuff.
 };
@@ -65,19 +65,19 @@ public:
   ~Buttom_i (void);
   // Ctor, dtor.
 
-  virtual char * shape (CORBA::Environment &)
+  virtual char * shape (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the shape of this object (interface.)
 
-  virtual char * color (CORBA::Environment &)
+  virtual char * color (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the color of this object (interface.)
 
-  virtual CORBA::Long width (CORBA::Environment &)
+  virtual CORBA::Long width (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the width of the stuff.
 
-  virtual char * name (CORBA::Environment &)
+  virtual char * name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the name of the object.
 };

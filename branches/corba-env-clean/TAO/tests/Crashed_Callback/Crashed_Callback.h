@@ -25,13 +25,13 @@ public:
   Crashed_Callback (void);
 
   // = The skeleton methods
-  virtual CORBA::Boolean are_you_there (CORBA::Environment &ACE_TRY_ENV)
+  virtual CORBA::Boolean are_you_there (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void crash_now_please (CORBA::Environment &ACE_TRY_ENV)
+  virtual void crash_now_please (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void test_oneway (CORBA::Environment &ACE_TRY_ENV)
+  virtual void test_oneway (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

@@ -24,11 +24,9 @@ INS_i::orb (CORBA::ORB_ptr o)
 }
 
 char *
-INS_i::test_ins (CORBA::Environment &env)
+INS_i::test_ins (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 ACE_THROW_SPEC (( CORBA::SystemException ))
 {
-  ACE_UNUSED_ARG (env);
-
   ACE_DEBUG ((LM_DEBUG,
               "Inside Operation\n"));
   return CORBA::string_dup ("Success");

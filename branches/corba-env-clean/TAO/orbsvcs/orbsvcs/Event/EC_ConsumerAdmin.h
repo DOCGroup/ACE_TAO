@@ -60,11 +60,11 @@ public:
 
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier (CORBA::Environment &)
+      obtain_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
           ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The PortableServer::ServantBase methods
-  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
+  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
   /// Store the default POA.

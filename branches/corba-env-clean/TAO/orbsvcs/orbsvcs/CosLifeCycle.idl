@@ -124,3 +124,4 @@ typedef sequence <NameValuePair> Criteria;
 */
 
 #endif /* TAO_LIFECYCLE_IDL */
+

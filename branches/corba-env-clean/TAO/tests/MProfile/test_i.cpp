@@ -17,7 +17,7 @@ Simple_Server_i::Simple_Server_i (void)
 }
 
 CORBA::Long
-Simple_Server_i::remote_call (CORBA::Environment &)
+Simple_Server_i::remote_call (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -28,7 +28,7 @@ Simple_Server_i::remote_call (CORBA::Environment &)
 
 
 void
-Simple_Server_i::shutdown (CORBA::Environment&)
+Simple_Server_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);

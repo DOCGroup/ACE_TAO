@@ -25,7 +25,6 @@ void
 Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
 
   CORBA::ULong s_count =
     this->starting_interception_point_count_.value ();

@@ -72,7 +72,7 @@ Consumer_Signal_Handler::quit_on_signal (void)
 	  ACE_DEBUG ((LM_DEBUG,
 		      "Consumer Unregistered\n"));
         }
-      this->consumer_handler_->consumer_servant_->shutdown (ACE_TRY_ENV);
+      this->consumer_handler_->consumer_servant_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -20,7 +20,11 @@ TAO_ESF_Connected_Command<Target,Object>::execute (void* arg)
   if (arg != 0)
     env = ACE_static_cast(CORBA::Environment*, arg);
 
-  this->target_->connected_i (this->object_, *env);
+  this->target_->connected_i (this->object_
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
+                              , *env
+#endif
+                              );
   return 0;
 }
 
@@ -33,7 +37,11 @@ TAO_ESF_Reconnected_Command<Target,Object>::execute (void* arg)
   if (arg != 0)
     env = ACE_static_cast(CORBA::Environment*, arg);
 
-  this->target_->reconnected_i (this->object_, *env);
+  this->target_->reconnected_i (this->object_
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
+                              , *env
+#endif
+                              );
   return 0;
 }
 
@@ -46,7 +54,11 @@ TAO_ESF_Disconnected_Command<Target,Object>::execute (void* arg)
   if (arg != 0)
     env = ACE_static_cast(CORBA::Environment*, arg);
 
-  this->target_->disconnected_i (this->object_, *env);
+  this->target_->disconnected_i (this->object_
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
+                              , *env
+#endif
+                              );
   return 0;
 }
 
@@ -59,7 +71,11 @@ TAO_ESF_Shutdown_Command<Target>::execute (void* arg)
   if (arg != 0)
     env = ACE_static_cast(CORBA::Environment*, arg);
 
-  this->target_->shutdown_i (*env);
+  this->target_->shutdown_i (
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
+                             *env
+#endif
+                              );
   return 0;
 }
 

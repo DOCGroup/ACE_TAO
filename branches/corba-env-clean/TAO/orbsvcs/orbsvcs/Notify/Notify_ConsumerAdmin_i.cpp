@@ -54,8 +54,6 @@ TAO_Notify_ConsumerAdmin_i::~TAO_Notify_ConsumerAdmin_i (void)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,"in CA %d dtor\n", this->my_id_));
 
-   TAO_ENV_DECLARE_NEW_ENV;
-
    delete this->lock_;
 
    delete this->event_listener_list_;

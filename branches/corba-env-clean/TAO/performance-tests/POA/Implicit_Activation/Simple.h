@@ -26,7 +26,7 @@ public:
 
   // = The skeleton methods
 
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV)
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

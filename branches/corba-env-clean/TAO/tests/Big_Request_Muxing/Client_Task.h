@@ -32,7 +32,7 @@ public:
 private:
   /// Make sure that all threads have connections available to
   /// workaround bug 189
-  void validate_connection (CORBA::Environment &ACE_TRY_ENV);
+  void validate_connection (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
   /// Reference to the test interface

@@ -34,8 +34,6 @@ TAO_Notify_SupplierAdmin_i::~TAO_Notify_SupplierAdmin_i ()
     ACE_DEBUG ((LM_DEBUG,"in SA dtor\n"));
   // Cleanup all resources..
 
-  TAO_ENV_DECLARE_NEW_ENV;
-
   delete this->lock_;
 
   this->event_channel_->supplier_admin_destroyed (this->my_id_);

@@ -61,9 +61,6 @@ private:
   /// Number of airplanes to query for.
   size_t loop_count_;
 
-  /// Environment variable.
-  CORBA::Environment env_;
-
   /// Server object ptr.
   Paper_Airplane_Server_ptr server_;
 

@@ -45,7 +45,7 @@ class TAO_Notify_Export TAO_Notify_Listener_Filter_Eval_Command : public TAO_Not
 
   ~TAO_Notify_Listener_Filter_Eval_Command();
 
-  virtual int execute (CORBA::Environment& ACE_TRY_ENV);
+  virtual int execute (TAO_ENV_SINGLE_ARG_DECL);
   // Command callback
 
  protected:

@@ -89,7 +89,7 @@ TAO_Notify_EventChannelFactory_i::event_channel_destroyed (CosNotifyChannelAdmin
 }
 
 void TAO_Notify_EventChannelFactory_i::shutdown (TAO_ENV_SINGLE_ARG_DECL
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_LACKS_SUPPRESS_ENV)
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
                                                  ,
 #endif
                                                 CORBA::Boolean destroy_children)
