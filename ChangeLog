@@ -1,6 +1,26 @@
 Mon Aug 16 11:16:02 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/ACE.h:
+
+	  Moved remaining ACE namespace variables out of header and into
+	  the '.cpp' file.  They should not be accessed/modified
+	  directly.
+
+	* ace/ACE.inl (hex_chars_, nibble2hex):
+
+	  No need to declare/define the hex_chars_ constant variable in
+	  the ACE namespace.  Define it as a static constant in the
+	  nibble2hex() function instead, the only place it is used.
+
+	* ace/ACE.cpp (debug):
+
+	  Unlined these functions.  They generally aren't performance
+	  critical, and doing so allows us to remove the ACE::debug_
+	  internal variable to the '.cpp' file.
+
+Mon Aug 16 11:16:02 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/ACE.h:
 	* ace/ACE.cpp:
 
 	  Added remaining missing DLL export qualifiers.  Fixes
