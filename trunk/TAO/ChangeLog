@@ -1,6 +1,14 @@
+Sat Aug  3 18:20:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/examples/PSS/Client.dsp:
+	* orbsvcs/examples/PSS/Server.dsp:
+	* orbsvcs/examples/PSS/PSS.dsw: Removed these files from the
+	  repo. The Win32 builds had problems groking these files and were
+	  giving a tough time to the builds. 
+
 Sat Aug  3 14:34:59 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Makefile: The director Smart_Proxies had two
+	* tests/Makefile: The directory Smart_Proxies had two
 	  entries. Removed one of them.
 
 Sat Aug 03 12:42:43 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
