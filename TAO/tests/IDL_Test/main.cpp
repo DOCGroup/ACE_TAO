@@ -20,6 +20,7 @@
 
 #include "ace/Log_Msg.h"
 #include "pragmaS.h"
+#include "unionC.h"
 
 class hello_i : public virtual POA_hello
 {
@@ -42,10 +43,16 @@ class aloha_i : public virtual POA_aloha
 };
 
 int 
-main (int, char *[])
+main (int argc , char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Test of pragma prefix handling.
+
       CORBA::ULong error_count = 0;
 
       CORBA::Object_var obj;
@@ -130,6 +137,27 @@ main (int, char *[])
                  "Check compiler output for build warnings\n",
                  error_count));
 
+      // Test of duplicate case labels.
+
+      Field field;
+      field.value.strValue (CORBA::string_dup ("duplicate case label test string"));
+      field.value._d (FTYPE_VARCHAR);
+      CORBA::Any any1;
+      any1 <<= field;
+      Field *outfield;
+      any1 >>= outfield;
+      const char *str = outfield->value.strValue ();
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n%s\n",
+                  str));
+
+      field.value.defstr (CORBA::string_dup ("default case test string"));
+      any1 <<= field;
+      any1 >>= outfield;
+      str = outfield->value.defstr ();
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s\n",
+                  str));
     }
   ACE_CATCHANY
     {
