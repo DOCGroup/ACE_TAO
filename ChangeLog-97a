@@ -2,6 +2,8 @@ Tue May 06 11:31:49 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.cpp (mktime): added time_t cast of -1 (error) return to avoid compiler warning.
 
+	* ace/config-vxworks-ghs-1.8.h: added ACE_LACKS_SIGNED_CHAR.
+
 Tue May  6 07:39:25 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp (main): 
