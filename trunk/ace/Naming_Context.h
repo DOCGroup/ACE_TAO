@@ -275,6 +275,10 @@ public:
   void database (const char *db);
   const char *database (void);
 
+  // = Set/Get base address of the underlying allocator
+  void base_address (char *address);
+  char *base_address (void);
+
   int debug (void);
   // Return debug status
 
@@ -302,6 +306,9 @@ private:
 
   const char *database_;
   // Name of the database that stores the name/value/type bindings.
+
+  char *base_address_;
+  // Base address of the underlying allocator
 
   ACE_Naming_Context::Context_Scope_Type context_;
   // The context in which the naming database will be created.

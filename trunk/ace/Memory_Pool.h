@@ -27,13 +27,28 @@
 #endif /* !ACE_WIN32 */
 
 #if !defined (ACE_LACKS_SBRK)
+class ACE_Export ACE_Sbrk_Memory_Pool_Options
+  // = TITLE
+  //     Helper class for constructor options.
+  //
+  // = DESCRIPTION
+  //     This should be a nested class, but that breaks too many 
+  //     compilers.
+{};
+
 class ACE_Export ACE_Sbrk_Memory_Pool
   // = TITLE
   //     Make a memory pool that is based on <sbrk(2)>.
 {
 public:
+  typedef ACE_Sbrk_Memory_Pool_Options OPTIONS;
+
   ACE_Sbrk_Memory_Pool (const char *pool_name = 0);
   // Initialization constructor.
+
+  ACE_Sbrk_Memory_Pool (const OPTIONS &options,
+			const char *pool_name = 0);
+  // Initialize the pool via the options.
 
   // = Implementor operations.
   virtual void *init_acquire (size_t nbytes, 
@@ -81,6 +96,15 @@ protected:
 #endif /* !ACE_LACKS_SBRK */
 
 #if !defined (ACE_LACKS_SYSV_SHMEM)
+class ACE_Export ACE_Shared_Memory_Pool_Options
+  // = TITLE
+  //     Helper class for constructor options.
+  //
+  // = DESCRIPTION
+  //     This should be a nested class, but that breaks too many 
+  //     compilers.
+{};
+
 class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
   // = TITLE
   //     Make a memory pool that is based on System V shared memory
@@ -88,8 +112,14 @@ class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
   //     shared between processes.
 {
 public:
+  typedef ACE_Shared_Memory_Pool_Options OPTIONS;
+
   ACE_Shared_Memory_Pool (const char *pool_name = ACE_ITOA (ACE_DEFAULT_SHM_KEY));
   // Initialization constructor.
+
+  ACE_Shared_Memory_Pool (const OPTIONS &options,
+			  const char *pool_name = ACE_ITOA (ACE_DEFAULT_SHM_KEY));
+  // Initialize the pool via the options.
 
   virtual void *init_acquire (size_t nbytes, 
 			      size_t &rounded_bytes, 
@@ -161,6 +191,15 @@ protected:
 };
 #endif /* !ACE_LACKS_SYSV_SHMEM */
 
+class ACE_Export ACE_Local_Memory_Pool_Options
+  // = TITLE
+  //     Helper class for constructor options.
+  //
+  // = DESCRIPTION
+  //     This should be a nested class, but that breaks too many 
+  //     compilers.
+{};
+
 class ACE_Export ACE_Local_Memory_Pool
   // = TITLE
   //   Make a memory pool that is based on C++ new/delete.  This is
@@ -168,8 +207,14 @@ class ACE_Export ACE_Local_Memory_Pool
   //   into the ACE Malloc scheme...
 {
 public:
+  typedef ACE_Local_Memory_Pool_Options OPTIONS;
+
   ACE_Local_Memory_Pool (const char *pool_name = 0);
   // Initialization constructor.
+
+  ACE_Local_Memory_Pool (const OPTIONS &options,
+			 const char *pool_name = 0);
+  // Initialize the pool via the options.
 
   virtual void *init_acquire (size_t nbytes, 
 			      size_t &rounded_bytes, 
@@ -215,18 +260,42 @@ protected:
   // appropriate chunksize.
 };
 
+class ACE_Export ACE_MMAP_Memory_Pool_Options
+  // = TITLE
+  //     Helper class for constructor options.
+  //
+  // = DESCRIPTION
+  //     This should be a nested class, but that breaks too many 
+  //     compilers.
+{
+public:
+  ACE_MMAP_Memory_Pool_Options (char *base_addr = ACE_DEFAULT_BASE_ADDR,
+				int use_fixed_addr = 1,
+				int write_each_page = 1)
+    : base_addr_ (base_addr),
+      use_fixed_addr_ (use_fixed_addr),
+      write_each_page_ (write_each_page) {}
+
+  int use_fixed_addr_;
+  int write_each_page_;
+  char *base_addr_;
+};
+
 class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
   // = TITLE
   //     Make a memory pool that is based on <mmap(2)>.  This
   //     implementation allows memory to be shared between processes.
 {
 public:
+  typedef ACE_MMAP_Memory_Pool_Options OPTIONS;
+
   // = Initialization and termination methods.
-  ACE_MMAP_Memory_Pool (const char *pool_name = 0,
-			int use_fixed_addr = 1, 
-			int write_each_page = 1,
-			char *base_addr = ACE_DEFAULT_BASE_ADDR);
-  // Initialize the pool.
+  ACE_MMAP_Memory_Pool (const char *pool_name = 0);
+  // Default constructor.
+
+  ACE_MMAP_Memory_Pool (const OPTIONS &options,
+			const char *pool_name = 0);
+  // Initialize the pool via the options.
 
   virtual void *init_acquire (size_t nbytes, 
 			      size_t &rounded_bytes, 
@@ -328,11 +397,12 @@ class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
 {
 public:
   // = Initialization and termination methods.
-  ACE_Lite_MMAP_Memory_Pool (const char *pool_name = 0,
-			      int use_fixed_addr = 1, 
-			      int write_each_page = 1,
-			      char *base_addr = ACE_DEFAULT_BASE_ADDR);
-  // Initialize the pool.
+  ACE_Lite_MMAP_Memory_Pool (const char *pool_name = 0);
+  // Default constructor.
+
+  ACE_Lite_MMAP_Memory_Pool (const OPTIONS &options,
+			     const char *pool_name = 0);
+  // Initialize the pool via the options.
 
   int sync (ssize_t len = -1, int flags = MS_SYNC);
   // Overwrite the default sync behavior with no-op

@@ -32,11 +32,21 @@ class ACE_Allocator_Adapter : public ACE_Allocator
 public:
   // Trait.
   typedef MALLOC ALLOCATOR;
+  typedef ALLOCATOR::MEMORY_POOL_OPTIONS MEMORY_POOL_OPTIONS;
 
   // = Initialization.
-  ACE_Allocator_Adapter (const char *pool_name = ACE_DEFAULT_MUTEX);
+  ACE_Allocator_Adapter (const char *pool_name = 0);
+  // Constructor.
   ACE_Allocator_Adapter (const char *pool_name,
 			 const char *lock_name);
+  // Constructor.
+  ACE_Allocator_Adapter (const MEMORY_POOL_OPTIONS &options,
+			 const char *pool_name,
+			 const char *lock_name);
+  // Constructor.
+
+  ACE_Allocator_Adapter (const MEMORY_POOL_OPTIONS &options,
+			 const char *pool_name = 0);
   // Constructor.
 
   // = Memory Management
@@ -121,10 +131,10 @@ private:
 };
 
 // Forward declaration.
-template <class MEM_POOL, class LOCK>
+template <ACE_MEM_POOL_1, class LOCK>
 class ACE_Malloc_Iterator;
 
-template <class MEM_POOL, class LOCK>
+template <ACE_MEM_POOL_1, class LOCK>
 class ACE_Malloc
   // = TITLE
   //     Define a C++ class that uses parameterized types to provide
@@ -136,9 +146,10 @@ class ACE_Malloc
   //     MEMORY_POOL strategies and different types of LOCK
   //     strategies.
 {
-friend class ACE_Malloc_Iterator<MEM_POOL, LOCK>;
+friend class ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>;
 public:
-  typedef MEM_POOL MEMORY_POOL;
+  typedef ACE_MEM_POOL MEMORY_POOL;
+  typedef ACE_MEM_POOL_OPTIONS MEMORY_POOL_OPTIONS;
   
   // = Initialization and termination methods.
   ACE_Malloc (const char *pool_name = 0);
@@ -153,6 +164,21 @@ public:
   // initialize the memory pool, and uses <lock_name> to automatically
   // extract out the name used for the underlying lock name (if
   // necessary).
+
+  ACE_Malloc (const ACE_MEM_POOL_OPTIONS &options,
+	      const char *pool_name,
+	      const char *lock_name);
+  // Initialize ACE_Malloc.  This constructor passes <pool_name> to
+  // initialize the memory pool, and uses <lock_name> to automatically
+  // extract out the name used for the underlying lock name (if
+  // necessary).  In addition, <options> is passed through to
+  // initialize the underlying memory pool.
+
+  ACE_Malloc (const ACE_MEM_POOL_OPTIONS &options,
+	      const char *pool_name = 0);
+  // Initialize ACE_Malloc.  This constructor passes <pool_name> to
+  // initialize the memory pool.  In addition, <options> is passed
+  // through to initialize the underlying memory pool.
 
   int remove (void);
   // Releases resources allocated by ACE_Malloc. 
@@ -261,18 +287,19 @@ private:
   void shared_free (void *ptr);
   // Deallocate memory.  Assumes that locks are held by callers.
 
-  MEMORY_POOL memory_pool_;
-  // Pool of memory used by ACE_Malloc 
-
   ACE_Control_Block *cb_ptr_;
   // Pointer to the control block (stored in memory controlled by
   // MEMORY_POOL).
 
+  MEMORY_POOL memory_pool_;
+  // Pool of memory used by ACE_Malloc 
+
   LOCK lock_;
   // Local that ensures mutual exclusion.
+
 };
 
-template <class MEM_POOL, class LOCK>
+template <ACE_MEM_POOL_1, class LOCK>
 class ACE_Malloc_Iterator
   // = TITLE
   //     Iterator for names stored in Malloc'd memory.
@@ -282,7 +309,7 @@ class ACE_Malloc_Iterator
 {
 public:
   // = Initialization method.
-  ACE_Malloc_Iterator (ACE_Malloc<MEM_POOL, LOCK> &malloc, const char *name = 0);
+  ACE_Malloc_Iterator (ACE_Malloc<ACE_MEM_POOL_2, LOCK> &malloc, const char *name = 0);
   // if <name> = 0 it will iterate through everything else only
   // through those entries whose <name> match
 
@@ -309,7 +336,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Malloc<MEM_POOL, LOCK> &malloc_;
+  ACE_Malloc<ACE_MEM_POOL_2, LOCK> &malloc_;
   // Malloc we are iterating over.
 
   ACE_Name_Node *curr_;

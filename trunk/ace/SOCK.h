@@ -22,21 +22,6 @@
 #include "ace/Addr.h"
 #include "ace/IPC_SAP.h"
 
-// The following is necessary since many C++ compilers don't support
-// typedef'd types inside of classes used as formal template
-// arguments... ;-(.  Luckily, using the C++ preprocessor I can hide
-// most of this nastiness!
-
-#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-#define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor
-#define ACE_SOCK_CONNECTOR ACE_SOCK_Connector
-#define ACE_SOCK_STREAM ACE_SOCK_Stream
-#else /* TEMPLATES are broken (must be a cfront-based compiler...) */
-#define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor, ACE_INET_Addr
-#define ACE_SOCK_CONNECTOR ACE_SOCK_Connector, ACE_INET_Addr
-#define ACE_SOCK_STREAM ACE_SOCK_Stream, ACE_INET_Addr
-#endif /* ACE_TEMPLATE_TYPEDEFS */
-
 class ACE_Export ACE_SOCK : public ACE_IPC_SAP
   // = TITLE
   //     Defines the member functions for the base class of the
