@@ -188,7 +188,7 @@ public:
 
   TAO_Dynamic_Property (void) {}
 
-  TAO_Dynamic_Property (const TAO_Dynamic_Property& dp) {}
+  TAO_Dynamic_Property (const TAO_Dynamic_Property &) {}
 
   virtual ~TAO_Dynamic_Property (void);
 
