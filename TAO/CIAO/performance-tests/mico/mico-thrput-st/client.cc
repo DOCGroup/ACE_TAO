@@ -1,6 +1,7 @@
 //
 //$Id$
 //
+//FUZZ: disable check_for_missing_rir_env
 
 #define USE_POA
 //#define NESTED
@@ -12,7 +13,7 @@
 #include <iostream>
 #else // HAVE_ANSI_CPLUSPLUS_HEADERS
 #include <iostream.h>
-#endif // HAVE_ANSI_CPLUSPLUS_HEADERS 
+#endif // HAVE_ANSI_CPLUSPLUS_HEADERS
 
 #include "RoundTrip.h"
 
@@ -28,7 +29,7 @@ using namespace std;
 int do_dump_history = 0;
 int niterations = 1000;
 
-int 
+int
 parse_args (int argc, char *argv[])
 {
   //parse arguments
@@ -55,7 +56,7 @@ parse_args (int argc, char *argv[])
 }
 
 void
-set_priority () 
+set_priority ()
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -82,9 +83,9 @@ set_priority ()
 int
 main (int argc, char *argv[])
 {
-  
+
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-  
+
   CORBA::Object_var obj = orb->resolve_initial_references ("NameService");
   CosNaming::NamingContextExt_var nc =
     CosNaming::NamingContextExt::_narrow (obj);
@@ -92,7 +93,7 @@ main (int argc, char *argv[])
 
   //Obtain reference from the naming context
   obj = nc->resolve_str ("RoundTrip");
-  
+
   Roundtrip_var bench = Roundtrip::_narrow (obj);
 
   parse_args(argc, argv);
@@ -105,12 +106,12 @@ main (int argc, char *argv[])
       bench->test_method (start);
     }
 
-  
+
   CORBA::ULongLong time_stamp = 1234;
   ACE_Sample_History history (niterations);
   ACE_hrtime_t test_start = ACE_OS::gethrtime ();
 
-  for (int i = 0; i < niterations; ++i) 
+  for (int i = 0; i < niterations; ++i)
     {
 
       ACE_hrtime_t start = ACE_OS::gethrtime ();
@@ -122,28 +123,28 @@ main (int argc, char *argv[])
   }
 
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
-  
+
   ACE_DEBUG ((LM_DEBUG, "test finished\n"));
-  
+
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
-  
+
   if (do_dump_history)
     {
       history.dump_samples ("HISTORY", gsf);
     }
-  
+
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
   stats.dump_results ("Total", gsf);
-  
+
   ACE_Throughput_Stats::dump_throughput ("Total", gsf,
-					 test_end - test_start,
-					 stats.samples_count ());
-  
+                                         test_end - test_start,
+                                         stats.samples_count ());
+
   //Remove the component
   cout << "client finished" << endl;
-  
+
   return 0;
 }
