@@ -1,3 +1,8 @@
+Thu Jul  7 08:09:00 2000  Bruce Trask   <brucetrask@aol.com>
+      * tao/Object_Adapter.h
+         
+        Changed the signature of dispatch_servant to remove the transport parameter
+
 Thu Jul  6 21:15:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
