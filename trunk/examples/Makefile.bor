@@ -6,6 +6,7 @@ DIRS = \
         IPC_SAP \
         Log_Msg \
         Map_Manager \
+        Mem_Map \
         Reactor \
         RMCast \
         Service_Configurator \
