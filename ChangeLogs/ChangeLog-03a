@@ -1,3 +1,37 @@
+Fri Feb 14 10:02:30 2003  Ossama Othman  <ossama@uci.edu>
+
+	* Makefile.am (all-local):
+
+	  Create a link to the $(top_srcdir)/bin directory if one doesn't
+	  exist.  It is needed for the automated regression tests we run.
+
+	  (distclean-local):
+
+	  Added this Automake recognized target.  It will clean up the
+	  `bin' link and accompanying stamp file if they exist.
+
+	* tests/Makefile.am (all-local):
+
+	  Create a stamp file to mark whether or not the scripts and data
+	  files are actually links to those in $(top_srcdir)/tests.
+
+	  (bin):
+
+	  Moved the rules in this target to all-local target in
+	  $(top_srcdir)/Makefile.am.  The link to the `bin' directory
+	  should be made in the top-level directory, not the `tests'
+	  directory.  This should address problems in running the
+	  automated regression tests.
+
+	  Removed this target.  It is longer needed.
+
+	  (distclean-local):
+
+	  Only delete the scripts and data files if the stamp file created
+	  by the all-local target exists.  Prevents those in the source
+	  directory from being erased once builds in the source directory
+	  are re-enabled.
+
 Tue Feb 11 14:27:08 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Makefile.am (all-local):
