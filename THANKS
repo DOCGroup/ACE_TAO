@@ -1563,7 +1563,7 @@ Jeremy Altavilla <jeremya@artifact-entertainment.com>
 Brian Appel <bappel@integ.com>
 Lan Zhineng <lanzn@huawei.com>
 Leen Van Kampen <leen.van.kampen@nl.vanderlande.com>
-James Beale <JAMES.H.BEALE@saic.com> 
+James Beale <JAMES.H.BEALE@saic.com>
 Mark Xu <ltxd@371.net>
 Umberto Mascia <u.mascia@pxl.it>
 Marcel Loose <loose@astron.nl>
@@ -1572,6 +1572,7 @@ Ville Lehtiniemi <guderian@ees2.oulu.fi>
 Chumsu Kim <chskim@add.re.kr>
 Schone Mullerin <smullerin@deutsches.lieder.net>
 Cemal Yimaz <cyilmaz@cs.umd.edu>
+Newton Aird <naird@ix.netcom.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
