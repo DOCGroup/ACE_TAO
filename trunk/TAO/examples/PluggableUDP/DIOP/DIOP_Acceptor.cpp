@@ -48,7 +48,7 @@ TAO_DIOP_Acceptor::~TAO_DIOP_Acceptor (void)
 //    2) For V1.[1,2] there are tagged components
 
 int
-TAO_DIOP_Acceptor::create_mprofile (const TAO_ObjectKey & /*object_key*/,
+TAO_DIOP_Acceptor::create_mprofile (const TAO_ObjectKey & object_key,
                                     TAO_MProfile &mprofile)
 {
   // Sanity check.
