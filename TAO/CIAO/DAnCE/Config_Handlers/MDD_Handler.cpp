@@ -16,11 +16,29 @@ namespace CIAO
         const MonolithicDeploymentDescription& src,
         Deployment::MonolithicDeploymentDescriptions& dest)
     {
+      /* @@ This has changed.  The schema has maxoccurred = unbounded */
+      
       // We know there should be only one..
-      dest.length (1);
+      //dest.length (1);
 
-      return MDD_Handler::mono_deployment_description (src,
-                                                       dest[0]);
+      DeploymentPlan::implementation_const_iterator imp_e =
+        src.end_implementation ();
+
+      for (DeploymentPlan::implementation_const_iterator imp_b =
+             src.begin_implementation ();
+           imp_b != imp_e;
+           ++imp_b)
+        {
+          CORBA::ULong len =
+            dest.length ();
+          dest.length (len + 1);
+
+          bool retval = MDD_Handler::mono_deployment_description (*imp_b,
+                                                                  dest[len]);
+          if (!retval)
+            return false;
+        }
+      return true;
     }
 
     bool

@@ -1,3 +1,11 @@
+Tue Feb  8 15:13:29 2005  Steve Goldman  <steve.goldman@vanderbilt.edu>
+	
+	* Config_Handlers/DP_Handler.cpp
+	* Config_Handlers/IDD_Handler.cpp
+	* Config_Handlers/MDD_Handler.cpp
+	
+	  Minor changes to populate missing fields.
+
 Thu Jan 28 15:02:42 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Container_Impl.cpp
