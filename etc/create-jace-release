@@ -1,9 +1,0 @@
-#! /bin/sh
-# $Id$
-# Builds the JACE release.
-
-umask 2
-
-cd java
-find src doc examples apps tests classes -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > ../JACE-1.2.tar.gz
-find src doc examples apps tests classes ImageProcessing -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > ../JACE-1.3.tar.gz
