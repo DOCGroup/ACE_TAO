@@ -1,3 +1,8 @@
+Mon Jun 19 10:43:27 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_lynxos.GNU: use -mthreads
+          with LynxOS 3.1.0, as well as with prior versions.
+
 Mon Jun 19 02:47:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/CORBA_macros.h: Fixed misspellings of deprecated.  Thanks to
