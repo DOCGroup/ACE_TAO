@@ -345,12 +345,14 @@ Notifier_i::push (const Event_Comm::Event &event,
     {
       Event_Comm::Consumer_ptr consumer_ref = me->int_id_->consumer ();
       ACE_ASSERT (consumer_ref != 0);
+
+#if defined (ACE_HAS_REGEX)
       char *regexp = ACE_const_cast (char *, me->int_id_->regexp ());
       ACE_ASSERT (regexp);
+
       const char *criteria = me->int_id_->criteria ();
       ACE_ASSERT (criteria);
 
-#if defined (ACE_HAS_REGEX)
       // Do a regular expression comparison to determine matching.
       if (ACE_OS::strcmp ("", criteria) == 0 // Everything matches the wildcard.
 	  || ACE_OS::step (event.tag_, regexp) != 0)

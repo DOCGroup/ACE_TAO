@@ -1,3 +1,9 @@
+Thu Jul 29 14:54:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Event_Comm/Event_Comm_i.cpp:
+	  Fixed warnings about unused variables on platforms that do not
+	  defined ACE_HAS_REGEX
+
 Thu Jul 29 14:09:11 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.4.4 released.
