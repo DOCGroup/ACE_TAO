@@ -520,7 +520,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
 
       if (this->has_mixed_parentage_ && ! this->is_abstract ())
         {
-          *os << "ACE_NESTED_CLASS (CORBA, AbstractBase) (" 
+          *os << "ACE_NESTED_CLASS (CORBA, AbstractBase) ("
               << be_idt << be_idt << be_idt_nl
               << "objref," << be_nl
               << "_tao_collocated," << be_nl
@@ -575,7 +575,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
         }
 
       *os << "," << be_nl
-          << "the"<< this->base_proxy_broker_name () << "_ (0)" 
+          << "the"<< this->base_proxy_broker_name () << "_ (0)"
           << be_uidt << be_uidt;
 
       *os << be_nl << "{" << be_idt_nl
@@ -617,7 +617,7 @@ be_interface:: gen_var_out_seq_decls (void)
       << "struct " << be_global->stub_export_macro () << " TAO::Objref_Traits<"
       << lname << ">" << be_nl
       << "{" << be_idt_nl
-      << "static " << lname << "_ptr tao_duplicate (" 
+      << "static " << lname << "_ptr tao_duplicate ("
       << be_idt << be_idt_nl
       << lname << "_ptr" << be_uidt_nl
       << ");" << be_uidt_nl
@@ -1228,8 +1228,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
       << (direct ? derived->full_direct_proxy_impl_name ()
                  : derived->full_thru_poa_proxy_impl_name ())
       << "::" << prefix << d->local_name () << " (" << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj, " << be_nl
-      << "CORBA::Object_out obj_forward," << be_nl
+      << "TAO_Abstract_ServantBase *servant," << be_nl
       << "TAO::Argument ** args," << be_nl
       << "int num_args" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
@@ -1242,8 +1241,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
       << (direct ? ancestor->full_direct_proxy_impl_name ()
                  : ancestor->full_thru_poa_proxy_impl_name ())
       << "::" << prefix << d->local_name () << " (" << be_idt << be_idt_nl
-      << "obj," << be_nl
-      << "obj_forward," << be_nl
+      << "servant," << be_nl
       << "args," << be_nl
       << "num_args" << be_nl
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
@@ -2105,8 +2103,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
           // Generate the static method corresponding to this method.
           *os << "static void" << be_nl
               << d->local_name () << " (" << be_idt << be_idt_nl
-              << "CORBA::Object_ptr obj, " << be_nl
-              << "CORBA::Object_out obj_forward," << be_nl
+              << "TAO_Abstract_ServantBase *servant, " << be_nl
               << "TAO::Argument ** args," << be_nl
               << "int num_args" << be_nl
               << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl

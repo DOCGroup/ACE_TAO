@@ -69,8 +69,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
     }
 
   *os << node->local_name () << " (" << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj," << be_nl
-      << "CORBA::Object_out forward," << be_nl
+      << "TAO_Abstract_ServantBase *servant," << be_nl
       << "TAO::Argument **";
 
   if (!node->void_return_type () || node->nmembers () > 0)
@@ -89,7 +88,9 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
     }
 
   *os << be_uidt_nl
-      << "{" << be_idt_nl
+      << "{" << be_idt_nl;
+
+#if 0
       << "TAO_Object_Adapter::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
       << "obj->_stubobj ()"
@@ -154,7 +155,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
       *os << "ACE_CHECK;";
     }
 
-  *os << be_nl << be_nl;
+#endif /*if 0*/
 
   if (!node->void_return_type ())
     {
@@ -168,7 +169,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
 
   *os << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
       << intf->full_skel_name () << "_ptr," << be_nl
-      << "servant_upcall.servant ()->_downcast (" << be_idt << be_idt_nl
+      << "servant->_downcast (" << be_idt << be_idt_nl
       << "\"" << intf->repoID ()  << "\"" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
       << ")" << be_uidt;

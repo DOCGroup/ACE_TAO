@@ -94,8 +94,27 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::Exception))" << be_uidt_nl
       << "{" << be_idt_nl
+      << "TAO_Object_Adapter::Servant_Upcall servant_upcall ("
+      << be_idt << be_idt_nl
+      << "obj->_stubobj ()"
+      << "->servant_orb_var ()->orb_core ()"
+      << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl
+      << "if (strategy == TAO::TAO_CS_THRU_POA_STRATEGY)" << be_nl
+      << be_idt <<" {" << be_nl
+      << "servant_upcall.prepare_for_upcall ("<< be_nl
+      << be_idt << "obj->_stubobj ()->object_key ()," << be_nl
+      << "op," << be_nl
+      << "forward_obj" << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_nl
+      << be_uidt << ");" << be_nl
+      << "ACE_CHECK;" << be_nl << be_nl
+      << "servant_upcall.pre_invoke_collocated_request (" << be_nl
+      << be_idt << "ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
+      << "ACE_CHECK;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "TAO_Collocated_Skeleton collocated_skel;" << be_nl << be_nl
-      << "if (obj->_servant ()->_find (" << be_idt << be_idt << be_idt
+      << "if (servant_upcall.servant ()->_find (" << be_idt << be_idt << be_idt
       << "op," << be_nl
       << "collocated_skel," << be_nl
       << "strategy," << be_nl
@@ -104,8 +123,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "ACE_TRY" << be_idt_nl
       << "{" << be_idt_nl
       << "collocated_skel (" << be_idt_nl
-      << "obj," << be_nl
-      << "forward_obj," << be_nl
+      << "servant_upcall.servant ()," << be_nl
       << "args, " << be_nl
       << "num_args" << be_nl
       << "ACE_ENV_ARG_PARAMETER);" << be_uidt_nl
@@ -147,6 +165,12 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_component (
   return this->visit_interface (node);
 }
 
+/**
+ *
+ * The generated code from the following method should be
+ * removed. This is not used at all.
+ *
+ */
 void
 be_visitor_interface_strategized_proxy_broker_ss::gen_thru_poa_operations (
     be_interface *node,
