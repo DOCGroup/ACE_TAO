@@ -1,5 +1,8 @@
 Mon Apr 26 05:35:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* tao/TAO_Internal.{h,cpp}: Changed *_args to of type const char
+	  *.  Thanks to Andy for reporting this.
+
 	* tao/TAO_Internal.{i,cpp} (default_svc_conf_entries): Moved to
 	  .cpp file and remove TAO_Internal.i from repository.
 
