@@ -85,7 +85,7 @@ main (int argc, char *argv[])
       // Read data from client (terminate on error).
 
       for (int r_bytes; 
-	   (r_bytes = new_stream.recv (buf, sizeof buf)) > 0; )
+	   (r_bytes = new_stream.recv (buf, sizeof buf, 0)) > 0; )
         if (ACE_OS::write (ACE_STDOUT,
                            buf,
                            r_bytes) != r_bytes)
