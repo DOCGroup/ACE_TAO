@@ -1,3 +1,12 @@
+Tue Nov 18 11:29:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IFR_Client_Adapter.h:
+	* tao/ORB.cpp:
+	* tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+
+	  Fixed compile errors that were caused due to improper macro
+	  usage. 
+
 Tue Nov 18 13:59:11 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * tao/ORB.cpp (resolve_service):

@@ -1015,7 +1015,7 @@ CORBA::ORB::resolve_policy_current (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 CORBA::Object_ptr
 CORBA::ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
-                             ACE_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL_NOT_USED)
 {
   const char * env_service_port [] =
   {
@@ -1176,7 +1176,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
   {
      result =
         this->string_to_object( service_ior.c_str() ACE_ENV_ARG_PARAMETER ) ;
-     ACE_CHECK_RETURN( CORBA_Object::_nil() ) ;
+     ACE_CHECK_RETURN( CORBA::Object::_nil() ) ;
 
      return result._retn() ;
   }
