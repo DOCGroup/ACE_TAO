@@ -36,6 +36,10 @@ Thu Jul 02 09:14:20 1998  David L. Levine  <levine@cs.wustl.edu>
           VxWorks task name and stack size tests from Barrier_Test
           to Thread_Manager_Test.
 
+        * tests/run_tests.vxworks: on VxWorks only, enabled
+          Message_Queue_Test.  It's OK to run it on VxWorks, now
+          that the iterator_test () is disabled in the test.
+
 Wed Jul 01 21:31:40 1998  Arturo Montes  <mitosys@colomsat.net.co>
 
         * ace/IOStream_T.i (recv_n, eof): fixed calculation of
