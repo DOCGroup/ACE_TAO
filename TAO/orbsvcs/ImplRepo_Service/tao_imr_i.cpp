@@ -56,6 +56,10 @@ TAO_IMR_i::init (int argc, char **argv)
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Parse command line and verify parameters.
+      if (this->parse_args () == -1)
+        return -1;
+
       // Get the ImplRepo object
 
       CORBA::Object_var implrepo_object =
@@ -73,9 +77,6 @@ TAO_IMR_i::init (int argc, char **argv)
         ImplementationRepository::Administration::_narrow (implrepo_object.in(), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Parse command line and verify parameters.
-      if (this->parse_args () == -1)
-        return -1;
     }
   ACE_CATCHANY
     {
@@ -122,7 +123,7 @@ TAO_IMR_i::parse_args (void)
 void
 TAO_IMR_i::print_usage (void)
 {
-  ACE_ERROR ((LM_ERROR, "Usage: tao_ir [options] command [command-arguments]\n"
+  ACE_ERROR ((LM_ERROR, "Usage: tao_imr [options] command [command-arguments]\n"
                         "  where [options] are ORB options\n"
                         "  where command is one of the following:\n"
                         "    activate  Activates a server through the IR\n"
@@ -901,7 +902,7 @@ TAO_IMR_Op_Activate::print_usage (void)
 {
   ACE_ERROR ((LM_ERROR, "Activates a server\n"
                         "\n"
-                        "Usage: tao_ir [options] activate <name> [command-arguments]\n"
+                        "Usage: tao_imr [options] activate <name> [command-arguments]\n"
                         "  where [options] are ORB options\n"
                         "  where <name> is the POA name used by the server object\n"
                         "  where [command-arguments] can be\n"
@@ -911,7 +912,7 @@ TAO_IMR_Op_Activate::print_usage (void)
 void
 TAO_IMR_Op_Add::print_usage (void)
 {
-  ACE_ERROR ((LM_ERROR, "Usage: tao_ir [options] add <name> [command-arguments]\n"
+  ACE_ERROR ((LM_ERROR, "Usage: tao_imr [options] add <name> [command-arguments]\n"
                         "  where [options] are ORB options\n"
                         "  where <name> is the POA name used by the server object\n"
                         "  where [command-arguments] can be\n"
@@ -924,7 +925,7 @@ TAO_IMR_Op_Add::print_usage (void)
 void
 TAO_IMR_Op_Autostart::print_usage (void)
 {
-  ACE_ERROR ((LM_ERROR, "Usage: tao_ir [options] autostart [command-arguments]\n"
+  ACE_ERROR ((LM_ERROR, "Usage: tao_imr [options] autostart [command-arguments]\n"
                         "  where [options] are ORB options\n"
                         "  where [command-arguments] can be\n"
                         "    -h            Displays this\n"));
@@ -937,7 +938,7 @@ TAO_IMR_Op_IOR::print_usage (void)
                         "the InterOperable Naming Service.  Please see the documentation for\n"
                         "more information on which server configurations work with this command.\n"
                         "\n"
-                        "Usage: tao_ir [options] ior <name> [command-arguments]\n"
+                        "Usage: tao_imr [options] ior <name> [command-arguments]\n"
                         "  where [options] are ORB options\n"
                         "  where <name> is the POA name of the server\n"
                         "  where [command-arguments] can be\n"
@@ -950,7 +951,7 @@ TAO_IMR_Op_List::print_usage (void)
 {
   ACE_ERROR ((LM_ERROR, "Lists all or one of the servers in the Implementation Repository\n"
                         "\n"
-                        "Usage: tao_ir [options] list [name] [command-arguments]\n"
+                        "Usage: tao_imr [options] list [name] [command-arguments]\n"
                         "  where [options] are ORB options\n"
                         "  where [name] is the optional server name to search for\n"
                         "  where [command-arguments] can be\n"
@@ -964,7 +965,7 @@ TAO_IMR_Op_Remove::print_usage (void)
 {
   ACE_ERROR ((LM_ERROR, "Removes a server entry\n"
                         "\n"
-                        "Usage: tao_ir [options] remove <name> [command-arguments]\n"
+                        "Usage: tao_imr [options] remove <name> [command-arguments]\n"
                         "  where [options] are ORB options\n"
                         "  where <name> is the POA name used by the server object\n"
                         "  where [command-arguments] can be\n"
@@ -976,7 +977,7 @@ TAO_IMR_Op_Shutdown::print_usage (void)
 {
   ACE_ERROR ((LM_ERROR, "Shuts down a server\n"
                         "\n"
-                        "Usage: tao_ir [options] shutdown <name> [command-arguments]\n"
+                        "Usage: tao_imr [options] shutdown <name> [command-arguments]\n"
                         "  where [options] are ORB options\n"
                         "  where <name> is the POA name used by the server object\n"
                         "  where [command-arguments] can be\n"
@@ -988,7 +989,7 @@ TAO_IMR_Op_Update::print_usage (void)
 {
   ACE_ERROR ((LM_ERROR, "Updates a server entry\n"
                         "\n"
-                        "Usage: tao_ir [options] update <name> [command-arguments]\n"
+                        "Usage: tao_imr [options] update <name> [command-arguments]\n"
                         "  where [options] are ORB options\n"
                         "  where <name> is the POA name used by the server object\n"
                         "  where [command-arguments] can be\n"
