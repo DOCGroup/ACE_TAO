@@ -460,6 +460,10 @@ protected:
   /// appropriate point specified by <requeue_position_>.
   virtual void renew (void) = 0;
 
+  /// Check to see if the <Event_Handler> associated with <handle> is
+  /// suspended. Returns 0 if not, 1 if so.
+  virtual int is_suspended_i (ACE_HANDLE handle) = 0;
+
   /// Table that maps <ACE_HANDLEs> to <ACE_Event_Handler *>'s.
   ACE_Select_Reactor_Handler_Repository handler_rep_;
 

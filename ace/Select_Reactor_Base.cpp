@@ -250,22 +250,35 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
     this->max_handlep1_ = handle + 1;
 #endif /* ACE_WIN32 */
 
-  // Add the <mask> for this <handle> in the Select_Reactor's wait_set.
-  this->select_reactor_.bit_ops (handle,
-                                 mask,
-                                 this->select_reactor_.wait_set_,
-                                 ACE_Reactor::ADD_MASK);
+  if (this->select_reactor_.is_suspended_i (handle))
+    {
+      this->select_reactor_.bit_ops (handle,
+                                     mask,
+                                     this->select_reactor_.suspend_set_,
+                                     ACE_Reactor::ADD_MASK);
+    }
+  else
+    {
+      this->select_reactor_.bit_ops (handle,
+                                     mask,
+                                     this->select_reactor_.wait_set_,
+                                     ACE_Reactor::ADD_MASK);
 
+      // Note the fact that we've changed the state of the <wait_set_>,
+      // which is used by the dispatching loop to determine whether it can
+      // keep going or if it needs to reconsult select().
+      this->select_reactor_.state_changed_ = 1;
+    }
+
+  /*
+  // @@NOTE: We used to do this in earlier versions of ACE+TAO. But
+  // this is totally wrong..
   // Clear any suspend masks for it too.
   this->select_reactor_.bit_ops (handle,
                                  mask,
                                  this->select_reactor_.suspend_set_,
                                  ACE_Reactor::CLR_MASK);
-
-  // Note the fact that we've changed the state of the <wait_set_>,
-  // which is used by the dispatching loop to determine whether it can
-  // keep going or if it needs to reconsult select().
-  this->select_reactor_.state_changed_ = 1;
+  */
 
   return 0;
 }
