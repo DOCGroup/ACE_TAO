@@ -103,6 +103,60 @@ be_visitor_array::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_array::visit_valuetype (be_valuetype *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
+
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_ARRAY_CH)
+    {
+      *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+    }
+  else
+    {
+      *os << bt->name () << "_var";
+    }
+
+  return 0;
+}
+
+int
+be_visitor_array::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
+
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_ARRAY_CH)
+    {
+      *os << bt->nested_type_name (this->ctx_->scope (), "_var");
+    }
+  else
+    {
+      *os << bt->name () << "_var";
+    }
+
+  return 0;
+}
+
+int
 be_visitor_array::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();

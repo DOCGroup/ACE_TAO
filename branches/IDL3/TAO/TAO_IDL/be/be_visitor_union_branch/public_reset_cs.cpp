@@ -222,7 +222,63 @@ be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
-                         "visit_interface - "
+                         "visit_interface_fwd - "
+                         "bad context information\n"), 
+                        -1);
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << "delete this->u_."
+      << ub->local_name () << "_;" << be_nl
+      << "this->u_." << ub->local_name ()
+      << "_ = 0;" << be_nl
+      << "break;" << be_uidt_nl;
+
+  return 0;
+}
+
+int
+be_visitor_union_branch_public_reset_cs::visit_valuetype (be_valuetype *)
+{
+  be_union_branch *ub =
+    this->ctx_->be_node_as_union_branch ();
+  be_union *bu =
+    this->ctx_->be_scope_as_union ();
+
+  if (!ub || !bu)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_public_reset_cs::"
+                         "visit_valuetype - "
+                         "bad context information\n"), 
+                        -1);
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << "delete this->u_."
+      << ub->local_name () << "_;" << be_nl
+      << "this->u_." << ub->local_name ()
+      << "_ = 0;" << be_nl
+      << "break;" << be_uidt_nl;
+
+  return 0;
+}
+
+int
+be_visitor_union_branch_public_reset_cs::visit_valuetype_fwd (be_valuetype_fwd *)
+{
+  be_union_branch *ub =
+    this->ctx_->be_node_as_union_branch ();
+  be_union *bu =
+    this->ctx_->be_scope_as_union ();
+
+  if (!ub || !bu)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_public_reset_cs::"
+                         "visit_valuetype_fwd - "
                          "bad context information\n"), 
                         -1);
     }

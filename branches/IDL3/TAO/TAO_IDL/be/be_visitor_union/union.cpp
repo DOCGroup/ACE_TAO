@@ -90,13 +90,6 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_UNION_PUBLIC_ACCESS_CS:
-      {
-        ctx.state (TAO_CodeGen::TAO_UNION_PUBLIC_ACCESS_CS);
-        be_visitor_union_branch_public_access_cs visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_UNION_CDR_OP_CH:
       {
         ctx.state (TAO_CodeGen::TAO_UNION_BRANCH_CDR_OP_CH);

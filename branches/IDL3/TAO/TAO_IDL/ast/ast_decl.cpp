@@ -1103,6 +1103,11 @@ AST_Decl::compute_name (const char *prefix,
 void
 AST_Decl::set_name (UTL_ScopedName *n)
 {
+  if (this->pd_name == n)
+    {
+      return;
+    }
+
   if (this->pd_name != 0)
     {
       this->pd_name->destroy ();

@@ -352,6 +352,96 @@ be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *)
   return 0;
 }
 
+// Visit value type.
+int
+be_visitor_field_cdr_op_ci::visit_valuetype (be_valuetype *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_field *f = this->ctx_->be_node_as_field ();
+
+  if (!f)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
+                         "visit_valuetype - "
+                         "cannot retrieve field node\n"), 
+                        -1);
+    }
+
+  // Check what is the code generations substate. Are we generating code for
+  // the in/out operators for our parent or for us?
+  switch (this->ctx_->sub_state ())
+    {
+    case TAO_CodeGen::TAO_CDR_INPUT:
+      *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
+
+      break;
+    case TAO_CodeGen::TAO_CDR_OUTPUT:
+      *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
+
+      break;
+    case TAO_CodeGen::TAO_CDR_SCOPE:
+      // Nothing to be done because a valuetype cannot be declared inside a
+      // structure.
+      break;
+    default:
+      // Error.
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
+                         "visit_valuetype - "
+                         "bad sub state\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
+// Visit value forward type.
+int
+be_visitor_field_cdr_op_ci::visit_valuetype_fwd (be_valuetype_fwd *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // Retrieve the field node.
+  be_field *f = this->ctx_->be_node_as_field ();
+
+  if (f == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
+                         "visit_valuetype_fwd - "
+                         "cannot retrieve field node\n"),
+                        -1);
+    }
+
+  // Check what is the code generations substate. Are we generating code for
+  // the in/out operators for our parent or for us?
+  switch (this->ctx_->sub_state ())
+    {
+    case TAO_CodeGen::TAO_CDR_INPUT:
+      *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
+
+      break;
+    case TAO_CodeGen::TAO_CDR_OUTPUT:
+      *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
+
+      break;
+    case TAO_CodeGen::TAO_CDR_SCOPE:
+      // Nothing to be done because a valuetype cannot be declared inside a
+      // structure.
+      break;
+    default:
+      // Error.
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
+                         "visit_valuetype_fwd - "
+                         "bad sub state\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
 // Visit predefined type.
 int
 be_visitor_field_cdr_op_ci::visit_predefined_type (be_predefined_type *node)

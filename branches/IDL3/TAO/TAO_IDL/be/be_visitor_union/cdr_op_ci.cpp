@@ -63,10 +63,14 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
 
-  *os << "ACE_INLINE CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+  *os << "ACE_INLINE" << be_nl
+      << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
       << "const " << node->name () << " &_tao_union" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -97,8 +101,8 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
 
   *os << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "CORBA::Boolean result = 1;" << be_nl
+      << "}" << be_uidt_nl << be_nl
+      << "CORBA::Boolean result = 1;" << be_nl << be_nl
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt_nl;
 
@@ -125,13 +129,14 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       *os << "break;";
     }
 
-  *os << be_uidt_nl << "}" << be_nl
+  *os << be_uidt_nl << "}" << be_nl << be_nl
       << "return result;" << be_uidt_nl
-      << "}\n\n";
+      << "}" << be_nl << be_nl;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "ACE_INLINE CORBA::Boolean operator>> (" << be_idt << be_idt_nl
+  *os << "ACE_INLINE" << be_nl
+      << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
       << node->name () << " &_tao_union" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -169,8 +174,8 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
 
   *os << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "CORBA::Boolean result = 1;" << be_nl
+      << "}" << be_uidt_nl << be_nl
+      << "CORBA::Boolean result = 1;" << be_nl << be_nl
       << "switch (_tao_discriminant)" << be_nl
       << "{" << be_idt_nl;
 
@@ -198,9 +203,9 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       *os << "break;" << be_uidt << be_uidt_nl;
     }
 
-  *os << "}" << be_nl
+  *os << "}" << be_nl << be_nl
       << "return result;" << be_uidt_nl
-      << "}\n\n";
+      << "}" << be_nl << be_nl;
 
   node->cli_inline_cdr_op_gen (1);
   return 0;
