@@ -918,7 +918,7 @@ TAO_NAMESPACE CORBA
 
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
 // define our own profile ids in TAO.
-#define TAO_TAG_UIOP_PROFILE   0x54414f00U /* Unix Domain */
+#define TAO_TAG_UIOP_PROFILE   0x54414f00U /* Local IPC (Unix Domain) */
 // @@ The values below are suggestions for some of the protocols
 //    we have thought of, subject to change at any point
 // #define TAO_TAG_AIOP_PROFILE   0x54414f01U /* ATM/AAL5 */
@@ -966,6 +966,9 @@ TAO_NAMESPACE CORBA
 #define TAO_POA_HOLDING                            (0x05U << 4)
 #define TAO_UNHANDLED_SERVER_CXX_EXCEPTION         (0x06U << 4)
 #define TAO_INVOCATION_RECV_REQUEST_MINOR_CODE     (0x07U << 4)
+#define TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL  (0x08U << 4)
+#define TAO_NULL_POINTER_MINOR_CODE                (0x09U << 4)
+#define TAO_MPROFILE_CREATION_ERROR                (0x0AU << 4)
 
 // errno encoding:  bottom 4 bits.
 #define TAO_UNSPECIFIED_MINOR_CODE  0x0U
@@ -997,7 +1000,7 @@ TAO_NAMESPACE CORBA
 
 // ****************************************************************
 
-// A helper clas to handle the various kinds of octet sequences used
+// A helper class to handle the various kinds of octet sequences used
 // inside the ORB.
 
 typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
