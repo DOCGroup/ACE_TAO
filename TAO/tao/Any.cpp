@@ -50,7 +50,10 @@ CORBA_Any::type (void) const
 const void *
 CORBA_Any::value (void) const
 {
-  return this->value_;
+  if (this->any_owns_data_)
+    return this->cdr_;
+  else
+    return this->value_;
 }
 
 // Default "Any" constructor -- initializes to nulls per the
@@ -659,18 +662,18 @@ CORBA_Any_var::operator= (const CORBA::Any_var& r)
 // supported only for standard data types.
 
 void
-CORBA_Any::dump (const CORBA::Any any_value) 
+CORBA_Any::dump (const CORBA::Any any_value)
 {
   // Get the type.
   CORBA::TypeCode_ptr type = any_value.type ();
-  
-  if (type == CORBA::_tc_null) 
+
+  if (type == CORBA::_tc_null)
     ACE_DEBUG ((LM_DEBUG,"Null\n"));
 
   else if (type == CORBA::_tc_void)
     ACE_DEBUG ((LM_DEBUG,"Void\n"));
-  
-  else if (type == CORBA::_tc_short) 
+
+  else if (type == CORBA::_tc_short)
     {
       CORBA::Short s;
       any_value >>= s;
@@ -727,7 +730,6 @@ CORBA_Any::dump (const CORBA::Any any_value)
        any_value >>= str;
        ACE_DEBUG ((LM_DEBUG, "String %s\n", str));
     }
-  else 
+  else
     ACE_DEBUG ((LM_DEBUG, "TCKind %d", type->kind_));
-} 
-               
+}
