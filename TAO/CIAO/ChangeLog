@@ -1,3 +1,10 @@
+Sat Dec 25 15:01:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* CIDLC/ExecImplSourceGenerator.cpp:
+
+	  Got rid of unused environment variable warnings in the generated
+	  code. 
+
 Wed Dec 22 06:53:30 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/CIDL/CodeGen/CodeGen.mpc:
