@@ -42,7 +42,7 @@ public:
   // Default constructor.  By default, the <close> operation on the
   // object will be invoked before it is destroyed.
 
-  ACE_DLL (ACE_DL_TYPE dll_name = 0,
+  ACE_DLL (ACE_DL_TYPE dll_name,
            int open_mode = ACE_DEFAULT_SHLIB_MODE,
            int close_on_destruction = 1);
   // This constructor opens and dynamically links <dll_name>.  The
