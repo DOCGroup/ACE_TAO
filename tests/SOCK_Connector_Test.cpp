@@ -96,7 +96,8 @@ fail_no_listener_nonblocking (void)
   // ECONNREFUSED directly, instead of EWOULDBLOCK. That is also fine.
   if (errno == EWOULDBLOCK || errno == ECONNREFUSED) 
     {
-      status = con.complete (sock);
+      if (sock.get_handle () != ACE_INVALID_HANDLE)
+        status = con.complete (sock);
 
       if (status != -1) 
 	{
