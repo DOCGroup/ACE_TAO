@@ -71,11 +71,12 @@ realclean: clean
 
 .obj/PP_TestC.o .obj/PP_TestC.so .shobj/PP_TestC.o .shobj/PP_TestC.so: PP_TestC.cpp PP_TestC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -324,19 +325,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/target_identifier.h \
- $(TAO_ROOT)/tao/target_identifier.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ImplRepoC.i \
  $(TAO_ROOT)/tao/POA.i \
@@ -354,16 +355,16 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- PP_TestC.i
+ $(TAO_ROOT)/tao/BoundsC.i PP_TestC.i
 
 .obj/PP_TestS.o .obj/PP_TestS.so .shobj/PP_TestS.o .shobj/PP_TestS.so: PP_TestS.cpp PP_TestS.h PP_TestC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -612,19 +613,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/target_identifier.h \
- $(TAO_ROOT)/tao/target_identifier.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ImplRepoC.i \
  $(TAO_ROOT)/tao/POA.i \
@@ -642,17 +643,18 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- PP_TestC.i PP_TestS_T.h PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i
+ $(TAO_ROOT)/tao/BoundsC.i PP_TestC.i \
+ PP_TestS_T.h PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i
 
 .obj/PP_Test_Server.o .obj/PP_Test_Server.so .shobj/PP_Test_Server.o .shobj/PP_Test_Server.so: PP_Test_Server.cpp PP_Test_Server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -904,19 +906,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/target_identifier.h \
- $(TAO_ROOT)/tao/target_identifier.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ImplRepoC.i \
  $(TAO_ROOT)/tao/POA.i \
@@ -934,18 +936,19 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- PP_TestC.i PP_TestS_T.h PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i \
+ $(TAO_ROOT)/tao/BoundsC.i PP_TestC.i \
+ PP_TestS_T.h PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i \
  $(TAO_ROOT)/tao/TAO_Internal.h
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp PP_Test_Server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1197,19 +1200,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/target_identifier.h \
- $(TAO_ROOT)/tao/target_identifier.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ImplRepoC.i \
  $(TAO_ROOT)/tao/POA.i \
@@ -1227,19 +1230,20 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- PP_TestC.i PP_TestS_T.h PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i \
+ $(TAO_ROOT)/tao/BoundsC.i PP_TestC.i \
+ PP_TestS_T.h PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
 
 .obj/PP_Test_Client.o .obj/PP_Test_Client.so .shobj/PP_Test_Client.o .shobj/PP_Test_Client.so: PP_Test_Client.cpp \
  $(ACE_ROOT)/ace/Read_Buffer.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1297,8 +1301,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- PP_Test_Client.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i PP_Test_Client.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/corba.h \
@@ -1492,19 +1495,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/target_identifier.h \
- $(TAO_ROOT)/tao/target_identifier.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ImplRepoC.i \
  $(TAO_ROOT)/tao/POA.i \
@@ -1522,20 +1525,20 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- PP_TestC.h PP_TestC.i \
- $(TAO_ROOT)/tao/Timeprobe.h \
+ $(TAO_ROOT)/tao/BoundsC.i PP_TestC.h \
+ PP_TestC.i $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
  $(TAO_ROOT)/tao/TAO_Internal.h
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp PP_Test_Client.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1785,19 +1788,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/target_identifier.h \
- $(TAO_ROOT)/tao/target_identifier.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ImplRepoC.i \
  $(TAO_ROOT)/tao/POA.i \
@@ -1815,18 +1818,18 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- PP_TestC.h PP_TestC.i \
- $(TAO_ROOT)/tao/Timeprobe.h \
+ $(TAO_ROOT)/tao/BoundsC.i PP_TestC.h \
+ PP_TestC.i $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
 
 .obj/PP_Test_i.o .obj/PP_Test_i.so .shobj/PP_Test_i.o .shobj/PP_Test_i.so: PP_Test_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2075,19 +2078,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/target_identifier.h \
- $(TAO_ROOT)/tao/target_identifier.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ImplRepoC.i \
  $(TAO_ROOT)/tao/POA.i \
@@ -2107,8 +2110,8 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.h \
- PP_Test_i.h PP_TestS.h PP_TestC.h PP_TestC.i PP_TestS_T.h \
- PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i
+ $(ACE_ROOT)/ace/Timeprobe.h PP_Test_i.h \
+ PP_TestS.h PP_TestC.h PP_TestC.i PP_TestS_T.h PP_TestS_T.i \
+ PP_TestS_T.cpp PP_TestS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
