@@ -491,15 +491,21 @@ ACE_OS::uname (ACE_utsname *name)
 
   const ACE_TCHAR* unknown = ACE_LIB_TEXT ("???");
 
-  if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
+  if (
+      vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT
+#   if defined (VER_PLATFORM_WIN32_CE)
+      || vinfo.dwPlatformId == VER_PLATFORM_WIN32_CE
+#   endif
+      )
     {
       // Get information from the two structures
+      const ACE_TCHAR *os;
+      if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
+        os = ACE_LIB_TEXT ("Windows NT %d.%d");
+      else
+        os = ACE_LIB_TEXT ("Windows CE %d.%d");
       ACE_OS::sprintf (name->release,
-#   if defined (ACE_HAS_WINCE)
-                       ACE_LIB_TEXT ("Windows CE %d.%d"),
-#   else
-                       ACE_LIB_TEXT ("Windows NT %d.%d"),
-#   endif /* ACE_HAS_WINCE */
+                       os,
                        (int) vinfo.dwMajorVersion,
                        (int) vinfo.dwMinorVersion);
       ACE_OS::sprintf (name->version,
@@ -563,7 +569,15 @@ ACE_OS::uname (ACE_utsname *name)
 #     if defined PROCESSOR_ARCHITECTURE_IA64
         case PROCESSOR_ARCHITECTURE_IA64:
           ACE_OS_String::strcpy (processor, ACE_LIB_TEXT ("Itanium"));
-          ACE_OS::sprintf (subtype, ACE_LIB_TEXT ("%d"), sinfo.wProcessorLevel);
+          ACE_OS::sprintf (subtype, ACE_LIB_TEXT ("%d"),
+                           sinfo.wProcessorLevel);
+          break;
+#     endif
+#     if defined PROCESSOR_ARCHITECTURE_ARM
+        case PROCESSOR_ARCHITECTURE_ARM:
+          ACE_OS_String::strcpy (processor, ACE_LIB_TEXT ("ARM"));
+          ACE_OS::sprintf (subtype, ACE_LIB_TEXT ("%d"),
+                           sinfo.wProcessorLevel);
           break;
 #     endif
         case PROCESSOR_ARCHITECTURE_UNKNOWN:
