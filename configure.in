@@ -937,7 +937,7 @@ dnl Check for libtool and turn on Automake processing for Libtool
 AC_PROG_LIBTOOL
 
 dnl Enable C++ support in libtool
-dnl AC_LIBTOOL_CXX
+AC_LIBTOOL_CXX
 
 dnl Temporary hack until I get integrate libtool's new tag support
 dnl into automake.
