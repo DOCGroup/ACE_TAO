@@ -1,5 +1,5 @@
 #
-# Makefile for building the Faults Test executable
+# $Id$
 #
 
 NAME = child

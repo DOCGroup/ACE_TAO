@@ -1,3 +1,28 @@
+Tue Mar 20 16:55:38 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/Client_Leaks/Makefile:
+	* tests/Client_Leaks/Test.idl:
+	* tests/Client_Leaks/Client_Task.h:
+	* tests/Client_Leaks/Client_Task.cpp:
+	* tests/Client_Leaks/Process_Factory.h:
+	* tests/Client_Leaks/Process_Factory.cpp:
+	* tests/Client_Leaks/Server_Task.h:
+	* tests/Client_Leaks/Server_Task.cpp:
+	* tests/Client_Leaks/Startup_Callback.h:
+	* tests/Client_Leaks/Startup_Callback.cpp:
+	* tests/Client_Leaks/child.cpp:
+	* tests/Client_Leaks/client.cpp:
+	* tests/Client_Leaks/server.cpp:
+	  Several improvements to the test to make it more reliable and
+	  faster.
+	  The process factory uses callback interfaces to receive the new
+	  child IOR.
+	  Both the client and the process factory are multithreaded, to
+	  speed up the test by increasing concurrency during process
+	  creation.
+	  The child processes are detached to avoid zombies and to
+	  minimize the need of using the ACE_Process_Manager.
+
 Tue Mar 20 18.54:01  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/PortableServer/POA.cpp (key_to_stub_i): 
@@ -18280,4 +18305,3 @@ Thu Oct 12 13:16:05 2000  Marina Spivak  <marina@cs.wustl.edu>
 Thu Oct 12 12:17:44 2000  Angelo  <corsaro@cs.wustl.edu>
 
         * TAO version 1.1.10 released.
->>>>>>> 1.2897

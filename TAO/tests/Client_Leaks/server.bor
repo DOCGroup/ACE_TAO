@@ -1,5 +1,5 @@
 #
-# Makefile for building the Faults Test executable
+# $Id$
 #
 
 NAME = server
@@ -10,6 +10,8 @@ OBJFILES = \
 	$(OBJDIR)\TestC.obj \
 	$(OBJDIR)\TestS.obj \
 	$(OBJDIR)\Process_Factory.obj \
+	$(OBJDIR)\Startup_Callback.obj \
+	$(OBJDIR)\Server_Task.obj \
 	$(OBJDIR)\server.obj
 
 CFLAGS = \
