@@ -322,6 +322,14 @@ public:
   // Send request, block until any reply comes back, and unmarshal
   // reply parameters as appropriate.
 
+  TAO_GIOP_ReplyStatusType invoke (TAO_Exception_Data *excepts,
+                                   CORBA::ULong except_count,
+                                   CORBA::Environment &env);
+  // Special purpose invoke method used by the stubs. This accomplishes the
+  // same task as the normal invoke except that Exceptions are allocated and
+  // decoded here. This keeps the size of the stubs small and abstracts all the
+  // common code here.
+
   void get_value (CORBA::TypeCode_ptr tc,
                   void *value,
                   CORBA::Environment &env);

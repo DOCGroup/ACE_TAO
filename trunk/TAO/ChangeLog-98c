@@ -1,3 +1,29 @@
+Fri May  1 13:05:56 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/Stub.h: Added a new structure called TAO_Exception_Data that
+	holds the typecode and pointer to a function for the user
+	exception we are dealing with. This was necessary since the
+	interpreter had no clue of how to allocate storage for the
+	exception we are dealing with and how to decode it.
+
+	* tao/GIOP.{h, cpp}: Affected by the above change is the "invoke"
+	method which takes the list of exceptions. It is this method that
+	is responsible for allocating the right amount of storage for the
+	exceptions and decode it.
+
+	We kept the original invoke method as it is because the newer
+	signature cannot work with DII. This still needs work.
+
+	* tao/IIOP_Object.cpp:(do_static_call) - When "invoke" is called,
+	we now pass the TAO_Exception_Data table.
+
+	* TAO_IDL/be/be_visitor_operation.cpp: The exceptionlist table
+	that gets generated is now an array of TAO_Exception_Data. In
+	addition, it is made static.
+
+	* TAO_IDL/be/be_visitor_exception.cpp: Added code to generate the
+	*_alloc function that allocates memory for the exception.
+
 Fri May  1 09:55:56 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/POAS.cpp: In the initialization section of constructors for
