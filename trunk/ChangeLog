@@ -1,4 +1,14 @@
-Thu Feb 20 17:14:46 2004  Irfan Pyarali  <irfan@oomworks.com>
+Fri Feb 20 18:21:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+	  AC_Input_Handler::close() should accept a u_long, not u_int, to
+	  properly override ACE_Svc_Handler::close().
+	  AC_CLD_Connector::connect_svc_handler() first arg is a
+	  ACE_Svc_Handler*&, not ACE_Svc_Handler*, to properly override
+	  ACE_Connector::connect_svc_handler().
+	  Thanks to Johnny Willemsen for pointing these out.
+
+Fri Feb 20 17:14:46 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* ace\CDR_Base (NonNative LongLong and LongDouble): 
 
