@@ -241,8 +241,6 @@ template class ACE_Array_Base<PortableInterceptor::ServerRequestInterceptor_ptr>
 
 template class ACE_Array_Base<PortableInterceptor::IORInterceptor_ptr>;
 
-# endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # if TAO_HAS_INTERCEPTORS == 1
