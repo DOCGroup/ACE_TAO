@@ -1,7 +1,7 @@
 // $Id$
 
 #include "NavDisplayGUI_exec.h"
-#include "CIAO/CIAO_common.h"
+#include "ciao/CIAO_common.h"
 #include <qapplication.h>
 #include <qevent.h>
 
