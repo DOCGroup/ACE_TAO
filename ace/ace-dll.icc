@@ -71,6 +71,7 @@ option
                                               'Asynch_IO_Impl.h',
                                               'ATM_Addr.h',
                                               'Auto_Ptr.h',
+                                              'Base_Thread_Adapter.h',
                                               'Based_Pointer_Repository.h',
                                               'Basic_Types.h',
                                               'Cached_Connect_Strategy_T.h',
@@ -113,6 +114,7 @@ option
                                               'FILE_Addr.h',
                                               'FILE_Connector.h',
                                               'FILE_IO.h',
+                                              'Flag_Manip.h',
                                               'FlReactor.h',
                                               'Free_List.h',
                                               'Functor.h',
@@ -121,6 +123,7 @@ option
                                               'Future_Set.h',
                                               'Get_Opt.h',
                                               'Handle_Gobbler.h',
+                                              'Handle_Ops.h',
                                               'Handle_Set.h',
                                               'Hash_Cache_Map_Manager_T.h',
                                               'Hash_Map_Manager.h',
@@ -129,17 +132,21 @@ option
                                               'High_Res_Timer.h',
                                               'config-all.h',
                                               'INET_Addr.h',
+                                              'Init_ACE.h',
                                               'iosfwd.h',
                                               'IOStream.h',
                                               'IOStream_T.h',
                                               'IO_Cntl_Msg.h',
                                               'IO_SAP.h',
                                               'IPC_SAP.h',
+                                              'Lib_Find.h',
                                               'Local_Name_Space.h',
                                               'Local_Name_Space_T.h',
                                               'Local_Tokens.h',
                                               'LOCK_SOCK_Acceptor.h',
                                               'Log_Msg.h',
+                                              'Log_Msg_Backend.h',
+                                              'Log_Msg_IPC.h',
                                               'Log_Priority.h',
                                               'Log_Record.h',
                                               'LSOCK.h',
@@ -149,6 +156,7 @@ option
                                               'LSOCK_Dgram.h',
                                               'LSOCK_Stream.h',
                                               'Malloc.h',
+                                              'Malloc_Allocator.h',
                                               'Malloc_Base.h',
                                               'Malloc_T.h',
                                               'Managed_Object.h',
@@ -174,15 +182,18 @@ option
                                               'Obstack.h',
                                               'OS.h',
                                               'OS_Dirent.h',
+                                              'OS_Log_Msg_Attributes.h',
                                               'OS_Memory.h',
                                               'OS_String.h',
+                                              'OS_Thread_Adapter.h',
                                               'OS_TLI.h',
+                                              'PI_Malloc.h',
+                                              'POSIX_Asynch_IO.h',
+                                              'POSIX_Proactor.h',
                                               'Pair.h',
                                               'Pair_T.h',
                                               'Parse_Node.h',
                                               'Pipe.h',
-                                              'POSIX_Asynch_IO.h',
-                                              'POSIX_Proactor.h',
                                               'Priority_Reactor.h',
                                               'Proactor.h',
                                               'Proactor_Impl.h',
@@ -221,6 +232,7 @@ option
                                               'SOCK_Dgram_Mcast.h',
                                               'SOCK_IO.h',
                                               'SOCK_Stream.h',
+                                              'Sock_Connect.h',
                                               'SPIPE.h',
                                               'SPIPE_Acceptor.h',
                                               'SPIPE_Addr.h',
@@ -252,6 +264,9 @@ option
                                               'Task.h',
                                               'Task_T.h',
                                               'Thread.h',
+                                              'Thread_Adapter.h',
+                                              'Thread_Control.h',
+                                              'Thread_Exit.h',
                                               'Thread_Manager.h',
                                               'Timeprobe.h',
                                               'Timeprobe_T.h',
@@ -303,6 +318,7 @@ option
                  source type(cpp) "ARGV.cpp"
                  source type(cpp) "Asynch_IO.cpp"
                  source type(cpp) "Asynch_IO_Impl.cpp"
+                 source type(cpp) "Base_Thread_Adapter.cpp"
                  source type(cpp) "Based_Pointer_Repository.cpp"
                  source type(cpp) "Basic_Types.cpp"
                  source type(cpp) "Capabilities.cpp"
@@ -332,19 +348,25 @@ option
                  source type(cpp) "FILE_Connector.cpp"
                  source type(cpp) "FILE_IO.cpp"
                  source type(cpp) "Filecache.cpp"
+                 source type(cpp) "Flag_Manip.cpp"
                  source type(cpp) "Functor.cpp"
                  source type(cpp) "Future.cpp"
                  source type(cpp) "Get_Opt.cpp"
+                 source type(cpp) "Handle_Ops.cpp"
                  source type(cpp) "Handle_Set.cpp"
                  source type(cpp) "Hash_Map_Manager.cpp"
                  source type(cpp) "High_Res_Timer.cpp"
                  source type(cpp) "INET_Addr.cpp"
+                 source type(cpp) "Init_ACE.cpp"
                  source type(cpp) "IO_Cntl_Msg.cpp"
                  source type(cpp) "IO_SAP.cpp"
                  source type(cpp) "IOStream.cpp"
                  source type(cpp) "IPC_SAP.cpp"
+                 source type(cpp) "Lib_Find.cpp"
                  source type(cpp) "Local_Name_Space.cpp"
                  source type(cpp) "Local_Tokens.cpp"
+                 source type(cpp) "Log_Msg_Backend.cpp"
+                 source type(cpp) "Log_Msg_IPC.cpp"
                  source type(cpp) "Log_Record.cpp"
                  source type(cpp) "LSOCK.cpp"
                  source type(cpp) "LSOCK_Acceptor.cpp"
@@ -353,6 +375,7 @@ option
                  source type(cpp) "LSOCK_Dgram.cpp"
                  source type(cpp) "LSOCK_Stream.cpp"
                  source type(cpp) "Malloc.cpp"
+                 source type(cpp) "Malloc_Allocator.cpp"
                  source type(cpp) "Map.cpp"
                  source type(cpp) "Mem_Map.cpp"
                  source type(cpp) "Memory_Pool.cpp"
@@ -369,9 +392,12 @@ option
                  source type(cpp) "Obstack.cpp"
                  source type(cpp) "OS.cpp"
                  source type(cpp) "OS_Dirent.cpp"
+                 source type(cpp) "OS_Log_Msg_Attributes.cpp"
                  source type(cpp) "OS_Memory.cpp"
                  source type(cpp) "OS_String.cpp"
+                 source type(cpp) "OS_Thread_Adapter.cpp"
                  source type(cpp) "OS_TLI.cpp"
+                 source type(cpp) "PI_Malloc.cpp"
                  source type(cpp) "Pair.cpp"
                  source type(cpp) "Parse_Node.cpp"
                  source type(cpp) "Pipe.cpp"
@@ -409,6 +435,7 @@ option
                  source type(cpp) "SOCK_Dgram_Mcast.cpp"
                  source type(cpp) "SOCK_IO.cpp"
                  source type(cpp) "SOCK_Stream.cpp"
+                 source type(cpp) "Sock_Connect.cpp"
                  source type(cpp) "SPIPE.cpp"
                  source type(cpp) "SPIPE_Acceptor.cpp"
                  source type(cpp) "SPIPE_Addr.cpp"
@@ -433,6 +460,9 @@ option
                  source type(cpp) "System_Time.cpp"
                  source type(cpp) "Task.cpp"
                  source type(cpp) "Thread.cpp"
+                 source type(cpp) "Thread_Adapter.cpp"
+                 source type(cpp) "Thread_Control.cpp"
+                 source type(cpp) "Thread_Exit.cpp"
                  source type(cpp) "Thread_Manager.cpp"
                  source type(cpp) "Time_Request_Reply.cpp"
                  source type(cpp) "Timeprobe.cpp"
