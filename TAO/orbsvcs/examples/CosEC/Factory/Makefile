@@ -70,7 +70,7 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
-override TAO_IDLFLAGS += -I$(TAO_ROOT)/orbsvcs
+override TAO_IDLFLAGS += -I$(TAO_ROOT)/orbsvcs -Ge 1
 
 factory: $(addprefix $(VDIR),$(FACTORY_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)

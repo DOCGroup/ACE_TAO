@@ -50,6 +50,7 @@ ifeq (Trader,$(findstring Trader,$(TAO_ORBSVCS)))
   SHLIB = $(SHLIB2)
 endif # Trader
 
+TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
