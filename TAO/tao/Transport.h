@@ -464,9 +464,18 @@ public:
    */
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor) = 0;
+
+  /// There is data queued or pending data in the current
+  /// message. Enable the reactive calls through the reactor
+  virtual int schedule_output (void);
+
+  /// There is no more data to send, cancel any reactive calls through
+  /// the reactor
+  virtual int cancel_output (void);
+
   //@}
 
-  /// Send a message block chain, 
+  /// Send a message block chain,
   int send_message_block_chain (const ACE_Message_Block *message_block,
                                 size_t &bytes_transferred,
                                 ACE_Time_Value *max_wait_time = 0);
@@ -500,14 +509,6 @@ private:
    * and 1 if the message was completely sent.
    */
   int dequeue_next_message (void);
-
-  /// There is data queued or pending data in the current
-  /// message. Enable the reactive calls through the reactor
-  int schedule_output (void);
-
-  /// There is no more data to send, cancel any reactive calls through
-  /// the reactor
-  int cancel_output (void);
 
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))

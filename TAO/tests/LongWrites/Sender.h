@@ -37,8 +37,20 @@ public:
     TEST_READ_WRITE,
   };
 
+  /// Run the test in a separate thread
+  int run_test (CORBA::Long event_count,
+                CORBA::ULong event_size);
+
+  /// Return 1 after <shutdown> is invoked and all the messages are
+  /// received.
+  int test_done (CORBA::ULong message_count);
+
   /// Return 1 after <shutdown> is invoked
   int shutdown_called (void);
+
+  /// Return 1 if the test is finished, assuming <message_count>
+  /// messages have been received by the local Receiver
+  int iteration_done (CORBA::ULong messsage_count);
 
   // = The skeleton methods
   virtual void add_receiver (Test::Receiver_ptr receiver,
@@ -65,6 +77,9 @@ private:
 
   /// Set to 1 if the shutdown() operations was called.
   int shutdown_called_;
+
+  /// Setup event count
+  CORBA::ULong event_count_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

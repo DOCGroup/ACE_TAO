@@ -27,6 +27,9 @@ public:
   /// Constructor
   Receiver (void);
 
+  /// Return the number of messages received so far
+  CORBA::ULong message_count (void);
+
   /// Print out the results
   void dump_results (void);
 

@@ -117,7 +117,7 @@ main (int argc, char *argv[])
                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      while (!sender_impl->shutdown_called ())
+      while (!sender_impl->test_done (receiver_impl->message_count ()))
         {
           ACE_Time_Value tv(1, 0);
           orb->run (tv, ACE_TRY_ENV);
