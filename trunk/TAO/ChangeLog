@@ -1,3 +1,9 @@
+Wed Feb 11 10:22:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/ec_typed_events.mpb:
+          Added idlflags so that export macros are also generated in for the
+          typed event idl files.
+
 Wed Feb 11 09:23:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Concurrency_Service/Concurrency_Service.vcp:
