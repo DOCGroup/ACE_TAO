@@ -153,21 +153,20 @@ ifdef shared_libs_only
   ifeq ($(SHLIB),)
     #### Makefile only specifies static libs, so only build static libs.
   else
-    #### don't build static objects:
-    BUILD           = $(VSHLIB) $(SHLIBA) $(VBIN)
-    LIB             =
-    OBJDIRS         = .shobj
-    SHOBJ           = $(addsuffix .$(SOEXT),$(FILES))
-    VDIR            =
+    #### Don't build static objects:
+    BUILD         = $(VSHLIB) $(SHLIBA) $(VBIN)
+    LIB           =
+    ifeq ($(BIN),)
+      OBJDIRS     = .shobj
+    endif # BIN
   endif # SHLIB
 else
 ifdef static_libs_only
-  #### don't build shared objects:
+  #### Don't build shared objects:
   BUILD           = $(VLIB) $(VBIN)
   OBJDIRS         = .obj
   PIC             =
   SHLIB           =
-  SHOBJ           = $(addsuffix .o,$(FILES))
   SOEXT           = o
   VSHDIR          = .obj/
   VLDLIBS         = $(LDLIBS:%.so=%.o)
