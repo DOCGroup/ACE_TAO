@@ -1,3 +1,12 @@
+Thu Jul  1 13:34:51 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Basic_Types.h: Change the ACE_UINT64_FORMAT_SPECIFIER and
+	  ACE_INT64_FORMAT_SPECIFIER to depend on the value of
+	  ACE_SIZEOF_LONG. If long is an 8-byte type, then the 'l'
+	  format modifier is correct instead of 'll'. Fixes compile
+	  warnings from g++ in 64-bite mode. Thanks to Andre Kostur
+	  <akostur@incognito.com> for this fix.
+
 Thu Jul  1 07:54:11 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/OS_NS_Thread.inl: Changed the thr_min_stack() wrapper method
