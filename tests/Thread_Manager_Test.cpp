@@ -256,7 +256,7 @@ main (int, ASYS_TCHAR *[])
       if (errno == ETIME)
         ACE_ERROR ((LM_ERROR,
                     ASYS_TEXT ("maximum wait time of %d msec exceeded\n"),
-                               max_wait));
+                               max_wait.msec ()));
       else
         ACE_OS::perror ("wait");
 
