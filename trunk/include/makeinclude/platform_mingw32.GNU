@@ -40,16 +40,6 @@ TCPU = pentiumpro
 #TCPU = i486
 #TCPU = i386
 
-# Define here mingw32 instalation location.
-# These asumes no fancy hierachy, just all packages above unpacked on
-# the same base directory.
-# Optionally, you can define it as an environment variable, or set it
-# on your platform_macros.GNU before including this file.
-
-ifndef MINGW_BASE
-  MINGW_BASE = c:/live/local/mingw32
-endif
-
 # MingW doesn't allow to add the version number of ACE to the dll name
 # because fe ace.dll.5.2.3 isn't a valid dll name
 SONAME=
