@@ -1,7 +1,20 @@
+Wed Aug 27 14:23:00 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/Options.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Reverted the -recurse change from Mon Aug 18 12:28:09 2003.  Added
+          a -exclude option that allows users to exclude directories
+          independently from the -recurse option.
+
 Wed Aug 27 13:25:20 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Kokyu_defs.h: Added inline qualification to operator != to
-	  fix warnings in SunOS_SunCC53 build.
+        * Kokyu/Kokyu_defs.h: Added inline qualification to operator != to
+          fix warnings in SunOS_SunCC53 build.
 
 Wed Aug 27 17:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 

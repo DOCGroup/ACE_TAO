@@ -146,6 +146,7 @@ sub new {
   my($gfeature)  = shift;
   my($feature)   = shift;
   my($hierarchy) = shift;
+  my($exclude)   = shift;
   my($makeco)    = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
@@ -2340,9 +2341,7 @@ sub get_verbatim {
 sub generate_recursive_input_list {
   my($self) = shift;
   my($dir)  = shift;
-  my($exc)  = shift;
   return $self->extension_recursive_input_list($dir,
-                                               $exc,
                                                $ProjectCreatorExtension);
 }
 

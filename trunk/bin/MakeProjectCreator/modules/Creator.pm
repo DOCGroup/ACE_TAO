@@ -445,32 +445,18 @@ sub add_file_written {
 sub extension_recursive_input_list {
   my($self)  = shift;
   my($dir)   = shift;
-  my($exc)   = shift;
   my($ext)   = shift;
   my($fh)    = new FileHandle();
   my(@files) = ();
 
   if (opendir($fh, $dir)) {
     foreach my $file (grep(!/^\.\.?$/, readdir($fh))) {
-      my($excluded) = 0;
       my($full) = ($dir ne '.' ? "$dir/" : '') . $file;
-      if (defined $exc && defined $$exc[0]) {
-        foreach my $ex (@$exc) {
-          if ($file eq $ex) {
-            $excluded = 1;
-            last;
-          }
-        }
+      if (-d $full) {
+        push(@files, $self->extension_recursive_input_list($full, $ext));
       }
-      if (!$excluded) {
-        if (-d $full) {
-          push(@files, $self->extension_recursive_input_list($full,
-                                                             $exc,
-                                                             $ext));
-        }
-        elsif ($full =~ /$ext$/) {
-          push(@files, $full);
-        }
+      elsif ($full =~ /$ext$/) {
+        push(@files, $full);
       }
     }
     closedir($fh);
@@ -785,7 +771,6 @@ sub process_duplicate_modification {
 sub generate_recursive_input_list {
   #my($self) = shift;
   #my($dir)  = shift;
-  #my($exc)  = shift;
   return ();
 }
 
