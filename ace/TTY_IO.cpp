@@ -2,7 +2,9 @@
 
 #include "ace/TTY_IO.h"
 
-ACE_RCSID(ace, TTY_IO, "$Id$")
+ACE_RCSID (ace,
+           TTY_IO,
+           "$Id$")
 
 ACE_TTY_IO::Serial_Params::Serial_Params (void)
 {
@@ -262,7 +264,7 @@ ACE_TTY_IO::control (Control_Mode cmd,
 #endif /* IXOFF */
       c_lflag = 0;
 
-      ivmin_cc4 = (u_char) 0;
+      ivmin_cc4 = (u_char) arg->readmincharacters;
       ivtime_cc5= (u_char) (arg->readtimeoutmsec / 100);
       devpar.c_iflag = c_iflag;
       devpar.c_oflag = c_oflag;
@@ -276,9 +278,9 @@ ACE_TTY_IO::control (Control_Mode cmd,
       int status;
       this->ACE_IO_SAP::control (TIOCMGET, &status);
 
-       if (arg->dtrdisable) 
+       if (arg->dtrdisable)
          status &= ~TIOCM_DTR;
-       else 
+       else
          status |= TIOCM_DTR;
 
       this->ACE_IO_SAP::control (TIOCMSET,&status);
@@ -305,10 +307,10 @@ ACE_TTY_IO::control (Control_Mode cmd,
     case SETPARAMS:
       DCB dcb;
       dcb.DCBlength = sizeof dcb;
-      if (!::GetCommState (this->get_handle (), &dcb)) 
+      if (!::GetCommState (this->get_handle (), &dcb))
         {
           ACE_OS::set_errno_to_last_error ();
-          return -1; 
+          return -1;
         }
 /*SadreevAA
       switch (arg->baudrate)
@@ -328,7 +330,7 @@ ACE_TTY_IO::control (Control_Mode cmd,
 //          case  256000: dcb.BaudRate = CBR_256000; break;
         default:  return -1;
         }
-*/  
+*/
       dcb.BaudRate = arg->baudrate;
       switch (arg->databits)
         {
@@ -423,19 +425,19 @@ ACE_TTY_IO::control (Control_Mode cmd,
       if (arg->xofflim != -1)
         dcb.XoffLim  = arg->xofflim;
 
-     if (arg->dtrdisable) 
+     if (arg->dtrdisable)
        dcb.fDtrControl = DTR_CONTROL_DISABLE;
      else
        dcb.fDtrControl = DTR_CONTROL_ENABLE;
 
       dcb.fAbortOnError = FALSE;
-      dcb.fErrorChar = FALSE; 
-      dcb.fNull = FALSE; 
+      dcb.fErrorChar = FALSE;
+      dcb.fNull = FALSE;
       dcb.fBinary = TRUE;
       if (!::SetCommState (this->get_handle (), &dcb))
         {
           ACE_OS::set_errno_to_last_error ();
-          return -1; 
+          return -1;
         }
 
       // 2/13/97 BWF added drop out timer
@@ -445,13 +447,13 @@ ACE_TTY_IO::control (Control_Mode cmd,
       if (!::GetCommTimeouts (this->get_handle(), &timeouts))
         {
           ACE_OS::set_errno_to_last_error ();
-          return -1; 
+          return -1;
         }
 
       if (arg->readtimeoutmsec == 0)
         {
           // return immediately if no data in the input buffer
-          timeouts.ReadIntervalTimeout = MAXDWORD; 
+          timeouts.ReadIntervalTimeout = MAXDWORD;
           timeouts.ReadTotalTimeoutMultiplier = 0;
           timeouts.ReadTotalTimeoutConstant   = 0;
         }
@@ -485,13 +487,13 @@ ACE_TTY_IO::control (Control_Mode cmd,
               timeouts.ReadTotalTimeoutConstant = 0;
             }
           }
-  
+
        if (!::SetCommTimeouts (this->get_handle (), &timeouts))
          {
            ACE_OS::set_errno_to_last_error ();
-           return -1; 
+           return -1;
          }
- 
+
        return 0;
 
     case GETPARAMS:
