@@ -1,3 +1,9 @@
+Wed May  7 17:09:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/ComponentServer_Impl.cpp (configuration): Used .inout ()
+	  while doing a deep copy so that the right operator= on
+	  TAO_Unbounded_Sequence is invoked without any warning in g++.
+
 Wed May  7 16:41:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/ComponentServer_Impl.cpp (remove_container): Fixed warnings
