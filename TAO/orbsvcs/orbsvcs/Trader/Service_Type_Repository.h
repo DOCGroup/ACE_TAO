@@ -207,13 +207,10 @@ private:
   struct Type_Info
   {
     // storage structure for information pertinent to the type.
-
-    typedef ACE_Unbounded_Set <TAO_String_Hash_Key> Type_List;
-
     CosTradingRepos::ServiceTypeRepository::TypeStruct type_struct_; 
     // standard type info.
     
-    Type_List sub_types_;
+    CORBA::Boolean has_subtypes_;
     // names of subtypes.
   };
   

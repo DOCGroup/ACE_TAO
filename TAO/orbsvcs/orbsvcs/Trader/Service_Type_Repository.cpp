@@ -156,31 +156,15 @@ remove_type (const char * name,
 
   // Check if it has any subtypes.
   Type_Info& type_info = type_entry->int_id_;
-  if (type_info.sub_types_.is_empty () == 0)
+  if (type_info.has_subtypes_)
     {
-      Type_Info::Type_List::iterator type_iter = type_info.sub_types_.begin ();
-      TAO_String_Hash_Key type_name = *type_iter;
-      
       TAO_THROW (CosTradingRepos::ServiceTypeRepository::HasSubTypes
-		 (name, (const char*) type_name));
+		 (name, ""));
     }
 
   // remove this type from an entry of each of its supertypes.
   CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super =
     type_info.type_struct_.super_types;
-
-  for (CORBA::ULong i = 0; i < super.length (); i++)
-    {
-      // find the super type
-      Service_Type_Map::ENTRY* super_entry = 0;
-      TAO_String_Hash_Key super_type (super[i]);
-      this->type_map_.find (super_type, super_entry);
-      
-      // remove this type from its list of subtypes
-      TAO_String_Hash_Key type_name (name);
-      Type_Info& type_info = super_entry->int_id_;
-      type_info.sub_types_.remove (type_name);
-    }
 
   // remove the type from the map.
   this->type_map_.unbind (type_entry);
@@ -526,7 +510,7 @@ update_type_map (const char* name,
        super_map_iterator++)
     {
       Type_Info* super_type_info = (*super_map_iterator).int_id_;
-      super_type_info->sub_types_.insert (type_name);
+      super_type_info->has_subtypes_ = CORBA::B_FALSE;
     }
 
   // all parameters are valid, create an entry for this service type
@@ -536,6 +520,7 @@ update_type_map (const char* name,
   type.type_struct_.super_types = super_types;
   type.type_struct_.masked = CORBA::B_FALSE;
   type.type_struct_.incarnation = this->incarnation_;
+  type.has_subtypes_ = CORBA::B_FALSE;
   
   this->type_map_.bind (type_name, type);
 }
