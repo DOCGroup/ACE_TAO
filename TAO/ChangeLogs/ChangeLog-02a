@@ -27,7 +27,7 @@ Fri Mar 10 18:56:25 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
  	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.{h,cpp}:
 	  Added the TAO_Notify_CosEC_ProxyPushConsumer_i type to support
 	  backward compatibility with the CosEC spec.
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.{h.cpp}
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.{h.cpp}:
 	  Added the TAO_Notify_CosEC_ProxyPushSupplier_i type to support
 	  backward compatibility with the CosEC spec.
  	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.{h.cpp}:
@@ -42,16 +42,17 @@ Fri Mar 10 18:56:25 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
  	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.{h,cpp}:
  	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.{h.cpp}:
           Minor changes to support updates.
-	* orbsvcs/orbsvcs/Notify/Notify_Types.{h,cpp}
+	* orbsvcs/orbsvcs/Notify/Notify_Types.{h,cpp}:
 	  Introduced the TAO_Notify_Event abstract type. This allows uniform
 	  handling of Any and Structured types.Anys are handled as the
 	  TAO_Notify_Any type and StructuredEvent as TAO_Notify_StructuredEvent
+        * orbsvcs/orbsvcs/Makefile: updates dependencies.
 
 	 Added Files:
  	* orbsvcs/orbsvcs/Notify/Notify_Proxy_T.{h, cpp}:
 	  Base class for all Proxys, pushed all Filter and QoS methods here.
-	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.{h,cpp}
- 	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.{h,cpp}
+	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.{h,cpp}:
+ 	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.{h,cpp}:
           New proxy consumer and proxy supplier types that support pushing
 	  the EventBatch type (a sequence of Structured Event).
 
