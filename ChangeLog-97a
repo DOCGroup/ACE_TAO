@@ -1,3 +1,11 @@
+Mon Jun 23 08:03:46 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/Auto_Ptr.h: changed inheritance of auto_basic_array_ptr in 
+	  auto_array_ptr to include the template parameter X.
+
+	* ace/IOStream_T.i: removed default parameter in the definition
+	  of ACE_Streambut_T::recv_n() and ACE_SOCK_Dgram_SC::recv_n()
+
 Mon Jun 23 01:13:15 1997    <irfan@TWOSTEP>
 
 	* ace/OS.cpp (fork_exec): Fixed the usage of ACE_WIDE_STRING.
