@@ -1,3 +1,19 @@
+Tue Feb 25 19:57:54 1997    <harrison@samba.cs.wustl.edu>
+
+	* ace/Timer_Queue.cpp (gettimeofday): Added gettimeofday accessors
+	  on the Timer_Queue.  The default implementation calls
+	  ACE_OS::gettimeofday.  Applications can specify, via pointers to
+	  functions, that a timer queue use an alternate gettimeofday
+	  implementation (e.g., a high resolution timer).
+
+	* ace/Reactor.cpp (schedule_timer): The Reactor no longer calls
+	  ACE_OS::gettimeofday.  Instead, it calls
+	  Timer_Queue::gettimeofday.
+
+	* ace/ReactorEx.cpp (schedule_timer): The ReactorEx no longer calls
+	  ACE_OS::gettimeofday.  Instead, it calls
+	  Timer_Queue::gettimeofday.
+
 Tue Feb 25 17:40:57 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Log_Msg.cpp: Updated the 'p' option of the log() method to
