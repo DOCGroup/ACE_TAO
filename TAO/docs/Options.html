@@ -614,6 +614,22 @@ would load all the options listed within "".
       thread until all the data is sent.
   </TD>
 </TR>
+<TR>
+  <TD><CODE>-ORBResourceUsage</CODE> <EM>eager / lazy</EM></TD>
+  <TD><a name="-ORBResourceUsage"></a>
+      This option, as the name implies is useful for strategizing the
+      resources used byt the ORB. <EM> Eager </EM> resource usage
+      would mean that all the resources are reserved upfront even
+      if they are not used. The <EM> lazy </EM> resource usage on the
+      other hand, tries to allocate or use resources when needed. <p>
+
+      The default for this option is <EM> eager </EM>, and at this
+      point, only the de-marshalling resources for IOR can be
+      controlled using this option. It will not have any effect on
+      other resources that are eagerly used by the ORB. They are work
+      in progress.<p>
+  </TD>
+</TR>
 </TABLE>
 </P>
 </blockquote>
@@ -866,7 +882,6 @@ would load all the options listed within "".
 
     </TD>
   </TR>
-
   <TR>
     <TD><CODE>-ORBTransportMuxStrategy</CODE> <EM>EXCLUSIVE / MUXED</EM></TD>
 
@@ -883,6 +898,36 @@ would load all the options listed within "".
 
         Default for this option is MUXED.
 
+    </TD>
+  </TR>
+  <TR>
+    <TD><CODE>-ORBTransportMuxStrategyLock</CODE> <EM>thread / null</EM></TD>
+
+    <TD><A name="-ORBTransportMuxStrategyLock"></a>
+
+        Specify the kind of synchronization primitive for the Muxed
+        strategy.  Default is <code>thread</code>, which means that a
+        mutex is used. The type of mutex depends on the muxed strategy
+        in use. The second option is <code>null</code>, which
+        means a null lock is used.  This makes sense in case of
+        optimizations and when only a single threaded client
+        is in use.  <p> 
+
+        Default for this option is <EM> thread </EM>.
+
+    </TD>
+  </TR>
+  <TR>
+    <TD><CODE>-ORBReplyDispatcherTableSize</CODE> <EM>number</EM></TD>
+
+    <TD><A name="-ORBReplyDispatcherTableSize"></a>
+
+        Specify the initial number of entries in the tables used for
+        storing the reply dispatchers. Using a smaller value would
+        limit the amount of runtime memory used. But, if the number of 
+        entries exceeds the starting size, dynamic changes in table
+        sizes could incur unpredictability during execution <p>
+        Default for this option is <EM> thread </EM>.
     </TD>
   </TR>
   <TR>
