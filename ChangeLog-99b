@@ -1,3 +1,8 @@
+Fri Aug 06 13:47:51 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: added note about disabling optimization
+          for some files with Tornado II.
+
 Fri Aug 06 13:39:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: updated VxWorks build information,
