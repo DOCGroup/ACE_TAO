@@ -40,7 +40,7 @@ ACE::beta_version (void)
   return ACE_BETA_VERSION;
 }
 
-const char* const
+const char*
 ACE::compiler_name (void)
 {
 #ifdef ACE_CC_NAME
