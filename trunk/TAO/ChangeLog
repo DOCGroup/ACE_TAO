@@ -1,25 +1,39 @@
+Fri Feb 21 12:54:07 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ValueBase.h (add_ref, remove_ref):
+
+	  Made these function prototypes match those in
+	  `corbafwd.h'. Should fix a problem revealed in "Release"
+	  configuration Windows builds.
+
+	* tao/corba.h:
+	* tao/orbconf.h:
+
+	  Moved ACE_NESTED_CLASS macro out of corba.h and into orbconf.h.
+	  That macro is needed within TAO's ORB core, as well.
+
 Fri Feb 21 17:49:54 2003  Edward Scott  <eas@prismtechnologies.com>
 
-	* tao/DynamicAny/DynUnion_i.h: 
+	* tao/DynamicAny/DynUnion_i.h:
 	* tao/DynamicAny/DynUnion_i.cpp:
 	  Fixes for bug 1455 for creating Dynamic Anys from Anys initialised
 	  with _default().
 
-	* tao/DynamicAny/DynStruct_i.cpp (from_any): 
-	* tao/DynamicAny/DynStruct_i.h (TAO_Local_RefCounted_Object): 
-	* tao/DynamicAny/DynUnion_i.cpp (TAO_DynUnion_i): 
+	* tao/DynamicAny/DynStruct_i.cpp (from_any):
+	* tao/DynamicAny/DynStruct_i.h (TAO_Local_RefCounted_Object):
+	* tao/DynamicAny/DynUnion_i.cpp (TAO_DynUnion_i):
 	  Fixes for Dynamic Any with aliases typecodes. Fixes bug 1449.
 
-	* tests/DynAny_Test/test_dynunion.cpp: 
-	* tests/DynAny_Test/test_dynstruct.cpp: 
-	* tests/DynAny_Test/da_tests.idl: 
+	* tests/DynAny_Test/test_dynunion.cpp:
+	* tests/DynAny_Test/test_dynstruct.cpp:
+	* tests/DynAny_Test/da_tests.idl:
 	  Test update for bugs 1449 and 1455.
 
-	* TAO_IDL/util/utl_global.cpp: 
-	* TAO_IDL/include/idl_global.h: 
-	* TAO_IDL/fe/lex.yy.cpp: 
-	* TAO_IDL/fe/idl.ll: 
-	* TAO_IDL/tao_idl.cpp: 
+	* TAO_IDL/util/utl_global.cpp:
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/tao_idl.cpp:
 	  Correct IFR Service handling IDL with C++ keyword identifiers.
 	  Fixes bug 1393.
 
@@ -35,11 +49,11 @@ Fri Feb 21 17:49:54 2003  Edward Scott  <eas@prismtechnologies.com>
 	* TAO/orbsvcs/tests/Bug_1393_Regression/README:
 	* TAO/orbsvcs/tests/Bug_1393_Regression/run_test.pl:
 	  Regression test for 1393.
-	
-	* tao/PortableServer/POA.cpp (TAO_POA): 
+
+	* tao/PortableServer/POA.cpp (TAO_POA):
 	  Recover from failure to contact IMR in create_POA with
 	  persistent policy. Fixes bug 1395.
-	
+
 	* TAO/orbsvcs/tests/Bug_1395_Regression/Bug_1395_Client.dsp:
 	* TAO/orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.dsw:
 	* TAO/orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
@@ -56,14 +70,14 @@ Fri Feb 21 17:49:54 2003  Edward Scott  <eas@prismtechnologies.com>
 	* TAO/orbsvcs/tests/Bug_1395_Regression/Test_i.h:
 	  Regression test for 1395.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (parse_args): 
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (parse_args):
 	  Fixed usage message (Bug 1438).
-	
+
 	* TAO/orbsvcs/tests/Bug_1436_Regression/README:
 	* TAO/orbsvcs/tests/Bug_1436_Regression/run_test.pl:
 	* TAO/orbsvcs/tests/Bug_1436_Regression/test.idl:
 	  Regression test for 1436.
-	
+
 	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
 	  Prevent registration of server with empty server name in the
 	  ImplRepo service. Fixes bug 1437.
@@ -71,7 +85,7 @@ Fri Feb 21 17:49:54 2003  Edward Scott  <eas@prismtechnologies.com>
 	* TAO/orbsvcs/tests/Bug_1437_Regression/README:
 	* TAO/orbsvcs/tests/Bug_1437_Regression/run_test.pl:
 	  Regression test for 1437.
-	
+
 Fri Feb 21 06:54:45 2003  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation.cpp
