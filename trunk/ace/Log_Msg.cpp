@@ -1004,6 +1004,10 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
 
   if (abort_prog)
     {
+      // Since we are now calling abort instead of exit, this value is
+      // not used.
+      ACE_UNUSED_ARG (exit_value);
+
       // *Always* print a message to stderr if we're aborting.  We
       // don't use verbose, however, to avoid recursive aborts if
       // something is hosed.
@@ -1011,7 +1015,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
 #if defined (ACE_HAS_WINCE)
       while (1) ;
 #else
-      ACE_OS::exit (exit_value);
+      ACE_OS::abort ();
 #endif /* ACE_HAS_WINCE */
     }
 
