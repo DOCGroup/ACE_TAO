@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Handle connections from remote INET connections.
-
 #if !defined (_HANDLE_THR_STREAM_H)
 #define _HANDLE_THR_STREAM_H
 
@@ -13,6 +11,9 @@
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class Handle_Thr_Acceptor : public ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
+  // = TITLE
+  //   This factory creates new <SVC_HANDLERS> and runs them with the
+  //   configured <ACE_Thread_Strategy>.  
 {
 public:
   // = Initialization and termination.
@@ -35,10 +36,11 @@ private:
   // Threading flags.
 };
 
-// This class interacts with the client, running in a separate
-// thread...
 template <ACE_PEER_STREAM_1>
 class CLI_Stream : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_MT_SYNCH>
+  // = TITLE
+  //   This class interacts with the client, running in a separate
+  //   thread and handles connections from remote TCP/IP connections.
 {
 public:
   CLI_Stream (ACE_Thread_Manager * = 0);

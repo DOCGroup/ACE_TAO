@@ -98,34 +98,34 @@ ACE_Time_Value::normalize (void)
   // ACE_TRACE ("ACE_Time_Value::normalize");
   // New code from Hans Rohnert...
 
-  if (this->tv_.tv_usec >= ONE_SECOND)
+  if (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS)
     {
       do
         { 
           this->tv_.tv_sec++;
-          this->tv_.tv_usec -= ONE_SECOND;
+          this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
         }
-      while (this->tv_.tv_usec >= ONE_SECOND);
+      while (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS);
     }
-  else if (this->tv_.tv_usec <= -ONE_SECOND)
+  else if (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS)
     {
       do
         { 
           this->tv_.tv_sec--;
-          this->tv_.tv_usec += ONE_SECOND;
+          this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
         }
-      while (this->tv_.tv_usec <= -ONE_SECOND);
+      while (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS);
     }
  
   if (this->tv_.tv_sec >= 1 && this->tv_.tv_usec < 0)
     {
       this->tv_.tv_sec--;
-      this->tv_.tv_usec += ONE_SECOND;
+      this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
     }
   else if (this->tv_.tv_sec < 0 && this->tv_.tv_usec > 0)
     {
       this->tv_.tv_sec++;
-      this->tv_.tv_usec -= ONE_SECOND;
+      this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
     }
 }
 

@@ -48,7 +48,7 @@ TAO_Default_Client_Strategy_Factory::init (int argc, char *argv[])
   return this->parse_args (argc, argv);
 }
 
-TAO_Client_Strategy_Factory::CONNECTOR *
+TAO_CONNECTOR *
 TAO_Default_Client_Strategy_Factory::connector (void)
 {
   return &this->connector_;

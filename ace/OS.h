@@ -22,6 +22,10 @@
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).  
 #include "ace/config.h"
 
+#define ACE_ONE_SECOND_IN_MSECS 1000L
+#define ACE_ONE_SECOND_IN_USECS 1000000L
+#define ACE_ONE_SECOND_IN_NSECS 1000000000L
+
 #if defined (ACE_NO_INLINE)
   // ACE inlining has been explicitly disabled.  Implement
   // internally within ACE by undefining __ACE_INLINE__.

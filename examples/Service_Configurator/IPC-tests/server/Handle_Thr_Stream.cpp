@@ -81,8 +81,11 @@ Handle_Thr_Acceptor<SH, PR_AC_2>::init (int argc, char *argv[])
 
   // Initialize the Acceptor base class, passing in the desired
   // concurrency strategy.
-  else if (this->open (local_addr, ACE_Reactor::instance (),
-		       0, 0, &this->thr_strategy_) == -1)
+  else if (this->open (local_addr,
+		       ACE_Reactor::instance (),
+		       0,
+		       0,
+		       &this->thr_strategy_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
   else
     return 0;
@@ -207,7 +210,6 @@ template class Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR>;
 #pragma instantiate CLI_Stream <THR_STREAM>
 #pragma instantiate Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_HANDLE_THR_STREAM_C */
