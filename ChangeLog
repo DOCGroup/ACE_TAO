@@ -1,3 +1,12 @@
+Tue Nov 11 17:25:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/TSS_T.cpp:
+
+	  Reverting the change "Mon Nov 10 22:30:14 2003  Kobi Cohen-Arazi
+	  <kobi@mivzak.com>". The change is so benign that the probelm is
+	  elsewhere. Thic change just triggered something else. Reverting
+	  this since our daily builds can run properly.
+
 Tue Nov 11 12:20:14 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
