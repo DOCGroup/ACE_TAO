@@ -1,3 +1,21 @@
+Thu Sep  9 18:30:56 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/Simple/time-date/Simple_time_date.mpc:
+
+	  Changed client project to inherit from portableserver.  It
+	  doesn't really use it, but Simple_util.h #includes
+	  "PortableServer/PortableServer.h", which forces it
+	  to be resolved.
+
+	* orbsvcs/examples/CosEC/Factory/CosEC_Factory.mpc:
+
+	  Added exename definitions so that programs, not libraries, are
+	  built.
+
+	  Added main.cpp to FactoryServer project's Source_Files.
+
+	  Changed FactoryServer project to inherit from event_serv.
+
 Thu Sep  9 17:24:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Extensions.h:
