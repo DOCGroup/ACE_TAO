@@ -1,7 +1,12 @@
+Thu Apr 15 06:00:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Data.cpp:
+          Added include of tao/CDR.h
+
 Thu Apr 15 14:27:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/OctetSeqC.h:
-        
+
           Reluctantly added a handcraft to this generated file, but it
           wouldn't work anywhere else. Visual Studio .NET has a bug
           (see http://support.microsoft.com/default.aspx?scid=kb;en-us;309801)
@@ -12,28 +17,28 @@ Thu Apr 15 14:27:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           if an application server uses the same type. Since the conflict
           is with *C.obj, the fix must go into a file that will be included
           in that translation unit, to force the correct import. We force
-          the import with 
-          
+          the import with
+
           #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
             template class TAO_Export TAO_Unbounded_Sequence<CORBA::OctetSeq>;
           #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
-          
+
           and the TAO export macro will be read by the application as
           __declspec(dllimport). Placement of the instantiation was tricky,
           since it had to be a place where
-          
+
           - TAO_Unbounded_Sequence is known
           - CORBA::OctetSeq is known
           - the instantiation will be seen when building *C.obj
           - it will not conflict with the implicit PortableServer export
-          
+
           Thanks to Bala <bala@dre.vanderbilt.edu> for his help with this
           bug, and to Scott Gammill <zumo@flashmail.com> for both reporting
           the bug and for pointing us to the Microsoft Knowledge Base article
           that finally explained it.
-          
+
         * tests/IDL_Test/sequence.idl:
-        
+
           Added IDL to test for the above bug.
 
 Thu Apr 15 12:02:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
