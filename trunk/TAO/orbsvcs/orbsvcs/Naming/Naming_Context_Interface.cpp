@@ -374,6 +374,64 @@ TAO_Naming_Context::to_name (const char *sn,
   return new CosNaming::Name (n);
 }
 
+int
+TAO_Naming_Context::to_url_is_alnum_or_punctuation (char c)
+{
+  if (isalnum (c))
+    return 1;
+
+  // NON US-ASCII charcters excluding those in this array are the
+  // characters that need to be escaped
+  static char non_escaped_punctuation[] =
+    { ';', '/', ':', '?', '@', '=', '+', '$', ',', '-',
+      '_', '.', '!', '~', '*', '\'', '(', ')' };
+  const size_t non_escaped_punctuation_count =
+    sizeof(non_escaped_punctuation)/sizeof(non_escaped_punctuation[0]);
+  for (const char *j = non_escaped_punctuation;
+       j != non_escaped_punctuation + non_escaped_punctuation_count;
+       ++j)
+    {
+      // But if the character is one of the 18 non US-ASCII characters
+      // and hence need not be escaped, then don't increment the
+      // count.
+      if (*j == c)
+        return 1;
+    }
+  return 0;
+}
+
+size_t
+TAO_Naming_Context::to_url_validate_and_compute_size (
+    const char *addr,
+    const char *sn,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  size_t addr_len = ACE_OS_String::strlen (addr);
+
+  // Check for invalid address
+  if (addr_len == 0)
+    ACE_THROW_RETURN (CosNaming::NamingContextExt::InvalidAddress (),
+                      0);
+
+  // Make a pass through the in string name to count the number of
+  // characters and if the character
+  // is to be escaped, increment the number of characters by 3.
+  size_t sn_len = 0;
+  for (const char *i = sn; *i != '\0'; ++i)
+    {
+      ++sn_len;
+
+      if (TAO_Naming_Context::to_url_is_alnum_or_punctuation (*i))
+        continue;
+      sn_len += 3;
+    }
+
+  if (sn_len == 0)
+    ACE_THROW_RETURN (CosNaming::NamingContextExt::InvalidName (), 0);
+
+  return addr_len + sn_len;
+}
+
 char *
 TAO_Naming_Context::to_url (const char * addr,
                             const char * sn,
@@ -382,84 +440,30 @@ TAO_Naming_Context::to_url (const char * addr,
                    CosNaming::NamingContextExt::InvalidAddress,
                    CosNaming::NamingContext::InvalidName))
 {
-  // Returns a fully formed URL string.
+  /// Compute how many characters will be required for the URL
+  CORBA::ULong no_char =
+    TAO_Naming_Context::to_url_validate_and_compute_size (addr, sn,
+                                                          ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
-  // NON US-ASCII charcters excluding those in this array are the
-  // characters that need to be escaped
-  //
-  char non_escaped_punctuation[]= {';', '/', ':', '?', '@',
-                                     '=', '+', '$', ',', '-',
-                                     '_', '.', '!', '~', '*',
-                                     '\'', '(', ')' };
 
-  // Variable to keep track of the number of characters
-  //
-  CORBA::ULong no_char = ACE_OS::strlen (addr);
-
-  // Check for invalid address
-  if (no_char == 0)
-    ACE_THROW_RETURN (CosNaming::NamingContextExt::InvalidAddress (),
-                      0);
-
-  // Assign the length of address to another variable
-  CORBA::ULong no_char_addr = no_char;
-
-  const char *sn_ptr = sn;
-  for (; *sn_ptr != '\0'; ++sn_ptr)
-    {
-      // Make a pass through the in string name to count the number of
-      // characters and if the character
-      // is to be escaped, increment the number of characters by 3.
-      //
-      if ( !isalnum (*sn_ptr))
-        {
-          no_char = no_char + 3;
-
-          for (const char *i = non_escaped_punctuation; *i != '\0'; ++i)
-            {
-              // But if the character is one of the 18 non US-ASCII characters
-              // and hence neednot be escaped, decrement the count by
-              // the 3.
-              //
-              if (*sn_ptr == *i)
-                {
-                  no_char = no_char - 3;
-                }
-            }
-        }
-
-      ++no_char;
-    }
-
-  // Check for invalid name
-  //
-  if (no_char == no_char_addr)
-    ACE_THROW_RETURN (CosNaming::NamingContext::InvalidName(),
-                      0);
-
-  // The 'iiopname://' tag is to be prepended at the starting of the
+  // The 'corbaloc:' tag is to be prepended at the starting of the
   // return parameter.
   //
-  char prefix []= "iiopname://1.1@";
+  char prefix []= "corbaloc:";
 
   // Allocate dynamic memory
   //
   char *str_url = CORBA::string_alloc (no_char + sizeof (prefix));
-  char *str_url_ptr = str_url;
-
 
   // Copy 'prefix' to the return parameter.
-  str_url_ptr  = ACE_OS::strcpy (str_url_ptr , prefix);
+  char *dest = ACE_OS::strcpy (str_url , prefix);
 
   // Concatenate the address
-  str_url_ptr = ACE_OS::strcat (str_url_ptr, addr);
+  dest = ACE_OS::strcat (dest, addr);
 
   // Concatenate the seperator between the addr and Name
-  str_url_ptr = ACE_OS::strcat (str_url_ptr, "/");
-
-  // Allocate temporary dynamic memory
-  CORBA::String_var temp_ptr = CORBA::string_alloc (no_char);
-  char *tempptr_ptr = temp_ptr;
+  dest = ACE_OS::strcat (dest, "/");
 
   // Now append the stringified object name to the return variable.
   // The percent '%' character is used as an escape. If a character
@@ -468,81 +472,29 @@ TAO_Naming_Context::to_url (const char * addr,
   // represent the octet. The first hexadecimal character represents
   // the low-order nibble of the octet and the second hexadecimal
   // character represents the low order nibble.
-  //
-  for (sn_ptr = sn; *sn_ptr != '\0'; ++sn_ptr)
+
+  for (const char *i = sn; *i != '\0'; ++i)
     {
-
-      if ( !isalnum (*sn_ptr))
-        {
-          CORBA::ULong i = 0;
-
-          // This boolean keeps track if the character is to be
-          // escaped. If the character is a non US-ASCII Alphanumeric
-          // but is in the set of characters that need not be escaped,
-          // the boolean becomes TRUE '0'
-          //
-          CORBA::Boolean found = 1;
-
-          while (found == 1 && i < 18)
-            {
-              if (*sn_ptr == non_escaped_punctuation [i])
-                {
-                  // If it is in the set, change the boolean value
-                  //
-                  found = 0;
-                }
-
-              // Still not found ..but may be one of the remaining
-              // characters: so continue to check
-              //
-              ++i;
-            }
-
-          if (found == 1)
-            {
-              // The character needs to be escaped
-              //
-              *tempptr_ptr = '%';
-              ++tempptr_ptr;
-
-              // Append the hexadecimal representation of the
-              // character.
-              const char *bytes = sn_ptr;
-
-              *tempptr_ptr = ACE::nibble2hex ((*bytes) >> 4);
-              ++tempptr_ptr;
-              *tempptr_ptr++ = ACE::nibble2hex (*bytes);
-
-            }
-          else
-            {
-              // The character neednot be escaped
-              *tempptr_ptr = *sn_ptr;
-              ++tempptr_ptr;
-            }
-
-        }
-      else
+      if (TAO_Naming_Context::to_url_is_alnum_or_punctuation (*i))
         {
           // If the character is a US-ASCII Alphanumeric value...
-          *tempptr_ptr = *sn_ptr;
-          ++tempptr_ptr;
+          *dest = *i; ++dest;
+          continue;
         }
+      // this must be an escaped character
+
+      *dest = '%'; ++dest;
+
+      // Append the hexadecimal representation of the character.
+      *dest = ACE::nibble2hex ((*i) >> 4); ++dest;
+      *dest = ACE::nibble2hex (*i); ++dest;
     }
 
   // Terminate the string
-  *tempptr_ptr = '\0';
-
-
-  str_url_ptr = ACE_OS::strcat (str_url_ptr,
-                                temp_ptr.in ());
-
-  //  CORBA::string_free (temp_ptr);
+  *dest = '\0';
 
   return str_url;
-
 }
-
 
 CORBA::Object_ptr
 TAO_Naming_Context::resolve_str (const char * n,
