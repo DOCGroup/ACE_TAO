@@ -432,33 +432,6 @@ ACE_Process_Options::inherit_environment (void)
 #else /* defined ACE_WIN32 */
 
 char * const *
-ACE_Process_Options::command_line_argv (void)
-{
-  if (command_line_argv_calculated_ == 0)
-    {
-      command_line_argv_calculated_ = 1;
-
-      // This tokenizer will replace all spaces with end-of-string
-      // characters and will preserve text between "" and '' pairs.
-      ACE_Tokenizer parser (command_line_buf_);
-      parser.delimiter_replace (' ', '\0');
-      parser.preserve_designators ('\"', '\"'); // "
-      parser.preserve_designators ('\'', '\'');
-
-      int x = 0;
-      do
-        command_line_argv_[x] = parser.next ();
-      while (command_line_argv_[x] != 0 
-             // substract one for the ending zero.
-             && ++x < MAX_COMMAND_LINE_OPTIONS - 1);
-
-      command_line_argv_[x] = 0;
-    }
-
-  return command_line_argv_;
-}
-
-char * const *
 ACE_Process_Options::env_argv (void)
 {
   return environment_argv_;
@@ -710,3 +683,31 @@ ACE_Process_Options::env_buf (void)
   return 0;
 #endif /* !ACE_HAS_WINCE */
 }
+
+char * const *
+ACE_Process_Options::command_line_argv (void)
+{
+  if (command_line_argv_calculated_ == 0)
+    {
+      command_line_argv_calculated_ = 1;
+
+      // This tokenizer will replace all spaces with end-of-string
+      // characters and will preserve text between "" and '' pairs.
+      ACE_Tokenizer parser (command_line_buf_);
+      parser.delimiter_replace (' ', '\0');
+      parser.preserve_designators ('\"', '\"'); // "
+      parser.preserve_designators ('\'', '\'');
+
+      int x = 0;
+      do
+        command_line_argv_[x] = parser.next ();
+      while (command_line_argv_[x] != 0 
+             // substract one for the ending zero.
+             && ++x < MAX_COMMAND_LINE_OPTIONS - 1);
+
+      command_line_argv_[x] = 0;
+    }
+
+  return command_line_argv_;
+}
+

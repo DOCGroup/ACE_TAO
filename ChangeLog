@@ -1,5 +1,10 @@
 Fri Jan 14 01:48:26 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Process: Moved the command_line_argv() from the
+	  non-Win32 part of the ACE_Process class to the generic
+	  part since it shouldn't depend on the platform.  Thanks
+	  to Michael Kircher for reporting this.
+
 	* ace/Process: Consider a process that spawns a number of
  	  processes using a same executable name but with different
  	  arguments <say svc.conf file..>. Depending on the arguments,
