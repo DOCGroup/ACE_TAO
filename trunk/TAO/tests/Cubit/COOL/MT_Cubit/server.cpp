@@ -106,7 +106,7 @@ main (int argc, char** argv)
 
   COOL::EOA::bind(argv[2], env);
   if (env.exception()) {
-    ACE_DEBUG ((LM_ERROR, "Impossible to bind the ORB to the description:%s\n", argv[1]));
+    ACE_DEBUG ((LM_ERROR, "Impossible to bind the ORB to the description: %s\n", argv[2]));
     return -1;
   }
 

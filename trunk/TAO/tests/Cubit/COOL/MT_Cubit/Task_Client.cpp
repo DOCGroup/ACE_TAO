@@ -565,6 +565,8 @@ Client::run_tests (Cubit_ptr cb,
       delta = ((40 * fabs (real_time) / 100) + (60 * delta / 100)); // pow(10,6)
       latency += real_time;
 #else /* ACE_LACKS_FLOATING_POINT */
+      // Store the time in secs.
+      real_time = delta_t.sec () + (double)delta_t.usec () / ACE_ONE_SECOND_IN_USECS;
       delta = ((0.4 * fabs (real_time * (1000 * 1000))) + (0.6 * delta)); // pow(10,6)
       latency += real_time;
       my_jitter_array [i] = real_time * 1000;
@@ -594,7 +596,7 @@ Client::run_tests (Cubit_ptr cb,
 				 latency, 
 				 thread_id);
 #else
-              ACE_DEBUG ((LM_DEBUG, "cube average call ACE_OS::time\t= %f msec, \t"
+              ACE_DEBUG ((LM_DEBUG, "(%P|%t) cube average call ACE_OS::time\t= %f msec, \t"
                               "%f calls/second\n",
                               latency * 1000,
                               1 / latency));
