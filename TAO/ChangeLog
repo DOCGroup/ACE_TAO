@@ -1,3 +1,13 @@
+Thu Oct 30 20:45:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        Please direct all queries regarding this commit to
+        Jason Cohen <jcohen@atl.lmco.com>
+
+        * tao/Strategies/SCIOP_Acceptor.cpp:
+
+          Cleaned up commented code.  No functional change.
+
+
 Thu Oct 30 20:30:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         Please direct all queries regarding this commit to
