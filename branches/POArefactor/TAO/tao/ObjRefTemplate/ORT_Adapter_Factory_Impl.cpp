@@ -52,5 +52,5 @@ namespace TAO
     ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
     0)
 
-    ACE_FACTORY_DEFINE (TAO_ORT, ORT_Adapter_Factory_Impl)
+  ACE_FACTORY_DEFINE (TAO_ORT, ORT_Adapter_Factory_Impl)
 }
