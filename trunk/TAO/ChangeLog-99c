@@ -1,3 +1,10 @@
+Sun May 02 22:09:42 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/{Consumer,Supplier}Admin_i.cpp,
+          EventChannel_i.cpp,ProxyPush{Consumer,Supplier}_i.cpp:
+          added auto_ptr and ACE_Auto_Basic_Ptr explicit instantiations,
+          for old g++.
+
 Sun May 02 22:05:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp (create_dispatching):
