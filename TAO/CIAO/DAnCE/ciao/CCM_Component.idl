@@ -20,6 +20,7 @@
 module Components
 {
   typeprefix Components "omg.org";
+  typedef string UUID;
 
   abstract valuetype PrimaryKeyBase {};
 
@@ -129,6 +130,7 @@ module Components
     void remove()
       raises (RemoveFailure);
     ComponentPortDescription get_all_ports ();
+    attribute UUID component_UUID;
   };
 
   // @@ Enumeration and DefaultEnumeration are only for EJB to CCM

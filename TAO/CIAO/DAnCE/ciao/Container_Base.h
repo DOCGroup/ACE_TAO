@@ -21,9 +21,13 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
 #include "CCM_ContainerC.h"
-#include "Deployment_CoreC.h"
+#include "Deployment_CoreS.h"
 #include "CIAO_Server_Export.h"
 
+#include "ace/Hash_Map_Manager.h"
+
+#include "CIAO_EventService_Factory.h"
+#include "CIAO_EventsS.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -38,7 +42,8 @@ namespace CIAO
    * Perhaps we can use local interface to define these interfaces as
    * we will also get reference counting automatically.
    */
-  class CIAO_SERVER_Export Container
+  class CIAO_SERVER_Export Container :
+    public virtual POA_CIAO::ContainerEventService
   {
   public:
     Container (CORBA::ORB_ptr o);
@@ -80,11 +85,89 @@ namespace CIAO
                               PortableServer::ObjectId_out oid
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+      
+    ContainerEventService_ptr
+    CIAO::Container::get_container_events_ref (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    // ContainerEventService implementation
+
+    /// A factory method for Consumer_Config objects.
+    Consumer_Config_ptr create_consumer_config (
+        EventServiceType type
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    /// A factory method for Supplier_Config objects.
+    Supplier_Config_ptr create_supplier_config (
+        EventServiceType type
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    /// Connect an event sink.
+    virtual void connect_event_consumer (
+        Consumer_Config_ptr consumer_config
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    /// Connect an event source.
+    virtual void connect_event_supplier (
+        Supplier_Config_ptr supplier_config
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    /// Disconnect event sink.
+    virtual void disconnect_event_consumer (
+        const char * connection_id
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        Components::InvalidName,
+        Components::InvalidConnection));
+
+    /// Disconnect event source.
+    virtual void disconnect_event_supplier (
+        const char * connection_id
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        Components::InvalidName,
+        Components::InvalidConnection));
+
+    /// Push an event.
+    virtual void push_event (
+        Components::EventBase * ev,
+        const char * connection_id
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
 
   protected:
+    // Reference to the ORB
     CORBA::ORB_var orb_;
 
+    // Reference to the POA
     PortableServer::POA_var poa_;
+    
+    /// Factory for event services.
+    EventService_Factory * event_service_factory_;
+
+    /// Mapping of components to an event service.
+    ACE_Hash_Map_Manager_Ex<ACE_CString,
+                            EventServiceBase *,
+                            ACE_Hash<ACE_CString>,
+                            ACE_Equal_To<ACE_CString>,
+                            ACE_Null_Mutex> event_service_map_;
+
+    /// Object reference to the events interface
+    ContainerEventService_var events_ref_;
+    
   };
 
   class Session_Container;

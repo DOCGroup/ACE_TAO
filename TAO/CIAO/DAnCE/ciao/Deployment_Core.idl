@@ -4,6 +4,7 @@
 #define DEPLOYMENT_CORE_IDL
 
 #include "CCM_Component.idl"
+#include "CIAO_Events.idl"
 
 // *************** Packaging and Deployment ***************
 module Deployment
@@ -176,7 +177,7 @@ module Deployment
     void remove ()
       raises (::Components::RemoveFailure);
 
-
+	::CIAO::ContainerEventService get_event_service ();
   };
 
 };
