@@ -1,3 +1,9 @@
+Wed Jan 19 12:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/SHMIOP_Endpoint.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+          Replaced ACE casts with their C++ versions
+
 Tue Jan 18 19:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/SHMIOP_Acceptor.cpp:
