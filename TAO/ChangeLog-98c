@@ -1,3 +1,9 @@
+Wed Apr  9 16:19:21 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tcpoa.cpp: Fixed a problem that G++ didn't notice regarding
+ 	changing the notion of endpoints in servers from server_endpoint
+ 	to an ACE_HANDLE.
+
 Wed Apr  9 15:43:37 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* svr.cpp: The -p option is gone, and -e takes its place and is
