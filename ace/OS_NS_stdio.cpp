@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/OS_NS_stdio.h"
-
+#include "ace/OS_NS_Thread.h"
 
 ACE_RCSID (ace,
            OS_NS_stdio,
@@ -28,6 +28,10 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID)
       ::DisableThreadLibraryCalls (instance);
 #     endif /* ACE_DISABLES_THREAD_LIBRARY_CALLS */
       ACE_OS::set_win32_resource_module(instance);
+    }
+  else if (reason == DLL_THREAD_DETACH)
+    {
+      ACE_OS::cleanup_tss (0);
     }
   return TRUE;
 }
