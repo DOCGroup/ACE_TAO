@@ -151,10 +151,10 @@ namespace CIAO
       if (specializedConfig)
         {
           // first increment the length of the sequence
-          CORBA::ULong i (pc.specializedConfigRef.length ());
-          pc.specializedConfigRef.length (i+1);
+          CORBA::ULong i (pc.specializedConfig.length ());
+          pc.specializedConfig.length (i+1);
           // insert the new specializedConfig
-          pc.specializedConfigRef[i] = strtoul (XMLString::transcode (specializedConfig), 0, 10);
+          pc.specializedConfig[i] = strtoul (XMLString::transcode (specializedConfig), 0, 10);
         }
     }
 
