@@ -231,7 +231,12 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
       << "{" << be_idt_nl 
       << " // Generate the arg list on demand" << be_nl;
 
-  if (node->argument_count () == 0)
+  if (node->argument_count () == 0 ||
+      // Now make sure that we have some in and inout
+      // parameters. Otherwise, there is nothing to be put into
+      // the Dyanmic::Paramlist.
+      (!(this->has_param_type (node, AST_Argument::dir_IN)) &&
+       !(this->has_param_type (node, AST_Argument::dir_INOUT))))
     {
       *os << "return 0;\n}\n\n" << be_nl;
     }
@@ -241,23 +246,23 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
       // The insertion operator is different for different nodes.
       // We change our scope to go to the argument scope to
       // be able to decide this.
-        ctx = *this->ctx_;
-        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST);
-        visitor = tao_cg->make_visitor (&ctx);
-        if (!visitor || (node->accept (visitor) == -1))
-          {
-            delete visitor;
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                               "codegen for argument pre invoke failed\n"),
-                              -1);
-          }
-        delete visitor;
-
-        *os << be_nl << "return &this->parameter_list_;\n}\n\n";
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "visit_operation - "
+                             "codegen for argument pre invoke failed\n"),
+                            -1);
+        }
+      delete visitor;
+      
+      *os << be_nl << "return &this->parameter_list_;\n}\n\n";
     }
-
+  
   os->decr_indent ();
   *os << "Dynamic::ExceptionList *" << be_nl;
   if (node->is_nested ())
