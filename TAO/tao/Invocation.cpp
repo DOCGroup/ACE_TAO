@@ -239,8 +239,10 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
   // Build the outgoing message, starting with generic GIOP header.
 
-  CORBA::Boolean bt = TAO_GIOP::start_message (message_type,
-                                               this->out_stream_);
+  CORBA::Boolean bt =
+    TAO_GIOP::start_message (message_type,
+			     this->out_stream_,
+			     this->orb_core_);
 
   if (bt != CORBA::B_TRUE)
     {
@@ -263,7 +265,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   // unverified user ID, and then verifying the message (i.e. a dummy
   // service context entry is set up to hold a digital signature for
   // this message, then patched shortly before it's sent).
-  static CORBA::Principal_ptr anybody = 0;
+  static CORBA::Principal_ptr principal = 0;
 
   // This static is only used to write into the CDR stream, once we
   // have real service context (needed for the messaging spec) this
@@ -274,17 +276,19 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
     {
     case TAO_GIOP::Request:
 
-      this->out_stream_ << svc_ctx;
-      this->out_stream_.write_ulong (this->my_request_id_);
-      this->out_stream_.write_boolean (is_roundtrip);
-      this->out_stream_ << *key;
-      this->out_stream_.write_string (this->opname_);
-      this->out_stream_ << anybody;
+      this->write_request_header (svc_ctx,
+				  this->my_request_id_,
+				  is_roundtrip,
+				  key,
+				  this->opname_,
+				  principal);
       break;
+
     case TAO_GIOP::LocateRequest:
-      this->out_stream_.write_ulong (this->my_request_id_);
+      this->out_stream_ << this->my_request_id_;
       this->out_stream_ << *key;
       break;
+
     default:
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
       return;
@@ -293,6 +297,65 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
     env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
 
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_REQUEST_HDR);
+}
+
+CORBA::Boolean
+TAO_GIOP_Invocation::write_request_header_std
+     (const TAO_GIOP_ServiceContextList& svc_ctx,
+      CORBA::ULong request_id,
+      CORBA::Boolean is_roundtrip,
+      const TAO_opaque* key,
+      const char* opname,
+      CORBA::Principal_ptr principal)
+{
+  this->out_stream_ << svc_ctx;
+  this->out_stream_ << request_id;
+  this->out_stream_ << is_roundtrip;
+  this->out_stream_ << *key;
+  this->out_stream_ << opname;
+  this->out_stream_ << principal;
+  return CORBA::B_TRUE;
+}
+
+CORBA::Boolean
+TAO_GIOP_Invocation::write_request_header_lite
+     (const TAO_GIOP_ServiceContextList&,
+      CORBA::ULong request_id,
+      CORBA::Boolean is_roundtrip,
+      const TAO_opaque* key,
+      const char* opname,
+      CORBA::Principal_ptr)
+{
+  this->out_stream_ << request_id;
+  this->out_stream_ << is_roundtrip;
+  this->out_stream_ << *key;
+  this->out_stream_ << opname;
+  return CORBA::B_TRUE;
+}
+
+CORBA::Boolean
+TAO_GIOP_Invocation::write_request_header
+     (const TAO_GIOP_ServiceContextList& svc_ctx,
+      CORBA::ULong request_id,
+      CORBA::Boolean is_roundtrip,
+      const TAO_opaque* key,
+      const char* opname,
+      CORBA::Principal_ptr principal)
+{
+  if (this->orb_core_->orb_params ()->use_IIOP_lite_protocol ())
+    return this->write_request_header_lite (svc_ctx,
+					    request_id,
+					    is_roundtrip,
+					    key,
+					    opname,
+					    principal);
+  else
+    return this->write_request_header_std (svc_ctx,
+					   request_id,
+					   is_roundtrip,
+					   key,
+					   opname,
+					   principal);
 }
 
 
@@ -477,7 +540,8 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
   TAO_SVC_HANDLER *handler = this->data_->handler ();
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
-                                                     this->inp_stream_);
+                                                     this->inp_stream_,
+						     this->orb_core_);
 
   this->orb_core_->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
@@ -731,7 +795,8 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 
   TAO_SVC_HANDLER *handler = this->data_->handler ();
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
-                                                     this->inp_stream_);
+                                                     this->inp_stream_,
+						     this->orb_core_);
 
   this->orb_core_->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
@@ -970,7 +1035,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
 
   TAO_SVC_HANDLER *handler = this->data_->handler ();
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
-                                                     this->inp_stream_);
+                                                     this->inp_stream_,
+						     this->orb_core_);
 
   this->orb_core_->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input

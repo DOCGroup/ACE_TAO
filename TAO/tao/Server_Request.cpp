@@ -36,8 +36,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
 
 IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
                                         TAO_OutputCDR &output,
-                                        CORBA::ORB_ptr the_orb,
-                                        TAO_POA *the_poa,
+                                        TAO_ORB_Core *orb_core,
                                         CORBA::Environment &env)
   : operation_ (0),
     incoming_ (&input),
@@ -47,8 +46,7 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
     retval_ (0),
     exception_ (0),
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
-    orb_ (the_orb),
-    poa_ (the_poa),
+    orb_core_ (orb_core),
     service_info_ (),
     request_id_ (0),
     object_key_ (),
@@ -56,6 +54,12 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
 
+  this->parse_header (env);
+}
+
+void
+IIOP_ServerRequest::parse_header_std (CORBA::Environment &env)
+{
   // Tear out the service context ... we currently ignore it, but it
   // should probably be passed to each ORB service as appropriate
   // (e.g. transactions, security).
@@ -65,6 +69,8 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
   // environment.  It may be required even when using IPSEC security
   // infrastructure.
 
+  TAO_InputCDR& input = *this->incoming_;
+
   input >> this->service_info_;
   CORBA::Boolean hdr_status = input.good_bit ();
 
@@ -73,14 +79,6 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
   hdr_status = hdr_status && input.read_ulong (this->request_id_);
   hdr_status = hdr_status && input.read_boolean (this->response_expected_);
 
-#if defined (TAO_COPY_OBJKEY)
-  // Actually it is not a copy, but it increases a reference count and
-  // thus allocates more memory.
-  hdr_status = hdr_status && input.decode (TC_opaque,
-                                           &this->object_key_,
-                                           0,
-                                           env);
-#else
   // We use ad-hoc demarshalling here: there is no need to increase
   // the reference count on the CDR message block, because this key
   // will not outlive the request (or the message block).
@@ -94,9 +92,7 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
                                  CORBA::B_FALSE);
       input.skip_bytes (key_length);
     }
-#endif
 
-#if !defined (TAO_COPY_OPNAME)
   CORBA::Long length;
   hdr_status = hdr_status && input.read_long (length);
   if (hdr_status)
@@ -104,12 +100,6 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
       this->operation_ = input.rd_ptr ();
       hdr_status = input.skip_bytes (length);
     }
-#else
-  hdr_status = hdr_status && input.decode (CORBA::_tc_string,
-                                           &this->operation_,
-                                           0,
-                                           env);
-#endif
 
   if (hdr_status)
     {
@@ -119,6 +109,56 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
 
   if (!hdr_status)
     env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+
+}
+
+void
+IIOP_ServerRequest::parse_header_lite (CORBA::Environment &env)
+{
+  TAO_InputCDR& input = *this->incoming_;
+
+  CORBA::Boolean hdr_status = input.good_bit ();
+
+  // Get the rest of the request header ...
+
+  hdr_status = hdr_status && input.read_ulong (this->request_id_);
+  hdr_status = hdr_status && input.read_boolean (this->response_expected_);
+
+  // We use ad-hoc demarshalling here: there is no need to increase
+  // the reference count on the CDR message block, because this key
+  // will not outlive the request (or the message block).
+
+  CORBA::Long key_length;
+  hdr_status = hdr_status && input.read_long (key_length);
+  if (hdr_status)
+    {
+      this->object_key_.replace (key_length, key_length,
+                                 (CORBA::Octet*)input.rd_ptr (),
+                                 CORBA::B_FALSE);
+      input.skip_bytes (key_length);
+    }
+
+  CORBA::Long length;
+  hdr_status = hdr_status && input.read_long (length);
+  if (hdr_status)
+    {
+      this->operation_ = input.rd_ptr ();
+      hdr_status = input.skip_bytes (length);
+    }
+
+  if (!hdr_status)
+    env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+}
+
+
+
+void
+IIOP_ServerRequest::parse_header (CORBA::Environment &env)
+{
+  if (this->orb_core_->orb_params ()->use_IIOP_lite_protocol ())
+    this->parse_header_lite (env);
+  else
+    this->parse_header_std (env);
 }
 
 // This constructor is used, by the locate request code
@@ -128,8 +168,7 @@ IIOP_ServerRequest::IIOP_ServerRequest (CORBA::ULong &request_id,
                                         TAO_opaque &object_key,
                                         char* operation,
                                         TAO_OutputCDR &output,
-                                        CORBA::ORB_ptr the_orb,
-                                        TAO_POA *the_poa,
+                                        TAO_ORB_Core *orb_core,
                                         CORBA::Environment &env)
   : operation_ (operation),
     incoming_ (0),
@@ -139,8 +178,7 @@ IIOP_ServerRequest::IIOP_ServerRequest (CORBA::ULong &request_id,
     retval_ (0),
     exception_ (0),
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
-    orb_ (the_orb),
-    poa_ (the_poa),
+    orb_core_ (orb_core),
     service_info_ (0),
     request_id_ (request_id),
     object_key_ (object_key),
@@ -148,19 +186,12 @@ IIOP_ServerRequest::IIOP_ServerRequest (CORBA::ULong &request_id,
 {
 }
 
-
-
 IIOP_ServerRequest::~IIOP_ServerRequest (void)
 {
   if (this->params_)
     CORBA::release (this->params_);
-  if (this->retval_)
-    delete this->retval_;
-  if (this->exception_)
-    delete this->exception_;
-#if defined (TAO_COPY_OPNAME)
-  CORBA::string_free (this->operation_);
-#endif
+  delete this->retval_;
+  delete this->exception_;
 }
 
 // Unmarshal in/inout params, and set up to marshal the appropriate
@@ -425,7 +456,10 @@ void
 IIOP_ServerRequest::init_reply (CORBA::Environment &env)
 {
   // Construct a REPLY header.
-  TAO_GIOP::start_message (TAO_GIOP::Reply, *this->outgoing_);
+  TAO_GIOP::start_message (TAO_GIOP::Reply,
+			   *this->outgoing_,
+			   this->orb_core_);
+
   TAO_GIOP_ServiceContextList resp_ctx;
   resp_ctx.length (0);
   this->outgoing_->encode (TC_ServiceContextList,
