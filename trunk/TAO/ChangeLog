@@ -1,3 +1,11 @@
+Wed Oct  9 13:30:54 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
+	* orbsvcs/orbsvcs/FT_ORB.dsp:
+
+	  Removed redundant and unnecessary "-I../../tao" TAO_IDL
+	  preprocessor directive.  Addresses some compile-time errors.
+
 Wed Oct  9 13:25:31 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
