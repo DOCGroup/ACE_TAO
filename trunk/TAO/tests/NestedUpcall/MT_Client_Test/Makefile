@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lorbsvcs -lTAO
+LDLIBS = -lTAO
 
 IDL_SRC = MT_Client_TestC.cpp MT_Client_TestS.cpp
 PROG_SRCS = $(IDL_SRC) server.cpp client.cpp \
