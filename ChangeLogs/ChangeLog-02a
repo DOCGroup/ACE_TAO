@@ -1,3 +1,22 @@
+Mon May 15 15:23:27 2000  Ossama Othman  <ossama@uci.edu>
+
+	The following are primarily consistency related updates.
+
+	* ace/LSOCK.i (ACE_LSOCK):
+
+	  Initialize "aux_handle_" member to ACE_INVALID_HANDLE in the
+	  base member initializer list.
+
+	* ace/Thread_Manager.i (ACE_At_Thread_Exit):
+
+	  Initialize "next_" member to 0 in the base member initializer
+	  list.
+	  
+	  (ACE_Thread_Descriptor_Base):
+
+	  Initialize "next_" and "prev_" members to 0 in the base member
+	  initializer list.
+
 Mon May 15 15:14:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/CDR_Stream.h:
