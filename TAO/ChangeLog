@@ -1,3 +1,11 @@
+Tue Oct 19 12:02:04 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * performance-tests/Protocols/sender.cpp:
+
+          Modified the to_seconds() function to always use the
+          ACE_UINT64_DBLCAST_ADAPTER macro.  The macro should work in all
+          cases including vc6.
+
 Mon Oct 18 13:45:21 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.cpp:
