@@ -13,7 +13,7 @@ LOCK_SOCK_Acceptor<ACE_LOCK>::accept (ACE_SOCK_Stream &stream,
   ACE_Guard<ACE_LOCK> m ((ACE_LOCK &) this->lock_);
 
   return ACE_SOCK_Acceptor::accept (stream, 
-                                    remote_adrress, 
+                                    remote_address, 
                                     timeout, 
                                     restart, 
                                     reset_new_handle);
