@@ -92,6 +92,10 @@ files in the correct place.</P>
 <OL>
   <LI> Make sure ACE is built (For Visual C++ 5.0, use ace.dsw or 
        ace-vc50.dsw, whichever is in your copy of ACE). <P>
+  
+  <LI> Make sure <CODE>ACE_wrappers\ace</CODE> is listed in the Executable 
+       Directories in Tools|Options.  This is needed if using the TAO_IDL
+	   compiler under MSVC.<P>
 
   <LI> Load the workspace <CODE>tao\TAO.dsw</CODE> and build the TAO 
        library. <P>
