@@ -1,5 +1,8 @@
 Sun Jun  6 13:32:25 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tao/GIOP.cpp: Fixed a typo in read_header.  Thanks to Jeff for
+ 	  reporting this.
+
 	* tao/GIOP.cpp (process_server_message): Fixed what appeared to be
  	  an unbalanced '}' in the TAO_HAS_EXCEPTIONS block.
 
