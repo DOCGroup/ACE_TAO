@@ -1,3 +1,8 @@
+Thu Nov  5 07:02:19 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ACE.FAQ.html: Pointed out that ACE is Y2K compliant.  Thanks to
+ 	  Fredrik Lindahl <fredrik.lindahl@ausys.se> for suggesting this.
+
 Wed Nov  4 23:28:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Stream.h: Made all the methods of ACE_Stream virtual to
