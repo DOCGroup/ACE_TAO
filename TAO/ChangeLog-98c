@@ -1,3 +1,9 @@
+
+Tue Oct  6 20:05:55 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Supplier_i.cpp (unregister_callback):
+	  removed a variable which was defined unnecessarily.
+
 Tue Oct  6 17:16:46 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
   * tao/DynUnion_i.cpp:
@@ -20,7 +26,7 @@ Tue Oct 06 11:23:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Oct  6 10:26:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
 	  Dummy initialization for "observer_handler" to give compilers
 	  some peace of mind about its use.
 
@@ -94,6 +100,11 @@ Mon Oct  5 20:35:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
           Updated the tasks corresponding to the changes in this ChangeLog
           entry.
 
+	Mon Oct  5 21:16:53 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Supplier_i.cpp (unregister_callback):
+	  The code to perform the unregistration of the consumer was added.
+
 Mon Oct 05 18:54:31 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Naming/CosNaming_i: Fixed the POA id generation
@@ -152,6 +163,13 @@ Mon Oct 05 16:13:48 1998  David L. Levine  <levine@cs.wustl.edu>
 Mon Oct 05 15:37:26 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.15 released.
+
+Mon Oct  5 14:56:03 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Consumer_i.cpp (push):
+	  Since I was checking whether the stock_value was greater
+	  than the threshold desired, I changed the consumer's reaction
+	  to selling shares rather than buying them.
 
 Mon Oct 05 13:52:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -778,6 +796,10 @@ Wed Sep 30 14:58:16 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Wed Sep 30 11:14:35 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
+	* tao/POA.cpp: Needed to properly terminate a CString in
+	  locate_poa_and_servant_i () by copying it to another
+	  CString and then extracting the char * from it.
+
         * tao/POA.cpp: Needed to properly terminate a CString in
           locate_poa_and_servant_i () by copying it to another
           CString and then extracting the char * from it.
@@ -798,6 +820,12 @@ Wed Sep 30 10:32:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
           orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.{cpp, dsp, h}:
           Enhancements for Boeing demo: expanded and revised make.bat to build
           java browser using Visibroker on NT.  Revised supplier and consumer
+	  logic to allow an ACT to indicate whether or not to update the
+	  scheduling information with actual data xollected by the EC.  Added
+	  a logging supplier that sets this ACT to request actual data update.
+	  Modified java consumer so entire event is passed to data handler.
+	  This allows the DOVE Browser to view either simulated or "live"
+	  scheduling data.
           logic to allow an ACT to indicate whether or not to update the
           scheduling information with actual data xollected by the EC.  Added
           a logging supplier that sets this ACT to request actual data update.
@@ -805,8 +833,19 @@ Wed Sep 30 10:32:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
           This allows the DOVE Browser to view either simulated or "live"
           scheduling data.
 
-Wed Sep 30 03:47:31 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
+Wed Sep 30 03:47:31 1998  Nagarajan Surendran  <naga@cs.wust
+	* performance-tests/Thruput/TAO/server.cpp:
+	  Added code to write ior to a file with the option -o.
+
+	* performance-tests/Thruput/TAO/client.cpp:
+	  Added code to read ior from a file with option -f.
+
+	* performance-tests/Thruput/TAO/run_server:
+	* performance-tests/Thruput/TAO/run_test:
+	* performance-tests/Thruput/TAO/run_client:
+	  Used the -o and -f options on server and client to avoid cut and
+	  paste of iors.
         * performance-tests/Thruput/TAO/server.cpp:
           Added code to write ior to a file with the option -o.
 
@@ -819,9 +858,23 @@ Wed Sep 30 03:47:31 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
           Used the -o and -f options on server and client to avoid cut and
           paste of iors.
 
+
 Wed Sep 30 02:44:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-        * tao: Removed some cases of explicit template instantiation of
+
+	* tao: Removed some cases of explicit template instantiation of
+ 	  ACE_Hash_Addr from TAO since it is no longer used inside the
+ 	  cached connector. It is still necessary since it is used inside
+	  the collocation table.
+
+	* tao/ORB_Core: Changed return type of ACE_Hash_Addr::hash_i() to
+ 	  u_long.  Also added template specialization for
+ 	  ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i().
+
+	* tao/POA.cpp (dispatch_servant_i): Reduced access to
+	  TAO_ORB_Core_instance() inside the POA.
+
+	* tao: Removed some cases of explicit template instantiation of
           ACE_Hash_Addr from TAO since it is no longer used inside the
           cached connector. It is still necessary since it is used inside
           the collocation table.
@@ -835,6 +888,17 @@ Wed Sep 30 02:44:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Wed Sep 30 02:18:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* performance-tests/Cubit/TAO/IDL_Cubit/README:
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.h:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+	  IDL_Cubit does *not* use the Naming Service anymore. It was
+	  simply too slow to compile orbsvcs and the Naming Service has
+	  many other examples that show how to use it and this test is
+	  compiled often after changin the ORB.
         * performance-tests/Cubit/TAO/IDL_Cubit/README:
         * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
         * performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
@@ -849,7 +913,29 @@ Wed Sep 30 02:18:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Wed Sep 30 00:26:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-        * tao/ORB_Core.h:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	* tao/CDR.h:
+	* tao/CDR.cpp:
+	* tao/Connect.cpp:
+	* tao/Invocation.i:
+	* tao/Invocation.cpp:
+	  The resource factory can create either TSS or global allocators
+	  for the InputCDR stream, thus applications that don't need the
+	  CDR stream buffer to survive after the upcall, or release it in
+	  another thread (most CORBA compliant apps fall in this category)
+	  can benefit from this feature that reduces locks and
+	  fragmentation in the global heap.
+
+	* tao/default_client.h:
+	  Fixed minor syntax error (comma at the end of an enum).
+
+	* orbsvcs/tests/EC_Custom_Marshal/svc.conf:
+	* orbsvcs/tests/EC_Custom_Marshal/svc.conf:
+	  Use a global allocator for the CDR stream.
+
+	* tao/ORB_Core.h:
         * tao/ORB_Core.i:
         * tao/ORB_Core.cpp:
         * tao/CDR.h:
@@ -871,7 +957,11 @@ Wed Sep 30 00:26:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * orbsvcs/tests/EC_Custom_Marshal/svc.conf:
           Use a global allocator for the CDR stream.
 
+
 Tue Sep 29 21:57:02 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+
+	* examples/TAO_Examples.dsw: Removed incorrect dependency.
 
         * examples/TAO_Examples.dsw: Removed incorrect dependency.
 
