@@ -37,7 +37,7 @@
 //          -Wb,post_include="ace/post.h" \
 //          IFR_Components.pidl
 //
-//   The only modification necessary to the skelton files is to
+//   The only modification necessary to the skeleton files is to
 //   change
 //
 //   #include "IFR_ComponentsC.h"

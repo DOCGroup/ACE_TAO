@@ -205,4 +205,3 @@ CORBA::TypedefDef::TypedefDef (
 }
 
 #endif /* end #if !defined */
-
