@@ -161,16 +161,8 @@ be_predefined_type::compute_repoID (void)
 {
   switch (this->pt ())
     {
-    case AST_PredefinedType::PT_pseudo:
-      if (!ACE_OS::strcmp (this->local_name ()->get_string (), "Object"))
-        {
-	        this->repoID_ = ACE::strnew ("IDL:omg.org/CORBA/Object:1.0");
-        }
-      else
-        {
-	        AST_Decl::compute_repoID ();
-        }
-
+    case AST_PredefinedType::PT_object:
+	    this->repoID_ = ACE::strnew ("IDL:omg.org/CORBA/Object:1.0");
       break;
     default:
       AST_Decl::compute_repoID ();
