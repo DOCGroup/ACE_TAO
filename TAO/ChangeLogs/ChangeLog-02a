@@ -1,6 +1,6 @@
 Thu May 18 08:14:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd-ci.cpp:
+	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
 	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
 	  Moved the generation of the destructor and default
