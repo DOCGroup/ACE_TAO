@@ -1,3 +1,10 @@
+Fri Aug 21 20:00:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-hpux-10.x.h: Added a check so that if threading is
+ 	  disabled, then timespec_t does not get defined.  This seems to
+ 	  work around a bug with HP/UX 10.x.  Thanks to Ganesh M. Pai
+ 	  <gpai@voicetek.com> for reporting this.
+
 Fri Aug 21 19:54:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU: 

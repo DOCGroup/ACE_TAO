@@ -226,6 +226,9 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 // Without threads being compiled in, the fd_set/int thing is not an issue.
 #  define _CMA_NOWRAPPERS_
 
+#else
+// If threading is disabled, then timespec_t does not get defined.
+#  define ACE_LACKS_TIMESPEC_T
 #endif /* ACE_HAS_THREADS */
 
 // Turns off the tracing feature.
