@@ -1,3 +1,9 @@
+Sun Apr 15 15:31:00 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp: 	
+	 
+	  Fixed Fuzz error.	
+
 Sun Apr 15 14:03:00 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/input: 	
