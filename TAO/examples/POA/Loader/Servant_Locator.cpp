@@ -24,7 +24,7 @@ ACE_RCSID(Loader, Servant_Locator, "$Id$")
 // Initialization.The dllname is used by the Loactor to load it into
 // memory. The factory function is the point of entry into the dll and
 // is used for obtaining the servant. The garbage_collection_function
-// is used to kill the servant. 
+// is used to kill the servant.
 
 ServantLocator_i::ServantLocator_i (CORBA::ORB_ptr orb,
                                     const char *dllname,
@@ -37,16 +37,16 @@ ServantLocator_i::ServantLocator_i (CORBA::ORB_ptr orb,
      ACE_ERROR ((LM_ERROR,
                  "%p",
                  this->dll_.error ()));
-                
+
   // Obtain the symbol for the function that will
   // get the servant object.
-  servant_supplier_ = ACE_reinterpret_cast
-    (SERVANT_FACTORY, this->dll_.symbol (factory_function));
+  servant_supplier_ =
+    (SERVANT_FACTORY) this->dll_.symbol (factory_function);
 
   // Obtain tne symbol for the function which
-  // will destroy the servant.  
-  servant_garbage_collector_ = ACE_reinterpret_cast
-    (SERVANT_GARBAGE_COLLECTOR, this->dll_.symbol (garbage_collection_function));
+  // will destroy the servant.
+  servant_garbage_collector_ =
+    (SERVANT_GARBAGE_COLLECTOR) this->dll_.symbol (garbage_collection_function);
 
 }
 
@@ -67,7 +67,7 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
     {
       // Return the servant as the cookie , used as a check when
       // postinvoke is called on this ServantLocator_i.
-      
+
       cookie = servant;
       return servant;
     }
@@ -92,7 +92,7 @@ ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
   PortableServer::Servant my_servant =
     ACE_reinterpret_cast (PortableServer::Servant,
                           cookie);
-  
+
   ACE_ASSERT (servant == my_servant);
 
   // Invoke the garbage_collection_function.
@@ -103,4 +103,3 @@ ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
   // To avoid warning about unused variable with ACE_NDEBUG.
   ACE_UNUSED_ARG (my_servant);
 }
-

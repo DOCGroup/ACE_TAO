@@ -1,3 +1,19 @@
+Wed Apr 07 14:34:31 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/DSI/Database_i.cpp (_is_a): Removed unused
+	  variable.
+
+	* examples/POA/Loader/Servant_Activator.cpp (ServantActivator_i):
+	* examples/POA/Loader/Servant_Locator.cpp (ServantLocator_i):
+	* examples/POA/On_Demand_Loading/Servant_Manager.cpp (obtain_servant):
+
+	  Should use a simple cast for casting functions and not
+	  reinterpret_cast.
+
+	* examples/POA/On_Demand_Loading/Servant_Manager.cpp
+	  (parse_string): Fixed comparison between signed and unsigned;
+	  <index> should be signed.
+
 Wed Apr  7 14:05:09 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.{h,cpp}
