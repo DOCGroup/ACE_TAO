@@ -1,9 +1,23 @@
+Sun Sep 26 18:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_limits.h:
+          Removed setting of MAXSYMLINKS when not set, this is not the way
+          to fix compile problems in OS_NS_stdlib.cpp, set ACE_LACKS_SYMLINKS
+          instead if symbolic links are not supported
+
+        * ace/config-openvms.h:
+          Added ACE_LACKS_SYMLINKS, removed MAXSYMLINKS
+
+        * ace/config-vxworks.h:
+          Added ACE_LACKS_SYMLINKS, ACE_LACKS_REALPATH and
+          ACE_HAS_NONCONST_READV
+
 Sun Sep 26 21:06:53 2004  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdlib.h:
           (mktemp, mkstemp) Changed protototype (parameter name) to match
           implementation.
-        
+
         * ace/OS_NS_stdlib.cpp: (realpath)
           Added check for new macro ACE_LACKS_SYMLINKS to leave out symbolic
           links related code. This fixes compile errors on platforms which
@@ -11,7 +25,7 @@ Sun Sep 26 21:06:53 2004  Olli Savia  <ops@iki.fi>
 
         * ace/README:
           Added ACE_LACKS_SYMLINKS.
-        
+
 Sun Sep 26 14:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ICMP_Socket.cpp:
