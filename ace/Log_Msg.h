@@ -181,13 +181,13 @@ public:
   static int exists (void);
   // Returns non-null if an ACE_Log_Msg exists for the calling thread.
 
-  static void disable_debug_messages();
-  // Clears the LM_DEBUG flag from the default priority mask used to
+  static void disable_debug_messages (ACE_Log_Priority priority = LM_DEBUG);
+  // Clears the flag from the default priority mask used to
   // initialize ACE_Log_Msg instances.
-
-  static void enable_debug_messages();
-  // Sets the LM_DEBUG flag in the default priority mask used to
-  // initialize ACE_Log_Msg instances.
+ 
+  static void enable_debug_messages (ACE_Log_Priority priority = LM_DEBUG);
+  // Sets the flag in the default priority mask used to initialize
+  // ACE_Log_Msg instances.
 
   ACE_Log_Msg (void);
   // Initialize logger.
