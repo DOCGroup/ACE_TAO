@@ -277,4 +277,7 @@ char ACE_from_IBM1047[257] =
   "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\xB3\xF7\xF0\xFA\xA7\xFF" // F0-FF
 };
 
-#endif /* ACE_CODESET_IMB1047_H */
+#elif defined (__HP_aCC)
+// Make aC++ stop complaining about an empty translation unit
+static int shut_up_aCC = 0;
+#endif /* ACE_MVS */
