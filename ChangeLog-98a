@@ -29,6 +29,11 @@ Tue Dec 23 07:26:28 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/Log_Msg.cpp (~ACE_Log_Msg): clean up the message queue and
           allocated strings on non-threaded platforms.
 
+        * tests/test_config.h (ACE_APPEND_LOG): added a close () of the
+          ace_file_stream before opening it.  Forked children inherit the
+          opened file stream, and fail on their attempt to open it if it
+          is not explicitly closed.
+
 Mon Dec 22 22:42:57 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/OS: Added a few minor changes to Nanbor's Semaphore
