@@ -9,6 +9,12 @@ Thu Jan  4 14:14:23 2001  Jeff Parsons <parsons@cs.wustl.edu>
           library in the current directory, which is not what
           we want.
 
+        * orbsvcs/IFR_Service/Makefile.EX:
+
+          Added TAO to the list of linked libraries. Apparently,
+          the tao_ifr executable's link to TAO_IFR_BE_DLL,
+          which is linked to TAO, is not sufficient.
+
 Thu Jan  4 13:45:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/tao_ifr.dsp:
