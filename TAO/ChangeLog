@@ -1,37 +1,48 @@
+Thu Mar 27 07:29:06 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.RT_Notification:
+	  Updated
+	* orbsvcs/orbsvcs/.depend.RT_Notification:
+	  Added dependency file.
+	* orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+	  In <init> method, call TAO_NS_Object::init instead of
+	  TAo_NS_proxy::init
+
 Fri Mar 21 17:16:42 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp:
 	* orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
 	  Added an option to check if the thread priority matches the
 	  priority specified in the event received.
-	
+
 	* orbsvcs/tests/Notify/ThreadPool/consumer.conf:
 	* orbsvcs/tests/Notify/Lanes/consumer.conf:
 	  Added the "-Check_Priority" option to the Periodic Consumers.
-	
+
 Fri Mar 21 11:35:15 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
 	* orbsvcs/orbsvcs/Notify/RT_Factory.cpp:
-	  Corrected to ACE_FACTORY_DEFINE macro.  
-	
+	  Corrected to ACE_FACTORY_DEFINE macro.
+
 Wed Mar 19 08:42:45 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/NotifyExt.idl:
 	  Extended the ConsumerAdmin and SupplierAdmin interfaces with
 	  create methods for Proxys with initial QoS parameters.
-	
+
 	* orbsvcs/orbsvcs/Notify/Builder.h:
 	* orbsvcs/orbsvcs/Notify/Builder.cpp:
 	  Revised the <build_proxy> to accept an inital QoS value.
-	
+
 	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.h:
 	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
 	* orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
 	* orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
 	  Implemented the method to create Proxys with initial QoS
 	  parameters.
-	
+
 	* orbsvcs/orbsvcs/Notify/Proxy.h:
 	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
 	  Overload the <activate> and <deactivate> methods to use the <proxy_poa_>.
@@ -42,12 +53,12 @@ Wed Mar 19 08:42:45 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/RT_Notification.bor:
 	* orbsvcs/orbsvcs/Makefile.RT_Notification:
 	  Added RT_Notification specific files.
-	
+
 	* orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
 	* orbsvcs/tests/Notify/lib/Activation_Manager.h:
 	* orbsvcs/tests/Notify/lib/Activation_Manager.idl:
 	  Manages start and shutdown of Periodic Supplier and consumers.
-	
+
 	* orbsvcs/tests/Notify/lib/Command.cpp:
 	* orbsvcs/tests/Notify/lib/Command.h:
   	  Base class of Command objects in the test lib.
@@ -55,17 +66,17 @@ Wed Mar 19 08:42:45 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/lib/Command_Builder.cpp:
 	* orbsvcs/tests/Notify/lib/Command_Builder.h:
 	  A builder for creating command objects.
-	
+
 	* orbsvcs/tests/Notify/lib/Command_Factory.cpp:
 	* orbsvcs/tests/Notify/lib/Command_Factory.h:
 	* orbsvcs/tests/Notify/lib/Command_Factory_T.cpp:
 	* orbsvcs/tests/Notify/lib/Command_Factory_T.h:
-	  Base classes for specifying Factory objects for command objects.	  
+	  Base classes for specifying Factory objects for command objects.
 
 	* orbsvcs/tests/Notify/lib/Application_Command.cpp:
 	* orbsvcs/tests/Notify/lib/Application_Command.h:
 	  Command object for specify Application specific commands.
-	
+
 	* orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.cpp:
 	* orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.h:
 	  Command object for specify ConsumerAdmin specific commands.
@@ -73,28 +84,28 @@ Wed Mar 19 08:42:45 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/lib/Driver_Base.h:
 	  A base interface for the driver that runs the owns the <main>
 	  entry point.
-	
+
 	* orbsvcs/tests/Notify/lib/Driver.cpp:
 	* orbsvcs/tests/Notify/lib/Driver.h:
 	  A generic Driver implementation useful for most applications.
-	  
+
 	* orbsvcs/tests/Notify/lib/EventChannel_Command.cpp:
 	* orbsvcs/tests/Notify/lib/EventChannel_Command.h:
 	  Command object for specify ConsumerAdmin specific commands.
-	
+
 	* orbsvcs/tests/Notify/lib/Factories_Define.cpp:
 	* orbsvcs/tests/Notify/lib/Factories_Define.h:
 	  Factory definitions are listed here.
-	
+
 	* orbsvcs/tests/Notify/lib/Filter_Command.cpp:
 	* orbsvcs/tests/Notify/lib/Filter_Command.h:
 	  Command object for specify Filter specific commands.
-	
+
 	* orbsvcs/tests/Notify/lib/LookupManager.cpp:
 	* orbsvcs/tests/Notify/lib/LookupManager.h:
 	  Objects of interest to command objects can be registered and
 	  resolved here.
-	
+
 	* orbsvcs/tests/Notify/lib/Makefile.TAO_NotifyTests:
 	* orbsvcs/tests/Notify/lib/Makefile.TAO_NotifyTests.bor:
 	* orbsvcs/tests/Notify/lib/Makefile.TAO_RT_NotifyTests:
@@ -102,31 +113,31 @@ Wed Mar 19 08:42:45 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/lib/Makefile.TAO_RT_NotifyTests_Filter:
 	* orbsvcs/tests/Notify/lib/Makefile.TAO_RT_NotifyTests_Filter.bor:
 	  Makefiles.
-	
+
 	* orbsvcs/tests/Notify/lib/Name.cpp:
 	* orbsvcs/tests/Notify/lib/Name.h:
 	  Command names are listed here.
-	
+
 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.cpp:
 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.h:
 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp:
 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h:
 	  Added a <connect> method that accepts a Proxy reference and its ID.
-	
+
 	* orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
 	  Corrected return of nil interface pointers.
-	
+
 	* orbsvcs/tests/Notify/lib/Notify_lib.mpc:
-	
+
 	* orbsvcs/tests/Notify/lib/Options_Parser.cpp:
 	* orbsvcs/tests/Notify/lib/Options_Parser.h:
 	  A Parser for parsing subscription and QoS options used by
 	  several command objects.
-	
+
 	* orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp:
 	* orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
 	  A periodic consumer.
-	
+
 	* orbsvcs/tests/Notify/lib/Periodic_Consumer_Command.cpp:
 	* orbsvcs/tests/Notify/lib/Periodic_Consumer_Command.h:
 	  Command object to specify Periodic Consumer specific commands.
@@ -134,47 +145,47 @@ Wed Mar 19 08:42:45 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp:
 	* orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
 	  A periodic supplier.
-	
+
 	* orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.cpp:
 	* orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.h:
 	  Command object to specify Periodic Supplier specific commands.
-	
+
 	* orbsvcs/tests/Notify/lib/Priority_Mapping.cpp:
 	* orbsvcs/tests/Notify/lib/Priority_Mapping.h:
-	  Priority mapping that returns the same number. 
-	 
+	  Priority mapping that returns the same number.
+
 	* orbsvcs/tests/Notify/lib/RT_Application_Command.cpp:
 	* orbsvcs/tests/Notify/lib/RT_Application_Command.h:
 	  Command object to specify RT Application specific
 	  commands.
-	
+
 	* orbsvcs/tests/Notify/lib/RT_Factories_Define.cpp:
 	  List of RT specific command objects.
-	
+
 	* orbsvcs/tests/Notify/lib/RT_POA_Command.cpp:
 	* orbsvcs/tests/Notify/lib/RT_POA_Command.h:
 	  Command object to specify RT POA specific commands.
-	
+
 	* orbsvcs/tests/Notify/lib/RT_Priority_Mapping.cpp:
 	* orbsvcs/tests/Notify/lib/RT_Priority_Mapping.h:
 	  A priority mapper that delegates to RTCORBA.
-	
+
 	* orbsvcs/tests/Notify/lib/RT_Test_Filter.cpp:
 	* orbsvcs/tests/Notify/lib/RT_Test_Filter.h:
 	  An implementation of Filter for verifying ThreadPools and lanes.
-	
+
 	* orbsvcs/tests/Notify/lib/RT_Test_FilterFactory.cpp:
 	* orbsvcs/tests/Notify/lib/RT_Test_FilterFactory.h:
 	  An implementation of FilterFactory.
-	
+
 	* orbsvcs/tests/Notify/lib/StructuredEvent.cpp:
 	* orbsvcs/tests/Notify/lib/StructuredEvent.h:
 	  A helper class for populating a Structured Event.
-	
+
 	* orbsvcs/tests/Notify/lib/SupplierAdmin_Command.cpp:
 	* orbsvcs/tests/Notify/lib/SupplierAdmin_Command.h:
 	  A command object for SupplierAdmin specific commands.
-	
+
 	* orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
 	* orbsvcs/tests/Notify/lib/TAO_NotifyTests_Static.dsp:
 	* orbsvcs/tests/Notify/lib/TAO_RT_NotifyTests.dsp:
@@ -182,16 +193,16 @@ Wed Mar 19 08:42:45 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/lib/TAO_RT_NotifyTests_Filter_Static.dsp:
 	* orbsvcs/tests/Notify/lib/TAO_RT_NotifyTests_Static.dsp:
 	  VC6 projects.
-	
+
 	* orbsvcs/tests/Notify/lib/Task_Callback.h:
 	  A callback that is invoked when a periodic supplier/consumer
 	  ends.
-	
+
 	* orbsvcs/tests/Notify/lib/Task_Stats.cpp:
 	* orbsvcs/tests/Notify/lib/Task_Stats.h:
 	* orbsvcs/tests/Notify/lib/Task_Stats.inl:
 	  A class for collecting performance numbers.
-	
+
 	* orbsvcs/tests/Notify/lib/rt_notify_test_export.h:
 	* orbsvcs/tests/Notify/lib/rt_test_filter_export.h:
 	  Export files.
@@ -205,9 +216,9 @@ Wed Mar 19 08:42:45 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/Driver/ThreadPool/README:
 	  README
 	* orbsvcs/tests/Notify/Driver/ThreadPool/supplier.conf:
-	  Supplier configuration. 
+	  Supplier configuration.
 	* orbsvcs/tests/Notify/Driver/ThreadPool/consumer.conf:
-	  Consumer configuration. 	
+	  Consumer configuration.
 	* orbsvcs/tests/Notify/Driver/ThreadPool/notify.conf:
 	  RT Notification conf.
 	* orbsvcs/tests/Notify/Driver/ThreadPool/run_test.pl:
@@ -216,9 +227,9 @@ Wed Mar 19 08:42:45 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/Driver/Lanes/README:
 	  README
 	* orbsvcs/tests/Notify/Driver/Lanes/supplier.conf:
-	  Supplier configuration. 
+	  Supplier configuration.
 	* orbsvcs/tests/Notify/Driver/Lanes/consumer.conf:
-	  Consumer configuration. 	
+	  Consumer configuration.
 	* orbsvcs/tests/Notify/Driver/Lanes/notify.conf:
 	  RT Notification conf.
 	* orbsvcs/tests/Notify/Driver/Lanes/run_test.pl:
@@ -232,19 +243,19 @@ Mon Feb 17 15:37:47 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* tests/RTCORBA/Persistent_IOR/client.bor: Linked the client with
 	  RTCORBA library to get the static constructors in so that they
-	  can do its job. 
+	  can do its job.
 
 Mon Feb 17 15:26:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/RTCORBA/MT_Client_Protocol_Priority/client.conf: This file
 	  missed the previous checkin somehow. Adding this file to the
-	  repo. 
+	  repo.
 
 Mon Feb 17 09:09:54 2003  Heather Drury  <drury_h@ociweb.com>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
         * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp: Fixed compile error
-          that was happening because the base class signature for 
+          that was happening because the base class signature for
           establish_components() did not match the derived class method
           signature.
 
