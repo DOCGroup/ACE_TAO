@@ -20,8 +20,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Timer.h"
+#include "Destroy_Callback.h"
 
 #include "ace/Timer_Queue.h"
+#include "ace/Timer_Heap.h"
 
 /**
  * @class TAO_NS_Timer_Queue
@@ -30,15 +32,17 @@
  *
  */
 class TAO_Notify_Export TAO_NS_Timer_Queue : public TAO_NS_Timer
+                                           , public TAO_NS_Destroy_Callback
 {
-  friend class TAO_NS_ThreadPool_Task;
-
 public:
   /// Constuctor
   TAO_NS_Timer_Queue (void);
 
   /// Destructor
   virtual ~TAO_NS_Timer_Queue ();
+
+  /// TAO_NS_Destroy_Callback methods
+  virtual void release (void);
 
   /// Schedule a timer
   virtual long schedule_timer (ACE_Event_Handler *handler,
@@ -48,9 +52,12 @@ public:
   /// Cancel Timer
   virtual int cancel_timer (long timer_id);
 
+  /// Get the native impl.
+  ACE_Timer_Queue& impl (void);
+
 protected:
   /// The Timer Queue
-  ACE_Timer_Queue* timer_queue_;
+  ACE_Timer_Heap timer_queue_;
 };
 
 #if defined (__ACE_INLINE__)

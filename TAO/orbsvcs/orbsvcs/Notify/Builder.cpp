@@ -145,6 +145,7 @@ TAO_NS_Builder::build_event_channel (TAO_NS_EventChannelFactory* ecf, const CosN
 
   //  set the parent -
   ec->parent_ = ecf;
+  ec->parent_->_incr_refcnt ();
 
   ec->TAO_NS_Container::init (ecf->object_poa(), 0, ecf->object_poa(), ecf->object_poa());
 
@@ -209,6 +210,7 @@ TAO_NS_Builder::build_consumer_admin (TAO_NS_EventChannel* ec, CosNotifyChannelA
   ca->filter_operator (op);
 
   ca->parent_ = ec;
+  ca->parent_->_incr_refcnt ();
   ca->event_manager_ = ec->event_manager_;
   ca->admin_properties_ = ec->admin_properties_;
 
@@ -261,6 +263,7 @@ TAO_NS_Builder::build_supplier_admin (TAO_NS_EventChannel* ec, CosNotifyChannelA
   sa->filter_operator (op);
 
   sa->parent_ = ec;
+  sa->parent_->_incr_refcnt ();
   sa->event_manager_ = ec->event_manager_;
   sa->admin_properties_ = ec->admin_properties_;
 
@@ -322,6 +325,7 @@ TAO_NS_Builder::build_notification_push_consumer (TAO_NS_SupplierAdmin* sa, CosN
         pc->event_manager_ = sa->event_manager_;
         pc->admin_properties_ = sa->admin_properties_;
         pc->parent_ = sa;
+        pc->parent_->_incr_refcnt ();
 
         /// self POA, proxy POA
         pc->init (sa->proxy_poa (), sa->proxy_poa (), sa->worker_task ());
@@ -363,6 +367,7 @@ TAO_NS_Builder::build_notification_push_consumer (TAO_NS_SupplierAdmin* sa, CosN
         pc->event_manager_ = sa->event_manager_;
         pc->admin_properties_ = sa->admin_properties_;
         pc->parent_ = sa;
+        pc->parent_->_incr_refcnt ();
 
         /// self POA, proxy POA
         pc->init (sa->proxy_poa (), sa->proxy_poa (), sa->worker_task ());
@@ -404,6 +409,7 @@ TAO_NS_Builder::build_notification_push_consumer (TAO_NS_SupplierAdmin* sa, CosN
         pc->event_manager_ = sa->event_manager_;
         pc->admin_properties_ = sa->admin_properties_;
         pc->parent_ = sa;
+        pc->parent_->_incr_refcnt ();
 
         /// self POA, proxy POA
         pc->init (sa->proxy_poa (), sa->proxy_poa (), sa->worker_task ());
@@ -467,6 +473,7 @@ TAO_NS_Builder::build_notification_push_supplier (TAO_NS_ConsumerAdmin* ca, CosN
         ps->event_manager_ = ca->event_manager_;
         ps->admin_properties_ = ca->admin_properties_;
         ps->parent_ = ca;
+        ps->parent_->_incr_refcnt ();
 
         /// self POA, proxy POA
         ps->init (ca->proxy_poa (), ca->proxy_poa (), ca->worker_task ());
@@ -510,6 +517,7 @@ TAO_NS_Builder::build_notification_push_supplier (TAO_NS_ConsumerAdmin* ca, CosN
         ps->event_manager_ = ca->event_manager_;
         ps->admin_properties_ = ca->admin_properties_;
         ps->parent_ = ca;
+        ps->parent_->_incr_refcnt ();
 
         /// self POA, proxy POA
         ps->init (ca->proxy_poa (), ca->proxy_poa (), ca->worker_task ());
@@ -553,6 +561,7 @@ TAO_NS_Builder::build_notification_push_supplier (TAO_NS_ConsumerAdmin* ca, CosN
         ps->event_manager_ = ca->event_manager_;
         ps->admin_properties_ = ca->admin_properties_;
         ps->parent_ = ca;
+        ps->parent_->_incr_refcnt ();
 
         /// self POA, proxy POA
         ps->init (ca->proxy_poa (), ca->proxy_poa (), ca->worker_task ());
@@ -612,6 +621,7 @@ TAO_NS_Builder::build_push_supplier (TAO_NS_ConsumerAdmin* ca ACE_ENV_ARG_DECL)
   ps->event_manager_ = ca->event_manager_;
   ps->admin_properties_ = ca->admin_properties_;
   ps->parent_ = ca;
+  ps->parent_->_incr_refcnt ();
 
   // self POA, proxy POA
   ps->init (ca->proxy_poa (), ca->proxy_poa (), ca->worker_task ());
@@ -662,6 +672,7 @@ TAO_NS_Builder::build_push_consumer (TAO_NS_SupplierAdmin* sa ACE_ENV_ARG_DECL)
   pc->event_manager_ = sa->event_manager_;
   pc->admin_properties_ = sa->admin_properties_;
   pc->parent_ = sa;
+  pc->parent_->_incr_refcnt ();
 
   // self POA, proxy POA
   pc->init (sa->proxy_poa (), sa->proxy_poa (), sa->worker_task ());

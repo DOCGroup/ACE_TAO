@@ -17,7 +17,7 @@ ACE_RCSID(Notify, TAO_NS_Event_Map_Entry_T, "$id$")
 
 template <class PROXY>
 TAO_NS_Event_Map_Entry_T<PROXY>::TAO_NS_Event_Map_Entry_T (void)
-  : collection_ (0), count_ (0)
+  : collection_ (0), count_ (0), usage_count_ (1)
 {
 }
 

@@ -69,11 +69,10 @@ TAO_NS_EventChannel::destroy (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  this->inherited::destroy (this ACE_ENV_ARG_PARAMETER);
-  this->event_manager_->shutdown ();
+  if (this->inherited::destroy (this ACE_ENV_ARG_PARAMETER) == 1)
+    return;
 
-  /*  this->default_consumer_admin_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      this->default_supplier_admin_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);*/
+  this->event_manager_->shutdown ();
 }
 
 void

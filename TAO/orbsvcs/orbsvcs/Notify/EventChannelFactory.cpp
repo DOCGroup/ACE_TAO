@@ -67,7 +67,8 @@ TAO_NS_EventChannelFactory::destroy (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  this->inherited::destroy (this ACE_ENV_ARG_PARAMETER);
+  if (this->inherited::destroy (this ACE_ENV_ARG_PARAMETER) == 1)
+    return;
 
   TAO_NS_Properties* properties = TAO_NS_PROPERTIES::instance();
 

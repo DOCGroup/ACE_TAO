@@ -84,7 +84,7 @@ public:
   void init_collection (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Shutdown
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
   typedef TAO_ESF_Proxy_Collection<TYPE> COLLECTION;

@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Copy_Disabled.h"
+#include "ace/Atomic_Op.h"
 #include "Types.h"
 
 template <class PROXY, class ACE_LOCK> class TAO_NS_Event_Map_T;
@@ -57,12 +58,22 @@ public:
   /// Count accessor
   int count (void);
 
+  ///= Reference counting methods.
+  // Incr the ref count.
+  CORBA::ULong _incr_refcnt (void);
+
+  // Decr the ref count. This object is destroyed when the count is 0.
+  CORBA::ULong _decr_refcnt (void);
+
 protected:
   /// The Collection
   COLLECTION* collection_;
 
   /// Count of PROXY's connected in the collection;
   int count_;
+
+  /// Count of users accessing this entry.
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX,int> usage_count_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -24,10 +24,9 @@
 #include "ace/Reactor.h"
 #include "AdminProperties.h"
 #include "Worker_Task.h"
-#include "Types.h"
-#include "Timer_Queue.h"
 
 class TAO_NS_Buffering_Strategy;
+class TAO_NS_Timer_Queue;
 
 /**
  * @class TAO_NS_ThreadPool_Task
@@ -48,9 +47,6 @@ public:
 
   /// Call the base class init
   virtual int init (int argc, char **argv);
-
-  /// Call the base class init 
-  virtual void init (TAO_NS_AdminProperties&);
 
   virtual int close (u_long flags);
 
@@ -84,7 +80,7 @@ private:
   int shutdown_;
 
   /// The Queue based timer.
-  TAO_NS_Timer_Queue timer_;
+  TAO_NS_Timer_Queue* timer_;
 };
 
 #if defined (__ACE_INLINE__)

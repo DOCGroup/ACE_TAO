@@ -47,6 +47,7 @@ void
 TAO_NS_SequencePushConsumer::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->cancel_timer ();
+  this->timer_->_decr_refcnt ();
 }
 
 void

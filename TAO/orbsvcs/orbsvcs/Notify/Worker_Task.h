@@ -41,9 +41,6 @@ public:
   /// Constuctor
   TAO_NS_Worker_Task (void);
 
-  /// Init AdminProperties
-  virtual void init (TAO_NS_AdminProperties& admin_properties);
-
   /// Update QoS Properties.
   virtual void update_qos_properties (const TAO_NS_QoSProperties& qos_properties);
 

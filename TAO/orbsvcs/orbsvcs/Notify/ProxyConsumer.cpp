@@ -98,17 +98,21 @@ TAO_NS_ProxyConsumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
   this->admin_properties_->suppliers ()--;
 }
 
-void
+int
 TAO_NS_ProxyConsumer::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  if (this->inherited::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
+    return 1;
 
-  this->inherited::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (1);
+
+  this->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (1);
 
   if (this->supplier_ != 0)
     this->supplier_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return 0;
 }
 
 void

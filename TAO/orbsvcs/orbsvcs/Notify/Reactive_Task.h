@@ -20,7 +20,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Worker_Task.h"
-#include "Timer_Reactor.h"
+#include "AdminProperties.h"
+
+class TAO_NS_Timer_Reactor;
 
 /**
  * @class TAO_NS_Reactive_Task
@@ -37,6 +39,9 @@ public:
   /// Destructor
   ~TAO_NS_Reactive_Task ();
 
+  /// Init the reactive task.
+  void init (TAO_NS_AdminProperties_var& admin_properties ACE_ENV_ARG_DECL);
+
   /// Shutdown task
   virtual void shutdown (void);
 
@@ -51,7 +56,7 @@ public:
 
 protected:
   /// The timer.
-  TAO_NS_Timer_Reactor timer_;
+  TAO_NS_Timer_Reactor* timer_;
 };
 
 #if defined (__ACE_INLINE__)
