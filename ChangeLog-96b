@@ -1,5 +1,7 @@
 Tue Nov 26 11:27:33 1996  David L. Levine  <levine@cs.wustl.edu>
-	* tests/SPIPE_Test.cpp:  added VXWORKS support
+	* tests/{CPP_Test,Mutex_Test,Shared_Memory_MM_Test,SPIPE_Test}.cpp:
+ 	  added VXWORKS support for these tests by spawning a new thread
+ 	  instead of forking a new process (the same as on Win32)
 
 Tue Nov 26 00:36:16 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
