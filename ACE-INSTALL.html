@@ -973,7 +973,7 @@ configure and build ACE, do:
        <pre>       mkdir build
        cd build
        </pre>
-      Note that you do not run the <code>create_ace_build</code> utility
+      Note that you do not run the <code>create_ace_build.pl</code> utility
       mentioned in the <a href="#cloning">Cloning the Source Tree</a>
       section. The configure script takes care of creating all files
       and links that are needed.</li>
@@ -2305,7 +2305,7 @@ Here's what you need to do:<p>
 cd ACE_wrappers
 
 # create the host (e.g. Linux in this case) build tree
-./bin/create_ace_build Linux_g++
+bin/create_ace_build.pl Linux_g++
 cd build/Linux_g++/ace
 ln -s ../../../ace/config-linux.h config.h
 cd ../include/makeinclude
@@ -2313,7 +2313,7 @@ ln -s ../../../../include/makeinclude/platform_linux.GNU platform_macros.GNU
 cd ../../../..
 
 # create the target build tree
-./bin/create_ace_build rtems
+bin/create_ace_build.pl rtems
 cd build/rtems/TAO
 /bin/rm -r TAO_IDL
 ln -s ../../Linux_g++/TAO/TAO_IDL .
@@ -2647,7 +2647,7 @@ that for entry points named <code>main</code>.
 
 On UNIX platforms, we typically like to support multiple platform
 builds using the same ACE source tree.  This idiom is supported by ACE
-using the $ACE_ROOT/bin/create_ace_build script or
+using the $ACE_ROOT/bin/create_ace_build.pl script or
 $ACE_ROOT/bin/clone.cpp program.
 
 To use build and use the clone program, first make sure there's a file
@@ -2658,7 +2658,7 @@ file that includes the desired platform/compiler specific
 configuration header.  Then perform the following steps:<p>
 
 </p><pre>% cd $ACE_ROOT/bin
-% make
+% make -f GNUmakefile.clone
 % mv clone ~/bin
 % rehash
 </pre><p>
@@ -2700,7 +2700,7 @@ files or directories) in all subdirectories before starting the build
 on your cloned tree.</p><p>
 
 Alternatively, the perl script
-<code>ACE_wrappers/bin/create_ace_build</code> can be used to create
+<code>ACE_wrappers/bin/create_ace_build.pl</code> can be used to create
 build trees.  It creates them below <code>ACE_wrappers/build</code>.
 It filters out all but the necessary files, so the warning above does
 not apply.  See the comments at the top of the script itself for usage
