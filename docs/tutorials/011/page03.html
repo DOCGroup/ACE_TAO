@@ -49,7 +49,7 @@ public:
   int close (u_long flags = 0);
 
 protected:
-  ACE_Barrier *barrier_;
+  ACE_Barrier barrier_;
   
   size_t n_threads_;
 };
@@ -65,7 +65,7 @@ protected:
 <font color=blue>#include</font> "<font color=green>data.h</font>"
 
 <font color=#008888>Task::Task</font> (size_t n_threads)
-  : barrier_ (0),
+  : barrier_ (n_threads),
     n_threads_ (n_threads)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -82,21 +82,14 @@ protected:
   ACE_Message_Block *message;
   this->getq (message);
   message->release ();
-
-  delete barrier_;
 }
 
 int 
 <font color=#008888>Task::open</font> (void *)
 {
-  barrier_;
-
-  ACE_NEW_RETURN (barrier_,
-                  ACE_Barrier (this->n_threads_),
-                  -1);
-
   return this->activate (THR_NEW_LWP,
-                         threads);
+                        this->n_threads_);
+
 }
 
 int 
@@ -111,7 +104,7 @@ int
 int 
 <font color=#008888>Task::svc</font> (void)
 {
-  this->barrier_->wait ();
+  this->barrier_.wait ();
 
   ACE_DEBUG ((LM_DEBUG,
               "<font color=green>(%P|%t) Task 0x%x starts in thread %d\n</font>",
