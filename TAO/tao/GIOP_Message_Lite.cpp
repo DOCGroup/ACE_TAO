@@ -20,7 +20,8 @@ static const size_t TAO_GIOP_LITE_HEADER_LEN = 5;
 static const size_t TAO_GIOP_LITE_MESSAGE_SIZE_OFFSET = 0;
 static const size_t TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET = 4;
 
-TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core)
+TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core,
+                                              size_t input_cdr_size)
   :message_state_ (orb_core),
    output_ (0),
    cdr_buffer_alloc_ (
@@ -29,7 +30,7 @@ TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core)
     cdr_dblock_alloc_ (
         orb_core->resource_factory ()->output_cdr_dblock_allocator ()
       ),
-   input_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
+   input_cdr_ (orb_core->create_input_cdr_data_block (input_cdr_size),
         TAO_ENCAP_BYTE_ORDER,
         orb_core),
    current_offset_ (0)

@@ -43,7 +43,8 @@ public:
   friend class TAO_GIOP_Message_Handler;
 
   /// Constructor
-  TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core);
+  TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
+                         size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
   /// Dtor
   virtual ~TAO_GIOP_Message_Base (void);
