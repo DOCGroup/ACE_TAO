@@ -354,6 +354,12 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
   // descrease it upon destruction.
   CORBA::add_ref (this->ort_template_.in ());
   this->obj_ref_factory_ = this->ort_template_;
+
+  // Iterate over the registered IOR interceptors so that they may be
+  // given the opportunity to add tagged components to the profiles
+  // for this servant.
+  this->establish_components (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 TAO_POA::~TAO_POA (void)
@@ -570,12 +576,6 @@ TAO_POA::create_POA_i (const TAO_POA::String &adapter_name,
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         0);
     }
-
-  // Iterate over the registered IOR interceptors so that they may be
-  // given the opportunity to add tagged components to the profiles
-  // for this servant.
-  poa->establish_components (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Note: Creating a POA using a POA manager that is in the active
   // state can lead to race conditions if the POA supports preexisting
