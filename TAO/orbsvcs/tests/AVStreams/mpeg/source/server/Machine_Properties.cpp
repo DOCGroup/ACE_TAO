@@ -88,6 +88,8 @@ TAO_Machine_Properties::evalDP(const CORBA::Any& extra_info,
 {
   CORBA::Any* return_value;
 
+  ACE_DEBUG ((LM_DEBUG, "Evaluating machine properties.\n"));
+  
   ACE_NEW_RETURN (return_value, CORBA::Any, 0);
   
   if (ACE_OS::gettimeofday () - this->timestamp_ > this->timeout_)
@@ -102,6 +104,7 @@ TAO_Machine_Properties::evalDP(const CORBA::Any& extra_info,
   if (prop_name == 0)
     return return_value;
 
+  CORBA::String_var prop_name_var (prop_name);
   int elapsed_seconds = this->sample_time_.sec () +
     (this->sample_time_.usec () > 500000) ? 1 : 0;
   
@@ -130,7 +133,44 @@ TAO_Machine_Properties::evalDP(const CORBA::Any& extra_info,
 
   return return_value;
 }
- 
+
+void
+TAO_Machine_Properties::
+export_dynamic_properties (TAO_Property_Exporter& prop_exporter,
+			   TAO_DP_Dispatcher& dp_disp) const
+{
+  ACE_DEBUG ((LM_ERROR, "Adding machine properties.\n"));
+  for (int i = 0; i < NUM_PROPERTIES; i++)
+    {
+      CORBA::Any extra_info;
+      const char* name = PROP_NAMES[i];
+      const CORBA::TypeCode_ptr prop_type = CORBA::_tc_float;
+
+      extra_info <<= name;
+      CosTradingDynamic::DynamicProp* dp_struct = 
+	dp_disp.construct_dynamic_prop (name, prop_type, extra_info);
+      
+      dp_disp.register_handler (name, (TAO_DP_Evaluation_Handler*) this);
+      prop_exporter.add_dynamic_property (name, dp_struct);
+    }
+}
+
+int
+TAO_Machine_Properties::
+define_properties (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq,
+		   CORBA::ULong offset) const
+{
+  prop_seq.length (NUM_PROPERTIES + offset);
+  for (int j = prop_seq.length () - offset - 1, i = offset; j >= 0; j--, i++)
+    {
+      prop_seq[i].name = PROP_NAMES[i - offset];
+      prop_seq[i].value_type = CORBA::TypeCode::_duplicate (CORBA::_tc_float);
+      prop_seq[i].mode = CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
+    }
+
+  return NUM_PROPERTIES;
+}
+
 void
 TAO_Machine_Properties::compute_cpu (CORBA::Any& value, int elapsed_seconds)
 {
