@@ -73,6 +73,10 @@ private:
 # include "tao/default_client.i"
 #endif /* __ACE_INLINE__ */
 
+#if defined (TAO_USES_STATIC_SERVICE)
+ACE_STATIC_SVC_DECLARE (TAO_Default_Client_Strategy_Factory)
+#endif /* TAO_USE_STATIC_SERVICE */
+
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Client_Strategy_Factory)
 
 #endif /* TAO_DEFAULT_CLIENT_H */

@@ -221,7 +221,7 @@ TAO_Default_Server_Strategy_Factory::create_active_object_map_i (TAO_Demux_Strat
       if (user_id_policy)
         objtable = TAO_ORB_Core_instance()->oa_params()->userdef_lookup_strategy_for_user_id_policy ();
       else
-        objtable = TAO_ORB_Core_instance()->oa_params()->userdef_lookup_strategy_for_system_id_policy ();        
+        objtable = TAO_ORB_Core_instance()->oa_params()->userdef_lookup_strategy_for_system_id_policy ();
       break;
     case TAO_ACTIVE_DEMUX:
       ACE_NEW_RETURN (objtable,
@@ -262,7 +262,7 @@ TAO_Default_Server_Strategy_Factory::create_reverse_active_object_map (int uniqu
     {
       ACE_NEW_RETURN (objtable,
                       TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy (),
-                      0);        
+                      0);
     }
 
   return objtable;
@@ -501,5 +501,14 @@ template class ACE_Thread_Strategy<TAO_Server_Connection_Handler>;
 #pragma instantiate ACE_Reactive_Strategy<TAO_Server_Connection_Handler>
 #pragma instantiate ACE_Thread_Strategy<TAO_Server_Connection_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if defined (TAO_USES_STATIC_SERVICE)
+ACE_STATIC_SVC_DEFINE (TAO_Default_Server_Strategy_Factory,
+		       ASYS_TEXT ("TAO_Default_Server_Strategy_Factory"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_Default_Server_Strategy_Factory),
+		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       0)
+#endif /* TAO_USES_STATIC_SERVICE */
 
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Server_Strategy_Factory)

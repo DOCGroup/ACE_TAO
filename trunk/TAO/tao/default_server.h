@@ -199,6 +199,10 @@ protected:
 # include "tao/default_server.i"
 #endif /* __ACE_INLINE__ */
 
+#if defined (TAO_USES_STATIC_SERVICE)
+ACE_STATIC_SVC_DECLARE (TAO_Default_Server_Strategy_Factory)
+#endif /* TAO_USE_STATIC_SERVICE */
+
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Server_Strategy_Factory)
 
 #endif /* TAO_DEFAULT_SERVER_FACTORY_H */
