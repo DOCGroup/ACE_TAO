@@ -22,6 +22,7 @@
 #include "Buffering_Constraint_Policy.h"
 #include "Messaging_Policy_i.h"
 #include "Client_Priority_Policy.h"
+#include "target_specification.h"
 #include "debug.h"
 
 #if (TAO_HAS_RT_CORBA == 1)
@@ -59,7 +60,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
 #if (TAO_HAS_CORBA_MESSAGING == 1)
     policies_ (0),
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-    addressing_mode_ (0),
+    addressing_mode_ (TAO_Target_Specification::Default_Addr),
     ior_info_ (0),
     forwarded_ior_info_ (0)
 {

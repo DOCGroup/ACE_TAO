@@ -24,12 +24,12 @@
 #include "Tagged_Components.h"
 #include "PolicyC.h"
 #include "GIOP_Message_State.h"
+#include "target_specification.h"
 
 class TAO_MProfile;
 class TAO_Stub;
 class TAO_Endpoint;
 class TAO_ORB_Core;
-class TAO_Target_Specification;
 
 /**
  * @class TAO_Profile
@@ -162,7 +162,10 @@ public:
 
   /// Set the target spec to point to the appropriate object in the
   /// TAO_Profile instance for a request.
-  virtual void request_target_specifier (TAO_Target_Specification &target_spec);
+  virtual void request_target_specifier (
+    TAO_Target_Specification &target_spec,
+    TAO_Target_Specification::TAO_Target_Address required_type,
+    CORBA::Environment &ACE_TRY_ENV);
 
   /// Returns true if this profile can specify multicast endpoints.
   virtual int supports_multicast (void) const;

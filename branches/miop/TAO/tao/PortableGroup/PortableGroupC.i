@@ -70,7 +70,7 @@ PortableGroup::TagGroupTaggedComponent_var::operator= (const ::PortableGroup::Ta
         {
           TagGroupTaggedComponent *deep_copy =
             new TagGroupTaggedComponent (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               TagGroupTaggedComponent *tmp = deep_copy;
@@ -80,7 +80,7 @@ PortableGroup::TagGroupTaggedComponent_var::operator= (const ::PortableGroup::Ta
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -103,20 +103,20 @@ PortableGroup::TagGroupTaggedComponent_var::operator const ::PortableGroup::TagG
 }
 
 ACE_INLINE
-PortableGroup::TagGroupTaggedComponent_var::operator ::PortableGroup::TagGroupTaggedComponent &() // cast
+PortableGroup::TagGroupTaggedComponent_var::operator ::PortableGroup::TagGroupTaggedComponent &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-PortableGroup::TagGroupTaggedComponent_var::operator ::PortableGroup::TagGroupTaggedComponent &() const // cast
+PortableGroup::TagGroupTaggedComponent_var::operator ::PortableGroup::TagGroupTaggedComponent &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-PortableGroup::TagGroupTaggedComponent_var::operator ::PortableGroup::TagGroupTaggedComponent *&() // cast
+PortableGroup::TagGroupTaggedComponent_var::operator ::PortableGroup::TagGroupTaggedComponent *&() // cast 
 {
   return this->ptr_;
 }
@@ -133,7 +133,7 @@ PortableGroup::TagGroupTaggedComponent_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::PortableGroup::TagGroupTaggedComponent *&
 PortableGroup::TagGroupTaggedComponent_var::out (void)
 {
@@ -194,7 +194,7 @@ PortableGroup::TagGroupTaggedComponent_out::operator= (TagGroupTaggedComponent *
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableGroup::TagGroupTaggedComponent_out::operator ::PortableGroup::TagGroupTaggedComponent *&() // cast
 {
   return this->ptr_;
@@ -211,6 +211,236 @@ PortableGroup::TagGroupTaggedComponent_out::operator-> (void)
 {
   return this->ptr_;
 }
+
+
+#if !defined (_PORTABLEGROUP_GROUPIIOPPROFILE_CI_)
+#define _PORTABLEGROUP_GROUPIIOPPROFILE_CI_
+
+// *************************************************************
+// Inline operations for class PortableGroup::GroupIIOPProfile_var
+// *************************************************************
+
+ACE_INLINE
+PortableGroup::GroupIIOPProfile_var::GroupIIOPProfile_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+PortableGroup::GroupIIOPProfile_var::GroupIIOPProfile_var (GroupIIOPProfile *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+PortableGroup::GroupIIOPProfile_var::GroupIIOPProfile_var (const ::PortableGroup::GroupIIOPProfile_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::PortableGroup::GroupIIOPProfile (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+// fixed-size base types only
+ACE_INLINE
+PortableGroup::GroupIIOPProfile_var::GroupIIOPProfile_var (const ::PortableGroup::GroupIIOPProfile &p)
+{
+  ACE_NEW (this->ptr_, ::PortableGroup::GroupIIOPProfile (p));
+}
+
+ACE_INLINE
+PortableGroup::GroupIIOPProfile_var::~GroupIIOPProfile_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE PortableGroup::GroupIIOPProfile_var &
+PortableGroup::GroupIIOPProfile_var::operator= (GroupIIOPProfile *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::PortableGroup::GroupIIOPProfile_var &
+PortableGroup::GroupIIOPProfile_var::operator= (const ::PortableGroup::GroupIIOPProfile_var &p)
+{
+  if (this != &p)
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          GroupIIOPProfile *deep_copy =
+            new GroupIIOPProfile (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              GroupIIOPProfile *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
+  return *this;
+}
+
+// fixed-size types only
+ACE_INLINE ::PortableGroup::GroupIIOPProfile_var &
+PortableGroup::GroupIIOPProfile_var::operator= (const ::PortableGroup::GroupIIOPProfile &p)
+{
+  if (this->ptr_ != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::PortableGroup::GroupIIOPProfile (p), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::PortableGroup::GroupIIOPProfile *
+PortableGroup::GroupIIOPProfile_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::PortableGroup::GroupIIOPProfile *
+PortableGroup::GroupIIOPProfile_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+PortableGroup::GroupIIOPProfile_var::operator const ::PortableGroup::GroupIIOPProfile &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+PortableGroup::GroupIIOPProfile_var::operator ::PortableGroup::GroupIIOPProfile &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+PortableGroup::GroupIIOPProfile_var::operator ::PortableGroup::GroupIIOPProfile &() const // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE CORBA::Octet &
+PortableGroup::GroupIIOPProfile_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const CORBA::Octet &
+PortableGroup::GroupIIOPProfile_var::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const CORBA::Octet &, this->ptr_->operator[] (index));
+}
+
+ACE_INLINE const ::PortableGroup::GroupIIOPProfile &
+PortableGroup::GroupIIOPProfile_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::PortableGroup::GroupIIOPProfile &
+PortableGroup::GroupIIOPProfile_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::PortableGroup::GroupIIOPProfile *&
+PortableGroup::GroupIIOPProfile_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::PortableGroup::GroupIIOPProfile *
+PortableGroup::GroupIIOPProfile_var::_retn (void)
+{
+  ::PortableGroup::GroupIIOPProfile *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::PortableGroup::GroupIIOPProfile *
+PortableGroup::GroupIIOPProfile_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class PortableGroup::GroupIIOPProfile_out
+// *************************************************************
+
+ACE_INLINE
+PortableGroup::GroupIIOPProfile_out::GroupIIOPProfile_out (GroupIIOPProfile *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+PortableGroup::GroupIIOPProfile_out::GroupIIOPProfile_out (GroupIIOPProfile_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+PortableGroup::GroupIIOPProfile_out::GroupIIOPProfile_out (const ::PortableGroup::GroupIIOPProfile_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (GroupIIOPProfile_out&, p).ptr_)
+{}
+
+ACE_INLINE ::PortableGroup::GroupIIOPProfile_out &
+PortableGroup::GroupIIOPProfile_out::operator= (const ::PortableGroup::GroupIIOPProfile_out &p)
+{
+  this->ptr_ = ACE_const_cast (GroupIIOPProfile_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::PortableGroup::GroupIIOPProfile_out &
+PortableGroup::GroupIIOPProfile_out::operator= (GroupIIOPProfile *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+PortableGroup::GroupIIOPProfile_out::operator ::PortableGroup::GroupIIOPProfile *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::PortableGroup::GroupIIOPProfile *&
+PortableGroup::GroupIIOPProfile_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::PortableGroup::GroupIIOPProfile *
+PortableGroup::GroupIIOPProfile_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA::Octet &
+PortableGroup::GroupIIOPProfile_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
 
 // *************************************************************
 // Inline operations for class PortableGroup::Property_var
@@ -263,7 +493,7 @@ PortableGroup::Property_var::operator= (const ::PortableGroup::Property_var &p)
         {
           Property *deep_copy =
             new Property (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               Property *tmp = deep_copy;
@@ -273,7 +503,7 @@ PortableGroup::Property_var::operator= (const ::PortableGroup::Property_var &p)
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -296,20 +526,20 @@ PortableGroup::Property_var::operator const ::PortableGroup::Property &() const 
 }
 
 ACE_INLINE
-PortableGroup::Property_var::operator ::PortableGroup::Property &() // cast
+PortableGroup::Property_var::operator ::PortableGroup::Property &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-PortableGroup::Property_var::operator ::PortableGroup::Property &() const // cast
+PortableGroup::Property_var::operator ::PortableGroup::Property &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-PortableGroup::Property_var::operator ::PortableGroup::Property *&() // cast
+PortableGroup::Property_var::operator ::PortableGroup::Property *&() // cast 
 {
   return this->ptr_;
 }
@@ -326,7 +556,7 @@ PortableGroup::Property_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::PortableGroup::Property *&
 PortableGroup::Property_var::out (void)
 {
@@ -387,7 +617,7 @@ PortableGroup::Property_out::operator= (Property *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableGroup::Property_out::operator ::PortableGroup::Property *&() // cast
 {
   return this->ptr_;
@@ -407,7 +637,7 @@ PortableGroup::Property_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_PROPERTIES_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_PROPERTIES_CI_
 
@@ -420,24 +650,24 @@ PortableGroup::Property_out::operator-> (void)
     ACE_NEW_RETURN (retval, PortableGroup::Property[size], 0);
     return retval;
   }
-
+  
   ACE_INLINE void PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Properties::freebuf (PortableGroup::Property *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-
+  
   ACE_INLINE
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Properties::_TAO_Unbounded_Sequence_PortableGroup_Properties (void) // Default constructor.
   {
   }
-
+  
   ACE_INLINE
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Properties::_TAO_Unbounded_Sequence_PortableGroup_Properties (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_PortableGroup_Properties::allocbuf (maximum))
   {
   }
-
+  
   ACE_INLINE
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Properties::_TAO_Unbounded_Sequence_PortableGroup_Properties (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -446,7 +676,7 @@ PortableGroup::Property_out::operator-> (void)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-
+  
   ACE_INLINE
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Properties::_TAO_Unbounded_Sequence_PortableGroup_Properties (const _TAO_Unbounded_Sequence_PortableGroup_Properties &rhs)
   // Copy constructor.
@@ -456,10 +686,10 @@ PortableGroup::Property_out::operator-> (void)
     {
       PortableGroup::Property *tmp1 = _TAO_Unbounded_Sequence_PortableGroup_Properties::allocbuf (this->maximum_);
       PortableGroup::Property * const tmp2 = ACE_reinterpret_cast (PortableGroup::Property * ACE_CAST_CONST, rhs.buffer_);
-
+      
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-
+      
       this->buffer_ = tmp1;
     }
     else
@@ -467,14 +697,14 @@ PortableGroup::Property_out::operator-> (void)
       this->buffer_ = 0;
     }
   }
-
+  
   ACE_INLINE PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Properties &
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Properties::operator= (const _TAO_Unbounded_Sequence_PortableGroup_Properties &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-
+    
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -487,18 +717,18 @@ PortableGroup::Property_out::operator-> (void)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_PortableGroup_Properties::allocbuf (rhs.maximum_);
-
+    
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-
+    
     PortableGroup::Property *tmp1 = ACE_reinterpret_cast (PortableGroup::Property *, this->buffer_);
     PortableGroup::Property * const tmp2 = ACE_reinterpret_cast (PortableGroup::Property * ACE_CAST_CONST, rhs.buffer_);
-
+    
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-
+    
     return *this;
   }
-
+  
   // = Accessors.
   ACE_INLINE PortableGroup::Property &
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Properties::operator[] (CORBA::ULong i)
@@ -508,7 +738,7 @@ PortableGroup::Property_out::operator-> (void)
     PortableGroup::Property* tmp = ACE_reinterpret_cast(PortableGroup::Property*,this->buffer_);
     return tmp[i];
   }
-
+  
   ACE_INLINE const PortableGroup::Property &
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Properties::operator[] (CORBA::ULong i) const
   // operator []
@@ -517,9 +747,9 @@ PortableGroup::Property_out::operator-> (void)
     PortableGroup::Property * const tmp = ACE_reinterpret_cast (PortableGroup::Property* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-
+  
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
+  
   ACE_INLINE PortableGroup::Property *
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Properties::get_buffer (CORBA::Boolean orphan)
   {
@@ -553,13 +783,13 @@ PortableGroup::Property_out::operator-> (void)
     }
     return result;
   }
-
+  
   ACE_INLINE const PortableGroup::Property *
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Properties::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const PortableGroup::Property * ACE_CAST_CONST, this->buffer_);
   }
-
+  
   ACE_INLINE void
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Properties::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -576,11 +806,11 @@ PortableGroup::Property_out::operator-> (void)
     this->buffer_ = data;
     this->release_ = release;
   }
-
+  
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_PORTABLEGROUP_PROPERTIES_CI_)
 #define _PORTABLEGROUP_PROPERTIES_CI_
@@ -636,7 +866,7 @@ PortableGroup::Properties_var::operator= (const ::PortableGroup::Properties_var 
         {
           Properties *deep_copy =
             new Properties (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               Properties *tmp = deep_copy;
@@ -646,7 +876,7 @@ PortableGroup::Properties_var::operator= (const ::PortableGroup::Properties_var 
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -662,27 +892,27 @@ PortableGroup::Properties_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableGroup::Properties_var::operator const ::PortableGroup::Properties &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-PortableGroup::Properties_var::operator ::PortableGroup::Properties &() // cast
+ACE_INLINE 
+PortableGroup::Properties_var::operator ::PortableGroup::Properties &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-PortableGroup::Properties_var::operator ::PortableGroup::Properties &() const // cast
+ACE_INLINE 
+PortableGroup::Properties_var::operator ::PortableGroup::Properties &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-PortableGroup::Properties_var::operator ::PortableGroup::Properties *&() // cast
+PortableGroup::Properties_var::operator ::PortableGroup::Properties *&() // cast 
 {
   return this->ptr_;
 }
@@ -711,7 +941,7 @@ PortableGroup::Properties_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::PortableGroup::Properties *&
 PortableGroup::Properties_var::out (void)
 {
@@ -772,7 +1002,7 @@ PortableGroup::Properties_out::operator= (Properties *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableGroup::Properties_out::operator ::PortableGroup::Properties *&() // cast
 {
   return this->ptr_;
@@ -801,7 +1031,7 @@ PortableGroup::Properties_out::operator[] (CORBA::ULong index)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_LOCATIONS_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_LOCATIONS_CI_
 
@@ -814,24 +1044,24 @@ PortableGroup::Properties_out::operator[] (CORBA::ULong index)
     ACE_NEW_RETURN (retval, PortableGroup::Location[size], 0);
     return retval;
   }
-
+  
   ACE_INLINE void PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Locations::freebuf (PortableGroup::Location *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-
+  
   ACE_INLINE
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Locations::_TAO_Unbounded_Sequence_PortableGroup_Locations (void) // Default constructor.
   {
   }
-
+  
   ACE_INLINE
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Locations::_TAO_Unbounded_Sequence_PortableGroup_Locations (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_PortableGroup_Locations::allocbuf (maximum))
   {
   }
-
+  
   ACE_INLINE
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Locations::_TAO_Unbounded_Sequence_PortableGroup_Locations (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -840,7 +1070,7 @@ PortableGroup::Properties_out::operator[] (CORBA::ULong index)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-
+  
   ACE_INLINE
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Locations::_TAO_Unbounded_Sequence_PortableGroup_Locations (const _TAO_Unbounded_Sequence_PortableGroup_Locations &rhs)
   // Copy constructor.
@@ -850,10 +1080,10 @@ PortableGroup::Properties_out::operator[] (CORBA::ULong index)
     {
       PortableGroup::Location *tmp1 = _TAO_Unbounded_Sequence_PortableGroup_Locations::allocbuf (this->maximum_);
       PortableGroup::Location * const tmp2 = ACE_reinterpret_cast (PortableGroup::Location * ACE_CAST_CONST, rhs.buffer_);
-
+      
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-
+      
       this->buffer_ = tmp1;
     }
     else
@@ -861,14 +1091,14 @@ PortableGroup::Properties_out::operator[] (CORBA::ULong index)
       this->buffer_ = 0;
     }
   }
-
+  
   ACE_INLINE PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Locations &
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Locations::operator= (const _TAO_Unbounded_Sequence_PortableGroup_Locations &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-
+    
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -881,18 +1111,18 @@ PortableGroup::Properties_out::operator[] (CORBA::ULong index)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_PortableGroup_Locations::allocbuf (rhs.maximum_);
-
+    
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-
+    
     PortableGroup::Location *tmp1 = ACE_reinterpret_cast (PortableGroup::Location *, this->buffer_);
     PortableGroup::Location * const tmp2 = ACE_reinterpret_cast (PortableGroup::Location * ACE_CAST_CONST, rhs.buffer_);
-
+    
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-
+    
     return *this;
   }
-
+  
   // = Accessors.
   ACE_INLINE PortableGroup::Location &
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Locations::operator[] (CORBA::ULong i)
@@ -902,7 +1132,7 @@ PortableGroup::Properties_out::operator[] (CORBA::ULong index)
     PortableGroup::Location* tmp = ACE_reinterpret_cast(PortableGroup::Location*,this->buffer_);
     return tmp[i];
   }
-
+  
   ACE_INLINE const PortableGroup::Location &
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Locations::operator[] (CORBA::ULong i) const
   // operator []
@@ -911,9 +1141,9 @@ PortableGroup::Properties_out::operator[] (CORBA::ULong index)
     PortableGroup::Location * const tmp = ACE_reinterpret_cast (PortableGroup::Location* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-
+  
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
+  
   ACE_INLINE PortableGroup::Location *
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Locations::get_buffer (CORBA::Boolean orphan)
   {
@@ -947,13 +1177,13 @@ PortableGroup::Properties_out::operator[] (CORBA::ULong index)
     }
     return result;
   }
-
+  
   ACE_INLINE const PortableGroup::Location *
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Locations::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const PortableGroup::Location * ACE_CAST_CONST, this->buffer_);
   }
-
+  
   ACE_INLINE void
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_Locations::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -970,11 +1200,11 @@ PortableGroup::Properties_out::operator[] (CORBA::ULong index)
     this->buffer_ = data;
     this->release_ = release;
   }
-
+  
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_PORTABLEGROUP_LOCATIONS_CI_)
 #define _PORTABLEGROUP_LOCATIONS_CI_
@@ -1030,7 +1260,7 @@ PortableGroup::Locations_var::operator= (const ::PortableGroup::Locations_var &p
         {
           Locations *deep_copy =
             new Locations (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               Locations *tmp = deep_copy;
@@ -1040,7 +1270,7 @@ PortableGroup::Locations_var::operator= (const ::PortableGroup::Locations_var &p
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -1056,27 +1286,27 @@ PortableGroup::Locations_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableGroup::Locations_var::operator const ::PortableGroup::Locations &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-PortableGroup::Locations_var::operator ::PortableGroup::Locations &() // cast
+ACE_INLINE 
+PortableGroup::Locations_var::operator ::PortableGroup::Locations &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-PortableGroup::Locations_var::operator ::PortableGroup::Locations &() const // cast
+ACE_INLINE 
+PortableGroup::Locations_var::operator ::PortableGroup::Locations &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-PortableGroup::Locations_var::operator ::PortableGroup::Locations *&() // cast
+PortableGroup::Locations_var::operator ::PortableGroup::Locations *&() // cast 
 {
   return this->ptr_;
 }
@@ -1105,7 +1335,7 @@ PortableGroup::Locations_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::PortableGroup::Locations *&
 PortableGroup::Locations_var::out (void)
 {
@@ -1166,7 +1396,7 @@ PortableGroup::Locations_out::operator= (Locations *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableGroup::Locations_out::operator ::PortableGroup::Locations *&() // cast
 {
   return this->ptr_;
@@ -1244,7 +1474,7 @@ PortableGroup::FactoryInfo_var::operator= (const ::PortableGroup::FactoryInfo_va
         {
           FactoryInfo *deep_copy =
             new FactoryInfo (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               FactoryInfo *tmp = deep_copy;
@@ -1254,7 +1484,7 @@ PortableGroup::FactoryInfo_var::operator= (const ::PortableGroup::FactoryInfo_va
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -1277,20 +1507,20 @@ PortableGroup::FactoryInfo_var::operator const ::PortableGroup::FactoryInfo &() 
 }
 
 ACE_INLINE
-PortableGroup::FactoryInfo_var::operator ::PortableGroup::FactoryInfo &() // cast
+PortableGroup::FactoryInfo_var::operator ::PortableGroup::FactoryInfo &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-PortableGroup::FactoryInfo_var::operator ::PortableGroup::FactoryInfo &() const // cast
+PortableGroup::FactoryInfo_var::operator ::PortableGroup::FactoryInfo &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-PortableGroup::FactoryInfo_var::operator ::PortableGroup::FactoryInfo *&() // cast
+PortableGroup::FactoryInfo_var::operator ::PortableGroup::FactoryInfo *&() // cast 
 {
   return this->ptr_;
 }
@@ -1307,7 +1537,7 @@ PortableGroup::FactoryInfo_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::PortableGroup::FactoryInfo *&
 PortableGroup::FactoryInfo_var::out (void)
 {
@@ -1368,7 +1598,7 @@ PortableGroup::FactoryInfo_out::operator= (FactoryInfo *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableGroup::FactoryInfo_out::operator ::PortableGroup::FactoryInfo *&() // cast
 {
   return this->ptr_;
@@ -1388,7 +1618,7 @@ PortableGroup::FactoryInfo_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_FACTORYINFOS_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_PORTABLEGROUP_FACTORYINFOS_CI_
 
@@ -1401,24 +1631,24 @@ PortableGroup::FactoryInfo_out::operator-> (void)
     ACE_NEW_RETURN (retval, PortableGroup::FactoryInfo[size], 0);
     return retval;
   }
-
+  
   ACE_INLINE void PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::freebuf (PortableGroup::FactoryInfo *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-
+  
   ACE_INLINE
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos (void) // Default constructor.
   {
   }
-
+  
   ACE_INLINE
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::allocbuf (maximum))
   {
   }
-
+  
   ACE_INLINE
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -1427,7 +1657,7 @@ PortableGroup::FactoryInfo_out::operator-> (void)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-
+  
   ACE_INLINE
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos (const _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos &rhs)
   // Copy constructor.
@@ -1437,10 +1667,10 @@ PortableGroup::FactoryInfo_out::operator-> (void)
     {
       PortableGroup::FactoryInfo *tmp1 = _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::allocbuf (this->maximum_);
       PortableGroup::FactoryInfo * const tmp2 = ACE_reinterpret_cast (PortableGroup::FactoryInfo * ACE_CAST_CONST, rhs.buffer_);
-
+      
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-
+      
       this->buffer_ = tmp1;
     }
     else
@@ -1448,14 +1678,14 @@ PortableGroup::FactoryInfo_out::operator-> (void)
       this->buffer_ = 0;
     }
   }
-
+  
   ACE_INLINE PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos &
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::operator= (const _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-
+    
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -1468,18 +1698,18 @@ PortableGroup::FactoryInfo_out::operator-> (void)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::allocbuf (rhs.maximum_);
-
+    
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-
+    
     PortableGroup::FactoryInfo *tmp1 = ACE_reinterpret_cast (PortableGroup::FactoryInfo *, this->buffer_);
     PortableGroup::FactoryInfo * const tmp2 = ACE_reinterpret_cast (PortableGroup::FactoryInfo * ACE_CAST_CONST, rhs.buffer_);
-
+    
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-
+    
     return *this;
   }
-
+  
   // = Accessors.
   ACE_INLINE PortableGroup::FactoryInfo &
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::operator[] (CORBA::ULong i)
@@ -1489,7 +1719,7 @@ PortableGroup::FactoryInfo_out::operator-> (void)
     PortableGroup::FactoryInfo* tmp = ACE_reinterpret_cast(PortableGroup::FactoryInfo*,this->buffer_);
     return tmp[i];
   }
-
+  
   ACE_INLINE const PortableGroup::FactoryInfo &
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::operator[] (CORBA::ULong i) const
   // operator []
@@ -1498,9 +1728,9 @@ PortableGroup::FactoryInfo_out::operator-> (void)
     PortableGroup::FactoryInfo * const tmp = ACE_reinterpret_cast (PortableGroup::FactoryInfo* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-
+  
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
+  
   ACE_INLINE PortableGroup::FactoryInfo *
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::get_buffer (CORBA::Boolean orphan)
   {
@@ -1534,13 +1764,13 @@ PortableGroup::FactoryInfo_out::operator-> (void)
     }
     return result;
   }
-
+  
   ACE_INLINE const PortableGroup::FactoryInfo *
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const PortableGroup::FactoryInfo * ACE_CAST_CONST, this->buffer_);
   }
-
+  
   ACE_INLINE void
   PortableGroup::_TAO_Unbounded_Sequence_PortableGroup_FactoryInfos::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -1557,11 +1787,11 @@ PortableGroup::FactoryInfo_out::operator-> (void)
     this->buffer_ = data;
     this->release_ = release;
   }
-
+  
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_PORTABLEGROUP_FACTORYINFOS_CI_)
 #define _PORTABLEGROUP_FACTORYINFOS_CI_
@@ -1617,7 +1847,7 @@ PortableGroup::FactoryInfos_var::operator= (const ::PortableGroup::FactoryInfos_
         {
           FactoryInfos *deep_copy =
             new FactoryInfos (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               FactoryInfos *tmp = deep_copy;
@@ -1627,7 +1857,7 @@ PortableGroup::FactoryInfos_var::operator= (const ::PortableGroup::FactoryInfos_
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -1643,27 +1873,27 @@ PortableGroup::FactoryInfos_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableGroup::FactoryInfos_var::operator const ::PortableGroup::FactoryInfos &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-PortableGroup::FactoryInfos_var::operator ::PortableGroup::FactoryInfos &() // cast
+ACE_INLINE 
+PortableGroup::FactoryInfos_var::operator ::PortableGroup::FactoryInfos &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-PortableGroup::FactoryInfos_var::operator ::PortableGroup::FactoryInfos &() const // cast
+ACE_INLINE 
+PortableGroup::FactoryInfos_var::operator ::PortableGroup::FactoryInfos &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-PortableGroup::FactoryInfos_var::operator ::PortableGroup::FactoryInfos *&() // cast
+PortableGroup::FactoryInfos_var::operator ::PortableGroup::FactoryInfos *&() // cast 
 {
   return this->ptr_;
 }
@@ -1692,7 +1922,7 @@ PortableGroup::FactoryInfos_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::PortableGroup::FactoryInfos *&
 PortableGroup::FactoryInfos_var::out (void)
 {
@@ -1753,7 +1983,7 @@ PortableGroup::FactoryInfos_out::operator= (FactoryInfos *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 PortableGroup::FactoryInfos_out::operator ::PortableGroup::FactoryInfos *&() // cast
 {
   return this->ptr_;
@@ -1856,7 +2086,7 @@ PortableGroup::FactoryInfos_out::operator[] (CORBA::ULong index)
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableGroup::TagGroupTaggedComponent &_tao_aggregate)
 {
   if (
-    (strm << _tao_aggregate.version) &&
+    (strm << _tao_aggregate.component_version) &&
     (strm << _tao_aggregate.group_domain_id.in ()) &&
     (strm << _tao_aggregate.object_group_id) &&
     (strm << _tao_aggregate.object_group_ref_version)
@@ -1864,13 +2094,13 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableGroup::
     return 1;
   else
     return 0;
-
+  
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableGroup::TagGroupTaggedComponent &_tao_aggregate)
 {
   if (
-    (strm >> _tao_aggregate.version) &&
+    (strm >> _tao_aggregate.component_version) &&
     (strm >> _tao_aggregate.group_domain_id.out ()) &&
     (strm >> _tao_aggregate.object_group_id) &&
     (strm >> _tao_aggregate.object_group_ref_version)
@@ -1878,8 +2108,23 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableGroup::TagGrou
     return 1;
   else
     return 0;
-
+  
 }
+
+
+#if !defined _TAO_CDR_OP_PortableGroup_GroupIIOPProfile_I_
+#define _TAO_CDR_OP_PortableGroup_GroupIIOPProfile_I_
+
+CORBA::Boolean TAO_PortableGroup_Export operator<< (
+    TAO_OutputCDR &,
+    const PortableGroup::GroupIIOPProfile &
+  );
+CORBA::Boolean TAO_PortableGroup_Export operator>> (
+    TAO_InputCDR &,
+    PortableGroup::GroupIIOPProfile &
+  );
+
+#endif /* _TAO_CDR_OP_PortableGroup_GroupIIOPProfile_I_ */
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableGroup::Property &_tao_aggregate)
 {
@@ -1890,7 +2135,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableGroup::
     return 1;
   else
     return 0;
-
+  
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableGroup::Property &_tao_aggregate)
@@ -1902,7 +2147,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableGroup::Propert
     return 1;
   else
     return 0;
-
+  
 }
 
 

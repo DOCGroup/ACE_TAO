@@ -1,0 +1,19 @@
+//
+// $Id$
+//
+
+module Quoter
+{
+
+  struct Stock_Quote {
+    double price;
+    string symbol;
+    string full_name;
+  };
+
+  interface Quote_Receiver
+  {
+    oneway void update_stock_price (in Stock_Quote quote);
+  };
+};
+

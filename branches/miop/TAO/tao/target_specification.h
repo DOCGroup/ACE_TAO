@@ -54,7 +54,7 @@ class TAO_Export TAO_Target_Specification
   //   writing a novel or your memoirs, 'I foresee' does not look like
   //   the right kind of comment in a class description.
   //
-  //   The motivation behind this is GIOP 1.2 althought I foresee
+  //   The motivation behind this is GIOP 1.2 although I foresee
   //   other messaging protocols doing something similar.
   //   The Invocation classes (client side) were
   //   passing the object key that they had extracted from the
@@ -74,11 +74,14 @@ public:
     // Note that this could be extended for other protocols
     Key_Addr = 0,
     Profile_Addr,
-    Reference_Addr
+    Reference_Addr,
+    Default_Addr       // If an addressing mode hasn't been specified by the
+                       // remote end, use the default for the profile that's 
+                       // in use.
   };
 
-  // Note: Please do not pass in a identifiers that is allocated on
-  // stack. These methods does not make a copy but holds the pointer
+  // Note: Please do not pass in a identifiers that are allocated on
+  // stack. These methods do not make a copy but hold the pointer
   // passed in.
   /// Set the target specification by giving the object key.
   void target_specifier (const TAO_ObjectKey &key);
@@ -122,18 +125,18 @@ public:
   TAO_Target_Address specifier (void);
 
 private:
+  /// The union of all possible target specifiers.
   union
   {
     TAO_ObjectKey *object_key_;
     IOP::TaggedProfile *profile_;
     IOP::IOR *ior_;
   } u_;
-  // The union of all the possibilities
 
-  /// The enum identifier
+  /// The discriminator for the above union (can't be Default_Addr).
   TAO_Target_Address specifier_;
 
-  /// The profile index
+  /// The profile index if using Reference_Addr.
   CORBA::ULong profile_index_;
 };
 

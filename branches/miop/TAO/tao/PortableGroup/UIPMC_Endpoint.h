@@ -38,9 +38,6 @@
 class TAO_PortableGroup_Export TAO_UIPMC_Endpoint : public TAO_Endpoint
 {
 public:
-
-  friend class TAO_UIPMC_Profile;
-
   // = Initialization and termination methods.
 
   /// Default constructor.
@@ -49,7 +46,7 @@ public:
   /// Constructor.
   TAO_UIPMC_Endpoint (const ACE_INET_Addr &addr);
 
-  /// Constructor.
+  /// Constructor. @@ Frank - deprecate this.
   TAO_UIPMC_Endpoint (const CORBA::Octet class_d_address[4],
                       CORBA::UShort port);
 
@@ -83,11 +80,15 @@ public:
   /// Set the IP multicast address and port.
   void object_addr (const ACE_INET_Addr &addr);
 
+  /// Return a pointer to the stringified host address (not including the 
+  /// port).  This class retains ownership of the address memory.
+  const char *get_host_addr (void) const;
+
   /// Return the port number.
   CORBA::UShort port (void) const;
 
   /// Set the port number.
-  CORBA::UShort port (CORBA::UShort p);
+  CORBA::UShort port (CORBA::UShort p); //@@ Frank - deprecate this.
 
   //TAO_UIPMC_Connection_Handler *&hint (void);
   // Access to our <hint_>.
@@ -102,10 +103,10 @@ private:
   /// Helper method to update the cached object address.
   void update_object_addr (void);
 
-  /// IP Multicast address.
+  /// IP Multicast address.  @@ Frank - deprecate this.
   CORBA::Octet class_d_address_[4];
 
-  /// UDP port number.
+  /// UDP port number.  @@ Frank - deprecate this.
   CORBA::UShort port_;
 
   /// Cached instance of <ACE_INET_Addr> for use in making

@@ -151,8 +151,6 @@ TAO_UIPMC_Connector::create_profile (TAO_InputCDR& cdr)
 TAO_Profile *
 TAO_UIPMC_Connector::make_profile (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_DEBUG ((LM_DEBUG, "TAO_UIPMC_Connector::make_profile: Shouldn't be here!!\n"));
-
   TAO_Profile *profile = 0;
   ACE_NEW_THROW_EX (profile,
                     TAO_UIPMC_Profile (this->orb_core ()),
@@ -173,24 +171,19 @@ TAO_UIPMC_Connector::check_prefix (const char *endpoint)
   if (!endpoint || !*endpoint)
     return -1;  // Failure
 
-  const char *protocol[] = { "uipmc", "uipmcloc" };
+  const char *protocol[] = { "miop" };
 
   size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
-
   size_t len0 = ACE_OS::strlen (protocol[0]);
-  size_t len1 = ACE_OS::strlen (protocol[1]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
   if (slot == len0
       && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
     return 0;
-  else if (slot == len1
-           && ACE_OS::strncasecmp (endpoint, protocol[1], len1) == 0)
-    return 0;
 
   return -1;
-  // Failure: not an UIPMC IOR
+  // Failure: not a MIOP IOR
   // DO NOT throw an exception here.
 }
 
