@@ -1,3 +1,9 @@
+Mon Sep 30 13:25:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_borland.GNU:
+          Now it is possible to create shared libraries, but no executables
+          yet with Kylix3.
+
 Mon Sep 30 11:33:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_borland.GNU:
