@@ -367,6 +367,10 @@ typedef unsigned __int64 ACE_UINT64;
                 #pragma comment(lib, "wsock32.lib")
         #endif /* _MSC_VER */
 
+        // We can't use recvmsg and sendmsg unless WinSock 2 is available
+        #define ACE_LACKS_RECVMSG
+        #define ACE_LACKS_SENDMSG
+
         // Version 1.1 of WinSock
         #define ACE_WSOCK_VERSION 1, 1
 #endif /* ACE_HAS_WINSOCK2 */
