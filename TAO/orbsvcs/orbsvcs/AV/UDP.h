@@ -41,7 +41,7 @@ class TAO_AV_UDP_Flow_Handler;
  * @brief A transport abstraction for udp sockets. 
  *        Uses the ACE_SOCK_Dgram to send the data.
  */
-class TAO_AV_UDP_Transport
+class TAO_AV_Export TAO_AV_UDP_Transport
   :public TAO_AV_Transport
 {
 
@@ -100,7 +100,7 @@ protected:
  * @class TAO_AV_UDP_Flow_Handler
  * @brief Flow Handler for UDP flows. 
  */
-class TAO_AV_UDP_Flow_Handler
+class TAO_AV_Export TAO_AV_UDP_Flow_Handler
   :public virtual TAO_AV_Flow_Handler,
    public virtual ACE_Event_Handler
 {
@@ -157,7 +157,7 @@ protected:
  * @class TAO_AV_UDP_Connector
  * @brief 
  */
-class TAO_AV_UDP_Connector
+class TAO_AV_Export TAO_AV_UDP_Connector
   :public TAO_AV_Connector
 {
 public:
