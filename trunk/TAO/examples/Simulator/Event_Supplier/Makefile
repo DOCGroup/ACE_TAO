@@ -21,7 +21,7 @@ EVENT_CON_OBJS = NavWeapC.o NavWeapS.o Event_Con.o
 LOGGING_SUP_OBJS = NavWeapC.o NavWeapS.o Logging_Sup.o DOVE_Supplier.o
 DUALEC_SUP_OBJS = NavWeapC.o NavWeapS.o DualEC_Sup.o DOVE_Supplier.o
 
-LDLIBS = -lTAO_Messaging -lTAO_RTOLDEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_Messaging -lTAO_RTOLDEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
 
 BIN2 = Event_Sup Logging_Sup DualEC_Sup Event_Con
 

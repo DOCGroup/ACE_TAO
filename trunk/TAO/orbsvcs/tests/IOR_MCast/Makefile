@@ -15,7 +15,7 @@ endif # ! TAO_ROOT
 IDL_FILES = MCast
 IDL_SRC = MCastC MCastS
 
-LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO -lACE
+LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO -lACE
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 BIN = server client

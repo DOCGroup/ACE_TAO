@@ -25,8 +25,8 @@ SHLIB = libRTCORBA_Common.$(SOEXT)
 IDL_FILES = test
 IDL_SRC = testC testS
 
-ACE_SHLIBS = -lTAO_PortableServer -lTAO -lACE
-LDLIBS = -lTAO_PortableServer -lTAO
+ACE_SHLIBS = -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO -lACE
+LDLIBS = -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
 SRCS = $(IDL_SRC) test_i
 LSRC = $(addsuffix .cpp,$(IDL_SRC) test_i)
 

@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -LTAO_Valuetype -lTAO_Messaging -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_Messaging -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
 
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp

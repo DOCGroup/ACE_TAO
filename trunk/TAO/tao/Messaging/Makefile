@@ -12,7 +12,7 @@ LIBNAME  = libTAO_Messaging
 LIB = $(LIBNAME).a
 SHLIB = $(LIBNAME).$(SOEXT)
 
-ACE_SHLIBS = -lTAO_PortableServer -lTAO_ObjRefTemplate \
+ACE_SHLIBS = -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO_ObjRefTemplate \
   -lTAO_Valuetype -lTAO -lACE
 
 CPP_SRCS += \

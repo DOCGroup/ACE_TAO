@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_DsLogAdmin -lTAO_CosNaming -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_DsLogAdmin -lTAO_CosNaming -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
 
 PROG_SRCS = \
 	TLS_Client.cpp \
