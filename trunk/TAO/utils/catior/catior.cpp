@@ -510,7 +510,7 @@ main (int argc, char *argv[])
   CORBA::Environment env;
   CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO", env);
   CORBA::Boolean b;
-  char opt;
+  int opt;
 
   while ((opt = get_opt ()) != EOF)
     {

@@ -182,10 +182,12 @@ depend.local: $(MAKEFILE)
 	@cat $(MAKEFILE) | \
 	sed -e "s;$(TAO_ROOT);\$$(TAO_ROOT);g" \
 	    -e "s;$(ACE_ROOT);\$$(ACE_ROOT);g" \
+	    -e '/$$(ACE_ROOT)\/ace\/config[^\.]*\.h/d' \
 	    -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
 	    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o .obj/\1.$(SOEXT) $(VSHDIR)\1.o $(VSHDIR)\1.$(SOEXT):;" \
 	> $(MAKEFILE).new
-	@mv $(MAKEFILE).new $(MAKEFILE)
+	@cat $(MAKEFILE).new >$(MAKEFILE)
+	@$(RM) -f $(MAKEFILE).new
 	@if	cmp -s $(MAKEFILE) $(MAKEFILE).old ;\
 	then	echo "Makefile dependencies unchanged." ;\
 	else \

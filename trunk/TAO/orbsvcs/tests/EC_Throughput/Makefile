@@ -55,9 +55,6 @@ realclean:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
- $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -356,9 +353,6 @@ realclean:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
- $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -657,9 +651,6 @@ realclean:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
- $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -1009,9 +1000,6 @@ realclean:
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Busy_Lock.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Command.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i \
  ECT_Throughput.h ECT_Driver.h ECT_Driver.i ECT_Consumer.h \
