@@ -162,8 +162,7 @@ catior (CORBA::String str,
 
   mb.rd_ptr (1);
   mb.wr_ptr (2 * len - 1);
-  TAO_InputCDR stream (&mb,
-                       byteOrder);
+  TAO_InputCDR stream (&mb, ACE_static_cast(int,byteOrder));
 
   if (byteOrder == 1)
     ACE_DEBUG ((LM_DEBUG,
