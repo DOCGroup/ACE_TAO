@@ -1,3 +1,21 @@
+Wed Mar 28 08:18:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * orbsvcs/orbsvcs/AV:UDP.h
+        * orbsvcs/orbsvcs/AVStreams_i.h
+        * orbsvcs/orbsvcs/Transport.h
+        * orbsvcs/orbsvcs/TCP.h
+        * orbsvcs/orbsvcs/RTP.h
+        * orbsvcs/orbsvcs/RTCP.h
+        * orbsvcs/orbsvcs/Protocol_Factory.h
+        * orbsvcs/orbsvcs/Policy.h
+        * orbsvcs/orbsvcs/MCast.h
+        * orbsvcs/orbsvcs/Flows_T.h
+        * orbsvcs/orbsvcs/Endpoint_Strategy_T.h
+        * orbsvcs/orbsvcs/Endpoint_Strategy.h
+        * orbsvcs/orbsvcs/AV_Core.h
+        * orbsvcs/orbsvcs/FlowSpec_Entry.h
+	  Converted commenting style to doxygen, added some comments.
+
 Wed Mar 28 06:15:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/AMI/client.cpp: Fixed a compile error in Windoows build.

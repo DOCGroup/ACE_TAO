@@ -1,20 +1,16 @@
 /* -*- C++ -*- */
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS AVStreams
-//
-// = FILENAME
-//   Flows_T.h
-//
-// = AUTHOR
-//    Nagarajan Surendran <naga@cs.wustl.edu>
-//
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Flows_T.h
+ *
+ *  $Id$
+ *
+ *  @author Nagarajan Surendran <naga@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_AV_FLOWS_T_H
 #define TAO_AV_FLOWS_T_H
@@ -22,6 +18,12 @@
 
 #include "AVStreams_i.h"
 
+/**
+ * @class TAO_FDev
+ * @brief Implementation of the AV/Streams Flow Device.
+ *        A FlowConnection is used to bind FDevs for flows,
+ *        much like how a StreamCtrl is used to bind MMDevices for streams.
+ */
 template <class T_Producer, class T_Consumer>
 class TAO_AV_Export TAO_FDev :
   public virtual POA_AVStreams::FDev,
@@ -29,18 +31,19 @@ class TAO_AV_Export TAO_FDev :
   public virtual PortableServer::RefCountServantBase
 {
 public:
+  /// default constructor
   TAO_FDev (void);
-  // default constructor
 
+  /// constructor taking a flowname.
   TAO_FDev (const char *flowname);
-  // constructor taking a flowname.
 
+  /// Destructor..
   ~TAO_FDev (void);
-  // Destructor..
 
+  /// set/get the flowname.
+  /// create a flow producer object.
   const char *flowname (void);
   void flowname (const char *flowname);
-  // set/get the flowname.
   AVStreams::FlowProducer_ptr create_producer (AVStreams::FlowConnection_ptr the_requester,
                                                        AVStreams::QoS & the_qos,
                                                        CORBA::Boolean_out met_qos,
@@ -51,16 +54,16 @@ public:
                      AVStreams::streamOpDenied,
                      AVStreams::notSupported,
                      AVStreams::QoSRequestFailed));
-  // create a flow producer object.
 
+  /// bridge method for the application to override the producer object
+  /// creation. Default implementation creates a TAO_FlowProducer.
   virtual AVStreams::FlowProducer_ptr make_producer (AVStreams::FlowConnection_ptr the_requester,
                                                        AVStreams::QoS & the_qos,
                                                        CORBA::Boolean_out met_qos,
                                                        char *& named_fdev,
                                                        CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // bridge method for the application to override the producer object
-  // creation. Default implementation creates a TAO_FlowProducer.
 
+  /// create a flow consumer object.
   virtual AVStreams::FlowConsumer_ptr create_consumer (AVStreams::FlowConnection_ptr the_requester,
                                                        AVStreams::QoS & the_qos,
                                                        CORBA::Boolean_out met_qos,
@@ -71,16 +74,16 @@ public:
                      AVStreams::streamOpDenied,
                      AVStreams::notSupported,
                      AVStreams::QoSRequestFailed));
-  // create a flow consumer object.
 
+  /// bridge method for the application to override the consumer object
+  /// creation. Default implementation creates a TAO_FlowConsumer.
   virtual AVStreams::FlowConsumer_ptr make_consumer (AVStreams::FlowConnection_ptr the_requester,
                                                        AVStreams::QoS & the_qos,
                                                        CORBA::Boolean_out met_qos,
                                                        char *& named_fdev,
                                                        CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // bridge method for the application to override the consumer object
-  // creation. Default implementation creates a TAO_FlowConsumer.
 
+  /// bind this FDev with another FDev.
   virtual AVStreams::FlowConnection_ptr bind (AVStreams::FDev_ptr peer_device,
                                               AVStreams::QoS & the_qos,
                                               CORBA::Boolean_out is_met,
@@ -88,8 +91,8 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
                      AVStreams::QoSRequestFailed));
-  // bind this FDev with another FDev.
 
+  /// multicast bind is not implemented yet.
   virtual AVStreams::FlowConnection_ptr bind_mcast (AVStreams::FDev_ptr first_peer,
                                                     AVStreams::QoS & the_qos,
                                                     CORBA::Boolean_out is_met,
@@ -97,15 +100,14 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
                      AVStreams::QoSRequestFailed));
-  // multicast bind is not implemented yet.
 
+  /// destroys this FDev.
   virtual void destroy (AVStreams::FlowEndPoint_ptr the_ep,
                         const char * fdev_name,
                         CORBA::Environment &env =
                         CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notSupported));
-  // destroys this FDev.
 
 protected:
   ACE_DLList <TAO_FlowProducer> producer_list_;

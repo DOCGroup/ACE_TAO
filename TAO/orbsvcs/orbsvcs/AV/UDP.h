@@ -1,19 +1,15 @@
 /* -*- C++ -*- */
 
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS AVStreams
-//
-// = FILENAME
-//   UDP.h
-//
-// = AUTHOR
-//    Nagarajan Surendran <naga@cs.wustl.edu>
-//
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   UDP.h
+ *
+ *  $Id$
+ *
+ *  @author Nagarajan Surendran <naga@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_AV_UDP_H
 #define TAO_AV_UDP_H
@@ -22,13 +18,17 @@
 #include "ace/OS.h"
 #include "Protocol_Factory.h"
 
+/**
+ * @class TAO_AV_UDP_Factory
+ * @brief
+ */
 class TAO_AV_Export TAO_AV_UDP_Factory : public TAO_AV_Transport_Factory
 {
 public:
+  /// Initialization hook.
   TAO_AV_UDP_Factory (void);
   virtual ~TAO_AV_UDP_Factory (void);
   virtual int init (int argc, char *argv[]);
-  // Initialization hook.
   virtual int match_protocol (const char *protocol_string);
   virtual TAO_AV_Acceptor *make_acceptor (void);
   virtual TAO_AV_Connector *make_connector (void);
@@ -36,14 +36,15 @@ public:
 
 class TAO_AV_UDP_Flow_Handler;
 
+/**
+ * @class TAO_AV_UDP_Transport
+ * @brief A transport abstraction for udp sockets. 
+ *        Uses the ACE_SOCK_Dgram to send the data.
+ */
 class TAO_AV_UDP_Transport
   :public TAO_AV_Transport
 {
-  // = TITLE
-  //     A transport abstraction for udp sockets.
-  //
-  // = DESCRIPTION
-  //     Uses the ACE_SOCK_Dgram to send the data.
+
 public:
   TAO_AV_UDP_Transport (void);
 
@@ -60,50 +61,54 @@ public:
 
   virtual int set_remote_address (const ACE_INET_Addr &address);
 
+  /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0);
-  // Write the complete Message_Block chain to the connection.
 
+  /// Write the contents of the buffer of length len to the connection.
   virtual ssize_t send (const char *buf,
                         size_t len,
                         ACE_Time_Value *s = 0);
-  // Write the contents of the buffer of length len to the connection.
 
+  /// Write the contents of iovcnt iovec's to the connection.
   virtual ssize_t send (const iovec *iov,
                         int iovcnt,
                         ACE_Time_Value *s = 0);
-  // Write the contents of iovcnt iovec's to the connection.
 
+  /// Read len bytes from into buf.
   virtual ssize_t recv (char *buf,
                         size_t len,
                         ACE_Time_Value *s = 0);
-  // Read len bytes from into buf.
 
+  /// Read len bytes from into buf using flags.
   virtual ssize_t recv (char *buf,
                         size_t len,
                         int flags,
                         ACE_Time_Value *s = 0);
-  // Read len bytes from into buf using flags.
 
+  ///  Read received data into the iovec buffers.
   virtual ssize_t recv (iovec *iov,
                         int iovcnt,
                         ACE_Time_Value *s = 0);
-  //  Read received data into the iovec buffers.
 protected:
   TAO_AV_UDP_Flow_Handler *handler_;
   ACE_Addr *addr_;
   ACE_INET_Addr peer_addr_;
 };
 
+/**
+ * @class TAO_AV_UDP_Flow_Handler
+ * @brief Flow Handler for UDP flows. 
+ */
 class TAO_AV_UDP_Flow_Handler
   :public virtual TAO_AV_Flow_Handler,
    public virtual ACE_Event_Handler
 {
 public:
+  ///Ctor
+  /// Dtor
   TAO_AV_UDP_Flow_Handler (void);
-  //Ctor
   ~TAO_AV_UDP_Flow_Handler (void);
-  // Dtor
   int open (ACE_Addr &address);
   virtual TAO_AV_Transport *transport (void);
   virtual int set_remote_address (ACE_Addr *address);
@@ -118,6 +123,10 @@ protected:
   ACE_SOCK_Dgram sock_dgram_;
 };
 
+/**
+ * @class TAO_AV_UDP_Acceptor
+ * @brief 
+ */
 class TAO_AV_UDP_Acceptor
   :public TAO_AV_Acceptor
 {
@@ -144,6 +153,10 @@ protected:
   TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
 };
 
+/**
+ * @class TAO_AV_UDP_Connector
+ * @brief 
+ */
 class TAO_AV_UDP_Connector
   :public TAO_AV_Connector
 {
@@ -165,20 +178,24 @@ protected:
   TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
 };
 
+/**
+ * @class TAO_AV_UDP_Object
+ * @brief TAO_AV_Protocol_Object for the User Datagram Protocol (UDP)
+ */
 class TAO_AV_Export TAO_AV_UDP_Object  : public TAO_AV_Protocol_Object
 {
 public:
   TAO_AV_UDP_Object (TAO_AV_Callback *callback,
                      TAO_AV_Transport *transport = 0);
 
+  /// Dtor
   virtual ~TAO_AV_UDP_Object (void);
-  // Dtor
 
   virtual int handle_input (void);
 
+  /// send a data frame.
   virtual int send_frame (ACE_Message_Block *frame,
                           TAO_AV_frame_info *frame_info = 0);
-  // send a data frame.
 
   virtual int send_frame (const iovec *iov,
                           int iovcnt,
@@ -187,21 +204,25 @@ public:
   virtual int send_frame (const char*buf,
                           size_t len);
   
+  /// end the stream.
   virtual int destroy (void);
-  // end the stream.
 
 private:
+  /// Pre-allocated memory to receive the data...
   ACE_Message_Block frame_;
-  // Pre-allocated memory to receive the data...
 };
 
+/**
+ * @class TAO_AV_UDP_Flow_Factory
+ * @brief 
+ */
 class TAO_AV_UDP_Flow_Factory : public TAO_AV_Flow_Protocol_Factory
 {
 public:
+  /// Initialization hook.
   TAO_AV_UDP_Flow_Factory (void);
   virtual ~TAO_AV_UDP_Flow_Factory (void);
   virtual int init (int argc, char *argv[]);
-  // Initialization hook.
   virtual int match_protocol (const char *flow_string);
   TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                 TAO_Base_StreamEndPoint *endpoint,

@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
 /*-
  * Copyright (c) 1993-1994 The Regents of the University of California.
  * All rights reserved.
@@ -34,19 +33,16 @@
  * SUCH DAMAGE.
  */
 
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS AVStreams
-//
-// = FILENAME
-//   RTCP.h
-//
-// = AUTHOR
-//    Nagarajan Surendran <naga@cs.wustl.edu>
-//
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   RTCP.h
+ *
+ *  $Id$
+ *
+ *  @author Nagarajan Surendran <naga@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_AV_RTCP_H
 #define TAO_AV_RTCP_H
@@ -61,7 +57,10 @@
 #include <stdlib.h>
 #include "RTP.h"
 
-// TAO_AV_RTP_State
+/**
+ * @class TAO_AV_RTP_State
+ * @brief Encapsulate the state of an RTP session
+ */
 class TAO_AV_RTP_State
 {
 public:
@@ -83,6 +82,11 @@ public:
 class TAO_AV_RTCP_Callback;
 class TAO_AV_SourceManager;
 
+/**
+ * @class TAO_AV_RTCP
+ * @brief Encapsulate the header format for the Real Time Control 
+ *        Protocol (RTCP)
+ */
 class TAO_AV_RTCP
 {
 public:
@@ -193,45 +197,52 @@ public:
 
 class TAO_AV_Callback;
 
+/**
+ * @class TAO_AV_RTCP_Object
+ * @brief TAO_AV_Protocol_Object for RTCP protocol
+ */
 class TAO_AV_Export TAO_AV_RTCP_Object 
   : public TAO_AV_Protocol_Object
 {
 public:
+  /// constructor.
   TAO_AV_RTCP_Object (TAO_AV_Callback *callback,
                       TAO_AV_Transport *transport = 0);
-  // constructor.
 
+  /// Destructor
   virtual ~TAO_AV_RTCP_Object (void);
-  // Destructor
 
   virtual int handle_input (void);
   virtual int handle_control_input (ACE_Message_Block *frame,
                                     const ACE_Addr &peer_address);
 
+  /// set/get policies.
   virtual int set_policies (const TAO_AV_PolicyList &policy_list);
-  // set/get policies.
 
+  /// start/stop the flow.
   virtual int start (void);
   virtual int stop (void);
-  // start/stop the flow.
 
+  /// send a data frame.
   virtual int send_frame (ACE_Message_Block *frame,
                           TAO_AV_frame_info *frame_info = 0);
-  // send a data frame.
 
+  /// send a frame in iovecs.
   virtual int send_frame (const iovec *iov,
                           int iovcnt,
                           TAO_AV_frame_info *frame_info = 0);
-  // send a frame in iovecs.
 
   virtual int send_frame (const char*buf,
                           size_t len);
 
+  /// end the stream.
   virtual int destroy (void);
-  // end the stream.
 };
 
-
+/**
+ * @class TAO_AV_Flow_Protocol_Factory
+ * @brief
+ */
 class TAO_AV_Export TAO_AV_RTCP_Flow_Factory
   :public TAO_AV_Flow_Protocol_Factory
 {
@@ -246,40 +257,44 @@ public:
                                                         TAO_AV_Transport *transport);
 };
 
+/**
+ * @class TAO_AV_RTCP_Callback
+ * @brief TAO_AV_Callback for RTCP protocol
+ */
 class TAO_AV_Export TAO_AV_RTCP_Callback : public TAO_AV_Callback
 {
 public:
+  /// RTCP callback.
   TAO_AV_RTCP_Callback (void);
-  // RTCP callback.
 
+  /// virtual destructor.
   virtual ~TAO_AV_RTCP_Callback (void);
-  // virtual destructor.
 
+  /// Called during Streamctrl->start.
   virtual int handle_start (void);
-  // Called during Streamctrl->start.
 
+  /// Called during Streamctrl->stop.
   virtual int handle_stop (void);
-  // Called during Streamctrl->stop.
 
+  /// Called during timeout for Flow Producers.
   virtual int handle_timeout (void *arg);
-  // Called during timeout for Flow Producers.
 
+  /// Called when a frame arrives for a FlowConsumer.
   virtual int receive_frame (ACE_Message_Block *frame,
                              TAO_AV_frame_info *frame_info = 0,
                              const ACE_Addr &peer_address = ACE_Addr::sap_any);
-  // Called when a frame arrives for a FlowConsumer.
 
   virtual int receive_control_frame (ACE_Message_Block *frame,
                                      const ACE_Addr &peer_address = ACE_Addr::sap_any);
 
+  /// Called during Streamctrl->destroy i.e tear_down  of the stream
+  /// @@coryan:Call it handle_destroy or handle_close.
   virtual int handle_destroy (void);
-  // Called during Streamctrl->destroy i.e tear_down  of the stream
-  // @@coryan:Call it handle_destroy or handle_close.
 
+  /// Called to get the timeout. If tv is 0 then the framework stop
+  /// calling this.
   virtual void get_timeout (ACE_Time_Value *&tv,
                             void *&arg);
-  // Called to get the timeout. If tv is 0 then the framework stop
-  // calling this.
 
   int demux (TAO_AV_RTP::rtphdr* rh,
              ACE_Message_Block *data,

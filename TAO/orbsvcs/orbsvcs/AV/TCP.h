@@ -1,19 +1,15 @@
 /* -*- C++ -*- */
 
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS AVStreams
-//
-// = FILENAME
-//   TCP.h
-//
-// = AUTHOR
-//    Nagarajan Surendran <naga@cs.wustl.edu>
-//
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   TCP.h
+ *
+ *  $Id$
+ *
+ *  @author Nagarajan Surendran <naga@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_AV_TCP_H
 #define TAO_AV_TCP_H
@@ -23,13 +19,17 @@
 #include "Protocol_Factory.h"
 #include "FlowSpec_Entry.h"
 
+/**
+ * @class TAO_AV_TCP_Factory
+ * @brief
+ */
 class TAO_AV_Export TAO_AV_TCP_Factory : public TAO_AV_Transport_Factory
 {
 public:
+  /// Initialization hook.
   TAO_AV_TCP_Factory (void);
   virtual ~TAO_AV_TCP_Factory (void);
   virtual int init (int argc, char *argv[]);
-  // Initialization hook.
   virtual int match_protocol (const char *protocol_string);
   virtual TAO_AV_Acceptor *make_acceptor (void);
   virtual TAO_AV_Connector *make_connector (void);
@@ -37,14 +37,15 @@ public:
 
 class TAO_AV_TCP_Flow_Handler;
 
+/**
+ * @class TAO_AV_TCP_Transport
+ * @brief A transport abstraction for socket streams.
+ *        Uses the ACE_SOCK_Stream to send the data.
+ */
 class TAO_AV_TCP_Transport
   :public TAO_AV_Transport
 {
-  // = TITLE
-  //     A transport abstraction for socket streams.
-  //
-  // = DESCRIPTION
-  //     Uses the ACE_SOCK_Stream to send the data.
+
 public:
   TAO_AV_TCP_Transport (void);
 
@@ -60,39 +61,43 @@ public:
 
   virtual ACE_Addr *get_peer_addr (void);
 
+  /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0);
-  // Write the complete Message_Block chain to the connection.
 
+  /// Write the contents of the buffer of length len to the connection.
   virtual ssize_t send (const char *buf,
                         size_t len,
                         ACE_Time_Value *s = 0);
-  // Write the contents of the buffer of length len to the connection.
 
+  /// Write the contents of iovcnt iovec's to the connection.
   virtual ssize_t send (const iovec *iov,
                         int iovcnt,
                         ACE_Time_Value *s = 0);
-  // Write the contents of iovcnt iovec's to the connection.
 
+  /// Read len bytes from into buf.
   virtual ssize_t recv (char *buf,
                         size_t len,
                         ACE_Time_Value *s = 0);
-  // Read len bytes from into buf.
 
+  /// Read len bytes from into buf using flags.
   virtual ssize_t recv (char *buf,
                         size_t len,
                         int flags,
                         ACE_Time_Value *s = 0);
-  // Read len bytes from into buf using flags.
 
+  ///  Read received data into the iovec buffers.
   virtual ssize_t recv (iovec *iov,
                         int iovcnt,
                         ACE_Time_Value *s = 0);
-  //  Read received data into the iovec buffers.
 protected:
   TAO_AV_TCP_Flow_Handler *handler_;
 };
 
+/**
+ * @class TAO_AV_TCP_Flow_Handler
+ * @brief
+ */
 class TAO_AV_TCP_Flow_Handler
   :public virtual TAO_AV_Flow_Handler,
    public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -110,6 +115,10 @@ protected:
 
 class TAO_AV_TCP_Acceptor;
 
+/**
+ * @class TAO_AV_TCP_Base_Acceptor
+ * @brief
+ */
 class TAO_AV_TCP_Base_Acceptor  :public ACE_Acceptor <TAO_AV_TCP_Flow_Handler,ACE_SOCK_ACCEPTOR>
 {
 public:
@@ -124,6 +133,10 @@ protected:
   TAO_FlowSpec_Entry *entry_;
 };
 
+/**
+ * @class TAO_AV_TCP_Acceptor
+ * @brief
+ */
 class TAO_AV_TCP_Acceptor  :public TAO_AV_Acceptor
 {
 public:
@@ -151,6 +164,10 @@ protected:
 
 class TAO_AV_TCP_Connector;
 
+/**
+ * @class TAO_AV_Base_Connector
+ * @brief
+ */
 class TAO_AV_TCP_Base_Connector  : public ACE_Connector <TAO_AV_TCP_Flow_Handler,ACE_SOCK_CONNECTOR>
 {
 public:
@@ -165,6 +182,10 @@ protected:
   ACE_Reactor *reactor_;
 };
 
+/**
+ * @class TAO_AV_TCP_Connector
+ * @brief
+ */
 class TAO_AV_TCP_Connector  : public TAO_AV_Connector
 {
 public:
@@ -187,20 +208,24 @@ protected:
   TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
 };
 
+/**
+ * @class TAO_AV_TCP_Object
+ * @brief TAO_AV_Protocol_Object for Transmission Control Protocol (TCP)
+ */
 class TAO_AV_Export TAO_AV_TCP_Object : public TAO_AV_Protocol_Object
 {
 public:
   TAO_AV_TCP_Object (TAO_AV_Callback *callback,
                      TAO_AV_Transport *transport = 0);
 
+  /// Dtor
   virtual ~TAO_AV_TCP_Object (void);
-  // Dtor
 
   virtual int handle_input (void);
 
+  /// send a data frame.
   virtual int send_frame (ACE_Message_Block *frame,
                           TAO_AV_frame_info *frame_info = 0);
-  // send a data frame.
 
   virtual int send_frame (const iovec *iov,
                           int iovcnt,
@@ -209,21 +234,25 @@ public:
   virtual int send_frame (const char*buf,
                           size_t len);
   
+  /// end the stream.
   virtual int destroy (void);
-  // end the stream.
 
 private:
+  /// Pre-allocated memory to receive the data...
   ACE_Message_Block frame_;
-  // Pre-allocated memory to receive the data...
 };
 
+/**
+ * @class TAO_AV_TCP_Flow_Factory
+ * @brief 
+ */
 class TAO_AV_TCP_Flow_Factory : public TAO_AV_Flow_Protocol_Factory
 {
 public:
+  /// Initialization hook.
   TAO_AV_TCP_Flow_Factory (void);
   virtual ~TAO_AV_TCP_Flow_Factory (void);
   virtual int init (int argc, char *argv[]);
-  // Initialization hook.
   virtual int match_protocol (const char *flow_string);
   TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                 TAO_Base_StreamEndPoint *endpoint,

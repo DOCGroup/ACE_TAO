@@ -1,20 +1,16 @@
 /* -*- C++ -*- */
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS (AVStreams)
-//
-// = FILENAME
-//   AV_Core.h
-//
-// = AUTHOR
-//    Nagarajan Surendran <naga@cs.wustl.edu>
-//
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   AV_Core.h
+ *
+ *  $Id$
+ *
+ *  @author Nagarajan Surendran <naga@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_AV_CORE_H
 #define TAO_AV_CORE_H
@@ -45,7 +41,11 @@ typedef ACE_Unbounded_Set_Iterator<TAO_AV_Transport_Item*> TAO_AV_TransportFacto
 typedef ACE_Unbounded_Set<TAO_AV_Flow_Protocol_Item*> TAO_AV_Flow_ProtocolFactorySet;
 typedef ACE_Unbounded_Set_Iterator<TAO_AV_Flow_Protocol_Item*> TAO_AV_Flow_ProtocolFactorySetItor;
 
-
+/**
+ * @class TAO_AV_Core
+ * @brief This class encapsulates access to the TAO AV Core's resources 
+ *        and its state.
+ */
 class TAO_AV_Export TAO_AV_Core
 {
 public:
@@ -68,11 +68,11 @@ public:
     TAO_AV_SFP_UDP_MCAST = 11
   };
 
+  /// Default constructor.
   TAO_AV_Core (void);
-  // Default constructor.
 
+  /// Destructor.
   ~TAO_AV_Core (void);
-  // Destructor.
 
   int init (CORBA::ORB_ptr orb,
             PortableServer::POA_ptr poa,
@@ -90,18 +90,18 @@ public:
   int init_transport_factories (void);
   int init_flow_protocol_factories (void);
 
+  /// = Get the acceptor registry
   TAO_AV_Acceptor *get_acceptor (const char *flowname);
   TAO_AV_Connector *get_connector (const char *flowname);
   TAO_AV_Connector_Registry *connector_registry (void);
   TAO_FlowSpec_Entry *get_flow_spec_entry (TAO_AV_FlowSpecSet &flow_spec_set,
                                            const char *flowname);
-  // = Get the acceptor registry
   TAO_AV_Acceptor_Registry  *acceptor_registry  (void);
 
   // = Get the protocol factories
+  /// = Set/get the <ACE_Reactor>.
   TAO_AV_Flow_ProtocolFactorySet *flow_protocol_factories (void);
   TAO_AV_TransportFactorySet *transport_factories (void);
-  // = Set/get the <ACE_Reactor>.
   void reactor (ACE_Reactor *r);
   ACE_Reactor *reactor (void);
   CORBA::ORB_ptr orb (void);
@@ -113,19 +113,19 @@ public:
   static char *get_flowname (const char *flow_spec_entry_str);
 
 protected:
+  /// The connector registry which all active connecters must register
+  /// themselves with.
   TAO_AV_Connector_Registry *connector_registry_;
-  // The connector registry which all active connecters must register
-  // themselves with.
 
+  /// The registry which maintains a list of acceptor factories for each
+  /// loaded protocol.
   TAO_AV_Acceptor_Registry *acceptor_registry_;
-  // The registry which maintains a list of acceptor factories for each
-  // loaded protocol.
 
+  /// Pointer to the list of transports loaded into this AV_Core instance.
   TAO_AV_TransportFactorySet transport_factories_;
-  // Pointer to the list of transports loaded into this AV_Core instance.
 
+  /// Pointer to the list of flow protocol loaded into this AV_Core instance.
   TAO_AV_Flow_ProtocolFactorySet flow_protocol_factories_;
-  // Pointer to the list of flow protocol loaded into this AV_Core instance.
 
   ACE_Reactor *reactor_;
   CORBA::ORB_var orb_;
