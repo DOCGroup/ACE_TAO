@@ -14,7 +14,8 @@ Tue Jan  6 20:43:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           the calculation of the repository id, which contains the prefix,
           to be done sooner, at AST node creation time, since the root
           prefix is updated with each file change and with each prefix
-          directive. This fix closes [BUGID:1687].
+          directive. This fix closes [BUGID:1687]. Thanks to Terry Ware
+          <terry.ware@dc.alphatech.com> for reporting it.
 
 Tue Jan  6 16:36:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
