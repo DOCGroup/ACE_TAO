@@ -36,9 +36,8 @@ public:
    * @param mt Specifies whether multithreaded ORB is used.
    */
   AMI_Primary_Replication_Strategy(bool mt);
-    virtual ~AMI_Primary_Replication_Strategy();
-  virtual int init();
-    virtual void replicate_request(const FTRT::State& state,
+  virtual ~AMI_Primary_Replication_Strategy();
+  virtual void replicate_request(const FTRT::State& state,
                                    RollbackOperation rollback,
                                    const FtRtecEventChannelAdmin::ObjectId& oid
                                    ACE_ENV_ARG_DECL);
