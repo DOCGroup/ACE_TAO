@@ -29,10 +29,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Implement the Web_Server::Content_Iterator interface.
 class Content_Iterator_i :
   public virtual POA_Web_Server::Content_Iterator,
   public virtual PortableServer::RefCountServantBase
+  // = TITLE
+  //Implement the Web_Server::Content_Iterator interface.
 {
   friend class Iterator_Factory_i;
 public:
@@ -78,8 +79,5 @@ private:
   // Flag that denotes that the Content Iterator has not been
   // initialized.
 };
-
-
-
 
 #endif  /* CONTENT_ITERATOR_I_H */

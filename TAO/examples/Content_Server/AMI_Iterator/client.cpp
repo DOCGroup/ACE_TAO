@@ -20,7 +20,6 @@ main (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage: client filename [filename ...]\n"),
                           -1);
-
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
@@ -54,12 +53,9 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Nil reference to Name Service\n"),
-                            -1);
-        }
-
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Nil reference to Name Service\n"),
+                          -1);
       // Create a name.
       CosNaming::Name name;
       name.length (1);
@@ -73,14 +69,11 @@ main (int argc, char *argv[])
       Web_Server::Iterator_Factory_var factory =
         Web_Server::Iterator_Factory::_narrow (obj.in ());
       if (CORBA::is_nil (factory.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object pointed to by:\n  %s\n"
-                             "is not an Iterator_Factory object.\n",
-                             argv[1]),
-                            -1);
-        }
-
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Object pointed to by:\n  %s\n"
+                           "is not an Iterator_Factory object.\n",
+                           argv[1]),
+                          -1);
       // Variable used to keep track of when file retrieval has
       // completed.
       int request_count = 0;
@@ -111,15 +104,14 @@ main (int argc, char *argv[])
 
       // Run the ORB event loop.
       while (request_count > 0)
-        {
-          if (orb->work_pending (ACE_TRY_ENV))
-            {
-              orb->perform_work (ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
-          else
-            ACE_OS::sleep (tv);
-        }
+        if (orb->work_pending (ACE_TRY_ENV))
+          {
+            orb->perform_work (ACE_TRY_ENV);
+            ACE_TRY_CHECK;
+          }
+        else
+          ACE_OS::sleep (tv);
+
       ACE_TRY_CHECK;
 
       orb->shutdown (0, ACE_TRY_ENV);
