@@ -138,18 +138,7 @@ UUID::create (unsigned char *buffer)
 
 
   ACE_Time_Value    now = ACE_OS::gettimeofday();
-  ACE_UINT64        timestamp =
-    (
-      SecondsToJan1970 +
-      now.sec()
-    ) *
-    10000000 +
-    now.usec() *
-    10
-
-    // multiplex timestamp with thread id to ensure the uniqueness between thread
-    +
-    static_cast<ACE_UINT16>(ACE_OS::thr_self());
+  ACE_UINT64        timestamp = (SecondsToJan1970 + now.sec()) * 10000000 + now.usec() * 10;
 
   buffer[0] = (unsigned char) (timestamp & 0xff);
   buffer[1] = (unsigned char) ((timestamp >> 8) & 0xff);
@@ -157,10 +146,11 @@ UUID::create (unsigned char *buffer)
   buffer[3] = (unsigned char) ((timestamp >> 24) & 0xff);
   buffer[4] = (unsigned char) ((timestamp >> 32) & 0xff);
   buffer[5] = (unsigned char) ((timestamp >> 40) & 0xff);
-  buffer[6] = (unsigned char) ((timestamp >> 48) & 0xff);
 
+  // multiplex timestamp with thread id to ensure the uniqueness between thread
+  buffer[6] = (unsigned char) ((timestamp >> 48) & 0xff);
   // Version number is 1
-  buffer[7] = (unsigned char) (((timestamp >> 56) & 0x0f) + 0x10);
+  buffer[7] = (unsigned char) (((timestamp >> 56) & 0x0f) + 0x10)
 
   ACE_UINT16  clockSequence = static_cast<
     ACE_UINT16>(ACE_OS::rand_r(seed) & 0x2ff);
