@@ -13,8 +13,7 @@ Timer_Helper::Timer_Helper (void)
 Timer_Helper::Timer_Helper (TAO_Time_Service_Clerk *clerk)
   : clerk_ (clerk)
 {
-  ACE_DEBUG ((LM_DEBUG,
-	      "In the constructor of the Timer Helper\n"));
+
 }
 
 // Destructor.
@@ -34,8 +33,8 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &time,
     {
       IORS::TYPE* value;
       for (IORS::ITERATOR server_iterator (this->clerk_->server_);
-	   server_iterator.next (value);
-	   !server_iterator.done ())
+	   server_iterator.next (value) != 0;
+	   server_iterator.advance ())
 	{
 	  // This is a remote call.
 	  CosTime::UTO_var UTO_server =
