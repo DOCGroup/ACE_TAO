@@ -126,6 +126,18 @@ public:
            const char host_name[],
            int encode = 1);
 
+#if defined ACE_HAS_IPV6
+  /**
+   * I think PF_UNSPEC is really a typo in the RFC and it really should
+   * be AF_UNSPEC.  They are both usually defined to the same thing, so
+   * it shouldn't really matter.
+   */
+  int set_usinggetaddrinfo (u_short port_number,
+                            const char host_name[],
+                            int address_family = PF_UNSPEC,
+                            int encode = 1);
+#endif
+
   /**
    * Initializes an <ACE_INET_Addr> from a <port_number> and an
    * Internet <ip_addr>.  If <encode> is enabled then <port_number>

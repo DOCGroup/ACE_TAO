@@ -22,6 +22,9 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
 {
   ACE_TRACE ("ACE_INET_Addr::addr_to_string");
 
+  // XXXXXXXX modify for IPv6 formatting.  Be sure to include
+  // the scope identifier in the full address.
+
   size_t total_len = (ipaddr_format == 0 ?
                       ACE_OS::strlen (this->get_host_name ()) :
                       ACE_OS::strlen (this->get_host_addr ()))
@@ -283,6 +286,48 @@ ACE_INET_Addr::set (u_short port_number,
                             encode);
         }
     }
+}
+
+// XXXXX this method should change name to something different.
+// Possibly use this as a replacement for the ugly set method
+// currently used for IPv4.
+int ACE_INET_Addr::set_usinggetaddrinfo (u_short port_number,
+                                         const char host_name[],
+                                         int address_family,
+                                         int encode)
+{
+  struct addrinfo hints, *res, *res0;
+  int error;
+  ACE_OS::memset((void*)&hints, 0, sizeof(hints));
+
+  hints.ai_family = address_family;
+
+  error = getaddrinfo(host_name, 0, &hints, &res0);
+  if(error) {
+    return -1;
+  }
+  int ret = -1;
+  for(res = res0; res != 0; res = res->ai_next) {
+    printf("length of address is %d\n",res->ai_addrlen);
+    if(res->ai_addrlen == sizeof(sockaddr_in)) {
+      sockaddr_in *addr = (sockaddr_in*)res->ai_addr;
+      this->set_address((const char*)&addr->sin_addr,sizeof(addr->sin_addr),0);
+      this->set_port_number(port_number,encode);
+      ret = 0;
+      break;
+    } else if(res->ai_addrlen == sizeof(sockaddr_in6)) {
+      sockaddr_in6 *addr = (sockaddr_in6*)res->ai_addr;
+      printf("ipv6 address\n");
+      printf("scope_id = %d\n",addr->sin6_scope_id);
+      printf("port = %d\n",addr->sin6_port);
+      this->set_addr((void*)res->ai_addr,res->ai_addrlen);
+      this->set_port_number(port_number,encode);
+      ret = 0;
+      break;
+    }
+  }
+  freeaddrinfo(res0);
+  return ret;
 }
 
 // Initializes a ACE_INET_Addr from a <port_name> and the remote
@@ -645,6 +690,8 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
                                 int encode /* = 1 */)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
+
+  printf("in set_address length=%d\n",len);
 
   this->ACE_Addr::base_set (ACE_ADDRESS_FAMILY, sizeof this->inet_addr_);
 #if defined (ACE_HAS_IPV6)
