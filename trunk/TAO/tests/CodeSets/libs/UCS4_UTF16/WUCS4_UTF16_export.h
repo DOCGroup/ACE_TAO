@@ -9,7 +9,7 @@
 
 #include "ace/config-all.h"
 
-#if defined (AS_STATIC_LIBS)
+#if defined (TAO_AS_STATIC_LIBS)
 #  if !defined (UCS4_UTF16_HAS_DLL)
 #    define UCS4_UTF16_HAS_DLL 0
 #  endif /* ! UCS4_UTF16_HAS_DLL */
