@@ -1,3 +1,8 @@
+Tue Mar 15 14:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Simple/grid/README:
+          Fixed typo
+
 Tue Mar 15 10:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/NestedUpcall/Triangle_Test/initiator.cpp:
