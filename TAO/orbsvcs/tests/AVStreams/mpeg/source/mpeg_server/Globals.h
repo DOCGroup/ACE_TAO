@@ -149,7 +149,7 @@ public:
 
 class Video_Global
 {
- public:
+public:
   Video_Global ();
 
   int live_source;

@@ -52,19 +52,19 @@ Video_Server_StreamEndPoint::handle_connection_requested (AVStreams::StreamEndPo
   return 1;
 } 
 
-// Main program
+// Main program.
 
 int
-main (int argc, char ** argv)
+main (int argc, char *argv[])
 {
   TAO_TRY
     {
-      TAO_ORB_Manager m;
+      TAO_ORB_Manager orb_manager;
 
       // Initialize the ORB.
-      m.init (argc, 
-              argv,
-              TAO_TRY_ENV);
+      orb_manager.init (argc, 
+                        argv,
+                        TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // Create server-side MMDevice.
@@ -75,8 +75,8 @@ main (int argc, char ** argv)
       TAO_CHECK_ENV;
 
       // Activate the MMDevice, i.e., register with POA.
-      CORBA::String_var s = m.activate (mmdevice_impl,
-                                        TAO_TRY_ENV);
+      CORBA::String_var s = orb_manager.activate (mmdevice_impl,
+                                                  TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
       // Print the IOR.
@@ -85,7 +85,7 @@ main (int argc, char ** argv)
                   s.in ()));
 
       // Run the ORB Event loop.
-      m.run (TAO_TRY_ENV);
+      orb_manager.run (TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::SystemException, sysex)
