@@ -1,3 +1,9 @@
+Thu Jul  1 14:46:24 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Plan_Handler.cpp:
+
+          Removed includes to Process_Basic_Type.h.
+
 Thu Jul  1 13:20:08 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Plan_Handler.cpp:
