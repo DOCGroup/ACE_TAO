@@ -1,3 +1,9 @@
+Sat Nov 17 13:22:21 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tao/Invocation_Endpoint_Selectors.cpp:
+	* tao/Invocation_Endpoint_Selectors.i:  Moved constructors
+	  from .i to .cpp file to remove VC++ warning. 
+
 Sat Nov 17 10:09:33 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/RTCP.cpp (send_report): Changed sdes_type from 
