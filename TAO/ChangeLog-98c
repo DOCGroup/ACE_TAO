@@ -1,3 +1,15 @@
+Wed Sep  2 14:30:46 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tests/Param_Test/Param_Test.dsw:
+	* tests/Param_Test/client.dsp:
+	* tests/Param_Test/server.dsp:
+	  Updated to use new filenames for TAO_IDL generated files
+	  and also updated to MSVC 6.
+
+	* tests/Param_Test/ub_objref_seq.cpp: 
+	  Fixed warnings on MSVC 6 -- an extra semicolon after a
+	  TAO_CATCHANY and a return 0 needed at the end of a method.
+
 Wed Sep  2 14:28:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Sequence.i: 
