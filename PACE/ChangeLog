@@ -1,5 +1,12 @@
+Wed Sep 13 13:42:15 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/sys/wait.h:
+
+	  More types changed to pace_*.
+
 Wed Sep 13 13:25:33 2000  Luther J Baker  <luther@cs.wustl.edu>
 
+	* pace/unistd.h: 
 	* pace/win32/unistd.inl:
 
 	  Even more type shifts to pace_*.
