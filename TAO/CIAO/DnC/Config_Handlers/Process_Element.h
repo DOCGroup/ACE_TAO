@@ -90,12 +90,6 @@ public:
   {
   }
 
-  Process_Member_Function& operator=(func_type ft)
-  {
-    f_ = f;
-    return *this;
-  }
-
   virtual void call(DOMNodeIterator* iter, DATA& data)
   {
     (obj_->*f_) (doc_, iter, data);
@@ -129,12 +123,6 @@ public:
   Process_Static_Function(func_type f)
     : f_(f)
   {
-  }
-
-  Process_Static_Function& operator=(func_type ft)
-  {
-    f_ = f;
-    return *this;
   }
 
   virtual void call(DOMNodeIterator* iter, DATA& data)
