@@ -1,3 +1,13 @@
+Mon Feb 14 10:16:15 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Acceptor_Registry.h:
+
+	  Removed inclusion extraneous headers.
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
 Mon Feb 14 08:25:32 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/Simple/time/Time.idl:
