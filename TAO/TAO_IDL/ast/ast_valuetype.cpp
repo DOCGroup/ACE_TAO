@@ -8,8 +8,11 @@
 #include "utl_err.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
+#include "utl_string.h"
 #include "global_extern.h"
 #include "nr_extern.h"
+
+#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_valuetype, 
@@ -129,6 +132,76 @@ idl_bool
 AST_ValueType::will_have_factory (void)
 {
   return I_FALSE;
+}
+
+// Look through supported interface list.
+AST_Decl *
+AST_ValueType::look_in_supported (UTL_ScopedName *e,
+                                  idl_bool treat_as_ref)
+{
+  AST_Decl *d = 0;
+  AST_Decl *d_before = 0;
+  AST_Interface **is = 0;
+  long nis = -1;
+
+  // Can't look in an interface which was not yet defined.
+  if (!this->is_defined ())
+    {
+      idl_global->err ()->fwd_decl_lookup (this,
+                                           e);
+      return 0;
+    }
+
+  // OK, loop through supported interfaces.
+
+  // (Don't leave the inheritance hierarchy, no module or global ...)
+  // Find all and report ambiguous results as error.
+
+  for (nis = this->n_supports (), is = this->supports ();
+       nis > 0;
+       nis--, is++)
+    {
+      d = (*is)->lookup_by_name (e,
+                                 treat_as_ref,
+                                 0 /* not in parent */);
+      if (d != 0)
+        {
+          if (d_before == 0)
+            {
+              // First result found.
+              d_before = d;
+            }
+          else
+            {
+              // Conflict against further results?
+              if (d != d_before)
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "warning in %s line %d: ",
+                              idl_global->filename ()->get_string (),
+                              idl_global->lineno ()));
+
+                  e->dump (*ACE_DEFAULT_LOG_STREAM);
+
+                  ACE_ERROR ((LM_ERROR,
+                              " is ambiguous in scope.\n"
+                              "Found "));
+
+                  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+
+                  ACE_ERROR ((LM_ERROR,
+                              " and "));
+
+                  d_before->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+
+                  ACE_ERROR ((LM_ERROR,
+                              ".\n"));
+                }
+            }
+        }
+    }
+
+  return d_before;
 }
 
 void

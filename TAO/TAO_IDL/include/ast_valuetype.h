@@ -43,6 +43,10 @@ public:
   virtual idl_bool will_have_factory (void);
   // Called from y.tab.cpp to set the factory decl seen bit.
 
+  // Look up a scoped name in the supported interface list.
+  virtual AST_Decl *look_in_supported (UTL_ScopedName *,
+                                       idl_bool treat_as_ref);
+                                       
   // Cleanup function.
   virtual void destroy (void);
 
