@@ -66,7 +66,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyType (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_PolicyType =
+  ::CORBA::TypeCode_ptr const _tc_PolicyType =
     &_tc_TAO_tc_CORBA_PolicyType;
 }
 
@@ -123,7 +123,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyList (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_PolicyList =
+  ::CORBA::TypeCode_ptr const _tc_PolicyList =
     &_tc_TAO_tc_CORBA_PolicyList;
 }
 
@@ -185,7 +185,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyTypeSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_PolicyTypeSeq =
+  ::CORBA::TypeCode_ptr const _tc_PolicyTypeSeq =
     &_tc_TAO_tc_CORBA_PolicyTypeSeq;
 }
 
@@ -234,7 +234,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_SetOverrideType (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_SetOverrideType =
+  ::CORBA::TypeCode_ptr const _tc_SetOverrideType =
     &_tc_TAO_tc_CORBA_SetOverrideType;
 }
 

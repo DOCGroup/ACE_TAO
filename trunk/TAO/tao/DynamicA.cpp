@@ -130,7 +130,7 @@ static CORBA::TypeCode _tc_TAO_tc_Dynamic_ParameterList (
 
 namespace Dynamic
 {
-  ::CORBA::TypeCode_ptr _tc_ParameterList =
+  ::CORBA::TypeCode_ptr const _tc_ParameterList =
     &_tc_TAO_tc_Dynamic_ParameterList;
 }
 
@@ -190,7 +190,7 @@ static CORBA::TypeCode _tc_TAO_tc_Dynamic_ContextList (
 
 namespace Dynamic
 {
-  ::CORBA::TypeCode_ptr _tc_ContextList =
+  ::CORBA::TypeCode_ptr const _tc_ContextList =
     &_tc_TAO_tc_Dynamic_ContextList;
 }
 
@@ -235,7 +235,7 @@ static CORBA::TypeCode _tc_TAO_tc_Dynamic_ExceptionList (
 
 namespace Dynamic
 {
-  ::CORBA::TypeCode_ptr _tc_ExceptionList =
+  ::CORBA::TypeCode_ptr const _tc_ExceptionList =
     &_tc_TAO_tc_Dynamic_ExceptionList;
 }
 
@@ -297,7 +297,7 @@ static CORBA::TypeCode _tc_TAO_tc_Dynamic_RequestContext (
 
 namespace Dynamic
 {
-  ::CORBA::TypeCode_ptr _tc_RequestContext =
+  ::CORBA::TypeCode_ptr const _tc_RequestContext =
     &_tc_TAO_tc_Dynamic_RequestContext;
 }
 

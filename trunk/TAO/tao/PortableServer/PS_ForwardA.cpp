@@ -87,7 +87,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ObjectId (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_ObjectId =
+  ::CORBA::TypeCode_ptr const _tc_ObjectId =
     &_tc_TAO_tc_PortableServer_ObjectId;
 }
 

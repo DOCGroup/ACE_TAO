@@ -43,7 +43,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -88,7 +88,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ServerId (
 
 namespace PortableInterceptor
 {
-  ::CORBA::TypeCode_ptr _tc_ServerId =
+  ::CORBA::TypeCode_ptr const _tc_ServerId =
     &_tc_TAO_tc_PortableInterceptor_ServerId;
 }
 
@@ -127,7 +127,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBId (
 
 namespace PortableInterceptor
 {
-  ::CORBA::TypeCode_ptr _tc_ORBId =
+  ::CORBA::TypeCode_ptr const _tc_ORBId =
     &_tc_TAO_tc_PortableInterceptor_ORBId;
 }
 
@@ -190,7 +190,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_AdapterName (
 
 namespace PortableInterceptor
 {
-  ::CORBA::TypeCode_ptr _tc_AdapterName =
+  ::CORBA::TypeCode_ptr const _tc_AdapterName =
     &_tc_TAO_tc_PortableInterceptor_AdapterName;
 }
 
@@ -253,7 +253,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ObjectId (
 
 namespace PortableInterceptor
 {
-  ::CORBA::TypeCode_ptr _tc_ObjectId =
+  ::CORBA::TypeCode_ptr const _tc_ObjectId =
     &_tc_TAO_tc_PortableInterceptor_ObjectId;
 }
 
@@ -298,7 +298,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_AdapterManagerId (
 
 namespace PortableInterceptor
 {
-  ::CORBA::TypeCode_ptr _tc_AdapterManagerId =
+  ::CORBA::TypeCode_ptr const _tc_AdapterManagerId =
     &_tc_TAO_tc_PortableInterceptor_AdapterManagerId;
 }
 
@@ -341,12 +341,12 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_AdapterState (
 
 namespace PortableInterceptor
 {
-  ::CORBA::TypeCode_ptr _tc_AdapterState =
+  ::CORBA::TypeCode_ptr const _tc_AdapterState =
     &_tc_TAO_tc_PortableInterceptor_AdapterState;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -69,7 +69,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ULongSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ULongSeq =
+  ::CORBA::TypeCode_ptr const _tc_ULongSeq =
     &_tc_TAO_tc_CORBA_ULongSeq;
 }
 

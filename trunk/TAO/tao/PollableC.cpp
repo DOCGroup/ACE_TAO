@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -55,7 +55,6 @@ namespace TAO
 
 // Traits specializations for CORBA::Pollable.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Pollable_ptr
 TAO::Objref_Traits<CORBA::Pollable>::duplicate (
     CORBA::Pollable_ptr p
@@ -64,7 +63,6 @@ TAO::Objref_Traits<CORBA::Pollable>::duplicate (
   return CORBA::Pollable::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::Pollable>::release (
     CORBA::Pollable_ptr p
@@ -73,14 +71,12 @@ TAO::Objref_Traits<CORBA::Pollable>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Pollable_ptr
 TAO::Objref_Traits<CORBA::Pollable>::nil (void)
 {
   return CORBA::Pollable::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::Pollable>::marshal (
     CORBA::Pollable_ptr p,
@@ -141,6 +137,12 @@ CORBA::Pollable::_duplicate (Pollable_ptr obj)
   return obj;
 }
 
+void
+CORBA::Pollable::_tao_release (Pollable_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::Pollable::_is_a (
     const char *value
@@ -186,7 +188,6 @@ CORBA::Pollable::marshal (TAO_OutputCDR &)
 
 // Traits specializations for CORBA::DIIPollable.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::DIIPollable_ptr
 TAO::Objref_Traits<CORBA::DIIPollable>::duplicate (
     CORBA::DIIPollable_ptr p
@@ -195,7 +196,6 @@ TAO::Objref_Traits<CORBA::DIIPollable>::duplicate (
   return CORBA::DIIPollable::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::DIIPollable>::release (
     CORBA::DIIPollable_ptr p
@@ -204,14 +204,12 @@ TAO::Objref_Traits<CORBA::DIIPollable>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::DIIPollable_ptr
 TAO::Objref_Traits<CORBA::DIIPollable>::nil (void)
 {
   return CORBA::DIIPollable::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::DIIPollable>::marshal (
     CORBA::DIIPollable_ptr p,
@@ -272,6 +270,12 @@ CORBA::DIIPollable::_duplicate (DIIPollable_ptr obj)
   return obj;
 }
 
+void
+CORBA::DIIPollable::_tao_release (DIIPollable_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::DIIPollable::_is_a (
     const char *value
@@ -321,7 +325,6 @@ CORBA::DIIPollable::marshal (TAO_OutputCDR &)
 
 // Traits specializations for CORBA::PollableSet.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::PollableSet_ptr
 TAO::Objref_Traits<CORBA::PollableSet>::duplicate (
     CORBA::PollableSet_ptr p
@@ -330,7 +333,6 @@ TAO::Objref_Traits<CORBA::PollableSet>::duplicate (
   return CORBA::PollableSet::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::PollableSet>::release (
     CORBA::PollableSet_ptr p
@@ -339,14 +341,12 @@ TAO::Objref_Traits<CORBA::PollableSet>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::PollableSet_ptr
 TAO::Objref_Traits<CORBA::PollableSet>::nil (void)
 {
   return CORBA::PollableSet::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::PollableSet>::marshal (
     CORBA::PollableSet_ptr p,
@@ -575,6 +575,12 @@ CORBA::PollableSet::_duplicate (PollableSet_ptr obj)
   return obj;
 }
 
+void
+CORBA::PollableSet::_tao_release (PollableSet_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::PollableSet::_is_a (
     const char *value
@@ -616,7 +622,7 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -103,7 +103,7 @@ static CORBA::TypeCode _tc_TAO_tc_Dynamic_Parameter (
 
 namespace Dynamic
 {
-  ::CORBA::TypeCode_ptr _tc_Parameter =
+  ::CORBA::TypeCode_ptr const _tc_Parameter =
     &_tc_TAO_tc_Dynamic_Parameter;
 }
 

@@ -46,7 +46,7 @@
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -236,7 +236,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ForwardRequest (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_ForwardRequest =
+  ::CORBA::TypeCode_ptr const _tc_ForwardRequest =
     &_tc_TAO_tc_PortableServer_ForwardRequest;
 }
 
@@ -274,7 +274,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

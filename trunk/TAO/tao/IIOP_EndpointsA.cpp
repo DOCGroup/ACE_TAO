@@ -81,7 +81,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IIOP_Endpoint_Info (
 
 namespace TAO
 {
-  ::CORBA::TypeCode_ptr _tc_IIOP_Endpoint_Info =
+  ::CORBA::TypeCode_ptr const _tc_IIOP_Endpoint_Info =
     &_tc_TAO_tc_TAO_IIOP_Endpoint_Info;
 }
 
@@ -161,7 +161,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IIOPEndpointSequence (
 
 namespace TAO
 {
-  ::CORBA::TypeCode_ptr _tc_IIOPEndpointSequence =
+  ::CORBA::TypeCode_ptr const _tc_IIOPEndpointSequence =
     &_tc_TAO_tc_TAO_IIOPEndpointSequence;
 }
 

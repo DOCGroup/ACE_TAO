@@ -100,7 +100,7 @@ namespace CORBA
 
   extern TAO_Export TypeCode_ptr _tc_UnknownUserException;
 
-  extern TAO_Export TypeCode_ptr _tc_Current;
+  extern TAO_Export TypeCode_ptr const _tc_Current;
 
   extern TAO_Export TypeCode_ptr _tc_NamedValue;
 }

@@ -123,6 +123,8 @@ namespace CORBA
     // The static operations.
     static Current_ptr _duplicate (Current_ptr obj);
     
+    static void _tao_release (Current_ptr obj);
+    
     static Current_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -141,7 +143,7 @@ namespace CORBA
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -169,7 +171,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Current;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Current;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -186,7 +188,7 @@ namespace TAO
 #if !defined (_CORBA_CURRENT__TRAITS_CH_)
 #define _CORBA_CURRENT__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Export Objref_Traits< ::CORBA::Current>
   {
     static ::CORBA::Current_ptr duplicate (

@@ -80,7 +80,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdAssignmentPolicyValue (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_IdAssignmentPolicyValue =
+  ::CORBA::TypeCode_ptr const _tc_IdAssignmentPolicyValue =
     &_tc_TAO_tc_PortableServer_IdAssignmentPolicyValue;
 }
 
@@ -122,7 +122,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdAssignmentPolicy (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_IdAssignmentPolicy =
+  ::CORBA::TypeCode_ptr const _tc_IdAssignmentPolicy =
     &_tc_TAO_tc_PortableServer_IdAssignmentPolicy;
 }
 

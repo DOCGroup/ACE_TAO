@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -56,7 +56,6 @@ namespace TAO
 
 // Traits specializations for PortableServer::ServantManager.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ServantManager_ptr
 TAO::Objref_Traits<PortableServer::ServantManager>::duplicate (
     PortableServer::ServantManager_ptr p
@@ -65,7 +64,6 @@ TAO::Objref_Traits<PortableServer::ServantManager>::duplicate (
   return PortableServer::ServantManager::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableServer::ServantManager>::release (
     PortableServer::ServantManager_ptr p
@@ -74,14 +72,12 @@ TAO::Objref_Traits<PortableServer::ServantManager>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ServantManager_ptr
 TAO::Objref_Traits<PortableServer::ServantManager>::nil (void)
 {
   return PortableServer::ServantManager::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableServer::ServantManager>::marshal (
     PortableServer::ServantManager_ptr p,
@@ -150,6 +146,12 @@ PortableServer::ServantManager::_duplicate (ServantManager_ptr obj)
   return obj;
 }
 
+void
+PortableServer::ServantManager::_tao_release (ServantManager_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 PortableServer::ServantManager::_is_a (
     const char *value
@@ -191,7 +193,7 @@ PortableServer::ServantManager::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -64,7 +64,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_Current (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_Current =
+  ::CORBA::TypeCode_ptr const _tc_Current =
     &_tc_TAO_tc_PortableServer_Current;
 }
 

@@ -65,7 +65,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_DomainManager (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_DomainManager =
+  ::CORBA::TypeCode_ptr const _tc_DomainManager =
     &_tc_TAO_tc_CORBA_DomainManager;
 }
 
@@ -105,7 +105,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ConstructionPolicy (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ConstructionPolicy =
+  ::CORBA::TypeCode_ptr const _tc_ConstructionPolicy =
     &_tc_TAO_tc_CORBA_ConstructionPolicy;
 }
 
@@ -168,7 +168,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_DomainManagerList (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_DomainManagerList =
+  ::CORBA::TypeCode_ptr const _tc_DomainManagerList =
     &_tc_TAO_tc_CORBA_DomainManagerList;
 }
 

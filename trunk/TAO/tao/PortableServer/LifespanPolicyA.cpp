@@ -79,7 +79,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_LifespanPolicyValue (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_LifespanPolicyValue =
+  ::CORBA::TypeCode_ptr const _tc_LifespanPolicyValue =
     &_tc_TAO_tc_PortableServer_LifespanPolicyValue;
 }
 
@@ -119,7 +119,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_LifespanPolicy (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_LifespanPolicy =
+  ::CORBA::TypeCode_ptr const _tc_LifespanPolicy =
     &_tc_TAO_tc_PortableServer_LifespanPolicy;
 }
 

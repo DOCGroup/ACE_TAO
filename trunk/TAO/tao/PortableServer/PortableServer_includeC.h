@@ -79,6 +79,10 @@ namespace TAO
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:961
 
+#if defined (__ACE_INLINE__)
+#include "PortableServer_includeC.inl"
+#endif /* defined INLINE */
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */

@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -68,7 +68,6 @@ TAO::BufferingConstraint::_tao_any_destructor (
 
 // Traits specializations for TAO::BufferingConstraintPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO::BufferingConstraintPolicy_ptr
 TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::duplicate (
     TAO::BufferingConstraintPolicy_ptr p
@@ -77,7 +76,6 @@ TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::duplicate (
   return TAO::BufferingConstraintPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::release (
     TAO::BufferingConstraintPolicy_ptr p
@@ -86,14 +84,12 @@ TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 TAO::BufferingConstraintPolicy_ptr
 TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::nil (void)
 {
   return TAO::BufferingConstraintPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::marshal (
     TAO::BufferingConstraintPolicy_ptr p,
@@ -160,6 +156,12 @@ TAO::BufferingConstraintPolicy::_duplicate (BufferingConstraintPolicy_ptr obj)
     }
   
   return obj;
+}
+
+void
+TAO::BufferingConstraintPolicy::_tao_release (BufferingConstraintPolicy_ptr obj)
+{
+  CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -234,7 +236,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
