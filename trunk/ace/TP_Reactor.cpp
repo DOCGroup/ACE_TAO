@@ -179,26 +179,29 @@ int
 ACE_TP_Reactor::remove_handler (ACE_Event_Handler *eh,
                                 ACE_Reactor_Mask mask)
 {
+  int result = 0;
   // Artificial scoping for grabbing and releasing the token
   {
     ACE_TP_Token_Guard guard (this->token_);
 
     // Acquire the token
-    int result = guard.acquire_token ();
+    result = guard.acquire_token ();
 
     if (!guard.is_owner ())
       return result;
 
     // Call the remove_handler_i () with a DONT_CALL mask. We dont
     // want to call the handle_close with the token held.
-    if (this->remove_handler_i (eh->get_handle (),
-                                mask | ACE_Event_Handler::DONT_CALL) == -1)
+    result = this->remove_handler_i (eh->get_handle (),
+                                     mask | ACE_Event_Handler::DONT_CALL);
+
+    if (result == -1)
       return -1;
   }
 
   // Close down the <Event_Handler> unless we've been instructed not
   // to.
-  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0)
+  if (result == 0 && (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0))
     eh->handle_close (ACE_INVALID_HANDLE, mask);
 
   return 0;
@@ -210,13 +213,13 @@ ACE_TP_Reactor::remove_handler (ACE_HANDLE handle,
 {
 
   ACE_Event_Handler *eh = 0;
-
+  int result = 0;
   // Artificial scoping for grabbing and releasing the token
   {
     ACE_TP_Token_Guard guard (this->token_);
 
     // Acquire the token
-    int result = guard.acquire_token ();
+    result = guard.acquire_token ();
 
     if (!guard.is_owner ())
       return result;
@@ -229,14 +232,18 @@ ACE_TP_Reactor::remove_handler (ACE_HANDLE handle,
 
     // Call the remove_handler_i () with a DONT_CALL mask. We dont
     // want to call the handle_close with the token held.
-    if (this->remove_handler_i (handle,
-                                mask | ACE_Event_Handler::DONT_CALL) == -1)
+    result = this->remove_handler_i (handle,
+                                     mask | ACE_Event_Handler::DONT_CALL);
+
+    if (result == -1)
       return -1;
   }
 
   // Close down the <Event_Handler> unless we've been instructed not
   // to.
-  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0)
+  // @@ Note: The check for result ==0 may be redundant, but shouldnt
+  // be a problem.
+  if (result ==0 && (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0))
     eh->handle_close (handle, mask);
 
   return 0;
