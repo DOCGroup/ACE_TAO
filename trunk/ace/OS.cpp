@@ -294,12 +294,6 @@ ACE_Countdown_Time::~ACE_Countdown_Time (void)
   this->stop ();
 }
 
-#if defined (ACE_HAS_PENTIUM) && defined (linux)
-  // see comments in OS.i in ACE_OS::gethrtime () definition
-  unsigned long ACE_OS_gethrtime_least;
-  unsigned long ACE_OS_gethrtime_most;
-#endif /* ACE_HAS_PENTIUM && linux */
-
 #if defined(ACE_MT_SAFE) && defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 
 int ACE_OS::netdb_mutex_inited_ = 0;

@@ -5771,18 +5771,13 @@ ACE_OS::gethrtime (void)
 #elif defined (ACE_HAS_PENTIUM) && defined (linux)
   // see comments for ACE_HAS_PENTIUM below
 
-  // These are declared in OS.cpp.  The easiest way to interface
-  // with the assembly instructions is via these two global variables.
-  // No, it's not thread safe.  If someone knows how to do this with
-  // local variables, that would be _much_ better!
-  extern unsigned long ACE_OS_gethrtime_least;
-  extern unsigned long ACE_OS_gethrtime_most;
+  unsigned long least, most;
 
   asm ("rdtsc");
-  asm ("movl %eax, ACE_OS_gethrtime_least");
-  asm ("movl %edx, ACE_OS_gethrtime_most");
+  asm ("movl %eax, -4(%ebp)");  // least
+  asm ("movl %edx, -8(%ebp)");  // most
 
-  return ACE_OS_gethrtime_most << 32  |  ACE_OS_gethrtime_least;
+  return (unsigned long long) most << 32  |  least;
 #elif defined (ACE_HAS_PENTIUM)
   // for WIN32 only . . .
   // Issue the RDTSC assembler instruction to get the number of clock
