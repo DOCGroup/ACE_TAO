@@ -1,16 +1,16 @@
 Tue Aug 25 14:33:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/XtReactor.cpp: 
-	  The lock type for the ACE_XtReactor was wrong.
+        * ace/XtReactor.cpp:
+          The lock type for the ACE_XtReactor was wrong.
 
 Tue Aug 25 13:36:10 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tests/Aio_Platform_Test.cpp (do_sysconf): Fixed the VxWorks
-	warnings. 
+        * tests/Aio_Platform_Test.cpp (do_sysconf): Fixed the VxWorks
+        warnings.
 
 Tue Aug 25 13:04:00 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Memory_Pool: Added virtual destructors.
+        * ace/Memory_Pool: Added virtual destructors.
 
 Tue Aug 25 10:38:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -49,6 +49,11 @@ Tue Aug 25 07:42:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunx86-sunc++-4.x.h: removed because it wasn't being
           maintained, because config-sunos5.{5,6}.h are supported on Solaris86.
+
+        * include/makeinclude/wrapper_macros.GNU: fixed determination
+          of whether the g++ version supports exception handling.  Assume
+          that it doesn't on VxWorks.  Thanks to Margherita Vittone Wiersma
+          <vittone@fndaub.fnal.gov> for reporting this.
 
 Tue Aug 25 05:23:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
