@@ -133,12 +133,12 @@
 # else  /* LynxOS < 3.1.0 */
 #   define ACE_HAS_PTHREADS_DRAFT4
 #   define ACE_HAS_STDARG_THR_DEST
+    // Without TSS emulation, you'll only have 3 native TSS keys, on
+    // LynxOS 3.0.0/ppc.
+#   define ACE_HAS_TSS_EMULATION
 # endif /* LynxOS < 3.1.0 */
 # define ACE_HAS_THREADS
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
-  // Without TSS emulation, you'll only have 3 native TSS keys, on
-  // LynxOS 3.0.0/ppc.
-# define ACE_HAS_TSS_EMULATION
 # define ACE_LACKS_NULL_PTHREAD_STATUS
 # define ACE_LACKS_SETDETACH
 # define ACE_LACKS_THREAD_PROCESS_SCOPING
