@@ -46,6 +46,8 @@ class Consumer : public POA_RtecEventComm::PushConsumer
   //   and it is up to the driver program to use the right one.
   //
 public:
+  typedef RtecScheduler::handle_t InfoHandle;
+
   Consumer (RtecEventComm::EventSourceID normal_type,
             RtecEventComm::EventSourceID ft_type,
             ACE_Time_Value& worktime,
@@ -68,10 +70,8 @@ public:
 
   void setWorkTime(ACE_Time_Value& worktime);
 
-  typedef ACE_Vector<RtecScheduler::handle_t> RT_Info_Vector;
-
-  void rt_info(RT_Info_Vector& consumer_rt_info);
-  RT_Info_Vector& rt_info(void);
+  void rt_info(InfoHandle consumer_rt_info);
+  InfoHandle rt_info(void);
 
   void handler(Service_Handler * handler);
 
@@ -83,7 +83,7 @@ private:
 
   Supplier *fwddest_;
   //RtecScheduler::handle_t rt_info_;
-  RT_Info_Vector rt_info_;
+  InfoHandle rt_info_;
 
   Service_Handler * handler_;
 

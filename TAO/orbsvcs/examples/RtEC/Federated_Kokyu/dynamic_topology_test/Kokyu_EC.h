@@ -34,7 +34,7 @@ public:
     virtual RtEventChannelAdmin::handle_t register_consumer (
         const char * entry_point,
         const RtEventChannelAdmin::SchedInfo & info,
-        RtecEventComm::EventType type,
+        EventType_Vector& cons_types, //RtecEventComm::EventType type,
         RtecEventComm::PushConsumer_ptr consumer,
         RtecEventChannelAdmin::ProxyPushSupplier_out proxy_supplier
         ACE_ENV_ARG_DECL
@@ -144,7 +144,7 @@ public:
                                     Consumer * consumer_impl,
                                     const char * cons_entry_point,
                                     ACE_Time_Value cons_period,
-                                    RtecEventComm::EventType cons_type,
+                                    EventType_Vector& cons_types, //RtecEventComm::EventType cons_type,
                                     RtecScheduler::Criticality_t cons_crit,
                                     RtecScheduler::Importance_t cons_imp,
                                     Supplier * supplier_impl,
@@ -164,7 +164,7 @@ public:
                       Consumer * consumer_impl,
                       const char * entry_point,
                       ACE_Time_Value period,
-                      RtecEventComm::EventType cons_type,
+                      EventType_Vector& cons_types, //RtecEventComm::EventType cons_type,
                       RtecScheduler::Criticality_t crit,
                       RtecScheduler::Importance_t imp
                       ACE_ENV_ARG_DECL

@@ -279,7 +279,7 @@ public:
     add_consumer_with_supplier(consumer_impl1_1, //deleted in consumer
                                "consumer1_1",
                                tv,
-                               cons1_1_types[0],
+                               cons1_1_types,
                                RtecScheduler::VERY_LOW_CRITICALITY,
                                RtecScheduler::VERY_LOW_IMPORTANCE,
                                supplier_impl1_2,
@@ -298,7 +298,7 @@ public:
 
     add_dummy_supplier(types);
     ACE_CHECK;
-
+    /*
     //DEBUG: print out schedule
     RtecScheduler::Scheduler_ptr scheduler = this->scheduler(ACE_ENV_SINGLE_ARG_PARAMETER);
     //RtecEventChannelAdmin::EventChannel_ptr event_channel = this->event_channel(ACE_ENV_SINGLE_ARG_DECL);
@@ -336,7 +336,7 @@ public:
                                           configs.in (),
                                           anomalies.in (),
                                           sched_out.str().c_str());
-    ////END DEBUG
+    *///END DEBUG
     Kokyu_EC::start(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
   } //start()
