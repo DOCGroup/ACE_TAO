@@ -96,13 +96,6 @@ TAO_GIOP_Invocation::profile (void)
   return this->profile_;
 }
 
-
-ACE_INLINE void
-TAO_GIOP_Invocation::profile (TAO_Profile *p)
-{
-  this->profile_ = p;
-}
-
 ACE_INLINE TAO_ORB_Core *
 TAO_GIOP_Invocation::orb_core (void)
 {
