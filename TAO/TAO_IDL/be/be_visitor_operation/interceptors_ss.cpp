@@ -230,7 +230,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
   if (this->void_return_type (bt)) 
     {      
       *os << " CORBA::TypeCode tc (CORBA::tk_void);"<<be_nl
-          << "this->result_val_.type (tc);" << be_nl;
+          << "this->result_val_.type (&tc);" << be_nl;
     }
   else
     {
@@ -249,48 +249,63 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
         }
       delete visitor;
     }
-  *os  << be_nl << "return &this->result_val_;" << be_nl << "}\n\n";
+  *os  << be_nl << "return &this->result_val_;" 
+       << be_nl << "}\n\n";
 
   os->decr_indent ();
-  *os << "char * " << be_nl;
-  if (node->is_nested ())
+    // Update the result.
+  bt = be_type::narrow_from_decl (node->return_type ());
+  if (!bt)
     {
-      be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
-      // But since we are at the interface level our parents full_name
-      // will include the interface name which we dont want and so we 
-      // get our parent's parent's full name.
-      //    be_interface *parent_interface = be_interface::narrow_from_decl (parent);
-      // be_decl *parents_parent = be_interface::narrow_from_scope (parent_interface->scope ())->decl ();
-      // Generate the scope::operation name.
-      //  *os << parents_parent->full_name () << "::";
-      *os << "POA_" <<parent->full_name () << "::";
+          ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ch::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
     }
+  // grab the right visitor to generate the return type accessor if
+  // its not void since we cant have a private member to be of void
+  // type.
+  if (!this->void_return_type (bt))
+    {
+      *os << "void " << be_nl;
+      if (node->is_nested ())
+        {
+          be_decl *parent =
+            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+          // But since we are at the interface level our parents full_name
+          // will include the interface name which we dont want and so we 
+          // get our parent's parent's full name.
+          //    be_interface *parent_interface = be_interface::narrow_from_decl (parent);
+          // be_decl *parents_parent = be_interface::narrow_from_scope (parent_interface->scope ())->decl ();
+          // Generate the scope::operation name.
+          //  *os << parents_parent->full_name () << "::";
+          *os << parent->full_name () << "::";
+        }
 
-  *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
-      << "sending_exception (CORBA::Environment &)"<< be_nl
-      << "{\n // Return the exception thrown " << be_nl;
-  // We change state to generate the sent exception id
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_EXCEPTION_ID);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "codegen for exceptlist failed\n"),
-                        -1);
+      *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
+          << "result (";
+
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_CH);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (bt->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "visit_operation - "
+                             "codegen for retval pre invoke failed\n"),
+                            -1);
+        }
+      os->indent ();
+      *os << "  result)" << be_uidt << be_uidt << be_uidt_nl
+          << "  {" << be_idt_nl
+          << "// update the result " << be_nl
+          << " this->result_ = result;" << be_uidt_nl
+          << "  }\n\n";
     }
-  delete visitor;
-  
-  // If theres no exception then we throw an exception that it is UNKNOWN.
-  // So basically we dont need to return 0 here.
-  //<< "return 0;"
-  *os << be_nl << "}\n\n";
-  os->decr_indent ();
-  
+ 
   return 0;  
   
 }
