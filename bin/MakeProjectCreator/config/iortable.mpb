@@ -1,4 +1,0 @@
-project : taolib {
-  after   += IORTable
-  libs    += TAO_IORTable
-}

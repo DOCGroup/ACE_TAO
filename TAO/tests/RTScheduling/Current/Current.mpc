@@ -1,9 +1,0 @@
-project(Current) : rtscheduling_client {
- Source_Files {
-    ../Scheduler.cpp
-    Thread_Task.cpp
-    test.cpp
-  }
-
-  exename = Current
-}

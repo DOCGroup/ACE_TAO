@@ -1,4 +1,0 @@
-project : rtcorba {
-  after   += RTScheduling 
-  libs    += TAO_RTScheduler
-}
