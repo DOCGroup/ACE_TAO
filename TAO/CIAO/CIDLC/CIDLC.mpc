@@ -11,6 +11,10 @@ project(CIDLC) {
   Source_Files {
     ExecutorMappingGenerator.cpp
     DescriptorGenerator.cpp
+    ExecImplGenerator.cpp
+    ExecImplHeaderGenerator.cpp
+    ExecImplSourceGenerator.cpp
+    ExecutorMappingGenerator.cpp
     SizeTypeCalculator.cpp
     ServantGenerator.cpp
     ServantHeaderGenerator.cpp
