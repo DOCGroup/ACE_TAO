@@ -12,7 +12,7 @@
  */
 //==========================================================================
 
-#ifndef ACE_CONDITION_RECURSIVE_TRHEAD_MUTEX_H
+#ifndef ACE_CONDITION_RECURSIVE_THREAD_MUTEX_H
 #define ACE_CONDITION_RECURSIVE_THREAD_MUTEX_H
 #include /**/ "ace/pre.h"
 
