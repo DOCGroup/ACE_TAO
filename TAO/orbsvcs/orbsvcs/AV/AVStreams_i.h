@@ -397,7 +397,7 @@ class TAO_ORBSVCS_Export TAO_VDev
   // My peer
 };
 
-class TAO_Endpoint_Strategy;
+class TAO_AV_Endpoint_Strategy;
 
 class TAO_ORBSVCS_Export TAO_MMDevice 
   : public virtual TAO_PropertySet, 
