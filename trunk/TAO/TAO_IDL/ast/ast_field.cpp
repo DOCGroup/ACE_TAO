@@ -90,28 +90,36 @@ ACE_RCSID(ast, ast_field, "$Id$")
 /*
  * Default constructor
  */
-AST_Field::AST_Field()
-         : pd_field_type(NULL), pd_visibility (vis_NA)
+AST_Field::AST_Field ()
+         : pd_field_type (NULL), 
+           pd_visibility (vis_NA)
 {
 }
 
 /*
  * To be used when constructing an AST_Field node
  */
-AST_Field::AST_Field(AST_Type *ft, UTL_ScopedName *n, UTL_StrList *p,
-                                            Visibility vis)
-         : AST_Decl(AST_Decl::NT_field, n, p),
-           pd_field_type(ft), pd_visibility (vis)
+AST_Field::AST_Field (AST_Type *ft, 
+                      UTL_ScopedName *n, 
+                      UTL_StrList *p,
+                      Visibility vis)
+         : AST_Decl (AST_Decl::NT_field, n, p),
+           pd_field_type (ft), 
+           pd_visibility (vis)
 {
 }
 
 /*
  * To be used when constructing a node of a subclass of AST_Field
  */
-AST_Field::AST_Field(AST_Decl::NodeType nt, AST_Type *ft,
-                   UTL_ScopedName *n, UTL_StrList *p, Visibility vis)
-         : AST_Decl(nt, n, p),
-           pd_field_type(ft), pd_visibility (vis)
+AST_Field::AST_Field (AST_Decl::NodeType nt, 
+                      AST_Type *ft,
+                      UTL_ScopedName *n, 
+                      UTL_StrList *p, 
+                      Visibility vis)
+         : AST_Decl (nt, n, p),
+           pd_field_type (ft), 
+           pd_visibility (vis)
 {
 }
 
@@ -132,9 +140,9 @@ AST_Field::AST_Field(AST_Decl::NodeType nt, AST_Type *ft,
  * Dump this AST_Field node to the ostream o
  */
 void
-AST_Field::dump(ostream &o)
+AST_Field::dump (ostream &o)
 {
-  switch (visibility())
+  switch (visibility ())
     {
     case vis_PRIVATE:
       o << "private ";
@@ -143,13 +151,14 @@ AST_Field::dump(ostream &o)
       o << "public ";
       break;
     case vis_NA:
-      ACE_ASSERT (!"this shouldn't happen!");
-      /* NOTREACHED */
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) AST_Field - "
+                  "bad visibility value\n"));
       break;
     }
-  pd_field_type->local_name()->dump(o);
+  pd_field_type->local_name ()->dump (o);
   o << " ";
-  local_name()->dump(o);
+  local_name ()->dump (o);
 }
 
 /*
@@ -157,13 +166,13 @@ AST_Field::dump(ostream &o)
  */
 
 AST_Type *
-AST_Field::field_type()
+AST_Field::field_type ()
 {
   return pd_field_type;
 }
 
 AST_Field::Visibility
-AST_Field::visibility()
+AST_Field::visibility ()
 {
   return pd_visibility;
 }
