@@ -1,3 +1,17 @@
+Tue Oct 28 15:53:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Adapter.h:
+	* tao/Invocation_Adapter.inl:
+	* tao/Invocation_Adapter.h:
+	* tao/Invocation_Adapter.inl:
+	* tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+	* tao/DynamicInterface/DII_Invocation_Adapter.h:
+	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
+	* tao/Messaging/Asynch_Invocation_Adapter.h
+	  
+	  Added const qualifier to the operation names. Not sure how this
+	  got missed. Thought I had done this once before!
+
 Tue Oct 28 14:06:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/AVStreams/Latency/pong.cpp: 

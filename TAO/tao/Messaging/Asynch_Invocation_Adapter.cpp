@@ -22,7 +22,7 @@ namespace TAO
   Asynch_Invocation_Adapter::Asynch_Invocation_Adapter (CORBA::Object *target,
                                                         Argument **args,
                                                         int arg_number,
-                                                        char *operation,
+                                                        const char *operation,
                                                         int op_len,
                                                         Collocation_Proxy_Broker *p,
                                                         Invocation_Mode m)
