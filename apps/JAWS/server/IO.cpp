@@ -107,7 +107,7 @@ JAWS_Synch_IO::transmit_file (const char *filename,
 
   if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
-#if defined (ACE_JAWS_BASELINE)
+#if defined (ACE_JAWS_BASELINE) || defined (ACE_WIN32)
       ACE_SOCK_Stream stream;
       stream.set_handle (this->handle_);
 
