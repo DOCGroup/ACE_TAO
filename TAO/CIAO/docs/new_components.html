@@ -63,6 +63,25 @@ to deal with manually...
       working on the implementation of the CIDL compiler.  Therefore,
       you still need to create this file manually.<p>
 
+  <li><font color="red"><code><b>Orc</b>EI.idl</code></font> -
+      Optional Component Executor implementation interface
+      definitions.  Often time, when you implement a non-trivial
+      monolithic component implementation, you are required to define
+      the monolithic local executor interface which often inherits
+      from the component monolithic executor interface and all the
+      provided interfaces.  The actually executor implementation will
+      inherit from this user defined interface instead of the default
+      executor mapping defined in <code><b>Orc</b>E.idl</code>.  You
+      will need to do the same when you wish to support non-vanilla
+      component interface, such as
+      <code>Components::SessionComponent</code>, and/or
+      <code>Components::SessionSynchronization</code>.<p>
+
+      Ideally, it would be perfect if we can auto-generate this
+      optional IDL file using CIDL compiler.  However, I'm not sure
+      the plan CIDL language contains enough information that's
+      required to generate this file.<p>
+
   <li><font color="red"><code><b>Orc</b>_exec.*</code></font> - These
       are files containing the actually component implementation that
       you have to write manually.  It, however, depends on the
@@ -103,6 +122,6 @@ to deal with manually...
 <hr>
 <address></address>
 <!-- hhmts start -->
-Last modified: Sun Mar 09 14:32:47 Central Standard Time 2003
+Last modified: Mon Mar 10 16:43:56 Central Standard Time 2003
 <!-- hhmts end -->
 </body> </html>
