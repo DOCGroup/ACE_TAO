@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_SYS_UTSNAME_H
-#define PACE_SYS_UTSNAME_H
+#ifndef PACE_SYS_UTSNAME_H_INDIRECT
+#define PACE_SYS_UTSNAME_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/utsname.h"
+# include "pace/posix/utsname.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/utsname.h"
+# include "pace/vxworks/utsname.h"
 #elif defined (PACE_WIN32)
-# include "win32/utsname.h"
+# include "pace/win32/utsname.h"
 #endif
 
-#endif /* PACE_SYS_UTSNAME_H */
+#endif /* PACE_SYS_UTSNAME_H_INDIRECT */

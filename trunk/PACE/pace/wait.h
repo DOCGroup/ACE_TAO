@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_WAIT_H
-#define PACE_WAIT_H
+#ifndef PACE_WAIT_H_INDIRECT
+#define PACE_WAIT_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/wait.h"
+# include "pace/posix/wait.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/wait.h"
+# include "pace/vxworks/wait.h"
 #elif defined (PACE_WIN32)
-# include "win32/wait.h"
+# include "pace/win32/wait.h"
 #endif
 
-#endif /* PACE_WAIT_H */
+#endif /* PACE_WAIT_H_INDIRECT */

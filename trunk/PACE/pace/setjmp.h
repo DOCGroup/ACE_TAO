@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_SETJMP_H
-#define PACE_SETJMP_H
+#ifndef PACE_SETJMP_H_INDIRECT
+#define PACE_SETJMP_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/setjmp.h"
+# include "pace/posix/setjmp.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/setjmp.h"
+# include "pace/vxworks/setjmp.h"
 #elif defined (PACE_WIN32)
-# include "win32/setjmp.h"
+# include "pace/win32/setjmp.h"
 #endif
 
-#endif /* PACE_SETJMP_H */
+#endif /* PACE_SETJMP_H_INDIRECT */

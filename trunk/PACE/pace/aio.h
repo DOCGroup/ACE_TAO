@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_AIO_H
-#define PACE_AIO_H
+#ifndef PACE_AIO_H_INDIRECT
+#define PACE_AIO_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/aio.h"
+# include "pace/posix/aio.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/aio.h"
+# include "pace/vxworks/aio.h"
 #elif defined (PACE_WIN32)
-# include "win32/aio.h"
+# include "pace/win32/aio.h"
 #endif
 
-#endif /* PACE_AIO_H */
+#endif /* PACE_AIO_H_INDIRECT */

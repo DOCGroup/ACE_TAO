@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_DIRENT_H
-#define PACE_DIRENT_H
+#ifndef PACE_DIRENT_H_INDIRECT
+#define PACE_DIRENT_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/dirent.h"
+# include "pace/posix/dirent.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/dirent.h"
+# include "pace/vxworks/dirent.h"
 #elif defined (PACE_WIN32)
-# include "win32/dirent.h"
+# include "pace/win32/dirent.h"
 #endif
 
-#endif /* PACE_DIRENT_H */
+#endif /* PACE_DIRENT_H_INDIRECT */

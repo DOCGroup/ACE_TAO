@@ -13,15 +13,15 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_MQUEUE_H
-#define PACE_MQUEUE_H
+#ifndef PACE_MQUEUE_H_INDIRECT
+#define PACE_MQUEUE_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/mqueue.h"
+# include "pace/posix/mqueue.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/mqueue.h"
+# include "pace/vxworks/mqueue.h"
 #elif defined (PACE_WIN32)
-# include "win32/mqueue.h"
+# include "pace/win32/mqueue.h"
 #endif
 
-#endif /* PACE_MQUEUE_H */
+#endif /* PACE_MQUEUE_H_INDIRECT */

@@ -13,17 +13,17 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_STDIO_H
-#define PACE_STDIO_H
+#ifndef PACE_STDIO_H_INDIRECT
+#define PACE_STDIO_H_INDIRECT
 
 #if defined (PACE_HAS_POSIX)
-# include "posix/stdio.h"
+# include "pace/posix/stdio.h"
 #elif defined (PACE_VXWORKS)
-# include "vxworks/stdio.h"
+# include "pace/vxworks/stdio.h"
 #elif defined (PACE_WIN32)
-# include "win32/stdio.h"
+# include "pace/win32/stdio.h"
 #endif
 
-#endif /* PACE_STDIO_H */
+#endif /* PACE_STDIO_H_INDIRECT */
 
 
