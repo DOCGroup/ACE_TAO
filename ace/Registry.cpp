@@ -1049,6 +1049,10 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
 					 LPCSTR machine_name)
 {
   long result = -1;
+
+  if (machine_name != 0 && ACE_OS::strcmp ("localhost", machine_name) == 0)
+    machine_name = 0;
+
   if (predefined == HKEY_LOCAL_MACHINE || predefined == HKEY_USERS)
     result = ::RegConnectRegistry ((LPSTR) machine_name,
 				   predefined,

@@ -7,6 +7,7 @@
 #include "ace/Naming_Context.h"
 #include "ace/Remote_Name_Space.h"
 #include "ace/Local_Name_Space.h"
+#include "ace/Registry_Name_Space.h"
 
 // Make life easier later on...
 
@@ -64,6 +65,10 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
   // Perform factory operation to select appropriate type of
   // Name_Space subclass.
 
+#if defined (ACE_WIN32)
+  // Use ACE_Registry
+  ACE_NEW_RETURN (this->name_space_, ACE_Registry_Name_Space (this->name_options_), -1);
+#else
   if (scope_in == ACE_Naming_Context::NET_LOCAL && this->local () == 0)
     {
       // Use NET_LOCAL name space, set up connection with remote server.
@@ -71,8 +76,6 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
 		      ACE_Remote_Name_Space (this->netnameserver_host_,
 					     this->netnameserver_port_),
 		      -1);
-      if (ACE_LOG_MSG->errnum ())
-	ACE_ERROR_RETURN ((LM_ERROR, "REMOTE_NAME_SPACE::REMOTE_NAME_SPACE\n"), -1);          
     }
   else // Use NODE_LOCAL or PROC_LOCAL name space.
     {
@@ -80,10 +83,11 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
 	ACE_NEW_RETURN (this->name_space_, LITE_LOCAL_NAME_SPACE (scope_in, this->name_options_), -1);
       else
 	ACE_NEW_RETURN (this->name_space_, LOCAL_NAME_SPACE (scope_in, this->name_options_), -1);
-
-      if (ACE_LOG_MSG->errnum ())
-	ACE_ERROR_RETURN ((LM_ERROR, "LOCAL_NAME_SPACE::LOCAL_NAME_SPACE\n"), -1);          
     }
+#endif /* ACE_WIN32 */
+
+  if (ACE_LOG_MSG->op_status ())
+    ACE_ERROR_RETURN ((LM_ERROR, "NAME_SPACE::NAME_SPACE\n"), -1);          
   return 0;
 }
 
