@@ -23,7 +23,9 @@ FILES = \
   SSL_Asynch_Stream \
   SSL_Asynch_BIO
 
-LSRC    = $(addsuffix .cpp,$(FILES))
+LSRC = $(addsuffix .cpp,$(FILES))
+
+LIBS = $(ACELIB)
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -45,11 +47,6 @@ endif # ssl
 #----------------------------------------------------------------------------
 #       Local targets (and local hacks)
 #----------------------------------------------------------------------------
-
-# This shouldn't be necessary... -Steve Huston
-#ifeq ($(HPUX_VERS),)
-#ACE_SHLIBS = -lACE -lssl -lcrypto
-#endif # HPUX_VERS
 
 #----------------------------------------------------------------------------
 #       Dependencies
