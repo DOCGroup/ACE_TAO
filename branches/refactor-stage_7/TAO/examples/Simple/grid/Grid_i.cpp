@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
+
 #include "Grid_i.h"
-#include "tao/corba.h"
 
 // Default constructor.
 

@@ -1,3 +1,52 @@
+Mon Oct 13 18:20:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/TAO_Examples.dsw
+        * examples/AMH/Sink_Server/Base_Server.h:
+        * examples/AMI/FL_Callback/AMI_Peer.dsp:
+        * examples/Buffered_Oneways/client.dsp:
+        * examples/OBV/Simple_util.h:
+        * examples/OBV/Typed_Events/Client_i.cpp:
+        * examples/OBV/Typed_Events/Event_Types_impl.h:
+        * examples/POA/DSI/Database_i.cpp:
+        * examples/POA/FindPOA/FindPOA.cpp:
+        * examples/POA/FindPOA/FindPOA.dsp:
+        * examples/POA/Loader/Servant_Activator.cpp:
+        * examples/POA/Loader/Servant_Activator.h:
+        * examples/POA/Loader/Servant_Locator.cpp:
+        * examples/POA/Loader/Servant_Locator.h:
+        * examples/POA/NewPOA/NewPOA.cpp:
+        * examples/POA/On_Demand_Activation/Servant_Activator.cpp:
+        * examples/POA/On_Demand_Activation/Servant_Activator.h:
+        * examples/POA/On_Demand_Activation/Servant_Locator.cpp:
+        * examples/POA/On_Demand_Activation/Servant_Locator.h:
+        * examples/POA/On_Demand_Loading/Servant_Activator.cpp:
+        * examples/POA/On_Demand_Loading/Servant_Locator.cpp:
+        * examples/POA/On_Demand_Loading/Servant_Locator.h:
+        * examples/POA/On_Demand_Loading/Servant_Manager.h:
+        * examples/POA/On_Demand_Loading/server.dsp:
+        * examples/POA/POA_BiDir/POA_BiDir.cpp:
+        * examples/POA/RootPOA/RootPOA.cpp:
+        * examples/Persistent_Grid/Grid_i.cpp:
+        * examples/Quoter/Factory_Finder.cpp:
+        * examples/Quoter/Factory_Finder_i.cpp:
+        * examples/Quoter/Generic_Factory.cpp:
+        * examples/Quoter/Generic_Factory_i.cpp:
+        * examples/Quoter/Quoter_i.cpp:
+        * examples/Quoter/client.cpp:
+        * examples/Quoter/client.h:
+        * examples/Quoter/server.dsp:
+        * examples/Simple/grid/Grid_i.cpp:
+        * examples/Simple/time-date/Time_Date_i.cpp:
+        * examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
+        * examples/Simulator/Event_Supplier/DOVE_Supplier.h:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.h:
+        * examples/Simulator/Event_Supplier/Event_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Logging_Sup.cpp:
+
+	  Updated file includes to match changes to the
+	  rest of TAO, and fixed MSVC project settings.
+
 Mon Oct 13 11:05:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Invocation_Adapter.cpp (object_forwarded):
