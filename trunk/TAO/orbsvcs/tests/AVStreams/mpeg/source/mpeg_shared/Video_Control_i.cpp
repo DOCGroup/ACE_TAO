@@ -1,11 +1,10 @@
 // $Id$
 
 #include "Video_Control_i.h"
-#include "../mpeg_server/Video_Server.h"
+#include "Video_Server.h"
 
-Video_Control_i::Video_Control_i (void)
+Video_Control_i::Video_Control_i ()
 {
-
 }
 
 CORBA::Boolean 
@@ -93,4 +92,9 @@ stop (CORBA::Long cmdsn,
       CORBA::Environment)
 {
   return 0;
+}
+
+Video_Control_i::~Video_Control_i ()
+{
+
 }
