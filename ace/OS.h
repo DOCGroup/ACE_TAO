@@ -2953,6 +2953,10 @@ struct ACE_Export ACE_Str_Buf : public strbuf
 #define ACE_MSB_MASK (~(1 << (NFDBITS - 1)))
 #endif /* ACE_HAS_BROKEN_BITSHIFT */
 
+// Signature for registering a cleanup function that is used by the
+// <ACE_Object_Manager> and the <ACE_Thread_Manager>.
+typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
+
 // Run the thread entry point for the <ACE_Thread_Adapter>.  This must
 // be an extern "C" to make certain compilers happy...
 extern "C" void *ace_thread_adapter (void *args);

@@ -94,8 +94,24 @@ public:
   void dump (void) const;
   // Dump the state of an object.
 
+  // = The following two methods are no-ops to keep the
+  // <ACE_Connector> happy.
+  int get_local_addr (ACE_DEV_Addr &) const;
+  // Return the local endpoint address.
+
+  int get_remote_addr (ACE_DEV_Addr &) const;
+  // Return the address of the remotely connected peer (if there is
+  // one).
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
+
+  // = Meta-type info
+  typedef ACE_DEV_Addr PEER_ADDR;
+
+private:
+  ACE_DEV_Addr addr_;
+  // Address of device we are connected to.
 };
 
 #include "ace/DEV_IO.i"

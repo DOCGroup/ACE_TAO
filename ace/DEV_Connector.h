@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -79,6 +78,10 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
+
+  // = Meta-type info
+  typedef ACE_DEV_Addr PEER_ADDR;
+  typedef ACE_DEV_IO   PEER_STREAM;
 };
 
 #include "ace/DEV_Connector.i"
