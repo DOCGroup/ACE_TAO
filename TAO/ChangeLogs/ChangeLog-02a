@@ -1,3 +1,11 @@
+Wed May 16 16:15:24 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+	  Commented out template instantiation of
+	  ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> since
+	  it is already instantiated in IIOP_Connection_Handler.cpp.
+	  This should clean up the warnings in the Lynx_I386 builds.
+
 Wed May 16 15:48:29 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Acceptor.cpp:
