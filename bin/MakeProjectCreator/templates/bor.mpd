@@ -38,6 +38,9 @@ LIBFILES = \
 <%foreach(libs defaultlibs)%>
 	<%lib%>$(LIB_DECORATOR).lib \
 <%endfor%>
+<%foreach(lit_libs)%>
+	<%lit_lib%>.lib \
+<%endfor%>
 	$(EXTERNAL_LIBS)
 <%if(idl_files)%>
 
