@@ -456,7 +456,6 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
           be_visitor_interface::add_abstract_op_args (op,
                                                       new_op);
           new_op.set_name (base);
-          ctx.state (TAO_CodeGen::TAO_OPERATION_SS);
           be_visitor_operation_ss op_visitor (&ctx);
           op_visitor.visit_operation (&new_op);
 
@@ -582,7 +581,6 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
       || be_global->gen_direct_collocation ())
     {
       ctx =  (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SS);
       be_visitor_interface_strategized_proxy_broker_ss ispb_visitor (&ctx);
 
       if (node->accept (&ispb_visitor) == -1)

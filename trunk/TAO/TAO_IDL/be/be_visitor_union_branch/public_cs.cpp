@@ -76,7 +76,6 @@ be_visitor_union_branch_public_cs::visit_array (be_array *node)
       // Anonymous array case.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_ARRAY_CS);
       be_visitor_array_cs visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -97,7 +96,6 @@ be_visitor_union_branch_public_cs::visit_enum (be_enum *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  ctx.state (TAO_CodeGen::TAO_ENUM_CS);
   be_visitor_enum_cs visitor (&ctx);
 
   if (node->accept (&visitor) == -1)
@@ -124,7 +122,6 @@ be_visitor_union_branch_public_cs::visit_sequence (be_sequence *node)
       // Anonymous sequence case.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CS);
       be_visitor_sequence_cs visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -151,7 +148,6 @@ be_visitor_union_branch_public_cs::visit_structure (be_structure *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  ctx.state (TAO_CodeGen::TAO_STRUCT_CS);
   be_visitor_structure_cs visitor (&ctx);
 
   if (node->accept (&visitor) == -1)
@@ -171,7 +167,6 @@ be_visitor_union_branch_public_cs::visit_union (be_union *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  ctx.state (TAO_CodeGen::TAO_UNION_CS);
   be_visitor_union_cs visitor (&ctx);
 
   if (node->accept (&visitor) == -1)

@@ -125,7 +125,6 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
       if (!node->imported () && be_global->tc_support ())
         {
           be_visitor_context ctx (*this->ctx_);
-          ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
           ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
           be_visitor_typecode_defn visitor (&ctx);
 

@@ -88,7 +88,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << "{";
 
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
 
   if (node->nmembers () > 0)
     {
@@ -120,7 +119,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
   // Assign each individual member.
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
   be_visitor_exception_ctor_assign visitor (&ctx);
 
   if (node->accept (&visitor) == -1)
@@ -305,7 +303,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
       // Assign each individual member. We need yet another state.
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
 
       // Indicate that the special ctor is being generated.
       ctx.exception (1);
@@ -337,7 +334,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   if (be_global->tc_support ())
     {
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
       ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
       be_visitor_typecode_defn visitor (&ctx);
 

@@ -47,7 +47,6 @@ be_visitor_component_fwd_cdr_op_ci::visit_component_fwd (
   )
 {
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CI);
   be_visitor_interface_fwd_cdr_op_ci visitor (&ctx);
   return visitor.visit_interface_fwd (node);
 }
