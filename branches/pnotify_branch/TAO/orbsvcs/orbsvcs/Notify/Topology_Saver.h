@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Topology_Object.h"
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #include "tao/corba.h"
 #include "ace/SString.h"

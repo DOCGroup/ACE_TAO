@@ -19,7 +19,9 @@
 #include "ace/Dynamic_Service.h"
 
 //#define DEBUG_LEVEL 9
-#define DEBUG_LEVEL TAO_debug_level
+#ifndef DEBUG_LEVEL
+# define DEBUG_LEVEL TAO_debug_level
+#endif //DEBUG_LEVEL
 
 #define QUEUE_ALLOWED 1
 

@@ -27,13 +27,48 @@
 
 class TAO_Notify_Event;
 
+
+/**
+ * @class TAO_Notify_Method_Request_Event_Base
+ *
+ * @brief
+ *
+ */
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event_Base
+{
+protected:
+  /// Constuctor
+  TAO_Notify_Method_Request_Event_Base (const TAO_Notify_Event *);
+
+  /// Copy-like constructor
+  /// Event is passed separately because it may be a copy of the one in request.
+  TAO_Notify_Method_Request_Event_Base (const TAO_Notify_Method_Request_Event_Base & rhs,
+    const TAO_Notify_Event * event);
+
+public:
+  /// Destructor
+  virtual ~TAO_Notify_Method_Request_Event_Base ();
+
+  const TAO_Notify_Event * event() const;
+
+  void complete ();
+  unsigned long sequence ();
+  bool should_retry ();
+
+protected:
+
+  /// The Event
+  const TAO_Notify_Event * event_;
+};
+
 /**
  * @class TAO_Notify_Method_Request_Dispatch_Base
  *
  * @brief
  *
  */
-class TAO_Notify_Method_Request_Dispatch_Base
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_Base
+  : public TAO_Notify_Method_Request_Event_Base
 {
 public:
   /// Constuctor
@@ -48,12 +83,9 @@ public:
   int execute_i (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
-  /// The Event
-  const TAO_Notify_Event * event_;
-
   /// The Proxy
   TAO_Notify_ProxySupplier * proxy_supplier_;
-//  TAO_Notify_ProxySupplier_Guard proxy_supplier_;
+
   /// Flag is true if we want to do fintering else false.
   bool filtering_;
 };

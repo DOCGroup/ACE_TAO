@@ -15,15 +15,25 @@ ACE_RCSID(Notify, TAO_Notify_Method_Request_Dispatch, "$Id$")
 #include "ConsumerAdmin.h"
 
 TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (const TAO_Notify_Event_var& event, TAO_Notify_ProxySupplier* proxy_supplier, CORBA::Boolean filtering)
-  : TAO_Notify_Method_Request_Dispatch_Base (event.get(), proxy_supplier, filtering)
+  : TAO_Notify_Method_Request (event.get ())
+  , TAO_Notify_Method_Request_Dispatch_Base (event.get(), proxy_supplier, filtering)
   , event_var_ (event)
   , proxy_guard_ (proxy_supplier)
 {
-  this->init (event);
+#if 0
+  ACE_DEBUG ((LM_DEBUG,
+    ACE_TEXT ("(%P|%t) Construct Method_Request_Dispatch @%@\n"),
+    this));
+#endif
 }
 
 TAO_Notify_Method_Request_Dispatch::~TAO_Notify_Method_Request_Dispatch ()
 {
+#if 0
+  ACE_DEBUG ((LM_DEBUG,
+    ACE_TEXT ("(%P|%t) Destroy Method_Request_Dispatch @%@\n"),
+    this));
+#endif
 }
 
 int
@@ -37,10 +47,21 @@ TAO_Notify_Method_Request_Dispatch::execute (ACE_ENV_SINGLE_ARG_DECL)
 TAO_Notify_Method_Request_Dispatch_No_Copy::TAO_Notify_Method_Request_Dispatch_No_Copy (const TAO_Notify_Event* event, TAO_Notify_ProxySupplier* proxy_supplier, CORBA::Boolean filtering)
   : TAO_Notify_Method_Request_Dispatch_Base (event, proxy_supplier, filtering)
 {
+#if 0
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("(%P|%t) Construct Method_Request_Dispatch_No_Copy @%@\n"),
+      this));
+#endif
+
 }
 
 TAO_Notify_Method_Request_Dispatch_No_Copy:: ~TAO_Notify_Method_Request_Dispatch_No_Copy ()
 {
+#if 0
+  ACE_DEBUG ((LM_DEBUG,
+    ACE_TEXT ("(%P|%t) Destroy Method_Request_Dispatch_No_Copy @%@\n"),
+    this));
+#endif
 }
 
 int
@@ -68,71 +89,8 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
 
 /*********************************************************************************************************/
 
-TAO_Notify_Method_Request_Dispatch_No_Copy_Ex::TAO_Notify_Method_Request_Dispatch_No_Copy_Ex (const TAO_Notify_Event_var& event, TAO_Notify_ProxySupplier* proxy_supplier, CORBA::Boolean filtering)
-  : TAO_Notify_Method_Request_Dispatch_Base (event.get (), proxy_supplier, filtering)
-  , event_var_ (event)
-{
-}
-
-TAO_Notify_Method_Request_Dispatch_No_Copy_Ex:: ~TAO_Notify_Method_Request_Dispatch_No_Copy_Ex ()
-{
-}
-
-int
-TAO_Notify_Method_Request_Dispatch_No_Copy_Ex::execute (ACE_ENV_SINGLE_ARG_DECL)
-{
-  return this->execute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
-TAO_Notify_Method_Request*
-TAO_Notify_Method_Request_Dispatch_No_Copy_Ex::copy (ACE_ENV_SINGLE_ARG_DECL)
-{
-  TAO_Notify_Method_Request* request;
-
-  ACE_NEW_THROW_EX (request,
-                    TAO_Notify_Method_Request_Dispatch (
-                        this->event_var_,
-                        this->proxy_supplier_,
-                        this->filtering_),
-                    CORBA::INTERNAL ());
-
-  return request;
-}
-
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event_var
-, TAO_Notify_ProxySupplier_Guard
-, const TAO_Notify_Event_var&
-, TAO_Notify_ProxySupplier*>;
-
-template class TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event*
-, TAO_Notify_ProxySupplier*
-, const TAO_Notify_Event*
-, TAO_Notify_ProxySupplier*>;
-
-template class TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event_var&
-, TAO_Notify_ProxySupplier*
-, const TAO_Notify_Event_var&
-, TAO_Notify_ProxySupplier*>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event_var
-, TAO_Notify_ProxySupplier_Guard
-, const TAO_Notify_Event_var&
-, TAO_Notify_ProxySupplier*>
-
-#pragma instantiate TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event*
-, TAO_Notify_ProxySupplier*
-, const TAO_Notify_Event*
-, TAO_Notify_ProxySupplier*>
-
-#pragma instantiate TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event_var&
-, TAO_Notify_ProxySupplier*
-, const TAO_Notify_Event_var&
-, TAO_Notify_ProxySupplier*>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -13,6 +13,7 @@ ACE_RCSID (Notify, TAO_Notify_Method_Request_Lookup_Base, "$Id$")
 #include "ProxyConsumer.h"
 #include "SupplierAdmin.h"
 #include "Consumer_Map.h"
+#include "Method_Request_Dispatch.h"
 
 TAO_Notify_Method_Request_Lookup_Base::TAO_Notify_Method_Request_Lookup_Base (
       const TAO_Notify_Event * event,
@@ -31,7 +32,8 @@ TAO_Notify_Method_Request_Lookup_Base::work (
   TAO_Notify_ProxySupplier* proxy_supplier
   ACE_ENV_ARG_DECL)
 {
-  proxy_supplier->push (this->event_, true ACE_ENV_ARG_PARAMETER);
+  TAO_Notify_Method_Request_Dispatch_No_Copy request (this->event_, proxy_supplier, true);
+  proxy_supplier->deliver (request ACE_ENV_ARG_PARAMETER);
 }
 
 TAO_Notify_Method_Request_Lookup_Base::execute_i (ACE_ENV_SINGLE_ARG_DECL)

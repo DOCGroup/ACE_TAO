@@ -43,13 +43,6 @@ TAO_Notify_ProxyPushConsumer::MyType (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_Notify_ProxyPushConsumer::push (TAO_Notify_Event_var &/*event*/)
-{
-  // This should never be called.
-  ACE_ASSERT (1);
-}
-
-void
 TAO_Notify_ProxyPushConsumer::push (const CORBA::Any& any ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException

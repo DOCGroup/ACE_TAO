@@ -8,10 +8,13 @@
 
 ACE_RCSID (Notify, TAO_Notify_Method_Request_Event, "$Id$")
 
-TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (const TAO_Notify_Event_var& event)
-  :event_ (event)
+TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
+      const TAO_Notify_Method_Request_Event_Base & prev_request,
+      const TAO_Notify_Event_var & event_var)
+  : TAO_Notify_Method_Request (event_var.get ())
+  , TAO_Notify_Method_Request_Event_Base (prev_request, event_var.get ())
+  , event_var_ (event_var)
 {
-  this->init (event);
 }
 
 TAO_Notify_Method_Request_Event::~TAO_Notify_Method_Request_Event ()
@@ -23,8 +26,3 @@ TAO_Notify_Method_Request_Event::execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return -1;
 }
 
-const TAO_Notify_Event_var&
-TAO_Notify_Method_Request_Event::event (void)
-{
-  return this->event_;
-}

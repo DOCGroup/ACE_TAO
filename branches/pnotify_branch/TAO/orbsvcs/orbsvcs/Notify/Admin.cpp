@@ -19,7 +19,9 @@ ACE_RCSID (Notify,
 #include "Reconnect_Worker_T.h"
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 9
-#define DEBUG_LEVEL TAO_debug_level
+#ifndef DEBUG_LEVEL
+# define DEBUG_LEVEL TAO_debug_level
+#endif //DEBUG_LEVEL
 
 TAO_Notify_Admin::TAO_Notify_Admin ()
   : ec_ (0)

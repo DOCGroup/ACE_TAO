@@ -10,7 +10,9 @@
 
 #include "TAO/debug.h"
 //#define DEBUG_LEVEL 9
-#define DEBUG_LEVEL TAO_debug_level
+#ifndef DEBUG_LEVEL
+# define DEBUG_LEVEL TAO_debug_level
+#endif //DEBUG_LEVEL
 
 ACE_RCSID(Notify, TAO_Notify_EventTypeSeq, "$Id$")
 

@@ -96,7 +96,7 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, 
 }
 
 void
-TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request_No_Copy& method_request ACE_ENV_ARG_DECL)
+TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request_Base& method_request ACE_ENV_ARG_DECL)
 {
   TAO_Notify_Method_Request& request_copy = *method_request.copy (ACE_ENV_SINGLE_ARG_PARAMETER);
 

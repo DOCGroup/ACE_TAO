@@ -57,16 +57,15 @@ TAO_Notify_StructuredEvent_No_Copy::unmarshal (TAO_InputCDR & cdr)
   return event;
 }
 
-const TAO_Notify_Event *
-TAO_Notify_StructuredEvent_No_Copy::copy_on_heap (ACE_ENV_SINGLE_ARG_PARAMETER) const
+TAO_Notify_Event *
+TAO_Notify_StructuredEvent_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  TAO_Notify_Event* copy;
-
-  ACE_NEW_THROW_EX (copy,
+  TAO_Notify_Event * new_event;
+  ACE_NEW_THROW_EX (new_event,
                     TAO_Notify_StructuredEvent (*this->notification_),
                     CORBA::NO_MEMORY ());
-
-  return copy;
+  ACE_CHECK_RETURN (0);
+  return new_event;
 }
 
 CORBA::Boolean
@@ -142,7 +141,7 @@ TAO_Notify_StructuredEvent::~TAO_Notify_StructuredEvent ()
 }
 
 const TAO_Notify_Event *
-TAO_Notify_StructuredEvent::copy_on_heap (ACE_ENV_SINGLE_ARG_PARAMETER)const
+TAO_Notify_StructuredEvent::copy_on_heap (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)const
 {
   return this;
 }

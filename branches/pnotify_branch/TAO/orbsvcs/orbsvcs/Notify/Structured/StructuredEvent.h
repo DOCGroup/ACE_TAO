@@ -12,7 +12,7 @@
 #define TAO_Notify_STRUCTUREDEVENT_H
 
 #include /**/ "ace/pre.h"
-#include "../notify_export.h"
+#include "../notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,9 +39,6 @@ public:
 
   /// Destructor
   ~TAO_Notify_StructuredEvent_No_Copy ();
-
-  /// returns a copy of this event allocated on the heap
-  virtual const TAO_Notify_Event * copy_on_heap ()const;
 
   /// marshal this event into a CDR buffer (for persistence)
   virtual void marshal (TAO_OutputCDR & cdr) const;
@@ -74,6 +71,9 @@ public:
   static TAO_Notify_StructuredEvent * unmarshal (TAO_InputCDR & cdr);
 
 protected:
+  /// returns a copy of this event allocated on the heap
+  virtual TAO_Notify_Event * copy (ACE_ENV_SINGLE_ARG_DECL) const;
+
   /// Structured Event
   const CosNotification::StructuredEvent* notification_;
 
@@ -99,7 +99,7 @@ public:
   ~TAO_Notify_StructuredEvent ();
 
   /// returns this
-  virtual const TAO_Notify_Event * copy_on_heap ()const;
+  virtual const TAO_Notify_Event * copy_on_heap (ACE_ENV_SINGLE_ARG_DECL)const;
 
 protected:
   /// Copy of the Event.

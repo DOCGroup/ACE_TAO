@@ -112,7 +112,7 @@ project(CosNotification_Skel) : orbsvcslib, core, notification, event_skel, port
   }
 }
 
-project(CosNotification_Serv) : orbsvcslib, core, notification_skel, dynamicany, etcl {
+project(CosNotification_Serv) : orbsvcslib, svc_utils, core, notification_skel, dynamicany, etcl{
   sharedname   = TAO_CosNotification_Serv
   dynamicflags = TAO_NOTIFY_SERV_BUILD_DLL
   tagchecks   += Notify
@@ -146,8 +146,10 @@ project(CosNotification_Serv) : orbsvcslib, core, notification_skel, dynamicany,
       Notify/ID_Factory.cpp
       Notify/Method_Request.cpp
       Notify/Method_Request_Dispatch.cpp
+      Notify/Method_Request_Dispatch_Base.cpp
       Notify/Method_Request_Event.cpp
       Notify/Method_Request_Lookup.cpp
+      Notify/Method_Request_Lookup_Base.cpp
       Notify/Method_Request_Shutdown.cpp
       Notify/Method_Request_Updates.cpp
       Notify/Name_Value_Pair.cpp

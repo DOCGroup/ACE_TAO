@@ -11,6 +11,11 @@ ACE_RCSID (Notify, TAO_Notify_AnyEvent, "$Id$")
 #include "../Consumer.h"
 #include "tao/debug.h"
 
+//#define DEBUG_LEVEL 10
+#ifndef DEBUG_LEVEL
+# define DEBUG_LEVEL TAO_debug_level
+#endif //DEBUG_LEVEL
+
 TAO_Notify_EventType TAO_Notify_AnyEvent_No_Copy::event_type_;
 
 TAO_Notify_AnyEvent_No_Copy::TAO_Notify_AnyEvent_No_Copy (const CORBA::Any &event)
@@ -37,7 +42,7 @@ TAO_Notify_AnyEvent_No_Copy::convert (CosNotification::StructuredEvent& notifica
 CORBA::Boolean
 TAO_Notify_AnyEvent_No_Copy::do_match (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL) const
 {
-  if (TAO_debug_level > 0)
+  if (DEBUG_LEVEL > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                 "TAO_Notify_AnyEvent::do_match ()\n"));
 
@@ -47,7 +52,7 @@ TAO_Notify_AnyEvent_No_Copy::do_match (CosNotifyFilter::Filter_ptr filter ACE_EN
 void
 TAO_Notify_AnyEvent_No_Copy::push (TAO_Notify_Consumer* consumer ACE_ENV_ARG_DECL) const
 {
-  if (TAO_debug_level > 0)
+  if (DEBUG_LEVEL > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                 "TAO_Notify_AnyEvent::push \n"));
 
@@ -107,16 +112,15 @@ TAO_Notify_AnyEvent_No_Copy::unmarshal (TAO_InputCDR & cdr)
   return event;
 }
 
-const TAO_Notify_Event *
-TAO_Notify_AnyEvent_No_Copy::copy_on_heap (ACE_ENV_SINGLE_ARG_PARAMETER) const
+TAO_Notify_Event *
+TAO_Notify_AnyEvent_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  TAO_Notify_Event* copy;
-
-  ACE_NEW_THROW_EX (copy,
+  TAO_Notify_Event * new_event;
+  ACE_NEW_THROW_EX (new_event,
                     TAO_Notify_AnyEvent (*this->event_),
                     CORBA::NO_MEMORY ());
-
-  return copy;
+  ACE_CHECK_RETURN (0);
+  return new_event;
 }
 
 
@@ -134,7 +138,7 @@ TAO_Notify_AnyEvent::~TAO_Notify_AnyEvent ()
 }
 
 const TAO_Notify_Event *
-TAO_Notify_AnyEvent::copy_on_heap (ACE_ENV_SINGLE_ARG_PARAMETER) const
+TAO_Notify_AnyEvent::copy_on_heap (ACE_ENV_SINGLE_ARG_DECL) const
 {
   return this;
 }
