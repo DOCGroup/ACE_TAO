@@ -377,7 +377,7 @@ be_interface::gen_client_header (void)
       // us
       *ch << be_uidt_nl
 	  << "protected:" << be_idt_nl
-      *ch << this->local_name () << " (" << be_idt << be_idt_nl
+	  << this->local_name () << " (" << be_idt << be_idt_nl
 	  << "STUB_Object *objref = 0," << be_nl
 	  << "TAO_ServantBase *servant = 0," << be_nl
 	  << "CORBA::Boolean collocated = CORBA::B_FALSE" << be_uidt_nl
