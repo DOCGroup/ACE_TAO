@@ -186,26 +186,35 @@ private:
   // Output the header (type declaration and %%) to the gperf's input
   // file.
 
-  int gen_perfect_hash_optable (void);
-  // Generate the perfect hash table code by running the gperf
-  // program. Returns 0 on sucess, -1 on error.
+  int gen_gperf_things (void);
+  // Run GPERF and get the correct lookup and other operations
+  // depending on which strategy we are using. Returns 0 on sucess, -1
+  // on error. 
 
   void gen_perfect_hash_class_definition (void);
   // Outputs the class definition for the perfect hashing. This class
   // will inherit from the TAO_Perfect_Hash_OpTable.
+  
+  void gen_binary_search_class_definition (void);
+  // Outputs the class definition for the binary search . This class
+  // will inherit from the TAO_Binary_Search_OpTable.
+  
+  void gen_linear_search_class_definition (void);
+  // Outputs the class defintion for the linear search. This class
+  // will inherit from the TAO_Linear_Search.
 
-  int gen_perfect_hash_methods (void);
-  // This calls the GPERF program and gets the perfect hashing methods
-  // from it.
+  int gen_gperf_lookup_methods (void);
+  // This calls the GPERF program and gets the correct operation
+  // lookup methods for the current OpLookup strategy.
 
-  void gen_perfect_hash_instance ();
+  void gen_perfect_hash_instance (void);
   // Create an instance of this perfect hash table.
-
-#if 0
-  void cleanup_gperf_temp_file ();
-  // Delete the stream and filename for this temp file and also remove
-  // the temperary gperf's input file from the disk.
-#endif /* 0 */
+  
+  void gen_binary_search_instance (void);
+  // Create an instance of the binary search optable. 
+  
+  void gen_linear_search_instance (void);
+  // Create an instance of the linear search optable. 
 
   char *full_skel_name_;
   // Fully scoped skeleton name.
