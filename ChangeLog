@@ -1,3 +1,10 @@
+Tue Feb 25 08:40:12 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Always generate a realclean target, but only add idl generated
+          files if we had idl_files to work with.
+
 Tue Feb 25 07:56:59 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
