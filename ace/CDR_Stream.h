@@ -672,14 +672,10 @@ public:
   /// stream.
   void steal_from (ACE_InputCDR &cdr);
 
-  /// Steal the contents of <cdr> in to this stream and leave the
-  /// <cdr> untouched.
-  /// NOTE: This is a slight modification of the steal_from ()
-  /// method. It doesn't invoke reset_contents () after stealing the
-  /// contents and can be used where new data blocks for the <cdr> are
-  /// not needed.
-  void steal_data (ACE_InputCDR &cdr);
-
+  /// Exchange data blocks with the caller of this method. The read
+  /// and write pointers are also exchanged.
+  /// Note: We now do only with the start_ message block.
+  void exchange_data_blocks (ACE_InputCDR &cdr);
 
   /// Re-initialize the CDR stream, forgetting about the old contents
   /// of the stream and allocating a new buffer (from the allocators).
