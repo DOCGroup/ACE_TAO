@@ -129,7 +129,7 @@ module Load_Balancer
       readonly attribute string id;
       // Each Object Group has its own distinct ID.
 
-      void bind (in Member member) raises (duplicate_member);
+      void bind (in Member member_) raises (duplicate_member);
       // Adds a new <member> to the <Object_Group>.  Note that each
       // <Member_ID> in an <Object_Group> must be unique.  If the
       // group already contains a member with the same <Member_ID>, a
