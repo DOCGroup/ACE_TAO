@@ -1,3 +1,8 @@
+Tue Nov 11 18:41:46 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+          And another missing .in()
+
 Tue Nov 11 18:28:17 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h:
