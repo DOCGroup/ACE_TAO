@@ -1,5 +1,10 @@
 Thu Jan 01 18:24:56 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
+	* apps/Gateway/Gateway/Gateway.dsp:  Added new file Options.cpp.
+
+	* apps/Gateway/Gateway/Options.cpp (ACE_BUILD_SVC_DLL): Added
+ 	  #define ACE_BUILD_SVC_DLL.
+
 	* netsvcs/lib/Base_Optimizer.i: Removed this file.
 
 	* netsvcs/lib/Base_Optimizer.h: Added codes to include in the
