@@ -1,3 +1,9 @@
+Sun Oct 19 18:25:20 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp: 
+	* tests/OBV/Supports/Supports_Test_impl.cpp: Fixed unused
+	  ACE_ENV_ARG warnings.
+
 Sun Oct 19 17:11:21 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/FTRT_Event_Service/Readme: 
