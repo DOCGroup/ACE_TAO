@@ -1,5 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$: 
+// $Id$
 
 // ========================================================================
 //
@@ -98,6 +98,11 @@ public:
   /// interception point.
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
                           CORBA::Environment &);
+
+  /// This method implements one of the "ending" client side
+  /// interception point.
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri,
+                      CORBA::Environment &);
   //@}
 
 private:

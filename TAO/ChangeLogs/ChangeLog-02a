@@ -1,3 +1,191 @@
+Wed Dec 13 19:06:43 2000  Ossama Othman  <ossama@uci.edu>
+
+	The following changes are the first stage of a series of updates
+	to push TAO's existing Portable Interceptor implementation to
+	more closely conform with the Portable Interceptor specification /
+	joint submission.  We're close.  These changes also fix quite a
+	few bugs in the existing implementation with respect to multiple
+	interceptor support in the presence of connection-retries, in
+	addition to improper return value storage semantics.
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	  (visit_operation):
+
+	  Do an ACE_TRY_CHECK before an ACE_RE_THROW after the
+	  send_exception() interception point in case
+	  send_exception() itself throws an exception.
+
+	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
+	  (visit_operation):
+
+	  Fixed broken flow logic that would occur when a LOCATION_FORWARD
+	  reply was received from the server, or a connection retry was
+	  performed, i.e. the connection loop was re-executed.  The flow
+	  stack size would increase during each loop iteration.  Thus, a
+	  seg fault would occur when during execution of an ending
+	  interception point since the logical flow stack would attempt to
+	  access an interceptor out of bounds of the interceptor array.
+
+	  Explicitly check for TAO_INVOKE_EXCEPTION invocation status
+	  instead of checking for invocation status not equal to
+	  TAO_INVOKE_OK.  This is necessary since the check for the
+	  TAO_INVOKE_RETRY status was moved after the receive_reply()
+	  interception point due to the reasons stated in the above
+	  paragraph.  The "!= TAO_INVOKE_OK" check would evaluate to
+	  "true" since "TAO_INVOKE_RETRY != TAO_INVOKE_OK," for example.
+
+	  Pass the result of the TAO_GIOP_Invocation::invoke() call to the
+	  ClientRequestInfo object.  This information is used by the
+	  ClientRequestInfo::reply_status() method.
+
+	  In the case of a one-way invocation, invoke the receive_other()
+	  interception point to preserve the general flow rules dictated
+	  by the Portable Interceptor specification.  This is particularly
+	  important now that TAO supports multiple interceptors since each
+	  interceptor pushed on to the logical flow stack must also be
+	  popped off of it.
+
+	  Moved instantiation of the ClientRequestInfo object within the
+	  connection-retry loop.  A new ClientRequestInfo must
+	  instantiated for each request, including the retries, to
+	  maintain consistency.  Otherwise, request information left over
+	  from a previously tried request will be available to the
+	  interceptors.
+
+	  Moved ACE_TRY/CATCH blocks within the connection-retry loop.  If
+	  a PortableInterceptor::ForwardRequest exception is thrown, then
+	  we need to be able to restart the invocation.
+
+	  Do an ACE_TRY_CHECK before an ACE_RE_THROW after the
+	  receive_exception() interception point in case
+	  receive_exception() itself throws an exception.
+
+	* tao/ClientRequestInfo.h:
+
+	  Doxygen-ated this header.
+
+	  Removed unused "forward_reference_" class member.
+
+	* tao/ClientRequestInfo.cpp (effective_target):
+
+	  Implemented this method.  Return the actual target for now.
+	  This will change once the LOCATION_FORWARD reply status
+	  interceptor updates are fully implemented.
+
+	  (tagged_profile):
+
+	  Implemented this method.  Obtain the tagged profile structure
+	  from the current profile in use.
+
+	  (received_exception):
+
+	  In accordance with the C++ mapping, the caller is responsible
+	  for storage of an Any return value so return a heap allocated
+	  Any.
+
+	  (get_effective_component):
+
+	  Implemented this method.  Extract the desired tagged component
+	  from the current profile in use.
+
+	  (add_request_service_context):
+
+	  Added support for the missing "replace" functionality.
+
+	  (response_expected, reply_status):
+
+	  Implemented these methods.
+
+	  (forward_reference):
+
+	  Partially implemented this method.
+
+	  (get_slot):
+
+	  Throw a CORBA::NO_IMPLEMENT() exception since it hasn't been
+	  implemented yet.
+
+	  (get_request_service_context, get_reply_service_context):
+
+	  In accordance with the C++ mapping, the caller is responsible
+	  for storage of a struct return value so return a heap allocated
+	  IOP::ServiceContext, not a cached one.
+
+	  As dictated by the Portable Interceptor specification, return a
+	  CORBA::BAD_PARAM() if an IOP::ServiceContext with the given
+	  ServiceId doesn't exist.
+	  
+	* tao/ClientRequestInfo.inl:
+
+	  New file that contains short non-virtual methods.
+
+	  (exception):
+
+	  Moved this method from the `.cpp' file to this file.
+
+	  Determine the reply status
+	  (PortableInterceptor::SYSTEM_EXCEPTION or
+	  PortableInterceptor::USER_EXCEPTION) by attempting to downcast
+	  the given exception.
+
+	  (request_id):
+
+	  Moved this method from the `.cpp' file to this file.
+
+	  (response_expected):
+
+	  Set the flag that specifies whether or not a response is
+	  excepted (e.g. no response excpected in a one-way request).
+
+	  (reply_status):
+
+	  Convert the invocation status (i.e. the return value of the
+	   Invocation::invoke() method in the generated stub) into the
+	  appropriate PortableInterceptor reply status.
+
+	* tao/PortableInterceptor.h:
+	* tao/PortableInterceptor.i (receive_other):
+
+	  New adapter method for the
+	  ClientRequestInterceptor::receive_other() method.  It is used in
+	  one-way and AMI requests.
+
+	* tao/PortableServer/ServerRequestInfo.h:
+	* tao/PortableServer/ServerRequestInfo.cpp (sending_exception):
+
+	  The C++ mapping requires that the caller be responsible for a
+	  returned CORBA::Any.  Removed the cached CORBA::Any attribute
+	  from this class.  The sending_exception() method now correctly
+	  returns a heap allocated CORBA::Any.
+
+	  (add_reply_service_context):
+
+	  Added support for the missing "replace" functionality.
+
+	  (get_request_service_context, get_reply_service_context):
+
+	  In accordance with the C++ mapping, the caller is responsible
+	  for storage of a struct return value so return a heap allocated
+	  IOP::ServiceContext, not a cached one.
+
+	  As dictated by the Portable Interceptor specification, return a
+	  CORBA::BAD_PARAM() if an IOP::ServiceContext with the given
+	  ServiceId doesn't exist.
+
+	  (exception):
+
+	  Determine the reply status
+	  (PortableInterceptor::SYSTEM_EXCEPTION or
+	  PortableInterceptor::USER_EXCEPTION) by attempting to downcast
+	  the given exception.
+
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp (receive_reply):
+
+	  Store returned service context in an IOP::ServiceContext_var to
+	  fix a memory leak.  This is necessary since TAO's
+	  ClientRequestInfo class now properly returns a heap allocated
+	  IOP::ServiceContext.
+
 Wed Dec 13 18:12:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/skip.cpp:
