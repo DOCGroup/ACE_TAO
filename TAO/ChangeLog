@@ -1,3 +1,9 @@
+Mon Apr 12 08:02:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* TAO_IDL/be/be_visitor_field/field_ci.cpp:
+
+	  Fixed warnings.
+
 Sun Apr 11 18:33:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* */*.icc:
