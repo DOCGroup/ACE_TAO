@@ -1,3 +1,10 @@
+Tue Jun 17 13:26:58 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          When matching possible output files for custom builds, check for
+          forward slashes and back slashes.
+
 Tue Jun 17 17:28:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SSL/Makefile:
@@ -5,16 +12,16 @@ Tue Jun 17 17:28:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jun 17 11:47:52 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Future.{h,cpp}: Changed all uses of ACE_Thread_Mutex to
-	  ACE_Recursive_Thread_Mutex and also changed the
- 	  ACE_Condition_Thread_Mutex to
- 	  ACE_Condition_Recursive_Thread_Mutex.  This should fix bugs with
- 	  deadlock.  Thanks to Thomas Groth <groth.th@nord-com.net> for
-	  providing these patches.
+        * ace/Future.{h,cpp}: Changed all uses of ACE_Thread_Mutex to
+          ACE_Recursive_Thread_Mutex and also changed the
+          ACE_Condition_Thread_Mutex to
+          ACE_Condition_Recursive_Thread_Mutex.  This should fix bugs with
+          deadlock.  Thanks to Thomas Groth <groth.th@nord-com.net> for
+          providing these patches.
 
-	* ace/DLL_Manager.cpp (symbol): Added missing newlines in
-	  debug/error messages.  Thanks to Rick Ohnemus
- 	  <rick.ohnemus@systemware.com> for reporting this.
+        * ace/DLL_Manager.cpp (symbol): Added missing newlines in
+          debug/error messages.  Thanks to Rick Ohnemus
+          <rick.ohnemus@systemware.com> for reporting this.
 
 Tue Jun 17 15:49:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 

@@ -1664,7 +1664,7 @@ sub check_custom_output {
           foreach my $c (@$comps) {
             ## We only match if the built file name matches from
             ## beginning to end or from a slash to the end.
-            if ($c =~ /^$re$/ || $c =~ /\/$re$/) {
+            if ($c =~ /^$re$/ || $c =~ /[\/\\]$re$/) {
               push(@outputs, $built);
               last;
             }
