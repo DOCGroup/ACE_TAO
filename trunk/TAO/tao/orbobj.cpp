@@ -299,7 +299,7 @@ CORBA::ORB_init (int &argc,
       ACE_Service_Repository::instance()->insert \
         (new ACE_Service_Type (svcname,\
                                  new ACE_Service_Object_Type\
-                                 (obj, svcname, ACE_Service_Type_Impl::DELETE_OBJ | ACE_Service_Type_Impl::DELETE_THIS), 0, 1));\
+                                 (obj, svcname, ACE_Service_Type::DELETE_OBJ | ACE_Service_Type::DELETE_THIS), 0, 1));\
     }\
   while (0) //;
 
