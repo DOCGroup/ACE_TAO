@@ -212,9 +212,6 @@ Task_State::parse_args (int argc,char **argv)
   ACE_NEW_RETURN (this->global_jitter_array_,
                   JITTER_ARRAY *[this->thread_count_],
                   -1);
-//   ACE_NEW_RETURN (this->global_jitter_iterator_,
-//                   JITTER_ARRAY_ITERATOR *[this->thread_count_],
-//                   -1);
   ACE_NEW_RETURN (this->count_,
                   u_int [thread_count_],
                   -1);
@@ -251,8 +248,7 @@ Client::Client (ACE_Thread_Manager *thread_manager,
     id_ (id),
     call_count_ (0),
     error_count_ (0),
-    my_jitter_array_ (0),// just an arbitrary size.
-    //    my_jitter_iterator_ (my_jitter_array_),
+    my_jitter_array_ (0),
     timer_ (0),
     frequency_ (0),
     orb_ (0),
@@ -277,7 +273,6 @@ Client::put_latency (JITTER_ARRAY *jitter,
 
   this->ts_->latency_[thread_id] = latency;
   this->ts_->global_jitter_array_[thread_id] = jitter;
-  //  this->ts_->global_jitter_iterator_ [thread_id] = iterator;
   this->ts_->count_[thread_id] = count;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -331,21 +326,19 @@ Client::get_high_priority_jitter (void)
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
 
-  //  JITTER_ARRAY high_array (*this->ts_->global_jitter_array_ [0]);
-  for (u_int i = 0; i < number_of_samples; i ++)
+  JITTER_ARRAY_ITERATOR iterator =
+    this->ts_->global_jitter_array_[0]->begin ();
+  
+  ACE_timer_t *latency = 0;
+  u_int i=0;
+  for (iterator.first ();
+       i < number_of_samples && iterator.next (latency) == 1;
+       i++,iterator.advance ())
     {
-      //      ACE_timer_t latency = high_array [i];
-      //      ACE_timer_t difference =
-        //        latency - average;
-        //        (*(this->ts_->global_jitter_array_))[i] - average;
-      ACE_timer_t difference = this->ts_->global_jitter_array_ [0][i] -average;
+      ACE_timer_t difference = *latency - average;
       jitter += difference * difference;
-
-      //      stats.sample ((ACE_UINT32) ((*(this->ts_->global_jitter_array_))[i] * 1000 + 0.5));
-      //      stats.sample ((ACE_UINT32) (high_array [i] * 1000 + 0.5));
-      stats.sample ((ACE_UINT32) (this->ts_->global_jitter_array_ [0][i] *1000 + 0.5));
-    }
-
+      stats.sample ((ACE_UINT32) (*latency *1000 + 0.5));
+    }          
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
 
@@ -380,23 +373,21 @@ Client::get_low_priority_jitter (void)
     {
       number_of_samples += this->ts_->count_[j];
 
-      //      JITTER_ARRAY low_array (*this->ts_->global_jitter_array_ [j]);
-      for (u_int i = 0;
-           i < this->ts_->count_[j] / this->ts_->granularity_;
-           i ++)
+      JITTER_ARRAY_ITERATOR iterator =
+        this->ts_->global_jitter_array_ [j]->begin ();
+
+      ACE_timer_t number_of_calls = 
+        this->ts_->count_ [j] / this->ts_->granularity_;
+      ACE_timer_t *latency = 0;
+      u_int i=0;
+      for (iterator.first ();
+           i < number_of_calls && iterator.next (latency) == 1;
+           iterator.advance ())
         {
-          //          ACE_timer_t latency = low_array [i];
-          //          ACE_timer_t difference = latency - average;
-//           ACE_timer_t difference =
-//             (*(this->ts_->global_jitter_array_ + j))[i] - average;
-
-          ACE_timer_t difference =
-            this->ts_->global_jitter_array_ [j][i] - average;
+          ACE_timer_t difference
+            = *latency - average;
           jitter += difference * difference;
-
-          //          stats.sample ((ACE_UINT32) (*(this->ts_->global_jitter_array_ + j)) [i] * 1000 + 0.5));
-          //          stats.sample ((ACE_UINT32) (low_array [i] * 1000 + 0.5));
-          stats.sample ((ACE_UINT32) (this->ts_->global_jitter_array_ [j][i] *1000 + 0.5));
+          stats.sample ((ACE_UINT32) (*latency * 1000 + 0.5));
         }
     }
 
@@ -425,22 +416,20 @@ Client::get_jitter (u_int id)
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
 
-  //      JITTER_ARRAY low_array (*this->ts_->global_jitter_array_ [id]);
-      for (u_int i = 0;
-           i < this->ts_->count_[id] / this->ts_->granularity_;
-           i ++)
-        {
-          //          ACE_timer_t latency = low_array [i];
-          //          ACE_timer_t difference = latency -average;
-//       ACE_timer_t difference =
-//         (*(this->ts_->global_jitter_array_ + id) [i] - average;
-          ACE_timer_t difference = 
-            this->ts_->global_jitter_array_ [id][i] - average;
-      jitter += difference * difference;
+  JITTER_ARRAY_ITERATOR iterator =
+    this->ts_->global_jitter_array_ [id]->begin ();
 
-      //      stats.sample ((ACE_UINT32) (*(this->ts_->global_jitter_array_ + id ))[i] * 1000 + 0.5));
-      //      stats.sample ((ACE_UINT32) (low_array [i] * 1000 + 0.5));
-      stats.sample ((ACE_UINT32) (this->ts_->global_jitter_array_ [id][i] * 1000 + 0.5));
+  ACE_timer_t number_of_calls =
+    this->ts_->count_[id] / this->ts_->granularity_;
+  ACE_timer_t *latency = 0;
+  u_int i = 0;
+  for (iterator.first ();
+       i < number_of_calls && iterator.next (latency) == 1;
+       i ++,iterator.advance ())
+    {
+      ACE_timer_t difference = *latency - average;
+      jitter += difference * difference;
+      stats.sample ((ACE_UINT32) (*latency *1000 + 0.5));
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -1154,9 +1143,7 @@ Client::do_test (void)
             / (ACE_timer_t) 100 + (ACE_timer_t) 60 * delta/ 100;
 
           this->latency_ += real_time * this->ts_->granularity_;
-
-          this->my_jitter_array_ [i/this->ts_->granularity_] =
-            TIME_IN_MICROSEC (real_time);
+          this->my_jitter_array_->insert (TIME_IN_MICROSEC (real_time));
         } 
       if (this->ts_->thread_per_rate_ == 1 
           && id_ < (this->ts_->thread_count_ - 1))
@@ -1188,16 +1175,9 @@ int
 Client::run_tests (void)
 {
   int result;
-  if (id_ == 0 
-      && this->ts_->thread_count_ > 1)
-    ACE_NEW_RETURN (this->my_jitter_array_,
-                    JITTER_ARRAY [(this->ts_->loop_count_/this->ts_->granularity_)*30],
-                    -1);
-   else
-     ACE_NEW_RETURN (this->my_jitter_array_,
-                     JITTER_ARRAY [(this->ts_->loop_count_/this->ts_->granularity_)*15],
-                     -1);
-
+  ACE_NEW_RETURN (this->my_jitter_array_,
+                  JITTER_ARRAY,
+                  -1);
   // Time to wait for utilization tests to know when to stop.
   ACE_Time_Value max_wait_time (this->ts_->util_time_, 0);
   ACE_Countdown_Time countdown (&max_wait_time);
@@ -1222,8 +1202,6 @@ Client::run_tests (void)
       this->ts_->util_test_time_ = util_time;
     }
   this->print_stats ();
-  // Delete the dynamically allocated memory
-  //  delete [] this->my_jitter_array_;
   return 0;
 }
 

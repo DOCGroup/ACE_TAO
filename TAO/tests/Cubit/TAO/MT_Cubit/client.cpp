@@ -273,21 +273,24 @@ Client_i::output_latency (Task_State *ts)
                       : "Low Priority",
                       j);
       // This loop visits each request latency from a client.
-      for (u_int i = 0;
-           i < (j == 0 
-                ? this->ts_->high_priority_loop_count_ 
-                : this->ts_->loop_count_) / this->ts_->granularity_;
-           i++)
+      JITTER_ARRAY_ITERATOR iterator =
+        this->ts_->global_jitter_array_ [j]->begin ();
+      u_int i = 0;
+      ACE_timer_t *latency = 0;
+      for (iterator.first ();
+           (i < (j == 0 
+                 ? this->ts_->high_priority_loop_count_ 
+                 : this->ts_->loop_count_) / this->ts_->granularity_) && 
+             (iterator.next (latency));
+           i++,iterator.advance ())
         {
-          JITTER_ARRAY jitter_array (*this->ts_->global_jitter_array_ [j]);
           ACE_OS::sprintf (buffer + ACE_OS::strlen (buffer),
 #if defined (CHORUS)
                           "\t%u\n",
 #else
                           "\t%f\n",
 #endif /* !CHORUS */
-                           this->ts_->global_jitter_array_[j][i]);
-                           //                           jitter_array [i]);
+                           *latency);
           ACE_OS::fputs (buffer,
                          latency_file_handle);
           buffer[0] = 0;
