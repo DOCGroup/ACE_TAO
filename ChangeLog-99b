@@ -1,8 +1,12 @@
 Sun Oct  3 12:47:35 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/MM_Shared_Memory_Test.cpp: Don't call ACE_OS::exit()
+	  in the child since this won't clean up the Object_Manager
+ 	  correctly.  Thanks to David Levine for reporting this.
+  
 	* tests/MM_Shared_Memory_Test.cpp: Oops, only do the
 	  acquire()/release() of the Process_Semaphore if we have fork()!
-	
+
 	* tests/MM_Shared_Memory_Test.cpp: Added an ACE_Process_Semaphore
 	  so we no longer need to sleep in order to wait for the server to
  	  be initialized.
