@@ -262,7 +262,6 @@ main (int, char *[])
 #if defined(ACE_HAS_THREADS)
  template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
 #endif /* ACE_HAS_THREADS */
-template class ACE_Message_Queue<ACE_NULL_SYNCH>;
 template class ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>;
 template class ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
