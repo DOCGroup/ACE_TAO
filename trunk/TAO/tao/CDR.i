@@ -170,22 +170,22 @@ TAO_OutputCDR::write_wstring (const CORBA::WChar *x)
 
 ACE_INLINE CORBA_Boolean
 TAO_OutputCDR::write_char_array (const CORBA::Char* x,
-				 CORBA::ULong length)
+                                 CORBA::ULong length)
 {
   return this->write_array (x,
-			    CDR::OCTET_SIZE,
-			    CDR::OCTET_ALIGN,
-			    length);
+                            CDR::OCTET_SIZE,
+                            CDR::OCTET_ALIGN,
+                            length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_OutputCDR::write_wchar_array (const CORBA::WChar* x,
-				  CORBA::ULong length)
+                                  CORBA::ULong length)
 {
   return this->write_array (x,
-			    CDR::SHORT_SIZE,
-			    CDR::SHORT_ALIGN,
-			    length);
+                            CDR::SHORT_SIZE,
+                            CDR::SHORT_ALIGN,
+                            length);
 }
 
 ACE_INLINE CORBA_Boolean
@@ -200,92 +200,92 @@ TAO_OutputCDR::write_octet_array (const CORBA::Octet* x,
 
 ACE_INLINE CORBA_Boolean
 TAO_OutputCDR::write_short_array (const CORBA::Short* x,
-				  CORBA::ULong length)
+                                  CORBA::ULong length)
 {
   return this->write_array (x,
-			    CDR::SHORT_SIZE,
-			    CDR::SHORT_ALIGN,
-			    length);
+                            CDR::SHORT_SIZE,
+                            CDR::SHORT_ALIGN,
+                            length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_OutputCDR::write_ushort_array (const CORBA::UShort* x,
-				   CORBA::ULong length)
+                                   CORBA::ULong length)
 {
   return this->write_array (x,
-			    CDR::SHORT_SIZE,
-			    CDR::SHORT_ALIGN,
-			    length);
+                            CDR::SHORT_SIZE,
+                            CDR::SHORT_ALIGN,
+                            length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_OutputCDR::write_long_array (const CORBA::Long* x,
-				 CORBA::ULong length)
+                                 CORBA::ULong length)
 {
   return this->write_array (x,
-			    CDR::LONG_SIZE,
-			    CDR::LONG_ALIGN,
-			    length);
+                            CDR::LONG_SIZE,
+                            CDR::LONG_ALIGN,
+                            length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_OutputCDR::write_ulong_array (const CORBA::ULong* x,
-				  CORBA::ULong length)
+                                  CORBA::ULong length)
 {
   return this->write_array (x,
-			    CDR::LONG_SIZE,
-			    CDR::LONG_ALIGN,
-			    length);
+                            CDR::LONG_SIZE,
+                            CDR::LONG_ALIGN,
+                            length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_OutputCDR::write_longlong_array (const CORBA::LongLong* x,
-				     CORBA::ULong length)
+                                     CORBA::ULong length)
 {
   return this->write_array (x,
-			    CDR::LONGLONG_SIZE,
-			    CDR::LONGLONG_ALIGN,
-			    length);
+                            CDR::LONGLONG_SIZE,
+                            CDR::LONGLONG_ALIGN,
+                            length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_OutputCDR::write_ulonglong_array (const CORBA::ULongLong* x,
-				      CORBA::ULong length)
+                                      CORBA::ULong length)
 {
   return this->write_array (x,
-			    CDR::LONGLONG_SIZE,
-			    CDR::LONGLONG_ALIGN,
-			    length);
+                            CDR::LONGLONG_SIZE,
+                            CDR::LONGLONG_ALIGN,
+                            length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_OutputCDR::write_float_array (const CORBA::Float* x,
-				  CORBA::ULong length)
+                                  CORBA::ULong length)
 {
   return this->write_array (x,
-			    CDR::LONG_SIZE,
-			    CDR::LONG_ALIGN,
-			    length);
+                            CDR::LONG_SIZE,
+                            CDR::LONG_ALIGN,
+                            length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_OutputCDR::write_double_array (const CORBA::Double* x,
-				   CORBA::ULong length)
+                                   CORBA::ULong length)
 {
   return this->write_array (x,
-			    CDR::LONGLONG_SIZE,
-			    CDR::LONGLONG_ALIGN,
-			    length);
+                            CDR::LONGLONG_SIZE,
+                            CDR::LONGLONG_ALIGN,
+                            length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_OutputCDR::write_longdouble_array (const CORBA::LongDouble* x,
-				       CORBA::ULong length)
+                                       CORBA::ULong length)
 {
   return this->write_array (x,
-			    CDR::LONGDOUBLE_SIZE,
-			    CDR::LONGDOUBLE_ALIGN,
-			    length);
+                            CDR::LONGDOUBLE_SIZE,
+                            CDR::LONGDOUBLE_ALIGN,
+                            length);
 }
 
 ACE_INLINE int
@@ -320,9 +320,9 @@ TAO_OutputCDR::length (void) const
 
 ACE_INLINE CORBA::TypeCode::traverse_status
 TAO_OutputCDR::encode (CORBA::TypeCode_ptr tc,
-		       const void *data,
-		       const void *data2,
-		       CORBA::Environment &env)
+                       const void *data,
+                       const void *data2,
+                       CORBA::Environment &env)
 {
   TAO_Marshal_Object *mobj =
     this->factory_->make_marshal_object (tc, env);
@@ -332,7 +332,7 @@ TAO_OutputCDR::encode (CORBA::TypeCode_ptr tc,
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
-ACE_INLINE
+ACE_INLINE int
 TAO_OutputCDR::do_byte_swap (void) const
 {
   return this->do_byte_swap_;
@@ -423,122 +423,122 @@ TAO_InputCDR::read_longdouble (CORBA::LongDouble& x)
 
 ACE_INLINE CORBA_Boolean
 TAO_InputCDR::read_char_array (CORBA::Char* x,
-			       CORBA::ULong length)
+                               CORBA::ULong length)
 {
   return this->read_array (x,
-			   CDR::OCTET_SIZE,
-			   CDR::OCTET_ALIGN,
-			   length);
+                           CDR::OCTET_SIZE,
+                           CDR::OCTET_ALIGN,
+                           length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_InputCDR::read_wchar_array (CORBA::WChar* x,
-				CORBA::ULong length)
+                                CORBA::ULong length)
 {
   return this->read_array (x,
-			   CDR::SHORT_SIZE,
-			   CDR::SHORT_ALIGN,
-			   length);
+                           CDR::SHORT_SIZE,
+                           CDR::SHORT_ALIGN,
+                           length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_InputCDR::read_octet_array (CORBA::Octet* x,
-				CORBA::ULong length)
+                                CORBA::ULong length)
 {
   return this->read_array (x,
-			   CDR::OCTET_SIZE,
-			   CDR::OCTET_ALIGN,
-			   length);
+                           CDR::OCTET_SIZE,
+                           CDR::OCTET_ALIGN,
+                           length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_InputCDR::read_short_array (CORBA::Short* x,
-				CORBA::ULong length)
+                                CORBA::ULong length)
 {
   return this->read_array (x,
-			   CDR::SHORT_SIZE,
-			   CDR::SHORT_ALIGN,
-			   length);
+                           CDR::SHORT_SIZE,
+                           CDR::SHORT_ALIGN,
+                           length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_InputCDR::read_ushort_array (CORBA::UShort* x,
-				 CORBA::ULong length)
+                                 CORBA::ULong length)
 {
   return this->read_array (x,
-			   CDR::SHORT_SIZE,
-			   CDR::SHORT_ALIGN,
-			   length);
+                           CDR::SHORT_SIZE,
+                           CDR::SHORT_ALIGN,
+                           length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_InputCDR::read_long_array (CORBA::Long* x,
-			       CORBA::ULong length)
+                               CORBA::ULong length)
 {
   return this->read_array (x,
-			   CDR::LONG_SIZE,
-			   CDR::LONG_ALIGN,
-			   length);
+                           CDR::LONG_SIZE,
+                           CDR::LONG_ALIGN,
+                           length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_InputCDR::read_ulong_array (CORBA::ULong* x,
-				CORBA::ULong length)
+                                CORBA::ULong length)
 {
   return this->read_array (x,
-			   CDR::LONG_SIZE,
-			   CDR::LONG_ALIGN,
-			   length);
+                           CDR::LONG_SIZE,
+                           CDR::LONG_ALIGN,
+                           length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_InputCDR::read_longlong_array (CORBA::LongLong* x,
-				   CORBA::ULong length)
+                                   CORBA::ULong length)
 {
   return this->read_array (x,
-			   CDR::LONGLONG_SIZE,
-			   CDR::LONGLONG_ALIGN,
-			   length);
+                           CDR::LONGLONG_SIZE,
+                           CDR::LONGLONG_ALIGN,
+                           length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_InputCDR::read_ulonglong_array (CORBA::ULongLong* x,
-				    CORBA::ULong length)
+                                    CORBA::ULong length)
 {
   return this->read_array (x,
-			   CDR::LONGLONG_SIZE,
-			   CDR::LONGLONG_ALIGN,
-			   length);
+                           CDR::LONGLONG_SIZE,
+                           CDR::LONGLONG_ALIGN,
+                           length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_InputCDR::read_float_array (CORBA::Float* x,
-				CORBA::ULong length)
+                                CORBA::ULong length)
 {
   return this->read_array (x,
-			   CDR::LONG_SIZE,
-			   CDR::LONG_ALIGN,
-			   length);
+                           CDR::LONG_SIZE,
+                           CDR::LONG_ALIGN,
+                           length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_InputCDR::read_double_array (CORBA::Double* x,
-				 CORBA::ULong length)
+                                 CORBA::ULong length)
 {
   return this->read_array (x,
-			   CDR::LONGLONG_SIZE,
-			   CDR::LONGLONG_ALIGN,
-			   length);
+                           CDR::LONGLONG_SIZE,
+                           CDR::LONGLONG_ALIGN,
+                           length);
 }
 
 ACE_INLINE CORBA_Boolean
 TAO_InputCDR::read_longdouble_array (CORBA::LongDouble* x,
-				     CORBA::ULong length)
+                                     CORBA::ULong length)
 {
   return this->read_array (x,
-			   CDR::LONGDOUBLE_SIZE,
-			   CDR::LONGDOUBLE_ALIGN,
-			   length);
+                           CDR::LONGDOUBLE_SIZE,
+                           CDR::LONGDOUBLE_ALIGN,
+                           length);
 }
 
 ACE_INLINE CORBA_Boolean
@@ -641,9 +641,9 @@ TAO_InputCDR::good_bit (void) const
 
 ACE_INLINE CORBA::TypeCode::traverse_status
 TAO_InputCDR::decode (CORBA::TypeCode_ptr tc,
-		       const void *data,
-		       const void *data2,
-		       CORBA::Environment &env)
+                       const void *data,
+                       const void *data2,
+                       CORBA::Environment &env)
 {
   TAO_Marshal_Object *mobj =
     this->factory_->make_marshal_object (tc, env);
