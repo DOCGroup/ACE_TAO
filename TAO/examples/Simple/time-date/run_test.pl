@@ -12,6 +12,9 @@ require Process;
 $status = 0;
 $iorfile = "./ior";
 
+# Remove the file before starting the test.
+unlink $iorfile;
+
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {

@@ -1,50 +1,67 @@
+Wed Sep 27 11:25:38 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Simple/time-date/svc.conf:
+          Dynamically load the default IOR parsers, otherwise the ORB may
+          try to do that, using ACE_Service_Config::process_directive().
+          Unfortunately that stops any further parsing in the svc.conf
+          file too.
+
+        * examples/Simple/time-date/Time_Date.cpp:
+          In debugging mode print the thread ID that initialize the ORB
+          and the thread id that runs it.  Useful to figure out what is
+          going on.
+
+        * examples/Simple/time-date/run_test.pl:
+          Remove the ior file before starting the test, to avoid problems
+          with stale files.
+
 Tue Sep 26 21:11:50 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect):
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect):
 
-	  Fixed erroneous use of CORBA::string_copy().  That method was
-	  removed from TAO since it provided no additional functionality
-	  compared to CORBA::string_dup().  The standard
-	  CORBA::string_dup() is used instead.
+          Fixed erroneous use of CORBA::string_copy().  That method was
+          removed from TAO since it provided no additional functionality
+          compared to CORBA::string_dup().  The standard
+          CORBA::string_dup() is used instead.
 
 Tue Sep 26 19:58:52 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/PortableServer/Makefile.bor:
-	* tao/Makefile.bor:
+        * tao/PortableServer/Makefile.bor:
+        * tao/Makefile.bor:
 
-	  Added new collocation related file to the borlands.
+          Added new collocation related file to the borlands.
 
 Tue Sep 26 15:14:33 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer/PortableServerC.cpp: Made a couple of
-	  formatting changes to reduce diffs. ForwardRequest constructor
-	  should not call CORBA::string_dup.
+        * tao/PortableServer/PortableServerC.cpp: Made a couple of
+          formatting changes to reduce diffs. ForwardRequest constructor
+          should not call CORBA::string_dup.
 
-	* tao/diffs/PortableServerC.cpp.diff: Fixed inclusion of POA.h.
-	  Also one of the MINIMUM_CORBA #defines was out of place because
-	  of the new _type() method.
+        * tao/diffs/PortableServerC.cpp.diff: Fixed inclusion of POA.h.
+          Also one of the MINIMUM_CORBA #defines was out of place because
+          of the new _type() method.
 
-	* tao/diffs/PortableServerC.h.diff: Many small formatting changes
-	  were necessary for the patch file to work with the better
-	  formatting produced by the idl compiler.  Also, code related to
-	  the iostreams was removed.
+        * tao/diffs/PortableServerC.h.diff: Many small formatting changes
+          were necessary for the patch file to work with the better
+          formatting produced by the idl compiler.  Also, code related to
+          the iostreams was removed.
 
 Tue Sep 26 12:25:53 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile.CosNotification:
-	  Updated dependencies.
+          Updated dependencies.
 
 Tue Sep 26 13:43:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs_.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs_.cpp:
 
-	  Moved the visit_scope call for the interface so it
-	  comes after the interface's _is_a, _tao_QueryInterface,
-	  and _interface_repository_id methods have been generated,
-	  so that the interface's methods will all be in one place.
-	  This makes it easier for the patch files for the hand-
-	  crafted code to do their work. Thanks to Irfan for pointing
-	  this out.
+          Moved the visit_scope call for the interface so it
+          comes after the interface's _is_a, _tao_QueryInterface,
+          and _interface_repository_id methods have been generated,
+          so that the interface's methods will all be in one place.
+          This makes it easier for the patch files for the hand-
+          crafted code to do their work. Thanks to Irfan for pointing
+          this out.
 
 Tue Sep 26 10:10:55 2000  Carlos O'Ryan  <coryan@uci.edu>
 
