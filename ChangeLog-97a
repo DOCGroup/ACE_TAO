@@ -1,3 +1,15 @@
+Tue May 13 16:48:18 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* ace/Process.cpp: Added implmenetations to new interfaces
+	  to ACE_Process_Options::setenv (char *envp[]), and
+	  ACE_Process_Options::command_line (char *argv[]).
+
+	* apps/JAWS/server/HTTP_Response.cpp: Required changes so that CGI
+	  processing will work with the new ACE_Process class.
+
+	* apps/JAWS/stress_testing/benchd.cpp: Requried changes due to
+	  changes in the ACE_Process interface.
+
 Tue May 13 15:22:01 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
 
 	* ace/Process_Manager.h:  Changed ACE_Process_Manager::start to
