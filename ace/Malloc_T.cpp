@@ -43,6 +43,20 @@ ACE_Cached_Allocator<T, ACE_LOCK>::~ACE_Cached_Allocator (void)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Malloc_T)
 
+template <class MALLOC> int
+ACE_Allocator_Adapter<MALLOC>::protect (ssize_t len, int flags)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::protect");
+  return this->allocator_.protect (len, flags);
+}
+
+template <class MALLOC> int
+ACE_Allocator_Adapter<MALLOC>::protect (void *addr, size_t len, int flags)
+{
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::protect");
+  return this->allocator_.protect (addr, len, flags);
+}
+
 template <class MALLOC>
 ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const ACE_TCHAR *pool_name)
   : allocator_ (pool_name)
