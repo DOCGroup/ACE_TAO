@@ -1,3 +1,9 @@
+Tue May 18 10:42:47 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.0.GNU: removed
+          suppression of warning 1180, statement causes unreachable
+          return, because it's no longer necessary.
+
 Tue May 18 10:38:53 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Thread_Manager_Test.cpp: replaced Hash_Map_Manager
