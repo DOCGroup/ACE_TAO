@@ -1,6 +1,33 @@
 /* -*- C++ -*- */
 // $Id$
 
+// Wrappers for methods that have been moved to ACE_OS.
+
+ASYS_INLINE ssize_t
+ACE::read_n (ACE_HANDLE handle,
+             void *buf,
+             size_t len)
+{
+  ACE_TRACE ("ACE::read_n");
+  return ACE_OS::read_n (handle, buf, len);
+}
+
+ASYS_INLINE ssize_t
+ACE::send_n (ACE_HANDLE handle, const void *buf, size_t len)
+{
+  ACE_TRACE ("ACE::send_n");
+  return ACE_OS::send_n (handle, buf, len);
+}
+
+ASYS_INLINE ssize_t
+ACE::write_n (ACE_HANDLE handle,
+              const void *buf,
+              size_t len)
+{
+  ACE_TRACE ("ACE::write_n");
+  return ACE_OS::write_n (handle, buf, len);
+}
+
 // Miscellaneous static methods used throughout ACE.
 
 ASYS_INLINE ssize_t

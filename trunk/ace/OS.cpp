@@ -4030,6 +4030,100 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
 # endif /* ACE_WIN32 */
 }
 
+// Receive <len> bytes into <buf> from <handle> (uses the <read>
+// system call on UNIX and the <ReadFile> call on Win32).
+
+ssize_t
+ACE_OS::read_n (ACE_HANDLE handle,
+                void *buf,
+                size_t len)
+{
+  // ACE_TRACE ("ACE_OS::read_n");
+
+  size_t bytes_read;
+  ssize_t n;
+
+  for (bytes_read = 0; bytes_read < len; bytes_read += n)
+    {
+      n = ACE_OS::read (handle,
+                        (char *) buf + bytes_read,
+                        len - bytes_read);
+
+      if (n == -1)
+        {
+          if (errno == EWOULDBLOCK)
+            n = 0; // Keep trying to read.
+          else
+            return -1;
+        }
+      else if (n == 0)
+        break;
+    }
+
+  return bytes_read;
+}
+
+ssize_t
+ACE_OS::send_n (ACE_HANDLE handle, const void *buf, size_t len)
+{
+  // ACE_TRACE ("ACE_OS::send_n");
+  size_t bytes_written;
+  ssize_t n;
+
+  for (bytes_written = 0; bytes_written < len; bytes_written += n)
+    {
+      n =
+#if defined (ACE_WIN32) || defined (ACE_PSOS)
+          ACE_OS::send (handle,
+                        (const char *) buf + bytes_written,
+                        len - bytes_written);
+#else
+          ACE_OS::write (handle,
+                         (const char *) buf + bytes_written,
+                         len - bytes_written);
+#endif /* ACE_WIN32 */
+
+      if (n == -1)
+        {
+          if (errno == EWOULDBLOCK)
+            n = 0; // Keep trying to send.
+          else
+            return -1;
+        }
+    }
+
+  return bytes_written;
+}
+
+// Write <len> bytes from <buf> to <handle> (uses the <write>
+// system call on UNIX and the <WriteFile> call on Win32).
+
+ssize_t
+ACE_OS::write_n (ACE_HANDLE handle,
+                 const void *buf,
+                 size_t len)
+{
+  // ACE_TRACE ("ACE_OS::write_n");
+
+  size_t bytes_written;
+  ssize_t n;
+
+  for (bytes_written = 0; bytes_written < len; bytes_written += n)
+    {
+      n = ACE_OS::write (handle, (const char *) buf + bytes_written,
+                         len - bytes_written);
+      if (n == -1)
+        {
+          if (errno == EWOULDBLOCK)
+            n = 0; // Keep trying to send.
+          else
+            return -1;
+        }
+    }
+
+  return bytes_written;
+}
+
 # if defined (ACE_LACKS_WRITEV)
 
 // "Fake" writev for operating systems without it.  Note that this is
@@ -4066,7 +4160,7 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
       ptr += iov[i].iov_len;
     }
 
-  ssize_t result = ACE::write_n (handle, buf, length);
+  ssize_t result = ACE_OS::write_n (handle, buf, length);
 #   if !defined (ACE_HAS_ALLOCA)
   delete [] buf;
 #   endif /* !defined (ACE_HAS_ALLOCA) */
@@ -4102,7 +4196,7 @@ readv (ACE_HANDLE handle,
   ACE_NEW_RETURN (buf, char[length], -1);
 #   endif /* !defined (ACE_HAS_ALLOCA) */
 
-  length = ACE::read_n (handle, buf, length);
+  length = ACE_OS::read_n (handle, buf, length);
 
   if (length != -1)
     {
