@@ -1,0 +1,20 @@
+$Id$
+
+This is a unit test for RTCORBA::ServerProtocolPolicy.
+
+Scenario:
+--------
+
+
+To run (on Unix):
+-------
+$./server
+$./client
+
+Options:
+--------
+server [-o ior_output_file]
+client [-k server_ior]
+
+Expected output:
+----------------
