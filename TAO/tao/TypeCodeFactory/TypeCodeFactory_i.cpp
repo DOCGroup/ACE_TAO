@@ -1,11 +1,17 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 // $Id$
 
 #include "TypeCodeFactory_i.h"
+
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/Marshal.h"
 
-ACE_RCSID(TypeCodeFactory, TypeCodeFactory_i, "$Id$")
+#include "ace/Containers_T.h"
+#include "ace/Hash_Map_Manager_T.h"
+
+ACE_RCSID (TypeCodeFactory,
+           TypeCodeFactory_i,
+           "$Id$")
 
 TAO_TypeCodeFactory_i::TAO_TypeCodeFactory_i (void)
 {
@@ -1457,4 +1463,3 @@ template class ACE_Bounded_Set_Iterator<CORBA::ULong>;
 #pragma instantiate ACE_Bounded_Set_Iterator<CORBA::ULong>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

@@ -21,6 +21,7 @@
 
 #include "IFR_BaseC.h"
 
+#include "tao/Stub.h"
 #include "tao/PortableInterceptor.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -15908,4 +15909,3 @@ CORBA::Boolean operator>> (
   ACE_ENDTRY;
   return 0;
 }
-

@@ -1,29 +1,18 @@
 // -*- C++ -*-
-// $Id$
-
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     IORManipulation.cpp
-//
-// = DESCRIPTION
-//
-// = AUTHOR
-//     Fred Kuhns <fredk@cs.wustl.edu>
-//
-// ============================================================================
 
 #include "IORManipulation.h"
+
 #include "tao/MProfile.h"
+#include "tao/Profile.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(tao, IORManipulation, "$Id$")
+ACE_RCSID (tao,
+           IORManipulation,
+           "$Id$")
+
 
 TAO_IOR_Manipulation_impl::TAO_IOR_Manipulation_impl (void)
 {
@@ -37,10 +26,10 @@ CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::merge_iors (
     const TAO_IOP::TAO_IOR_Manipulation::IORList & iors
     ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       TAO_IOP::EmptyProfileList,
-                       TAO_IOP::Duplicate,
-                       TAO_IOP::Invalid_IOR))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   TAO_IOP::EmptyProfileList,
+                   TAO_IOP::Duplicate,
+                   TAO_IOP::Invalid_IOR))
 {
   // we need to create a new CORBA::Object which has the union of the
   // two profile lists.  However, if any profiles are duplicates (i.e. in
@@ -143,12 +132,10 @@ TAO_IOR_Manipulation_impl::add_profiles (
     CORBA::Object_ptr ior1,
     CORBA::Object_ptr ior2
     ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        TAO_IOP::EmptyProfileList,
-        TAO_IOP::Duplicate,
-        TAO_IOP::Invalid_IOR
-      ))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   TAO_IOP::EmptyProfileList,
+                   TAO_IOP::Duplicate,
+                   TAO_IOP::Invalid_IOR))
 {
 
   // Get an estimate of the number of profiles
@@ -244,15 +231,12 @@ TAO_IOR_Manipulation_impl::remove_profiles (
 
 CORBA::Boolean
 TAO_IOR_Manipulation_impl::set_property (
-      TAO_IOP::TAO_IOR_Property_ptr prop,
-      CORBA::Object_ptr ior
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      TAO_IOP::Invalid_IOR,
-      TAO_IOP::Duplicate
-    ))
+    TAO_IOP::TAO_IOR_Property_ptr prop,
+    CORBA::Object_ptr ior
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   TAO_IOP::Invalid_IOR,
+                   TAO_IOP::Duplicate))
 {
   // make sure we have some profiles
   if (ior->_stubobj ()->base_profiles ().profile_count () == 0)
@@ -266,17 +250,14 @@ TAO_IOR_Manipulation_impl::set_property (
 
 CORBA::Boolean
 TAO_IOR_Manipulation_impl::set_primary (
-      TAO_IOP::TAO_IOR_Property_ptr prop,
-      CORBA::Object_ptr ior1,
-      CORBA::Object_ptr ior2
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      TAO_IOP::Invalid_IOR,
-      TAO_IOP::Duplicate,
-      TAO_IOP::MultiProfileList
-    ))
+    TAO_IOP::TAO_IOR_Property_ptr prop,
+    CORBA::Object_ptr ior1,
+    CORBA::Object_ptr ior2
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   TAO_IOP::Invalid_IOR,
+                   TAO_IOP::Duplicate,
+                   TAO_IOP::MultiProfileList))
 {
   // make sure we have some profiles in IOR2
   if (ior2->_stubobj ()->base_profiles ().profile_count () == 0)
@@ -320,13 +301,10 @@ TAO_IOR_Manipulation_impl::get_primary (
 
 CORBA::Boolean
 TAO_IOR_Manipulation_impl::is_primary_set (
-      TAO_IOP::TAO_IOR_Property_ptr prop,
-      CORBA::Object_ptr ior
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+    TAO_IOP::TAO_IOR_Property_ptr prop,
+    CORBA::Object_ptr ior
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return prop->is_primary_set (ior ACE_ENV_ARG_PARAMETER);
 }
@@ -336,12 +314,10 @@ TAO_IOR_Manipulation_impl::is_in_ior (
     CORBA::Object_ptr ior1,
     CORBA::Object_ptr ior2
     ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        TAO_IOP::NotFound
-      ))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   TAO_IOP::NotFound))
 {
-  CORBA::ULong count=0;
+  CORBA::ULong count = 0;
   TAO_Profile *pfile1, *pfile2;
   auto_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->make_profiles ());
   auto_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->make_profiles ());
@@ -368,10 +344,8 @@ CORBA::ULong
 TAO_IOR_Manipulation_impl::get_profile_count (
     CORBA::Object_ptr ior
     ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        TAO_IOP::EmptyProfileList
-      ))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   TAO_IOP::EmptyProfileList))
 {
   CORBA::ULong count;
   count = ior->_stubobj ()->base_profiles ().profile_count ();
@@ -385,12 +359,10 @@ TAO_IOR_Manipulation_impl::get_profile_count (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-
 template class auto_ptr<TAO_MProfile>;
 template class ACE_Auto_Basic_Ptr<TAO_MProfile>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
 
 #pragma instantiate auto_ptr<TAO_MProfile>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_MProfile>

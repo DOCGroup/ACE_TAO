@@ -4,8 +4,11 @@
 #include "IFR_ExtendedC.h"
 #include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
+#include "tao/Stub.h"
 
-ACE_RCSID(IFR_Client, IFR_Client_Adapter_Impl, "$Id$")
+ACE_RCSID (IFR_Client,
+           IFR_Client_Adapter_Impl,
+           "$Id$")
 
 TAO_IFR_Client_Adapter_Impl::~TAO_IFR_Client_Adapter_Impl (void)
 {
