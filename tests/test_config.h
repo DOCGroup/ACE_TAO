@@ -253,7 +253,7 @@ ACE_Test_Output::close (void)
   this->output_file_.flush ();
   this->output_file_.close ();
 }
-#else
+#else /* ACE HAS_WINCE */
 
 #define ACE_START_TEST(NAME) \
   const ASYS_TCHAR *program = NAME; \
@@ -261,6 +261,9 @@ ACE_Test_Output::close (void)
 
 #define ACE_END_TEST \
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Ending %s test at %D\n"), program)); \
+
+#undef ACE_DEFAULT_TEST_FILE
+#define ACE_DEFAULT_TEST_FILE L"\\temp\\ace_test_file"
 
 #endif /* ACE_HAS_WINCE */
 

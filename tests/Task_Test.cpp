@@ -52,7 +52,7 @@ Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
 {
   // Create worker threads.
   if (this->activate (THR_NEW_LWP, n_threads) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("activate failed")));
 }
   
 // Iterate <n_iterations> time printing off a message and "waiting"
@@ -65,7 +65,7 @@ Barrier_Task::svc (void)
        iterations <= this->n_iterations_;
        iterations++)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%t) in iteration %d\n", iterations));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) in iteration %d\n"), iterations));
 
       // Block until all other threads have waited, then continue.
       this->barrier_.wait ();
@@ -80,9 +80,9 @@ Barrier_Task::svc (void)
 #endif /* ACE_HAS_THREADS */
 
 int 
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Task_Test");
+  ACE_START_TEST (ASYS_TEXT ("Task_Test"));
 
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
@@ -95,7 +95,7 @@ main (int, char *[])
   ACE_Thread_Manager::instance ()->wait ();
 
 #else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

@@ -22,9 +22,9 @@
 #include "ace/SString.h"
 
 int 
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("SString_Test");
+  ACE_START_TEST (ASYS_TEXT ("SString_Test"));
 
   {
     ACE_CString s1 ("hello");

@@ -68,7 +68,7 @@ Thread_Pool::~Thread_Pool (void)
 int
 Thread_Pool::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) close of worker\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) close of worker\n")));
   return 0;
 }
 
@@ -105,7 +105,7 @@ Thread_Pool::svc (void)
 
       if (length > 0)
 	ACE_DEBUG ((LM_DEBUG,
-		    "(%t) in iteration %d, queue len = %d, length = %d, text = \"%*s\"\n",
+		    ASYS_TEXT ("(%t) in iteration %d, queue len = %d, length = %d, text = \"%*s\"\n"),
 		    count, this->msg_queue ()->message_count (),
 		    length, length - 1, mb->rd_ptr ()));
 
@@ -115,7 +115,7 @@ Thread_Pool::svc (void)
       if (length == 0)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
-		      "(%t) in iteration %d, queue len = %d, got NULL message, exiting\n",
+		      ASYS_TEXT ("(%t) in iteration %d, queue len = %d, got NULL message, exiting\n"),
 		      count, this->msg_queue ()->message_count ()));
 	  break;
 	}
@@ -130,12 +130,12 @@ int
 Thread_Pool::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) producer start, dumping the Thread_Pool\n"));
+	      ASYS_TEXT ("(%t) producer start, dumping the Thread_Pool\n")));
   this->dump ();
 
   // Create a pool of worker threads.
   if (this->activate (THR_NEW_LWP, this->n_threads_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate failed"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("activate failed")), -1);
 
   for (size_t count = 0; count < n_iterations; count++)
     {
@@ -147,24 +147,24 @@ Thread_Pool::open (void *)
 					 0, 0, 0, &this->lock_adapter_),
 		      -1);
 
-      ACE_OS::sprintf (mb->rd_ptr (), "%d\n", count);
-      int n = ACE_OS::strlen (mb->rd_ptr ());
+      ACE_OS::sprintf ((ASYS_TCHAR *) mb->rd_ptr (), ASYS_TEXT ("%d\n"), count);
+      int n = ACE_OS::strlen ((ASYS_TCHAR *)mb->rd_ptr ());
 
       if (count == 0 || (count % 20 == 0))
 	ACE_OS::sleep (1);
 
       // Send a normal message to the waiting threads and continue
       // producing.
-      mb->wr_ptr (n);
+      mb->wr_ptr (n * sizeof (ASYS_TCHAR));
 
       // Pass the message to the Thread_Pool.
       if (this->put (mb) == -1)
-	ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
+	ACE_ERROR ((LM_ERROR, ASYS_TEXT (" (%t) %p\n"), ASYS_TEXT ("put")));
     }
 
   // Send a shutdown message to the waiting threads and exit.
   ACE_DEBUG ((LM_DEBUG,
-	      "\n(%t) sending shutdown message to %d threads, dump of task:\n",
+	      ASYS_TEXT ("\n(%t) sending shutdown message to %d threads, dump of task:\n"),
 	      this->thr_count ()));
   this->dump ();
 
@@ -178,7 +178,7 @@ Thread_Pool::open (void *)
   for (int i = this->thr_count (); i > 0; i--)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "(%t) EOF, enqueueing NULL block for thread = %d\n",
+		  ASYS_TEXT ("(%t) EOF, enqueueing NULL block for thread = %d\n"),
 		  i));
 
       // Enqueue an empty message to flag each consumer to shutdown.
@@ -187,12 +187,12 @@ Thread_Pool::open (void *)
       ACE_Message_Block *dup = mb->duplicate ();
 
       if (this->put (dup) == -1)
-	ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
+	ACE_ERROR ((LM_ERROR, ASYS_TEXT (" (%t) %p\n"), ASYS_TEXT ("put")));
     }
 
   mb->release ();
 
-  ACE_DEBUG ((LM_DEBUG, "\n(%t) end loop, dump of task:\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n(%t) end loop, dump of task:\n")));
   this->dump ();
 
   return 0;
@@ -204,18 +204,17 @@ template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
 #pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Thread_Pool_Test");
+  ACE_START_TEST (ASYS_TEXT ("Thread_Pool_Test"));
 
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) threads = %d\n", n_threads));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) threads = %d\n"), n_threads));
 
   // Create the worker tasks.
   Thread_Pool thread_pool (n_threads);
@@ -226,15 +225,15 @@ main (int, char *[])
 
   // Wait for all the threads to reach their exit point.
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) waiting for worker tasks to finish...\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) waiting for worker tasks to finish...\n")));
 
   ACE_Thread_Manager::instance ()->wait ();
 
   ACE_ASSERT (thread_pool.msg_queue ()->is_empty ());
-  ACE_DEBUG ((LM_DEBUG, "(%t) destroying worker tasks and exiting...\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) destroying worker tasks and exiting...\n")));
 
 #else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

@@ -187,7 +187,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
 
       // Shut down the listen socket to recycle the handles.
       if (this->peer_acceptor_.close () == -1)
-        ACE_ERROR ((LM_ERROR, "close\n"));
+        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("close\n")));
 
       // Set the Reactor to 0 so that we don't try to close down
       // again.
@@ -657,7 +657,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ASYS_TCHAR **strp
     return -1;
 
   // @@ Should add the protocol in...
-  ACE_OS::sprintf (buf, "%s\t %s #%s\n",
+  ACE_OS::sprintf (buf, ASYS_TEXT ("%s\t %s #%s\n"),
                    this->service_name_,
                    service_addr_str,
                    this->service_description_);
@@ -732,8 +732,8 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor");
   if (this->open (addr, reactor, cs) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n",
-               "ACE_Oneshot_Acceptor::ACE_Oneshot_Acceptor"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+               ASYS_TEXT ("ACE_Oneshot_Acceptor::ACE_Oneshot_Acceptor")));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>

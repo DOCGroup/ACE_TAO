@@ -94,7 +94,7 @@ create_reactor (void)
 
   if (opt_wfmo_reactor)
     {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
       ACE_NEW (impl, ACE_WFMO_Reactor);
 #endif /* ACE_WIN32 */
     }
@@ -110,37 +110,37 @@ create_reactor (void)
 void
 print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 {
-  char *reactor_type = 0;
+  ASYS_TCHAR *reactor_type = 0;
   if (opt_wfmo_reactor)
-    reactor_type = "WFMO_Reactor";
+    reactor_type = ASYS_TEXT ("WFMO_Reactor");
   else if (opt_select_reactor)
-    reactor_type = "Select_Reactor";
+    reactor_type = ASYS_TEXT ("Select_Reactor");
   else
-    reactor_type = "Platform's default Reactor";
+    reactor_type = ASYS_TEXT ("Platform's default Reactor");
 
-  ACE_DEBUG ((LM_DEBUG, "\nNotify_Performance Test statistics:\n\n"));
-  ACE_DEBUG ((LM_DEBUG, "\tReactor Type: %s\n", reactor_type));
-  ACE_DEBUG ((LM_DEBUG, "\tWorker threads (calling notify()): %d\n", opt_nthreads));
-  ACE_DEBUG ((LM_DEBUG, "\tIteration per thread: %d\n", opt_nloops));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nNotify_Performance Test statistics:\n\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tReactor Type: %s\n"), reactor_type));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tWorker threads (calling notify()): %d\n"), opt_nthreads));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tIteration per thread: %d\n"), opt_nloops));
   if (opt_pass_notify_data)
-    ACE_DEBUG ((LM_DEBUG, "\tData was passed in the notify() call\n"));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tData was passed in the notify() call\n")));
   else
-    ACE_DEBUG ((LM_DEBUG, "\tNo data was passed in the notify() call\n"));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tNo data was passed in the notify() call\n")));
 
-  ACE_DEBUG ((LM_DEBUG, "\n\tTiming results notify() call:\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n\tTiming results notify() call:\n")));
   ACE_DEBUG ((LM_DEBUG,
-	      "\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n\n",
+	      ASYS_TEXT ("\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n\n"),
 	      et.real_time,
 	      et.user_time,
 	      et.system_time));
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_START_TEST ("Notify_Performance_Test");
+  ACE_START_TEST (ASYS_TEXT ("Notify_Performance_Test"));
 
-  ACE_Get_Opt getopt (argc, argv, "swdc:l:", 1);
+  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("swdc:l:"), 1);
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
@@ -151,10 +151,10 @@ main (int argc, char *argv[])
 	opt_wfmo_reactor = 1;
 	break;
       case 'c':
-	opt_nthreads = atoi (getopt.optarg);
+	opt_nthreads = ACE_OS::atoi (getopt.optarg);
 	break;
       case 'l':
-	opt_nloops = atoi (getopt.optarg);
+	opt_nloops = ACE_OS::atoi (getopt.optarg);
 	break;
       case 'd':
 	opt_pass_notify_data = 1;
@@ -182,7 +182,7 @@ main (int argc, char *argv[])
        ACE_THR_FUNC (client),
        (void *) &handler,
        THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n%a"), ASYS_TEXT ("thread create failed")));
 
   // Timer business
   ACE_Profile_Timer timer;
@@ -199,7 +199,7 @@ main (int argc, char *argv[])
   // Print results
   print_results (et);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) waiting for the worker threads...\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) waiting for the worker threads...\n")));
 
   // Wait for all worker to get done.
   ACE_Thread_Manager::instance ()->wait ();
@@ -224,11 +224,11 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, long>;
 
 #else
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Notify_Performance_Test");
+  ACE_START_TEST (ASYS_TEXT ("Notify_Performance_Test"));
 
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
 
   ACE_END_TEST;
   return 0;

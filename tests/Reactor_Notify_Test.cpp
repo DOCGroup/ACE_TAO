@@ -84,8 +84,8 @@ Supplier_Task::open (void *)
   // Create the pipe.
   if (this->pipe_.open () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "open failed"),
+                       ASYS_TEXT ("(%t) %p\n"),
+                       ASYS_TEXT ("open failed")),
                       -1);
   // Register the pipe's write handle with the <Reactor> for writing.
   // This should mean that it's always "active."
@@ -94,14 +94,14 @@ Supplier_Task::open (void *)
        this,
        ACE_Event_Handler::WRITE_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "register_handler failed"),
+                       ASYS_TEXT ("(%t) %p\n"),
+                       ASYS_TEXT ("register_handler failed")),
                       -1);
   // Make this an Active Object.
   else if (this->activate (THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "activate failed"),
+                       ASYS_TEXT ("(%t) %p\n"),
+                       ASYS_TEXT ("activate failed")),
                       -1);
   else
     return 0;
@@ -110,20 +110,20 @@ Supplier_Task::open (void *)
 int
 Supplier_Task::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) Supplier_Task::close\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) Supplier_Task::close\n")));
 
   if (ACE_Reactor::instance ()->remove_handler
       (this->pipe_.write_handle (),
        ACE_Event_Handler::WRITE_MASK) == -1)
     ACE_ERROR ((LM_ERROR,
-                "(%t) %p\n",
-                "remove_handler failed"));
+                ASYS_TEXT ("(%t) %p\n"),
+                ASYS_TEXT ("remove_handler failed")));
   return 0;
 }
 
 Supplier_Task::~Supplier_Task (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) ~Supplier_Task\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) ~Supplier_Task\n")));
   this->pipe_.close ();
 }
 
@@ -135,12 +135,12 @@ Supplier_Task::perform_notifications (int notifications)
   for (size_t i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) notifying reactor\n"));
+                  ASYS_TEXT ("(%t) notifying reactor\n")));
       // Notify the Reactor, which will call <handle_exception>.
       if (ACE_Reactor::instance ()->notify (this) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%t) %p\n",
-                           "notify"),
+                           ASYS_TEXT ("(%t) %p\n"),
+                           ASYS_TEXT ("notify")),
                           -1);
 
       // Wait for our <handle_exception> method to release the
@@ -148,8 +148,8 @@ Supplier_Task::perform_notifications (int notifications)
       else if (this->disable_notify_pipe_ == 0
                && this->waiter_.acquire () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%t) %p\n",
-                           "acquire"),
+                           ASYS_TEXT ("(%t) %p\n"),
+                           ASYS_TEXT ("acquire")),
                           -1);
     }
   return 0;
@@ -159,7 +159,7 @@ int
 Supplier_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) **** starting unlimited notifications test\n"));
+              ASYS_TEXT ("(%t) **** starting unlimited notifications test\n")));
 
   // Allow an unlimited number of iterations per
   // <ACE_Reactor::notify>.
@@ -167,7 +167,7 @@ Supplier_Task::svc (void)
     return -1;
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) **** starting limited notifications test\n"));
+              ASYS_TEXT ("(%t) **** starting limited notifications test\n")));
 
   // Only allow 1 iteration per <ACE_Reactor::notify>
 
@@ -175,7 +175,7 @@ Supplier_Task::svc (void)
     return -1;
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) **** exiting thread test\n"));
+              ASYS_TEXT ("(%t) **** exiting thread test\n")));
   return 0;
 }
 
@@ -184,7 +184,7 @@ Supplier_Task::handle_exception (ACE_HANDLE handle)
 {
   ACE_ASSERT (handle == ACE_INVALID_HANDLE);
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) handle_exception\n"));
+              ASYS_TEXT ("(%t) handle_exception\n")));
 
   this->waiter_.release ();
   return 0;
@@ -195,7 +195,7 @@ Supplier_Task::handle_output (ACE_HANDLE handle)
 {
   ACE_ASSERT (handle == this->pipe_.write_handle ());
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) handle_output\n"));
+              ASYS_TEXT ("(%t) handle_output\n")));
 
   // This function is called by the main thread, believe it or not :-)
   // That's because the pipe's write handle is always active.  So,
@@ -233,7 +233,7 @@ run_test (int disable_notify_pipe)
 
   if (task.open () == -1)
     ACE_ERROR ((LM_ERROR,
-                "(%t) open failed\n"));
+                ASYS_TEXT ("(%t) open failed\n")));
   else
     {
       int shutdown = 0;
@@ -249,8 +249,8 @@ run_test (int disable_notify_pipe)
             {
             case -1:
               ACE_ERROR ((LM_ERROR,
-                          "(%t) %p\n",
-                          "reactor"));
+                          ASYS_TEXT ("(%t) %p\n"),
+                          ASYS_TEXT ("reactor")));
               shutdown = 1;
               break;
               /* NOTREACHED */
@@ -272,20 +272,20 @@ run_test (int disable_notify_pipe)
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Reactor_Notify_Test");
+  ACE_START_TEST (ASYS_TEXT ("Reactor_Notify_Test"));
 
 #if defined (ACE_HAS_THREADS)
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) running tests with notify pipe enabled\n"));
+              ASYS_TEXT ("(%t) running tests with notify pipe enabled\n")));
   run_test (0);
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) running tests with notify pipe disabled\n"));
+              ASYS_TEXT ("(%t) running tests with notify pipe disabled\n")));
   run_test (1);
 #else
   ACE_ERROR ((LM_ERROR,
-              "threads not supported on this platform\n"));
+              ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

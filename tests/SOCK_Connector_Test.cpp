@@ -30,7 +30,7 @@
 // one will do.
 
 static void
-find_another_host (char other_host[])
+find_another_host (ASYS_TCHAR other_host[])
 {
   ACE_OS::strcpy (other_host, ACE_DEFAULT_SERVER_HOST); // If all else fails
 
@@ -44,7 +44,7 @@ find_another_host (char other_host[])
   h = ACE_OS::gethostbyname (un.nodename);
 
   // Use me if can't find another
-  ACE_OS::strcpy (other_host, h->h_name);
+  ACE_OS::strcpy (other_host, ASYS_WIDE_STRING (h->h_name));
 
   // @@ We really need to add wrappers for these hostent methods.
   sethostent (1);
@@ -73,7 +73,7 @@ find_another_host (char other_host[])
 static int
 fail_no_listener_nonblocking (void)
 {
-  char test_host[MAXHOSTNAMELEN];
+  ASYS_TCHAR test_host[MAXHOSTNAMELEN];
   int status;
   ACE_INET_Addr nobody_home;
   ACE_SOCK_Connector con;
@@ -81,7 +81,7 @@ fail_no_listener_nonblocking (void)
   ACE_Time_Value nonblock (0, 0);
 
   find_another_host (test_host);
-  ACE_DEBUG ((LM_DEBUG, "Testing to host %s\n", test_host));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Testing to host %s\n"), test_host));
   nobody_home.set ((u_short) 42000, test_host);
   status = con.connect (sock, nobody_home, &nonblock);
 
@@ -100,20 +100,20 @@ fail_no_listener_nonblocking (void)
       if (status != -1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Connect which should fail didn't\n"));
+                      ASYS_TEXT ("Connect which should fail didn't\n")));
           status = -1;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "%p\n", "Proper fail"));
+          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%p\n"), ASYS_TEXT ("Proper fail")));
           status = 0;
         }
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Test not executed fully; expected EWOULDBLOCK, %p\n",
-                  "not"));
+                  ASYS_TEXT ("Test not executed fully; expected EWOULDBLOCK, %p\n"),
+                  ASYS_TEXT ("not")));
       status = -1;
     }
 
@@ -124,9 +124,9 @@ fail_no_listener_nonblocking (void)
 }
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("SOCK_Connector_Test");
+  ACE_START_TEST (ASYS_TEXT ("SOCK_Connector_Test"));
 
   int status = 0;
 
