@@ -208,7 +208,7 @@ ACE_INLINE [uses type]_ptr
 ##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
 
 // Multiplex [receptacle name] connection management operations
-ACE_INLINE ::Components::Cookie_ptr
+ACE_INLINE ::Components::Cookie *
 [ciao module name]::[component name]_Servant::connect_[receptacle name] ([uses type]_ptr c
                                                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -220,7 +220,7 @@ ACE_INLINE ::Components::Cookie_ptr
 }
 
 ACE_INLINE [uses type]_ptr
-[ciao module name]::[component name]_Servant::disconnect_[receptacle name] (::Components::Cookie_ptr ck
+[ciao module name]::[component name]_Servant::disconnect_[receptacle name] (::Components::Cookie *ck
                                                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::InvalidConnection))
@@ -322,7 +322,7 @@ ACE_INLINE [eventtype]Consumer_ptr
 
 // Operations for publishes interfaces.
 ##foreach [publish name] with [eventtype] in (list of all publishers) generate:
-ACE_INLINE ::Components::Cookie_ptr
+ACE_INLINE ::Components::Cookie *
 [ciao module name]::[component name]_Servant::subscribe_[publish name] ([eventtype]Consumer_ptr c
                                                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -333,7 +333,7 @@ ACE_INLINE ::Components::Cookie_ptr
 }
 
 ACE_INLINE [eventtype]Consumer_ptr
-[ciao module name]::[component name]_Servant::unsubscribe_[publish name] (::Components::Cookie_ptr ck
+[ciao module name]::[component name]_Servant::unsubscribe_[publish name] (::Components::Cookie *ck
                                                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::InvalidConnection))

@@ -184,7 +184,7 @@ namespace CIAO_GLUE
 
 ##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
     // Multiplex [receptacle name] connection management operations
-    ::Components::Cookie_ptr
+    ::Components::Cookie *
     connect_[receptacle name] ([uses type]_ptr c
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -192,7 +192,7 @@ namespace CIAO_GLUE
                        ::Components::InvalidConnection));
 
     [uses type]_ptr
-    disconnect_[receptacle name] (::Components::Cookie_ptr ck
+    disconnect_[receptacle name] (::Components::Cookie *ck
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::InvalidConnection));
@@ -221,14 +221,14 @@ namespace CIAO_GLUE
 
     // Operations for publishes interfaces.
 ##foreach [publish name] with [eventtype] in (list of all publishers) generate:
-      ::Components::Cookie_ptr
+      ::Components::Cookie *
       subscribe_[publish name] ([eventtype]Consumer_ptr c
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::ExceededConnectionLimit));
 
       [eventtype]Consumer_ptr
-      unsubscribe_[publish name] (::Components::Cookie_ptr ck
+      unsubscribe_[publish name] (::Components::Cookie *ck
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::InvalidConnection));
@@ -301,7 +301,7 @@ namespace CIAO_GLUE
       ACE_THROW_SPEC ((CORBA::SystemException));
 ##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
     // Multiplex [receptacle name] connection management operations
-    virtual ::Components::Cookie_ptr
+    virtual ::Components::Cookie *
     connect_[receptacle name] ([uses type]_ptr c
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -309,7 +309,7 @@ namespace CIAO_GLUE
                        ::Components::InvalidConnection));
 
     virtual [uses type]_ptr
-    disconnect_[receptacle name] (::Components::Cookie_ptr ck
+    disconnect_[receptacle name] (::Components::Cookie *ck
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::InvalidConnection));
@@ -381,14 +381,14 @@ namespace CIAO_GLUE
 
     // Operations for publishes interfaces.
 ##foreach [publish name] with [eventtype] in (list of all publishers) generate:
-    virtual ::Components::Cookie_ptr
+    virtual ::Components::Cookie *
     subscribe_[publish name] ([eventtype]Consumer_ptr c
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::ExceededConnectionLimit));
 
     virtual [eventtype]Consumer_ptr
-    unsubscribe_[publish name] (::Components::Cookie_ptr ck
+    unsubscribe_[publish name] (::Components::Cookie *ck
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::InvalidConnection));
@@ -417,7 +417,7 @@ namespace CIAO_GLUE
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations for Receptacles interface
-    virtual ::Components::Cookie_ptr
+    virtual ::Components::Cookie *
     connect (const char * name,
              CORBA::Object_ptr connection
              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -429,7 +429,7 @@ namespace CIAO_GLUE
 
     virtual CORBA::Object_ptr
     disconnect (const char * name,
-                Components::Cookie_ptr ck
+                Components::Cookie *ck
                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,
@@ -460,7 +460,7 @@ namespace CIAO_GLUE
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
-    virtual ::Components::Cookie_ptr
+    virtual ::Components::Cookie *
     subscribe (const char * publisher_name,
                Components::EventConsumerBase_ptr subscriber
                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -471,7 +471,7 @@ namespace CIAO_GLUE
 
     virtual ::Components::EventConsumerBase_ptr
     unsubscribe (const char * publisher_name,
-                 Components::Cookie_ptr ck
+                 Components::Cookie *ck
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,

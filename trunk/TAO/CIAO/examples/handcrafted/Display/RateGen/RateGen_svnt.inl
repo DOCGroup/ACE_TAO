@@ -135,7 +135,7 @@ CIAO_GLUE_HUDisplay::RateGen_Servant::hertz (CORBA::Long hertz
 }
 
 // Operations for publishes interfaces.
-ACE_INLINE ::Components::Cookie_ptr
+ACE_INLINE ::Components::Cookie *
 CIAO_GLUE_HUDisplay::RateGen_Servant::subscribe_Pulse (HUDisplay::tickConsumer_ptr c
                                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -146,7 +146,7 @@ CIAO_GLUE_HUDisplay::RateGen_Servant::subscribe_Pulse (HUDisplay::tickConsumer_p
 }
 
 ACE_INLINE HUDisplay::tickConsumer_ptr
-CIAO_GLUE_HUDisplay::RateGen_Servant::unsubscribe_Pulse (::Components::Cookie_ptr ck
+CIAO_GLUE_HUDisplay::RateGen_Servant::unsubscribe_Pulse (::Components::Cookie *ck
                                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::InvalidConnection))

@@ -1,3 +1,19 @@
+Mon Apr 28 21:33:19 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/GPS/GPS_svnt.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.inl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.h:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.h:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.inl: Fixed
+	  more misuses of "valuetype_ptr" bug.  Thanks to Tao Lu
+	  <tao.lu@vanderbilt.edu> for reporting them.
+
 Mon Apr 28 20:50:09 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/templates/CIAO_Glue_Session_Template.cpp:
