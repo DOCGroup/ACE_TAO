@@ -50,12 +50,6 @@
 	<BR>[STATUS] Darrell is working on this.
       <P></LI>
 
-      <LI><P>Add an option to the IDL-compiler (e.g. -rp) meaning
-	"generate relative include paths".
-	<BR>[STATUS] Alex is working on this.
-	</P>
-      </LI>
-
     </OL>
 
     <HR>
@@ -90,28 +84,14 @@
 	the data block and the rest of it to contain the actual buffer
       <P></LI>
 
-      <LI><P>For extremely low latency applications we could remove
-	  some fields from the IIOP protocol, for instance:
-	  <UL>
-	  <LI>The first four bytes are always 'GIOP'
-	  </LI>
-	  <LI>In homogeneous environments sending the byte order is a
-	    waste
-	  </LI>
-	  <LI>Fields like the <CODE>Principal</CODE>, the services
-	    context list, the versions can also be removed
-	  </LI>
-	  </UL>
-      </P>
-      </LI>
-
       <LI><P>Parameterized support for location forwarding, some
 	  applications don't need this feature.
 	</P>
       </LI>
 
       <LI><P>Parameterized support nested upcalls, some applications
-	  don't need this feature.
+	  don't need this feature. It seems like the right way to
+	  strategize this by changing the Client_Connection_Handlers.
 	</P>
       </LI>
 
@@ -124,6 +104,25 @@
           fine-grained control over code generation. 
 	</P>
       </LI>
+
+      <LI><P>For extremely low latency applications we could remove
+	  some fields from the IIOP protocol, for instance:
+	  <UL>
+	  <LI>The first four bytes are always 'GIOP'
+	  </LI>
+	  <LI>In homogeneous environments sending the byte order is a
+	    waste
+	  </LI>
+	  <LI>Fields like the <CODE>Principal</CODE>, the services
+	    context list, the versions can also be removed
+	  </LI>
+	  </UL>
+	<BR>[STATUS] Most of this optimizations were implemented,
+	and can be enabled using the <CODE>-ORBiioplite</CODE> command
+	line option.
+      </P>
+      </LI>
+
     </OL>
 
     <H4>New features</H4>
@@ -576,6 +575,13 @@ class Foo {
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P>Add an option to the IDL-compiler (e.g. -rp) meaning
+	  "generate relative include paths".
+	  <BR>[STATUS] Alex is working on this.
+	  <BR>[DONE]
+	</P>
+      </LI>
+
       <LI><P>Add the &lt&lt= and &gt&gt= operators for
 	  <CODE>CORBA::TypeCode</CODE>
 	  <BR>[DONE] Jeff added the operators</P>
