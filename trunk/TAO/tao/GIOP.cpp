@@ -345,6 +345,7 @@ TAO_GIOP::write_request_header (const IOP::ServiceContextList& svc_ctx,
                                 CORBA::Octet response_flags,
                                 const TAO_opaque& key,
                                 const char *opname,
+                                CORBA::ULong opname_len,
                                 CORBA::Principal_ptr principal,
                                 TAO_OutputCDR &msg,
                                 TAO_ORB_Core *orb_core)
@@ -355,6 +356,7 @@ TAO_GIOP::write_request_header (const IOP::ServiceContextList& svc_ctx,
                                                 response_flags,
                                                 key,
                                                 opname,
+                                                opname_len,
                                                 principal,
                                                 msg);
   else
@@ -363,6 +365,7 @@ TAO_GIOP::write_request_header (const IOP::ServiceContextList& svc_ctx,
                                                response_flags,
                                                key,
                                                opname,
+                                               opname_len,
                                                principal,
                                                msg);
 }
@@ -1516,6 +1519,7 @@ TAO_GIOP::write_request_header_std (const IOP::ServiceContextList &svc_ctx,
                                     CORBA::Octet response_flags,
                                     const TAO_opaque &key,
                                     const char *opname,
+                                    CORBA::ULong opname_len,
                                     CORBA::Principal_ptr principal,
                                     TAO_OutputCDR &out_stream)
 {
@@ -1549,7 +1553,7 @@ TAO_GIOP::write_request_header_std (const IOP::ServiceContextList &svc_ctx,
     return 0;
 
   out_stream << key;
-  out_stream << opname;
+  out_stream.write_string (opname_len, opname);
   out_stream << principal;
   return 1;
 }
@@ -1560,6 +1564,7 @@ TAO_GIOP::write_request_header_lite (const IOP::ServiceContextList &,
                                      CORBA::Octet response_flags,
                                      const TAO_opaque &key,
                                      const char *opname,
+                                     CORBA::ULong opname_len,
                                      CORBA::Principal_ptr,
                                      TAO_OutputCDR &out_stream)
 {
@@ -1592,7 +1597,7 @@ TAO_GIOP::write_request_header_lite (const IOP::ServiceContextList &,
     return 0;
 
   out_stream << key;
-  out_stream << opname;
+  out_stream.write_string (opname_len, opname);
   return 1;
 }
 

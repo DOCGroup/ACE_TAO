@@ -127,6 +127,7 @@ CORBA::Boolean CORBA_Pollable::is_ready (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "is_ready",
+      8,
       istub->orb_core ()
     );
 
@@ -187,6 +188,7 @@ CORBA_PollableSet_ptr CORBA_Pollable::create_pollable_set (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_pollable_set",
+      19,
       istub->orb_core ()
     );
 
@@ -560,6 +562,7 @@ CORBA::DIIPollable_ptr CORBA_PollableSet::create_dii_pollable (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_dii_pollable",
+      19,
       istub->orb_core ()
     );
 
@@ -614,6 +617,7 @@ void CORBA_PollableSet::add_pollable (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "add_pollable",
+      12,
       istub->orb_core ()
     );
 
@@ -675,6 +679,7 @@ CORBA_Pollable_ptr CORBA_PollableSet::poll (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "poll",
+      4,
       istub->orb_core ()
     );
 
@@ -740,6 +745,7 @@ void CORBA_PollableSet::remove (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "remove",
+      6,
       istub->orb_core ()
     );
 
@@ -795,6 +801,7 @@ CORBA::UShort CORBA_PollableSet::number_left (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "number_left",
+      11,
       istub->orb_core ()
     );
 

@@ -422,6 +422,7 @@ public:
                                               CORBA::Octet response_flags,
                                               const TAO_opaque& key,
                                               const char* opname,
+                                              CORBA::ULong opname_len,
                                               CORBA::Principal_ptr principal,
                                               TAO_OutputCDR &msg,
                                               TAO_ORB_Core *orb_core);
@@ -537,6 +538,7 @@ private:
                                                   CORBA::Octet response_flags,
                                                   const TAO_opaque& key,
                                                   const char* opname,
+                                                  CORBA::ULong opname_len,
                                                   CORBA::Principal_ptr principal,
                                                   TAO_OutputCDR &msg);
   // Encode the standard header for the Request, assuming that the
@@ -547,6 +549,7 @@ private:
                                                    CORBA::Octet response_flags,
                                                    const TAO_opaque& key,
                                                    const char* opname,
+                                                   CORBA::ULong opname_len,
                                                    CORBA::Principal_ptr principal,
                                                    TAO_OutputCDR &msg);
   // Encode the light weight header for the Request, assuming that the

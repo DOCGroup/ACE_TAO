@@ -73,6 +73,7 @@ void ImplementationRepository::ServerObject::ping (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "ping",
+      4,
       istub->orb_core ()
     );
 
@@ -181,6 +182,7 @@ void ImplementationRepository::ServerObject::shutdown (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "shutdown",
+      8,
       istub->orb_core ()
     );
 
@@ -1166,6 +1168,7 @@ void ImplementationRepository::Administration::activate_server (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "activate_server",
+      15,
       istub->orb_core ()
     );
 
@@ -1287,6 +1290,7 @@ void ImplementationRepository::Administration::register_server (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "register_server",
+      15,
       istub->orb_core ()
     );
 
@@ -1403,6 +1407,7 @@ void ImplementationRepository::Administration::reregister_server (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "reregister_server",
+      17,
       istub->orb_core ()
     );
 
@@ -1524,6 +1529,7 @@ void ImplementationRepository::Administration::remove_server (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "remove_server",
+      13,
       istub->orb_core ()
     );
 
@@ -1644,6 +1650,7 @@ void ImplementationRepository::Administration::shutdown_server (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "shutdown_server",
+      15,
       istub->orb_core ()
     );
 
@@ -1766,6 +1773,7 @@ char * ImplementationRepository::Administration::server_is_running (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "server_is_running",
+      17,
       istub->orb_core ()
     );
 
@@ -1895,6 +1903,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "server_is_shutting_down",
+      23,
       istub->orb_core ()
     );
 
@@ -2017,6 +2026,7 @@ void ImplementationRepository::Administration::find (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "find",
+      4,
       istub->orb_core ()
     );
 
@@ -2138,6 +2148,7 @@ void ImplementationRepository::Administration::list (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "list",
+      4,
       istub->orb_core ()
     );
 
@@ -2585,6 +2596,7 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "next_n",
+      6,
       istub->orb_core ()
     );
 
@@ -2706,6 +2718,7 @@ void ImplementationRepository::ServerInformationIterator::destroy (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "destroy",
+      7,
       istub->orb_core ()
     );
 
