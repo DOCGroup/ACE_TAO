@@ -45,3 +45,9 @@ ACE_INET_Addr::get_ip_address (void) const
   return ntohl (ACE_UINT32 (this->inet_addr_.sin_addr.s_addr));
 }
 
+ACE_INLINE u_long 
+ACE_INET_Addr::hash (void) const
+{
+  return this->get_ip_address () + this->get_port_number ();
+}
+
