@@ -91,6 +91,8 @@
 #endif /*TAO_HAS_INTERFACE_REPOSITORY */
 
 #include "tao/BoundsC.h"
+#include "tao/TAOC.h"
+#include "tao/MessagingC.h"
 
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)

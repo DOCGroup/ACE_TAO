@@ -10,25 +10,25 @@ TAO_Policy_Manager_Impl::TAO_Policy_Manager_Impl (void)
 {
 }
 
-ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy *
+ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy_i *
 TAO_Policy_Manager_Impl::relative_roundtrip_timeout (void) const
 {
   return this->relative_roundtrip_timeout_;
 }
 
-ACE_INLINE POA_TAO::ClientPriorityPolicy *
+ACE_INLINE TAO_Client_Priority_Policy *
 TAO_Policy_Manager_Impl::client_priority (void) const
 {
   return this->client_priority_;
 }
 
-ACE_INLINE POA_Messaging::SyncScopePolicy *
+ACE_INLINE TAO_Sync_Scope_Policy *
 TAO_Policy_Manager_Impl::sync_scope (void) const
 {
   return this->sync_scope_;
 }
 
-ACE_INLINE POA_TAO::BufferingConstraintPolicy *
+ACE_INLINE TAO_Buffering_Constraint_Policy *
 TAO_Policy_Manager_Impl::buffering_constraint (void) const
 {
   return this->buffering_constraint_;
@@ -66,25 +66,25 @@ TAO_Policy_Manager::set_policy_overrides (
   this->impl_.set_policy_overrides (policies, set_add, ACE_TRY_ENV);
 }
 
-ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy *
+ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy_i *
 TAO_Policy_Manager::relative_roundtrip_timeout (void) const
 {
   return this->impl_.relative_roundtrip_timeout ();
 }
 
-ACE_INLINE POA_TAO::ClientPriorityPolicy *
+ACE_INLINE TAO_Client_Priority_Policy *
 TAO_Policy_Manager::client_priority (void) const
 {
   return this->impl_.client_priority ();
 }
 
-ACE_INLINE POA_Messaging::SyncScopePolicy *
+ACE_INLINE TAO_Sync_Scope_Policy *
 TAO_Policy_Manager::sync_scope (void) const
 {
   return this->impl_.sync_scope ();
 }
 
-ACE_INLINE POA_TAO::BufferingConstraintPolicy *
+ACE_INLINE TAO_Buffering_Constraint_Policy *
 TAO_Policy_Manager::buffering_constraint (void) const
 {
   return this->impl_.buffering_constraint ();
@@ -122,25 +122,25 @@ TAO_Policy_Current_Impl::set_policy_overrides (
   this->manager_impl_.set_policy_overrides (policies, set_add, ACE_TRY_ENV);
 }
 
-ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy *
+ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy_i *
 TAO_Policy_Current_Impl::relative_roundtrip_timeout (void) const
 {
   return this->manager_impl_.relative_roundtrip_timeout ();
 }
 
-ACE_INLINE POA_TAO::ClientPriorityPolicy *
+ACE_INLINE TAO_Client_Priority_Policy *
 TAO_Policy_Current_Impl::client_priority (void) const
 {
   return this->manager_impl_.client_priority ();
 }
 
-ACE_INLINE POA_Messaging::SyncScopePolicy *
+ACE_INLINE TAO_Sync_Scope_Policy *
 TAO_Policy_Current_Impl::sync_scope (void) const
 {
   return this->manager_impl_.sync_scope ();
 }
 
-ACE_INLINE POA_TAO::BufferingConstraintPolicy *
+ACE_INLINE TAO_Buffering_Constraint_Policy *
 TAO_Policy_Current_Impl::buffering_constraint (void) const
 {
   return this->manager_impl_.buffering_constraint ();
@@ -179,7 +179,7 @@ TAO_Policy_Current::set_policy_overrides (
   impl.set_policy_overrides (policies, set_add, ACE_TRY_ENV);
 }
 
-ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy *
+ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy_i *
 TAO_Policy_Current::relative_roundtrip_timeout (void) const
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
@@ -187,7 +187,7 @@ TAO_Policy_Current::relative_roundtrip_timeout (void) const
   return impl.relative_roundtrip_timeout ();
 }
 
-ACE_INLINE POA_TAO::ClientPriorityPolicy *
+ACE_INLINE TAO_Client_Priority_Policy *
 TAO_Policy_Current::client_priority (void) const
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
@@ -195,7 +195,7 @@ TAO_Policy_Current::client_priority (void) const
   return impl.client_priority ();
 }
 
-ACE_INLINE POA_Messaging::SyncScopePolicy *
+ACE_INLINE TAO_Sync_Scope_Policy *
 TAO_Policy_Current::sync_scope (void) const
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
@@ -203,7 +203,7 @@ TAO_Policy_Current::sync_scope (void) const
   return impl.sync_scope ();
 }
 
-ACE_INLINE POA_TAO::BufferingConstraintPolicy *
+ACE_INLINE TAO_Buffering_Constraint_Policy *
 TAO_Policy_Current::buffering_constraint (void) const
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();

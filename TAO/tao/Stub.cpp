@@ -23,6 +23,10 @@
 #include "tao/Sync_Strategies.h"
 #include "ace/Auto_Ptr.h"
 
+#include "tao/Buffering_Constraint_Policy.h"
+#include "tao/Messaging_Policy_i.h"
+#include "tao/Client_Priority_Policy.h"
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Stub.i"
 #endif /* ! __ACE_INLINE__ */
@@ -201,9 +205,9 @@ TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
 CORBA::ULong
 TAO_Stub::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, 
-                    guard, 
-                    this->refcount_lock_, 
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                    guard,
+                    this->refcount_lock_,
                     0);
 
   return this->refcount_++;
@@ -213,9 +217,9 @@ CORBA::ULong
 TAO_Stub::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, 
-                      mon, 
-                      this->refcount_lock_, 
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                      mon,
+                      this->refcount_lock_,
                       0);
 
     this->refcount_--;
@@ -370,7 +374,7 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
             return; // Shouldn't happen
 
           if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, 
+            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_MAYBE));
 
           // The only case left is status == TAO_INVOKE_OK, exit the
@@ -475,13 +479,13 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
-          call.prepare_header (0, 
+          call.prepare_header (0,
                                ACE_TRY_ENV);
           ACE_CHECK;
 
-          this->put_params (ACE_TRY_ENV, 
-                            info, 
-                            call, 
+          this->put_params (ACE_TRY_ENV,
+                            info,
+                            call,
                             args);
           ACE_CHECK;
 
@@ -497,7 +501,7 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
             return; // Shouldn't happen
 
           if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, 
+            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_MAYBE));
 
           break;
@@ -531,22 +535,22 @@ TAO_Stub::put_params (CORBA::Environment &ACE_TRY_ENV,
 
       if (pdp->mode == PARAM_IN)
         {
-          (void) cdr.encode (pdp->tc, 
-                             ptr, 
-                             0, 
+          (void) cdr.encode (pdp->tc,
+                             ptr,
+                             0,
                              ACE_TRY_ENV);
         }
       else if (pdp->mode == PARAM_INOUT)
         {
           if (pdp->value_size == 0)
-            (void) cdr.encode (pdp->tc, 
-                               ptr, 
-                               0, 
+            (void) cdr.encode (pdp->tc,
+                               ptr,
+                               0,
                                ACE_TRY_ENV);
           else
-            (void) cdr.encode (pdp->tc, 
-                               *(void**)ptr, 
-                               0, 
+            (void) cdr.encode (pdp->tc,
+                               *(void**)ptr,
+                               0,
                                ACE_TRY_ENV);
         }
       ACE_CHECK;
@@ -575,7 +579,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
   // be forwarded.  No standard way now to know.
   if (this->use_locate_request_ && this->first_locate_request_)
     {
-      TAO_GIOP_Locate_Request_Invocation call (this, 
+      TAO_GIOP_Locate_Request_Invocation call (this,
                                                this->orb_core_);
 
       // Simply let these exceptions propagate up
@@ -591,8 +595,8 @@ TAO_Stub::do_dynamic_call (const char *opname,
 
   if (is_roundtrip)
     {
-      TAO_GIOP_Twoway_Invocation call (this, 
-                                       opname, 
+      TAO_GIOP_Twoway_Invocation call (this,
+                                       opname,
                                        this->orb_core_);
 
       // Loop as needed for forwarding; see above.
@@ -602,18 +606,18 @@ TAO_Stub::do_dynamic_call (const char *opname,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
-          call.prepare_header (1, 
+          call.prepare_header (1,
                                ACE_TRY_ENV);
           ACE_CHECK;
 
-          this->put_params (call, 
-                            args, 
+          this->put_params (call,
+                            args,
                             ACE_TRY_ENV);
           ACE_CHECK;
 
           // Make the call ... blocking for the response.
           int status =
-            call.invoke (exceptions, 
+            call.invoke (exceptions,
                          ACE_TRY_ENV);
           ACE_CHECK;
 
@@ -624,7 +628,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
             return; // Shouldn't happen
 
           if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, 
+            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_MAYBE));
 
           // The only case left is status == TAO_INVOKE_OK, exit the
@@ -655,7 +659,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
     }
   else
     {
-      TAO_GIOP_Oneway_Invocation call (this, 
+      TAO_GIOP_Oneway_Invocation call (this,
                                        opname,
                                        this->orb_core_);
 
@@ -664,12 +668,12 @@ TAO_Stub::do_dynamic_call (const char *opname,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
-          call.prepare_header (0, 
+          call.prepare_header (0,
                                ACE_TRY_ENV);
           ACE_CHECK;
 
-          this->put_params (call, 
-                            args, 
+          this->put_params (call,
+                            args,
                             ACE_TRY_ENV);
           ACE_CHECK;
 
@@ -704,7 +708,7 @@ TAO_Stub::do_deferred_call (const CORBA::Request_ptr req,
   // be forwarded.  No standard way now to know.
   if (this->use_locate_request_ && this->first_locate_request_)
     {
-      TAO_GIOP_Locate_Request_Invocation call (this, 
+      TAO_GIOP_Locate_Request_Invocation call (this,
                                                this->orb_core_);
 
       // Simply let these exceptions propagate up
@@ -718,7 +722,7 @@ TAO_Stub::do_deferred_call (const CORBA::Request_ptr req,
       this->first_locate_request_ = 0;
     }
 
-  TAO_GIOP_DII_Deferred_Invocation call (this, 
+  TAO_GIOP_DII_Deferred_Invocation call (this,
                                          this->orb_core_,
                                          req);
 
@@ -729,12 +733,12 @@ TAO_Stub::do_deferred_call (const CORBA::Request_ptr req,
       call.start (ACE_TRY_ENV);
       ACE_CHECK;
 
-      call.prepare_header (1, 
+      call.prepare_header (1,
                            ACE_TRY_ENV);
       ACE_CHECK;
 
-      this->put_params (call, 
-                        req->arguments (), 
+      this->put_params (call,
+                        req->arguments (),
                         ACE_TRY_ENV);
       ACE_CHECK;
 
@@ -746,7 +750,7 @@ TAO_Stub::do_deferred_call (const CORBA::Request_ptr req,
         continue;
 
       if (status != TAO_INVOKE_OK)
-        ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, 
+        ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
                                    CORBA::COMPLETED_MAYBE));
 
       // The only case left is status == TAO_INVOKE_OK, exit the
@@ -786,7 +790,7 @@ TAO_Stub::get_policy (
   if (this->policies_ == 0)
     return CORBA::Policy::_nil ();
 
-  return this->policies_->get_policy (type, 
+  return this->policies_->get_policy (type,
                                       ACE_TRY_ENV);
 }
 
@@ -800,7 +804,7 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type,
   CORBA::Policy_var result;
   if (this->policies_ != 0)
     {
-      result = this->policies_->get_policy (type, 
+      result = this->policies_->get_policy (type,
                                             ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
@@ -808,7 +812,7 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type,
   if (CORBA::is_nil (result.in ()))
     {
       TAO_Policy_Current &policy_current = this->orb_core_->policy_current ();
-      result = policy_current.get_policy (type, 
+      result = policy_current.get_policy (type,
                                           ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
@@ -822,7 +826,7 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type,
         this->orb_core_->policy_manager ();
       if (policy_manager != 0)
         {
-          result = policy_manager->get_policy (type, 
+          result = policy_manager->get_policy (type,
                                                ACE_TRY_ENV);
           ACE_CHECK_RETURN (CORBA::Policy::_nil ());
         }
@@ -830,7 +834,7 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type,
 
   if (CORBA::is_nil (result.in ()))
     {
-      result = this->orb_core_->get_default_policy (type, 
+      result = this->orb_core_->get_default_policy (type,
                                                     ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
@@ -838,10 +842,10 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type,
   return result._retn ();
 }
 
-POA_Messaging::RelativeRoundtripTimeoutPolicy *
+TAO_RelativeRoundtripTimeoutPolicy_i *
 TAO_Stub::relative_roundtrip_timeout (void)
 {
-  POA_Messaging::RelativeRoundtripTimeoutPolicy *result = 0;
+  TAO_RelativeRoundtripTimeoutPolicy_i *result = 0;
 
   // No need to lock, the stub only changes its policies at
   // construction time...
@@ -873,10 +877,10 @@ TAO_Stub::relative_roundtrip_timeout (void)
   return result;
 }
 
-POA_TAO::ClientPriorityPolicy *
+TAO_Client_Priority_Policy *
 TAO_Stub::client_priority (void)
 {
-  POA_TAO::ClientPriorityPolicy *result = 0;
+  TAO_Client_Priority_Policy *result = 0;
 
   // No need to lock, the stub only changes its policies at
   // construction time...
@@ -908,10 +912,10 @@ TAO_Stub::client_priority (void)
   return result;
 }
 
-POA_Messaging::SyncScopePolicy *
+TAO_Sync_Scope_Policy *
 TAO_Stub::sync_scope (void)
 {
-  POA_Messaging::SyncScopePolicy *result = 0;
+  TAO_Sync_Scope_Policy *result = 0;
 
   // No need to lock, the stub only changes its policies at
   // construction time...
@@ -943,10 +947,10 @@ TAO_Stub::sync_scope (void)
   return result;
 }
 
-POA_TAO::BufferingConstraintPolicy *
+TAO_Buffering_Constraint_Policy *
 TAO_Stub::buffering_constraint (void)
 {
-  POA_TAO::BufferingConstraintPolicy *result = 0;
+  TAO_Buffering_Constraint_Policy *result = 0;
 
   // No need to lock, the stub only changes its policies at
   // construction time...
@@ -1032,7 +1036,7 @@ TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types,
   if (this->policies_ == 0)
     return 0;
 
-  return this->policies_->get_policy_overrides (types, 
+  return this->policies_->get_policy_overrides (types,
                                            ACE_TRY_ENV);
 }
 

@@ -36,8 +36,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_Client_Priority_Policy : public virtual PortableServer::RefCountServantBase,
-                                              public virtual POA_TAO::ClientPriorityPolicy
+class TAO_Export TAO_Client_Priority_Policy : public PortableServer::RefCountServantBase,
+                                              public POA_TAO::ClientPriorityPolicy
 {
   // = TITLE
   //
@@ -57,6 +57,9 @@ public:
       TAO_default_environment ()
     );
   // Helper method for the implementation of CORBA::ORB::create_policy
+
+  virtual TAO_Client_Priority_Policy *clone (void) const;
+  // Returns a copy of <this>.
 
   // = The TAO::Client_Priority_Policy methods
   virtual TAO::PrioritySpecification priority_specification (

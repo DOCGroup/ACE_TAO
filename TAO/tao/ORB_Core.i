@@ -129,25 +129,25 @@ TAO_ORB_Core::get_default_policy (
   return this->default_policies_->get_policy (policy, ACE_TRY_ENV);
 }
 
-ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy *
+ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy_i *
 TAO_ORB_Core::default_relative_roundtrip_timeout (void) const
 {
   return this->default_policies_->relative_roundtrip_timeout ();
 }
 
-ACE_INLINE POA_TAO::ClientPriorityPolicy *
+ACE_INLINE TAO_Client_Priority_Policy *
 TAO_ORB_Core::default_client_priority (void) const
 {
   return this->default_policies_->client_priority ();
 }
 
-ACE_INLINE POA_Messaging::SyncScopePolicy *
+ACE_INLINE TAO_Sync_Scope_Policy *
 TAO_ORB_Core::default_sync_scope (void) const
 {
   return this->default_policies_->sync_scope ();
 }
 
-ACE_INLINE POA_TAO::BufferingConstraintPolicy *
+ACE_INLINE TAO_Buffering_Constraint_Policy *
 TAO_ORB_Core::default_buffering_constraint (void) const
 {
   return this->default_policies_->buffering_constraint ();
