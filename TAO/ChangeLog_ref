@@ -1,3 +1,42 @@
+Sun Oct 26 16:15:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/BiDir_GIOP/BiDirPolicyC.cpp:
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/IFR_Client/IFR_BaseC.cpp:
+	* tao/IFR_Client/IFR_BaseC.h:
+	* tao/IFR_Client/IFR_BaseC.i:
+	* tao/IFR_Client/IFR_BasicC.cpp:
+	* tao/IFR_Client/IFR_BasicC.h:
+	* tao/IFR_Client/IFR_BasicC.i:
+	* tao/IFR_Client/IFR_ComponentsC.cpp:
+	* tao/IFR_Client/IFR_ComponentsC.h:
+	* tao/IFR_Client/IFR_ComponentsC.i:
+	* tao/IFR_Client/IFR_ExtendedC.cpp:
+	* tao/IFR_Client/IFR_ExtendedC.h:
+	* tao/IFR_Client/IFR_ExtendedC.i:
+	* tao/IORManipulation/IORC.cpp
+	* tao/IORManipulation/IORC.h:
+	* tao/IORManipulation/IORC.i:
+	* tao/IORTable/IORTableC.cpp:
+	* tao/RTCORBA/RTCORBAC.cpp:
+	* tao/RTCORBA/RTCORBAC.i:
+	* tao/RTPortableServer/RTPortableServerC.cpp:
+	* tao/RTScheduling/RTSchedulerC.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+
+	  Fixes for explicit template instantiation. 
+
+	* tao/RTCORBA/RTCORBA.pidl:
+	* tao/IFR_Client/Interface.pidl: 
+	* tao/RTPortableServer/RTPortableServer.pidl: 
+	  
+	  Added comments and command line options.
+
+Sat Oct 25 12:19:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_root/root.cpp: Commented out the SArg
+	  explicit template generation since they are not required now.
+
 Sun Oct 26 13:11:54 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
@@ -55,7 +94,7 @@ Sun Oct 26 10:29:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           instantiations for TAO::Objref_Traits<>, TAO::Narrow_Utils,
           and TAO::Arg_Traits<>.
 
-Sat Oct 25 12:06:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+Sat Oct 23 12:06:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/ImplRepoC.cpp:
 	* tao/PortableServer/Operation_Table.cpp:

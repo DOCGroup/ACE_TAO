@@ -26,20 +26,13 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:301
+// be/be_codegen.cpp:302
 
 
 #include "IORManip_Loader.h"
-#include "tao/Stub.h"
-#include "tao/Invocation_Adapter.h"
-#include "tao/Object_T.h"
+#include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
-#include "tao/Basic_Arguments.h"
-#include "tao/Object_Argument_T.h"
-#include "tao/Special_Basic_Arguments.h"
-#include "tao/Var_Size_Argument_T.h"
-#include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -50,47 +43,11 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:59
+// be/be_visitor_arg_traits.cpp:60
 
 // Arg traits specializations.
 namespace TAO
 {
-
-#if !defined (_TAO_IOP_TAO_IOR_PROPERTY__ARG_TRAITS_CS_)
-#define _TAO_IOP_TAO_IOR_PROPERTY__ARG_TRAITS_CS_
-
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_IORManip_Export Arg_Traits<TAO_IOP::TAO_IOR_Property>
-    : public
-        Object_Arg_Traits_T<
-            TAO_IOP::TAO_IOR_Property_ptr,
-            TAO_IOP::TAO_IOR_Property_var,
-            TAO_IOP::TAO_IOR_Property_out,
-            TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>
-          >
-  {
-  };
-
-#endif /* end #if !defined */
-
-  // TAO_IDL - Generated from
-  // be/be_visitor_arg_traits.cpp:262
-
-#if !defined (__TAO_SEQ_CORBA_OBJECT___ARG_TRAITS_CS_)
-#define __TAO_SEQ_CORBA_OBJECT___ARG_TRAITS_CS_
-
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_IORManip_Export Arg_Traits<TAO_IOP::TAO_IOR_Manipulation::IORList>
-    : public
-        Var_Size_Arg_Traits_T<
-            TAO_IOP::TAO_IOR_Manipulation::IORList,
-            TAO_IOP::TAO_IOR_Manipulation::IORList_var,
-            TAO_IOP::TAO_IOR_Manipulation::IORList_out
-          >
-  {
-  };
-
-#endif /* end #if !defined */
 };
 
 // TAO_IDL - Generated from
@@ -1011,7 +968,7 @@ TAO::Collocation_Proxy_Broker *
   ) = 0;
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/sequence_cs.cpp:66
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_
@@ -1668,6 +1625,7 @@ CORBA::Boolean operator>>= (
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>::to_object (
@@ -1691,7 +1649,6 @@ TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
-
 
 // Copying insertion.
 void
@@ -1737,6 +1694,7 @@ operator>>= (
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::to_object (
@@ -1803,10 +1761,80 @@ operator>>= (
       );
 }
 
+// TAO_IDL - Generated from
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const TAO_IOP::TAO_IOR_Manipulation::IORList &_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::insert_copy (
+      _tao_any,
+      TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor,
+      TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
+      _tao_elem
+    );
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    TAO_IOP::TAO_IOR_Manipulation::IORList *_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::insert (
+      _tao_any,
+      TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor,
+      TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
+      _tao_elem
+    );
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    TAO_IOP::TAO_IOR_Manipulation::IORList *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast (
+      const TAO_IOP::TAO_IOR_Manipulation::IORList *&,
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const TAO_IOP::TAO_IOR_Manipulation::IORList *&_tao_elem
+  )
+{
+  return
+    TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::extract (
+        _tao_any,
+        TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor,
+        TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
+        _tao_elem
+      );
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1703
+// be/be_visitor_root/root.cpp:1702
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -1835,50 +1863,25 @@ operator>>= (
         TAO_IOP::MultiProfileList
       >;
 
-#if !defined (_TAO_IOP_TAO_IOR_PROPERTY__ARG_TRAITS_TMPLINST_CS_)
-#define _TAO_IOP_TAO_IOR_PROPERTY__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<TAO_IOP::TAO_IOR_Property>;
-
   template class
-    TAO::Object_Arg_Traits_T<
-        TAO_IOP::TAO_IOR_Property_ptr,
-        TAO_IOP::TAO_IOR_Property_var,
-        TAO_IOP::TAO_IOR_Property_out
+    TAO::Objref_Traits<
+        TAO_IOP::TAO_IOR_Property
       >;
-
-#endif /* end #if !defined */
 
   template class
     TAO_Objref_Var_T<
-        TAO_IOP::TAO_IOR_Property,
-        TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>
+        TAO_IOP::TAO_IOR_Property
       >;
 
   template class
     TAO_Objref_Out_T<
-        TAO_IOP::TAO_IOR_Property,
-        TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>
+        TAO_IOP::TAO_IOR_Property
       >;
 
   template class
     TAO::Any_Impl_T<
         TAO_IOP::TAO_IOR_Property
       >;
-
-#if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST__ARG_TRAITS_TMPLINST_CS_)
-#define _TAO_IOP_TAO_IOR_MANIPULATION_IORLIST__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<TAO_IOP::TAO_IOR_Manipulation::IORList>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        TAO_IOP::TAO_IOR_Manipulation::IORList,
-        TAO_IOP::TAO_IOR_Manipulation::IORList_var,
-        TAO_IOP::TAO_IOR_Manipulation::IORList_out
-      >;
-
-#endif /* end #if !defined */
 
   template class
     TAO_Pseudo_Object_Manager<
@@ -1916,25 +1919,18 @@ operator>>= (
       >;
 
   template class
-    TAO::In_Var_Size_Argument_T<
-        TAO_IOP::TAO_IOR_Manipulation::IORList
-      >;
-
-  template class
-    TAO::In_Object_Argument_T<
-        TAO_IOP::TAO_IOR_Property_ptr
+    TAO::Objref_Traits<
+        TAO_IOP::TAO_IOR_Manipulation
       >;
 
   template class
     TAO_Objref_Var_T<
-        TAO_IOP::TAO_IOR_Manipulation,
-        TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>
+        TAO_IOP::TAO_IOR_Manipulation
       >;
 
   template class
     TAO_Objref_Out_T<
-        TAO_IOP::TAO_IOR_Manipulation,
-        TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>
+        TAO_IOP::TAO_IOR_Manipulation
       >;
 
   template class
@@ -1969,50 +1965,25 @@ operator>>= (
         TAO_IOP::MultiProfileList \
       >
 
-#if !defined (_TAO_IOP_TAO_IOR_PROPERTY__ARG_TRAITS_TMPLINST_CS_)
-#define _TAO_IOP_TAO_IOR_PROPERTY__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<TAO_IOP::TAO_IOR_Property>
-
 # pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        TAO_IOP::TAO_IOR_Property_ptr, \
-        TAO_IOP::TAO_IOR_Property_var, \
-        TAO_IOP::TAO_IOR_Property_out \
+    TAO::Objref_Traits< \
+        TAO_IOP::TAO_IOR_Property \
       >
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        TAO_IOP::TAO_IOR_Property, \
-        TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property> \
+        TAO_IOP::TAO_IOR_Property
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        TAO_IOP::TAO_IOR_Property, \
-        TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property> \
+        TAO_IOP::TAO_IOR_Property
       >
 
 # pragma instantiate \
     TAO::Any_Impl_T< \
         TAO_IOP::TAO_IOR_Property \
       >
-
-#if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST__ARG_TRAITS_TMPLINST_CS_)
-#define _TAO_IOP_TAO_IOR_MANIPULATION_IORLIST__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<TAO_IOP::TAO_IOR_Manipulation::IORList>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        TAO_IOP::TAO_IOR_Manipulation::IORList, \
-        TAO_IOP::TAO_IOR_Manipulation::IORList_var, \
-        TAO_IOP::TAO_IOR_Manipulation::IORList_out \
-      >
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO_MngSeq_Var_T< \
@@ -2045,25 +2016,18 @@ operator>>= (
       >
 
 # pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        TAO_IOP::TAO_IOR_Manipulation::IORList \
-      >
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        TAO_IOP::TAO_IOR_Property_ptr \
+    TAO::Objref_Traits< \
+        TAO_IOP::TAO_IOR_Manipulation \
       >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        TAO_IOP::TAO_IOR_Manipulation, \
-        TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation> \
+        TAO_IOP::TAO_IOR_Manipulation
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        TAO_IOP::TAO_IOR_Manipulation, \
-        TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation> \
+        TAO_IOP::TAO_IOR_Manipulation
       >
 
 # pragma instantiate \

@@ -26,14 +26,14 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:151
+// be/be_codegen.cpp:150
 
 #ifndef _TAO_IDL_ORIG_IORC_H_
 #define _TAO_IDL_ORIG_IORC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "ior_manip_export.h"
+#include "tao/ORB.h"
 
 #ifndef TAO_IORMANIP_SAFE_INCLUDE
 #error "You should not include IORC.h directly, use IORManip_Loader.h"
@@ -43,13 +43,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
+#include "ior_manip_export.h"
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/Object.h"
 #include "tao/Sequence_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
-#include "tao/VarOut_T.h"
-#include "tao/Object.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -82,6 +83,7 @@ namespace TAO
   class Collocation_Proxy_Broker;
 
   template<typename T> class Narrow_Utils;
+  template<typename T> class AbstractBase_Narrow_Utils;
 }
 
 // TAO_IDL - Generated from
@@ -331,7 +333,7 @@ namespace TAO_IOP
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:601
+  // be/be_interface.cpp:610
 
 #if !defined (_TAO_IOP_TAO_IOR_PROPERTY__VAR_OUT_CH_)
 #define _TAO_IOP_TAO_IOR_PROPERTY__VAR_OUT_CH_
@@ -354,7 +356,7 @@ namespace TAO_IOP
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:53
+  // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_TAO_IOP_TAO_IOR_PROPERTY_CH_)
 #define _TAO_IOP_TAO_IOR_PROPERTY_CH_
@@ -375,9 +377,9 @@ namespace TAO_IOP
       );
 
     static TAO_IOR_Property_ptr _nil (void)
-      {
-        return (TAO_IOR_Property_ptr)0;
-      }
+    {
+      return (TAO_IOR_Property_ptr)0;
+    }
 
     static void _tao_any_destructor (void *);
 
@@ -385,7 +387,7 @@ namespace TAO_IOP
     // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean set_property (
-        CORBA::Object_ptr ior
+        CORBA::Object_ptr & ior
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -397,7 +399,7 @@ namespace TAO_IOP
     // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean set_primary (
-        CORBA::Object_ptr ior1,
+        CORBA::Object_ptr & ior1,
         CORBA::Object_ptr ior2
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -443,7 +445,7 @@ namespace TAO_IOP
       )) = 0;
 
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:185
+    // be/be_visitor_interface/interface_ch.cpp:192
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -454,11 +456,15 @@ namespace TAO_IOP
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
   protected:
+    // Abstract or local interface only.
     TAO_IOR_Property (void);
+
     virtual ~TAO_IOR_Property (void);
 
   private:
+    // Private and unimplemented for concrete interfaces.
     TAO_IOR_Property (const TAO_IOR_Property &);
+
     void operator= (const TAO_IOR_Property &);
   };
 
@@ -470,7 +476,7 @@ namespace TAO_IOP
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TAO_IOR_Property;
 
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:601
+  // be/be_interface.cpp:610
 
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION__VAR_OUT_CH_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION__VAR_OUT_CH_
@@ -493,7 +499,7 @@ namespace TAO_IOP
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:53
+  // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_CH_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION_CH_
@@ -514,9 +520,9 @@ namespace TAO_IOP
       );
 
     static TAO_IOR_Manipulation_ptr _nil (void)
-      {
-        return (TAO_IOR_Manipulation_ptr)0;
-      }
+    {
+      return (TAO_IOR_Manipulation_ptr)0;
+    }
 
     static void _tao_any_destructor (void *);
 
@@ -715,7 +721,7 @@ namespace TAO_IOP
       )) = 0;
 
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:185
+    // be/be_visitor_interface/interface_ch.cpp:192
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -726,11 +732,15 @@ namespace TAO_IOP
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
   protected:
+    // Abstract or local interface only.
     TAO_IOR_Manipulation (void);
+
     virtual ~TAO_IOR_Manipulation (void);
 
   private:
+    // Private and unimplemented for concrete interfaces.
     TAO_IOR_Manipulation (const TAO_IOR_Manipulation &);
+
     void operator= (const TAO_IOR_Manipulation &);
   };
 
@@ -755,7 +765,7 @@ namespace TAO
 
 #if !defined (_TAO_IOP_TAO_IOR_PROPERTY__TRAITS_CH_)
 #define _TAO_IOP_TAO_IOR_PROPERTY__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IORManip_Export Objref_Traits<TAO_IOP::TAO_IOR_Property>
   {
@@ -776,7 +786,7 @@ namespace TAO
 
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION__TRAITS_CH_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IORManip_Export Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>
   {
@@ -899,7 +909,7 @@ TAO_IORManip_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_IOP::MultiPro
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:926
+// be/be_codegen.cpp:911
 
 #if defined (__ACE_INLINE__)
 #include "IORC.i"
@@ -912,5 +922,7 @@ TAO_IORManip_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_IOP::MultiPro
 #if defined (__BORLANDC__)
 #pragma option pop
 #endif /* __BORLANDC__ */
+
+#include /**/ "ace/post.h"
 
 #endif /* ifndef */

@@ -88,7 +88,7 @@ TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*BiDirPolicy__TAO_BidirectionalPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -118,7 +118,7 @@ BiDirPolicy::BidirectionalPolicy::_duplicate (BidirectionalPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -172,30 +172,35 @@ BiDirPolicy::BidirectionalPolicy::marshal (TAO_OutputCDR &)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
-    TAO_Objref_Var_T<
-        BiDirPolicy::BidirectionalPolicy,
-        TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>
+    TAO::Objref_Traits<
+        BiDirPolicy::BidirectionalPolicy
       >;
-  
+
+  template class
+    TAO_Objref_Var_T<
+        BiDirPolicy::BidirectionalPolicy
+      >;
+
   template class
     TAO_Objref_Out_T<
-        BiDirPolicy::BidirectionalPolicy,
-        TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>
+        BiDirPolicy::BidirectionalPolicy
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
-    TAO_Objref_Var_T< \
-        BiDirPolicy::BidirectionalPolicy, \
-        TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy> \
+    TAO::Objref_Traits< \
+        BiDirPolicy::BidirectionalPolicy \
       >
-  
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        BiDirPolicy::BidirectionalPolicy
+      >
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        BiDirPolicy::BidirectionalPolicy, \
-        TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy> \
+        BiDirPolicy::BidirectionalPolicy
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

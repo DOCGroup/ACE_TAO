@@ -26,14 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:301
+// be/be_codegen.cpp:302
 
 
 #include "testC.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Dual_Impl_T.h"
-#include "tao/Any_Basic_Impl_T.h"
 #include "tao/Typecode.h"
+#include "tao/Any_Impl_T.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -44,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:59
+// be/be_visitor_arg_traits.cpp:60
 
 // Arg traits specializations.
 namespace TAO
@@ -228,6 +226,7 @@ TAO::Any_Impl_T<test>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
+
 // Copying insertion.
 void
 operator<<= (
@@ -270,4 +269,52 @@ operator>>= (
       );
 }
 
+// TAO_IDL - Generated from
+// be/be_visitor_root/root.cpp:1702
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class
+    TAO::Objref_Traits<
+        test
+      >;
+
+  template class
+    TAO_Objref_Var_T<
+        test
+      >;
+  
+  template class
+    TAO_Objref_Out_T<
+        test
+      >;
+
+  template class
+    TAO::Any_Impl_T<
+        test
+      >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        test \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        test
+      >
+  
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        test
+      >
+
+# pragma instantiate \
+    TAO::Any_Impl_T< \
+        test \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 

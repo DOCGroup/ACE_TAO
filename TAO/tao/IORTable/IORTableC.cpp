@@ -504,92 +504,66 @@ IORTable::Locator::marshal (TAO_OutputCDR &)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (_IORTABLE_LOCATOR__ARG_TRAITS_TMPLINST_CS_)
-#define _IORTABLE_LOCATOR__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<IORTable::Locator>;
-
   template class
-    TAO::Object_Arg_Traits_T<
-        IORTable::Locator_ptr,
-        IORTable::Locator_var,
-        IORTable::Locator_out
-      >;
-
-#endif /* end #if !defined */
-
-  template class
-    TAO_Objref_Var_T<
-        IORTable::Locator,
-        TAO::Objref_Traits<IORTable::Locator>
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        IORTable::Locator,
-        TAO::Objref_Traits<IORTable::Locator>
-      >;
-
-  template class
-    TAO::In_Object_Argument_T<
-        IORTable::Locator_ptr
+    TAO::Objref_Traits<
+        IORTable::Locator
       >;
 
   template class
     TAO_Objref_Var_T<
-        IORTable::Table,
-        TAO::Objref_Traits<IORTable::Table>
+        IORTable::Locator
       >;
 
   template class
     TAO_Objref_Out_T<
-        IORTable::Table,
-        TAO::Objref_Traits<IORTable::Table>
+        IORTable::Locator
+      >;
+
+  template class
+    TAO::Objref_Traits<
+        IORTable::Table
+      >;
+
+  template class
+    TAO_Objref_Var_T<
+        IORTable::Table
+      >;
+
+  template class
+    TAO_Objref_Out_T<
+        IORTable::Table
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#if !defined (_IORTABLE_LOCATOR__ARG_TRAITS_TMPLINST_CS_)
-#define _IORTABLE_LOCATOR__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<IORTable::Locator>
-
 # pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        IORTable::Locator_ptr, \
-        IORTable::Locator_var, \
-        IORTable::Locator_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        IORTable::Locator, \
-        TAO::Objref_Traits<IORTable::Locator> \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        IORTable::Locator, \
-        TAO::Objref_Traits<IORTable::Locator> \
-      >
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        IORTable::Locator_ptr \
+    TAO::Objref_Traits< \
+        IORTable::Locator \
       >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        IORTable::Table, \
-        TAO::Objref_Traits<IORTable::Table> \
+        IORTable::Locator
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        IORTable::Table, \
-        TAO::Objref_Traits<IORTable::Table> \
+        IORTable::Locator
+      >
+
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        IORTable::Table \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        IORTable::Table
+      >
+
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        IORTable::Table
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

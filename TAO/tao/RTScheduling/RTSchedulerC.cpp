@@ -1440,152 +1440,35 @@ namespace RTScheduling
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (_CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::Policy>;
-
   template class
-    TAO::Object_Arg_Traits_T<
-        CORBA::Policy_ptr,
-        CORBA::Policy_var,
-        CORBA::Policy_out
+    TAO::Objref_Traits<
+        RTScheduling::ThreadAction
       >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::PolicyList>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        CORBA::PolicyList,
-        CORBA::PolicyList_var,
-        CORBA::PolicyList_out
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableInterceptor::ClientRequestInfo>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableInterceptor::ClientRequestInfo_ptr,
-        PortableInterceptor::ClientRequestInfo_var,
-        PortableInterceptor::ClientRequestInfo_out
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableInterceptor::ServerRequestInfo>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableInterceptor::ServerRequestInfo_ptr,
-        PortableInterceptor::ServerRequestInfo_var,
-        PortableInterceptor::ServerRequestInfo_out
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTSCHEDULING_THREADACTION__ARG_TRAITS_TMPLINST_CS_)
-#define _RTSCHEDULING_THREADACTION__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<RTScheduling::ThreadAction>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        RTScheduling::ThreadAction_ptr,
-        RTScheduling::ThreadAction_var,
-        RTScheduling::ThreadAction_out
-      >;
-
-#endif /* end #if !defined */
 
   template class
     TAO_Objref_Var_T<
-        RTScheduling::ThreadAction,
-        TAO::Objref_Traits<RTScheduling::ThreadAction>
+        RTScheduling::ThreadAction
       >;
 
   template class
     TAO_Objref_Out_T<
-        RTScheduling::ThreadAction,
-        TAO::Objref_Traits<RTScheduling::ThreadAction>
+        RTScheduling::ThreadAction
       >;
-
-#if !defined (_RTSCHEDULING_DISTRIBUTABLETHREAD__ARG_TRAITS_TMPLINST_CS_)
-#define _RTSCHEDULING_DISTRIBUTABLETHREAD__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<RTScheduling::DistributableThread>;
 
   template class
-    TAO::Object_Arg_Traits_T<
-        RTScheduling::DistributableThread_ptr,
-        RTScheduling::DistributableThread_var,
-        RTScheduling::DistributableThread_out
+    TAO::Objref_Traits<
+        RTScheduling::DistributableThread
       >;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTSCHEDULING_DISTRIBUTABLETHREAD_DT_STATE__ARG_TRAITS_TMPLINST_CS_)
-#define _RTSCHEDULING_DISTRIBUTABLETHREAD_DT_STATE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<RTScheduling::DistributableThread::DT_State>;
-
-  template class TAO::Basic_Arg_Traits_T<RTScheduling::DistributableThread::DT_State>;
-
-#endif /* end #if !defined */
 
   template class
     TAO_Objref_Var_T<
-        RTScheduling::DistributableThread,
-        TAO::Objref_Traits<RTScheduling::DistributableThread>
+        RTScheduling::DistributableThread
       >;
 
   template class
     TAO_Objref_Out_T<
-        RTScheduling::DistributableThread,
-        TAO::Objref_Traits<RTScheduling::DistributableThread>
+        RTScheduling::DistributableThread
       >;
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        RTScheduling::DistributableThread_ptr,
-        RTScheduling::DistributableThread_var
-      >;
-
-  template class
-    TAO::In_Object_Argument_T<
-        RTScheduling::ThreadAction_ptr
-      >;
-
-  template class
-    TAO::In_Object_Argument_T<
-        CORBA::Policy_ptr
-      >;
-
-#if !defined (_RTSCHEDULING_CURRENT_IDTYPE__ARG_TRAITS_TMPLINST_CS_)
-#define _RTSCHEDULING_CURRENT_IDTYPE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<RTScheduling::Current::IdType>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        RTScheduling::Current::IdType,
-        RTScheduling::Current::IdType_var,
-        RTScheduling::Current::IdType_out
-      >;
-
-#endif /* end #if !defined */
 
   template class
     TAO_FixedSeq_Var_T<
@@ -1607,25 +1490,6 @@ namespace RTScheduling
       >;
 
   template class
-    TAO::In_Var_Size_Argument_T<
-        RTScheduling::Current::IdType
-      >;
-
-#if !defined (_RTSCHEDULING_CURRENT_NAMELIST__ARG_TRAITS_TMPLINST_CS_)
-#define _RTSCHEDULING_CURRENT_NAMELIST__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<RTScheduling::Current::NameList>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        RTScheduling::Current::NameList,
-        RTScheduling::Current::NameList_var,
-        RTScheduling::Current::NameList_out
-      >;
-
-#endif /* end #if !defined */
-
-  template class
     TAO_MngSeq_Var_T<
         RTScheduling::Current::NameList,
         TAO_SeqElem_String_Manager
@@ -1645,225 +1509,81 @@ namespace RTScheduling
       >;
 
   template class
-    TAO_Objref_Var_T<
-        RTScheduling::Current,
-        TAO::Objref_Traits<RTScheduling::Current>
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        RTScheduling::Current,
-        TAO::Objref_Traits<RTScheduling::Current>
-      >;
-
-#if !defined (_RTSCHEDULING_RESOURCEMANAGER__ARG_TRAITS_TMPLINST_CS_)
-#define _RTSCHEDULING_RESOURCEMANAGER__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<RTScheduling::ResourceManager>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        RTScheduling::ResourceManager_ptr,
-        RTScheduling::ResourceManager_var,
-        RTScheduling::ResourceManager_out
-      >;
-
-#endif /* end #if !defined */
-
-  template class
-    TAO_Objref_Var_T<
-        RTScheduling::ResourceManager,
-        TAO::Objref_Traits<RTScheduling::ResourceManager>
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        RTScheduling::ResourceManager,
-        TAO::Objref_Traits<RTScheduling::ResourceManager>
-      >;
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        RTScheduling::ResourceManager_ptr,
-        RTScheduling::ResourceManager_var
-      >;
-
-  template class
-    TAO::In_Object_Argument_T<
-        PortableInterceptor::ClientRequestInfo_ptr
-      >;
-
-  template class
-    TAO::In_Object_Argument_T<
-        PortableInterceptor::ServerRequestInfo_ptr
-      >;
-
-  template class
-    TAO::Out_Var_Size_Argument_T<
-        RTScheduling::Current::IdType,
-        RTScheduling::Current::IdType_out
-      >;
-
-  template class
-    TAO::Out_Object_Argument_T<
-        CORBA::Policy_ptr,
-        CORBA::Policy_out
+    TAO::Objref_Traits<
+        RTScheduling::Current
       >;
 
   template class
     TAO_Objref_Var_T<
-        RTScheduling::Scheduler,
-        TAO::Objref_Traits<RTScheduling::Scheduler>
+        RTScheduling::Current
       >;
 
   template class
     TAO_Objref_Out_T<
-        RTScheduling::Scheduler,
-        TAO::Objref_Traits<RTScheduling::Scheduler>
+        RTScheduling::Current
+      >;
+
+  template class
+    TAO::Objref_Traits<
+        RTScheduling::ResourceManager
+      >;
+
+  template class
+    TAO_Objref_Var_T<
+        RTScheduling::ResourceManager
+      >;
+
+  template class
+    TAO_Objref_Out_T<
+        RTScheduling::ResourceManager
+      >;
+
+  template class
+    TAO::Objref_Traits<
+        RTScheduling::Scheduler
+      >;
+
+  template class
+    TAO_Objref_Var_T<
+        RTScheduling::Scheduler
+      >;
+
+  template class
+    TAO_Objref_Out_T<
+        RTScheduling::Scheduler
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#if !defined (_CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::Policy>
-
 # pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        CORBA::Policy_ptr, \
-        CORBA::Policy_var, \
-        CORBA::Policy_out \
+    TAO::Objref_Traits< \
+        RTScheduling::ThreadAction \
       >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::PolicyList>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        CORBA::PolicyList, \
-        CORBA::PolicyList_var, \
-        CORBA::PolicyList_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableInterceptor::ClientRequestInfo>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableInterceptor::ClientRequestInfo_ptr, \
-        PortableInterceptor::ClientRequestInfo_var, \
-        PortableInterceptor::ClientRequestInfo_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableInterceptor::ServerRequestInfo>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableInterceptor::ServerRequestInfo_ptr, \
-        PortableInterceptor::ServerRequestInfo_var, \
-        PortableInterceptor::ServerRequestInfo_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_RTSCHEDULING_THREADACTION__ARG_TRAITS_TMPLINST_CS_)
-#define _RTSCHEDULING_THREADACTION__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<RTScheduling::ThreadAction>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        RTScheduling::ThreadAction_ptr, \
-        RTScheduling::ThreadAction_var, \
-        RTScheduling::ThreadAction_out \
-      >
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        RTScheduling::ThreadAction, \
-        TAO::Objref_Traits<RTScheduling::ThreadAction> \
+        RTScheduling::ThreadAction
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        RTScheduling::ThreadAction, \
-        TAO::Objref_Traits<RTScheduling::ThreadAction> \
+        RTScheduling::ThreadAction
       >
-
-#if !defined (_RTSCHEDULING_DISTRIBUTABLETHREAD__ARG_TRAITS_TMPLINST_CS_)
-#define _RTSCHEDULING_DISTRIBUTABLETHREAD__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<RTScheduling::DistributableThread>
 
 # pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        RTScheduling::DistributableThread_ptr, \
-        RTScheduling::DistributableThread_var, \
-        RTScheduling::DistributableThread_out \
+    TAO::Objref_Traits< \
+        RTScheduling::DistributableThread \
       >
-
-#endif /* end #if !defined */
-
-#if !defined (_RTSCHEDULING_DISTRIBUTABLETHREAD_DT_STATE__ARG_TRAITS_TMPLINST_CS_)
-#define _RTSCHEDULING_DISTRIBUTABLETHREAD_DT_STATE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<RTScheduling::DistributableThread::DT_State>
-
-# pragma instantiate TAO::Basic_Arg_Traits_T<RTScheduling::DistributableThread::DT_State>
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        RTScheduling::DistributableThread, \
-        TAO::Objref_Traits<RTScheduling::DistributableThread> \
+        RTScheduling::DistributableThread
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        RTScheduling::DistributableThread, \
-        TAO::Objref_Traits<RTScheduling::DistributableThread> \
+        RTScheduling::DistributableThread
       >
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        RTScheduling::ThreadAction_ptr \
-      >
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        CORBA::Policy_ptr \
-      >
-
-#if !defined (_RTSCHEDULING_CURRENT_IDTYPE__ARG_TRAITS_TMPLINST_CS_)
-#define _RTSCHEDULING_CURRENT_IDTYPE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<RTScheduling::Current::IdType>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        RTScheduling::Current::IdType, \
-        RTScheduling::Current::IdType_var, \
-        RTScheduling::Current::IdType_out \
-      >
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO_FixedSeq_Var_T< \
@@ -1885,25 +1605,6 @@ namespace RTScheduling
       >
 
 # pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        RTScheduling::Current::IdType \
-      >
-
-#if !defined (_RTSCHEDULING_CURRENT_NAMELIST__ARG_TRAITS_TMPLINST_CS_)
-#define _RTSCHEDULING_CURRENT_NAMELIST__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<RTScheduling::Current::NameList>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        RTScheduling::Current::NameList, \
-        RTScheduling::Current::NameList_var, \
-        RTScheduling::Current::NameList_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
     TAO_MngSeq_Var_T< \
         RTScheduling::Current::NameList, \
         TAO_SeqElem_String_Manager \
@@ -1923,75 +1624,48 @@ namespace RTScheduling
       >
 
 # pragma instantiate \
-    TAO_Objref_Var_T< \
-        RTScheduling::Current, \
-        TAO::Objref_Traits<RTScheduling::Current> \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        RTScheduling::Current, \
-        TAO::Objref_Traits<RTScheduling::Current> \
-      >
-
-#if !defined (_RTSCHEDULING_RESOURCEMANAGER__ARG_TRAITS_TMPLINST_CS_)
-#define _RTSCHEDULING_RESOURCEMANAGER__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<RTScheduling::ResourceManager>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        RTScheduling::ResourceManager_ptr, \
-        RTScheduling::ResourceManager_var, \
-        RTScheduling::ResourceManager_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        RTScheduling::ResourceManager, \
-        TAO::Objref_Traits<RTScheduling::ResourceManager> \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        RTScheduling::ResourceManager, \
-        TAO::Objref_Traits<RTScheduling::ResourceManager> \
-      >
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        PortableInterceptor::ClientRequestInfo_ptr \
-      >
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        PortableInterceptor::ServerRequestInfo_ptr \
-      >
-
-# pragma instantiate \
-    TAO::Out_Var_Size_Argument_T< \
-        RTScheduling::Current::IdType, \
-        RTScheduling::Current::IdType_out \
-      >
-
-# pragma instantiate \
-    TAO::Out_Object_Argument_T< \
-        CORBA::Policy_ptr, \
-        CORBA::Policy_out \
+    TAO::Objref_Traits< \
+        RTScheduling::Current \
       >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        RTScheduling::Scheduler, \
-        TAO::Objref_Traits<RTScheduling::Scheduler> \
+        RTScheduling::Current
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        RTScheduling::Scheduler, \
-        TAO::Objref_Traits<RTScheduling::Scheduler> \
+        RTScheduling::Current
+      >
+
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        RTScheduling::ResourceManager \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTScheduling::ResourceManager
+      >
+
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTScheduling::ResourceManager
+      >
+
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        RTScheduling::Scheduler \
+      >
+
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTScheduling::Scheduler
+      >
+
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTScheduling::Scheduler
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

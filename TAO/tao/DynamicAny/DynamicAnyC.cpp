@@ -393,10 +393,10 @@ DynamicAny::DynAny::_narrow (
     {
       return DynAny::_nil ();
     }
-  
+
   DynAny_ptr proxy =
     dynamic_cast<DynAny_ptr> (_tao_objref);
-  
+
   return DynAny::_duplicate (proxy);
 }
 
@@ -509,10 +509,10 @@ DynamicAny::DynFixed::_narrow (
     {
       return DynFixed::_nil ();
     }
-  
+
   DynFixed_ptr proxy =
     dynamic_cast<DynFixed_ptr> (_tao_objref);
-  
+
   return DynFixed::_duplicate (proxy);
 }
 
@@ -629,10 +629,10 @@ DynamicAny::DynEnum::_narrow (
     {
       return DynEnum::_nil ();
     }
-  
+
   DynEnum_ptr proxy =
     dynamic_cast<DynEnum_ptr> (_tao_objref);
-  
+
   return DynEnum::_duplicate (proxy);
 }
 
@@ -847,10 +847,10 @@ DynamicAny::DynStruct::_narrow (
     {
       return DynStruct::_nil ();
     }
-  
+
   DynStruct_ptr proxy =
     dynamic_cast<DynStruct_ptr> (_tao_objref);
-  
+
   return DynStruct::_duplicate (proxy);
 }
 
@@ -967,10 +967,10 @@ DynamicAny::DynUnion::_narrow (
     {
       return DynUnion::_nil ();
     }
-  
+
   DynUnion_ptr proxy =
     dynamic_cast<DynUnion_ptr> (_tao_objref);
-  
+
   return DynUnion::_duplicate (proxy);
 }
 
@@ -1178,10 +1178,10 @@ DynamicAny::DynSequence::_narrow (
     {
       return DynSequence::_nil ();
     }
-  
+
   DynSequence_ptr proxy =
     dynamic_cast<DynSequence_ptr> (_tao_objref);
-  
+
   return DynSequence::_duplicate (proxy);
 }
 
@@ -1298,10 +1298,10 @@ DynamicAny::DynArray::_narrow (
     {
       return DynArray::_nil ();
     }
-  
+
   DynArray_ptr proxy =
     dynamic_cast<DynArray_ptr> (_tao_objref);
-  
+
   return DynArray::_duplicate (proxy);
 }
 
@@ -1418,10 +1418,10 @@ DynamicAny::DynValue::_narrow (
     {
       return DynValue::_nil ();
     }
-  
+
   DynValue_ptr proxy =
     dynamic_cast<DynValue_ptr> (_tao_objref);
-  
+
   return DynValue::_duplicate (proxy);
 }
 
@@ -1623,10 +1623,10 @@ DynamicAny::DynAnyFactory::_narrow (
     {
       return DynAnyFactory::_nil ();
     }
-  
+
   DynAnyFactory_ptr proxy =
     dynamic_cast<DynAnyFactory_ptr> (_tao_objref);
-  
+
   return DynAnyFactory::_duplicate (proxy);
 }
 
@@ -1909,74 +1909,49 @@ CORBA::Boolean operator>> (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (_CORBA_TCKIND__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_TCKIND__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::TCKind>;
-
-  template class TAO::Basic_Arg_Traits_T<CORBA::TCKind>;
-
-#endif /* end #if !defined */
-
-#if !defined (_DYNAMICANY_DYNANY__ARG_TRAITS_TMPLINST_CS_)
-#define _DYNAMICANY_DYNANY__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<DynamicAny::DynAny>;
-
   template class
-    TAO::Object_Arg_Traits_T<
-        DynamicAny::DynAny_ptr,
-        DynamicAny::DynAny_var,
-        DynamicAny::DynAny_out
-      >;
-
-#endif /* end #if !defined */
-
-  template class
-    TAO::In_Object_Argument_T<
-        DynamicAny::DynAny_ptr
-      >;
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        DynamicAny::DynAny_ptr,
-        DynamicAny::DynAny_var
+    TAO::Objref_Traits<
+        DynamicAny::DynAny
       >;
 
   template class
     TAO_Objref_Var_T<
-        DynamicAny::DynAny,
-        TAO::Objref_Traits<DynamicAny::DynAny>
+        DynamicAny::DynAny
       >;
 
   template class
     TAO_Objref_Out_T<
-        DynamicAny::DynAny,
-        TAO::Objref_Traits<DynamicAny::DynAny>
+        DynamicAny::DynAny
+      >;
+
+  template class
+    TAO::Objref_Traits<
+        DynamicAny::DynFixed
       >;
 
   template class
     TAO_Objref_Var_T<
-        DynamicAny::DynFixed,
-        TAO::Objref_Traits<DynamicAny::DynFixed>
+        DynamicAny::DynFixed
       >;
 
   template class
     TAO_Objref_Out_T<
-        DynamicAny::DynFixed,
-        TAO::Objref_Traits<DynamicAny::DynFixed>
+        DynamicAny::DynFixed
+      >;
+
+  template class
+    TAO::Objref_Traits<
+        DynamicAny::DynEnum
       >;
 
   template class
     TAO_Objref_Var_T<
-        DynamicAny::DynEnum,
-        TAO::Objref_Traits<DynamicAny::DynEnum>
+        DynamicAny::DynEnum
       >;
 
   template class
     TAO_Objref_Out_T<
-        DynamicAny::DynEnum,
-        TAO::Objref_Traits<DynamicAny::DynEnum>
+        DynamicAny::DynEnum
       >;
 
   template class
@@ -1994,20 +1969,6 @@ CORBA::Boolean operator>> (
         DynamicAny::NameValuePair,
         DynamicAny::NameValuePair_var
       >;
-
-#if !defined (_DYNAMICANY_NAMEVALUEPAIRSEQ__ARG_TRAITS_TMPLINST_CS_)
-#define _DYNAMICANY_NAMEVALUEPAIRSEQ__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<DynamicAny::NameValuePairSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        DynamicAny::NameValuePairSeq,
-        DynamicAny::NameValuePairSeq_var,
-        DynamicAny::NameValuePairSeq_out
-      >;
-
-#endif /* end #if !defined */
 
   template class
     TAO_VarSeq_Var_T<
@@ -2028,8 +1989,8 @@ CORBA::Boolean operator>> (
         DynamicAny::NameValuePair
       >;
 
-#if !defined (_DYNAMICANY_NAMEVALUEPAIRSEQ_CS_)
-#define _DYNAMICANY_NAMEVALUEPAIRSEQ_CS_
+#if !defined (_DYNAMICANY_NAMEVALUEPAIR__EXPLICIT_CS_)
+#define _DYNAMICANY_NAMEVALUEPAIR__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
@@ -2054,20 +2015,6 @@ CORBA::Boolean operator>> (
         DynamicAny::NameDynAnyPair_var
       >;
 
-#if !defined (_DYNAMICANY_NAMEDYNANYPAIRSEQ__ARG_TRAITS_TMPLINST_CS_)
-#define _DYNAMICANY_NAMEDYNANYPAIRSEQ__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<DynamicAny::NameDynAnyPairSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        DynamicAny::NameDynAnyPairSeq,
-        DynamicAny::NameDynAnyPairSeq_var,
-        DynamicAny::NameDynAnyPairSeq_out
-      >;
-
-#endif /* end #if !defined */
-
   template class
     TAO_VarSeq_Var_T<
         DynamicAny::NameDynAnyPairSeq,
@@ -2087,8 +2034,8 @@ CORBA::Boolean operator>> (
         DynamicAny::NameDynAnyPair
       >;
 
-#if !defined (_DYNAMICANY_NAMEDYNANYPAIRSEQ_CS_)
-#define _DYNAMICANY_NAMEDYNANYPAIRSEQ_CS_
+#if !defined (_DYNAMICANY_NAMEDYNANYPAIR__EXPLICIT_CS_)
+#define _DYNAMICANY_NAMEDYNANYPAIR__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
@@ -2098,69 +2045,34 @@ CORBA::Boolean operator>> (
 #endif /* end #if !defined */
 
   template class
-    TAO::Ret_Basic_Argument_T<
-        CORBA::TCKind
-      >;
-
-  template class
-    TAO::Ret_Var_Size_Argument_T<
-        DynamicAny::NameValuePairSeq,
-        DynamicAny::NameValuePairSeq_var
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        DynamicAny::NameValuePairSeq
-      >;
-
-  template class
-    TAO::Ret_Var_Size_Argument_T<
-        DynamicAny::NameDynAnyPairSeq,
-        DynamicAny::NameDynAnyPairSeq_var
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        DynamicAny::NameDynAnyPairSeq
+    TAO::Objref_Traits<
+        DynamicAny::DynStruct
       >;
 
   template class
     TAO_Objref_Var_T<
-        DynamicAny::DynStruct,
-        TAO::Objref_Traits<DynamicAny::DynStruct>
+        DynamicAny::DynStruct
       >;
 
   template class
     TAO_Objref_Out_T<
-        DynamicAny::DynStruct,
-        TAO::Objref_Traits<DynamicAny::DynStruct>
+        DynamicAny::DynStruct
+      >;
+
+  template class
+    TAO::Objref_Traits<
+        DynamicAny::DynUnion
       >;
 
   template class
     TAO_Objref_Var_T<
-        DynamicAny::DynUnion,
-        TAO::Objref_Traits<DynamicAny::DynUnion>
+        DynamicAny::DynUnion
       >;
 
   template class
     TAO_Objref_Out_T<
-        DynamicAny::DynUnion,
-        TAO::Objref_Traits<DynamicAny::DynUnion>
+        DynamicAny::DynUnion
       >;
-
-#if !defined (_DYNAMICANY_ANYSEQ__ARG_TRAITS_TMPLINST_CS_)
-#define _DYNAMICANY_ANYSEQ__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<DynamicAny::AnySeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        DynamicAny::AnySeq,
-        DynamicAny::AnySeq_var,
-        DynamicAny::AnySeq_out
-      >;
-
-#endif /* end #if !defined */
 
   template class
     TAO_VarSeq_Var_T<
@@ -2181,24 +2093,10 @@ CORBA::Boolean operator>> (
         CORBA::Any
       >;
 
-#if !defined (_DYNAMICANY_DYNANYSEQ__ARG_TRAITS_TMPLINST_CS_)
-#define _DYNAMICANY_DYNANYSEQ__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<DynamicAny::DynAnySeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        DynamicAny::DynAnySeq,
-        DynamicAny::DynAnySeq_var,
-        DynamicAny::DynAnySeq_out
-      >;
-
-#endif /* end #if !defined */
-
   template class
     TAO_Object_Manager<
         DynamicAny::DynAny,
-        DynamicAny::DynAny_va,
+        DynamicAny::DynAny_var
       >;
 
   template class
@@ -2229,8 +2127,8 @@ CORBA::Boolean operator>> (
           >
       >;
 
-#if !defined (_DYNAMICANY_DYNANYSEQ_CS_)
-#define _DYNAMICANY_DYNANYSEQ_CS_
+#if !defined (_DYNAMICANY_DYNANY__EXPLICIT_CS_)
+#define _DYNAMICANY_DYNANY__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Object_Sequence<
@@ -2241,139 +2139,110 @@ CORBA::Boolean operator>> (
 #endif /* end #if !defined */
 
   template class
-    TAO::Ret_Var_Size_Argument_T<
-        DynamicAny::AnySeq,
-        DynamicAny::AnySeq_var
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        DynamicAny::AnySeq
-      >;
-
-  template class
-    TAO::Ret_Var_Size_Argument_T<
-        DynamicAny::DynAnySeq,
-        DynamicAny::DynAnySeq_var
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        DynamicAny::DynAnySeq
+    TAO::Objref_Traits<
+        DynamicAny::DynSequence
       >;
 
   template class
     TAO_Objref_Var_T<
-        DynamicAny::DynSequence,
-        TAO::Objref_Traits<DynamicAny::DynSequence>
+        DynamicAny::DynSequence
       >;
 
   template class
     TAO_Objref_Out_T<
-        DynamicAny::DynSequence,
-        TAO::Objref_Traits<DynamicAny::DynSequence>
+        DynamicAny::DynSequence
+      >;
+
+  template class
+    TAO::Objref_Traits<
+        DynamicAny::DynArray
       >;
 
   template class
     TAO_Objref_Var_T<
-        DynamicAny::DynArray,
-        TAO::Objref_Traits<DynamicAny::DynArray>
+        DynamicAny::DynArray
       >;
 
   template class
     TAO_Objref_Out_T<
-        DynamicAny::DynArray,
-        TAO::Objref_Traits<DynamicAny::DynArray>
+        DynamicAny::DynArray
+      >;
+
+  template class
+    TAO::Objref_Traits<
+        DynamicAny::DynValue
       >;
 
   template class
     TAO_Objref_Var_T<
-        DynamicAny::DynValue,
-        TAO::Objref_Traits<DynamicAny::DynValue>
+        DynamicAny::DynValue
       >;
 
   template class
     TAO_Objref_Out_T<
-        DynamicAny::DynValue,
-        TAO::Objref_Traits<DynamicAny::DynValue>
+        DynamicAny::DynValue
+      >;
+
+  template class
+    TAO::Objref_Traits<
+        DynamicAny::DynAnyFactory
       >;
 
   template class
     TAO_Objref_Var_T<
-        DynamicAny::DynAnyFactory,
-        TAO::Objref_Traits<DynamicAny::DynAnyFactory>
+        DynamicAny::DynAnyFactory
       >;
 
   template class
     TAO_Objref_Out_T<
-        DynamicAny::DynAnyFactory,
-        TAO::Objref_Traits<DynamicAny::DynAnyFactory>
+        DynamicAny::DynAnyFactory
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#if !defined (_CORBA_TCKIND__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_TCKIND__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::TCKind>
-
-# pragma instantiate TAO::Basic_Arg_Traits_T<CORBA::TCKind>
-
-#endif /* end #if !defined */
-
-#if !defined (_DYNAMICANY_DYNANY__ARG_TRAITS_TMPLINST_CS_)
-#define _DYNAMICANY_DYNANY__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<DynamicAny::DynAny>
-
 # pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        DynamicAny::DynAny_ptr, \
-        DynamicAny::DynAny_var, \
-        DynamicAny::DynAny_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        DynamicAny::DynAny_ptr \
+    TAO::Objref_Traits< \
+        DynamicAny::DynAny \
       >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        DynamicAny::DynAny, \
-        TAO::Objref_Traits<DynamicAny::DynAny> \
+        DynamicAny::DynAny
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        DynamicAny::DynAny, \
-        TAO::Objref_Traits<DynamicAny::DynAny> \
+        DynamicAny::DynAny
+      >
+
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        DynamicAny::DynFixed \
       >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        DynamicAny::DynFixed, \
-        TAO::Objref_Traits<DynamicAny::DynFixed> \
+        DynamicAny::DynFixed
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        DynamicAny::DynFixed, \
-        TAO::Objref_Traits<DynamicAny::DynFixed> \
+        DynamicAny::DynFixed
+      >
+
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        DynamicAny::DynEnum \
       >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        DynamicAny::DynEnum, \
-        TAO::Objref_Traits<DynamicAny::DynEnum> \
+        DynamicAny::DynEnum
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        DynamicAny::DynEnum, \
-        TAO::Objref_Traits<DynamicAny::DynEnum> \
+        DynamicAny::DynEnum
       >
 
 # pragma instantiate \
@@ -2391,20 +2260,6 @@ CORBA::Boolean operator>> (
         DynamicAny::NameValuePair, \
         DynamicAny::NameValuePair_var \
       >
-
-#if !defined (_DYNAMICANY_NAMEVALUEPAIRSEQ__ARG_TRAITS_TMPLINST_CS_)
-#define _DYNAMICANY_NAMEVALUEPAIRSEQ__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<DynamicAny::NameValuePairSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        DynamicAny::NameValuePairSeq, \
-        DynamicAny::NameValuePairSeq_var, \
-        DynamicAny::NameValuePairSeq_out \
-      >
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO_VarSeq_Var_T< \
@@ -2425,8 +2280,8 @@ CORBA::Boolean operator>> (
         DynamicAny::NameValuePair \
       >
 
-#if !defined (_DYNAMICANY_NAMEVALUEPAIRSEQ_CS_)
-#define _DYNAMICANY_NAMEVALUEPAIRSEQ_CS_
+#if !defined (_DYNAMICANY_NAMEVALUEPAIR__EXPLICIT_CS_)
+#define _DYNAMICANY_NAMEVALUEPAIR__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \
@@ -2451,20 +2306,6 @@ CORBA::Boolean operator>> (
         DynamicAny::NameDynAnyPair_var \
       >
 
-#if !defined (_DYNAMICANY_NAMEDYNANYPAIRSEQ__ARG_TRAITS_TMPLINST_CS_)
-#define _DYNAMICANY_NAMEDYNANYPAIRSEQ__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<DynamicAny::NameDynAnyPairSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        DynamicAny::NameDynAnyPairSeq, \
-        DynamicAny::NameDynAnyPairSeq_var, \
-        DynamicAny::NameDynAnyPairSeq_out \
-      >
-
-#endif /* end #if !defined */
-
 # pragma instantiate \
     TAO_VarSeq_Var_T< \
         DynamicAny::NameDynAnyPairSeq, \
@@ -2484,8 +2325,8 @@ CORBA::Boolean operator>> (
         DynamicAny::NameDynAnyPair \
       >
 
-#if !defined (_DYNAMICANY_NAMEDYNANYPAIRSEQ_CS_)
-#define _DYNAMICANY_NAMEDYNANYPAIRSEQ_CS_
+#if !defined (_DYNAMICANY_NAMEDYNANYPAIR__EXPLICIT_CS_)
+#define _DYNAMICANY_NAMEDYNANYPAIR__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \
@@ -2495,52 +2336,34 @@ CORBA::Boolean operator>> (
 #endif /* end #if !defined */
 
 # pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        DynamicAny::NameValuePairSeq \
-      >
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        DynamicAny::NameDynAnyPairSeq \
+    TAO::Objref_Traits< \
+        DynamicAny::DynStruct \
       >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        DynamicAny::DynStruct, \
-        TAO::Objref_Traits<DynamicAny::DynStruct> \
+        DynamicAny::DynStruct
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        DynamicAny::DynStruct, \
-        TAO::Objref_Traits<DynamicAny::DynStruct> \
+        DynamicAny::DynStruct
+      >
+
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        DynamicAny::DynUnion \
       >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        DynamicAny::DynUnion, \
-        TAO::Objref_Traits<DynamicAny::DynUnion> \
+        DynamicAny::DynUnion
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        DynamicAny::DynUnion, \
-        TAO::Objref_Traits<DynamicAny::DynUnion> \
+        DynamicAny::DynUnion
       >
-
-#if !defined (_DYNAMICANY_ANYSEQ__ARG_TRAITS_TMPLINST_CS_)
-#define _DYNAMICANY_ANYSEQ__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<DynamicAny::AnySeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        DynamicAny::AnySeq, \
-        DynamicAny::AnySeq_var, \
-        DynamicAny::AnySeq_out \
-      >
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO_VarSeq_Var_T< \
@@ -2560,20 +2383,6 @@ CORBA::Boolean operator>> (
         DynamicAny::AnySeq_var, \
         CORBA::Any \
       >
-
-#if !defined (_DYNAMICANY_DYNANYSEQ__ARG_TRAITS_TMPLINST_CS_)
-#define _DYNAMICANY_DYNANYSEQ__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<DynamicAny::DynAnySeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        DynamicAny::DynAnySeq, \
-        DynamicAny::DynAnySeq_var, \
-        DynamicAny::DynAnySeq_out \
-      >
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO_MngSeq_Var_T< \
@@ -2603,8 +2412,8 @@ CORBA::Boolean operator>> (
           > \
       >
 
-#if !defined (_DYNAMICANY_DYNANYSEQ_CS_)
-#define _DYNAMICANY_DYNANYSEQ_CS_
+#if !defined (_DYNAMICANY_DYNANY__EXPLICIT_CS_)
+#define _DYNAMICANY_DYNANY__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Object_Sequence< \
@@ -2615,61 +2424,63 @@ CORBA::Boolean operator>> (
 #endif /* end #if !defined */
 
 # pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        DynamicAny::AnySeq \
-      >
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        DynamicAny::DynAnySeq \
+    TAO::Objref_Traits< \
+        DynamicAny::DynSequence \
       >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        DynamicAny::DynSequence, \
-        TAO::Objref_Traits<DynamicAny::DynSequence> \
+        DynamicAny::DynSequence
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        DynamicAny::DynSequence, \
-        TAO::Objref_Traits<DynamicAny::DynSequence> \
+        DynamicAny::DynSequence
+      >
+
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        DynamicAny::DynArray \
       >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        DynamicAny::DynArray, \
-        TAO::Objref_Traits<DynamicAny::DynArray> \
+        DynamicAny::DynArray
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        DynamicAny::DynArray, \
-        TAO::Objref_Traits<DynamicAny::DynArray> \
+        DynamicAny::DynArray
+      >
+
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        DynamicAny::DynValue \
       >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        DynamicAny::DynValue, \
-        TAO::Objref_Traits<DynamicAny::DynValue> \
+        DynamicAny::DynValue
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        DynamicAny::DynValue, \
-        TAO::Objref_Traits<DynamicAny::DynValue> \
+        DynamicAny::DynValue
+      >
+
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        DynamicAny::DynAnyFactory \
       >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        DynamicAny::DynAnyFactory, \
-        TAO::Objref_Traits<DynamicAny::DynAnyFactory> \
+        DynamicAny::DynAnyFactory
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        DynamicAny::DynAnyFactory, \
-        TAO::Objref_Traits<DynamicAny::DynAnyFactory> \
+        DynamicAny::DynAnyFactory
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
