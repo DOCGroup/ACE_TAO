@@ -4339,8 +4339,6 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                      void *arg)
 {
   // ACE_TRACE ("ACE_OS::rwlock_init");
-  type = type;
-  name = name;
 #   if defined (ACE_HAS_THREADS) && defined (ACE_LACKS_RWLOCK_T)
   // NT, POSIX, and VxWorks don't support this natively.
   ACE_UNUSED_ARG (name);
@@ -4433,30 +4431,23 @@ ACE_PSOS_Time_t::ACE_PSOS_Time_t (const timespec_t& t)
   struct tm* tm_struct = ACE_OS::gmtime (&(t.tv_sec));
 
   // Encode date values from tm struct into pSOS date bit array.
-
   date_ = (ACE_PSOS_Time_t::year_mask &
            ACE_static_cast (u_long,
                             tm_struct->tm_year + ACE_PSOS_Time_t::year_origin)) <<
     ACE_PSOS_Time_t::year_shift;
-
   date_ |= (ACE_PSOS_Time_t::month_mask &
             ACE_static_cast (u_long,
                              tm_struct->tm_mon + ACE_PSOS_Time_t::month_origin)) <<
     ACE_PSOS_Time_t::month_shift;
-
   date_ |= ACE_PSOS_Time_t::day_mask &
     ACE_static_cast (u_long, tm_struct->tm_mday);
-
   // Encode time values from tm struct into pSOS time bit array.
-
   time_ = (ACE_PSOS_Time_t::hour_mask  &
             ACE_static_cast (u_long, tm_struct->tm_hour)) <<
     ACE_PSOS_Time_t::hour_shift;
-
   time_ |= (ACE_PSOS_Time_t::minute_mask &
             ACE_static_cast (u_long, tm_struct->tm_min)) <<
     ACE_PSOS_Time_t::minute_shift;
-
   time_ |= ACE_PSOS_Time_t::second_mask &
     ACE_static_cast (u_int, tm_struct->tm_sec);
 
@@ -4474,43 +4465,38 @@ ACE_PSOS_Time_t::operator timespec_t (void)
 {
   struct tm tm_struct;
 
-  // decode date and time bit arrays and fill in fields of tm_struct
+  // Decode date and time bit arrays and fill in fields of tm_struct.
 
   tm_struct.tm_year =
     ACE_static_cast (int, (ACE_PSOS_Time_t::year_mask &
                            (date_ >> ACE_PSOS_Time_t::year_shift))) -
     ACE_PSOS_Time_t::year_origin;
-
   tm_struct.tm_mon =
     ACE_static_cast (int, (ACE_PSOS_Time_t::month_mask &
                            (date_ >> ACE_PSOS_Time_t::month_shift))) -
     ACE_PSOS_Time_t::month_origin;
-
   tm_struct.tm_mday =
     ACE_static_cast (int, (ACE_PSOS_Time_t::day_mask & date_));
-
   tm_struct.tm_hour =
     ACE_static_cast (int, (ACE_PSOS_Time_t::hour_mask &
                            (time_ >> ACE_PSOS_Time_t::hour_shift)));
-
   tm_struct.tm_min =
     ACE_static_cast (int, (ACE_PSOS_Time_t::minute_mask &
                            (time_ >> ACE_PSOS_Time_t::minute_shift)));
-
   tm_struct.tm_sec =
     ACE_static_cast (int, (ACE_PSOS_Time_t::second_mask & time_));
 
-  // indicate values we don't know as negative numbers
+  // Indicate values we don't know as negative numbers.
   tm_struct.tm_wday  = -1;
   tm_struct.tm_yday  = -1;
   tm_struct.tm_isdst = -1;
 
   timespec_t t;
 
-  // convert calendar time to time struct
+  // Convert calendar time to time struct.
   t.tv_sec = ACE_OS::mktime (&tm_struct);
 
-  // encode nanoseconds as system clock ticks
+  // Encode nanoseconds as system clock ticks.
   t.tv_nsec = ACE_static_cast (long,
                                ((ACE_static_cast (double, ticks_) *
                                  ACE_static_cast (double, 1000000000)) /
@@ -4530,9 +4516,7 @@ ACE_PSOS_Time_t::get_system_time (ACE_PSOS_Time_t& t)
   int result = 0;
   ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
   if (result == -1)
-  {
     return 1;
-  }
 
   ACE_Time_Value atv (tv);
   timespec ts = atv;
@@ -4551,8 +4535,7 @@ ACE_PSOS_Time_t::get_system_time (ACE_PSOS_Time_t& t)
 u_long
 ACE_PSOS_Time_t::set_system_time (const ACE_PSOS_Time_t& t)
 {
-  u_long ret_val = tm_set (t.date_, t.time_, t.ticks_);
-  return ret_val;
+  return tm_set (t.date_, t.time_, t.ticks_);
 }
 
 // Static member function to set current system time.
@@ -4568,20 +4551,23 @@ ACE_PSOS_Time_t::init_simulator_time (void)
   // uninitialized (chicken and egg).
   timeval t;
   int result = 0;
-  ACE_OSCALL (::gettimeofday (&t, 0), int, -1, result);
-  if (result == -1)
-  {
-    return 1;
-  }
-  else
-  {
-    ACE_Time_Value tv (t);
-    timespec ts = tv;
-    ACE_PSOS_Time_t pt (ts);
-    u_long ret_val = ACE_PSOS_Time_t::set_system_time (pt);
-    return ret_val;
+  ACE_OSCALL (::gettimeofday (&t, 0),
+              int,
+              -1,
+              result);
 
-  }
+  if (result == -1)
+    return 1;
+  else
+    {
+      ACE_Time_Value tv (t);
+      timespec ts = tv;
+      ACE_PSOS_Time_t pt (ts);
+      u_long ret_val =
+        ACE_PSOS_Time_t::set_system_time (pt);
+      return ret_val;
+
+    }
 }
 
 // Static member function to initialize system time, using UNIX calls.
@@ -4592,13 +4578,14 @@ ACE_PSOS_Time_t::init_simulator_time (void)
 # if defined (__DGUX) && defined (ACE_HAS_THREADS) && defined (_POSIX4A_DRAFT10_SOURCE)
 extern "C" int __d6_sigwait (sigset_t *set);
 
-extern "C" int __d10_sigwait( const sigset_t *set, int *sig )
+extern "C" int __d10_sigwait (const sigset_t *set, int *sig)
 {
-  sigset_t  unconst_set = *set;
-  int caught_sig;
+  sigset_t unconst_set = *set;
+  int caught_sig = __d6_sigwait (&unconst_set);
 
-  if ((caught_sig = __d6_sigwait(&unconst_set)) == -1)
+  if (caught == -1)
     return -1;
+
   *sig = caught_sig;
   return 0;
 }
@@ -4610,8 +4597,10 @@ void
 ace_sysconf_dump (void)
 {
   ACE_Time_Value time = ACE_OS::gettimeofday ();
+
   if (time == -1)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Cannot get time\n")));
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("Cannot get time\n")));
   else
     time.dump ();
 
@@ -4751,9 +4740,10 @@ ACE_CE_Bridge::write_msg (LPCTSTR str)
 int
 ACE_CE_Bridge::write_msg (CString *s)
 {
-  return                        // Don't ask!
-    this->text_output_->PostMessage (WM_COMMAND,
-                                     MAKEWORD (this->idc_, this->notification_),
-                                     (long)((void *) s));
+  // Don't ask!
+  return this->text_output_->PostMessage (WM_COMMAND,
+                                          MAKEWORD (this->idc_,
+                                                    this->notification_),
+                                          (long)((void *) s));
 }
 # endif /* ACE_HAS_WINCE */
