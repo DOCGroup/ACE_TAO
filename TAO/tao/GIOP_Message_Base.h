@@ -40,6 +40,7 @@ class TAO_Pluggable_Reply_Params;
 class TAO_Export TAO_GIOP_Message_Base : public TAO_Pluggable_Messaging
 {
 public:
+  friend class TAO_GIOP_Message_Handler;
 
   /// Constructor
   TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core);

@@ -1399,7 +1399,7 @@ CORBA_TypeCode::private_id (CORBA::Environment &ACE_TRY_ENV) const
           return this->private_state_->tc_id_;
 
         this->private_state_->tc_id_known_ = 1;
-        this->private_state_->tc_id_ = (char*) (buffer_
+        this->private_state_->tc_id_ = (ACE_const_cast(char *, buffer_)
                                                  + 4    // skip byte order
                                                         // flag and padding
                                                  + 4);  // skip (strlen + 1)

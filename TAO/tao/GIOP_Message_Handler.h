@@ -23,6 +23,7 @@
 
 class TAO_Transport;
 class TAO_ORB_Core;
+class TAO_GIOP_Message_Base;
 
 enum TAO_GIOP_Message_Status
 {
@@ -65,9 +66,9 @@ enum TAO_Message_Block_Content_Status
 class TAO_GIOP_Message_Handler
 {
 public:
-
   /// Ctor
-  TAO_GIOP_Message_Handler (TAO_ORB_Core *orb_core);
+  TAO_GIOP_Message_Handler (TAO_ORB_Core *orb_core,
+                            TAO_GIOP_Message_Base *base);
 
   /// Read the message from the transport in to the
   /// <current_buffer_>. This method delegates responsibility of
@@ -127,6 +128,9 @@ private:
   void align_left_info (void);
 
 private:
+
+  /// The pointer to the object that holds us
+  TAO_GIOP_Message_Base *mesg_base_;
 
   /// The state of the message in the buffer
   TAO_GIOP_Message_Status message_status_;

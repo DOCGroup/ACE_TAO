@@ -3,6 +3,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Pluggable.h"
 #include "tao/debug.h"
+#include "tao/GIOP_Message_Base.h"
 
 
 #if !defined (__ACE_INLINE__)
@@ -15,8 +16,10 @@ ACE_RCSID(tao, GIOP_Message_Handler, "$Id$")
 
 
 
-TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core)
-  : message_status_ (TAO_GIOP_WAITING_FOR_HEADER),
+TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core,
+                                                    TAO_GIOP_Message_Base *base)
+  : mesg_base_ (base),
+    message_status_ (TAO_GIOP_WAITING_FOR_HEADER),
     message_size_ (ACE_CDR::DEFAULT_BUFSIZE),
     current_buffer_ (ACE_CDR::DEFAULT_BUFSIZE),
     // @@ This doesn't seem to work. The problem comes when we extract
@@ -273,13 +276,23 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
   if (this->message_status_ == TAO_GIOP_WAITING_FOR_PAYLOAD)
     {
       size_t len = this->current_buffer_.length ();
-
+      char *buf =
+        this->current_buffer_.rd_ptr () - TAO_GIOP_MESSAGE_HEADER_LEN;
       if (len == this->message_state_.message_size)
         {
           // If the buffer length is equal to the size of the payload we
           // have exactly one message. Check whether we have received
           // only the first part of the fragment.
           this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
+
+
+          if (TAO_debug_level >= 4)
+            this->mesg_base_->dump_msg (
+                "Recv msg",
+                ACE_reinterpret_cast (u_char *,
+                                      buf),
+                this->message_state_.message_size);
+
           return this->message_state_.is_complete (this->current_buffer_);
         }
       else if (len > this->message_state_.message_size)
@@ -294,9 +307,18 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
           this->supp_buffer_.copy (this->current_buffer_.rd_ptr (),
                                    this->message_state_.message_size);
 
+
+          if (TAO_debug_level >= 4)
+            this->mesg_base_->dump_msg (
+                "Recv msg",
+                ACE_reinterpret_cast (u_char *,
+                                      buf),
+                this->message_state_.message_size);
+
           // We have one of the messages copied. Let us move the
           // rd_ptr in <current_buffer_> after that message
           this->current_buffer_.rd_ptr (this->message_state_.message_size);
+
 
           return this->message_state_.is_complete (this->supp_buffer_);
         }
