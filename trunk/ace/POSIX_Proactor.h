@@ -290,18 +290,14 @@ protected:
   virtual int start_aio (ACE_POSIX_Asynch_Result *result,
                          int op); 
   
-  ACE_POSIX_Asynch_Result *find_completed_aio (int& error_status,
-                                               int& return_status);
+  ACE_POSIX_Asynch_Result *find_completed_aio (int &error_status,
+                                               int &return_status);
   // Extract the results of aio.
 
   ACE_AIOCB_Notify_Pipe_Manager *aiocb_notify_pipe_manager_;
   // This class takes care of doing <accept> when we use
   // AIO_CONTROL_BLOCKS strategy.
   
-ll limit the array size to Maximum RT signals that
-  // can be queued in a process.  This is the upper limit how many aio
-  // operations can be pending at a time.
-
   aiocb **aiocb_list_;
   ACE_POSIX_Asynch_Result **result_list_;
   // Use a dynamically allocated array to keep track of all the aio's
