@@ -1,3 +1,13 @@
+Thu Nov  8 15:48:11 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_string.cpp:
+
+          Changed the format/indentation of the constructor call to
+          the base class AST_Decl, so as not to confuse the configuration
+          of gcc used by HP-UX 11.11. Thanks to Steve Osselton 
+          <steve@prismtechnologies.com> for reporting the bug and
+          suggesting the fix.
+
 Thu Nov  8 13:57:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Asynch_Reply_Dispatcher.cpp:
