@@ -1,3 +1,10 @@
+Tue Jun 23 22:18:42 1998  Douglas C. Schmidt  <schmidt@cumbia.cs.wustl.edu>
+
+	* examples/Mem_Map/file-reverse/file-reverse.cpp: Fixed a minor
+ 	  bug where the program would ungraciously core dump if the file
+ 	  given on the command-line doesn't exist.  Thanks to William
+ 	  S. Lear <rael@dejanews.com> for reporting this.
+
 Tue Jun 23 20:33:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Synch.h (ACE_Adaptive_Lock): Added ACE_Export.
