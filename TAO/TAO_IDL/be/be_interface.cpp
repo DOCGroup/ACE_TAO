@@ -1811,6 +1811,15 @@ be_interface::relative_skel_name (const char *skelname)
         }
       else
         {
+          // we had overwritten a ':' by a '\0' for string comparison. We
+          // revert back because we want the rest of the relative name to be
+          // used
+          if (def_next)
+            *def_next = ':';
+
+          if (use_next)
+            *use_next = ':';
+
           // no match. This is the end of the first argument. Get out
           // of the loop as no more comparisons are necessary
           break;
