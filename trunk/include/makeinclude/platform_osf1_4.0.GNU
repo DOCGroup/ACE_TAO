@@ -40,11 +40,9 @@ endif # ! 6.0
 #### CXX_VER to CXX_5 either on the make command line, or by
 #### or by setting the CXX_VER environment variable to CXX_5.
 # WARNING_FLAGS +=
-#  174: expr_has_no_effect
 #  193: zero used for undefined preprocessing identifier
 #  236: controlling expression is constant
 #  401: base_class_with_nonvirtual_dtor
-#  610: nonoverriding_function_decl
 #  835: unreferenced_function_param
 #  839: no_corresponding_delete (until this is fixed in libTAO)
 # 1016: expected type is incompatible with declared type of int (in bzero ())
@@ -52,7 +50,7 @@ endif # ! 6.0
 ifneq ($(CXX_VER),CXX_5)
   WARNING_FLAGS += -w0 -msg_display_number -msg_display_tag
   WARNING_FLAGS += \
-    -msg_disable 174,193,236,401,610,835,839$(CXX_1016)$(CXX_1136)
+    -msg_disable 193,236,401,835,839$(CXX_1016)$(CXX_1136)
 
   ifndef ACE_DU_VERSION
     # In case this file wasn't included by platform_osf1_cxx.GNU:
