@@ -1,7 +1,7 @@
 Sun Feb 22 20:12:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs/orbsvcs.dsp: Adapted chages to the directory
-	  rearrangement. 
+	  rearrangement.
 
 	* orbsvcs/orbsvcs/Runtime_Scheduler.h:
 	* orbsvcs/orbsvcs/Scheduler_Utilities.h:
@@ -35,6 +35,11 @@ Sat Feb 21 08:08:55 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/POA/On_Demand_Activation/Servant_Activator.cpp (etherealize),
           Servant_Locator.cpp (preinvoke,postinvoke):
           added some ACE_UNUSED_ARG's.
+
+        * TAO_IDL/Makefile,tao/Makefile: use CROSS-COMPILE flag instead of
+          CHORUS, LYNXOS, and VXWORKS.  This allows us to add new cross-
+          compile platforms without having to modify the TAO Makefiles.
+          The new platform need only set the CROSS-COMPILE flag.
 
 Sat Feb 21 00:31:20 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
 
