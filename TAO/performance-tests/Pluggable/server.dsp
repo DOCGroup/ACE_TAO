@@ -64,8 +64,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir ".\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -119,6 +119,22 @@ SOURCE=.\PP_Test_Server.h
 # Begin Source File
 
 SOURCE=.\PP_TestS.h
+# End Source File
+# End Group
+# Begin Group "Inline Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\PP_TestS.i
+# End Source File
+# End Group
+# Begin Group "IDL Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\PP_Test.idl
 # End Source File
 # End Group
 # End Target
