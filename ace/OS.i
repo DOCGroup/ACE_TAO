@@ -1049,13 +1049,11 @@ ACE_OS::abort (void)
 #endif /* !ACE_HAS_WINCE */
 }
 
-#if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
 ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
 {
   return ACE_SPRINTF_ADAPTER (::vsprintf (buffer, format, argptr));
 }
-#endif /* ACE_HAS_WINCE */
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
@@ -5669,16 +5667,11 @@ ACE_INLINE ACE_TCHAR *
 ACE_OS::fgets (ACE_TCHAR *buf, int size, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fgets");
-#if defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (size);
-  ACE_UNUSED_ARG (fp);
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+#if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::fgetws (buf, size, fp), wchar_t *, 0);
 #else /* ACE_WIN32 */
   ACE_OSCALL_RETURN (::fgets (buf, size, fp), char *, 0);
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_WIN32 && ACE_USES_WCHAR */
 }
 
 #if !defined (ACE_WIN32)
@@ -5706,7 +5699,6 @@ ACE_OS::freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream)
 ACE_INLINE int
 ACE_OS::fflush (FILE *fp)
 {
-#if !defined (ACE_HAS_WINCE)
   ACE_OS_TRACE ("ACE_OS::fflush");
 #if defined (VXWORKS)
   if (fp == 0)
@@ -5717,11 +5709,6 @@ ACE_OS::fflush (FILE *fp)
 #endif /* VXWORKS */
 
   ACE_OSCALL_RETURN (::fflush (fp), int, -1);
-#else
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL(::FlushFileBuffers (fp),
-                                         ace_result_),
-                        int, -1);
-#endif /* !ACE_HAS_WINCE */
 }
 
 ACE_INLINE size_t
@@ -6584,11 +6571,9 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
 
   ACE_Errno_Guard error (errno);
   *data = ::TlsGetValue (key);
-#    if !defined (ACE_HAS_WINCE)
   if (*data == 0 && (error = ::GetLastError ()) != NO_ERROR)
     return -1;
   else
-#    endif /* ACE_HAS_WINCE */
     return 0;
 #   endif /* ACE_HAS_STHREADS */
 #  else
@@ -6718,12 +6703,9 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 
   ACE_Errno_Guard error (errno);
   *data = ::TlsGetValue (key);
-#   if !defined (ACE_HAS_WINCE)
   if (*data == 0 && (error = ::GetLastError ()) != NO_ERROR)
-
     return -1;
   else
-#   endif /* ACE_HAS_WINCE */
     return 0;
 # elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
   ACE_hthread_t tid;

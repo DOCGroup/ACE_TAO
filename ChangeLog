@@ -432,6 +432,15 @@ Sat Feb 22 08:16:36 2003  Ossama Othman  <ossama@uci.edu>
           Fixed return type mismatch between declaration and definition in
           Basic_Types.i.
 
+Fri Feb 21 22:21:49 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.i: Removed the #if !defined (ACE_HAS_WINCE) around the
+          ACE_OS::vsprintf() method. It's available on CE. Thanks to
+          Emmanuel Thevenot Beaufort <emmanuel.thevenot-beaufort@jci.com>
+          for this fix.
+
+          Also enabled ACE_OS::fgets(), fflush(), thr_getspecific() similarly.
+
 Fri Feb 21 12:52:00 2003  Ossama Othman  <ossama@uci.edu>
 
         * ace/Global_Macros.h:
