@@ -1,3 +1,8 @@
+Fri Aug 24 23:07:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Configuration_Import_Export.cpp: Fixed a compile error with
+	  g++. 
+
 Fri Aug 24 21:55:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * ace/QoS/QoS_Session_Impl.cpp:
