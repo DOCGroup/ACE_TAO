@@ -146,6 +146,8 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -331,6 +333,9 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/SOCK_IO.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/INET_Addr.i \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
   $(ACE_ROOT)/ace/SOCK_Stream.i \
   $(ACE_ROOT)/ace/SOCK_Acceptor.i \
   $(ACE_ROOT)/ace/Time_Request_Reply.h \
@@ -480,9 +485,14 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/SOCK_IO.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/INET_Addr.i \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
   $(ACE_ROOT)/ace/SOCK_Stream.i \
   $(ACE_ROOT)/ace/SOCK_Connector.i \
   $(ACE_ROOT)/ace/Svc_Handler.h \
@@ -639,8 +649,6 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Mem_Map.h \
   $(ACE_ROOT)/ace/Mem_Map.i \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
@@ -752,15 +760,17 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -938,6 +948,9 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/SOCK_IO.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/INET_Addr.i \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
   $(ACE_ROOT)/ace/SOCK_Stream.i \
   $(ACE_ROOT)/ace/SOCK_Connector.i \
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
@@ -952,22 +965,21 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   Client_Logging_Handler.h \
   $(ACE_ROOT)/ace/svc_export.h \
   $(ACE_ROOT)/ace/Log_Record.h \
-  $(ACE_ROOT)/ace/Log_Record.i \
-  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h
+  $(ACE_ROOT)/ace/Log_Record.i
 
 .obj/Name_Handler.o .obj/Name_Handler.so .shobj/Name_Handler.o .shobj/Name_Handler.so: Name_Handler.cpp \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/Containers.i \
   $(ACE_ROOT)/ace/Containers_T.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Array_Base.h \
@@ -1052,15 +1064,17 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -1242,6 +1256,9 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/SOCK_IO.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/INET_Addr.i \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
   $(ACE_ROOT)/ace/SOCK_Stream.i \
   $(ACE_ROOT)/ace/SOCK_Acceptor.i \
   $(ACE_ROOT)/ace/Naming_Context.h \
@@ -1369,6 +1386,13 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/INET_Addr.i \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
+  $(ACE_ROOT)/ace/OS_NS_stdio.h \
+  $(ACE_ROOT)/ace/OS_NS_stdio.inl \
+  $(ACE_ROOT)/ace/OS_NS_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -1379,11 +1403,6 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
-  $(ACE_ROOT)/ace/OS_NS_stdio.h \
-  $(ACE_ROOT)/ace/OS_NS_stdio.inl \
-  $(ACE_ROOT)/ace/OS_NS_pwd.h \
-  $(ACE_ROOT)/ace/os_include/os_pwd.h \
-  $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
@@ -1402,6 +1421,8 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/SOCK_IO.i \
   $(ACE_ROOT)/ace/SOCK_Stream.i \
   $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -1635,20 +1656,23 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
   $(ACE_ROOT)/ace/RW_Mutex.h \
@@ -1666,13 +1690,13 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
@@ -1740,20 +1764,23 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
   $(ACE_ROOT)/ace/RW_Mutex.h \
@@ -1784,6 +1811,8 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/INET_Addr.i \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
   $(ACE_ROOT)/ace/SOCK_Acceptor.h \
   $(ACE_ROOT)/ace/SOCK_Stream.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -1839,7 +1868,6 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
   $(ACE_ROOT)/ace/Containers_T.h \
@@ -2064,15 +2092,17 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -2250,6 +2280,9 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
   $(ACE_ROOT)/ace/SOCK_IO.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/INET_Addr.i \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
   $(ACE_ROOT)/ace/SOCK_Stream.i \
   $(ACE_ROOT)/ace/SOCK_Acceptor.i \
   $(ACE_ROOT)/ace/Local_Tokens.h \

@@ -1,3 +1,10 @@
+Sun Jan  4 20:40:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* */Makefile*:
+
+	  Release is fast approaching. Updates to the Makefile
+	  dependencies. 
+
 Sun Jan  4 15:12:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* apps/JAWS3/jaws3/Asynch_IO.cpp:
