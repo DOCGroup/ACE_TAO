@@ -459,7 +459,7 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (const void *base_add
   // for backwards compatability
   if (base_addr_ == 0 && use_fixed_addr_ == ALWAYS_FIXED)
     use_fixed_addr_ = FIRSTCALL_FIXED;
-    
+
   // HP-UX 11, 64-bit bug workaround.
 #if defined (__hpux) && defined (__LP64__)
   long temp = ACE_DEFAULT_BASE_ADDRL;

@@ -1,3 +1,16 @@
+Tue Mar 05 15:46:15 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Memory_Pool.h:
+	* ace/Memory_Pool.i: Added a base_addr () method for all memroy
+	  pool classes.  For memory pools that don't have a base_addr and
+	  will never remap the pool to a different area, this method
+	  always return 0.
+
+	* ace/Malloc_T.cpp: Reset this->cb_ptr_ after acquiring new memory
+	  to memory_pool's base_addr (if base_addr != 0).  This makes sure
+	  the cb_ptr_ points to the right memory after a remap.  Thanks to
+	  Ariel Peltz <Arielp@bigbandnet.com> for pointing this out.
+
 Tue Mar  5 12:20:26 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/INET_Addr.cpp (get_host_name_i, set):
