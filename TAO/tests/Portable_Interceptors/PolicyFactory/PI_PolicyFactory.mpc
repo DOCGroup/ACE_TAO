@@ -8,8 +8,8 @@ project(*Server): taoexe, portableserver {
 
   Source_Files {
     testC.cpp
-    Policy
-    PolicyFactory
+    Policy.cpp
+    PolicyFactory.cpp
     Server_ORBInitializer.cpp
     IORInterceptor.cpp
     server.cpp
