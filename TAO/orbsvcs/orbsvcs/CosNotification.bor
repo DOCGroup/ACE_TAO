@@ -40,6 +40,7 @@ OBJFILES = \
 	$(OBJDIR)\Notify_Event_Processor.obj \
 	$(OBJDIR)\Notify_EventChannel_i.obj \
 	$(OBJDIR)\Notify_EventChannelFactory_i.obj \
+	$(OBJDIR)\Notify_Extensions.obj \
 	$(OBJDIR)\Notify_Factory.obj \
 	$(OBJDIR)\Notify_Filter_i.obj \
 	$(OBJDIR)\Notify_FilterAdmin_i.obj \
@@ -52,6 +53,7 @@ OBJFILES = \
 	$(OBJDIR)\Notify_SequenceProxyPushConsumer_i.obj \
 	$(OBJDIR)\Notify_SequenceProxyPushSupplier_i.obj \
 	$(OBJDIR)\Notify_Source_Filter_Eval_Command.obj	\
+	$(OBJDIR)\Notify_StructuredEvents.obj \
 	$(OBJDIR)\Notify_StructuredProxyPushConsumer_i.obj \
 	$(OBJDIR)\Notify_StructuredProxyPushSupplier_i.obj \
 	$(OBJDIR)\Notify_SupplierAdmin_i.obj \

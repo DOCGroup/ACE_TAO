@@ -1,3 +1,18 @@
+Mon Jan 21 00:13:42 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * orbsvcs/Notify_Service/NT_Notify_Service.bor:
+        * orbsvcs/Notify_Service/Notify_Service.bor:
+          Added in ETCL library now required for static linking.
+
+        * orbsvcs/orbsvcs/CosNotification.bor:
+          Added missing source files Notify_Extensions and
+          Notify_StructuredEvents.
+
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp:
+        * orbsvcs/orbsvcs/Security/SecurityManager.cpp:
+          Added .in()s in places to fix Borland C++ compiler error about
+          ambiguous conversion.
+
 Sun Jan 20 17:38:01 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_exception.cpp:

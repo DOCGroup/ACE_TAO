@@ -149,7 +149,7 @@ TAO_SecurityManager::remove_own_credentials (
 
   // @@ A linear search.  Yuck!
   for (CORBA::ULong i = 0; i < len; ++i)
-    if (this->own_credentials_[i] == creds)
+    if (this->own_credentials_[i].in () == creds)
       {
         if (i == len - 1)
           this->own_credentials_.length (len - 1);
@@ -198,7 +198,7 @@ TAO_SecurityManager::add_own_credentials (SecurityLevel2::Credentials_ptr creds
 
   // @@ A linear search.  Yuck!
   for (CORBA::ULong i = 0; i < len; ++i)
-    if (this->own_credentials_[i] == creds)
+    if (this->own_credentials_[i].in () == creds)
       ACE_THROW (CORBA::BAD_PARAM ());
     else if (empty_slot == 0
              && CORBA::is_nil (this->own_credentials_[i]))
