@@ -98,10 +98,9 @@ private:
   // Pointer to an <ACE_Task_Base> or NULL if there's no <ACE_Task_Base>;
 
   ACE_Thread_Descriptor *next_;
-  // @@ Please document
-
   ACE_Thread_Descriptor *prev_;
-  // @@ Please document
+  // We need these pointers to maintain the double-linked list in a
+  // thread managers.
 };
 
 // Forward declaration.
@@ -438,8 +437,10 @@ protected:
   // Set the cancellation flag for the thread described in <tda>.
 
   ACE_Double_Linked_List<ACE_Thread_Descriptor> thr_list_;
-  // Keeping a list of threads within the thread manager.
-  // @@ Please add more details on what this is used for.
+  // Keeping a list of thread descriptors within the thread manager.
+  // Double-linked list enables us to cache the entries in TSS
+  // and adding/removing thread descriptor entries without
+  // affecting other thread's descriptor entries.
 
 #if !defined (VXWORKS)
   ACE_Unbounded_Queue<ACE_Thread_Descriptor> terminated_thr_queue_;
