@@ -2,7 +2,8 @@ Fri Sep 22 12:20:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/tests/ImplRepo/run_test.pl:
 
-	  Added missing quotes around a couple of ACE_ROOTs.
+	  Added missing quotes around a couple of ACE_ROOTs,
+	  and $DIR_SEPARATORs in place of some '/'s.
 
 Thu Sep 21 19:27:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
