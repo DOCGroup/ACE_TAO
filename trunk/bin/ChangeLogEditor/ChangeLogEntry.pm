@@ -30,12 +30,22 @@ sub new {
 }
 
 
+sub escape_regex_special {
+  my($self) = shift;
+  my($name) = shift;
+
+  $name =~ s/([\+\-\\\$\[\]\(\)\.])/\\$1/g;
+  return $name;
+}
+
+
 sub sortFileList {
   my($self) = shift;
   return sort {
            if ($a =~ /\.h$/) {
              my($base) = $a;
              $base =~ s/\.h//;
+             $base = $self->escape_regex_special($base);
              if ($b =~ /^$base\./) {
                return -1;
              }
@@ -46,6 +56,7 @@ sub sortFileList {
            elsif ($a =~ /\.i(nl)?$/) {
              my($base) = $a;
              $base =~ s/\.i(nl)?$//;
+             $base = $self->escape_regex_special($base);
              if ($b =~ /^$base\.cpp/) {
                return -1;
              }
@@ -56,6 +67,7 @@ sub sortFileList {
            elsif ($a =~ /\.cpp?$/) {
              my($base) = $a;
              $base =~ s/\.cpp?$//;
+             $base = $self->escape_regex_special($base);
              if ($b =~ /^$base\./) {
                return 1;
              }
