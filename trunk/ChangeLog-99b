@@ -1,3 +1,8 @@
+Tue Jul 13 09:14:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Cached_Connect_Strategy_T.cpp (dtor): Added ACE_TYPENAME
+          to 'iter' declaration since its type depends on template parameters.
+
 Tue Jul 13 09:11:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_ghs.GNU:
