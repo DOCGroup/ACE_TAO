@@ -1,3 +1,10 @@
+Mon Nov 29 11:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/RequestProcessingStrategy*.{h,cpp}:
+          Renames reference_to_servant to system_id_to_servant, the reference
+          argument was not used anywhere.
+
 Mon Nov 29 10:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.h:

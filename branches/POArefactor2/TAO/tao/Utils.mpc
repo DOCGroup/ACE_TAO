@@ -9,7 +9,6 @@ project : taolib, core, portableserver {
 
   Header_Files {
     Utils
-//    Auto_Functor.h
   }
 
   Inline_Files {
@@ -18,9 +17,6 @@ project : taolib, core, portableserver {
 
   Template_Files {
     Utils
-//    RIR_Narrow.cpp
-//    Servant_Var.cpp
-//    Server_Main.cpp
   }
 
   Resource_Files {
