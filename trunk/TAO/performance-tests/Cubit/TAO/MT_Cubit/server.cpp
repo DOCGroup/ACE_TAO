@@ -58,7 +58,7 @@ Globals::parse_args (int argc,char **argv)
 
   while ((c = opts ()) != -1)
     {
-      ACE_DEBUG ((LM_DEBUG,"parse_args:%c ,",c));
+      //      ACE_DEBUG ((LM_DEBUG,"parse_args:%c ,",c));
       switch (c)
       {
       case 'U':
@@ -71,26 +71,26 @@ Globals::parse_args (int argc,char **argv)
         thread_per_rate = 1;
         break;
       case 's':
-        ACE_DEBUG ((LM_DEBUG,"Not using naming service\n"));
+        //        ACE_DEBUG ((LM_DEBUG,"Not using naming service\n"));
         use_name_service = 0;
         break;
       case 'f':
         //        ior_file = opts.optarg;
         ACE_NEW_RETURN (ior_file,char[BUFSIZ],-1);
         ACE_OS::strcpy (ior_file,opts.optarg);
-        ACE_DEBUG ((LM_DEBUG,"Using file %s",ior_file));
+        //        ACE_DEBUG ((LM_DEBUG,"Using file %s",ior_file));
         break;
       case 'h':
         ACE_OS::strcpy (hostname, opts.optarg);
-        ACE_DEBUG ((LM_DEBUG, "h\n"));
+        //        ACE_DEBUG ((LM_DEBUG, "h\n"));
         break;
       case 'p':
         base_port = ACE_OS::atoi (opts.optarg);
-        ACE_DEBUG ((LM_DEBUG, "p\n"));
+        //        ACE_DEBUG ((LM_DEBUG, "p\n"));
         break;
       case 't':
         num_of_objs = ACE_OS::atoi (opts.optarg);
-        ACE_DEBUG ((LM_DEBUG,"num_of_objs:%d\n",num_of_objs));
+        //        ACE_DEBUG ((LM_DEBUG,"num_of_objs:%d\n",num_of_objs));
         break;
       case '?':
       default:
@@ -214,7 +214,7 @@ Cubit_Task::initialize_orb (void)
 
       int argc = args.argc ();
       char **argv = args.argv ();
-
+      
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
@@ -280,12 +280,12 @@ Cubit_Task::initialize_orb (void)
       // Do the argument parsing
 
       if (this->task_id_ == 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,"parsing the arguments\n"));
+        {      
+          //          ACE_DEBUG ((LM_DEBUG,"parsing the arguments\n"));
           if (GLOBALS::instance ()->parse_args (argc,argv) < 0)
             return -1;
           GLOBALS::instance ()->barrier_ = new ACE_Barrier (GLOBALS::instance ()->num_of_objs+1);
-          ACE_DEBUG ((LM_DEBUG,"(%t)Arguments parsed successfully\n"));
+          //          ACE_DEBUG ((LM_DEBUG,"(%t)Arguments parsed successfully\n"));
           ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, GLOBALS::instance ()->ready_mtx_, 1));
           GLOBALS::instance ()->ready_ = 1;
           GLOBALS::instance ()->ready_cnd_.broadcast ();
@@ -517,9 +517,12 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
 {
 
   ACE_ARGV  tmp_args (this->argv_);
-  char tmp_buf[BUFSIZ];
+  char high_thread_args[BUFSIZ];
+  char low_thread_args[BUFSIZ];
 
-  ACE_OS::strcpy (tmp_buf,
+  ACE_OS::strcpy (high_thread_args,
+                  tmp_args.buf ());
+  ACE_OS::strcpy (low_thread_args,
                   tmp_args.buf ());
   char *args1;
 
@@ -535,6 +538,14 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
                   CORBA::String [GLOBALS::instance ()->num_of_objs],
                   -1);
 
+
+  for (i=0;i<this->argc_;i++)
+    {
+      if ((ACE_OS::strcmp (this->argv_[i],"-p") == 0) && (i-1 < this->argc_))
+        GLOBALS::instance ()->base_port = ACE_OS::atoi (this->argv_[i+1]);
+      else if ((ACE_OS::strcmp (this->argv_[i],"-h") == 0) && (i-1 < this->argc_))
+        ACE_OS::strcpy (GLOBALS::instance ()->hostname,this->argv_[i+1]);
+    }
   ACE_OS::sprintf (args1,
                    "-ORBport %d "
                    "-ORBhost %s "
@@ -545,11 +556,11 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
                    GLOBALS::instance ()->hostname);
 
 
-  ACE_OS::strcat (tmp_buf,args1);
+  ACE_OS::strcat (high_thread_args,args1);
   Cubit_Task *high_priority_task;
 
   ACE_NEW_RETURN (high_priority_task,
-                  Cubit_Task (tmp_buf,
+                  Cubit_Task (high_thread_args,
                               "internet",
                               1,
                               &start_barrier,
@@ -581,11 +592,11 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
                   "\thigh_priority_task->activate failed"));
     }
 
-  ACE_DEBUG ((LM_DEBUG,"(%t) Waiting for argument parsing\n"));
+  //  ACE_DEBUG ((LM_DEBUG,"(%t) Waiting for argument parsing\n"));
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
   while (!GLOBALS::instance ()->ready_)
     GLOBALS::instance ()->ready_cnd_.wait ();
-  ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
+  //  ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
 
 
   if (GLOBALS::instance ()->run_utilization_test == 1)
@@ -666,7 +677,7 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
                       -1);
 
       ACE_OS::sprintf (args,
-                       "rate10 -ORBport %d "
+                       "-ORBport %d "
                        "-ORBhost %s "
                        "-ORBobjrefstyle URL "
                        "-ORBsndsock 32768 "
@@ -674,14 +685,16 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
                        GLOBALS::instance ()->base_port + i,
                        GLOBALS::instance ()->hostname);
 
+      ACE_OS::strcat (low_thread_args,args);
+
       ACE_NEW_RETURN (low_priority_task [i - 1],
-                      Cubit_Task (args,
-                                  "internet",
-                                  1,
-                                  &start_barrier,
-                                  ts,
-                                  serv_thr_mgr,
-                                  i),
+                      Cubit_Task (low_thread_args, 
+				  "internet", 
+				  1, 
+				  &start_barrier, 
+				  ts,
+				  serv_thr_mgr,
+				  i),
                       -1);
 
       // Make the low priority task an active object.
@@ -731,7 +744,7 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
 
     if (GLOBALS::instance ()->ior_file != 0)
       {
-        ACE_DEBUG ((LM_DEBUG,"(%P|%t) Opening file:%s\n",GLOBALS::instance ()->ior_file));
+        //        ACE_DEBUG ((LM_DEBUG,"(%P|%t) Opening file:%s\n",GLOBALS::instance ()->ior_file));
         ior_f = ACE_OS::fopen (GLOBALS::instance ()->ior_file, "w");
       }
 
@@ -739,7 +752,7 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
       {
         if (ior_f != 0)
           {
-            ACE_DEBUG ((LM_DEBUG,"(%P|%t) ior_file is open :%s",GLOBALS::instance ()->ior_file));
+            //            ACE_DEBUG ((LM_DEBUG,"(%P|%t) ior_file is open :%s",GLOBALS::instance ()->ior_file));
             ACE_OS::fprintf (ior_f, "%s\n", cubits[i]);
             ACE_OS::printf ("cubits[%d] ior = %s\n",
                             i,
@@ -749,7 +762,7 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
 
     if (ior_f != 0)
       {
-        ACE_DEBUG ((LM_DEBUG,"(%P|%t) Closing ior file\n"));
+        //        ACE_DEBUG ((LM_DEBUG,"(%P|%t) Closing ior file\n"));
         ACE_OS::fclose (ior_f);
       }
   }

@@ -1,3 +1,10 @@
+Thu Jul 23 19:59:31 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp: Added code so that -ORB
+	arguments are passed to the low priority thread as well. Also now
+	the high priority threads checks the -p and -h arguments before
+	ORB_init so that it uses the port specified on the command line.
+
 Thu Jul 23 16:54:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Server_Request.cpp: 
