@@ -1,3 +1,13 @@
+Wed Jul 30 12:53:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation: A new test
+	  for testing some simple FT ORB features. Please see the README
+	  file for more details. 
+
+	* orbsvcs/tests/FaultTolerance/IOGR/svc.conf: Fixed a typo. 
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp: Fixed some
+	  obvious memory leaks.
+
 Wed Jul 30 12:50:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Profile.h:
