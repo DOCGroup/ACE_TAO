@@ -1,7 +1,8 @@
 Tue Sep 16 11:42:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/OS: Added a wrapper for strpbrk().  Thanks to Bob Olson
- 	  <olson@jeeves.mcs.anl.gov> for pointing out the need for this.
+	* ace/OS: Added a wrapper for strpbrk() and wcspbrk().  Thanks to
+ 	  Bob Olson <olson@jeeves.mcs.anl.gov> and Irfan for pointing out
+ 	  the need for this.
 
 Tue Sep 16 08:30:28 1997  Steve Huston  <shuston@riverace.com>
 
