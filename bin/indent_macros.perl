@@ -7,6 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -i -S $0 ${1+"$@"}'
 # This perl script re-arrange the macro indentation so it's easier to
 # see the layering relationship.
 
+$lineno = 0;
 $indent = 0;
 
 sub inc_indent
@@ -22,12 +23,13 @@ sub dec_indent
 sub get_indent
 {
     $retv = 0;
-    die ("Unbalanced macro pairs\n") if ($indent < 0);
+    print STDERR "$0 (", $lineno, "): Unbalanced macro pairs\n" if ($indent < 0);
     $retv = $indent - 1 if ($indent > 0);
     $retv;
 }
 
 while (<>) {
+    $lineno++;
     if (/^[ \t]*\#[ \t]*((if|el|en|).*)/)
     {
         $cont = $1;
@@ -54,4 +56,4 @@ while (<>) {
     }
 }
 
-die ("Unbalanced macro pairs\n") if ($indent < 0);
+die ("$0 (EOF): Unbalanced macro pairs\n") if ($indent != 0);
