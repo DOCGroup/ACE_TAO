@@ -220,7 +220,7 @@ pace_pthread_condattr_getpshared (const pace_pthread_condattr_t * attr,
 
 PACE_INLINE
 int
-pace_pthead_condattr_init (pace_pthread_condattr_t * attr)
+pace_pthread_condattr_init (pace_pthread_condattr_t * attr)
 {
   return pthread_condattr_init (attr);
 }
