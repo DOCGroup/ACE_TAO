@@ -204,7 +204,8 @@ public:
 
   AST_Expression (unsigned long ul);
 
-  AST_Expression (ACE_UINT64 ull);
+  AST_Expression (ACE_UINT64 ull,
+                  ExprType t);
 
   AST_Expression (float f);
 
