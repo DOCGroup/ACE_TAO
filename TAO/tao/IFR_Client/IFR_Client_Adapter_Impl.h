@@ -61,7 +61,7 @@ public:
     );
 
   virtual CORBA::InterfaceDef_ptr get_interface_remote (
-      const CORBA::Object_ptr target
+      CORBA::Object_ptr target
       ACE_ENV_ARG_DECL
     );
 
