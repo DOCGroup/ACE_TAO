@@ -1,9 +1,5 @@
 // $Id$
 
-#include "ace/config-all.h"
-
-#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
-
 #include "SSLIOP_Factory.h"
 #include "SSLIOP_Acceptor.h"
 #include "SSLIOP_Connector.h"
@@ -183,4 +179,4 @@ ACE_STATIC_SVC_DEFINE (TAO_SSLIOP_Protocol_Factory,
 
 ACE_FACTORY_DEFINE (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)
 
-#endif  /* ACE_HAS_SSL */
+ACE_STATIC_SVC_REQUIRE (TAO_SSLIOP_Protocol_Factory)

@@ -21,8 +21,6 @@
 
 #include "SSLIOP_Export.h"
 
-#if defined (ACE_HAS_SSL)
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -74,8 +72,6 @@ private:
 
 ACE_STATIC_SVC_DECLARE (TAO_SSLIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)
-
-#endif  /* ACE_HAS_SSL */
 
 #include "ace/post.h"
 

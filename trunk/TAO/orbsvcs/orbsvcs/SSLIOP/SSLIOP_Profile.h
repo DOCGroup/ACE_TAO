@@ -25,8 +25,6 @@
 
 #include "ace/config-all.h"
 
-#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -138,8 +136,6 @@ private:
 #if defined (__ACE_INLINE__)
 # include "SSLIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
-
-#endif  /* ACE_HAS_SSL */
 
 #include "ace/post.h"
 

@@ -1,9 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
+//
 // $Id$
 
-#include "ace/config-all.h"
-
-#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
 
 #include "SSLIOP_Connector.h"
 #include "SSLIOP_Profile.h"
@@ -343,6 +341,3 @@ template class ACE_Auto_Basic_Array_Ptr<TAO_SSLIOP_Client_Connection_Handler*>;
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_SSLIOP_Client_Connection_Handler*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
-#endif  /* ACE_HAS_SSL */

@@ -23,16 +23,14 @@
 
 #include "ace/pre.h"
 
-#include "tao/Endpoint.h"
-
-#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
+#include "SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ORB.h"
-#include "SSLIOP_Export.h"
+#include "tao/Endpoint.h"
 #include "orbsvcs/SSLIOPC.h"
 
 // Tag for storing multiple ssl endpoints within a single profile.
@@ -118,7 +116,6 @@ private:
 #include "SSLIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
-#endif  /* ACE_HAS_SSL */
-
 #include "ace/post.h"
+
 #endif  /* TAO_SSLIOP_ENDPOINT_H */
