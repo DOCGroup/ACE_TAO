@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -51,9 +52,9 @@
 #   if defined (ACE_USES_OLD_IOSTREAMS)
 #     include /**/ <iostream.h>
 #     include /**/ <fstream.h>
-  // This has been commented as it is not needed and causes problems with Qt. 
-  // (brunsch) But has been uncommented since it should be included.  Qt 
-  // probably should have some sort of macro that will prevent including this 
+  // This has been commented as it is not needed and causes problems with Qt.
+  // (brunsch) But has been uncommented since it should be included.  Qt
+  // probably should have some sort of macro that will prevent including this
   // when it is used.
 #     include /**/ <iomanip.h>
 #     if defined (_MSC_VER)
