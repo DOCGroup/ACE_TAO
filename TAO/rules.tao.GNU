@@ -67,35 +67,35 @@ ifeq ($(ami),1)
   CPPFLAGS += -DTAO_HAS_AMI=1
 else  # ami
   override ami = 0
-  CPPFLAGS += -DTAO_HAS_AMI=0
+  # CPPFLAGS += -DTAO_HAS_AMI=0
 endif # ami
 
 ifeq ($(ami_poller),1)
   CPPFLAGS += -DTAO_HAS_AMI_POLLER=1
 else  # ami_poller
   override ami_poller = 0
-  CPPFLAGS += -DTAO_HAS_AMI_POLLER=0
+  # CPPFLAGS += -DTAO_HAS_AMI_POLLER=0
 endif # ami_poller
 
 ifeq ($(ami_callback),1)
   CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=1
 else  # ami_callback
   override ami_callback = 0
-  CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=0
+  # CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=0
 endif # ami_callback
 
 ifeq ($(rt_corba),0)
   CPPFLAGS += -DTAO_HAS_RT_CORBA=0
 else  # rt_corba
   override rt_corba = 1
-  CPPFLAGS += -DTAO_HAS_RT_CORBA=1
+  # CPPFLAGS += -DTAO_HAS_RT_CORBA=1
 endif # rt_corba
 
 ifeq ($(corba_messaging),0)
   CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=0
 else  # corba_messaging
   override corba_messaging = 1
-  CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=1
+  # CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=1
 endif # corba_messaging
 
 ifeq (1,$(CROSS-COMPILE))
