@@ -311,7 +311,11 @@ ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
   endif # rmcast
 endif # ACE_HAS_GNUG_PRE_2_8
 
-DIRS += QoS
+## Only build the contents of the QoS directory under UNIX
+## if we have the RAPI library installed
+ifeq ($(rapi),1)
+  DIRS += QoS
+endif # rapi                    
 
 ####
 #### Build customization.
