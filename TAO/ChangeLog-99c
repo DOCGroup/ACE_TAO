@@ -1,3 +1,52 @@
+Mon Jul 12 10:43:54 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/ORB.cpp (resolve_initial_references):
+
+	  Fixed bug where the object ID was not being properly appended
+	  to multiple endpoints when using -ORBDefaultInitRef.  The task
+	  of appending the object ID is now the responsibility of
+	  TAO_Connector::make_mprofile() which actually gets invoked when
+	  an CORBA::string_to_object() call is made.  The code in
+	  resolve_initial_references() was redundant code since the code
+	  in TAO_Connector::make_mprofile() already existed and is better
+	  suited to handle pluggable protocols. -ORBDefaultInitRef now
+	  works properly with all of TAO's pluggable protocols.
+	
+	* tao/Pluggable.cpp (make_mprofile):
+
+	  Fixed a bug where the location of the object key was being
+	  evaluated everytime an addr from an endpoint with multiple addrs
+	  was parsed.  The object key location should only be evaluated
+	  once.  Endpoint searches were also being made throughout the
+	  entire length of the IOR.  Endpoint searches should only occur
+	  after the protocol specification and before the object key.
+	  This fixes a bug that was preventing -ORBDefaultInitRef from
+	  working properly when given an argument with multiple
+	  endpoints.
+
+	* tao/UIOP_Acceptor.cpp:
+	* tao/UIOP_Connect.cpp:
+	* tao/UIOP_Connector.cpp:
+	* tao/UIOP_Factory.cpp:
+	* tao/UIOP_Profile.cpp:
+	* tao/UIOP_Transport.cpp:
+
+	  Moved some headers outside of the ACE_LACKS_UNIX_DOMAIN_SOCKETS
+	  guard to make sure we include the configuration header so that
+	  ACE_LACKS_UNIX_DOMAIN_SOCKETS gets defined when necessary.  This
+	  fixes compilation on platforms that don't support UNIX domain
+	  sockets, such as Win32.
+
+	* tao/params.cpp (TAO_ORB_Parameters):
+
+	  Added default_init_ref_ to the member initializer list.
+
+	* tao/TAO.dsp:
+
+	  Added the UIOP pluggable protocol files to the project.  Their
+	  contents will actually get #ifdefed out on Win32 platforms but
+	  it is good to add them to the project to be consistent.
+	
 Mon Jul 12 10:32:53 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/*.h: inserted pragma once into a bunch of headers
