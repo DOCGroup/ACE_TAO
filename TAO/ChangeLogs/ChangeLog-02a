@@ -1,3 +1,30 @@
+Fri Oct  5 16:03:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_array.cpp:
+	* TAO_IDL/ast/ast_attribute.cpp:
+	* TAO_IDL/ast/ast_constant.cpp:
+	* TAO_IDL/ast/ast_decl.cpp:
+	* TAO_IDL/ast/ast_enum.cpp:
+	* TAO_IDL/ast/ast_enum_val.cpp:
+	* TAO_IDL/ast/ast_exception.cpp:
+	* TAO_IDL/ast/ast_expression.cpp:
+	* TAO_IDL/ast/ast_field.cpp:
+	* TAO_IDL/ast/ast_interface.cpp:
+	* TAO_IDL/ast/ast_interface_fwd.cpp:
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/ast/ast_native.cpp:
+	* TAO_IDL/ast/ast_operation.cpp:
+	* TAO_IDL/ast/ast_predefined_type.cpp:
+	* TAO_IDL/ast/ast_root.cpp:
+	* TAO_IDL/ast/ast_sequence.cpp:
+	* TAO_IDL/ast/ast_string.cpp:
+	* TAO_IDL/ast/ast_structure.cpp:
+	* TAO_IDL/ast/ast_typedef.cpp:
+	* TAO_IDL/ast/ast_union.cpp:
+	* TAO_IDL/ast/ast_union_branch.cpp:
+	* TAO_IDL/ast/ast_union_label.cpp: Changed instances of ostream to
+	  ACE_OSTREAM_TYPE. Thanks to Russ Noseworthy for suggesting this.
+
 Fri Oct  5 14:44:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* be/be_visitor.cpp:

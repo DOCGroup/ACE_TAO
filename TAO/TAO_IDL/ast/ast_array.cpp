@@ -89,16 +89,16 @@ AST_Array::AST_Array (UTL_ScopedName *n,
                       UTL_ExprList *ds,
                       idl_bool local,
                       idl_bool abstract)
-  : AST_Decl (AST_Decl::NT_array, 
-              n, 
+  : AST_Decl (AST_Decl::NT_array,
+              n,
               0,
               I_TRUE),
-    COMMON_Base (local, 
+    COMMON_Base (local,
                  abstract),
-    pd_n_dims (nd), 
+    pd_n_dims (nd),
     pd_base_type (0)
 {
-  this->pd_dims = this->compute_dims (ds, 
+  this->pd_dims = this->compute_dims (ds,
                                       nd);
 }
 
@@ -111,7 +111,7 @@ AST_Array::~AST_Array (void)
 // Compute how many dimensions there are and collect their expressions
 // into an array.
 AST_Expression **
-AST_Array::compute_dims (UTL_ExprList *ds, 
+AST_Array::compute_dims (UTL_ExprList *ds,
                          unsigned long nds)
 {
   if (ds == 0)
@@ -126,8 +126,8 @@ AST_Array::compute_dims (UTL_ExprList *ds,
 
   UTL_ExprlistActiveIterator iter (ds);
 
-  for (unsigned long i = 0; 
-       !iter.is_done () && i < nds; 
+  for (unsigned long i = 0;
+       !iter.is_done () && i < nds;
        iter.next (), i++)
     {
       result[i] = iter.item ();
@@ -140,13 +140,13 @@ AST_Array::compute_dims (UTL_ExprList *ds,
 
 // Dump this AST_Array node to the ostream o.
 void
-AST_Array::dump (ostream &o)
+AST_Array::dump (ACE_OSTREAM_TYPE &o)
 {
   pd_base_type->dump (o);
   o << " ";
   this->local_name ()->dump (o);
 
-  for (unsigned long i = 0; i < this->pd_n_dims; i++) 
+  for (unsigned long i = 0; i < this->pd_n_dims; i++)
     {
       o << "[";
       pd_dims[i]->dump (o);
@@ -186,7 +186,7 @@ AST_Array::set_base_type (AST_Type *nbt)
 }
 
 void
-AST_Array::set_dims (AST_Expression **ds, 
+AST_Array::set_dims (AST_Expression **ds,
                      unsigned long nds)
 {
     this->pd_dims = ds;

@@ -88,11 +88,11 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
                       UTL_StrList *p,
                       idl_bool local,
                       idl_bool abstract)
-  : AST_Decl (AST_Decl::NT_union, 
-             n, 
+  : AST_Decl (AST_Decl::NT_union,
+             n,
              p),
     UTL_Scope (AST_Decl::NT_union),
-    COMMON_Base (local, 
+    COMMON_Base (local,
                  abstract),
     default_index_ (-2)
 {
@@ -100,7 +100,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
 
   AST_PredefinedType *pdt = 0;
 
-  if (dt == 0) 
+  if (dt == 0)
     {
       this->pd_disc_type = 0;
       this->pd_udisc_type = AST_Expression::EV_none;
@@ -110,11 +110,11 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
   // If the discriminator type is a predefined type
   // then install the equivalent coercion target type in
   // the pd_udisc_type field.
-  if (dt->node_type () == AST_Decl::NT_pre_defined) 
+  if (dt->node_type () == AST_Decl::NT_pre_defined)
     {
       pdt = AST_PredefinedType::narrow_from_decl (dt);
 
-      if (pdt == 0) 
+      if (pdt == 0)
         {
           this->pd_disc_type = 0;
           this->pd_udisc_type = AST_Expression::EV_none;
@@ -123,7 +123,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
 
       pd_disc_type = dt;
 
-      switch (pdt->pt ()) 
+      switch (pdt->pt ())
         {
         case AST_PredefinedType::PT_long:
           this->pd_udisc_type = AST_Expression::EV_long;
@@ -154,13 +154,13 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
           this->pd_disc_type = 0;
           break;
         }
-    } 
-  else if (dt->node_type() == AST_Decl::NT_enum) 
+    }
+  else if (dt->node_type() == AST_Decl::NT_enum)
     {
       this->pd_udisc_type = AST_Expression::EV_any;
       this->pd_disc_type = dt;
-    } 
-  else 
+    }
+  else
     {
       this->pd_udisc_type = AST_Expression::EV_none;
       this->pd_disc_type = 0;
@@ -168,8 +168,8 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
 
   if (this->pd_disc_type == 0)
     {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DISC_TYPE, 
-                                  this, 
+      idl_global->err ()->error2 (UTL_Error::EIDL_DISC_TYPE,
+                                  this,
                                   dt);
     }
 }
@@ -214,7 +214,7 @@ AST_Union::in_recursion (AST_Type *node)
       // Continue until each element is visited.
       while (!si->is_done ())
         {
-          AST_UnionBranch *field = 
+          AST_UnionBranch *field =
             AST_UnionBranch::narrow_from_decl (si->item ());
 
           if (field == 0)
@@ -225,7 +225,7 @@ AST_Union::in_recursion (AST_Type *node)
               continue;
             }
 
-          AST_Type *type = 
+          AST_Type *type =
             AST_Type::narrow_from_decl (field->field_type ());
 
           if (type == 0)
@@ -260,35 +260,35 @@ AST_Union::lookup_default (void)
 {
   UTL_ScopeActiveIterator *i = 0;
   ACE_NEW_RETURN (i,
-                  UTL_ScopeActiveIterator (this, 
+                  UTL_ScopeActiveIterator (this,
                                            IK_both),
                   0);
 
-  AST_UnionBranch	*b = 0;
+  AST_UnionBranch       *b = 0;
   AST_Decl *d = 0;
 
-  while (!i->is_done()) 
+  while (!i->is_done())
     {
       d = i->item ();
 
-      if (d->node_type () == AST_Decl::NT_union_branch) 
+      if (d->node_type () == AST_Decl::NT_union_branch)
         {
           b = AST_UnionBranch::narrow_from_decl (d);
 
-          if (b == 0) 
+          if (b == 0)
             {
               i->next ();
               continue;
             }
 
-          if (b->label() != 0 
-              && b->label ()->label_kind () == AST_UnionLabel::UL_default) 
+          if (b->label() != 0
+              && b->label ()->label_kind () == AST_UnionLabel::UL_default)
             {
-	            idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH, 
-                                          this, 
+                    idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
+                                          this,
                                           b);
-	            delete i;
-	            return b;
+                    delete i;
+                    return b;
             }
         }
 
@@ -312,45 +312,45 @@ AST_Union::lookup_label (AST_UnionBranch *b)
     }
 
   AST_Decl *d = 0;
-  AST_UnionBranch	*fb = 0;
+  AST_UnionBranch       *fb = 0;
 
   lv->set_ev (lv->coerce (this->pd_udisc_type));
 
-  if (lv->ev () == 0) 
+  if (lv->ev () == 0)
     {
       idl_global->err ()->eval_error (lv);
       return b;
     }
 
-  UTL_ScopeActiveIterator	*i = 0;
+  UTL_ScopeActiveIterator       *i = 0;
   ACE_NEW_RETURN (i,
-                  UTL_ScopeActiveIterator (this, 
+                  UTL_ScopeActiveIterator (this,
                                            IK_decls),
                   0);
 
-  while (!i->is_done()) 
+  while (!i->is_done())
     {
       d = i->item ();
 
-      if (d->node_type () == AST_Decl::NT_union_branch) 
+      if (d->node_type () == AST_Decl::NT_union_branch)
         {
           fb = AST_UnionBranch::narrow_from_decl (d);
 
-          if (fb == 0) 
+          if (fb == 0)
             {
               i->next ();
               continue;
             }
 
-          if (fb->label() != 0 
-              && fb->label ()->label_kind () == AST_UnionLabel::UL_label 
-              && fb->label ()->label_val ()->compare (lv)) 
+          if (fb->label() != 0
+              && fb->label ()->label_kind () == AST_UnionLabel::UL_label
+              && fb->label ()->label_val ()->compare (lv))
             {
-	            idl_global->err ()->error2  (UTL_Error::EIDL_MULTIPLE_BRANCH, 
-                                           this, 
+                    idl_global->err ()->error2  (UTL_Error::EIDL_MULTIPLE_BRANCH,
+                                           this,
                                            b);
-	            delete i;
-	            return b;
+                    delete i;
+                    return b;
             }
         }
 
@@ -371,9 +371,9 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
   AST_Expression *lv = label->label_val ();
   AST_Enum *e = AST_Enum::narrow_from_decl (this->pd_disc_type);
   AST_Decl *d = 0;
-  AST_UnionBranch	*fb = 0;
+  AST_UnionBranch       *fb = 0;
 
-  if (e == 0) 
+  if (e == 0)
     {
       return 0;
     }
@@ -384,57 +384,57 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
     }
 
   // Expecting a symbol label.
-  if (lv->ec () != AST_Expression::EC_symbol) 
+  if (lv->ec () != AST_Expression::EC_symbol)
     {
-      idl_global->err ()->enum_val_expected (this, 
+      idl_global->err ()->enum_val_expected (this,
                                              label);
       return b;
     }
 
   // See if the symbol defines a constant in the discriminator enum.
   UTL_ScopedName *sn = lv->n ();
-  d = e->lookup_by_name (sn, 
+  d = e->lookup_by_name (sn,
                          I_TRUE);
 
-  if (d == 0 || d->defined_in () != e) 
+  if (d == 0 || d->defined_in () != e)
     {
-      idl_global->err ()->enum_val_lookup_failure (this, 
-                                                   e, 
+      idl_global->err ()->enum_val_lookup_failure (this,
+                                                   e,
                                                    sn);
       return b;
     }
 
   // OK, now see if this symbol is already used as the label of
   // some other branch.
-  UTL_ScopeActiveIterator	*i = 0;
+  UTL_ScopeActiveIterator       *i = 0;
   ACE_NEW_RETURN (i,
-                  UTL_ScopeActiveIterator (this, 
+                  UTL_ScopeActiveIterator (this,
                                            IK_decls),
                   0);
 
-  while (!i->is_done()) 
+  while (!i->is_done())
     {
       d = i->item ();
 
-      if (d->node_type () == AST_Decl::NT_union_branch) 
+      if (d->node_type () == AST_Decl::NT_union_branch)
         {
           fb = AST_UnionBranch::narrow_from_decl (d);
 
-          if (fb == 0) 
+          if (fb == 0)
             {
                 i->next ();
                 continue;
             }
 
-          if (fb->label() != 0 
-              && fb->label ()->label_kind () == AST_UnionLabel::UL_label 
-              && fb->label ()->label_val ()->compare (lv)) 
+          if (fb->label() != 0
+              && fb->label ()->label_kind () == AST_UnionLabel::UL_label
+              && fb->label ()->label_val ()->compare (lv))
             {
-	            idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH, 
-                                          this, 
+                    idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
+                                          this,
                                           b);
-	            delete i;
-	            return b;
+                    delete i;
+                    return b;
             }
         }
 
@@ -458,7 +458,7 @@ AST_Union::lookup_branch (AST_UnionBranch *branch)
       label = branch->label ();
     }
 
-  if (label != 0) 
+  if (label != 0)
     {
       if (label->label_kind () == AST_UnionLabel::UL_default)
         {
@@ -640,7 +640,7 @@ AST_Union::compute_default_value (void)
 
   // If we have determined that we don't need a default case and even then a
   // default case was provided, flag this off as error.
-  if ((this->default_value_.computed_ == 0) 
+  if ((this->default_value_.computed_ == 0)
       && (this->default_index () != -1))
     {
       // Error.
@@ -655,7 +655,7 @@ AST_Union::compute_default_value (void)
   switch (this->default_value_.computed_)
     {
     case -1:
-      // Error. We should never be here because errors 
+      // Error. We should never be here because errors
       // have already been caught
       // above.
       return -1;
@@ -707,7 +707,7 @@ AST_Union::compute_default_value (void)
   while (this->default_value_.computed_ == -2)
     {
       // Instantiate a scope iterator.
-      UTL_ScopeActiveIterator si (this, 
+      UTL_ScopeActiveIterator si (this,
                                   UTL_Scope::IK_decls);
 
       int break_loop = 0;
@@ -715,7 +715,7 @@ AST_Union::compute_default_value (void)
       while (!si.is_done () && break_loop == 0)
         {
           // Get the next AST decl node
-          AST_UnionBranch *ub = 
+          AST_UnionBranch *ub =
             AST_UnionBranch::narrow_from_decl (si.item ());
 
           if (ub != 0)
@@ -724,7 +724,7 @@ AST_Union::compute_default_value (void)
                    i < ub->label_list_length () && !break_loop;
                    ++i)
                 {
-                  if (ub->label (i)->label_kind () 
+                  if (ub->label (i)->label_kind ()
                         == AST_UnionLabel::UL_label)
                     {
                       // Not a default.
@@ -919,38 +919,38 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
     }
 
   // If branch with that label already exists, complain.
-  if (lookup_branch (t) != 0) 
+  if (lookup_branch (t) != 0)
     {
-      idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH, 
-                                  this, 
+      idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
+                                  this,
                                   t);
       return 0;
     }
 
   // If branch with same field name exists, complain.
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (this->referenced (d, t->local_name ())) 
+      if (this->referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return 0;
         }
@@ -960,8 +960,8 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
   this->add_to_scope (t);
 
   // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t, 
-                           I_FALSE, 
+  this->add_to_referenced (t,
+                           I_FALSE,
                            t->local_name ());
 
   this->fields_.enqueue_tail (t);
@@ -976,29 +976,29 @@ AST_Union::fe_add_union (AST_Union *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (this->referenced (d, t->local_name ())) 
+      if (this->referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return 0;
         }
@@ -1008,8 +1008,8 @@ AST_Union::fe_add_union (AST_Union *t)
   this->add_to_local_types (t);
 
   // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t, 
-                           I_FALSE, 
+  this->add_to_referenced (t,
+                           I_FALSE,
                            t->local_name ());
 
   return t;
@@ -1022,29 +1022,29 @@ AST_Union::fe_add_structure (AST_Structure *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (this->referenced (d, t->local_name ())) 
+      if (this->referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return 0;
         }
@@ -1054,8 +1054,8 @@ AST_Union::fe_add_structure (AST_Structure *t)
   this->add_to_local_types (t);
 
   // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t, 
-                           I_FALSE, 
+  this->add_to_referenced (t,
+                           I_FALSE,
                            t->local_name ());
 
   return t;
@@ -1068,29 +1068,29 @@ AST_Union::fe_add_enum (AST_Enum *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (this->referenced (d, t->local_name ())) 
+      if (this->referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return 0;
         }
@@ -1100,8 +1100,8 @@ AST_Union::fe_add_enum (AST_Enum *t)
   this->add_to_local_types (t);
 
   // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t, 
-                           I_FALSE, 
+  this->add_to_referenced (t,
+                           I_FALSE,
                            t->local_name ());
 
   return t;
@@ -1117,29 +1117,29 @@ AST_Union::fe_add_enum_val (AST_EnumVal *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (this->referenced (d, t->local_name ())) 
+      if (this->referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return 0;
         }
@@ -1149,8 +1149,8 @@ AST_Union::fe_add_enum_val (AST_EnumVal *t)
   this->add_to_scope (t);
 
   // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t, 
-                           I_FALSE, 
+  this->add_to_referenced (t,
+                           I_FALSE,
                            t->local_name ());
 
   return t;
@@ -1158,7 +1158,7 @@ AST_Union::fe_add_enum_val (AST_EnumVal *t)
 
 // Dump this AST_Union node to the ostream o.
 void
-AST_Union::dump (ostream &o)
+AST_Union::dump (ACE_OSTREAM_TYPE &o)
 {
   o << "union ";
   this->local_name ()->dump (o);

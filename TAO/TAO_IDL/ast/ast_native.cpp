@@ -16,8 +16,8 @@ AST_Native::AST_Native (void)
 
 AST_Native::AST_Native(UTL_ScopedName *n,
                        UTL_StrList *p)
-  : AST_Decl (AST_Decl::NT_native, 
-              n, 
+  : AST_Decl (AST_Decl::NT_native,
+              n,
               p)
 {
 }
@@ -29,7 +29,7 @@ AST_Native::~AST_Native (void)
 
 // Dump this AST_Native node to the ostream o.
 void
-AST_Native::dump (ostream &o)
+AST_Native::dump (ACE_OSTREAM_TYPE &o)
 {
   AST_Decl::dump (o);
 }

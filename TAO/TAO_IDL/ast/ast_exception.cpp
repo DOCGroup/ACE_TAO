@@ -82,16 +82,16 @@ AST_Exception::AST_Exception(UTL_ScopedName *n,
                              UTL_StrList *p,
                              idl_bool local,
                              idl_bool abstract)
-  : AST_Structure (AST_Decl::NT_except, 
-                   n, 
-                   p, 
-                   local, 
+  : AST_Structure (AST_Decl::NT_except,
+                   n,
+                   p,
+                   local,
                    abstract),
     UTL_Scope (AST_Decl::NT_except),
-    AST_Decl (AST_Decl::NT_except, 
-              n, 
+    AST_Decl (AST_Decl::NT_except,
+              n,
               p),
-    COMMON_Base (local, 
+    COMMON_Base (local,
                  abstract)
 {
 }
@@ -124,7 +124,7 @@ AST_Exception::in_recursion (AST_Type *node)
       // Continue until each element is visited.
       while (!si->is_done ())
         {
-          AST_Field *field = 
+          AST_Field *field =
             AST_Field::narrow_from_decl (si->item ());
 
           if (field == 0)
@@ -135,7 +135,7 @@ AST_Exception::in_recursion (AST_Type *node)
               continue;
             }
 
-          AST_Type *type = 
+          AST_Type *type =
             AST_Type::narrow_from_decl (field->field_type ());
 
           if (type == 0)
@@ -156,10 +156,10 @@ AST_Exception::in_recursion (AST_Type *node)
             }
 
           si->next ();
-        } 
+        }
 
       delete si;
-    } 
+    }
 
   // Not in recursion
   return 0;
@@ -174,29 +174,29 @@ AST_Exception::fe_add_field (AST_Field *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF, 
-                                       t, 
-                                       this, 
+          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF,
+                                       t,
+                                       this,
                                        d);
           return 0;
         }
 
-      if (referenced (d, t->local_name ())) 
+      if (referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE, 
-                                       t, 
-                                       this, 
+          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE,
+                                       t,
+                                       this,
                                        d);
           return 0;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return 0;
         }
@@ -206,8 +206,8 @@ AST_Exception::fe_add_field (AST_Field *t)
   this->add_to_scope (t);
 
   // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t, 
-                           I_FALSE, 
+  this->add_to_referenced (t,
+                           I_FALSE,
                            t->local_name ());
 
   this->fields_.enqueue_tail (t);
@@ -222,29 +222,29 @@ AST_Exception::fe_add_union (AST_Union *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF, 
-                                       t, 
-                                       this, 
+          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF,
+                                       t,
+                                       this,
                                        d);
           return 0;
         }
 
-      if (this->referenced (d, t->local_name ())) 
+      if (this->referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE, 
-                                       t, 
-                                       this, 
+          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE,
+                                       t,
+                                       this,
                                        d);
           return 0;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return 0;
         }
@@ -254,8 +254,8 @@ AST_Exception::fe_add_union (AST_Union *t)
   this->add_to_local_types (t);
 
   // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t, 
-                           I_FALSE, 
+  this->add_to_referenced (t,
+                           I_FALSE,
                            t->local_name ());
 
   return t;
@@ -269,28 +269,28 @@ AST_Exception::fe_add_structure (AST_Structure *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error2  (UTL_Error::EIDL_REDEF, 
-                                       t, 
+          idl_global->err ()->error2  (UTL_Error::EIDL_REDEF,
+                                       t,
                                        this);
           return 0;
         }
 
-      if (this->referenced (d, t->local_name ())) 
+      if (this->referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE, 
-                                       t, 
-                                       this, 
+          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE,
+                                       t,
+                                       this,
                                        d);
           return 0;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return 0;
         }
@@ -300,8 +300,8 @@ AST_Exception::fe_add_structure (AST_Structure *t)
   this->add_to_local_types (t);
 
   // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t, 
-                           I_FALSE, 
+  this->add_to_referenced (t,
+                           I_FALSE,
                            t->local_name ());
 
   return t;
@@ -314,29 +314,29 @@ AST_Exception::fe_add_enum (AST_Enum *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF, 
-                                       t, 
-                                       this, 
+          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF,
+                                       t,
+                                       this,
                                        d);
           return 0;
         }
 
-      if (referenced (d, t->local_name ())) 
+      if (referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return 0;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return 0;
         }
@@ -346,8 +346,8 @@ AST_Exception::fe_add_enum (AST_Enum *t)
   this->add_to_local_types (t);
 
   // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t, 
-                           I_FALSE, 
+  this->add_to_referenced (t,
+                           I_FALSE,
                            t->local_name ());
 
   return t;
@@ -363,29 +363,29 @@ AST_Exception::fe_add_enum_val (AST_EnumVal *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF, 
-                                       t, 
-                                       this, 
+          idl_global->err ()->error3  (UTL_Error::EIDL_REDEF,
+                                       t,
+                                       this,
                                        d);
           return 0;
         }
 
-      if (referenced (d, t->local_name ())) 
+      if (referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE, 
-                                       t, 
-                                       this, 
+          idl_global->err ()->error3  (UTL_Error::EIDL_DEF_USE,
+                                       t,
+                                       this,
                                        d);
           return 0;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return 0;
         }
@@ -393,10 +393,10 @@ AST_Exception::fe_add_enum_val (AST_EnumVal *t)
 
   // Add it to scope.
   this->add_to_scope (t);
- 
+
   // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t, 
-                           I_FALSE, 
+  this->add_to_referenced (t,
+                           I_FALSE,
                            t->local_name ());
 
   return t;
@@ -404,7 +404,7 @@ AST_Exception::fe_add_enum_val (AST_EnumVal *t)
 
 // Dump this AST_Exception node to the ostream o.
 void
-AST_Exception::dump (ostream &o)
+AST_Exception::dump (ACE_OSTREAM_TYPE &o)
 {
   o << "exception ";
   this->local_name ()->dump (o);

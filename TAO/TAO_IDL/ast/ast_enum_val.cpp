@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -78,16 +78,16 @@ AST_EnumVal::AST_EnumVal (void)
 {
 }
 
-AST_EnumVal::AST_EnumVal (unsigned long v, 
-                          UTL_ScopedName *n, 
+AST_EnumVal::AST_EnumVal (unsigned long v,
+                          UTL_ScopedName *n,
                           UTL_StrList *p)
   : AST_Constant  (AST_Expression::EV_ulong,
-		               AST_Decl::NT_enum_val,
-			             new AST_Expression (v), 
-                   n, 
+                               AST_Decl::NT_enum_val,
+                                     new AST_Expression (v),
+                   n,
                    p),
-	  AST_Decl (AST_Decl::NT_enum_val, 
-              n, 
+          AST_Decl (AST_Decl::NT_enum_val,
+              n,
               p)
 {
 }
@@ -100,7 +100,7 @@ AST_EnumVal::~AST_EnumVal (void)
 
 // Dump this AST_EnumVal to the ostream o.
 void
-AST_EnumVal::dump (ostream &o)
+AST_EnumVal::dump (ACE_OSTREAM_TYPE &o)
 {
   AST_Constant::dump (o);
 }

@@ -273,8 +273,8 @@ AST_Decl::compute_prefix (void)
       ACE_NEW (this->prefix_,
                char[len + 1]);
 
-      ACE_OS::strncpy (this->prefix_, 
-                       start, 
+      ACE_OS::strncpy (this->prefix_,
+                       start,
                        len);
 
       this->prefix_[len] = 0;
@@ -468,11 +468,11 @@ AST_Decl::compute_repoID (void)
 
       this->repoID_[0] = '\0';
 
-      ACE_OS::sprintf (this->repoID_, 
-                       "%s", 
+      ACE_OS::sprintf (this->repoID_,
+                       "%s",
                        "IDL:");
 
-      ACE_OS::strcat (this->repoID_, 
+      ACE_OS::strcat (this->repoID_,
                       this->prefix ());
 
       // Add the "/" only if there is a prefix.
@@ -518,7 +518,7 @@ AST_Decl::compute_repoID (void)
         }
 
       delete i;
-      ACE_OS::strcat (this->repoID_, 
+      ACE_OS::strcat (this->repoID_,
                       ":1.0");
     }
 
@@ -568,7 +568,7 @@ AST_Decl::is_child (AST_Decl *s)
 
 // Dump this AST_Decl to the ostream o.
 void
-AST_Decl::dump (ostream &o)
+AST_Decl::dump (ACE_OSTREAM_TYPE &o)
 {
   this->pd_local_name->dump (o);
 }

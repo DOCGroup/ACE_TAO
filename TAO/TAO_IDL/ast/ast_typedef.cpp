@@ -86,10 +86,10 @@ AST_Typedef::AST_Typedef (AST_Type *bt,
                           UTL_StrList *p,
                           idl_bool local,
                           idl_bool abstract)
- : AST_Decl (AST_Decl::NT_typedef, 
-             n, 
+ : AST_Decl (AST_Decl::NT_typedef,
+             n,
              p),
-   COMMON_Base (bt->is_local () || local, 
+   COMMON_Base (bt->is_local () || local,
                 abstract),
    pd_base_type (bt)
 {
@@ -120,7 +120,7 @@ AST_Typedef::primitive_base_type (void)
 
 // Dump this AST_Typedef node to the ostream o.
 void
-AST_Typedef::dump (ostream &o)
+AST_Typedef::dump (ACE_OSTREAM_TYPE&o)
 {
   if (this->is_local ())
     {
