@@ -1,3 +1,9 @@
+Fri Aug 17 18:17:38 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* bin/clone.cpp: Only use extern char *sys_errlist[] if we're not
+	  compiling on Linux.  Thanks to Thomas Groth
+ 	  <groth.th@stn-atlas.de> for reporting this.
+
 Fri Aug 17 19:04:31 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.cpp (ACE_Process_Options::pass_handle): For WinCE,
