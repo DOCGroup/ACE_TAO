@@ -509,7 +509,7 @@ int be_interface::gen_server_skeletons (void)
   *ss << "IIOP_Object *data; // Actual object reference" << nl;
   *ss << "CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()->orb (); " <<
     "// underlying ORB" << nl;
-  *ss << "CORBA::BOA_ptr oa = TAO_ORB_Core_instance ()->root_poa (); " <<
+  *ss << "CORBA::POA_ptr oa = TAO_ORB_Core_instance ()->root_poa (); " <<
     "// underlying OA" << nl;
   *ss << "this->optable_ = &tao_" << local_name () << "_optable;" << nl <<
     nl; 

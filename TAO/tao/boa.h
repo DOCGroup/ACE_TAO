@@ -51,7 +51,7 @@ public:
                               ACE_INET_Addr &addr,
                               CORBA::Environment &env);
   // NON-STANDARD CALL.  According to CORBA V2.0, this functionality
-  // should really be <ROA_ptr ORB::ROA_init (argc,argv,ident)>.
+  // should really be <POA_ptr ORB::POA_init (argc,argv,ident)>.
   //
   // The current signature is residue from when this code was part of
   // the SunSoft IIOP reference implementation.
