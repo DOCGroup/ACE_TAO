@@ -37,7 +37,11 @@ SHFLAGS       = <%shflags%>
 TEMPINCDIR    = <%tempinc%>/<%project_name%>
 <%endif%>
 <%endfor%>
-CPPFLAGS      = $(PICFLAGS)<%if(cppflags)%> <%cppflags%><%endif%><%foreach(configurations)%><%if(tempinc)%> <%tempincopt%>$(TEMPINCDIR)<%endif%><%endfor%><%foreach(platforms)%><%if(extraflags)%> <%extraflags%><%endif%><%endfor%><%foreach(configurations)%><%if(compilerflags)%> <%compilerflags%><%endif%><%endfor%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%><%endfor%><%endif%><%if(includes)%><%foreach(includes)%> -I<%include%><%endfor%><%endif%><%if(macros)%><%foreach(macros)%> -D<%macro%><%endfor%><%endif%>
+GENFLAGS      = -g
+CPPFLAGS      = $(PICFLAGS) $(GENFLAGS)<%if(cppflags)%> <%cppflags%><%endif%><%foreach(configurations)%><%if(tempinc)%> <%tempincopt%>$(TEMPINCDIR)<%endif%><%endfor%><%foreach(platforms)%><%if(extracppflags)%> <%extracppflags%><%endif%><%endfor%><%foreach(configurations)%><%if(compilerflags)%> <%compilerflags%><%endif%><%endfor%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%><%endfor%><%endif%><%if(includes)%><%foreach(includes)%> -I<%include%><%endfor%><%endif%><%if(macros)%><%foreach(macros)%> -D<%macro%><%endfor%><%endif%>
+<%if(arflags)%>
+ARFLAGS       = <%arflags%>
+<%endif%>
 <%if(idl_files)%>
 IDL_FILES     =<%foreach(idl_files)%> <%noextension(idl_file)%><%endfor%>
 IDL_SRC       =<%foreach(idl_files)%> <%noextension(idl_file)%>C.cpp <%noextension(idl_file)%>S.cpp<%endfor%>
@@ -61,10 +65,11 @@ OUTPUT_OPTION = -o $@
 GENERATED_DIRTY =<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%if(custom_type->input_file->output_files)%><%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%><%endif%><%endfor%><%endfor%>
 <%foreach(custom_types)%>
 <%if(custom_types->libpath)%>
-LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
-SHLIB_PATH      := $(SHLIB_PATH):<%custom_type->libpath%>
-LIBPATH         := $(LIBPATH):<%custom_type->libpath%>
-PATH            := $(PATH):<%custom_type->libpath%>
+DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
+LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
+SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>
+LIBPATH           := $(LIBPATH):<%custom_type->libpath%>
+PATH              := $(PATH):<%custom_type->libpath%>
 
 <%endif%>
 <%foreach(custom_type->input_files)%>
@@ -132,7 +137,7 @@ $(LIB): $(OBJS)
 INSTARGET = $(BIN)
 install:
 	@echo "Installing $(INSTARGET) -> <%install%>/$(INSTARGET)"
-	@mkdir -p "<%install%>"
+	@-test -d "<%install%>" || mkdir -p "<%install%>" 2> /dev/null || true
 	@$(RM) "<%install%>/$(INSTARGET)"
 	@ln -s "$(PWD)/$(INSTARGET)" "<%install%>"
 
@@ -140,7 +145,7 @@ install:
 <%else%>
 <%if(!exename)%>
 install:
-	@mkdir -p "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
+	@-test -d "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>" || mkdir -p "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>" 2> /dev/null || true
 	@$(RM) "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>/$(INSTARGET)"
 	@ln -s "$(PWD)/$(INSTARGET)" "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
 

@@ -326,10 +326,12 @@ INSTALL_CHECK = <%install%>
 ifeq ($(INSTALL_CHECK),)
   INSTALL = $(INSTALL_CHECK)
 else
+ifneq ($(INSTALL_CHECK),.)
 <%if(exename)%>
   INSBIN  = $(INSTALL_CHECK)
   INSTALL = $(VBIN:%=$(INSBIN)/%$(EXEEXT))
 <%endif%>
+endif
 endif
 <%else%>
 <%if(!exename)%>
@@ -414,10 +416,11 @@ avoid_warning:
 <%if(custom_types)%>
 <%foreach(custom_types)%>
 <%if(custom_types->libpath)%>
-LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
-SHLIB_PATH      := $(SHLIB_PATH):<%custom_type->libpath%>
-LIBPATH         := $(LIBPATH):<%custom_type->libpath%>
-PATH            := $(PATH):<%custom_type->libpath%>
+DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
+LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
+SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>
+LIBPATH           := $(LIBPATH):<%custom_type->libpath%>
+PATH              := $(PATH):<%custom_type->libpath%>
 
 <%endif%>
 <%foreach(custom_type->input_files)%>

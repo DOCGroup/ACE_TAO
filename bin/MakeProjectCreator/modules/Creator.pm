@@ -570,6 +570,7 @@ sub fill_type_name {
     ## by a space.  This value could be a space separated list.
     $name =~ s/_$//;
     $name =~ s/_\s/ /g;
+    $name =~ s/\s_/ /g;
 
     ## If any one word is capitalized then capitalize each word
     if ($name =~ /[A-Z][0-9a-z_]+/) {
