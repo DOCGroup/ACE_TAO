@@ -1,3 +1,29 @@
+Sun Aug 15 18:32:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+        * tools/IDL3_to_IDL2/TAO_IDL3_TO_IDL2_BE_Export.h:
+        * tools/IDL3_to_IDL2/be_extern.h:
+        * tools/IDL3_to_IDL2/be_global.cpp:
+        * tools/IDL3_to_IDL2/be_global.h:
+        * tools/IDL3_to_IDL2/be_helper.cpp:
+        * tools/IDL3_to_IDL2/be_helper.h:
+        * tools/IDL3_to_IDL2/be_init.cpp:
+        * tools/IDL3_to_IDL2/be_produce.cpp:
+        * tools/IDL3_to_IDL2/be_sunsoft.cpp:
+        * tools/IDL3_to_IDL2/be_sunsoft.h:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+        * tools/IDL3_to_IDL2/README:
+        
+          New files implementing a tool that inputs an IDL file with IDL3
+          constructs and generates another IDL file with the IDL3
+          constructs converted to the spec-defined IDL2 equivalents. Using
+          the generated file instead of the original one in applications
+          will allow the developer to reference the IDL2 equivalent types
+          in application IDL, rather than just in C++ code as before.
+          The generated IDL file has a '_IDL2' suffix added to the
+          original file name just before the '.idl' extension.
+
 Sun Aug 15 09:17:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/Benchmark/Benchmark.mpc:
