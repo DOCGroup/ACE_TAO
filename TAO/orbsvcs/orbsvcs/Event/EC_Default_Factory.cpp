@@ -1,7 +1,7 @@
 // $Id$
 
 #include "EC_Default_Factory.h"
-#include "EC_Dispatching.h"
+#include "EC_Priority_Dispatching.h"
 #include "EC_Basic_Filter_Builder.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
@@ -51,12 +51,10 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
                 {
                   this->dispatching_ = 0;
                 }
-#if 0
               else if (ACE_OS::strcasecmp (opt, "priority") == 0)
                 {
                   this->dispatching_ = 1;
                 }
-#endif
               else
                 {
                   ACE_ERROR ((LM_ERROR,
@@ -188,6 +186,10 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
               else if (ACE_OS::strcasecmp (opt, "delayed") == 0)
                 {
                   this->supplier_set_ = 1;
+                }
+              else if (ACE_OS::strcasecmp (opt, "immediate_st") == 0)
+                {
+                  this->supplier_set_ = 2;
                 }
               else
                 {
@@ -345,10 +347,8 @@ TAO_EC_Default_Factory::create_dispatching (TAO_EC_Event_Channel *)
 {
   if (this->dispatching_ == 0)
     return new TAO_EC_Reactive_Dispatching ();
-#if 0
   else if (this->dispatching_ == 1)
-    return new TAO_EC_Priority_Dispatching (scheduler /* ??? */);
-#endif
+    return new TAO_EC_Priority_Dispatching ();
   return 0;
 }
 
@@ -486,9 +486,11 @@ TAO_EC_ProxyPushSupplier_Set*
 TAO_EC_Default_Factory::create_proxy_push_supplier_set (TAO_EC_Event_Channel *)
 {
   if (this->supplier_set_ == 0)
-    return new TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_Null_Mutex> ();
+    return new TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_SYNCH_MUTEX> ();
   else if (this->supplier_set_ == 1)
     return new TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH> ();
+  else if (this->supplier_set_ == 2)
+    return new TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_Null_Mutex> ();
   return 0;
 }
 
@@ -584,6 +586,12 @@ ACE_FACTORY_DEFINE (TAO_ORBSVCS, TAO_EC_Default_Factory)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_SYNCH_MUTEX>;
+template class TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_Null_Mutex>;
+
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_SYNCH_MUTEX>
+#pragma instantiate TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
