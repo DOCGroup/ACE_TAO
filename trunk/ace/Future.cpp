@@ -91,7 +91,7 @@ ACE_Future_Rep<T>::attach (ACE_Future_Rep<T>*& rep)
 {
   ACE_ASSERT (rep != 0);
   // Use value_ready_mutex_ for both condition and ref count management
-  ACE_MT (ACE_Guard<ACE_Thread_Mutex> r_mon (rep->value_ready_mutex_));
+  ACE_MT (ACE_Guard<ACE_Recursive_Thread_Mutex> r_mon (rep->value_ready_mutex_));
   ++rep->ref_count_;
   return rep;
 }
@@ -101,7 +101,7 @@ ACE_Future_Rep<T>::detach (ACE_Future_Rep<T>*& rep)
 {
   ACE_ASSERT (rep != 0);
   // Use value_ready_mutex_ for both condition and ref count management
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, r_mon, rep->value_ready_mutex_));
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, r_mon, rep->value_ready_mutex_));
 
   if (rep->ref_count_-- == 0)
     {
@@ -119,7 +119,7 @@ ACE_Future_Rep<T>::assign (ACE_Future_Rep<T>*& rep, ACE_Future_Rep<T>* new_rep)
   ACE_ASSERT (rep != 0);
   ACE_ASSERT (new_rep != 0);
   // Use value_ready_mutex_ for both condition and ref count management
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, r_mon, rep->value_ready_mutex_));
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, r_mon, rep->value_ready_mutex_));
 
   ACE_Future_Rep<T>* old = rep;
   rep = new_rep;
@@ -162,7 +162,7 @@ ACE_Future_Rep<T>::set (const T &r,
   // If the value is already produced, ignore it...
   if (this->value_ == 0)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex,
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
                                 ace_mon,
                                 this->value_ready_mutex_,
                                 -1));
@@ -203,15 +203,15 @@ ACE_Future_Rep<T>::get (T &value,
   // If the value is already produced, return it.
   if (this->value_ == 0)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
-                                ACE_const_cast (ACE_Thread_Mutex &, this->value_ready_mutex_),
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+                                ACE_const_cast (ACE_Recursive_Thread_Mutex &, this->value_ready_mutex_),
                                 -1));
       // If the value is not yet defined we must block until the
       // producer writes to it.
 
       while (this->value_ == 0)
         // Perform a timed wait.
-        if ((ACE_const_cast (ACE_Condition_Thread_Mutex &, this->value_ready_)).wait (tv) == -1)
+        if ((ACE_const_cast (ACE_Condition_Recursive_Thread_Mutex &, this->value_ready_)).wait (tv) == -1)
           return -1;
 
       // Destructor releases the lock.
@@ -225,7 +225,7 @@ template <class T> int
 ACE_Future_Rep<T>::attach (ACE_Future_Observer<T> *observer,
                           ACE_Future<T> &caller)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->value_ready_mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->value_ready_mutex_, -1));
 
   // Otherwise, create a new result value.  Note the use of the
   // Double-checked locking pattern to avoid corrupting the list.
@@ -244,7 +244,7 @@ ACE_Future_Rep<T>::attach (ACE_Future_Observer<T> *observer,
 template <class T> int
 ACE_Future_Rep<T>::detach (ACE_Future_Observer<T> *observer)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->value_ready_mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->value_ready_mutex_, -1));
 
   // Remove all occurrences of the specified observer from this
   // objects hash map.
@@ -258,7 +258,7 @@ ACE_Future_Rep<T>::operator T ()
   if (this->value_ == 0)
     {
       // Constructor of ace_mon acquires the mutex.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->value_ready_mutex_, 0));
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->value_ready_mutex_, 0));
 
       // If the value is not yet defined we must block until the
       // producer writes to it.
@@ -294,10 +294,7 @@ template <class T>
 ACE_Future<T>::ACE_Future (const T &r)
   : future_rep_ (FUTURE_REP::create ())
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT (" (%t) funny constructor\n")));
-  this->future_rep_->set (r,
-                          *this);
+  this->future_rep_->set (r, *this);
 }
 
 template <class T>
