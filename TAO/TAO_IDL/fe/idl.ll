@@ -507,13 +507,16 @@ idl_parse_line_and_file (char *buf)
 
   idl_global->set_in_main_file (in_main_file);
 
-  // @@@ (JP) We no longer store the stripped name as before, since that
-  // made it impossible to validate included IDL files
-  // unambiguously.
+  // Strip off any command line -I prefix that may have been added
+  // by the preprocessor.
   if (!(idl_global->in_main_file ()) && idl_global->import ()) 
     {
-      ACE_NEW (nm,
-               UTL_String (fname));
+      ACE_NEW (
+          nm,
+          UTL_String (
+              idl_global->stripped_preproc_include (fname->get_string ())
+            )
+        );
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);

@@ -617,123 +617,34 @@ IDL_GlobalData::validate_included_idl_files (void)
   // New number of included_idl_files.
   size_t newj = 0;
 
-  size_t n_lexer_includes = idl_global->n_included_idl_files ();
-  char **lexer_includes = idl_global->included_idl_files ();
-  char *lexer_include = 0;
-  char *lexer_base = 0;
-  size_t n_preproc_includes = idl_global->n_include_file_names ();
-  UTL_String **preproc_includes = idl_global->include_file_names ();
-  char *preproc_include = 0;
-  char *preproc_base = 0;
+  size_t n_pre_preproc_includes = idl_global->n_included_idl_files ();
+  char **pre_preproc_includes = idl_global->included_idl_files ();
+  size_t n_post_preproc_includes = idl_global->n_include_file_names ();
+  UTL_String **post_preproc_includes = idl_global->include_file_names ();
 
-  for (size_t j = 0; j < n_lexer_includes; ++j)
+  for (size_t j = 0; j < n_pre_preproc_includes; ++j)
     {
-      // Get a name from the lexer's list of included IDL files.
-      lexer_include = lexer_includes[j];
-
       // Check this name with the names list that we got from the
       // preprocessor.
       size_t valid_file = 0;
 
-      for (size_t ni = 0; ni < n_preproc_includes; ++ni)
+      for (size_t ni = 0; ni < n_post_preproc_includes; ++ni)
         {
-          preproc_include = preproc_includes[ni]->get_string ();
-
-          if (ACE_OS::strstr (preproc_include, lexer_include) != 0)
+          if (ACE_OS::strcmp (post_preproc_includes[ni]->get_string (), 
+                              pre_preproc_includes[j]) 
+               == 0)
             {
-              // Find the last occurrence of '/', if any,.
-              lexer_base = ACE_OS::strrchr (lexer_include,
-                                            '/');
-
-              int lexer_no_prefix = 0;
-
-              // Does this include come from the working directory?
-              if (lexer_base == 0)
-                {
-                  // Just use the whole string.
-                  lexer_base = lexer_include;
-
-                  // Set the flag for later comparison.
-                  lexer_no_prefix = 1;
-                }
-              // strrchr leaves the token at the beginning of the
-              // returned string, so we strip it off here.
-              else if (lexer_base[0] == '/')
-                {
-                  ++lexer_base;
-                }
-
-              preproc_base = ACE_OS::strrchr (preproc_include,                                              
-                                              '/');
-              int preproc_no_prefix = 0;
-
-              // Does this include come from the working directory?
-              if (preproc_base == 0)
-                {
-                  // Just use the whole string.
-                  preproc_base = preproc_include;
-
-                  // Set the flag for later comparison.
-                  preproc_no_prefix = 1;
-                }
-              // strrchr leaves the token at the beginning of the
-              // returned string, so we strip it off here.
-              else if (preproc_base[0] == '/')
-                {
-                  ++preproc_base;
-                }
-              // VC++ preprocessor prepends '.\' to included filenames
-              // from the working directory. SunCC preprocessor prepends
-              // './'. Gnu preprocessor prepends nothing, so the code
-              // below makes them all equivalent.
-              else if (preproc_base[0] == '.')
-                {
-                  if (preproc_base[1] == '\\' || preproc_base[1] == '/')
-                    {
-                      preproc_base += 2;
-                    }
-                }
-
-              // This tells us that the substring match above is bogus,
-              // since one file is from the working directory and one
-              // is from a subdirectory. If both files are from
-              // subdirectories, the substring match will have already
-              // failed, unless we have a true match.
-              if (lexer_no_prefix != preproc_no_prefix)
-                {
-                  continue;
-                }
-              
-              // Belt-and-suspenders check for '\' in the path name,
-              // in case the lexer conversion function for VC++ lets
-              // some get through. If some did, we may still not have
-              // the base file name to use with strcmp.
-              char *tmp = ACE_OS::strrchr (preproc_base,
-                                           '\\');
-
-              if (tmp == 0)
-                {
-                  tmp = preproc_base;
-                }
-              else if (tmp[0] == '\\')
-                {
-                  preproc_base = tmp + 1;
-                }
-
-              if (ACE_OS::strcmp (lexer_base, preproc_base) == 0)
-                {
-                  // This file name is valid.
-                  valid_file = 1;
-                  break;
-                }
+             // This file name is valid.
+              valid_file = 1;
+              break;
             }
         }
 
       // Remove the file, if it is not valid.
       if (valid_file == 0)
         {
-          delete idl_global->included_idl_files ()[j];
-          idl_global->included_idl_files ()[j] = 0;
+          delete pre_preproc_includes[j];
+          pre_preproc_includes[j] = 0;
         }
       else
         {
@@ -743,11 +654,11 @@ IDL_GlobalData::validate_included_idl_files (void)
           if (j != newj)
             {
               // Move to the new index position.
-              idl_global->included_idl_files ()[newj] =
-                idl_global->included_idl_files ()[j];
+              pre_preproc_includes[newj] =
+                pre_preproc_includes[j];
 
               // Make old position 0.
-              idl_global->included_idl_files ()[j] = 0;
+              pre_preproc_includes[j] = 0;
             }
 
           // Increment the new index.
@@ -775,7 +686,9 @@ IDL_GlobalData::parse_state()
  * Convert a PredefinedType to an ExprType
  */
 AST_Expression::ExprType
-IDL_GlobalData::PredefinedTypeToExprType(AST_PredefinedType::PredefinedType pt)
+IDL_GlobalData::PredefinedTypeToExprType (
+    AST_PredefinedType::PredefinedType pt
+  )
 {
   switch (pt) {
   case AST_PredefinedType::PT_long:
@@ -1103,3 +1016,64 @@ IDL_GlobalData::string_to_scoped_name (char *s)
 
   return retval;
 }
+
+char *
+IDL_GlobalData::stripped_preproc_include (const char *name)
+{
+  // Some preprocessors prepend "./" to filenames in the
+  // working directory, some others prepend ".\". If either
+  // of these are here, we want to strip them. Since we also
+  // know we're in the working directory, we can skip the
+  // command line prefix iteration.
+  if (name[0] == '.')
+    {
+      if (name[1] == '\\' || name[1] == '/')
+        {
+          return (char *)name + 2;
+        }
+    }
+
+  ssize_t cursor = this->idl_flags_.find ("-I", 0);
+  ACE_CString c_name (name, 0, 0);
+  size_t start = 0;
+  size_t end = 0;
+
+  while (cursor != ACE_SString::npos)
+    {
+      // Skip over the "-I".
+      start = (size_t)cursor + 2;
+
+      // If the "-I" is followed by a space. skip that too.
+      if (this->idl_flags_[start] == ' ')
+        {
+          ++start;
+        }
+
+      // idl_flags_ uses ' ' as a separator.
+      end = this->idl_flags_.find (' ', start);
+
+      // If it's the last one, there won't be a space at the end.
+      if (end == ACE_SString::npos)
+        {
+          end = this->idl_flags_.length ();
+        }
+
+      // Set the cursor for the next iteration, if any.
+      cursor = this->idl_flags_.find ("-I", end);
+
+      // If this prefix is found at the beginning of the name, strip it
+      // and return it.
+      if (c_name.find (this->idl_flags_.substr (start, end - start)) == 0)
+        {
+          // If the prefix ends in / or \, we don't need to strip the one
+          // that *would* have been added for concatenation.
+          char prefix_cap = this->idl_flags_[end - 1];
+          size_t skip_slash = (prefix_cap != '\\' && prefix_cap != '/');
+          return c_name.substr (end - start + skip_slash).rep ();
+        }
+    }
+
+  // If no prefix matches, just return the name unchanged.
+  return (char *)name;
+}
+
