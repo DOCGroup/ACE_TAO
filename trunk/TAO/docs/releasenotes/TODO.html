@@ -84,9 +84,24 @@
 	</P>
       </LI>
 
+      <LI><P>If the connection to the server cannot be established the
+	  right exception is <CODE>TRANSIENT</CODE>, not
+	  <CODE>COMM_FAILURE</CODE>; this and other exception
+	  inconsistencies have to be checked
+	  <BR>[STATUS] Most of this work has been completed, there are 
+	  a few i's to dot and t's to cross, for example:
+	  what is the right exception to raise when a
+	  <CODE>write()</CODE> fails? The answer is
+	  none, we must transparently retry the current profile, not
+	  the next one.
+          <BR>[ASSIGNED TO:] Carlos
+	</P>
+      </LI>
+
     </OL>
 
     <HR>
+
     <P>
     <H3>Pending Tasks</H3>
     </P>
@@ -629,19 +644,6 @@ class POA_Foo {
 
       <LI><P>Is the client side in TAO handling a
 	  <CODE>CloseConnection</CODE> GIOP message properly?
-	</P>
-      </LI>
-
-      <LI><P>If the connection to the server cannot be established the
-	  right exception is <CODE>TRANSIENT</CODE>, not
-	  <CODE>COMM_FAILURE</CODE>; this and other exception
-	  inconsistencies have to be checked
-	  <BR>[STATUS] Most of this work has been completed, there are 
-	  a few i's to dot and t's to cross, for example:
-	  what is the right exception to raise when a
-	  <CODE>write()</CODE> fails? The answer is
-	  none, we must transparently retry the current profile, not
-	  the next one.
 	</P>
       </LI>
 
