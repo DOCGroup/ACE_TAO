@@ -1,3 +1,14 @@
+Tue Mar 01 01:26:03 2005  Gan Deng <dengg@dre.vanderbilt.edu>
+
+	* ciao/Deployment_Core.idl
+
+	  Deleted a useless type definition.
+
+	* tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
+	* tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+
+	  Fixed compilation errors. Now both these two tests runs fine.
+
 Tue Mar 01 12:20:21 2005  Gan Deng <dengg@dre.vanderbilt.edu>
 
 	* DomainApplicationManager/DomainApplicationManager_Impl.cpp

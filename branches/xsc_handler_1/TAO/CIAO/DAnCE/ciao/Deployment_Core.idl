@@ -84,7 +84,6 @@ module Deployment
     Properties container_config;
   };
 
-  typedef sequence <ContainerImplementationInfo> ContainerImplementationInfos;
   typedef sequence <ContainerImplementationInfo> NodeImplementationInfo;
 
   //==================================
