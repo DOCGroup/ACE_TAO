@@ -212,7 +212,7 @@ ACE_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 	  break;
 	}
       // Here's the first free slot, so let's take it.
-      else if (ACE_REACTOR_EVENT_HANDLER (this, i) == ACE_INVALID_HANDLE
+      else if (ACE_REACTOR_HANDLE (i) == ACE_INVALID_HANDLE
 	       && assigned_slot == -1)
 	assigned_slot = i;
     }
