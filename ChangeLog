@@ -1,10 +1,17 @@
+Wed Jan  7 13:03:06 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Added an informational message when a project will be skipped when
+          a required feature is disabled or an avoided feature is enabled.
+
 Wed Jan  7 18:37:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Makefile.bor:
-	  Added special rule to install the os_include directory and its
-	  subdirectories. Thanks to Chris Kohlhoff for coming up with the
-	  solution and to Cyrille Chépélov <cyrille@softek.fr> for reporting
-	  this. This fixes [BUGID 1669].
+        * ace/Makefile.bor:
+          Added special rule to install the os_include directory and its
+          subdirectories. Thanks to Chris Kohlhoff for coming up with the
+          solution and to Cyrille Chépélov <cyrille@softek.fr> for reporting
+          this. This fixes [BUGID 1669].
 
 Wed Jan  7 12:13:12 2004  Chad Elliott  <elliott_c@ociweb.com>
 
