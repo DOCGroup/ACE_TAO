@@ -34,13 +34,13 @@ main (int, char *[])
 
   Message_Data &recv_msg_data = recv_msg.data ();
 
-  cout << "a message of length "
-       << recv_msg_data.length ()
-       << " received from server "
-       << recv_msg_data.pid ()
-       << " (user "
-       << recv_msg_data.user () << "): "
-       << recv_msg_data.text () << "\n";
+  ACE_DEBUG (("a message of length %d"
+              " received from server %d"
+       		  " (user %s): %s\n",
+              recv_msg_data.length (),
+              recv_msg_data.pid (),
+              recv_msg_data.user (),
+              recv_msg_data.text ()));
 
   return 0;
 }
