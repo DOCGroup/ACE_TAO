@@ -1,21 +1,27 @@
+Mon May 10 22:59:46 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/wrapper_macros.GNU: don't set VDIR
+          to .shobj/ for VxWorks, because it uses the same .o files
+          for static and shared libs.
+
 Mon May 10 15:33:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/INET_Addr.cpp (string_to_addr): Fixed a mistake that
- 	  occurred when integrating Jerry D. De Master
- 	  <jdemaste@ipdinc.com> fix.  Thanks to Zoran and Jerry for
- 	  reporting this.
+        * ace/INET_Addr.cpp (string_to_addr): Fixed a mistake that
+          occurred when integrating Jerry D. De Master
+          <jdemaste@ipdinc.com> fix.  Thanks to Zoran and Jerry for
+          reporting this.
 
 Mon May 10 15:00:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACE-INSTALL.html: Changed to use ACE_NO_INLINE to supress
-	  inlining to match with the recent dsp file changes.  Added a
-	  link to Barry Hoggard's CORBA page which contains ACE related
-	  MSVC setting hints.
+        * ACE-INSTALL.html: Changed to use ACE_NO_INLINE to supress
+          inlining to match with the recent dsp file changes.  Added a
+          link to Barry Hoggard's CORBA page which contains ACE related
+          MSVC setting hints.
 
-	* ace/Select_Reactor_Base.cpp (unbind): We need to make sure the
- 	  reactor's suspend_set_ also gets cleaned up when unbinding a
- 	  handler.  Thanks to Casey Lucas <clucas@sabre.com> for pointing
- 	  this out.
+        * ace/Select_Reactor_Base.cpp (unbind): We need to make sure the
+          reactor's suspend_set_ also gets cleaned up when unbinding a
+          handler.  Thanks to Casey Lucas <clucas@sabre.com> for pointing
+          this out.
 
 Mon May 10 17:08:29 1999  James C. Hu <jxh@entera.com>
 
@@ -44,8 +50,8 @@ Mon May 10 12:14:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 Mon May 10 11:35:18 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * COPYING: Made some updates suggested by Richard Stallman
- 	  <rms@gnu.org> of the Free Software Foundation
- 	  (http://www.fsf.org/).
+          <rms@gnu.org> of the Free Software Foundation
+          (http://www.fsf.org/).
 
 Mon May 10 11:01:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
