@@ -1,0 +1,390 @@
+/**
+ * @file CosNotification.idl
+ *
+ * @brief Define the CosNotification module
+ *
+ * $Id$
+ *
+ * @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+
+#ifndef _COS_NOTIFICATION_IDL_
+#define _COS_NOTIFICATION_IDL_
+
+#pragma prefix "omg.org"
+
+/**
+ * @namespace CosNotification
+ *
+ * @brief Define basic data structures used by the Notification
+ *        Service
+ */
+module CosNotification
+{
+  /// Dummy typedef for strings, if the intent was to support I18N
+  /// strings the spec should have used wstring
+  typedef string Istring;
+
+  /// Properties are named using a string
+  typedef Istring PropertyName;
+
+  /// Property values are stored using anys
+  typedef any PropertyValue;
+
+  /**
+   * @struct Property
+   *
+   * @brief Define a name/value pair.
+   *
+   * Events are described using named/value sequences, this structure
+   * defines the name/value pair.
+   */
+  struct Property {
+    /// The name
+    PropertyName name;
+    /// The value
+    PropertyValue value;
+  };
+
+  /// Define a sequence of properties.
+  typedef sequence<Property> PropertySeq;
+
+  //@{
+  /**
+   * @name Different kinds of property sequences
+   *
+   * @brief The following are all sequences of Property, but
+   * serve different purposes.
+   */
+  /// Property sequence used for optional header fields
+  typedef PropertySeq OptionalHeaderFields;
+
+  /// Property sequence used for the event body that can be used
+  /// in filtering
+  typedef PropertySeq FilterableEventBody;
+
+  /// Specify quality of service properties
+  typedef PropertySeq QoSProperties;
+
+  /// Specify administrative properties
+  typedef PropertySeq AdminProperties;
+  //@}
+
+  /**
+   * @struct _EventType
+   *
+   * @brief Define event type names.
+   *
+   * Different vertical industries (domains) can define well-known
+   * events (event_types).  This structure is used for that purpose
+   */
+  struct _EventType {
+    /// The name of the vertical industry defining the event type.
+    string domain_name;
+    /// The type of event.
+    string type_name;
+  };
+  /// A sequence of event types
+  typedef sequence<_EventType> EventTypeSeq;
+
+  /**
+   * @struct PropertyRange
+   *
+   * @brief A structure to define property ranges.
+   *
+   */
+  struct PropertyRange {
+    /// Lower end of the range
+    PropertyValue low_val;
+    /// High end of the range
+    PropertyValue high_val;
+  };
+
+  /**
+   * @struct NamedPropertyRange
+   *
+   * @brief A named property range
+   */
+  struct NamedPropertyRange {
+    /// The name
+    PropertyName name;
+    /// The range
+    PropertyRange range;
+  };
+  /// A sequence of named property ranges
+  typedef sequence<NamedPropertyRange> NamedPropertyRangeSeq;
+
+  /**
+   * @enum QoSError_code
+   *
+   * @brief Describe QoS errors.
+   */
+  enum QoSError_code {
+    /// The application has requested an unsupported QoS property
+    UNSUPPORTED_PROPERTY,
+    /// The application has requested a QoS property that, though
+    /// supported, cannot be set in the requested scope.
+    UNAVAILABLE_PROPERTY,
+    /// The application has requested a QoS property with an
+    /// unsupported value.
+    UNSUPPORTED_VALUE,
+    /// The application has requested a QoS property with a supported
+    /// value, but unavailable at the requeste scope.
+    UNAVAILABLE_VALUE,
+    /// The property name is unknown or not recognized.
+    BAD_PROPERTY,
+    /// The value type for the requested property is invalid
+    BAD_TYPE,
+    /// The value for the requested property is illegal
+    BAD_VALUE
+  };
+
+  /**
+   * @struct PropertyError
+   *
+   * @brief Describe the problems detected with an application
+   * requested QoS.
+   *
+   * If there are any problems with an application request for QoS the
+   * problems are raised using an exception that contains all the
+   * problems, and a description of the valid values (if they apply).
+   */
+  struct PropertyError {
+    /// Property error description
+    QoSError_code code;
+    /// Property name with a problem
+    PropertyName name;
+    /// Valid range for that property in the Notification Service
+    /// implementation
+    PropertyRange available_range;
+  };
+  /// List of property errors.
+  typedef sequence<PropertyError> PropertyErrorSeq;
+
+  /**
+   * @exception UnsupportedQoS
+   *
+   * @brief Exception used to describe problems with one or more QoS
+   * requests
+   *
+   */
+  exception UnsupportedQoS {
+    /// Complete description of the properties in error
+    PropertyErrorSeq qos_err;
+  };
+
+  /**
+   * @exception UnsupportedAdmin
+   *
+   * @brief Exception used to describe problems with one or more Admin
+   * properties
+   */
+  exception UnsupportedAdmin {
+    /// The complete description of the invalid properties.
+    PropertyErrorSeq admin_err;
+  };
+
+  /**
+   * @struct FixedEventHeader
+   *
+   * @brief Define the 'fixed' part of the event header
+   */
+  struct FixedEventHeader {
+    /// The event type
+    _EventType event_type;
+    /// A (possibly unique) name for the particular event
+    string event_name;
+  };
+
+  /**
+   * @struct EventHeader
+   *
+   * @brief Complete event header
+   */
+  struct EventHeader {
+    /// The fixed part of the event header
+    FixedEventHeader fixed_header;
+    /// The optional part
+    OptionalHeaderFields variable_header;
+  };
+
+  /**
+   * @struct StructuredEvent
+   *
+   * @brief Define structured events
+   */
+  struct StructuredEvent {
+    /// The header
+    EventHeader header;
+    /// The part of the body used for filtering
+    FilterableEventBody filterable_data;
+    /// The part of the body not used for filtering
+    any remainder_of_body;
+  };
+  /// Sequence of events, for batch processing
+  typedef sequence<StructuredEvent> EventBatch;
+
+  //@{
+  /**
+   * @name Constants for QoS Properties
+   *
+   * The following constant declarations define the standard QoS
+   * property names and the associated values each property can take
+   * on. The name/value pairs for each standard property are grouped,
+   * beginning with a string constant defined for the property name,
+   * followed by the values the property can take on.
+   */
+
+  const string EventReliability = "EventReliability";
+  const short BestEffort = 0;
+  const short Persistent = 1;
+
+  /// Can take on the same values as EventReliability
+  const string ConnectionReliability = "ConnectionReliability";
+
+  const string Priority = "Priority";
+  const short LowestPriority = -32767;
+  const short HighestPriority = 32767;
+  const short DefaultPriority = 0;
+
+  /// StartTime takes a value of type TimeBase::UtcT.
+  const string StartTime = "StartTime";
+
+  /// StopTime takes a value of type TimeBase::UtcT.
+  const string StopTime = "StopTime";
+
+  /// Timeout takes on a value of type TimeBase::TimeT
+  const string Timeout = "Timeout";
+
+  const string OrderPolicy = "OrderPolicy";
+  const short AnyOrder = 0;
+  const short FifoOrder = 1;
+  const short PriorityOrder = 2;
+  const short DeadlineOrder = 3;
+
+  /// DiscardPolicy takes on the same values as OrderPolicy, plus
+  const string DiscardPolicy = "DiscardPolicy";
+  const short LifoOrder = 4;
+
+  /// MaximumBatchSize takes on a value of type long
+  const string MaximumBatchSize = "MaximumBatchSize";
+
+  /// PacingInterval takes on a value of type TimeBase::TimeT
+  const string PacingInterval = "PacingInterval";
+
+  /// StartTimeSupported takes on a boolean value
+  const string StartTimeSupported = "StartTimeSupported";
+
+  /// StopTimeSupported takes on a boolean value
+  const string StopTimeSupported = "StopTimeSupported";
+
+  /// MaxEventsPerConsumer takes on a value of type long
+  const string MaxEventsPerConsumer = "MaxEventsPerConsumer";
+
+  //@}
+
+  /**
+   * @interface QoSAdmin
+   *
+   * @brief Interface used to control the QoS properties of an Event
+   * Service components (Channel, Proxy, etc.)
+   *
+   * QoS properties of a channel can be set at different levels,
+   * including the proxies, the ConsumerAdmin and the SupplierAdmin
+   * objects.  Each one of those components offers this interface to
+   * allow control over the properties.
+   */
+  interface QoSAdmin {
+    /// Get the current QoS properties
+    /**
+     * The operation returns the properties set:
+     * - At the level queried
+     * - Not set at the level queried but set at a higher-level
+     * - Not set at all but having a default value.
+     */
+    QoSProperties get_qos();
+
+    /// Set the QoS properties
+    /**
+     * @param qos The requested QoS properties
+     * @throws UnsupportedQoS if the requested QoS cannot be
+     *   implemented or is invalid.  The exception contents describe
+     *   the problem(s) in detail.
+     */
+    void set_qos ( in QoSProperties qos)
+      raises ( UnsupportedQoS );
+
+    /// Validate a set of QoS properties
+    /**
+     * @param required_qos the list of properties requested by the
+     *        application
+     * @param available_qos If the properties are supported this
+     *        argument returns a list of any other properties that
+     *        could also be set.
+     * @throws UnsupportedQoS if the requested QoS cannot be
+     *   implemented or is invalid.  The exception contents describe
+     *   the problem(s) in detail.
+     */
+    void validate_qos (in QoSProperties required_qos,
+                       out NamedPropertyRangeSeq available_qos )
+      raises ( UnsupportedQoS );
+  };
+
+  //@{
+  /**
+   * @name Constants for Admin Properties
+   *
+   * Admin properties are defined in similar manner as QoS
+   * properties. The only difference is that these properties are
+   * related to channel administration policies, as opposed message
+   * quality of service
+   */
+  /// MaxQueueLength takes on a value of type long
+  const string MaxQueueLength = "MaxQueueLength";
+
+  /// MaxConsumers takes on a value of type long
+  const string MaxConsumers = "MaxConsumers";
+
+  /// MaxSuppliers takes on a value of type long
+  const string MaxSuppliers = "MaxSuppliers";
+
+  /// RejectNewEvents takes on a value of type Boolean
+  const string RejectNewEvents = "RejectNewEvents";
+  //@}
+
+  /**
+   * @interface AdminPropertiesAdmin
+   *
+   * @brief Define the interface to manipulate the Admin properties of
+   *   a Notification Service components
+   *
+   * Several Notification Service components have Admin properties,
+   * including the Event Channel, its ConsumerAdmin and SupplierAdmin
+   * objects as well as the proxies.  This interface is used to
+   * control the Admin properties of each one of those components.
+   */
+  interface AdminPropertiesAdmin {
+    /// Get the Admin properties
+    /**
+     * The operation returns the properties set:
+     * - At the level queried
+     * - Not set at the level queried but set at a higher-level
+     * - Not set at all but having a default value.
+     */
+    AdminProperties get_admin();
+
+    /// Set the Admin properities
+    /**
+     * @param admin The list of Admin properties requested
+     * @throws UnsupportedAdmin if the requested admin properties
+     *   cannot be implemented or are invalid
+     */
+    void set_admin (in AdminProperties admin)
+      raises ( UnsupportedAdmin);
+  };
+
+};
+
+#pragma prefix ""
+
+#endif /* _COS_NOTIFICATION_IDL_ */

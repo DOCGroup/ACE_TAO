@@ -1,0 +1,3 @@
+TODO:
+   - Attempt to make all subroutines thread safe
+   - work on test suite - validate basic stuff doesn't leak
