@@ -15,6 +15,11 @@ public class DeSpeckleFilter extends SpatialFilter
       degree_ = degree;
     }
   
+  public String info ()
+  {
+    return "Removes speckles from an image.";
+  }
+
   public void imageComplete(int status)
   {
     if (status == IMAGEERROR || status == IMAGEABORTED)
