@@ -6,6 +6,10 @@ Thu May 18 11:28:29 2000  Ossama Othman  <ossama@uci.edu>
 	  option, and the endpoint formats of each of TAO's bundled
 	  pluggable protocols IIOP, SHMIOP and UIOP.
 
+	* docs/Options.html:
+
+	  Added link to new ORBEndpoint.html document.
+
 Thu May 18 09:14:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/invoke_cs.cpp:
