@@ -106,7 +106,7 @@ int main (int argc, char * argv[])
 
   } // end try
 
-  catch (const CORBA::Exception & e) {
+  catch (const CORBA::Exception &) {
     cerr << "Caught CORBA exception" << endl;
     return 1;
   }
