@@ -1,4 +1,7 @@
-Thu Feb 25 11:22:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Thu Feb 25 11:38:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/default_server.cpp (parse_args): Still allow the use of
+	  -ORBdemuxstrategy but spit out a warning when used.
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Don't remove
 	  temporary files on Win95/98.  Thanks to Rod Joseph
