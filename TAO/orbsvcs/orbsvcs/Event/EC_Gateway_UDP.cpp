@@ -79,7 +79,7 @@ void
 TAO_ECG_UDP_Sender::shutdown (CORBA::Environment& _env)
 {
   this->close (_env);
-  if (_env.exception () == 0) return;
+  if (_env.exception () != 0) return;
   this->lcl_ec_ = RtecEventChannelAdmin::EventChannel::_nil ();
 }
 
@@ -163,7 +163,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
   CORBA::ULong max_fragment_payload = this->mtu () -
     TAO_ECG_UDP_Sender::ECG_HEADER_SIZE;
   // ACE_ASSERT (max_fragment_payload != 0);
-  
+
   // ACE_DEBUG ((LM_DEBUG, "%d event(s) - ", events.length ()));
 
   // Send each event in a separate message.
@@ -206,7 +206,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
       iovec iov[TAO_WRITEV_MAX];
 
       CORBA::ULong total_length;
-      CORBA::ULong fragment_count = 
+      CORBA::ULong fragment_count =
         this->compute_fragment_count (cdr.begin (),
                                       cdr.end (),
                                       TAO_WRITEV_MAX,
@@ -238,7 +238,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
               CORBA::ULong last_mb_length =
                 max_fragment_payload - (fragment_size - l);
               iov[iovcnt - 1].iov_len = last_mb_length;
-              
+
               this->send_fragment (udp_addr,
                                    request_id,
                                    total_length,
@@ -331,7 +331,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
         }
       // ACE_ASSERT (total_length == fragment_offset);
       // ACE_ASSERT (fragment_id == fragment_count);
-     
+
     }
 }
 
@@ -361,7 +361,7 @@ TAO_ECG_UDP_Sender::send_fragment (const RtecUDPAdmin::UDP_Addr& udp_addr,
   cdr.write_ulong (fragment_count);
   CORBA::Octet padding[4];
   cdr.write_octet_array (padding, 4);
-                   
+
   iov[0].iov_base = cdr.begin ()->rd_ptr ();
   iov[0].iov_len  = cdr.begin ()->length ();
 
@@ -422,7 +422,7 @@ TAO_ECG_UDP_Sender::compute_fragment_count (const ACE_Message_Block* begin,
           fragment_count++;
 
           // The next iovector will contain what remains of this
-          // buffer, but also consider 
+          // buffer, but also consider
           iovcnt = 2;
           l -= max_fragment_payload - (fragment_size - l);
           fragment_size = l;
@@ -516,7 +516,7 @@ TAO_ECG_UDP_Request_Entry (const TAO_ECG_UDP_Request_Entry& rhs)
      own_received_fragments_ (0)
 {
 }
-#endif 
+#endif
 
 TAO_ECG_UDP_Request_Entry::~TAO_ECG_UDP_Request_Entry (void)
 {
@@ -660,10 +660,10 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                             RtecScheduler::Scheduler_ptr lcl_sched,
                             const char* lcl_name,
                             TAO_ECG_UDP_Out_Endpoint* ignore_from,
-			    RtecUDPAdmin::AddrServer_ptr addr_server,
+                            RtecUDPAdmin::AddrServer_ptr addr_server,
                             ACE_Reactor *reactor,
                             const ACE_Time_Value &expire_interval,
-                            int max_timeout, 
+                            int max_timeout,
                             CORBA::Environment &_env)
 {
   this->ignore_from_ = ignore_from;
@@ -671,9 +671,9 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
   this->lcl_ec_ =
     RtecEventChannelAdmin::EventChannel::_duplicate (lcl_ec);
 
-  this->addr_server_ = 
+  this->addr_server_ =
     RtecUDPAdmin::AddrServer::_duplicate (addr_server);
-  
+
   this->lcl_info_ = lcl_sched->lookup (lcl_name, _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
   if (this->lcl_info_ == -1)
@@ -776,7 +776,7 @@ void
 TAO_ECG_UDP_Receiver::shutdown (CORBA::Environment& _env)
 {
   this->close (_env);
-  if (_env.exception () == 0) return;
+  if (_env.exception () != 0) return;
 
   this->lcl_ec_ = RtecEventChannelAdmin::EventChannel::_nil ();
 
@@ -872,7 +872,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
       //                  fragment_count));
 
       // Create an entry and insert it....
-      TAO_ECG_UDP_Request_Entry* request_entry = 
+      TAO_ECG_UDP_Request_Entry* request_entry =
         new TAO_ECG_UDP_Request_Entry(byte_order,
                                       request_id,
                                       request_size,
@@ -958,7 +958,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
 
       return 0;
     }
-    
+
   TAO_TRY
     {
       RtecEventComm::EventSet event;
@@ -984,8 +984,8 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
 
 void
 TAO_ECG_UDP_Receiver::get_addr (const RtecEventComm::EventHeader& header,
-				RtecUDPAdmin::UDP_Addr_out addr,
-				CORBA::Environment& env)
+                                RtecUDPAdmin::UDP_Addr_out addr,
+                                CORBA::Environment& env)
 {
   this->addr_server_->get_addr (header, addr, env);
 }
@@ -1078,7 +1078,7 @@ TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv)
 
 int
 TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec,
-			CORBA::Environment& _env)
+                        CORBA::Environment& _env)
 {
   this->ec_ = RtecEventChannelAdmin::EventChannel::_duplicate (ec);
   RtecEventChannelAdmin::Observer_var obs =
@@ -1100,12 +1100,12 @@ TAO_ECG_Mcast_EH::close (CORBA::Environment& _env)
 
   if (this->dgram_.unsubscribe () == -1)
     return -1;
-  
+
   this->ec_->remove_observer (this->handle_, _env);
   this->handle_ = 0;
   TAO_CHECK_ENV_RETURN (_env, -1);
 
-  return 0;  
+  return 0;
 }
 
 int
@@ -1134,30 +1134,30 @@ TAO_ECG_Mcast_EH::unsubscribe (const ACE_INET_Addr &mcast_addr)
 
 void
 TAO_ECG_Mcast_EH::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
-				   CORBA::Environment& _env)
+                                   CORBA::Environment& _env)
 {
   // ACE_DEBUG ((LM_DEBUG,
-  //	      "ECG_Mcast_EH (%t) updating consumer\n"));
+  //          "ECG_Mcast_EH (%t) updating consumer\n"));
 
   // @@ TODO: If we are more careful we may simply subscribe for the
   // new event types and unsubscribe from the old ones...
   this->reactor ()->remove_handler (this,
-				    ACE_Event_Handler::READ_MASK);
+                                    ACE_Event_Handler::READ_MASK);
   this->dgram_.close ();
 
   int must_register = 0;
   for (CORBA::ULong i = 0; i < sub.dependencies.length (); ++i)
     {
       const RtecEventComm::EventHeader& header =
-	sub.dependencies[i].event.header;
+        sub.dependencies[i].event.header;
 
       if (0 <= header.type && header.type <= ACE_ES_EVENT_UNDEFINED)
-	{
-	  // ACE_DEBUG ((LM_DEBUG,
-	  //	      "ECG_Mcast_EH (%t) type = %d skipped\n",
-	  //	      header.type));
-	  continue;
-	}
+        {
+          // ACE_DEBUG ((LM_DEBUG,
+          //          "ECG_Mcast_EH (%t) type = %d skipped\n",
+          //          header.type));
+          continue;
+        }
       must_register = 1;
       RtecUDPAdmin::UDP_Addr addr;
 
@@ -1166,24 +1166,24 @@ TAO_ECG_Mcast_EH::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub
 
       ACE_INET_Addr inet_addr (addr.port, addr.ipaddr);
       if (this->subscribe (inet_addr) == -1)
-	ACE_ERROR ((LM_DEBUG,
-		    "cannot subscribe to %s:%d\n",
-		    inet_addr.get_host_addr (),
-		    inet_addr.get_port_number ()));
+        ACE_ERROR ((LM_DEBUG,
+                    "cannot subscribe to %s:%d\n",
+                    inet_addr.get_host_addr (),
+                    inet_addr.get_port_number ()));
       // ACE_DEBUG ((LM_DEBUG,
-      //	  "ECG_Mcast_EH (%t) subscribed to %s:%d\n",
-      //	  inet_addr.get_host_addr (),
-      //	  inet_addr.get_port_number ()));
+      //          "ECG_Mcast_EH (%t) subscribed to %s:%d\n",
+      //          inet_addr.get_host_addr (),
+      //          inet_addr.get_port_number ()));
     }
 
   if (must_register)
     this->reactor ()->register_handler (this,
-					ACE_Event_Handler::READ_MASK);
+                                        ACE_Event_Handler::READ_MASK);
 }
 
 void
 TAO_ECG_Mcast_EH::update_supplier (const RtecEventChannelAdmin::SupplierQOS&,
-				   CORBA::Environment&)
+                                   CORBA::Environment&)
 {
   // Do nothing
 }
@@ -1197,15 +1197,15 @@ TAO_ECG_Mcast_EH::Observer::Observer (TAO_ECG_Mcast_EH* eh)
 
 void
 TAO_ECG_Mcast_EH::Observer::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
-					     CORBA::Environment& _env)
+                                             CORBA::Environment& _env)
 {
   this->eh_->update_consumer (sub, _env);
 }
 
 void
 TAO_ECG_Mcast_EH::Observer::update_supplier (const
-					     RtecEventChannelAdmin::SupplierQOS& pub,
-					     CORBA::Environment& _env)
+                                             RtecEventChannelAdmin::SupplierQOS& pub,
+                                             CORBA::Environment& _env)
 {
   this->eh_->update_supplier (pub, _env);
 }
