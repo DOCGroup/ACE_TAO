@@ -14,7 +14,7 @@
 <hr><p>
 <font size=+2><strong>Contents</strong></font>
 <ol>
-  <li><a href="#Proposal">Proposal for Splitting ACE into Multiple
+  <li><a href="#Motivation">Motivation for Splitting ACE into Multiple
     Libraries</a>
   <li><a href="#Configuration Management">Configuration Management</a>
   <li><a href="#Classes">Classes in Each ACE Library Subset</a>
@@ -25,13 +25,12 @@
 
 
 <hr><p>
-<h3><a name="Proposal">Proposal for Splitting ACE into Multiple
+<h3><a name="Motivation">Motivation for Splitting ACE into Multiple
   Libraries</a></h3>
 
-The following is a draft of our proposal for splitting ACE into
-multiple libraries, each of which will contain a smaller subset of the
-overall ACE functionality.  The primary motivations for subsetting ACE
-are:
+This document describes how we are splitting ACE into multiple
+libraries, each of which will contain a smaller subset of the overall
+ACE functionality.  The primary motivations for subsetting ACE are:
 
 <UL>
 <LI><EM>Principle of parsimony</EM> -- <EM>i.e.</EM>, developers
@@ -43,7 +42,7 @@ are:
   use. <P>
 </UL>
 
-The main design goals of this proposal are as follows: <P>
+The main design goals of our approach are as follows: <P>
 
 <OL>
 <LI>Support the original libACE as before.  Thus, for users who
@@ -131,14 +130,15 @@ depend on <CODE>libACE_OS</CODE>.<P>
 In addition, we will create <CODE>libACE_TAO</CODE>, which contains
 just the core set of components in ACE that are required to support
 TAO.  This library is targeted at embedded systems developers who want
-to minimize the footprint of ACE+TAO. <P>
+to minimize the footprint of ACE+TAO.  We are also planning to support
+the OMG's <A
+HREF="http://www.omg.org/techprocess/meetings/schedule/Minimum_CORBA_RFP.html">Minimum
+CORBA</A> specification as part of a separate effort. <P>
 
 Note that the ACE library subsets described above are intended as a
 guideline, <EM>not</EM> a complete specification.  The actual
 partitioning of files in the final ACE library subsets may differ
-somewhat in order to improve footprint and simplify common
-use-cases. <P>
-
+somewhat to improve footprint and simplify common use-cases. <P>
 
 <hr><p>
 <h3><a name="Configuration Management">Configuration Management</a></h3>
@@ -734,9 +734,9 @@ This component contains miscellaneous ACE C++ wrappers.
 <hr><p>
 <h3><a name="ACE Library Size Breakdown">ACE Library Size Breakdown</a></h3>
 
-Here is an example size breakdown, by ACE library component.  It
-is for ACE 4.6.25, statically built with these
-<a href="../ACE-INSTALL.html#flags">make flags</a>:
+Here is an example size breakdown, by ACE library component.  It is
+for ACE 4.6.25, statically built with these <a
+href="../ACE-INSTALL.html#flags">make flags</a>:
 
 <pre><code>
     debug=0 optimize=1 static_libs_only=1 DEFFLAGS=-DACE_USE_RCSID=0
@@ -1040,7 +1040,6 @@ the <code>ACE_OS</code> member functions, ACE's
 <a href="../ace/OS.h"><code>ace/OS.h</code></a>.  See ACE's
 <a href="../tests/Basic_Types_Test.cpp">Basic_Types_Test.cpp</a>
 for an example of usage.<p>
-
 
 <HR><P>
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>
