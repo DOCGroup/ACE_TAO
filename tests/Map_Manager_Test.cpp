@@ -25,63 +25,90 @@
 #include "ace/Synch.h"
 
 typedef ACE_Null_Mutex MUTEX;
-typedef size_t VALUE;
+typedef size_t TYPE;
 
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-// We need this template specialization since KEY is defined as a
+// We need this template specialization since TYPE is defined as a
 // size_t, which doesn't have a hash() method defined on it.
 
 u_long
-ACE_Hash_Map_Manager<KEY, VALUE, MUTEX>::hash (const KEY& ext_id)
+ACE_Hash_Map_Manager<TYPE, TYPE, MUTEX>::hash (const TYPE& ext_id)
 {
   return ext_id;
 }
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
-typedef ACE_Map_Manager <KEY, VALUE, MUTEX> MAP_MANAGER;
-typedef ACE_Map_Iterator <KEY, VALUE, MUTEX> ITERATOR;
-typedef ACE_Map_Reverse_Iterator <KEY, VALUE, MUTEX> REVERSE_ITERATOR;
-typedef ACE_Map_Entry <KEY, VALUE> ENTRY;
-typedef ACE_Hash_Map_Manager <KEY, VALUE, MUTEX> HASH_MAP_MANAGER;
-typedef ACE_Hash_Map_Iterator <KEY, VALUE, MUTEX> HASH_ITERATOR;
-typedef ACE_Hash_Map_Entry <KEY, VALUE> HASH_ENTRY;
+typedef ACE_Map_Manager <TYPE, TYPE, MUTEX> MAP_MANAGER;
+typedef ACE_Map_Iterator <TYPE, TYPE, MUTEX> ITERATOR;
+typedef ACE_Map_Reverse_Iterator <TYPE, TYPE, MUTEX> REVERSE_ITERATOR;
+typedef ACE_Map_Entry <TYPE, TYPE> ENTRY;
+typedef ACE_Hash_Map_Manager <TYPE, TYPE, MUTEX> HASH_MAP_MANAGER;
+typedef ACE_Hash_Map_Iterator <TYPE, TYPE, MUTEX> HASH_ITERATOR;
+typedef ACE_Hash_Map_Reverse_Iterator <TYPE, TYPE, MUTEX> HASH_REVERSE_ITERATOR;
+typedef ACE_Hash_Map_Entry <TYPE, TYPE> HASH_ENTRY;
 
 static void
 test_hash_map_manager (size_t table_size, size_t iterations)
 {
   HASH_MAP_MANAGER map (table_size);
-  VALUE i;
-  VALUE j;
+  TYPE i;
+  TYPE j;
 
   for (i = 0; i < iterations; i++)
-    ACE_ASSERT (map.bind (KEY (i), i) != -1);
+    ACE_ASSERT (map.bind (i, i) != -1);
 
   {
     HASH_ITERATOR iterator (map);
 
-    for (HASH_ENTRY *entry = 0;
+    HASH_ENTRY *entry = 0;
+    for (entry = 0, i = 0;
 	 iterator.next (entry) != 0;
-	 iterator.advance ())
-      continue;
+	 iterator.advance (), i++)
+      ACE_DEBUG ((LM_DEBUG, "%d ", i));
+    ACE_DEBUG ((LM_DEBUG, "\n"));
+  }
+  
+  {
+    HASH_REVERSE_ITERATOR iterator (map);
+    
+    HASH_ENTRY *entry = 0;
+    for (entry = 0, i = iterations - 1;
+	 iterator.next (entry) != 0;
+	 iterator.advance (), i--)
+      ACE_DEBUG ((LM_DEBUG, "%d ", i));
+    ACE_DEBUG ((LM_DEBUG, "\n"));
   }
 
   {
     HASH_MAP_MANAGER::ITERATOR iterator (map);
 
-    for (HASH_MAP_MANAGER::ENTRY *entry = 0;
+    HASH_MAP_MANAGER::ENTRY *entry = 0;
+    for (entry = 0, i = 0;
 	 iterator.next (entry) != 0;
-	 iterator.advance ())
-      continue;
+	 iterator.advance (), i++)
+      ACE_DEBUG ((LM_DEBUG, "%d ", i));
+    ACE_DEBUG ((LM_DEBUG, "\n"));
+  }
+
+  {
+    HASH_MAP_MANAGER::REVERSE_ITERATOR iterator (map);
+
+    HASH_MAP_MANAGER::ENTRY *entry = 0;
+    for (entry = 0, i = iterations - 1;
+	 iterator.next (entry) != 0;
+	 iterator.advance (), i--)
+      ACE_DEBUG ((LM_DEBUG, "%d ", i));
+    ACE_DEBUG ((LM_DEBUG, "\n"));
   }
 
   for (i = 0; i < iterations; i++)
     {
-      ACE_ASSERT (map.find (KEY (i), j) != -1);
+      ACE_ASSERT (map.find (i, j) != -1);
       ACE_ASSERT (i == j);
     }
 
   for (i = 0; i < iterations; i++)
-    ACE_ASSERT (map.unbind (KEY (i)) != -1);
+    ACE_ASSERT (map.unbind (i) != -1);
 
   ACE_ASSERT (map.current_size () == 0);
 }
@@ -90,56 +117,64 @@ static void
 test_map_manager (size_t table_size, size_t iterations)
 {
   MAP_MANAGER map (table_size);
-  VALUE i;
-  VALUE j;
+  TYPE i;
+  TYPE j;
 
   for (i = 0; i < iterations; i++)
-    ACE_ASSERT (map.bind (KEY (i), i) != -1);
+    ACE_ASSERT (map.bind (i, i) != -1);
 
   {
     ITERATOR iterator (map);
 
-    for (ENTRY *entry = 0;
+    ENTRY *entry = 0;
+    for (entry = 0, i = 0;
 	 iterator.next (entry) != 0;
-	 iterator.advance ())
-      continue;
+	 iterator.advance (), i++)
+      ACE_DEBUG ((LM_DEBUG, "%d ", i));
+    ACE_DEBUG ((LM_DEBUG, "\n"));
   }
 
   {
     REVERSE_ITERATOR iterator (map);
 
-    for (ENTRY *entry = 0;
+    ENTRY *entry = 0;
+    for (entry = 0, i = iterations - 1;
 	 iterator.next (entry) != 0;
-	 iterator.advance ())
-      continue;
+	 iterator.advance (), i--)
+      ACE_DEBUG ((LM_DEBUG, "%d ", i));
+    ACE_DEBUG ((LM_DEBUG, "\n"));
   }
 
   {
     MAP_MANAGER::ITERATOR iterator (map);
 
-    for (MAP_MANAGER::ENTRY *entry = 0;
+    MAP_MANAGER::ENTRY *entry = 0;
+    for (entry = 0, i = 0;
 	 iterator.next (entry) != 0;
-	 iterator.advance ())
-      continue;
+	 iterator.advance (), i++)
+      ACE_DEBUG ((LM_DEBUG, "%d ", i));
+    ACE_DEBUG ((LM_DEBUG, "\n"));
   }
 
   {
     MAP_MANAGER::REVERSE_ITERATOR iterator (map);
 
-    for (MAP_MANAGER::ENTRY *entry = 0;
+    MAP_MANAGER::ENTRY *entry = 0;
+    for (entry = 0, i = iterations - 1;
 	 iterator.next (entry) != 0;
-	 iterator.advance ())
-      continue;
+	 iterator.advance (), i--)
+      ACE_DEBUG ((LM_DEBUG, "%d ", i));
+    ACE_DEBUG ((LM_DEBUG, "\n"));
   }
 
   for (i = 0; i < iterations; i++)
     {
-      ACE_ASSERT (map.find (KEY (i), j) != -1);
+      ACE_ASSERT (map.find (i, j) != -1);
       ACE_ASSERT (i == j);
     }
 
   for (i = 0; i < iterations; i++)
-    ACE_ASSERT (map.unbind (KEY (i)) != -1);
+    ACE_ASSERT (map.unbind (i) != -1);
 
   ACE_ASSERT (map.current_size () == 0);
 }
@@ -174,7 +209,7 @@ main (int argc, char *argv[])
 {
   ACE_START_TEST ("Map_Manager_Test");
 
-  size_t table_size = ACE_MAX_ITERATIONS;
+  size_t table_size = ACE_MAX_ITERATIONS / 2;
   size_t iterations = ACE_MAX_ITERATIONS;
 
   if (argc > 1)
@@ -190,20 +225,22 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager<KEY, VALUE, MUTEX>;
-template class ACE_Hash_Map_Iterator<KEY, VALUE, MUTEX>;
-template class ACE_Hash_Map_Entry<KEY, VALUE>;
-template class ACE_Map_Manager<KEY, VALUE, MUTEX>;
-template class ACE_Map_Iterator<KEY, VALUE, MUTEX>;
-template class ACE_Map_Reverse_Iterator<KEY, VALUE, MUTEX>;
-template class ACE_Map_Entry<KEY, VALUE>;
+template class ACE_Hash_Map_Manager<TYPE, TYPE, MUTEX>;
+template class ACE_Hash_Map_Iterator<TYPE, TYPE, MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>;
+template class ACE_Hash_Map_Entry<TYPE, TYPE>;
+template class ACE_Map_Manager<TYPE, TYPE, MUTEX>;
+template class ACE_Map_Iterator<TYPE, TYPE, MUTEX>;
+template class ACE_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>;
+template class ACE_Map_Entry<TYPE, TYPE>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager<KEY, VALUE, MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<KEY, VALUE, MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<KEY, VALUE>
-#pragma instantiate ACE_Map_Manager<KEY, VALUE, MUTEX>
-#pragma instantiate ACE_Map_Iterator<KEY, VALUE, MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<KEY, VALUE, MUTEX>
-#pragma instantiate ACE_Map_Entry<KEY, VALUE>
+#pragma instantiate ACE_Hash_Map_Manager<TYPE, TYPE, MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<TYPE, TYPE, MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry<TYPE, TYPE>
+#pragma instantiate ACE_Map_Manager<TYPE, TYPE, MUTEX>
+#pragma instantiate ACE_Map_Iterator<TYPE, TYPE, MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>
+#pragma instantiate ACE_Map_Entry<TYPE, TYPE>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
