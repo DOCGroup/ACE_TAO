@@ -1,4 +1,4 @@
-Wed Jun 16 18:54:32 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu
+Wed Jun 16 18:54:32 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
 	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
