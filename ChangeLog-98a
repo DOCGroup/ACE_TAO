@@ -1,3 +1,22 @@
+Thu Jan 29 16:17:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (open): Always close down the logger connection
+	  before changing the setting.  Added codes to allow resetting
+	  logging endpoint back to STDERR from LOGGER.
+
+	* ace/OS.h (ACE_DEFAULT_LOGGER_KEY):  Changed to localhost:10012
+	  so it can be used in both netsvcs/lib/ and netsvcs/client/.
+
+	* netsvcs/client/Logger/indirect_logger.cpp: Added code to reset
+	  logging endpoint back to stderr.
+
+	* netsvcs/lib/Client_Logging_Handler.cpp
+	  (ACE_Client_Logging_Acceptor):  Changed to initialize
+	  logger_key_ with ACE_DEFAULT_LOGGER_KEY.
+
+	* netsvcs/lib/Client_Logging_Handler.h: Removed DEFAULT_LOGGER_KEY
+	  definition.
+
 Thu Jan 29 12:32:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* include/makeinclude/platform_irix6.x-sgic++.GNU:
