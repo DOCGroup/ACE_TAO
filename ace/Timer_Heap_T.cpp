@@ -555,6 +555,10 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::cancel (long timer_id,
 
   // Locate the ACE_Timer_Node that corresponds to the timer_id.
 
+  // Check to see if the timer_id is out of range
+  if (timer_id < 0 || (size_t)timer_id > this->max_size_)
+    return 0;
+
   long timer_node_slot = this->timer_ids_[timer_id];
 
   if (timer_id != this->heap_[timer_node_slot]->get_timer_id ())
