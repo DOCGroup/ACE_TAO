@@ -445,7 +445,7 @@ CORBA_ORB_out::CORBA_ORB_out (CORBA_ORB_var &p) // constructor from _var
 }
 
 ACE_INLINE
-CORBA_ORB_out::CORBA_ORB_out (CORBA_ORB_out &p) // copy constructor
+CORBA_ORB_out::CORBA_ORB_out (const CORBA_ORB_out &p) // copy constructor
         : ptr_ (p.ptr_)
 {}
 
