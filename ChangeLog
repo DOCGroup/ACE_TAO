@@ -1,3 +1,12 @@
+Fri Jun 25 18:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.pl: 
+          Removed all options for valgrind. The easiest way to do this is
+          to set the environment variable VALGRIND_OPTS and then valgrind
+          will use these settings. This way the user can control all the 
+          options of valgrind, which options there are, see the valgrind
+          documentation
+
 Fri Jun 25 11:47:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Configuration.h:
