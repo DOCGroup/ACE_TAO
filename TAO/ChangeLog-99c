@@ -1,3 +1,9 @@
+Wed Sep 01 04:53:39 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IIOP_Transport.cpp (start_request):
+	* tao/UIOP_Transport.cpp (start_request): Fixed unused variable
+	  warnings.
+
 Wed Sep 01 04:04:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Invocation.h:
