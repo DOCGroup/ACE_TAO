@@ -1,33 +1,68 @@
+Fri Nov 19 10:52:03 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * performance-tests/Latency/DII/run_test.pl:
+        * performance-tests/Latency/DSI/run_test.pl:
+        * performance-tests/Latency/Deferred/run_test.pl:
+        * performance-tests/Latency/Thread_Pool/run_test.pl:
+
+          Increased the timeouts to allow for slower machines.
+
+        * examples/POA/Explicit_Activation/alternate.conf.xml:
+        * examples/Quoter/client.conf:
+        * examples/Quoter/client.conf.xml:
+        * examples/Quoter/server.conf:
+        * examples/Quoter/server.conf.xml:
+        * orbsvcs/tests/AVStreams/Multicast/components_svc.conf.xml:
+        * performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+        * performance-tests/Cubit/TAO/MT_Cubit/svc.conf.xml:
+        * performance-tests/Latency/DII/svc.conf.xml:
+        * performance-tests/Latency/DSI/svc.conf:
+        * performance-tests/Latency/DSI/svc.conf.xml:
+        * performance-tests/Latency/Deferred/svc.conf:
+        * performance-tests/Latency/Deferred/svc.conf.xml:
+        * performance-tests/Sequence_Latency/DII/svc.conf.xml:
+        * performance-tests/Sequence_Latency/DSI/svc.conf:
+        * performance-tests/Sequence_Latency/DSI/svc.conf.xml:
+        * performance-tests/Sequence_Latency/Deferred/svc.conf:
+        * performance-tests/Sequence_Latency/Deferred/svc.conf.xml:
+        * performance-tests/Sequence_Latency/Single_Threaded/svc.conf.xml:
+        * performance-tests/Throughput/svc.conf:
+        * performance-tests/Throughput/svc.conf.xml:
+        * tests/NestedUpcall/MT_Client_Test/client.conf:
+        * tests/NestedUpcall/MT_Client_Test/client.conf.xml:
+
+          Removed the deprecated -ORBresources configurator option.
+
 Fri Nov 19 08:54:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_home.cpp:
-        
+
           Fixed call to wrong member of accessor/mutator pair
           for the seen_in_operation member of the home's
           managed component.
-          
+
         * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp:
         * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
-        
+
           Added a missing check for locality constraint in the decision
           to generate/not generate Any and CDR operators for forward
           declared interfaces to changes made to these files in
-          
+
           Thu Nov 18 13:17:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Nov 18 18:00:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Object_T.cpp:
-        
+
           Made the _unchecked_narrow() method more robust by moving
           the check for a local interface above the call to _stubobj().
           Then if the call returns 0, we know we have been passed a
           bogus object reference, so we can throw BAD_PARAM. Thanks
           to Bala Natarajan <bala@dre.vanderbilt.edu> for answering
           my questions about this.
-          
+
         * tao/Object_T.h:
-        
+
           Removed some commented out and unused code.
 
 Thu Nov 17 15:55:00 2004  Gary Maxey  <gary.maxey@hp.com>
@@ -49,7 +84,7 @@ Thu Nov 17 15:55:00 2004  Gary Maxey  <gary.maxey@hp.com>
 Thu Nov 18 17:05:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Object_T.cpp:
-        
+
           Fixed a bug in narrowing a local interface to a non-local
           base class. Thanks to Vincent Spano <spam.robot@go.away>
           for reporting it, and for sending in example code to
@@ -61,24 +96,24 @@ Thu Nov 18 13:17:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
-        
+
           Removed code generation of Any and CDR operator declarations
           for undefined forward declared interfaces. Since this issue
           was last addressed, we have added other features to code
           generation that may enable us to eliminate this unnecessary
           bit of code generation.
-          
+
         * TAO_IDL/include/utl_err.h:
         * TAO_IDL/util/utl_err.cpp:
-        
+
           Added error for use of local type in a non-local interface's
           operation signature. Formerly we had just an ACE_DEBUG message,
           which is easily overlooked.
 
 Thu Nov 18 19:08:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
-	* rules.tao.GNU:
-	  Fixed correct setting of TAO_IDL_DEP for crossbuilds.
+        * rules.tao.GNU:
+          Fixed correct setting of TAO_IDL_DEP for crossbuilds.
 
 Thu Nov 18 12:44:34 2004  Chad Elliott  <elliott_c@ociweb.com>
 
