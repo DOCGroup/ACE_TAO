@@ -197,11 +197,7 @@ Server::Server (void)
 int
 Server::handle_input (ACE_HANDLE /* handle */)
 {
-//   ACE_DEBUG ((LM_DEBUG, "GOT EVENT FOR HANDLE %d\n", handle));
-
   char buffer[BUFSIZ] = { 0 };
-
-  ACE_DEBUG ((LM_DEBUG, "BUFFER SIZE = %d\n", BUFSIZ));
 
   ssize_t bytes_read = 0;
 
@@ -222,10 +218,8 @@ Server::handle_input (ACE_HANDLE /* handle */)
 
       if (bytes_read == -1)
         {
-          ACE_DEBUG ((LM_DEBUG, "%p\n", "ERROR WAS"));
           if (errno == EWOULDBLOCK)
             {
-              ACE_DEBUG ((LM_DEBUG, "GOT EWOULDBLOCK\n"));
 
 //               ACE_HEX_DUMP ((LM_DEBUG,
 //                              buf,
@@ -491,7 +485,7 @@ server_worker (void *p)
 int
 main (int, char *[])
 {
-//   ACE_START_TEST (ACE_TEXT ("Dev_Poll_Reactor_Test"));
+  ACE_START_TEST (ACE_TEXT ("Dev_Poll_Reactor_Test"));
 
   ACE_Dev_Poll_Reactor dp_reactor;
   ACE_Reactor reactor (&dp_reactor);
@@ -523,12 +517,6 @@ main (int, char *[])
                        ACE_TEXT ("Unable to spawn server thread")),
                       -1);
 
-//   if (cv.wait () != 0)
-//     ACE_ERROR_RETURN ((LM_ERROR,
-//                        ACE_TEXT ("%p\n"),
-//                        ACE_TEXT ("Error waiting on condition variable")),
-//                       -1);
-
   ACE_OS::sleep (5);  // Wait for the listening endpoint to be set up.
 
   ACE_INET_Addr addr;
@@ -558,7 +546,7 @@ main (int, char *[])
                        ACE_TEXT ("Error waiting for threads to complete")),
                       -1);
 
-//   ACE_END_TEST;
+  ACE_END_TEST;
 
   return 0;
 }
@@ -603,7 +591,6 @@ template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client> *, ACE_SYNCH_R
 #pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client> *, ACE_SYNCH_RW_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 
 #else
 
