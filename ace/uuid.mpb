@@ -2,8 +2,6 @@
 // $Id$
 
 feature(ace_uuid) {
-  macros += ACE_HAS_ACE_UUID
-
   Source_Files(ACE_COMPONENTS) {
     UUID {
       UUID.cpp

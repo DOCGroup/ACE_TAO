@@ -1036,6 +1036,9 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 #if defined (ACE_WIN32)
   ::Sleep (tv.msec ());
   return 0;
+#elif defined (ACE_HAS_CLOCK_GETTIME)
+  timespec_t rqtp = tv;
+  ACE_OSCALL_RETURN (::nanosleep (&rqtp, 0), int, -1);
 #else
 # if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
   // Copy the timeval, because this platform doesn't declare the timeval
