@@ -174,6 +174,16 @@ protected:
   // compared to <AST> that can be associated each asynchronous
   // operation. <completion_key> is implemented right now for the
   // POSIX Proators.
+
+  virtual int post_wakeup_completions (int how_many);
+  // Post <how_many> completions to the completion port so that all
+  // threads can wake up. This is used in conjunction with the
+  // <run_event_loop>. 
+
+protected:
+  ACE_Handler wakeup_handler_;
+  // Handler to handle the wakeups. This works in conjunction with the
+  // <ACE_Proactor::run_event_loop>. 
 };
 
 // Forward declarations.

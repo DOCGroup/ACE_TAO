@@ -1002,7 +1002,12 @@ public:
   virtual void handle_time_out (const ACE_Time_Value &tv,
                                 const void *act = 0);
   // Called when timer expires.  <tv> was the requested time value and
-  // <act> is the ACT passed when scheduling the timer
+  // <act> is the ACT passed when scheduling the timer.
+
+  virtual void handle_wakeup (void);
+  // This is method works with the <run_event_loop> of the
+  // ACE_Proactor. A special <Wake_Up_Completion> is used to wake up
+  // all the threads that are blocking for completions.
 
   ACE_Proactor *proactor (void);
   // Get the proactor associated with this handler.

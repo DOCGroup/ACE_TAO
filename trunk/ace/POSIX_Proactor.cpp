@@ -13,6 +13,38 @@
 #include "ace/POSIX_Proactor.i"
 #endif /* __ACE_INLINE__ */
 
+class ACE_Export ACE_POSIX_Wakeup_Completion : public ACE_POSIX_Asynch_Result
+{
+  // = TITLE
+  // 
+  //     This is result object is used by the <end_event_loop> of the 
+  //     ACE_Proactor interface to wake up all the threads blocking
+  //     for completions.
+  // 
+  // = DESCRIPTION
+  // 
+  
+public:
+  ACE_POSIX_Wakeup_Completion (ACE_Handler &handler,
+                               const void *act = 0,
+                               ACE_HANDLE event = ACE_INVALID_HANDLE,
+                               int priority = 0,
+                               int signal_number = ACE_SIGRTMIN);
+  // Constructor.
+  
+  virtual ~ACE_POSIX_Wakeup_Completion (void);
+  // Destructor.
+  
+  
+  virtual void complete (u_long bytes_transferred = 0,
+                         int success = 1,
+                         const void *completion_key = 0,
+                         u_long error = 0);
+  // This method calls the <handler>'s <handle_wakeup> method.
+};
+
+// *********************************************************************
+
 ACE_POSIX_Proactor::~ACE_POSIX_Proactor (void)
 {
   this->close ();
@@ -307,6 +339,23 @@ ACE_POSIX_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *asynch_r
       delete asynch_result;
     }
 }
+
+int
+ACE_POSIX_Proactor::post_wakeup_completions (int how_many)
+{
+  ACE_POSIX_Wakeup_Completion *wakeup_completion = 0;
+  for (ssize_t ci = 0; ci < how_many; ci++)
+    {
+      ACE_NEW_RETURN (wakeup_completion,
+                      ACE_POSIX_Wakeup_Completion (this->wakeup_handler_),
+                      -1);
+      
+      if (wakeup_completion->post_completion (this) == -1)
+        return -1;
+    }
+  
+  return 0;
+}  
 
 // *********************************************************************
 
@@ -982,9 +1031,9 @@ ACE_POSIX_SIG_Proactor::null_handler (int signal_number,
                                       void *      /* context */)
 {
   ACE_ERROR ((LM_ERROR,
-              "Error:(%P | %t):%s:Signal number %d\n"
-              "Mask all the RT signals for this thread",
-              "ACE_POSIX_SIG_Proactor::null_handler called",
+              "Error:(%P | %t):ACE_POSIX_SIG_Proactor::null_handler called,"
+              "Signal number %d,"
+              "Mask all the RT signals for this thread\n",
               signal_number));
 }
 
@@ -1154,6 +1203,31 @@ ACE_POSIX_Asynch_Timer::complete (u_long bytes_transferred,
   ACE_UNUSED_ARG (bytes_transferred);
 
   this->handler_.handle_time_out (this->time_, this->act ());
+}
+
+// *********************************************************************
+
+ACE_POSIX_Wakeup_Completion::ACE_POSIX_Wakeup_Completion (ACE_Handler &handler,
+                                                          const void *act,
+                                                          ACE_HANDLE event,
+                                                          int priority,
+                                                          int signal_number)
+  : ACE_Asynch_Result_Impl (),
+    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number)
+{
+}
+
+ACE_POSIX_Wakeup_Completion::~ACE_POSIX_Wakeup_Completion (void)
+{
+}
+
+void
+ACE_POSIX_Wakeup_Completion::complete (u_long       /* bytes_transferred */,
+                                       int          /* success */,
+                                       const void * /* completion_key */,
+                                       u_long       /*  error */)
+{
+  this->handler_.handle_wakeup ();
 }
 
 #endif /* ACE_HAS_AIO_CALLS */

@@ -256,6 +256,7 @@ public:
       ACE_THREAD_EXIT_LOCK,
       ACE_TOKEN_MANAGER_CREATION_LOCK,
       ACE_TOKEN_INVARIANTS_CREATION_LOCK,
+      ACE_PROACTOR_EVENT_LOOP_LOCK,
 #endif /* ACE_MT_SAFE */
 
       // Hook for preallocated objects provided by application.

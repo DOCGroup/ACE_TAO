@@ -201,6 +201,10 @@ protected:
   // Protect against structured exceptions caused by user code when
   // dispatching handles.
 
+  virtual int post_wakeup_completions (int how_many);
+  // Post <how_many> completions to the completion port so that all
+  // threads can wake up. This is used in conjunction with the
+  // <run_event_loop>. 
 
   ACE_HANDLE completion_port_;
   // Handle for the completion port. Unix doesnt have completion
@@ -217,6 +221,10 @@ protected:
   int used_with_reactor_event_loop_;
   // Flag that indicates whether we are used in conjunction with
   // Reactor.
+  
+  ACE_Handler wakeup_handler_;
+  // Handler to handle the wakeups. This works in conjunction with the
+  // <ACE_Proactor::run_event_loop>. 
 };
 
 class ACE_Export ACE_WIN32_Asynch_Timer : public ACE_WIN32_Asynch_Result
