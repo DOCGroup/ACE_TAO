@@ -1,3 +1,7 @@
+Tue Sep 21 09:38:20 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/run_tests.lst: disabled Signal_Test. [Bug 309]
+
 Tue Sep 21 08:33:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: use shared_libs=1, not shared_libs_only=1,
