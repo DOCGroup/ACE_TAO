@@ -5379,7 +5379,7 @@ ACE_OS::condattr_destroy (ACE_condattr_t &)
 
 int
 ACE_OS::cond_init (ACE_cond_t *cv,
-                   ACE_condatttr_t &attributes,
+                   ACE_condattr_t &attributes,
                    LPCTSTR name, void *arg)
 {
   return ACE_OS::cond_init (cv, attributes.type, name, arg);

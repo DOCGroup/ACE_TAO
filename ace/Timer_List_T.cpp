@@ -212,6 +212,27 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
   return (long) temp;
 }
 
+// Locate and update the inteval on the timer_id
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK> int 
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (const long timer_id, 
+                                                           const ACE_Time_Value &interval)
+{
+  ACE_TRACE ("ACE_Timer_List_T::reset_interval");
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+
+  // Make sure we are getting a valid <timer_id>, not an error
+  // returned by schedule ()
+  if (timer_id == -1)
+    return 0;
+
+  ACE_Timer_Node_T<TYPE> *node = (ACE_Timer_Node_T<TYPE> *) timer_id;
+
+  node->set_interval (interval);
+
+  return 1;
+}
+
 // Locate and remove the single <ACE_Event_Handler> with a value of
 // <timer_id> from the timer queue.
 

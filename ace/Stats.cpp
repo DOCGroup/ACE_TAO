@@ -447,9 +447,9 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
   if (this->samples_count_ == 1u)
     {
       this->latency_min_ = latency;
-      this->latency_min_at_ = this->samples_count_;
+      this->latency_min_at_ = ACE_U64_TO_U32 (this->samples_count_);
       this->latency_max_ = latency;
-      this->latency_max_at_ = this->samples_count_;
+      this->latency_max_at_ = ACE_U64_TO_U32 (this->samples_count_);
       this->latency_sum_ = latency;
 #if defined ACE_LACKS_LONGLONG_T
       this->latency_sum2_ = latency * ACE_U64_TO_U32 (latency);
@@ -473,12 +473,12 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
       if (this->latency_min_ > latency)
         {
           this->latency_min_ = latency;
-          this->latency_min_at_ = this->samples_count_;
+          this->latency_min_at_ = ACE_U64_TO_U32 (this->samples_count_);
         }
       if (this->latency_max_ < latency)
         {
           this->latency_max_ = latency;
-          this->latency_max_at_ = this->samples_count_;
+          this->latency_max_at_ = ACE_U64_TO_U32 (this->samples_count_);
         }
 
       this->latency_sum_  += latency;
