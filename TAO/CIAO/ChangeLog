@@ -1,7 +1,13 @@
+Sat May 17 12:40:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.cpp
+	  (provide_facet): Added the implementation to resolve "data_read"
+	  facet name.
+
 Sat May 17 12:19:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/handcrafted/BasicSP/descriptors/BasicSP.cad: Fixed yet
-	  another typo. Thanks to Nanbor for pointing it out. 
+	  another typo. Thanks to Nanbor for pointing it out.
 
 Sat May 17 12:07:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -14,7 +20,7 @@ Sat May 17 12:07:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Sat May 17 11:18:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/handcrafted/BasicSP/*/config: Config files for
-	  testing. 
+	  testing.
 
 Sat May 17 11:05:40 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
