@@ -115,14 +115,14 @@ public:
 private:
   friend int tao_yyparse (void);
 
-  int compute_member_count (void);
-  // Count the number of members.
+  unsigned long pd_enum_counter;
+  // Value for next enumerator.
 
   int member_count_;
   // Number of members.
 
-  unsigned long pd_enum_counter;
-  // Value for next enumerator.
+  int compute_member_count (void);
+  // Count the number of members.
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
   // Scope Management.

@@ -109,7 +109,8 @@ COMMON_Base::destroy (void)
 // Constructor(s) and destructor.
 
 AST_Decl::AST_Decl (void)
-  : pd_imported (I_FALSE),
+  : repoID_ (0),
+    pd_imported (I_FALSE),
     pd_in_main_file (I_FALSE),
     pd_defined_in (0),
     pd_node_type (NT_module),
@@ -121,7 +122,6 @@ AST_Decl::AST_Decl (void)
     pd_pragmas (0),
     pd_added (I_FALSE),
     full_name_ (0),
-    repoID_ (0),
     prefix_ (0)
 {
 }
@@ -129,7 +129,8 @@ AST_Decl::AST_Decl (void)
 AST_Decl::AST_Decl (NodeType nt,
                     UTL_ScopedName *n,
                     UTL_StrList *p)
-  : pd_imported (idl_global->imported ()),
+  : repoID_ (0),
+    pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
     pd_defined_in (idl_global->scopes ()->depth () > 0
                      ? idl_global->scopes ()->top ()
@@ -142,7 +143,6 @@ AST_Decl::AST_Decl (NodeType nt,
     pd_pragmas (p),
     pd_added (I_FALSE),
     full_name_ (0),
-    repoID_ (0),
     prefix_ (0)
 {
   compute_full_name (n);
