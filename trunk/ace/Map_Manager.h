@@ -34,17 +34,17 @@ class ACE_Map_Entry
   // = TITLE
   //     An entry in the Map.
 public:
-  EXT_ID ext_id_;
-  // Key used to look up an entry.
-
-  INT_ID int_id_;
-  // The contents of the entry itself.
-
 # if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
   ~ACE_Map_Entry (void);
   // We need this destructor to keep some compilers from complaining.
   // It's just a no-op, however.
 # endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
+
+  EXT_ID ext_id_;
+  // Key used to look up an entry.
+
+  INT_ID int_id_;
+  // The contents of the entry itself.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -52,10 +52,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  //
   // = These are really private, but unfortunately template friends
-  // don't work too well.
-  //
+  // are not portable.
 
   size_t next (void) const;
   void next (size_t n);

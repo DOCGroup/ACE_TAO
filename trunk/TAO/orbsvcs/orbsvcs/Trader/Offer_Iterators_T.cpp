@@ -1,17 +1,4 @@
-// ============================================================================
 // $Id$
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    Offer_Iterators_T.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-// ============================================================================
 
 #ifndef TAO_OFFER_ITERATORS_T_C
 #define  TAO_OFFER_ITERATORS_T_C

@@ -1,18 +1,4 @@
-// ========================================================================
-//
 // $Id$
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//   Service_Type_Repository.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//
-// ========================================================================
 
 #include "Locking.h"
 #include "Service_Type_Repository.h"

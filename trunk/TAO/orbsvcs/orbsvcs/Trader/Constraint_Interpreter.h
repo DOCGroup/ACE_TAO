@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
+// $Id$
 
 // ========================================================================
-// $Id$
 //
 // = LIBRARY
 //    orbsvcs
@@ -72,7 +72,7 @@ class TAO_Constraint_Interpreter : public TAO_Interpreter
 //   whether the offer meets the constraints.
 {
 public:
-
+  // = Initialization and termination methods.
   TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                               const char* constraints,
                               CORBA::Environment& env)
