@@ -92,11 +92,15 @@ CORBA::TypeCode::name (ACE_ENV_SINGLE_ARG_DECL) const
 ACE_INLINE CORBA::ULong
 CORBA::TypeCode::member_count (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  // if already precomputed
+  // if already precomputed...
   if (this->private_state_->tc_member_count_known_)
-    return this->private_state_->tc_member_count_;
+    {
+      return this->private_state_->tc_member_count_;
+    }
   else
-    return this->private_member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+    {
+      return this->private_member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
 }
 
 ACE_INLINE CORBA::TypeCode::OFFSET_MAP *
@@ -106,9 +110,9 @@ CORBA::TypeCode::offset_map (void) const
 }
 
 ACE_INLINE void
-CORBA::TypeCode::offset_map (CORBA::TypeCode::OFFSET_MAP *map)
+CORBA::TypeCode::offset_map (CORBA::TypeCode::OFFSET_MAP *new_map)
 {
-  this->offset_map_ = map;
+  this->offset_map_ = new_map;
 }
 
 // ************************************************************
