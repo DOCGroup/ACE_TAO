@@ -1,3 +1,9 @@
+Wed Jun  7 18:07:28 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/CosNotification.bor:
+
+          Removed some files.
+
 Wed Jun  7 20:04:11 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/ExposedPolicies/Client.cpp

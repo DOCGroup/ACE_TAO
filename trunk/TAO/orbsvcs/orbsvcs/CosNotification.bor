@@ -35,16 +35,12 @@ OBJFILES = \
 	$(OBJDIR)\Notify_FilterFactory_i.obj \
 	$(OBJDIR)\Notify_ProxyPushConsumer_i.obj \
 	$(OBJDIR)\Notify_ProxyPushSupplier_i.obj \
-	$(OBJDIR)\Notify_PushConsumer.obj \
-	$(OBJDIR)\Notify_PushSupplier.obj \
 	$(OBJDIR)\Notify_QoSAdmin_i.obj \
 	$(OBJDIR)\Notify_Resource_Manager.obj \
 	$(OBJDIR)\Notify_SequenceProxyPushConsumer_i.obj \
 	$(OBJDIR)\Notify_SequenceProxyPushSupplier_i.obj \
 	$(OBJDIR)\Notify_StructuredProxyPushConsumer_i.obj \
 	$(OBJDIR)\Notify_StructuredProxyPushSupplier_i.obj \
-	$(OBJDIR)\Notify_StructuredPushConsumer.obj \
-	$(OBJDIR)\Notify_StructuredPushSupplier.obj \
 	$(OBJDIR)\Notify_SupplierAdmin_i.obj \
 	$(OBJDIR)\Notify_Types.obj
 
