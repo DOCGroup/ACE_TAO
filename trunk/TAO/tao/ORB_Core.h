@@ -108,7 +108,7 @@ public:
   TAO_POA *root_poa (const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                      TAO_POA_Manager *poa_manager = 0,
                      const TAO_POA_Policies *policies = 0);
-  PortableServer::POA_ptr root_poa_reference (CORBA::Environment &TAO_IN_ENV = CORBA::default_environment (),
+  PortableServer::POA_ptr root_poa_reference (CORBA::Environment &TAO_IN_ENV = TAO_default_environment (),
                                               const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                                               TAO_POA_Manager *poa_manager = 0,
                                               const TAO_POA_Policies *policies = 0);
@@ -248,7 +248,7 @@ public:
   CORBA::Policy_ptr get_default_policy (
       CORBA::PolicyType policy,
       CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ());
+        TAO_default_environment ());
   // Accesor to obtain the default policy for a particular policy
   // type.
   // If there is no default policy it returns CORBA::Policy::_nil ()

@@ -147,7 +147,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
 	  << "void* target," << be_nl
 	  << "CORBA_Object *src," << be_nl
 	  << "CORBA_Environment &ACE_TRY_ENV = "  << be_idt_nl
-	  << "CORBA::default_environment ()"
+	  << "TAO_default_environment ()"
 	  << be_uidt << be_uidt_nl
 	  << ");" << be_uidt_nl;
 

@@ -84,8 +84,8 @@ public:
   // TAO extension for access to the underlying pointer.
 
   virtual void _downcast (CORBA_Object *base_ptr,
-                          CORBA_Environment &ACE_TRY_ENV
-                          /* = CORBA::default_environment () */);
+                          CORBA_Environment &ACE_TRY_ENV =
+                              TAO_default_environment ());
   // No default to workaround egcs problem with templates and
   // namespaces
   virtual CORBA_Object *_upcast (void);

@@ -137,12 +137,12 @@ private:
                  CORBA::NamedValue_ptr result,
                  CORBA::Flags flags,
                  CORBA::Environment &TAO_IN_ENV =
-                   CORBA::default_environment ());
+                   TAO_default_environment ());
 
   CORBA_Request (CORBA::Object_ptr obj,
                  const CORBA::Char *op,
                  CORBA::Environment &TAO_IN_ENV =
-                   CORBA::default_environment ());
+                   TAO_default_environment ());
 
   ~CORBA_Request (void);
 
@@ -261,7 +261,7 @@ public:
   // Implement the same constructors provided by the template here,
   // check Sequence_T.h for ideas.
   // Simply delegate on the template for the implementation...
-  
+
   CORBA_ORB_RequestSeq (void);
   // default ctor
 
@@ -281,14 +281,14 @@ public:
   // dtor releases all the contained elements.
 };
 
-// This class definition should be removed.. But need to 
+// This class definition should be removed.. But need to
 // check with all the compiler guys before we have this removed
 
 /*class CORBA_ORB_RequestSeq : public TAO_Unbounded_Base_Sequence
 {
 public:
 
-  
+
   // Default constructor.
   CORBA_ORB_RequestSeq (void);
 

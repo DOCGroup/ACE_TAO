@@ -48,7 +48,7 @@ class CosEvent_Service : public CosEC_ServantBase
   // Returns 0 on success, -1 on error.
 
   void shutdown (CORBA::Environment &ACE_TRY_ENV =
-                 CORBA::default_environment ());
+                     TAO_default_environment ());
   // Shutdown the COS Event Service.
   // Returns 0 on success, -1 on error.
 

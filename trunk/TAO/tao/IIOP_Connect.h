@@ -130,7 +130,7 @@ public:
                               CORBA::Boolean &response_required,
                               CORBA::ULong &request_id,
                               CORBA_Environment &TAO_IN_ENV =
-                                  CORBA::default_environment ());
+                                  TAO_default_environment ());
   // Handle processing of the request residing in <msg>, setting
   // <response_required> to zero if the request is for a oneway or
   // non-zero if for a two-way and <response> to any necessary
@@ -146,7 +146,7 @@ protected:
                              CORBA::Boolean &response_required,
                              CORBA::ULong &request_id,
                              CORBA_Environment &TAO_IN_ENV =
-                                 CORBA::default_environment ());
+                                 TAO_default_environment ());
   // Handle processing of the location request residing in <msg>,
   // setting <response_required> to one if no errors are encountered.
   // The LocateRequestReply is placed into <response>.  In case of

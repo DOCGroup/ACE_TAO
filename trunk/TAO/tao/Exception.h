@@ -284,17 +284,20 @@ public:
                                       const char *name,
                                       char *buffer,
                                       size_t buflen,
-                                      CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                                      CORBA_Environment &TAO_IN_ENV =
+                                          TAO_default_environment ());
   // Make the TypeCode for a standard exception.  When used
   // correctly, initializing system exceptions is only an exercise
   // in CPU time; it allocates no new memory.
 
   static void make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
-                                          CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                                          CORBA_Environment &TAO_IN_ENV =
+                                              TAO_default_environment ());
   // Make the TypeCode for the CORBA::UnknownUserException standard
   // exception.
 
-  static void init (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  static void init (CORBA_Environment &TAO_IN_ENV =
+                        TAO_default_environment ());
   // Runtime initialization of all standard exception typecodes.
   // Called from <CORBA::ORB_init>.
 
@@ -302,7 +305,7 @@ public:
   // Runtime finalization of all standard exception typecodes.
 
   static CORBA_Exception *create_system_exception (const char* id,
-                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                                                   CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // Create a CORBA::SystemException given the interface repository
   // ID.
 
@@ -360,10 +363,10 @@ public:
   void add_consume (CORBA::TypeCode_ptr tc);
   // add and consume a TypeCode to the list
 
-  CORBA::TypeCode_ptr item (CORBA::ULong index, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  CORBA::TypeCode_ptr item (CORBA::ULong index, CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // return the typecode at index i. Raises the "Bounds" exception
 
-  void remove (CORBA::ULong index, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  void remove (CORBA::ULong index, CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
   // remove the typecode at index i. Raises the "Bounds" exception
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8

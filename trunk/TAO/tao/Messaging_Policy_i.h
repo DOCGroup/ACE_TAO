@@ -46,7 +46,7 @@ public:
       PortableServer::POA_ptr poa,
       const CORBA::Any& val,
       CORBA::Environment &ACE_TRY_ENV =
-      CORBA::default_environment ()
+      TAO_default_environment ()
     );
   // Helper method for the implementation of CORBA::ORB::create_policy
 
@@ -56,16 +56,16 @@ public:
         CORBA::Environment::default_environment ()
     );
   virtual CORBA::PolicyType policy_type (
-      CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ()
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
     );
   virtual CORBA::Policy_ptr copy (
-      CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ()
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
     );
   virtual void destroy (
-      CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ()
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
     );
   virtual PortableServer::POA_ptr _default_POA (
-      CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ()
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
     );
 
 private:

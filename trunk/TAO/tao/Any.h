@@ -250,14 +250,14 @@ public:
                 const void *value,
                 CORBA::Boolean any_owns_data,
                 CORBA_Environment &TAO_IN_ENV =
-                  CORBA::default_environment ());
+                  TAO_default_environment ());
   // Replace the current typecode and data with the specified one -
   // unsafe.
 
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
                 CORBA_Environment &TAO_IN_ENV =
-                  CORBA::default_environment ());
+                  TAO_default_environment ());
   // Replace the current typecode and data with the specified one -
   // unsafe. This uses a default value for the "any_owns_data" parameter
 
@@ -266,7 +266,7 @@ public:
 
   void type (CORBA::TypeCode_ptr type,
              CORBA_Environment &TAO_IN_ENV =
-               CORBA::default_environment ());
+               TAO_default_environment ());
   // For use along with <<= of a value of aliased type when the alias must
   // be preserved.
 
@@ -296,7 +296,7 @@ public:
   void _tao_replace (CORBA::TypeCode_ptr,
                      const ACE_Message_Block *mb,
                      CORBA::Environment &TAO_IN_ENV =
-                       CORBA::default_environment ());
+                       TAO_default_environment ());
   // Replace via message block instead of <value_>.
 
   void _tao_replace (CORBA::TypeCode_ptr type,
@@ -304,14 +304,14 @@ public:
                      CORBA::Boolean any_owns_data,
                      void* value,
                      CORBA::Environment &TAO_IN_ENV =
-                       CORBA::default_environment ());
+                       TAO_default_environment ());
   // Replace all the contents of the any, used in the <<= operators.
 
   void _tao_replace (CORBA::TypeCode_ptr type,
                      CORBA::Boolean any_owns_data,
                      void* value,
                      CORBA::Environment &TAO_IN_ENV =
-                       CORBA::default_environment ());
+                       TAO_default_environment ());
   // Replace the value of the Any, used in the >>= operators.
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8

@@ -35,7 +35,7 @@ public:
                           TAO_OutputCDR &output,
                           TAO_ORB_Core *orb_core,
                           CORBA_Environment &TAO_IN_ENV =
-                              CORBA::default_environment ());
+                              TAO_default_environment ());
   // Constructor
   TAO_GIOP_ServerRequest (CORBA::ULong &request_id,
                           CORBA::Boolean &response_expected,
@@ -44,7 +44,7 @@ public:
                           TAO_OutputCDR &output,
                           TAO_ORB_Core *orb_core,
                           CORBA_Environment &TAO_IN_ENV =
-                             CORBA::default_environment ());
+                             TAO_default_environment ());
 
   virtual ~TAO_GIOP_ServerRequest (void);
   // Destructor.
@@ -54,18 +54,18 @@ public:
   // = General ServerRequest operations
   void arguments (CORBA::NVList_ptr &list,
                   CORBA_Environment &TAO_IN_ENV =
-                      CORBA::default_environment ());
+                      TAO_default_environment ());
 
   void set_result (const CORBA::Any &value,
                    CORBA_Environment &TAO_IN_ENV =
-                       CORBA::default_environment ());
+                       TAO_default_environment ());
 
   void set_exception (const CORBA::Any &value,
                       CORBA_Environment &TAO_IN_ENV =
-                          CORBA::default_environment ());
+                          TAO_default_environment ());
 
   virtual void dsi_marshal (CORBA_Environment &TAO_IN_ENV =
-                                CORBA::default_environment ());
+                                TAO_default_environment ());
   // does the marshaling of outgoing parameters and is used by the DSI
   // based scheme
 
@@ -109,7 +109,7 @@ public:
   // i.e., by the IDL compiler generated skeletons.
 
   virtual void init_reply (CORBA_Environment &TAO_IN_ENV =
-                               CORBA::default_environment ());
+                               TAO_default_environment ());
   // start a Reply message
 
   virtual TAO_InputCDR &incoming (void);

@@ -126,7 +126,7 @@ TAO_GIOP::dump_msg (const char *label,
     {
       const char* message_name = "UNKNOWN MESSAGE";
       unsigned long index = ptr[7] + TAO_GIOP::tao_specific_message_types;
-      if (index >= 0 && index < sizeof (names)/sizeof(names[0]))
+      if (index < sizeof (names)/sizeof(names[0]))
         {
           message_name = names [index];
         }
@@ -900,7 +900,7 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
   CORBA::Boolean response_required = 0;
   CORBA::ULong request_id = 0;
 
-  CORBA::Environment &ACE_TRY_ENV = CORBA::default_environment ();
+  CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
   ACE_TRY
     {
       TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END);
