@@ -16,7 +16,6 @@ ACE_EH_Dispatch_Info::reset (void)
   this->callback_ = 0;
 }
 
-ACE_INLINE int
 
 ACE_INLINE
 ACE_EH_Dispatch_Info::ACE_EH_Dispatch_Info (void)
@@ -38,6 +37,7 @@ ACE_EH_Dispatch_Info::set (ACE_HANDLE handle,
   this->callback_ = callback;
 }
 
+ACE_INLINE int
 ACE_EH_Dispatch_Info::dispatch (void) const
 {
   return this->dispatch_;
