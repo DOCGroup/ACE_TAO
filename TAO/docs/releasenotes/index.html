@@ -118,6 +118,9 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <TD>
 <UL>
 
+<li><!-- <a href="../../CIAO/docs/"> -->CORBA Component Model (Coming
+    soon) <!-- </a> -->
+
 <li><a href="#CORBA-conformance">CORBA Standards Conformance</a></li>
 
 <li>
@@ -509,7 +512,7 @@ const char *foo = ......<br><br>
 
 occurs in the source code. The variable foo is sometimes not allocated or assigned
 properly, and if foo is part of generated code, it will then display as garbage or
-as an empty string (or substring). Two workarounds have been found. One is to 
+as an empty string (or substring). Two workarounds have been found. One is to
 change the declaration of foo to be<br><br>
 
 static const char *foo = ....<br><br>
@@ -520,7 +523,7 @@ setting to 'Minimize Size'. Reportedly the problem has been fixed in MSVC versio
 7.0.
 </li>
 <li>
-In conditional #includes, where there is an inclusion for either value of the 
+In conditional #includes, where there is an inclusion for either value of the
 condition, and where the non-included base filename is a substring of the included
 one, both files will be included.
 </li>
@@ -1331,7 +1334,7 @@ TAO's A/V Service please have a look <A HREF="http://www.cs.wustl.edu/~schmidt/a
       Diffserv support added to the UDP pluggable protocol by <a href="mailto:crodrigu@bbn.com">Craig Rodrigues</a>.
   </li>
   <li>
-      RTP/UDP support enhancements and RTCP control protocol support added by 
+      RTP/UDP support enhancements and RTCP control protocol support added by
       <a href="mailto:rruff@scires.com">Rob Ruff</a>.
   </li>
 </ul>
@@ -1526,7 +1529,7 @@ Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
 Work is underway to implement the TAO Real-Time Notification
 Service. This is an extension to TAO's CORBA Notification Service with
 Real-Time CORBA support.
-  
+
 The current <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf">
 Notification Service </a> implementation (first released in TAO 1.2.2
 ) consists of the following
