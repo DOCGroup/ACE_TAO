@@ -1834,8 +1834,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
               int, -1, result);
 #  endif /* ACE_HAS_DCE_DRAFT4_THREADS */
   // We need to adjust this to make the POSIX and Solaris return
-  // values consistent.
-  if (result == -1 && errno == ETIMEDOUT)
+  // values consistent.  EAGAIN is from DCE DRAFT4 (HP-UX 10.20 and down).
+  if (result == -1 && (errno == ETIMEDOUT || errno == EAGAIN))
     errno = ETIME;
 
 #elif defined (ACE_HAS_STHREADS)
