@@ -43,8 +43,7 @@ ECConsumer::push (const RtecEventComm::EventSet& events
 {
   if (events.length () == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "ECConsumer (%P|%t) no events\n"));
+      ACE_DEBUG ((LM_DEBUG,"ECConsumer (%P|%t) no events\n"));
       return;
     }
 
@@ -71,6 +70,10 @@ ECConsumer::push (const RtecEventComm::EventSet& events
 
   ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) worktime is %isec %iusec\n",
              this->worktime_.sec(),this->worktime_.usec()));
+
+  // DEBUG
+  //this->worktime_.set(0,200000);
+  // END DEBUG
 
   ACE_Time_Value start_time(ACE_OS::gettimeofday());
   timer.start();

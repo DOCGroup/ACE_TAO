@@ -21,13 +21,13 @@ ECSupplier::ECSupplier (SourceID id,
 }
 
 ECSupplier::~ECSupplier (void)
-{
-}
+{}
 
 void
-ECSupplier::set_consumer_proxy(ConsumerProxy proxy)
+ECSupplier::set_consumer_proxy(ConsumerProxy::_ptr_type proxy)
 {
-  this->consumer_proxy_ = proxy;
+  // copy the ref
+  this->consumer_proxy_ = ConsumerProxy::_duplicate(proxy);
 }
 
 void
@@ -62,6 +62,8 @@ ECSupplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG((LM_DEBUG,"ECSupplier (id %d) in thread %t will push event type %d\n",this->id_,event[0].header.type));
 
   this->consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
+
+  ACE_DEBUG((LM_DEBUG,"ECSupplier (id %d) in thread %t pushed event\n",this->id_));
 
   if (this->handler_ != 0)
     {
