@@ -5,8 +5,8 @@
 
 #include "JAWS/Cache_Manager_T.h"
 #include "JAWS/Cache_Hash_T.h"
-#include "JAWS/Cache_Heap_T.h"
-#include "JAWS/Cache_List_T.h"
+
+class Cache_Manager;
 
 #include <iostream.h>
 
@@ -53,9 +53,9 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
     this->factory_ = Object_Factory::instance ();
 
   ACE_NEW_MALLOC (this->hash_,
-                  (Cache_Hash *)
-                  this->allocator_->malloc (sizeof (Cache_Hash)),
-                  Cache_Hash (alloc, hashsize));
+                  (ACE_CACHE_HASH *)
+                  this->allocator_->malloc (sizeof (ACE_CACHE_HASH)),
+                  ACE_CACHE_HASH (alloc, hashsize));
 
   if (this->hash_ == 0)
     {
@@ -206,7 +206,10 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   result = this->MAKE (data, size, obj);
   if (result == -1)
     {
-      cerr << "MAKE failed.  Bummer!" << endl;
+      if (obj)
+        this->DROP_i (obj);
+      else
+        cerr << "MAKE failed.  Bummer!" << endl;
       return -1;
     }
 
@@ -360,6 +363,7 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
       // The above is a little tricky to implement.  Think about it
       // some more.
       cerr << "*** " << size << " is too large to cache" << endl;
+      obj = this->factory_->create (data, size);
       return -1;
 
 #endif /* 0 */
