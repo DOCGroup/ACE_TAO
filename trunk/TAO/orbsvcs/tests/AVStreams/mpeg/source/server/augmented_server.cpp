@@ -6,6 +6,8 @@
 int AV_Server::done_;
 pid_t AV_Server::current_pid_ = -1;
 
+const char* AV_Audio_MMDevice::NUMBER_OF_CONNECTIONS = "Number_Of_Connections";
+
 AV_Audio_MMDevice::
 AV_Audio_MMDevice (TAO_AV_Endpoint_Process_Strategy *endpoint_strategy)
   :TAO_MMDevice (endpoint_strategy),
@@ -37,7 +39,7 @@ create_B (AVStreams::StreamCtrl_ptr the_requester,
   return stream_ptr;
 }
 
-int
+CORBA::ULong
 AV_Audio_MMDevice::connections (void) const
 {
   return this->connections_;
@@ -45,23 +47,29 @@ AV_Audio_MMDevice::connections (void) const
 
 void
 AV_Audio_MMDevice::
-export_properties (TAO_Property_Exporter& prop_exporter) const
+export_static_properties (TAO_Property_Exporter& prop_exporter) const
 {
   CORBA::Any connections;
 
-  connections <<= this->connections_;
-  prop_exporter.add_static_property (AV_Property_Names[AV_NUMBER_OF_CONNECTIONS],
-				     connections);
+  connections <<= (CORBA::ULong) this->connections_;
+  prop_exporter.add_static_property (NUMBER_OF_CONNECTIONS, connections);
 }
 
-CORBA::Object_ptr
+int
 AV_Audio_MMDevice::
-get_object (CORBA::Environment& _env)
+define_properties (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq,
+		   CORBA::ULong offset) const
 {
-  CORBA::Object_ptr object_ptr = this->_this (_env);
-  TAO_CHECK_ENV_RETURN (_env, object_ptr);
+  CORBA::ULong num_props = prop_seq.length ();
 
-  return object_ptr;
+  if (num_props <= offset)
+    prop_seq.length (offset + 1);
+
+  prop_seq[offset].name = NUMBER_OF_CONNECTIONS;
+  prop_seq[offset].value_type = CORBA::TypeCode::_duplicate (CORBA::_tc_ulong);
+  prop_seq[offset].mode = CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY;
+
+  return 1;
 }
 
 // AV_Server_Sig_Handler routines
@@ -255,10 +263,13 @@ AV_Server_Sig_Handler::~AV_Server_Sig_Handler (void)
 
 // AV_Server routines
 
+const char* AV_Server::SERVICE_TYPE = "MMDevice";
+
 // Default Constructor
 AV_Server::AV_Server (void)
-  :video_process_strategy_ (&video_process_options_),
-   audio_process_strategy_ (&audio_process_options_)
+  : video_rep_ ("movie_database.txt"),
+    video_process_strategy_ (&video_process_options_),
+    audio_process_strategy_ (&audio_process_options_)
 {
   this->video_process_options_.command_line ("./vs -ORBport 0 -ORBobjrefstyle url");
   this->audio_process_options_.command_line ("./as -ORBport 0 -ORBobjrefstyle url");
@@ -378,7 +389,8 @@ AV_Server::init (int argc,
                                                this->video_mmdevice_,
                                                env);
   TAO_CHECK_ENV_RETURN (env,-1);
-  
+
+  /*
   // Register the video_mmdevice with the naming service.
   CosNaming::Name video_server_mmdevice_name (1);
   video_server_mmdevice_name.length (1);
@@ -398,7 +410,7 @@ AV_Server::init (int argc,
       TAO_CHECK_ENV_RETURN (env,-1);
     }
   
-  
+  */  
   // Register the audio mmdevice object with the ORB
   ACE_NEW_RETURN (this->audio_mmdevice_,
                   AV_Audio_MMDevice (&this->audio_process_strategy_),
@@ -410,6 +422,7 @@ AV_Server::init (int argc,
                                                env);
   TAO_CHECK_ENV_RETURN (env,-1);
 
+  /*
   // Register the audio_mmdevice with the naming service.
 
   CosNaming::Name audio_server_mmdevice_name (1);
@@ -430,13 +443,14 @@ AV_Server::init (int argc,
       TAO_CHECK_ENV_RETURN (env,-1);
     }
 
+  */    
   // Invoke this once, passing in an object for each trading service
   // service type.  
-  this->resolve_trader (this->audio_mmdevice_, env);
+  this->resolve_trader (env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
   // Invoke this for each offer.
-  this->export_properties (this->audio_mmdevice_, env);
+  this->export_properties (env);
   TAO_CHECK_ENV_RETURN (env, -1);
   
   // Register the various signal handlers with the reactor.
@@ -468,10 +482,9 @@ AV_Server::run (CORBA::Environment& env){
 }
 
 void
-AV_Server::export_properties (AV_Exportable* mmdevice,
-			      CORBA::Environment& _env)
+AV_Server::export_properties (CORBA::Environment& _env)
 {
-  CORBA::Object_ptr object_ptr = mmdevice->get_object (_env);
+  CORBA::Object_ptr object_ptr = this->audio_mmdevice_->_this (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
   
   CosPropertyService::PropertySet_ptr prop_set =
@@ -482,37 +495,19 @@ AV_Server::export_properties (AV_Exportable* mmdevice,
   TAO_Property_Exporter prop_exporter (this->trader_, prop_set);
 
   // Add properties to server description.
-  mmdevice->export_properties (prop_exporter);
-      
-  // Add the machine properties.
-  ACE_DEBUG ((LM_ERROR, "Adding machine properties.\n"));
-  for (int i = (int) TAO_Machine_Properties::CPU;
-       i <= (int) TAO_Machine_Properties::LOAD; i++)
-    {
-      CORBA::Any extra_info;
-      const char* name = TAO_Machine_Properties::PROP_NAMES[i];
-      const CORBA::TypeCode_ptr prop_type = CORBA::_tc_float;
+  this->audio_mmdevice_->export_static_properties (prop_exporter);
+  this->mach_props_.export_dynamic_properties (prop_exporter, this->dp_);
+  this->video_rep_.export_dynamic_properties (prop_exporter, this->dp_);
 
-      extra_info <<= name;
-      CosTradingDynamic::DynamicProp* dp_struct = 
-	this->dp_.construct_dynamic_prop (name, prop_type, extra_info);
-      
-      this->dp_.register_handler (name, &this->mach_props_);
-      prop_exporter.add_dynamic_property (name, dp_struct);
-    }
-  
-  ACE_DEBUG ((LM_ERROR, "Exporting to the Trader.\n"));
-  
   CosTrading::OfferId_var offer_id =
-    prop_exporter.export (CORBA::Object::_duplicate (object_ptr),
-			  (const CosTrading::ServiceTypeName) AV_MMDEVICE,
+    prop_exporter.export (object_ptr,
+			  (CosTrading::ServiceTypeName) SERVICE_TYPE,
 			  _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 }
 
 void
-AV_Server::resolve_trader (const AV_Audio_MMDevice* mmdevice,
-			   CORBA::Environment& _env)
+AV_Server::resolve_trader (CORBA::Environment& _env)
 {
   if (this->trader_.ptr () == 0)
     {
@@ -535,21 +530,13 @@ AV_Server::resolve_trader (const AV_Audio_MMDevice* mmdevice,
       
       // Export the service types, filling in the service type
       // information first. 
-      CosTradingRepos::ServiceTypeRepository::PropStructSeq prop_seq;
+      CosTradingRepos::ServiceTypeRepository::PropStructSeq prop_seq (12);
       CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq type_name_seq;
-      
-      prop_seq.length (11);
-      
-      for (int i = 0; i <= TAO_Machine_Properties::NUM_PROPERTIES; i++)
-	{
-	  prop_seq[i].name = TAO_Machine_Properties::PROP_NAMES[i];
-	  prop_seq[i].value_type = CORBA::TypeCode::_duplicate (CORBA::_tc_float);
-	  prop_seq[i].mode = CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
-	}
-      
-      prop_seq[10].name = AV_Property_Names[AV_NUMBER_OF_CONNECTIONS];
-      prop_seq[10].value_type = CORBA::TypeCode::_duplicate (CORBA::_tc_long);
-      prop_seq[10].mode = CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY;
+
+      // Add property definitions to the service type.
+      CORBA::ULong offset = this->audio_mmdevice_->define_properties (prop_seq);
+      offset += this->mach_props_.define_properties (prop_seq, offset);
+      this->video_rep_.define_properties (prop_seq, offset);
       
       CosTrading::TypeRepository_ptr obj = this->trader_->type_repos (_env);
       CosTradingRepos::ServiceTypeRepository_var str =
@@ -559,8 +546,8 @@ AV_Server::resolve_trader (const AV_Audio_MMDevice* mmdevice,
       TAO_TRY
 	{
 	  ACE_DEBUG ((LM_DEBUG, "Attempting add_type.\n"));
-	  str->add_type (AV_MMDEVICE,
-			 mmdevice->_interface_repository_id (),
+	  str->add_type (SERVICE_TYPE,
+			 this->audio_mmdevice_->_interface_repository_id (),
 			 prop_seq,
 			 type_name_seq,
 			 TAO_TRY_ENV);
@@ -568,7 +555,7 @@ AV_Server::resolve_trader (const AV_Audio_MMDevice* mmdevice,
 	}
       TAO_CATCH (CosTradingRepos::ServiceTypeRepository::ServiceTypeExists, ste)
 	{
-	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ah, well the service type exists already."));
+	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ah, well, the service type exists already."));
 	}
       TAO_CATCHANY
 	{

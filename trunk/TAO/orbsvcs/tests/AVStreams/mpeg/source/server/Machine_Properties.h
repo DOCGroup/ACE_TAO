@@ -2,8 +2,7 @@
 
 // ============================================================================
 // $Id$
-// 
-
+//
 // = FILENAME
 //    Machine_Properties.h
 //
@@ -20,12 +19,15 @@
 #define TAO_MACHINE_PROPERTIES
 
 #include "orbsvcs/Trader/Dynamic_Property.h"
+#include "Property_Exporter.h"
 
 //RPC related includes
 #include <rpc/rpc.h>
 #include <rpcsvc/rstat.h>
 
-class TAO_Machine_Properties : public TAO_DP_Evaluation_Handler
+class TAO_Machine_Properties :
+  public TAO_DP_Evaluation_Handler,
+  public TAO_Exportable
 {
 public:
 
@@ -46,14 +48,25 @@ public:
   static const int NUM_PROPERTIES;
   static const char* PROP_NAMES[];
   
-  TAO_Machine_Properties (void);   
+  TAO_Machine_Properties (void);
+  
   TAO_Machine_Properties (const ACE_Time_Value& timeout);   
   
   virtual CORBA::Any* evalDP(const CORBA::Any& extra_info,
 			     CORBA::TypeCode_ptr returned_type,
 			     CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
+  // Return the value of a machine performance property whose name is
+  // contained in <extra_info>, which in essence is another
+  // demultiplexing key.
 
+  virtual void export_dynamic_properties (TAO_Property_Exporter& prop_exporter,
+					  TAO_DP_Dispatcher& dp_dispatcher) const;
+
+  virtual int define_properties
+    (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq,
+     CORBA::ULong offset = 0) const;
+  
 private:
 
   void init (void);

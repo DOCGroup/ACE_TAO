@@ -25,6 +25,34 @@
 #include "orbsvcs/CosPropertyServiceC.h"
 #include "orbsvcs/Trader/Dynamic_Property.h"
 
+class TAO_Property_Exporter;
+
+class TAO_Exportable
+// = DESCRIPTION
+//   Interface that allows property containers to export their
+//   properties to a TAO_Property_Exporter instance.
+{
+public:
+
+  virtual void
+    export_static_properties (TAO_Property_Exporter& prop_exporter) const {}
+  // Insert exportable properties into the proper_exporter.
+
+  virtual void
+    export_dynamic_properties (TAO_Property_Exporter& prop_exporter,
+			       TAO_DP_Dispatcher& dp_dispatcher) const {}
+  // Insert exportable properties into the proper_exporter.
+
+  virtual int define_properties
+    (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq,
+     CORBA::ULong offset = 0) const = 0;
+  // Append property definitions to the service type defintition
+  // sequence. The <offset> is the point at which the method can begin 
+  // placing the PropStructures. define_properties returns the number
+  // of properties inserted from the offset.
+};
+
+
 class TAO_Property_Exporter 
 // = TITLE
 //   Publish public properties of a servant to a
@@ -62,23 +90,23 @@ class TAO_Property_Exporter
 
   void add_dynamic_property (const char* name,
 			     CosTradingDynamic::DynamicProp* dp_struct);
-
+  
   CosTrading::OfferId export (const CORBA::Object_ptr object_ref,
 			      const CosTrading::ServiceTypeName type,
 			      CORBA::Environment& _env)
-  TAO_THROW_SPEC ((CORBA::SystemException,
-		   CosPropertyService::MultipleExceptions,
-		   CosTrading::Register::InvalidObjectRef, 
-		   CosTrading::IllegalServiceType, 
-		   CosTrading::UnknownServiceType, 
-		   CosTrading::Register::InterfaceTypeMismatch, 
-		   CosTrading::IllegalPropertyName, 
-		   CosTrading::PropertyTypeMismatch, 
-		   CosTrading::ReadonlyDynamicProperty, 
-		   CosTrading::MissingMandatoryProperty, 
-		   CosTrading::DuplicatePropertyName));
+    TAO_THROW_SPEC ((CORBA::SystemException,
+		     CosPropertyService::MultipleExceptions,
+		     CosTrading::Register::InvalidObjectRef, 
+		     CosTrading::IllegalServiceType, 
+		     CosTrading::UnknownServiceType, 
+		     CosTrading::Register::InterfaceTypeMismatch, 
+		     CosTrading::IllegalPropertyName, 
+		     CosTrading::PropertyTypeMismatch, 
+		     CosTrading::ReadonlyDynamicProperty, 
+		     CosTrading::MissingMandatoryProperty, 
+		     CosTrading::DuplicatePropertyName));
   // Export the offer to the trader under the given type.
-
+  
   typedef CosTradingRepos::ServiceTypeRepository TRADING_REPOS;
   CosTrading::OfferId export (const CORBA::Object_ptr object_ref,
 			      const CosTrading::ServiceTypeName type,
