@@ -65,14 +65,6 @@ public:
 
   virtual char object_key_delimiter (void) const;
 
-protected:
-  // = More TAO_Connector methods, please check the documentation on
-  //   Transport_Connector.h
-  int make_connection (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc);
-
-  virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
-
 public:
 
   typedef TAO_Connect_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>
@@ -88,6 +80,17 @@ public:
   typedef ACE_Strategy_Connector<TAO_SHMIOP_Connection_Handler,
                                  ACE_MEM_CONNECTOR>
           TAO_SHMIOP_BASE_CONNECTOR;
+
+protected:
+  // = More TAO_Connector methods, please check the documentation on
+  //   Transport_Connector.h
+  int set_validate_endpoint (TAO_Endpoint *endpoint);
+
+  int make_connection (TAO_GIOP_Invocation *invocation,
+                       TAO_Transport_Descriptor_Interface *desc);
+
+  virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
+
 private:
 
   /// local address

@@ -114,6 +114,7 @@ TAO_IIOP_Connection_Handler::open (void*)
       return -1;
     }
 
+
   if (TAO_debug_level > 0)
     {
       ACE_TCHAR client[MAXHOSTNAMELEN + 16];
@@ -132,6 +133,7 @@ TAO_IIOP_Connection_Handler::open (void*)
   // Use C-style cast b/c otherwise we get warnings on lots of compilers
   this->transport ()->id ((int) this->get_handle ());
 
+  this->state_changed (TAO_LF_Event::LFS_SUCCESS);
   return 0;
 }
 
@@ -220,6 +222,8 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
       // Set the handle to be INVALID_HANDLE
       this->set_handle (ACE_INVALID_HANDLE);
     }
+
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
 
   // If the upcall count is zero start the cleanup.
   if (upcalls == 0)

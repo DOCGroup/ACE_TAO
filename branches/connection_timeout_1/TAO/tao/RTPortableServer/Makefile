@@ -72,7 +72,8 @@ endif # corba_messaging
 
 
 .obj/RTPortableServer.o .obj/RTPortableServer.so .shobj/RTPortableServer.o .shobj/RTPortableServer.so: RTPortableServer.cpp RTPortableServer.h \
- $(ACE_ROOT)/ace/pre.h rtportableserver_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ rtportableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -258,7 +259,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h
 
 .obj/RTPortableServerC.o .obj/RTPortableServerC.so .shobj/RTPortableServerC.o .shobj/RTPortableServerC.so: RTPortableServerC.cpp RTPortableServerC.h \
- $(ACE_ROOT)/ace/pre.h rtportableserver_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ rtportableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -918,7 +920,9 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/RTCORBA/Thread_Pool.i
 
 .obj/RT_Object_Adapter_Factory.o .obj/RT_Object_Adapter_Factory.so .shobj/RT_Object_Adapter_Factory.o .shobj/RT_Object_Adapter_Factory.so: RT_Object_Adapter_Factory.cpp \
- RT_Object_Adapter_Factory.h $(ACE_ROOT)/ace/pre.h \
+ RT_Object_Adapter_Factory.h \
+ $(ACE_ROOT)/ace/pre.h \
+ rtportableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1195,7 +1199,8 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(TAO_ROOT)/tao/ORB_Core.i RT_Servant_Dispatcher.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ RT_Servant_Dispatcher.h \
  $(TAO_ROOT)/tao/PortableServer/Servant_Dispatcher.h \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
@@ -1211,7 +1216,9 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Collocation_Resolver.i \
  RT_Collocation_Resolver.i
 
-.obj/RT_POA.o .obj/RT_POA.so .shobj/RT_POA.o .shobj/RT_POA.so: RT_POA.cpp RT_POA.h $(ACE_ROOT)/ace/pre.h \
+.obj/RT_POA.o .obj/RT_POA.so .shobj/RT_POA.o .shobj/RT_POA.so: RT_POA.cpp RT_POA.h \
+ $(ACE_ROOT)/ace/pre.h \
+ rtportableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1840,7 +1847,9 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/PortableServer/POA_Cached_Policies.i
 
 .obj/RT_Servant_Dispatcher.o .obj/RT_Servant_Dispatcher.so .shobj/RT_Servant_Dispatcher.o .shobj/RT_Servant_Dispatcher.so: RT_Servant_Dispatcher.cpp \
- RT_Servant_Dispatcher.h $(ACE_ROOT)/ace/pre.h \
+ RT_Servant_Dispatcher.h \
+ $(ACE_ROOT)/ace/pre.h \
+ rtportableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2070,7 +2079,8 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i RT_POA.h \
+ $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
+ RT_POA.h \
  $(TAO_ROOT)/tao/PortableServer/POA.h \
  $(TAO_ROOT)/tao/PortableServer/POAManager.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \

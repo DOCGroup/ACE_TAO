@@ -1,14 +1,15 @@
-#include "tao/IIOP_Connector.h"
-#include "tao/IIOP_Profile.h"
-#include "tao/debug.h"
-#include "tao/ORB_Core.h"
-#include "tao/Client_Strategy_Factory.h"
-#include "tao/Environment.h"
-#include "tao/Base_Transport_Property.h"
-#include "tao/Protocols_Hooks.h"
-#include "tao/Transport_Cache_Manager.h"
-#include "tao/Invocation.h"
-#include "tao/Thread_Lane_Resources.h"
+#include "IIOP_Connector.h"
+#include "IIOP_Profile.h"
+#include "debug.h"
+#include "ORB_Core.h"
+#include "Client_Strategy_Factory.h"
+#include "Environment.h"
+#include "Base_Transport_Property.h"
+#include "Protocols_Hooks.h"
+#include "Transport_Cache_Manager.h"
+#include "Invocation.h"
+#include "Connect_Strategy.h"
+#include "Thread_Lane_Resources.h"
 #include "ace/Strategies_T.h"
 
 ACE_RCSID (TAO,
@@ -62,7 +63,15 @@ TAO_IIOP_Connector::~TAO_IIOP_Connector (void)
 int
 TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
+  // @@todo: The functionality of the following two statements could
+  // be  done in the constructor, but that involves changing the
+  // interface of the pluggable transport factory.
+
+  // Set the ORB Core
   this->orb_core (orb_core);
+
+  // Create our connect strategy
+  this->create_connect_strategy ();
 
   if (this->init_tcp_properties () != 0)
     return -1;
@@ -100,43 +109,82 @@ TAO_IIOP_Connector::close (void)
 }
 
 int
-TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
-                                     TAO_Transport_Descriptor_Interface *desc)
+TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
-  if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect - ")
-                ACE_LIB_TEXT ("making a new connection\n")));
-
-
-
   TAO_IIOP_Endpoint *iiop_endpoint =
-    this->narrow_endpoint (desc->endpoint ());
+    this->remote_endpoint (endpoint);
 
   if (iiop_endpoint == 0)
     return -1;
 
-   int result = 0;
+   const ACE_INET_Addr &remote_address =
+     iiop_endpoint->object_addr ();
 
-   TAO_IIOP_Connection_Handler *svc_handler = 0;
+   // Verify that the remote ACE_INET_Addr was initialized properly.
+   // Failure can occur if hostname lookup failed when initializing the
+   // remote ACE_INET_Addr.
+   if (remote_address.get_type () != AF_INET)
+     {
+       if (TAO_debug_level > 0)
+         {
+           ACE_DEBUG ((LM_DEBUG,
+                       ACE_LIB_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
+                       ACE_LIB_TEXT ("TAO (%P|%t) This is most likely ")
+                       ACE_LIB_TEXT ("due to a hostname lookup ")
+                       ACE_LIB_TEXT ("failure.\n")));
+         }
 
-   // Purge connections (if necessary)
-   // @@TODO: This is not the right place for this!
-   this->orb_core ()->lane_resources ().transport_cache ().purge ();
+       return -1;
+     }
 
+   return 0;
+}
+
+int
+TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
+                                     TAO_Transport_Descriptor_Interface *desc)
+{
+  TAO_IIOP_Endpoint *iiop_endpoint =
+    this->remote_endpoint (desc->endpoint ());
+
+  if (iiop_endpoint == 0)
+    return -1;
+
+  const ACE_INET_Addr &remote_address =
+    iiop_endpoint->object_addr ();
+
+   if (TAO_debug_level > 2)
+     ACE_DEBUG ((LM_DEBUG,
+                 ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect - ")
+                 ACE_LIB_TEXT ("making a new connection\n")));
+
+
+   // Get the max_wait_time
+   // @@todo: Right place for Jon reis stuff!!
    ACE_Time_Value *max_wait_time =
      invocation->max_wait_time ();
 
-   /////////////****************
-   ACE_Synch_Options synch_options (ACE_Synch_Options::USE_REACTOR,
-                                    *max_wait_time);
+   // Get the right synch options
+   ACE_Synch_Options synch_options;
 
-   // We obtain the transport in the <svc_handler> variable. As
-   // we know now that the connection is not available in Cache
-   // we can make a new connection
-   result = this->base_connector_.connect (svc_handler,
-                                           remote_address,
-                                           synch_options);
+   this->active_connect_strategy_->synch_options (max_wait_time,
+                                                  synch_options);
+
+   TAO_IIOP_Connection_Handler *svc_handler = 0;
+
+   // Active connect
+   int result = this->base_connector_.connect (svc_handler,
+                                               remote_address,
+                                               synch_options);
+
+
+   if (result == -1 && errno == EWOULDBLOCK)
+     {
+       result =
+         this->active_connect_strategy_->wait (svc_handler,
+                                               max_wait_time);
+     }
+
 
    if (result == -1)
      {
@@ -319,41 +367,22 @@ TAO_IIOP_Connector::init_tcp_properties (void)
   return 0;
 }
 
+
 TAO_IIOP_Endpoint *
-TAO_IIOP_Connector::narrow_endpoint (TAO_Endpoint *endpoint)
+TAO_IIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
-    return -1;
+    return 0;
 
   TAO_IIOP_Endpoint *iiop_endpoint =
     ACE_dynamic_cast (TAO_IIOP_Endpoint *,
                       endpoint );
-
   if (iiop_endpoint == 0)
     return 0;
 
-  const ACE_INET_Addr &remote_address =
-    iiop_endpoint->object_addr ();
-
-  // Verify that the remote ACE_INET_Addr was initialized properly.
-  // Failure can occur if hostname lookup failed when initializing the
-  // remote ACE_INET_Addr.
-  if (remote_address.get_type () != AF_INET)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
-                      ACE_LIB_TEXT ("TAO (%P|%t) This is most likely ")
-                      ACE_LIB_TEXT ("due to a hostname lookup ")
-                      ACE_LIB_TEXT ("failure.\n")));
-        }
-
-      return 0;
-    }
-
   return iiop_endpoint;
 }
+
 
 #if 0
 

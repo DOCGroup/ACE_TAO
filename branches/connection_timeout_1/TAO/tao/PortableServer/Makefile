@@ -92,7 +92,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 
 .obj/PortableServer.o .obj/PortableServer.so .shobj/PortableServer.o .shobj/PortableServer.so: PortableServer.cpp PortableServer.h \
- $(ACE_ROOT)/ace/pre.h portableserver_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ portableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -186,7 +187,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i PortableServerC.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ PortableServerC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -221,8 +223,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
- Object_Adapter.h Key_Adapters.h $(ACE_ROOT)/ace/Map.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i Object_Adapter.h Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
@@ -268,15 +271,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i poa_macros.h \
- Servant_Base.h \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i poa_macros.h Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp Servant_Base.i \
- Active_Object_Map.h \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Servant_Base.i Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- Active_Object_Map.i $(TAO_ROOT)/tao/Adapter.h \
+ Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -284,8 +288,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Policy_Validator.h \
  POA_Policy_Set.h POA_Policies.h POA_Policies.i \
  $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i POA_Policy_Set.i \
- Object_Adapter.i
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ POA_Policy_Set.i Object_Adapter.i
 
 .obj/PortableServerC.o .obj/PortableServerC.so .shobj/PortableServerC.o .shobj/PortableServerC.so: PortableServerC.cpp PortableServerC.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -382,7 +386,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i portableserver_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ portableserver_export.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -417,7 +422,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
@@ -563,8 +569,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
  $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
  $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
- $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl POA.h \
- Object_Adapter.h Key_Adapters.h $(ACE_ROOT)/ace/Map.h \
+ $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl \
+ POA.h Object_Adapter.h Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
@@ -576,13 +583,13 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i poa_macros.h \
- Servant_Base.h \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i poa_macros.h Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp Servant_Base.i \
- Active_Object_Map.h \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Servant_Base.i Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  Active_Object_Map.i Default_Policy_Validator.h \
  $(TAO_ROOT)/tao/Policy_Validator.h \
@@ -590,7 +597,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  Object_Adapter.i POAManager.h POAManager.i POA_Cached_Policies.h \
  POA_Cached_Policies.i POA.i
 
-.obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp POA.h \
+.obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp \
+ POA.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -917,7 +925,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  POA.h
 
 .obj/Default_Acceptor_Filter.o .obj/Default_Acceptor_Filter.so .shobj/Default_Acceptor_Filter.o .shobj/Default_Acceptor_Filter.so: Default_Acceptor_Filter.cpp \
- Default_Acceptor_Filter.h $(ACE_ROOT)/ace/pre.h \
+ Default_Acceptor_Filter.h \
+ $(ACE_ROOT)/ace/pre.h \
+ portableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1052,11 +1062,13 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Transport_Acceptor.inl
 
 .obj/Object_Adapter.o .obj/Object_Adapter.so .shobj/Object_Adapter.o .shobj/Object_Adapter.so: Object_Adapter.cpp Object_Adapter.h \
- $(ACE_ROOT)/ace/pre.h portableserver_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ portableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl Key_Adapters.h \
- PortableServerC.h $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ Key_Adapters.h PortableServerC.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1181,7 +1193,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair.h \
@@ -1228,15 +1241,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i poa_macros.h \
- Servant_Base.h \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i poa_macros.h Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp Servant_Base.i \
- Active_Object_Map.h \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Servant_Base.i Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- Active_Object_Map.i $(TAO_ROOT)/tao/Adapter.h \
+ Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -1244,8 +1258,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Policy_Validator.h \
  POA_Policy_Set.h POA_Policies.h POA_Policies.i \
  $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i POA_Policy_Set.i \
- Object_Adapter.i POA.h POAManager.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ POA_Policy_Set.i Object_Adapter.i POA.h POAManager.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -1322,7 +1336,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(TAO_ROOT)/tao/ORB_Core.i ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ ServerRequestInfo.h \
  $(TAO_ROOT)/tao/Service_Context.h \
  $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
@@ -1355,7 +1370,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timeprobe.h
 
 .obj/Operation_Table.o .obj/Operation_Table.so .shobj/Operation_Table.o .shobj/Operation_Table.so: Operation_Table.cpp Operation_Table.h \
- $(ACE_ROOT)/ace/pre.h portableserver_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ portableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1536,7 +1552,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ORB.i
 
 .obj/Key_Adapters.o .obj/Key_Adapters.so .shobj/Key_Adapters.o .shobj/Key_Adapters.so: Key_Adapters.cpp Key_Adapters.h \
- $(ACE_ROOT)/ace/pre.h PortableServerC.h \
+ $(ACE_ROOT)/ace/pre.h \
+ PortableServerC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1630,7 +1647,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i portableserver_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ portableserver_export.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -1665,7 +1683,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair.h \
@@ -1712,10 +1731,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i
 
 .obj/POAManager.o .obj/POAManager.so .shobj/POAManager.o .shobj/POAManager.so: POAManager.cpp POAManager.h \
- $(ACE_ROOT)/ace/pre.h PortableServerC.h \
+ $(ACE_ROOT)/ace/pre.h \
+ PortableServerC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1809,7 +1830,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i portableserver_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ portableserver_export.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -1844,8 +1866,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
- poa_macros.h $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i poa_macros.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
@@ -1914,22 +1937,24 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i \
- Servant_Base.h \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp Servant_Base.i \
- Active_Object_Map.h \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Servant_Base.i Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- Active_Object_Map.i $(TAO_ROOT)/tao/Adapter.h \
+ Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  Default_Policy_Validator.h \
  $(TAO_ROOT)/tao/Policy_Validator.h \
  POA_Policy_Set.h POA_Policies.h POA_Policies.i \
  $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i POA_Policy_Set.i \
- Object_Adapter.i POA_Cached_Policies.h POA_Cached_Policies.i \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ POA_Policy_Set.i Object_Adapter.i POA_Cached_Policies.h \
+ POA_Cached_Policies.i \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1986,7 +2011,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/Active_Object_Map.o .obj/Active_Object_Map.so .shobj/Active_Object_Map.o .shobj/Active_Object_Map.so: Active_Object_Map.cpp Active_Object_Map.h \
- $(ACE_ROOT)/ace/pre.h Key_Adapters.h PortableServerC.h \
+ $(ACE_ROOT)/ace/pre.h Key_Adapters.h \
+ PortableServerC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2080,7 +2106,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i portableserver_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ portableserver_export.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -2115,7 +2142,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair.h \
@@ -2162,17 +2190,19 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i \
- Servant_Base.h \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp Servant_Base.i \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Servant_Base.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  Active_Object_Map.i
 
 .obj/Servant_Base.o .obj/Servant_Base.so .shobj/Servant_Base.o .shobj/Servant_Base.so: Servant_Base.cpp Servant_Base.h \
- $(ACE_ROOT)/ace/pre.h PortableServerC.h \
+ $(ACE_ROOT)/ace/pre.h \
+ PortableServerC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2266,7 +2296,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i portableserver_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ portableserver_export.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -2301,12 +2332,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp Servant_Base.i POA.h \
- Object_Adapter.h Key_Adapters.h $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Servant_Base.i POA.h Object_Adapter.h Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
@@ -2352,10 +2385,11 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i poa_macros.h \
- Active_Object_Map.h \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i poa_macros.h Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- Active_Object_Map.i $(TAO_ROOT)/tao/Adapter.h \
+ Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -2363,8 +2397,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Policy_Validator.h \
  POA_Policy_Set.h POA_Policies.h POA_Policies.i \
  $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i POA_Policy_Set.i \
- Object_Adapter.i POAManager.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ POA_Policy_Set.i Object_Adapter.i POAManager.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -2396,7 +2430,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp POA.i \
- Operation_Table.h $(TAO_ROOT)/tao/TAO_Singleton.h \
+ Operation_Table.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
@@ -2551,8 +2586,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
- $(ACE_ROOT)/ace/SString.i Object_Adapter.h \
- portableserver_export.h Key_Adapters.h PortableServerC.h \
+ $(ACE_ROOT)/ace/SString.i \
+ Object_Adapter.h portableserver_export.h Key_Adapters.h \
+ PortableServerC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2591,7 +2627,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair.h \
@@ -2638,15 +2675,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i poa_macros.h \
- Servant_Base.h \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i poa_macros.h Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp Servant_Base.i \
- Active_Object_Map.h \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Servant_Base.i Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- Active_Object_Map.i $(TAO_ROOT)/tao/Adapter.h \
+ Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -2654,8 +2692,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Policy_Validator.h \
  POA_Policy_Set.h POA_Policies.h POA_Policies.i \
  $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i POA_Policy_Set.i \
- Object_Adapter.i POAManager.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ POA_Policy_Set.i Object_Adapter.i POAManager.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -2834,8 +2872,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i Object_Adapter.h \
- Key_Adapters.h PortableServerC.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ Object_Adapter.h Key_Adapters.h PortableServerC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -2869,7 +2907,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair.h \
@@ -2916,15 +2955,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i poa_macros.h \
- Servant_Base.h \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i poa_macros.h Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp Servant_Base.i \
- Active_Object_Map.h \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Servant_Base.i Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- Active_Object_Map.i $(TAO_ROOT)/tao/Adapter.h \
+ Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -2932,8 +2972,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Policy_Validator.h \
  POA_Policy_Set.h POA_Policies.h POA_Policies.i \
  $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i POA_Policy_Set.i \
- Object_Adapter.i
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ POA_Policy_Set.i Object_Adapter.i
 
 .obj/Strategized_Object_Proxy_Broker.o .obj/Strategized_Object_Proxy_Broker.so .shobj/Strategized_Object_Proxy_Broker.o .shobj/Strategized_Object_Proxy_Broker.so: Strategized_Object_Proxy_Broker.cpp \
  Strategized_Object_Proxy_Broker.h portableserver_export.h \
@@ -3183,7 +3223,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  Direct_Object_Proxy_Impl.h ThruPOA_Object_Proxy_Impl.h
 
 .obj/Collocated_Object.o .obj/Collocated_Object.so .shobj/Collocated_Object.o .shobj/Collocated_Object.so: Collocated_Object.cpp Collocated_Object.h \
- $(ACE_ROOT)/ace/pre.h portableserver_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ portableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3303,8 +3344,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Policy_ForwardC.i \
- $(TAO_ROOT)/tao/Object.i Servant_Base.h \
- PortableServerC.h $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.i \
+ Servant_Base.h PortableServerC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
@@ -3312,12 +3354,13 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp Servant_Base.i \
- Collocated_Object.i Object_Adapter.h Key_Adapters.h \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Servant_Base.i Collocated_Object.i Object_Adapter.h Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair.h \
@@ -3364,10 +3407,11 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i poa_macros.h \
- Active_Object_Map.h \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i poa_macros.h Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- Active_Object_Map.i $(TAO_ROOT)/tao/Adapter.h \
+ Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -3375,8 +3419,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Policy_Validator.h \
  POA_Policy_Set.h POA_Policies.h POA_Policies.i \
  $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i POA_Policy_Set.i \
- Object_Adapter.i $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ POA_Policy_Set.i Object_Adapter.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
@@ -3453,7 +3498,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i
 
-.obj/PolicyS.o .obj/PolicyS.so .shobj/PolicyS.o .shobj/PolicyS.so: PolicyS.cpp PolicyS.h $(ACE_ROOT)/ace/pre.h \
+.obj/PolicyS.o .obj/PolicyS.so .shobj/PolicyS.o .shobj/PolicyS.so: PolicyS.cpp PolicyS.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -3766,6 +3812,7 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 .obj/ORB_Manager.o .obj/ORB_Manager.so .shobj/ORB_Manager.o .shobj/ORB_Manager.so: ORB_Manager.cpp ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h PortableServer.h \
+ portableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3859,7 +3906,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i PortableServerC.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ PortableServerC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -3894,7 +3942,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
@@ -4278,23 +4327,24 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i poa_macros.h \
- Servant_Base.h \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i poa_macros.h Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp Servant_Base.i \
- Active_Object_Map.h \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Servant_Base.i Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- Active_Object_Map.i $(TAO_ROOT)/tao/Adapter.h \
+ Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  Default_Policy_Validator.h \
  $(TAO_ROOT)/tao/Policy_Validator.h \
  POA_Policy_Set.h POA_Policies.h POA_Policies.i \
  $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i POA_Policy_Set.i \
- Object_Adapter.i ServerRequestInfo.inl POA.h POAManager.h \
- POAManager.i POA_Cached_Policies.h POA_Cached_Policies.i \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ POA_Policy_Set.i Object_Adapter.i ServerRequestInfo.inl POA.h \
+ POAManager.h POAManager.i POA_Cached_Policies.h POA_Cached_Policies.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -4344,14 +4394,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/ServerInterceptorAdapter.o .obj/ServerInterceptorAdapter.so .shobj/ServerInterceptorAdapter.o .shobj/ServerInterceptorAdapter.so: ServerInterceptorAdapter.cpp \
- ServerInterceptorAdapter.h $(ACE_ROOT)/ace/pre.h \
+ ServerInterceptorAdapter.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/Basic_Types.i portableserver_export.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ portableserver_export.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -4561,28 +4613,32 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i poa_macros.h \
- Servant_Base.h \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i poa_macros.h Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp Servant_Base.i \
- Active_Object_Map.h \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Servant_Base.i Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- Active_Object_Map.i $(TAO_ROOT)/tao/Adapter.h \
+ Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  Default_Policy_Validator.h \
  $(TAO_ROOT)/tao/Policy_Validator.h \
  POA_Policy_Set.h POA_Policies.h POA_Policies.i \
  $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i POA_Policy_Set.i \
- Object_Adapter.i ServerRequestInfo.inl
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ POA_Policy_Set.i Object_Adapter.i ServerRequestInfo.inl
 
 .obj/Default_Servant_Dispatcher.o .obj/Default_Servant_Dispatcher.so .shobj/Default_Servant_Dispatcher.o .shobj/Default_Servant_Dispatcher.so: Default_Servant_Dispatcher.cpp \
- Default_Servant_Dispatcher.h $(ACE_ROOT)/ace/pre.h \
+ Default_Servant_Dispatcher.h \
+ $(ACE_ROOT)/ace/pre.h \
+ portableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl Servant_Dispatcher.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ Servant_Dispatcher.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -4669,8 +4725,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
- $(ACE_ROOT)/ace/SString.i Object_Adapter.h \
- Key_Adapters.h PortableServerC.h \
+ $(ACE_ROOT)/ace/SString.i \
+ Object_Adapter.h Key_Adapters.h PortableServerC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -4709,7 +4765,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair.h \
@@ -4756,15 +4813,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i poa_macros.h \
- Servant_Base.h \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i poa_macros.h Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp Servant_Base.i \
- Active_Object_Map.h \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Servant_Base.i Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- Active_Object_Map.i $(TAO_ROOT)/tao/Adapter.h \
+ Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -4772,8 +4830,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Policy_Validator.h \
  POA_Policy_Set.h POA_Policies.h POA_Policies.i \
  $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i POA_Policy_Set.i \
- Object_Adapter.i POA.h POAManager.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ POA_Policy_Set.i Object_Adapter.i POA.h POAManager.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -4897,8 +4955,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
- $(ACE_ROOT)/ace/SString.i portableserver_export.h \
- Object_Adapter.h Key_Adapters.h PortableServerC.h \
+ $(ACE_ROOT)/ace/SString.i \
+ portableserver_export.h Object_Adapter.h Key_Adapters.h \
+ PortableServerC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -4937,7 +4996,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair.h \
@@ -4984,15 +5044,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i poa_macros.h \
- Servant_Base.h \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i poa_macros.h Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp Servant_Base.i \
- Active_Object_Map.h \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Servant_Base.i Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- Active_Object_Map.i $(TAO_ROOT)/tao/Adapter.h \
+ Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -5000,11 +5061,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Policy_Validator.h \
  POA_Policy_Set.h POA_Policies.h POA_Policies.i \
  $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i POA_Policy_Set.i \
- Object_Adapter.i
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ POA_Policy_Set.i Object_Adapter.i
 
 .obj/POA_Cached_Policies.o .obj/POA_Cached_Policies.so .shobj/POA_Cached_Policies.o .shobj/POA_Cached_Policies.so: POA_Cached_Policies.cpp POA_Cached_Policies.h \
- $(ACE_ROOT)/ace/pre.h POA_Policies.h PortableServerC.h \
+ $(ACE_ROOT)/ace/pre.h POA_Policies.h \
+ PortableServerC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -5098,7 +5160,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i portableserver_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ portableserver_export.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -5133,15 +5196,18 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i POA_Policies.i \
- POA_Cached_Policies.i POA_Policy_Set.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ POA_Policies.i POA_Cached_Policies.i POA_Policy_Set.h \
  $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i POA_Policy_Set.i
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ POA_Policy_Set.i
 
 .obj/POA_Policies.o .obj/POA_Policies.so .shobj/POA_Policies.o .shobj/POA_Policies.so: POA_Policies.cpp POA_Policies.h \
- $(ACE_ROOT)/ace/pre.h PortableServerC.h \
+ $(ACE_ROOT)/ace/pre.h \
+ PortableServerC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -5235,7 +5301,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i portableserver_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ portableserver_export.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -5270,12 +5337,15 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i POA_Policies.i
+ $(TAO_ROOT)/tao/LocalObject.i \
+ POA_Policies.i
 
 .obj/POA_Policy_Set.o .obj/POA_Policy_Set.so .shobj/POA_Policy_Set.o .shobj/POA_Policy_Set.so: POA_Policy_Set.cpp POA_Policy_Set.h \
- $(ACE_ROOT)/ace/pre.h POA_Policies.h PortableServerC.h \
+ $(ACE_ROOT)/ace/pre.h POA_Policies.h \
+ PortableServerC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -5369,7 +5439,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i portableserver_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ portableserver_export.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -5404,12 +5475,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i POA_Policies.i \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ POA_Policies.i \
  $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i POA_Policy_Set.i \
- POA_Cached_Policies.h POA_Cached_Policies.i \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ POA_Policy_Set.i POA_Cached_Policies.h POA_Cached_Policies.i \
  $(TAO_ROOT)/tao/Policy_Validator.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB.h \
@@ -5521,7 +5594,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/Default_Policy_Validator.o .obj/Default_Policy_Validator.so .shobj/Default_Policy_Validator.o .shobj/Default_Policy_Validator.so: Default_Policy_Validator.cpp \
- Default_Policy_Validator.h $(ACE_ROOT)/ace/pre.h \
+ Default_Policy_Validator.h \
+ $(ACE_ROOT)/ace/pre.h \
+ portableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5640,8 +5715,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Policy_ForwardC.i POA_Policies.h \
- PortableServerC.h $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ POA_Policies.h PortableServerC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/CurrentC.i \
@@ -5651,9 +5727,11 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
- $(TAO_ROOT)/tao/LocalObject.i POA_Policies.i \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ POA_Policies.i \
  $(TAO_ROOT)/tao/Policy_Set.h \
  $(TAO_ROOT)/tao/Policy_Set.i
 
@@ -6043,7 +6121,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i portableserver_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ portableserver_export.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/OctetSeqC.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -6072,7 +6151,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- Default_ORTC.i $(TAO_ROOT)/tao/Stub.h \
+ Default_ORTC.i \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
@@ -7043,7 +7123,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/GIOP_Utils.i
 
 .obj/PortableGroup_Hooks.o .obj/PortableGroup_Hooks.so .shobj/PortableGroup_Hooks.o .shobj/PortableGroup_Hooks.so: PortableGroup_Hooks.cpp PortableGroup_Hooks.h \
- $(ACE_ROOT)/ace/pre.h PortableServerC.h \
+ $(ACE_ROOT)/ace/pre.h \
+ PortableServerC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7137,7 +7218,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i portableserver_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ portableserver_export.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -7172,8 +7254,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i PortableServerC.i POA.h \
- Object_Adapter.h Key_Adapters.h $(ACE_ROOT)/ace/Map.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ PortableServerC.i POA.h Object_Adapter.h Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
@@ -7219,15 +7302,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp Key_Adapters.i poa_macros.h \
- Servant_Base.h \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i poa_macros.h Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp Servant_Base.i \
- Active_Object_Map.h \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ Servant_Base.i Active_Object_Map.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- Active_Object_Map.i $(TAO_ROOT)/tao/Adapter.h \
+ Active_Object_Map.i \
+ $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -7235,8 +7319,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Policy_Validator.h \
  POA_Policy_Set.h POA_Policies.h POA_Policies.i \
  $(TAO_ROOT)/tao/Policy_Set.h \
- $(TAO_ROOT)/tao/Policy_Set.i POA_Policy_Set.i \
- Object_Adapter.i POAManager.h \
+ $(TAO_ROOT)/tao/Policy_Set.i \
+ POA_Policy_Set.i Object_Adapter.i POAManager.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -7364,7 +7448,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i portableserver_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ portableserver_export.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -7394,8 +7479,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Policy_ForwardC.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Object_Proxy_Impl.h ImplRepoC.i \
- $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ ImplRepoC.i $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
@@ -7642,7 +7727,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i portableserver_export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ portableserver_export.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -7672,7 +7758,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Policy_ForwardC.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Object_Proxy_Impl.h ImplRepoC.i \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ ImplRepoC.i \
  PortableServer.h \
  portableserver_export.h \
  PortableServerC.h \

@@ -28,6 +28,7 @@ class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 class TAO_Transport;
 class TAO_ORB_Core;
+class TAO_Connect_Strategy;
 
 /**
  * @class TAO_Client_Strategy_Factory
@@ -57,6 +58,9 @@ public:
 
   /// Create the correct client <wait_for_reply> strategy.
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
+
+  /// Create the correct client <asynch_connect> strategy.
+  virtual TAO_Connect_Strategy *create_connect_strategy (TAO_ORB_Core *);
 
   /// Does the client allow any form of callback?
   virtual int allow_callback (void);

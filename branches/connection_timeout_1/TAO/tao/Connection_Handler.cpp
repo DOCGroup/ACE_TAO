@@ -1,17 +1,21 @@
 //$Id$
 
-#include "tao/Connection_Handler.h"
-#include "tao/ORB_Core.h"
-#include "tao/Server_Strategy_Factory.h"
-#include "tao/debug.h"
-#include "tao/Object.h"
+#include "Connection_Handler.h"
+#include "ORB_Core.h"
+#include "Server_Strategy_Factory.h"
+#include "debug.h"
+#include "Object.h"
 #include "Resume_Handle.h"
+#include "Transport.h"
+#include "ace/SOCK.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, Connection_Handler, "$Id$")
+ACE_RCSID (tao,
+           Connection_Handler,
+           "$Id$")
 
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
   :orb_core_ (orb_core),
@@ -25,6 +29,10 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
   // factory for this and TAO_Transport.
   this->pending_upcall_lock_ =
     this->orb_core_->resource_factory ()->create_cached_connection_lock ();
+
+  // Put ourselves in the connection wait state as soon as we get
+  // created
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_WAIT);
 }
 
 

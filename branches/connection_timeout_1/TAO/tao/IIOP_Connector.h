@@ -25,8 +25,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Connector.h"
+class TAO_IIOP_Endpoint;
 
+#include "ace/Connector.h"
 #include "Transport_Connector.h"
 #include "tao/Connector_Impl.h"
 #include "tao/IIOP_Connection_Handler.h"
@@ -82,6 +83,8 @@ protected:
 
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
+  int set_validate_endpoint (TAO_Endpoint *ep);
+
   int make_connection (TAO_GIOP_Invocation *invocation,
                        TAO_Transport_Descriptor_Interface *desc);
 
@@ -93,8 +96,10 @@ protected:
   /// initialize <tcp_properties_>.
   int init_tcp_properties (void);
 
-  /// Narrow the <endpoint> to an IIOP_Endpoint
-  TAO_IIOP_Endpoint *narrow_endpoint (TAO_Endpoint *);
+private:
+
+  /// Return the remote endpoint, a helper function
+  TAO_IIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
 protected:
 
@@ -104,6 +109,7 @@ protected:
 
   /// Do we need to use a GIOP_Lite for sending messages?
   CORBA::Boolean lite_flag_;
+
 
 private:
 
