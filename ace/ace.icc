@@ -498,6 +498,7 @@ group TEMPLATE_FILES =
 	   "Hash_Map_With_Allocator_T.cpp",
            "Hash_Cache_Map_Manager_T.cpp",
            "IOStream_T.cpp",
+           "Intrusive_List.cpp",
            "LOCK_SOCK_Acceptor.cpp",
            "Local_Name_Space_T.cpp",
            "Malloc_T.cpp",
