@@ -17,7 +17,7 @@ TX_Object_i::TX_Object_i (CORBA::ORB_ptr orb)
 TX_Object_i::~TX_Object_i (void)
 {
 }
-  
+
 void
 TX_Object_i::send (const DataSeq & data,
                    CORBA::Environment & /* ACE_TRY_ENV */)
@@ -29,7 +29,7 @@ TX_Object_i::send (const DataSeq & data,
               "Received octet sequence of length: %u\n",
               data.length ()));
 }
-  
+
 void
 TX_Object_i::recv (DataSeq_out data,
                    CORBA::Environment &ACE_TRY_ENV)

@@ -27,12 +27,12 @@ class  TX_Object_i : public virtual POA_TX_Object
 {
 public:
 
-  // Constructor 
+  // Constructor
   TX_Object_i (CORBA::ORB_ptr orb);
-  
-  // Destructor 
+
+  // Destructor
   virtual ~TX_Object_i (void);
-  
+
   virtual void send (const DataSeq & data,
                      CORBA::Environment &ACE_TRY_ENV =
                        TAO_default_environment ())
