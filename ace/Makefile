@@ -216,6 +216,20 @@ TEMPLATE_FILES = \
            Typed_SV_Message \
            Typed_SV_Message_Queue
 
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+ifneq ($(GHS),)
+  ifeq ($(CPU),86)
+    #### With Green Hills for x86 target, compile gethrtime.cpp.
+    FILES += gethrtime
+    LSRC += gethrtime.cpp
+  endif # 86
+endif # GHS
+
 ####
 #### Build customization.
 ####
@@ -288,7 +302,9 @@ ifneq (,$(findstring Token,$(ACE_COMPONENTS)))
   FILES += $(TOKEN_FILES)
 endif # Token
 
-ifneq (,$(findstring Other,$(ACE_COMPONENTS)))
+ifeq (,$(findstring Other,$(ACE_COMPONENTS)))
+  CCFLAGS += -DACE_LACKS_ACE_OTHER
+else
   FILES += $(OTHER_FILES)
 endif # Other
 
@@ -299,20 +315,6 @@ endif
 
 LSRC  = $(addsuffix .cpp,$(FILES))
 LSRC2 = $(addsuffix .cpp,$(TEMPLATE_FILES))
-
-#----------------------------------------------------------------------------
-#       Include macros and targets
-#----------------------------------------------------------------------------
-
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-ifneq ($(GHS),)
-  ifeq ($(CPU),86)
-    #### With Green Hills for x86 target, compile gethrtime.cpp.
-    FILES += gethrtime
-    LSRC += gethrtime.cpp
-  endif # 86
-endif # GHS
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
