@@ -38,16 +38,24 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
                                  + node->flat_name ());
 
   // Generate array containing struct field characteristics.
-  os << "static TAO::TypeCode::Struct_Field<char const *> const "
-     << fields_name.c_str ()
-     << "[] =" << be_idt_nl
-     << "{" << be_idt_nl;
+  os << "static TAO::TypeCode::Struct_Field<char const *> "
+     << fields_name.c_str ();
 
-  if (this->visit_members (node) != 0)
-    return -1;
+  if (count == 0)
+    {
+      os << " * const = 0;" << be_nl;
+    }
+  else
+    {
+      os << "[] =" << be_idt_nl
+         << "{" << be_idt_nl;
 
-  os << be_uidt_nl
-     << "};" << be_uidt_nl << be_nl;
+      if (this->visit_members (node) != 0)
+        return -1;
+
+      os << be_uidt_nl
+         << "};" << be_uidt_nl;
+    }
 
   // Generate the TypeCode instantiation.
   os

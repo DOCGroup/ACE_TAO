@@ -508,12 +508,11 @@ be_visitor_typecode_defn::gen_base_typecode_name (be_type * base)
         {
           // Internally used TypeCodes.
 
-          os << "::_tao_tc_" << base->tc_name ();
+          os << base->tc_name ();
         }
     }
   else
-    os << "::_tao_tc_"
-      << base->tc_name ();
+    os << base->tc_name ();
 
   return 0;
 }
@@ -755,12 +754,17 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
                         -1);
     }
 
-  // Generate the TypeCode instantiation.
-  os << "static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>"
+  // namespace begin
+  os << "namespace TAO" << be_nl
+     << "{" << be_idt_nl
+     << "namespace TypeCode" << be_nl
+     << "{" << be_idt_nl;
+    
+  os << "TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>"
      << be_idt_nl
-     << "_tao_tc_"
-//      << node->flat_name () << "_" << node->max_size()
-     << node->tc_name ()
+     << node->flat_name () << "_" << node->max_size()->ev ()->u.ulval
+//     << node->tc_name ()
+
      << " (" << be_idt_nl
      << "CORBA::tk_sequence," << be_nl
      << "&";
@@ -772,7 +776,18 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
      << node->max_size () << ");" << be_uidt_nl
      << be_uidt_nl;
 
-  return this->gen_typecode_ptr (node);
+  os << "::CORBA::TypeCode_ptr const tc_"
+     << node->flat_name () << "_" << node->max_size()->ev ()->u.ulval << " ="
+     << be_idt_nl
+     << "&" << node->flat_name () << "_" << node->max_size()->ev ()->u.ulval
+     << ";" << be_uidt_nl;
+
+  // namespace end
+  os << be_uidt_nl
+     << "}" << be_uidt_nl
+     << "}" << be_nl << be_nl;
+
+  return 0; // this->gen_typecode_ptr (node);
 }
 
 int
@@ -791,17 +806,42 @@ be_visitor_typecode_defn::visit_string (be_string * node)
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  // Multiple definition guards.
+  // @todo Can we automate duplicate detection within the IDL compiler
+  //       itself?
+  os << "\n#ifndef _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
+     << "\n#define _TAO_TYPECODE_" << node->flat_name () << "_GUARD" << be_nl;
+
+  // namespace begin
+  os << "namespace TAO" << be_nl
+     << "{" << be_idt_nl
+     << "namespace TypeCode" << be_nl
+     << "{" << be_idt_nl;
+
   // Generate the TypeCode instantiation.
   os
-    << "static TAO::TypeCode::String<TAO::Null_RefCount_Policy>"
+    << "TAO::TypeCode::String<TAO::Null_RefCount_Policy>"
     << be_idt_nl
-    << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
+    << node->flat_name () << " (" << be_idt_nl
     << "CORBA::tk_" << (node->width () == 1 ? "string" : "wstring") << ","
     << be_nl
     << node->max_size () << ");" << be_uidt_nl
     << be_uidt_nl;
 
-  return this->gen_typecode_ptr (node);
+  os << "::CORBA::TypeCode_ptr const tc_"
+     << node->flat_name () << " ="
+     << be_idt_nl
+     << "&" << node->flat_name () << ";" << be_uidt_nl;
+
+  // namespace end
+  os << be_uidt_nl
+     << "}" << be_uidt_nl
+     << "}" << be_nl << be_nl;
+
+  os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
+     << be_nl;
+
+  return 0; // this->gen_typecode_ptr (node);
 }
 
 // int
