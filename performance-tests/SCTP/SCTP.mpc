@@ -8,6 +8,13 @@ project(*SOCK_STREAM_clt) : aceexe {
     Options_Manager.cpp
     hist.cpp
   }
+
+  // Some source code uses the sqrt and pow function and
+  // some UNIX operating systems need the math library to
+  // get the symbol.
+  verbatim(gnuace, local) {
+    LDLIBS += $(MATHLIB)
+  }
 }
 
 project(*SOCK_STREAM_srv) : aceexe {
@@ -24,6 +31,13 @@ project(*SOCK_SEQPACK_clt) : aceexe {
     SOCK_SEQPACK_clt.cpp
     Options_Manager.cpp
     hist.cpp
+  }
+
+  // Some source code uses the sqrt and pow function and
+  // some UNIX operating systems need the math library to
+  // get the symbol.
+  verbatim(gnuace, local) {
+    LDLIBS += $(MATHLIB)
   }
 }
 

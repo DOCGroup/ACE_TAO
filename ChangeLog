@@ -1,3 +1,12 @@
+Tue Nov  2 06:56:21 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * performance-tests/SCTP/SCTP.mpc:
+
+          Added verbatim sections to the client projects to adds $(MATHLIB)
+          to LDLIBS for gnuace projects.  The math library is needed for
+          some UNIX platforms and is set in the corresponding platform_*.GNU
+          files.
+
 Tue Nov  2 07:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/SCTP/Options_Manager.cpp:
@@ -6,8 +15,8 @@ Tue Nov  2 07:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Nov  1 10:21:00 2004  Gary Maxey  <gary.maxey@hp.com>
 
-	* ace/TP_Reactor.cpp: performace enhancement in handle_timer_events
-	  See Bugzilla #1971 for details.
+        * ace/TP_Reactor.cpp: performace enhancement in handle_timer_events
+          See Bugzilla #1971 for details.
 
 Mon Nov  1 08:37:47 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -46,13 +55,13 @@ Fri Oct 29 22:48:34 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Fri Oct 29 12:15:23 2004  Steve Huston  <shuston@riverace.com>
 
-	* performance-tests/SCTP/SOCK_SEQPACK_clt.cpp: Add missing #include
-	  "ace/OS_Memory.h" to find ACE_NEW_RETURN.
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.cpp: Add missing #include
+          "ace/OS_Memory.h" to find ACE_NEW_RETURN.
 
 Fri Oct 29 12:09:28 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/Shared_Memory/test_MM.cpp: Don't try ACE_OS::mkstemp()
-	  if ACE_LACKS_MKSTEMP is defined.
+        * examples/Shared_Memory/test_MM.cpp: Don't try ACE_OS::mkstemp()
+          if ACE_LACKS_MKSTEMP is defined.
 
 Fri Oct 29 09:30:37 2004  Chad Elliott  <elliott_c@ociweb.com>
 
