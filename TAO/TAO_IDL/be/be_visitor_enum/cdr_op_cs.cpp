@@ -65,7 +65,7 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
       << be_nl
       << "if (_tao_success)" << be_idt_nl
       << "{" << be_idt_nl
-      << "enumerator = static_cast<" << node->name ()
+      << "_tao_enumerator = static_cast<" << node->name ()
       << "> (_tao_temp);" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "return _tao_success;" << be_uidt_nl
