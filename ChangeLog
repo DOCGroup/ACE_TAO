@@ -1,3 +1,7 @@
+Tue Jul 22 22:46:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/OS.h: Fixed a typo in the documentation of read_n ().
+
 Tue Jul 22 23:24:53 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.cpp (ACE_Thread_ID::to_string):
