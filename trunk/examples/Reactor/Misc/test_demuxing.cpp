@@ -14,13 +14,13 @@
 // Default is to have a 2 second timeout.
 static int timeout = 2;
 
-// This class illustrates how to handle signal-driven I/O using the
-// ACE_Reactor framework.  Note that signals may be caught and
-// processed without requiring the use of global signal handler
-// functions or global signal handler data.
-
 class Sig_Handler : public ACE_Event_Handler
 {
+  // = TITLE
+  //   This class illustrates how to handle signal-driven I/O using
+  //   the <ACE_Reactor> framework.  Note that signals may be caught
+  //   and processed without requiring the use of global signal
+  //   handler functions or global signal handler data.
 public:
   Sig_Handler (void);
   virtual ACE_HANDLE get_handle (void) const;
@@ -150,11 +150,11 @@ Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
   return 0;
 }
 
-// This class illustrates that the ACE_Reactor can handle signals,
-// STDIO, and timeouts using the same mechanisms.
-
 class STDIN_Handler : public ACE_Event_Handler
 {
+  // = TITLE
+  //   This class illustrates that the ACE_Reactor can handle signals,
+  //   STDIO, and timeouts using the same mechanisms.
 public:
   STDIN_Handler (void);
   virtual int handle_input (ACE_HANDLE);
