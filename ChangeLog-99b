@@ -1,3 +1,13 @@
+Thu Jun 24 12:53:22 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.(h i): Added check for ACE_HAS_WINSOCK2 != 0 wherever
+          the check was only for ifdef ACE_HAS_WINSOCK2. Allows building on
+          Winsock 1.1.
+
+        * ace/config-pharlap.h: New config file for use with PharLap TNT
+          Embedded ToolSuite. This is not really tested yet - that activity
+          continues.
+
 Thu Jun 24 07:05:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-osf1-4.0.h,include/makeinclude/platform_osf1_4.0.GNU,
