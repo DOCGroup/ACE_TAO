@@ -1,6 +1,6 @@
 //$Id$
 
-project(*CompilerElements) {
+project(CompilerElements) {
   requires += cidl
   sharedname =
   staticname = CompilerElements

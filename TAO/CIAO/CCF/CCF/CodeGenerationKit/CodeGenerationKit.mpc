@@ -1,6 +1,6 @@
 //$Id$
 
-project(*CodeGenerationKit) {
+project(CodeGenerationKit) {
   requires += cidl
   sharedname =
   staticname = CodeGenerationKit

@@ -1,3 +1,14 @@
+Sun Mar 14 00:23:02 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* CCF/CCF/CIDL/CIDL.mpc:
+	* CCF/CCF/IDL2/IDL2.mpc:
+	* CCF/CCF/IDL3/IDL3.mpc:
+	* CCF/CCF/CIDL/CodeGenerationKit.mpc:
+	* CCF/CCF/CIDL/CompilerElements.mpc:
+
+	  Removed the * to disable the duplicated words in the
+	  project/makefile.
+
 Sun Mar 14 00:16:46 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* CIDLC/CIDLC.mpc:
