@@ -27,8 +27,11 @@
 class TAO_ORBSVCS_Export TAO_IntId 
 {
   // = TITLE
-  //     Stores information a context keeps for each bound name
-  //     (object reference and the type of binding).
+  //     Stores information a context keeps for each bound name.
+  // 
+  // = DESCRIPTION
+  //     Each bound name is associated with an object reference and
+  //     the type of binding. 
 public:
   // = Initialization and termination methods.
   TAO_IntId (void);
@@ -59,6 +62,10 @@ class TAO_ORBSVCS_Export TAO_ExtId
 {
   // = TITLE
   //    Stores the name to which an object is bound.
+  //
+  // = DESCRIPTION
+  //    This class is used as the External ID for the
+  //    <ACE_Hash_Map_Manager>.  
 public:
   // = Initialization and termination methods.
 

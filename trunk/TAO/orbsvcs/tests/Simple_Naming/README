@@ -24,8 +24,9 @@ The following options exist:
 If no option is specified, Simple test is run.  If more than one
 option is specified, only one test runs.
 
-NOTE: if running tests manually, Naming Service has to be restarted before each test
-(this is due to some tests not 'cleaning up' bindings after themselves).
+NOTE: if running tests manually, Naming Service has to be restarted
+before each test (this is due to some tests not 'cleaning up' bindings
+after themselves).
 
 NOTE: destroy test will not produce desired output if POA 'recreates
 servants on request'.
@@ -37,7 +38,6 @@ Simple Test.
 
 Performs bind (), resolve (), and unbind () of an object reference in
 the root context.
-
 
 Expected Output:
 

@@ -1,21 +1,5 @@
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    orbsvcs/Naming_Service/Naming_Service
-//
-// = FILENAME
-//    Naming_Service.cpp
-//
-// = DESCRIPTION
-//      This class implements a Naming_Service object.
-//
-// = AUTHORS
-//    Nagarajan Surendran (naga@cs.wustl.edu)
-//
-// ============================================================================
-
 #include "Naming_Service.h"
 
 ACE_RCSID(Naming_Service, Naming_Service, "$Id$")
@@ -112,16 +96,13 @@ TAO_Naming_Service::init (int argc,
       orb = this->orb_manager_.orb ();
       child_poa = this->orb_manager_.child_poa ();
 
-      // Check the non-ORB arguments.
-      // this needs to come before we initialize my_naming_server so
-      // that we can pass on some of the command-line arguments.
+      // Check the non-ORB arguments.  this needs to come before we
+      // initialize my_naming_server so that we can pass on some of
+      // the command-line arguments.
 
-      result = this->parse_args (argc,
-                             argv);
-
+      result = this->parse_args (argc, argv);
       if (result < 0)
         return result;
-
 
       result = this->my_naming_server_.init (orb.in (),
                                              child_poa.in (),
@@ -139,7 +120,6 @@ TAO_Naming_Service::init (int argc,
     }
   TAO_ENDTRY;
 
-
   if (this->ior_output_file_ != 0)
     {
       CORBA::String_var str =
@@ -152,17 +132,19 @@ TAO_Naming_Service::init (int argc,
 
   if (this->pid_file_name_ != 0)
     {
-      FILE* pidf = fopen (this->pid_file_name_, "w");
+      FILE *pidf = fopen (this->pid_file_name_, "w");
       if (pidf != 0)
         {
-          ACE_OS::fprintf (pidf, "%d\n", ACE_OS::getpid ());
+          ACE_OS::fprintf (pidf,
+                           "%d\n",
+                           ACE_OS::getpid ());
           ACE_OS::fclose (pidf);
         }
     }
   return 0;
 }
 
-// Run the ORB event loop
+// Run the ORB event loop.
 
 int
 TAO_Naming_Service::run (CORBA_Environment& env)
@@ -171,7 +153,7 @@ TAO_Naming_Service::run (CORBA_Environment& env)
       return this->orb_manager_.run (env);
   else
     {
-      ACE_Time_Value * t = new ACE_Time_Value (time_);
+      ACE_Time_Value *t = new ACE_Time_Value (time_);
       return this->orb_manager_.run (env, t);
     }
 }
@@ -183,7 +165,7 @@ TAO_Naming_Service::~TAO_Naming_Service (void)
 }
 
 int
-main (int argc, char* argv[])
+main (int argc, char *argv[])
 {
   TAO_Naming_Service naming_service;
 

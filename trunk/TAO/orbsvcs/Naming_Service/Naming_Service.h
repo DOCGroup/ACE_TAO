@@ -9,7 +9,8 @@
 //    Naming_Service.h
 //
 // = DESCRIPTION
-//      This class implements the functionality of a Naming_Service.
+//      This class implements the functionality of a Naming_Service in
+//      a stand-alone process.
 //
 // = AUTHORS
 //    Nagarajan Surendran (naga@cs.wustl.edu)
@@ -72,7 +73,6 @@ private:
   size_t time_;
   // After how long the server should stop listening to requests (in
   // seconds).
-
 };
 
 #endif /* TAO_NAMING_SERVICE_H */

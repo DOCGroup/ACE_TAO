@@ -32,8 +32,8 @@ TAO_NamingContext::TAO_NamingContext (PortableServer::POA_ptr poa,
 {
   ACE_NEW (context_,
            HASH_MAP (hash_table_size_));
-
-  // if allocation failed, should we delete the rest of us? delete this?
+  // If allocation failed, should we delete the rest of us? delete
+  // this?
 
   // Get the lock from the ORB, which knows what type is appropriate.
   // This method must be called AFTER the ORB has been initialized via
@@ -50,6 +50,7 @@ TAO_NamingContext::~TAO_NamingContext (void)
 }
 
 // Return the Default POA of this Servant
+
 PortableServer::POA_ptr
 TAO_NamingContext::_default_POA (CORBA::Environment &/*env*/)
 {
@@ -65,15 +66,14 @@ TAO_NamingContext::get_context (const CosNaming::Name &name,
     CosNaming::NamingContext::_nil ();
 
   // Create compound name to be resolved (<name> - last component).
-  // To avoid copying (and thus memory allocations), we can just
-  // reuse <name>'s buffer, since we will not be modifying it.
+  // To avoid copying (and thus memory allocations), we can just reuse
+  // <name>'s buffer, since we will not be modifying it.
   CORBA::ULong len = name.length ();
   CosNaming::Name comp_name (name.maximum (),
                              len - 1,
                              ACE_const_cast
                              (CosNaming::NameComponent*,
                               name.get_buffer ()));
-
   TAO_TRY
     {
       // Resolve the name.
@@ -118,7 +118,6 @@ TAO_NamingContext::get_context (const CosNaming::Name &name,
                                                             rest),
                          result._retn());
     }
-
   // Finally, if everything went smoothly, just return the resolved
   // context.
   return result._retn ();
@@ -160,7 +159,6 @@ TAO_NamingContext::bind (const CosNaming::Name& n,
         }
       TAO_ENDTRY;
     }
-
   // If we received a simple name, we need to bind it in this context.
   else
     {
@@ -409,13 +407,11 @@ TAO_NamingContext::resolve (const CosNaming::Name& n,
              ACE_const_cast (CosNaming::NameComponent*,
                              n.get_buffer ())
              + 1);
-
           // If there are any exceptions, they will propagate up.
           return context->resolve (rest_of_name,
                                    _env);
         }
     }
-
   // If the name we had to resolve was simple, we just need to return
   // the result.  Since we don't want the result to be destroyed when
   // this method returns we need to duplicate it.
@@ -564,8 +560,6 @@ TAO_NamingContext::destroy (CORBA::Environment &_env)
       {
         TAO_TRY
           {
-            // @@ This looks like a prime candidate for factoring into a
-            // helper method or class....!
             PortableServer::POA_var poa =
               this->_default_POA (TAO_TRY_ENV);
             TAO_CHECK_ENV;
@@ -587,10 +581,8 @@ TAO_NamingContext::destroy (CORBA::Environment &_env)
       }
   }
 
-  // Let go of the lock.
-  //
-  // Commit suicide: must have been dynamically allocated
-
+  // Let go of the lock and commit suicide.  We *must* be dynamically
+  // allocated for this to work right...
   if (this->root_ == 0)
     delete this;
 }
@@ -737,7 +729,7 @@ CORBA::Boolean
 TAO_BindingIterator::next_one (CosNaming::Binding_out b,
                               CORBA::Environment &_env)
 {
-  CosNaming::Binding * binding;
+  CosNaming::Binding *binding;
 
   // Allocate a binding to be returned (even if there no more
   // bindings, we need to allocate an out parameter.)
@@ -775,8 +767,8 @@ TAO_NamingContext::populate_binding (TAO_NamingContext::HASH_MAP::ENTRY *hash_en
   b.binding_name.length (1);
 
   // Here we perform a check before assignment to make sure
-  // CORBA::string_dup is not called on 0 pointer, since the spec
-  // does not say what should happen in that case.
+  // CORBA::string_dup is not called on 0 pointer, since the spec does
+  // not say what should happen in that case.
   if (hash_entry->ext_id_.id_.fast_rep () != 0)
     {
       b.binding_name[0].id =

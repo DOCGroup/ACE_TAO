@@ -1,29 +1,35 @@
 // $Id$
 
-README:
-======
-        This directory consists of the files implementing the TAO
-Naming Service.
-
-        The TAO Naming Service makes use of IP Multicast to process
-requests to the Naming Service.
+        This directory contains the files that implement the TAO
+Naming Service.  The TAO Naming Service uses IP Multicast to process
+client "resolve_initial_references()" requests.
 
 To Run:
 ======
 
-        % Naming_Service [-ORBport port] [-ORBobjrefstyle url]
-                         [-ORBnameserviceport nsport]
-                         [-s context_size] [-t time]
+% Naming_Service [-ORBport port] 
+                 [-ORBobjrefstyle url]
+                 [-ORBnameserviceport nsport]
+                 [-s context_size] 
+                 [-t time]
 
 Arguments:
 ==========
-        port - The ORB port
-        nsport - Multicast port.
-        context_size - Size of the hash table allocated upon the
-        creation of the root Naming Context (if one is created).
-        (All contexts created under the root will use the same size
-        for their hash tables).
-        time - how long the server should listen for requests before exiting.
+        port
+                 The ORB port.
+
+        nsport 
+                Multicast port.
+
+        context_size
+                 Size of the hash table allocated upon the creation of
+                 the root Naming Context (if one is created).  All
+                 contexts created under the root will use the same
+                 size for their hash tables.  The default is 1024.
+
+        time
+                How long the server should listen for requests before
+                exiting.
 
 Environment Variables:
 =====================
@@ -33,7 +39,7 @@ Environment Variables:
 Sample Run:
 ==========
 
-      % Naming_Service -ORBport 20000 -ORBobjrefstyle url -ORBnameserviceport 19999
+% Naming_Service -ORBport 20000 -ORBobjrefstyle url -ORBnameserviceport 19999
 starting up daemon <unknown>
 opening dynamic service Resource_Factory
 did dynamic on Resource_Factory, error = 0
@@ -47,34 +53,40 @@ The multicast server setup is done.
 NameService Client:
 ==================
 
-        A client of the TAO Naming Service will use the ORB
-resolve_initial_references to resolve the NamingService object. This
-will be done using Multicast by default. This behavior can be
-overridden by these 2 ways.
+A client of the TAO Naming Service will use the ORB
+resolve_initial_references() method to resolve the "NamingService"
+object service.  By default, this resolution is performed using
+Multicast.  This behavior can be overridden in the following ways:
 
-        1. passing the argument -ORBnameserviceior ior.
+        1. Pass the argument -ORBnameserviceior ior.
            This ior is got from the output of the Naming_Service from
            line 'listening as object <iiop:..>'.
 
-        2. setting the env. variable 'NameService'.
+           For example, If a client wants to use the Naming_Service
+           from the sample run it could use:
 
-For example if a client wants to use the Naming_Service from the
-sample run it would be like,
+           % client - ORBnameserviceior
+           <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
 
-        %client -ORBnameserviceior
-                <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
+        2. Set the environment variable `NameService' (minus the
+           quotes), as follows in csh or tcsh:
 
-or set the environment variable,
+           % setenv NameService <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
 
-        in a tcsh ,
+           and then run the client,
 
-        % setenv NameService <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
+           % client <.. client's arguments>
 
-        and then run the client,
+These two techniques may be needed in an environment where
 
-        % client <.. client's arguments>
+        1. There is more than one NamingService, to avoid the
+           confusion of a server registering its object with one
+           NamingService and the client getting the reply from some
+           other NamingService. 
 
-        These methods might be needed in an environment where there is
-more than one NamingService to avoid the confusion of a server
-registering its object with one NamingService and the client getting
-the reply from some other NamingService.
+        2. The OS platform doesn't support multicast.
+
+        3. The client or server isn't written using TAO, and therefore
+           doesn't use TAO's multicast NameService resolution protocol.
+
+

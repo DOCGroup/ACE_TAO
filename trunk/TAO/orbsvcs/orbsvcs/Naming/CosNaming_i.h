@@ -42,7 +42,6 @@ public:
                      const char *poa_id,
                      size_t default_hash_table_size = ACE_DEFAULT_MAP_SIZE,
                      int root = 0);
-
   // Default constructor, which initializes the <size> of the table,
   // and sets a root flag.
 
@@ -128,9 +127,10 @@ public:
 
   static int populate_binding (TAO_NamingContext::HASH_MAP::ENTRY *hash_entry,
                                CosNaming::Binding &b);
-  // Helper function used by TAO_NamingContext and TAO_BindingIterator:
-  // populate a binding <b> with info contained in <hash_entry>.
-  // Return 1 if everything went smoothly, 0 if an allocation failed.
+  // Helper function used by TAO_NamingContext and
+  // TAO_BindingIterator: populate a binding <b> with info contained
+  // in <hash_entry>.  Return 1 if everything went smoothly, 0 if an
+  // allocation failed.
 
 protected:
   // = These are the helper methods used by other methods.
@@ -151,10 +151,8 @@ protected:
   void list_helper (TAO_BindingIterator* &bind_iter,
                      TAO_NamingContext::HASH_MAP::ITERATOR *hash_iter,
                      CORBA::Environment &_env);
-
-  // This is a helper function for <list> method.
-  // It is necessary due to inability to have 2 TRY blocks in one function.
-
+  // This is a helper function for <list> method.  It is necessary due
+  // to inability to have 2 TRY blocks in one function.
 
   HASH_MAP *context_;
   // This implementation of <NamingContext> uses <ACE_Hash_Map> for
@@ -171,16 +169,16 @@ protected:
   // null lock if the ORB decides threading is not necessary.
 
   PortableServer::POA_var poa_;
-  // Implement a different _default_POA()
+  // Implement a different <_default_POA>.
 
   u_long counter_;
-  // This counter is used to generate names for children
+  // This counter is used to generate names for children.
 
   size_t hash_table_size_;
-  // Hash table size
+  // Hash table size.
 
   ACE_CString poa_id_;
-  // My POA Id
+  // My POA Id.
 };
 
 class TAO_ORBSVCS_Export TAO_BindingIterator : public POA_CosNaming::BindingIterator
@@ -229,7 +227,6 @@ private:
 
   PortableServer::POA_var poa_;
   // Implement a different _default_POA()
-
 };
 
 #endif /* TAO_NAMING_I_H */
