@@ -124,8 +124,11 @@ IDL_GlobalData::IDL_GlobalData (void)
       exception_support_ (I_FALSE),
       opt_tc_ (I_FALSE)
 {
-  // Path for the perfect hash generator(gperf) program. Default
-  // is $ACE_ROOT/bin/gperf.
+
+  // Path for the perfect hash generator(gperf) program.
+  // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
+  // Use ACE_GPERF if $ACE_ROOT hasn't been set or won't be set
+  // in the environment.
   // Form the absolute pathname.
   char* ace_root = ACE_OS::getenv ("ACE_ROOT");
   if (ace_root == 0)
@@ -135,7 +138,18 @@ IDL_GlobalData::IDL_GlobalData (void)
     // the perfect hasher and at that time, we can switch over to some
     // other scheme. 
     {
+#if defined (ACE_GPERF)
+      // The actual gperf program must be included in the definition of
+      // ACE_GPERF, not just the directory in which it is located.
+      const char ace_gperf[] = ACE_GPERF;
+      ACE_NEW (this->gperf_path_, 
+               char [ACE_OS::strlen (ace_gperf) + 1]);
+      ACE_OS::sprintf (this->gperf_path_,
+                       "%s",
+                       ace_gperf);
+#else
       this->gperf_path_ = 0;
+#endif
     }
   else
     {
