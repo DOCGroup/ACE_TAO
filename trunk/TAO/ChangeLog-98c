@@ -1,3 +1,10 @@
+Fri Oct 30 09:35:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/orbconf.h: Changed TAO_USE_EXCEPTIONS to TAO_HAS_EXCEPTIONS
+ 	  to be consistent with ACE_HAS_EXCEPTIONS.  Thanks to
+ 	  Terry.Rosenbaum@Radiology.MSU.edu <Terry Rosenbaum> for
+ 	  suggesting this.
+
 Thu Oct 29 18:19:55 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.37 released.
@@ -556,14 +563,15 @@ Wed Oct 21 07:22:12 1998  David L. Levine  <levine@cs.wustl.edu>
 Tue Oct 20 18:04:30 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
-        * TAO_IDL/driver/drv_args.cpp: Fixed the problem with seperating
-        suffix from the mail file name. It was hard coded assuming that
-        all files will end with .cpp which may  not be true when somebody
-        uses -sT or -st option to specify someother suffix like .cxx or
-        something. So, we now use "." to separate the main name from the
-        suffix. If . is also not there (sanity check), we just take the
-        whole name as it is. THANKS for Terry.Rosenbaum@Radiology.MSU.edu
-        (Terry Rosenbaum) for reporting this problem.
+        * TAO_IDL/driver/drv_args.cpp: Fixed the problem with separating
+          suffix from the mail file name. It was hard coded assuming that
+ 	  all files will end with .cpp which may not be true when somebody
+ 	  uses -sT or -st option to specify someother suffix like .cxx or
+ 	  something. So, we now use "." to separate the main name from the
+ 	  suffix. If . is also not there (sanity check), we just take the
+ 	  whole name as it is.  Thanks to
+ 	  Terry.Rosenbaum@Radiology.MSU.edu <Terry Rosenbaum> for
+ 	  reporting this problem.
 
 1998-10-20  Seth Widoff  <swidoff@cs.cmu.edu>
 
