@@ -92,13 +92,11 @@ TAO_Transport::send_or_buffer (TAO_Stub *stub,
                                const ACE_Message_Block *message_block,
                                const ACE_Time_Value *max_wait_time)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->handler_lock_,
-                            -1));
 
   if (stub == 0 || two_way)
-    return this->send_i (message_block, max_wait_time);
+    {
+      return this->send (message_block, max_wait_time);
+    }
 
   TAO_Sync_Strategy &sync_strategy = stub->sync_strategy ();
 
@@ -483,7 +481,14 @@ TAO_Transport::register_handler (void)
 }
 
 int
-TAO_Transport::id (void)
+TAO_Transport::id (void) const
 {
   return this->id_;
 }
+
+void
+TAO_Transport::id (int id)
+{
+  this->id_ = id;
+}
+

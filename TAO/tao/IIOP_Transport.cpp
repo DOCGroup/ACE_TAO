@@ -32,10 +32,6 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
-  // We'll set the id_ (from TAO_Transport) to the handle from our connection
-  if (connection_handler_ != 0)
-    this->id_ = ACE_static_cast (int, this->connection_handler_->get_handle ());
-
   if (flag)
     {
       // Use the lite version of the protocol

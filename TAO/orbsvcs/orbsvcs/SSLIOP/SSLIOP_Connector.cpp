@@ -210,12 +210,8 @@ TAO_SSLIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
       if (TAO_debug_level > 5)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) SSLIOP_Connector::connect ")
-                    ACE_TEXT ("got an existing connection \n")));
-
-      // We have found a connection and a handler
-      svc_handler =
-        ACE_dynamic_cast (TAO_SSLIOP_Connection_Handler *,
-                          base_transport->connection_handler ());
+                    ACE_TEXT ("got an existing transport with id %d\n"),
+                    base_transport->id ()));
     }
   else
     {

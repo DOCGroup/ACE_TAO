@@ -55,15 +55,6 @@ public:
   /// Default destructor.
   ~TAO_SHMIOP_Transport (void);
 
-#if 0
-  /// Return the connection service handler
-  TAO_SHMIOP_SVC_HANDLER *service_handler (void);
-
-  ///  The TAO_Transport methods, please check the documentation in
-  ///  "tao/Pluggable.h" for more details.
-  virtual ACE_HANDLE handle (void);
-#endif
-
 protected:
   /** @name Overridden Template Methods
    *
@@ -136,20 +127,13 @@ public:
   /// signalling.
   virtual int reactor_signalling (void);
 
-#if 0
-  // Access the connection handler
-  virtual TAO_Connection_Handler* connection_handler (void) const;
-#endif
-
   //@}
 
 private:
-
   /// Process the message that we have read
   int process_message (void);
 
 private:
-
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
   TAO_SHMIOP_Connection_Handler *connection_handler_;

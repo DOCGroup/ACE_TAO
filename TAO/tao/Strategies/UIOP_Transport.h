@@ -60,15 +60,6 @@ public:
   /// Default destructor.
   ~TAO_UIOP_Transport (void);
 
-#if 0
-  /// Return the connection service handler
-  TAO_UIOP_SVC_HANDLER *service_handler (void);
-
-  ///  The TAO_Transport methods, please check the documentation in
-  ///  "tao/Pluggable.h" for more details.
-  virtual ACE_HANDLE handle (void);
-#endif
-
 protected:
   /** @name Overridden Template Methods
    *
@@ -136,11 +127,6 @@ public:
   /// Initialising the messaging object
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor);
-
-#if 0
-  // Access the connection handler
-  virtual TAO_Connection_Handler* connection_handler (void) const;
-#endif
 
   //@}
 
