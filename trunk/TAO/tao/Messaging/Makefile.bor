@@ -8,11 +8,13 @@ OBJFILES = \
         $(OBJDIR)\Messaging.obj \
         $(OBJDIR)\MessagingC.obj \
         $(OBJDIR)\MessagingS.obj \
+        $(OBJDIR)\MessagingS_T.obj \
         $(OBJDIR)\Asynch_Reply_Dispatcher.obj \
         $(OBJDIR)\Asynch_Timeout_Handler.obj \
         $(OBJDIR)\Messaging_ORBInitializer.obj \
         $(OBJDIR)\Messaging_PolicyFactory.obj \
-        $(OBJDIR)\Messaging_Policy_i.obj
+        $(OBJDIR)\Messaging_Policy_i.obj \
+        $(OBJDIR)\Twoway_Asynch_Invocation.obj
 
 RESOURCE = $(OBJDIR)\TAO_Messaging.res
 
