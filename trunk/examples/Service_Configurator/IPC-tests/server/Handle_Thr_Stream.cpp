@@ -142,7 +142,7 @@ CLI_Stream<PR_ST_2>::svc (void)
   ACE_OS::puts ("----------------------------------------");
   ACE_OS::fflush (stdout);
 
-  long t = ACE_OS::time (0L);
+  time_t t = ACE_OS::time (0L);
   ACE_OS::cuserid (login_name);
   ACE_OS::sprintf (buf, "user %s %s", login_name, ACE_OS::ctime (&t));
 
