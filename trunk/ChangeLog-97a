@@ -4,6 +4,12 @@ Tue Feb 11 11:26:03 1997  David L. Levine  <levine@cs.wustl.edu>
 	  and only support ACE_OS::clock_gettime if that's defined.
 	  It can be supported on Solaris 2.5, but -lposix4 is then required.
 
+	* include/makeinclude/platform_sunos5_sunc++_4.1.GNU:
+	  added -pta back to avoid link problems with template classes
+	  that have virtual functions that are all inline, if inlining
+	  is disabled.  Though we don't see the problem, other 4.1 users do.
+	  Thanks to mscallinan@CCGATE.HAC.COM for reporting this.
+
 	* examples/Logger/simple-server/Logging_Handler.cpp (handle_input):
 	  cast "len" to ssize_t to prevent mixed signed/unsigned comparison.
 
