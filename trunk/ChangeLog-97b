@@ -18,6 +18,8 @@ Fri Oct 24 09:24:14 1997  David L. Levine  <levine@cs.wustl.edu>
 	  destroying TSS objects.  There are two more changes required to
 	  completely remove the ACE_Allocator use.
 
+	* tests/TSS_Test.cpp (worker): added printout of iteration count.
+
 Fri Oct 24 01:53:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.26, released Fri Oct 24 01:53:58 1997.
