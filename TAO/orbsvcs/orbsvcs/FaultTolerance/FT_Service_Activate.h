@@ -26,8 +26,8 @@
 
 #include "tao/Services_Activate.h"
 #include "ace/Service_Config.h"
-#include "tao/ORB_Core.h"
-#include "tao/Service_Callbacks.h"
+
+class TAO_Service_Callbacks;
 
 // Forward declarations
 class TAO_FT_Export TAO_FT_Service_Activate : public TAO_Services_Activate
@@ -55,10 +55,6 @@ public:
 
   static int Initializer (void);
   // Used to force the initialization.
-
-private:
-  TAO_ORB_Core *orb_core_;
-  // Our copy of the ORB Core pointer
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_FT_Service_Activate)
