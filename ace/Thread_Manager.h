@@ -224,7 +224,7 @@ public:
   // resembles suspend_thr().
   
   // = Operations on ACE_Tasks.
-  int wait_task (ACE_Task_Base *task)
+  int wait_task (ACE_Task_Base *task);
   // Block until there are no more threads running in <task>.  Returns
   // 0 on success and -1 on failure.
   int suspend_task (ACE_Task_Base *task);
