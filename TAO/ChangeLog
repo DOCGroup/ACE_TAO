@@ -1,3 +1,8 @@
+Mon Jan 10 10:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Profile.h:
+          Doxygen improvements
+
 Sun Jan  9 19:52:09 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Naming/README:
