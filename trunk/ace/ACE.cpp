@@ -2752,7 +2752,79 @@ ACE::get_ip_interfaces (size_t &count,
 {
   ACE_TRACE ("ACE::get_ip_interfaces");
 
+  count = 0;
+  addrs = 0;
+
 #if defined (ACE_WIN32)
+  // Win32 can do this by a simple API call if MSVC 5 or later is the compiler.
+  // Not sure if Borland supplies the needed header/lib, but it might.
+# if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+#if 0
+  // If this also needs to be predicated on MSVC 5 or later, add the
+  // following condition to the #if above.  It tests ok at Riverace w/ 4.2,
+  // but this isn't a virgin install of 4.2 so there's a minimal risk that
+  // it may need work later.
+     defined (_MSC_VER) && (_MSC_VER >= 1100)
+#endif /* 0 */
+
+  int i, n_interfaces, status;
+  INTERFACE_INFO info[64];
+  LPINTERFACE_INFO lpii;
+  SOCKET sock;
+
+  // Get an (overlapped) DGRAM socket to test with
+  sock = socket (AF_INET, SOCK_DGRAM, 0);
+  if (sock == INVALID_SOCKET)
+    return -1;
+
+  DWORD bytes;
+  status = WSAIoctl(sock,
+                    SIO_GET_INTERFACE_LIST,
+                    0, 0,
+                    info, sizeof(info),
+                    &bytes,
+                    NULL,
+                    NULL);
+  closesocket (sock);
+  if (status == SOCKET_ERROR)
+      return -1;
+
+  n_interfaces = bytes / sizeof(INTERFACE_INFO);
+  if (n_interfaces == 0)
+    return 0;
+
+  ACE_NEW_RETURN (addrs, ACE_INET_Addr[n_interfaces], -1);
+
+  // Now go through the list and transfer the good ones to the list of
+  // because they're down or don't have an IP address.
+  for (count = 0, i = 0; i < n_interfaces; i++)
+    {
+      struct sockaddr_in *addrp;
+
+      lpii = &info[i];
+      if (!(lpii->iiFlags & IFF_UP))
+	  continue;
+
+      // We assume IPv4 addresses here
+      addrp = ACE_reinterpret_cast(struct sockaddr_in *, &(lpii->iiAddress));
+      if (addrp->sin_addr.s_addr == INADDR_ANY)
+	  continue;
+
+      // Set the address for the caller.
+      addrs[count].set(addrp, sizeof(lpii->iiAddress));
+      ++count;
+    }
+
+  if (count == 0)
+    {
+      delete [] addrs;
+      addrs = 0;
+    }
+
+  return 0;
+
+#else /* Winsock 2 && MSVC 5 or later */
+
   const TCHAR *SVCS_KEY1 =
     __TEXT ("SYSTEM\\CurrentControlSet\\Services\\");
   const TCHAR *LINKAGE_KEY1 =
@@ -2826,6 +2898,8 @@ ACE::get_ip_interfaces (size_t &count,
         }
     }
   return 0;
+# endif /* Winsock 2 && MSVC 5 or later */
+
 #elif defined (__unix) || defined (__Lynx__)
   // COMMON (SVR4 and BSD) UNIX CODE
 
