@@ -1145,9 +1145,7 @@ private:
 /// Service Objects, i.e., objects dynamically loaded via the service
 /// configurator, must provide a destructor function with the
 /// following prototype to perform object cleanup.
-extern "C" {
 typedef void (*ACE_Service_Object_Exterminator)(void *);
-}
 
 /** @name Service Configurator macros
  *
@@ -1312,7 +1310,7 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *);
  * cleanup the service object.
  */
 # define ACE_FACTORY_DEFINE(CLS,SERVICE_CLASS) \
-extern "C" void _gobble_##SERVICE_CLASS (void *p) { \
+void _gobble_##SERVICE_CLASS (void *p) { \
   ACE_Service_Object *_p = ACE_reinterpret_cast (ACE_Service_Object *, p); \
   ACE_ASSERT (_p != 0); \
   delete _p; } \
@@ -2584,7 +2582,7 @@ typedef unsigned int size_t;
 #   if !defined (ACE_LACKS_NEW_H)
 #     if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #       include /**/ <new>
-#     else     
+#     else
 #       include /**/ <new.h>
 #     endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #   endif /* ! ACE_LACKS_NEW_H */

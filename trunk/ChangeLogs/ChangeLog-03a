@@ -1,3 +1,13 @@
+Mon Feb 18 11:00:17 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* html/index.html: Added an entry for ACEXML document.
+
+	* ace/OS.h: Removed the extern "C" link designator from the
+	  typedef of ACE_Service_Object_Exterminator and the definition of
+	  gobbler functions in ACE_FACTORY_DEFINE.  They are not used
+	  outside of a DLL so it's okay to have a mangled gobbler name.
+	  Thanks to Doug for noticing this.
+
 Mon Feb 18 11:12:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Refcounted_Auto_Ptr.h: Improved Doxygenation of some comments.
@@ -10,7 +20,7 @@ Mon Feb 18 10:45:00 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	  of ACE_DEFAULT_QOS_SESSION.
 
 	* ace/QoS/QoS_Session_Factory.cpp:
-	  Set the value of ACE_DEFAULT_QOS_SESSION to ACE_RAPI_SESSION on 
+	  Set the value of ACE_DEFAULT_QOS_SESSION to ACE_RAPI_SESSION on
 	  platforms with RAPI RSVP support.  Set it to
 	  ACE_GQOS_SESSION on Win32 platforms with GQoS support.
 	  Otherwise, issue a compilation error, since these are the only
