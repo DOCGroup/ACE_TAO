@@ -1,3 +1,10 @@
+Thu Sep  2 09:41:28 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * interop-tests/wchar/interop_wchar_i.cpp:
+          Add a cast to keep the TRUE64 compiler from complaining
+          that a wchar_t * cannot be used for a
+          const CORBA::WChar_T * argument.
+
 Thu Sep  2 08:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ServerRequestInfo.cpp:
@@ -10,13 +17,13 @@ Thu Sep  2 07:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Sep  1 12:55:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* docs/libraries.html:
+        * docs/libraries.html:
 
-	  Removed duplicate DynamicInterface entry.
+          Removed duplicate DynamicInterface entry.
 
-	* docs/orbsvcs.html:
+        * docs/orbsvcs.html:
 
-	  Fixed Sched service directory
+          Fixed Sched service directory
 
 Wed Sep  1 10:42:38 2004  Chad Elliott  <elliott_c@ociweb.com>
 
