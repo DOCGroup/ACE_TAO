@@ -130,11 +130,16 @@ const size_t ACE_MAX_CLIENTS = 30;
 const size_t ACE_NS_MAX_ENTRIES = 1000;
 const size_t ACE_DEFAULT_USECS = 1000;
 const size_t ACE_MAX_TIMERS = 4;
-const size_t ACE_MAX_THREADS = 4;
 const size_t ACE_MAX_DELAY = 10;
 const size_t ACE_MAX_INTERVAL = 0;
 const size_t ACE_MAX_ITERATIONS = 10;
-const size_t ACE_MAX_PROCESSES = 10;
+#if defined (__Lynx__)
+  const size_t ACE_MAX_PROCESSES = 4;
+  const size_t ACE_MAX_THREADS = 2;
+#else  /* ! __Lynx__ */
+  const size_t ACE_MAX_PROCESSES = 10;
+  const size_t ACE_MAX_THREADS = 4;
+#endif /* ! __Lynx__ */
 
 char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 

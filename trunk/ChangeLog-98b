@@ -1,12 +1,12 @@
 Mon Aug 31 16:38:03 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-kcc-common.h: Added ACE_HAS_CPLUSPLUS_HEADERS to
- 	  prevent warnings/errors.  Thanks to Ben Eng <ben@jetpen.com> and
- 	  Todd Pack <todd@rwii.com> for reporting this.
+        * ace/config-kcc-common.h: Added ACE_HAS_CPLUSPLUS_HEADERS to
+          prevent warnings/errors.  Thanks to Ben Eng <ben@jetpen.com> and
+          Todd Pack <todd@rwii.com> for reporting this.
 
-	* Added a bunch of patches so that ACE compiles and passes its
- 	  tests on Chorus with gcc.  Thanks to Alberto Villarica"
- 	  <Alberto.Villarica.rav@nt.com> for reporting this.
+        * Added a bunch of patches so that ACE compiles and passes its
+          tests on Chorus with gcc.  Thanks to Alberto Villarica"
+          <Alberto.Villarica.rav@nt.com> for reporting this.
 
 Mon Aug 31 14:02:34 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -36,6 +36,18 @@ Mon Aug 31 12:25:15 1998  David L. Levine  <levine@cs.wustl.edu>
           semaphore acquire fails on ACE_HAS_PTHREADS_DRAFT4
           with EINTR instead of ETIME if it times out.  That's
           the way it's documented, as well as the way it behaves on LynxOS.
+
+        * tests/TSS_Test.cpp (cleanup): with DRAFT4 threads,
+          don't do anything in the cleanup function.
+          The intended use of this function doesn't apply.
+          With Draft 4 threads, this function is called implicitly
+          by pthread_setspecific whenever an old value is replaced.
+          This function is intended to be used with Draft 6 and later
+          threads, where it is called on thread termination with the
+          thread-specific value.
+
+        * tests/test_config.cpp: set ACE_MAX_PROCESSES to 4 on LynxOS,
+          so that Process_Mutex_Test will succeed.
 
 Sun Aug 30 23:05:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
