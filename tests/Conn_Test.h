@@ -1,4 +1,22 @@
+/* -*- C++ -*- */
 // $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Conn_Test.h
+//
+// = DESCRIPTION
+//    Define class needed for generating templates. IBM C++ requires this to
+//    be in its own file for auto template instantiation.
+//
+// = AUTHOR
+//    Irfan Pyarali  <irfan@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "ace/Service_Config.h"
 
@@ -10,6 +28,7 @@
 #include "ace/SOCK_Stream.h"
 
 class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+{
   // = TITLE
   //      This class is the product created by both <ACE_Connector>
   //      and <ACE_Acceptor> objects.
@@ -18,7 +37,6 @@ class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   //    This class gets its own header file to work around AIX C++
   //    compiler "features" related to template instantiation...  It is
   //    only used by Conn_Test.cpp.
-{
 public:
   Svc_Handler (ACE_Thread_Manager * = 0);
   // Do-nothing constructor.
