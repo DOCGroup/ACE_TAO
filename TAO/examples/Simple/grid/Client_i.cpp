@@ -9,9 +9,9 @@ Client_i::Client_i (void)
   : ior_ (0),
     shutdown_ (0),
     server_ (),
+    grid_ (0),
     height_ (0),
     width_ (0),
-    grid_ (0),
     setx_ (0),
     sety_ (0),
     setvalue_ (0)
