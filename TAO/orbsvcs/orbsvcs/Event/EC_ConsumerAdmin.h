@@ -58,9 +58,7 @@ class TAO_ORBSVCS_Export TAO_EC_ConsumerAdmin : public POA_RtecEventChannelAdmin
   // = TODO
   //
 public:
-  typedef TAO_EC_Proxy_Collection<TAO_EC_ProxyPushSupplier> Collection;
-  TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel* event_channel,
-                        Collection* collection = 0);
+  TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel* event_channel);
   // constructor. If <supplier_set> is nil then it builds one using
   // the <event_channel> argument.
   // In any case it assumes ownership.
@@ -105,6 +103,8 @@ public:
 private:
   TAO_EC_Event_Channel *event_channel_;
   // The Event Channel we belong to
+
+  typedef TAO_EC_Proxy_Collection<TAO_EC_ProxyPushSupplier> Collection;
 
   Collection *collection_;
   // The supplier container.

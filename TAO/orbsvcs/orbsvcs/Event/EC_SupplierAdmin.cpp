@@ -64,10 +64,10 @@ TAO_EC_SupplierAdmin::disconnected (TAO_EC_ProxyPushSupplier *supplier,
 }
 
 void
-TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushConsumer *consumer,
-                                 CORBA::Environment &ACE_TRY_ENV)
+TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushConsumer * /*consumer*/,
+                                 CORBA::Environment &/*ACE_TRY_ENV*/)
 {
-  this->collection_->connected (consumer, ACE_TRY_ENV);
+  // this->collection_->connected (consumer, ACE_TRY_ENV);
 }
 
 void
@@ -100,7 +100,16 @@ TAO_EC_SupplierAdmin::obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV)
   TAO_EC_ProxyPushConsumer* consumer =
     this->event_channel_->create_proxy_push_consumer ();
 
-  return consumer->_this (ACE_TRY_ENV);
+  PortableServer::ServantBase_var holder = consumer;
+
+  RtecEventChannelAdmin::ProxyPushConsumer_var result =
+    consumer->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (RtecEventChannelAdmin::ProxyPushConsumer::_nil ());
+
+  this->collection_->connected (consumer, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (RtecEventChannelAdmin::ProxyPushConsumer::_nil ());
+  
+  return result._retn ();
 }
 
 // ****************************************************************

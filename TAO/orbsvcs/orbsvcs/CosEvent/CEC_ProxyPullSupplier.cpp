@@ -54,8 +54,6 @@ TAO_CEC_ProxyPullSupplier::shutdown (CORBA::Environment &ACE_TRY_ENV)
   this->deactivate (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->_decr_refcnt ();
-
   ACE_TRY
     {
       consumer->disconnect_pull_consumer (ACE_TRY_ENV);
@@ -290,8 +288,6 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier (
         }
       ACE_ENDTRY;
     }
-
-  this->_decr_refcnt ();
 }
 
 PortableServer::POA_ptr

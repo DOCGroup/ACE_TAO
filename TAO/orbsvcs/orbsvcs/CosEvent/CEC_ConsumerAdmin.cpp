@@ -55,31 +55,31 @@ TAO_CEC_ConsumerAdmin::push (const CORBA::Any &event,
 }
 
 void
-TAO_CEC_ConsumerAdmin::connected (TAO_CEC_ProxyPushSupplier *supplier,
-                                 CORBA::Environment &ACE_TRY_ENV)
+TAO_CEC_ConsumerAdmin::connected (TAO_CEC_ProxyPushSupplier * /*supplier*/,
+                                  CORBA::Environment & /*ACE_TRY_ENV*/)
 {
-  this->push_collection_->connected (supplier, ACE_TRY_ENV);
+  // this->push_collection_->connected (supplier, ACE_TRY_ENV);
 }
 
 void
 TAO_CEC_ConsumerAdmin::reconnected (TAO_CEC_ProxyPushSupplier *supplier,
-                                   CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
   this->push_collection_->reconnected (supplier, ACE_TRY_ENV);
 }
 
 void
 TAO_CEC_ConsumerAdmin::disconnected (TAO_CEC_ProxyPushSupplier *supplier,
-                                    CORBA::Environment &ACE_TRY_ENV)
+                                     CORBA::Environment &ACE_TRY_ENV)
 {
   this->push_collection_->disconnected (supplier, ACE_TRY_ENV);
 }
 
 void
-TAO_CEC_ConsumerAdmin::connected (TAO_CEC_ProxyPullSupplier *supplier,
-                                 CORBA::Environment &ACE_TRY_ENV)
+TAO_CEC_ConsumerAdmin::connected (TAO_CEC_ProxyPullSupplier * /*supplier*/,
+                                  CORBA::Environment & /*ACE_TRY_ENV*/)
 {
-  this->pull_collection_->connected (supplier, ACE_TRY_ENV);
+  // this->pull_collection_->connected (supplier, ACE_TRY_ENV);
 }
 
 void
@@ -121,7 +121,16 @@ TAO_CEC_ConsumerAdmin::obtain_push_supplier (CORBA::Environment &ACE_TRY_ENV)
   TAO_CEC_ProxyPushSupplier* supplier =
     this->event_channel_->create_proxy_push_supplier ();
 
-  return supplier->_this (ACE_TRY_ENV);
+  PortableServer::ServantBase_var holder = supplier;
+
+  CosEventChannelAdmin::ProxyPushSupplier_var result =
+    supplier->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosEventChannelAdmin::ProxyPushSupplier::_nil ());
+
+  this->push_collection_->connected (supplier, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosEventChannelAdmin::ProxyPushSupplier::_nil ());
+
+  return result._retn ();
 }
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr
@@ -131,7 +140,16 @@ TAO_CEC_ConsumerAdmin::obtain_pull_supplier (CORBA::Environment &ACE_TRY_ENV)
   TAO_CEC_ProxyPullSupplier* supplier =
     this->event_channel_->create_proxy_pull_supplier ();
 
-  return supplier->_this (ACE_TRY_ENV);
+  PortableServer::ServantBase_var holder = supplier;
+
+  CosEventChannelAdmin::ProxyPullSupplier_var result =
+    supplier->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosEventChannelAdmin::ProxyPullSupplier::_nil ());
+
+  this->pull_collection_->connected (supplier, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosEventChannelAdmin::ProxyPullSupplier::_nil ());
+
+  return result._retn ();
 }
 
 PortableServer::POA_ptr
