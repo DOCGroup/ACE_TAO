@@ -31,7 +31,9 @@ class Gateway_ObjRef_Factory
 
   virtual CORBA::Object_ptr make_object (const char *repository_id,
                                          const PortableInterceptor::ObjectId &id
-                                        ACE_ENV_ARG_DECL);
+                                         ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 
  private:
 
