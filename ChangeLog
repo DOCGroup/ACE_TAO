@@ -1,3 +1,9 @@
+Wed Apr 28 14:25:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Removed $(EXEEXT) for BIN_UNCHECKED. This has strange problems
+          in our MinGW build. We are looking at this again for OpenVMS.
+
 Wed Apr 28 13:00:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Mutex.{cpp,inl}:
