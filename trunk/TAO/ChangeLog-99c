@@ -1,3 +1,10 @@
+Thu Sep 02 10:47:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp (start_client_header): Changed to
+	  include <tao/corbafwd.h> intead of <tao/corba.h> in client
+	  header when generating locality constraint objects.  Thanks to
+	  Carlos for suggesting that.
+
 Thu Sep  2 07:54:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/decode.cpp:
@@ -6,13 +13,13 @@ Thu Sep  2 07:54:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Fix to pointer alignment adjustment calculation in
 	  TAO_Marshal_Struct::*. The old one was failing with
 	  Borland Builder. Thanks to
-	  Christopher Kohlhoff <chris_kohlhoff@yahoo.com> for 
+	  Christopher Kohlhoff <chris_kohlhoff@yahoo.com> for
 	  sending in the Borland fix and his efforts to find a
 	  single portable one.
 
 Wed Sep  1 20:27:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/ntp-time.h: 
+	* orbsvcs/orbsvcs/AV/ntp-time.h:
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
 	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
 	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
