@@ -128,7 +128,8 @@ sub is_warning ()
 
     return 1 if ((/warning/i && !/ warning\(s\)/)
                  || /info: /i
-                 || /^make.*\*\*\*/);
+                 || /^make.*\*\*\*/
+                 || /^error \(future\)/i);
 
     if (/^.*\.h: /
         || /^.*\.i: /
@@ -176,7 +177,7 @@ sub is_error ()
                  || /: multiple definition of/);
 
     # Look for possible errors
-    return 1 if ((/error/i && !/ error\(s\), /)
+    return 1 if ((/error/i && !/ error\(s\), / && !/error \(future\)/i)
                  || /^Fatal\:/
                  || /: fatal:/);
 
