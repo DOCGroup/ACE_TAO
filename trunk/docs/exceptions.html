@@ -7,6 +7,11 @@
   <body text="#000000" link="#0000ff" vlink="#cc0000" bgcolor="#ffffff">
     <h1>Using ACE try macros for CORBA programming</h1>
 
+     <P>It would be useful if the reader can go through the book, "Advanced
+       Corba Programming with C++" by Michi & Steve, from pages 307 through
+       to 322.  
+     </P>
+
     <P>CORBA::Environment provides a way to handle exceptions when
       native c++ exception handling is unavailable or undesirable.
       However, writing portable code for both (with and without) native
@@ -16,6 +21,7 @@
       but please keep in mind that no amount of macros is going to
       solve the problem perfectly.
     </P>
+
 
 <h3>What's in here?</h3>
 <ul>
@@ -35,38 +41,31 @@ try macros.
 </P>
 
 <ol>
-  <li><p>ACE try macros are modeled and used like native c++
-      exceptions with some extra rules to ensure it works even on
+  <li><p>ACE try macros are modelled like C++ language  exceptions and
+      can be used like them, but with a small difference. These macros
+      rely on  the CORBA::Environment variable to handle exceptions
+      on platforms that do not support exception
+      handling. (Please note that native exceptions can be turned on
+      or off at COMPILE time as an option to your make)
+      The exception macros  have been modelled with some extra rules to ensure it works even on
       platforms without native exception support.  See some <a
-      href="#examples">quick examples</a> about how to use ACE try
+      href="#examples">quick examples</a> on  how to use ACE try
       macros.
       </p>
   </li>
 
   <li><P><em>Name of CORBA::Environment variable</em><br>
       A function that may throw a CORBA::Exception needs a
-      CORBA::Environment variable to pass up exceptions and to gather
+      CORBA::Environment variable to pass up exceptions (to throw in
+      the C++ sense) and to gather (catch () in the C++ sense)
       exceptions from functions it called.  By default, ACE try macros
-      assume the variable is named <code>ACE_TRY_ENV</code>.
+      assumes that the variable is named <code>ACE_TRY_ENV</code>.
       <code>ACE_TRY_ENV</code> itself is also a macro which can be
-      redefined.  If you are using TAO, more likely than not, you
-      don't have to worry about redefining this macro because TAO
-      is written to use ACE try macros.  For example, you should
-      define your functions as,
-      </P>
-      <pre>
-      int AN_OBJ::foobar (int a, int b, CORBA_Environment &ACE_TRY_ENV);
-      </pre>
-      <P>
-      and within the function, call other functions that might throw
-      exceptions like,
-      </P>
-      <pre>
-      another_obj->func_name (x, y, ACE_TRY_ENV);
+      redefined.  
       </pre>
 
       <P>
-      As mentioned, you can redefine the name of the variable to
+      You can redefine the name of the variable to
       something else to avoid name clashing.  Alternatively, there's
       another macro (<code>ACE_ADOPT_CORBA_ENV</code>) that allow you
       to use another variable name as the default CORBA::Environment
@@ -74,16 +73,33 @@ try macros.
       </P>
   </LI>
 
+  <li><P><em>Definition of the CORBA::Environment variable </em><br>
+      If you are using TAO for writing application programs and you
+      are interested in using exceptions (which is a pretty neat way
+      to go about), the environmnet variable can be brought in to your
+      scope by the adding a statement <code>ACE_DECLARE_NEW_CORBA_ENV;</code> 
+      You can then invoke the methods on the servant from the client
+      side as
+      <pre>
+      object_reference->func_name (x, y, ACE_TRY_ENV);
+      </pre>
+      
+      
+      Even if you are interested in making calls within the client
+      side, you can define your method like this
+      <pre>
+      int AN_OBJ::foobar (int a, int b, CORBA_Environment &ACE_TRY_ENV);
+      </pre>
   <li><P><em>Throwing exceptions:</em><br>
       Use <code>ACE_THROW</code> and <code>ACE_THROW_RETURN</code> to
-      throw exceptions.  They should never be used withing a try
+      throw exceptions.  They should never be used within a try
       block; please use <code>ACE_TRY_THROW</code> instead.
       </P>
   </LI>
 
   <li><P><em>Propagating exceptions:</em><br>
       To simulate native exceptions on platforms without native
-      exception handling, <em>every</em> single function call that may
+      exception handling, <em>every</em>  function call that may
       throw exceptions must be followed by <code>ACE_CHECK</code> or
       <code>ACE_CHECK_RETURN</code>.</p>
 
@@ -150,7 +166,9 @@ try macros.
         </LI>
 
         <li><P>Follow <em>every</em> exception throwing function with
-            <code>ACE_TRY_CHECK</code>, including inner
+            <code>ACE_TRY_CHECK</code>. If you are using a TRY block
+            within another try block add a <code>ACE_TRY_CHECK</code>
+            at the end of this TRY block ie. after 
             <code>ACE_ENDTRY</code>.
             </p>
         </LI>
