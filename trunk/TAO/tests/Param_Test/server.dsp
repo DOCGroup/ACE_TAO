@@ -148,7 +148,7 @@ InputPath=.\param_test.idl
 InputName=param_test
 
 BuildCmds= \
-	tao_idl -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i $(InputName).idl
+	..\..\..\bin\Release\tao_idl -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i $(InputName).idl
 
 "$(InputName)Cli.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -187,7 +187,7 @@ InputPath=.\param_test.idl
 InputName=param_test
 
 BuildCmds= \
-	tao_idl -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i $(InputName).idl
+	..\..\..\bin\tao_idl -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i $(InputName).idl
 
 "$(InputName)Cli.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

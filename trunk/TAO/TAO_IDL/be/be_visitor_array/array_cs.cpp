@@ -66,14 +66,14 @@ int be_visitor_array_cs::visit_array (be_array *node)
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local names of the var
   // save the node's local name and full name in a buffer for quick use later
-  // on 
+  // on
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   if (this->ctx_->tdef ())
     {
       // typedefed node
       ACE_OS::sprintf (fname, "%s", node->fullname ());
-      ACE_OS::sprintf (lname, "%s", 
+      ACE_OS::sprintf (lname, "%s",
                        node->local_name ()->get_string ());
     }
   else
@@ -84,15 +84,15 @@ int be_visitor_array_cs::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (), 
+          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
                            node->local_name ()->get_string ());
-          ACE_OS::sprintf (lname, "_%s", 
+          ACE_OS::sprintf (lname, "_%s",
                            node->local_name ()->get_string ());
         }
       else
         {
           ACE_OS::sprintf (fname, "_%s", node->fullname ());
-          ACE_OS::sprintf (lname, "_%s", 
+          ACE_OS::sprintf (lname, "_%s",
                            node->local_name ()->get_string ());
         }
     }
@@ -109,6 +109,42 @@ int be_visitor_array_cs::visit_array (be_array *node)
       << "_slice *)0;" << be_nl;
   *os << fname << "_copy (_tao_dup_array, _tao_src_array);" << be_nl;
   *os << "return _tao_dup_array;" << be_uidt_nl;
+  *os << "}\n\n";
+
+  // alloc method
+  os->indent (); // start from current indentation
+  *os << fname << "_slice *" << be_nl;
+  *os << fname << "_alloc (void)" << be_nl;
+  *os << "{" << be_idt_nl;
+  *os << "return new ";
+  if (bt->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_array_ci::"
+                         "visit_array - "
+                         "base type decl failed\n"),
+                        -1);
+    }
+
+  if (node->gen_dimensions (os) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_array::"
+                         "gen_client - "
+                         "dimensions codegen failed\n"),
+                        -1);
+    }
+
+  *os << ";" << be_uidt_nl;
+  *os << "}\n\n";
+
+  // free method
+  os->indent ();
+  *os << "void" << be_nl
+      << fname << "_free (" << fname
+      << "_slice *_tao_slice)" << be_nl;
+  *os << "{" << be_idt_nl;
+  *os << "delete [] _tao_slice;" << be_uidt_nl;
   *os << "}\n\n";
 
   // copy method
@@ -215,7 +251,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
     }
   *os << be_uidt_nl << "}\n\n";
 
-#if 0 
+#if 0
   // typecode for anonymous arrays is not required since we do not generate the
   // Any operators for it and it cannot be used as a type
 

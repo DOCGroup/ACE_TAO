@@ -127,7 +127,7 @@ InputPath=.\test.idl
 InputName=test
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\bin\Release\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -165,7 +165,7 @@ InputPath=.\test.idl
 InputName=test
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
