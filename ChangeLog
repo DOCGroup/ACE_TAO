@@ -1,3 +1,9 @@
+Mon Nov 24 16:59:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.inl:
+          Moved ACE_OS::flock_unlock() to an earlier place in this file
+          to fix an internal compiler with MinGW.
+
 Mon Nov 24 07:03:15 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
