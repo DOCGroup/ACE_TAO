@@ -1,3 +1,22 @@
+Wed Aug 05 14:53:18 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Strategies_T.cpp (connect_svc_handler): When using this
+ 	  method, the user was required to pass us a zero for the
+ 	  svc_handler. We would either find them a non-busy one, or will
+ 	  create a new one.
+
+	  Unfortunately, the svc_handler lookup was taking too long.
+  	  Therefore, the following change was made to the
+ 	  connect_svc_handler algorithm: the user is now allowed to pass
+ 	  in the svc_handler that they used last as a "hint".  The
+ 	  algorithm first checks to see if the "hint" svc_handler is
+ 	  connected to the correct address and is recyclable.  If it is,
+ 	  then it recycles the "hint" svc_handler and gives it back to the
+ 	  user.  This should improve the lookups in most cases.
+
+	* ace/Svc_Handler.cpp (recycling_act): Added accessor to get the
+ 	  <recycling_act_>.
+
 Wed Aug  5 16:12:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp: Replaced usage of ACE_OS::thr_* with

@@ -141,6 +141,9 @@ public:
   virtual ACE_Connection_Recycling_Strategy *recycler (void) const;
   // Get the recycler.
   
+  virtual const void *recycling_act (void) const;
+  // Get the recycling act.
+  
   virtual int recycle (void * = 0);
   // Upcall made by the recycler when it is about to recycle the
   // connection.  This gives the object a chance to prepare itself for
