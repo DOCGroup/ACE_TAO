@@ -4,7 +4,6 @@
 
 #include "tao/GIOP_Server_Request.h"
 
-//BRT CHANGE
 #include "tao/GIOP_Message_Acceptors.h"
 
 #include "tao/CDR.h"
@@ -52,13 +51,13 @@ TAO_GIOP_ServerRequest::
     TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
                             TAO_InputCDR &input,
                             TAO_OutputCDR &output,
-                            TAO_Transport *transport,//BRT
+                            TAO_Transport *transport,
                             TAO_ORB_Core *orb_core,
                             const TAO_GIOP_Version & /*version*/)
       :mesg_base_ (mesg_base),
        incoming_ (&input),
        outgoing_ (&output),
-	   transport_(transport),// BRT CHANGE
+       transport_(transport),
        response_expected_ (0),
        sync_with_server_ (0),
        lazy_evaluation_ (0),
@@ -381,8 +380,8 @@ TAO_GIOP_ServerRequest::exception_type (void)
   return this->exception_type_;
 }
 
-void											//BRT
-TAO_GIOP_ServerRequest::send_no_exception_reply (/*TAO_Transport *transport*/)
+void										
+TAO_GIOP_ServerRequest::send_no_exception_reply ()
 {
   // Construct our reply generator
   TAO_Pluggable_Reply_Params reply_params;
@@ -408,7 +407,7 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (/*TAO_Transport *transport*/)
                                         reply_params);
 
   // Send the message
-  int result = this->mesg_base_->send_message (transport_,//BRT
+  int result = this->mesg_base_->send_message (transport_,
                                                *this->outgoing_);
 
   if (result == -1)
@@ -424,7 +423,7 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (/*TAO_Transport *transport*/)
     }
 }
 
-// BRT CHANGE
+
 void 
 TAO_GIOP_ServerRequest::tao_send_reply()
 {
@@ -446,7 +445,6 @@ TAO_GIOP_ServerRequest::tao_send_reply()
     }
 }
 
-//BRT CHANGE
 void 
 TAO_GIOP_ServerRequest::tao_send_reply_exception(CORBA::Exception& ex)
 {
@@ -456,7 +454,7 @@ TAO_GIOP_ServerRequest::tao_send_reply_exception(CORBA::Exception& ex)
     result = ACE_static_cast(TAO_GIOP_Message_Acceptors*,mesg_base_)->send_reply_exception (transport_,
                                                orb_core_,
                                                request_id_,
-											   &service_info(),//BRT
+                                               &service_info(),
                                                &ex);
     if (result == -1)
     {

@@ -84,7 +84,6 @@ protected:
   // results and out parameters (if any) or the exceptions thrown into
   // <request>.
 
-    //BRT CHANGE
   virtual void synchronous_upcall_dispatch (CORBA::ServerRequest &req,
                                             void *context,
                                             void *derived_this,
