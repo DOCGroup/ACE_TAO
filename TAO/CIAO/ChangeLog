@@ -1,26 +1,32 @@
+Tue Apr  5 14:13:10 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* DAnCE/Config_Handlers/Any_Handler.cpp
+
+	Incorporated a fix to the Any handler from Gary Duzan.
+	
 Tue Apr  5 11:34:32 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
-	* Basic_Deployment_Data.cpp
-	* Basic_Deployment_Data.hpp
-	* Deployment.cpp
-	* Deployment.hpp
-	* ccd.cpp
-	* ccd.hpp
-	* cdd.cpp
-	* cdd.hpp
-	* cdp.cpp
-	* cdp.hpp
-	* cid.cpp
-	* cid.hpp
-	* cpd.cpp
-	* cpd.hpp
-	* iad.cpp
-	* iad.hpp
-	* pcd.cpp
-	* pcd.hpp
-	* toplevel.cpp
-	* toplevel.hpp
-	* XMLSchema/Types.hpp
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
+	* DAnCE/Config_Handlers/Deployment.cpp
+	* DAnCE/Config_Handlers/Deployment.hpp
+	* DAnCE/Config_Handlers/ccd.cpp
+	* DAnCE/Config_Handlers/ccd.hpp
+	* DAnCE/Config_Handlers/cdd.cpp
+	* DAnCE/Config_Handlers/cdd.hpp
+	* DAnCE/Config_Handlers/cdp.cpp
+	* DAnCE/Config_Handlers/cdp.hpp
+	* DAnCE/Config_Handlers/cid.cpp
+	* DAnCE/Config_Handlers/cid.hpp
+	* DAnCE/Config_Handlers/cpd.cpp
+	* DAnCE/Config_Handlers/cpd.hpp
+	* DAnCE/Config_Handlers/iad.cpp
+	* DAnCE/Config_Handlers/iad.hpp
+	* DAnCE/Config_Handlers/pcd.cpp
+	* DAnCE/Config_Handlers/pcd.hpp
+	* DAnCE/Config_Handlers/toplevel.cpp
+	* DAnCE/Config_Handlers/toplevel.hpp
+	* DAnCE/Config_Handlers/XMLSchema/Types.hpp
 	
 	New version of the generated XSC handlers fixing the following problems:
 	  - Use ACE_TCHAR instead of char as the character type

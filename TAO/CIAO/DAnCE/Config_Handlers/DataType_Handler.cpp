@@ -1,7 +1,7 @@
 //$Id$
 
 #include "DataType_Handler.h"
-#include "tao/TypeCode.h"
+#include "tao/Typecode.h"
 
 namespace CIAO{
 
