@@ -17,8 +17,23 @@ You are under no obligation to freely redistribute any of your source
 code that is built using TAO.  Please note, however, that you may not
 do anything to the ACE code that will prevent it from being
 distributed freely (such as copyrighting it or claiming authorship).
-Naturally, neither I nor my research group is responsible for any
-problems caused by the use of TAO.
+
+TAO is provided as is with no warranties of any kind including the
+warranties of design, merchantibility and fitness for a particular
+purpose, noninfringement, or arising from a course of dealing, usage
+or trade practice.
+
+TAO is provided with no support and without any obligation on the part
+of Washington University, its employees, or students to assist in its
+use, correction, modification or enhancement.
+
+Washington University, its employees, and students shall have no
+liability with respect to the infringement of copyrights, trade
+secrets or any patents by TAO or any part thereof.
+
+In no event will Washington University, its employees, or students be
+liable for any lost revenue or profits or other special, indirect and
+consequential damages.
 
         Douglas C. Schmidt 
         schmidt@cs.wustl.edu 
