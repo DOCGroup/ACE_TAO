@@ -1,3 +1,17 @@
+Sun Aug 17 16:53:42 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
+
+	* IIOP/test/Orbeline/client/Profile_Timer.h: 
+	* IIOP/tests/Cubit/VisiBroker/base_server/Profile_Timer.cpp: 
+	* IIOP/tests/Cubit/VisiBroker/base_server/Profile_Timer.h: 
+	* IIOP/tests/Cubit/VisiBroker/client/Profile_Timer.cpp: 
+	* IIOP/tests/Cubit/VisiBroker/client/Profile_Timer.h: 
+	* tests/Cubit/VisiBroker/base_server/Profile_Timer.cpp: 
+	* tests/Cubit/VisiBroker/base_server/Profile_Timer.h: 
+	* tests/Cubit/VisiBroker/client/Profile_Timer.cpp: 
+	* tests/Cubit/VisiBroker/client/Profile_Timer.h: 
+	We no longer use timestruct_t in ACE, it is a SYSVism; we use
+	timespec_t instead.
+
 Sat Aug 16 01:11:56 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Cubit/TAO/svc.conf: Added this as an example of an

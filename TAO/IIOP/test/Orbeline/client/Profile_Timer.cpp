@@ -57,7 +57,7 @@ Profile_Timer::elapsed_rusage (prusage_t &rusage)
 void
 Profile_Timer::compute_times (Elapsed_Time &et, prusage_t &end, prusage_t &begin)
 {
-  timestruc_t td;
+  timespec_t td;
 
   this->subtract (td, end.pr_tstamp, begin.pr_tstamp);
   et.real_time = td.tv_sec + ((double) td.tv_nsec) / (1000 * 1000 * 1000);
@@ -79,7 +79,7 @@ Profile_Timer::elapsed_time (Elapsed_Time &et)
 /* Determine the difference between T1 and T2. */
 
 void
-Profile_Timer::subtract (timestruc_t &tdiff, timestruc_t &t1, timestruc_t &t0)
+Profile_Timer::subtract (timespec_t &tdiff, timespec_t &t1, timespec_t &t0)
 {
   tdiff.tv_sec  = t1.tv_sec - t0.tv_sec;
   tdiff.tv_nsec = t1.tv_nsec - t0.tv_nsec;

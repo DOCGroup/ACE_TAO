@@ -30,7 +30,7 @@ public:
   void get_rusage (prusage_t &rusage);
 
 private:
-  void subtract (timestruc_t &tdiff, timestruc_t &t0, timestruc_t &t1);
+  void subtract (timespec_t &tdiff, timespec_t &t0, timespec_t &t1);
   void compute_times (Elapsed_Time &et, prusage_t &, prusage_t &);
 
   prusage_t begin_usage_;
