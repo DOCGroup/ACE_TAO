@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //    Example for using <ACE_UPIPE_SAP> and <ACE_Thread> for
-//    intra-process communication.  
+//    intra-process communication.
 //
 // = AUTHOR
 //    Gerhard Lenzer and Douglas C. Schmidt
@@ -45,7 +45,7 @@ peer1 (void *)
 
   ACE_Message_Block *mb;
   ACE_NEW_RETURN (mb,
-                  new ACE_Message_Block (20),
+                  ACE_Message_Block (20),
                   0);
 
   mb->copy ("hello", 6);
@@ -71,8 +71,8 @@ peer1 (void *)
   ACE_ERROR ((LM_ERROR,
               "(%t) peer1 sending text\n"));
   if (c_stream.send (mytext, sizeof mytext) == -1)
-    ACE_ERROR ((LM_ERROR, 
-		"(%t) buffer send from peer1 failed\n"));
+    ACE_ERROR ((LM_ERROR,
+                "(%t) buffer send from peer1 failed\n"));
 
   char conbuf[30];  // Buffer to receive response.
 
@@ -81,16 +81,16 @@ peer1 (void *)
   for (char c = ' '; c != '!'; i++)
     {
       if (c_stream.recv (&c, 1) == -1)
-	ACE_ERROR ((LM_ERROR, 
-		    "(%t) buffer recv from peer1 failed\n"));
+        ACE_ERROR ((LM_ERROR,
+                    "(%t) buffer recv from peer1 failed\n"));
       else
-	conbuf[i] = c;
+        conbuf[i] = c;
     }
 
   conbuf[i] = '\0';
-  ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) peer1 received buffer with \"%s\"\n", 
-	      conbuf));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) peer1 received buffer with \"%s\"\n",
+              conbuf));
   c_stream.close ();
   return 0;
 }
@@ -114,8 +114,8 @@ peer2 (void *)
               "(%t) peer2 starting accept\n"));
 
   if (acc.accept (s_stream) == -1)
-    ACE_ERROR ((LM_ERROR, 
-		"(%t) ACE_UPIPE_Acceptor.accept failed\n"));
+    ACE_ERROR ((LM_ERROR,
+                "(%t) ACE_UPIPE_Acceptor.accept failed\n"));
 
   ACE_Message_Block *mb = 0;
 
@@ -123,8 +123,8 @@ peer2 (void *)
     ACE_ERROR ((LM_ERROR,
                 "(%t) peer2 recv failed\n"));
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) peer2 recv is \"%s\"\n", 
-	      mb->rd_ptr ()));
+  ACE_DEBUG ((LM_DEBUG, "(%t) peer2 recv is \"%s\"\n",
+              mb->rd_ptr ()));
 
   mb->wr_ptr (mb->rd_ptr ());
   mb->copy ("thanks", 7);
@@ -141,9 +141,9 @@ peer2 (void *)
     ACE_ERROR ((LM_ERROR,
                 "(%t) peer2 recv failed\n"));
   else
-    ACE_DEBUG ((LM_DEBUG, 
-		"(%t) peer2 received buffer with \"%s\"\n", 
-		s_buf));
+    ACE_DEBUG ((LM_DEBUG,
+                "(%t) peer2 received buffer with \"%s\"\n",
+                s_buf));
 
   ACE_OS::strcpy (s_buf,
                   "this is the peer2 response!");
@@ -155,7 +155,7 @@ peer2 (void *)
   return 0;
 }
 
-int 
+int
 main (int, char *[])
 {
   // Spawn a peer2 thread.
@@ -171,7 +171,7 @@ main (int, char *[])
   return 0;
 }
 #else
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
