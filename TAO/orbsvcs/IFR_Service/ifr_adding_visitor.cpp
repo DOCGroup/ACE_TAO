@@ -247,12 +247,6 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
       return 0;
     }
 
-  // If the node is really a valuetype, go there instead.
-  if (node->node_type () == AST_Decl::NT_valuetype)
-    {
-      return this->visit_valuetype (node);
-    }
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -557,13 +551,13 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
 }
 
 int
-ifr_adding_visitor::visit_valuetype (AST_Interface *)
+ifr_adding_visitor::visit_valuetype (AST_ValueType *)
 {
   return 0;
 }
 
 int
-ifr_adding_visitor::visit_valuetype_fwd (AST_InterfaceFwd *)
+ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *)
 {
   return 0;
 }

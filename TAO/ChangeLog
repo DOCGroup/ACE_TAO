@@ -1,3 +1,12 @@
+Thu Jul 11 13:29:57 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+	* orbsvcs/IFR_Service/ifr_adding_visitor.h:
+
+	  Changed signature of visit_valuetype() and visit_valuetype_fwd()
+	  to take AST_ValueType and AST_ValueTypeFwd instead of the
+	  corresponding AST_Interface* base classes.
+
 Thu Jul 11 10:47:41 2002  Steve Huston  <shuston@riverace.com>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (svc):
