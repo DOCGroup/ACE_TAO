@@ -24,7 +24,7 @@ CFLAGS          += -mt
 #### -pta instantiates all template members, which makes libraries bigger.
 #### But, it's supposed to put each member into it's own .o, so executable
 #### size should not be penalized.
-CCFLAGS         += $(CFLAGS) $(EXFLAGS) -pta
+CCFLAGS         += $(CFLAGS) -pta
 DCFLAGS         += -g
 DLD             = $(CXX)
 
@@ -35,11 +35,9 @@ DLD             = $(CXX)
 #### performance penalty of exception handling, then use the default
 #### of no exceptions.  If you want to enable exception handling,
 #### add "exceptions=1" to your "make" invocation.
-ifdef exceptions
-EXFLAGS += -DACE_HAS_EXCEPTIONS
-else
-EXFLAGS += -noex
-endif # exceptions
+ifndef exceptions
+  CCFLAGS += -noex
+endif # ! exceptions
 
 LD              = $(CXX)
 
