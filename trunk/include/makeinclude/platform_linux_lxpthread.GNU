@@ -2,31 +2,33 @@
 
 # For pthreads support on Linux, you need
 # -D_POSIX_THREADS
-# -D_POSIX_THREAD_SAFE_FUNCTIONS 
+# -D_POSIX_THREAD_SAFE_FUNCTIONS
 # in the CXX command line. Also, add -lpthreads to the LIBS.
 # libpthreads.so comes with the sources of Linux libc-5.3.*, you need
-# to compile it yourself (no binaries included) -- 
+# to compile it yourself (no binaries included) --
 # Jan Rychter <jwr@icm.edu.pl>
 
 debug = 1
 optimize = 1
 
 CC              = gcc
-CXX		= g++
-CFLAGS          += -Wall -pipe -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
+CXX             = g++
+CFLAGS          += -Wall -pipe \
+                   -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
-DCFLAGS		+= -g
+DCFLAGS         += -g
 DLD             = $(CXX)
-LD		= $(CXX) 
+LD              = $(CXX)
 LIBS            += -ldl -lpthread
-OCFLAGS		+= -O3
+OCFLAGS         += -O3
 PIC             = -fPIC
 AR              = ar
 ARFLAGS         = ruv
 RANLIB          = ranlib
 
 SOFLAGS = $(CPPFLAGS) -shared
-SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
+SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
+          $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).
 # Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
