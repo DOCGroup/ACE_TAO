@@ -52,7 +52,6 @@ Fri May  4 15:42:20 2001  Craig Rodrigues <crodrigu@bbn.com>
           This is necessary to work with RAPI.
 
 Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-<<<<<<< ChangeLog
 
 	* ace/ace_wchar.h: Add a new macro (ACE_USES_L_PREFIX) that allows
 	  users to control whether wide character strings use the "L"
@@ -63,32 +62,9 @@ Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	  <ACE_HANDLE> so this will work properly on Win32 platforms.
 	  Thanks to Johnny Willemsen for reporting the problem.
 
-	* examples/Misc/test_XtReactor2.cpp (main): Fixed a stray ')'.
-	  Thanks to Johnny Willemsen for reporting the problem.  
-=======
-
-        * ace/OS.h: Changed the typedefs of uid_t, gid_t, and mode_t to
-          match those in standard POSIX.  Thanks to Gonzalo Diethelm
-          <Gonzalo.Diethelm@sonda.com> for reporting this.
-  
-Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-
-        * ace/ace_wchar.h: Add a new macro (ACE_USES_L_PREFIX) that allows
-          users to control whether wide character strings use the "L"
-          prefix via their config.h files.  Thanks to Albert Wijnja for
-          this fix.
-
-        * examples/Misc/test_read_buffer.cpp (main): Changed <int> to
-          <ACE_HANDLE> so this will work properly on Win32 platforms.
-          Thanks to Johnny Willemsen for reporting the problem.
->>>>>>> 4.1972
-
-<<<<<<< ChangeLog
-=======
         * examples/Misc/test_XtReactor2.cpp (main): Fixed a stray ')'.
           Thanks to Johnny Willemsen for reporting the problem.  
 
->>>>>>> 4.1972
 Thu May  3 17:33:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ace/OS.h: Fixed a mistake in the setsockopt() comment.  Thanks
