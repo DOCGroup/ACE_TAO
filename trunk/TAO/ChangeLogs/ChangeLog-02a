@@ -1,3 +1,35 @@
+Thu Sep 27 17:31:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connection_Handler.cpp (handle_close): 
+	* tao/IIOP_Connection_Handler.h: We always depended on the
+	  handle_close () to cleanup memory, the cache and the
+	  transport. The cleanup would not start if the number of upcalls
+	  is greater than zero. This could create problems for multi-threaded
+	  cases like this one
+
+	  - One of the threads is woken up by the Reactor to handle
+            upcalls. 
+
+	  - After the upcall is dispatched another thread could be woken
+	    up to close the connection. The second thread would call
+	    handle_close () religiously, but cleanup wouldnt have
+	    occurred. 
+	  
+	  We need to start cleanup only after the upcall count reaches
+	  0. We now have a method handle_close_i () which does the cleanup
+	  activity. This method is called whenever there is a possibility
+	  of the upcall count reaching zero. 
+
+	* tao/Strategies/UIOP_Connection_Handler.h:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.h:
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.h:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp: 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	  Applied the same fix to the above protocols too.
+	
 Thu Sep 27 17:12:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/File_IO/client.cpp: 

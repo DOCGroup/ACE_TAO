@@ -219,47 +219,57 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                  handle,
                  rm));
 
-  long pending =
+  long upcalls =
     this->decr_pending_upcalls ();
 
-  if (pending <= 0)
+  ACE_ASSERT (upcalls >= 0);
+
+  // Try to clean up things if the upcall count has reached 0
+  if (upcalls == 0)
     {
-      // @@ Why are we doing checks for is_registered flags here if the
-      // handlers are not registered with the reactor? - Bala
-      if (this->transport ()->wait_strategy ()->is_registered ())
-        {
-          // @@ Frank: Added reactor check.  not sure if this is right?
-          if (this->reactor ())
-            {
-              // Make sure there are no timers.
-              this->reactor ()->cancel_timer (this);
-            }
-
-          // Set the flag to indicate that it is no longer registered with
-          // the reactor, so that it isn't included in the set that is
-          // passed to the reactor on ORB destruction.
-          this->transport ()->wait_strategy()->is_registered (0);
-        }
-
-      // Close the handle..
-      if (this->get_handle () != ACE_INVALID_HANDLE)
-        {
-          // Remove the entry as it is invalid
-          this->transport ()->purge_entry ();
-
-          // Signal the transport that we will no longer have
-          // a reference to it.  This will eventually call
-          // TAO_Transport::release ().
-          this->transport (0);
-        }
-
-      // Follow usual Reactor-style lifecycle semantics and commit
-      // suicide.
-      this->destroy ();
+      this->handle_close_i ();
     }
 
   return 0;
 }
+
+void
+TAO_DIOP_Connection_Handler::handle_close_i (void)
+{
+  // @@ Why are we doing checks for is_registered flags here if the
+  // handlers are not registered with the reactor? - Bala
+  if (this->transport ()->wait_strategy ()->is_registered ())
+    {
+      // @@ Frank: Added reactor check.  not sure if this is right?
+      if (this->reactor ())
+        {
+          // Make sure there are no timers.
+          this->reactor ()->cancel_timer (this);
+        }
+
+      // Set the flag to indicate that it is no longer registered with
+      // the reactor, so that it isn't included in the set that is
+      // passed to the reactor on ORB destruction.
+      this->transport ()->wait_strategy()->is_registered (0);
+    }
+
+  // Close the handle..
+  if (this->get_handle () != ACE_INVALID_HANDLE)
+    {
+      // Remove the entry as it is invalid
+      this->transport ()->purge_entry ();
+
+      // Signal the transport that we will no longer have
+      // a reference to it.  This will eventually call
+      // TAO_Transport::release ().
+      this->transport (0);
+    }
+
+  // Follow usual Reactor-style lifecycle semantics and commit
+  // suicide.
+  this->destroy ();
+}
+
 
 int
 TAO_DIOP_Connection_Handler::resume_handler (void)
@@ -350,8 +360,16 @@ TAO_DIOP_Connection_Handler::handle_input (ACE_HANDLE)
     }
 
   // The upcall is done. Bump down the reference count
-  if (this->decr_pending_upcalls () <= 0)
-    retval = -1;
+  long upcalls = this->decr_pending_upcalls ();
+
+  ACE_ASSERT (upcalls >= 0);
+
+  // Try to clean up things if the upcall count has reached 0
+  if (upcalls == 0)
+    {
+      this->handle_close_i ();
+      retval = -1;
+    }
 
   if (retval == -1)
     {
