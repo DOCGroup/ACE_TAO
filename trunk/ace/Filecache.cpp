@@ -29,6 +29,7 @@ static const int WRITE_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
 
 // static data members
 ACE_Filecache *ACE_Filecache::cvf_ = 0;
+ACE_SYNCH_RW_MUTEX ACE_Filecache::lock_;
 
 void
 ACE_Filecache_Handle::init (void)
@@ -326,12 +327,8 @@ ACE_Filecache::fetch (const char *filename)
   ACE_Filecache_Object *handle = 0;
 
   u_long loc = ACE::hash_pjw (filename) % this->size_;
-  ACE_SYNCH_RW_MUTEX &hashlock =
-      ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>::get_preallocated_array
-        (ACE_Object_Manager::ACE_FILECACHE_HASH_LOCK)[loc];
-  ACE_SYNCH_RW_MUTEX &filelock =
-      ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>::get_preallocated_array
-        (ACE_Object_Manager::ACE_FILECACHE_FILE_LOCK)[loc];
+  ACE_SYNCH_RW_MUTEX &hashlock = this->hash_lock_[loc];
+  ACE_SYNCH_RW_MUTEX &filelock = this->file_lock_[loc];
 
   filelock.acquire_read ();
 
@@ -373,9 +370,7 @@ ACE_Filecache::create (const char *filename, int size)
   ACE_Filecache_Object *handle = 0;
 
   u_long loc = ACE::hash_pjw (filename) % this->size_;
-  ACE_SYNCH_RW_MUTEX &filelock =
-      ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>::get_preallocated_array
-        (ACE_Object_Manager::ACE_FILECACHE_FILE_LOCK)[loc];
+  ACE_SYNCH_RW_MUTEX &filelock = this->file_lock_[loc];
 
   ACE_NEW_RETURN (handle,
                   ACE_Filecache_Object (filename, size, filelock),
@@ -394,9 +389,7 @@ ACE_Filecache::finish (ACE_Filecache_Object *&file)
   int result;
 
   u_long loc = ACE::hash_pjw (file->filename_) % this->size_;
-  ACE_SYNCH_RW_MUTEX &hashlock =
-      ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>::get_preallocated_array
-        (ACE_Object_Manager::ACE_FILECACHE_HASH_LOCK)[loc];
+  ACE_SYNCH_RW_MUTEX &hashlock = this->hash_lock_[loc];
 
   if (file != 0)
     switch (file->action_)

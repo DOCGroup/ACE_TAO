@@ -1,5 +1,9 @@
 Tue Sep 30 17:15:14 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
+	* ace/Filecache.{h,cpp}: I removed the static locks in the
+	  Filecache and made them local member objects.  Since Filecache
+	  is usually a singleton, no more memory is required this way.
+
 	* tests/Hash_Map_Manager_Test.cpp: Added some code to test the
 	  Hash_Map_Manager_Iterator.  This is to show Bob Laferriere that
 	  it works.
