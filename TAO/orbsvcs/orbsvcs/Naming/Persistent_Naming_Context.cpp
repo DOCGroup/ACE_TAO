@@ -341,6 +341,9 @@ TAO_Persistent_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (result._retn ());
 
+  // Let <implementation> know about it's <interface>.
+  context_impl->interface (context);
+
   // Change what we hold in auto pointer.
   temp.release ();
   ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp2 (context);
@@ -448,7 +451,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
     {
       // Create a BindingIterator for return.
       ACE_NEW_THROW_EX (bind_iter,
-                        ITER_SERVANT (hash_iter, this->poa_.in (), this->lock_),
+                        ITER_SERVANT (this, hash_iter, this->poa_.in (), this->lock_),
                         CORBA::NO_MEMORY ());
 
       // Release <hash_iter> from auto pointer and put <bind_iter> into
@@ -475,6 +478,11 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
 
       // Give POA the ownership of this servant.
       bind_iter->_remove_ref (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      // Increment reference count on this Naming Context, so it doesn't get
+      // deleted before the BindingIterator servant gets deleted.
+      interface_->_add_ref (ACE_TRY_ENV);
       ACE_CHECK;
 
       // Everything went without error, release the auto pointer.
