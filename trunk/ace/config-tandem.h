@@ -201,8 +201,6 @@
 //ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP   Platform has pthread_condattr_
 // setkind_np().
 //ACE_HAS_PTHREAD_EQUAL                 Platform has pthread_equal().
-//ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR   pthread_getspecific() takes a data
-// pointer for 2nd arg.
 //ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP  Platform has
 // pthread_mutexattr_setkind_np().
 //ACE_HAS_PTHREAD_T                     Platform has pthread_t defined.
