@@ -5,11 +5,17 @@ ACE_INLINE char *
 CORBA::string_alloc (CORBA::ULong len)
 {
   // Allocate 1 + strlen to accomodate the null terminating character.
-  return new CORBA::Char[size_t (len + 1)];
+
+  char *s = 0;
+  ACE_NEW_RETURN (s,
+                  char[size_t (len + 1)],
+                  0);
+
+  return s;
 }
 
 ACE_INLINE void
-CORBA::string_free (CORBA::Char *str)
+CORBA::string_free (char *str)
 {
   delete [] str;
 }
@@ -17,7 +23,12 @@ CORBA::string_free (CORBA::Char *str)
 ACE_INLINE CORBA::WChar*
 CORBA::wstring_alloc (CORBA::ULong len)
 {
-  return new CORBA::WChar [(size_t) (len + 1)];
+  CORBA::WChar *s = 0;
+  ACE_NEW_RETURN (s,
+                  CORBA::WChar [(size_t) (len + 1)],
+                  0);
+
+  return s;
 }
 
 ACE_INLINE void
