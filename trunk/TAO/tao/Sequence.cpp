@@ -60,6 +60,8 @@ check_bounds(
                  ACE_TEXT_CHAR_TO_TCHAR (filename), lineno, tao_idx, tao_max));
     }
 
+  // @@TODO: When we have a hook setup, we can totally ignore this or 
+  // even remove this. 
 #if defined (ACE_HAS_EXCEPTIONS)
   ACE_THROW (CORBA::BAD_PARAM ());
 #elif
