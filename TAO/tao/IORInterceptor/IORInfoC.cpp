@@ -31,7 +31,6 @@
 
 #include "IORInfoC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
 #include "tao/Object_Argument_T.h"
 #include "ace/OS_NS_string.h"
 
