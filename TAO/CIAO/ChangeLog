@@ -1,3 +1,7 @@
+Mon Jun 02 12:47:50 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* README: Revised the root readme file.
+
 Mon Jun  2 12:42:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/External/Utility/Documentation/Build.html:
@@ -239,7 +243,7 @@ Fri May 30 19:33:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIDLC/Version:
         * CIDLC/cidlc.cpp:
 
-	  Source code, documentation and build files for the 
+	  Source code, documentation and build files for the
 	  CIDL compiler.
 
 Fri May 30 18:18:25 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -387,7 +391,7 @@ Fri May 30 14:27:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Fri May 30 14:15:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* VERSION: 
+	* VERSION:
 	* PROBLEM-REPORT-FORM (Subject): Files needed for the release.
 
 Fri May 30 14:11:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
