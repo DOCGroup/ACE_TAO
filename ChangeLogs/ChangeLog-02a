@@ -1,15 +1,21 @@
+Sat Jan  8 09:44:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Needed to add an extern "C" {} block around the 
+	  setregid() and setreuid() functions.  Thanks to David Levine
+	  for reporting this.
+
 Fri Jan  7 20:01:48 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i,
 	  ace/config-sunos5.5.h: Some platforms seem to lack function
- 	  prototypes for setreuid() and setreguid(), even though they are
+ 	  prototypes for setreuid() and setregid(), even though they are
  	  in the library.  Therefore, I've added
   
  	  #define ACE_LACKS_SETREGID_PROTOTYPE 
   
 	  and 
   
-	  #define ACE_LACKS_SETREGID_PROTOTYPE
+	  #define ACE_LACKS_SETREUID_PROTOTYPE
   
           macros to handle this case.
   
