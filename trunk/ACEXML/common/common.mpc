@@ -10,4 +10,18 @@ project(ACEXML): acelib, codecs {
     // See codecs.mpb for more information.
     !XML_Codecs.cpp
   }
+
+  Header_Files {
+    ACEXML_Export.h
+    Attributes.h
+    ContentHandler.h
+    DTDHandler.h
+    EntityResolver.h
+    ErrorHandler.h
+    Locator.h
+    XMLFilter.h
+    XML_Macros.h
+    XMLReader.h
+    XML_Types.h
+  }
 }
