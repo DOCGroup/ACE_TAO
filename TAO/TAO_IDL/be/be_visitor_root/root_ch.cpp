@@ -53,8 +53,7 @@ be_visitor_root_ch::init (void)
 
   // If this IDL file contains an interface declaration, generated a
   // forward declaration of the proxy broker for a possible collocated call.
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.interface_seen_))
+  if (idl_global->interface_seen_)
     {
       TAO_OutStream *os = this->ctx_->stream ();
 

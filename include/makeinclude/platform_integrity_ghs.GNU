@@ -36,6 +36,27 @@ ifndef BSP
   BSP = mcp750
 endif
 
+ifndef TARGET_BSP
+  TARGET_BSP = $(ACE_ROOT)/tests/ACE.bsp
+endif
+
+ifndef TARGET_LD
+  TARGET_LD = $(ACE_ROOT)/tests/INTEGRITY.ld
+endif
+
+#### Set Integrity version
+verline := $(shell ($(GHSROOT)/gversion 2>&1|grep "Green Hills Software"))
+ifeq "$(verline)" ""
+  $(error Not Green Hills or the environment is not set-up)
+endif
+INTEGRITY_VERSION_STR := $(strip $(if ifeq $(word 4, $(verline)) "INTEGRITY", $(word 5, $(verline))))
+ifeq "$(INTEGRITY_VERSION_STR)" ""
+  $(error This Green Hills setup is not for Integrity)
+endif
+ifeq "$(INTEGRITY_VERSION_STR)" "4.1.8"
+  CCFLAGS += -DINTEGRITY_VERSION=40108
+endif
+
 CC = $(GHSROOT)/cc$(CPU)
 CXX = $(GHSROOT)/cx$(CPU)
 
@@ -46,15 +67,12 @@ ifeq (1, $(exceptions))
    override rtti = 1
 endif # exceptions
 
-CCFLAGS  += $(CFLAGS) -integrate -dynamic -I$(RTOSROOT)/INTEGRITY-include-SCA $(IOPS) -bspfile=$(ACE_ROOT)/tests/ACE.bsp $(ACE_ROOT)/tests/INTEGRITY.ld
+CCFLAGS  += $(CFLAGS) -integrate -dynamic -I$(RTOSROOT)/INTEGRITY-include-SCA $(IOPS) -bspfile=$(TARGET_BSP) $(TARGET_LD)
 DCFLAGS  += -G
 SOFLAGS  += -shared
 DLD      = $(CXX)
 LD       = $(CXX)
-LDLIBS += -lACE -lshm_client -lnet -livfssca -lposixsca -lsocket
-LDFLAGS = -lACE -lshm_client -lnet -livfssca -lposixsca -lsocket
-#LDFLAGS  = --no_auto_instantiation
-#OCFLAGS  += -OL -OM
+LIBS    += -lshm_client -lnet -livfssca -lposixsca -lsocket
 PIC      =
 AR := $(CXX) -archive $(IOPS)
 ARFLAGS = -o

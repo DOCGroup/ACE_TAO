@@ -117,11 +117,11 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * each asynchronous call.  If @a handle == ACE_INVALID_HANDLE,
+   * ACE_Handler::handle() will be called on the proxied handler to get the
    * correct handle.
    */
-  virtual int open (ACE_Handler &handler,
+  virtual int open (ACE_Handler::Proxy_Ptr &handler_proxy,
                     ACE_HANDLE handle,
                     const void *completion_key,
                     ACE_Proactor *proactor) = 0;

@@ -26,12 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:302
 
 
 #include "RTPortableServerC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -39,11 +39,11 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "RTPortableServerC.i"
+#include "RTPortableServerC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:65
 
 // Arg traits specializations.
 namespace TAO
@@ -91,23 +91,17 @@ TAO::Objref_Traits<RTPortableServer::POA>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*RTPortableServer__TAO_POA_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 RTPortableServer::POA::POA (void)
 {}
 
 RTPortableServer::POA::~POA (void)
 {}
 
-void
+void 
 RTPortableServer::POA::_tao_any_destructor (void *_tao_void_pointer)
 {
   POA *_tao_tmp_pointer =
-    ACE_static_cast (POA *, _tao_void_pointer);
+    static_cast<POA *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -121,10 +115,10 @@ RTPortableServer::POA::_narrow (
     {
       return POA::_nil ();
     }
-
+  
   POA_ptr proxy =
     dynamic_cast<POA_ptr> (_tao_objref);
-
+  
   return POA::_duplicate (proxy);
 }
 
@@ -138,10 +132,10 @@ RTPortableServer::POA::_unchecked_narrow (
     {
       return POA::_nil ();
     }
-
+  
   POA_ptr proxy =
     dynamic_cast<POA_ptr> (_tao_objref);
-
+  
   return POA::_duplicate (proxy);
 }
 
@@ -152,7 +146,7 @@ RTPortableServer::POA::_duplicate (POA_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -201,7 +195,7 @@ RTPortableServer::POA::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -214,7 +208,7 @@ RTPortableServer::POA::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         RTPortableServer::POA
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTPortableServer::POA
@@ -231,10 +225,10 @@ RTPortableServer::POA::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         RTPortableServer::POA
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTPortableServer::POA
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

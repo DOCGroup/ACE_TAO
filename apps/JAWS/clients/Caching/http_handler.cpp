@@ -13,6 +13,7 @@
 //
 // ============================================================================
 
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Filecache.h"
 #include "http_handler.h"
@@ -136,7 +137,7 @@ HTTP_Handler::svc (void)
       && (::sscanf (contentlength, "\nContent-%*[lL]ength: %d ",
                     &this->response_size_) == 1))
     {
-      ACE_Filecache_Handle afh (this->filename_,
+      ACE_Filecache_Handle afh (ACE_TEXT_CHAR_TO_TCHAR (this->filename_),
                                 this->response_size_);
 
       this->peer ().recv_n (afh.address (), this->response_size_);
@@ -188,7 +189,7 @@ HTTP_Connector::connect (const char * url)
   HTTP_Handler *hhptr = &hh;
 
   // First check the cache.
-  if (ACE_Filecache::instance ()->find (hh.filename ()) == 0)
+  if (ACE_Filecache::instance ()->find (ACE_TEXT_CHAR_TO_TCHAR (hh.filename ())) == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "  ``%s'' is already cached.\n",
                   hh.filename ()));

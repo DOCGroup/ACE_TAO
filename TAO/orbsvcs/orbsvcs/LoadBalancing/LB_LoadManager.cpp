@@ -16,9 +16,12 @@
 #include "tao/ORB_Constants.h"
 
 #include "ace/Reactor.h"
-#include "ace/OS_NS_sys_time.h"
 #include "ace/Reverse_Lock_T.h"
+#include "ace/SString.h"
+#include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (LoadBalancing,
            LB_LoadManager,
@@ -925,8 +928,7 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
       // using the same POA.
       const ACE_Time_Value tv = ACE_OS::gettimeofday ();
       const CORBA::Long time =
-        ACE_static_cast (CORBA::Long,
-                         tv.msec ()); // Time in milliseconds.
+        static_cast<CORBA::Long> (tv.msec ()); // Time in milliseconds.
 
       char poa_name[] = "TAO_LB_LoadManager_POA - 0xZZZZZZZZ";
       char * astr =

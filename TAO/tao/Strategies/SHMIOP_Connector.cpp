@@ -77,7 +77,6 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
                   TAO_SHMIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core,
-                       0,
                        this->lite_flag_),
                   -1);
 
@@ -119,8 +118,7 @@ TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     return -1;
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
-    ACE_dynamic_cast (TAO_SHMIOP_Endpoint *,
-                      endpoint );
+    dynamic_cast <TAO_SHMIOP_Endpoint *>(endpoint);
   if (shmiop_endpoint == 0)
     return -1;
 
@@ -134,7 +132,7 @@ TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
      {
        if (TAO_debug_level > 0)
          {
-           ACE_DEBUG ((LM_DEBUG,
+           ACE_ERROR ((LM_ERROR,
                        ACE_TEXT ("TAO (%P|%t) SHMIOP connection failed.\n")
                        ACE_TEXT ("TAO (%P|%t) This is most likely ")
                        ACE_TEXT ("due to a hostname lookup ")
@@ -151,11 +149,11 @@ TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 TAO_Transport *
 TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                        TAO_Transport_Descriptor_Interface &desc,
-                                       ACE_Time_Value *max_wait_time)
+                                       ACE_Time_Value *timeout)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) SHMIOP_Connector::make_connection - ")
+                  ACE_TEXT ("TAO (%P|%t) - SHMIOP_Connector::make_connection, ")
                   ACE_TEXT ("looking for SHMIOP connection.\n")));
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
@@ -169,13 +167,15 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) SHMIOP_Connector::connect ")
-                ACE_TEXT ("making a new connection \n")));
+                "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
+                "making a new connection to <%s:%d>\n",
+                ACE_TEXT_CHAR_TO_TCHAR (shmiop_endpoint->host ()),
+                shmiop_endpoint->port ()));
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
 
-  this->active_connect_strategy_->synch_options (max_wait_time,
+  this->active_connect_strategy_->synch_options (timeout,
                                                  synch_options);
 
   TAO_SHMIOP_Connection_Handler *svc_handler = 0;
@@ -202,8 +202,8 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       // Give users a clue to the problem.
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) SHMIOP_Connector::make_connection, ")
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) - SHMIOP_Connector::make_connection, ")
                       ACE_TEXT ("connection to <%s:%u> failed (%p)\n"),
                       ACE_TEXT_CHAR_TO_TCHAR (shmiop_endpoint->host ()),
                       shmiop_endpoint->port (),
@@ -262,8 +262,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - SHMIOP_Connector [%d]::make_connection, "
-                    "could not register the transport "
-                    "in the reactor.\n",
+                    "could not register the transport in the reactor.\n",
                     transport->id ()));
 
       return 0;
@@ -275,7 +274,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 TAO_Profile *
 TAO_SHMIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile;
+  TAO_Profile *pfile = 0;
   ACE_NEW_RETURN (pfile,
                   TAO_SHMIOP_Profile (this->orb_core ()),
                   0);
@@ -352,8 +351,7 @@ TAO_SHMIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
     return 0;
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
-    ACE_dynamic_cast (TAO_SHMIOP_Endpoint *,
-                      endpoint );
+    dynamic_cast <TAO_SHMIOP_Endpoint *>(endpoint);
   if (shmiop_endpoint == 0)
     return 0;
 

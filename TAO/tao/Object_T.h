@@ -23,9 +23,6 @@ namespace CORBA
 {
   class Object;
   typedef Object *Object_ptr;
-
-  class AbstractBase;
-  typedef AbstractBase *AbstractBase_ptr;
 }
 
 namespace TAO
@@ -46,11 +43,6 @@ namespace TAO
                          Proxy_Broker_Factory
                          ACE_ENV_ARG_DECL);
 
-    static T_ptr narrow (CORBA::AbstractBase_ptr,
-                         const char *repo_id,
-                         Proxy_Broker_Factory
-                         ACE_ENV_ARG_DECL);
-
     // Version used the operators.
     static T_ptr unchecked_narrow (CORBA::Object_ptr,
                                    Proxy_Broker_Factory);
@@ -60,8 +52,6 @@ namespace TAO
                                    Proxy_Broker_Factory
                                    ACE_ENV_ARG_DECL);
 
-    // static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr,
-    //                              Proxy_Broker_Factory);
   private:
     // Code for lazily evaluated IORs.
     static T_ptr lazy_evaluation (CORBA::Object_ptr);

@@ -110,20 +110,18 @@ namespace TAO
       /// Return the SSLIOP-specific ACE_INET_Addr.
       const ACE_INET_Addr &object_addr (void) const;
 
-      /// Set the Quality-of-Protection settings for this endpoint.
-      void qop (::Security::QOP qop);
+      /// Set the Quality-of-Protection, establishment of trust, and
+      /// credentials for this endpoint. This is all done in one function
+      /// so that the guard may be used uniformly.
+      void set_sec_attrs (::Security::QOP qop,
+                          const ::Security::EstablishTrust &trust,
+                          TAO::SSLIOP::OwnCredentials_ptr creds);
 
       /// Get the Quality-of-Protection settings for this endpoint.
       ::Security::QOP qop (void) const;
 
-      /// Set the establishment of trust settings for this endpoint.
-      void trust (const ::Security::EstablishTrust &trust);
-
       /// Get the establishment of trust settings for this endpoint.
       ::Security::EstablishTrust trust (void) const;
-
-      /// Set the credentials for this endpoint.
-      void credentials (TAO::SSLIOP::OwnCredentials_ptr creds);
 
       /// Get the credentials for this endpoint.
       /**
@@ -135,6 +133,15 @@ namespace TAO
        */
       TAO::SSLIOP::OwnCredentials * credentials (void) const;
       //@}
+
+
+      /// Credentials are not supplied by the constructor, and it is
+      /// valid to have a nil credential, for instance if the
+      /// SSL_use_certificate() method returns 0. Therefore it is
+      /// necessary to have a new method to distinguish between a
+      /// credential that is nil because it has not been set, vs one
+      /// that was set to nil explicitly.
+      int credentials_set (void) const;
 
     private:
 
@@ -171,6 +178,8 @@ namespace TAO
       /// SSLIOP-specific credentials for this endpoint object.
       TAO::SSLIOP::OwnCredentials_var credentials_;
 
+      /// A flag indicating that credentials_ was explicitly initialized
+      int credentials_set_;
     };
 
 //   }  // End SSLIOP namespace.

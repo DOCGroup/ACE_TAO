@@ -22,6 +22,7 @@ namespace CCF
               consumes_ (ctx_),
               emits_ (ctx_),
               event_type_ (ctx_),
+              event_type_factory_ (ctx_),
               home_ (ctx_),
               home_factory_ (ctx_),
               home_finder_ (ctx_),

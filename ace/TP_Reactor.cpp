@@ -358,6 +358,11 @@ int
 ACE_TP_Reactor::handle_timer_events (int & /*event_count*/,
                                      ACE_TP_Token_Guard &guard)
 {
+  if (this->timer_queue_->is_empty())
+    { // Empty timer queue so cannot have any expired timers.
+      return 0;
+    }
+
   // Get the current time
   ACE_Time_Value cur_time (this->timer_queue_->gettimeofday () +
                            this->timer_queue_->timer_skew ());

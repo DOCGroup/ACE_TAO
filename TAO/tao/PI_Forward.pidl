@@ -23,7 +23,7 @@
  *
  * cp orig/PI_ForwardC.{h,i,cpp} .
  *
- * The code left in PI_ForwardC.{h,i,cpp} is ready for use.
+ * The code left in PI_ForwardC.{h,i,cpp}
  *
  */
 

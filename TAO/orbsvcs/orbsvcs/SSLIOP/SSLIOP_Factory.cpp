@@ -18,7 +18,7 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
-static const char prefix_[] = "iiop";
+static const char *prefix_[] = {"iiop", "ssliop"};
 
 namespace TAO
 {
@@ -44,13 +44,18 @@ int
 TAO::SSLIOP::Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
   // Check for the proper prefix for this protocol.
-  return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_) == 0);
+  return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_[0]) == 0)
+     || (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_[1]) == 0);
 }
 
 const char *
 TAO::SSLIOP::Protocol_Factory::prefix (void) const
 {
-  return ::prefix_;
+   // Note: This method doesn't seem to be used anywhere. Moreover,
+   // keeping it may make things more confusing - a Factory can 
+   // well be handling multiple protocol prefixes, not just one!
+   // Shouldn't it be deprecated?
+  return ::prefix_[0];
 }
 
 char
@@ -71,6 +76,30 @@ TAO::SSLIOP::Protocol_Factory::make_acceptor (void)
 
   return acceptor;
 }
+
+
+// Parses a X509 path. Beware: This function modifies 
+// the buffer pointed to by arg!
+int
+TAO::SSLIOP::Protocol_Factory::parse_x509_file_path (char *arg, 
+                                                   char **path)
+{
+  ACE_ASSERT (arg!= 0);
+  ACE_ASSERT (path!= 0);
+  
+  char *lst = 0;
+  const char *type_name = ACE_OS::strtok_r (arg, ":", &lst);
+  *path = ACE_OS::strtok_r (0, "", &lst);
+
+  if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
+      return SSL_FILETYPE_ASN1;
+  
+  if (ACE_OS::strcasecmp (type_name, "PEM") == 0)
+      return SSL_FILETYPE_PEM;
+
+  return -1;
+}
+
 
 int
 TAO::SSLIOP::Protocol_Factory::init (int argc,
@@ -154,20 +183,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
           curarg++;
           if (curarg < argc)
             {
-              char *lasts = 0;
-              const char *type_name =
-                ACE_OS::strtok_r (argv[curarg], ":", &lasts);
-              certificate_path =
-                ACE_OS::strtok_r (0, ":", &lasts);
-
-              if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
-                {
-                  certificate_type = SSL_FILETYPE_ASN1;
-                }
-              else if (ACE_OS::strcasecmp (type_name, "PEM") == 0)
-                {
-                  certificate_type = SSL_FILETYPE_PEM;
-                }
+              certificate_type = parse_x509_file_path (argv[curarg], &certificate_path);
             }
         }
 
@@ -177,20 +193,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
           curarg++;
           if (curarg < argc)
             {
-              char *lasts = 0;
-              const char *type_name =
-                ACE_OS::strtok_r (argv[curarg], ":", &lasts);
-              private_key_path =
-                ACE_OS::strtok_r (0, ":", &lasts);
-
-              if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
-                {
-                  private_key_type = SSL_FILETYPE_ASN1;
-                }
-              else if (ACE_OS::strcasecmp (type_name, "PEM") == 0)
-                {
-                  private_key_type = SSL_FILETYPE_PEM;
-                }
+              private_key_type = parse_x509_file_path (argv[curarg], &private_key_path);
             }
         }
 
@@ -257,19 +260,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
           curarg++;
           if (curarg < argc)
             {
-              char *lasts = 0;
-              const char *type_name =
-                ACE_OS::strtok_r (argv[curarg], ":", &lasts);
-              dhparams_path = ACE_OS::strtok_r (0, ":", &lasts);
-
-              if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
-                {
-                  dhparams_type = SSL_FILETYPE_ASN1;
-                }
-              else if (ACE_OS::strcasecmp (type_name, "PEM") == 0)
-                {
-                  dhparams_type = SSL_FILETYPE_PEM;
-                }
+              dhparams_type = parse_x509_file_path (argv[curarg], &dhparams_path);
             }
         }
 

@@ -112,7 +112,7 @@
 # endif /* ACE_DEFAULT_MAX_SOCKET_BUFSIZ */
 
 # if !defined (ACE_DEFAULT_SERVER_PORT_STR)
-#   define ACE_DEFAULT_SERVER_PORT_STR "20002"
+#   define ACE_DEFAULT_SERVER_PORT_STR ACE_LIB_TEXT("20002")
 # endif /* ACE_DEFAULT_SERVER_PORT_STR */
 
 // Used for the Service_Directory test

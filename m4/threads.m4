@@ -67,60 +67,70 @@ dnl  AC_REQUIRE([AC_LANG])
     dnl Do nothing
    ])
 
- dnl Check for UNIX International Threads -- STHREADS
- AC_SEARCH_LIBS([thr_create], [thread],
-   [
-    ace_has_sthreads=yes
-    AC_DEFINE([ACE_HAS_STHREADS], 1, 
-	      [Define to 1 if platform has UNIX International Threads])
-   ],
-   [
-    ace_has_sthreads=no
-   ])
-
- dnl Sometimes thr_create is actually found with explicitly linking against
- dnl -lthread, so try a more "exotic" function.
- AC_SEARCH_LIBS([rwlock_destroy], [thread],[],[])
+ dnl Check for UNIX International Threads (ACE calls this STHREADS)
+ dnl This used to check for thr_create(), but AIX has a semi-functional
+ dnl UI Threads capability that includes thr_create(). We don't want to
+ dnl find such a half-hearted UI Threads, so this was changed to look for
+ dnl a UI Threads function that AIX doesn't offer.
+ AS_IF([test "$ace_user_enable_uithreads" = yes],
+   [ AC_MSG_CHECKING([for UNIX International threads capability])
+     AC_SEARCH_LIBS([mutex_lock], [thread],
+     [
+       ace_has_sthreads=yes
+       AC_DEFINE([ACE_HAS_STHREADS], 1, 
+	         [Define to 1 if platform has UNIX International Threads])
+     ],
+     [
+       ace_has_sthreads=no
+     ])
+     dnl Sometimes thr_create is actually found with explicitly linking against
+     dnl -lthread, so try a more "exotic" function.
+     AC_SEARCH_LIBS([rwlock_destroy], [thread],[],[])
+     AC_MSG_RESULT([$ace_has_sthreads])
+   ],[])
 
  dnl Check if any thread related preprocessor flags are needed.
  ACE_CHECK_THREAD_CPPFLAGS
 
  dnl Check for POSIX threads
  ace_has_pthreads=no
-
- AC_MSG_CHECKING([for POSIX threads library])
-
- ACE_CHECK_POSIX_THREADS(
-   [
-    ace_has_pthreads=yes
-    AC_DEFINE([ACE_HAS_PTHREADS], 1,
-	      [Define to 1 if platform has POSIX threads])
-    AC_MSG_RESULT([none required])
-   ],
-   [])
-
- AS_IF([test "$ace_has_pthreads" != yes],
-   [
-    ace_posix_threads_search_LIBS="$LIBS"
-    for ace_p in pthread pthreads c_r gthreads; do
-      LIBS="-l$ace_p $ace_posix_threads_search_LIBS"
-      ACE_CHECK_POSIX_THREADS(
-        [
+ AS_IF([test "$ace_user_enable_pthreads" = yes],
+   [ AC_MSG_CHECKING([for POSIX threads library])
+     ACE_CHECK_POSIX_THREADS(
+       [
          ace_has_pthreads=yes
-         AC_DEFINE([ACE_HAS_PTHREADS])
-         AC_MSG_RESULT([-l$ace_p])
-         break
+         AC_DEFINE([ACE_HAS_PTHREADS], 1,
+	           [Define to 1 if platform has POSIX threads])
+         AC_MSG_RESULT([none required])
+       ],
+       [])
+
+     AS_IF([test "$ace_has_pthreads" != yes],
+       [
+         ace_posix_threads_search_LIBS="$LIBS"
+         for ace_p in pthread pthreads c_r gthreads; do
+           LIBS="-l$ace_p $ace_posix_threads_search_LIBS"
+           ACE_CHECK_POSIX_THREADS(
+             [
+               ace_has_pthreads=yes
+               AC_DEFINE([ACE_HAS_PTHREADS])
+               AC_MSG_RESULT([-l$ace_p])
+               break
+             ],
+             [])
+         done
+
+         AS_IF([test "$ace_has_pthreads" != yes],
+           [
+             AC_MSG_RESULT([no])
+             LIBS="$ace_posix_threads_search_LIBS"
+           ],[])
         ],
         [])
-    done
-
-    AS_IF([test "$ace_has_pthreads" != yes],
-      [
-       AC_MSG_RESULT([no])
-       LIBS="$ace_posix_threads_search_LIBS"
-      ],[])
    ],
-   [])
+   [
+     AC_MSG_NOTICE([Pthreads disabled by user; not checking for it])
+   ])
 
  dnl If we don't have any thread library, then disable threading altogether!
  AS_IF([test "$ace_has_pthreads" != yes && test "$ace_has_sthreads" != yes],
@@ -143,13 +153,24 @@ AC_DEFUN([ACE_CHECK_THREAD_FLAGS],
  dnl to get around this nuisance by checking the return value of
  dnl thr_create().  The cross-compiled case will use a link-time
  dnl test, instead.
+ dnl Furthermore, we need the implementation to be a real one, not
+ dnl a half-hearted attempt such as that provided on AIX 5. So, we
+ dnl make sure it can at least work with a mutex.
 
  AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <thread.h>
+#if ((THR_BOUND & THR_SUSPEND & THR_DETACHED) != 0)
+#  error This is a silly UI Threads implementation.
+#endif
 
 extern "C" void *
 ace_start_func (void *)
 {
+ mutex_t m;
+ mutex_init (&m, USYNC_THREAD, NULL);
+ mutex_lock (&m);
+ mutex_unlock (&m);
+ mutex_destroy (&m);
  return 0;
 }
 

@@ -74,21 +74,21 @@ public:
 
   enum SystemType  // open for future extention
   {
-    OS_UNDEFINED= 0x0000,
-    OS_WIN      = 0x0100,          // for future
-    OS_WIN_NT   = OS_WIN | 0x0001,
-    OS_WIN_2000 = OS_WIN | 0x0002,
-    OS_SUN      = 0x0200,          // Sun Solaris family
-    OS_SUN_55   = OS_SUN | 0x0001,
-    OS_SUN_56   = OS_SUN | 0x0002,
-    OS_SUN_57   = OS_SUN | 0x0004,
-    OS_SUN_58   = OS_SUN | 0x0008,
-    OS_HPUX     = 0x0400,          // HPUX family
-    OS_HPUX_11  = OS_HPUX | 0x0001,
-    OS_LINUX    = 0x0800,          // Linux family
-    OS_FREEBSD  = 0x1000,          // FreeBSD family
-    OS_IRIX     = 0x2000,          // SGI IRIX family
-    OS_OPENBSD  = 0x4000           // OpenBSD familty
+    ACE_OS_UNDEFINED= 0x0000,
+    ACE_OS_WIN      = 0x0100,          // for future
+    ACE_OS_WIN_NT   = ACE_OS_WIN | 0x0001,
+    ACE_OS_WIN_2000 = ACE_OS_WIN | 0x0002,
+    ACE_OS_SUN      = 0x0200,          // Sun Solaris family
+    ACE_OS_SUN_55   = ACE_OS_SUN | 0x0001,
+    ACE_OS_SUN_56   = ACE_OS_SUN | 0x0002,
+    ACE_OS_SUN_57   = ACE_OS_SUN | 0x0004,
+    ACE_OS_SUN_58   = ACE_OS_SUN | 0x0008,
+    ACE_OS_HPUX     = 0x0400,          // HPUX family
+    ACE_OS_HPUX_11  = ACE_OS_HPUX | 0x0001,
+    ACE_OS_LINUX    = 0x0800,          // Linux family
+    ACE_OS_FREEBSD  = 0x1000,          // FreeBSD family
+    ACE_OS_IRIX     = 0x2000,          // SGI IRIX family
+    ACE_OS_OPENBSD  = 0x4000           // OpenBSD familty
   };
 
   enum Opcode {
@@ -160,7 +160,7 @@ public:
 
   virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void);
   virtual ACE_Asynch_Read_Stream_Result_Impl *
-    create_asynch_read_stream_result (ACE_Handler &handler,
+    create_asynch_read_stream_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block &message_block,
                                       size_t bytes_to_read,
@@ -171,7 +171,7 @@ public:
 
   virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void);
   virtual ACE_Asynch_Write_Stream_Result_Impl *
-    create_asynch_write_stream_result (ACE_Handler &handler,
+    create_asynch_write_stream_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block &message_block,
                                        size_t bytes_to_write,
@@ -182,7 +182,7 @@ public:
 
   virtual ACE_Asynch_Read_File_Impl *create_asynch_read_file (void);
   virtual ACE_Asynch_Read_File_Result_Impl *
-    create_asynch_read_file_result (ACE_Handler &handler,
+    create_asynch_read_file_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                     ACE_HANDLE handle,
                                     ACE_Message_Block &message_block,
                                     size_t bytes_to_read,
@@ -195,7 +195,7 @@ public:
 
   virtual ACE_Asynch_Write_File_Impl *create_asynch_write_file (void);
   virtual ACE_Asynch_Write_File_Result_Impl *
-    create_asynch_write_file_result (ACE_Handler &handler,
+    create_asynch_write_file_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block &message_block,
                                      size_t bytes_to_write,
@@ -208,7 +208,7 @@ public:
 
   virtual ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram (void);
   virtual ACE_Asynch_Read_Dgram_Result_Impl *
-    create_asynch_read_dgram_result (ACE_Handler &handler,
+    create_asynch_read_dgram_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block *message_block,
                                      size_t bytes_to_read,
@@ -221,7 +221,7 @@ public:
 
   virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram (void);
   virtual ACE_Asynch_Write_Dgram_Result_Impl *
-    create_asynch_write_dgram_result (ACE_Handler &handler,
+    create_asynch_write_dgram_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block *message_block,
                                       size_t bytes_to_write,
@@ -233,7 +233,7 @@ public:
 
   virtual ACE_Asynch_Accept_Impl *create_asynch_accept (void);
   virtual ACE_Asynch_Accept_Result_Impl *
-    create_asynch_accept_result (ACE_Handler &handler,
+    create_asynch_accept_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                  ACE_HANDLE listen_handle,
                                  ACE_HANDLE accept_handle,
                                  ACE_Message_Block &message_block,
@@ -245,7 +245,7 @@ public:
 
   virtual ACE_Asynch_Connect_Impl *create_asynch_connect (void);
   virtual ACE_Asynch_Connect_Result_Impl *
-    create_asynch_connect_result (ACE_Handler & handler,
+    create_asynch_connect_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE connect_handle,
                                   const void *act,
                                   ACE_HANDLE event = ACE_INVALID_HANDLE,
@@ -254,7 +254,7 @@ public:
 
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
   virtual ACE_Asynch_Transmit_File_Result_Impl *
-    create_asynch_transmit_file_result (ACE_Handler &handler,
+    create_asynch_transmit_file_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                         ACE_HANDLE socket,
                                         ACE_HANDLE file,
                                         ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
@@ -271,7 +271,7 @@ public:
   /// Create a timer result object which can be used with the Timer
   /// mechanism of the Proactor.
   virtual ACE_Asynch_Result_Impl *
-    create_asynch_timer (ACE_Handler &handler,
+    create_asynch_timer (ACE_Handler::Proxy_Ptr &handler_proxy,
                          const void *act,
                          const ACE_Time_Value &tv,
                          ACE_HANDLE event = ACE_INVALID_HANDLE,
@@ -563,12 +563,13 @@ public:
    * which the Proactor will be waiting) of the Proactor. If there are
    * more than one signal, the higher numbered signal will be chosen.
    */
-  virtual ACE_Asynch_Result_Impl *create_asynch_timer (ACE_Handler &handler,
-                                                       const void *act,
-                                                       const ACE_Time_Value &tv,
-                                                       ACE_HANDLE event = ACE_INVALID_HANDLE,
-                                                       int priority = 0,
-                                                       int signal_number = ACE_SIGRTMIN);
+  virtual ACE_Asynch_Result_Impl *create_asynch_timer
+    (ACE_Handler::Proxy_Ptr &handler_proxy,
+     const void *act,
+     const ACE_Time_Value &tv,
+     ACE_HANDLE event = ACE_INVALID_HANDLE,
+     int priority = 0,
+     int signal_number = ACE_SIGRTMIN);
 
 protected:
   /// To setup the handler for a real-time signbal.
@@ -628,7 +629,7 @@ class ACE_Export ACE_POSIX_Asynch_Timer : public ACE_POSIX_Asynch_Result
 
 protected:
   /// Constructor.
-  ACE_POSIX_Asynch_Timer (ACE_Handler &handler,
+  ACE_POSIX_Asynch_Timer (ACE_Handler::Proxy_Ptr &handler_proxy,
                           const void *act,
                           const ACE_Time_Value &tv,
                           ACE_HANDLE event = ACE_INVALID_HANDLE,

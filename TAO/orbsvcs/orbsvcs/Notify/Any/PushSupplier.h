@@ -13,7 +13,7 @@
 #define TAO_Notify_PUSHSUPPLIER_H
 #include /**/ "ace/pre.h"
 
-#include "../notify_export.h"
+#include "../notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -46,14 +46,13 @@ public:
   /// TAO_Notify_Destroy_Callback methods
   virtual void release (void);
 
+  /// Retrieve the ior of this peer
+  virtual bool get_ior (ACE_CString & iorstr) const;
+
 protected:
   /// The Supplier
   CosEventComm::PushSupplier_var push_supplier_;
 };
-
-#if defined (__ACE_INLINE__)
-#include "PushSupplier.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_PUSHSUPPLIER_H */

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): messaging, taoexe, portableserver {
+project(*Server): messaging, taoserver {
   Source_Files {
     Sleep_Service.cpp
     Server_Task.cpp

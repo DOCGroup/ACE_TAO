@@ -115,11 +115,6 @@ namespace Config_Handler
     return _wstr[i];
   }
 
-  bool XStr::operator== (const XMLCh* wstr) const
-  {
-    return XMLString::compareIString (wstr, this->_wstr) == 0;
-  }
-
   bool operator== (const XStr& lhs, const XStr& rhs)
   {
     return XMLString::compareIString (lhs,rhs) == 0;

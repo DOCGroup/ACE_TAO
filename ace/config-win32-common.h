@@ -195,6 +195,7 @@
 #define ACE_HAS_MSG
 #define ACE_HAS_DIRENT
 #define ACE_HAS_SOCKADDR_MSG_NAME
+#define ACE_LACKS_DUP2
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_GETPPID
 #define ACE_LACKS_SETPGID
@@ -223,20 +224,29 @@
 #define ACE_LACKS_PTHREAD_H
 #define ACE_LACKS_ARPA_INET_H
 #define ACE_LACKS_MADVISE
+#define ACE_LACKS_READLINK
+#define ACE_LACKS_PWD_FUNCTIONS
+#define ACE_LACKS_WAIT
+#define ACE_LACKS_SOCKETPAIR
+#define ACE_LACKS_UNIX_SYSLOG
 
 #define ACE_HAS_SNPRINTF
 #define ACE_HAS_VFWPRINTF
 #define ACE_HAS_VSWPRINTF
+
+#define ACE_MKDIR_LACKS_MODE
 
 #define ACE_SIZEOF_LONG_LONG 8
 // Green Hills Native x86 does not support __int64 keyword
 // Neither does mingw32.
 #if !defined (ACE_LACKS_LONGLONG_T) && !defined (__MINGW32__)
 typedef unsigned __int64 ACE_UINT64;
+typedef   signed __int64 ACE_INT64;
 #endif /* (ghs) */
 
 #if defined (__MINGW32__)
 typedef unsigned long long ACE_UINT64;
+typedef   signed long long ACE_INT64;
 #endif
 
 // Optimize ACE_Handle_Set for select().
@@ -341,12 +351,6 @@ typedef unsigned long long ACE_UINT64;
 #  error You must link against multi-threaded libraries when using ACE (check your project settings)
 # endif /* !_MT && !ACE_HAS_WINCE */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
-
-// We are using STL's min and max (in algobase.h).  Therefore the
-// macros in window.h are extra
-#if !defined (NOMINMAX)
-# define NOMINMAX
-#endif /* NOMINMAX */
 
 #if !defined(_DEBUG)
 // If we are making a release, and the user has not specified

@@ -52,7 +52,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("usage: %s ")
                     ACE_TEXT ("[-i (iterations)] ")
                     ACE_TEXT ("[-t (table size)] "),
-                    argv[0]));
+                    ACE_TEXT ("Hash_Map_Bucket_Iterator_Test")));
         return -1;
       }
 

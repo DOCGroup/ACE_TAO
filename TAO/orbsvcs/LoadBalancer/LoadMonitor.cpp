@@ -6,6 +6,7 @@
 
 #include "tao/ORB_Core.h"
 
+#include "ace/Reactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_strings.h"
@@ -111,7 +112,7 @@ extern "C"
 void *
 TAO_LB_run_load_monitor (void * orb_arg)
 {
-  CORBA::ORB_ptr orb = ACE_static_cast (CORBA::ORB_ptr, orb_arg);
+  CORBA::ORB_ptr orb = static_cast<CORBA::ORB_ptr> (orb_arg);
 
   // Only the main thread should handle signals.
   //
@@ -130,10 +131,10 @@ TAO_LB_run_load_monitor (void * orb_arg)
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "TAO Load Monitor");
 
-      return ACE_reinterpret_cast (void *, -1);
+      return reinterpret_cast<void *> (-1);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (ACE_reinterpret_cast (void *, -1));
+  ACE_CHECK_RETURN (reinterpret_cast<void *> (-1));
 
   return 0;
 }
@@ -385,6 +386,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       //    exception.
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Wait for the signal handler thread to finish
+      // before the process exits.
+      signal_handler.wait ();
 #endif  /* linux && ACE_HAS_THREADS */
 
       if (timer_id != -1 && reactor->cancel_timer (timer_id) == 0)

@@ -3,10 +3,6 @@
 #include "Loader.h"
 #include "Test_i.h"
 
-#if !defined(__ACE_INLINE__)
-#include "Loader.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Object_Loader, Loader, "$Id$")
 
 Loader::Loader (void)

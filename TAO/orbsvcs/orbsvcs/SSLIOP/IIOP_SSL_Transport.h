@@ -59,7 +59,6 @@ namespace TAO
     /// Constructor.
     IIOP_SSL_Transport (IIOP_SSL_Connection_Handler *handler,
                         TAO_ORB_Core *orb_core,
-                        TAO::SSLIOP::Current_ptr current,
                         CORBA::Boolean flag = 0);
 
     /// Default destructor.

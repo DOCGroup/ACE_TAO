@@ -56,8 +56,7 @@ const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
 static void *
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = ACE_reinterpret_cast (ACE_INET_Addr *,
-                                                     arg);
+  ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_LOCALHOST);
   ACE_SOCK_Stream cli_stream;
@@ -97,23 +96,23 @@ client (void *arg)
   // The server will verify that this data pattern gets there intact.
 
   for (i = 0; i < sizeof buffer; ++i)
-    buffer[i] = ACE_static_cast (u_char, i);
+    buffer[i] = static_cast<u_char> (i);
 
   iovec iov[5];
 
-  iov[0].iov_base = ACE_reinterpret_cast (char *, &buffer[0]);
+  iov[0].iov_base = reinterpret_cast<char *> (&buffer[0]);
   iov[0].iov_len = 50;
 
-  iov[1].iov_base = ACE_reinterpret_cast (char *, &buffer[50]);
+  iov[1].iov_base = reinterpret_cast<char *> (&buffer[50]);
   iov[1].iov_len = 25;
 
-  iov[2].iov_base = ACE_reinterpret_cast (char *, &buffer[75]);
+  iov[2].iov_base = reinterpret_cast<char *> (&buffer[75]);
   iov[2].iov_len = 150;
 
-  iov[3].iov_base = ACE_reinterpret_cast (char *, &buffer[225]);
+  iov[3].iov_base = reinterpret_cast<char *> (&buffer[225]);
   iov[3].iov_len = 29;
 
-  iov[4].iov_base = ACE_reinterpret_cast (char *, &buffer[254]);
+  iov[4].iov_base = reinterpret_cast<char *> (&buffer[254]);
   iov[4].iov_len = 1;
 
   len = cli_stream.sendv (iov, 5);
@@ -225,13 +224,13 @@ server (void *arg)
   ssize_t len;
   int i;
 
-  iov[0].iov_base = ACE_reinterpret_cast (char *, &buffer[0]);
+  iov[0].iov_base = reinterpret_cast<char *> (&buffer[0]);
   iov[0].iov_len = 75;
 
-  iov[1].iov_base = ACE_reinterpret_cast (char *, &buffer[75]);
+  iov[1].iov_base = reinterpret_cast<char *> (&buffer[75]);
   iov[1].iov_len = 100;
 
-  iov[2].iov_base = ACE_reinterpret_cast (char *, &buffer[175]);
+  iov[2].iov_base = reinterpret_cast<char *> (&buffer[175]);
   iov[2].iov_len = 80;
 
   len = sock_str.recvv_n (iov, 3);
@@ -351,14 +350,13 @@ spawn (void)
           ACE_OS::exit (0);
           /* NOTREACHED */
         default:
-          server (ACE_reinterpret_cast (void *,
-                                        &peer_acceptor));
+          server (reinterpret_cast<void *> (&peer_acceptor));
           ACE_OS::wait ();
         }
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn
           (ACE_THR_FUNC (server),
-           ACE_reinterpret_cast (void *, &peer_acceptor),
+           reinterpret_cast<void *> (&peer_acceptor),
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
@@ -367,7 +365,7 @@ spawn (void)
 
       if (ACE_Thread_Manager::instance ()->spawn
           (ACE_THR_FUNC (client),
-           ACE_reinterpret_cast (void *, &server_addr),
+           reinterpret_cast<void *> (&server_addr),
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),

@@ -37,11 +37,11 @@ hist_t *head_hist, *tail_hist;
 hist_t *histogram(char *name, unsigned int num_bins, double first,
                   double last) {
   hist_t *hist;
-  if ((hist = (hist_t *)malloc(sizeof(hist_t))) == NULL) {
+  if ((hist = (hist_t *)malloc(sizeof(hist_t))) == 0) {
     fprintf(stderr, "unable to allocate memory for histogram : %s", name);
     exit(-1);
   }
-  if ((hist->hs = (unsigned int *)malloc(sizeof(unsigned int) * (num_bins+2))) == NULL){
+  if ((hist->hs = (unsigned int *)malloc(sizeof(unsigned int) * (num_bins+2))) == 0){
     fprintf(stderr, "unable to allocate memory for histogram : %s", name);
     exit(-1);
   }
@@ -58,11 +58,11 @@ hist_t *histogram(char *name, unsigned int num_bins, double first,
   hist->sum4 = 0.0;
   hist->max = DBL_MIN;
   hist->min = DBL_MAX;
-  hist->outer = NULL;
-  hist->next = NULL;
+  hist->outer = 0;
+  hist->next = 0;
   hist->skew = 0;
-  hist->firstoptheader = NULL;
-  if(head_hist == NULL)
+  hist->firstoptheader = 0;
+  if(head_hist == 0)
     head_hist = tail_hist = hist;
   else {
     tail_hist->next = hist;
@@ -90,16 +90,16 @@ void add_field(char *key, char *value, hist_t *hist) {
   nextoptheader = (struct optheader *) malloc(sizeof(struct optheader));
   nextoptheader->key = (char *) malloc(strlen(key)+1);
   nextoptheader->value = (char *) malloc(strlen(value)+1);
-  nextoptheader->next = NULL;
+  nextoptheader->next = 0;
   strcpy(nextoptheader->key,key);
   strcpy(nextoptheader->value,value);
 
      /* tack nextoptheader onto end of optheader list */
-  if (hist->firstoptheader == NULL) {
+  if (hist->firstoptheader == 0) {
      hist->firstoptheader = nextoptheader;
   } else {
      trace = hist->firstoptheader;
-     while (trace->next != NULL) {
+     while (trace->next != 0) {
         trace = trace->next;
      }
      trace->next = nextoptheader;
@@ -185,7 +185,7 @@ void report_to(FILE *strm, hist_t *hist) {
   fprintf(strm, "num_bins: %d %g %g\n", hist->num_bins,hist->first,hist->last);
   if (hist->firstoptheader) {
      trace = hist->firstoptheader;
-     while(trace->next != NULL) {
+     while(trace->next != 0) {
         fprintf(strm, "%s: %s\n", trace->key, trace->value);
         trace = trace->next;
      }

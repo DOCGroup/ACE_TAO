@@ -27,7 +27,7 @@ ACE_RCSID (Strategies,
            "$Id$")
 
 TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (CORBA::Boolean flag)
-  : TAO_Acceptor (TAO_TAG_UDP_PROFILE),
+  : TAO_Acceptor (TAO_TAG_DIOP_PROFILE),
     addrs_ (0),
     hosts_ (0),
     endpoint_count_ (0),
@@ -137,7 +137,7 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
     {
       pfile = mprofile.get_profile (i);
-      if (pfile->tag () == TAO_TAG_UDP_PROFILE)
+      if (pfile->tag () == TAO_TAG_DIOP_PROFILE)
       {
         iiop_profile = ACE_dynamic_cast (TAO_DIOP_Profile *,
                                          pfile);
@@ -236,9 +236,6 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          const char *options)
 {
   this->orb_core_ = orb_core;
-
-  if (this->init_tcp_properties () != 0)
-    return -1;
 
   if (this->hosts_ != 0)
     {
@@ -351,9 +348,6 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  if (this->init_tcp_properties () != 0)
-    return -1;
-
   if (this->hosts_ != 0)
     {
       // The hostname cache has already been set!
@@ -384,7 +378,7 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   // address.
   ACE_INET_Addr addr;
 
-  if (addr.set (ACE_DEFAULT_SERVER_PORT,
+  if (addr.set (static_cast<unsigned short> (0),
                 ACE_static_cast(ACE_UINT32, INADDR_ANY),
                 1) != 0)
     return -1;
@@ -399,8 +393,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
 {
   ACE_NEW_RETURN (this->connection_handler_,
                   TAO_DIOP_Connection_Handler (this->orb_core_,
-                                               this->lite_flag_,
-                                               0 /* TAO_DIOP_Properties */),
+                                               this->lite_flag_),
                   -1);
 
   this->connection_handler_->local_addr (addr);
@@ -416,11 +409,25 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   // Connection handler ownership now belongs to the Reactor.
   this->connection_handler_->remove_reference ();
 
+  ACE_INET_Addr address;
+
+  // We do this make sure the port number the endpoint is listening on
+  // gets set in the addr.
+  if (this->connection_handler_->dgram ().get_local_addr (address) != 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) DIOP_Acceptor::open_i ")
+                    ACE_TEXT ("- %p"),
+                    ACE_TEXT ("cannot get local addr\n")));
+      return -1;
+    }
+
   // Set the port for each addr.  If there is more than one network
   // interface then the endpoint created on each interface will be on
   // the same port.  This is how a wildcard socket bind() is supposed
   // to work.
-  u_short port = addr.get_port_number ();
+  u_short port = address.get_port_number ();
   for (size_t j = 0; j < this->endpoint_count_; ++j)
     this->addrs_[j].set_port_number (port, 1);
 
@@ -741,13 +748,6 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
                               -1);
         }
     }
-  return 0;
-}
-
-int
-TAO_DIOP_Acceptor::init_tcp_properties (void)
-{
-  // @@ Michael: We use UDP, so we do not set TCP settings.
   return 0;
 }
 

@@ -94,6 +94,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   "hello",
                   10000));
 
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
       ACE_LOG_MSG->msg_ostream (&cout);
 
@@ -137,6 +139,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   "",
                   "world",
                   10000 * counter++));
+
+#endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
 
       static int array[] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
 

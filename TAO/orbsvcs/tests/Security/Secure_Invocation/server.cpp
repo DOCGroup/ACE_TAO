@@ -3,12 +3,14 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "Foo_i.h"
+#include "ace/SString.h"
 
 ACE_RCSID (Secure_Invocation,
            server,
            "$Id$")
 
 const char *ior_output_file = 0;
+const char *cert_file = "cacert.pem";
 
 int
 parse_args (int argc, char *argv[])
@@ -40,6 +42,10 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
+      ACE_TString env ("SSL_CERT_FILE=");
+      env += cert_file;
+      ACE_OS::putenv (env.c_str ());
+
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -84,9 +90,9 @@ main (int argc, char *argv[])
       Foo_i *server_impl = 0;
 
       ACE_NEW_RETURN (server_impl,
-		      Foo_i (orb.in (),
-			     security_current.in ()),
-		      -1);
+                      Foo_i (orb.in (),
+                             security_current.in ()),
+                      -1);
 
       PortableServer::ServantBase_var owner_transfer (server_impl);
 
@@ -95,22 +101,24 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Sanity check on SSLIOP profile equivalence.
-      {
-        Foo_i server_impl2 (orb.in (), security_current.in ());
-        Foo::Bar_var server2 =
-          server_impl2._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+      // Since the POA is reference counting the servants, this
+      // implementation must still exist when the POA is destroyed.
+      Foo_i server_impl2 (orb.in (), security_current.in ());
+      Foo::Bar_var server2 =
+        server_impl2._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-        const CORBA::Boolean equivalent =
-          server->_is_equivalent (server2.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+      const CORBA::Boolean equivalent =
+        server->_is_equivalent (server2.in ()
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-	// @@ A better thing would be to print out an error statement.
-        ACE_ASSERT (!equivalent);
-
-	ACE_UNUSED_ARG (equivalent);
-      }
+      if (equivalent)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) ERROR: SSLIOP profile equivalence "
+                      "check failed.\n"));
+        }
 
       CORBA::String_var ior =
         orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);

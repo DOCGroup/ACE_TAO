@@ -3,6 +3,7 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 #include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID (Log,
@@ -100,9 +101,8 @@ TAO_LogRecordStore::log (DsLogAdmin::LogRecord &rec)
     }
 
   // Increment the number of records in the log
-  ++(this->num_records_);
-  this->current_size_ =
-    this->current_size_ + sizeof (rec);
+  ++this->num_records_;
+  this->current_size_ += log_record_size(rec);
 
   return 0;
 }
@@ -134,9 +134,8 @@ TAO_LogRecordStore::remove (DsLogAdmin::RecordId id)
       return -1;
     }
 
-  --(this->num_records_);
-  this->current_size_ =
-    this->current_size_ - sizeof (rec);
+  --this->num_records_;
+  this->current_size_ -= log_record_size(rec);
   // TODO: return ids to a reuse list.
 
   return 0;
@@ -170,11 +169,33 @@ TAO_LogRecordStore::purge_old_records (void)
 }
 
 
-
 TAO_LogRecordStore::LOG_RECORD_STORE &
 TAO_LogRecordStore::get_storage (void)
 {
   return rec_hash_;
+}
+
+size_t
+TAO_LogRecordStore::log_record_size (const DsLogAdmin::LogRecord &rec)
+{
+  size_t mb_size = 0;
+  TAO::Any_Impl *impl = rec.info.impl ();
+  
+  if (impl->encoded ())
+    {
+      TAO::Unknown_IDL_Type *unk =
+        dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+        
+      mb_size = unk->_tao_get_cdr ().start ()->length ();
+    }
+  else
+    {
+      // If the Any is not encoded, it just has a stored value
+      // instead of a CDR stream, not sure what info would be
+      // useful here.
+    }
+  
+  return sizeof (rec) + mb_size;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

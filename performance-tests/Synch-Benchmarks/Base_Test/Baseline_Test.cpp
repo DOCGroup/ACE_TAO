@@ -54,7 +54,7 @@ Baseline_Test_Base::parse_args (int argc, ACE_TCHAR *argv[])
                                "%d is not a valid value for iteration\n",
                                tmp), -1);
           else
-            this->iteration_ = ACE_static_cast (size_t, tmp);
+            this->iteration_ = static_cast<size_t> (tmp);
         }
         break;
 

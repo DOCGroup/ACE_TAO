@@ -48,11 +48,11 @@ class MyTask : public ACE_Task_Base
 {
 public:
 
-  MyTask (ACE_Barrier& barrier,
+  MyTask (ACE_Barrier& bar,
           Kokyu::DSRT_Dispatcher<mif_scheduler_traits>* dispatcher,
           mif_scheduler_traits::QoSDescriptor_t& qos,
           int exec_duration)
-    :barrier_ (barrier),
+    :barrier_ (bar),
      dispatcher_ (dispatcher),
      qos_ (qos),
      guid_ (++guid),
@@ -125,7 +125,7 @@ int ACE_TMAIN (int,ACE_TCHAR**)
   //  config_info.scheduler_type_ = Kokyu::SCHED_MIF;
   config_info.impl_type_ = Kokyu::DSRT_OS_BASED;
 
-  ACE_Barrier barrier (3);
+  ACE_Barrier bar (3);
 
   ACE_DEBUG ((LM_DEBUG, "before create_dispatcher\n" ));
 
@@ -145,9 +145,9 @@ int ACE_TMAIN (int,ACE_TCHAR**)
   qos2.importance_ = 2;
   qos3.importance_ = 3;
 
-  MyTask mytask1 (barrier, disp.get (), qos1, 15);
-  MyTask mytask2 (barrier, disp.get (), qos2, 6);
-  MyTask mytask3 (barrier, disp.get (), qos3, 4);
+  MyTask mytask1 (bar, disp.get (), qos1, 15);
+  MyTask mytask2 (bar, disp.get (), qos2, 6);
+  MyTask mytask3 (bar, disp.get (), qos3, 4);
 
   long flags = THR_BOUND | THR_SCHED_FIFO;
 

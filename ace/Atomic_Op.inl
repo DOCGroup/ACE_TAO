@@ -114,7 +114,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator< (long rhs) const
   return (this->value_ < rhs);
 }
 
-ACE_INLINE void
+ACE_INLINE ACE_Atomic_Op<ACE_Thread_Mutex, long> &
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (long rhs)
 {
 #if defined (WIN32)
@@ -122,9 +122,10 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (long rhs)
 #else /* WIN32 */
   (*exchange_fn_) (&this->value_, rhs);
 #endif /* WIN32 */
+  return *this;
 }
 
-ACE_INLINE void
+ACE_INLINE ACE_Atomic_Op<ACE_Thread_Mutex, long> &
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (
    const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs)
 {
@@ -133,6 +134,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (
 #else /* WIN32 */
   (*exchange_fn_) (&this->value_, rhs.value_);
 #endif /* WIN32 */
+  return *this;
 }
 
 ACE_INLINE long

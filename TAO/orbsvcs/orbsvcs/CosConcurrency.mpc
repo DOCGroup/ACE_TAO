@@ -20,4 +20,11 @@ project(CosConcurrency) : orbsvcslib, core, portableserver {
       Concurrency
     }
   }
+
+  Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_CosConcurrency.pc.in
+  }
 }

@@ -29,7 +29,7 @@ Assembly Deployer
 
     w:\TAO\CIAO\examples\OEP\Display\descriptors\
     title Assembly Deployer
-    .....\tools\Assembly_Deployer\Assembly_Deployer -k file://ior  -a HUDisplay.cad
+    .....\tools\Assembly_Deployer\Assembly_Deployer -k file://ior  -a HUDisplay.cad -o IDfile
 
 client
 ------
@@ -37,6 +37,12 @@ client
     w:\TAO\CIAO\examples\OEP\Display\descriptors\
     title Client
     ..\RateGen\controller -o
+
+
+Tearing down the application:
+-----------------------------
+
+    .....\tools\Assembly_Deployer\Assembly_Deployer -k file://ior  -d IDfile
 
 
 RT-server-test:
@@ -70,7 +76,7 @@ Assembly Deployer
 
     w:\TAO\CIAO\examples\OEP\Display\descriptors\
     title Assembly Deployer
-    .....\tools\Assembly_Deployer\Assembly_Deployer -k file://ior  -a HUDisplay-rtcad.cad
+    .....\tools\Assembly_Deployer\Assembly_Deployer -k file://ior  -a HUDisplay-rtcad.cad -o IDfile
 
 client
 ------
@@ -78,3 +84,8 @@ client
     w:\TAO\CIAO\examples\OEP\Display\descriptors\
     title Controller
     ..\RateGen\controller -o
+
+Tearing down the application:
+-----------------------------
+
+    .....\tools\Assembly_Deployer\Assembly_Deployer -k file://ior  -d IDfile

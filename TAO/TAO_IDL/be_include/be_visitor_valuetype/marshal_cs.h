@@ -42,7 +42,7 @@ public:
   // destructor
 
   virtual int visit_valuetype (be_valuetype *node);
-  // visit valuetype
+  virtual int visit_eventtype (be_eventtype *node);
 
   void class_name (be_valuetype *node, TAO_OutStream *os);
   int gen_fields (be_valuetype *node, be_visitor_context &ctx);

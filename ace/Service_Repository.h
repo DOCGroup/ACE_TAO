@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Default_Constants.h"
-#include "ace/Thread_Mutex.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 
 class ACE_Service_Type;
@@ -153,7 +153,7 @@ private:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Synchronization variable for the MT_SAFE Repository
-  ACE_Thread_Mutex lock_;
+  ACE_Recursive_Thread_Mutex lock_;
 #endif /* ACE_MT_SAFE */
 };
 

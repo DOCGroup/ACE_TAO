@@ -67,7 +67,7 @@ Hash_Table::~Hash_Table (void)
                   keysig_width,
                   "keysig"));
 
-      for (int i = ACE_static_cast (int, this->size_ - 1); i >= 0; i--)
+      for (int i = static_cast<int> (this->size_ - 1); i >= 0; i--)
         if (this->table_[i])
           ACE_DEBUG ((LM_DEBUG,
                       "%8d, %*s, %s\n",

@@ -141,8 +141,7 @@ ACEXML_FileCharStream::read (ACEXML_Char *str,
   if (this->infile_ == 0)
     return -1;
 
-  return ACE_static_cast (int,
-          ACE_OS::fread (str, sizeof (ACEXML_Char), len, this->infile_));
+  return static_cast<int> (ACE_OS::fread (str, sizeof (ACEXML_Char), len, this->infile_));
 }
 
 int

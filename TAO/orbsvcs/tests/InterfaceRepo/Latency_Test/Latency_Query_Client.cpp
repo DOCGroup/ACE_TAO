@@ -14,7 +14,7 @@ ACE_RCSID (Latency_Test,
 const CORBA::ULong DEFAULT_NUMCALLS = 20000;
 
 Latency_Query_Client::Latency_Query_Client (void)
-  : debug_ (0),
+  : debug_ (false),
     do_dump_history_ (0),
     iterations_ (DEFAULT_NUMCALLS)
 {
@@ -107,15 +107,6 @@ Latency_Query_Client::run (void)
             {
               return -1;
             }
-/*
-          dk = this->tdef_->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          if (dk != CORBA::dk_Alias)
-            {
-              return -1;
-            }
-*/
         }
 
       ACE_Sample_History history (this->iterations_);
@@ -126,7 +117,6 @@ Latency_Query_Client::run (void)
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
           am = this->attr_->mode (ACE_ENV_SINGLE_ARG_PARAMETER);
-//          dk = this->tdef_->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -135,28 +125,30 @@ Latency_Query_Client::run (void)
 
       ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
-      ACE_DEBUG ((LM_DEBUG, 
-                  "test finished\n"));
-      ACE_DEBUG ((LM_DEBUG, 
-                  "High resolution timer calibration...."));
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-      ACE_DEBUG ((LM_DEBUG, 
-                  "done\n"));
-
-      if (this->do_dump_history_)
+      if (this->debug_)
         {
-          history.dump_samples ("HISTORY", gsf);
+          ACE_DEBUG ((LM_DEBUG, 
+                      "test finished\n"));
+          ACE_DEBUG ((LM_DEBUG, 
+                      "High resolution timer calibration...."));
+          ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+          ACE_DEBUG ((LM_DEBUG, 
+                      "done\n"));
+
+          if (this->do_dump_history_)
+            {
+              history.dump_samples ("HISTORY", gsf);
+            }
+
+          ACE_Basic_Stats stats;
+          history.collect_basic_stats (stats);
+          stats.dump_results ("Total", gsf);
+
+          ACE_Throughput_Stats::dump_throughput ("Total", 
+											                           gsf,
+                                                 test_end - test_start,
+                                                 stats.samples_count ());
         }
-
-      ACE_Basic_Stats stats;
-      history.collect_basic_stats (stats);
-      stats.dump_results ("Total", gsf);
-
-      ACE_Throughput_Stats::dump_throughput ("Total", 
-											                       gsf,
-                                             test_end - test_start,
-                                             stats.samples_count ());
-
     }
   ACE_CATCHANY
     {
@@ -178,33 +170,35 @@ Latency_Query_Client::parse_args (int argc,
   int result = 0;
 
   while ((c = opts ()) != -1)
-    switch (c)
-      {
-      case 'd':
-        this->debug_ = 1;
-        break;
-      case 'h': 
-        this->do_dump_history_ = 1;
-        break;
-      case 'i': 
-        result = ACE_OS::atoi (opts.opt_arg ());
+    {
+      switch (c)
+        {
+        case 'd':
+          this->debug_ = true;
+          break;
+        case 'h': 
+          this->do_dump_history_ = true;
+          break;
+        case 'i': 
+          result = ACE_OS::atoi (opts.opt_arg ());
 
-        if (result > 0)
-          {
-            this->iterations_ = result;
-          }
+          if (result > 0)
+            {
+              this->iterations_ = result;
+            }
 
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage: %s"
-                           " [-d]"
-                           " [-i iterations]"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "usage: %s"
+                            " [-d]"
+                            " [-i iterations]"
+                            "\n",
+                            argv [0]),
+                            -1);
+        }
+    }
 
   return 0;
 }
@@ -257,57 +251,7 @@ Latency_Query_Client::populate_ifr (ACE_ENV_SINGLE_ARG_DECL)
                              CORBA::ATTR_NORMAL
                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-/*
-  CORBA::Contained_var irobj = this->repo_->lookup_id ("IDL:longtype:1.0"
-                                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
-  if (! CORBA::is_nil (irobj.in ()))
-    {
-      this->tdef_ = CORBA::AliasDef::_narrow (irobj.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-
-      if (CORBA::is_nil (this->tdef_.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Latency_Query_Client::populate_ifr - "
-                             "AliasDef::_narrow returned null\n"),
-                            -1);
-        }
-
-      return 0;
-    }
-
-  CORBA::PrimitiveDef_var longdef = 
-    this->repo_->get_primitive (CORBA::pk_long
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  if (CORBA::is_nil (longdef.in ()))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Latency_Query_Client::populate_ifr - "
-                         "get_primitive returned null\n"),
-                        -1);
-    }
-
-  this->tdef_ = 
-    this->repo_->create_alias ("IDL:longtype:1.0",
-                               "longtype",
-                               "1.0",
-                               longdef.in ()
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  if (CORBA::is_nil (this->tdef_.in ()))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Latency_Query_Client::populate_ifr - "
-                         "create_alias returned null\n"),
-                        -1);
-    }
-*/
   return 0;
 }
 

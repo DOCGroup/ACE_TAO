@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "Repository_i.h"
@@ -10,13 +9,16 @@
 
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 
-#include "tao/CDR.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
+
 
 ACE_RCSID (IFRService,
            Container_i,
            "$Id$")
+
 
 const char *TAO_Container_i::tmp_name_holder_ = 0;
 
@@ -154,7 +156,7 @@ TAO_Container_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
                                                      "def_kind",
                                                      kind);
           CORBA::DefinitionKind def_kind =
-            ACE_static_cast (CORBA::DefinitionKind, kind);
+            static_cast<CORBA::DefinitionKind> (kind);
 
           TAO_Contained_i *impl = this->repo_->select_contained (def_kind);
           impl->section_key (defn_key);
@@ -278,7 +280,7 @@ TAO_Container_i::lookup_i (const char *search_name
                                                          "def_kind",
                                                          kind);
 
-              def_kind = ACE_static_cast (CORBA::DefinitionKind, kind);
+              def_kind = static_cast<CORBA::DefinitionKind> (kind);
 
               if (def_kind == CORBA::dk_Interface
                   || def_kind == CORBA::dk_Value)
@@ -477,7 +479,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
                                                          kind);
 
               CORBA::DefinitionKind def_kind =
-                ACE_static_cast (CORBA::DefinitionKind, kind);
+                static_cast<CORBA::DefinitionKind> (kind);
 
               if (limit_type == CORBA::dk_all
                   || limit_type == def_kind)
@@ -525,7 +527,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
         }
     }
 
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong, kind_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong> (kind_queue.size ());
   retval->length (size);
 
   for (CORBA::ULong j = 0; j < size; ++j)
@@ -593,7 +595,7 @@ TAO_Container_i::lookup_name_i (const char *search_name,
                                exclude_inherited
                                ACE_ENV_ARG_PARAMETER);
 
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong, kind_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong> (kind_queue.size ());
 
   CORBA::ContainedSeq *holder;
   ACE_NEW_THROW_EX (holder,
@@ -669,7 +671,7 @@ TAO_Container_i::describe_contents_i (CORBA::DefinitionKind limit_type,
     }
   else
     {
-      ret_len = length < ACE_static_cast (CORBA::ULong, max_returned_objs)
+      ret_len = length < static_cast<CORBA::ULong> (max_returned_objs)
                 ? length
                 : max_returned_objs;
     }
@@ -819,7 +821,24 @@ TAO_Container_i::create_constant_i (const char *id,
                                             type_path);
 
   // Store the value.
-  ACE_Message_Block *mb = value._tao_get_cdr ();
+  ACE_Message_Block *mb = 0;
+  TAO::Any_Impl *impl = value.impl ();
+  
+  if (impl->encoded ())
+    {
+      TAO::Unknown_IDL_Type *unk =
+        dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+        
+      mb = unk->_tao_get_cdr ().steal_contents ();
+    }
+  else
+    {
+      TAO_OutputCDR out;
+      impl->marshal_value (out);
+      TAO_InputCDR in (out);
+      mb = in.steal_contents ();
+    }
+
   CORBA::TypeCode_var val_tc = value.type ();
 
   CORBA::TCKind kind = val_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1951,7 +1970,7 @@ TAO_Container_i::lookup_name_recursive (
                                                      kind);
 
           CORBA::DefinitionKind def_kind =
-            ACE_static_cast (CORBA::DefinitionKind, kind);
+            static_cast<CORBA::DefinitionKind> (kind);
 
           ACE_TString id;
           this->repo_->config ()->get_string_value (defn_key,
@@ -2245,9 +2264,6 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
   CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  TAO_InputCDR cdr (value._tao_get_cdr (),
-                    value._tao_byte_order ());
-
   u_int result = 0;
   int default_label = 0;
 
@@ -2259,75 +2275,93 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
     case CORBA::tk_char:
     {
       CORBA::Char x;
-      cdr.read_char (x);
-      result = ACE_static_cast (u_int, x);
+      value >>= CORBA::Any::to_char (x);
+      result = static_cast<u_int> (x);
       break;
     }
     case CORBA::tk_wchar:
     {
       CORBA::WChar x;
-      cdr.read_wchar (x);
-      result = ACE_static_cast (u_int, x);
+      value >>= CORBA::Any::to_wchar (x);
+      result = static_cast<u_int> (x);
       break;
     }
     case CORBA::tk_boolean:
     {
       CORBA::Boolean x;
-      cdr.read_boolean (x);
-      result = ACE_static_cast (u_int, x);
+      value >>= CORBA::Any::to_boolean (x);
+      result = static_cast<u_int> (x);
       break;
     }
     case CORBA::tk_short:
     {
       CORBA::Short x;
-      cdr.read_short (x);
-      result = ACE_static_cast (u_int, x);
+      value >>= x;
+      result = static_cast<u_int> (x);
       break;
     }
     case CORBA::tk_ushort:
     {
       CORBA::UShort x;
-      cdr.read_ushort (x);
-      result = ACE_static_cast (u_int, x);
+      value >>= x;
+      result = static_cast<u_int> (x);
       break;
     }
     case CORBA::tk_long:
     {
       CORBA::Long x;
-      cdr.read_long (x);
-      result = ACE_static_cast (u_int, x);
+      value >>= x;
+      result = static_cast<u_int> (x);
       break;
     }
     case CORBA::tk_ulong:
     {
       CORBA::ULong x;
-      cdr.read_ulong (x);
-      result = ACE_static_cast (u_int, x);
+      value >>= x;
+      result = static_cast<u_int> (x);
       break;
     }
 #if !defined (ACE_LACKS_LONGLONG_T)
     case CORBA::tk_longlong:
     {
       CORBA::LongLong x;
-      cdr.read_longlong (x);
+      value >>= x;
       // We could lose data here.
-      result = ACE_static_cast (u_int, x);
+      result = static_cast<u_int> (x);
       break;
     }
 #endif /* ACE_LACKS_LONGLONG_T */
     case CORBA::tk_ulonglong:
     {
       CORBA::ULongLong x;
-      cdr.read_ulonglong (x);
+      value >>= x;
       // We could lose data here.
-      result = ACE_static_cast (u_int, x);
+      result = static_cast<u_int> (x);
       break;
     }
     case CORBA::tk_enum:
     {
       CORBA::ULong x;
-      cdr.read_ulong (x);
-      result = ACE_static_cast (u_int, x);
+      TAO::Any_Impl *impl = value.impl ();
+      TAO_InputCDR in (static_cast<ACE_Message_Block *> (0));
+      
+      if (impl->encoded ())
+        {
+          TAO::Unknown_IDL_Type *unk =
+            dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+            
+          in = unk->_tao_get_cdr ();
+        }
+      else
+        {
+          TAO_OutputCDR out;
+          impl->marshal_value (out);
+          TAO_InputCDR tmp (out);
+          in = tmp;
+        }
+       
+      in.read_ulong (x);  
+      result = static_cast<u_int> (x);
       break;
     }
     default:
@@ -2353,10 +2387,17 @@ TAO_Container_i::update_refs (const char *path,
                               const char *name)
 {
   ACE_Configuration_Section_Key refs_key;
-  this->repo_->config ()->open_section (this->section_key_,
-                                        "refs",
-                                        1,
-                                        refs_key);
+  int status =
+    this->repo_->config ()->open_section (this->section_key_,
+                                          "refs",
+                                          0,
+                                          refs_key);
+
+  // If this container has no "refs" section, there is nothing to do.
+  if (status != 0)
+    {
+      return;
+    }
 
   u_int count = 0;
   this->repo_->config ()->get_integer_value (refs_key,
@@ -2381,12 +2422,25 @@ TAO_Container_i::update_refs (const char *path,
                                                 "name",
                                                 ref_name);
 
+      int pos = ref_name.find (this->repo_->extension ());
+
       // If one of the names has been mangled by move(), fix it.
-      if (ref_name.find (this->repo_->extension ()) != ACE_TString::npos)
+      if (pos != ACE_TString::npos)
         {
-          this->repo_->config ()->set_string_value (ref_key,
-                                                    "name",
-                                                    name);
+          // If we're just changing the path after doing a 'move',
+          // we don't want to change the name, so we've passed in 0.
+          if (name != 0)
+            {
+              this->repo_->config ()->set_string_value (ref_key,
+                                                        "name",
+                                                        name);
+            }
+          else
+            {
+              this->repo_->config ()->set_string_value (ref_key,
+                                                        "name",
+                                                        ref_name.substr (0, pos));
+            }
 
           this->repo_->config ()->set_string_value (ref_key,
                                                     "path",
@@ -2394,6 +2448,12 @@ TAO_Container_i::update_refs (const char *path,
 
           return;
         }
+    }
+
+  // If we're just changing the path after doing a 'move', we're done.
+  if (name == 0)
+    {
+      return;
     }
 
   // Add a new reference.
@@ -2580,7 +2640,7 @@ TAO_Container_i::create_value_common (
                                       TAO_IFR_Service_Utils::tmp_key_,
                                       "def_kind",
                                       kind);
-          def_kind = ACE_static_cast (CORBA::DefinitionKind, kind);
+          def_kind = static_cast<CORBA::DefinitionKind> (kind);
 
           if (def_kind == CORBA::dk_Interface)
             {

@@ -24,7 +24,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("Service Config open")),
                       1);
-    ACE_TRACE (ACE_TEXT ("main"));
+    ACE_TRACE ("main");
     ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("%t%IHowdy Pardner\n")));
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("%t%IGoodnight\n")));
 

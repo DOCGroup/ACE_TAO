@@ -22,6 +22,7 @@
 #include "tao/ORB.h"
 #include "ace/Synch.h"
 #include "ace/Synch_Traits.h"
+#include "ace/SString.h"
 #include "Container_Base.h"
 #include "Deployment_CoreS.h"
 #include "Server_init.h"

@@ -2,13 +2,9 @@
 
 #include "test_i.h"
 
-#if defined(ACE_HAS_QT)
-
-#if !defined(__ACE_INLINE__)
-#include "test_i.i"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID(FL_Cube, test_i, "$Id$")
+ACE_RCSID( QtTests,
+           test_i,
+           "$Id$")
 
 LCD_Display_imp::LCD_Display_imp (CORBA::ORB_ptr orb)
 
@@ -35,4 +31,4 @@ LCD_Display_imp::send_val (CORBA::Long val
               "The value from server is <%d> \n", val));
   emit set_value (val);
 }
-#endif /* ACE_HAS_QT */
+

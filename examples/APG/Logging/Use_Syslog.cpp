@@ -8,7 +8,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   // This will be directed to stderr (the default ACE_Log_Msg
   // behavior).
-  ACE_TRACE (ACE_TEXT ("main"));
+  ACE_TRACE ("main");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%IHi Mom\n")));
 
@@ -26,7 +26,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
 
 void foo (void)
 {
-  ACE_TRACE (ACE_TEXT ("foo"));
+  ACE_TRACE ("foo");
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("%IHowdy Pardner\n")));
 }

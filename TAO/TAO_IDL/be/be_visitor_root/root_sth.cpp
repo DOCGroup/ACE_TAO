@@ -115,13 +115,6 @@ be_visitor_root_sth::visit_module (be_module *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
                << "// " __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  if (!node->is_nested ())
-    {
-      // If the line below is not true, we don't want to
-      // see 'TAO_NAMESPACE' or anything in it.
-      *os << "#if defined (ACE_HAS_USING_KEYWORD)" << be_nl;
-    }
-
   // Now generate the class definition. The prefix POA_ is prepended to our
   // name only if we are the outermost module.
   *os << "namespace ";
@@ -149,11 +142,6 @@ be_visitor_root_sth::visit_module (be_module *node)
     }
 
   *os << be_uidt_nl << "} // module " << node->name ();
-
-  if (!node->is_nested ())
-    {
-      *os << "\n#endif /* ACE_HAS_USING_KEYWORD */";
-    }
 
   return 0;
 }

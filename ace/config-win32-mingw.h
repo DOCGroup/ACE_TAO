@@ -52,6 +52,9 @@
 #  define ACE_LACKS_DIRENT_H
 #endif
 
+#undef ACE_LACKS_SIGSET
+
+#define ACE_LACKS_SIGSET_DEFINITIONS
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_NETINET_TCP_H
@@ -94,6 +97,9 @@
 #  define ACE_HAS_WINNT4 0
 # endif
 #endif
+
+#define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
+#define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
 
 #define ACE_ENDTHREADEX(STATUS)  ::_endthreadex ((DWORD) (STATUS))
 

@@ -17,24 +17,25 @@
 //      Jason Cohen, Lockheed Martin ATL <jcohen@atl.lmco.com>
 //
 // ============================================================================
-// FUZZ: disable check_for_streams_include
 
 #include "ace/Codeset_Registry.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
+#include "tao/corba.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/Messaging_PolicyValueC.h"
 #include "tao/Messaging/Messaging_RT_PolicyC.h"
 #include "tao/Messaging/Messaging_SyncScope_PolicyC.h"
 #include "tao/Messaging/Messaging_No_ImplC.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "tao/Typecode.h"
+//#include "tao/Typecode.h"
 #include "tao/Marshal.h"
-#include "tao/ORB_Constants.h"
+//#include "tao/ORB_Constants.h"
 #include "tao/Transport_Acceptor.h"
 #include "tao/IIOP_EndpointsC.h"
-#include "tao/CDR.h"
 
 
 static CORBA::Boolean
@@ -57,8 +58,8 @@ catiiop (char* string
 
   CORBA::Short  iiop_version_major, iiop_version_minor;
 
-  if (isdigit (string [0])
-      && isdigit (string [2])
+  if (ACE_OS::ace_isdigit (string [0])
+      && ACE_OS::ace_isdigit (string [2])
       && string [1] == '.'
       && string [3] == '/'
       && string [4] == '/')
@@ -132,14 +133,22 @@ catiiop (char* string
 static CORBA::Boolean
 cat_iiop_profile (TAO_InputCDR& cdr);
 
+#if 0
 static CORBA::Boolean
 cat_sciop_profile (TAO_InputCDR& cdr);
+#endif /*if 0*/
 
 static CORBA::Boolean
 cat_uiop_profile (TAO_InputCDR& cdr);
 
 static CORBA::Boolean
 cat_shmiop_profile (TAO_InputCDR& cdr);
+
+static CORBA::Boolean
+cat_nskpw_profile (TAO_InputCDR& cdr);
+
+static CORBA::Boolean
+cat_nskfs_profile (TAO_InputCDR& cdr);
 
 static CORBA::Boolean
 cat_octet_seq (const char *object_name,
@@ -172,7 +181,7 @@ catior (char* str
     {
       u_char byte;
 
-      if (! (isxdigit (tmp [0]) && isxdigit (tmp [1])))
+      if (! (ACE_OS::ace_isxdigit (tmp [0]) && ACE_OS::ace_isxdigit (tmp [1])))
         break;
 
       byte = (u_char) (ACE::hex2byte (tmp [0]) << 4);
@@ -189,7 +198,7 @@ catior (char* str
 
   mb.rd_ptr (1);
   mb.wr_ptr (2 * len - 1);
-  TAO_InputCDR stream (&mb, ACE_static_cast(int,byteOrder));
+  TAO_InputCDR stream (&mb, static_cast<int> (byteOrder));
 
   if (byteOrder == 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -272,12 +281,19 @@ catior (char* str
             continue_decoding = cat_iiop_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
+
+// the SCIOR decoding is disabled in the main branch. This will be
+// enabled when SCTP_O branch is merged in.
+// gthaker@atl.lmco.com, Feb 11, 2003.
+#if 0
         else if (tag == TAO_TAG_SCIOP_PROFILE)
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding = cat_sciop_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
+#endif
+
         else if (tag == TAO_TAG_UIOP_PROFILE)
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
@@ -290,10 +306,22 @@ catior (char* str
             continue_decoding = cat_shmiop_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
-        else if (tag == TAO_TAG_UDP_PROFILE)
+        else if (tag == TAO_TAG_DIOP_PROFILE)
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding =  cat_profile_helper(stream, "DIOP (GIOP over UDP)");
+            ACE_DEBUG ((LM_DEBUG, "%}"));
+          }
+        else if (tag == TAO_TAG_NSKPW_PROFILE)
+          {
+            ACE_DEBUG ((LM_DEBUG, "%{"));
+            continue_decoding = cat_nskpw_profile (stream);
+            ACE_DEBUG ((LM_DEBUG, "%}"));
+          }
+        else if (tag == TAO_TAG_NSKFS_PROFILE)
+          {
+            ACE_DEBUG ((LM_DEBUG, "%{"));
+            continue_decoding = cat_nskfs_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
         else
@@ -434,19 +462,32 @@ catpoop (char* string
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:");
-
   ACE_DECLARE_NEW_CORBA_ENV;
-  CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO" ACE_ENV_ARG_PARAMETER);
+  ACE_Argv_Type_Converter argcon (argcw, argvw);
+  CORBA::ORB_var orb_var =  CORBA::ORB_init (argcon.get_argc (),
+                                             argcon.get_ASCII_argv (),
+                                             "TAO" ACE_ENV_ARG_PARAMETER);
   CORBA::Boolean b = 0;
   int opt;
+
+  ACE_Get_Opt get_opt (argcon.get_argc (), argcon.get_TCHAR_argv (),
+                       ACE_TEXT ("f:n:"));
 
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
         {
+        case 'n':
+          //  Read the CosName from the NamingService convert the
+          //  object_ptr to a CORBA::String_var via the call to
+          //  object_to_string.
+          ACE_DEBUG ((LM_DEBUG,
+                      "opening a connection to the NamingService\n"
+                      "resolving the CosName %s\n",
+                      get_opt.opt_arg ()));
+          break;
         case 'f':
           {
             //  Read the file into a CORBA::String_var.
@@ -454,6 +495,7 @@ main (int argc, char *argv[])
                         "reading the file %s\n",
                         get_opt.opt_arg ()));
 
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
             ifstream ifstr (get_opt.opt_arg ());
 
             if (!ifstr.good ())
@@ -476,6 +518,31 @@ main (int argc, char *argv[])
                     aString += ch;
                     have_some_input = 1;
                   }
+#else
+            FILE* ifstr = ACE_OS::fopen (get_opt.opt_arg (), ACE_TEXT ("r"));
+
+            if (ifstr && !ferror (ifstr))
+              {
+                if (ifstr)
+                  ACE_OS::fclose (ifstr);
+                return -1;
+              }
+
+            int have_some_input = 0;
+            while (!feof (ifstr))
+              {
+                char ch;
+                ACE_CString aString;
+
+                while (!feof (ifstr))
+                  {
+                    ch = ACE_OS::fgetc (ifstr);
+                    if (ch == '\n' || ch == EOF)
+                      break;
+                    aString += ch;
+                    have_some_input = 1;
+                  }
+#endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
                 if (have_some_input == 0)
                   break;
                 ACE_DEBUG ((LM_DEBUG,
@@ -490,7 +557,7 @@ main (int argc, char *argv[])
 
                     // Strip the IOR: off the string.
                     ACE_CString prefix = "IOR:";
-                    short prefixLength = prefix.length ();
+                    size_t prefixLength = prefix.length ();
 
                     ACE_CString subString =
                       aString.substring (prefixLength,
@@ -505,7 +572,7 @@ main (int argc, char *argv[])
                                 "decoding an IIOP URL IOR\n"));
 
                     ACE_CString prefix = "IIOP:";
-                    short prefixLength = prefix.length ();
+                    size_t prefixLength = prefix.length ();
 
                     ACE_CString subString =
                       aString.substring (prefixLength,
@@ -532,7 +599,11 @@ main (int argc, char *argv[])
             else
               ACE_DEBUG ((LM_DEBUG,
                           "catior returned false\n"));
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
             ifstr.close ();
+#else
+            ACE_OS::fclose (ifstr);
+#endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
           }
         break;
         case '?':
@@ -541,11 +612,12 @@ main (int argc, char *argv[])
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Usage: %s "
                              "-f filename "
+                             "-n CosName "
                              "\n"
                              "Reads an IOR "
                              "and dumps the contents to stdout "
                              "\n",
-                             argv[0]),
+                             argvw[0]),
                             1);
         }
     }
@@ -592,10 +664,6 @@ cat_tao_tag_endpoints (TAO_InputCDR& stream) {
   TAO::IIOPEndpointSequence epseq;
   stream2 >> epseq;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "%I Number of endpoints: %d\n",
-              epseq.length()));
-
   for (unsigned int iter=0; iter < epseq.length() ; iter++) {
     ACE_DEBUG ((LM_DEBUG,
                 "%I Endpoint #%d:\n",iter+1));
@@ -612,37 +680,25 @@ cat_tao_tag_endpoints (TAO_InputCDR& stream) {
   return 1;
 }
 
+// alternate endpoints arent supported yet
+#if 0
 static CORBA::Boolean
-cat_tag_group (TAO_InputCDR& stream) {
-/*
-ID is 27
-Component Value len:   36
-Component Value as hex:
-01 01 00 cd 0f 00 00 00 64 65 66 61 75 6c 74 2d
-64 6f 6d 61 69 6e 00 cd 01 00 00 00 00 00 00 00
-02 00 00 00
-The Component Value as string:
- ...-....default-domain.-............
-*/
-
-#if 1
-  cat_octet_seq ("TAG_GROUP", stream);
-#else
-  CORBA::Octet version_major;
-  if (stream.read_octet(version_major) == 0)
-  {
+cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
+  CORBA::ULong length = 0;
+  if (stream.read_ulong (length) == 0)
     return 1;
-  }
 
-  CORBA::Octet version_minor;
-  if (stream.read_octet(version_minor) == 0)
-  {
-    return 1;
-  }
+  TAO_InputCDR stream2 (stream, length);
+  stream.skip_bytes(length);
 
-#endif
+  TAG_ALTERNATE_IIOP_Endpoint_Info ei;
+  if ((stream2  >> ei) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,"cannot extract endpoint info\n"),0);
+  ACE_DEBUG ((LM_DEBUG,
+              "%I endpoint: %s:%u\n",ei.host.in(),(unsigned short)ei.port));
   return 1;
 }
+#endif
 
 static CORBA::Boolean
 cat_tag_policies (TAO_InputCDR& stream) {
@@ -673,7 +729,7 @@ cat_tag_policies (TAO_InputCDR& stream) {
     int byteOrder = policies[iter].pvalue[0];
     TAO_InputCDR stream3 (pmbuf,
                           policies[iter].pvalue.length(),
-                          ACE_static_cast(int,byteOrder));
+                          static_cast<int> (byteOrder));
 
     if (policies[iter].ptype == RTCORBA::PRIORITY_MODEL_POLICY_TYPE) {
       ACE_DEBUG ((LM_DEBUG,
@@ -827,7 +883,8 @@ cat_octet_seq (const char *object_name,
   for (i = 0; i < length; i++)
     {
       char c = objKey[i];
-      if (isprint (c))
+      int tmp = (unsigned char) c; // isprint doesn't work with negative vals.(except EOF)
+      if (ACE_OS::ace_isprint (tmp))
         ACE_DEBUG ((LM_DEBUG, "%c", c));
       else
         ACE_DEBUG ((LM_DEBUG, "."));
@@ -888,7 +945,7 @@ cat_codeset_info(TAO_InputCDR& stream)
      CORBA::ULong byteOrder;
      stream >> byteOrder;
 
-     if( byteOrder )
+     if (byteOrder)
      {
         ACE_DEBUG ((LM_DEBUG,
             "\tThe Component Byte Order:\tLittle Endian\n"));
@@ -900,41 +957,42 @@ cat_codeset_info(TAO_InputCDR& stream)
      // CodesetId for char
      // CORBA::ULong c_ncsId;
      ACE_DEBUG ((LM_DEBUG, "\tNative CodeSet for char: "));
-     displayHex( stream );
+     displayHex (stream);
 
      // number of Conversion Codesets for char
      CORBA::ULong c_ccslen=0;
      stream >> c_ccslen;
      ACE_DEBUG ((LM_DEBUG, "\tNumber of CCS for char %u \n", c_ccslen));
 
-     if( c_ccslen )
+     if (c_ccslen)
         ACE_DEBUG ((LM_DEBUG, "\tConversion Codesets for char are: \n"));
 
      //  Loop through and display them
-     for(  CORBA::ULong index=0; index < c_ccslen; ++index)
+     CORBA::ULong index = 0;
+     for ( ; index < c_ccslen; ++index)
      {
         // CodesetId for char
         ACE_DEBUG ((LM_DEBUG, "\t%u) ", index + 1L));
-        displayHex( stream );
+        displayHex (stream);
      }
 
      // CodesetId for wchar
      ACE_DEBUG ((LM_DEBUG, "\tNative CodeSet for wchar: "));
-     displayHex( stream );
+     displayHex (stream);
 
      // number of Conversion Codesets for char
      CORBA::ULong w_ccslen=0;
      stream >> w_ccslen;
      ACE_DEBUG ((LM_DEBUG, "\tNumber of CCS for wchar %u \n", w_ccslen));
 
-     if( w_ccslen )
+     if (w_ccslen)
        ACE_DEBUG ((LM_DEBUG, "\tConversion Codesets for wchar are: \n"));
 
      //  Loop through and display them
-     for(  CORBA::ULong index2=0; index2 < w_ccslen; ++index2)
+     for (index = 0; index < w_ccslen; ++index)
      {
-       ACE_DEBUG ((LM_DEBUG, "\t %u) ", index2 + 1L));
-       displayHex( stream );
+       ACE_DEBUG ((LM_DEBUG, "\t %u) ", index + 1L));
+       displayHex (stream);
      }
      return 1;
 }
@@ -967,13 +1025,14 @@ cat_tagged_components (TAO_InputCDR& stream)
         ACE_DEBUG ((LM_DEBUG, "%{%{"));
         cat_codeset_info(stream);
         ACE_DEBUG ((LM_DEBUG, "%}%}"));
-
+// TAG_ALTERNATE_IIOP_ADDRESS not supported yet
+#if 0
       } else if (tag == IOP::TAG_ALTERNATE_IIOP_ADDRESS) {
         ACE_DEBUG ((LM_DEBUG,"%d (TAG_ALTERNATE_IIOP_ADDRESS)\n", tag));
         ACE_DEBUG ((LM_DEBUG, "%{%{"));
-        cat_octet_seq ("Component Value" ,stream);
+        cat_tag_alternate_endpoints (stream);
         ACE_DEBUG ((LM_DEBUG, "%}%}"));
-
+#endif
       } else if (tag == TAO_TAG_ENDPOINTS) {
         ACE_DEBUG ((LM_DEBUG,"%d (TAO_TAG_ENDPOINTS)\n", tag));
         ACE_DEBUG ((LM_DEBUG, "%{%{"));
@@ -984,16 +1043,6 @@ cat_tagged_components (TAO_InputCDR& stream)
         ACE_DEBUG ((LM_DEBUG,"%d (TAG_POLICIES)\n", tag));
         ACE_DEBUG ((LM_DEBUG, "%{%{"));
         cat_tag_policies(stream);
-        ACE_DEBUG ((LM_DEBUG, "%}%}"));
-      } else if (tag == IOP::TAG_FT_GROUP) {  //@@ PortableGroup will rename this TAG_GROUP
-        ACE_DEBUG ((LM_DEBUG,"%d (TAG_GROUP)\n", tag));
-        ACE_DEBUG ((LM_DEBUG, "%{%{"));
-        cat_tag_group (stream);
-        ACE_DEBUG ((LM_DEBUG, "%}%}"));
-      } else if (tag == IOP::TAG_FT_PRIMARY) {   //@@ PortableGroup will rename this TAG_PRIMARY
-        ACE_DEBUG ((LM_DEBUG,"%d (TAG_PRIMARY)\n", tag));
-        ACE_DEBUG ((LM_DEBUG, "%{%{"));
-        cat_octet_seq ("TAG_PRIMARY", stream);
         ACE_DEBUG ((LM_DEBUG, "%}%}"));
       } else {
         ACE_DEBUG ((LM_DEBUG,"%d\n", tag));
@@ -1163,6 +1212,7 @@ cat_uiop_profile (TAO_InputCDR& stream)
   return 1;
 }
 
+#if 0
 static CORBA::Boolean
 cat_sciop_profile (TAO_InputCDR& stream)
 {
@@ -1252,4 +1302,97 @@ cat_sciop_profile (TAO_InputCDR& stream)
     return 0;
 
   return 1;
+}
+#endif /*if 0*/
+
+
+static CORBA::Boolean
+cat_nsk_profile_helper (TAO_InputCDR& stream,
+                        const char *protocol)
+{
+  // OK, we've got an NSK profile.  It's going to be
+  // encapsulated ProfileData.  Create a new decoding stream and
+  // context for it, and tell the "parent" stream that this data
+  // isn't part of it any more.
+
+  CORBA::ULong encap_len;
+  if (stream.read_ulong (encap_len) == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "cannot read encap length\n"));
+      return 0;
+    }
+
+  // Create the decoding stream from the encapsulation in the
+  // buffer, and skip the encapsulation.
+  TAO_InputCDR str (stream, encap_len);
+
+  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+    return 0;
+
+  // Read and verify major, minor versions, ignoring NSK
+  // profiles whose versions we don't understand.
+  //
+  // XXX this doesn't actually go back and skip the whole
+  // encapsulation...
+  CORBA::Octet iiop_version_major, iiop_version_minor;
+  if (! (str.read_octet (iiop_version_major)
+         && iiop_version_major == 1
+         && str.read_octet (iiop_version_minor)
+         && iiop_version_minor <= 2))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I detected new v%d.%d %s profile that catior cannot decode",
+                  iiop_version_major,
+                  iiop_version_minor,
+                  protocol));
+      return 1;
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%s Version:\t%d.%d\n",
+              protocol,
+              iiop_version_major,
+              iiop_version_minor));
+
+  // Get address
+  char* fsaddress;
+  if ((str >> fsaddress) == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I problem decoding file system address\n"));
+      return 1;
+    }
+
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%I FS Address:\t%s\n",
+              fsaddress));
+  CORBA::string_free (fsaddress);
+
+  if (cat_object_key (str) == 0)
+    return 0;
+
+  // Version 1.0 does not have tagged_components.
+  if (!(iiop_version_major == 1 && iiop_version_minor == 0))
+    {
+      if (cat_tagged_components (str) == 0)
+        return 0;
+
+      return 1;
+    }
+  else
+    return 0;
+}
+
+static CORBA::Boolean
+cat_nskpw_profile (TAO_InputCDR& stream)
+{
+  return cat_nsk_profile_helper (stream, "NSKPW");
+}
+
+static CORBA::Boolean
+cat_nskfs_profile (TAO_InputCDR& stream)
+{
+  return cat_nsk_profile_helper (stream, "NSKFS");
 }

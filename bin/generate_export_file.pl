@@ -16,30 +16,31 @@ use Getopt::Std;
 $flags = join (" ", @ARGV);
 
 if (!getopts ('df:hs') || $opt_h) {
-    print "generate_export_file.pl [-d] [-f dependency] [-s] library_name\n";
-    print "\n";
-    print "    -d         Turn on debug mode\n";
-    print "    -f         Adds a dependency to another *_HAS_DLL macro\n";
-    print "    -s         Add in ACE_AS_STATIC_LIBS check\n";
-    print "\n";
-    print "generate_export_file creates the *_export files that are used\n";
-    print "in exporting of symbols for DLLs (and not exporting them when\n";
-    print "the library is static).  If library_name is something like\n";
-    print "\"Foo\", then the file will contain definitions for Foo_Export\n";
-    print "and FOO_SINGLETON_DECLARE, etc. which will be controlled by\n";
-    print "FOO_HAS_DLL, etc.\n";
+    print STDERR
+          "generate_export_file.pl [-d] [-f dependency] [-s] library_name\n",
+          "\n",
+          "    -d         Turn on debug mode\n",
+          "    -f         Adds a dependency to another *_HAS_DLL macro\n",
+          "    -s         Add in ACE_AS_STATIC_LIBS check\n",
+          "\n",
+          "generate_export_file creates the *_export files that are used\n",
+          "in exporting of symbols for DLLs (and not exporting them when\n",
+          "the library is static).  If library_name is something like\n",
+          "\"Foo\", then the file will contain definitions for Foo_Export\n",
+          "and FOO_SINGLETON_DECLARE, etc. which will be controlled by\n",
+          "FOO_HAS_DLL, etc.\n";
     exit (1);
 }
 
 if (defined $opt_d) {
-    print "Debugging Turned on\n";
+    print STDERR "Debugging Turned on\n";
 
     if (defined $opt_f) {
-        print "Dependency to $opt_f\n";
+        print STDERR "Dependency to $opt_f\n";
     }
 
     if (defined $opt_s) {
-        print "ACE_AS_STATIC_LIBS turned on\n";
+        print STDERR "ACE_AS_STATIC_LIBS turned on\n";
     }
 }
 

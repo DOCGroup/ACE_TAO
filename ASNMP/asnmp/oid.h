@@ -117,7 +117,7 @@ public:
   void trim( const size_t how_many = 1);
   // trim off the n rightmost values of an oid
 
-  int suboid(Oid& oid, size_t start = 0, size_t how_many = -1);
+  int suboid(Oid& oid, size_t start = 0, size_t how_many = size_t (-1));
   // the equivalent of a substr(new_str, 0, 1)
 
   int left_comparison( const unsigned long n, const Oid &o) const;

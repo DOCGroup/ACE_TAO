@@ -4,10 +4,6 @@
 
 #include "ace/OS_NS_stdio.h"
 
-#if !defined (__ACE_INLINE__)
-# include "Deployment_Configuration.inl"
-#endif /* __ACE_INLINE__ */
-
 #define NAME_BUFSIZE 1024
 
 CIAO::Deployment_Configuration::Deployment_Configuration (CORBA::ORB_ptr o)

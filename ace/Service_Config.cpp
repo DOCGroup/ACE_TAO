@@ -18,9 +18,12 @@
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/DLL.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/XML_Svc_Conf.h"
+#include "ace/SString.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_stat.h"
 
 ACE_RCSID (ace,
            Service_Config,
@@ -54,6 +57,7 @@ sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
   // = Set by command-line options.
 int ACE_Service_Config::be_a_daemon_ = 0;
 int ACE_Service_Config::no_static_svcs_ = 1;
+ACE_TCHAR* ACE_Service_Config::pid_file_name_ = 0;
 
 // Number of the signal used to trigger reconfiguration.
 int ACE_Service_Config::signum_ = SIGHUP;
@@ -157,7 +161,7 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
   ACE_TRACE ("ACE_Service_Config::parse_args");
   ACE_Get_Opt getopt (argc,
                       argv,
-                      ACE_LIB_TEXT ("bdf:k:nys:S:"),
+                      ACE_LIB_TEXT ("bdf:k:nyp:s:S:"),
                       1); // Start at argv[1].
 
   if (ACE_Service_Config::init_svc_conf_file_queue () == -1)
@@ -188,6 +192,9 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'y':
         ACE_Service_Config::no_static_svcs_ = 0;
+        break;
+      case 'p':
+        ACE_Service_Config::pid_file_name_ = getopt.opt_arg ();
         break;
       case 's':
         {
@@ -424,7 +431,15 @@ ACE_Service_Config::process_file (const ACE_TCHAR file[])
                     ACE_LIB_TEXT ("%p\n"),
                     file));
 
-      errno = ENOENT;
+      // Use stat to find out if the file exists.  I didn't use access()
+      // because stat is better supported on most non-unix platforms.
+      ACE_stat exists;
+      if (ACE_OS::stat (file, &exists) == 0)
+        // If it exists, but we couldn't open it for reading then we
+        // must not have permission to read it.
+        errno = EPERM;
+      else
+        errno = ENOENT;
       result = -1;
     }
   else
@@ -662,6 +677,21 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   // Become a daemon before doing anything else.
   if (ACE_Service_Config::be_a_daemon_)
     ACE_Service_Config::start_daemon ();
+
+  // Write process id to file.
+  if (ACE_Service_Config::pid_file_name_ != 0)
+    {
+      FILE* pidf = ACE_OS::fopen (ACE_Service_Config::pid_file_name_,
+				  ACE_LIB_TEXT("w"));
+
+      if (pidf != 0)
+        {
+          ACE_OS::fprintf (pidf,
+                           "%ld\n",
+                           static_cast<long> (ACE_OS::getpid()));
+          ACE_OS::fclose (pidf);
+        }
+    }
 
   u_long flags = log_msg->flags ();
 

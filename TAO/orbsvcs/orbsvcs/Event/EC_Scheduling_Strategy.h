@@ -63,10 +63,6 @@ public:
 
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_Scheduling_Strategy.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_EC_SCHEDULING_STRATEGY_H */

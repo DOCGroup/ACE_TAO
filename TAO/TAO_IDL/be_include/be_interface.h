@@ -234,12 +234,6 @@ public:
   // Helper method passed to the template method that generates code for the
   // is_a method.
 
-  static int queryinterface_helper (be_interface *,
-                                    be_interface *,
-                                    TAO_OutStream *os);
-  // Helper method passed to the template method that generates code for the
-  // _tao_QueryInterface method.
-
   static int downcast_helper (be_interface *,
                               be_interface *,
                               TAO_OutStream *os);
@@ -344,6 +338,9 @@ public:
 
   int has_mixed_parentage (void);
   // Do we have both abstract and concrete parents?
+  
+  int session_component_child (void);
+  // Is Components::SessionComponent an immediate parent?
 
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);
@@ -406,6 +403,9 @@ private:
 
   int has_mixed_parentage_;
   // Do we have both abstract and concrete parents?
+  
+  int session_component_child_;
+  // Are we a direct child of Components::SessionComponent?
 };
 
 /**

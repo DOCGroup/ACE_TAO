@@ -243,8 +243,7 @@ DatabaseImpl::Agent::find_entry (const char *key,
   if (DATABASE::instance ()->find (key, temp) == 0)
     {
       Employee *employee =
-        ACE_reinterpret_cast (Employee *,
-                              temp);
+        reinterpret_cast<Employee *> (temp);
       ACE_DEBUG ((LM_DEBUG,
                   "Employee with key = %s found: name = %s and id = %d\n",
                   key,
@@ -296,8 +295,7 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
   if (DATABASE::instance ()->unbind (key, temp) == 0)
     {
       Employee *employee =
-        ACE_reinterpret_cast (Employee *,
-                              temp);
+        reinterpret_cast<Employee *> (temp);
       ACE_DEBUG ((LM_DEBUG,
                   "Employee with key = %s will be removed from the database: "
                   "name = %s and id = %d \n",
@@ -420,4 +418,6 @@ template class ACE_Singleton<DatabaseImpl::Simpler_Database_Malloc, ACE_Null_Mut
 #pragma instantiate ACE_Malloc_Iterator<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
 #pragma instantiate ACE_Malloc_LIFO_Iterator_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>
 #pragma instantiate ACE_Singleton<DatabaseImpl::Simpler_Database_Malloc, ACE_Null_Mutex>
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+template ACE_Singleton<DatabaseImpl::Simpler_Database_Malloc, ACE_Null_Mutex> *ACE_Singleton<DatabaseImpl::Simpler_Database_Malloc, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

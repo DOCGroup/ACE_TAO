@@ -320,6 +320,8 @@ static CACHED_CONNECT_STRATEGY *connect_strategy = 0;
 // more iterations to get to the handle limit.
 #if defined (ACE_WIN32)
 static int iterations = 2000;
+#elif defined (__Lynx__)
+static int iterations = 134;
 #else
 static int iterations = 200;
 #endif /* ACE_WIN32 */
@@ -565,7 +567,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("[-d (addition debugging output)] ")
                     ACE_TEXT ("[-p (purge percent)] ")
                     ACE_TEXT ("[-a (keep handles available)] "),
-                    argv[0]));
+                    ACE_TEXT ("Cached_Conn_Test")));
         return -1;
       }
 

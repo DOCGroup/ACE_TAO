@@ -248,8 +248,7 @@ ACEXML_Parser::parse_token (const ACEXML_Char* keyword)
   if (keyword == 0)
     return -1;
   const ACEXML_Char* ptr = keyword;
-  ACEXML_Char ch;
-  for (; *ptr != 0 && ((ch = this->get()) == *ptr); ++ptr)
+  for (; *ptr != 0 && (this->get() == *ptr); ++ptr)
     ;
   if (*ptr == 0)
   return 0;

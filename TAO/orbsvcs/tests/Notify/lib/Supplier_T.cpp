@@ -4,10 +4,6 @@
 
 #include "Supplier_T.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Supplier_T.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_Tests_Supplier_T, "$Id$")
 
 template <class Supplier_Traits>

@@ -13,8 +13,6 @@
  *  @author Gan Deng <gan.deng@vanderbilt.edu>
  */
 //=============================================================================
-
-
 #ifndef CIAO_DEPLOYMENT_CONFIGURATION_H
 #define CIAO_DEPLOYMENT_CONFIGURATION_H
 #include /**/ "ace/pre.h"
@@ -26,9 +24,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "DeploymentC.h"
-
+#include "DomainApplicationManager/DomainApplicationManager_Export.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
+#include "ace/SString.h"
 
 namespace CIAO
 {
@@ -47,7 +46,7 @@ namespace CIAO
    * strategy.  We can enhance this class later on to provide
    * different deployment location strategies, such as naming service.
    */
-  class Deployment_Configuration
+  class DomainApplicationManager_Export Deployment_Configuration
   {
   public:
     typedef struct _node_manager_info
@@ -124,10 +123,6 @@ namespace CIAO
   };
 
 }
-
-#if defined (__ACE_INLINE__)
-# include "Deployment_Configuration.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_DEPLOYMENT_CONFIGURATION_H */

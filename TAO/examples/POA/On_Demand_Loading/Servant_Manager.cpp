@@ -81,10 +81,10 @@ ServantManager_i::obtain_servant (const char *str,
   // Cannot go from void* to function pointer directly. Cast the void*
   // to long first.
   void *symbol = dll->symbol (create_symbol_.c_str ());
-  long function = ACE_reinterpret_cast (long, symbol);
+  long function = reinterpret_cast<long> (symbol);
 
   SERVANT_FACTORY servant_creator =
-    ACE_reinterpret_cast (SERVANT_FACTORY, function);
+    reinterpret_cast<SERVANT_FACTORY> (function);
 
   // Checking whether it is possible to create the servant.
   if (servant_creator == 0)

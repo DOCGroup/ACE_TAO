@@ -2,7 +2,7 @@
 
 #include "tao/Any_Basic_Impl.h"
 #include "tao/Typecode.h"
-#include "tao/Any.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 
@@ -54,9 +54,11 @@ namespace TAO
       case CORBA::tk_longlong:
         this->u_.ll = *static_cast<CORBA::LongLong *> (value);
         break;
+#if !defined (ACE_LACKS_LONGLONG_T)
       case CORBA::tk_ulonglong:
         this->u_.ull = *static_cast<CORBA::ULongLong *> (value);
         break;
+#endif
       case CORBA::tk_longdouble:
         this->u_.ld = *static_cast<CORBA::LongDouble *> (value);
         break;
@@ -104,9 +106,7 @@ namespace TAO
 
         TAO::Any_Impl *impl = any.impl ();
 
-        ACE_Message_Block *mb = impl->_tao_get_cdr ();
-
-        if (mb == 0)
+        if (!impl->encoded ())
           {
             TAO::Any_Basic_Impl *narrow_impl =
               dynamic_cast<TAO::Any_Basic_Impl *> (impl);
@@ -126,30 +126,28 @@ namespace TAO
 
         auto_ptr<TAO::Any_Basic_Impl> replacement_safety (replacement);
 
-        TAO_InputCDR cdr (mb->data_block (),
-                          ACE_Message_Block::DONT_DELETE,
-                          mb->rd_ptr () - mb->base (),
-                          mb->wr_ptr () - mb->base (),
-                          impl->_tao_byte_order (),
-                          TAO_DEF_GIOP_MAJOR,
-                          TAO_DEF_GIOP_MINOR);
+        // We know this will work since the unencoded case is covered above.  
+        TAO::Unknown_IDL_Type *unk =
+          dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
         // Get the kind of the type where we are extracting in ie. the
         // aliased  type if there are any. Passing the aliased kind
         // will not help.
-        CORBA::TCKind tck =
-          tc->kind ();
+        CORBA::TCKind tck = tc->kind ();
+        
+        // We don't want the rd_ptr of unk to move, in case it is
+        // shared by another Any. This copies the state, not the buffer.
+        TAO_InputCDR for_reading (unk->_tao_get_cdr ());
 
+        CORBA::Boolean good_decode =
+          replacement->demarshal_value (for_reading,
+                                        static_cast<CORBA::Long> (tck));
 
-        CORBA::Boolean result =
-          replacement->demarshal_value (cdr,
-                                        (CORBA::Long) tck);
-
-        if (result == 1)
+        if (good_decode)
           {
             Any_Basic_Impl::assign_value (_tao_elem,
                                           replacement,
-					  tck);
+					                                tck);
             const_cast<CORBA::Any &> (any).replace (replacement);
             replacement_safety.release ();
             return 1;
@@ -193,8 +191,10 @@ namespace TAO
         return cdr << CORBA::Any::from_octet (this->u_.o);
       case CORBA::tk_longlong:
         return cdr << this->u_.ll;
+#if !defined (ACE_LACKS_LONGLONG_T)
       case CORBA::tk_ulonglong:
         return cdr << this->u_.ull;
+#endif
       case CORBA::tk_longdouble:
         return cdr << this->u_.ld;
       case CORBA::tk_wchar:
@@ -238,8 +238,10 @@ namespace TAO
         return cdr >> CORBA::Any::to_octet (this->u_.o);
       case CORBA::tk_longlong:
         return cdr >> this->u_.ll;
+#if !defined (ACE_LACKS_LONGLONG_T)
       case CORBA::tk_ulonglong:
         return cdr >> this->u_.ull;
+#endif
       case CORBA::tk_longdouble:
         return cdr >> this->u_.ld;
       case CORBA::tk_wchar:
@@ -346,9 +348,11 @@ namespace TAO
       case CORBA::tk_longlong:
         *static_cast<CORBA::LongLong *> (dest) = src->u_.ll;
         break;
+#if !defined (ACE_LACKS_LONGLONG_T)
       case CORBA::tk_ulonglong:
         *static_cast<CORBA::ULongLong *> (dest) = src->u_.ull;
         break;
+#endif
       case CORBA::tk_longdouble:
         *static_cast<CORBA::LongDouble *> (dest) = src->u_.ld;
         break;

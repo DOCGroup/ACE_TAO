@@ -61,7 +61,7 @@ RT_Thread_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
 
 ACE_THR_FUNC_RETURN Thread_Per_Connection_Logging_Server::run_svc (void *arg)
 {
-  auto_ptr<Thread_Args> thread_args (ACE_static_cast (Thread_Args *, arg));
+  auto_ptr<Thread_Args> thread_args (static_cast<Thread_Args *> (arg));
 
   thread_args->this_->handle_data (&thread_args->logging_peer_);
   thread_args->logging_peer_.close ();
@@ -80,7 +80,7 @@ Thread_Per_Connection_Logging_Server::handle_connections ()
                    // Pointer to function entry point.
                   Thread_Per_Connection_Logging_Server::run_svc,
                    // <run_svc> parameter.
-                  ACE_static_cast (void *, thread_args.get ()),
+                  static_cast<void *> (thread_args.get ()),
                   THR_DETACHED | THR_SCOPE_SYSTEM) == -1)
     return -1;
   thread_args.release ();   // Spawned thread now owns memory

@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
 Handle_L_Pipe::~Handle_L_Pipe (void)
@@ -26,16 +27,17 @@ Handle_L_Pipe::open (const ACE_UNIX_Addr &suap, int async)
     return 0;
 }
 
-ACE_INLINE int 
-Handle_L_Pipe::info (char **strp, size_t length) const
+ACE_INLINE int
+Handle_L_Pipe::info (ACE_TCHAR **strp, size_t length) const
 {
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
   ACE_UNIX_Addr sa;
 
   if (ACE_LSOCK_Acceptor::get_local_addr (sa) == -1)
     return -1;
-  
-  ACE_OS::sprintf (buf, "%s %s", sa.get_path_name (), "# tests local pipe\n");
+
+  ACE_OS::strcpy (buf, ACE_TEXT_CHAR_TO_TCHAR (sa.get_path_name ()));
+  ACE_OS::strcat (buf, ACE_TEXT (" # tests local pipe\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -45,16 +47,16 @@ Handle_L_Pipe::info (char **strp, size_t length) const
 }
 
 ACE_INLINE int
-Handle_L_Pipe::init (int argc, char *argv[])
+Handle_L_Pipe::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNIX_Addr sup;
-  const char	*r = Handle_L_Pipe::DEFAULT_RENDEZVOUS;
-  ACE_Get_Opt	get_opt (argc, argv, "r:", 0);
+  const ACE_TCHAR *r = Handle_L_Pipe::DEFAULT_RENDEZVOUS;
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("r:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
-       case 'r': 
+       case 'r':
 	 r = get_opt.opt_arg ();
 	 break;
        default:
@@ -65,25 +67,25 @@ Handle_L_Pipe::init (int argc, char *argv[])
   ACE_OS::unlink (this->rendezvous);
   sup.set (this->rendezvous);
   if (this->open (sup) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-  else if (ACE_Reactor::instance ()->register_handler 
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+  else if (ACE_Reactor::instance ()->register_handler
 	   (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-		       "registering service with ACE_Reactor\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+		       ACE_TEXT ("registering service with ACE_Reactor")), -1);
   return 0;
 }
 
-ACE_INLINE int 
-Handle_L_Pipe::fini (void) 
+ACE_INLINE int
+Handle_L_Pipe::fini (void)
 {
-  return ACE_Reactor::instance ()->remove_handler 
+  return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
 ACE_INLINE int
 Handle_L_Pipe::get_handle (void) const
-{ 
-  return ACE_LSOCK_Acceptor::get_handle (); 
+{
+  return ACE_LSOCK_Acceptor::get_handle ();
 }
 
 ACE_INLINE int

@@ -1,6 +1,8 @@
 $Id$
 
-This is a unit test for setting DiffServ Codepoint both in the requests sent and the replies received. It also illustrates how a Custom Network Priority Mapping can be plugged in.
+This is a unit test for setting DiffServ Codepoint both in the
+requests sent and the replies received. It also illustrates how a
+Custom Network Priority Mapping can be plugged in.
 
 Scenario:
 --------
@@ -25,17 +27,16 @@ reference. Client then performs several invocations on the object.
 To run (on Unix): 
 -----------------
 
-$./server 
-$./client
+$ ./server -ORBdebuglevel 1 -p 20000
+$ ./client -ORBdebuglevel 1 -n 10 -p 10000 -k file://simple_servant.ior
+$ ./client -ORBdebuglevel 1 -n 10 -p 10000 -k file://diffserv_servant.ior
 
-Options:
---------
+Both client executions set diffserv codepoints on outbound
+packets. When the client invokes on the diffserv_servant, reply
+packets also have diffserv codepoints set on them.
 
-server [-k ior_output_file2] [-o ior_output_file2] [-p corba_priority] [-s {test_server} ] [-c {test_client}]
-
-client [-k server_ior] [-n number_of_iterations] [-p corba_priority] [-s {test_server}] [-c {test_client}]
-
-NOTE: The iterations have to be >=6 in order to test set/unset at the ORB, THREAD and OBJECT levels.
+NOTE: The iterations have to be >=6 in order to test set/unset at the
+ORB, THREAD and OBJECT levels.
 
 
 

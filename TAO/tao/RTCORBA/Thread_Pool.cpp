@@ -17,11 +17,6 @@ ACE_RCSID (RTCORBA,
 #include "tao/Leader_Follower.h"
 #include "ace/Auto_Ptr.h"
 
-#if !defined (__ACE_INLINE__)
-# include "Thread_Pool.i"
-#endif /* ! __ACE_INLINE__ */
-
-
 TAO_RT_New_Leader_Generator::TAO_RT_New_Leader_Generator (
   TAO_Thread_Lane &lane)
   : lane_ (lane)
@@ -217,10 +212,45 @@ TAO_Thread_Lane::open (ACE_ENV_SINGLE_ARG_DECL)
   this->validate_and_map_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  // Create a string with the pool:thread id.
+  char pool_lane_id[10];
+  ACE_OS::sprintf (pool_lane_id,
+                   "%d:%d",
+                   this->pool ().id (),
+                   this->id ());
+
+  TAO_ORB_Parameters *params =
+    this->pool ().manager ().orb_core ().orb_params ();
+
+  TAO_EndpointSet endpoint_set;
+  bool ignore_address;
+
+  // Get the endpoints for this lane.
+  params->get_endpoint_set (pool_lane_id,
+                            endpoint_set);
+
+  if (endpoint_set.is_empty ())
+    {
+      // If endpoints are not specified for this lane, use the
+      // endpoints specified for the default lane but ignore their
+      // addresses.
+      params->get_endpoint_set (TAO_DEFAULT_LANE,
+                                endpoint_set);
+
+      ignore_address = true;
+    }
+  else
+    {
+      // If endpoints are specified for this lane, use them with thier
+      // addresses.
+      ignore_address = false;
+    }
+
   // Open the acceptor registry.
   int result = 0;
   result =
-    this->resources_.open_acceptor_registry (1
+    this->resources_.open_acceptor_registry (endpoint_set,
+                                             ignore_address
                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 

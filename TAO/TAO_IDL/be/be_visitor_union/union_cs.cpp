@@ -118,8 +118,16 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
   // Get the first label in its list.
   AST_UnionLabel *ul = ub->label (0);
+  AST_Union::DefaultValue dv;
+  
+  // This can indicate an error in the return value, but it is
+  // caught elsewhere.
+  (void) node->default_value (dv);
+    
+  bool test = dv.computed_ == 0 
+              && ul->label_kind () == AST_UnionLabel::UL_label;
 
-  if (ul->label_kind () == AST_UnionLabel::UL_label)
+  if (test)
     {
       ub->gen_label_value (os);
     }

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : aceexe {
+project : acelib {
   after    += Synch_Lib
   libs     += Synch_Lib
   libpaths += ../Synch_Lib

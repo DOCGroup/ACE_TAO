@@ -7,7 +7,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Object_KeyC.h"
 #include "tao/Tagged_Components.h"
-#include <algorithm>
 #include "../Utils/resolve_init.h"
 #include "../Utils/Safe_InputCDR.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
@@ -58,42 +57,36 @@ IOGR_Maker::merge_iors(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
 
 
 CORBA::Object_ptr
-IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
+IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list,
+                      CORBA::ULong object_group_ref_version
                       ACE_ENV_ARG_DECL)
 {
+  /// generate a new IOGR if the object group changes.
   CORBA::Object_var obj = merge_iors(list ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(CORBA::Object::_nil());
 
-  set_tag_components(obj.in(), list[0]
+  FT::TagFTGroupTaggedComponent ft_tag_component(ft_tag_component_);
+  /// the generated IOGR should use a new object_group_ref_version 
+  ft_tag_component.object_group_ref_version = object_group_ref_version;
+  set_tag_components(obj.in(), list[0], ft_tag_component
                      ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN(CORBA::Object::_nil());
   return obj._retn();
 }
 
-
 void replace_key(char* ior, char* end_ior,
                 const TAO::ObjectKey& oldkey,
-                const TAO::ObjectKey& newkey)
-{
-  size_t keylen = oldkey.length();
-  ACE_ASSERT(keylen == newkey.length());
-
-  char* pos = ior;
-  const char* oldkey_begin = (const char*)oldkey.get_buffer();
-  const char* oldkey_end = oldkey_begin + keylen;
-
-  while ((pos = std::search(pos, end_ior,oldkey_begin, oldkey_end)) != end_ior) {
-    memcpy(pos, newkey.get_buffer(), keylen);
-    pos+= keylen;
-  }
-}
+                const TAO::ObjectKey& newkey);
+/// the definition of replace_key() is moved
+/// to replace_key.cpp.
 
 
 CORBA::Object_ptr
 IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
                        ACE_ENV_ARG_DECL)
 {
+  /// forge an IOGR whose object_key is the same with that of \a obj. 
   CORBA::Object_var merged;
   // make a copy of the object
   FtRtecEventChannelAdmin::EventChannel_var successor
@@ -140,7 +133,7 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
   else
     merged = CORBA::Object::_duplicate(obj);
 
-  set_tag_components(merged.in(), obj
+  set_tag_components(merged.in(), obj, ft_tag_component_
                      ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN(CORBA::Object::_nil ());
@@ -198,15 +191,14 @@ IOGR_Maker::copy_ft_group_component(CORBA::Object_ptr ior)
           // @@ NOTE: This involves an allocation and a dellocation. This is
           // really bad.
           Safe_InputCDR cdr (
-            ACE_reinterpret_cast (const char*,
-                                  tagged_components.component_data.get_buffer ()),
+            reinterpret_cast<const char*> (tagged_components.component_data.get_buffer ()),
             tagged_components.component_data.length ());
           CORBA::Boolean byte_order;
 
           if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
             return false;
 
-          cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+          cdr.reset_byte_order (static_cast<int> (byte_order));
 
           return (cdr >> ft_tag_component_) != 0;
        }
@@ -236,7 +228,7 @@ IOGR_Maker::set_ref_version(CORBA::ULong version)
 CORBA::ULong
 IOGR_Maker::increment_ref_version()
 {
-  ACE_DEBUG((LM_DEBUG, "new object_group_ref_version = %d\n", ft_tag_component_.object_group_ref_version+1));
+  ACE_DEBUG((LM_DEBUG, "new object_group_ref_version = %d\n", ft_tag_component_.            object_group_ref_version+1));
   return ++ft_tag_component_.object_group_ref_version;
 }
 
@@ -248,11 +240,14 @@ IOGR_Maker::get_ref_version() const
 
 
 void
-IOGR_Maker::set_tag_components(CORBA::Object_ptr merged, CORBA::Object_ptr primary
-                               ACE_ENV_ARG_DECL)
+IOGR_Maker::set_tag_components(
+  CORBA::Object_ptr merged, 
+  CORBA::Object_ptr primary,
+  FT::TagFTGroupTaggedComponent& ft_tag_component
+  ACE_ENV_ARG_DECL)
 {
     // set the primary
-    TAO_FT_IOGR_Property prop (ft_tag_component_);
+    TAO_FT_IOGR_Property prop (ft_tag_component);
 
 
     prop.remove_primary_tag(merged

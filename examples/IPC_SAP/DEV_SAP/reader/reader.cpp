@@ -7,12 +7,11 @@
 
 ACE_RCSID(reader, reader, "$Id$")
 
-int 
-main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc < 2)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "usage: %s device-filename\n",
+                       ACE_TEXT ("usage: %s device-filename\n"),
                        argv[0]),
                       1);
 
@@ -22,7 +21,7 @@ main (int argc, char *argv[])
   if (con.connect (read_dev,
                    ACE_DEV_Addr (argv[1])) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
+                       ACE_TEXT ("%p\n"),
                        argv[1]),
                       1);
 
@@ -39,7 +38,7 @@ main (int argc, char *argv[])
   if (read_dev.control (ACE_TTY_IO::SETPARAMS,
                         &myparams) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p control\n",
+                       ACE_TEXT ("%p control\n"),
                        argv[1]),
                       1);
 
@@ -51,12 +50,11 @@ main (int argc, char *argv[])
 
       if (bytes_read == 1)
 	ACE_DEBUG ((LM_DEBUG,
-                    "read: %c\n",
+                    ACE_TEXT ("read: %c\n"),
                     readback));
       else if (bytes_read == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "%p  recv\n",
-
+                             ACE_TEXT ("%p  recv\n"),
                              argv[1]), 1);
     }
 

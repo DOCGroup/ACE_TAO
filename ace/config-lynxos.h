@@ -14,8 +14,6 @@
 #define ACE_CONFIG_H
 #include /**/ "ace/pre.h"
 
-#include <unistd.h> /* Get _POSIX_VERSION macro */
-
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -24,7 +22,7 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-#if _POSIX_VERSION >= 199506L
+#if ACE_LYNXOS_MAJOR > 3 || (ACE_LYNXOS_MAJOR == 3 && ACE_LYNXOS_MINOR > 0)
   // LynxOS 3.1.0 or greater need ipc_1c.h to be included before net/if.h
   // to avoid macro conflict.
 # define ACE_NEEDS_IPC_1C_H
@@ -56,6 +54,7 @@
 #define ACE_HAS_GNU_CSTRING_H
 #define ACE_HAS_GPERF
 #define ACE_HAS_IP_MULTICAST
+#define ACE_HAS_LYNXOS_BROKEN_MMAP
 #define ACE_HAS_LYNXOS_SIGNALS
 #define ACE_HAS_MEMCHR
 #define ACE_HAS_MSG
@@ -65,6 +64,7 @@
 #define ACE_HAS_POLL
 #define ACE_HAS_POSIX_NONBLOCK
 #define ACE_HAS_POSIX_TIME
+#define ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_SEMUN
 #define ACE_HAS_SHM_OPEN
@@ -113,7 +113,6 @@
 // MAP_SHARED.
 #define ACE_MAP_PRIVATE ACE_MAP_SHARED
 #define ACE_PAGE_SIZE 4096
-#define ACE_POLL_IS_BROKEN
 
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
@@ -124,14 +123,14 @@
 #if ACE_MT_SAFE == 1
   // Platform supports threads.
 # define ACE_HAS_PTHREADS
-# if _POSIX_VERSION >= 199506L
+# if ACE_LYNXOS_MAJOR > 3 || (ACE_LYNXOS_MAJOR == 3 && ACE_LYNXOS_MINOR > 0)
     /* LynxOS 3.1.0 or greater */
 #   define ACE_HAS_PTHREADS_STD
 # else  /* LynxOS < 3.1.0 */
 #   define ACE_HAS_PTHREADS_DRAFT4
 #   define ACE_HAS_STDARG_THR_DEST
 #   define ACE_LACKS_MUTEXATTR_PSHARED
-    // Without TSS emulation, you'll only have 3 native TSS keys, on
+    // Without TSS emulation, you'll only have 3 native TSS keys on 
     // LynxOS 3.0.0/ppc.
 #   define ACE_HAS_TSS_EMULATION
 # endif /* LynxOS < 3.1.0 */
@@ -147,8 +146,7 @@
 
 #define ACE_HAS_AIO_CALLS
 #define ACE_POSIX_AIOCB_PROACTOR
-// AIOCB Proactor works on Lynx. But it is not
-// multi-threaded.
+// AIOCB Proactor works on Lynx. But it is not multi-threaded.
 // Lynx OS 3.0.0 lacks POSIX call <pthread_sigmask>. So,we cannot use
 // SIG Proactor also, with multiple threads. So, let us use the AIOCB
 // Proactor. Once <pthreadd_sigmask> is available on Lynx, we can turn
@@ -163,13 +161,13 @@
 #define ACE_HAS_USING_KEYWORD
 
 #if __GNUC__ == 2  &&  __GNUC_MINOR__ == 9
-   // config-g++-common.h defines these incorrectly for LynxOS 3.x
-   // with G++ version 2.9-gnupro-98r2
-#  define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-#  define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-#  define ACE_HAS_TEMPLATE_SPECIALIZATION
-#  define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
-#  undef ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
+  // config-g++-common.h defines these incorrectly for LynxOS 3.x
+  // with G++ version 2.9-gnupro-98r2
+# define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+# define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
+# define ACE_HAS_TEMPLATE_SPECIALIZATION
+# define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
+# undef ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #endif /* __GNUC__ == 2  &&  __GNUC_MINOR__ == 9 */
 
 // By default, don't include RCS Id strings in object code.
@@ -180,19 +178,15 @@
 // System include files are not in sys/, this gets rid of warning.
 #define __NO_INCLUDE_WARN__
 
-// socket.h from LynxOS 4.0.x defines SOCK_MAXADDRLEN.  Versions
-// of socket.h found on earlier releases of LynxOS do not define it.
-#include <socket.h>
-#if _POSIX_VERSION >= 199506L && defined (SOCK_MAXADDRLEN)
-
-// "changes signedness" error (OS.i and many other files)
+#if ACE_LYNXOS_MAJOR > 3 /* LynxOS 4.x */
+  // "changes signedness" error (OS.i and many other files)
 # define ACE_HAS_SOCKLEN_T
-
-// LSOCK.cpp uses a macro from param.h, not included
+  // LSOCK.cpp uses a macro from param.h, not included
 # define ALIGNBYTES (sizeof(int) - 1)
 # define ALIGN(p) (((unsigned)p + ALIGNBYTES) & ~ALIGNBYTES)
-
-#endif /* _POSIX_VERSION && SOCK_MAXADDRLEN */
+#else /* LynxOS 3.x */
+# define ACE_LACKS_AUTO_PTR
+#endif /* ACE_LYNXOS_MAJOR > 3 */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

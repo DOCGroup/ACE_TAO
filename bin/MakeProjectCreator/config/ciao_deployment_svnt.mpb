@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : portableserver, ciao_deployment_stub, ciao_client_dnc {
+project : ciao_deployment_stub, portableserver {
   after += Deployment_svnt
   libs  += CIAO_Deployment_svnt 
   includes += $(CIAO_ROOT)/DAnCE/ciao 

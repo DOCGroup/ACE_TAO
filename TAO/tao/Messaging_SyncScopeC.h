@@ -26,20 +26,22 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_MESSAGING_SYNCSCOPEC_H_
 #define _TAO_IDL_ORIG_MESSAGING_SYNCSCOPEC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Basic_Types.h"
+
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
+#include "tao/ORB.h"
 #include "tao/Environment.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -55,9 +57,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -111,13 +111,13 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:963
 
 #if defined (__ACE_INLINE__)
-#include "Messaging_SyncScopeC.i"
+#include "Messaging_SyncScopeC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -128,4 +128,5 @@ namespace TAO
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 

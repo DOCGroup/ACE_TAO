@@ -323,9 +323,9 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
   sc_qos_as_any <<= sc_qos;
 
   sc.context_data =
-    ACE_reinterpret_cast(IOP::ServiceContext::
-                         _tao_seq_CORBA_Octet_ &,
-                         *codec_->encode (sc_qos_as_any));
+    ACE_reinterpret_cast<IOP::ServiceContext::_tao_seq_CORBA_Octet_ &> (
+	*codec_->encode (sc_qos_as_any)
+	);
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,

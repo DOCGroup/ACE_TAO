@@ -66,6 +66,9 @@ public:
   /// Handle dispatch exceptions.
   void handle_dispatch_exception (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Retrieve the ior of this peer
+  virtual bool get_ior (ACE_CString & iorstr) const = 0;
+
 protected:
   /// Implementation of Peer specific dispatch_updates
   virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,

@@ -24,22 +24,12 @@ Technical Description:
 In addition to specifying the resources that the ORB needs to allocate
 for an Xt event loop, the ORB also needs the information about the
 XtAppContext in which the user application is initialised. To provide
-these information TAO provides a class by name
-"TAO_XT_Resource_Factory" that inherits from the
-TAO_Default_Resource_factory. This provides the user with a static
-method through which he can set the XtAppContext.
+these information TAO provides a class by name TAO_XtResource_Loader which is
+responsible for create and instance of TAO_XtResource_Factory that inherits
+from the TAO_Default_Resource_factory. TAO_XtResource_Loader has a constructor
+parameterized the application context necessary for integration of ACE_XtReactor
+with Xt event loop.
 
-To make TAO understand that the user is in fact wants to use the
-TAO_XT_Resource_Factory and not the default resource factory, the
-application developer must add the following line to his svc.conf
-file. 
-
-dynamic Resource_Factory Service_Object *
-TAO:_make_TAO_XT_Resource_Factory() ""
-
-Please see the line of code in server.cpp that sets the XtAppContext
-in the TAO_XT_Resource_factory.
-
-One more interseting observation would be to note that the server and
-client  run on the Xt event loop by calling the  XtAppMainLoop ().
+Please notice also that the server and client  run on the Xt event loop by
+calling the  XtAppMainLoop ().
 

@@ -48,47 +48,47 @@ namespace ACE_OS {
 
   /// Returns true if the character is an alphanumeric character.
   ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isalnum (const ACE_TCHAR c);
+  int ace_isalnum (ACE_TCHAR c);
 
   /// Returns true if the character is an alphabetic character.
   ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isalpha (const ACE_TCHAR c);
+  int ace_isalpha (ACE_TCHAR c);
 
   /// Returns true if the character is a control character.
   ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_iscntrl (const ACE_TCHAR c);
+  int ace_iscntrl (ACE_TCHAR c);
 
   /// Returns true if the character is a decimal-digit character.
   ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isdigit (const ACE_TCHAR c);
+  int ace_isdigit (ACE_TCHAR c);
 
   /// Returns true if the character is a printable character other than a space.
   ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isgraph (const ACE_TCHAR c);
+  int ace_isgraph (ACE_TCHAR c);
 
   /// Returns true if the character is a lowercase character.
   ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_islower (const ACE_TCHAR c);
+  int ace_islower (ACE_TCHAR c);
 
   /// Returns true if the character is a printable character.
   ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isprint (const ACE_TCHAR c);
+  int ace_isprint (ACE_TCHAR c);
 
   /// Returns true if the character is a punctuation character.
   ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_ispunct (const ACE_TCHAR c);
+  int ace_ispunct (ACE_TCHAR c);
 
   /// Returns true if the character is a space character.
   ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isspace (const ACE_TCHAR c);
+  int ace_isspace (ACE_TCHAR c);
 
   /// Returns true if the character is an uppercase character.
   ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isupper (const ACE_TCHAR c);
+  int ace_isupper (ACE_TCHAR c);
 
   /// Returns true if the character is a hexadecimal-digit character.
   ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isxdigit (const ACE_TCHAR c);
+  int ace_isxdigit (ACE_TCHAR c);
 
   /// Converts a character to lower case (char version).
   ACE_NAMESPACE_INLINE_FUNCTION

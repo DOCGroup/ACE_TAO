@@ -56,7 +56,7 @@ public:
   virtual CORBA::Boolean _is_a (const char *logical_type_id
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /// Default <_non_existent>: always returns false.
+  /// Default _non_existent: always returns false.
   virtual CORBA::Boolean _non_existent (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
@@ -66,7 +66,7 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
 
-  /// Default <_get_component>: always returns CORBA::Object::_nil().
+  /// Default _get_component: always returns CORBA::Object::_nil().
   virtual CORBA::Object_ptr _get_component (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
@@ -82,7 +82,7 @@ public:
    * type to the most derived type, demarshall all the parameters from
    * the request and finally invokes the operation, storing the
    * results and out parameters (if any) or the exceptions thrown into
-   * <request>.
+   * @a request.
    */
   virtual void _dispatch (TAO_ServerRequest &request,
                           void *servant_upcall
@@ -99,11 +99,10 @@ public:
                      TAO::Collocation_Strategy st,
                      const unsigned int length = 0);
 
+protected:
 
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
-
-protected:
 
   /// Default constructor, only derived classes can be created.
   TAO_ServantBase (TAO_Operation_Table * optable = 0);
@@ -114,7 +113,6 @@ protected:
   /// Assignment operator.
   TAO_ServantBase &operator= (const TAO_ServantBase &);
 
-
   virtual void synchronous_upcall_dispatch (TAO_ServerRequest &req,
                                             void *servant_upcall,
                                             void *derived_this
@@ -124,13 +122,6 @@ protected:
                                              void *servant_upcall,
                                              void *derived_this
                                              ACE_ENV_ARG_DECL);
-
-
-  /// Register a CORBA IDL operation name.
-  /*
-    virtual int _bind (const char *opname,
-                       const TAO_Skeleton skel_ptr);
-  */
 
 protected:
 
@@ -186,10 +177,9 @@ public:
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
   /**
-   * Returns the current reference count value.  This method is
-   * non-standard and is only here to simplify debugging.
+   * Returns the current reference count value.
    */
-  virtual long _ref_count (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
+  virtual CORBA::ULong _refcount_value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
 protected:
 
@@ -207,7 +197,14 @@ protected:
 private:
 
   /// Reference counter.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> ref_count_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> ref_count_;
+};
+
+class TAO_PortableServer_Export TAO_Servant_Hash
+{
+public:
+  /// Returns hash value.
+  u_long operator () (PortableServer::Servant servant) const;
 };
 
 /**
@@ -222,7 +219,6 @@ private:
  */
 class TAO_PortableServer_Export TAO_ServantBase_var
 {
-
 public:
   TAO_ServantBase_var (void);
 
@@ -249,39 +245,6 @@ public:
 private:
 
   TAO_ServantBase *ptr_;
-};
-
-class TAO_PortableServer_Export TAO_Servant_Hash
-{
-public:
-  /// Returns hash value.
-  u_long operator () (PortableServer::Servant servant) const;
-};
-
-/**
- * @class TAO_Local_ServantBase
- *
- * @brief Base class for local servants.
- *
- * This servant does not register with the POA and does not
- * produce a valid stub, i.e., object references of this servant
- * cannot be exported.  The (collocated) stubs of these servants
- * will always be direct, i.e., call directly to the servant and
- * don't call through the POA since this servant is not
- * registered with the POA.
- */
-class TAO_PortableServer_Export TAO_Local_ServantBase
-  : public virtual TAO_ServantBase
-{
-protected:
-  /// This is an auxiliar method for _this().  Make sure *not* to
-  /// register with the default POA.
-  TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-
-  /// Throws CORBA::BAD_OPERATION exception.
-  void _dispatch (TAO_ServerRequest &request,
-                  void *servant_upcall
-                  ACE_ENV_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)

@@ -200,8 +200,7 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
   ACE_CHECK_RETURN (0);
 
   CORBA::ULong i = 0;
-  CORBA::ULong length = ACE_static_cast (CORBA::ULong,
-                                         this->type_map_.current_size ());
+  CORBA::ULong length = static_cast<CORBA::ULong> (this->type_map_.current_size ());
   CosTrading::ServiceTypeName *types =
     CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq::allocbuf (length);
 
@@ -406,8 +405,7 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct 
 
   // Count the total number of properties.
   CORBA::ULong num_props = 0;
-  CORBA::ULong num_types = ACE_static_cast (CORBA::ULong,
-                                            service_type_queue.size ());
+  CORBA::ULong num_types = static_cast<CORBA::ULong> (service_type_queue.size ());
 
   TAO_String_Queue::ITERATOR iterator (service_type_queue);
 
@@ -419,8 +417,7 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct 
       Service_Type_Map::ENTRY *type_entry = 0;
 
       iterator.next (next_type_name);
-      TAO_String_Hash_Key hash_key (ACE_const_cast (const char *,
-                                                    *next_type_name));
+      TAO_String_Hash_Key hash_key (const_cast<const char *> (*next_type_name));
       this->type_map_.find (hash_key,
                             type_entry);
 
@@ -451,8 +448,7 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct 
       Service_Type_Map::ENTRY *type_entry = 0;
 
       iterator.next (next_type_name);
-      TAO_String_Hash_Key hash_key (ACE_const_cast (const char *,
-                                                    *next_type_name));
+      TAO_String_Hash_Key hash_key (const_cast<const char *> (*next_type_name));
       this->type_map_.find (hash_key,
                             type_entry);
 
@@ -492,8 +488,7 @@ collect_inheritance_hierarchy (const CosTradingRepos::ServiceTypeRepository::Typ
 
           const char *type_name =
             type_struct.super_types[i];
-          target.enqueue_tail (ACE_const_cast (char *,
-                                               type_name));
+          target.enqueue_tail (const_cast<char *> (type_name));
 
           this->collect_inheritance_hierarchy (next_type_struct,
                                                target);
@@ -514,14 +509,13 @@ validate_properties (Prop_Map &prop_map,
        i++)
     {
       const char *n = props[i].name;
-      if (TAO_Trader_Base::is_valid_identifier_name (n) == 0)
+      if (TAO_Trader_Base::is_valid_property_name (n) == 0)
         ACE_THROW (CosTrading::IllegalPropertyName (n));
       else
         {
           TAO_String_Hash_Key prop_name (n);
           CosTradingRepos::ServiceTypeRepository::PropStruct *prop_val =
-            ACE_const_cast (CosTradingRepos::ServiceTypeRepository::PropStruct *,
-                            &props[i]);
+            const_cast<CosTradingRepos::ServiceTypeRepository::PropStruct *> (&props[i]);
 
           if (prop_map.bind (prop_name,
                              prop_val) == 1)
@@ -684,8 +678,7 @@ update_type_map (const char *name,
   /*
   CORBA::ULong pslength = props.length ();
   CosTradingRepos::ServiceTypeRepository::PropStructSeq* pstructs =
-    ACE_const_cast (CosTradingRepos::ServiceTypeRepository::PropStructSeq*,
-                    &props);
+    const_cast<CosTradingRepos::ServiceTypeRepository::PropStructSeq*> (&props);
   CosTradingRepos::ServiceTypeRepository::PropStruct* psbuf =
     pstructs->get_buffer (1);
   type->type_struct_.props.replace (pslength,

@@ -67,6 +67,12 @@ ACE_Cached_Allocator<T, ACE_LOCK>::free (void * ptr)
     this->free_list_.add ((ACE_Cached_Mem_Pool_Node<T> *) ptr) ;
 }
 
+template <class T, class ACE_LOCK> ACE_INLINE size_t
+ACE_Cached_Allocator<T, ACE_LOCK>::pool_depth (void)
+{
+  return this->free_list_.size ();
+}
+
 template <class ACE_LOCK> ACE_INLINE void *
 ACE_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
 {
@@ -105,6 +111,12 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
 {
   if (ptr != 0)
     this->free_list_.add ((ACE_Cached_Mem_Pool_Node<char> *) ptr);
+}
+
+template <class ACE_LOCK> ACE_INLINE size_t
+ACE_Dynamic_Cached_Allocator<ACE_LOCK>::pool_depth (void)
+{
+  return this->free_list_.size ();
 }
 
 template <class MALLOC> ACE_INLINE void *

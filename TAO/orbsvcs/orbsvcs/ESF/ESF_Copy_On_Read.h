@@ -58,10 +58,6 @@ private:
 
 // ****************************************************************
 
-#if defined (__ACE_INLINE__)
-#include "ESF_Copy_On_Read.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ESF_Copy_On_Read.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

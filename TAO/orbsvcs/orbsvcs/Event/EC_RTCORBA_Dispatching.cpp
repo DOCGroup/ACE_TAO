@@ -3,10 +3,6 @@
 #include "EC_RTCORBA_Dispatching.h"
 #include "tao/RTCORBA/Priority_Mapping.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_RTCORBA_Dispatching.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_RTCORBA_Dispatching, "$Id$")
 
 TAO_EC_RTCORBA_Dispatching::

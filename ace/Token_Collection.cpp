@@ -22,8 +22,7 @@ ACE_Token_Collection::ACE_Token_Collection (int debug,
     name = ACE_LIB_TEXT ("no name");
 
   ACE_OS::strsncpy (this->name_,
-                    ACE_const_cast (ACE_TCHAR *,
-                                    name),
+                    const_cast<ACE_TCHAR *> (name),
                     ACE_MAXTOKENNAMELEN);
 }
 

@@ -9,6 +9,7 @@
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
+#include "tao/PolicyC.h"
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
@@ -30,9 +31,9 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
                           const TAO::ObjectKey &obj_key,
                           const TAO_GIOP_Message_Version &version)
   : version_ (version)
-    , are_policies_parsed_ (0)
     , stub_ (0)
     , policy_list_ (0)
+    , are_policies_parsed_ (false)
     , addressing_mode_ (0)
     , tagged_profile_ (0)
     , ref_object_key_ (0)
@@ -54,9 +55,9 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
                           TAO_ORB_Core *orb_core,
                           const TAO_GIOP_Message_Version &version)
   : version_ (version)
-    , are_policies_parsed_ (0)
     , stub_ (0)
     , policy_list_ (0)
+    , are_policies_parsed_ (false)
     , addressing_mode_ (0)
     , tagged_profile_ (0)
     , ref_object_key_ (0)
@@ -288,7 +289,7 @@ TAO_Profile::create_tagged_profile (void)
       this->create_profile_body (encap);
 
       CORBA::ULong length =
-        ACE_static_cast(CORBA::ULong,encap.total_length ());
+        static_cast <CORBA::ULong> (encap.total_length ());
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       // Place the message block in to the Sequence of Octets that we
@@ -380,8 +381,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
       (*policy_list)[i]->_tao_encode (out_CDR);
 
       length = out_CDR.total_length ();
-      policy_value_seq[i].pvalue.length (ACE_static_cast (CORBA::ULong,
-                                                          length));
+      policy_value_seq[i].pvalue.length (static_cast <CORBA::ULong>(length));
 
       buf = policy_value_seq[i].pvalue.get_buffer ();
 
@@ -408,8 +408,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
 
   length = out_cdr.total_length ();
 
-  tagged_component.component_data.length (ACE_static_cast (CORBA::ULong,
-                                                           length));
+  tagged_component.component_data.length (static_cast <CORBA::ULong>(length));
   buf = tagged_component.component_data.get_buffer ();
 
   for (const ACE_Message_Block *iterator = out_cdr.begin ();
@@ -456,7 +455,7 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL)
           const CORBA::Octet *buf =
             tagged_component.component_data.get_buffer ();
 
-          TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char *, buf),
+          TAO_InputCDR in_cdr (reinterpret_cast <const char *> (buf),
                                tagged_component.component_data.length ());
 
           // Extract the Byte Order
@@ -467,7 +466,7 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL)
               return *(stub_->base_profiles ().policy_list_);
             }
 
-          in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+          in_cdr.reset_byte_order (static_cast <int> (byte_order));
 
           // Now we take out the Messaging::PolicyValueSeq out from the
           // CDR.
@@ -503,15 +502,14 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL)
                       buf = policy_value_seq[i].pvalue.get_buffer ();
 
                       TAO_InputCDR in_cdr (
-                        ACE_reinterpret_cast (const char*, buf),
+                        reinterpret_cast <const char*>  (buf),
                         policy_value_seq[i].pvalue.length ());
 
 
                       if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
                         ACE_TRY_THROW (CORBA::INV_OBJREF ());
 
-                      in_cdr.reset_byte_order (ACE_static_cast (int,
-                                                                byte_order));
+                      in_cdr.reset_byte_order (static_cast <int> (byte_order));
 
                       policy->_tao_decode (in_cdr);
                       (*pl)[i] = policy._retn ();
@@ -844,7 +842,7 @@ CORBA::Boolean
 TAO_Unknown_Profile::do_is_equivalent (const TAO_Profile* other_profile)
 {
   const TAO_Unknown_Profile * op =
-    ACE_dynamic_cast (const TAO_Unknown_Profile *, other_profile);
+    dynamic_cast <const TAO_Unknown_Profile *> (other_profile);
 
   return (CORBA::Boolean) (op == 0 ? 0 : this->body_ == op->body_);
 }
@@ -862,8 +860,8 @@ CORBA::ULong
 TAO_Unknown_Profile::hash (CORBA::ULong max
                            ACE_ENV_ARG_DECL_NOT_USED)
 {
-  return (ACE::hash_pjw (ACE_reinterpret_cast (const char*,
-                                               this->body_.get_buffer ()),
+  return (ACE::hash_pjw (reinterpret_cast <const char*>
+                                          (this->body_.get_buffer ()),
                          this->body_.length ()) % max);
 }
 

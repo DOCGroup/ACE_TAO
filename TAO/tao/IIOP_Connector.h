@@ -95,18 +95,10 @@ protected:
   /// Transport_Connector.h
   virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Obtain tcp properties that must be used by this connector, i.e.,
-  /// initialize <tcp_properties_>.
-  int init_tcp_properties (void);
-
   /// Cancel the passed cvs handler from the connector
   virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
 protected:
-
-  /// TCP configuration properties to be used for all
-  /// connections established by this connector.
-  TAO_IIOP_Properties tcp_properties_;
 
   /// Do we need to use a GIOP_Lite for sending messages?
   const bool lite_flag_;

@@ -79,16 +79,8 @@ protected:
 class ACE_Export ACE_Base_Thread_Adapter
 {
 public:
-  /// Constructor.
-  ACE_Base_Thread_Adapter (ACE_THR_FUNC user_func,
-                           void *arg,
-                           ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter,
-                           ACE_OS_Thread_Descriptor *td = 0
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-                           , ACE_SEH_EXCEPT_HANDLER selector = 0
-                           , ACE_SEH_EXCEPT_HANDLER handler = 0
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-                      );
+
+  virtual ~ACE_Base_Thread_Adapter (void);
 
   /// Virtual method invoked by the thread entry point.
   virtual ACE_THR_FUNC_RETURN invoke (void) = 0;
@@ -113,10 +105,16 @@ public:
   static ACE_OS_Thread_Descriptor *thr_desc_log_msg (void);
 
 protected:
-  /// Destructor, making it private ensures that objects of this class
-  /// are allocated on the heap.
-  virtual ~ACE_Base_Thread_Adapter (void);
-
+  /// Constructor.
+  ACE_Base_Thread_Adapter (ACE_THR_FUNC user_func,
+                           void *arg,
+                           ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter,
+                           ACE_OS_Thread_Descriptor *td = 0
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+                           , ACE_SEH_EXCEPT_HANDLER selector = 0
+                           , ACE_SEH_EXCEPT_HANDLER handler = 0
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+                      );
   /// Inherit the logging features if the parent thread has an
   /// <ACE_Log_Msg>.
   void inherit_log_msg (void);

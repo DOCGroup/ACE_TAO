@@ -8,6 +8,15 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib '../../../../../bin';
 use PerlACE::Run_Test;
 
+print STDERR <<EOF;
+INFO: Do not expect this test to work until portable interceptors
+INFO: get invoked during thru_POA colocation optimizations.
+INFO:
+INFO: See http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=586
+INFO: for more information.
+
+EOF
+
 $iorfile = PerlACE::LocalFile ("test.ior");
 unlink $iorfile;
 $status = 0;

@@ -39,25 +39,6 @@ class TAO_Pluggable_Messaging;
 // ****************************************************************
 
 /**
- * @class TAO_UIPMC_Properties
- *
- * @brief UIPMC properties specification for a set of
- *  connections.
- *
- */
-
-class TAO_PortableGroup_Export TAO_UIPMC_Properties
-{
-
-public:
-  int ttl;
-};
-
-
-
-// ****************************************************************
-
-/**
  * @class TAO_UIPMC_Connection_Handler
  *
  * @brief  Handles requests on a single connection.
@@ -78,8 +59,7 @@ public:
 
   /// Constructor. <arg> parameter is used by the Acceptor to pass the
   /// protocol configuration properties for this connection.
-  TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core,
-                               void *arg);
+  TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core);
 
 
   /// Destructor.
@@ -162,16 +142,7 @@ protected:
   virtual int release_os_resources (void);
   //@}
 
-private:
-
-  /// UIPMC configuration for this connection.
-  TAO_UIPMC_Properties *uipmc_properties_;
 };
-
-
-#if defined (__ACE_INLINE__)
-#include "UIPMC_Connection_Handler.i"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_UIPMC_CONNECTION_HANDLER_H */

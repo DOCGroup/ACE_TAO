@@ -39,7 +39,7 @@ TAO_ECG_Complex_Address_Server::init (const char *arg)
                                         "Unable to initialize address "
                                         "server: cannot find <@> separator "
                                         "in initialization string "
-                                        "as expected"),
+                                        "as expected\n"),
                             -1);
         }
       size_t len = location - data;
@@ -82,7 +82,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
     {
       if (this->default_addr_.set (mcast_addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
-                                     "mcast address specified: %s.",
+                                     "mcast address specified: %s.\n",
                            mcast_addr),
                           -1);
       return 0;
@@ -94,7 +94,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
   if (*endptr != '\0')
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
-                                   "source/type specified: %s.",
+                                   "source/type specified: %s.\n",
                          key),
                         -1);
     }
@@ -103,7 +103,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
   if (addr.set (mcast_addr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
-                                   "mcast address specified: %s.",
+                                   "mcast address specified: %s.\n",
                          mcast_addr),
                          -1);
     }
@@ -111,7 +111,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
   if (this->mcast_mapping_.bind (header_value, addr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Unable to initialize: error adding "
-                                   "new entry to the mapping."),
+                                   "new entry to the mapping.\n"),
                         -1);
     }
 
@@ -149,23 +149,19 @@ TAO_ECG_Complex_Address_Server::get_addr (
 void
 TAO_ECG_Complex_Address_Server::dump_content (void)
 {
-  cout << "Default address: "
-       << this->default_addr_.get_host_addr ()
-       << ":"
-       << this->default_addr_.get_port_number ()
-       << endl;
+  ACE_DEBUG ((LM_DEBUG, "Default address: %s:%d\n",
+              this->default_addr_.get_host_addr (),
+              this->default_addr_.get_port_number ()));
 
   for (MAP::iterator iter = this->mcast_mapping_.begin ();
        iter != this->mcast_mapping_.end ();
        iter++)
     {
       MAP::ENTRY & entry = *iter;
-      cout << entry.ext_id_
-           << " --> "
-           << entry.int_id_.get_host_addr ()
-           << ":"
-           << entry.int_id_.get_port_number ()
-           << endl;
+      ACE_DEBUG ((LM_DEBUG, "%d --> %s:%d\n",
+                  entry.ext_id_,
+                  this->default_addr_.get_host_addr (),
+                  this->default_addr_.get_port_number ()));
     }
 }
 

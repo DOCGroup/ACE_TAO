@@ -7,7 +7,13 @@ project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver, minimum_corba
   dynamicflags = TAO_FT_ORB_UTILS_BUILD_DLL
   tagchecks   += FTORB_Utils
 
+  // Since the PortableGroup_Simple_DS.idl file is shared between 3 libraries,
+  // we must generate using an export (for the PortableGroup library).
+  // However, we don't want to export it from this library or
+  // FTRT_EventChannel.
+  macros += TAO_PORTABLEGROUP_SIMPLE_HAS_DLL=0
   IDL_Files {
+    idlflags += -Wb,export_macro=TAO_PortableGroup_Simple_Export -Wb,export_include=orbsvcs/PortableGroup_Simple_export.h
     PortableGroup_Simple_DS.idl
   }
 
@@ -24,9 +30,28 @@ project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver, minimum_corba
       FaultTolerance/FT_IOGR_Property.cpp
     }
   }
+
+  Header_Files {
+    PortableGroup_Simple_export.h
+    PortableGroup_Simple_DSS.h
+    PortableGroup_Simple_DSS_T.h
+    FaultTolerance/FT_ORB_Utils_export.h
+  }
+
+  Inline_Files {
+    PortableGroup_Simple_DSS_T.inl
+  }
+
+  Template_Files {
+    PortableGroup_Simple_DSS_T.cpp
+  }
+
+  Pkgconfig_Files {
+    TAO_FTORB_Utils.pc.in
+  }
 }
 
-project(FT_ClientORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup {
+project(FT_ClientORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup, interceptors {
   sharedname   = TAO_FT_ClientORB
   dynamicflags = TAO_FT_CLIENTORB_BUILD_DLL
   tagchecks   += FT_ClientORB
@@ -45,13 +70,19 @@ project(FT_ClientORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup {
        FaultTolerance/FT_ClientService_Activate.cpp
        FaultTolerance/FT_Endpoint_Selector_Factory.cpp
        FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp
-       PortableGroup_Simple_DSC.cpp
        FaultTolerance/FT_Service_Callbacks.cpp
     }
   }
+
+  Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_FT_ClientORB.pc.in
+  }
 }
 
-project(FT_ServerORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup {
+project(FT_ServerORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup, interceptors {
   sharedname   = TAO_FT_ServerORB
   dynamicflags = TAO_FT_SERVERORB_BUILD_DLL
   tagchecks   += FT_ServerORB
@@ -66,8 +97,14 @@ project(FT_ServerORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup {
        FaultTolerance/FT_ServerPolicyFactory.cpp
        FaultTolerance/FT_ServerPolicy_i.cpp
        FaultTolerance/FT_ServerRequest_Interceptor.cpp
-       PortableGroup_Simple_DSC.cpp
        FaultTolerance/FT_ServerService_Activate.cpp
     }
+  }
+
+  Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_FT_ServerORB.pc.in
   }
 }

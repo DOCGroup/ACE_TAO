@@ -246,7 +246,7 @@ ACE_INLINE struct hostent *
 ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
 {
 #if defined (ACE_HAS_IPV6) && !defined (ACE_WIN32)
-#  if defined (__GLIBC__)
+#  if defined (ACE_LACKS_GETIPNODEBYADDR)
   ACE_UNUSED_ARG (src);
   ACE_UNUSED_ARG (len);
   ACE_UNUSED_ARG (family);
@@ -259,7 +259,7 @@ ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
       errno = errnum;
     }
   return hptr;
-#  endif /* whatever_doesnt_have_getipnodebyname */
+#  endif /* ACE_LACKS_GETIPNODEBYADDR */
 #else
   // IPv4-only implementation
   if (family == AF_INET)
@@ -281,7 +281,7 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
   ACE_UNUSED_ARG (flags);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_IPV6) && !defined (ACE_WIN32)
-#   if defined (__GLIBC__)
+#   if defined (ACE_LACKS_GETIPNODEBYNAME)
   ACE_UNUSED_ARG (flags);
 #     if defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::gethostbyname2 (const_cast<char *> (name),
@@ -299,7 +299,7 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
       errno = errnum;
     }
   return hptr;
-#   endif /* __GLIBC__ */
+#   endif /* ACE_LACKS_GETIPNODEBYNAME */
 # else
   // IPv4-only implementation
   ACE_UNUSED_ARG (flags);

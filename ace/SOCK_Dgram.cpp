@@ -508,7 +508,7 @@ ACE_SOCK_Dgram::set_nic (const char *option_value)
      nic_name specified */
   ip_mreq multicast_address;
   ACE_INET_Addr mcast_addr;
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined(__INTERIX)
   // This port number is not necessary, just convenient
   ACE_INET_Addr interface_addr;
   if (interface_addr.set (mcast_addr.get_port_number (),
@@ -535,7 +535,7 @@ ACE_SOCK_Dgram::set_nic (const char *option_value)
   sockaddr_in *socket_address;
   socket_address = reinterpret_cast<sockaddr_in *> (&if_address.ifr_addr);
   multicast_address.imr_interface.s_addr = socket_address->sin_addr.s_addr;
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 || __INTERIX */
 
   /*
    * Now. I got the interface address for the 'nic' specified.

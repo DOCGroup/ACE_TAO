@@ -6,8 +6,8 @@
 #include "tao/Transport.h"
 #include "tao/Synch_Reply_Dispatcher.h"
 
-ACE_RCSID (tao, 
-           Wait_On_Leader_Follower, 
+ACE_RCSID (tao,
+           Wait_On_Leader_Follower,
            "$Id$")
 
 TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower (TAO_Transport *transport)
@@ -30,10 +30,10 @@ TAO_Wait_On_Leader_Follower::register_handler (void)
   return 1;
 }
 
-int
-TAO_Wait_On_Leader_Follower::non_blocking (void)
+bool
+TAO_Wait_On_Leader_Follower::non_blocking (void) const
 {
-  return 1;
+  return true;
 }
 
 int
@@ -60,4 +60,10 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
   return leader_follower.wait_for_event (&rd,
                                          this->transport_,
                                          max_wait_time);
+}
+
+bool
+TAO_Wait_On_Leader_Follower::can_process_upcalls (void) const
+{
+  return true;
 }

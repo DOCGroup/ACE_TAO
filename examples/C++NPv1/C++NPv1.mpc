@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Iterative_Logging_Server) : aceexe {
+  avoids += uses_wchar
   exename = iterative_logging_server
   Source_Files {
     Iterative_Logging_Server.cpp
@@ -11,6 +12,7 @@ project(*Iterative_Logging_Server) : aceexe {
 }
 
 project(*Logging_Client) : aceexe {
+  avoids += uses_wchar
   exename = logging_client
   Source_Files {
     Logging_Client.cpp
@@ -18,6 +20,7 @@ project(*Logging_Client) : aceexe {
 }
 
 project(*PPC_Logging_Server) : aceexe {
+  avoids += uses_wchar
   exename = ppc_logging_server
   Source_Files {
     Process_Per_Connection_Logging_Server.cpp
@@ -27,6 +30,7 @@ project(*PPC_Logging_Server) : aceexe {
 }
 
 project(*Reactive_Logging_Server) : aceexe {
+  avoids += uses_wchar
   exename = reactive_logging_server
   Source_Files {
     Reactive_Logging_Server.cpp
@@ -36,6 +40,7 @@ project(*Reactive_Logging_Server) : aceexe {
 }
 
 project(*Reactive_Logging_Server_Ex) : aceexe {
+  avoids += uses_wchar
   exename = reactive_logging_server_ex
   Source_Files {
     Reactive_Logging_Server_Ex.cpp
@@ -45,6 +50,7 @@ project(*Reactive_Logging_Server_Ex) : aceexe {
 }
 
 project(*RTTPC_Logging_Server) : aceexe {
+  avoids += uses_wchar
   exename = RTTPC_logging_server
   Source_Files {
     RT_Thread_Per_Connection_Logging_Server.cpp
@@ -54,6 +60,7 @@ project(*RTTPC_Logging_Server) : aceexe {
 }
 
 project(*TPC_Logging_Server) : aceexe {
+  avoids += uses_wchar
   exename = tpc_logging_server
   Source_Files {
     Thread_Per_Connection_Logging_Server.cpp

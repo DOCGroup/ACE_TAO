@@ -1,60 +1,32 @@
---- orig/DynamicAnyC.h	Wed Feb  6 11:11:22 2002
-+++ DynamicAnyC.h	Wed Feb  6 11:17:29 2002
-@@ -22,6 +22,10 @@
- #ifndef _TAO_IDL_ORIG_DYNAMICANYC_H_
- #define _TAO_IDL_ORIG_DYNAMICANYC_H_
+--- orig/DynamicAnyC.h	2004-11-24 08:54:01.902620800 +0100
++++ DynamicAnyC.h	2004-11-24 08:57:51.632956800 +0100
+@@ -34,6 +34,10 @@
+ #include /**/ "ace/pre.h"
+ 
  
 +#ifndef TAO_DYNAMICANY_SAFE_INCLUDE
 +#error "You should not include DynamicAnyC.h directly, use DynamicAny.h"
 +#endif /* !TAO_DYNAMICANY_SAFE_INCLUDE */
 +
- #include "ace/pre.h"
- #include "tao/corba.h"
+ #include "ace/config-all.h"
  
-@@ -1650,7 +1654,7 @@
-         , DynamicAny::DynAny::InvalidValue
-       )) = 0;
-     
--    virtual ::TCKind current_member_kind (
-+    virtual CORBA::TCKind current_member_kind (
-         
-         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-       )
-@@ -1868,7 +1872,7 @@
-         CORBA::SystemException
-       )) = 0;
-     
--    virtual ::TCKind discriminator_kind (
-+    virtual CORBA::TCKind discriminator_kind (
-         
-         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-       )
-@@ -1894,7 +1898,7 @@
-         , DynamicAny::DynAny::InvalidValue
-       )) = 0;
-     
--    virtual ::TCKind member_kind (
-+    virtual CORBA::TCKind member_kind (
-         
-         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-       )
-@@ -2716,7 +2720,7 @@
-         , DynamicAny::DynAny::InvalidValue
-       )) = 0;
-     
--    virtual ::TCKind current_member_kind (
-+    virtual CORBA::TCKind current_member_kind (
-         
-         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-       )
---- orig/DynamicAnyC.cpp	Wed Feb  6 11:11:22 2002
-+++ DynamicAnyC.cpp	Wed Feb  6 11:15:25 2002
-@@ -19,7 +19,7 @@
- // Information about TAO is available at:
- //     http://www.cs.wustl.edu/~schmidt/TAO.html
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+@@ -41,7 +45,6 @@
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+ #include "dynamicany_export.h"
+-#include "tao/Valuetype/ValueBase.h"
+ #include "tao/ORB.h"
+ #include "tao/SystemException.h"
+ #include "tao/Environment.h"
+--- orig/DynamicAnyC.cpp	2004-11-24 08:54:01.902620800 +0100
++++ DynamicAnyC.cpp	2004-11-24 08:58:10.009380800 +0100
+@@ -29,7 +29,7 @@
+ // be\be_codegen.cpp:301
+ 
  
 -#include "DynamicAnyC.h"
 +#include "DynamicAny.h"
+ #include "tao/CDR.h"
+ #include "ace/OS_NS_string.h"
  
- #include "tao/Stub.h"
- #include "tao/Invocation.h"

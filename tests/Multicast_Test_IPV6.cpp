@@ -123,7 +123,7 @@ public:
   int wait (void) const { return this->wait_;}
   ACE_SOCK_Dgram_Mcast::options options (void) const
   {
-    return ACE_static_cast (ACE_SOCK_Dgram_Mcast::options, this->sdm_opts_);
+    return static_cast<ACE_SOCK_Dgram_Mcast::options> (this->sdm_opts_);
   }
 
   int set_group (int port, const char *group);
@@ -872,10 +872,8 @@ int advance_addr (ACE_INET_Addr &addr)
 #if defined (__linux__) && defined (ACE_HAS_IPV6)
   else  // assume AF_INET6
     {
-      sockaddr_in6 *saddr = ACE_reinterpret_cast (sockaddr_in6 *,
-                                                  addr.get_addr ());
-      unsigned char *sin6_addr = ACE_reinterpret_cast (unsigned char *,
-                                                       &saddr->sin6_addr);
+      sockaddr_in6 *saddr = reinterpret_cast<sockaddr_in6 *> (addr.get_addr ());
+      unsigned char *sin6_addr = reinterpret_cast<unsigned char *> (&saddr->sin6_addr);
       int i = 15;
 
       // i >= 2 is used here so that the flags and scope for the
@@ -998,15 +996,16 @@ template class ACE_Array<ACE_String_Base<char> *>;
 
 #else
 int
-run_main (int, ACE_TCHAR *argv[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Multicast_Test_IPV6"));
 
   ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("%s must be run on a platform ")
-              ACE_TEXT ("that support IP multicast.\n"),
-              argv[0]));
+              ACE_TEXT ("This test must be run on a platform ")
+              ACE_TEXT ("that support IP multicast and threads.\n")));
+
   ACE_END_TEST;
-  return 1;
+
+  return 0;
 }
 #endif /* ACE_HAS_IP_MULTICAST && ACE_HAS_THREADS */

@@ -85,7 +85,7 @@ public:
                                 ACE_ENV_ARG_DECL);
   virtual void get_qos_info (TAO_EC_QOS_Info& qos_info
                              ACE_ENV_ARG_DECL);
-  
+
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Kokyu_Filter
                               (const TAO_EC_Kokyu_Filter&))
@@ -124,10 +124,6 @@ private:
   /// Required for the scheduling service
   RtecScheduler::Info_Type_t info_type_;
 };
-
-#if defined (__ACE_INLINE__)
-#include "EC_Kokyu_Filter.i"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_KOKYU_FILTER_H */

@@ -14,17 +14,10 @@ $status = 0;
 $ifr_service_bin = "../../IFR_Service";
 
 # The location of the tao_ifr utility binary
-if ($^O eq "MSWin32") 
-{
-   $tao_ifr_bin = "../../../../bin";
-}
-else 
-{
-   $tao_ifr_bin = $ifr_service_bin;
-}
+$tao_ifr_bin = "../../../../bin";
 
 # The location of the tao_idl utility binary
-$tao_idl_bin = "../../../../TAO/TAO_IDL";
+$tao_idl_bin = "../../../../bin";
 
 # The idl file to be used for the test
 $test_idl = PerlACE::LocalFile("test.idl");
@@ -40,7 +33,7 @@ _EOF_
 close(HANDLE);
 
 $TAO_IDL    = new PerlACE::Process("$tao_idl_bin/tao_idl");
-$TAO_IDL->Arguments("$test_idl");
+$TAO_IDL->Arguments("-Sc $test_idl");
 $result = $TAO_IDL->SpawnWaitKill (30);
 
 # Search one of the stub files for the munged for of the interface name
@@ -69,7 +62,7 @@ if ($result != 0)
 # Delete files created during IDL compilation
 unlink <test*.h>;
 unlink <test*.cpp>;
-unlink <test*.i>;
+unlink <test*.inl>;
    
 # The file name for the IFR service IOR
 $ifr_service_ior_file = PerlACE::LocalFile("ifr.ior");

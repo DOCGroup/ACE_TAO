@@ -63,12 +63,12 @@ main (int argc, char *argv [])
       if (ACE_OS::last_error () == EPERM)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "server (%P|%t): user is not superuser, "
+                      "client (%P|%t): user is not superuser, "
                       "test runs in time-shared class\n"));
         }
       else
         ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
+                    "client (%P|%t): sched_params failed\n"));
     }
 
   ACE_TRY_NEW_ENV

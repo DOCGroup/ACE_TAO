@@ -111,7 +111,7 @@ main (int argc, char **argv)
               "\n \t IDL_Cubit: Collocation test \n\n"));
 
   ACE_Thread_Manager tm;
-  tm.spawn (ACE_reinterpret_cast (ACE_THR_FUNC, &svr_worker),
+  tm.spawn (reinterpret_cast<ACE_THR_FUNC> (&svr_worker),
             &thread_barrier);
   thread_barrier.server_init_.wait ();
   ACE_OS::sleep (1);

@@ -15,7 +15,7 @@ int TP_Logging_Handler::handle_input (ACE_HANDLE) {
     ACE_Message_Block *log_blk = 0;
     ACE_NEW_RETURN
       (log_blk, ACE_Message_Block
-                  (ACE_reinterpret_cast (char *, this)), -1);
+                  (reinterpret_cast<char *> (this)), -1);
     log_blk->cont (mblk);
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, -1);
     if (TP_LOGGING_TASK::instance ()->put (log_blk) == -1)
@@ -50,8 +50,7 @@ TP_Logging_Handler::handle_close (ACE_HANDLE handle,
 
 int TP_Logging_Task::svc () {
   for (ACE_Message_Block *log_blk; getq (log_blk) != -1; ) {
-    TP_Logging_Handler *tp_handler = ACE_reinterpret_cast
-      (TP_Logging_Handler *, log_blk->rd_ptr ());
+    TP_Logging_Handler *tp_handler = reinterpret_cast<TP_Logging_Handler *> (log_blk->rd_ptr ());
     Logging_Handler logging_handler (tp_handler->log_file ());
     logging_handler.write_log_record (log_blk->cont ());
 

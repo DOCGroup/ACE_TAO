@@ -79,7 +79,9 @@ namespace TAO
       CORBA::Char c;
       CORBA::Octet o;
       CORBA::LongLong ll;
+#if !defined (ACE_LACKS_LONGLONG_T)
       CORBA::ULongLong ull;
+#endif
       CORBA::LongDouble ld;
       CORBA::WChar wc;
     }u_;

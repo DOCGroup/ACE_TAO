@@ -22,8 +22,7 @@ ACE_INLINE u_long
 TAO::CosSchedulingObjectMap_Hash_Key::operator () (
   const COS_SCHEDULING_OBJECT_NAME_KEY &key) const
 {
-      u_long value;
-      value = key->_hash(LONG_MAX);
+      u_long value = key->_hash(ACE_UINT32_MAX);
       return value;
 }
 
@@ -31,5 +30,5 @@ ACE_INLINE u_long
 TAO::CosSchedulingInvocation_Hash_key::operator () (
   const COS_SCHEDULING_INVOCATION_KEY &key) const
 {
-  return ACE_static_cast(u_long, key);
+  return static_cast<u_long> (key);
 }

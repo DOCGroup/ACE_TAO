@@ -36,7 +36,7 @@
 #include "tao/Messaging_SyncScopeC.h"
 #include "tao/Object.h"
 #include "tao/Invocation_Utils.h"
-#include "tao/Adapter.h"
+#include "tao/Adapter_Registry.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "Interceptor_List.h"
@@ -104,6 +104,10 @@ class TAO_ClientRequestInfo;
 class TAO_Transport_Sync_Strategy;
 class TAO_Sync_Strategy;
 class TAO_Policy_Validator;
+namespace TAO
+{
+  class GUIResource_Factory;
+}
 
 namespace CORBA
 {
@@ -189,7 +193,6 @@ public:
   /// current thread.
   TAO_ClientRequestInfo *client_request_info_;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
 };
 
 
@@ -212,7 +215,6 @@ public:
 class TAO_Export TAO_ORB_Core
 {
   friend class TAO_ORB_Core_Auto_Ptr;
-  friend class TAO_ORB_Table;
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          char *argv[],
                                          const char *,
@@ -293,7 +295,7 @@ public:
    * No-Collocation is a special case of collocation.
    */
   static
-  TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
+TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
                                                   ACE_ENV_ARG_DECL);
   //@}
 
@@ -375,6 +377,9 @@ public:
   /// Returns pointer to the resource factory.
   TAO_Resource_Factory *resource_factory (void);
 
+  /// Returns pointer to the factory for creating gui resources
+  TAO::GUIResource_Factory *gui_resource_factory (void);
+
   /// Returns pointer to the client factory.
   TAO_Client_Strategy_Factory *client_factory (void);
 
@@ -412,6 +417,13 @@ public:
   /// Sets the value of TAO_ORB_Core::resource_factory_
   static void set_resource_factory (const char *resource_factory_name);
 
+  /** Sets the value of TAO_ORB_Core::gui_resource_factory_.
+   *
+   *  Sets the value of gui_resource_factory in TSS. ORB_Core is responsible
+   *  for releasing this factory if needed.
+   */
+  static void set_gui_resource_factory (TAO::GUIResource_Factory *gui_resource_factory);
+
   /// Sets the value of TAO_ORB_Core::protocols_hooks_
   static void set_protocols_hooks (const char *protocols_hooks_name);
 
@@ -428,7 +440,7 @@ public:
   static const ACE_CString &poa_factory_name (void);
 
   /// Gets the value of TAO_ORB_Core::protocols_hooks__
-  TAO_Protocols_Hooks * get_protocols_hooks (ACE_ENV_SINGLE_ARG_DECL);
+  TAO_Protocols_Hooks * get_protocols_hooks (void);
 
   /// Sets the value of TAO_ORB_Core::dynamic_adapter_name_.
   static void dynamic_adapter_name (const char *name);
@@ -459,6 +471,7 @@ public:
 
   /// Gets the value of TAO_ORB_Core::valuetype_adapter_name.
   static const char *valuetype_adapter_name (void);
+
 
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.
@@ -542,9 +555,26 @@ public:
   /// Accessor method for the default_policies_
   TAO_Policy_Set *get_default_policies (void);
 
-  /// Get a cached policy.  First, check the ORB-level Policy
-  /// Manager, and then check the ORB defaults.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
+  /// Get a policy.  First, check the ORB-level Policy Manager, then
+  /// check the ORB defaults.
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType type
+                                ACE_ENV_ARG_DECL);
+
+  /// Get a policy.  First, check the thread current, then check the
+  /// ORB-level Policy Manager, then check the ORB defaults.
+  CORBA::Policy_ptr get_policy_including_current (CORBA::PolicyType type
+                                                  ACE_ENV_ARG_DECL);
+
+  /// Get a cached policy.  First, check the ORB-level Policy Manager,
+  /// then check the ORB defaults.
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
+                                       ACE_ENV_ARG_DECL);
+
+  /// Get a cached policy.  First, check the thread current, then
+  /// check the ORB-level Policy Manager, then check the ORB defaults.
+  CORBA::Policy_ptr get_cached_policy_including_current (
+      TAO_Cached_Policy_Type type
+      ACE_ENV_ARG_DECL);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -604,12 +634,6 @@ public:
 
   static void set_timeout_hook (Timeout_Hook hook);
 
-
-  /// Access to the RoundtripTimeoutPolicy policy set on the thread or
-  /// on the ORB.  In this method, we do not consider the stub since
-  /// we do not have access to it.
-  CORBA::Policy_ptr stubless_relative_roundtrip_timeout (void);
-
   /// Invoke the timeout hook if present.
   /**
    * The timeout hook is used to determine if the timeout policy is
@@ -626,13 +650,6 @@ public:
   /// Define the Timeout_Hook signature
   static void connection_timeout_hook (Timeout_Hook hook);
 
-
-  /// Access to the connection timeout policy set on the thread or
-  /// on the ORB.  In this method, we do not consider the stub since
-  /// we do not have access to it.
-  CORBA::Policy_ptr stubless_connection_timeout (void);
-
-
   void call_sync_scope_hook (TAO_Stub *stub,
                              bool &has_synchronization,
                              Messaging::SyncScope &scope);
@@ -643,15 +660,10 @@ public:
                                    TAO_Stub *,
                                    bool &,
                                    Messaging::SyncScope &);
+
   static void set_sync_scope_hook (Sync_Scope_Hook hook);
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-  CORBA::Policy_ptr stubless_sync_scope (void);
-#endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-  CORBA::Policy_ptr default_buffering_constraint (void) const;
 
   /// This strategy will buffer messages.
   //@{
@@ -666,10 +678,6 @@ public:
 
   /// Handle to the factory for protocols_hooks_..
   TAO_Protocols_Hooks *protocols_hooks_;
-
-  /// Flag to check whether the protocols hooks have been checked or
-  /// not.
-  bool protocols_hooks_checked_;
 
   /// Obtain the TSS resources of this orb.
   TAO_ORB_Core_TSS_Resources* get_tss_resources (void);
@@ -968,7 +976,8 @@ public:
 
   /// Call the libraries to handover the validators if they havent
   /// registered yet with the list of validators.
-  void load_policy_validators (TAO_Policy_Validator &validator);
+  void load_policy_validators (TAO_Policy_Validator &validator
+                               ACE_ENV_ARG_DECL);
 
   /// Return the flushing strategy
   /**
@@ -1059,7 +1068,8 @@ protected:
   /// Pointer to the list of protocol loaded into this ORB instance.
   /// Helper method to hold the common code part for -ORBEndpoint and
   /// -ORBListenEndpoint options.
-  int set_endpoint_helper (const char *current_arg
+  int set_endpoint_helper (const ACE_CString &lane,
+                           const ACE_CString &endpoints
                            ACE_ENV_ARG_DECL);
 
 private:

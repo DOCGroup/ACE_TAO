@@ -1,7 +1,7 @@
 #include "Storable_Naming_Context.h"
 #include "Bindings_Iterator_T.h"
 
-#include <tao/debug.h>
+#include "tao/debug.h"
 
 // The following #pragma is needed to disable a warning that occurs
 // in MSVC 6 due to the overly long debugging symbols generated for
@@ -259,8 +259,7 @@ void TAO_Storable_Naming_Context::Write(TAO_Storable_Base& wrtr)
   ACE_TRACE("Write");
   TAO_NS_Persistence_Header header;
 
-  header.size (ACE_static_cast(unsigned int,
-                               storable_context_->current_size()));
+  header.size (static_cast<unsigned int> (storable_context_->current_size()));
   header.destroyed (destroyed_);
 
   wrtr << header;
@@ -547,7 +546,7 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context (void)
       // Now delete the file
       ACE_Auto_Ptr<TAO_Storable_Base>
         fl (
-          this->factory_->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()),
+          this->factory_->create_stream(file_name.c_str(),
                                         ACE_TEXT("r"))
           );
       if (fl.get())
@@ -1017,8 +1016,7 @@ TAO_Storable_Naming_Context::resolve (const CosNaming::Name& n
           CosNaming::Name rest_of_name
             (n.maximum () - 1,
              n.length () - 1,
-             ACE_const_cast (CosNaming::NameComponent*,
-                             n.get_buffer ()) + 1);
+             const_cast<CosNaming::NameComponent*> (n.get_buffer ()) + 1);
 
           // If there are any exceptions, they will propagate up.
           return context->resolve (rest_of_name
@@ -1144,49 +1142,47 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n
       ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
     }
   // If we received a simple name, we need to bind it in this context.
-  else
-  {
-    // This had been a read on the file so now we are done with it
-    flck.release();
 
-    // Stores our new Naming Context.
-    CosNaming::NamingContext_var result =
-      CosNaming::NamingContext::_nil ();
+  // This had been a read on the file so now we are done with it
+  flck.release();
 
-    // Create new context.
-    result = new_context (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+  // Stores our new Naming Context.
+  CosNaming::NamingContext_var result =
+    CosNaming::NamingContext::_nil ();
 
-    // Bind the new context to the name.
-    ACE_TRY
+  // Create new context.
+  result = new_context (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+
+  // Bind the new context to the name.
+  ACE_TRY
+    {
+      bind_context (n,
+                    result.in ()
+                    ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
       {
-        bind_context (n,
-                      result.in ()
-                      ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        ACE_DECLARE_NEW_CORBA_ENV;
+        ACE_TRY_EX(DESTROY)
+          {
+            result->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_TRY_CHECK_EX(DESTROY);
+          }
+        ACE_CATCHANY
+          {
+            // Do nothing?
+          }
+        ACE_ENDTRY;
       }
-    ACE_CATCHANY
-      {
-        {
-          ACE_DECLARE_NEW_CORBA_ENV;
-          ACE_TRY_EX(DESTROY)
-            {
-              result->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK_EX(DESTROY);
-            }
-          ACE_CATCHANY
-            {
-              // Do nothing?
-            }
-          ACE_ENDTRY;
-        }
-        // Re-raise the exception in bind_context()
-        ACE_RE_THROW;
-      }
-    ACE_ENDTRY;
-    ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
-    return result._retn ();
-  }
+      // Re-raise the exception in bind_context()
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+  return result._retn ();
 }
 
 void
@@ -1376,7 +1372,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
   if (this->context_->current_size () > how_many)
     n = how_many;
   else
-    n = ACE_static_cast (CORBA::ULong, this->context_->current_size ());
+    n = static_cast<CORBA::ULong> (this->context_->current_size ());
 
   // Use the hash map iterator to populate <bl> with bindings.
   bl->length (n);

@@ -155,7 +155,7 @@ EDF_Scheduling::SchedulingParameter::_tao_any_destructor (
   )
 {
   SchedulingParameter *_tao_tmp_pointer =
-    ACE_static_cast (SchedulingParameter *, _tao_void_pointer);
+    static_cast<SchedulingParameter *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -215,7 +215,7 @@ void
 EDF_Scheduling::SchedulingParameterPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   SchedulingParameterPolicy *_tao_tmp_pointer =
-    ACE_static_cast (SchedulingParameterPolicy *, _tao_void_pointer);
+    static_cast<SchedulingParameterPolicy *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -391,7 +391,7 @@ void
 EDF_Scheduling::Scheduler::_tao_any_destructor (void *_tao_void_pointer)
 {
   Scheduler *_tao_tmp_pointer =
-    ACE_static_cast (Scheduler *, _tao_void_pointer);
+    static_cast<Scheduler *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -540,9 +540,7 @@ CORBA::Boolean operator>>= (
     EDF_Scheduling::SchedulingParameter *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const EDF_Scheduling::SchedulingParameter *&,
-      _tao_elem
+  return _tao_any >>= const_cast<const EDF_Scheduling::SchedulingParameter *&> (_tao_elem
     );
 }
 

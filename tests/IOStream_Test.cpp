@@ -293,7 +293,7 @@ server (void *arg = 0)
 
   ACE_INET_Addr server_addr;
   ACE_SOCK_Acceptor *acceptor =
-    ACE_reinterpret_cast (ACE_SOCK_Acceptor *, arg);
+    reinterpret_cast<ACE_SOCK_Acceptor *> (arg);
 
   if (acceptor->get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

@@ -1,14 +1,18 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "StructDef_i.h"
+#include "RecursDef_i.h"
 #include "Repository_i.h"
 #include "IFR_Service_Utils.h"
-#include "ace/Auto_Ptr.h"
 
-ACE_RCSID (IFRService, 
-           StructDef_i, 
+#include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           StructDef_i,
            "$Id$")
+
 
 TAO_StructDef_i::TAO_StructDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -75,6 +79,25 @@ TAO_StructDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "id",
                                             id);
+
+  //---------------------------------------------------------------------------
+  // Have we already seen this structure definition at an outer scope?
+  // If yes, return a recursive type code to signal the nesting.
+  // If not, record this new structure id in our stack (it will automatically
+  // be removed when NowSeenThis goes out of scope).
+  //---------------------------------------------------------------------------
+
+  if (TAO_RecursiveDef_OuterScopes::SeenBefore( id ))
+    return this->repo_->tc_factory ()->
+                 create_recursive_tc ( id.c_str () ACE_ENV_ARG_PARAMETER);
+
+  TAO_RecursiveDef_OuterScopes NowSeenThis( id );
+
+  //---------------------------------------------------------------------------
+  // Create a new type code for this structure; the create_struct_tc() call
+  // that follows may recursivly call this method again if one of its children
+  // refers to a structure (which is the point of the above NowSeenThis stack).
+  //---------------------------------------------------------------------------
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -160,13 +183,13 @@ TAO_StructDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
                                                      kind);
 
           CORBA::DefinitionKind def_kind =
-            ACE_static_cast (CORBA::DefinitionKind, kind);
+            static_cast<CORBA::DefinitionKind> (kind);
 
           kind_queue.enqueue_tail (def_kind);
         }
     }
 
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong, kind_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong> (kind_queue.size ());
 
   CORBA::StructMemberSeq *members = 0;
   ACE_NEW_THROW_EX (members,
@@ -208,6 +231,10 @@ TAO_StructDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
 
       impl = TAO_IFR_Service_Utils::path_to_idltype (path,
                                                      this->repo_);
+      if (0 == impl)
+      {
+        ACE_THROW_RETURN ( CORBA::OBJECT_NOT_EXIST(), 0);
+      }
 
       retval[k].type = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -265,7 +292,7 @@ TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members
                                                 "name",
                                                 members[i].name.in ());
 
-      path = 
+      path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,

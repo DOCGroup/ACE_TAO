@@ -39,7 +39,7 @@ public:
     virtual void check_validity(ACE_ENV_SINGLE_ARG_DECL);
 
     typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
-      (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL);
 
   /**
    * Replicate a request.

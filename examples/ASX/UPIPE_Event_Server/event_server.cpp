@@ -2,6 +2,7 @@
 
 // Test the event server.
 
+#include "ace/OS_main.h"
 #include "ace/Stream.h"
 #include "ace/Service_Config.h"
 #include "ace/UPIPE_Acceptor.h"
@@ -15,8 +16,11 @@
 #include "Event_Analyzer.h"
 #include "Supplier_Router.h"
 #include "ace/Signal.h"
+#include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(UPIPE_Event_Server, event_server, "$Id$")
+ACE_RCSID (UPIPE_Event_Server,
+           event_server,
+           "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
@@ -34,15 +38,15 @@ public:
 
 Quit_Handler::Quit_Handler (void)
   : ACE_Sig_Adapter (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
-{  
+{
   // Register to trap input from the user.
   if (ACE_Event_Handler::register_stdin_handler (this,
-						 ACE_Reactor::instance (),
-						 ACE_Thread_Manager::instance ()) == -1)
+                                                 ACE_Reactor::instance (),
+                                                 ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
   // Register to trap the SIGINT signal.
-  else if (ACE_Reactor::instance ()->register_handler 
-	   (SIGINT, this) == -1)
+  else if (ACE_Reactor::instance ()->register_handler
+           (SIGINT, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 }
 
@@ -61,7 +65,7 @@ static void *
 consumer (void *)
 {
   ACE_UPIPE_Stream c_stream;
-  ACE_UPIPE_Addr c_addr ("/tmp/conupipe");
+  ACE_UPIPE_Addr c_addr (ACE_TEXT ("/tmp/conupipe"));
 
   int verb = options.verbose ();
   int msiz = options.message_size ();
@@ -86,22 +90,22 @@ consumer (void *)
 
   par1= (time_t) currsec;
 
-  while (done == 0 
-	 && (c_stream.recv (mb_p) != -1))
-    if (mb_p->length () > 1) 
+  while (done == 0
+         && (c_stream.recv (mb_p) != -1))
+    if (mb_p->length () > 1)
       {
-	cnt++;
-	if (verb)
-	  cout << " consumer received message !!!!!! " 
-	       << mb_p->rd_ptr () << endl;
+        cnt++;
+        if (verb)
+          cout << " consumer received message !!!!!! "
+               << mb_p->rd_ptr () << endl;
       }
     else
       {
-	if (verb)
-	  cout << "consumer got last mb" 
-	       << (char) * (mb_p->rd_ptr ()) << endl;
-	c_stream.close ();
-	done = 1;
+        if (verb)
+          cout << "consumer got last mb"
+               << (char) * (mb_p->rd_ptr ()) << endl;
+        c_stream.close ();
+        done = 1;
       }
 
     ACE_OS::time (&currsec);
@@ -112,8 +116,8 @@ consumer (void *)
     if (secs <= 0)
       secs=1;
 
-    cout << "consumer got " << cnt << " messages of size " << msiz 
-	 << "within " << secs << " seconds" << endl;
+    cout << "consumer got " << cnt << " messages of size " << msiz
+         << "within " << secs << " seconds" << endl;
 
     ACE_OS::sleep (2);
     cout << "consumer terminating " << endl;
@@ -124,7 +128,7 @@ static void *
 supplier (void *dummy)
 {
   ACE_UPIPE_Stream s_stream;
-  ACE_UPIPE_Addr serv_addr ("/tmp/supupipe");
+  ACE_UPIPE_Addr serv_addr (ACE_TEXT ("/tmp/supupipe"));
   ACE_UPIPE_Connector con;
 
   int iter = options.iterations ();
@@ -136,7 +140,7 @@ supplier (void *dummy)
     ACE_DEBUG ((LM_INFO, " (%t) connect failed\n"));
 
   cout << "supplier : we're connected" << endl;
-  int	   n;
+  int      n;
   n = 0;
   ACE_Message_Block * mb_p;
 
@@ -148,10 +152,10 @@ supplier (void *dummy)
       if (verb)
         cout << "supplier sending 1 message_block" << endl;
       if (s_stream.send (mb_p) == -1)
-	{
-	  cout << "supplier send failed" << endl;
-	  return (void *) -1;
-	}
+        {
+          cout << "supplier send failed" << endl;
+          return (void *) -1;
+        }
       n++;
     }
 
@@ -184,75 +188,82 @@ supplier (void *dummy)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon;
-  
+
   options.parse_args (argc, argv);
   options.start_timer ();
 
   // Primary ACE_Stream for EVENT_SERVER application.
-  MT_Stream event_server; 
+  MT_Stream event_server;
 
   // Enable graceful shutdowns....
   Quit_Handler quit_handler;
 
   // Create the modules..
 
-  MT_Module *sr = new MT_Module ("Supplier_Router", 
-	  new Supplier_Router (ACE_Thread_Manager::instance ()));
-  MT_Module *ea = new MT_Module ("Event_Analyzer", 
-				 new Event_Analyzer, 
-				 new Event_Analyzer);
-  MT_Module *cr = new MT_Module ("Consumer_Router", 
-				 0, // 0 triggers the creation of a ACE_Thru_Task...
-				 new Consumer_Router (ACE_Thread_Manager::instance ()));
+  MT_Module *sr = new MT_Module (ACE_TEXT ("Supplier_Router"),
+          new Supplier_Router (ACE_Thread_Manager::instance ()));
+  MT_Module *ea = new MT_Module (ACE_TEXT ("Event_Analyzer"),
+                                 new Event_Analyzer,
+                                 new Event_Analyzer);
+  MT_Module *cr = new MT_Module (ACE_TEXT ("Consumer_Router"),
+                                 0, // 0 triggers the creation of a ACE_Thru_Task...
+                                 new Consumer_Router (ACE_Thread_Manager::instance ()));
 
   // Push the modules onto the event_server stream.
 
   if (event_server.push (sr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "push (Supplier_Router)"), -1);
-					
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("push (Supplier_Router)")), -1);
+
   if (event_server.push (ea) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "push (Event_Analyzer)"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("push (Event_Analyzer)")), -1);
 
   if (event_server.push (cr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "push (Consumer_Router)"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("push (Consumer_Router)")), -1);
 
   // Set the high and low water marks appropriately.
 
   int wm = options.low_water_mark ();
 
   if (event_server.control (ACE_IO_Cntl_Msg::SET_LWM, &wm) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "push (setting low watermark)"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("push (setting low watermark)")), -1);
 
   wm = options.high_water_mark ();
   if (event_server.control (ACE_IO_Cntl_Msg::SET_HWM, &wm) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "push (setting high watermark)"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("push (setting high watermark)")), -1);
 
   // spawn the two threads.
 
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (consumer), (void *) 0,
-					     THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
+                                             THR_NEW_LWP | THR_DETACHED) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
 
   else if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (supplier), (void *) "hello",
-						  THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
- 
+                                                  THR_NEW_LWP | THR_DETACHED) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
+
   // Perform the main event loop waiting for the user to type ^C or to
   // enter a line on the ACE_STDIN.
 
-  ACE_Reactor::run_event_loop ();
+  ACE_Reactor::instance ()->run_reactor_event_loop ();
 
-  ACE_DEBUG ((LM_DEBUG, "main exiting\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("main exiting\n")));
 
   return 0;
 }
 #else
-int 
-main (int, char *[])
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, "test not defined for this platform\n"), -1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT ("test not defined for this platform\n")),
+                    -1);
 }
 #endif /* ACE_HAS_THREADS */

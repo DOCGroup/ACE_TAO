@@ -16,15 +16,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 
-
 ACE_RCSID (Strategies,
            DIOP_Profile,
            "$Id$")
-
-
-#if !defined (__ACE_INLINE__)
-# include "DIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
 
 static const char prefix_[] = "diop";
 
@@ -41,7 +35,7 @@ TAO_DIOP_Profile::TAO_DIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO::ObjectKey &object_key,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UDP_PROFILE,
+  : TAO_Profile (TAO_TAG_DIOP_PROFILE,
                  orb_core,
                  object_key,
                  version),
@@ -57,7 +51,7 @@ TAO_DIOP_Profile::TAO_DIOP_Profile (const char* host,
                                     const ACE_INET_Addr &addr,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UDP_PROFILE,
+  : TAO_Profile (TAO_TAG_DIOP_PROFILE,
                  orb_core,
                  object_key,
                  version),
@@ -67,7 +61,7 @@ TAO_DIOP_Profile::TAO_DIOP_Profile (const char* host,
 }
 
 TAO_DIOP_Profile::TAO_DIOP_Profile (TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UDP_PROFILE,
+  : TAO_Profile (TAO_TAG_DIOP_PROFILE,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (),

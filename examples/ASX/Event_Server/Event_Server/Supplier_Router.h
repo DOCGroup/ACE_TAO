@@ -65,7 +65,7 @@ protected:
   // Runs in a separate thread to dequeue messages and pass them up
   // the stream.
 
-  virtual int info (char **info_string, size_t length) const;
+  virtual int info (ACE_TCHAR **info_string, size_t length) const;
   // Dynamic linking hook.
 };
 

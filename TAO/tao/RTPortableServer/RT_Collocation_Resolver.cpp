@@ -4,7 +4,9 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-ACE_RCSID(RTCORBA, RT_Collocation_Resolver, "$Id$")
+ACE_RCSID(RTPortableServer,
+          RT_Collocation_Resolver,
+          "$Id$")
 
 #include "tao/ORB_Core.h"
 #include "tao/Object.h"
@@ -13,10 +15,6 @@ ACE_RCSID(RTCORBA, RT_Collocation_Resolver, "$Id$")
 #include "tao/PortableServer/POA.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/Profile.h"
-
-#if !defined (__ACE_INLINE__)
-# include "tao/RTPortableServer/RT_Collocation_Resolver.i"
-#endif /* ! __ACE_INLINE__ */
 
 CORBA::Boolean
 TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object

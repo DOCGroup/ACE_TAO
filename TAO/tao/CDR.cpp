@@ -1,37 +1,5 @@
 // $Id$
 
-
-// Portions of this file are:
-// Copyright 1994-1995 by Sun Microsystems Inc.
-// All Rights Reserved
-
-// CDR:         Encode/Decode basic machine data types
-//
-// Implementation of OMG "Common Data Representation" (CDR) ... there
-// are one routine each for byte/halfword/word/doubleword put/get,
-// which adjust to establish "natural" alignment (the bulk of the
-// code) and then put or get with byteswapping as needed.
-//
-// The implementation knows that native data formats are conformant
-// with OMG-IDL's (and hence CDR's) size requirements, and relies on
-// the fact that (for example) CORBA::Long is always four bytes long
-// even if the environment's "int" is a different size.
-//
-//      char, octet                       8 bits (1 byte)
-//      short, unsigned short            16 bits (2 bytes)
-//      long, unsigned long, float       32 bits (4 bytes)
-//      double, (unsigned) long long     64 bits (8 bytes)
-//      long double                     128 bits (16 bytes)
-//
-// Moreover, this "knows" that the native 'char' represents ISO
-// Latin/1 characters (an ASCII superset addressing Western European
-// characters) and that "double" and "float" comply with the IEEE
-// standards. (The "long double" may not be a native data type,
-// though.)
-//
-// THREADING NOTE: "CDR" is a data structure which must be protected
-// by external critical sections.
-
 #include "tao/CDR.h"
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
@@ -43,8 +11,9 @@
 #endif /* ! __ACE_INLINE__ */
 
 
-ACE_RCSID(tao, CDR, "$Id$")
-
+ACE_RCSID (tao,
+           CDR,
+           "$Id$")
 
 
 #if defined (ACE_ENABLE_TIMEPROBES)
@@ -142,9 +111,11 @@ TAO_OutputCDR::throw_stub_exception (int error_num ACE_ENV_ARG_DECL)
     case EINVAL : // wchar from a GIOP 1.0
       ACE_THROW (CORBA::MARSHAL (CORBA::OMGVMCID | 5, CORBA::COMPLETED_NO));
       ACE_NOTREACHED(break);
+#if (ERANGE != EINVAL)
     case ERANGE : // untranslatable character
       ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO));
       ACE_NOTREACHED(break);
+#endif
     case EACCES : // wchar but no codeset
       ACE_THROW(CORBA::INV_OBJREF (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO));
       ACE_NOTREACHED(break);
@@ -170,10 +141,12 @@ TAO_OutputCDR::throw_skel_exception (int error_num ACE_ENV_ARG_DECL)
                                    CORBA::COMPLETED_YES));
       ACE_NOTREACHED(break);
 
+#if (ERANGE != EINVAL)
     case ERANGE : // untranslatable character
       ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1,
                                          CORBA::COMPLETED_YES));
       ACE_NOTREACHED(break);
+#endif
 
     default :
       ACE_THROW (CORBA::MARSHAL (0, CORBA::COMPLETED_YES));
@@ -217,9 +190,11 @@ TAO_InputCDR::throw_stub_exception (int error_num ACE_ENV_ARG_DECL)
     case EINVAL : // wchar from a GIOP 1.0
       ACE_THROW (CORBA::MARSHAL (CORBA::OMGVMCID | 6, CORBA::COMPLETED_YES));
       ACE_NOTREACHED(break);
+#if (ERANGE != EINVAL)
     case ERANGE : // untranslatable character
       ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES));
       ACE_NOTREACHED(break);
+#endif
     case EACCES : // wchar but no codeset
       ACE_THROW (CORBA::INV_OBJREF (CORBA::OMGVMCID | 2, CORBA::COMPLETED_YES));
       ACE_NOTREACHED(break);
@@ -243,9 +218,11 @@ TAO_InputCDR::throw_skel_exception (int error_num ACE_ENV_ARG_DECL)
       ACE_THROW (CORBA::BAD_PARAM(CORBA::OMGVMCID | 23, CORBA::COMPLETED_NO));
       ACE_NOTREACHED(break);
 
+#if (ERANGE != EINVAL)
     case ERANGE : // untranslatable character
       ACE_THROW (CORBA::DATA_CONVERSION(CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO));
       ACE_NOTREACHED(break);
+#endif
 
     default :
       ACE_THROW (CORBA::MARSHAL());

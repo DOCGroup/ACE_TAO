@@ -14,4 +14,11 @@ project(ETCL) : orbsvcslib, core {
   Source_Files {
     ETCL
   }
+
+  Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_ETCL.pc.in
+  }
 }

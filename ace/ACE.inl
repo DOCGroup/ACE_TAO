@@ -225,7 +225,7 @@ ACE::send_i (ACE_HANDLE handle, const void *buf, size_t len)
 ACE_INLINE ssize_t
 ACE::recv_i (ACE_HANDLE handle, void *buf, size_t len)
 {
-#if defined (ACE_WIN32) || defined (ACE_PSOS) || defined (ACE_OPENVMS)
+#if defined (ACE_WIN32) || defined (ACE_PSOS) || defined (ACE_OPENVMS) || defined (ACE_TANDEM_T1248_PTHREADS)
   return ACE_OS::recv (handle, (char *) buf, len);
 #else
   return ACE_OS::read (handle, (char *) buf, len);
@@ -288,7 +288,15 @@ ACE_INLINE ACE_TCHAR
 ACE::nibble2hex (u_int n)
 {
   // Hexadecimal characters.
+#if defined (ACE_VXWORKS) && !defined (__DCPLUSPLUS__)
+  // temporary solution to prevent Windriver GNU toolchains from spewing
+  // loads of warnings when inlining.
+  // problem (incorrect warning leftover from older GNU) has been reported as
+  // TSR to Windriver.
+  const ACE_TCHAR hex_chars[] = ACE_LIB_TEXT ("0123456789abcdef");
+#else
   static const ACE_TCHAR hex_chars[] = ACE_LIB_TEXT ("0123456789abcdef");
+#endif
 
   // @@ UNICODE does this work?
   return hex_chars[n & 0x0f];

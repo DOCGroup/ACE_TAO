@@ -124,6 +124,12 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
   return 0;
 }
 
+int
+be_visitor_valuetype_ss::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
 ACE_CString
 be_visitor_valuetype_ss::generate_flat_name (be_valuetype *node)
 {

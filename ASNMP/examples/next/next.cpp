@@ -34,6 +34,7 @@
 =====================================================================*/
 
 #include "asnmp/snmp.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Get_Opt.h"
 
 // FUZZ: disable check_for_streams_include
@@ -92,19 +93,23 @@ nextapp::nextapp(int argc, char *argv[]): valid_(0)
       return;
    }
 
-   ACE_Get_Opt get_opt (argc, argv, "o:c:r:t:");
+   ACE_Argv_Type_Converter to_tchar (argc, argv);
+   ACE_Get_Opt get_opt (argc,
+                        to_tchar.get_TCHAR_argv (),
+                        ACE_TEXT ("o:c:r:t:"));
    for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
        case 'o':
-         req = get_opt.opt_arg();
+         req = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
          if (req.valid() == 0)
-         cout << "ERROR: oid value: " <<get_opt.opt_arg()  \
+         cout << "ERROR: oid value: "
+              << ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg())
               << "is not valid. using default.\n";
          break;
 
        case 'c':
-         community_ = get_opt.opt_arg();
+         community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
          target_.set_read_community(community_);
          break;
 

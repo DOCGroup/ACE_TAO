@@ -190,7 +190,7 @@ ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
 
 #if (ACE_NSIG > 0)  &&  !defined (CHORUS)
   for (int s = 1; s < ACE_NSIG; s++)
-    if (signals.is_member (s))
+    if ((signals.is_member (s)) == 1)
       ACE_OS::sigaction (s, &this->sa_, 0);
 #else  /* ACE_NSIG <= 0  ||  CHORUS */
   ACE_UNUSED_ARG (signals);
@@ -218,7 +218,7 @@ ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
 
 #if (ACE_NSIG > 0)  &&  !defined (CHORUS)
   for (int s = 1; s < ACE_NSIG; s++)
-    if (signals.is_member (s))
+    if ((signals.is_member (s)) == 1)
       ACE_OS::sigaction (s, &this->sa_, 0);
 #else  /* ACE_NSIG <= 0  ||  CHORUS */
   ACE_UNUSED_ARG (signals);
@@ -392,7 +392,7 @@ ACE_Sig_Handler::remove_handler (int signum,
       // Register either the new disposition or restore the default.
       return new_disp->register_action (signum, old_disp);
     }
-  else
+
     return -1;
 }
 
@@ -472,6 +472,10 @@ ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Handler_Ex sig_func,
     sig_func_ (sig_func)
 {
   // ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
+}
+
+ACE_Sig_Adapter::~ACE_Sig_Adapter ()
+{
 }
 
 int
@@ -693,8 +697,8 @@ ACE_Sig_Handlers::register_handler (int signum,
             return ace_sig_adapter->sigkey ();
         }
     }
-  else
-    return -1;
+
+  return -1;
 }
 
 // Remove the ACE_Event_Handler currently associated with <signum>.

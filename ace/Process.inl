@@ -372,12 +372,6 @@ ACE_Process_Options::process_name (void)
   return this->process_name_;
 }
 
-ACE_INLINE void
-ACE_Managed_Process::unmanage (void)
-{
-  delete this;
-}
-
 #if defined (ACE_HAS_WINCE)
 // Here is a collection of inline functions which are defined only
 // under CE.  They are not empty on most other platforms.

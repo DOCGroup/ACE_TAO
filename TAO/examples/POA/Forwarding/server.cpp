@@ -178,12 +178,6 @@ int
 main (int argc,
       char **argv)
 {
-  int result =
-    parse_args (argc, argv);
-
-  if (result == -1)
-    return -1;
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -194,6 +188,12 @@ main (int argc,
                          0
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      int result =
+        parse_args (argc, argv);
+
+      if (result == -1)
+        return -1;
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -233,7 +233,7 @@ main (int argc,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in server");
       return -1;
     }
   ACE_ENDTRY;

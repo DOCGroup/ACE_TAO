@@ -236,11 +236,6 @@ private:
   ACEXML_NS_CONTEXT *effective_context_;
 };
 
-
-#if defined (__ACEXML_INLINE__)
-# include "ACEXML/common/NamespaceSupport.i"
-#endif /* __ACEXML_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* ACEXML_NAMESPACESUPPORT_H */

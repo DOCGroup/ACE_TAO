@@ -11,7 +11,6 @@ package GNUObjectGenerator;
 # ************************************************************
 
 use strict;
-use File::Basename;
 use ObjectGenerator;
 
 use vars qw(@ISA);
@@ -22,7 +21,7 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub process {
-  my($noext)   = basename($_[1]);
+  my($noext)   = $_[1];
   my($objects) = [];
   $noext =~ s/\.[^\.]+$//o;
 

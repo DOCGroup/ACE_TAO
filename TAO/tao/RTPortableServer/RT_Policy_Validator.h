@@ -26,6 +26,7 @@
 
 #include "rtportableserver_export.h"
 #include "tao/Policy_Validator.h"
+#include "tao/RTCORBA/RTCORBA.h"
 
 class TAO_ORB_Core;
 class TAO_Acceptor_Registry;
@@ -41,12 +42,16 @@ public:
   /// Destructor.
   ~TAO_POA_RT_Policy_Validator (void);
 
+  static RTCORBA::ServerProtocolPolicy_ptr server_protocol_policy_from_thread_pool (TAO_Thread_Pool *thread_pool,
+                                                                                    TAO_ORB_Core &orb_core);
+
+  static void server_protocol_policy_from_acceptor_registry (RTCORBA::ProtocolList &protocols,
+                                                             TAO_Acceptor_Registry &acceptor_registry,
+                                                             TAO_ORB_Core &orb_core);
+
   static TAO_Thread_Pool *extract_thread_pool (TAO_ORB_Core &orb_core,
                                                TAO_Policy_Set &policies
                                                ACE_ENV_ARG_DECL);
-
-  static TAO_Acceptor_Registry *extract_acceptor_registry (TAO_ORB_Core &orb_core,
-                                                           TAO_Thread_Pool *thread_pool);
 
 protected:
 
@@ -79,13 +84,6 @@ private:
 
   void validate_thread_pool (TAO_Policy_Set &policies
                              ACE_ENV_ARG_DECL);
-
-  void validate_lifespan (TAO_Policy_Set &policies
-                          ACE_ENV_ARG_DECL);
-
-  TAO_Acceptor_Registry *acceptor_registry (void);
-
-  TAO_Acceptor_Registry *acceptor_registry_;
 
   TAO_Thread_Pool *thread_pool_;
 

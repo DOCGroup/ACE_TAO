@@ -13,11 +13,6 @@ ACE_RCSID (tao,
            IIOP_Profile,
            "$Id$")
 
-
-#if !defined (__ACE_INLINE__)
-# include "IIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/os_include/os_netdb.h"
 
 static const char prefix_[] = "iiop";
@@ -64,7 +59,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
 TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (IOP::TAG_INTERNET_IOP,
                  orb_core,
-                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
+                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
+                                           TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
     count_ (1)
 {
@@ -104,6 +100,9 @@ TAO_IIOP_Profile::decode_profile (TAO_InputCDR& cdr)
       // Invalidate the object_addr_ until first access.
       this->endpoint_.object_addr_.set_type (-1);
 
+      this->count_ +=
+        this->endpoint_.preferred_interfaces (this->orb_core ());
+
       return 1;
     }
 
@@ -136,7 +135,15 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
 
   if (cp_pos == ior)
     {
-      // No hostname specified!  It is required by the spec.
+      // No hostname, however one is required by the spec when specifying a port.
+      // See formal-04-03-01, section 13.6.10.3
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_ERROR,
+                   ACE_LIB_TEXT ("\nTAO (%P|%t) IIOP_Profile: ")
+                   ACE_LIB_TEXT ("Host address may be omited only when no port has been specified.\n")));
+        }
+
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,
@@ -301,7 +308,7 @@ TAO_IIOP_Profile::add_endpoint (TAO_IIOP_Endpoint *endp)
   endp->next_ = this->endpoint_.next_;
   this->endpoint_.next_ = endp;
 
-  this->count_++;
+  ++this->count_;
 }
 
 char *
@@ -381,6 +388,21 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 int
 TAO_IIOP_Profile::encode_endpoints (void)
 {
+  CORBA::ULong actual_count = 0;
+
+  const TAO_IIOP_Endpoint *endpoint = &this->endpoint_;
+
+  // Count the number of endpoints that needs to be encoded
+  for (CORBA::ULong c = 0;
+       c != this->count_;
+       ++c)
+    {
+      if (endpoint->is_encodable_)
+        ++actual_count;
+
+      endpoint = endpoint->next_;
+    }
+
   // Create a data structure and fill it with endpoint info for wire
   // transfer.
   // We include information for the head of the list
@@ -389,17 +411,20 @@ TAO_IIOP_Profile::encode_endpoints (void)
   // priority is not!
 
   TAO::IIOPEndpointSequence endpoints;
-  endpoints.length (this->count_);
+  endpoints.length (actual_count);
 
-  const TAO_IIOP_Endpoint *endpoint = &this->endpoint_;
+  endpoint = &this->endpoint_;
+
   for (CORBA::ULong i = 0;
-       i < this->count_;
+       i < actual_count;
        ++i)
     {
-      endpoints[i].host = endpoint->host ();
-      endpoints[i].port = endpoint->port ();
-      endpoints[i].priority = endpoint->priority ();
-
+      if (endpoint->is_encodable_)
+        {
+          endpoints[i].host = endpoint->host ();
+          endpoints[i].port = endpoint->port ();
+          endpoints[i].priority = endpoint->priority ();
+        }
       endpoint = endpoint->next_;
     }
 

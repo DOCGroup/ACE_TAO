@@ -87,7 +87,4 @@ namespace CIAO
 
 }
 
-#if defined (__ACE_INLINE__)
-# include "XML_Utils.inl"
-#endif /* __ACE_INLINE__ */
 #endif /* CIAO_XML_UTILS_H */

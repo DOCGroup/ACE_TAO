@@ -4,6 +4,7 @@
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Message_Block.h"
+#include "ace/Min_Max.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Filecache.h"
 #include "IO.h"
@@ -128,19 +129,19 @@ JAWS_Synch_IO::transmit_file (const char *filename,
       int iovcnt = 0;
       if (header_size > 0)
         {
-          iov[iovcnt].iov_base = ACE_const_cast(char*, header);
+          iov[iovcnt].iov_base = const_cast<char*> (header);
           iov[iovcnt].iov_len =  header_size;
           iovcnt++;
         }
       if (handle.size () > 0)
         {
-          iov[iovcnt].iov_base =  ACE_reinterpret_cast(char*,handle.address ());
+          iov[iovcnt].iov_base =  reinterpret_cast<char*> (handle.address ());
           iov[iovcnt].iov_len = handle.size ();
           iovcnt++;
         }
       if (trailer_size > 0)
         {
-          iov[iovcnt].iov_base = ACE_const_cast(char*, trailer);
+          iov[iovcnt].iov_base = const_cast<char*> (trailer);
           iov[iovcnt].iov_len = trailer_size;
           iovcnt++;
         }

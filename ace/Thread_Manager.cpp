@@ -580,7 +580,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
   ACE_hthread_t thr_handle;
 
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
   // On VxWorks, ACE_thread_t is char *.  If t_id is 0, allocate space
   // for ACE_OS::thr_create () to store the task name.  If t_id is not
   // 0, and it doesn't point to a 0 char *, then the non-zero char *
@@ -630,40 +630,38 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
       new_thr_desc->sync_->release ();
       return -1;
     }
-  else
-    {
+
 #if defined (ACE_HAS_WTHREADS)
-      // Have to duplicate handle if client asks for it.
-      // @@ How are thread handles implemented on AIX?  Do they
-      // also need to be duplicated?
-      if (t_handle != 0)
+  // Have to duplicate handle if client asks for it.
+  // @@ How are thread handles implemented on AIX?  Do they
+  // also need to be duplicated?
+  if (t_handle != 0)
 # if defined (ACE_HAS_WINCE)
-        *t_handle = thr_handle;
+    *t_handle = thr_handle;
 # else  /* ! ACE_HAS_WINCE */
-        (void) ::DuplicateHandle (::GetCurrentProcess (),
-                                  thr_handle,
-                                  ::GetCurrentProcess (),
-                                  t_handle,
-                                  0,
-                                  TRUE,
-                                  DUPLICATE_SAME_ACCESS);
+  (void) ::DuplicateHandle (::GetCurrentProcess (),
+                            thr_handle,
+                            ::GetCurrentProcess (),
+                            t_handle,
+                            0,
+                            TRUE,
+                            DUPLICATE_SAME_ACCESS);
 # endif /* ! ACE_HAS_WINCE */
 #else  /* ! ACE_HAS_WTHREADS */
-     if (t_handle != 0)
-       *t_handle = thr_handle;
+  if (t_handle != 0)
+    *t_handle = thr_handle;
 #endif /* ! ACE_HAS_WTHREADS && ! VXWORKS */
 
-      // append_thr also put the <new_thr_desc> into Thread_Manager's
-      // double-linked list.  Only after this point, can we manipulate
-      // double-linked list from a spawned thread's context.
-      return this->append_thr (*t_id,
-                               thr_handle,
-                               ACE_THR_SPAWNED,
-                               grp_id,
-                               task,
-                               flags,
-                               new_thr_desc.release ());
-    }
+  // append_thr also put the <new_thr_desc> into Thread_Manager's
+  // double-linked list.  Only after this point, can we manipulate
+  // double-linked list from a spawned thread's context.
+  return this->append_thr (*t_id,
+                           thr_handle,
+                           ACE_THR_SPAWNED,
+                           grp_id,
+                           task,
+                           flags,
+                           new_thr_desc.release ());
 }
 
 int
@@ -867,7 +865,7 @@ ACE_Thread_Manager::insert_thr (ACE_thread_t t_id,
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Check for duplicates and bail out if we're already registered...
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
   if (this->find_hthread (t_handle) != 0 )
     return -1;
 #else  /* ! VXWORKS */
@@ -923,7 +921,7 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 {
   ACE_TRACE ("ACE_Thread_Manager::remove_thr");
 
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
   ACE_thread_t tid = td->self ();
 #endif /* VXWORKS */
 
@@ -932,7 +930,7 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
   this->thr_list_.remove (td);
 
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
   // Delete the thread ID, if the ACE_Thread_Manager allocated it.
   if (tid  &&  tid[0] == ACE_THR_ID_ALLOCATED)
     {
@@ -1070,7 +1068,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
   ACE_TRACE ("ACE_Thread_Manager::kill_thr");
 
   ACE_thread_t tid = td->thr_id_;
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
   // Skip over the ID-allocated marker, if present.
   tid += tid[0] == ACE_THR_ID_ALLOCATED  ?  1  :  0;
 #endif /* VXWORKS */
@@ -1641,7 +1639,7 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, int do_thr_exit)
 
     // Find the thread id, but don't use the cache.  It might have been
     // deleted already.
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
     ACE_hthread_t id;
     ACE_OS::thr_self (id);
     ACE_Thread_Descriptor *td = this->find_hthread (id);
@@ -1702,7 +1700,7 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, int do_thr_exit)
 
     // Find the thread id, but don't use the cache.  It might have been
     // deleted already.
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
     ACE_hthread_t id;
     ACE_OS::thr_self (id);
     ACE_Thread_Descriptor* td = this->find_hthread (id);

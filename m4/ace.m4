@@ -316,6 +316,55 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ])
  AM_CONDITIONAL([BUILD_THREADS], [test X$ace_user_enable_threads = Xyes])
 
+ AC_ARG_ENABLE([pthreads],
+  AS_HELP_STRING(--enable-pthreads,enable POSIX thread (Pthreads) support [[[yes]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_user_enable_pthreads=yes
+      ;;
+    no)
+      ace_user_enable_pthreads=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-pthreads])
+      ;;
+   esac
+  ],
+  [
+    ace_user_enable_pthreads=yes
+  ])
+
+ AC_ARG_ENABLE([uithreads],
+  AS_HELP_STRING(--enable-uithreads,enable UNIX International thread support [[[no]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_user_enable_uithreads=yes
+      ;;
+    no)
+      ace_user_enable_uithreads=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-uithreads])
+      ;;
+   esac
+  ],
+  [
+    dnl The default is to disable UI threads. However, on Solaris, we
+    dnl enable it by default since it's functionality is very useful and
+    dnl has traditionally been enabled in ACE.
+    case "$host" in
+      *solaris2*)
+        ace_user_enable_uithreads=yes
+        AC_MSG_NOTICE([[--enable-uithreads enabled by default for Solaris; use --enable-uithreads=no to disable it.]])
+        ;;
+      *)
+        ace_user_enable_uithreads=no
+        ;;
+    esac
+  ])
+
  AC_ARG_ENABLE([verb-not-sup],
   AS_HELP_STRING(--enable-verb-not-sup,enable verbose ENOTSUP reports [[[no]]]),
   [
@@ -332,23 +381,23 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    esac
   ],)
 
+ dnl The ace/config-all.h file defaults ACE_NTRACE properly, so only emit
+ dnl something if the user specifies this option.
  AC_ARG_ENABLE([trace],
   AS_HELP_STRING(--enable-trace,enable ACE tracing [[[no]]]),
   [
    case "${enableval}" in
     yes)
+      AC_DEFINE([ACE_NTRACE],0)
       ;;
     no)
-      AC_DEFINE([ACE_NTRACE])
+      AC_DEFINE([ACE_NTRACE],1)
       ;;
     *)
       AC_MSG_ERROR([bad value ${enableval} for --enable-trace])
       ;;
    esac
-  ],
-  [
-   AC_DEFINE([ACE_NTRACE])
-  ])
+  ],)
 
  AC_ARG_ENABLE([wfmo],
   AS_HELP_STRING(--enable-wfmo,build WFMO-using examples [[[no]]]),
@@ -388,7 +437,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
       ace_user_enable_winregistry=no
       ;;
     *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-rtti])
+      AC_MSG_ERROR([bad value ${enableval} for --enable-winregistry])
       ;;
    esac
   ],
@@ -404,53 +453,10 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ])
  AM_CONDITIONAL([BUILD_WINREGISTRY], [test X$ace_user_enable_winregistry = Xyes])
 
- AC_ARG_ENABLE([xt-reactor],
-  AS_HELP_STRING(--enable-xt-reactor,build support for the XtReactor [[[no]]]),
-  [
-   case "${enableval}" in
-    yes)
-      AC_PATH_XTRA
-dnl Here, if X isn't found or the user sets "--without-x" on the command
-dnl line, then "no_x" is set to "yes."
-      AS_IF([test "$no_x" != yes],
-        [
-         ACE_XLIBS="-lX11 -lXt"
-         ace_user_enable_xt_reactor=yes
-        ],
-        [
-         ACE_XLIBS=""
-         ace_user_enable_xt_reactor=no
-         AC_MSG_WARN([X was not found or it was disabled.])
-         AC_MSG_WARN([ACE_XtReactor will not be enabled.])
-        ])
-      ;;
-    no)
-      ACE_XLIBS=""
-      ace_user_enable_xt_reactor=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-xt-reactor])
-      ;;
-   esac
-  ],)
-
- AC_ARG_ENABLE([fl-reactor],
-  AS_HELP_STRING(--enable-fl-reactor,build support for the FlReactor [[[no]]]),
-  [
-   case "${enableval}" in
-    yes)
-      AC_MSG_ERROR([--enable-fl-reactor currently unimplemented])
-      ace_user_enable_fl_reactor=yes
-      ;;
-    no)
-      AC_MSG_ERROR([--enable-fl-reactor currently unimplemented])
-      ace_user_enable_fl_reactor=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-fl-reactor])
-      ;;
-   esac
-  ],)
+ ACE_ENABLE_FL_REACTOR
+ ACE_ENABLE_QT_REACTOR
+ ACE_ENABLE_TK_REACTOR
+ ACE_ENABLE_XT_REACTOR
 
  AC_ARG_WITH([gperf],
   AS_HELP_STRING(--with-gperf,compile the gperf program [[[yes]]]),
@@ -484,9 +490,9 @@ dnl line, then "no_x" is set to "yes."
   ])
  AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_with_gperf = Xyes])
 
- ACE_WITH_RMCAST
- ACE_WITH_QOS
- ACE_WITH_SSL
+ ACE_ENABLE_QOS
+ ACE_ENABLE_SSL
+ ACE_ENABLE_ACEXML
 
  AC_ARG_WITH([tao],
   AS_HELP_STRING(--with-tao,build TAO (the ACE ORB) [[[yes]]]),
@@ -562,6 +568,7 @@ AC_DEFUN([ACE_COMPILATION_OPTIONS],
       ;;
     no)
       AC_DEFINE([ACE_NDEBUG])
+      AC_DEFINE([ACE_USE_RCSID],[0])
       ;;
     *)
       AC_MSG_ERROR([bad value ${enableval} for --enable-debug])
@@ -810,7 +817,7 @@ dnl    fi
   ],)
 
  AC_ARG_ENABLE([stdcpplib],
-  AS_HELP_STRING(--enable-stdcpplib,enable standard C++ library [[[yes]]]),
+  AS_HELP_STRING([--enable-stdcpplib],[enable standard C++ library [[yes]]]),
   [
    case "${enableval}" in
     yes)
@@ -828,64 +835,247 @@ dnl    fi
    ace_user_enable_stdcpplib=yes
   ])
 
+ AC_ARG_ENABLE([uses-wchar],
+               AS_HELP_STRING([--enable-uses-wchar],
+                            [enable use of wide characters [[no]]]),
+               [case "${withval}" in
+                 yes) 
+                  AC_DEFINE([ACE_USES_WCHAR])
+                  ace_user_enable_wide_char=yes
+                  ;;
+                 no)
+                  ace_user_enable_wide_char=no
+                  ;;
+                 *)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-uses-wchar])
+                  ;;
+                esac])
+ AC_CACHE_CHECK([whether to use wide characters internally],
+                [ace_user_enable_wide_char], [ace_user_enable_wide_char=no])
+ AM_CONDITIONAL([BUILD_USES_WCHAR], [test X$ace_user_enable_wide_char = Xyes])
+
 ])
 
-AC_DEFUN([ACE_WITH_RMCAST],
-[AC_ARG_WITH([rmcast],
-             AS_HELP_STRING([--with-rmcast],
-                            [compile/use the ACE_RMCast library [[yes]]]),
-             [case "${withval}" in
-               yes) 
-                ace_user_with_rmcast=yes
-                ;;
-               no)
-                ace_user_with_rmcast=no
-                ;;
-               *)
-                AC_MSG_ERROR(bad value ${withval} for --with-rmcast)
-                ;;
-              esac])
-AC_CACHE_CHECK([whether to compile/use the ACE_RMCast library],
-               [ace_user_with_rmcast],[ace_user_with_rmcast=yes])
-AM_CONDITIONAL([BUILD_RMCAST], [test X$ace_user_with_rmcast = Xyes])
-])
-
-AC_DEFUN([ACE_WITH_QOS],
-[AC_ARG_WITH([qos],
-             AS_HELP_STRING([--with-qos],
-                            [compile/use the ACE_QoS library [[no]]]),
-             [case "${withval}" in
-               yes) 
-                ace_user_with_qos=yes
-                ;;
-               no)
-                ace_user_with_qos=no
-                ;;
-               *)
-                AC_MSG_ERROR(bad value ${withval} for --with-qos)
-                ;;
-              esac])
+AC_DEFUN([ACE_ENABLE_QOS],
+[AC_ARG_ENABLE([qos],
+	       AS_HELP_STRING([--enable-qos],
+			      [compile/use the ACE_QoS library [[no]]]),
+	       [case "${withval}" in
+		 yes) 
+		  ace_user_enable_qos=yes
+		  ;;
+		 no)
+		  ace_user_enable_qos=no
+		  ;;
+		 *)
+		  AC_MSG_ERROR(bad value ${withval} for --with-qos)
+		  ;;
+		esac])
 AC_CACHE_CHECK([whether to compile/use the ACE_QoS library],
-               [ace_user_with_qos],[ace_user_with_qos=no])
-AM_CONDITIONAL([BUILD_QOS], [test X$ace_user_with_qos = Xyes])
+               [ace_user_enable_qos],[ace_user_enable_qos=no])
+AM_CONDITIONAL([BUILD_QOS], [test X$ace_user_enable_qos = Xyes])
 ])
 
-AC_DEFUN([ACE_WITH_SSL],
-[AC_ARG_WITH([ssl],
-             AS_HELP_STRING([--with-ssl],
-                            [compile/use the ACE_SSL library [[yes]]]),
-             [case "${withval}" in
-               yes) 
-                ace_user_with_ssl=yes
-                ;;
-               no)
-                ace_user_with_ssl=no
-                ;;
-               *)
-                AC_MSG_ERROR(bad value ${withval} for --with-ssl)
-                ;;
-              esac])
+AC_DEFUN([ACE_ENABLE_SSL],
+[AC_ARG_ENABLE([ssl],
+	       AS_HELP_STRING([--enable-ssl],
+			      [compile/use the ACE_SSL library [[yes]]]),
+	       [case "${withval}" in
+		 yes) 
+		  ace_user_enable_ssl=yes
+		  ;;
+		 no)
+		  ace_user_enable_ssl=no
+		  ;;
+		 *)
+		  AC_MSG_ERROR(bad value ${withval} for --with-ssl)
+		  ;;
+		esac])
 AC_CACHE_CHECK([whether to compile/use the ACE_SSL library],
-               [ace_user_with_ssl], [ace_user_with_ssl=yes])
-AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
+               [ace_user_enable_ssl], [ace_user_enable_ssl=yes])
+AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_enable_ssl = Xyes])
+])
+
+AC_DEFUN([ACE_ENABLE_ACEXML],
+[AC_ARG_ENABLE([acexml],
+	       AS_HELP_STRING([--enable-acexml],
+			      [compile/use the ACEXML library [[yes]]]),
+	       [case "${withval}" in
+		 yes) 
+		  ace_user_enable_acexml=yes
+		  ;;
+		 no)
+		  ace_user_enable_acexml=no
+		  ;;
+		 *)
+		  AC_MSG_ERROR(bad value ${withval} for --with-acexml)
+		  ;;
+		esac],
+		[
+		 ace_user_enable_acexml=yes
+		])
+AC_CACHE_CHECK([whether to compile/use the ACEXML library],
+               [ace_user_enable_acexml], [ace_user_enable_acexml=yes])
+AM_CONDITIONAL([BUILD_ACEXML], [test X$ace_user_enable_acexml = Xyes])
+])
+
+
+# ACE_PATH_GL
+#---------------------------------------------------------------------------
+# Find OpenGL Libraries, flags, etc.
+AC_DEFUN([ACE_PATH_GL],
+[
+AM_CONDITIONAL([BUILD_GL], [false])
+])
+
+
+# ACE_PATH_FL
+#---------------------------------------------------------------------------
+# Find FL/TK Libraries, flags, etc.
+AC_DEFUN([ACE_PATH_FL],
+[AC_REQUIRE([ACE_PATH_GL])
+])
+
+
+# ACE_PATH_QT
+#---------------------------------------------------------------------------
+# Find Qt Libraries, flags, etc.
+AC_DEFUN([ACE_PATH_QT],
+[
+])
+
+
+# ACE_PATH_TK
+#---------------------------------------------------------------------------
+# Find Tk Libraries, flags, etc.
+AC_DEFUN([ACE_PATH_TK],
+[
+])
+
+
+# ACE_ENABLE_FL_REACTOR
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_FL_REACTOR],
+[AC_REQUIRE([ACE_PATH_FL])
+AC_ARG_ENABLE([fl-reactor],
+  	       AS_HELP_STRING([--enable-fl-reactor],
+		              [build support for the FlReactor [[no]]]),
+               [case "${enableval}" in
+                 yes)
+		  AC_MSG_ERROR([--enable-fl-reactor currently unimplemented])
+		  ace_user_enable_fl_reactor=yes
+		  ;;
+		no)
+		  AC_MSG_ERROR([--enable-fl-reactor currently unimplemented])
+		  ace_user_enable_fl_reactor=no
+		  ;;
+		*)
+		  AC_MSG_ERROR([bad value ${enableval} for --enable-fl-reactor])
+		  ;;
+	        esac],
+                [
+                 ace_user_enable_fl_reactor=no
+                ])
+AM_CONDITIONAL([BUILD_FL], [test X$ace_enable_fl_reactor = Xyes])
+AM_CONDITIONAL([BUILD_ACE_FLREACTOR], 
+               [test X$ace_enable_fl_reactor = Xyes])
+])
+
+
+# ACE_ENABLE_QT_REACTOR
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_QT_REACTOR],
+[AC_REQUIRE([ACE_PATH_QT])
+AC_ARG_ENABLE([qt-reactor],
+  	       AS_HELP_STRING([--enable-qt-reactor],
+		              [build support for the QtReactor [[no]]]),
+               [case "${enableval}" in
+                 yes)
+		  AC_MSG_ERROR([--enable-qt-reactor currently unimplemented])
+		  ace_user_enable_qt_reactor=yes
+		  ;;
+		no)
+		  AC_MSG_ERROR([--enable-qt-reactor currently unimplemented])
+		  ace_user_enable_qt_reactor=no
+		  ;;
+		*)
+		  AC_MSG_ERROR([bad value ${enableval} for --enable-qt-reactor])
+		  ;;
+	        esac],
+                [
+                 ace_user_enable_qt_reactor=no
+                ])
+AM_CONDITIONAL([BUILD_QT], [test X$ace_enable_qt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_ACE_QTREACTOR], 
+               [test X$ace_enable_qt_reactor = Xyes])
+])
+
+
+# ACE_ENABLE_TK_REACTOR
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_TK_REACTOR],
+[AC_REQUIRE([ACE_PATH_TK])
+AC_ARG_ENABLE([tk-reactor],
+  	       AS_HELP_STRING([--enable-tk-reactor],
+		              [build support for the TkReactor [[no]]]),
+               [case "${enableval}" in
+                 yes)
+		  AC_MSG_ERROR([--enable-tk-reactor currently unimplemented])
+		  ace_user_enable_tk_reactor=yes
+		  ;;
+		no)
+		  AC_MSG_ERROR([--enable-tk-reactor currently unimplemented])
+		  ace_user_enable_tk_reactor=no
+		  ;;
+		*)
+		  AC_MSG_ERROR([bad value ${enableval} for --enable-tk-reactor])
+		  ;;
+	        esac],
+                [
+                 ace_user_enable_tk_reactor=no
+                ])
+AM_CONDITIONAL([BUILD_TK], [test X$ace_enable_tk_reactor = Xyes])
+AM_CONDITIONAL([BUILD_ACE_TKREACTOR], 
+               [test X$ace_enable_tk_reactor = Xyes])
+])
+
+
+# ACE_ENABLE_XT_REACTOR
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_ENABLE_XT_REACTOR],
+[AC_ARG_ENABLE([xt-reactor],
+               AS_HELP_STRING([--enable-xt-reactor],
+                              [build support for the XtReactor [[no]]]),
+               [case "${enableval}" in
+                 yes)
+                  AC_PATH_XTRA
+dnl Here, if X isn't found or the user sets "--without-x" on the command
+dnl line, then "no_x" is set to "yes."
+                  AS_IF([test "$no_x" != yes],
+                        [
+		          ACE_XLIBS="-lX11 -lXt"
+                          ace_user_enable_xt_reactor=yes
+                        ],[
+                          ACE_XLIBS=""
+                          ace_user_enable_xt_reactor=no
+                          AC_MSG_WARN([X was not found or it was disabled.])
+                          AC_MSG_WARN([ACE_XtReactor will not be enabled.])
+                        ])
+                  ;;
+                 no)
+                  ACE_XLIBS=""
+                  ace_user_enable_xt_reactor=no
+                  ;;
+                 *)
+		  AC_MSG_ERROR([bad value ${enableval} for --enable-xt-reactor])
+		  ;;
+                esac],
+		[
+                  ACE_XLIBS=""
+                  ace_user_enable_xt_reactor=no
+		])
+AM_CONDITIONAL([BUILD_X11], [test X$ace_enable_xt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_XT], [test X$ace_enable_xt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_ACE_XTREACTOR], 
+               [test X$ace_enable_xt_reactor = Xyes])
 ])

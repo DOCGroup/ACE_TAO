@@ -120,6 +120,17 @@ namespace CCF
           act_event_type_end (
             f.event_type (), &SemanticAction::EventType::end),
 
+          // EventTypeFactory
+          //
+          act_event_type_factory_name (
+            f.event_type_factory (), &SemanticAction::EventTypeFactory::name),
+
+          act_event_type_factory_parameter (
+            f.event_type_factory (), &SemanticAction::EventTypeFactory::parameter),
+
+          act_event_type_factory_raises (
+            f.event_type_factory (), &SemanticAction::EventTypeFactory::raises),
+
 
           // Home
           //
@@ -422,8 +433,39 @@ namespace CCF
            | attribute_decl
            | operation_decl
            | value_type_member_decl
-           | value_type_factory_decl
+           | event_type_factory_decl
         )
+        ;
+
+
+      // eventtype factory
+      //
+      //
+      event_type_factory_decl =
+           FACTORY
+        >> simple_identifier[act_event_type_factory_name]
+        >> LPAREN
+        >> event_type_factory_parameter_list
+        >> RPAREN
+        >> !(RAISES >> LPAREN >> event_type_factory_raises_list >> RPAREN)
+        >> SEMI
+        ;
+
+      event_type_factory_parameter_list =
+        *(
+              event_type_factory_parameter
+           >> *(COMMA >> event_type_factory_parameter)
+        )
+        ;
+
+      event_type_factory_parameter =
+           IN
+        >> (identifier >> simple_identifier)[act_event_type_factory_parameter]
+        ;
+
+      event_type_factory_raises_list =
+           identifier[act_event_type_factory_raises]
+        >> *(COMMA >> identifier[act_event_type_factory_raises])
         ;
 
       //

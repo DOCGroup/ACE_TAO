@@ -350,7 +350,7 @@ Notifier_i::push (const Event_Comm::Event &event
       ACE_ASSERT (consumer_ref != 0);
 
 #if defined (ACE_HAS_REGEX)
-      char *regexp = ACE_const_cast (char *, me->int_id_->regexp ());
+      char *regexp = const_cast<char *> (me->int_id_->regexp ());
       ACE_ASSERT (regexp);
 
       const char *criteria = me->int_id_->criteria ();

@@ -146,10 +146,6 @@ protected:
   ));
 };
 
-#if defined (__ACE_INLINE__)
-#include "ProxySupplier_T.inl"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ProxySupplier_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

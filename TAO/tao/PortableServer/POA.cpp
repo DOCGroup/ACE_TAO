@@ -8,8 +8,8 @@ ACE_RCSID (PortableServer,
 // ImplRepo related.
 //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-# include "tao/PortableServer/ImR_LocatorC.h"
 # include "tao/PortableServer/ImplRepo_i.h"
+# include "tao/PortableServer/ImplRepoC.h"
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 #include "tao/StringSeqC.h"
@@ -48,8 +48,8 @@ ACE_RCSID (PortableServer,
 #endif /* ! __ACE_INLINE__ */
 
 // This is the TAO_Object_key-prefix that is appended to all TAO Object keys.
-// It's an array of octets representing ^t^a^o/0 in octal.
-CORBA::Octet
+// It's an array of constant octets representing ^t^a^o/0 in octal.
+CORBA::Octet const
 TAO_POA::objectkey_prefix [TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE] = {
   024, // octal for ^t
   001, // octal for ^a
@@ -386,14 +386,6 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
   // lead to reference deadlock, i.e., POA holds object A, but POA
   // cannot die because object A hold POA.
   {
-    // A recursive thread lock without using a recursive thread lock.
-    // Non_Servant_Upcall has a magic constructor and destructor.  We
-    // unlock the Object_Adapter lock for the duration of the servant
-    // activator upcalls; reacquiring once the upcalls complete.  Even
-    // though we are releasing the lock, other threads will not be
-    // able to make progress since
-    // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
-
     //
     // If new things are added to this cleanup code, make sure to move
     // the minimum CORBA #define after the declaration of
@@ -401,6 +393,14 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
     //
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+    // A recursive thread lock without using a recursive thread lock.
+    // Non_Servant_Upcall has a magic constructor and destructor.  We
+    // unlock the Object_Adapter lock for the duration of the servant
+    // activator upcalls; reacquiring once the upcalls complete.  Even
+    // though we are releasing the lock, other threads will not be
+    // able to make progress since
+    // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
 
     TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
     ACE_UNUSED_ARG (non_servant_upcall);
@@ -415,17 +415,6 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  }
-
-  if (this->ort_adapter_ != 0)
-  {
-    TAO::ORT_Adapter_Factory *ort_factory =
-      this->ORT_adapter_factory ();
-
-    ort_factory->destroy (this->ort_adapter_ ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    this->ort_adapter_ = 0;
   }
 
   CORBA::release (this);
@@ -617,16 +606,6 @@ TAO_POA::find_POA (const char *adapter_name,
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);
 
-  // A recursive thread lock without using a recursive thread lock.
-  // Non_Servant_Upcall has a magic constructor and destructor.  We
-  // unlock the Object_Adapter lock for the duration of the servant
-  // activator upcalls; reacquiring once the upcalls complete.  Even
-  // though we are releasing the lock, other threads will not be able
-  // to make progress since
-  // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
-  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
-  ACE_UNUSED_ARG (non_servant_upcall);
-
   TAO_POA *poa = this->find_POA_i (adapter_name,
                                    activate_it
                                    ACE_ENV_ARG_PARAMETER);
@@ -657,6 +636,18 @@ TAO_POA::find_POA_i (const ACE_CString &child_name,
               // Check the state of the POA Manager.
               this->check_poa_manager_state (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK_RETURN (0);
+
+              // A recursive thread lock without using a recursive
+              // thread lock. Non_Servant_Upcall has a magic
+              // constructor and destructor.  We unlock the
+              // Object_Adapter lock for the duration of the servant
+              // activator upcalls; reacquiring once the upcalls
+              // complete.  Even though we are releasing the lock,
+              // other threads will not be able to make progress since
+              // <Object_Adapter::non_servant_upcall_in_progress_> has
+              // been set.
+              TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
+              ACE_UNUSED_ARG (non_servant_upcall);
 
               CORBA::Boolean success =
                 this->adapter_activator_->unknown_adapter (this,
@@ -733,43 +724,49 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
         }
     }
 
-  TAO::ORT_Array array_obj_ref_template;
+  TAO::ORT_Array array_obj_ref_template (1);
 
   CORBA::ULong i = 0;
 
   // Gather all ObjectReferenceTemplates and change all adapter states
-  // to inactivate
+  // to INACTIVE.
   for (CHILDREN::iterator iterator = this->children_.begin ();
        iterator != this->children_.end ();
        ++iterator)
     {
-      TAO_POA *child_poa = (*iterator).int_id_;
+      TAO_POA * const child_poa = (*iterator).int_id_;
 
-      // Get the adapter template related to the ChildPOA
-      PortableInterceptor::ObjectReferenceTemplate *child_at =
-        child_poa->get_adapter_template_i ();
+      TAO::ORT_Adapter * const adapter = child_poa->ORT_adapter_i ();
 
-      // In case no ORT library is linked we get zero
-      if (child_at != 0)
+      // In case no ORT library is linked we get zero.
+      if (adapter != 0)
         {
+          // Get the ObjectReferenceTemplate for the child POA.
+          PortableInterceptor::ObjectReferenceTemplate * const ort =
+            adapter->get_adapter_template ();
+
           // Add it to the sequence of object reference templates that
           // will be destroyed.
-          array_obj_ref_template.size (i + 1);
+          array_obj_ref_template.size (1);
 
-          array_obj_ref_template[i] = child_at;
+          array_obj_ref_template[0] = ort;
         }
 
       child_poa->adapter_state_ =
         PortableInterceptor::INACTIVE;
 
+      // Notify the state changes to the IORInterceptors
+      this->adapter_state_changed (array_obj_ref_template,
+                                   PortableInterceptor::INACTIVE
+                                   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      if (adapter != 0)
+        adapter->release (array_obj_ref_template[0]);
+
       ++i;
     }
 
-  // Notify the state changes to the IORInterceptors
-  this->adapter_state_changed (array_obj_ref_template,
-                               PortableInterceptor::INACTIVE
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Destroy all child POA's now.
   for (CHILDREN::iterator destroy_iterator = this->children_.begin ();
@@ -842,17 +839,21 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
     {
       TAO::ORT_Array my_array_obj_ref_template;
 
-      // Get the adapter template
-      PortableInterceptor::ObjectReferenceTemplate *adapter =
-        this->get_adapter_template_i ();
+      TAO::ORT_Adapter * const ort_adapter =
+        this->ORT_adapter_i ();
 
-      if (adapter != 0)
+      // In case no ORT library is linked we get zero.
+      if (ort_adapter != 0)
         {
-          // Add it to the sequence of object reference templates, we just notify
-          // for ourselves that we are now non_existent, our childs will do it
-          // for themselves.
-          array_obj_ref_template.size (1);
-          array_obj_ref_template[0] = adapter;
+          // Get the ObjectReferenceTemplate.
+          PortableInterceptor::ObjectReferenceTemplate * const ort =
+            ort_adapter->get_adapter_template ();
+
+          // Add it to the sequence of object reference templates, we
+          // just notify for ourselves that we are now non_existent,
+          // our childs will do it for themselves.
+          my_array_obj_ref_template.size (1);
+          my_array_obj_ref_template[0] = ort;
         }
 
       // According to the ORT spec, after a POA is destroyed, its state
@@ -868,10 +869,24 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       this->adapter_state_ = PortableInterceptor::NON_EXISTENT;
 
-      this->adapter_state_changed (array_obj_ref_template,
+      this->adapter_state_changed (my_array_obj_ref_template,
                                    this->adapter_state_
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
+
+      if (ort_adapter != 0)
+        {
+          ort_adapter->release (my_array_obj_ref_template[0]);
+
+          TAO::ORT_Adapter_Factory *ort_factory =
+            this->ORT_adapter_factory ();
+
+          ort_factory->destroy (ort_adapter
+                                ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+
+          this->ort_adapter_ = 0;
+        }
     }
   else
     {
@@ -2504,13 +2519,11 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference
 
       return user_id._retn ();
     }
-  else
-    {
-      // Otherwise, it is the NON_RETAIN policy.  Therefore, the
-      // system id is the id (and no conversion/transformation is
-      // needed).
-      return new PortableServer::ObjectId (system_id);
-    }
+
+  // Otherwise, it is the NON_RETAIN policy.  Therefore, the
+  // system id is the id (and no conversion/transformation is
+  // needed).
+  return new PortableServer::ObjectId (system_id);
 }
 
 PortableServer::Servant
@@ -3945,6 +3958,25 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
   if (CORBA::is_nil (imr.in ()))
       return;
 
+  ImplementationRepository::Administration_var imr_locator;
+  {
+        // A recursive thread lock without using a recursive thread lock.
+        // Non_Servant_Upcall has a magic constructor and destructor.  We
+        // unlock the Object_Adapter lock for the duration of the servant
+        // activator upcalls; reacquiring once the upcalls complete.  Even
+        // though we are releasing the lock, other threads will not be able
+        // to make progress since
+        // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+        TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
+        ACE_UNUSED_ARG (non_servant_upcall);
+
+        imr_locator = ImplementationRepository::Administration::_narrow (imr.in () ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+  }
+
+  if (CORBA::is_nil(imr_locator.in ()))
+      return;
+
   TAO_POA *root_poa = this->object_adapter ().root_poa ();
   ACE_NEW_THROW_EX (this->server_object_,
                     ServerObject_i (this->orb_core_.orb (),
@@ -3979,7 +4011,7 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
 
   if (!svr->_stubobj () || !svr->_stubobj ()->profile_in_use ())
     {
-      ACE_ERROR ((LM_ERROR, "Invalid ServerObject, bailing out.\n"));
+      ACE_ERROR ((LM_ERROR, "Invalid ImR ServerObject, bailing out.\n"));
       return;
     }
 
@@ -3998,37 +4030,29 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_CString partial_ior(ior.in (), (pos - ior.in()) + 1);
 
-  ImplementationRepository::Locator_var imr_locator =
-    ImplementationRepository::Locator::_narrow (imr.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (CORBA::is_nil(imr_locator.in ()))
-    {
-      ACE_DEBUG ((LM_DEBUG, "Couldnt narrow down the ImR interface\n"));
-      return;
-    }
-
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Informing IMR that we are running at: %s\n",
                 ACE_TEXT_CHAR_TO_TCHAR (partial_ior.c_str())));
 
-  char host_name[MAXHOSTNAMELEN + 1];
-  ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
-
   ACE_TRY
     {
-      // Relies on the fact that host_name will be same for the activator
-      // We must pass this separately, because it is NOT possible to parse
-      // the hostname from the ior portably. On some platforms the hostname
-      // will be like 'foo.bar.com' and on others it will just be 'foo'
-      imr_locator->server_is_running_in_activator (this->name().c_str (),
-                                      host_name,
+      // A recursive thread lock without using a recursive thread lock.
+      // Non_Servant_Upcall has a magic constructor and destructor.  We
+      // unlock the Object_Adapter lock for the duration of the servant
+      // activator upcalls; reacquiring once the upcalls complete.  Even
+      // though we are releasing the lock, other threads will not be able
+      // to make progress since
+      // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
+
+      imr_locator->server_is_running (this->name().c_str (),
                                       partial_ior.c_str(),
                                       svr.in()
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_UNUSED_ARG (non_servant_upcall);
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -4052,35 +4076,43 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_POA::imr_notify_shutdown (void)
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notifing IMR of Shutdown\n"));
-
-  char host_name[MAXHOSTNAMELEN + 1];
-  ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
-
   // Notify the Implementation Repository about shutting down.
+
   CORBA::Object_var imr = this->orb_core ().implrepo_service ();
 
-  // Check to see if there was an imr returned.  If none, return ourselves.
+  // Check to see if there was an imr returned.  If none, return
+  // ourselves.
   if (CORBA::is_nil (imr.in ()))
     return;
 
   ACE_TRY_NEW_ENV
     {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Notifing IMR of Shutdown server:%s\n", this->the_name()));
+
+      // A recursive thread lock without using a recursive thread lock.
+      // Non_Servant_Upcall has a magic constructor and destructor.  We
+      // unlock the Object_Adapter lock for the duration of the servant
+      // activator upcalls; reacquiring once the upcalls complete.  Even
+      // though we are releasing the lock, other threads will not be able
+      // to make progress since
+      // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
+      ACE_UNUSED_ARG (non_servant_upcall);
+
       // Get the IMR's administrative object and call shutting_down on it
-      ImplementationRepository::Locator_var imr_locator =
-        ImplementationRepository::Locator::_narrow (imr.in ()
-                                                    ACE_ENV_ARG_PARAMETER);
+      ImplementationRepository::Administration_var imr_locator =
+        ImplementationRepository::Administration::_narrow (imr.in ()
+                                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      imr_locator->server_is_shutting_down_in_activator (this->the_name (),
-                                                         host_name
+      imr_locator->server_is_shutting_down (this->the_name ()
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Server_i::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "POA::imr_notify_shutdown()");
       // Ignore exceptions
     }
   ACE_ENDTRY;
@@ -4121,7 +4153,7 @@ TAO_POA::ORT_adapter_i (void)
           ort_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (!ort_adapter_)
+      if (!this->ort_adapter_)
         return 0;
 
       // @todo We have to look at this, we activate it but hold the POA lock,
@@ -4230,7 +4262,9 @@ TAO_POA::reference_to_ids (CORBA::Object_ptr the_ref
       PortableServer::NotAGroupObject
     ))
 {
-  TAO_POA_PortableGroup_Hooks *hooks = this->orb_core_.portable_group_poa_hooks ();
+  TAO_POA_PortableGroup_Hooks * hooks =
+    this->orb_core_.portable_group_poa_hooks ();
+
   if (hooks == 0)
     {
       ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),

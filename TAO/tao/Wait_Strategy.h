@@ -50,7 +50,7 @@ public:
   virtual int sending_request (TAO_ORB_Core *orb_core,
                                int two_way);
 
-  /// Base class virtual method. Wait till the <reply_received> flag is
+  /// Base class virtual method. Wait till the @c reply_received flag is
   /// true or the time expires.
   virtual int wait (ACE_Time_Value *max_wait_time,
                     TAO_Synch_Reply_Dispatcher &rd) = 0;
@@ -61,7 +61,17 @@ public:
 
   /// Returns a value to indicate whether the transport needs to set
   /// the socket on which it is waiting to non-blocking mode or not.
-  virtual int non_blocking (void) = 0;
+  virtual bool non_blocking (void) const = 0;
+
+  /// Flag that indicates whether we can process requests while
+  /// waiting for the reply.
+  /**
+   * This flag is to check whether the thread can process upcalls
+   * while waiting for the reply. Some wait strategies, like
+   * Wait_On_LF_No_Upcall does not allow the client threads to process
+   * requests while waiting for the reply.
+   */
+  virtual bool can_process_upcalls (void) const = 0;
 
   /// Get method for the flag
   int is_registered (void);

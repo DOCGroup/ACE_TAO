@@ -69,7 +69,7 @@ Time_Handler::Time_Handler (void)
 void
 Time_Handler::handle_time_out (const ACE_Time_Value &, const void *arg)
 {
-  size_t current_count = *(ACE_reinterpret_cast (const size_t *, arg));
+  size_t current_count = *(reinterpret_cast<const size_t *> (arg));
   if (current_count != count)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Expected timer %d, not %d\n"),

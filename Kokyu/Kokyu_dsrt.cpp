@@ -58,7 +58,7 @@ int DSRT_Dispatcher<DSRT_Scheduler_Traits>::shutdown ()
 }
 
 template <class DSRT_Scheduler_Traits>
-typename DSRT_Dispatcher_Factory<DSRT_Scheduler_Traits>::DSRT_Dispatcher_Auto_Ptr
+DSRT_Dispatcher<DSRT_Scheduler_Traits>*
 DSRT_Dispatcher_Factory<DSRT_Scheduler_Traits>::
 create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
 {
@@ -66,14 +66,6 @@ create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
 
   DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>* tmp;
   DSRT_Dispatcher<DSRT_Scheduler_Traits>* disp;
-  DSRT_Dispatcher_Auto_Ptr nil_ptr((DSRT_Dispatcher<DSRT_Scheduler_Traits>*)0);
-
-  //DSRT_Dispatcher_Impl::init_svcs ();
-
-  //ACE_Service_Config::open ("Kokyu", ACE_DEFAULT_LOGGER_KEY, 0);
-
-  //tmp =
-  //  ACE_Dynamic_Service<DSRT_Dispatcher_Impl>::instance ("DSRT_Dispatcher_Impl");
 
   switch (config_info.impl_type_)
     {
@@ -82,7 +74,7 @@ create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
                       DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits> (
                       config_info.sched_policy_, 
                       config_info.sched_scope_), 
-                      nil_ptr);
+                      0);
       break;
 
     case DSRT_CV_BASED:
@@ -91,16 +83,15 @@ create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
                       DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>(
                       config_info.sched_policy_, 
                       config_info.sched_scope_), 
-                      nil_ptr);
+                      0);
       break;
     }
     
   ACE_ASSERT (tmp != 0);
-  ACE_NEW_RETURN (disp, DSRT_Dispatcher<DSRT_Scheduler_Traits>, nil_ptr);
-  DSRT_Dispatcher_Auto_Ptr disp_auto_ptr(disp);
+  ACE_NEW_RETURN (disp, DSRT_Dispatcher<DSRT_Scheduler_Traits>, 0);
   disp->implementation (tmp);
   tmp->init (config_info);
-  return disp_auto_ptr;
+  return disp;
 }
 
 template <class QoSDescriptor_t>

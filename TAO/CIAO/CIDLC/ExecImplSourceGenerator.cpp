@@ -276,10 +276,10 @@ namespace
   {
     AttributeEmitter (Context& c, T& scope)
       : EmitterBase (c),
+        scope_ (scope),
         write_type_name_emitter_ (c.os ()),
         read_type_name_emitter_ (c.os ()),
-        return_emitter_ (c.os ()),
-        scope_ (scope)
+        return_emitter_ (c.os ())
     {
       write_belongs_.node_traverser (write_type_name_emitter_);
       read_belongs_.node_traverser (read_type_name_emitter_);
@@ -336,9 +336,9 @@ namespace
   {
     ReadOnlyAttributeEmitter (Context& c, T& scope)
       : EmitterBase (c),
+        scope_ (scope),
         read_type_name_emitter_ (c.os ()),
-        return_emitter_ (c.os ()),
-        scope_ (scope)
+        return_emitter_ (c.os ())
     {
       read_belongs_.node_traverser (read_type_name_emitter_);
       return_belongs_.node_traverser (return_emitter_);
@@ -731,7 +731,7 @@ namespace
 
       os << "void" << endl
          << t.name () << "_exec_i::ciao_preactivate (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -741,7 +741,7 @@ namespace
 
       os << "void" << endl
          << t.name () << "_exec_i::ciao_postactivate (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -751,7 +751,7 @@ namespace
 
       os << "void" << endl
          << t.name () << "_exec_i::ccm_activate (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -761,7 +761,7 @@ namespace
 
       os << "void" << endl
          << t.name () << "_exec_i::ccm_passivate (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -771,7 +771,7 @@ namespace
 
       os << "void" << endl
          << t.name () << "_exec_i::ccm_remove (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -781,7 +781,7 @@ namespace
     }
 
     virtual void
-    post (Type& t)
+    post (Type&)
     {
     }
   };
@@ -826,7 +826,7 @@ namespace
     }
 
     virtual void
-    returns (SemanticGraph::HomeFactory& hf)
+    returns (SemanticGraph::HomeFactory&)
     {
       os << STRS[COMP_EC] << "_ptr" << endl;
     }
@@ -920,7 +920,7 @@ namespace
     }
 
     virtual void
-    returns (SemanticGraph::HomeFinder& hf)
+    returns (SemanticGraph::HomeFinder&)
     {
       os << STRS[COMP_EC] << "_ptr" << endl;
     }
@@ -1216,7 +1216,7 @@ namespace
       os << "// Implicit operations." << endl << endl
          << STRS[COMP_EC] << "_ptr" << endl
          << t.name () << "_exec_i::create (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -1274,7 +1274,7 @@ ExecImplSourceEmitter::ExecImplSourceEmitter (std::ostream& os_,
 {}
 
 void
-ExecImplSourceEmitter::pre (TranslationUnit& u)
+ExecImplSourceEmitter::pre (TranslationUnit&)
 {
   os << COPYRIGHT;
 
@@ -1289,7 +1289,7 @@ ExecImplSourceEmitter::pre (TranslationUnit& u)
                                       "_exec.h");
 
   file_name = regex::perl_s (file_name,
-                             "/(\\.(idl|cidl))?$/"
+                             "/(\\.(idl|cidl|cdl))?$/"
                              + file_suffix
                              + "/");
 
@@ -1364,7 +1364,7 @@ ExecImplSourceEmitter::generate (TranslationUnit& u)
 }
 
 void
-ExecImplSourceEmitter::post (TranslationUnit& u)
+ExecImplSourceEmitter::post (TranslationUnit&)
 {
 }
 

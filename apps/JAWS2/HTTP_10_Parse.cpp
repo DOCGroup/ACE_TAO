@@ -34,7 +34,7 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
   JAWS_HTTP_10_Request *info;
 
   if (data->payload ())
-    info = ACE_reinterpret_cast (JAWS_HTTP_10_Request *, data->payload ());
+    info = reinterpret_cast<JAWS_HTTP_10_Request *> (data->payload ());
   else
     {
       info = new JAWS_HTTP_10_Request;
@@ -43,7 +43,7 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
           ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_HTTP_10_Parse_Task::handle_put"));
           return -1;
         }
-      data->payload (ACE_static_cast (void *, info));
+      data->payload (static_cast<void *> (info));
     }
 
   while (info->receive (*(ACE_Message_Block *)data) == 0)

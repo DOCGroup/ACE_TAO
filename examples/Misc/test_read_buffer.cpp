@@ -6,8 +6,12 @@
 #include "ace/Malloc_Base.h"
 #include "ace/Service_Config.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_stdlib.h"
 
-ACE_RCSID(Misc, test_read_buffer, "$Id$")
+
+ACE_RCSID (Misc,
+           test_read_buffer,
+           "$Id$")
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

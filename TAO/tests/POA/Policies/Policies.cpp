@@ -19,6 +19,7 @@
 //=========================================================================
 
 #include "tao/ORB.h"
+#include "tao/Any.h"
 #include "tao/PortableServer/PortableServer.h"
 
 #include "ace/Log_Msg.h"

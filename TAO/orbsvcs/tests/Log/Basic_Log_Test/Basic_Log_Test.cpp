@@ -32,16 +32,14 @@ BasicLog_Test::~BasicLog_Test (void)
 int
 BasicLog_Test::init (int argc, char *argv[])
 {
-  this->argc_ = argc;
-  this->argv_ = argv;
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialize the ORB
       orb_ = CORBA::ORB_init (argc,
                               argv,
-                              "internet" ACE_ENV_ARG_PARAMETER);
+                              "internet"
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (TAO_debug_level > 0)
@@ -49,7 +47,7 @@ BasicLog_Test::init (int argc, char *argv[])
                     "\nOrb initialized successfully\n"));
 
       // Parse command line and verify parameters.
-      if (this->parse_args () == -1)
+      if (this->parse_args (argc, argv) == -1)
         return -1;
 
       // Initialize the factory
@@ -361,7 +359,7 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords
 
   ACE_DEBUG ((LM_ERROR,"The number of records in log is %d\n", ACE_U64_TO_U32(nrecords)));
 
-  ACE_RETURN(nrecords);
+  ACE_RETURN(static_cast<int> (nrecords));
 }
 
 int
@@ -544,9 +542,9 @@ BasicLog_Test::test_query(CORBA::ULong numberOfRecordsToWrite)
 
 
 int
-BasicLog_Test::parse_args (void)
+BasicLog_Test::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "di");
+  ACE_Get_Opt get_opts (argc, argv, "di");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -562,7 +560,7 @@ BasicLog_Test::parse_args (void)
                            " [-d]"
                            "\n"
                            "    -d: increase debug level\n",
-                           this->argv_ [0]),
+                           argv[0]),
                           -1);
       }
 
@@ -623,7 +621,8 @@ BasicLog_Test::destroy_log()
   ACE_ENDTRY;
 }
 
-int BasicLog_Test::test_log_destroy (void)
+int
+BasicLog_Test::test_log_destroy (void)
 {
 
   ACE_DEBUG ((LM_ERROR, "Testing destroy log\n"));
@@ -635,16 +634,24 @@ int BasicLog_Test::test_log_destroy (void)
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_INFO, "Wrote to log\n"));
     }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  "Test of destroy log succeeded: "
+                  "caught CORBA::OBJECT_NOT_EXIST exception.\n"));
+      return 0;
+    }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Destroying log");
       ACE_DEBUG ((LM_ERROR,
-                  "Test of destroy log succeeded and caught exception.\n"));
-      return 0;
+                  "Test of destroy log failed: "
+                  "caught unexpected exception.\n"));
+      return -1;
     }
   ACE_ENDTRY;
   ACE_ERROR_RETURN ((LM_ERROR,
-                     "Test of destroy log failed and no exception thrown.\n"),
+                     "Test of destroy log failed: no exception thrown.\n"),
                     -1);
 }
 

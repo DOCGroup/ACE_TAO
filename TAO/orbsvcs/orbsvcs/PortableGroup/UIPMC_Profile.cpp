@@ -19,10 +19,6 @@ ACE_RCSID (PortableGroup,
            UIPMC_Profile,
            "$Id$")
 
-#if !defined (__ACE_INLINE__)
-# include "UIPMC_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 static const char prefix_[] = "uipmc";
 
 // UIPMC doesn't support object keys, so send profiles by default in the GIOP 1.2 target
@@ -339,8 +335,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
     }
 
   CORBA::UShort mcast_port =
-      ACE_static_cast (CORBA::UShort,
-        ACE_OS::strtoul (ace_str.c_str () + pos, 0, 10));
+      static_cast<CORBA::UShort> (ACE_OS::strtoul (ace_str.c_str () + pos, 0, 10));
 
   //
   // Finally, set all of the fields of the profile.
@@ -359,7 +354,7 @@ CORBA::Boolean
 TAO_UIPMC_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 {
   const TAO_UIPMC_Profile *op =
-    ACE_dynamic_cast (const TAO_UIPMC_Profile *, other_profile);
+    dynamic_cast<const TAO_UIPMC_Profile *> (other_profile);
 
   if (op == 0)
     return 0;
@@ -415,7 +410,7 @@ TAO_UIPMC_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    1 /* colon separator */ +
                    5 /* port number */);
 
-  char * buf = CORBA::string_alloc (ACE_static_cast (CORBA::ULong, buflen));
+  char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
   ACE_OS::sprintf (buf,
                    "corbaloc:%s://1.0@%s:%d",
@@ -447,7 +442,7 @@ TAO_UIPMC_Profile::create_tagged_profile (void)
       this->create_profile_body (encap);
 
       CORBA::ULong length =
-        ACE_static_cast(CORBA::ULong,encap.total_length ());
+        static_cast<CORBA::ULong> (encap.total_length ());
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       // Place the message block in to the Sequence of Octets that we
@@ -504,14 +499,14 @@ TAO_UIPMC_Profile::decode_endpoints (void)
       const CORBA::Octet *buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
+      TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
                            tagged_component.component_data.length ());
 
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         return -1;
-      in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+      in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       TAO_UIPMCEndpointSequence endpoints;
@@ -593,8 +588,7 @@ TAO_UIPMC_Profile::update_cached_group_component (void)
 
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = IOP::TAG_GROUP;
-  tagged_component.component_data.length (ACE_static_cast (CORBA::ULong,
-                                                           length));
+  tagged_component.component_data.length (static_cast<CORBA::ULong> (length));
   CORBA::Octet *buf =
     tagged_component.component_data.get_buffer ();
 
@@ -678,8 +672,7 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
 //#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 //  TAO_InputCDR cdr (profile.profile_data.mb ());
 //#else
-  TAO_InputCDR cdr (ACE_reinterpret_cast(const char*,
-                                         profile.profile_data.get_buffer ()),
+  TAO_InputCDR cdr (reinterpret_cast<const char*> (profile.profile_data.get_buffer ()),
                     profile.profile_data.length ());
 //#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
@@ -687,7 +680,7 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
   CORBA::Boolean byte_order;
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return -1;
-  cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+  cdr.reset_byte_order (static_cast<int> (byte_order));
 
   // Read and verify major, minor versions, ignoring UIPMC profiles
   // whose versions we don't understand.
@@ -736,13 +729,13 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
   const CORBA::Octet *buf =
     tagged_component.component_data.get_buffer ();
 
-  TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
+  TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
                        tagged_component.component_data.length ());
 
   // Extract the Byte Order.
   if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return -1;
-  in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+  in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
   if ((in_cdr >> group) == 0)
     return -1;

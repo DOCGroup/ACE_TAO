@@ -50,12 +50,9 @@ public:
   /// Constructor.
   TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
-  /// Constructor. <arg> parameter is used by the Acceptor to pass the
-  /// protocol configuration properties for this connection.
+  /// Constructor.
   TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                               CORBA::Boolean flag,
-                               void *arg);
-
+                                 CORBA::Boolean flag);
 
   /// Destructor.
   ~TAO_SHMIOP_Connection_Handler (void);
@@ -105,12 +102,6 @@ private:
   int resume_flag_;
 
 };
-
-
-
-#if defined (__ACE_INLINE__)
-#include "SHMIOP_Connection_Handler.inl"
-#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 

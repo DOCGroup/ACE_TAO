@@ -9,15 +9,15 @@
   <xsd:complexType name="ComponentInterfaceDescription">
     <xsd:choice>
       <xsd:sequence>
-        <xsd:element name="label" type="xsd:string"/>
-        <xsd:element name="UUID" type="xsd:string"/>
+        <xsd:element name="label" type="xsd:string" minOccurs="0"/>
+        <xsd:element name="UUID" type="xsd:string" minOccurs="0"/>
         <xsd:element name="specificType" type="xsd:string"/>
-        <xsd:element name="supportedType" type="xsd:string"/>
-        <xsd:element name="idlFile" type="xsd:string" minOccurs="0"/>
-        <xsd:element name="configProperty" type="Deployment:Property" minOccurs="0"/>
+        <xsd:element name="supportedType" type="xsd:string" maxOccurs="unbounded"/>
+        <xsd:element name="idlFile" type="xsd:string" maxOccurs="unbounded"/>
+        <xsd:element name="configProperty" type="Deployment:Property" maxOccurs="unbounded"/>
         <xsd:element name="port" type="Deployment:ComponentPortDescription" maxOccurs="unbounded"/>
-        <xsd:element name="property" type="Deployment:ComponentPropertyDescription" minOccurs="0"/>
-        <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0"/>
+        <xsd:element name="property" type="Deployment:ComponentPropertyDescription" maxOccurs="unbounded"/>
+        <xsd:element name="infoProperty" type="Deployment:Property" maxOccurs="unbounded"/>
       </xsd:sequence>
       <xsd:element name="contentLocation" type="xsd:string"/>
     </xsd:choice>

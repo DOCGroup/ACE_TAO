@@ -220,7 +220,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
       DT* run_dt;
       ACE_Message_Block* msg;
       ready_que_.dequeue_head (msg);
-      run_dt = ACE_dynamic_cast (DT*, msg);
+      run_dt = dynamic_cast<DT*> (msg);
       if ((desired_priority == 100) || run_dt->msg_priority () >= (unsigned int)desired_priority)
 	{
 	  ready_que_.enqueue_prio (new_dt);
@@ -258,7 +258,7 @@ MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
       DT* run_dt;
       ACE_Message_Block* msg;
       ready_que_.dequeue_head (msg);
-      run_dt = ACE_dynamic_cast (DT*, msg);
+      run_dt = dynamic_cast<DT*> (msg);
       lock_.acquire ();
       run_dt->resume ();
       lock_.release ();
@@ -353,7 +353,7 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
       DT* run_dt;
       ACE_Message_Block* msg;
       ready_que_.dequeue_head (msg);
-      run_dt = ACE_dynamic_cast (DT*, msg);
+      run_dt = dynamic_cast<DT*> (msg);
       run_dt->resume ();
     }
   lock_.release ();
@@ -459,7 +459,7 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
       DT* run_dt;
       ACE_Message_Block* msg;
       ready_que_.dequeue_head (msg);
-      run_dt = ACE_dynamic_cast (DT*, msg);
+      run_dt = dynamic_cast<DT*> (msg);
       lock_.acquire ();
       run_dt->resume ();
       lock_.release ();
@@ -477,7 +477,7 @@ MIF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr
       DT* run_dt;
       ACE_Message_Block* msg;
       ready_que_.dequeue_head (msg);
-      run_dt = ACE_dynamic_cast (DT*, msg);
+      run_dt = dynamic_cast<DT*> (msg);
       lock_.acquire ();
       run_dt->resume ();
       lock_.release ();
@@ -511,7 +511,7 @@ MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr
       DT* run_dt;
       ACE_Message_Block* msg;
       ready_que_.dequeue_head (msg);
-      run_dt = ACE_dynamic_cast (DT*, msg);
+      run_dt = dynamic_cast<DT*> (msg);
       lock_.acquire ();
       run_dt->resume ();
       lock_.release ();

@@ -116,9 +116,11 @@ TAO_IFR_Server::init_with_orb (int argc,
           return retval;
         }
 
-      if (use_multicast_server || OPTIONS::instance()->support_multicast_discovery ())
+      if (use_multicast_server
+          || OPTIONS::instance()->support_multicast_discovery ())
         {
-          retval = this->init_multicast_server (ACE_ENV_SINGLE_ARG_PARAMETER);
+          retval =
+            this->init_multicast_server (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (retval != 0)
@@ -126,9 +128,6 @@ TAO_IFR_Server::init_with_orb (int argc,
               return retval;
             }
         }
-      ACE_DEBUG ((LM_DEBUG,
-                  "The IFR IOR is: <%s>\n",
-                  this->ifr_ior_.in ()));
     }
   ACE_CATCHANY
     {
@@ -258,6 +257,9 @@ TAO_IFR_Server::open_config (ACE_ENV_SINGLE_ARG_DECL)
 
           if (heap->open (filename))
             {
+              delete heap;
+              heap = 0;
+            
               ACE_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("Error:: Opening persistent heap file '%s'\n"),
@@ -698,7 +700,7 @@ TAO_IFR_Service_Utils::name_exists (
 
           if ((*checker) (defn_name.fast_rep ()) != 0)
             {
-              ACE_THROW (CORBA::BAD_PARAM (3,
+              ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 3,
                                            CORBA::COMPLETED_NO));
             }
         }
@@ -1163,8 +1165,7 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
       repo->config ()->get_integer_value (member_key,
                                           "access",
                                           access);
-      vm_seq[i].access = ACE_static_cast (CORBA::Visibility,
-                                          access);
+      vm_seq[i].access = static_cast<CORBA::Visibility> (access);
     }
 }
 
@@ -1208,8 +1209,7 @@ TAO_IFR_Service_Utils::path_to_def_kind (ACE_TString &path,
   repo->config ()->get_integer_value (TAO_IFR_Service_Utils::tmp_key_,
                                       "def_kind",
                                       kind);
-  return ACE_static_cast (CORBA::DefinitionKind,
-                          kind);
+  return static_cast<CORBA::DefinitionKind> (kind);
 }
 
 CORBA::DefinitionKind

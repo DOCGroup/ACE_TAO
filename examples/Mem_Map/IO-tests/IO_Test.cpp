@@ -164,10 +164,7 @@ Mmap1_Test::run_test (int iterations,
   void *src = map_input.addr ();
 
   if (src == MAP_FAILED)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s",
-                       this->name ()),
-                      -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%C"), this->name ()), -1);
   else
     {
       this->tm_.start ();
@@ -175,15 +172,15 @@ Mmap1_Test::run_test (int iterations,
       while (--iterations >= 0)
       {
         if (ACE_OS::write (fileno (output_fp),
-                             src,
-                             map_input.size ()) == -1)
-                             ACE_ERROR_RETURN ((LM_ERROR,
-                               "%s",
-                               this->name ()),
-                              -1);
+                           src,
+                           map_input.size ()) == -1)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%C"),
+                             this->name ()),
+                            -1);
         ACE_OS::lseek (fileno (output_fp),
-                         0,
-                         SEEK_SET);
+                       0,
+                       SEEK_SET);
       }
 
       this->tm_.stop ();
@@ -191,7 +188,7 @@ Mmap1_Test::run_test (int iterations,
   
   if (map_input.unmap () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s",
+                       ACE_TEXT ("%C"),
                        this->name ()),
                       -1);
   else

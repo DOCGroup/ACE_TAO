@@ -67,7 +67,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           << "TAO::Any_Dual_Impl_T<" << node->name ()
           << ">::marshal_value (TAO_OutputCDR &)" << be_nl
           << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
+          << "return false;" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
@@ -76,7 +76,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           << "TAO::Any_Dual_Impl_T<" << node->name ()
           << ">::demarshal_value (TAO_InputCDR &)" << be_nl
           << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
+          << "return false;" << be_uidt_nl
           << "}";
     }
 

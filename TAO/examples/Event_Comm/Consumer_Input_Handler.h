@@ -18,6 +18,8 @@
 #define CONSUMER_INPUT_HANDLER_
 
 #include "ace/Service_Config.h"
+#include "ace/Event_Handler.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

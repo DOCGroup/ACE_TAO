@@ -21,6 +21,7 @@
 #include "Any_Unknown_IDL_Type.h"
 #include "ORB_Constants.h"
 #include "SystemException.h"
+#include "orb_typesC.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
     || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -2812,10 +2813,10 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
         }
 
       TAO::Unknown_IDL_Type *impl = 0;
+      TAO_InputCDR in (out);
       ACE_NEW_THROW_EX (impl,
                         TAO::Unknown_IDL_Type (label_tc,
-                                               out.begin (),
-                                               ACE_CDR_BYTE_ORDER),
+                                               in),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
@@ -3677,35 +3678,6 @@ namespace TAO
   }
 }
 
-/*static*/ CORBA::TypeCode_ptr
-CORBA::TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
-{
-  if (tc)
-    {
-      if (tc->orb_owns_)
-        {
-          tc->_incr_refcnt ();
-          return tc;
-        }
-      else
-        {
-          CORBA::TypeCode_ptr tmp = 0;
-          ACE_NEW_RETURN (tmp,
-              CORBA::TypeCode (static_cast<CORBA::TCKind> (tc->kind_),
-                               tc->length_,
-                               tc->buffer_,
-                               true,
-                               0,
-                               tc->parent_),
-                          0);
-
-          return tmp;
-        }
-    }
-
-  return 0;
-}
-
 // ****************************************************************
 
 CORBA::Boolean
@@ -3823,27 +3795,6 @@ operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
     }
   ACE_ENDTRY;
   return 1;
-}
-
-CORBA::Boolean
-operator<< (TAO_OutputCDR &strm, const CORBA::TCKind &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
-}
-
-CORBA::Boolean
-operator>> (TAO_InputCDR &strm, CORBA::TCKind &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
-
-  if (_tao_result == 1)
-    {
-      _tao_enumval = ACE_static_cast (CORBA::TCKind, _tao_temp);
-    }
-
-  return _tao_result;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

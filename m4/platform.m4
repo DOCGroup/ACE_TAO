@@ -375,12 +375,12 @@ AH_TEMPLATE([ACE_INT64_FORMAT_SPECIFIER],
 AH_TEMPLATE([ACE_UINT64_FORMAT_SPECIFIER],
 [Define to the *printf format specifier (e.g. "%llu") for the 64 bit signed integer type])dnl
 
-case "$target_os" in
+case "$host_os" in
 darwin*)
   AC_DEFINE([ACE_SIZE_T_FORMAT_SPECIFIER], ["%lu"])
   ;;
 netbsd*)
-  case "$target_cpu" in
+  case "$host_cpu" in
     x86_64)
       AC_DEFINE([ACE_SIZE_T_FORMAT_SPECIFIER], ["%lu"])
       AC_DEFINE([ACE_SSIZE_T_FORMAT_SPECIFIER], ["%ld"])
@@ -406,7 +406,7 @@ esac])
 AC_DEFUN([ACE_CHECK_LACKS_PERFECT_MULTICAST_FILTERING],
 [AC_CACHE_CHECK([whether platform lacks perfect multicast filtering],
   [ace_cv_lacks_perfect_multicast_filtering],
-  [case "$target_os" in
+  [case "$host_os" in
   darwin* | freebsd* | netbsd* | openbsd* | qnx*)
     ace_cv_lacks_perfect_multicast_filtering=yes ;;
   *)
@@ -437,7 +437,7 @@ fi
 AC_DEFUN([ACE_FUNC_IOCTL_ARGTYPES],
 [AC_CACHE_CHECK([types of arguments for ioctl()],
   [ace_cv_func_ioctl_arg2],
-  [case "$target_os" in
+  [case "$host_os" in
    darwin* | freebsd* | netbsd* | openbsd*)
     ace_cv_func_ioctl_arg2="unsigned long" ;;
    *)
@@ -458,9 +458,12 @@ AC_DEFUN([ACE_VAR_TIMEZONE],
 [AC_CACHE_CHECK([for timezone variable],
 		[ace_cv_var_timezone],
 		[AC_TRY_LINK([#include <time.h>],
-			     [return (int)timezone;],
-		             [ace_cv_var_timezone=yes],
-			     [ace_cv_var_timezone=no])
+			     [return (int) timezone(0, 0);],
+		             [ace_cv_var_timezone=no],
+			     [AC_TRY_LINK([#include <time.h>],
+					  [return (int) timezone;],
+					  [ace_cv_var_timezone=yes],
+			                  [ace_cv_var_timezone=no])])
 		])
 if test "$ace_cv_var_timezone" = yes; then
   AC_DEFINE([ACE_HAS_TIMEZONE], 1,

@@ -13,7 +13,7 @@
 #define TAO_Notify_BATCH_BUFFERING_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "../notify_export.h"
+#include "../notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -51,10 +51,6 @@ protected:
   /// Extract upto <max_deq_count> number of items.
   int dequeue_i (int max_deq_count, CosNotification::EventBatch& event_batch);
 };
-
-#if defined (__ACE_INLINE__)
-#include "Batch_Buffering_Strategy.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_BATCH_BUFFERING_STRATEGY_H */

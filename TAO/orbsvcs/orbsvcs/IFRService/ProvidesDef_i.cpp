@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "Repository_i.h"
@@ -6,9 +5,13 @@
 #include "IFR_ComponentsS.h"
 #include "IFR_Service_Utils_T.h"
 
-ACE_RCSID (IFRService, 
-           ProvidesDef_i, 
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           ProvidesDef_i,
            "$Id$")
+
 
 TAO_ProvidesDef_i::TAO_ProvidesDef_i (
     TAO_Repository_i *repo
@@ -104,7 +107,7 @@ TAO_ProvidesDef_i::interface_type_i (ACE_ENV_SINGLE_ARG_DECL)
                                        ACE_ENV_ARG_PARAMETER);
 }
 
-void 
+void
 TAO_ProvidesDef_i::interface_type (
     CORBA::InterfaceDef_ptr interface_type
     ACE_ENV_ARG_DECL
@@ -120,12 +123,12 @@ TAO_ProvidesDef_i::interface_type (
                           ACE_ENV_ARG_PARAMETER);
 }
 
-void 
+void
 TAO_ProvidesDef_i::interface_type_i (
     CORBA::InterfaceDef_ptr interface_type
     ACE_ENV_ARG_DECL_NOT_USED
   )
-  ACE_THROW_SPEC ((CORBA::SystemException)) 
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_value (this->section_key_,
                                         "base_type");
@@ -135,7 +138,7 @@ TAO_ProvidesDef_i::interface_type_i (
       return;
     }
 
-  const char *tmp = 
+  const char *tmp =
     TAO_IFR_Service_Utils::reference_to_path (interface_type);
 
   ACE_Configuration_Section_Key new_key;

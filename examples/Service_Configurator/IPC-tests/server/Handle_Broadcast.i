@@ -36,7 +36,8 @@ Handle_Broadcast::info (ACE_TCHAR **strp, size_t length) const
   if (this->get_local_addr (sa) == -1)
     return -1;
 
-  ACE_OS::sprintf (buf, ACE_TEXT("%d/%s %s"), sa.get_port_number (), ACE_TEXT("udp"), ACE_TEXT("# tests broadcasting\n"));
+  ACE_OS::sprintf (buf, ACE_TEXT("%d/"), sa.get_port_number ());
+  ACE_OS::strcat (buf, ACE_TEXT("udp # tests broadcasting\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -62,10 +63,11 @@ Handle_Broadcast::init (int argc, ACE_TCHAR *argv[])
        }
 
   if (this->open (sba) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
   else if (ACE_Reactor::instance ()->register_handler
            (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("registering service with ACE_Reactor")), -1);
   return 0;
 }
 
@@ -93,7 +95,7 @@ Handle_Broadcast::handle_input (ACE_HANDLE)
     return -1;
   else
     ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("received broadcast datagram from host %s\n"),
+                ACE_TEXT ("received broadcast datagram from host %C\n"),
                 sa.get_host_name ()));
 
   ACE_OS::puts (ACE_TEXT ("----------------------------------------"));

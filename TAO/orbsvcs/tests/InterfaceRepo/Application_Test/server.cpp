@@ -87,10 +87,6 @@ main (int argc, char *argv[])
                             -1);
         }
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "IOR is: <%s>\n",
-                  ior.in ()));
-
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

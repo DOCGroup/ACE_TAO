@@ -9,6 +9,7 @@
 #include "tao/SystemException.h"
 #include "tao/UTF16_BOM_Factory.h"
 #include "tao/debug.h"
+#include "tao/CDR.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Codeset_Registry.h"
@@ -27,10 +28,13 @@ ACE_RCSID (tao,
 //
 #define TAO_CODESET_ID_ISO8859_1 0x00010001U
 #define TAO_CODESET_ID_UNICODE   0x00010109U
+#define TAO_CODESET_ID_XOPEN_UTF_8 0x05010001U
 
 // These are the default codesets that TAO declares, of course they
 // will be different on each platform, once the complete support for
 // character sets is implemented
+
+//#define TAO_DEFAULT_CHAR_CODESET_ID  TAO_CODESET_ID_XOPEN_UTF_8
 #define TAO_DEFAULT_CHAR_CODESET_ID  TAO_CODESET_ID_ISO8859_1
 #define TAO_DEFAULT_WCHAR_CODESET_ID TAO_CODESET_ID_UNICODE
 
@@ -80,7 +84,7 @@ TAO_Codeset_Manager::~TAO_Codeset_Manager ()
 
   this->wchar_factories_.reset ();
 
-  delete this->utf16_bom_translator_;
+  // Note: do not delete utf16_bom_translator_  The service manager owns it
 }
 
 void
@@ -450,26 +454,12 @@ TAO_Codeset_Manager::init_codeset_factories_i (
   return 0;
 }
 
+
 TAO_Codeset_Translator_Factory *
 TAO_Codeset_Manager::get_char_trans (CONV_FRAME::CodeSetId tcs)
 {
   if (this->codeset_info_.ForCharData.native_code_set == tcs)
-    {
-      if (tcs != ACE_CODESET_ID_ISO_UTF_16)
-        return 0;
-      else
-        {
-          if (this->utf16_bom_translator_ == 0)
-            {
-              ACE_NEW_RETURN (this->utf16_bom_translator_,
-                              UTF16_BOM_Factory,
-                              0);
-              this->utf16_bom_translator_->init(0,0);
-            }
-          return this->utf16_bom_translator_;
-        }
-    }
-
+    return 0;
   return this->get_translator_i (this->char_factories_,tcs);
 }
 
@@ -478,11 +468,25 @@ TAO_Codeset_Manager::get_wchar_trans (CONV_FRAME::CodeSetId tcs)
 {
   if (this->codeset_info_.ForWcharData.native_code_set == tcs)
     {
-      return 0;
+      if (tcs != ACE_CODESET_ID_ISO_UTF_16)
+        return 0;
+      else
+        {
+          if (TAO_debug_level > 9)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_LIB_TEXT("TAO (%P|%t) Using utf16 BOM translator\n")));
+          if (this->utf16_bom_translator_ == 0)
+            {
+              this->utf16_bom_translator_ =
+                ACE_Dynamic_Service <UTF16_BOM_Factory>::instance ("UTF16_BOM_Factory");
+            }
+          return this->utf16_bom_translator_;
+        }
     }
-
   return this->get_translator_i (this->wchar_factories_,tcs);
 }
+
+
 
 TAO_Codeset_Translator_Factory *
 TAO_Codeset_Manager::get_translator_i (TAO_CodesetFactorySet& factset,

@@ -494,6 +494,7 @@ public:
    *  - 'p': print out the appropriate errno message from sys_errlist,
    *         e.g., as done by perror()
    *  - 'Q': print out the uint64 number
+   *  - 'q': print out the int64 number
    *  - '@': print a void* pointer (in hexadecimal)
    *  - 'r': call the function pointed to by the corresponding argument
    *  - 'R': print return status

@@ -65,9 +65,9 @@ public:
 
   /**
    * Initialize a passive-mode BSD-style acceptor socket (no QoS).
-   * <local_sap> is the address that we're going to listen for
-   * connections on.  If <reuse_addr> is 1 then we'll use the
-   * <SO_REUSEADDR> to reuse this address.  Returns 0 on success and
+   * @a local_sap is the address that we're going to listen for
+   * connections on.  If @a reuse_addr is 1 then we'll use the
+   * @c SO_REUSEADDR to reuse this address.  Returns 0 on success and
    * -1 on failure.
    */
   int open (const ACE_MEM_Addr &local_sap,
@@ -117,7 +117,7 @@ public:
   int get_local_addr (ACE_MEM_Addr &) const;
 
   /// Accessor to the mmap options.
-  /// This method has been deprecated.
+  /// @deprecated This method has been deprecated.
   ACE_MEM_SAP::MALLOC_OPTIONS& malloc_options (void);
 
   // = Meta-type info

@@ -1,7 +1,5 @@
 // $Id$
 
-#include "RT_Transport_Descriptor_Property.h"
-
 ACE_INLINE
 TAO_RT_Transport_Descriptor_Property::TAO_RT_Transport_Descriptor_Property (void)
   : next_ (0)

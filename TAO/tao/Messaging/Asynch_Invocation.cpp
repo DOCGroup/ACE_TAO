@@ -46,42 +46,6 @@ namespace TAO
 
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
-
-    this->write_header (tspec,
-                        cdr
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (s);
-
-    this->marshal_data (cdr
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (s);
-
-    // Register a reply dispatcher for this invocation. Use the
-    // preallocated reply dispatcher.
-    TAO_Bind_Dispatcher_Guard dispatch_guard (
-        this->details_.request_id (),
-        this->safe_rd_.get (),
-        this->resolver_.transport ()->tms ());
-
-    // Now that we have bound the reply dispatcher to the map, just
-    // loose ownership of the reply dispatcher.
-    this->safe_rd_.release ();
-
-    if (dispatch_guard.status () != 0)
-      {
-        // @@ What is the right way to handle this error? Do we need
-        // to call the interceptors in this case?
-        ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
-                                               CORBA::COMPLETED_NO),
-                          TAO_INVOKE_FAILURE);
-      }
-
-    // Do not unbind during destruction. We need the entry to be
-    // there in the map since the reply dispatcher depends on
-    // that. This is also a trigger to loose the ownership of the
-    // reply dispatcher.
-    dispatch_guard.status (TAO_Bind_Dispatcher_Guard::NO_UNBIND);
-
 #if TAO_HAS_INTERCEPTORS == 1
     s =
       this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -96,6 +60,41 @@ namespace TAO
     // try block is to take care of the cases when things go wrong.
     ACE_TRY
       {
+        this->write_header (tspec,
+                            cdr
+                            ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (s);
+
+        this->marshal_data (cdr
+                            ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (s);
+
+        // Register a reply dispatcher for this invocation. Use the
+        // preallocated reply dispatcher.
+        TAO_Bind_Dispatcher_Guard dispatch_guard (
+          this->details_.request_id (),
+          this->safe_rd_.get (),
+          this->resolver_.transport ()->tms ());
+
+        // Now that we have bound the reply dispatcher to the map, just
+        // loose ownership of the reply dispatcher.
+        this->safe_rd_.release ();
+
+        if (dispatch_guard.status () != 0)
+          {
+            // @@ What is the right way to handle this error? Do we need
+            // to call the interceptors in this case?
+            ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                               CORBA::COMPLETED_NO),
+                              TAO_INVOKE_FAILURE);
+          }
+
+        // Do not unbind during destruction. We need the entry to be
+        // there in the map since the reply dispatcher depends on
+        // that. This is also a trigger to loose the ownership of the
+        // reply dispatcher.
+        dispatch_guard.status (TAO_Bind_Dispatcher_Guard::NO_UNBIND);
+
         // Send it as a oneway request. It will make all the required
         // paraphernalia within the ORB to fire, like buffering if
         // send blocks etc.

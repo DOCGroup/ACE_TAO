@@ -12,8 +12,8 @@
 #include "LookupManager.h"
 #include "Priority_Mapping.h"
 
-ACE_RCSID (RT_Notify, 
-           TAO_Notify_Tests_Periodic_Consumer, 
+ACE_RCSID (RT_Notify,
+           TAO_Notify_Tests_Periodic_Consumer,
            "$Id$")
 
 int WARMUP_COUNT = 10;
@@ -233,6 +233,8 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
 
   // Eat CPU
   static CORBA::ULong prime_number = 9619;
+
+  (void)ACE::gcd (prime_number, prime_number/2 -1);
 
   for (CORBA::ULong load = this->load_; load != 0; --load)
     ACE::is_prime (prime_number,

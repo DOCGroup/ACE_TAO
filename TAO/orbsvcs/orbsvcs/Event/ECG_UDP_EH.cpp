@@ -31,7 +31,7 @@ TAO_ECG_UDP_EH::open (const ACE_INET_Addr& ipaddr,
   if (this->dgram_.open (ipaddr, PF_INET, 0, reuse_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open udp handler: "
-                       "error opening receiving dgram."),
+                       "error opening receiving dgram.\n"),
                        -1);
 
   if (!this->reactor ()
@@ -41,7 +41,7 @@ TAO_ECG_UDP_EH::open (const ACE_INET_Addr& ipaddr,
     {
       this->dgram_.close ();
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot register handler with reactor."),
+                         "Cannot register handler with reactor.\n"),
                         -1);
     }
 
@@ -64,12 +64,12 @@ TAO_ECG_UDP_EH::shutdown (void)
   if (result != 0)
     ACE_ERROR ((LM_ERROR,
                 "Unable to deregister handler from reactor "
-                "on shutdown."));
+                "on shutdown.\n"));
 
   result = this->dgram_.close ();
   if (result != 0)
     ACE_ERROR ((LM_ERROR,
-                "Unable to close receiving dgram on shutdown."));
+                "Unable to close receiving dgram on shutdown.\n"));
 
   this->receiver_ = 0;
 

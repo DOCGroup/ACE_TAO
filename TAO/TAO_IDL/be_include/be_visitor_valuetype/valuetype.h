@@ -44,10 +44,6 @@ public:
   // destructor
 
 public:
-
-  virtual int visit_valuetype (be_valuetype *node);
-  // visit the valuetype node
-
   virtual int visit_valuetype_scope (be_valuetype *node);
   // visit the scope of the valuetype node
   // (in public/private field order)

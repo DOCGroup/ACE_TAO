@@ -10,10 +10,6 @@
 #include "ORB_Core.h"
 #include "Thread_Lane_Resources.h"
 
-#if !defined (__ACE_INLINE__)
-# include "IIOP_Transport.i"
-#endif /* ! __ACE_INLINE__ */
-
 ACE_RCSID (tao,
            IIOP_Transport,
            "$Id$")
@@ -75,6 +71,16 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
                                                              max_wait_time);
   if (retval > 0)
     bytes_transferred = retval;
+  else
+    {
+      if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::send, ")
+                      ACE_TEXT ("send failure - %m (%d)\n"),
+                      this->id (), errno));
+        }
+    }
 
   return retval;
 }
@@ -129,36 +135,6 @@ TAO_IIOP_Transport::send_request (TAO_Stub *stub,
                                   int message_semantics,
                                   ACE_Time_Value *max_wait_time)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      TAO_Protocols_Hooks *tph =
-        this->orb_core_->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (tph != 0)
-        {
-          const int result =
-            tph->update_client_protocol_properties (stub,
-                                                    this,
-                                                    "iiop");
-
-          if (result == -1)
-            return -1;
-        }
-    }
-  ACE_CATCHANY
-    {
-      if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             "TAO (%P|%t) - TAO_IIOP_Transport::send_request - "
-                             "get_protocol_hooks");
-
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-
   if (this->ws_->sending_request (orb_core,
                                   message_semantics) == -1)
 
@@ -219,15 +195,6 @@ TAO_IIOP_Transport::send_message_shared (
 
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-
-    if (TAO_debug_level > 6)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - ")
-                  ACE_TEXT ("IIOP_Transport::send_message_shared, ")
-                  ACE_TEXT ("enable_network_priority = %d\n"),
-                  this->connection_handler_->enable_network_priority ()));
-
-    this->connection_handler_->set_dscp_codepoint ();
 
     r = this->send_message_shared_i (stub, message_semantics,
                                      message_block, max_wait_time);
@@ -424,17 +391,4 @@ TAO_IIOP_Transport::get_listen_point (
     }
 
   return 1;
-}
-
-void
-TAO_IIOP_Transport::update_protocol_properties (int snd_buf_sz,
-                                                int rcv_buf_sz,
-                                                int no_delay,
-                                                int enable_nw_prio)
-{
-  this->connection_handler_->update_protocol_properties (
-      snd_buf_sz,
-      rcv_buf_sz,
-      no_delay,
-      enable_nw_prio);
 }

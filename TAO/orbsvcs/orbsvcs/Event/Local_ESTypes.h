@@ -38,10 +38,6 @@
 
 typedef RtecEventComm::Event RtecEventComm_Event;
 
-#if defined (__ACE_INLINE__)
-#include "Local_ESTypes.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* ACE_LOCAL_ESTYPES_H */

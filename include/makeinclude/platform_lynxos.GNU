@@ -15,10 +15,6 @@
 #### Similarly, the default VERSION and HOST_OS settings (see below)
 #### can be overridden for your particular platform.
 
-
-ifeq ($(debug),)
-  debug = 1
-endif
 ifeq ($(shared_libs_only),1)
   shared_libs = 1
   static_libs =
@@ -28,12 +24,14 @@ ifeq ($(static_libs_only),1)
   static_libs = 1
 endif
 
-#### optimize is defined below because it is version-dependent.
+optimize ?= 1
+debug ?= 1
+pipes ?= 1
 
-ifneq ($(shell uname -s),LynxOS)
+ifeq ($(shell uname -s),LynxOS)
+  export VERSION=$(shell uname -r)
+else
   CROSS-COMPILE = 1
-
-  PACE_SYSNAME = LynxOS
 
   #### The following may need to be customized for your host or target type.
   #### Or, you can source the appropriate (for your shell) Lynx SETUP file
@@ -42,8 +40,6 @@ ifneq ($(shell uname -s),LynxOS)
   ifeq (,$(VERSION))
     export VERSION=3.0.0
   endif # VERSION
-
-  PACE_SYSVER = 0x$(VERSION)
 
   ifeq (,$(LYNXTARGET))
     export LYNXTARGET = x86
@@ -82,20 +78,8 @@ $(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/bin:$(ENV_PREFIX)/cdk/$
   endif # PATH
 endif # ! LynxOS
 
-ifeq (2.5.0,$(VERSION))
-  # NOTE: On LynxOS Version 2.5.0, optimization causes these warnings:
-  #       warning: internal compiler error: debugging info corrupted
-  optimize = 0
-  ACE_HAS_GNUG_PRE_2_8 = 1
-else
-  ifeq ($(optimize),)
-    optimize = 1
-  endif
-
-  #### Even though the g++ version is 2.7-97r1, it supports nested
-  #### classes, so it can build the TAO tests.
-  ACE_HAS_GNUG_PRE_2_8 = 0
-endif # VERSION
+LYNXOS_MAJOR = $(shell uname -r | awk -F. '{print $$1;}')
+LYNXOS_MINOR = $(shell uname -r | awk -F. '{print $$2;}')
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXm -lXt
@@ -105,14 +89,20 @@ PLATFORM_X11_CPPFLAGS=
 PLATFORM_X11_LIBS=-lXpm -lXext -lX11 -lSM -lICE
 PLATFORM_X11_LDFLAGS=
 
-pipes ?= 1
+ifeq ($(LYNXOS_MAJOR),4)
+  PLATFORM_TCL_CPPFLAGS=-I/usr/include/tcl8.4
+  PLATFORM_TCL_LIBS=-ltcl8.4
+  PLATFORM_TCL_LDFLAGS=
+
+  PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
+  PLATFORM_TK_LIBS=$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_LIB_FLAG)
+  PLATFORM_TK_LDFLAGS=
+endif
 
 CC              = gcc
 CXX             = g++
 CFLAGS          += -mthreads -Wpointer-arith -Wall
-#### -Winline complains a lot with -O2.
-#### CFLAGS          += -Winline
-
+CFLAGS          += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
 DCFLAGS         += -g
 PIC             = -fPIC
 DLD             = $(CXX)

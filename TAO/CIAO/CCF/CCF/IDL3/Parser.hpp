@@ -68,6 +68,11 @@ namespace CCF
       Rule event_type_def_trailer;
       Rule event_type_body;
 
+      Rule event_type_factory_decl;
+      Rule event_type_factory_parameter_list;
+      Rule event_type_factory_parameter;
+      Rule event_type_factory_raises_list;
+
       // home
       //
       Rule home_decl;
@@ -182,6 +187,19 @@ namespace CCF
 
       NoArgAction<SemanticAction::EventType>
       act_event_type_end;
+
+      // EventTypeFactory
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::EventTypeFactory>
+      act_event_type_factory_name;
+
+      TwoArgAction<IdentifierPtr,
+                   SimpleIdentifierPtr,
+                   SemanticAction::EventTypeFactory>
+      act_event_type_factory_parameter;
+
+      OneArgAction<IdentifierPtr, SemanticAction::EventTypeFactory>
+      act_event_type_factory_raises;
 
 
       // Home

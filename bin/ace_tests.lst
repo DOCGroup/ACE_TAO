@@ -10,4 +10,4 @@
 # NOTE: This file contains tests only for ACE. Please do not include
 # tests in TAO here..
 tests/run_test.pl
-examples/Reactor/WFMO_Reactor/run_test.pl: !Cygwin
+examples/Reactor/WFMO_Reactor/run_test.pl: !Cygwin !VxWorks

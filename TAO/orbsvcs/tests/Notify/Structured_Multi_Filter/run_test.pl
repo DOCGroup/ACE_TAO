@@ -77,6 +77,8 @@ foreach $ops (@ops)
     $TS->Kill ();
     $NS->Kill ();
 
+    sleep 2;
+
     unlink $ior;
     unlink $notifyior;
 
@@ -113,6 +115,8 @@ foreach $ops (@ops)
 
     $TS->Kill ();
     $NS->Kill ();
+
+    sleep 2;
 
     unlink $ior;
     unlink $notifyior;

@@ -22,14 +22,14 @@
  *
  * after the file is generated a patch must be applied:
  *
- *   cp orig/Messaging_No_Impl{C,S,S_T}.{h,i,cpp} .
+ *   cp orig/Messaging_No_Impl{C,S}.{h,inl,cpp} .
  *   patch < diffs/Messaging.diff
  *
  * The patch eliminates cycles in the include dependencies.
  *
  * Note: to update the patch file after re-generating the code use:
  *
- *   for i in Messaging_No_Impl{C,S,S_T}.{h,i,cpp}; do
+ *   for i in Messaging_No_Impl{C,S}.{h,inl,cpp}; do
  *     diff -uBbw orig/$i $i;
  *   done > diffs/Messaging_No_Impl.diff
  */

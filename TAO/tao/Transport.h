@@ -46,7 +46,7 @@ struct iovec;
 namespace TAO
 {
   /**
-   * @NOTE: Should this be in TAO namespace. Seems like a candidate
+   * @note Should this be in TAO namespace. Seems like a candidate
    * that should be in the transport
    */
   enum Connection_Role
@@ -297,16 +297,6 @@ public:
    */
   TAO::Connection_Role opened_as (void) const;
   void opened_as (TAO::Connection_Role);
-
-  /**
-   * Predicate that returns true if it is valid for this transport to act in a server
-   * role.  This would, for example, be true if opened_as() == TAO_SERVER_ROLE
-   * or bidirectional_flag() == 1.
-   *
-   * \return 0 cannot act in server role
-   * \return 1 can acts in server role
-   */
-  bool acts_as_server (void) const;
 
   /// Get and Set the purging order. The purging strategy uses the set
   /// version to set the purging order.
@@ -739,6 +729,11 @@ public:
   /// and output CDRs.
   void assign_translators (TAO_InputCDR *, TAO_OutputCDR *);
 
+  /// It is necessary to clear the codeset translator when a CDR stream
+  /// is used for more than one GIOP message. This is required since the
+  /// header must not be translated, whereas the body must be.
+  void clear_translators (TAO_InputCDR *, TAO_OutputCDR *);
+
   /// Return true if the tcs has been set
   CORBA::Boolean is_tcs_set() const;
 
@@ -856,6 +851,18 @@ private:
 
   /// Assume the lock is held
   void send_connection_closed_notifications_i (void);
+
+  /// Process a non-version specific fragment by either consolidating
+  /// the fragments or enqueuing the queueable message
+  void process_fragment (TAO_Queued_Data* fragment_message,
+                         TAO_Queued_Data* queueable_message,
+                         CORBA::Octet major,
+                         CORBA::Octet minor,
+                         TAO_Resume_Handle &rh);
+
+  /// Allocate a partial message block and store it in our
+  /// partial_message_ data member.
+  void allocate_partial_message_block (void);
 
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
@@ -983,6 +990,9 @@ private:
   /// first request. After that, the translators are fixed for the life of the
   /// connection.
   CORBA::Boolean first_request_;
+
+  /// Holds the partial GIOP message (if there is one)
+  ACE_Message_Block* partial_message_;
 };
 
 /**

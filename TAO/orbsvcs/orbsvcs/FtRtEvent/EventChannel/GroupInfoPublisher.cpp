@@ -7,6 +7,8 @@
 #include "FTEC_Become_Primary_Listener.h"
 #include "../Utils/Log.h"
 
+//#include "../Utils/log_obj_endpoints.h"
+
 ACE_RCSID (EventChannel,
            GroupInfoPublisher,
            "$Id$")
@@ -58,9 +60,12 @@ GroupInfoPublisherBase::backups() const
   return info_->backups;
 }
 
-GroupInfoPublisherBase::Info_ptr
+
+
+GroupInfoPublisherBase::Info*
 GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
-                                   int my_position
+                                   int my_position,
+                                   CORBA::ULong object_group_ref_version
                                    ACE_ENV_ARG_DECL)
 {
   Info_ptr result(new Info);
@@ -79,19 +84,22 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
   }
 
   CORBA::Object_var obj =
-    IOGR_Maker::instance()->make_iogr(iors ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(Info_ptr());
+    IOGR_Maker::instance()->make_iogr(iors,object_group_ref_version
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
 
   result->iogr =
     ::FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(Info_ptr());
+  ACE_CHECK_RETURN(0);
 
+  ACE_DEBUG((LM_DEBUG, "In setup_info\n"));
+  //log_obj_endpoints(result->iogr.in());
 
   /// check if sucessor changed
   size_t successors_length = info_list.length() - my_position -1;
 
-  if (successors_length != info_->backups.length())  {
+  if (successors_length /*!= info_->backups.length() */)  {
     // successor changed, update successor
     iors.length(successors_length);
     for (i = 0; i < successors_length; ++i) {
@@ -100,23 +108,25 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
 
     obj =  IOGR_Maker::instance()->merge_iors(iors
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(Info_ptr());
+    ACE_CHECK_RETURN(0);
 
     result->successor =
       FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(Info_ptr());
+    ACE_CHECK_RETURN(0);
   }
+  /*
   else {
     result->successor = info_->successor;
   }
-
+  
   if (!CORBA::is_nil(result->successor.in()))
   {
     CORBA::PolicyList_var pols;
     result->successor->_validate_connection (pols.out ());
   }
-
+  */
+ 
   // update backups
   result->backups.length(successors_length);
   for (i = 0; i < successors_length; ++i)  {
@@ -124,15 +134,15 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
       FtRtecEventChannelAdmin::EventChannel::_narrow(
       info_list[i+ my_position+1].ior.in()
       ACE_ENV_ARG_PARAMETER);
-    CORBA::PolicyList_var pols;
-    result->backups[i]->_validate_connection (pols.out ());
-    ACE_CHECK_RETURN(Info_ptr());
+    //CORBA::PolicyList_var pols;
+    //result->backups[i]->_validate_connection (pols.out ());
+    ACE_CHECK_RETURN(0);
   }
-  return result;
+  return result.release();
 }
 
 void
-GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr info)
+GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
 {
   if (info->primary) {
     if (!info_->primary) {
@@ -157,3 +167,12 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr info)
   info_ = info;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+
+template ACE_Singleton<GroupInfoPublisherBase, ACE_Thread_Mutex> *ACE_Singleton<GroupInfoPublisherBase, ACE_Thread_Mutex>::singleton_;
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

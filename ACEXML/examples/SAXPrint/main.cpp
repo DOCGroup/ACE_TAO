@@ -58,13 +58,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             break;
           case 'z':
             zip = 1;
-#ifndef ACEXML_HAS_ZZIPLIB
+#ifndef USE_ZZIP
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ZZIPLIB support has not been")
                         ACE_TEXT (" compiled in. Refer to ")
                         ACE_TEXT ("$ACE_ROOT/ACEXML/README for more ")
                         ACE_TEXT ("information. \n")));
             return -1;
-#endif /* ACEXML_HAS_ZZIPLIB */
+#endif /* USE_ZZIP */
             break;
           default:
             usage(argv[0]);
@@ -82,12 +82,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACEXML_FileCharStream *fstm = 0;
   ACEXML_HttpCharStream *ustm = 0;
   ACEXML_StrCharStream* sstm = 0;
-#ifdef ACEXML_HAS_ZZIPLIB
+#ifdef USE_ZZIP
   ACEXML_ZipCharStream* zstm = 0;
-#endif /* ACEXML_HAS_ZZIPLIB */
+#endif /* USE_ZZIP */
   if (filename != 0)
     {
-#ifdef ACEXML_HAS_ZZIPLIB
+#ifdef USE_ZZIP
       if (zip)
         {
           ACE_NEW_RETURN (zstm, ACEXML_ZipCharStream(), -1);
@@ -100,7 +100,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       else
         {
-#endif /* ACEXML_HAS_ZZIPLIB */
+#endif /* USE_ZZIP */
           ACE_NEW_RETURN (fstm, ACEXML_FileCharStream (), -1);
           if (fstm->open (filename) != 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -108,9 +108,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                filename),
                               -1);
           stm = fstm;
-#ifdef ACEXML_HAS_ZZIPLIB
+#ifdef USE_ZZIP
         }
-#endif /* ACEXML_HAS_ZZIPLIB */
+#endif /* USE_ZZIP */
     }
   else if (url != 0)
     {
@@ -152,30 +152,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   parser.setDTDHandler (handler);
   parser.setErrorHandler (handler);
   parser.setEntityResolver (handler);
-  ACEXML_TRY_NEW_ENV
+  ACEXML_DECLARE_NEW_ENV;
+
+  ACEXML_TRY_EX (FIRST)
   {
     parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
-    ACEXML_TRY_CHECK;
+    ACEXML_TRY_CHECK_EX (FIRST);
   }
   ACEXML_CATCH (ACEXML_Exception, ex)
+    {
+      ex.print();
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
+    }
+  ACEXML_ENDTRY;
+  ACEXML_TRY_EX (SECOND)
+  {
+    parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+    ACEXML_TRY_CHECK_EX (SECOND);
+  }
+  ACEXML_CATCH (ACEXML_SAXException, ex)
     {
       ex.print();
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
       return 1;
     }
   ACEXML_ENDTRY;
-//   ACEXML_TRY_EX (SECOND)
-//   {
-//     parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
-//     ACEXML_TRY_CHECK_EX (SECOND);
-//   }
-//   ACEXML_CATCH (ACEXML_SAXException, ex)
-//     {
-//       ex.print();
-//       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
-//       return 1;
-//     }
-//   ACEXML_ENDTRY;
 //   ACEXML_TRY_EX (THIRD)
 //   {
 //     parser.parse (&input ACEXML_ENV_ARG_PARAMETER);

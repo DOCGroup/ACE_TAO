@@ -34,7 +34,7 @@
 
 ACE_RCSID(tests, SOCK_Test, "$Id$")
 
-#if !defined (ACE_WIN32)
+#if !defined (ACE_LACKS_MKFIFO)
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
@@ -44,7 +44,7 @@ static const size_t big_size = (BUFSIZ * 4);
 static void *
 client (void *arg)
 {
-  ACE_TCHAR *fifo_path = ACE_reinterpret_cast (ACE_TCHAR *, arg);
+  ACE_TCHAR *fifo_path = reinterpret_cast <ACE_TCHAR *> (arg);
   ACE_FIFO_Send_Msg fifo;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) client opening %s\n"), fifo_path));
   if (fifo.open (fifo_path) == -1)
@@ -53,7 +53,7 @@ client (void *arg)
   // Try some transfers - the server part is expecting this data.
   // First, try a nice, easy send.
   ssize_t send_count;
-  ssize_t expect = ACE_static_cast (ssize_t, ACE_OS::strlen (ACE_ALPHABET));
+  ssize_t expect = static_cast <ssize_t> (ACE_OS::strlen (ACE_ALPHABET));
   send_count = fifo.send (ACE_ALPHABET, ACE_OS::strlen (ACE_ALPHABET));
   if (send_count == expect)
     {
@@ -63,11 +63,11 @@ client (void *arg)
       char big[big_size];
       for (size_t i = 0; i < big_size; ++i)
         big[i] = (i % 2) ? 0x05 : 0x0A;  // Make nice pattern in blown stack
-      expect = ACE_static_cast (ssize_t, big_size);
+      expect = static_cast <ssize_t> (big_size);
       send_count = fifo.send (big, big_size);
       if (send_count == expect)
         {
-          expect = ACE_static_cast (ssize_t, ACE_OS::strlen (ACE_ALPHABET));
+          expect = static_cast <ssize_t> (ACE_OS::strlen (ACE_ALPHABET));
           send_count = fifo.send (ACE_ALPHABET, ACE_OS::strlen (ACE_ALPHABET));
           if (send_count != expect)
             ACE_ERROR ((LM_ERROR,
@@ -101,7 +101,7 @@ client (void *arg)
 static void *
 server (void *arg)
 {
-  ACE_FIFO_Recv_Msg *fifo = ACE_reinterpret_cast (ACE_FIFO_Recv_Msg *, arg);
+  ACE_FIFO_Recv_Msg *fifo = reinterpret_cast <ACE_FIFO_Recv_Msg *> (arg);
 
   // Wait for the client to get going and open the FIFO.
   errno = 0;
@@ -124,7 +124,7 @@ server (void *arg)
 
   char buf[BUFSIZ];
   ssize_t recv_count;
-  ssize_t expect = ACE_static_cast (ssize_t, ACE_OS::strlen (ACE_ALPHABET));
+  ssize_t expect = static_cast <ssize_t> (ACE_OS::strlen (ACE_ALPHABET));
   recv_count = fifo->recv (buf, sizeof (buf));
   if (recv_count != expect)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -155,9 +155,9 @@ server (void *arg)
 
       // recv_count is sizeof(buf) on ACE_HAS_STREAM_PIPES; big_size on others.
 #if defined (ACE_HAS_STREAM_PIPES)
-      expect = ACE_static_cast (ssize_t, sizeof (buf));
+      expect = static_cast <ssize_t> (sizeof (buf));
 #else
-      expect = ACE_static_cast (ssize_t, big_size);
+      expect = static_cast <ssize_t> (big_size);
 #endif /* ACE_HAS_STREAM_PIPES */
       recv_count = fifo->recv (buf, sizeof (buf));
       if (recv_count != expect)
@@ -170,7 +170,7 @@ server (void *arg)
     }
 #endif /* ACE_HAS_STREAM_PIPES */
 
-  expect = ACE_static_cast (ssize_t, ACE_OS::strlen (ACE_ALPHABET));
+  expect = static_cast <ssize_t> (ACE_OS::strlen (ACE_ALPHABET));
   recv_count = fifo->recv (buf, sizeof (buf));
   if (recv_count != expect)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -296,6 +296,7 @@ run_main (int, ACE_TCHAR *[])
 }
 
 #else
+
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -307,4 +308,4 @@ run_main (int, ACE_TCHAR *[])
   return 0;
 }
 
-#endif /* !ACE_WIN32 */
+#endif /* !ACE_LACKS_MKFIFO */

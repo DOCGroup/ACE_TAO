@@ -56,7 +56,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
 ACE_thread_key_t *log_msg_tss_key (void)
 {
-  static ACE_thread_key_t key;
+  static ACE_thread_key_t key = 0;
 
   return &key;
 }
@@ -727,6 +727,7 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
 #else
     {
       delete ostream_;
+      ostream_ = 0;
     }
 #endif
 }
@@ -790,7 +791,7 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
       else
         {
           status =
-            ACE_Log_Msg_Manager::log_backend_->open (logger_key);
+            ACE_Log_Msg_Manager::log_backend_->open (prog_name);
         }
 
       if (status == -1)
@@ -803,8 +804,8 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
             ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG);
         }
     }
-  else if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER) ||
-           ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG))
+  else if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER) 
+           || ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG))
     {
       // If we are closing down logger, redirect logging to stderr.
       ACE_CLR_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER);
@@ -879,6 +880,7 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
  *   'P': format the current process id
  *   'p': format the appropriate errno message from sys_errlist, e.g., as done by <perror>
  *   'Q': print out the uint64 number
+ *   'q': print out the int64 number
  *   '@': print a void* pointer (in hexadecimal)
  *   'r': call the function pointed to by the corresponding argument
  *   'R': print return status
@@ -1785,8 +1787,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     // On some platforms sizeof (wchar_t) can be 2
                     // on the others 4 ...
                     wchar_t wtchar =
-                      ACE_static_cast(wchar_t,
-                                      va_arg (argp, int));
+                      static_cast<wchar_t> (va_arg (argp, int));
 #if defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
                     ACE_OS::strcpy (fp, ACE_LIB_TEXT ("c"));
@@ -1933,6 +1934,27 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   ACE_UPDATE_COUNT (bspace, this_len);
                   break;
 
+                case 'q':
+ #if defined (ACE_LACKS_LONGLONG_T)
+                   // No implementation available yet, no ACE_INT64 emulation
+                   // available yet
+ #else  /* ! ACE_LACKS_LONGLONG_T */
+                   {
+                     const ACE_TCHAR *fmt = ACE_INT64_FORMAT_SPECIFIER;
+                     ACE_OS::strcpy (fp, &fmt[1]);    // Skip leading %
+                     if (can_check)
+                       this_len = ACE_OS::snprintf (bp, bspace,
+                                                    format,
+                                                    va_arg (argp, ACE_INT64));
+                     else
+                       this_len = ACE_OS::sprintf (bp,
+                                                   format,
+                                                   va_arg (argp, ACE_INT64));
+                   }
+ #endif /* ! ACE_LACKS_LONGLONG_T */
+                   ACE_UPDATE_COUNT (bspace, this_len);
+                   break;
+
                 case '@':
                     ACE_OS::strcpy (fp, ACE_LIB_TEXT ("p"));
                     if (can_check)
@@ -1973,21 +1995,26 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
   *bp = '\0'; // Terminate bp, but don't auto-increment this!
 
-  // Check that memory was not corrupted.
+  ssize_t result = 0;
+
+  // Check that memory was not corrupted, if it corrupted we can't log anything
+  // anymore because all our members could be corrupted.
   if (bp >= this->msg_ + sizeof this->msg_)
     {
       abort_prog = 1;
       ACE_OS::fprintf (stderr,
                        "The following logged message is too long!\n");
     }
+  else
+    {
+      // Copy the message from thread-specific storage into the transfer
+      // buffer (this can be optimized away by changing other code...).
+      log_record.msg_data (this->msg ());
 
-  // Copy the message from thread-specific storage into the transfer
-  // buffer (this can be optimized away by changing other code...).
-  log_record.msg_data (this->msg ());
-
-  // Write the <log_record> to the appropriate location.
-  ssize_t result = this->log (log_record,
-                              abort_prog);
+      // Write the <log_record> to the appropriate location.
+      result = this->log (log_record,
+                          abort_prog);
+    }
 
   if (abort_prog)
     {

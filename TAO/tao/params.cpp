@@ -15,21 +15,23 @@ ACE_RCSID (tao,
 
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
-  : endpoints_list_ (),
-    mcast_discovery_endpoint_ (),
-    default_init_ref_ (TAO_DEFAULT_INIT_REFERENCE_INITIALIZER),
-    sock_rcvbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
-    sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
-    nodelay_ (1),
-    cdr_memcpy_tradeoff_ (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF),
-    use_lite_protocol_ (0),
-    use_dotted_decimal_addresses_ (0),
-    std_profile_components_ (1),
-    ace_sched_policy_ (ACE_SCHED_OTHER),
-    sched_policy_ (THR_SCHED_DEFAULT),
-    scope_policy_ (THR_SCOPE_PROCESS),
-    single_read_optimization_ (1),
-    disable_rt_collocation_resolver_ (false)
+  : endpoints_map_ (10)
+  , mcast_discovery_endpoint_ ()
+  , default_init_ref_ (TAO_DEFAULT_INIT_REFERENCE_INITIALIZER)
+  , sock_rcvbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ)
+  , sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ)
+  , nodelay_ (1)
+  , cdr_memcpy_tradeoff_ (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF)
+  , use_lite_protocol_ (0)
+  , use_dotted_decimal_addresses_ (0)
+  , std_profile_components_ (1)
+  , ace_sched_policy_ (ACE_SCHED_OTHER)
+  , sched_policy_ (THR_SCHED_DEFAULT)
+  , scope_policy_ (THR_SCOPE_PROCESS)
+  , single_read_optimization_ (1)
+  , pref_network_ ()
+  , disable_rt_collocation_resolver_ (false)
+  , enforce_preferred_interfaces_ (false)
 {
   for (int i = 0; i != TAO_NO_OF_MCAST_SERVICES; ++i)
     {
@@ -41,9 +43,72 @@ TAO_ORB_Parameters::~TAO_ORB_Parameters (void)
 {
 }
 
+void
+TAO_ORB_Parameters::get_endpoint_set (const ACE_CString &lane,
+                                      TAO_EndpointSet &endpoint_set)
+{
+  ACE_CString endpoints;
+
+  // Look for the lane in the endpoints map.
+  int result =
+    this->endpoints_map_.find (lane, endpoints);
+
+  // If lane is not in the map, <endpoint_set> remains empty
+  if (result != 0)
+    return;
+
+  // At this point, the parsing should not fail since they have been
+  // parsed successfully before.
+  result =
+    this->parse_and_add_endpoints (endpoints,
+                                   endpoint_set);
+  ACE_ASSERT (result == 0);
+}
+
 int
-TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
-                                     TAO_EndpointSet &endpoints_list)
+TAO_ORB_Parameters::add_endpoints (const ACE_CString &lane,
+                                   const ACE_CString &additional_endpoints)
+{
+  TAO_EndpointSet endpoint_set;
+
+  // Parse the additional endpoints.
+  int result =
+    this->parse_and_add_endpoints (additional_endpoints,
+                                   endpoint_set);
+
+  // Parse failure.
+  if (result != 0)
+    return result;
+
+  // Look for the lane in the endpoints map.
+  ACE_CString existing_endpoints;
+  result =
+    this->endpoints_map_.find (lane, existing_endpoints);
+
+  // Create the resultant endpoints string.
+  ACE_CString new_endpoints;
+  if (result == 0)
+    new_endpoints =
+      existing_endpoints +
+      ";" +
+      additional_endpoints;
+  else
+    new_endpoints =
+      additional_endpoints;
+
+  result =
+    this->endpoints_map_.rebind (lane,
+                                 new_endpoints);
+
+  if (result == -1)
+    return result;
+
+  return 0;
+}
+
+int
+TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
+                                             TAO_EndpointSet &endpoint_set)
 {
   // Parse the string into seperate endpoints, where `endpoints' is of
   // the form:
@@ -106,7 +171,7 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
           if (check_offset > 0 &&
               check_offset != endpt.npos)
             {
-              endpoints_list.enqueue_tail (endpt);
+              endpoint_set.enqueue_tail (endpt);
               // Insert endpoint into list
             }
           else
@@ -125,4 +190,52 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
     }
 
   return status;
+}
+
+bool
+TAO_ORB_Parameters::preferred_interfaces (const char *s)
+{
+  ACE_CString tmp (s);
+
+  ssize_t index = 0;
+  int comma = 0;
+  while ((index = tmp.find (",", index)) != ACE_CString::npos)
+    {
+      ++comma;
+      ++index;
+    }
+
+  index = 0;
+
+  int colon = 0;
+  while ((index = tmp.find (":", index)) != ACE_CString::npos)
+    {
+      ++colon;
+      ++index;
+    }
+
+  if (colon != (comma + 1))
+    return false;
+
+  this->pref_network_ = tmp;
+
+  return true;
+}
+
+const char *
+TAO_ORB_Parameters::preferred_interfaces (void) const
+{
+  return this->pref_network_.c_str ();
+}
+
+void
+TAO_ORB_Parameters::enforce_pref_interfaces (bool p)
+{
+  this->enforce_preferred_interfaces_ = p;
+}
+
+bool
+TAO_ORB_Parameters::enforce_pref_interfaces (void) const
+{
+  return this->enforce_preferred_interfaces_;
 }

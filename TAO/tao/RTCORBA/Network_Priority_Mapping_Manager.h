@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Network_Priority_Mapping_Manager.h
@@ -22,13 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
 
 #include "Network_Priority_Mapping.h"
 #include "tao/LocalObject.h"
@@ -63,10 +57,8 @@ public:
   RTCORBA::NetworkPriorityMapping *mapping (void);
 
 public:
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
   typedef TAO_Network_Priority_Mapping_Manager_ptr _ptr_type;
   typedef TAO_Network_Priority_Mapping_Manager_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
 
   // the static operations
   static TAO_Network_Priority_Mapping_Manager_ptr _duplicate (
@@ -99,7 +91,8 @@ private:
   TAO_Network_Priority_Mapping *mapping_;
 };
 
-class TAO_RTCORBA_Export TAO_Network_Priority_Mapping_Manager_var : public TAO_Base_var
+class TAO_RTCORBA_Export TAO_Network_Priority_Mapping_Manager_var
+  : private TAO_Base_var
 {
 public:
   TAO_Network_Priority_Mapping_Manager_var (void); // default constructor
@@ -155,10 +148,6 @@ private:
 #if defined (__ACE_INLINE__)
 #include "Network_Priority_Mapping_Manager.i"
 #endif /* __ACE_INLINE__ */
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

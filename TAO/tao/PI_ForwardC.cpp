@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:303
+// be\be_codegen.cpp:302
 
 
 #include "PI_ForwardC.h"
@@ -43,7 +43,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:65
 
 // Arg traits specializations.
 namespace TAO
@@ -52,7 +52,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_PortableInterceptor_ServerId[] =
 {
@@ -83,7 +83,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ServerId (
     sizeof (_oc_PortableInterceptor_ServerId),
     (char *) &_oc_PortableInterceptor_ServerId,
     0,
-    sizeof (PortableInterceptor::ServerId)
+    0
   );
 
 namespace PortableInterceptor
@@ -93,7 +93,7 @@ namespace PortableInterceptor
 }
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_PortableInterceptor_ORBId[] =
 {
@@ -122,7 +122,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBId (
     sizeof (_oc_PortableInterceptor_ORBId),
     (char *) &_oc_PortableInterceptor_ORBId,
     0,
-    sizeof (PortableInterceptor::ORBId)
+    0
   );
 
 namespace PortableInterceptor
@@ -132,7 +132,7 @@ namespace PortableInterceptor
 }
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_PortableInterceptor_AdapterName[] =
 {
@@ -185,7 +185,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_AdapterName (
     sizeof (_oc_PortableInterceptor_AdapterName),
     (char *) &_oc_PortableInterceptor_AdapterName,
     0,
-    sizeof (PortableInterceptor::AdapterName)
+    0
   );
 
 namespace PortableInterceptor
@@ -195,7 +195,7 @@ namespace PortableInterceptor
 }
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_PortableInterceptor_ObjectId[] =
 {
@@ -248,7 +248,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ObjectId (
     sizeof (_oc_PortableInterceptor_ObjectId),
     (char *) &_oc_PortableInterceptor_ObjectId,
     0,
-    sizeof (PortableInterceptor::ObjectId)
+    0
   );
 
 namespace PortableInterceptor
@@ -258,7 +258,7 @@ namespace PortableInterceptor
 }
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_PortableInterceptor_AdapterManagerId[] =
 {
@@ -293,7 +293,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_AdapterManagerId (
     sizeof (_oc_PortableInterceptor_AdapterManagerId),
     (char *) &_oc_PortableInterceptor_AdapterManagerId,
     0,
-    sizeof (PortableInterceptor::AdapterManagerId)
+    0
   );
 
 namespace PortableInterceptor
@@ -303,7 +303,7 @@ namespace PortableInterceptor
 }
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_PortableInterceptor_AdapterState[] =
 {
@@ -336,7 +336,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_AdapterState (
     sizeof (_oc_PortableInterceptor_AdapterState),
     (char *) &_oc_PortableInterceptor_AdapterState,
     0,
-    sizeof (PortableInterceptor::AdapterState)
+    0
   );
 
 namespace PortableInterceptor
@@ -346,11 +346,10 @@ namespace PortableInterceptor
 }
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-

@@ -5,6 +5,8 @@
 
 
 const char *ior = "file://test.ior";
+char *another_ior = 0;
+
 int niterations = 5;
 int do_shutdown = 0;
 int nthreads = 5;
@@ -64,6 +66,12 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
+      int len = ACE_OS::strlen(ior) + 1;
+      another_ior = new char[len + 1];
+      ACE_OS::strcpy(another_ior, ior);
+      another_ior[len-1] = '1';
+      another_ior[len] = '\0';
+
       // Get Object Reference using IOR file
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
@@ -82,7 +90,19 @@ main (int argc, char *argv[])
         }
 
 
-      Client_Worker client (server.in (), niterations);
+      object =
+        orb->string_to_object (another_ior ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Cast to Appropriate Type
+      Another_One_var another =
+        Another_One::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+
+      Client_Worker client (server.in (),
+                            another.in (),
+                            niterations);
 
       if (client.activate (THR_NEW_LWP | THR_JOINABLE, nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,

@@ -70,18 +70,8 @@ protected:
 
   virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Obtain UIPMC properties that must be used by this connector, i.e.,
-  /// initialize <uipmc_properties_>.
-  int init_uipmc_properties (void);
-
   /// Cancel the passed cvs handler from the connector
   virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
-
-protected:
-
-  /// UIPMC configuration properties to be used for all
-  /// connections established by this connector.
-  TAO_UIPMC_Properties uipmc_properties_;
 
 private:
   // @@ Michael: UDP Addition

@@ -91,7 +91,7 @@ MyImpl::BMDevice_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-MyImpl::BMDevice_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::BMDevice_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

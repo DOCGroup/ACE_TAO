@@ -23,8 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
-
 /**
  * @class ACE_Time_Request
  *

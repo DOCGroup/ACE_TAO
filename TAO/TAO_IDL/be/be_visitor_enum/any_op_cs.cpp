@@ -65,7 +65,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
           << "TAO::Any_Basic_Impl_T<" << node->name ()
           << ">::marshal_value (TAO_OutputCDR &)" << be_nl
           << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
+          << "return false;" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
@@ -74,7 +74,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
           << "TAO::Any_Basic_Impl_T<" << node->name ()
           << ">::demarshal_value (TAO_InputCDR &)" << be_nl
           << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
+          << "return false;" << be_uidt_nl
           << "}";
     }
 

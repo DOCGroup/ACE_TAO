@@ -71,8 +71,7 @@ be_array::be_array (UTL_ScopedName *n,
 {
   if (!this->imported ())
     {
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.array_seen_);
+      idl_global->array_seen_ = true;
     }
 }
 

@@ -384,7 +384,7 @@ fill_receptacles (const char* /* type */,
   ACE_CHECK_RETURN (0);
 
   CORBA::ULong i = 0;
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong, pref_inter.num_offers ());
+  CORBA::ULong size = static_cast<CORBA::ULong> (pref_inter.num_offers ());
   CORBA::ULong offers_in_sequence = (how_many < size) ? how_many : size;
   CORBA::ULong offers_in_iterator = size - offers_in_sequence;
 
@@ -957,11 +957,11 @@ _cxx_export (CORBA::Object_ptr reference,
   // No copying, no memory leaks. Violates the "in" parameter semantics
   // when this object is colocated with the client, however.
   //  CosTrading::PropertySeq* hack_seq =
-  //    ACE_const_cast (CosTrading::PropertySeq*, &properties);
+  //    const_cast<CosTrading::PropertySeq*> (&properties);
   //  CosTrading::Property* pbuf = hack_seq->get_buffer (1);
 
   //  CosTrading::PropertySeq* hack_seq =
-  //    ACE_const_cast (CosTrading::PropertySeq*, &properties);
+  //    const_cast<CosTrading::PropertySeq*> (&properties);
   //  CosTrading::Property* pbuf = hack_seq->get_buffer (0);
   //  offer->properties.replace (plength, plength, pbuf, 0);
   //  offer->properties._allocate_buffer (plength);
@@ -1059,7 +1059,7 @@ modify (const char *id,
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
 
   CosTrading::Offer* offer = offer_database.
-    lookup_offer (ACE_const_cast (CosTrading::OfferId, id), type ACE_ENV_ARG_PARAMETER);
+    lookup_offer (const_cast<CosTrading::OfferId> (id), type ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (offer != 0)
@@ -1168,7 +1168,7 @@ resolve (const CosTrading::TraderName &name
                   CosTrading::Register::RegisterNotSupported))
 {
   // Determine if the first link is a legal link name.
-  if (! TAO_Trader_Base::is_valid_identifier_name (name[0]))
+  if (! TAO_Trader_Base::is_valid_link_name (name[0]))
     ACE_THROW_RETURN (CosTrading::Register::IllegalTraderName (name),
                       CosTrading::Register::_nil ());
 
@@ -1311,30 +1311,30 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
   if (ip_addr != 0)
     {
       pid_t pid = ACE_OS::getpid ();
-      this->stem_id_[0] = ACE_static_cast (CORBA::Octet, (ip_addr >> 24) & 0xff);
-      this->stem_id_[1] = ACE_static_cast (CORBA::Octet, (ip_addr >> 16) & 0xff);
-      this->stem_id_[2] = ACE_static_cast (CORBA::Octet, (ip_addr >> 8) & 0xff);
-      this->stem_id_[3] = ACE_static_cast (CORBA::Octet, ip_addr & 0xff);
-      this->stem_id_[4] = ACE_static_cast (CORBA::Octet, (pid >> 24) & 0xff);
-      this->stem_id_[5] = ACE_static_cast (CORBA::Octet, (pid >> 16) & 0xff);
-      this->stem_id_[6] = ACE_static_cast (CORBA::Octet, (pid >> 8) & 0xff);
-      this->stem_id_[7] = ACE_static_cast (CORBA::Octet, pid & 0xff);
+      this->stem_id_[0] = static_cast<CORBA::Octet> ((ip_addr >> 24) & 0xff);
+      this->stem_id_[1] = static_cast<CORBA::Octet> ((ip_addr >> 16) & 0xff);
+      this->stem_id_[2] = static_cast<CORBA::Octet> ((ip_addr >> 8) & 0xff);
+      this->stem_id_[3] = static_cast<CORBA::Octet> (ip_addr & 0xff);
+      this->stem_id_[4] = static_cast<CORBA::Octet> ((pid >> 24) & 0xff);
+      this->stem_id_[5] = static_cast<CORBA::Octet> ((pid >> 16) & 0xff);
+      this->stem_id_[6] = static_cast<CORBA::Octet> ((pid >> 8) & 0xff);
+      this->stem_id_[7] = static_cast<CORBA::Octet> (pid & 0xff);
     }
 
   // The default way -- eight random integers.
   else
     {
       size_t time_value = ACE_OS::time ();
-      ACE_OS::srand (ACE_static_cast (u_int, time_value));
+      ACE_OS::srand (static_cast<u_int> (time_value));
 
-      this->stem_id_[0] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
-      this->stem_id_[1] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
-      this->stem_id_[2] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
-      this->stem_id_[3] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
-      this->stem_id_[4] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
-      this->stem_id_[5] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
-      this->stem_id_[6] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
-      this->stem_id_[7] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
+      this->stem_id_[0] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
+      this->stem_id_[1] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
+      this->stem_id_[2] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
+      this->stem_id_[3] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
+      this->stem_id_[4] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
+      this->stem_id_[5] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
+      this->stem_id_[6] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
+      this->stem_id_[7] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
     }
 }
 
@@ -1680,7 +1680,7 @@ add_link (const char *name,
                   CosTrading::Link::LimitingFollowTooPermissive))
 {
   // Ensure the link name is valid.
-  if (! TAO_Trader_Base::is_valid_identifier_name (name))
+  if (! TAO_Trader_Base::is_valid_link_name (name))
     ACE_THROW (CosTrading::Link::IllegalLinkName (name));
 
   // Ensure this isn't a duplicate link name.
@@ -1730,7 +1730,7 @@ remove_link (const char *name
                   CosTrading::Link::UnknownLinkName))
 {
   // Ensure the link name is valid.
-  if (! TAO_Trader_Base::is_valid_identifier_name (name))
+  if (! TAO_Trader_Base::is_valid_link_name (name))
     ACE_THROW (CosTrading::Link::IllegalLinkName (name));
 
   // Ensure this isn't a duplicate link name.
@@ -1751,7 +1751,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name
                    CosTrading::Link::UnknownLinkName))
 {
   // Ensure the link name is valid.
-  if (! TAO_Trader_Base::is_valid_identifier_name (name))
+  if (! TAO_Trader_Base::is_valid_link_name (name))
     ACE_THROW_RETURN (CosTrading::Link::IllegalLinkName (name), 0);
 
   // Ensure this isn't a duplicate link name.
@@ -1795,7 +1795,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::list_links (ACE_ENV_SINGLE_ARG_DECL_NO
   size_t size = this->links_.current_size ();
   CORBA::ULong i = 0;
   CosTrading::LinkName* link_seq =
-    CosTrading::LinkNameSeq::allocbuf (ACE_static_cast (CORBA::ULong, size));
+    CosTrading::LinkNameSeq::allocbuf (static_cast<CORBA::ULong> (size));
 
   // Copy the link names into the buffer.
   for (ACE_TYPENAME Links::iterator links_iter (this->links_);
@@ -1820,7 +1820,7 @@ modify_link (const char *name,
                    CosTrading::Link::LimitingFollowTooPermissive))
 {
   // Ensure the link name is valid.
-  if (! TAO_Trader_Base::is_valid_identifier_name (name))
+  if (! TAO_Trader_Base::is_valid_link_name (name))
     ACE_THROW (CosTrading::Link::IllegalLinkName (name));
 
   // Ensure this isn't a duplicate link name.

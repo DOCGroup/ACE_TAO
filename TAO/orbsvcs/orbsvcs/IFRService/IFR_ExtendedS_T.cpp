@@ -26,15 +26,15 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:684
+// be\be_codegen.cpp:683
 
-#ifndef _TAO_IDL_______ORBSVCS_ORBSVCS_IFRSERVICE_ORIG_IFR_EXTENDEDS_T_CPP_
-#define _TAO_IDL_______ORBSVCS_ORBSVCS_IFRSERVICE_ORIG_IFR_EXTENDEDS_T_CPP_
+#ifndef _TAO_IDL_SERVER_IFR_EXTENDEDS_T_CPP_
+#define _TAO_IDL_SERVER_IFR_EXTENDEDS_T_CPP_
 
 #include "IFR_ExtendedS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "IFR_ExtendedS_T.i"
+#include "IFR_ExtendedS_T.inl"
 #endif /* !defined INLINE */
 
 

@@ -24,8 +24,8 @@
 #include "CEC_Reactive_SupplierControl.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (CosEvent, 
-           CEC_Reactive_SupplierControl, 
+ACE_RCSID (CosEvent,
+           CEC_Reactive_SupplierControl,
            "$Id$")
 
 TAO_CEC_Reactive_SupplierControl::
@@ -88,7 +88,7 @@ TAO_CEC_Reactive_SupplierControl::query_suppliers (
   if (this->typed_event_channel_)
     {
       TAO_CEC_Ping_Typed_Push_Supplier push_worker (this);
-      
+
       this->typed_event_channel_->typed_supplier_admin ()->for_each (&push_worker
                                                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -473,8 +473,3 @@ TAO_CEC_Ping_Pull_Supplier::work (TAO_CEC_ProxyPullConsumer *consumer
   ACE_ENDTRY;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

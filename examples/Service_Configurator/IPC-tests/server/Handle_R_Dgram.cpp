@@ -2,7 +2,7 @@
 
 #include "Handle_R_Dgram.h"
 
-ACE_RCSID(server, Handle_R_Dgram, "$Id$")
+ACE_RCSID(server, Handle_R_Dgram, "Handle_R_Dgram.cpp,v 4.2 1998/07/31 22:55:19 gonzo Exp")
 
 #if defined (SunOS4)
 extern "C" 
@@ -35,4 +35,4 @@ unsigned short Handle_R_Dgram::DEFAULT_PORT = ACE_DEFAULT_SERVER_PORT;
 #endif /* __ACE_INLINE__ */
 
 Handle_R_Dgram remote_dgram;
-ACE_Service_Object_Type rd (&remote_dgram, "Remote_Dgram");
+ACE_Service_Object_Type rd (&remote_dgram, ACE_TEXT ("Remote_Dgram"));

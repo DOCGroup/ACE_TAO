@@ -19,7 +19,7 @@ ACE_round (ACE_timer_t t)
 #if defined (ACE_LACKS_FLOATING_POINT)
   return t;
 #else
-  return ACE_static_cast (ACE_UINT32, t);
+  return static_cast<ACE_UINT32> (t);
 #endif
 }
 
@@ -339,8 +339,7 @@ Client::get_low_priority_latency (void)
 ACE_timer_t
 Client::get_latency (u_int thread_id)
 {
-  return ACE_static_cast (ACE_timer_t,
-                          this->ts_->latency_ [thread_id]);
+  return static_cast<ACE_timer_t> (this->ts_->latency_ [thread_id]);
 }
 
 // Returns the jitter in usecs.

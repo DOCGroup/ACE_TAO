@@ -8,6 +8,8 @@
 #include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/Object.h"
 #include "tao/Typecode.h"
+#include "tao/SystemException.h"
+#include "tao/CDR.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
@@ -119,17 +121,6 @@ CORBA::Any::_tao_set_typecode (const CORBA::TypeCode_ptr tc)
     {
       this->impl_->type (tc);
     }
-}
-
-ACE_Message_Block *
-CORBA::Any::_tao_get_cdr (void) const
-{
-  if (this->impl_ != 0)
-    {
-      return this->impl_->_tao_get_cdr ();
-    }
-
-  return 0;
 }
 
 int
@@ -305,9 +296,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
     {
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW_RETURN (impl,
-                      TAO::Unknown_IDL_Type (tc.in (),
-                                             0,
-                                             cdr.byte_order ()),
+                      TAO::Unknown_IDL_Type (tc.in ()),
                       0);
 
       any.replace (impl);

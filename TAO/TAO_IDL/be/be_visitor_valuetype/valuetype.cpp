@@ -32,13 +32,6 @@ be_visitor_valuetype::~be_visitor_valuetype (void)
 {
 }
 
-// This method must be overridden by the derived valuetype visitors.
-int
-be_visitor_valuetype::visit_valuetype (be_valuetype *)
-{
-  return -1;
-}
-
 int
 be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
 {

@@ -2,8 +2,10 @@
 
 #include "Requirement_Handler.h"
 #include "Property_Handler.h"
-#include "tao/Exception.h"
 #include "Utils.h"
+#include "tao/Exception.h"
+#include "ace/SString.h"
+
 
 using CIAO::Config_Handler::Property_Handler;
 
@@ -12,8 +14,8 @@ CIAO::Config_Handler::Requirement_Handler::process_Requirement (DOMNodeIterator 
                                                                 Deployment::Requirement &ret_struct)
 {
   int valid_resourceType = 0, valid_property = 0, valid_name = 0;
-  for (DOMNode * node = iter->nextNode (); 
-       node != 0; 
+  for (DOMNode * node = iter->nextNode ();
+       node != 0;
        node = iter->nextNode ())
     {
       XStr name (node->getNodeName ());
@@ -21,7 +23,7 @@ CIAO::Config_Handler::Requirement_Handler::process_Requirement (DOMNodeIterator 
         {
           valid_resourceType = 1;
           // Populate the structure
-          ret_struct.resourceType = 
+          ret_struct.resourceType =
             CIAO::Config_Handler::Utils::parse_string (iter);
         }
       else if (name == XStr (ACE_TEXT ("property")))
@@ -62,7 +64,7 @@ CIAO::Config_Handler::Requirement_Handler::process_Requirement (DOMNodeIterator 
                             {
                               XMLURL url (attr_node_value.c_str ());
                               DOMNodeIterator * value_iter =
-                                Utils::parse_href_tag (url, 
+                                Utils::parse_href_tag (url,
                                                        node->getOwnerDocument ());
                               // Get to the root-node
                               value_iter->nextNode ();
@@ -78,7 +80,7 @@ CIAO::Config_Handler::Requirement_Handler::process_Requirement (DOMNodeIterator 
                   // Deep copy the value
                   CIAO::Config_Handler::Property_Handler::
                     process_Property (property_iter, properties [index]);
-                }  
+                }
             }
           valid_property = 1;
 
@@ -93,9 +95,9 @@ CIAO::Config_Handler::Requirement_Handler::process_Requirement (DOMNodeIterator 
           valid_name = 1;
           ret_struct.name = CIAO::Config_Handler::Utils::parse_string (iter);
         }
-      else 
+      else
         {
-          if (! valid_resourceType || 
+          if (! valid_resourceType ||
               ! valid_property     ||
               ! valid_name)
             {

@@ -1,7 +1,6 @@
 #include "SSLIOP_Acceptor.h"
 #include "SSLIOP_Profile.h"
 #include "SSLIOP_Current.h"
-#include "SSLIOP_Util.h"
 
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
@@ -49,7 +48,6 @@ TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
     creation_strategy_ (0),
     concurrency_strategy_ (0),
     accept_strategy_ (0),
-    handler_state_ (),
     timeout_ (timeout)
 {
   // --- CSIv1 ---
@@ -187,7 +185,7 @@ TAO::SSLIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
 
       this->orb_core_->codeset_manager ()->
-	set_codeset (pfile->tagged_components());
+        set_codeset (pfile->tagged_components());
 
       IOP::TaggedComponent component;
       component.tag = ::SSLIOP::TAG_SSL_SEC_TRANS;
@@ -470,14 +468,8 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
   // holes.
   static const int giop_lite = 0;
 
-  if (TAO::SSLIOP::Util::setup_handler_state (this->orb_core_,
-                                              &(this->tcp_properties_),
-                                              this->handler_state_) != 0)
-      return -1;
-
   ACE_NEW_RETURN (this->creation_strategy_,
                   CREATION_STRATEGY (this->orb_core_,
-                                     &(this->handler_state_),
                                      giop_lite),
                   -1);
 

@@ -115,6 +115,9 @@ public:
   /// Return a chunk of memory back to free list cache.
   void free (void *);
 
+  /// Return the number of chunks available in the cache.
+  size_t pool_depth (void);
+
 private:
   /// Remember how we allocate the memory in the first place so
   /// we can clear things up later.
@@ -176,6 +179,9 @@ public:
 
   /// Return a chunk of memory back to free list cache.
   void free (void *);
+
+  /// Return the number of chunks available in the cache.
+  size_t pool_depth (void);
 
 private:
   /// Remember how we allocate the memory in the first place so
@@ -666,13 +672,6 @@ private:
  * examples.
  *
  */
-template <class ACE_LOCK>
-class ACE_Malloc_Lock_Adapter_T
-{
-public:
-  ACE_LOCK * operator () (const ACE_TCHAR *name);
-};
-
 /*****************************************************************************/
 
 /**
@@ -873,6 +872,13 @@ public:
   /// through those entries whose @a name match.
   ACE_Malloc_FIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
                             const char *name = 0);
+};
+
+template <class ACE_LOCK>
+class ACE_Malloc_Lock_Adapter_T
+{
+public:
+  ACE_LOCK * operator () (const ACE_TCHAR *myname);
 };
 
 #if defined (__ACE_INLINE__)

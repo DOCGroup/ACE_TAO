@@ -4,6 +4,7 @@
 
 #include "Port_Activator_T.h"
 #include "tao/CORBA_String.h"
+#include "ace/OS_NS_string.h"
 
 namespace CIAO
 {

@@ -43,11 +43,6 @@ static u_int errors = 0;
     (ACE_DEFAULT_THREAD_KEYS - ACE_MAX_THREADS) / (2 * ACE_MAX_THREADS) < 2
       ?  1
       :  (ACE_DEFAULT_THREAD_KEYS - ACE_MAX_THREADS) / (2 * ACE_MAX_THREADS);
-
-#elif defined (__Lynx__)
-  // LynxOS only has 16 native TSS keys, and most of those don't seem
-  // to be available.
-  static const int ITERATIONS = 1;
 #else
   // POSIX requires at least _POSIX_THREAD_KEYS_MAX (128) keys.  25
   // iterations with 4 worker threads should be sufficient to check
@@ -58,6 +53,9 @@ static u_int errors = 0;
 
 // Static variables.
 int Errno::flags_;
+int Errno::created_;
+int Errno::deleted_;
+
 ACE_Thread_Mutex *Errno::lock_ = 0;
 
 // This is our thread-specific error handler . . .
@@ -81,15 +79,17 @@ cleanup (void *ptr)
   // old value is replaced.  This function is intended to be
   // used with Draft 6 and later threads, where it is called
   // on thread termination with the thread-specific value.
-
-  // Anyways, for whatever reason, the ACE_DEBUG causes a
-  // core dump on LynxOS 2.5.0.
   ACE_UNUSED_ARG (ptr);
 #else  /* ! ACE_HAS_PTHREADS_DRAFT4 */
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in cleanup, ptr = %x\n"), ptr));
+  // Don't do this:  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in cleanup, ptr = %x\n"), ptr));
+  // The Log_Msg buffer is a TSS object, too, and it may be gone!
+  // if you must say something here try:
+  //  ACE_OS::fprintf (stderr, ACE_TEXT("(%d) in cleanup, ptr = %x\n"), ACE_Thread::self(), ptr);
+  // and this:
+  //    operator delete (ptr);
+  // is nonsense when applied to a void *! (even tho the compilers accept it????
+  delete static_cast <int *> (ptr);
 #endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
-
-  operator delete (ptr);
 }
 
 // This worker function is the entry point for each thread.
@@ -97,7 +97,7 @@ cleanup (void *ptr)
 static void *
 worker (void *c)
 {
-  int count = *(ACE_static_cast (int*, c));
+  int count = *(static_cast<int*> (c));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) worker, iterations = %d\n"), count));
 
@@ -200,7 +200,7 @@ worker (void *c)
         }
 #endif /* !defined (ACE_HAS_BROKEN_EXPLICIT_TYPECAST_OPERATOR_INVOCATION) */
 
-#if !defined (__Lynx__) || defined (ACE_HAS_TSS_EMULATION)
+#if defined (ACE_HAS_TSS_EMULATION)
       key = ACE_OS::NULL_key;
 
       if (ACE_Thread::keycreate (&key, cleanup) == -1)
@@ -243,9 +243,8 @@ worker (void *c)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::keyfree")));
 #  endif /* !(PTHREADS_DRAFT4 or 6) || defined (ACE_HAS_TSS_EMULATION) */
-#endif /* ! __Lynx__ || ACE_HAS_TSS_EMULATION */
+#endif /* ACE_HAS_TSS_EMULATION */
     }
-
   return 0;
 }
 
@@ -298,7 +297,20 @@ run_main (int, ACE_TCHAR *[])
   delete tss_error;
 
   Errno::deallocate_lock ();
-#else
+
+
+  if (Errno::created () != Errno::deleted ())
+    {
+      //@@TODO: this should probably be promoted to an error rather than just a
+      // warning.
+      ACE_ERROR ((LM_DEBUG,
+        ACE_TEXT ("(%P|%t) Warning: Number created (%d) != number deleted (%d)\n"),
+        Errno::created (),
+        Errno::deleted ()
+        ));
+    }
+
+#else /* ACE_HAS_THREADS */
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("threads are not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */

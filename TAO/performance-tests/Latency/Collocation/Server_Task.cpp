@@ -3,20 +3,22 @@
 //
 
 #include "Server_Task.h"
-#include "TestS.h"
 #include "Roundtrip.h"
 
-Server_Task::Server_Task (const char* ior_file,
-                          CORBA::ORB_ptr sorb,
-                          ACE_Null_Condition &cond,
+Server_Task::Server_Task (CORBA::ORB_ptr sorb,
+                          ACE_Manual_Event &cond,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr),
-    ior_file(ior_file),
     cond_ (cond),
     sorb_ (CORBA::ORB::_duplicate (sorb))
 {
 }
 
+Test::Roundtrip *
+Server_Task::get_reference ()
+{
+  return Test::Roundtrip::_duplicate (this->rt_var_.in ());
+}
 
 int
 Server_Task::svc (void)
@@ -50,37 +52,27 @@ Server_Task::svc (void)
 
      PortableServer::ServantBase_var owner_transfer(rt_impl);
 
-     Test::Roundtrip_var rt_var =
+     this->rt_var_ =
        rt_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
-     CORBA::String_var ior =
-       this->sorb_->object_to_string (rt_var.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
-
-     // Output the IOR to the <this->output_>
-     FILE *output_file= ACE_OS::fopen (this->ior_file,
-                                       "w");
-     if (output_file == 0)
-       ACE_ERROR_RETURN ((LM_ERROR,
-                          "Cannot open output file for writing IOR: %s",
-                          this->ior_file),
-                         1);
-
-     ACE_OS::fprintf (output_file, "%s", ior.in ());
-     ACE_OS::fclose (output_file);
+     if (CORBA::is_nil (this->rt_var_.in ()))
+      {
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           "Error activating Test::Roundtrip reference\n"),
+                          1);
+      }
 
      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_TRY_CHECK;
+
+     ACE_DEBUG ((LM_DEBUG, "Server_Task: Object Activation complete\n"));
 
      // Signal the main thread to spawn the client
      this->cond_.signal ();
 
      this->sorb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_TRY_CHECK;
-
-     ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
      ACE_TRY_CHECK;

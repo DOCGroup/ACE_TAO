@@ -32,8 +32,14 @@ $cargs = "-f -n100 -c2 ";
 print "*************** Running Structured Client Filter Test ****************\n";
 
 # Start Naming Service
-$NS->Spawn ();
-$TS->Spawn ();
+if ($NS->Spawn () == -1) {
+    exit 1;
+}
+
+if ($TS->Spawn () == -1) {
+    $NS->Kill ();
+    exit 1;
+}
 
 sleep 2;
 
@@ -65,6 +71,7 @@ $NS->Kill ();
 unlink $ior;
 unlink $notifyior;
 
+sleep 2;
 
 print "*************** Running Structured Client No Filters Test ****************\n";
 

@@ -169,6 +169,7 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << "\"\n\n";
     }
 
+  // To get ACE_UNUSED_ARGS
   this->gen_standard_include (this->client_header_,
                               "ace/config-all.h");
 
@@ -252,9 +253,7 @@ TAO_CodeGen::start_client_header (const char *fname)
                         << "#endif /* TAO_EXPORT_NESTED_CLASSES */";
 
   *this->client_header_ << "\n\n#if defined(_MSC_VER)\n"
-                        << "#if (_MSC_VER >= 1200)\n"
                         << "#pragma warning(push)\n"
-                        << "#endif /* _MSC_VER >= 1200 */\n"
                         << "#pragma warning(disable:4250)";
 
   if (be_global->use_raw_throw ())
@@ -428,14 +427,6 @@ TAO_CodeGen::start_server_header (const char *fname)
                                    server_hdr);
     }
 
-  // Include the Messaging files if AMI is enabled.
-  if (be_global->ami_call_back () == I_TRUE)
-    {
-      // Include Messaging skeleton file.
-      this->gen_standard_include (this->server_header_,
-                                  "tao/Messaging/MessagingS.h");
-    }
-
   // The server header should include the client header.
   *this->server_header_ << "\n#include \""
                         << be_global->be_get_client_hdr_fname (1)
@@ -452,24 +443,33 @@ TAO_CodeGen::start_server_header (const char *fname)
   // thing, because we need the definitions there, it also
   // registers the POA factory with the Service_Configurator, so
   // the ORB can automatically find it.
-  this->gen_standard_include (this->server_header_,
-                              "tao/Collocation_Proxy_Broker.h");
-  this->gen_standard_include (this->server_header_,
-                              "tao/PortableServer/PortableServer.h");
-  this->gen_standard_include (this->server_header_,
-                              "tao/PortableServer/Servant_Base.h");
-
-  if (be_global->gen_amh_classes ())
+  if (idl_global->non_local_iface_seen_)
     {
+      // Include the Messaging files if AMI is enabled.
+      if (be_global->ami_call_back () == I_TRUE)
+        {
+          // Include Messaging skeleton file.
+          this->gen_standard_include (this->server_header_,
+                                      "tao/Messaging/MessagingS.h");
+        }
+
       this->gen_standard_include (this->server_header_,
-                                  "tao/Messaging/AMH_Response_Handler.h");
+                                  "tao/Collocation_Proxy_Broker.h");
+      this->gen_standard_include (this->server_header_,
+                                  "tao/PortableServer/PortableServer.h");
+      this->gen_standard_include (this->server_header_,
+                                  "tao/PortableServer/Servant_Base.h");
+
+      if (be_global->gen_amh_classes ())
+        {
+          this->gen_standard_include (this->server_header_,
+                                      "tao/Messaging/AMH_Response_Handler.h");
+        }
     }
 
   *this->server_header_ << be_nl << be_nl
                         << "#if defined(_MSC_VER)\n"
-                        << "#if (_MSC_VER >= 1200)\n"
                         << "#pragma warning(push)\n"
-                        << "#endif /* _MSC_VER >= 1200 */\n"
                         << "#pragma warning(disable:4250)";
 
   if (be_global->use_raw_throw ())
@@ -563,9 +563,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
     }
 
   *this->server_template_header_ << "\n\n#if defined(_MSC_VER)\n"
-                                 << "#if (_MSC_VER >= 1200)\n"
                                  << "#pragma warning(push)\n"
-                                 << "#endif /* _MSC_VER >= 1200 */\n"
                                  << "#pragma warning(disable:4250)\n";
 
   if (be_global->use_raw_throw ())
@@ -885,8 +883,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
     << "#pragma once\n"
     << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
 
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.local_iface_seen_))
+  if (idl_global->local_iface_seen_)
     {
       *this->implementation_header_ << "#include \"tao/LocalObject.h\"\n\n";
     }
@@ -970,7 +967,7 @@ TAO_CodeGen::end_client_header (void)
                         << "\"\n";
   *this->client_header_ << "#endif /* defined INLINE */";
 
-  *this->client_header_ << "\n\n#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
+  *this->client_header_ << "\n\n#if defined(_MSC_VER)\n"
                         << "#pragma warning(pop)\n"
                         << "#endif /* _MSC_VER */";
 
@@ -1015,7 +1012,7 @@ TAO_CodeGen::end_server_header (void)
                         << "\"\n";
   *this->server_header_ << "#endif /* defined INLINE */";
 
-  *this->server_header_ << "\n\n#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
+  *this->server_header_ << "\n\n#if defined(_MSC_VER)\n"
                         << "#pragma warning(pop)\n"
                         << "#endif /* _MSC_VER */";
 
@@ -1122,7 +1119,7 @@ TAO_CodeGen::end_server_template_header (void)
       << "\")";
   *this->server_template_header_ << "\n#endif /* defined REQUIRED PRAGMA */";
 
-  *this->server_template_header_ << "\n\n#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
+  *this->server_template_header_ << "\n\n#if defined(_MSC_VER)\n"
                                  << "#pragma warning(pop)\n"
                                  << "#endif /* _MSC_VER */";
 
@@ -1335,32 +1332,27 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   // that require all necessary non-dependent names be parsed prior to
   // parsing templates that may use them (e.g. GNU g++ 3.4.x).
 
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.abstract_iface_seen_))
+  if (idl_global->abstract_iface_seen_)
     {
       // Include the AbstractBase file from the Valuetype library.
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/AbstractBase.h");
 
       // Turn on generation of the rest of the Valuetype library includes.
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.valuetype_seen_);
+      idl_global->valuetype_seen_ = I_TRUE;
     }
 
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.valuebase_seen_))
+  if (idl_global->valuebase_seen_)
     {
       // Include files from the Valuetype library.
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/ValueBase.h");
     }
 
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.valuetype_seen_))
+  if (idl_global->valuetype_seen_)
     {
       // Don't want to generate this twice.
-      if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                          idl_global->decls_seen_masks.valuebase_seen_))
+      if (!idl_global->valuebase_seen_)
         {
           this->gen_standard_include (this->client_header_,
                                       "tao/Valuetype/ValueBase.h");
@@ -1372,7 +1364,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       // Check for setting this bit performed in y.tab.cpp, actual checking
       // code is in be_valuetype.cpp.
       this->gen_cond_file_include (
-          idl_global->decls_seen_masks.valuefactory_seen_,
+          idl_global->valuefactory_seen_,
           "tao/Valuetype/ValueFactory.h",
           this->client_header_
         );
@@ -1384,7 +1376,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
                               "tao/ORB.h");
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.operation_seen_,
+      idl_global->operation_seen_,
       "tao/SystemException.h",
       this->client_header_
     );
@@ -1396,7 +1388,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 #if 0
   // For IDL exception, we need full knowledge of CORBA::UserException.
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.exception_seen_,
+      idl_global->exception_seen_,
       "tao/UserException.h",
       this->client_header_
     );
@@ -1409,9 +1401,9 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
   // Non-abstract interface or keyword 'Object'.
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.non_local_iface_seen_
-      | idl_global->decls_seen_masks.local_iface_seen_
-      | idl_global->decls_seen_masks.base_object_seen_,
+      idl_global->non_local_iface_seen_
+      | idl_global->local_iface_seen_
+      | idl_global->base_object_seen_,
       "tao/Object.h",
       this->client_header_
     );
@@ -1419,7 +1411,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   // This is true if we have a typecode or TCKind in the IDL file.
   // If not included here, it will appear in *C.cpp, if TCs not suppressed.
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.typecode_seen_,
+      idl_global->typecode_seen_,
       "tao/Typecode.h",
       this->client_header_
     );
@@ -1427,15 +1419,8 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   // This is true if we have an 'any' in the IDL file.
   // If not included here, it will appear in *C.cpp, if Anys not suppressed.
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.any_seen_,
+      idl_global->any_seen_,
       "tao/Any.h",
-      this->client_header_
-    );
-
-  // ParameterMode is so rarely used, it was put in a separate TAO file.
-  this->gen_cond_file_include (
-      idl_global->decls_seen_masks.parametermode_seen_,
-      "tao/ParameterMode.h",
       this->client_header_
     );
 
@@ -1485,8 +1470,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
   // Conditional includes.
 
   // Operations for local interfaces are pure virtual.
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.non_local_op_seen_))
+  if (idl_global->non_local_op_seen_)
     {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Exception_Data.h");
@@ -1495,8 +1479,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
     }
 
   // Any abstract interface present will probably have an operation.
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                        idl_global->decls_seen_masks.abstract_iface_seen_))
+  if (idl_global->abstract_iface_seen_)
     {
       this->gen_standard_include (
           this->client_stubs_,
@@ -1515,12 +1498,10 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "tao/Messaging/Asynch_Invocation_Adapter.h");
 
       // If a valuetype has been seen, this will already be in the header file.
-      if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                            idl_global->decls_seen_masks.valuetype_seen_))
+      if (!idl_global->valuetype_seen_)
         {
           // This may already be in the generated header file.
-          if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                           idl_global->decls_seen_masks.valuebase_seen_))
+          if (!idl_global->valuebase_seen_)
             {
               // For AMI exception holders.
               this->gen_standard_include (this->client_stubs_,
@@ -1534,25 +1515,21 @@ TAO_CodeGen::gen_stub_src_includes (void)
 
   // If valuefactory_seen_ was set, this was generated in the stub header file,
   // otherwise it needs to go here - used in _tao_unmarshal().
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.valuetype_seen_)
-      && !ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                           idl_global->decls_seen_masks.valuefactory_seen_))
+  if (idl_global->valuetype_seen_
+      && !idl_global->valuefactory_seen_)
     {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Valuetype/ValueFactory.h");
     }
 
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.non_local_iface_seen_))
+  if (idl_global->non_local_iface_seen_)
     {
       // Needed for _narrow(), which is now template-based.
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Object_T.h");
     }
 
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.octet_seq_seen_))
+  if (idl_global->octet_seq_seen_)
     {
       // Needed for the TAO_NO_COPY_OCTET_SEQUENCES optimization. Note that
       // it is preferable to just refer to CORBA::OctetSeq in the IDL file.
@@ -1560,11 +1537,15 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "tao/ORB_Core.h");
     }
 
-  // We generate this include if we have typecode support and have not
-  // already included it in the header file.
-  if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                        idl_global->decls_seen_masks.typecode_seen_)
-      && be_global->tc_support ())
+  // We generate this include if we
+  // have typecode support
+  // AND have not already included it in the header file
+  // OR a TypeCode or TCKind reference is not seen
+  //    AND we are not generating typecodes in a separate file.
+  if (be_global->tc_support ()
+      && ( idl_global->exception_seen_
+      || (!idl_global->typecode_seen_
+          && !be_global->gen_anyop_files ())))
     {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Typecode.h");
@@ -1576,10 +1557,8 @@ TAO_CodeGen::gen_stub_src_includes (void)
   // However, only include "tao/SystemException.h" if a user exception
   // was encountered and if we're not already including it in the stub
   // header.
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.exception_seen_)
-      && ACE_BIT_DISABLED (idl_global->decls_seen_info_,
-                           idl_global->decls_seen_masks.operation_seen_))
+  if (idl_global->exception_seen_
+      && !idl_global->operation_seen_)
     {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/SystemException.h");
@@ -1593,12 +1572,9 @@ TAO_CodeGen::gen_stub_src_includes (void)
   this->gen_stub_arg_file_includes (this->client_stubs_);
 
   // strcmp() is used with interfaces and exceptions.
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.interface_seen_)
-      || ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                          idl_global->decls_seen_masks.exception_seen_)
-      || ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                          idl_global->decls_seen_masks.union_seen_))
+  if (idl_global->interface_seen_
+      || idl_global->exception_seen_
+      || idl_global->union_seen_)
     {
       // Needed for _narrow(), which is now template-based.
       this->gen_standard_include (this->client_stubs_,
@@ -1618,6 +1594,12 @@ TAO_CodeGen::gen_stub_src_includes (void)
 void
 TAO_CodeGen::gen_skel_src_includes (void)
 {
+  // Only non-local interfaces generate anything in the skeleton.
+  if (!idl_global->non_local_iface_seen_)
+    {
+      return;
+    }
+
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/Object_Adapter.h");
   this->gen_standard_include (this->server_skeletons_,
@@ -1674,9 +1656,6 @@ TAO_CodeGen::gen_skel_src_includes (void)
   // For Static_Allocator_Base
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Malloc_Allocator.h");
-  // To get ACE_UNUSED_ARGS
-  this->gen_standard_include (this->server_skeletons_,
-                              "ace/config-all.h");
 }
 
 void
@@ -1686,13 +1665,13 @@ TAO_CodeGen::gen_seq_file_includes (void)
   // files have been split up.
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.vt_seq_seen_,
+      idl_global->vt_seq_seen_,
       "tao/Valuetype/Sequence_T.h",
       this->client_header_
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.seq_seen_,
+      idl_global->seq_seen_,
       "tao/Sequence_T.h",
       this->client_header_
     );
@@ -1708,31 +1687,36 @@ TAO_CodeGen::gen_any_file_includes (void)
       if (be_global->gen_anyop_files ())
         {
           stream = this->anyop_source_;
+
+          this->gen_standard_include (stream,
+                                      "tao/CDR.h");
+          this->gen_standard_include (stream,
+                                      "tao/Any.h");
         }
 
       this->gen_cond_file_include (
-          idl_global->decls_seen_masks.interface_seen_
-          | idl_global->decls_seen_masks.valuetype_seen_,
+          idl_global->interface_seen_
+          | idl_global->valuetype_seen_,
           "tao/Any_Impl_T.h",
           stream
         );
 
       this->gen_cond_file_include (
-          idl_global->decls_seen_masks.aggregate_seen_
-          | idl_global->decls_seen_masks.seq_seen_
-          | idl_global->decls_seen_masks.exception_seen_,
+          idl_global->aggregate_seen_
+          | idl_global->seq_seen_
+          | idl_global->exception_seen_,
           "tao/Any_Dual_Impl_T.h",
           stream
         );
 
       this->gen_cond_file_include (
-          idl_global->decls_seen_masks.array_seen_,
+          idl_global->array_seen_,
           "tao/Any_Array_Impl_T.h",
           stream
         );
 
       this->gen_cond_file_include (
-          idl_global->decls_seen_masks.enum_seen_,
+          idl_global->enum_seen_,
           "tao/Any_Basic_Impl_T.h",
           stream
         );
@@ -1743,39 +1727,39 @@ void
 TAO_CodeGen::gen_var_file_includes (void)
 {
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.valuetype_seen_
-      | idl_global->decls_seen_masks.fwd_valuetype_seen_,
+      idl_global->valuetype_seen_
+      | idl_global->fwd_valuetype_seen_,
       "tao/Valuetype/Value_VarOut_T.h",
       this->client_header_
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.interface_seen_
-      | idl_global->decls_seen_masks.fwd_iface_seen_,
+      idl_global->interface_seen_
+      | idl_global->fwd_iface_seen_,
       "tao/Objref_VarOut_T.h",
       this->client_header_
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.seq_seen_,
+      idl_global->seq_seen_,
       "tao/Seq_Var_T.h",
       this->client_header_
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.seq_seen_,
+      idl_global->seq_seen_,
       "tao/Seq_Out_T.h",
       this->client_header_
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.aggregate_seen_,
+      idl_global->aggregate_seen_,
       "tao/VarOut_T.h",
       this->client_header_
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.array_seen_,
+      idl_global->array_seen_,
       "tao/Array_VarOut_T.h",
       this->client_header_
     );
@@ -1785,56 +1769,62 @@ void
 TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
 {
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.basic_arg_seen_,
+      idl_global->basic_arg_seen_,
       "tao/Basic_Arguments.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.bd_string_arg_seen_,
+      idl_global->bd_string_arg_seen_,
       "tao/BD_String_Argument_T.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.fixed_array_arg_seen_,
+      idl_global->fixed_array_arg_seen_,
       "tao/Fixed_Array_Argument_T.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.fixed_size_arg_seen_,
+      idl_global->fixed_size_arg_seen_,
       "tao/Fixed_Size_Argument_T.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.object_arg_seen_,
+      idl_global->object_arg_seen_,
       "tao/Object_Argument_T.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.special_basic_arg_seen_,
+      idl_global->special_basic_arg_seen_,
       "tao/Special_Basic_Arguments.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.ub_string_arg_seen_,
+      idl_global->ub_string_arg_seen_,
       "tao/UB_String_Arguments.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.var_array_arg_seen_,
+      idl_global->var_array_arg_seen_,
       "tao/Var_Array_Argument_T.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.var_size_arg_seen_,
+      idl_global->var_size_arg_seen_,
       "tao/Var_Size_Argument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->any_arg_seen_,
+      "tao/Any_Arg_Traits.h",
       stream
     );
 }
@@ -1904,11 +1894,11 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
 }
 
 void
-TAO_CodeGen::gen_cond_file_include (ACE_UINT64 mask,
+TAO_CodeGen::gen_cond_file_include (bool condition_green,
                                     const char *filepath,
                                     TAO_OutStream *stream)
 {
-  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_, mask))
+  if (condition_green)
     {
       this->gen_standard_include (stream,
                                   filepath);

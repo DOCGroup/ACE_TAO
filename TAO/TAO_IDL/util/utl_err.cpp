@@ -201,6 +201,8 @@ error_string (UTL_Error::ErrorCode c)
       return "back end: ";
     case UTL_Error::EIDL_ILLEGAL_INFIX:
       return "illegal infix operator in expression";
+    case UTL_Error::EIDL_LOCAL_REMOTE_MISMATCH:
+      return "";
   }
 
   return 0;
@@ -1301,10 +1303,10 @@ UTL_Error::redefinition_in_scope (AST_Decl *d,
   idl_error_header (EIDL_REDEF_SCOPE,
                     d->line (),
                     d->file_name ());
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               ", "));
-  s->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  s->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
@@ -1350,6 +1352,25 @@ UTL_Error::illegal_infix (void)
   idl_error_header (EIDL_ILLEGAL_INFIX,
                     idl_global->lineno (),
                     idl_global->filename ());
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::local_remote_mismatch (AST_Decl *l,
+                                  UTL_Scope *s)
+{
+  AST_Decl *r = ScopeAsDecl (s);
+  idl_error_header (EIDL_LOCAL_REMOTE_MISMATCH,
+                    r->line (),
+                    r->file_name ());
+  ACE_ERROR ((LM_ERROR,
+              "local type "));
+  l->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              " used in remote operation "));
+  r->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);

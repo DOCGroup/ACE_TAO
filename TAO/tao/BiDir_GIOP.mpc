@@ -26,4 +26,8 @@ project : taolib, core {
   PIDL_Files {
     BiDir_GIOP
   }
+
+  Pkgconfig_Files {
+    BiDir_GIOP/TAO_BiDirGIOP.pc.in
+  }
 }

@@ -465,8 +465,7 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
       ACE_CHECK;
 
       /// Make the shared memory a place for a lock list
-      this->lock_array_ = ACE_static_cast(CosSchedulingLockNode *,
-                                          this->mem_.malloc(CosSchedulingLockList_space));
+      this->lock_array_ = static_cast<CosSchedulingLockNode *> (this->mem_.malloc(CosSchedulingLockList_space));
       /// get the pointer to the list of locks and
       /// construct a lock list manager object
       if (this->lock_array_ == 0)

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ftorbutils {
+project : ftorbutils, interceptors {
   after     += FT_ClientORB 
   libs      += TAO_FT_ClientORB
   requires  += ace_uuid

@@ -137,9 +137,7 @@ void ForwardCtrlServerInterceptor::receive_request_service_contexts (
 FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_context
                                                ACE_ENV_ARG_DECL)
 {
-  Safe_InputCDR cdr (ACE_reinterpret_cast (const char*,
-                                            service_context->context_data.get_buffer ()
-                                            ),
+  Safe_InputCDR cdr (reinterpret_cast<const char*> (service_context->context_data.get_buffer ()),
                       service_context->context_data.length ());
 
   CORBA::Boolean byte_order;
@@ -147,7 +145,7 @@ FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_c
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO), 0);
 
-  cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+  cdr.reset_byte_order (static_cast<int> (byte_order));
 
   FT::FTGroupVersionServiceContext fgvsc;
 
@@ -215,7 +213,21 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
 
       ACE_Message_Block mb;
       ACE_CDR::consolidate(&mb, cdr.begin());
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       sc.context_data.replace(mb.length(), &mb);
+#else
+      // If the replace method is not available, we will need
+      // to do the copy manually.  First, set the octet sequence length.
+      CORBA::ULong length = mb.length ();
+      sc.context_data.length (length);
+
+      // Now copy over each byte.
+      char* base = mb.data_block ()->base ();
+      for(CORBA::ULong i = 0; i < length; i++)
+        {
+          sc.context_data[i] = base[i];
+        }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
       ri->add_reply_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX(block2);

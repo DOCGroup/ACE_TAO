@@ -28,8 +28,7 @@ public:
   {
     size_t len = ACE_OS::strlen (name) + 1;
     char *buf =
-      ACE_reinterpret_cast (char *,
-                            g_allocator->malloc (len));
+      reinterpret_cast<char *> (g_allocator->malloc (len));
     ACE_OS::strcpy (buf, name);
     name_ = buf;
   }
@@ -58,7 +57,7 @@ void showRecords (void)
     for (void *temp = 0; iter.next (temp) != 0; iter.advance ())
       {
         Record *record =
-          ACE_reinterpret_cast (Record *, temp);
+          reinterpret_cast<Record *> (temp);
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Record name: %C|id1:%d|id2:%d\n"),
                     record->name(), record->id1(), record->id2()));

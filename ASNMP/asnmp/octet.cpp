@@ -84,7 +84,6 @@ OctetStr::OctetStr( const char  * string, long size):
   output_buffer(0), validity(0)
 {
 
-  size_t z;
   init_octet_smi(smival);
 
   // check for null string
@@ -92,7 +91,7 @@ OctetStr::OctetStr( const char  * string, long size):
     return;
 
   if (size == -1) // calc if no length given - assume c style string
-    size = z = ACE_OS::strlen( string);
+    size = ACE_OS::strlen( string);
 
   copy_octet_smi(smival, size, string, validity);
 }
@@ -102,8 +101,6 @@ OctetStr::OctetStr( const char  * string, long size):
 // TODO: should return status since it can fail in so many places
 void OctetStr::set_data( const SmiBYTE* string, long size)
 {
-  size_t z;
-
   // invalid args, set octetStr to not valid
   if ( !string || !size) {
     validity = 0;
@@ -112,7 +109,7 @@ void OctetStr::set_data( const SmiBYTE* string, long size)
 
   // assume non-zero terminated string
   if (size == -1) // calc if no length given - assume c style string
-    size = z = ACE_OS::strlen( (char *)string);
+    size = ACE_OS::strlen( (char *)string);
 
   // free up already used space
   if ( smival.value.string.ptr ) {

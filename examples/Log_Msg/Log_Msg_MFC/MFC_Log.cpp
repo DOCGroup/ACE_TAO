@@ -35,7 +35,7 @@ MFC_Log::log (ACE_Log_Record& log_record)
                    log_record.msg_data());
 
 #if defined (ACE_WIN32)
-  ::OutputDebugString(Message);
+  ACE_TEXT_OutputDebugString(Message);
 #endif /* ACE_WIN32 */
 }
 

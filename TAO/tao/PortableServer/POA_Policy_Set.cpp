@@ -10,7 +10,11 @@
 # include "POA_Policy_Set.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (PortableServer, POA, "$Id$")
+
+ACE_RCSID (PortableServer,
+           POA_Policy_Set,
+           "$Id$")
+
 
 TAO_POA_Policy_Set::TAO_POA_Policy_Set ()
   :
@@ -60,7 +64,7 @@ TAO_POA_Policy_Set::validate_policies (TAO_Policy_Validator &validator,
 {
   // Just give a last chance for all the unloaded validators in other
   // libraries to be registered
-  orb_core.load_policy_validators (validator);
+  orb_core.load_policy_validators (validator ACE_ENV_ARG_PARAMETER);
 
   // Validate that all of the specified policies make sense.
   validator.validate (this->impl_  ACE_ENV_ARG_PARAMETER);

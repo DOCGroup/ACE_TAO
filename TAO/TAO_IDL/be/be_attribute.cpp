@@ -80,16 +80,14 @@ be_attribute::be_attribute (idl_bool ro,
   // TAO_IDL generated attribute methods currently have an exception
   // specification containing CORBA::SystemException.  Make sure we
   // generate a "tao/SystemException.h" include directive.
-  ACE_SET_BITS (idl_global->decls_seen_info_,
-                idl_global->decls_seen_masks.operation_seen_);
+  idl_global->operation_seen_ = true;
 
   if (!this->imported () && !this->is_local ())
     {
       // For the return types of the two operations
       // generated from this attribute.
       this->set_arg_seen_bit (be_type::narrow_from_decl (ft));
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.basic_arg_seen_);
+      idl_global->basic_arg_seen_ = true;
     }
 }
 

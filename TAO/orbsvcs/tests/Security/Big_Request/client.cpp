@@ -2,12 +2,14 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 
 ACE_RCSID (Big_Request,
            client,
            "$Id$")
 
 const char *ior = "file://test.ior";
+const char *cert_file = "cacert.pem";
 
 int
 parse_args (int argc, char *argv[])
@@ -41,6 +43,10 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      ACE_TString env ("SSL_CERT_FILE=");
+      env += cert_file;
+      ACE_OS::putenv (env.c_str ());
+
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,

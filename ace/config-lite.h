@@ -195,26 +195,30 @@
 #  define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
-// =========================================================================
-// EXPLICIT macro
-// =========================================================================
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+  // =========================================================================
+  // EXPLICIT macro
+  // =========================================================================
 
-/**
- * @deprecated explicit is deprecated.  ACE requires C++
- *             "explicit" keyword support.
- */
-# define ACE_EXPLICIT explicit
+  /**
+   * @deprecated explicit is deprecated.  ACE requires C++
+   *             "explicit" keyword support.
+   */
+  # define ACE_EXPLICIT explicit
+#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
-// =========================================================================
-// MUTABLE macro
-// =========================================================================
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+  // =========================================================================
+  // MUTABLE macro
+  // =========================================================================
 
-/**
- * @deprecated ACE_MUTABLE is deprecated.  ACE requires C++ "mutable"
- *             keyword support.
- */
-# define ACE_MUTABLE mutable
-# define ACE_CONST_WHEN_MUTABLE const
+  /**
+   * @deprecated ACE_MUTABLE is deprecated.  ACE requires C++ "mutable"
+   *             keyword support.
+   */
+  # define ACE_MUTABLE mutable
+  # define ACE_CONST_WHEN_MUTABLE const
+#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
 // ============================================================================
 // EXPORT macros
@@ -346,17 +350,21 @@
 // should keep them quiet.
 // ============================================================================
 
-#if defined (ghs) || defined (__GNUC__) || defined (__hpux) || defined (__sgi) || defined (__DECCXX) || defined (__KCC) || defined (__rational__) || defined (__USLC__) || defined (ACE_RM544)
+#if defined (ghs) || defined (__GNUC__) || defined (__hpux) || defined (__sgi) || defined (__DECCXX) || defined (__KCC) || defined (__rational__) || defined (__USLC__) || defined (ACE_RM544) || defined (__DCC__) || defined (__PGI)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.  NOTE: that may only be true if -O is enabled,
 // such as with GreenHills (ghs) 1.8.8.
 # define ACE_UNUSED_ARG(a) do {/* null */} while (&a == 0)
+#elif defined (__DMC__)
+  #define ACE_UNUSED_ID(identifier)
+  template <class T>
+  inline void ACE_UNUSED_ARG(const T& ACE_UNUSED_ID(t)) { }
 #else /* ghs || __GNUC__ || ..... */
 # define ACE_UNUSED_ARG(a) (a)
 #endif /* ghs || __GNUC__ || ..... */
 
-#if defined (__sgi) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (__KCC) || defined (ACE_RM544) || defined (__USLC__)
+#if defined (__sgi) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (__KCC) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI)
 # define ACE_NOTREACHED(a)
 #else  /* __sgi || ghs || ..... */
 # define ACE_NOTREACHED(a) a
@@ -517,8 +525,7 @@ typedef ACE_HANDLE ACE_SOCKET;
 // indicate that the actual thread function doesn't return anything. The
 // rest of ACE uses a real type so there's no a ton of conditional code
 // everywhere to deal with the possibility of no return type.
-# if defined (VXWORKS)
-//typedef FUNCPTR ACE_THR_FUNC;  // where typedef int (*FUNCPTR) (...)
+# if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
 # include /**/ <taskLib.h>
 typedef int ACE_THR_FUNC_RETURN;
 # elif defined (ACE_PSOS)
@@ -538,7 +545,7 @@ typedef void (*ACE_THR_C_DEST)(void *);
 typedef void (*ACE_THR_DEST)(void *);
 
 // Now some platforms have special requirements...
-# if defined (VXWORKS)
+# if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
 typedef FUNCPTR ACE_THR_FUNC_INTERNAL;  // where typedef int (*FUNCPTR) (...)
 # elif defined (ACE_PSOS)
 typedef void (*ACE_THR_FUNC_INTERNAL)(void *);
@@ -548,7 +555,7 @@ typedef ACE_THR_FUNC ACE_THR_FUNC_INTERNAL;
 
 extern "C"
 {
-# if defined (VXWORKS)
+# if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
 typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
 # elif defined (ACE_PSOS)
 // needed to handle task entry point type inconsistencies in pSOS+

@@ -34,13 +34,12 @@ TAO_Notify_PropertySeq::init (const CosNotification::PropertySeq& prop_seq)
 }
 
 int
-TAO_Notify_PropertySeq::populate (CosNotification::PropertySeq_var& prop_seq)
+TAO_Notify_PropertySeq::populate (CosNotification::PropertySeq_var& prop_seq) const
 {
-  PROPERTY_MAP::ITERATOR iterator (this->property_map_);
+  PROPERTY_MAP::CONST_ITERATOR iterator (this->property_map_);
 
   int index = prop_seq->length ();
-  prop_seq->length (ACE_static_cast (CORBA::ULong,
-                        index + this->property_map_.current_size ()));
+  prop_seq->length (static_cast<CORBA::ULong> (index + this->property_map_.current_size ()));
 
   for (PROPERTY_MAP::ENTRY *entry = 0;
        iterator.next (entry) != 0;
@@ -51,4 +50,12 @@ TAO_Notify_PropertySeq::populate (CosNotification::PropertySeq_var& prop_seq)
     }
 
   return 0;
+}
+
+void
+TAO_Notify_PropertySeq::add(const ACE_CString& name, const CORBA::Any& val)
+{
+  int ret = this->property_map_.rebind (name, val);
+  ACE_ASSERT(ret >= 0);
+  ACE_UNUSED_ARG (ret); // because the assert disappears in release builds
 }

@@ -26,12 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:302
 
 
 #include "GIOPC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -39,11 +39,11 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "GIOPC.i"
+#include "GIOPC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:65
 
 // Arg traits specializations.
 namespace TAO
@@ -60,7 +60,7 @@ GIOP::Version::_tao_any_destructor (
   )
 {
   Version *_tao_tmp_pointer =
-    ACE_static_cast (Version *, _tao_void_pointer);
+    static_cast<Version *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -73,7 +73,7 @@ GIOP::IORAddressingInfo::_tao_any_destructor (
   )
 {
   IORAddressingInfo *_tao_tmp_pointer =
-    ACE_static_cast (IORAddressingInfo *, _tao_void_pointer);
+    static_cast<IORAddressingInfo *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -84,7 +84,7 @@ GIOP::TargetAddress::TargetAddress (void)
 {
   ACE_OS::memset (&this->disc_, 0, sizeof (this->disc_));
   ACE_OS::memset (&this->u_, 0, sizeof (this->u_));
-  this->disc_ = 0;
+  this->disc_ = -32768;
 }
 
 GIOP::TargetAddress::TargetAddress (const ::GIOP::TargetAddress &u)
@@ -151,7 +151,7 @@ GIOP::TargetAddress::~TargetAddress (void)
 void GIOP::TargetAddress::_tao_any_destructor (void *_tao_void_pointer)
 {
   TargetAddress *tmp =
-    ACE_static_cast (TargetAddress *, _tao_void_pointer);
+    static_cast<TargetAddress *> (_tao_void_pointer);
   delete tmp;
 }
 
@@ -228,6 +228,7 @@ void GIOP::TargetAddress::_reset (CORBA::Short, CORBA::Boolean /*finalize*/)
 {
   switch (this->disc_)
   {
+    
     case 0:
       delete this->u_.object_key_;
       this->u_.object_key_ = 0;
@@ -241,7 +242,7 @@ void GIOP::TargetAddress::_reset (CORBA::Short, CORBA::Boolean /*finalize*/)
       this->u_.ior_ = 0;
       break;
     default:
-      break;
+    break;
   }
 }
 
@@ -390,7 +391,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -481,4 +482,3 @@ CORBA::Boolean operator>> (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-

@@ -26,23 +26,27 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_DYNAMIC_PARAMETERC_H_
 #define _TAO_IDL_ORIG_DYNAMIC_PARAMETERC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ParameterMode.h"
+
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
+#include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Any.h"
 #include "tao/VarOut_T.h"
+
+#include "tao/ParameterModeC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -57,9 +61,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -72,40 +74,40 @@
 
 namespace Dynamic
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
-  
+
   struct Parameter;
-  
+
   typedef
     TAO_Var_Var_T<
         Parameter
       >
     Parameter_var;
-  
+
   typedef
     TAO_Out_T<
         Parameter,
         Parameter_var
       >
     Parameter_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export Parameter
   {
     typedef Parameter_var _var_type;
-    
+
     static void _tao_any_destructor (void *);
     CORBA::Any argument;
     CORBA::ParameterMode mode;
   };
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Parameter;
 
 // TAO_IDL - Generated from
@@ -136,13 +138,13 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Dynamic::Parameter 
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Dynamic::Parameter &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:963
 
 #if defined (__ACE_INLINE__)
-#include "Dynamic_ParameterC.i"
+#include "Dynamic_ParameterC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -153,4 +155,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Dynamic::Parameter &);
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 

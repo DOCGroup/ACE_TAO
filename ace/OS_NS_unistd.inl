@@ -106,7 +106,7 @@ ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::chdir");
-#if defined (VXWORKS)
+#if defined (ACE_HAS_NONCONST_CHDIR)
   ACE_OSCALL_RETURN (::chdir (const_cast<char *> (path)), int, -1);
 
 #elif defined (ACE_PSOS_LACKS_PHILE)
@@ -115,7 +115,7 @@ ACE_OS::chdir (const char *path)
 
 #elif defined (ACE_PSOS)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::change_dir ((char *) path), result),
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::change_dir (const_cast<char *> (path)), result),
                      int, -1);
 
 #elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
@@ -128,7 +128,7 @@ ACE_OS::chdir (const char *path)
 #else
   ACE_OSCALL_RETURN (::chdir (path), int, -1);
 
-#endif /* VXWORKS */
+#endif /* ACE_HAS_NONCONST_CHDIR */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -184,8 +184,6 @@ ACE_OS::rmdir (const char *path)
 
   return (int) result;
 
-#elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (::rmdir ((char *) path), int, -1);
 #elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_OSCALL_RETURN (::_rmdir ((char *) path), int, -1);
 #elif defined (ACE_HAS_WINCE)
@@ -269,15 +267,14 @@ ACE_INLINE int
 ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 {
   ACE_OS_TRACE ("ACE_OS::dup2");
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_PSOS)
+#if defined (ACE_LACKS_DUP2)
   // msvcrt has _dup2 ?!
   ACE_UNUSED_ARG (oldhandle);
   ACE_UNUSED_ARG (newhandle);
-
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::dup2 (oldhandle, newhandle), int, -1);
-#endif /* ACE_WIN32 || VXWORKS || ACE_PSOS */
+#endif /* ACE_LACKS_DUP2 */
 }
 
 ACE_INLINE int
@@ -523,7 +520,7 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
   ACE_UNUSED_ARG (size);
   ACE_NOTSUP_RETURN (0);
 #  elif defined (ACE_WIN32)
-  return ::_wgetcwd (buf, ACE_static_cast (int, size));
+  return ::_wgetcwd (buf, static_cast<int> (size));
 #  else
   char *narrow_buf = new char[size];
   char *result = 0;
@@ -551,13 +548,11 @@ ACE_OS::getgid (void)
 # endif /* VXWORKS || ACE_PSOS */
 }
 
-#if !defined (ACE_WIN32)
-
 ACE_INLINE int
 ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
 {
   ACE_OS_TRACE ("ACE_OS::getopt");
-#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY) || defined (ACE_WIN32)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   ACE_UNUSED_ARG (optstring);
@@ -566,21 +561,6 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
   ACE_OSCALL_RETURN (::getopt (argc, argv, optstring), int, -1);
 # endif /* VXWORKS */
 }
-
-#else /* ACE_WIN32 */
-
-ACE_INLINE int
-ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
-{
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_UNUSED_ARG (optstring);
-
-  ACE_OS_TRACE ("ACE_OS::getopt");
-  ACE_NOTSUP_RETURN (-1);
-}
-
-#endif /* !ACE_WIN32 */
 
 ACE_INLINE pid_t
 ACE_OS::getpgid (pid_t pid)
@@ -926,8 +906,7 @@ ACE_INLINE int
 ACE_OS::readlink (const char *path, char *buf, size_t bufsiz)
 {
   ACE_OS_TRACE ("ACE_OS::readlink");
-# if defined (ACE_LACKS_READLINK) || \
-     defined (ACE_HAS_WINCE) || defined (ACE_WIN32)
+# if defined (ACE_LACKS_READLINK)
   ACE_UNUSED_ARG (path);
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (bufsiz);
@@ -980,7 +959,7 @@ ACE_OS::sbrk (int brk)
   ACE_NOTSUP_RETURN (0);
 #else
   ACE_OSCALL_RETURN (::sbrk (brk), void *, 0);
-#endif /* VXWORKS */
+#endif /* ACE_LACKS_SBRK */
 }
 
 ACE_INLINE int
@@ -1166,6 +1145,10 @@ ACE_OS::swab (const void *src,
   char *from = const_cast<char *> (tmp);
   char *to = static_cast<char *> (dest);
   ::swab (from, to, length);
+#elif defined (ACE_HAS_CONST_CHAR_SWAB)
+  const char *from = static_cast<const char*> (src);
+  char *to = static_cast<char *> (dest);
+  ::swab (from, to, length);
 #else
   ::swab (src, dest, length);
 #endif /* ACE_LACKS_SWAB */
@@ -1276,13 +1259,13 @@ ACE_INLINE int
 ACE_OS::unlink (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::unlink");
-# if defined (VXWORKS)
+# if defined (ACE_HAS_NONCONST_UNLINK)
   ACE_OSCALL_RETURN (::unlink (const_cast<char *> (path)), int, -1);
 # elif defined (ACE_PSOS) && ! defined (ACE_PSOS_LACKS_PHILE)
-  ACE_OSCALL_RETURN (::remove_f ((char *) path), int , -1);
+  ACE_OSCALL_RETURN (::remove_f (const_char <char *> (path)), int , -1);
 # elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_C_LIBRARY)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::remove ((char *) path),
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::remove (const_char <char *> (path)),
                                        result),
                      int, -1);
 # elif defined (ACE_HAS_WINCE)
@@ -1294,7 +1277,7 @@ ACE_OS::unlink (const char *path)
   ACE_NOTSUP_RETURN (-1);
 # else
   ACE_OSCALL_RETURN (::unlink (path), int, -1);
-# endif /* VXWORKS */
+# endif /* ACE_HAS_NONCONST_UNLINK */
 }
 
 #if defined (ACE_HAS_WCHAR)

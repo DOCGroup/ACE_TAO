@@ -101,11 +101,12 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
       *os << " _tao_forany_" << node->local_name () << " (";
       *os << this->type_name (bt, "_dup");
       *os << " (";
-      // This is to placate some compilers which have
-      // trouble with IN args that are multidimensional arrays.
-      //if (node->n_dims () > 1) cant do this here since dont have a be_array node
+      
       if (this->direction () != AST_Argument::dir_IN)
-        *os << "(const ::" << bt->name () << "_slice *) ";
+        {
+          *os << "(const ::" << bt->name () << "_slice *) ";
+        }
+        
       *os << "this->";
       *os << node->local_name () << "_));" << be_nl;
       *os << "(*parameter_list)[len].argument <<= _tao_forany_" ;

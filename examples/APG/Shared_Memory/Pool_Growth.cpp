@@ -201,7 +201,11 @@ int handle_parent (ACE_TCHAR *cmdLine)
 
   ACE_Process processa, processb;
   ACE_Process_Options poptions;
-  poptions.command_line ("%s a", cmdLine);
+  const ACE_TCHAR *args[3];
+  args[0] = cmdLine;
+  args[1] = ACE_TEXT ("a");
+  args[2] = 0;
+  poptions.command_line (args);
   processa.spawn (poptions);
   processb.spawn (poptions);
 

@@ -22,6 +22,7 @@
 #include "ID_Factory.h"
 #include "Event.h"
 #include "notify_serv_export.h"
+#include "Topology_Object.h"
 
 /**
  * @class TAO_Notify_FilterAdmin
@@ -30,6 +31,7 @@
  *
  */
 class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
+  : public TAO_Notify::Topology_Object
 {
 
  public:
@@ -80,6 +82,13 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
                      CORBA::SystemException
                      ));
 
+
+  // TAO_Notify::Topology_Object
+
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
+    const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL);
+  virtual void release (void);
  private:
   typedef ACE_Hash_Map_Manager <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, ACE_SYNCH_NULL_MUTEX> FILTER_LIST;
 

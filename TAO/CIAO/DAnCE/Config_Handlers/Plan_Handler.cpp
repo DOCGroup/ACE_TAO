@@ -144,7 +144,7 @@ void Plan_Handler::process_irdd (DOMNodeIterator* iter,
                 (ACE_TEXT ("Deployment:InstanceResourceDeploymentDescription")))
         {
         }
-      else if (node_name == "resourceUsage")
+      else if (node_name == XStr ("resourceUsage"))
         {
           RUK_Handler::process_ResourceUsageKind (iter, irdd.resourceUsage);
         }

@@ -86,7 +86,7 @@ MyImpl::BMDisplay_exec_impl::ciao_preactivate (
 }
 
 void
-MyImpl::BMDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::BMDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

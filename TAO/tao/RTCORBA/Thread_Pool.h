@@ -399,10 +399,6 @@ private:
   ACE_SYNCH_MUTEX lock_;
 };
 
-#if defined (__ACE_INLINE__)
-# include "Thread_Pool.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"

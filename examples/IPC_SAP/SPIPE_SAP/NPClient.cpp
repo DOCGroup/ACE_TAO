@@ -11,9 +11,9 @@
 ACE_RCSID(SPIPE_SAP, NPClient, "$Id$")
 
 #if defined (ACE_WIN32)
-#define MAKE_PIPE_NAME(X) "\\\\.\\pipe\\" X
+#define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\") ACE_TEXT (X)
 #else
-#define MAKE_PIPE_NAME(X) X
+#define MAKE_PIPE_NAME(X) ACE_TEXT (X)
 #endif
 
 const int DEFAULT_SIZE = 8;
@@ -30,7 +30,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   char[size],
                   1);
 
-  const char *rendezvous = MAKE_PIPE_NAME ("acepipe");
+  const ACE_TCHAR *rendezvous = MAKE_PIPE_NAME ("acepipe");
 
   ACE_SPIPE_Stream cli_stream;
   ACE_SPIPE_Connector con;
@@ -39,7 +39,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (con.connect (cli_stream,
                    ACE_SPIPE_Addr (rendezvous)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
+                       ACE_TEXT ("%p\n"),
                        rendezvous),
                       -1);
 
@@ -49,14 +49,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for (i = 0; i < iterations; i++)
     if (cli_stream.send (buf, size) != size)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "putmsg"),
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("putmsg")),
                         -1);
 
   if (cli_stream.close () == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "close"),
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("close")),
                         -1);
   return 0;
 }

@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoexe, portableserver {
+  exename = server
   Source_Files {
     interop_wchar_i.cpp
     wchar_reference.cpp
@@ -10,6 +11,7 @@ project(*Server): taoexe, portableserver {
 }
 
 project(*Client): taoexe {
+  exename = client
   Source_Files {
     interop_wcharC.cpp
     wchar_reference.cpp

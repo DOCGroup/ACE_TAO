@@ -26,13 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:302
 
 
 #include "TAO_ExtC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
-#include "tao/Any_Impl_T.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -40,11 +38,11 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "TAO_ExtC.i"
+#include "TAO_ExtC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
@@ -92,12 +90,6 @@ TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*TAO__TAO_ConnectionTimeoutPolicy_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 TAO::ConnectionTimeoutPolicy::ConnectionTimeoutPolicy (void)
 {}
 
@@ -108,7 +100,7 @@ void
 TAO::ConnectionTimeoutPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ConnectionTimeoutPolicy *_tao_tmp_pointer =
-    ACE_static_cast (ConnectionTimeoutPolicy *, _tao_void_pointer);
+    static_cast<ConnectionTimeoutPolicy *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -165,22 +157,22 @@ TAO::ConnectionTimeoutPolicy::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Policy:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:tao/TAO/ConnectionTimeoutPolicy:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -202,116 +194,7 @@ TAO::ConnectionTimeoutPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
-
-static const CORBA::Long _oc_TAO_ConnectionTimeoutPolicy[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x74616f2f), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x436f6e6e), 
-  ACE_NTOHL (0x65637469), 
-  ACE_NTOHL (0x6f6e5469), 
-  ACE_NTOHL (0x6d656f75), 
-  ACE_NTOHL (0x74506f6c), 
-  ACE_NTOHL (0x6963793a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:tao/TAO/ConnectionTimeoutPolicy:1.0
-    24,
-  ACE_NTOHL (0x436f6e6e), 
-  ACE_NTOHL (0x65637469), 
-  ACE_NTOHL (0x6f6e5469), 
-  ACE_NTOHL (0x6d656f75), 
-  ACE_NTOHL (0x74506f6c), 
-  ACE_NTOHL (0x69637900),  // name = ConnectionTimeoutPolicy
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_TAO_ConnectionTimeoutPolicy (
-    CORBA::tk_objref,
-    sizeof (_oc_TAO_ConnectionTimeoutPolicy),
-    (char *) &_oc_TAO_ConnectionTimeoutPolicy,
-    0,
-    sizeof (TAO::ConnectionTimeoutPolicy)
-  );
-
-namespace TAO
-{
-  ::CORBA::TypeCode_ptr _tc_ConnectionTimeoutPolicy =
-    &_tc_TAO_tc_TAO_ConnectionTimeoutPolicy;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    TAO::ConnectionTimeoutPolicy_ptr _tao_elem
-  )
-{
-  TAO::ConnectionTimeoutPolicy_ptr _tao_objptr =
-    TAO::ConnectionTimeoutPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    TAO::ConnectionTimeoutPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::insert (
-      _tao_any,
-      TAO::ConnectionTimeoutPolicy::_tao_any_destructor,
-      TAO::_tc_ConnectionTimeoutPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    TAO::ConnectionTimeoutPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<TAO::ConnectionTimeoutPolicy>::extract (
-        _tao_any,
-        TAO::ConnectionTimeoutPolicy::_tao_any_destructor,
-        TAO::_tc_ConnectionTimeoutPolicy,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -327,11 +210,6 @@ operator>>= (
   
   template class
     TAO_Objref_Out_T<
-        TAO::ConnectionTimeoutPolicy
-      >;
-
-  template class
-    TAO::Any_Impl_T<
         TAO::ConnectionTimeoutPolicy
       >;
 
@@ -352,10 +230,4 @@ operator>>= (
         TAO::ConnectionTimeoutPolicy
       >
 
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        TAO::ConnectionTimeoutPolicy \
-      >
-
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-

@@ -40,7 +40,7 @@ parse_args (int argc, char **argv)
         break;
 
       case 'T':
-        timeout = ACE_static_cast (CORBA::ULong, ::atoi (get_opts.opt_arg ()));
+        timeout = static_cast<CORBA::ULong> (::atoi (get_opts.opt_arg ()));
         break;
 
       case 'x':

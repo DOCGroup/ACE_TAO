@@ -230,6 +230,11 @@ test_log_msg_features (const ACE_TCHAR *program)
                 badname,
                 cleanup));
 
+// Don't try this on VxWorks, it will result in an overflow and end the test.
+// Platforms that don't define ACE_HAS_SNPRINTF are candidates to fail here.
+// This then proves that logging to big messages is problematic but on VxWorks
+// we know this and we want to rest of the test to continue
+#if !defined (VXWORKS)
   // Try a log operation that would overflow the logging buffer if not
   // properly guarded.
   ACE_TCHAR big[ACE_Log_Record::MAXLOGMSGLEN + 1];
@@ -239,6 +244,7 @@ test_log_msg_features (const ACE_TCHAR *program)
   while (i < ACE_Log_Record::MAXLOGMSGLEN)
     big[i++] = alphabet[i % j];
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("This is too big: %s\n"), big));
+#endif /* !VXWORKS */
 
   // Exercise many different combinations of OSTREAM.
 
@@ -353,6 +359,7 @@ test_ostream (void)
   if (myostream.bad ())
     return -1;
 
+  OFSTREAM *old_stream = ace_file_stream::instance ()->output_file ();
   // Set the ostream.
   ACE_LOG_MSG->msg_ostream (&myostream);
 
@@ -360,7 +367,7 @@ test_ostream (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("fourth message\n")));
   // Set the ostream back to the test's log file.
-  ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
+  ACE_LOG_MSG->msg_ostream (old_stream);
   // Now close the ostream file and check its contents.
   myostream.close ();
 

@@ -2,10 +2,6 @@
 
 #include "EC_MT_Dispatching.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_MT_Dispatching.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_MT_Dispatching, "$Id$")
 
 TAO_EC_MT_Dispatching::TAO_EC_MT_Dispatching (int nthreads,

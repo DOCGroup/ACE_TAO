@@ -36,7 +36,7 @@
 #include "ace/Acceptor.h"
 #include "ace/MEM_Acceptor.h"
 #include "tao/GIOP_Message_Version.h"
-// TAO SHMIOP_Acceptor concrete call defination
+// TAO SHMIOP_Acceptor concrete call definitions
 
 /**
  * @class TAO_SHMIOP_Acceptor
@@ -147,10 +147,6 @@ private:
   /// Should we use GIOP lite??
   CORBA::Boolean lite_flag_;
 };
-
-#if defined(__ACE_INLINE__)
-#include "SHMIOP_Acceptor.i"
-#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 

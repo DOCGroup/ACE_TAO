@@ -24,8 +24,7 @@
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Unbounded_Set.h"
-#include "ace/SString.h"
-#include "ace/XML_Svc_Conf.h"
+#include "ace/SStringfwd.h"
 #include "ace/OS_NS_signal.h"
 
 // Forward decl.
@@ -41,7 +40,9 @@ class ACE_DLL;
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 class ACE_Svc_Conf_Param;
-#endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
+#else
+class ACE_XML_Svc_Conf;
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
 extern "C"
 {
@@ -106,15 +107,15 @@ typedef ACE_Unbounded_Queue_Iterator<ACE_TString>
  * @brief Supplies common server operations for dynamic and static
  * configuration of services.
  *
- * The <ACE_Service_Config> uses the Monostate pattern.  Therefore,
+ * The ACE_Service_Config uses the Monostate pattern.  Therefore,
  * you can only have one of these instantiated per-process.
- * NOTE: the signal_handler_ static member is allocated by the
- * <ACE_Object_Manager>.  The <ACE_Service_Config> constructor
+ * @note The signal_handler_ static member is allocated by the
+ * ACE_Object_Manager.  The ACE_Service_Config constructor
  * uses signal_handler_.  Therefore, if the program has any
- * static <ACE_Service_Config> objects, there might be
+ * static ACE_Service_Config objects, there might be
  * initialization order problems.  They can be minimized, but
  * not eliminated, by _not_ #defining
- * <ACE_HAS_NONSTATIC_OBJECT_MANAGER>.
+ * ACE_HAS_NONSTATIC_OBJECT_MANAGER.
  */
 class ACE_Export ACE_Service_Config
 {
@@ -141,12 +142,12 @@ public:
 
   /**
    * Performs an open without parsing command-line arguments.  The
-   * <logger_key> indicates where to write the logging output, which
+   * @a logger_key indicates where to write the logging output, which
    * is typically either a STREAM pipe or a socket address.  If
-   * <ignore_default_svc_conf_file> is non-0 then the "svc.conf" file
-   * will be ignored.  If <ignore_debug_flag> is non-0 then the
+   * @a ignore_default_svc_conf_file is non-0 then the "svc.conf" file
+   * will be ignored.  If @a ignore_debug_flag is non-0 then the
    * application is responsible for setting the
-   * <ACE_Log_Msg::priority_mask> appropriately.  Returns number of
+   * @c ACE_Log_Msg::priority_mask() appropriately.  Returns number of
    * errors that occurred on failure and 0 otherwise.
    */
   static int open_i (const ACE_TCHAR program_name[],
@@ -156,15 +157,15 @@ public:
 
   /**
    * Performs an open without parsing command-line arguments.  The
-   * <logger_key> indicates where to write the logging output, which
+   * @a logger_key indicates where to write the logging output, which
    * is typically either a STREAM pipe or a socket address.  If
-   * <ignore_static_svcs> is 1 then static services are not loaded,
-   * otherwise, they are loaded.  If <ignore_default_svc_conf_file> is
+   * @a ignore_static_svcs is 1 then static services are not loaded,
+   * otherwise, they are loaded.  If @a ignore_default_svc_conf_file is
    * non-0 then the <svc.conf> configuration file will be ignored.
    * Returns zero upon success, -1 if the file is not found or cannot
    * be opened (errno is set accordingly), otherwise returns the
    * number of errors encountered loading the services in the
-   * specified svc.conf configuration file.  If <ignore_debug_flag> is
+   * specified svc.conf configuration file.  If @a ignore_debug_flag is
    * non-0 then the application is responsible for setting the
    * <ACE_Log_Msg::priority_mask> appropriately.
    */
@@ -196,6 +197,7 @@ public:
    *        overrides the @a ignore_static_svcs parameter value.
    * - '-n' Explicitly disables the use of static services. This flag
    *        overrides the @a ignore_static_svcs parameter value.
+   * - '-p' Specifies a pathname which is used to store the process id.
    * - '-s' Specifies a signal number other than SIGHUP to trigger reprocessing
    *        of the configuration file(s). Ignored for platforms that do not
    *        have POSIX signals, such as Windows.
@@ -217,7 +219,7 @@ public:
    *                          for setting the @c ACE_Log_Msg::priority_mask
    *                          appropriately.
    *
-   * @retval -1   the configuration file is not found or cannot
+   * @retval -1   The configuration file is not found or cannot
    *              be opened (errno is set accordingly).
    * @retval  0   Success.
    * @retval  >0  The number of errors encountered while processing
@@ -244,8 +246,8 @@ public:
 
   /**
    * Perform user-specified close hooks on all of the configured
-   * services in the <Service_Repository>, then delete the
-   * <Service_Repository> itself.  Returns 0.
+   * services in the Service_Repository, then delete the
+   * Service_Repository itself.  Returns 0.
    */
   static int close_svcs (void);
 
@@ -274,16 +276,16 @@ public:
   static int initialize (const ACE_Service_Type *,
                          const ACE_TCHAR *parameters);
 
-  /// Initialize and activate a statically <svc_name> service.
+  /// Initialize and activate a statically @a svc_name service.
   static int initialize (const ACE_TCHAR *svc_name,
                          const ACE_TCHAR *parameters);
 
-  /// Resume a <svc_name> that was previously suspended or has not yet
+  /// Resume a @a svc_name that was previously suspended or has not yet
   /// been resumed (e.g., a static service).
   static int resume (const ACE_TCHAR svc_name[]);
 
   /**
-   * Suspend <svc_name>.  Note that this will not unlink the service
+   * Suspend @a svc_name.  Note that this will not unlink the service
    * from the daemon if it was dynamically linked, it will mark it as
    * being suspended in the Service Repository and call the <suspend>
    * member function on the appropriate <ACE_Service_Object>.  A
@@ -292,7 +294,7 @@ public:
    */
   static int suspend (const ACE_TCHAR svc_name[]);
 
-  /// Totally remove <svc_name> from the daemon by removing it
+  /// Totally remove @a svc_name from the daemon by removing it
   /// from the ACE_Reactor, and unlinking it if necessary.
   static int remove (const ACE_TCHAR svc_name[]);
 
@@ -319,7 +321,7 @@ public:
   /// directives.
   static int process_file (const ACE_TCHAR file[]);
 
-  /// Process one service configuration <directive>, which is passed as
+  /// Process one service configuration @a directive, which is passed as
   /// a string.  Returns the number of errors that occurred.
   static int process_directive (const ACE_TCHAR directive[]);
 
@@ -397,7 +399,7 @@ protected:
   static int start_daemon (void);
 
   /// Add the default statically-linked services to the
-  /// <ACE_Service_Repository>.
+  /// ACE_Service_Repository.
   static int load_static_svcs (void);
 
 private:
@@ -425,6 +427,9 @@ private:
   /// Shall we become a daemon process?
   static int be_a_daemon_;
 
+  /// Pathname of file to write process id.
+  static ACE_TCHAR *pid_file_name_;
+
   /// Should we avoid loading the static services?
   static int no_static_svcs_;
 
@@ -448,11 +453,6 @@ private:
 #include "ace/Service_Config.inl"
 #endif /* __ACE_INLINE__ */
 
-// These must go here to avoid circular includes...  (only left here
-// for to not break applications which rely on this - no real need any
-// longer)
-#include "ace/Reactor.h"
-#include "ace/Svc_Conf_Tokens.h"
 
 #include /**/ "ace/post.h"
 

@@ -2,4 +2,5 @@
 // $Id$
 
 project: aceexe {
+  avoids += uses_wchar
 }

@@ -4,17 +4,13 @@
 #include "Thread_Lane_Resources.h"
 #include "Exception.h"
 #include "Environment.h"
+#include "ORB_Core.h"
 #include "ace/Log_Msg.h"
 
 
 ACE_RCSID (tao,
            Default_Thread_Lane_Resources_Manager,
            "$Id$")
-
-
-#if !defined (__ACE_INLINE__)
-# include "tao/Default_Thread_Lane_Resources_Manager.i"
-#endif /* ! __ACE_INLINE__ */
 
 TAO_Default_Thread_Lane_Resources_Manager::TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
   : TAO_Thread_Lane_Resources_Manager (orb_core),
@@ -34,8 +30,19 @@ TAO_Default_Thread_Lane_Resources_Manager::~TAO_Default_Thread_Lane_Resources_Ma
 int
 TAO_Default_Thread_Lane_Resources_Manager::open_default_resources (ACE_ENV_SINGLE_ARG_DECL)
 {
+  TAO_ORB_Parameters *params =
+    this->orb_core_->orb_params ();
+
+  TAO_EndpointSet endpoint_set;
+
+  params->get_endpoint_set (TAO_DEFAULT_LANE,
+                            endpoint_set);
+
+  bool ignore_address = false;
+
   int result =
-    this->lane_resources_->open_acceptor_registry (0
+    this->lane_resources_->open_acceptor_registry (endpoint_set,
+                                                   ignore_address
                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 

@@ -1,6 +1,12 @@
 // -*- MPC -*-
 // $Id$
 
-feature(qt): qt {
-  macros += ACE_HAS_QT
+
+project: qt {
+  // Depends on configration from include/makeinclude/platform_*.GNU
+  verbatim(gnuace,local) {
+    CPPFLAGS += $(PLATFORM_QT_CPPFLAGS)
+    LIBS += $(PLATFORM_QT_LIBS)
+    LDFLAGS += $(PLATFORM_QT_LDFLAGS)
+  }
 }

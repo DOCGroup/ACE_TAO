@@ -8,8 +8,8 @@
  *
  *  SSLIOP specific connector processing
  *
- *  @author Carlos O'Ryan <coryan@uci.edu>
- *  @author Ossama Othman <ossama@uci.edu>
+ *  @author Carlos O'Ryan
+ *  @author Ossama Othman
  */
 //=============================================================================
 
@@ -25,9 +25,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SSL/SSL_SOCK_Connector.h"
 #include "IIOP_SSL_Connector.h"
 #include "SSLIOP_Connection_Handler.h"
+
+#include "ace/SSL/SSL_SOCK_Connector.h"
 
 /// Forward declarations.
 class TAO_Base_Transport_Property;
@@ -70,19 +71,29 @@ namespace TAO
                                       ACE_ENV_ARG_DECL);
 
       virtual TAO_Profile *create_profile (TAO_InputCDR& cdr);
+      virtual int check_prefix (const char *endpoint);
+      virtual TAO_Profile * corbaloc_scan (const char *ior,
+                                           size_t &len
+                                           ACE_ENV_ARG_DECL);
+
       //@}
 
     protected:
 
       /**
-       * @name More TAO_Connector methods
+       * @name @c TAO_Connector Methods
        *
-       * Please check the documentation in Pluggable.h.
+       * Methods required by the @c TAO_Connector base class.
+       *
+       * @see @c TAO_Connector
        */
+      //@{
       virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
-
-      /// Cancel the passed cvs handler from the connector
       virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
+      //@}
+
+      /// SSL-specific profile
+      TAO_Profile * make_secure_profile (ACE_ENV_SINGLE_ARG_DECL);
 
       /// IIOP-specific connection establishment.
       /**
@@ -136,10 +147,6 @@ namespace TAO
 
       /// The connector initiating connection requests for IIOP.
       BASE_CONNECTOR base_connector_;
-
-      /// State that will be passed to each SSLIOP connection handler upon
-      /// creation.
-      Connection_Handler_State handler_state_;
 
     };
 

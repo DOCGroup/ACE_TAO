@@ -15,11 +15,13 @@
 #define ACE_TLI_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS_TLI.h"
+#include "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS_TLI.h"
 
 #if defined (ACE_HAS_TLI)
 

@@ -43,21 +43,17 @@ namespace CIAO
             typename EXEC_VAR, 
             typename CONTEXT>
   class Servant_Impl : public virtual BASE_SKEL,
-                       public Servant_Impl_Base
+                       public virtual Servant_Impl_Base,
+                       public virtual PortableServer::RefCountServantBase
   {
   public:
     Servant_Impl (EXEC * exe,
                   Session_Container * c);
+                  
     virtual ~Servant_Impl (void);
    
-    virtual ::Components::FacetDescriptions *
-    get_all_facets (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  
-    virtual ::Components::ConsumerDescriptions *
-    get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-      
+    // Operations for CCMObject interface.
+
     virtual CORBA::Boolean
     same_component (CORBA::Object_ptr object_ref
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -67,20 +63,11 @@ namespace CIAO
     get_ccm_home (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual ::Components::PrimaryKeyBase *
-    get_primary_key (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::NoKeyAvailable));
-
-    virtual ::Components::ComponentPortDescription *
-    get_all_ports (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
     virtual CORBA::Object_ptr
     _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    // CIAO-specific operations.
+   // CIAO-specific operations.
 
     void
     ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)

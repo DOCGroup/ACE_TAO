@@ -240,8 +240,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
 
       // XX This is windows stuff only. fredk
       if (ACE_OS::join_leaf (this->get_handle (),
-                             ACE_reinterpret_cast (const sockaddr *,
-                                                   &ret_mreq.IMR_MULTIADDR.s_addr),
+                             reinterpret_cast<const sockaddr *> (&ret_mreq.IMR_MULTIADDR.s_addr),
                              sizeof ret_mreq.IMR_MULTIADDR.s_addr,
                              qos_params) == ACE_INVALID_HANDLE
           && errno != ENOTSUP)

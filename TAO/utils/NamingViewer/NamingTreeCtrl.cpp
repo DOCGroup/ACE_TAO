@@ -48,13 +48,13 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CNamingTreeCtrl message handlers
 
-void CNamingTreeCtrl::OnRButtonDown (UINT nFlags, CPoint point) 
+void CNamingTreeCtrl::OnRButtonDown (UINT nFlags, CPoint point)
 {
   // TODO: Add your message handler code here and/or call default
   // Special case here - this causes the entry to be selected when the
   // right button is the first to be hit.  strange
   OnLButtonDown (nFlags, point);
-  
+
   // Now find the item were hitting
   HTREEITEM hItem = HitTest(point);
   if(!hItem)
@@ -70,21 +70,31 @@ void CNamingTreeCtrl::OnRButtonDown (UINT nFlags, CPoint point)
   // If this is not a context, show the object popup
   if(!pObject->IsContext())
     {
-      if(!m_ObjectPopup.GetSubMenu(0)->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this))
+      if(!m_ObjectPopup.GetSubMenu(0)->TrackPopupMenu(
+#if defined (TPM_RIGHTBUTTON)
+		                                              TPM_RIGHTBUTTON |
+#endif
+                                            		  TPM_LEFTALIGN,
+		                                              Point.x, Point.y, this))
         {
           TRACE0("TrackPopupMenu Failed");
         }
     }
   else
     {
-      if(!m_ContextPopup.GetSubMenu(0)->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this))
+      if(!m_ContextPopup.GetSubMenu(0)->TrackPopupMenu(
+#if defined (TPM_RIGHTBUTTON)
+		                                              TPM_RIGHTBUTTON |
+#endif
+		                                               TPM_LEFTALIGN,
+		                                               Point.x, Point.y, this))
         {
           TRACE0("TrackPopupMenu Failed");
         }
     }
 }
 
-void CNamingTreeCtrl::OnContextPopupViewreference() 
+void CNamingTreeCtrl::OnContextPopupViewreference()
 {
 	// TODO: Add your command handler code here
 	ViewIORDialog Dialog(m_pORB, GetTreeObject()->Object());
@@ -117,7 +127,7 @@ void CNamingTreeCtrl::ClearChildren(HTREEITEM hItem)
     HTREEITEM hItem = GetRootItem();
     if(hItem)
     {
-      
+
       //CORBA::Object_var Object = (CORBA::Object_ptr)GetItemData(hItem);
       ClearChildren(hItem);
       delete GetTreeObject(hItem);
@@ -151,20 +161,20 @@ void CNamingTreeCtrl::ListContext(HTREEITEM hItem)
     {
       return;
     }
-    
+
     // List the contexts entries
     CosNaming::BindingList_var bl;
     CosNaming::BindingIterator_var bi;
     Context->list(LISTQUANTUM, bl, bi);
     ListBindingList(hItem, Context, bl);
-    
+
     if(!CORBA::is_nil(bi))
     {
       while(bl->length())
       {
         CString Text;
-        Text.Format("This context contains more than %d entries, list the next %d?", LISTQUANTUM, LISTQUANTUM);
-        if(MessageBox(Text, "Question", MB_YESNO) == IDNO)
+        Text.Format(ACE_TEXT ("This context contains more than %d entries, list the next %d?"), LISTQUANTUM, LISTQUANTUM);
+        if(MessageBox(Text, ACE_TEXT ("Question"), MB_YESNO) == IDNO)
         {
           return;
         }
@@ -176,11 +186,11 @@ void CNamingTreeCtrl::ListContext(HTREEITEM hItem)
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._rep_id(), "CORBA::Exception");
+    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
   }
 }
 
-void CNamingTreeCtrl::OnItemexpanding(NMHDR* pNMHDR, LRESULT* pResult) 
+void CNamingTreeCtrl::OnItemexpanding(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 	// TODO: Add your control notification handler code here
@@ -193,7 +203,7 @@ void CNamingTreeCtrl::OnItemexpanding(NMHDR* pNMHDR, LRESULT* pResult)
   ListContext(pNMTreeView->itemNew.hItem);
 }
 
-void CNamingTreeCtrl::OnContextPopupRefresh() 
+void CNamingTreeCtrl::OnContextPopupRefresh()
 {
 	// TODO: Add your command handler code here
 	HTREEITEM hItem = GetSelectedItem();
@@ -201,10 +211,11 @@ void CNamingTreeCtrl::OnContextPopupRefresh()
   ListContext(hItem);
 }
 
-void CNamingTreeCtrl::OnContextPopupUnbind() 
+void CNamingTreeCtrl::OnContextPopupUnbind()
 {
 	// TODO: Add your command handler code here
-  if(MessageBox("Are you sure you want to unbind this object?", "Confirm", MB_YESNO | MB_ICONEXCLAMATION) != IDYES)
+  if(MessageBox(ACE_TEXT ("Are you sure you want to unbind this object?"),
+	            ACE_TEXT ("Confirm"), MB_YESNO | MB_ICONEXCLAMATION) != IDYES)
   {
     return;
   }
@@ -226,7 +237,7 @@ void CNamingTreeCtrl::OnContextPopupUnbind()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._rep_id(), "CORBA::Exception");
+    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
   }
 }
 
@@ -235,7 +246,7 @@ void CNamingTreeCtrl::Resolve(CosNaming::NamingContext_ptr pRootContext)
   ClearChildren();
   if(!CORBA::is_nil(pRootContext))
   {
-    HTREEITEM hItem = InsertItem("Root");
+    HTREEITEM hItem = InsertItem(ACE_TEXT ("Root"));
     CosNaming::Name Name;
     Name.length(1);
     Name[0].id = CORBA::string_dup("Root");
@@ -244,10 +255,11 @@ void CNamingTreeCtrl::Resolve(CosNaming::NamingContext_ptr pRootContext)
   }
 }
 
-void CNamingTreeCtrl::OnContextPopupDestroy() 
+void CNamingTreeCtrl::OnContextPopupDestroy()
 {
 	// TODO: Add your command handler code here
-  if(MessageBox("Are you sure you want to destroy this context?", "Confirm", MB_YESNO | MB_ICONEXCLAMATION) != IDYES)
+  if(MessageBox(ACE_TEXT ("Are you sure you want to destroy this context?"),
+	            ACE_TEXT ("Confirm"), MB_YESNO | MB_ICONEXCLAMATION) != IDYES)
   {
     return;
   }
@@ -274,11 +286,11 @@ void CNamingTreeCtrl::OnContextPopupDestroy()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._rep_id(), "CORBA::Exception");
+    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
   }
 }
 
-void CNamingTreeCtrl::OnContextPopupBindContext() 
+void CNamingTreeCtrl::OnContextPopupBindContext()
 {
 	// TODO: Add your command handler code here
   CBindDialog Dialog(true, m_pORB);
@@ -297,7 +309,7 @@ void CNamingTreeCtrl::OnContextPopupBindContext()
     CosNaming::NamingContext_var NewContext = CosNaming::NamingContext::_narrow(Dialog.GetObject());
     if(CORBA::is_nil(NewContext))
     {
-      AfxMessageBox("Object is not a CosNaming::NamingContext");
+      AfxMessageBox(ACE_TEXT ("Object is not a CosNaming::NamingContext"));
       return;
     }
     Context->bind_context(Dialog.GetName(), NewContext);
@@ -305,11 +317,11 @@ void CNamingTreeCtrl::OnContextPopupBindContext()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._rep_id(), "CORBA::Exception");
+    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
   }
 }
 
-void CNamingTreeCtrl::OnContextPopupBindobject() 
+void CNamingTreeCtrl::OnContextPopupBindobject()
 {
 	// TODO: Add your command handler code here
   CBindDialog Dialog(false, m_pORB);
@@ -331,11 +343,11 @@ void CNamingTreeCtrl::OnContextPopupBindobject()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._rep_id(), "CORBA::Exception");
+    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
   }
 }
 
-void CNamingTreeCtrl::OnDestroy() 
+void CNamingTreeCtrl::OnDestroy()
 {
 	CTreeCtrl::OnDestroy();
 	
@@ -345,7 +357,7 @@ void CNamingTreeCtrl::OnDestroy()
 }
 
 
-void CNamingTreeCtrl::OnContextpopupBindnewcontext() 
+void CNamingTreeCtrl::OnContextpopupBindnewcontext()
 {
 	// TODO: Add your command handler code here
   HTREEITEM hItem = GetSelectedItem();
@@ -369,11 +381,11 @@ void CNamingTreeCtrl::OnContextpopupBindnewcontext()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._rep_id(), "CORBA::Exception");
+    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
   }
 }
 
-void CNamingTreeCtrl::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult) 
+void CNamingTreeCtrl::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	// TODO: Add your control notification handler code here
 	CNamingObject* pObject = GetTreeObject();
@@ -387,7 +399,7 @@ void CNamingTreeCtrl::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CNamingTreeCtrl::OnCopy() 
+void CNamingTreeCtrl::OnCopy()
 {
 	// TODO: Add your command handler code here
   CNamingObject* pObject = GetTreeObject();
@@ -406,11 +418,11 @@ void CNamingTreeCtrl::OnCopy()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._rep_id(), "CORBA::Exception");
+    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
   }
 }
 
-LRESULT CNamingTreeCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
+LRESULT CNamingTreeCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	// TODO: Add your specialized code here and/or call the base class
 	if(message == WM_HOTKEY)
@@ -423,10 +435,11 @@ LRESULT CNamingTreeCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	return CTreeCtrl::WindowProc(message, wParam, lParam);
 }
 
-void CNamingTreeCtrl::OnObjectpopupUnbind() 
+void CNamingTreeCtrl::OnObjectpopupUnbind()
 {
 	// TODO: Add your command handler code here
-  if(MessageBox("Are you sure you want to unbind this object?", "Confirm", MB_YESNO | MB_ICONEXCLAMATION) != IDYES)
+  if(MessageBox(ACE_TEXT ("Are you sure you want to unbind this object?"),
+	            ACE_TEXT ("Confirm"), MB_YESNO | MB_ICONEXCLAMATION) != IDYES)
   {
     return;
   }
@@ -448,11 +461,11 @@ void CNamingTreeCtrl::OnObjectpopupUnbind()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._rep_id(), "CORBA::Exception");
+    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
   }	
 }
 
-void CNamingTreeCtrl::OnObjectpopupViewrefrence() 
+void CNamingTreeCtrl::OnObjectpopupViewrefrence()
 {
 	// TODO: Add your command handler code here
 	ViewIORDialog Dialog(m_pORB, GetTreeObject()->Object());
@@ -473,11 +486,11 @@ void CNamingTreeCtrl::ListBindingList(HTREEITEM hItem, CosNaming::NamingContext_
       const char* pKind = (bl[i].binding_name[0]).kind;
       if(*pKind)
       {
-        Name.Format("%s | %s", (bl[i].binding_name[0]).id, pKind);
+        Name.Format(ACE_TEXT ("%s | %s"), (bl[i].binding_name[0]).id, pKind);
       }
       else
       {
-        Name.Format("%s", (bl[i].binding_name[0]).id);
+        Name.Format(ACE_TEXT ("%s"), (bl[i].binding_name[0]).id);
       }
       HTREEITEM hContext = InsertItem(Name, hItem);
       SetItemData(hContext, (DWORD)pNewObject);
@@ -500,7 +513,7 @@ void CNamingTreeCtrl::ListBindingList(HTREEITEM hItem, CosNaming::NamingContext_
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._rep_id(), "CORBA::Exception");
+    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
   }
 }
 

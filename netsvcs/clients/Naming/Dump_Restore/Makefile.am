@@ -6,16 +6,16 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
+ACE_ROOT = $(top_srcdir)
 
 ## Makefile.Netsvcs_Dump_Restore_Lib.am 
 noinst_LTLIBRARIES = libDump_Restore.la
 
 libDump_Restore_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -DACE_BUILD_SVC_DLL
 
@@ -32,8 +32,7 @@ noinst_HEADERS = \
 noinst_PROGRAMS = main
 
 main_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR)
 
 main_SOURCES = \
@@ -41,10 +40,12 @@ main_SOURCES = \
   Dump_Restore.h
 
 main_LDADD = \
-  libDump_Restore.la $(top_builddir)/ace/libACE.la
+ libDump_Restore.la $(top_builddir)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB

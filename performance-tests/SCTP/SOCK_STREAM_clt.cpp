@@ -6,6 +6,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/CDR_Stream.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/OS_Memory.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -42,14 +43,14 @@ ACE_UINT32 const microsec_clock_scale_factor = ACE_High_Res_Timer::global_scale_
 // file readability.
 HIST runTest(ACE_SOCK_Stream &);
 
-int main(int argc, char **argv){
+int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 
   // Initialize the options manager
-  Options_Manager optsMgr(argc, argv, "client-opts");
+  Options_Manager optsMgr(argc, argv, ACE_TEXT ("client-opts"));
 
   // show usage if requested
   if (optsMgr._usage) {
-    optsMgr._show_usage(cerr, "client-opts");
+    optsMgr._show_usage(stderr, ACE_TEXT ("client-opts"));
     return 1;
   }
 
@@ -58,13 +59,13 @@ int main(int argc, char **argv){
 #ifndef ACE_HAS_SCTP
   if (optsMgr.test_transport_protocol == IPPROTO_SCTP)
     ACE_ERROR_RETURN((LM_ERROR,
-                      "SCTP was NOT installed when this binary was compiled.\nSOCK_STREAM_clt may still be run using TCP via the '-t tcp' option.\n"),
+                      ACE_TEXT ("SCTP was NOT installed when this binary was compiled.\nSOCK_STREAM_clt may still be run using TCP via the '-t tcp' option.\n")),
                      1);
 #endif
 
   // check that valid options were specified
   if (optsMgr._error) {
-    cerr << "ERROR: " << optsMgr._error_message << endl;
+    ACE_OS::fprintf (stderr, "ERROR: %s\n", ACE_TEXT_ALWAYS_CHAR (optsMgr._error_message));
     return 1;
   }
 
@@ -89,12 +90,12 @@ int main(int argc, char **argv){
                          0,clientAddr, 0, 0, 0, // ALL DEFAULT ARGUMENTS
                          Options_Manager::test_transport_protocol) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "connection failed"),
+                       ACE_TEXT ("(%P|%t) %p\n"),
+                       ACE_TEXT ("connection failed")),
                       1);
 
   // run the test
-  HIST testResultsHistogram = NULL;
+  HIST testResultsHistogram = 0;
   // connection is closed by runTest* functions
   testResultsHistogram = runTest(dataStream);
 
@@ -217,9 +218,9 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_Strea
   }
 
   // AFTER PRIMING THE PUMP CREATE THE HISTOGRAM
-  HIST aceStream_hist=NULL;
+  HIST aceStream_hist = 0;
   aceStream_hist = createHistogram(msgLen);
-  if (NULL == aceStream_hist)
+  if (0 == aceStream_hist)
     ACE_ERROR_RETURN((LM_ERROR,
                       "%p\n",
                       "histogram create failed"),
@@ -239,9 +240,9 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_Strea
 
 
     ACE_CDR::ULong msgLenExpressed = ACE_HTONL(msgLen);
-    iov[0].iov_base = ACE_reinterpret_cast(char *, &msgLenExpressed);
+    iov[0].iov_base = reinterpret_cast<char *> (&msgLenExpressed);
     iov[0].iov_len = ACE_CDR::LONG_SIZE;
-    iov[1].iov_base = ACE_reinterpret_cast(char *, buf);
+    iov[1].iov_base = reinterpret_cast<char *> (buf);
     iov[1].iov_len = msgLen;
 
     if (-1 == stream.sendv_n (iov, 2))
@@ -269,10 +270,8 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_Strea
     // compute the message latency in micro-seconds
     messageLatency_usec =
 
-      (ACE_static_cast(double,
-                       ACE_UINT64_DBLCAST_ADAPTER(endTime)) -
-       ACE_static_cast(double,
-                       ACE_UINT64_DBLCAST_ADAPTER(startTime)))
+      (static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER(endTime)) -
+       static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER(startTime)))
 
       / microsec_clock_scale_factor;
 

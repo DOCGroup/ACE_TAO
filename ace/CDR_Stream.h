@@ -1072,7 +1072,7 @@ protected:
 class ACE_Export ACE_WChar_Codeset_Translator
 {
 public:
-  virtual ~ACE_WChar_Codeset_Translator () {}
+  virtual ~ACE_WChar_Codeset_Translator ();
 
   virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR&,
                                        ACE_CDR::WChar&) = 0;

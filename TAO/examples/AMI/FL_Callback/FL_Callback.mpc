@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*progress): taoexe, strategies, messaging, ami, portableserver {
-  requires += fl_reactor
+project(*progress): taoexe, messaging, ami, portableserver, tao_flresource {
   Source_Files {
     Progress_i.cpp
     progress.cpp
@@ -10,7 +9,6 @@ project(*progress): taoexe, strategies, messaging, ami, portableserver {
 }
 
 project(*peer): taoexe, strategies, messaging, ami, portableserver {
-  requires += fl_reactor
   Source_Files {
     Peer_i.cpp
     peer.cpp

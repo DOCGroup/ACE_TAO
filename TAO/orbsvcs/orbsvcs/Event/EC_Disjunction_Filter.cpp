@@ -2,10 +2,6 @@
 
 #include "EC_Disjunction_Filter.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Disjunction_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_Disjunction_Filter, "$Id$")
 
 TAO_EC_Disjunction_Filter::
@@ -53,7 +49,7 @@ TAO_EC_Disjunction_Filter::end (void) const
 int
 TAO_EC_Disjunction_Filter::size (void) const
 {
-  return ACE_static_cast (int, this->n_);
+  return static_cast<int> (this->n_);
 }
 
 int

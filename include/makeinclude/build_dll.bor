@@ -10,7 +10,6 @@
 # CPPDIR - list	of directories containing source files
 # OBJFILES - list of (non-system) object files
 # LIBFILES - list of (non-system) libraries
-# PASCAL - if defined means link dll against pascal run-time library
 # DEBUG	- if defined means building with debug information
 # UNICODE - if defined when building a unicode dll
 #

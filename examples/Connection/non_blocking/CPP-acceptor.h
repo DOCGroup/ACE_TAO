@@ -61,7 +61,7 @@ public:
   // the <Reactor>.
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the network server.
 
   virtual int fini (void);

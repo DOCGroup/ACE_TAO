@@ -23,6 +23,14 @@ my $LS = new PerlACE::Process ("../../../bin/nslist");
 my $AD = new PerlACE::Process ("../../../bin/nsadd");
 my $status = 0;
 
+# We want the nslist and nsadd executables to be found exactly in the path
+# given, without being modified by the value of -ExeSubDir.
+# So, we tell their Process objects to ignore the setting of -ExeSubDir.
+
+$LS->IgnoreExeSubDir (1);
+$AD->IgnoreExeSubDir (1);
+
+print STDOUT "Executable for nslist is " . $LS->Executable () . "\n";
 
 sub name_server
 {

@@ -22,7 +22,7 @@ ACE_RCSID(Message_Queue, bounded_buffer, "$Id$")
 static void *
 producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 {
-  // Keep reading stdin, until we reach EOF. 
+  // Keep reading stdin, until we reach EOF.
 
   for (int n; ; )
     {
@@ -56,7 +56,7 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 	}
     }
 
-  return 0; 
+  return 0;
 }
 
 // The consumer dequeues a message from the ACE_Message_Queue, writes
@@ -103,13 +103,13 @@ static void *consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 
 // Spawn off two threads that copy stdin to stdout.
 
-int 
-main (int, char *[])
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Message list.
   ACE_Message_Queue<ACE_MT_SYNCH> msg_queue;
 
-  if (ACE_Thread_Manager::instance ()->spawn 
+  if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (producer),
        (void *) &msg_queue,
        THR_NEW_LWP | THR_DETACHED) == -1)
@@ -117,7 +117,7 @@ main (int, char *[])
                        "%p\n",
                        "spawn"),
                       1);
-  else if (ACE_Thread_Manager::instance ()->spawn 
+  else if (ACE_Thread_Manager::instance ()->spawn
            (ACE_THR_FUNC (consumer),
             (void *) &msg_queue,
             THR_NEW_LWP | THR_DETACHED) == -1)
@@ -131,8 +131,8 @@ main (int, char *[])
   return 0;
 }
 #else
-int 
-main (int, char *[])
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

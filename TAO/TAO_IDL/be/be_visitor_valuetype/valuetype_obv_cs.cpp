@@ -134,6 +134,12 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 }
 
 int
+be_visitor_valuetype_obv_cs::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
+int
 be_visitor_valuetype_obv_cs::visit_field (be_field *node)
 {
   be_visitor_context ctx = (*this->ctx_);

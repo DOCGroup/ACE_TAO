@@ -29,11 +29,29 @@ ACE_UNIX_Addr::string_to_addr (const char addr[])
 // Transform the current address into string format.
 
 ACE_INLINE int
-ACE_UNIX_Addr::addr_to_string (char s[], size_t len) const
+ACE_UNIX_Addr::addr_to_string (ACE_TCHAR s[], size_t len) const
 {
-  ACE_OS::strsncpy (s, this->unix_addr_.sun_path, len);
+  ACE_OS::strsncpy (s,
+                    ACE_TEXT_CHAR_TO_TCHAR (this->unix_addr_.sun_path),
+                    len);
   return 0;
 }
+
+#if defined (ACE_HAS_WCHAR)
+/// Creates an ACE_UNIX_Addr from a string.
+ACE_INLINE
+ACE_UNIX_Addr::ACE_UNIX_Addr (const wchar_t rendezvous_point[])
+{
+  this->set (ACE_TEXT_ALWAYS_CHAR (rendezvous_point));
+}
+
+/// Creates an ACE_UNIX_Addr from a string.
+ACE_INLINE int
+ACE_UNIX_Addr::set (const wchar_t rendezvous_point[])
+{
+  return this->set (ACE_TEXT_ALWAYS_CHAR (rendezvous_point));
+}
+#endif /* ACE_HAS_WCHAR */
 
 // Compare two addresses for equality.
 

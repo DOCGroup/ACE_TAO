@@ -13,6 +13,7 @@
 #include "Time_Date.h"
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/debug.h"
+#include "ace/Reactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/Dynamic_Service.h"
 

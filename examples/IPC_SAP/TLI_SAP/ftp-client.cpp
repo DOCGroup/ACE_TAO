@@ -42,7 +42,7 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "your platform isn't configured to support TLI\n"),

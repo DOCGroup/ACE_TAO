@@ -6,15 +6,9 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (TAO, 
-           BiDir_Policy_i, 
+ACE_RCSID (TAO,
+           BiDir_Policy_i,
            "$Id$")
-
-
-
-#if ! defined (__ACE_INLINE__)
-#include "BiDir_Policy_i.inl"
-#endif /* __ACE_INLINE__ */
 
 TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (
     const BiDirPolicy::BidirectionalPolicyValue  val)

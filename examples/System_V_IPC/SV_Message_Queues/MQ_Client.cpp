@@ -21,7 +21,7 @@ main (int, char *[])
   ACE_SV_Message_Queue msgque (SRV_KEY);
   Message_Block send_msg (SRV_ID,
                           pid,
-                          ACE_OS::cuserid (ACE_static_cast (char *, 0)),
+                          ACE_OS::cuserid (static_cast<char *> (0)),
                           "did you get this?");
   Message_Block recv_msg (pid);
 
@@ -44,7 +44,7 @@ main (int, char *[])
 
 #else
 
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR,
               "SYSV IPC, or SYSV SHMEM is not supported on this platform\n"));

@@ -24,11 +24,11 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Listing 1 code/ch06
   iovec send[4];
-  send[0].iov_base = ACE_const_cast (char *, "up");
+  send[0].iov_base = const_cast<char *> ("up");
   send[0].iov_len  = 2;
-  send[1].iov_base = ACE_const_cast (char *, "time");
+  send[1].iov_base = const_cast<char *> ("time");
   send[1].iov_len  = 4;
-  send[2].iov_base = ACE_const_cast (char *, "\n");
+  send[2].iov_base = const_cast<char *> ("\n");
   send[2].iov_len  = 1;
 
   peer.sendv (send, 3);
@@ -61,12 +61,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   for (int i = 0; i < 2 && bc > 0; ++i)
     {
       size_t wc = receive[i].iov_len;
-      if (ACE_static_cast (size_t, bc) < wc)
-        wc = ACE_static_cast (size_t, bc);
+      if (static_cast<size_t> (bc) < wc)
+        wc = static_cast<size_t> (bc);
       write (1, receive[i].iov_base, wc);
       bc -= receive[i].iov_len;
       delete []
-        (ACE_reinterpret_cast (char *, receive[i].iov_base));
+        (reinterpret_cast<char *> (receive[i].iov_base));
     }
   // Listing 4
 
@@ -75,7 +75,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   iovec response;
   peer.recvv (&response);
   write (1, response.iov_base, response.iov_len);
-  delete [] ACE_reinterpret_cast (char *, response.iov_base);
+  delete [] reinterpret_cast<char *> (response.iov_base);
   // Listing 5
 
   peer.close ();

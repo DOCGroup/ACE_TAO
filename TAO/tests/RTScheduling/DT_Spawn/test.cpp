@@ -57,7 +57,7 @@ main (int argc, char* argv [])
 
 	  ACE_CString data ("Harry Potter");
 	  current->spawn (&thread_action,
-			  ACE_const_cast (char *, data.c_str ()),
+			  const_cast<char *> (data.c_str ()),
 			  name,
 			  sched_param,
 			  implicit_sched_param,

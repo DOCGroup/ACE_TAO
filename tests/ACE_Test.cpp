@@ -39,7 +39,7 @@ execname_test (void)
   if (newname != prog1)   // Didn't find .exe correctly
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Name %s, not %s\n"), newname, prog1));
-      delete [] ACE_const_cast (ACE_TCHAR *, newname);
+      delete [] const_cast<ACE_TCHAR *> (newname);
       ++error_count;
     }
 
@@ -47,7 +47,7 @@ execname_test (void)
   if (newname != prog2)   // Didn't find .exe correctly
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Name %s, not %s\n"), newname, prog2));
-      delete [] ACE_const_cast (ACE_TCHAR *, newname);
+      delete [] const_cast<ACE_TCHAR *> (newname);
       ++error_count;
     }
 
@@ -59,7 +59,7 @@ execname_test (void)
       ++error_count;
     }
   else
-    delete [] ACE_const_cast (ACE_TCHAR *, newname);
+    delete [] const_cast<ACE_TCHAR *> (newname);
 #endif /* ACE_WIN32 */
 
   return error_count;

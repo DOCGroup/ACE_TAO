@@ -1,15 +1,7 @@
-
-
 // $Id$
 
 #include "Default_Protocols_Hooks.h"
-
-#if !defined (__ACE_INLINE__)
-# include "Default_Protocols_Hooks.i"
-#endif /* ! __ACE_INLINE__ */
-
 #include "ace/Log_Msg.h"
-
 
 ACE_RCSID (tao,
            Default_Protocols_Hooks,
@@ -24,26 +16,6 @@ void
 TAO_Default_Protocols_Hooks::init_hooks (TAO_ORB_Core *
                                          ACE_ENV_ARG_DECL_NOT_USED)
 {
-}
-
-int
-TAO_Default_Protocols_Hooks::call_client_protocols_hook (int &,
-                                                         int &,
-                                                         int &,
-                                                         int &,
-                                                         const char *)
-{
-  return 0;
-}
-
-int
-TAO_Default_Protocols_Hooks::call_server_protocols_hook (int &,
-                                                         int &,
-                                                         int &,
-                                                         int &,
-                                                         const char *)
-{
-  return 0;
 }
 
 void
@@ -106,19 +78,6 @@ TAO_Default_Protocols_Hooks::set_thread_native_priority (CORBA::Short
   return 0;
 }
 
-int
-TAO_Default_Protocols_Hooks::set_default_policies (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-{
-  return 0;
-}
-
-int
-TAO_Default_Protocols_Hooks::set_default_server_protocol_policy (TAO_Acceptor_Registry &
-                                                                 ACE_ENV_ARG_DECL_NOT_USED)
-{
-  return 0;
-}
-
 void
 TAO_Default_Protocols_Hooks::rt_service_context (TAO_Stub *,
                                                  TAO_Service_Context &,
@@ -127,20 +86,80 @@ TAO_Default_Protocols_Hooks::rt_service_context (TAO_Stub *,
 {
 }
 
-int
-TAO_Default_Protocols_Hooks::update_client_protocol_properties (TAO_Stub *,
-                                                                TAO_Transport *,
-                                                                const char *)
+CORBA::Boolean
+TAO_Default_Protocols_Hooks::set_client_network_priority (IOP::ProfileId,
+                                                          TAO_Stub *
+                                                          ACE_ENV_ARG_DECL_NOT_USED)
 {
-  return 0;
+  return false;
 }
 
-int
-TAO_Default_Protocols_Hooks::update_server_protocol_properties (CORBA::Policy *,
-                                                                TAO_Transport *,
-                                                                const char *)
+CORBA::Boolean
+TAO_Default_Protocols_Hooks::set_server_network_priority (IOP::ProfileId,
+                                                          CORBA::Policy *
+                                                          ACE_ENV_ARG_DECL_NOT_USED)
 {
-  return 0;
+  return false;
+}
+
+void
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &
+                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+void
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &
+                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+void
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &
+                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+void
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &
+                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+void
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &
+                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+void
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &
+                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+void
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &
+                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+void
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &
+                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+void
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &
+                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+void
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &
+                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+{
 }
 
 CORBA::Long

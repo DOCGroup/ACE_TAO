@@ -16,10 +16,6 @@ ACE_RCSID(Strategies,
           SCIOP_Profile,
           "$Id$")
 
-#if !defined (__ACE_INLINE__)
-# include "SCIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 static const char prefix_[] = "sciop";
 
 const char TAO_SCIOP_Profile::object_key_delimiter_ = '/';
@@ -89,7 +85,6 @@ int
 TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 {
   // Decode multiple endpoints, starting with the primary (endpoint_)
-
   CORBA::StringSeq endpointSeq;
   cdr >> endpointSeq;
 
@@ -106,15 +101,20 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 
   // Add multiple endpoints > 1
 
-  for (int i=endpointSeq.length() - 1; i > 0 ; i--) {
-    TAO_SCIOP_Endpoint *endpoint = 0;
-    ACE_NEW_RETURN (endpoint,
-                    TAO_SCIOP_Endpoint (endpointSeq[i].in(),
-                                        this->endpoint_.port_,
-                                        this->endpoint_.priority()),
-                    -1);
-    this->add_endpoint (endpoint);
-  }
+  for (int i=endpointSeq.length() - 1; i > 0 ; i--)
+    {
+      TAO_SCIOP_Endpoint *endpoint = 0;
+      ACE_NEW_RETURN (endpoint,
+                      TAO_SCIOP_Endpoint (endpointSeq[i].in(),
+                                          this->endpoint_.port_,
+                                          this->endpoint_.priority()),
+                      -1);
+
+      this->count_ +=
+        endpoint->preferred_interfaces (this->orb_core ());
+
+      this->add_endpoint (endpoint);
+    }
 
   // SCIOR has a max_streams variable
   // We are ignoring it for now since ACE SCTP code fixes at 1 anyway.
@@ -404,6 +404,21 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 int
 TAO_SCIOP_Profile::encode_endpoints (void)
 {
+  CORBA::ULong actual_count = 0;
+
+  const TAO_SCIOP_Endpoint *endpoint = &this->endpoint_;
+
+  // Count the number of endpoints that needs to be encoded
+  for (CORBA::ULong c = 0;
+       c != this->count_;
+       ++c)
+    {
+      if (endpoint->is_encodable_)
+        ++actual_count;
+
+      endpoint = endpoint->next_;
+    }
+
   // Create a data structure and fill it with endpoint info for wire
   // transfer.
   // We include information for the head of the list
@@ -412,16 +427,20 @@ TAO_SCIOP_Profile::encode_endpoints (void)
   // priority is not!
 
   TAO_SCIOPEndpointSequence endpoints;
-  endpoints.length (this->count_);
+  endpoints.length (actual_count);
 
-  const TAO_SCIOP_Endpoint *endpoint = &this->endpoint_;
+  endpoint = &this->endpoint_;
+
   for (CORBA::ULong i = 0;
        i < this->count_;
        ++i)
     {
-      endpoints[i].host = endpoint->host ();
-      endpoints[i].port = endpoint->port ();
-      endpoints[i].priority = endpoint->priority ();
+      if (endpoint->is_encodable_)
+        {
+          endpoints[i].host = endpoint->host ();
+          endpoints[i].port = endpoint->port ();
+          endpoints[i].priority = endpoint->priority ();
+        }
 
       endpoint = endpoint->next_;
     }

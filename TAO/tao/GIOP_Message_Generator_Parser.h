@@ -96,6 +96,9 @@ public:
   /// request/response?
   virtual int is_ready_for_bidirectional (void);
 
+  /// The header length of a fragment
+  virtual size_t fragment_header_length (void) const = 0;
+
 protected:
 
   /// Marshall the reply status
@@ -103,10 +106,6 @@ protected:
                              TAO_Pluggable_Reply_Params_Base &reply);
 
 };
-
-#if defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_Generator_Parser.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_GENERATOR_PARSER_H*/

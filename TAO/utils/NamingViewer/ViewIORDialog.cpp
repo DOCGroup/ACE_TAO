@@ -53,7 +53,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // ViewIORDialog message handlers
 
-BOOL ViewIORDialog::OnInitDialog() 
+BOOL ViewIORDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	
@@ -63,18 +63,18 @@ BOOL ViewIORDialog::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void ViewIORDialog::OnApply() 
+void ViewIORDialog::OnApply()
 {
 	// TODO: Add your control notification handler code here
   UpdateData();
   try
   {
-    m_Object = m_pORB->string_to_object(m_IOR);
+    m_Object = m_pORB->string_to_object(ACE_TEXT_ALWAYS_CHAR (m_IOR));
     DecodeIOR();
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._rep_id(), "CORBA::Exception");
+    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
   }
 }
 
@@ -84,19 +84,19 @@ void ViewIORDialog::DecodeIOR()
   m_Profiles.DeleteAllItems();
   m_TypeID = "";
   UpdateData(FALSE);
-  
+
   // if object is nil, return out
   if(CORBA::is_nil(m_Object))
   {
     return;
   }
-  
+
   // Get the stub
   TAO_Stub* pStub = m_Object->_stubobj();
   const char* pType = pStub->type_id;
   m_TypeID = pType ? pType : ""; // special case for INS objects, tao doesn't get the type id
   UpdateData(FALSE);
-  
+
   // Iterate through each profile and add an entry to the tree control
   const TAO_MProfile& BaseProfiles= pStub->base_profiles();
   CORBA::ULong Count = BaseProfiles.profile_count();
@@ -106,12 +106,12 @@ void ViewIORDialog::DecodeIOR()
     HTREEITEM hProfile;
     switch(pProfile->tag())
     {
-    case 0: //IOP::TAG_INTERNET_IOP: 
+    case 0: //IOP::TAG_INTERNET_IOP:
       {
         TAO_IIOP_Profile* pIIOPProfile = (TAO_IIOP_Profile*)pProfile;
         CString ProfileString;
-        ProfileString.Format("IIOP %d.%d", 
-          pIIOPProfile->version().major, 
+        ProfileString.Format(ACE_TEXT ("IIOP %d.%d"),
+          pIIOPProfile->version().major,
           pIIOPProfile->version().minor);
         hProfile = m_Profiles.InsertItem(ProfileString);
         TAO_IIOP_Endpoint* pIIOPEndpoint =
@@ -119,21 +119,21 @@ void ViewIORDialog::DecodeIOR()
         while(pIIOPEndpoint)
         {
           CString EndpointString;
-          EndpointString.Format("%s:%d",
-            pIIOPEndpoint->host(), 
+          EndpointString.Format(ACE_TEXT ("%s:%d"),
+            pIIOPEndpoint->host(),
             pIIOPEndpoint->port());
           HTREEITEM hItem = m_Profiles.InsertItem(EndpointString, hProfile);
           m_Profiles.EnsureVisible(hItem);
           pIIOPEndpoint = (TAO_IIOP_Endpoint*)pIIOPEndpoint->next();
         }
-      
+
       }
       break;
     default:
       {
         CString ProfileString;
         char* pToString = ((TAO_Profile*)pProfile)->to_string();
-        ProfileString.Format("Unknown Profile (Tag=%d) %s", pProfile->tag(), pToString);
+        ProfileString.Format(ACE_TEXT ("Unknown Profile (Tag=%d) %s"), pProfile->tag(), pToString);
         delete pToString;
         hProfile = m_Profiles.InsertItem(ProfileString);
       }

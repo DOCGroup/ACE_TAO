@@ -13,6 +13,7 @@
 #endif
 
 #include "ace/streams.h"
+#include "ace/OS_NS_stdio.h"
 
 class Options_Manager
 {
@@ -55,7 +56,7 @@ public:
   static const ACE_TCHAR* _error_message;
 
   static ACE_CDR::UShort _usage;
-  void _show_usage(ostream& out, ACE_TCHAR const * const opts_set);
+  void _show_usage(FILE* out, ACE_TCHAR const * const opts_set);
 
 private:
   static ACE_CDR::Boolean __initialized;

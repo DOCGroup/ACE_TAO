@@ -604,7 +604,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("[-d (addition debugging output)] ")
                     ACE_TEXT ("[-p (purge percent)] ")
                     ACE_TEXT ("[-a (keep handles available)] "),
-                    argv[0]));
+                    ACE_TEXT ("Cached_Accept_Conn_Test")));
         return -1;
       }
 

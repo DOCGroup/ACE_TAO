@@ -140,12 +140,9 @@ TAO_Time_Service_Clerk::get_time (void)
 
   const ACE_Time_Value timeofday = ACE_OS::gettimeofday ();
 
-  return (CORBA::ULongLong) (ACE_static_cast (CORBA::ULongLong,
-                                              timeofday.sec ()) *
-                             ACE_static_cast (ACE_UINT32,
-                                              10000000) +
-                             ACE_static_cast (CORBA::ULongLong,
-                                              timeofday.usec () * 10))
+  return (CORBA::ULongLong) (static_cast<CORBA::ULongLong> (timeofday.sec ()) *
+                             static_cast<ACE_UINT32> (10000000) +
+                             static_cast<CORBA::ULongLong> (timeofday.usec () * 10))
     - this->update_timestamp_
     + this->time_;
 }

@@ -61,7 +61,7 @@ ACE_Service_Type::~ACE_Service_Type (void)
 
   this->fini ();
 
-  delete [] (ACE_TCHAR *) this->name_;
+  delete [] const_cast <ACE_TCHAR *> (this->name_);
 }
 
 int
@@ -79,7 +79,7 @@ int
 ACE_Service_Type::suspend (void) const
 {
   ACE_TRACE ("ACE_Service_Type::suspend");
-  ((ACE_Service_Type *) this)->active_ = 0;
+  (const_cast<ACE_Service_Type *> (this))->active_ = 0;
   return this->type_->suspend ();
 }
 
@@ -87,7 +87,7 @@ int
 ACE_Service_Type::resume (void) const
 {
   ACE_TRACE ("ACE_Service_Type::resume");
-  ((ACE_Service_Type *) this)->active_ = 1;
+  (const_cast<ACE_Service_Type *> (this))->active_ = 1;
   return this->type_->resume ();
 }
 
@@ -121,6 +121,6 @@ ACE_Service_Type::name (const ACE_TCHAR *n)
 {
   ACE_TRACE ("ACE_Service_Type::name");
 
-  delete [] (ACE_TCHAR *) this->name_;
+  delete [] const_cast <ACE_TCHAR *> (this->name_);
   this->name_ = ACE::strnew (n);
 }

@@ -26,4 +26,8 @@ project : taolib, core {
   PIDL_Files {
     IORManipulation
   }
+
+  Pkgconfig_Files {
+    IORManipulation/TAO_IORManip.pc.in
+  }
 }

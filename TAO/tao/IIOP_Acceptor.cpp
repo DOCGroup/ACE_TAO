@@ -272,9 +272,6 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  if (this->init_tcp_properties () != 0)
-    return -1;
-
   if (this->hosts_ != 0)
     {
       // The hostname cache has already been set!
@@ -401,16 +398,13 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  if (this->init_tcp_properties () != 0)
-    return -1;
-
   if (this->hosts_ != 0)
     {
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) ")
-                         ACE_TEXT ("IIOP_Acceptor::open_default - ")
+                         ACE_TEXT ("TAO (%P|%t) - ")
+                         ACE_TEXT ("IIOP_Acceptor::open_default, ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
@@ -447,7 +441,6 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
 {
   ACE_NEW_RETURN (this->creation_strategy_,
                   CREATION_STRATEGY (this->orb_core_,
-                                     &(this->tcp_properties_),
                                      this->lite_flag_),
                   -1);
 
@@ -471,8 +464,8 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i ")
-                        ACE_TEXT ("- %p, "),
+                        ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
+                        ACE_TEXT ("%p, "),
                         ACE_TEXT ("cannot open acceptor\n")));
           return -1;
         }
@@ -492,7 +485,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
         {
           if (TAO_debug_level > 5)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i() ")
+                        ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                         ACE_TEXT ("trying to listen on port %d\n"), p));
 
           // Now try to actually open on that port
@@ -513,7 +506,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i ")
+                        ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                         ACE_TEXT ("cannot open acceptor in port range (%d,%d)")
                         ACE_TEXT ("- %p\n"),
                         requested_port, last_port, ACE_TEXT("")));
@@ -529,8 +522,8 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i ")
-                    ACE_TEXT ("- %p"),
+                    ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
+                    ACE_TEXT ("%p"),
                     ACE_TEXT ("cannot get local addr\n")));
       return -1;
     }
@@ -553,7 +546,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i - ")
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
                       ACE_TEXT_CHAR_TO_TCHAR(this->hosts_[i]),
                       this->addrs_[i].get_port_number ()));
@@ -625,9 +618,9 @@ TAO_IIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
   if (tmp == 0 || result != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) ")
-                    ACE_TEXT ("IIOP_Acceptor::dotted_decimal_address ")
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - ")
+                    ACE_TEXT ("IIOP_Acceptor::dotted_decimal_address, ")
                     ACE_TEXT ("- %p, "),
                     ACE_TEXT ("cannot determine hostname\n")));
       return -1;
@@ -661,8 +654,8 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_WARNING,
-                      ACE_TEXT ("TAO (%P|%t) Unable to probe network ")
-                      ACE_TEXT ("interfaces.  Using default.\n")));
+                      ACE_TEXT ("TAO (%P|%t) - Unable to probe network ")
+                      ACE_TEXT ("interfaces. Using default.\n")));
         }
 
       if_cnt = 1; // Force the network interface count to be one.
@@ -775,7 +768,7 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Profile::decode, v%d.%d\n"),
                       major,
                       minor));
         }
@@ -792,7 +785,7 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) TAO_IIOP_Acceptor::object_key - ")
+                      ACE_TEXT ("TAO (%P|%t) - TAO_IIOP_Acceptor::object_key, ")
                       ACE_TEXT ("error while decoding host/port\n")));
         }
       return -1;
@@ -916,73 +909,6 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
                               -1);
         }
     }
-
-  return 0;
-}
-
-int
-TAO_IIOP_Acceptor::init_tcp_properties (void)
-{
-  // @@ Currently (in the code below), we obtain protocol properties from
-  // ORB-level ServerProtocol, even though the policy may
-  // have been overridden on POA level.  That's because currently all
-  // endpoints (acceptors) are global.  Once endpoints become per POA,
-  // the code below will have to be changed to look at the POA-level
-  // ServerProtocol policy first.
-
-  // @@ Later we may want to factor some of the code below
-  // among different protocols and place it into TAO_Acceptor, for
-  // example.
-
-  // ServerProtocolProperties policy controls protocols configuration.
-  // Look for protocol properties in the effective ServerProtocolPolicy.
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  // Initialize the parameters to their defaults.  If RTCORBA is loaded,
-  // the server_protocols_hook will override any of the values if they
-  // have been set by a ServerProtocolProperties policy.
-
-  int send_buffer_size = this->orb_core_->orb_params ()->sock_sndbuf_size ();
-  int recv_buffer_size = this->orb_core_->orb_params ()->sock_rcvbuf_size ();
-  int no_delay = this->orb_core_->orb_params ()->nodelay ();
-  int enable_network_priority = 0;
-
-  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  if (tph != 0)
-    {
-      static const char protocol[] = "iiop";
-      const char *protocol_type = protocol;
-
-      const int hook_return =
-        tph->call_server_protocols_hook (send_buffer_size,
-                                         recv_buffer_size,
-                                         no_delay,
-                                         enable_network_priority,
-                                         protocol_type);
-
-      if (hook_return == -1)
-        return -1;
-    }
-
-  this->tcp_properties_.send_buffer_size =
-    send_buffer_size;
-  this->tcp_properties_.recv_buffer_size =
-    recv_buffer_size;
-  this->tcp_properties_.no_delay =
-    no_delay;
- this->tcp_properties_.enable_network_priority  =
-   enable_network_priority;
-
-
-  // @@ NOTE.  RTCORBA treats a combination of transport+messaging
-  // as a single protocol.  Keep this in mind for when we adopt
-  // RTCORBA approach to protocols configuration for nonRT use.  In
-  // particular, what are the semantics of independent variation of
-  // messaging and transport layers, when one transport appears in
-  // combination with several messaging protocols, for example.
 
   return 0;
 }

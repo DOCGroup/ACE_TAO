@@ -57,10 +57,10 @@ public:
       ACE_TRACE ("Server::Server");
     }
 
-  virtual int init (int argc, char *argv[])
+  virtual int init (int argc, ACE_TCHAR *argv[])
     {
       ACE_TRACE ("Server::init");
-      const char *l_addr = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
+      const ACE_TCHAR *l_addr = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
 
       ACE_UPIPE_Addr local_addr (l_addr);
 
@@ -98,11 +98,11 @@ public:
       ACE_TRACE ("Client::Client");
     }
 
-  virtual int init (int argc, char *argv[])
+  virtual int init (int argc, ACE_TCHAR *argv[])
   {
     ACE_TRACE ("Client::init");
 
-    const char *r_addr = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
+    const ACE_TCHAR *r_addr = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
 
     ACE_UPIPE_Addr remote_addr (r_addr);
 
@@ -118,7 +118,7 @@ private:
 };
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config svc_conf;
   ACE_Thread_Manager thr_mgr;
@@ -129,9 +129,9 @@ main (int argc, char *argv[])
   // Establish the connection between Acceptor and Connector.
 
   if (peer_acceptor.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("init")), -1);
   else if (peer_connector.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("init")), -1);
 
   // Wait for threads to exit.
   thr_mgr.wait ();

@@ -40,7 +40,7 @@ public:
   // destructor
 
   virtual int visit_valuetype (be_valuetype *node);
-  // set the right context and make a visitor
+  virtual int visit_eventtype (be_eventtype *node);
 
 protected:
   ACE_CString generate_flat_name (be_valuetype *node);

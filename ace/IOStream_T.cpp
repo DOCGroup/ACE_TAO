@@ -14,20 +14,6 @@ ACE_RCSID(ace, IOStream_T, "$Id$")
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
-#if defined (__GNUG__)
-# if !defined (ACE_IOSTREAM_T_H)
-    // _Only_ define this when compiling this .cpp file standalone, not
-    // when instantiating templates.  Its purpose is to provide something
-    // for global constructors and destructors to be tied to.  Without it,
-    // they would be tied to the file(name).  With Cygnus g++ 2.7.2/VxWorks,
-    // that name is used directly in variable names in the munched ctor/dtor
-    // file.  That name contains a ".", so it's not a legal C variable name.
-    // The root of all this trouble is a static instance (of Iostream_init)
-    // declared in the iostream.h header file.
-    int ACE_IOStream_global_of_builtin_type_to_avoid_munch_problems = 0;
-# endif /* ! ACE_IOSTREAM_T_H */
-#endif /*__GNUG__ */
-
 #if !defined (__ACE_INLINE__)
 #include "ace/IOStream_T.inl"
 #endif /* !__ACE_INLINE__ */

@@ -4,7 +4,7 @@
 /**
  *  @file    StandardConfigurator_Impl.h
  *
- *  $Id$:StandardConfigurator_Impl.h,v 1.0 2004/08/12 20:00:00 jules
+ *  $Id$
  *
  *  This file contains implementation for the servant of
  *  Components::StandardConfigurator interface.
@@ -61,7 +61,7 @@ namespace CIAO
         ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-    void StandardConfigurator_Impl::configure (
+    void configure (
         Components::CCMObject_ptr comp
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,

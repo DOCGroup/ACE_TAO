@@ -88,21 +88,21 @@ namespace CIAO {
       static DOMBuilder* create_parser ();
       // Create a parser from the URL
 
-      static bool process_string (DOMNodeIterator* iter, const XStr& node_name, 
+      static bool process_string (DOMNodeIterator* iter, const XStr& node_name,
                                   const char* name, TAO_String_Manager& var);
       // process strings
 
-      static bool process_string_seq (DOMNodeIterator* iter, 
-                                      const XStr& node_name, 
+      static bool process_string_seq (DOMNodeIterator* iter,
+                                      const XStr& node_name,
                                       const char* name, CORBA::StringSeq& seq);
       // process string sequence
 
-      static bool process_boolean (DOMNodeIterator* iter, 
-                                   const XStr& node_name, 
+      static bool process_boolean (DOMNodeIterator* iter,
+                                   const XStr& node_name,
                                    const char* name, CORBA::Boolean& var);
       // process strings
 
-      static bool process_ulong (DOMNodeIterator* iter, const XStr& node_name, 
+      static bool process_ulong (DOMNodeIterator* iter, const XStr& node_name,
                                  const char* name, CORBA::ULong& var);
       // process ulong
 
@@ -113,6 +113,8 @@ namespace CIAO {
       // new document
     };
   }
-
 }
+
+#include /**/ "ace/post.h"
+
 #endif /* UTILS_H */

@@ -71,7 +71,7 @@ extern "C"
 #if defined (ACE_HAS_PTHREADS_STD)    /* POSIX.1c threads (pthreads) */
    // ... and 2-parameter asctime_r and ctime_r
 #  if !defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) && \
-      !defined (ACE_HAS_STHREADS)
+      !defined (ACE_HAS_STHREADS) && !defined (ACE_VXWORKS)
 #    define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #  endif
 #endif /* ACE_HAS_PTHREADS_STD */
@@ -96,7 +96,7 @@ extern "C"
 typedef struct timespec * ACE_TIMESPEC_PTR;
 #else
 typedef const struct timespec * ACE_TIMESPEC_PTR;
-#endif /* HPUX */
+#endif /* ACE_LACKS_CONST_TIMESPEC_PTR */
 
 #if defined (DIGITAL_UNIX)
   extern char *_Pctime_r (const time_t *, char *);

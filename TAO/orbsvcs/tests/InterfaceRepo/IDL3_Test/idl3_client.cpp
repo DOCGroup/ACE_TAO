@@ -822,8 +822,39 @@ IDL3_Client::component_inheritance_test (
     ACE_ENV_ARG_DECL
   )
 {
+  CORBA::ComponentIR::ComponentDef_var comp_base =
+    comp_def->base_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (comp_base.in ()))
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "component_inheritance_test: "
+                      "base component is null\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::String_var str = comp_base->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (str.in () == 0 || ACE_OS::strcmp (str.in (), COMP_BASE_ID) != 0)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "component_inheritance_test: "
+                      "bad id on base component\n"));
+        }
+
+      return -1;
+    }
+
   CORBA::InterfaceDefSeq_var supported =
-    comp_def->supported_interfaces (ACE_ENV_SINGLE_ARG_PARAMETER);
+    comp_base->supported_interfaces (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CORBA::ULong length = supported->length ();
@@ -840,8 +871,6 @@ IDL3_Client::component_inheritance_test (
       return -1;
     }
 
-  CORBA::String_var str;
-  
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       str = supported[i].in ()->id (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -860,37 +889,6 @@ IDL3_Client::component_inheritance_test (
 
           return -1;
         }
-    }
-
-  CORBA::ComponentIR::ComponentDef_var comp_base =
-    comp_def->base_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  if (CORBA::is_nil (comp_base.in ()))
-    {
-      if (this->debug_)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "component_inheritance_test: "
-                      "base component is null\n"));
-        }
-
-      return -1;
-    }
-
-  str = comp_base->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  if (str.in () == 0 || ACE_OS::strcmp (str.in (), COMP_BASE_ID) != 0)
-    {
-      if (this->debug_)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "component_inheritance_test: "
-                      "bad id on base component\n"));
-        }
-
-      return -1;
     }
 
   return 0;
@@ -1657,7 +1655,7 @@ IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var &hd
     }
 
   CORBA::InterfaceDefSeq_var supported = 
-    hd->supported_interfaces (ACE_ENV_SINGLE_ARG_PARAMETER);
+    bhd->supported_interfaces (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CORBA::ULong length = supported->length ();

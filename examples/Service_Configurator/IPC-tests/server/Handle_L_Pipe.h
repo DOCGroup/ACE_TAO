@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 // Handle connections from local UNIX domain sockets that are sending
@@ -9,6 +8,7 @@
 #define _HANDLE_L_PIPE_H
 
 #include "ace/Service_Config.h"
+#include "ace/Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,8 +26,8 @@ class ACE_Svc_Export Handle_L_Pipe : public ACE_Service_Object, public ACE_LSOCK
 public:
   Handle_L_Pipe (void);
   ~Handle_L_Pipe (void);
-  virtual int init (int argc, char *argv[]);
-  virtual int info (char **, size_t) const;
+  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int info (ACE_TCHAR **, size_t) const;
   virtual int fini (void);
 
 private:
@@ -38,8 +38,8 @@ private:
 
   char *upper_case (char s[], int n);
 
-  char rendezvous[MAXPATHLEN + 1];
-  static const char *DEFAULT_RENDEZVOUS;
+  ACE_TCHAR rendezvous[MAXPATHLEN + 1];
+  static const ACE_TCHAR *DEFAULT_RENDEZVOUS;
 };
 
 extern ACE_Service_Object_Type lp;

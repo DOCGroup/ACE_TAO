@@ -63,7 +63,7 @@ write_ior_to_file (const char *ior)
                             "%s",
                             ior);
   if (result < 0 ||
-      ACE_static_cast (size_t, result) != ACE_OS::strlen (ior))
+      static_cast<size_t> (result) != ACE_OS::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %s to %s\n",
                        ior,

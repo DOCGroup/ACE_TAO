@@ -4,8 +4,8 @@
 
 #ifndef ACE_CONFIG_NSK_H
 #define ACE_CONFIG_NSK_H
-#include /**/ "ace/pre.h"
 
+#include /**/ "ace/pre.h"
 
 // The following configuration file contains defines for Tandem NSK
 // platform, MIPS processor, version 2 C++ compiler.
@@ -28,6 +28,7 @@
 
 // Use all available T1248 thread aware wrapper functions for providing
 // non-blocking I/O.
+// [Note: this causes a significant performance degradation]
 //#define ACE_TANDEM_T1248_PTHREADS_ALL_IO_WRAPPERS
 
 
@@ -66,6 +67,25 @@ typedef enum CMA_T_SCHED_POLICY {
     }                           cma_t_sched_policy;
 #endif
 
+// T1248 doesn't define these constants.  They're defined in spt/cma.h
+// (formerly dce/cma.h), but this header is not included or provided
+// by T1248 G07-AAL.
+#define cma_c_prio_fifo_min     16
+#define cma_c_prio_fifo_mid     24
+#define cma_c_prio_fifo_max     31
+#define cma_c_prio_rr_min       16
+#define cma_c_prio_rr_mid       24
+#define cma_c_prio_rr_max       31
+#define cma_c_prio_through_min  8
+#define cma_c_prio_through_mid  12
+#define cma_c_prio_through_max  15
+#define cma_c_prio_back_min     1
+#define cma_c_prio_back_mid     4
+#define cma_c_prio_back_max     7
+
+// Enable NSK Pluggable Protocols
+#define TAO_HAS_NSKPW 1
+#define TAO_HAS_NSKFS 1
 
 //=========================================================================
 // Platform specific parts
@@ -163,6 +183,12 @@ typedef enum CMA_T_SCHED_POLICY {
 // classification.
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
+// No wcsstr function available for this compiler
+#define ACE_LACKS_WCSSTR
+
+// No wctype.h available for this compiler
+#define ACE_LACKS_WCTYPE_H
+
 // Platform supports the POSIX regular expression library.
 // [Note Tandem NSK platform does have regular expresson support but it
 // does not follow the assumptions made by ACE.  To use it would need
@@ -211,6 +237,12 @@ typedef enum CMA_T_SCHED_POLICY {
 // Platform lacks the socketpair() call
 #define ACE_LACKS_SOCKETPAIR
 
+// Platform limits the maximum socket message size.
+#define ACE_HAS_SOCK_BUF_SIZE_MAX
+
+// hrtime_t is a basic type that doesn't require ACE_U64_TO_U32 conversion
+#define ACE_HRTIME_T_IS_BASIC_TYPE
+
 //=========================================================================
 // Threads specific parts
 //=========================================================================
@@ -236,6 +268,9 @@ extern int cma_sigwait  (sigset_t *);
 #ifdef ACE_TANDEM_T1248_PTHREADS
 #define ACE_HAS_PTHREADS_STD
 #endif
+
+// Standard pthreads supports only SCHED_FIFO
+#define ACE_HAS_ONLY_SCHED_FIFO
 
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
@@ -360,10 +395,6 @@ extern int cma_sigwait  (sigset_t *);
 // of classes used as formal arguments to a template class.
 #define ACE_HAS_TEMPLATE_TYPEDEFS
 
-// Platform/Compiler supports a String class
-//#define ACE_HAS_STRING_CLASS
-//# define ACE_HAS_STDCPP_STL_INCLUDES
-
 // Platform has its standard c++ library in the namespace std.
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
@@ -374,14 +405,12 @@ extern int cma_sigwait  (sigset_t *);
 // Following will not be needed if use standard c library (G06.20 and later)
 #define ACE_LACKS_SIGNED_CHAR
 
+// Compiler supports the new using keyword for C++ namespaces.
+#define ACE_HAS_USING_KEYWORD 
+
 //=========================================================================
 // Build options
 //=========================================================================
-
-// Use in-line functions by default
-//#if ! defined (__ACE_INLINE__)
-//# define __ACE_INLINE__
-//#endif /* ! __ACE_INLINE__ */
 
 // Disable the inclusion of RCS ids in the generated code.
 #define ACE_USE_RCSID 0
@@ -398,5 +427,7 @@ extern int cma_sigwait  (sigset_t *);
 
 // Uncomment the following if tokens library is needed.
 //#define ACE_HAS_TOKENS_LIBRARY
+
+#include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_NSK_H */

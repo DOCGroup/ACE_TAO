@@ -2,10 +2,6 @@
 
 #include "EC_Negation_Filter.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Negation_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_Negation_Filter, "$Id$")
 
 TAO_EC_Negation_Filter::
@@ -23,13 +19,13 @@ TAO_EC_Negation_Filter::~TAO_EC_Negation_Filter (void)
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Negation_Filter::begin (void) const
 {
-  return ACE_const_cast(TAO_EC_Filter**,&this->child_);
+  return const_cast<TAO_EC_Filter**> (&this->child_);
 }
 
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Negation_Filter::end (void) const
 {
-  return ACE_const_cast(TAO_EC_Filter**,&this->child_) + 1;
+  return const_cast<TAO_EC_Filter**> (&this->child_) + 1;
 }
 
 int

@@ -6,12 +6,7 @@
 #include "EC_Supplier_Filter.h"
 #include "ace/Synch_T.h"
 
-
-#if ! defined (__ACE_INLINE__)
-#include "EC_Default_ProxyConsumer.i"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID(Event, EC_Default_ProxyConsumer, "$Dd$")
+ACE_RCSID(Event, EC_Default_ProxyConsumer, "$Id$")
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
 

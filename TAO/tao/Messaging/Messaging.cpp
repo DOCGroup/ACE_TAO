@@ -4,14 +4,17 @@
 #include "Messaging.h"
 #include "Messaging_ORBInitializer.h"
 
-#include "ace/Auto_Ptr.h"
 #include "tao/Exception_Data.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/CDR.h"
 
-ACE_RCSID (tao,
+#include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (Messaging,
            Messaging,
            "$Id$")
 
@@ -154,4 +157,3 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
   ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
                              CORBA::COMPLETED_YES));
 }
-

@@ -102,10 +102,9 @@ public:
   bool operator!= (const ACEXML_Attribute&rhs) const;
 
 private:
-  /// @var uri_ Namespace URI of an attribute
+  /// Namespace URI of an attribute
   ACEXML_Char *uri_;
 
-  /// @var localName_
   ACEXML_Char *localName_;
   ACEXML_Char *qName_;
   ACEXML_Char *type_;

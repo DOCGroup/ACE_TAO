@@ -26,21 +26,6 @@
 
 ACE_RCSID(tests, FlReactor_Test, "$Id$")
 
-#if !defined (ACE_HAS_FL)
-
-int
-run_main (int, ACE_TCHAR*[])
-{
-  ACE_START_TEST (ACE_TEXT ("FlReactor_Test"));
-
-  ACE_ERROR ((LM_INFO,
-              "FL not supported on this platform\n"));
-  ACE_END_TEST;
-
-  return 0;
-}
-
-#else
 
 #include "ace/FlReactor.h"
 #include "ace/Event_Handler.h"
@@ -138,10 +123,10 @@ Test_Window::draw (void)
 void sides_cb (Fl_Widget *o, void *p)
 {
   Test_Window *tw =
-    ACE_reinterpret_cast (Test_Window *,p);
+    reinterpret_cast<Test_Window *> (p);
   Fl_Slider *slider =
-    ACE_dynamic_cast (Fl_Slider*,o);
-  tw->sides (ACE_static_cast (int, slider->value ()));
+    dynamic_cast<Fl_Slider*> (o);
+  tw->sides (static_cast<int> (slider->value ()));
 }
 
 class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -225,7 +210,10 @@ int
 Acceptor::make_svc_handler (Connection_Handler *&sh)
 {
   if (sh == 0)
-    ACE_NEW_RETURN (sh, Connection_Handler (this->w_, this->box_), -1);
+    {
+      ACE_NEW_RETURN (sh, Connection_Handler (this->w_, this->box_), -1);
+      sh->reactor (this->reactor());
+    }
   return 0;
 }
 
@@ -296,5 +284,3 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* ACE_HAS_FL */

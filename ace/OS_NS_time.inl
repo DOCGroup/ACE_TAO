@@ -37,6 +37,8 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 # else
 #   if defined (HPUX_10)
   return (::asctime_r(t, buf, buflen) == 0 ? buf : (char *)0);
+#   elif defined (ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R)
+  ACE_OSCALL_RETURN (::asctime_r (t, buf, reinterpret_cast<size_t*>(&buflen)), char *, 0);
 #   else
   ACE_OSCALL_RETURN (::asctime_r (t, buf, buflen), char *, 0);
 #   endif /* HPUX_10 */
@@ -130,12 +132,12 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   bufp = buf;
 #   endif /* ACE_USES_WCHAR */
 
-#   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   if (buflen < ctime_buf_size)
     {
       errno = ERANGE;
       return 0;
     }
+#   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
 #      if defined (DIGITAL_UNIX)
   ACE_OSCALL (::_Pctime_r (t, bufp), ACE_TCHAR *, 0, bufp);
 #      else /* DIGITAL_UNIX */
@@ -145,6 +147,8 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 
 #      if defined (ACE_CTIME_R_RETURNS_INT)
   bufp = ::ctime_r (t, bufp, buflen) == -1 ? 0 : bufp;
+#      elif defined (ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R)
+  bufp = ::ctime_r (t, bufp, reinterpret_cast<size_t*>(&buflen));
 #      else /* ACE_CTIME_R_RETURNS_INT */
   bufp = ::ctime_r (t, bufp, buflen);
 #      endif /* ACE_CTIME_R_RETURNS_INT */
@@ -218,7 +222,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ACE_UNUSED_ARG (op);
   // Use .obj/gethrtime.o, which was compiled with g++.
   return ACE_gethrtime ();
-#elif (defined(__KCC) || defined (__GNUG__)) && !defined (__MINGW32__) && defined (ACE_HAS_PENTIUM)
+#elif (defined(__KCC) || defined (__GNUG__)) && !defined (__MINGW32__) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)
   ACE_UNUSED_ARG (op);
 
 # if defined (ACE_LACKS_LONGLONG_T)
@@ -322,7 +326,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   do {
     asm volatile ("mftbu %0\n"
 		  "mftb  %1\n"
-		  "mftbu %2" 
+		  "mftbu %2"
 		  : "=r" (most), "=r" (least), "=r" (scratch));
   } while (most != scratch);
 #endif

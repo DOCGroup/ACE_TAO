@@ -70,7 +70,7 @@ private:
 # define ACE_ITOA(X) #X
 
 // Create a string of a server address with a "host:port" format.
-# define ACE_SERVER_ADDRESS(H,P) H":"P
+# define ACE_SERVER_ADDRESS(H,P) H ACE_TEXT(":") P
 
 // A couple useful inline functions for checking whether bits are
 // enabled or disabled.
@@ -96,13 +96,15 @@ private:
 #   define ACE_UNIMPLEMENTED_FUNC(f) f;
 # endif /* ACE_NEEDS_FUNC_DEFINITIONS */
 
-// Easy way to designate that a class is used as a pseudo-namespace.
-// Insures that g++ "friendship" anamolies are properly handled.
-# define ACE_CLASS_IS_NAMESPACE(CLASSNAME) \
-private: \
-CLASSNAME (void); \
-CLASSNAME (const CLASSNAME&); \
-friend class ace_dewarn_gplusplus
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+  // Easy way to designate that a class is used as a pseudo-namespace.
+  // Insures that g++ "friendship" anamolies are properly handled.
+  # define ACE_CLASS_IS_NAMESPACE(CLASSNAME) \
+  private: \
+  CLASSNAME (void); \
+  CLASSNAME (const CLASSNAME&); \
+  friend class ace_dewarn_gplusplus
+#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
 // ----------------------------------------------------------------
 
@@ -132,21 +134,23 @@ friend class ace_dewarn_gplusplus
 #   endif /* ! ACE_HAS_BROKEN_NAMESPACES */
 # endif  /* !ACE_NESTED_CLASS */
 
-/**
- * @name CORBA namespace macros.
- *
- * CORBA namespace macros.
- *
- * @deprecated These macros were formerly used by TAO but are now
- *             deprecated, and only remain to retain some backward
- *             compatibility.  They will be removed in a future ACE
- *             release.
- */
-//@{
-# define ACE_CORBA_1(NAME) CORBA::NAME
-# define ACE_CORBA_2(TYPE, NAME) CORBA::TYPE::NAME
-# define ACE_CORBA_3(TYPE, NAME) CORBA::TYPE::NAME
-//@}
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+  /**
+   * @name CORBA namespace macros.
+   *
+   * CORBA namespace macros.
+   *
+   * @deprecated These macros were formerly used by TAO but are now
+   *             deprecated, and only remain to retain some backward
+   *             compatibility.  They will be removed in a future ACE
+   *             release.
+   */
+  //@{
+  # define ACE_CORBA_1(NAME) CORBA::NAME
+  # define ACE_CORBA_2(TYPE, NAME) CORBA::TYPE::NAME
+  # define ACE_CORBA_3(TYPE, NAME) CORBA::TYPE::NAME
+  //@}
+#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
 // ----------------------------------------------------------------
 
@@ -611,6 +615,46 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
   if (gobbler != 0) \
     *gobbler = (ACE_Service_Object_Exterminator) _gobble_##SERVICE_CLASS; \
   return new SERVICE_CLASS; \
+}
+
+/**
+ * For service classes scoped within namespaces, use this macro in
+ * place of ACE_FACTORY_DEFINE. The third argument in this case is
+ * the fully scoped name of the class as it is to be
+ * instantiated. For example, given:
+ * namespace ACE
+ * {
+ *   namespace Foo
+ *   {
+ *     class Bar : public ACE_Service_Object
+ *     {};
+ *   };
+ * };
+ *
+ * ACE_FACTORY_DECLARE(ACE,ACE_Foo_Bar)
+ *
+ * you would then use:
+ *
+ * ACE_FACTORY_NAMESPACE_DEFINE(ACE,ACE_Foo_Bar,ACE::Foo::Bar)
+ *
+ * Note that in this example, the ACE_FACTORY_DECLARE is done outside
+ * the namespace scope. Then, the SERVICE_CLASS name is the same as
+ * the fully scoped class name, but with '::' replaced with '_'. Doing
+ * this will ensure unique generated signatures for the various C
+ * style functions.
+ */
+# define ACE_FACTORY_NAMESPACE_DEFINE(CLS,SERVICE_CLASS,NAMESPACE_CLASS) \
+void _gobble_##SERVICE_CLASS (void *p) { \
+  ACE_Service_Object *_p = static_cast<ACE_Service_Object *> (p); \
+  ACE_ASSERT (_p != 0); \
+  delete _p; } \
+extern "C" CLS##_Export ACE_Service_Object *\
+_make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
+{ \
+  ACE_TRACE (#SERVICE_CLASS); \
+  if (gobbler != 0) \
+    *gobbler = (ACE_Service_Object_Exterminator) _gobble_##SERVICE_CLASS; \
+  return new NAMESPACE_CLASS; \
 }
 
 /// The canonical name for a service factory method

@@ -54,9 +54,9 @@ ACE_Singleton_Strategy<SVC_HANDLER>::open (SVC_HANDLER *sh,
 }
 
 template <class SVC_HANDLER> int
-ACE_DLL_Strategy<SVC_HANDLER>::open (const char dll_name[],
-                                     const char factory_function[],
-                                     const char svc_name[],
+ACE_DLL_Strategy<SVC_HANDLER>::open (const ACE_TCHAR dll_name[],
+                                     const ACE_TCHAR factory_function[],
+                                     const ACE_TCHAR svc_name[],
                                      ACE_Service_Repository *svc_rep,
                                      ACE_Thread_Manager *thr_mgr)
 {
@@ -95,7 +95,7 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
       // Create an ACE_Service_Type containing the SVC_Handler and
       // insert into this->svc_rep_;
 
-      ACE_Service_Type_Impl *stp;
+      ACE_Service_Type_Impl *stp = 0;
       ACE_NEW_RETURN (stp,
                       ACE_Service_Object_Type (svc_handler,
                                                this->svc_name_),
@@ -475,7 +475,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cach
   this->recycling_strategy_ = 0;
 
   // Close down all cached service handlers.
-  CONNECTION_MAP_ENTRY *entry;
+  CONNECTION_MAP_ENTRY *entry = 0;
   for (CONNECTION_MAP_ITERATOR iterator (connection_map_);
        iterator.next (entry);
        iterator.advance ())

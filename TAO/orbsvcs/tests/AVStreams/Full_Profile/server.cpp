@@ -172,7 +172,7 @@ Server::run (void)
     }
     ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::init\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::run\n");
       return -1;
     }
   ACE_ENDTRY;
@@ -271,4 +271,6 @@ template class TAO_AV_Endpoint_Reactive_Strategy <TAO_StreamEndPoint_B,TAO_VDev,
 s#pragma instantiate ACE_Singleton <Server,ACE_Null_Mutex>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl>
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+template ACE_Singleton<Server, ACE_Null_Mutex> *ACE_Singleton<Server, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

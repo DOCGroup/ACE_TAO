@@ -7,15 +7,6 @@ TAO_Notify_Proxy::updates_off (void)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Notify_Proxy::check_filters (const TAO_Notify_Event_var &event
-                             , TAO_Notify_FilterAdmin& parent_filter_admin
-                             , CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator
-                             ACE_ENV_ARG_DECL)
-{
-  return this->check_filters (event.get (), parent_filter_admin, filter_operator ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Boolean
 TAO_Notify_Proxy::check_filters (const TAO_Notify_Event* event
                              , TAO_Notify_FilterAdmin& parent_filter_admin
                              , CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator

@@ -53,9 +53,9 @@ int sagent::handle_input(ACE_HANDLE fd)
      return 0;
   OctetStr community(rcv_com_str);
   const ACE_INET_Addr &ta = tr.get_from_addr();
-  char buf_tmp[MAXHOSTNAMELEN + 1];
+  ACE_TCHAR buf_tmp[MAXHOSTNAMELEN + 1];
   ta.addr_to_string (buf_tmp, MAXHOSTNAMELEN);
-  UdpAddress ra(buf_tmp);
+  UdpAddress ra (ACE_TEXT_ALWAYS_CHAR (buf_tmp));
   tgt_.set_address(ra);
 
 

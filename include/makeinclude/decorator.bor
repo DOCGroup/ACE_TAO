@@ -7,7 +7,6 @@
 # ~~~~~~~
 # DEBUG - defined if building a debug library/executable
 # STATIC - defined if building a static library
-# PASCAL - defined if linking against cp32*
 # UNICODE - defined if building a unicode version
 #
 # Outputs:
@@ -26,11 +25,6 @@ BORLAND_DECO=b
 DECO_PREFIX=_
 !endif
 
-!ifdef PASCAL
-DECO_PREFIX=_
-PASCAL_DECO=p
-!endif
-
 !ifdef STATIC
 DECO_PREFIX=_
 STATIC_DECO=s
@@ -46,11 +40,11 @@ DECO_PREFIX=_
 UNICODE_DECO=u
 !endif
 
-LIB_DECORATOR=$(DECO_PREFIX)$(BORLAND_DECO)$(PASCAL_DECO)$(STATIC_DECO)$(UNICODE_DECO)$(DEBUG_DECO)
+LIB_DECORATOR=$(DECO_PREFIX)$(BORLAND_DECO)$(STATIC_DECO)$(UNICODE_DECO)$(DEBUG_DECO)
 
 !ifdef NO_EXE_DECORATION
 EXE_DECORATOR=
 !else
-EXE_DECORATOR=$(DECO_PREFIX)$(BORLAND_DECO)$(PASCAL_DECO)$(STATIC_DECO)$(UNICODE_DECO)$(DEBUG_DECO)
+EXE_DECORATOR=$(DECO_PREFIX)$(BORLAND_DECO)$(STATIC_DECO)$(UNICODE_DECO)$(DEBUG_DECO)
 !endif
 

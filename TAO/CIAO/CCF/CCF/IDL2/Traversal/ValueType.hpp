@@ -6,7 +6,7 @@
 #define CCF_IDL2_TRAVERSAL_VALUE_TYPE_HPP
 
 #include "CCF/IDL2/Traversal/Elements.hpp"
-
+#include "CCF/IDL2/Traversal/Operation.hpp"
 #include "CCF/IDL2/SemanticGraph/ValueType.hpp"
 
 namespace CCF
@@ -76,6 +76,10 @@ namespace CCF
       typedef
       ValueTypeTemplate<SemanticGraph::ConcreteValueType>
       ConcreteValueType;
+
+      typedef
+      OperationTemplate<SemanticGraph::ValueTypeFactory>
+      ValueTypeFactory;
     }
   }
 }

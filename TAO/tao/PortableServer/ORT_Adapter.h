@@ -85,6 +85,11 @@ namespace TAO
     virtual PortableInterceptor::ObjectReferenceFactory *
       get_obj_ref_factory (void) = 0;
 
+    /// Release any references on @c ObjectReferenceTemplate @a t.
+    virtual void release (
+      PortableInterceptor::ObjectReferenceTemplate * t) = 0;
+
+
     // @@ Johnny, we won't be needing the exception specification
     //    below for long.  Once bug 1852 is fixed, we can the
     //    exception specification and the "tao/SystemException.h"

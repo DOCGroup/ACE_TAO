@@ -24,13 +24,13 @@ PTImpl::Pulser::~Pulser ()
 }
 
 int
-PTImpl::Pulser::open ()
+PTImpl::Pulser::open (void*)
 {
   return this->activate ();
 }
 
 int
-PTImpl::Pulser::close ()
+PTImpl::Pulser::close (u_long)
 {
   this->done_ = 1;
   this->reactor ()->notify ();

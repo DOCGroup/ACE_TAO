@@ -37,7 +37,7 @@ Handle_L_Pipe::handle_input (ACE_HANDLE)
     return -1;
   else
     ACE_DEBUG ((LM_INFO,
-                "received file descriptors %d and %d\n",
+                ACE_TEXT ("received file descriptors %d and %d\n"),
                 fd1,
                 fd2));
 
@@ -54,13 +54,13 @@ Handle_L_Pipe::handle_input (ACE_HANDLE)
   return 0;
 }
 
-const char *Handle_L_Pipe::DEFAULT_RENDEZVOUS = "/tmp/foo_pipe";
+const ACE_TCHAR *Handle_L_Pipe::DEFAULT_RENDEZVOUS = ACE_TEXT ("/tmp/foo_pipe");
 
 #if !defined (__ACE_INLINE__)
 #include "Handle_L_Pipe.i"
 #endif /* __ACE_INLINE__ */
 
 Handle_L_Pipe local_pipe;
-ACE_Service_Object_Type lp (&local_pipe, "Local_Pipe");
+ACE_Service_Object_Type lp (&local_pipe, ACE_TEXT ("Local_Pipe"));
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

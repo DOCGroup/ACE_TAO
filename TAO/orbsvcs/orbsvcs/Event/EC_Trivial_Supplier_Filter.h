@@ -99,10 +99,6 @@ private:
   TAO_EC_Trivial_Supplier_Filter filter_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_Trivial_Supplier_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_EC_TRIVIAL_SUPPLIER_FILTER_H */

@@ -31,7 +31,7 @@ public:
    * @param s The contained servant.  The constructor assumes
    * ownership.
    */
-  ACE_EXPLICIT Servant_var (SERVANT *s = 0);
+  explicit Servant_var (SERVANT *s = 0);
 
   /// Copy constructor
   Servant_var (const Servant_var<SERVANT> &rhs);

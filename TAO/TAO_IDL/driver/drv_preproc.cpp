@@ -188,7 +188,6 @@ void
 DRV_cpp_init (void)
 {
   const char *cpp_loc = FE_get_cpp_loc_from_env ();
-
   DRV_cpp_putarg (cpp_loc);
 
   // Add an option to the IDL compiler to make the TAO version
@@ -200,10 +199,9 @@ DRV_cpp_init (void)
                    ACE_MAJOR_VERSION,
                    ACE_MINOR_VERSION,
                    ACE_BETA_VERSION);
+                   
   DRV_cpp_putarg (version_option);
-
   DRV_cpp_putarg ("-I.");
-
   const char *cpp_args = FE_get_cpp_args_from_env ();
 
   if (cpp_args == 0)
@@ -221,15 +219,8 @@ DRV_cpp_init (void)
 #endif /* TAO_IDL_PREPROCESSOR_ARGS */
 
       // So we can find OMG IDL files, such as `orb.idl'.
+      
       ACE_OS::strcpy (option, "-I");
-
-#if defined (TAO_IDL_INCLUDE_DIR)
-      // TAO_IDL_INCLUDE_DIR should be in quotes,
-      // e.g. "/usr/local/include/tao"
-
-      ACE_OS::strcat (option,
-                      TAO_IDL_INCLUDE_DIR);
-#else
       char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
       size_t len = 0;
 
@@ -265,6 +256,12 @@ DRV_cpp_init (void)
             }
           else
             {
+#if defined (TAO_IDL_INCLUDE_DIR)
+              // TAO_IDL_INCLUDE_DIR should be in quotes,
+              // e.g. "/usr/local/include/tao"
+              ACE_OS::strcat (option,
+                              TAO_IDL_INCLUDE_DIR);
+#else
               ACE_ERROR ((LM_WARNING,
                           "NOTE: The environment variables "
                           "TAO_ROOT and ACE_ROOT are not defined.\n"
@@ -272,9 +269,9 @@ DRV_cpp_init (void)
                           "locate orb.idl\n"));
 
               ACE_OS::strcat (option, ".");
+#endif  /* TAO_IDL_INCLUDE_DIR */
             }
         }
-#endif  /* TAO_IDL_INCLUDE_DIR */
 
       DRV_cpp_putarg (option);
       idl_global->add_include_path (ACE_CString (option + 2).c_str ());
@@ -674,10 +671,10 @@ DRV_pre_proc (const char *myfile)
   ACE_OS::strcat (tmp_file,  tao_idlf_template);
   ACE_OS::strcat (tmp_ifile, tao_idli_template);
 
-  int tf_fd = ACE_OS::mkstemp (tmp_file);
   int ti_fd = ACE_OS::mkstemp (tmp_ifile);
+  int tf_fd = ACE_OS::mkstemp (tmp_file);
 
-  if (tf_fd == -1 || ti_fd == -1)
+  if (ti_fd == -1 || tf_fd == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s: Unable to create temporary file: %m\n",
@@ -698,6 +695,8 @@ DRV_pre_proc (const char *myfile)
 
   char * t_file  = tmp_cpp_file;
   char * t_ifile = tmp_cpp_ifile;
+
+  ACE_OS::close (tf_fd);
 
 #endif  /* ACE_LACKS_MKSTEMP */
 

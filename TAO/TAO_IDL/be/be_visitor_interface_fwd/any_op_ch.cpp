@@ -39,16 +39,14 @@ be_visitor_interface_fwd_any_op_ch::~be_visitor_interface_fwd_any_op_ch (void)
 }
 
 int
-be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
-    be_interface_fwd *node
-  )
+be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (be_interface_fwd *node)
 {
   AST_Interface *fd = node->full_definition ();
 
   // Only a forward declared interface that is not defined in the same file
   // needs to have this generated here. The Any operators are needed by
   // portable interceptor code if the interface is a parameter of an operation.
-  if (fd->is_defined () != 0)
+  if (fd->is_defined () != 0 || node->is_local ())
     {
       return 0;
     }

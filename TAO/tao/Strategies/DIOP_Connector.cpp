@@ -42,7 +42,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_DIOP_Connecti
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 TAO_DIOP_Connector::TAO_DIOP_Connector (CORBA::Boolean flag)
-  : TAO_Connector (TAO_TAG_UDP_PROFILE),
+  : TAO_Connector (TAO_TAG_DIOP_PROFILE),
     lite_flag_ (flag)
 {
 }
@@ -134,8 +134,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       TAO_DIOP_Connection_Handler *svc_handler_i = 0;
       ACE_NEW_RETURN (svc_handler_i,
                       TAO_DIOP_Connection_Handler (this->orb_core (),
-                                                   this->lite_flag_,
-                                                   0 /* TAO_DIOP_Properties */),
+                                                   this->lite_flag_),
                       0);
 
       svc_handler_i->local_addr (ACE_sap_any_cast (ACE_INET_Addr &));
@@ -235,17 +234,10 @@ TAO_DIOP_Connector::object_key_delimiter (void) const
   return TAO_DIOP_Profile::object_key_delimiter_;
 }
 
-int
-TAO_DIOP_Connector::init_tcp_properties (void)
-{
-  // @@ Michael: We have not TCP, so we have no TCP properties.
-  return 0;
-}
-
 TAO_DIOP_Endpoint *
 TAO_DIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
-  if (endpoint->tag () != TAO_TAG_UDP_PROFILE)
+  if (endpoint->tag () != TAO_TAG_DIOP_PROFILE)
     return 0;
 
   TAO_DIOP_Endpoint *diop_endpoint =

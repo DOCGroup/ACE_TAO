@@ -91,7 +91,7 @@ ECMS_Driver::run (int argc, char* argv[])
           if (pid != 0)
             {
               ACE_OS::fprintf (pid, "%ld\n",
-                               ACE_static_cast (long, ACE_OS::getpid ()));
+                               static_cast<long> (ACE_OS::getpid ()));
               ACE_OS::fclose (pid);
             }
         }
@@ -251,16 +251,29 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
           ACE_hrtime_t t = ACE_OS::gethrtime ();
           ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
 
-          if (i == ACE_static_cast (CORBA::Long, this->event_count_) - 1)
+          if (i == static_cast<CORBA::Long> (this->event_count_) - 1)
             event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
           else if (i % 2 == 0)
             event[0].header.type = this->event_a_;
           else
             event[0].header.type = this->event_b_;
 
-         // We use replace to minimize the copies, this should result
+          // We use replace to minimize the copies, this should result
           // in just one memory allocation;
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
           event[0].data.payload.replace (mblen, mb);
+#else
+          // If the replace method is not available, we will need
+          // to do the copy manually.  First, set the octet sequence length.
+          event[0].data.payload.length (mblen);
+
+          // Now copy over each byte.
+          char* base = mb->data_block ()->base ();
+          for(CORBA::ULong i = 0; i < mblen; i++)
+            {
+              event[0].data.payload[i] = base[i];
+            }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
           supplier->consumer_proxy ()->push(event ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;

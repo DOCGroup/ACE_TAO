@@ -14,12 +14,13 @@
 #include "ace/Unbounded_Queue.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 #include "Widget.h"
 #include "Widget_Factory.h"
 #include "Widget_Part.h"
 #include "Widget_Part_Factory.h"
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);

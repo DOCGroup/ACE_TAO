@@ -598,7 +598,8 @@ protected:
   // checks for loops, marks unresolved remote dependencies.
 
   void perform_admission_i (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
+    ACE_THROW_SPEC ((RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
+                     CORBA::SystemException,
                      RtecScheduler::INTERNAL));
   // Compute aggregate execution times, then performs admission over
   // rate tuples.
@@ -757,11 +758,6 @@ maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
 // Helper function: makes sure there is room in the scheduling pointer
 // arrays.  This function expands the array eagerly, to minimize time
 // overhead for memory allocation (at a cost of some unused space).
-
-#if defined (__ACE_INLINE__)
-#include "Reconfig_Scheduler_T.i"
-#endif /* __ACE_INLINE__ */
-
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Reconfig_Scheduler_T.cpp"

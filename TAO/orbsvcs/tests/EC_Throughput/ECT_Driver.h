@@ -36,8 +36,4 @@ public:
   // suppliers.
 };
 
-#if defined (__ACE_INLINE__)
-#include "ECT_Driver.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* ECT_CONSUMER_H */

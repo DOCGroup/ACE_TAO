@@ -6,6 +6,9 @@
 // The ACE_CDR::swap_X and ACE_CDR::swap_X_array routines are broken
 // in 4 cases for optimization:
 //
+// * AMD64 CPU + gnu g++
+//   => gcc amd64 inline assembly.
+//
 // * x86 Pentium CPU + gnu g++
 //   (ACE_HAS_PENTIUM && __GNUG__)
 //   => gcc x86 inline assembly.
@@ -47,24 +50,19 @@
 ACE_INLINE void
 ACE_CDR::swap_2 (const char *orig, char* target)
 {
-#if defined(ACE_HAS_PENTIUM)
-# if defined(__GNUG__)
+#if (defined(ACE_HAS_PENTIUM) || defined (__amd64__)) && defined(__GNUG__)
   unsigned short a =
     *reinterpret_cast<const unsigned short*> (orig);
   asm( "rolw $8, %0" : "=r" (a) : "0" (a) );
   *reinterpret_cast<unsigned short*> (target) = a;
-# elif (defined(_MSC_VER) || defined(__BORLANDC__)) \
+#elif defined (ACE_HAS_PENTIUM) \
+       && (defined(_MSC_VER) || defined(__BORLANDC__)) \
        && !defined(ACE_LACKS_INLINE_ASSEMBLY)
   __asm mov ebx, orig;
   __asm mov ecx, target;
   __asm mov ax, [ebx];
   __asm rol ax, 8;
   __asm mov [ecx], ax;
-# else
-  // For CISC Platforms this is faster than shift/masks.
-  target[1] = orig[0];
-  target[0] = orig[1];
-# endif
 #else
   register ACE_UINT16 usrc = * reinterpret_cast<const ACE_UINT16*> (orig);
   register ACE_UINT16* udst = reinterpret_cast<ACE_UINT16*> (target);
@@ -75,7 +73,7 @@ ACE_CDR::swap_2 (const char *orig, char* target)
 ACE_INLINE void
 ACE_CDR::swap_4 (const char* orig, char* target)
 {
-#if defined(ACE_HAS_PENTIUM) && defined(__GNUG__)
+#if (defined(ACE_HAS_PENTIUM) || defined (__amd64__)) && defined(__GNUG__)
   // We have ACE_HAS_PENTIUM, so we know the sizeof's.
   register unsigned int j =
     *reinterpret_cast<const unsigned int*> (orig);
@@ -99,7 +97,12 @@ ACE_CDR::swap_4 (const char* orig, char* target)
 ACE_INLINE void
 ACE_CDR::swap_8 (const char* orig, char* target)
 {
-#if defined(ACE_HAS_PENTIUM) && defined(__GNUG__)
+#if defined(__amd64__) && defined(__GNUG__) 
+  register unsigned long x =
+    * reinterpret_cast<const unsigned long*> (orig);
+  asm ("bswapq %1" : "=r" (x) : "0" (x));
+  *reinterpret_cast<unsigned long*> (target) = x;
+#elif defined(ACE_HAS_PENTIUM) && defined(__GNUG__)
   register unsigned int i =
     *reinterpret_cast<const unsigned int*> (orig);
   register unsigned int j =

@@ -254,6 +254,10 @@ public:
   void add_to_scope (AST_Decl *e,
                      AST_Decl *ex = 0);
 
+  // Add to name_referenced identifier list. It's public because
+  // a union needs to add its enum discriminator label names.
+  void add_to_name_referenced (Identifier *id);
+
   // Accessors for the has_prefix_ member.
   idl_bool has_prefix (void);
   void has_prefix (idl_bool val);
@@ -286,7 +290,7 @@ protected:
                           idl_bool recursive,
                           Identifier *id,
                           AST_Decl *ex = 0);
-
+                          
   // Add to local types. Node represents a local manifest type.
   void add_to_local_types (AST_Decl *e);
 

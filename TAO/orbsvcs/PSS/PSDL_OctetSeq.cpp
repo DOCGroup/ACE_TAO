@@ -49,7 +49,7 @@ TAO_PSDL_OctetSeq::operator= (const TAO_PSDL_OctetSeq & rhs)
 
   this->allocator_ = rhs.allocator_;
   void * buf = this->allocator_->malloc (rhs.length_);
-  this->buffer_ = ACE_static_cast (CORBA::Octet *, buf);
+  this->buffer_ = static_cast<CORBA::Octet *> (buf);
   if (this->buffer_)
     {
       // Deep copy the buffer.
@@ -72,7 +72,7 @@ TAO_PSDL_OctetSeq::operator= (const CORBA::OctetSeq & rhs)
   const CORBA::ULong len = rhs.length ();
 
   void * buf = this->allocator_->malloc (len);
-  this->buffer_ = ACE_static_cast (CORBA::Octet *, buf);
+  this->buffer_ = static_cast<CORBA::Octet *> (buf);
   if (this->buffer_)
     {
       CORBA::Octet * dest = this->buffer_;

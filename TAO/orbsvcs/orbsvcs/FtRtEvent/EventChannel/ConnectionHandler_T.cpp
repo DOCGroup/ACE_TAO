@@ -10,7 +10,7 @@ int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::open (void * acceptor)
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
-  reactor_ = static_cast<ACE_Service_Object*>(acceptor)->reactor();
+  reactor_ = static_cast<ACE_Service_Object*> (acceptor)->reactor();
 
   if (reactor_->register_handler (this,
     ACE_Event_Handler::READ_MASK) == -1)

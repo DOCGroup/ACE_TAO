@@ -37,8 +37,6 @@ CORBA::is_nil (CORBA::AbstractBase_ptr obj)
 
 // ************************************************************
 
-int CORBA::AbstractBase::_tao_class_id = 0;
-
 CORBA::AbstractBase::AbstractBase (void)
   : is_objref_ (0)
   , concrete_stubobj_ (0)
@@ -174,25 +172,36 @@ CORBA::AbstractBase::_to_value (void)
 CORBA::Boolean
 operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
 {
-  CORBA::Boolean discriminator = 0;
+  CORBA::Boolean discriminator = true;
+  
+  // We marshal a null abstract interface ptr as a discriminator
+  // plus null object reference (see CORBA::Object::marshal()
+  // and operator << for CORBA::Object).
+  if (CORBA::is_nil (abs))
+    {
+      // Marshal discriminator, then empty type hint.
+      strm << ACE_OutputCDR::from_boolean (discriminator);
+      strm.write_ulong (1);
+      strm.write_char ('\0');
+      strm.write_ulong (0);
+      return (CORBA::Boolean) strm.good_bit ();
+    }
 
   if (abs->_is_objref ())
     {
-      discriminator = 1;
-
       if (strm << ACE_OutputCDR::from_boolean (discriminator))
         {
           TAO_Stub *stubobj = abs->_stubobj ();
 
           if (stubobj == 0)
             {
-              return 0;
+              return false;
             }
 
           // STRING, a type ID hint
           if ((strm << stubobj->type_id.in ()) == 0)
             {
-              return 0;
+              return false;
             }
 
           const TAO_MProfile& mprofile = stubobj->base_profiles ();
@@ -201,7 +210,7 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
 
           if ((strm << profile_count) == 0)
             {
-              return 0;
+              return false;
             }
 
           // @@ The MProfile should be locked during this iteration, is there
@@ -212,7 +221,7 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
 
               if (p->encode (strm) == 0)
                 {
-                  return 0;
+                  return false;
                 }
             }
 
@@ -221,11 +230,11 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
     }
   else
     {
-      discriminator = 0;
+      discriminator = false;
 
       if (strm << ACE_OutputCDR::from_boolean (discriminator))
         {
-          CORBA::Boolean retval = 1;
+          CORBA::Boolean retval = true;
 
           CORBA::ULong value_tag = TAO_OBV_GIOP_Flags::Value_tag_base
                                    | TAO_OBV_GIOP_Flags::Type_info_single;
@@ -248,7 +257,7 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
         }
     }
 
-  return 0;
+  return false;
 }
 
 CORBA::Boolean

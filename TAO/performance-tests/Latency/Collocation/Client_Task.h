@@ -10,8 +10,9 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-#include "tao/ORB.h"
 
+#include "tao/ORB.h"
+#include "TestC.h"
 
 /// Implement a Task to run the client as a thread
 class Client_Task : public ACE_Task_Base
@@ -19,18 +20,17 @@ class Client_Task : public ACE_Task_Base
 public:
 
   /// Constructor
-  Client_Task (const char *input,
+  Client_Task (Test::Roundtrip_ptr reference,
                int iterations,
-               CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
   int svc (void);
 
 private:
-  const char *input_;
+
   const int niterations;
-  CORBA::ORB_var corb_;
+  Test::Roundtrip_var remote_ref_;
 
 };
 

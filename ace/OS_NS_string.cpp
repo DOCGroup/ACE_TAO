@@ -41,53 +41,6 @@ ACE_OS::memchr_emulation (const void *s, int c, size_t len)
 }
 #endif /*ACE_HAS_MEMCHR*/
 
-#if defined (ACE_LACKS_STRCHR)
-char *
-ACE_OS::strchr_emulation (char *s, int c)
-{
-  for (;;++s)
-    {
-      if (*s == c)
-        return s;
-      if (*s == 0)
-        return 0;
-    }
-}
-
-const char *
-ACE_OS::strchr_emulation (const char *s, int c)
-{
-  for (;;++s)
-    {
-      if (*s == c)
-        return s;
-      if (*s == 0)
-        return 0;
-    }
-}
-#endif /* ACE_LACKS_STRCHR */
-
-#if defined (ACE_LACKS_STRCSPN)
-size_t
-ACE_OS::strcspn_emulation (const char *s, const char *reject)
-{
-  const char *scan;
-  const char *rej_scan;
-  int count = 0;
-
-  for (scan = s; *scan; ++scan)
-    {
-      for (rej_scan = reject; *rej_scan; ++rej_scan)
-        if (*scan == *rej_scan)
-          return count;
-
-      ++count;
-    }
-
-  return count;
-}
-#endif /* ACE_LACKS_STRCSPN */
-
 char *
 ACE_OS::strdup (const char *s)
 {

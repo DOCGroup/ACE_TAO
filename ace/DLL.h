@@ -45,7 +45,7 @@ public:
 
   /// Default constructor.  By default, the close() operation on the
   /// object will be invoked before it is destroyed.
-  explicit ACE_DLL (int close_on_destruction = 1);
+  explicit ACE_DLL (int close_handle_on_destruction = 1);
 
   /**
    * This constructor opens and dynamically links @a dll_name.  The
@@ -58,7 +58,7 @@ public:
    */
   explicit ACE_DLL (const ACE_TCHAR *dll_name,
                     int open_mode = ACE_DEFAULT_SHLIB_MODE,
-           int close_on_destruction = 1);
+                    int close_handle_on_destruction = 1);
 
   /// Copy constructor.
   ACE_DLL (const ACE_DLL &);
@@ -73,20 +73,20 @@ public:
    * processing of any other DLLs.
    * @param dll_name The name of the dll.
    * @param open_mode How the dll is opened.
-   * @param close_on_destruction Close the handle in the destructor.
+   * @param close_handle_on_destruction Close the handle when object is destroyed.
    * @retval -1 On failure
    * @retval 0 On success.
    */
   int open (const ACE_TCHAR *dll_name,
             int open_mode = ACE_DEFAULT_SHLIB_MODE,
-            int close_on_destruction = 1);
+            int close_handle_on_destruction = 1);
 
   /// Call to close the DLL object.
   int close (void);
 
   /**
    * Called when the DLL object is destroyed -- invokes close() if the
-   * <close_on_destruction> flag is set in the constructor or open()
+   * <close_handle_on_destruction> flag is set in the constructor or open()
    * method.
    */
   ~ACE_DLL (void);
@@ -107,19 +107,20 @@ public:
    * Return the handle to the caller.  If @a become_owner is non-0 then
    * caller assumes ownership of the handle and the ACE_DLL object
    * won't call close() when it goes out of scope, even if
-   * <close_on_destruction> is set.
+   * <close_handle_on_destruction> is set.
    */
   ACE_SHLIB_HANDLE get_handle (int become_owner = 0) const;
 
   /// Set the handle for the DLL object. By default, the close()
   //operation on / the object will be invoked before it is destroyed.
-  int set_handle (ACE_SHLIB_HANDLE handle, int close_on_destruction = 1);
+  int set_handle (ACE_SHLIB_HANDLE handle, 
+                  int close_handle_on_destruction = 1);
 
 private:
 
   int open_i (const ACE_TCHAR *dll_name,
               int open_mode = ACE_DEFAULT_SHLIB_MODE,
-              int close_on_destruction = 1,
+              int close_handle_on_destruction = 1,
               ACE_SHLIB_HANDLE handle = 0);
 
 
@@ -132,8 +133,8 @@ private:
   ACE_TCHAR *dll_name_;
 
   /// This flag keeps track of whether we should close the handle
-  /// automatically when the destructor runs.
-  int close_on_destruction_;
+  /// automatically when the object is destroyed.
+  int close_handle_on_destruction_;
 
   ACE_DLL_Handle *dll_handle_;
 

@@ -411,8 +411,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
               }
           }
 
-        AVStreams::flowSpec new_flowspec (ACE_static_cast (CORBA::ULong,
-                                                   flow_spec_set.size ()));
+        AVStreams::flowSpec new_flowspec (static_cast<CORBA::ULong> (flow_spec_set.size ()));
         int i=0;
         TAO_AV_FlowSpecSetItor connect_end = address_flow_set.end ();
         TAO_AV_FlowSpecSetItor connect = address_flow_set.begin ();
@@ -1186,4 +1185,6 @@ TAO_AV_Core::get_control_flowname(const char *flowname)
 template class ACE_Singleton<TAO_AV_Core,ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<TAO_AV_Core,ACE_Null_Mutex>
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+template ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex> *ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

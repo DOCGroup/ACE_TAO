@@ -179,10 +179,10 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   char *fgets (char *buf, int size, FILE *fp);
 
-# if defined (ACE_HAS_WCHAR)
+# if defined (ACE_HAS_WCHAR) && !defined(ACE_LACKS_FGETWS)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *fgets (wchar_t *buf, int size, FILE *fp);
-# endif /* ACE_HAS_WCHAR */
+# endif /* ACE_HAS_WCHAR && !ACE_LACKS_FGETWS */
 
   //@{ @name A set of wrappers for file locks.
 
@@ -302,11 +302,11 @@ namespace ACE_OS {
   int fputs (const char *s,
              FILE *stream);
 
-# if defined (ACE_HAS_WCHAR)
+# if defined (ACE_HAS_WCHAR) && !defined(ACE_LACKS_FPUTWS)
   ACE_NAMESPACE_INLINE_FUNCTION
   int fputs (const wchar_t *s,
              FILE *stream);
-#endif /* ACE_HAS_WCHAR */
+# endif /* ACE_HAS_WCHAR && !ACE_LACKS_FPUTWS */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t fread (void *ptr,
@@ -335,18 +335,6 @@ namespace ACE_OS {
                  size_t size,
                  size_t nitems,
                  FILE *fp);
-
-  // The old gets () which directly maps to the evil, unprotected
-  // gets () has been deprecated.  If you really need gets (),
-  // consider the following one.
-
-  // A better gets ().
-  //   If n == 0, input is swallowed, but NULL is returned.
-  //   Otherwise, reads up to n-1 bytes (not including the newline),
-  //              then swallows rest up to newline
-  //              then swallows newline
-  extern ACE_Export
-  char *gets (char *str, int n = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void perror (const char *s);

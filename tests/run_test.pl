@@ -7,7 +7,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # This file is for running the tests in the ACE tests directory.
 # It is usually used for auto_compiles.
 
-use lib "$ENV{ACE_ROOT}/bin";
+if (defined $ENV{ACE_ROOT}) {
+  use lib "$ENV{ACE_ROOT}/bin";
+}
+if (defined $ENV{top_srcdir}) {
+  use lib "$ENV{top_srcdir}/bin";
+}
 use PerlACE::Run_Test;
 
 use Cwd;
@@ -16,6 +21,9 @@ use Getopt::Std;
 use FileHandle;
 
 $config_list = new PerlACE::ConfigList;
+
+$set_vx_defgw = 1;
+$do_vx_init = 1;
 
 ################################################################################
 
@@ -105,7 +113,7 @@ sub run_program ($)
     my $P;
 
     if ($config_list->check_config ('Valgrind')) {
-      $P = new PerlACE::Process ($program);   
+      $P = new PerlACE::Process ($program);
       $P->IgnoreExeSubDir(1);
     }
     else {
@@ -147,18 +155,117 @@ sub run_program ($)
 
 ################################################################################
 
+sub run_vxworks_command ($)
+{
+    my $program = shift;
+
+    unlink <log/$program*.log>;
+    unlink "core";
+    unlink "run_test.vxs";
+
+    my $P;
+
+    my $WINDSH = $ENV{"ACE_RUN_WINDSH"};
+    if (!defined $WINDSH) {
+        $WINDSH = $ENV{"WIND_BASE"} . "\\host\\" . $ENV{"WIND_HOST_TYPE"} . "\\bin\\windsh";
+    }
+
+    ## check module existence
+    if (! -e $program . ".out") {
+        print STDERR "Error: " . $program . ".out" .
+                     " does not exist\n";
+        return;
+    }
+
+	## initialize VxWorks kernel (reboot!) if starting first test
+    if ($do_vx_init) {
+        ## reboot VxWorks kernel to cleanup
+        $P = new PerlACE::Process ($WINDSH, "-e \"shParse {reboot}; shParse{exit}\" " . $ENV{"ACE_RUN_VX_TGTSVR"});
+        $P->SpawnWaitKill (60);
+		$set_vx_defgw = 1;
+		$do_vx_init = 0;
+    }
+
+
+    my $oh = new FileHandle();
+    if (!open($oh, ">run_test.vxs")) {
+        print STDERR "ERROR: Unable to write to run_test.vxs\n";
+        return;
+    }
+
+    print $oh "?\n" .
+              "proc aceRunTest {fname} {\n" .
+              "  shParse \"ld 1,0,\\\"\$fname\\\"\"\n" .
+              "  set procId [shParse { taskSpawn 0,100,0x0008,64000,ace_main }]\n" .
+              "  while { [shParse \"taskIdFigure \$procId\"] != -1 } {\n" .
+              "    shParse { taskDelay (13 * sysClkRateGet ()) }\n" .
+              "  }\n" .
+              "  shParse \"unld \\\"\$fname\\\"\"\n" .
+              "}\n" .
+              "?\n";
+
+	if ( defined $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} && $set_vx_defgw ) {
+      print $oh "\n" .
+                "mRouteAdd(\"0.0.0.0\", \"" . $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} . "\", 0,0,0)\n";
+	  $set_vx_defgw = 0;
+	}
+
+    print $oh "\n" .
+              "cd \"" . $ENV{"ACE_ROOT"} . "/tests\"\n" .
+              "\@cd \"" . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/tests\"\n" .
+              "putenv(\"TMPDIR=" . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/tests\")\n";
+
+    output_vxworks_commands ($oh, $program);
+
+    print $oh "\n" .
+              "exit\n";
+
+    close($oh);
+
+    $P = new PerlACE::Process ($WINDSH, "-s run_test.vxs " . $ENV{"ACE_RUN_VX_TGTSVR"});
+    $P->IgnoreExeSubDir(1);
+
+    ### Try to run the VxWorks shell
+
+    print "auto_run_tests: tests/$program\n";
+    my $start_time = time();
+    $status = $P->SpawnWaitKill (400);
+    my $time = time() - $start_time;
+
+    ### Check for problems
+
+    if ($status == -1 || $config_list->check_config ('VX_TGT_REBOOT')) {
+        if ($status == -1) {
+            print STDERR "Error: $program FAILED (time out)\n";
+            $P->Kill ();
+            $P->TimedWait (1);
+		}
+        ## reboot VxWorks kernel to cleanup leftover module
+        $P = new PerlACE::Process ($WINDSH, "-e \"shParse {reboot}; shParse{exit}\" " . $ENV{"ACE_RUN_VX_TGTSVR"});
+        $P->SpawnWaitKill (60);
+		sleep(90);
+		$set_vx_defgw = 1;
+    }
+
+    print "\nauto_run_tests_finished: test/$program Time:$time"."s Result:$status\n";
+
+    check_log ($program);
+}
+
+################################################################################
+
 sub output_vxworks_commands
 {
   my($oh)      = shift;
   my($program) = shift;
   my($length)  = length($program) + 2;
+
   if ($config_list->check_config ('CHECK_RESOURCES')) {
     print $oh "memShow();\n";
   }
+
   print $oh "write(2, \"\\n$program\\n\", $length);\n" .
-            "ld < $program\n" .
-            "ace_main (0, 0);\n" .
-            "unld \"$program\"\n";
+            "?aceRunTest {$program.out}\n"
 }
 
 ################################################################################
@@ -192,8 +299,14 @@ sub check_log ($)
     my $program = shift;
 
     ### Check the logs
-
-    local $log = "log/".$program.".log";
+    local $log_suffix;
+    if (defined $ENV{"ACE_WINCE_TEST_CONTROLLER"}) {
+        $log_suffix = ".txt";
+    }
+    else {
+        $log_suffix = ".log";
+    }
+    local $log = "log/".$program.$log_suffix;
 
     if (-e "core") {
         print STDERR "Error: $program dumped core\n";
@@ -261,7 +374,7 @@ sub check_log ($)
             # Now check for any sub-logs. If either the main log or a
             # sub-log has an error, print the sub-log.
             opendir (THISDIR, "log");
-            local $sublognames = "$program\-.*\.log";
+            local $sublognames = "$program\-.*".$log_suffix;
             @sublogs = grep (/$sublognames/, readdir (THISDIR));
             closedir (THISDIR);
             foreach $log (@sublogs) {
@@ -294,7 +407,7 @@ sub check_log ($)
                        print STDERR "Error ($log): no line with 'Starting'\n";
                        $print_log = 1;
                     }
- 
+
                     if ($number_ending == 0) {
                        print STDERR "Error ($log): no line with 'Ending'\n";
                        $print_log = 1;
@@ -403,6 +516,10 @@ if (!($tmp = $ENV{TMP}) && !($tmp = $ENV{TEMP})) {
 
 check_for_more_configs ();
 
+if ($config_list->check_config ('VxWorks')) {
+    $opt_v = 1;
+}
+
 @tests = ();
 
 if (defined $opt_t) {
@@ -421,13 +538,13 @@ record_resources () if (!defined $opt_d);
 my($oh) = \*STDOUT;
 if (defined $opt_v && defined $opt_o) {
   $oh = new FileHandle();
-  if (!open($oh, ">$opt_o")) {
-    print STDERR "ERROR: Unable to write to $opt_o\n";
-    exit(1);
+  if ($opt_o != 1) {
+    if (!open($oh, ">$opt_o")) {
+      print STDERR "ERROR: Unable to write to $opt_o\n";
+      exit(1);
+    }
   }
-}
 
-if (defined $opt_v) {
   print $oh "#\n" .
             "# ACE one-button test for VxWorks 5.x.\n" .
             "# To use:  -> < run_test.vxworks > run_test.log\n" .
@@ -439,21 +556,40 @@ if (defined $opt_v) {
             "#\n" .
             "# The output logs can be checked from a Unix host:\n" .
             "#    % ./run_tests.check log/*.log\n\n";
-}
 
-foreach $test (@tests) {
+  print $oh "?\n" .
+            "proc aceRunTest {fname} {\n" .
+            "  shParse \"ld 1,0,\\\"\$fname\\\"\"\n" .
+            "  set procId [shParse { taskSpawn 0,100,0x0008,64000,ace_main }]\n" .
+            "  while { [shParse \"taskIdFigure \$procId\"] != -1 } {\n" .
+            "    shParse { taskDelay (13 * sysClkRateGet ()) }\n" .
+            "  }\n" .
+            "  shParse \"unld \\\"\$fname\\\"\"\n" .
+            "}\n" .
+            "?\n";
+
+  foreach $test (@tests) {
+    output_vxworks_commands ($oh, $test);
+  }
+}
+else {
+  $set_vx_defgw = 1;
+  $do_vx_init = 1;
+
+  foreach $test (@tests) {
     if (defined $opt_d) {
-        print "Would run test $test now\n";
+      print "Would run test $test now\n";
     }
     elsif ($config_list->check_config ('Purify')) {
-        purify_program ($test);
+      purify_program ($test);
     }
-    elsif (defined $opt_v) {
-        output_vxworks_commands ($oh, $test);
+    if (defined $opt_v) {
+      run_vxworks_command ($test);
     }
     else {
-        run_program ($test);
+      run_program ($test);
     }
+  }
 }
 
 check_resources ($oh) if (!defined $opt_d);

@@ -126,13 +126,6 @@ private:
                             const char *name,
                             be_exception *&result);
 
-  int create_uses_multiple_stuff (be_component *node,
-                                  AST_Component::port_description *pd);
-  int create_uses_multiple_struct (be_component *node,
-                                   AST_Component::port_description *pd);
-  int create_uses_multiple_sequence (be_component *node,
-                                     AST_Component::port_description *pd);
-
   int create_event_consumer (be_eventtype *node);
   AST_Interface *lookup_consumer (AST_Component::port_description *pd);
   AST_Interface *create_explicit (be_home *node);
@@ -149,8 +142,6 @@ private:
 private:
   // These are created for operations implied by 'uses multiple' declarations.
   Identifier module_id_;
-  be_structure *connection_;
-  be_sequence *connections_;
   be_valuetype *cookie_;
 
   // Exceptions thrown by implied CCM operations.

@@ -2,7 +2,7 @@
 
 #include "ace/config-all.h"
 
-#if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG)
+#if !defined (ACE_LACKS_UNIX_SYSLOG)
 
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
@@ -200,4 +200,4 @@ ACE_Log_Msg_UNIX_Syslog::convert_log_mask (int lm_mask)
   return syslog_mask;
 }
 
-#endif /* !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG) */
+#endif /* !defined (ACE_LACKS_UNIX_SYSLOG) */

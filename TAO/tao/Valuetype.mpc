@@ -25,4 +25,8 @@ project : taolib, core {
 
   PIDL_Files {
   }
+
+  Pkgconfig_Files {
+    Valuetype/TAO_Valuetype.pc.in
+  }
 }

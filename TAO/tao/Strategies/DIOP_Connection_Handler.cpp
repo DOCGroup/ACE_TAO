@@ -13,21 +13,21 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Base_Transport_Property.h"
+#include "tao/Protocols_Hooks.h"
 #include "tao/Resume_Handle.h"
 
 #include "DIOP_Transport.h"
 #include "DIOP_Endpoint.h"
 
-#if !defined (__ACE_INLINE__)
-# include "DIOP_Connection_Handler.i"
-#endif /* ! __ACE_INLINE__ */
+#include "ace/os_include/netinet/os_tcp.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID(tao, DIOP_Connect, "$Id$")
 
 TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_DIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    tcp_properties_ (0)
+    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -39,16 +39,14 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t)
 
 
 TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                          CORBA::Boolean flag,
-                                                          void *arg)
+                                                          CORBA::Boolean flag)
   : TAO_DIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    tcp_properties_ (ACE_static_cast
-                     (TAO_DIOP_Properties *, arg))
+    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
   TAO_DIOP_Transport* specific_transport = 0;
-  ACE_NEW(specific_transport,
-          TAO_DIOP_Transport(this, orb_core, flag));
+  ACE_NEW (specific_transport,
+           TAO_DIOP_Transport(this, orb_core, flag));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
@@ -113,9 +111,45 @@ TAO_DIOP_Connection_Handler::open_handler (void *v)
 int
 TAO_DIOP_Connection_Handler::open (void*)
 {
+  // Currently, the DIOP properties are not used.  This code is here
+  // for consistency with other protocols.
+  TAO_DIOP_Protocol_Properties protocol_properties;
+
+  TAO_Protocols_Hooks *tph =
+    this->orb_core ()->get_protocols_hooks ();
+
+  bool client =
+    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      if (client)
+        {
+          tph->client_protocol_properties_at_orb_level (
+            protocol_properties
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          tph->server_protocol_properties_at_orb_level (
+            protocol_properties
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
   this->udp_socket_.open (this->local_addr_);
 
-  if(TAO_debug_level > 5)
+  if (TAO_debug_level > 5)
   {
      ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT("\nTAO (%P|%t) TAO_DIOP_Connection_Handler::open -")
@@ -218,7 +252,49 @@ TAO_DIOP_Connection_Handler::close (u_long)
 int
 TAO_DIOP_Connection_Handler::release_os_resources (void)
 {
-  return this->peer().close ();
+  return this->peer ().close ();
+}
+
+int
+TAO_DIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_priority)
+{
+  int tos = IPDSFIELD_DSCP_DEFAULT << 2;
+
+  if (set_network_priority)
+    {
+      TAO_Protocols_Hooks *tph =
+        this->orb_core ()->get_protocols_hooks ();
+
+      CORBA::Long codepoint =
+        tph->get_dscp_codepoint ();
+
+      tos = (int)(codepoint) << 2;
+    }
+
+  if (tos != this->dscp_codepoint_)
+    {
+      int result = this->dgram ().set_option (IPPROTO_IP,
+                                              IP_TOS,
+                                              (int *) &tos ,
+                                              (int) sizeof (tos));
+
+      if (TAO_debug_level)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - DIOP_Connection_Handler::"
+                      "set_dscp_codepoint -> dscp: %x; result: %d; %s\n",
+                      tos,
+                      result,
+                      result == -1 ? "try running as superuser" : ""));
+        }
+
+      // On successful setting of TOS field.
+      if (result == 0)
+        this->dscp_codepoint_ = tos;
+
+    }
+
+  return 0;
 }
 
 // ****************************************************************

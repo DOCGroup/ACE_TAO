@@ -26,67 +26,28 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:302
 
 
 #include "ObjectIdListC.h"
-#include "tao/Typecode.h"
+#include "tao/CDR.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "ObjectIdListC.i"
+#include "ObjectIdListC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:65
 
 // Arg traits specializations.
 namespace TAO
 {
 }
 
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_CORBA_ORB_ObjectId[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f4f52), 
-  ACE_NTOHL (0x425f4f62), 
-  ACE_NTOHL (0x6a656374), 
-  ACE_NTOHL (0x49643a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ORB_ObjectId:1.0
-    13,
-  ACE_NTOHL (0x4f52425f), 
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63744964), 
-  ACE_NTOHL (0x0),  // name = ORB_ObjectId
-    CORBA::tk_string, 
-  0U, // string length
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_ObjectId (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_ORB_ObjectId),
-    (char *) &_oc_CORBA_ORB_ObjectId,
-    0,
-    sizeof (CORBA::ORB_ObjectId)
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_ORB_ObjectId =
-    &_tc_TAO_tc_CORBA_ORB_ObjectId;
-}
 
 // TAO_IDL - Generated from 
 // be\be_visitor_sequence/sequence_cs.cpp:65
@@ -127,71 +88,6 @@ CORBA::ORB_ObjectIdList::~ORB_ObjectIdList (void)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_CORBA_ORB_ObjectIdList[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f4f52), 
-  ACE_NTOHL (0x425f4f62), 
-  ACE_NTOHL (0x6a656374), 
-  ACE_NTOHL (0x49644c69), 
-  ACE_NTOHL (0x73743a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ORB_ObjectIdList:1.0
-    17,
-  ACE_NTOHL (0x4f52425f), 
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63744964), 
-  ACE_NTOHL (0x4c697374), 
-  ACE_NTOHL (0x0),  // name = ORB_ObjectIdList
-    CORBA::tk_sequence, // typecode kind
-  88, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_alias, // typecode kind for typedefs
-    72, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      35,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x434f5242), 
-      ACE_NTOHL (0x412f4f52), 
-      ACE_NTOHL (0x425f4f62), 
-      ACE_NTOHL (0x6a656374), 
-      ACE_NTOHL (0x49643a31), 
-      ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ORB_ObjectId:1.0
-            13,
-      ACE_NTOHL (0x4f52425f), 
-      ACE_NTOHL (0x4f626a65), 
-      ACE_NTOHL (0x63744964), 
-      ACE_NTOHL (0x0),  // name = ORB_ObjectId
-            CORBA::tk_string, 
-      0U, // string length
-
-    0U,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_ObjectIdList (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_ORB_ObjectIdList),
-    (char *) &_oc_CORBA_ORB_ObjectIdList,
-    0,
-    sizeof (CORBA::ORB_ObjectIdList)
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_ORB_ObjectIdList =
-    &_tc_TAO_tc_CORBA_ORB_ObjectIdList;
-}
-
-// TAO_IDL - Generated from
 // be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_CORBA_ORB_ObjectIdList_CPP_
@@ -202,7 +98,7 @@ CORBA::Boolean operator<< (
     const CORBA::ORB_ObjectIdList &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -265,7 +161,7 @@ return 0;
 #endif /* _TAO_CDR_OP_CORBA_ORB_ObjectIdList_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -310,4 +206,3 @@ return 0;
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-

@@ -75,8 +75,11 @@ static TAO_Module_Initializer
   TAO_Requires_ORTFactory_Initializer =
     TAO::ORT_Adapter_Factory_Impl::Initializer ();
 
-  #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
+#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
+#define TAO_OBJREF_TEMPLATE_SAFE_INCLUDE
+#include "tao/ObjRefTemplate/ObjectReferenceTemplateC.h"
+#undef TAO_OBJREF_TEMPLATE_SAFE_INCLUDE
 #include /**/ "ace/post.h"
 
 #endif /* TAO_ORT_ADAPTER_FACTORY_IMPL_H */

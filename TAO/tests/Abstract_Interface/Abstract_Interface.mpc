@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : taoexe, valuetype {
+project(*client) : taoclient, valuetype {
   idlflags += -Sc
 
   IDL_Files {
@@ -18,7 +18,7 @@ project(*client) : taoexe, valuetype {
   }
 }
 
-project(*server) : taoexe, portableserver, valuetype {
+project(*server) : taoserver, valuetype {
   idlflags += -Sc
 
   IDL_Files {

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "ConstantDef_i.h"
@@ -9,10 +8,13 @@
 #include "tao/Any_Unknown_IDL_Type.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
 
-ACE_RCSID (IFRService, 
+
+ACE_RCSID (IFRService,
            ConstantDef_i,
            "$Id$")
+
 
 TAO_ConstantDef_i::TAO_ConstantDef_i (
     TAO_Repository_i *repo
@@ -137,7 +139,7 @@ TAO_ConstantDef_i::type_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "type_path",
                                             type_path);
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (type_path,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
@@ -202,12 +204,13 @@ TAO_ConstantDef_i::value_i (ACE_ENV_SINGLE_ARG_DECL)
                               length
                             );
 
-  char *data = ACE_static_cast (char *, ref);
+  char *data = static_cast<char *> (ref);
   ACE_Auto_Basic_Array_Ptr<char> safety (data);
 
   ACE_Message_Block mb (data,
                         length);
   mb.length (length);
+  TAO_InputCDR in_cdr (&mb);
 
   CORBA::Any *retval = 0;
   ACE_NEW_THROW_EX (retval,
@@ -218,8 +221,7 @@ TAO_ConstantDef_i::value_i (ACE_ENV_SINGLE_ARG_DECL)
   TAO::Unknown_IDL_Type *impl = 0;
   ACE_NEW_THROW_EX (impl,
                     TAO::Unknown_IDL_Type (tc.in (),
-                                           &mb,
-                                           TAO_ENCAP_BYTE_ORDER),
+                                           in_cdr),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -247,7 +249,8 @@ TAO_ConstantDef_i::value_i (const CORBA::Any &value
                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::TypeCode_var my_tc = this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var my_tc =
+    this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::TypeCode_var val_tc = value.type ();
@@ -257,7 +260,23 @@ TAO_ConstantDef_i::value_i (const CORBA::Any &value
       return;
     }
 
-  ACE_Message_Block *mb = value._tao_get_cdr ();
+  ACE_Message_Block *mb = 0;
+  TAO::Any_Impl *impl = value.impl ();
+  
+  if (impl->encoded ())
+    {
+      TAO::Unknown_IDL_Type *unk =
+        dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+        
+      mb = unk->_tao_get_cdr ().steal_contents ();
+    }
+  else
+    {
+      TAO_OutputCDR out;
+      impl->marshal_value (out);
+      TAO_InputCDR in (out);
+      mb = in.steal_contents ();
+    }
 
   CORBA::TCKind kind = val_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -283,4 +302,3 @@ TAO_ConstantDef_i::value_i (const CORBA::Any &value
                                             mb->base (),
                                             mb->length ());
 }
-

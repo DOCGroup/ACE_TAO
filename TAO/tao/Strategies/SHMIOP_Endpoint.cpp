@@ -102,14 +102,21 @@ TAO_SHMIOP_Endpoint::set (const ACE_INET_Addr &addr,
   if (use_dotted_decimal_addresses
       || addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
     {
+      if (use_dotted_decimal_addresses == 0 && TAO_debug_level > 5)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - SHMIOP_Endpoint::set, ")
+                      ACE_TEXT ("- %p cannot determine hostname\n")));
+        }
+
       const char *tmp = addr.get_host_addr ();
       if (tmp == 0)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("\n\nTAO (%P|%t) ")
+                        ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("SHMIOP_Endpoint::set ")
-                        ACE_TEXT ("- %p\n\n"),
+                        ACE_TEXT ("- %p\n"),
                         ACE_TEXT ("cannot determine hostname")));
           return -1;
         }
@@ -174,11 +181,8 @@ TAO_SHMIOP_Endpoint::duplicate (void)
 CORBA::Boolean
 TAO_SHMIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
-  TAO_Endpoint *endpt = ACE_const_cast (TAO_Endpoint *,
-                                        other_endpoint);
-
-  TAO_SHMIOP_Endpoint *endpoint = ACE_dynamic_cast (TAO_SHMIOP_Endpoint *,
-                                                    endpt);
+  const TAO_SHMIOP_Endpoint *endpoint = dynamic_cast <const TAO_SHMIOP_Endpoint *>
+                                                     (other_endpoint);
 
   if (endpoint == 0)
     return 0;
@@ -225,8 +229,7 @@ TAO_SHMIOP_Endpoint::object_addr (void) const
       // We need to modify the object_addr_ in this method.  Do so
       // using a  non-const copy of the <this> pointer.
       TAO_SHMIOP_Endpoint *endpoint =
-        ACE_const_cast (TAO_SHMIOP_Endpoint *,
-                        this);
+        const_cast <TAO_SHMIOP_Endpoint *>(this);
 
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         guard,

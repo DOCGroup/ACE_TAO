@@ -3,6 +3,7 @@
 #define CIAO_IMPLEMENTATION_INFO_C
 
 #include "ImplementationInfo.h"
+#include "ace/SString.h"
 
 // Specialized operation that we will use for now.
 namespace CIAO

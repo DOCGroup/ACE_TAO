@@ -714,7 +714,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
 
 #if (ACE_NSIG > 0)  &&  !defined (CHORUS)
   for (int s = 1; s < ACE_NSIG; ++s)
-    if (sigset.is_member (s)
+    if ((sigset.is_member (s) == 1)
         && this->signal_handler_->register_handler (s,
                                                     new_sh,
                                                     new_disp) == -1)
@@ -736,7 +736,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
 
 #if (ACE_NSIG > 0)  &&  !defined (CHORUS)
   for (int s = 1; s < ACE_NSIG; ++s)
-    if (sigset.is_member (s)
+    if ((sigset.is_member (s) == 1)
         && this->signal_handler_->remove_handler (s) == -1)
       result = -1;
 #else  /* ACE_NSIG <= 0  ||  CHORUS */
@@ -1203,10 +1203,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_notification_handlers
   int n =
     this->notify_handler_->dispatch_notifications (number_of_active_handles,
                                                    dispatch_set.rd_mask_);
+
   if (n == -1)
     return -1;
   else
-    number_of_handlers_dispatched += n;
+    {
+      number_of_handlers_dispatched += n;
+      number_of_active_handles -= n;
+    }
 
   // Same as dispatch_timer_handlers
   // No need to do anything with the state changed. That is because

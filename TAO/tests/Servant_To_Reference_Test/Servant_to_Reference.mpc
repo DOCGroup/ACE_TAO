@@ -5,11 +5,10 @@ project(*Server): taoexe, portableserver, minimum_corba {
   Source_Files {
     server.cpp
     Test_i.cpp
-    Test_i.h
     TestC.cpp
     TestS.cpp
   }
-  
+
   IDL_Files {
     Test.idl
   }

@@ -21,4 +21,7 @@ project(RTEventLogAdmin) : orbsvcslib, core, naming, rtoldevent, dslogadmin_serv
       Log/RTEventLogNotification.cpp
     }
   }
+
+  Template_Files {
+  }
 }

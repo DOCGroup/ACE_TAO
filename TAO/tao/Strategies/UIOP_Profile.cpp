@@ -12,16 +12,11 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-
+#include "ace/os_include/os_ctype.h"
 
 ACE_RCSID (Strategies,
            UIOP_Profile,
            "$Id$")
-
-
-#if !defined (__ACE_INLINE__)
-# include "UIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
 
 static const char prefix_[] = "uiop";
 
@@ -101,6 +96,43 @@ void
 TAO_UIOP_Profile::parse_string_i (const char *string
                                   ACE_ENV_ARG_DECL)
 {
+  if (!string || !*string)
+    {
+      ACE_THROW (CORBA::INV_OBJREF (
+                   CORBA::SystemException::_tao_minor_code (
+                     0,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
+    }
+
+  // Remove the "N.n@" version prefix, if it exists, and verify the
+  // version is one that we accept.
+
+  // Check for version
+  if (isdigit (string [0]) &&
+      string[1] == '.' &&
+      isdigit (string [2]) &&
+      string[3] == '@')
+    {
+      // @@ This may fail for non-ascii character sets [but take that
+      // with a grain of salt]
+      this->version_.set_version ((char) (string [0] - '0'),
+                                  (char) (string [2] - '0'));
+      string += 4;
+      // Skip over the "N.n@"
+    }
+
+  if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
+      this->version_.minor  > TAO_DEF_GIOP_MINOR)
+    {
+      ACE_THROW (CORBA::INV_OBJREF (
+                   CORBA::SystemException::_tao_minor_code (
+                     0,
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
+    }
+
+
   // Pull off the "rendezvous point" part of the objref
   // Copy the string because we are going to modify it...
   CORBA::String_var copy (string);
@@ -148,7 +180,7 @@ CORBA::Boolean
 TAO_UIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 {
   const TAO_UIOP_Profile *op =
-    ACE_dynamic_cast (const TAO_UIOP_Profile *, other_profile);
+    dynamic_cast <const TAO_UIOP_Profile *> (other_profile);
 
   if (op == 0)
     return 0;
@@ -356,14 +388,14 @@ TAO_UIOP_Profile::decode_endpoints (void)
       const CORBA::Octet *buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
+      TAO_InputCDR in_cdr (reinterpret_cast <const char*>(buf),
                            tagged_component.component_data.length ());
 
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         return -1;
-      in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+      in_cdr.reset_byte_order (static_cast<int>(byte_order));
 
       // Extract endpoints sequence.
       TAO_UIOPEndpointSequence endpoints;

@@ -44,8 +44,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
 
   AST_Union *u = AST_Union::narrow_from_scope (node);
 
-  CORBA::ULong nfields = ACE_static_cast (CORBA::ULong,
-                                          u->nfields ());
+  CORBA::ULong nfields = static_cast<CORBA::ULong> (u->nfields ());
 
   this->members_.length (nfields);
 
@@ -167,12 +166,12 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
                     {
                       TAO_OutputCDR cdr;
                       cdr.write_ulong (ev->u.ulval);
+                      TAO_InputCDR in_cdr (cdr);
                       TAO::Unknown_IDL_Type *unk = 0;
                       ACE_NEW_RETURN (unk,
                                       TAO::Unknown_IDL_Type (
                                           this->disc_tc_.in (),
-                                          cdr.begin (),
-                                          TAO_ENCAP_BYTE_ORDER
+                                          in_cdr
                                         ),
                                       -1);
                       this->members_[index].label.replace (unk);
@@ -305,8 +304,7 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          CORBA::ULong member_count = ACE_static_cast (CORBA::ULong,
-                                                       node->member_count ());
+          CORBA::ULong member_count = static_cast<CORBA::ULong> (node->member_count ());
 
           CORBA::EnumMemberSeq members (member_count);
           members.length (member_count);

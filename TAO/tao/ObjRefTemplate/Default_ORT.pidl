@@ -10,7 +10,7 @@
  * command:
  *
  *   tao_idl.exe
- *        -o orig -Ge 1 -GT -Sc
+ *        -o orig -Ge 1 -GT -Sc -GA
  *        -I../..
  *        -Wb,export_macro=TAO_ORT_Export \
  *        -Wb,export_include="ort_export.h" \
@@ -23,7 +23,7 @@
 #ifndef TAO_DEFAULT_ORT_PIDL
 #define TAO_DEFAULT_ORT_PIDL
 
-#include "tao/ObjRefTemplate/ObjectReferenceTemplate.pidl"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplate_include.pidl"
 
 module TAO_Default_ORT
 {

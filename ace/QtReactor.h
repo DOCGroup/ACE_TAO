@@ -17,12 +17,12 @@
 
 
 #include "ace/Select_Reactor.h"
+#include "ace/ACE_QtReactor_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_QT)
 #include "ace/Map_Manager.h"
 
 // Qttoolkit specific includes.
@@ -79,7 +79,7 @@
  * it is not clear if the leak is introduced by  QtReactor, or rather incorrect
  * memory management in QtReactor_Test.
  */
-class ACE_Export ACE_QtReactor : public QObject, public ACE_Select_Reactor
+class ACE_QtReactor_Export ACE_QtReactor : public QObject, public ACE_Select_Reactor
 {
 
     Q_OBJECT
@@ -211,8 +211,6 @@ void read_event (int FD);
     /// Dispach a timeout event
     void timeout_event (void);
 };
-
-#endif /*ACE_HAS_QT */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_QTREACTOR_H */

@@ -1,7 +1,7 @@
 //  -*- MPC -*-
 // $Id$
 
-project(ACEXML_Parser): acelib {
+project(ACEXML_Parser): acelib, core {
   sharedname    = ACEXML_Parser
   after        += ACEXML
   libs         += ACEXML

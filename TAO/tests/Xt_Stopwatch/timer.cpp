@@ -1,7 +1,6 @@
 //$Id$
 #include "timer.h"
 
-#if defined (ACE_HAS_XT)
 
 Timer_imp::Timer_imp (XtAppContext &app,
                       CORBA::Long interval,
@@ -55,8 +54,7 @@ Timer_imp::tick_callback (XtPointer client_data,
                           XtIntervalId * )
 {
   // Get the object pointer and call the corresponding tick function
-  Timer_imp *obj = ACE_static_cast (Timer_imp *,
-                                    client_data);
+  Timer_imp *obj = static_cast<Timer_imp *> (client_data);
   obj->tick ();
 }
 
@@ -84,4 +82,3 @@ Timer_imp::report_time (CORBA::Float time)
 }
 
 
-#endif /*ACE_HAS_XT*/

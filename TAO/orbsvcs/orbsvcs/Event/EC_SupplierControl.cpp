@@ -2,10 +2,6 @@
 
 #include "EC_SupplierControl.h"
 
-#if ! defined (__ACE_INdLINE__)
-#include "EC_SupplierControl.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_SupplierControl, "$Id$")
 
 TAO_EC_SupplierControl::TAO_EC_SupplierControl (void)
@@ -41,8 +37,3 @@ TAO_EC_SupplierControl::system_exception (TAO_EC_ProxyPushConsumer *,
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

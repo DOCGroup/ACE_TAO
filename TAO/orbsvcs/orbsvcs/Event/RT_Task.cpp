@@ -15,8 +15,12 @@
 #include "tao/Timeprobe.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID (Event, 
-           RT_Task, 
+#if defined (ACE_HAS_STHREADS)
+# include "ace/OS_NS_unistd.h"
+#endif /* ACE_HAS_STHREADS */
+
+ACE_RCSID (Event,
+           RT_Task,
            "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)

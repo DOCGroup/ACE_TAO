@@ -66,7 +66,7 @@ int main(int, char*[])
     cdr.write_octet_array_mb(m1);
     dump("expect 3,3,3"); // that's what I expected, anyway
     ACE_DEBUG ((LM_INFO, "total cdr length is %u\n",
-                ACE_static_cast (u_int, cdr.total_length())));
+                static_cast<u_int> (cdr.total_length())));
   }
   dump("expect 2,2,2"); // that's what I expected, anyway
 

@@ -10,6 +10,7 @@
 
 #include "ace/ACE.h"
 #include "ace/Service_Config.h"
+#include "ace/Reactor.h"
 #include "ace/Task.h"
 #include "ace/Reactor_Notification_Strategy.h"
 #include "ace/Signal.h"
@@ -347,7 +348,7 @@ Message_Handler::handle_input (ACE_HANDLE)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon (argv [0]);
 
@@ -369,8 +370,8 @@ main (int argc, char *argv[])
 
   // Loop handling signals and I/O events until SIGQUIT occurs.
 
-  while (ACE_Reactor::event_loop_done () == 0)
-    ACE_Reactor::run_event_loop ();
+  while (ACE_Reactor::instance ()->event_loop_done () == 0)
+    ACE_Reactor::instance ()->run_reactor_event_loop ();
 
   // Deactivate the message queue.
   mh.msg_queue ()->deactivate ();
@@ -378,6 +379,6 @@ main (int argc, char *argv[])
   // Wait for the thread to exit.
   ACE_Thread_Manager::instance ()->wait ();
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) leaving main\n"));
+              ACE_TEXT ("(%t) leaving main\n")));
   return 0;
 }

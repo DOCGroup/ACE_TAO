@@ -17,11 +17,7 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Resume_Handle.h"
 #include "tao/Thread_Lane_Resources.h"
-
-#if !defined (__ACE_INLINE__)
-# include "UIOP_Connection_Handler.inl"
-#endif /* ! __ACE_INLINE__ */
-
+#include "tao/Protocols_Hooks.h"
 
 ACE_RCSID (Strategies,
            UIOP_Connection_Handler,
@@ -30,8 +26,7 @@ ACE_RCSID (Strategies,
 
 TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIOP_SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0),
-    uiop_properties_ (0)
+    TAO_Connection_Handler (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -44,15 +39,13 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)
 
 TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (
   TAO_ORB_Core *orb_core,
-  CORBA::Boolean flag,
-  void *arg)
+  CORBA::Boolean flag)
   : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
-    TAO_Connection_Handler (orb_core),
-    uiop_properties_ (static_cast<TAO_UIOP_Properties *> (arg))
+    TAO_Connection_Handler (orb_core)
 {
   TAO_UIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
-           TAO_UIOP_Transport(this, orb_core, flag));
+           TAO_UIOP_Transport (this, orb_core, flag));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
@@ -73,9 +66,49 @@ TAO_UIOP_Connection_Handler::open_handler (void *v)
 int
 TAO_UIOP_Connection_Handler::open (void*)
 {
+  TAO_UIOP_Protocol_Properties protocol_properties;
+
+  // Initialize values from ORB params.
+  protocol_properties.send_buffer_size_ =
+    this->orb_core ()->orb_params ()->sock_sndbuf_size ();
+  protocol_properties.recv_buffer_size_ =
+    this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
+
+  TAO_Protocols_Hooks *tph =
+    this->orb_core ()->get_protocols_hooks ();
+
+  bool client =
+    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;;
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      if (client)
+        {
+          tph->client_protocol_properties_at_orb_level (
+            protocol_properties
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          tph->server_protocol_properties_at_orb_level (
+            protocol_properties
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
   if (this->set_socket_option (this->peer (),
-                               this->uiop_properties_->send_buffer_size,
-                               this->uiop_properties_->recv_buffer_size) == -1)
+                               protocol_properties.send_buffer_size_,
+                               protocol_properties.recv_buffer_size_) == -1)
     return -1;
 
   if (this->transport ()->wait_strategy ()->non_blocking ())

@@ -828,8 +828,7 @@ High_Priority_Synchronized_Task::svc ()
     Mutex_Acquire_Release_Test mutex_acquire_release_test (num_iterations);
     mutex_acquire_release_test.svc ();
     mutex_acquire_release_time =
-      ACE_static_cast (ACE_UINT32,
-                       mutex_acquire_release_test.elapsed_time () /
+      static_cast<ACE_UINT32> (mutex_acquire_release_test.elapsed_time () /
                        num_iterations);
 #if ACE_DEBUG_CST > 0
     ACE_DEBUG ((LM_DEBUG, "mutex_acquire_release: %u nsec\n",
@@ -901,8 +900,7 @@ High_Priority_Synchronized_Task::done ()
 ACE_UINT32
 High_Priority_Synchronized_Task:: average_context_switch_time () const
 {
-  return iterations_ > 0  ?  ACE_static_cast (ACE_UINT32,
-                                              total_time_ / iterations_)
+  return iterations_ > 0  ?  static_cast<ACE_UINT32> (total_time_ / iterations_)
                           : 0;
 }
 
@@ -989,8 +987,7 @@ Synchronized_Suspend_Resume_Test::svc ()
     Mutex_Acquire_Release_Test mutex_acquire_release_test (num_iterations);
     mutex_acquire_release_test.svc ();
     mutex_acquire_release_time_ =
-      ACE_static_cast (ACE_UINT32,
-                       mutex_acquire_release_test.elapsed_time () /
+      static_cast<ACE_UINT32> (mutex_acquire_release_test.elapsed_time () /
                        num_iterations);
 #if ACE_DEBUG_CST > 0
     ACE_DEBUG ((LM_DEBUG, "mutex_acquire_release: %u nsec\n",

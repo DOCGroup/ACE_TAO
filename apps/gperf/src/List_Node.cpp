@@ -69,7 +69,7 @@ List_Node::List_Node (char *k, int len)
   : link (0),
     next (0),
     key (k),
-    rest (option[TYPE] ? k + len + 1 : ACE_const_cast(char*, "")),
+    rest (option[TYPE] ? k + len + 1 : const_cast<char*> ("")),
     length (len),
     slot (0)
 {
@@ -90,11 +90,11 @@ List_Node::List_Node (char *k, int len)
         int i = (int) *ptr;
         ++Vectors::occurrences[i];
       }
-  else                          
+  else
     {
       // Only use those character positions specified by the user.
 
-      option.reset (); 
+      option.reset ();
 
       // Iterate thru the list of key_positions, initializing
       // occurrences table and keysig (via char * pointer ptr).
@@ -119,7 +119,7 @@ List_Node::List_Node (char *k, int len)
                     1));
     }
   // Terminate this string.
-  *ptr = '\0'; 
+  *ptr = '\0';
 
   // Sort the KEYSIG items alphabetically.
   sort (keysig, ptr - keysig);

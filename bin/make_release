@@ -92,7 +92,7 @@ my $controlled_files = my $release_files = my $release_lib_files = '';
 my $release_tag_files = my $release_autoconf_files = '';
 my $release_filter = '\\( -name CVS -o -name build \\) -prune -o ' .
                      '! -name \'.\#*\' ! -name \'\#*\' ! -name \'*~\' ' .
-                     '! -name \'*.MAK\' -print';
+                     '! -name \'*.MAK\' ! -name \'.cvsignore\' -print';
 my $update_versions = 0;
 my $create_zips = 1;
 
@@ -210,6 +210,9 @@ unless ("$release_tag_files") {
 &ex ("$touch  $export_dir/DON")  &&
  die "$0: Write failures in $export_dir, access problems..\n";
 
+&ex ("$touch  $old_versions_dir/DON")  &&
+ die "$0: Write failures in $old_versions_dir, access problems..\n";
+
 my $ace_root = $ENV{'ACE_ROOT'};
 
 &ex ("$touch  $ace_root/MPC/DON")  &&
@@ -220,6 +223,9 @@ my $ace_root = $ENV{'ACE_ROOT'};
 
 &ex ("$rm -r $export_dir/DON $export_dir/*.gz $export_dir/*.zip $export_dir/*.bz2")  &&
  die "$0: failed to remove files in $export_dir\n";
+
+&ex ("$rm -r $old_versions_dir/DON")  &&
+ die "$0: failed to remove file in $old_versions_dir\n";
 
 ########
 ######## Setup signal handlers.
@@ -287,7 +293,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
     chdir "ACE_wrappers"  ||  die "$0: unable to chdir ACE_wrappers\n";
     &ex ("$cvs -q export -r$tao_tag -kv TAO > /dev/null")  &&
       die "$0: failed cvs export of $tao_tag in $stage_dir\n";
-    &ex ("cd TAO  &&  $make INSTALL")  &&
+    &ex ("cd TAO  &&  $make TAO-INSTALL")  &&
       die "$0: failed make INSTALL in " .
           "$stage_dir/ACE_wrappers/TAO\n";
   }
@@ -296,6 +302,9 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
     chdir "TAO"  ||  die "$0: unable to chdir ACE_wrappers/TAO\n";
     &ex ("$cvs -q export -r$ciao_tag -kv CIAO > /dev/null")  &&
       die "$0: failed cvs export of $ciao_tag in $stage_dir\n";
+    &ex ("cd CIAO  &&  $make CIAO-INSTALL")  &&
+      die "$0: failed make INSTALL in " .
+          "$stage_dir/ACE_wrappers/TAO\n";
   }
 
   chdir "../../";
@@ -322,7 +331,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
           my $previous_beta = $beta_v - 1;
           $previous_version = "$major_v.$minor_v.$previous_beta";
 
-          &diff ('ACE_wrappers', "ACE-$previous_version", "$ace_tag");
+####          &diff ('ACE_wrappers', "ACE-$previous_version", "$ace_tag");
         }
       }
     }
@@ -341,7 +350,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
           my $previous_beta = $beta_v - 1;
           $previous_version = "$major_v.$minor_v.$previous_beta";
 
-          &diff ('ACE_wrappers/TAO', "TAO-$previous_version", "$tao_tag");
+####          &diff ('ACE_wrappers/TAO', "TAO-$previous_version", "$tao_tag");
         }
       }
     }
@@ -561,9 +570,9 @@ sub update_version_files () {
     if ("$exec_prefix") {
       print "CIAO version ${major_version}.${minor_version}.${beta_version}\n";
     } else {
-      &ex ("perl -pi -e 's/version =.*/version = $version/' " .
-           "../../bin/MakeProjectCreator/config/ciaoversion.mpb");
-      return 1 if $? >> 8;
+###     &ex ("perl -pi -e 's/version =.*/version = $version/' " .
+###           "../../bin/MakeProjectCreator/config/ciaoversion.mpb");
+###      return 1 if $? >> 8;
 
       open (CIAO_VERSION_H, "> ciao/Version.h")  ||
         die "$0: unable to open ciao/Version.h\n";
@@ -588,9 +597,9 @@ sub update_version_files () {
     if ("$exec_prefix") {
       print "TAO version ${major_version}.${minor_version}.${beta_version}\n";
     } else {
-      &ex ("perl -pi -e 's/version =.*/version = $version/' " .
-           "../bin/MakeProjectCreator/config/taoversion.mpb");
-      return 1 if $? >> 8;
+###      &ex ("perl -pi -e 's/version =.*/version = $version/' " .
+###         "../bin/MakeProjectCreator/config/taoversion.mpb");
+###      return 1 if $? >> 8;
 
       open (TAO_VERSION_H, "> tao/Version.h")  ||
         die "$0: unable to open tao/Version.h\n";
@@ -611,9 +620,9 @@ sub update_version_files () {
     if ("$exec_prefix") {
       print "ACE version ${major_version}.${minor_version}.${beta_version}\n";
     } else {
-      &ex ("perl -pi -e 's/version =.*/version = $version/' " .
-           "bin/MakeProjectCreator/config/aceversion.mpb");
-      return 1 if $? >> 8;
+##      &ex ("perl -pi -e 's/version =.*/version = $version/' " .
+##           "bin/MakeProjectCreator/config/aceversion.mpb");
+##      return 1 if $? >> 8;
 
       open (ACE_VERSION_H, "> ace/Version.h")  ||
         die "$0: unable to open ace/Version.h\n";
@@ -667,17 +676,13 @@ sub update_changelog () {
     || return 1;
 
   my $version_h = '';
-  my $version_mpb = '';
 
   if ($KIT eq 'ACE') {
       $version_h = 'ace/Version.h';
-      $version_mpb = 'bin/MakeProjectCreator/config/aceversion.mpb';
   } elsif ($KIT eq 'TAO') {
       $version_h = 'TAO/tao/Version.h';
-      $version_mpb = 'bin/MakeProjectCreator/config/taoversion.mpb';
   } elsif ($KIT eq 'CIAO') {
       $version_h = 'TAO/CIAO/ciao/Version.h';
-      $version_mpb = 'bin/MakeProjectCreator/config/ciaoversion.mpb';
   }
 
 # Incase you are wondering what is all this about. We are trying to
@@ -688,19 +693,19 @@ sub update_changelog () {
 
   if ($KIT eq 'TAO') {
   &ex ("cd ..; $cvs commit -m'$version' " .
-      "TAO/VERSION TAO/PROBLEM-REPORT-FORM TAO/ChangeLog $version_h $version_mpb && " .
-      "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb; " .
-      "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
+      "TAO/VERSION TAO/PROBLEM-REPORT-FORM TAO/ChangeLog $version_h && " .
+      "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h; " .
+      "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h");
   } elsif ($KIT eq 'CIAO') {
   &ex ("cd ../../; $cvs commit -m'$version' " .
-       "TAO/CIAO/VERSION TAO/CIAO/PROBLEM-REPORT-FORM TAO/CIAO/ChangeLog $version_h $version_mpb && " .
-       "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb; " .
-       "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
+       "TAO/CIAO/VERSION TAO/CIAO/PROBLEM-REPORT-FORM TAO/CIAO/ChangeLog $version_h && " .
+       "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h; " .
+       "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h");
   } else {
   &ex ("$cvs commit -m'$version' " .
-       "VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb &&" .
-       "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb; " .
-       "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
+       "VERSION PROBLEM-REPORT-FORM ChangeLog $version_h &&" .
+       "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h; " .
+       "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h");
   }
 
   return 1 if $? >> 8;
@@ -778,14 +783,15 @@ sub generate_makefiles () {
     # Need todo a common chmod on the file lists!
     my $here = Cwd::getcwd();
 
-    my $exclude_option = '-exclude TAO/TAOACE.mwc,TAO/CIAO/CIAOTAO.mwc';
+    print "My current wok in generate makefiles $here \n";
+    my $exclude_option = '-exclude ASNMP/asnmp.mwc,TAO/TAOACE.mwc,TAO/CIAO/CIAOTAO.mwc';
     my $tmp_mpc_option =
         '-recurse -hierarchy -relative ACE_ROOT=';
 
     my $mpc_option = $tmp_mpc_option.$here.'/ACE_wrappers';
 
     my $tmp_static_option =
-        '-static -name_modifier *_Static -apply_project -exclude TAO/CIAO,TAO/TAOACE.mwc ';
+        '-static -name_modifier *_Static -apply_project -exclude ASNMP/asnmp.mwc,TAO/CIAO,TAO/TAOACE.mwc ';
 
     my $static_option = $tmp_static_option.$mpc_option;
 
@@ -796,6 +802,8 @@ sub generate_makefiles () {
         "// \$Id\$\n" .
         "// This is an automatically generated file.\n\n" .
         "ssl=1\n" .
+        "fl_reactor=1\n" .
+        "xt_reactor=1\n" .
         "cidl=1\n" .
         "sctp=1\n";
 
@@ -873,7 +881,7 @@ sub create_kit () {
   # These files don't get LF->CRLF conversions done when making the zip.
   my $bin_files =
     "\"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|" .
-    "\\.gif|\\.vcp|\\.vcproj|\\.vcw|\\.sln\|\\.dfm\|\\.jpg\"";
+    "\\.gif|\\.vcp|\\.vcproj|\\.vcw|\\.sln\|\\.dfm\|\\.jpg\|\\.png\|\\.vsd\|\\.bz2\"";
 
   my $build_command;
   my $archives;
@@ -927,6 +935,12 @@ sub create_kit () {
   if ($kit eq 'ace+tao' || $kit eq 'ace+tao+ciao') {
       # Set the relese files once again
     my $tmp_rel_file = '';
+      $status = &bootstrap_autotools ();
+
+      if ($status != 0) {
+          die "$0: failed to bootstrap autotools\n";
+      }
+
     chomp ($tmp_rel_file = `$regmake -f ACE_wrappers/TAO/Release show_release_files`);
     $release_files = $base_release_files;
     $release_files .= ' ';
@@ -971,14 +985,9 @@ sub create_kit () {
         if ($status != 0) {
             die "$0: failed to generate em3 files\n";
         }
-      $status = &bootstrap_autotools ();
-
-      if ($status != 0) {
-          die "$0: failed to bootstrap autotools\n";
-      }
 
       # Reset it again with autoconf files
-      chomp ($release_files = `$regmake -f ACE_wrappers/Release show_autoconf_release_files`);
+      chomp ($release_files = `$regmake -f ACE_wrappers/Release show_release_files`);
 
       $build_command =
         "$rm ACE.zip ACE-lib.zip; " .

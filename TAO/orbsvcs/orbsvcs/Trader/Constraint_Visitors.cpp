@@ -6,7 +6,13 @@
 
 #include "tao/DynamicAny/DynSequence_i.h"
 
-ACE_RCSID(Trader, Constraint_Visitors, "$Id$")
+#include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (Trader,
+           Constraint_Visitors,
+           "$Id$")
+
 
 TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue (void)
 {
@@ -357,7 +363,7 @@ visit_twiddle (TAO_Binary_Constraint* binary_twiddle)
   TAO_Constraint* left = binary_twiddle->left_operand (),
     *right = binary_twiddle->right_operand ();
 
-  // Determine if the left operand is a subTAO_String_Hash_Key of the right.
+  // Determine if the left operand is a substring of the right.
 
   if (left->accept (this) == 0)
     {
@@ -367,8 +373,8 @@ visit_twiddle (TAO_Binary_Constraint* binary_twiddle)
           TAO_Literal_Constraint& right_operand = this->queue_.get_right_operand ();
 
           CORBA::Boolean result = (CORBA::Boolean)
-            (ACE_OS::strstr ((const char*)left_operand,
-                             (const char*)right_operand) != 0);
+            (ACE_OS::strstr ((const char*)right_operand,
+                             (const char*)left_operand) != 0);
 
           this->queue_.dequeue_operand ();
           this->queue_.dequeue_operand ();
@@ -533,13 +539,13 @@ sequence_does_contain (CORBA::Any* sequence,
     case CORBA::tk_short:
       {
         CORBA::Long value = element;
-        return_value = ::TAO_find (*sequence, ACE_static_cast (CORBA::Short, value));
+        return_value = ::TAO_find (*sequence, static_cast<CORBA::Short> (value));
       }
     break;
     case CORBA::tk_ushort:
       {
         CORBA::ULong value = element;
-        return_value = ::TAO_find (*sequence, ACE_static_cast (CORBA::UShort, value));
+        return_value = ::TAO_find (*sequence, static_cast<CORBA::UShort> (value));
       }
       break;
     case CORBA::tk_long:
@@ -557,7 +563,7 @@ sequence_does_contain (CORBA::Any* sequence,
     case CORBA::tk_float:
       {
         CORBA::Double value = element;
-        return_value = ::TAO_find (*sequence, ACE_static_cast (CORBA::Float, value));
+        return_value = ::TAO_find (*sequence, static_cast<CORBA::Float> (value));
       }
       break;
     case CORBA::tk_double:

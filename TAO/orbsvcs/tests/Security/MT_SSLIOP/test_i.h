@@ -42,6 +42,28 @@ private:
   // The ORB
 };
 
+
+class Another_One_i : public POA_Another_One
+{
+  // = TITLE
+  //   Simpler Server implementation
+  //
+  // = DESCRIPTION
+  //   Implements the Simple_Server interface in test.idl
+  //
+public:
+  Another_One_i (CORBA::ORB_ptr orb);
+  // ctor
+
+  // = The Simple_Server methods.
+  CORBA::Long test_method (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  CORBA::ORB_var orb_;
+  // The ORB
+};
+
 #if defined(__ACE_INLINE__)
 #include "test_i.i"
 #endif /* __ACE_INLINE__ */

@@ -87,7 +87,7 @@ CORBA::ValueBase::_tao_marshal (TAO_OutputCDR &strm,
                                 CORBA::ValueBase *this_,
                                 ptrdiff_t /* formal_type_id */)
 {
-  CORBA::Boolean retval = 1;
+  CORBA::Boolean retval = true;
   // %! yet much to do ... look for +++ !
 
   // 1. Is 'this' yet marshalled ? (->1a)
@@ -176,9 +176,9 @@ CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
                                           new_object,
                                           0);
 
-  if (retval == 0)
+  if (!retval)
     {
-      return 0;
+      return false;
     }
 
   if (factory.in () != 0)
@@ -212,7 +212,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
                                       const char * const repo_id)
 { // %! dont leak on error case !
   // %! postconditions
-  CORBA::Boolean retval = 1;
+  CORBA::Boolean retval = true;
   factory = 0;
   // %! yet much to do ... look for +++ !
 
@@ -228,7 +228,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
 
   if (!strm.read_ulong (value_tag))
     {
-      return 0;
+      return false;
     }
 
   if (TAO_OBV_GIOP_Flags::is_null_ref (value_tag))
@@ -247,7 +247,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("!CORBA::ValueBase::_tao_unmarshal_pre ")
                   ACE_TEXT ("not value_tag\n")));
-      return 0;
+      return false;
     }
 
   // 3. if (chunking) read and record the blocksize-tag.
@@ -280,19 +280,20 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
      CORBA::String_var repo_id_stream;
 
      // It would be more efficient not to copy the string %!)
-     if (strm.read_string (repo_id_stream.inout ()) == 0)
+     if (!strm.read_string (repo_id_stream.inout ()))
      {
-        return 0;
+        return false;
      }
 
-     factory = orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
+     factory =
+      orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
   }
 
   if (factory == 0) // %! except.!
     {
       ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT ("(%N:%l) OBV factory is null !!!\n")));
-      return 0;
+      return false;
     }
 
   return retval;
@@ -301,7 +302,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
 CORBA::Boolean
 CORBA::ValueBase::_tao_unmarshal_post (TAO_InputCDR &)
 {
-  CORBA::Boolean retval = 1;
+  CORBA::Boolean retval = true;
 
   // (... called from T::_tao_unmarshal)
   // 7. if (chunking) check the last blocksize tag for correct value.  +++

@@ -44,7 +44,7 @@ namespace Config_Handler
 
     bool append(const XMLCh* tail);
 
-    bool erase(const XMLCh* head, const XMLCh* tail);
+    bool erase (const XMLCh* head, const XMLCh* tail);
 
     int size() const;
 
@@ -53,9 +53,6 @@ namespace Config_Handler
     const XMLCh operator [] (const int i) const;
 
     operator const XMLCh* () const { return _wstr; };
-
-    bool operator== (const XMLCh* wstr) const;
-
 
   private:
 

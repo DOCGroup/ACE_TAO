@@ -32,7 +32,7 @@ int Client::handle_input (ACE_HANDLE)
   if (recv_cnt > 0)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%.*C"),
-                  ACE_static_cast (int, recv_cnt),
+                  static_cast<int> (recv_cnt),
                   buf));
       return 0;
     }
@@ -60,7 +60,7 @@ int Client::handle_timeout(const ACE_Time_Value &, const void *)
   int nbytes = ACE_OS::sprintf
     (mb->wr_ptr (), "Iteration %d\n", this->iterations_);
   ACE_ASSERT (nbytes > 0);
-  mb->wr_ptr (ACE_static_cast (size_t, nbytes));
+  mb->wr_ptr (static_cast<size_t> (nbytes));
   this->putq (mb);
   return 0;
 }
@@ -80,7 +80,7 @@ int Client::handle_output (ACE_HANDLE)
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("send")));
       else
-        mb->rd_ptr (ACE_static_cast (size_t, send_cnt));
+        mb->rd_ptr (static_cast<size_t> (send_cnt));
       if (mb->length () > 0)
         {
           this->ungetq (mb);

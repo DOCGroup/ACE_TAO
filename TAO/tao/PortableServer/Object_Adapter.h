@@ -28,6 +28,7 @@
 #include "Active_Object_Map.h"
 
 #include "tao/Adapter.h"
+#include "tao/Adapter_Factory.h"
 #include "tao/Server_Strategy_Factory.h"
 
 // Local Object
@@ -43,22 +44,14 @@
 // Policy Set
 #include "POA_Policy_Set.h"
 
+#include "Servant_Location.h"
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-// ****************************************************************
-
-enum TAO_SERVANT_LOCATION
-{
-  TAO_SERVANT_FOUND,
-  TAO_DEFAULT_SERVANT,
-  TAO_SERVANT_MANAGER,
-  TAO_SERVANT_NOT_FOUND
-};
 
 // ****************************************************************
 
@@ -376,8 +369,6 @@ protected:
 
   int unbind_persistent_poa (const poa_name &folded_name,
                              const poa_name &system_name);
-
-  void set_default_server_protocol_policy (ACE_ENV_SINGLE_ARG_DECL);
 
   static ACE_Lock *create_lock (int enable_locking,
                                 TAO_SYNCH_MUTEX &thread_lock);
@@ -848,8 +839,7 @@ public:
 private:
 
   /// Helper method to get collocated servant
-  TAO_ServantBase *get_collocated_servant (const TAO_MProfile &mp
-                                           ACE_ENV_ARG_DECL);
+  TAO_ServantBase *get_collocated_servant (const TAO_MProfile &mp);
 
 private:
 
@@ -877,25 +867,6 @@ private:
   /// every POA (unless overridden).
   TAO_POA_Policy_Set default_poa_policies_;
 };
-
-// ****************************************************************
-
-class TAO_PortableServer_Export TAO_Object_Adapter_Factory : public TAO_Adapter_Factory
-{
-public:
-  /// Constructor
-  TAO_Object_Adapter_Factory (void);
-
-  // = The TAO_Adapter_Factory methods, please read tao/Adapter.h for
-  // details.
-  virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
-
-  virtual int init (int argc,
-                    ACE_TCHAR* argv[]);
-};
-
-ACE_STATIC_SVC_DECLARE (TAO_Object_Adapter_Factory)
-ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_Object_Adapter_Factory)
 
 // ****************************************************************
 

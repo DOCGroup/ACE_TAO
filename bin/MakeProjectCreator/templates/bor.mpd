@@ -23,8 +23,8 @@ OBJFILES = \
 
 LFLAGS = \
 <%foreach(libpaths)%>
-	-L"<%libpath%>\$(CONFIG_SUBDIR)" \
-	-j"<%libpath%>\$(CONFIG_SUBDIR)" <%fornotlast(" \\")%>
+        -L"<%libpath%>" \
+        -j"<%libpath%>" <%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
 <%if(libs || lit_libs || pure_libs)%>
@@ -88,10 +88,11 @@ CFLAGS = \
 # For example, any place that uses ACE_LIB_TEXT().
 #PCH_HEADER=<%pch_header%>
 <%endif%>
+<%if(cppdir)%>
 
 CPPDIR = <%cppdir%>
 CDIR   = <%cppdir%>
-
+<%endif%>
 <%if(header_files || template_files || inline_files || idl_files)%>
 
 INCDIR_NAME = <%relwd%>
@@ -111,11 +112,20 @@ PATH := $(PATH);<%custom_type->libpath%>
 
 <%custom_type%>_<%forcount(custom_type->input_files)%>=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>
 $(<%custom_type%>_<%forcount(custom_type->input_files)%>): <%custom_type->input_file%>
-	<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
+<%if(flag_overrides(custom_type->input_file, gendir))%>
+	-mkdir <%flag_overrides(custom_type->input_file, gendir)%> 2> nul
+<%endif%>
+	<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
+<%if(flag_overrides(custom_type->input_file, postcommand))%>
+<%foreach(custom_type->input_file->output_files)%>
+	<%flag_overrides(custom_type->input_file, postcommand)%>
+<%endfor%>
+<%else%>
 <%if(custom_type->postcommand)%>
 <%foreach(custom_type->input_file->output_files)%>
-	<%custom_type->postcommand()%>
+	<%custom_type->postcommand%>
 <%endfor%>
+<%endif%>
 <%endif%>
 <%if(pch_header)%>
 <%if(custom_type->pch_postrule)%>
@@ -148,12 +158,6 @@ INSTALL_THIS_TARGET = 1
 
 <%endif%>
 <%marker(macros)%>
-STATIC_DIR=.
-DEBUG_DIR=.
-PASCAL_DIR=.
-UNICODE_DIR=.
-
-INSTALL_DLLDIR=$(INSTALL_DIR)\lib
 INCLUDES_INSTALL=1
 <%if(exename)%>
 
@@ -167,15 +171,14 @@ BASE_BINDIR = .
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 <%else%>
-<%if(dllout)%>
-BINDIR = <%dllout%>
-<%else%>
-<%if(libout)%>
-BINDIR = <%libout%>
-<%endif%>
-<%endif%>
+<%if(sharedname || staticname)%>
+BINDIR = <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
 
 !include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
+<%else%>
+all:
+	@-rem
+<%endif%>
 <%endif%>
 <%if(header_files || template_files || inline_files || idl_files || pidl_files)%>
 

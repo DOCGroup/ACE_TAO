@@ -17,8 +17,8 @@
 #define TAO_STORABLE_NAMING_CONTEXT_ACTIVATOR_H
 #include /**/ "ace/pre.h"
 
-#include <tao/PortableServer/PortableServer.h>
-#include <tao/LocalObject.h>
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/LocalObject.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 

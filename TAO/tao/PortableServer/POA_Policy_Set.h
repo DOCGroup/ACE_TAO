@@ -51,7 +51,8 @@ public:
   CORBA::ULong num_policies (void) const;
 
   /// Obtain a single cached policy.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
+                                       ACE_ENV_ARG_DECL);
 
   void merge_policies (const CORBA::PolicyList &policies
                        ACE_ENV_ARG_DECL);

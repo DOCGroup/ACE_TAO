@@ -124,10 +124,6 @@ namespace TAO
     factory->_remove_ref (); }
 
 
-#if defined (__ACE_INLINE__)
-# include "ValueFactory.inl"
-#endif /* __ACE_INLINE__) */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_VALUEFACTORY_H */

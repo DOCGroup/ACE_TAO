@@ -7,6 +7,7 @@
 #define _HANDLE_L_CODGRAM_H
 
 #include "ace/Service_Config.h"
+#include "ace/Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,8 +24,8 @@ class ACE_Svc_Export Handle_L_CODgram : public ACE_Service_Object, public ACE_LS
 {
 public:
   Handle_L_CODgram (void);
-  virtual int init (int argc, char *argv[]);
-  virtual int info (char **, size_t) const;
+  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int info (ACE_TCHAR **, size_t) const;
   virtual int fini (void);
 
 public:
@@ -33,8 +34,8 @@ public:
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
 
-  char rendezvous[MAXPATHLEN + 1];
-  static const char *DEFAULT_RENDEZVOUS;
+  ACE_TCHAR rendezvous[MAXPATHLEN + 1];
+  static const ACE_TCHAR *DEFAULT_RENDEZVOUS;
 };
 
 extern ACE_Service_Object_Type lc;

@@ -1,4 +1,3 @@
-// $Id$
 /* -*- C++ -*- */
 //=============================================================================
 /**
@@ -25,6 +24,7 @@
 #include "CEC_Defaults.h"
 
 #include "ace/Service_Config.h"
+#include "ace/Time_Value.h"
 
 /**
  * @class TAO_CEC_Default_Factory

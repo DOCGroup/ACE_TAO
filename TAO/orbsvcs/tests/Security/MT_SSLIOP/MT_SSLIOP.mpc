@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*security server): orbsvcsexe, portableserver, ssl {
+project(*security server): orbsvcsexe, portableserver, ssl, iortable {
   Source_Files {
     Server_Worker.cpp
     test_i.cpp

@@ -41,10 +41,10 @@ template class ACE_NonBlocking_Connect_Handler<TAO_IIOP_Connection_Handler>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
-  : TAO_Connector (IOP::TAG_INTERNET_IOP),
-    lite_flag_ (flag),
-    connect_strategy_ (),
-    base_connector_ ()
+  : TAO_Connector (IOP::TAG_INTERNET_IOP)
+  , lite_flag_ (flag)
+  , connect_strategy_ ()
+  , base_connector_ ()
 {
 }
 
@@ -66,9 +66,6 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
   if (this->create_connect_strategy () == -1)
     return -1;
 
-  if (this->init_tcp_properties () != 0)
-    return -1;
-
   /// Our connect creation strategy
   TAO_IIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
 
@@ -76,7 +73,6 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
                   TAO_IIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core,
-                       &(this->tcp_properties_),
                        this->lite_flag_),
                   -1);
 
@@ -147,6 +143,15 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   const ACE_INET_Addr &remote_address =
     iiop_endpoint->object_addr ();
 
+  bool pn =
+    iiop_endpoint->is_preferred_network ();
+
+  ACE_INET_Addr local_addr;
+
+  if (pn)
+    local_addr.set ((u_short) 0,
+                    iiop_endpoint->preferred_network ());
+
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - IIOP_Connector::make_connection, "
@@ -172,11 +177,11 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
   TAO_IIOP_Connection_Handler *svc_handler = 0;
 
-  // Connect.
   int result =
     this->base_connector_.connect (svc_handler,
                                    remote_address,
-                                   synch_options);
+                                   synch_options,
+                                   local_addr);
 
   // The connect() method creates the service handler and bumps the
   // #REFCOUNT# up one extra.  There are four possibilities from
@@ -349,6 +354,8 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
   static const char *protocol[] = { "iiop", "iioploc" };
 
   const size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  if (slot == 0) // an empty string is valid for corbaloc.
+    return 0;
 
   const size_t len0 = ACE_OS::strlen (protocol[0]);
   const size_t len1 = ACE_OS::strlen (protocol[1]);
@@ -372,62 +379,6 @@ TAO_IIOP_Connector::object_key_delimiter (void) const
 {
   return TAO_IIOP_Profile::object_key_delimiter_;
 }
-
-int
-TAO_IIOP_Connector::init_tcp_properties (void)
-{
-  // Connector protocol properties are obtained from ORB-level
-  // RTCORBA::ClientProtocolProperties policy override.
-  // If the override doesn't exist or doesn't contain the
-  // properties, we use ORB default.
-  //
-  // Currently, we do not use Object-level and Current-level policy
-  // overrides for protocol configuration because connection
-  // lookup and caching are not done based on protocol
-  // properties.
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  // Initialize the settings to the ORB defaults.  If RT CORBA is enabled,
-  // it may override these.
-  int send_buffer_size = this->orb_core ()->orb_params ()->sock_sndbuf_size ();
-  int recv_buffer_size = this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
-  int no_delay = this->orb_core ()->orb_params ()->nodelay ();
-  int enable_network_priority = 0;
-
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  if (tph != 0)
-    {
-      static const char protocol[] = "iiop";
-      const char *protocol_type = protocol;
-
-      const int hook_result =
-        tph->call_client_protocols_hook (send_buffer_size,
-                                         recv_buffer_size,
-                                         no_delay,
-                                         enable_network_priority,
-                                         protocol_type);
-
-      if (hook_result == -1)
-        return -1;
-    }
-
-  // Extract and locally store properties of interest.
-  this->tcp_properties_.send_buffer_size =
-    send_buffer_size;
-  this->tcp_properties_.recv_buffer_size =
-    recv_buffer_size;
-  this->tcp_properties_.no_delay =
-    no_delay;
-  this->tcp_properties_.enable_network_priority  =
-    enable_network_priority;
-
-  return 0;
-}
-
 
 TAO_IIOP_Endpoint *
 TAO_IIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)

@@ -6,6 +6,9 @@ project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
   idlflags  += -Sc -Wb,stub_export_include=CIAO_Client_Export.h -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,skel_export_include=CIAO_Container_Export.h -Wb,skel_export_macro=CIAO_CONTAINER_Export
   dynamicflags    = CIAO_CLIENT_BUILD_DLL
 
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
   IDL_Files {
     CCM_Base.idl
     CCM_Event.idl
@@ -25,7 +28,7 @@ project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
     CIAO_Client_Export.h
     CIAO_common.h
   }
-  
+
   Template_Files {
   }
 }
@@ -34,9 +37,12 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, valuetype, ifr_
   after += CIAO_Client
   sharedname  = CIAO_Container
   libs       += CIAO_Client
-  idlflags   += -Sc -Wb,export_include=CIAO_Container_Export.h 
+  idlflags   += -Sc -Wb,export_include=CIAO_Container_Export.h
   idlflags   += -Wb,export_macro=CIAO_CONTAINER_Export
   dynamicflags = CIAO_CONTAINER_BUILD_DLL
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
 
   IDL_Files {
     CCM_Transaction.idl
@@ -55,7 +61,7 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, valuetype, ifr_
     CCM_ComponentS.cpp
     Cookies.cpp
   }
-  
+
   Template_Files {
   }
 }
@@ -72,7 +78,6 @@ project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, secur
   IDL_Files {
     CCM_Deployment.idl
     CIAO_Servers.idl
-//    HomeRegistrar.idl
   }
 
   Source_Files {
@@ -84,6 +89,8 @@ project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, secur
     ComponentServer_Impl.cpp
     Container_Base.cpp
     Container_Impl.cpp
+    Context_Impl_Base.cpp
+    Home_Servant_Impl_Base.cpp
     Servant_Impl_Base.cpp
     Servant_Activator.cpp
     Port_Activator.cpp
@@ -96,8 +103,10 @@ project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, secur
     CIAO_Server_Export.h
     CIAO_common.h
   }
-  
+
   Template_Files {
+    Context_Impl_T.cpp
+    Home_Servant_Impl_T.cpp
     Object_Set_T.cpp
     Servant_Impl_T.cpp
     Servant_Activator_T.cpp

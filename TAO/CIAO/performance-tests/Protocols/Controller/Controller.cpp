@@ -4,6 +4,8 @@
 #include "ReceiverC.h"
 #include "tao/ORB_Constants.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_string.h"
+
 
 static const char *sender_ior = "file://sender.ior";
 static const char *distributor_ior = "file://distributor.ior";
@@ -16,7 +18,7 @@ static CORBA::ULong invocation_rate = 5;
 static int count_missed_end_deadlines = 0;
 static int do_dump_history = 0;
 static int print_missed_invocations = 0;
-static CORBA::ULong message_size = 0;
+static CORBA::ULong message_size = 100;
 static const char *test_protocol = "IIOP";
 static int print_statistics = 1;
 static int number_of_connection_attempts = 20;
@@ -171,7 +173,7 @@ main (int argc, char *argv[])
 
       CORBA::ULong test_protocol_tag = IOP::TAG_INTERNET_IOP;
       if (ACE_OS::strcmp (test_protocol, "DIOP") == 0)
-        test_protocol_tag = TAO_TAG_UDP_PROFILE;
+        test_protocol_tag = TAO_TAG_DIOP_PROFILE;
       else if (ACE_OS::strcmp (test_protocol, "SCIOP") == 0)
         test_protocol_tag = TAO_TAG_SCIOP_PROFILE;
 

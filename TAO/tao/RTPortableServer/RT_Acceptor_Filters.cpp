@@ -8,11 +8,7 @@
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "RT_Acceptor_Filters.i"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID (tao,
+ACE_RCSID (RTPortableServer,
            RT_Acceptor_Filter,
            "$Id$")
 

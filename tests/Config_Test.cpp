@@ -578,7 +578,10 @@ run_tests (void)
   ACE_Configuration_Heap pers_config;
 
   if (pers_config.open (ACE_TEXT ("test.reg")))
-    return 0;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Cannot open test.reg\n")),
+                      -1);
+
   {
     int result = test (&pers_config);
     if (result)

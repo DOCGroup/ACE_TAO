@@ -7,12 +7,8 @@
 #include "RT_Properties.h"
 #include "ace/SString.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "RT_POA_Helper.inl"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID (RT_Notify, 
-           TAO_Notify_RT_POA_Helper, 
+ACE_RCSID (RT_Notify,
+           TAO_Notify_RT_POA_Helper,
            "$Id$")
 
 TAO_Notify_RT_POA_Helper::~TAO_Notify_RT_POA_Helper ()

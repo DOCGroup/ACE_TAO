@@ -28,7 +28,7 @@ TAO_LB_CPU_Load_Average_Monitor::TAO_LB_CPU_Load_Average_Monitor (const char * l
         {
           // Couldn't determine hostname.  Use the current time
           // instead.
-          CORBA::ULong t = ACE_static_cast (CORBA::ULong, ACE_OS::time ());
+          CORBA::ULong t = static_cast<CORBA::ULong> (ACE_OS::time ());
 
           // A 64 byte buffer is more than enough to contain the
           // string representation of a 32 bit unsigned integer.
@@ -225,7 +225,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 
   load_list->length (1);
 
-  load_list[0].id = CosLoadBalancing::CPU;
+  load_list[0].id = CosLoadBalancing::LoadAverage;
   load_list[0].value = load;
 
   return load_list._retn ();

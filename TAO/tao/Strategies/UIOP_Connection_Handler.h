@@ -37,20 +37,6 @@
 // Forward Decls
 class TAO_Pluggable_Messaging;
 
-/**
- * @class TAO_UIOP_Properties
- *
- * @brief Unix Domain Sockets protocol properties specification for a
- *  set of connections.
- */
-class TAO_Strategies_Export TAO_UIOP_Properties
-{
-public:
-
-  int send_buffer_size;
-  int recv_buffer_size;
-};
-
 // ****************************************************************
 
 /**
@@ -69,16 +55,12 @@ public:
 
   TAO_UIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
-  /// Constructor. <arg> parameter is used by the Acceptor to pass the
-  /// protocol configuration properties for this connection.
+  /// Constructor.
   TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                               CORBA::Boolean flag,
-                               void *arg);
-
+                               CORBA::Boolean flag);
 
   /// Destructor.
   ~TAO_UIOP_Connection_Handler (void);
-
 
   //@{
   /**
@@ -108,7 +90,6 @@ public:
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
 
-
 protected:
 
   //@{
@@ -117,18 +98,7 @@ protected:
    */
   virtual int release_os_resources (void);
   //@}
-
-private:
-
-  /// TCP configuration for this connection.
-  TAO_UIOP_Properties *uiop_properties_;
 };
-
-
-
-#if defined (__ACE_INLINE__)
-#include "UIOP_Connection_Handler.inl"
-#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_UIOP == 1 */
 

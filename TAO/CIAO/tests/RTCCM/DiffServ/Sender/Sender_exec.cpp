@@ -4,6 +4,7 @@
 #include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
 #include "tao/RTCORBA/Network_Priority_Mapping.h"
 #include "Custom_Network_Priority_Mapping.h"
+#include "Custom_Network_Priority_Mapping.cpp"
 #include "Sender_exec.h"
 #include "ace/OS_NS_unistd.h"
 

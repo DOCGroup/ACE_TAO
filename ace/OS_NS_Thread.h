@@ -105,11 +105,13 @@ protected:
 # if defined (ACE_WIN32)
 typedef DWORD ACE_thread_t;
 typedef HANDLE ACE_hthread_t;
+// Native TSS key type
+typedef DWORD ACE_OS_thread_key_t;
+// Application TSS key type (use this type except in TSS Emulation)
 #   if defined (ACE_HAS_TSS_EMULATION)
-      typedef DWORD ACE_OS_thread_key_t;
       typedef u_int ACE_thread_key_t;
 #   else  /* ! ACE_HAS_TSS_EMULATION */
-      typedef DWORD ACE_thread_key_t;
+      typedef ACE_OS_thread_key_t ACE_thread_key_t;
 #   endif /* ! ACE_HAS_TSS_EMULATION */
 # endif /* ACE_WIN32 */
 
@@ -139,7 +141,14 @@ typedef HANDLE ACE_hthread_t;
 // Solaris threads, without PTHREADS.
 // Typedefs to help compatibility with Windows NT and Pthreads.
 typedef thread_t ACE_thread_t;
-typedef thread_key_t ACE_thread_key_t;
+// Native TSS key type (not for general use)
+typedef thread_key_t ACE_OS_thread_key_t;
+// Application TSS key type (use this type except in TSS Emulation)
+#   if defined (ACE_HAS_TSS_EMULATION)
+      typedef u_int ACE_thread_key_t;
+#   else  /* ! ACE_HAS_TSS_EMULATION */
+      typedef ACE_OS_thread_key_t ACE_thread_key_t;
+#   endif /* ! ACE_HAS_TSS_EMULATION */
 typedef mutex_t ACE_mutex_t;
 #     if !defined (ACE_LACKS_RWLOCK_T)
 typedef rwlock_t ACE_rwlock_t;
@@ -201,10 +210,16 @@ struct ACE_Export ACE_mutexattr_t
 // use unsigned int, so the ACE TSS emulation is compatible with them.
 // Native pSOS TSD, where available, uses unsigned long as the key type.
 #     if defined (ACE_PSOS_HAS_TSS)
-typedef u_long ACE_thread_key_t;
+typedef u_long ACE_OS_thread_key_t;
 #     else
-typedef u_int ACE_thread_key_t;
+typedef u_int ACE_OS_thread_key_t;
 #     endif /* ACE_PSOS_HAS_TSS */
+// Application TSS key type (use this type except in TSS Emulation)
+#   if defined (ACE_HAS_TSS_EMULATION)
+      typedef u_int ACE_thread_key_t;
+#   else  /* ! ACE_HAS_TSS_EMULATION */
+      typedef ACE_OS_thread_key_t ACE_thread_key_t;
+#   endif /* ! ACE_HAS_TSS_EMULATION */
 
 #     define THR_CANCEL_DISABLE      0  /* thread can never be cancelled */
 #     define THR_CANCEL_ENABLE       0      /* thread can be cancelled */
@@ -310,7 +325,14 @@ typedef int ACE_hthread_t;
 // Key type: the ACE TSS emulation requires the key type be unsigned,
 // for efficiency.  (Current POSIX and Solaris TSS implementations also
 // use u_int, so the ACE TSS emulation is compatible with them.)
-typedef u_int ACE_thread_key_t;
+// Native TSS key type
+typedef u_int ACE_OS_thread_key_t;
+// Application TSS key type (use this type except in TSS Emulation)
+#   if defined (ACE_HAS_TSS_EMULATION)
+      typedef u_int ACE_thread_key_t;
+#   else  /* ! ACE_HAS_TSS_EMULATION */
+      typedef ACE_OS_thread_key_t ACE_thread_key_t;
+#   endif /* ! ACE_HAS_TSS_EMULATION */
 
       // Marker for ACE_Thread_Manager to indicate that it allocated
       // an ACE_thread_t.  It is placed at the beginning of the ID.
@@ -465,30 +487,30 @@ struct ACE_Export ACE_rwlock_t
 public:
 //protected:
 
+  /// Serialize access to internal state.
   ACE_mutex_t lock_;
-  // Serialize access to internal state.
 
+  /// Reader threads waiting to acquire the lock.
   ACE_cond_t waiting_readers_;
-  // Reader threads waiting to acquire the lock.
 
+  /// Number of waiting readers.
   int num_waiting_readers_;
-  // Number of waiting readers.
 
+  /// Writer threads waiting to acquire the lock.
   ACE_cond_t waiting_writers_;
-  // Writer threads waiting to acquire the lock.
 
+  /// Number of waiting writers.
   int num_waiting_writers_;
-  // Number of waiting writers.
 
+  /// Value is -1 if writer has the lock, else this keeps track of the
+  /// number of readers holding the lock.
   int ref_count_;
-  // Value is -1 if writer has the lock, else this keeps track of the
-  // number of readers holding the lock.
 
+  /// Indicate that a reader is trying to upgrade
   int important_writer_;
-  // indicate that a reader is trying to upgrade
 
+  /// Condition for the upgrading reader
   ACE_cond_t waiting_important_writer_;
-  // condition for the upgrading reader
 };
 #   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 typedef pthread_rwlock_t ACE_rwlock_t;
@@ -680,7 +702,14 @@ typedef int ACE_sema_t;
 typedef int ACE_rwlock_t;
 typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
-typedef unsigned int ACE_thread_key_t;
+// Native TSS key type
+typedef unsigned int ACE_OS_thread_key_t;
+// Application TSS key type (use this type except in TSS Emulation)
+#   if defined (ACE_HAS_TSS_EMULATION)
+      typedef u_int ACE_thread_key_t;
+#   else  /* ! ACE_HAS_TSS_EMULATION */
+      typedef ACE_OS_thread_key_t ACE_thread_key_t;
+#   endif /* ! ACE_HAS_TSS_EMULATION */
 
 // Ensure that ACE_THR_PRI_FIFO_DEF and ACE_THR_PRI_OTHER_DEF are
 // defined on non-threaded platforms, to support application source
@@ -833,6 +862,9 @@ public:
   /// Release a key that was used. This way the key can be given out in a
   /// new request. Returns 0 on success, 1 if the key was not reserved.
   static int release_key (ACE_thread_key_t key);
+
+  /// Check a key for validity.
+  static int is_key (ACE_thread_key_t key);
 
   /// Returns the exit hook associated with the key.  Does _not_ check
   /// for a valid key.
@@ -1089,34 +1121,6 @@ class ACE_event_t;
 class ACE_Base_Thread_Adapter;
 
 namespace ACE_OS {
-
-# if 0
-  //@{ @name A set of wrappers for threads (these are portable since they use the ACE_Thread_ID).
-  int thr_continue (const ACE_Thread_ID &thread);
-  int thr_create (ACE_THR_FUNC,
-                  void *args,
-                  long flags,
-                  ACE_Thread_ID *,
-                  long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                  void *stack = 0,
-                  size_t stacksize = 0);
-  int thr_getprio (ACE_Thread_ID thr_id,
-                   int &prio,
-                   int *policy = 0);
-  int thr_join (ACE_Thread_ID waiter_id,
-                ACE_THR_FUNC_RETURN *status);
-  int thr_kill (ACE_Thread_ID thr_id,
-                int signum);
-  ACE_Thread_ID thr_self (void);
-  int thr_setprio (ACE_Thread_ID thr_id,
-                   int prio);
-  int thr_setprio (const ACE_Sched_Priority prio);
-  int thr_suspend (ACE_Thread_ID target_thread);
-  int thr_cancel (ACE_Thread_ID t_id);
-  //@}
-# endif /* 0 */
-
-
   //@{ @name A set of wrappers for threads
 
   /// This is necessary to deal with POSIX pthreads and their use of
@@ -1632,11 +1636,12 @@ namespace ACE_OS {
                    int &priority,
                    int &policy);
 
-# if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+# if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
   ACE_NAMESPACE_INLINE_FUNCTION
-  int thr_getspecific (ACE_OS_thread_key_t key,
+  /// for internal use only.  Applications should call thr_getspecific
+  int thr_getspecific_native (ACE_OS_thread_key_t key,
                        void **data);
-# endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+# endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_getspecific (ACE_thread_key_t key,
@@ -1666,30 +1671,36 @@ namespace ACE_OS {
   int thr_key_used (ACE_thread_key_t key);
 
 # if defined (ACE_HAS_THR_C_DEST)
-#   if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+  /// for internal use.  Applications should call thr_keycreate
   extern ACE_Export
-  int thr_keycreate (ACE_OS_thread_key_t *key,
-                     ACE_THR_C_DEST,
-                     void *inst = 0);
-#   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+  int thr_keycreate_native (ACE_OS_thread_key_t *key,
+                     ACE_THR_C_DEST);
+#   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
   extern ACE_Export
   int thr_keycreate (ACE_thread_key_t *key,
                      ACE_THR_C_DEST,
                      void *inst = 0);
 # else
-#   if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+  // for internal use:  applications should call thr_keycreate instead
   extern ACE_Export
-  int thr_keycreate (ACE_OS_thread_key_t *key,
-                     ACE_THR_DEST,
-                     void *inst = 0);
-#   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
-
+  int thr_keycreate_native (ACE_OS_thread_key_t *key,
+                     ACE_THR_DEST);
+#   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
   extern ACE_Export
   int thr_keycreate (ACE_thread_key_t *key,
                      ACE_THR_DEST,
                      void *inst = 0);
+
 # endif /* ACE_HAS_THR_C_DEST */
+
+# if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+  // for internal use:  applications should call thr_keyfree instead
+  extern ACE_Export
+  int thr_keyfree_native (ACE_OS_thread_key_t key);
+# endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
   extern ACE_Export
   int thr_keyfree (ACE_thread_key_t key);
@@ -1726,11 +1737,12 @@ namespace ACE_OS {
   extern ACE_Export
   int thr_setprio (const ACE_Sched_Priority prio);
 
-# if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+# if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+  /// for internal use.  Applications should call thr_setspecific
   extern ACE_Export
-  int thr_setspecific (ACE_OS_thread_key_t key,
+  int thr_setspecific_native (ACE_OS_thread_key_t key,
                        void *data);
-# endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+# endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
   extern ACE_Export
   int thr_setspecific (ACE_thread_key_t key,

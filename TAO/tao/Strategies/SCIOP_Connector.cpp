@@ -85,9 +85,6 @@ TAO_SCIOP_Connector::open (TAO_ORB_Core *orb_core)
   if (this->create_connect_strategy () == -1)
     return -1;
 
-  if (this->init_tcp_properties () != 0)
-    return -1;
-
   /// Our connect creation strategy
   TAO_SCIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
 
@@ -95,7 +92,6 @@ TAO_SCIOP_Connector::open (TAO_ORB_Core *orb_core)
                   TAO_SCIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core,
-                       &(this->tcp_properties_),
                        this->lite_flag_),
                   -1);
 
@@ -161,16 +157,25 @@ TAO_SCIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
   TAO_Transport *transport = 0;
 
-  while (tao_endpoint != 0) {
-    TAO_SCIOP_Endpoint *sciop_endpoint = this->remote_endpoint (tao_endpoint);
-    if (sciop_endpoint != 0) {
-      transport = make_connection_i (r, desc, timeout, sciop_endpoint);
-      if (transport) {
-        break;
-      }
+  // @@ ATL folks, is this while loop needed?
+  // TAO_Default_Endpoint_Selector has this code already, i.e., the
+  // loop.
+  while (tao_endpoint != 0)
+    {
+      TAO_SCIOP_Endpoint *sciop_endpoint =
+        this->remote_endpoint (tao_endpoint);
+
+      if (sciop_endpoint != 0)
+        {
+          transport =
+            this->make_connection_i (r, desc, timeout, sciop_endpoint);
+          if (transport)
+            {
+              break;
+            }
+        }
+      tao_endpoint = tao_endpoint->next();
     }
-    tao_endpoint = tao_endpoint->next();
-  }
 
   return transport;
 }
@@ -216,9 +221,20 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
                      remote_address.get_ip_address()))
     return 0;
 
-  int result = this->base_connector_.connect (svc_handler,
-                                              multihomed,
-                                              synch_options);
+  ACE_Multihomed_INET_Addr local_address;
+
+  bool pn =
+    sciop_endpoint->is_preferred_network ();
+
+  if (pn)
+    local_addr.set ((u_short) 0,
+                    sciop_endpoint->preferred_network ());
+
+  int result =
+    this->base_connector_.connect (svc_handler,
+                                   multihomed,
+                                   synch_options,
+                                   local_address);
 
   // This call creates the service handler and bumps the #REFCOUNT# up
   // one extra.  There are three possibilities: (a) connection
@@ -412,61 +428,6 @@ TAO_SCIOP_Connector::object_key_delimiter (void) const
 {
   return TAO_SCIOP_Profile::object_key_delimiter_;
 }
-
-int
-TAO_SCIOP_Connector::init_tcp_properties (void)
-{
-  // Connector protocol properties are obtained from ORB-level
-  // RTCORBA::ClientProtocolProperties policy override.
-  // If the override doesn't exist or doesn't contain the
-  // properties, we use ORB default.
-  //
-  // Currently, we do not use Object-level and Current-level policy
-  // overrides for protocol configuration because connection
-  // lookup and caching are not done based on protocol
-  // properties.
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  // Initialize the settings to the ORB defaults.  If RT CORBA is enabled,
-  // it may override these.
-  int send_buffer_size = this->orb_core ()->orb_params ()->sock_sndbuf_size ();
-  int recv_buffer_size = this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
-  int no_delay = this->orb_core ()->orb_params ()->nodelay ();
-  int enable_network_priority = 0;
-
-  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  if (tph != 0)
-    {
-      const char protocol [] = "sciop";
-      const char *protocol_type = protocol;
-
-      int hook_result =
-        tph->call_client_protocols_hook (send_buffer_size,
-                                         recv_buffer_size,
-                                         no_delay,
-                                         enable_network_priority,
-                                         protocol_type);
-
-      if(hook_result == -1)
-        return -1;
-    }
-
-  // Extract and locally store properties of interest.
-  this->tcp_properties_.send_buffer_size =
-    send_buffer_size;
-  this->tcp_properties_.recv_buffer_size =
-    recv_buffer_size;
-  this->tcp_properties_.no_delay =
-    no_delay;
-  this->tcp_properties_.enable_network_priority  =
-    enable_network_priority;
-
-  return 0;
-}
-
 
 TAO_SCIOP_Endpoint *
 TAO_SCIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)

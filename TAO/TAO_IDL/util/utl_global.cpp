@@ -89,69 +89,12 @@ ACE_RCSID (util,
 #undef INCREMENT
 #define INCREMENT 64
 
-static long seen_once[INCREMENT] = {0};
+static long *pSeenOnce= 0;
 
-IDL_GlobalData::dsf::dsf (void)
-  : interface_seen_ (0),
-    valuetype_seen_ (0),
-    abstract_iface_seen_ (0),
-    local_iface_seen_ (0),
-    non_local_iface_seen_ (0),
-    fwd_iface_seen_ (0),
-    fwd_valuetype_seen_ (0),
-    basic_type_seen_ (0),
-    ambiguous_type_seen_ (0),
-    enum_seen_ (0),
-    string_seen_ (0),
-    array_seen_ (0),
-    aggregate_seen_ (0),
-    union_seen_ (0),
-    exception_seen_ (0),
-    operation_seen_ (0),
-    non_local_op_seen_ (0),
-    typecode_seen_ (0),
-    any_seen_ (0),
-    parametermode_seen_ (0),
-    base_object_seen_ (0),
-    valuefactory_seen_ (0),
-    valuebase_seen_ (0),
 
-    seq_seen_ (0),
-    iface_seq_seen_ (0),
-    vt_seq_seen_ (0),
-    array_seq_seen_ (0),
-    pseudo_seq_seen_ (0),
-    string_seq_seen_ (0),
-    wstring_seq_seen_ (0),
-    octet_seq_seen_ (0),
-    boolean_seq_seen_ (0),
-    char_seq_seen_ (0),
-    wchar_seq_seen_ (0),
-    short_seq_seen_ (0),
-    ushort_seq_seen_ (0),
-    long_seq_seen_ (0),
-    ulong_seq_seen_ (0),
-    longlong_seq_seen_ (0),
-    ulonglong_seq_seen_ (0),
-    float_seq_seen_ (0),
-    double_seq_seen_ (0),
-    longdouble_seq_seen_ (0),
-    any_seq_seen_ (0),
-
-    basic_arg_seen_ (0),
-    bd_string_arg_seen_ (0),
-    fixed_array_arg_seen_ (0),
-    fixed_size_arg_seen_ (0),
-    object_arg_seen_ (0),
-    special_basic_arg_seen_ (0),
-    ub_string_arg_seen_ (0),
-    var_array_arg_seen_ (0),
-    var_size_arg_seen_ (0)
-{}
 
 IDL_GlobalData::IDL_GlobalData (void)
-  : decls_seen_info_ (0),
-    pd_root (0),
+  : pd_root (0),
     pd_gen (0),
     pd_err (0),
     pd_err_count (0),
@@ -183,7 +126,8 @@ IDL_GlobalData::IDL_GlobalData (void)
     nest_orb_ (I_FALSE),
     idl_flags_ (""),
     preserve_cpp_keywords_ (I_TRUE),
-    pass_orb_idl_ (I_FALSE)
+    pass_orb_idl_ (I_FALSE),
+    using_ifr_backend_ (false)
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -191,7 +135,7 @@ IDL_GlobalData::IDL_GlobalData (void)
   // in the environment.
   // Form the absolute pathname.
   char* ace_root = ACE_OS::getenv ("ACE_ROOT");
-  
+
   if (ace_root == 0)
     // This may not cause any problem if -g option is used to specify
     // the correct path for the  gperf program. Let us ignore this
@@ -237,70 +181,74 @@ IDL_GlobalData::IDL_GlobalData (void)
 #endif /* ACE_GPERF */
     }
 
-  // Initialize the decls seen info masks
-
-  const ACE_UINT64 cursor = 1U;
-
-  ACE_SET_BITS (this->decls_seen_masks.interface_seen_,         cursor);
-  ACE_SET_BITS (this->decls_seen_masks.valuetype_seen_,         cursor << 1);
-  ACE_SET_BITS (this->decls_seen_masks.abstract_iface_seen_,    cursor << 2);
-  ACE_SET_BITS (this->decls_seen_masks.local_iface_seen_,       cursor << 3);
-  ACE_SET_BITS (this->decls_seen_masks.non_local_iface_seen_,   cursor << 4);
-  ACE_SET_BITS (this->decls_seen_masks.fwd_iface_seen_,         cursor << 5);
-  ACE_SET_BITS (this->decls_seen_masks.fwd_valuetype_seen_,     cursor << 6);
-  ACE_SET_BITS (this->decls_seen_masks.basic_type_seen_,        cursor << 7);
-  ACE_SET_BITS (this->decls_seen_masks.ambiguous_type_seen_,    cursor << 8);
-  ACE_SET_BITS (this->decls_seen_masks.enum_seen_,              cursor << 9);
-  ACE_SET_BITS (this->decls_seen_masks.string_seen_,            cursor << 10);
-  ACE_SET_BITS (this->decls_seen_masks.array_seen_,             cursor << 11);
-  ACE_SET_BITS (this->decls_seen_masks.aggregate_seen_,         cursor << 12);
-  ACE_SET_BITS (this->decls_seen_masks.union_seen_,             cursor << 13);
-  ACE_SET_BITS (this->decls_seen_masks.exception_seen_,         cursor << 14);
-  ACE_SET_BITS (this->decls_seen_masks.operation_seen_,         cursor << 15);
-  ACE_SET_BITS (this->decls_seen_masks.non_local_op_seen_,      cursor << 16);
-  ACE_SET_BITS (this->decls_seen_masks.typecode_seen_,          cursor << 17);
-  ACE_SET_BITS (this->decls_seen_masks.any_seen_,               cursor << 18);
-  ACE_SET_BITS (this->decls_seen_masks.parametermode_seen_,     cursor << 19);
-  ACE_SET_BITS (this->decls_seen_masks.base_object_seen_,       cursor << 20);
-  ACE_SET_BITS (this->decls_seen_masks.valuefactory_seen_,      cursor << 21);
-  ACE_SET_BITS (this->decls_seen_masks.valuebase_seen_,         cursor << 22);
-
-  ACE_SET_BITS (this->decls_seen_masks.seq_seen_,               cursor << 27);
-  ACE_SET_BITS (this->decls_seen_masks.iface_seq_seen_,         cursor << 28);
-  ACE_SET_BITS (this->decls_seen_masks.vt_seq_seen_,            cursor << 29);
-  ACE_SET_BITS (this->decls_seen_masks.array_seq_seen_,         cursor << 30);
-  ACE_SET_BITS (this->decls_seen_masks.pseudo_seq_seen_,        cursor << 31);
-  ACE_SET_BITS (this->decls_seen_masks.string_seq_seen_,        cursor << 32);
-  ACE_SET_BITS (this->decls_seen_masks.wstring_seq_seen_,       cursor << 33);
-  ACE_SET_BITS (this->decls_seen_masks.octet_seq_seen_,         cursor << 34);
-  ACE_SET_BITS (this->decls_seen_masks.boolean_seq_seen_,       cursor << 35);
-  ACE_SET_BITS (this->decls_seen_masks.char_seq_seen_,          cursor << 36);
-  ACE_SET_BITS (this->decls_seen_masks.wchar_seq_seen_,         cursor << 37);
-  ACE_SET_BITS (this->decls_seen_masks.short_seq_seen_,         cursor << 38);
-  ACE_SET_BITS (this->decls_seen_masks.ushort_seq_seen_,        cursor << 39);
-  ACE_SET_BITS (this->decls_seen_masks.octet_seq_seen_,         cursor << 40);
-  ACE_SET_BITS (this->decls_seen_masks.long_seq_seen_,          cursor << 41);
-  ACE_SET_BITS (this->decls_seen_masks.ulong_seq_seen_,         cursor << 42);
-  ACE_SET_BITS (this->decls_seen_masks.longlong_seq_seen_,      cursor << 43);
-  ACE_SET_BITS (this->decls_seen_masks.ulonglong_seq_seen_,     cursor << 44);
-  ACE_SET_BITS (this->decls_seen_masks.float_seq_seen_,         cursor << 45);
-  ACE_SET_BITS (this->decls_seen_masks.double_seq_seen_,        cursor << 46);
-  ACE_SET_BITS (this->decls_seen_masks.longdouble_seq_seen_,    cursor << 47);
-  ACE_SET_BITS (this->decls_seen_masks.any_seq_seen_,           cursor << 48);
-
-  ACE_SET_BITS (this->decls_seen_masks.basic_arg_seen_,         cursor << 52);
-  ACE_SET_BITS (this->decls_seen_masks.bd_string_arg_seen_,     cursor << 53);
-  ACE_SET_BITS (this->decls_seen_masks.fixed_array_arg_seen_,   cursor << 54);
-  ACE_SET_BITS (this->decls_seen_masks.fixed_size_arg_seen_,    cursor << 55);
-  ACE_SET_BITS (this->decls_seen_masks.object_arg_seen_,        cursor << 56);
-  ACE_SET_BITS (this->decls_seen_masks.special_basic_arg_seen_, cursor << 57);
-  ACE_SET_BITS (this->decls_seen_masks.ub_string_arg_seen_,     cursor << 58);
-  ACE_SET_BITS (this->decls_seen_masks.var_array_arg_seen_,     cursor << 59);
-  ACE_SET_BITS (this->decls_seen_masks.var_size_arg_seen_,      cursor << 60);
+  // ambiguous_type_seen_ and basic_type_seen_ are not reset between
+  // command line idl files, so do those here and then reset the rest.
+  this->ambiguous_type_seen_ = false;
+  this->basic_type_seen_ = false;
+  this->reset_flag_seen ();
 }
 
 IDL_GlobalData::~IDL_GlobalData (void)
 {
+}
+
+// When starting to process the next command line input idl file, reset.
+void
+IDL_GlobalData::reset_flag_seen (void)
+{
+  abstract_iface_seen_ = false;
+  aggregate_seen_ = false;
+//ambiguous_type_seen_
+  any_arg_seen_ = false;
+  any_seen_ = false;
+  any_seq_seen_ = false;
+  array_seen_ = false;
+  array_seq_seen_ = false;
+  base_object_seen_ = false;
+  basic_arg_seen_ = false;
+//basic_type_seen_
+  bd_string_arg_seen_ = false;
+  boolean_seq_seen_ = false;
+  char_seq_seen_ = false;
+  double_seq_seen_ = false;
+  enum_seen_ = false;
+  exception_seen_ = false;
+  fixed_array_arg_seen_ = false;
+  fixed_size_arg_seen_ = false;
+  float_seq_seen_ = false;
+  fwd_iface_seen_ = false;
+  fwd_valuetype_seen_ = false;
+  iface_seq_seen_ = false;
+  interface_seen_ = false;
+  local_iface_seen_ = false;
+  long_seq_seen_ = false;
+  longdouble_seq_seen_ = false;
+  longlong_seq_seen_ = false;
+  non_local_iface_seen_ = false;
+  non_local_op_seen_ = false;
+  object_arg_seen_ = false;
+  octet_seq_seen_ = false;
+  operation_seen_ = false;
+  pseudo_seq_seen_ = false;
+  seq_seen_ = false;
+  short_seq_seen_ = false;
+  special_basic_arg_seen_ = false;
+  string_seen_ = false;
+  string_seq_seen_ = false;
+  typecode_seen_ = false;
+  ub_string_arg_seen_ = false;
+  ulong_seq_seen_ = false;
+  ulonglong_seq_seen_ = false;
+  union_seen_ = false;
+  ushort_seq_seen_ = false;
+  valuebase_seen_ = false;
+  valuefactory_seen_ = false;
+  valuetype_seen_ = false;
+  var_array_arg_seen_ = false;
+  var_size_arg_seen_ = false;
+  vt_seq_seen_ = false;
+  wchar_seq_seen_ = false;
+  wstring_seq_seen_ = false;
 }
 
 // Get or set scopes stack
@@ -568,7 +516,7 @@ IDL_GlobalData::seen_include_file_before (char *n)
 
       if (ACE_OS::strcmp (tmp, incl) == 0)
         {
-          return seen_once[i]++;
+          return ++pSeenOnce[i];
         }
     }
 
@@ -579,13 +527,11 @@ IDL_GlobalData::seen_include_file_before (char *n)
 void
 IDL_GlobalData::store_include_file_name (UTL_String *n)
 {
-  UTL_String **o_include_file_names;
-  unsigned long o_n_alloced_file_names;
-  unsigned long i;
-
   // Check if we need to store it at all or whether we've seen it already.
   if (this->seen_include_file_before (n->get_string ()))
     {
+      n->destroy ();
+      delete n; // Don't keep filenames we don't store!
       return;
     }
 
@@ -598,26 +544,32 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
           this->pd_n_alloced_file_names = INCREMENT;
           ACE_NEW (this->pd_include_file_names,
                    UTL_String *[this->pd_n_alloced_file_names]);
+          ACE_NEW (pSeenOnce, long [this->pd_n_alloced_file_names]);
         }
       else
         {
-          o_include_file_names = this->pd_include_file_names;
-          o_n_alloced_file_names = this->pd_n_alloced_file_names;
+          UTL_String    **o_include_file_names=   this->pd_include_file_names;
+          unsigned long   o_n_alloced_file_names= this->pd_n_alloced_file_names;
+          long           *o_pSeenOnce=            pSeenOnce;
+
           this->pd_n_alloced_file_names += INCREMENT;
           ACE_NEW (this->pd_include_file_names,
                    UTL_String *[this->pd_n_alloced_file_names]);
+          ACE_NEW (pSeenOnce, long [this->pd_n_alloced_file_names]);
 
-          for (i = 0; i < o_n_alloced_file_names; ++i)
+          for (unsigned long i = 0; i < o_n_alloced_file_names; ++i)
             {
               this->pd_include_file_names[i] = o_include_file_names[i];
+              pSeenOnce[i]= o_pSeenOnce[i];
             }
 
           delete [] o_include_file_names;
+          delete [] o_pSeenOnce;
         }
     }
 
   // Store it.
-  seen_once[this->pd_n_include_file_names] = 1;
+  pSeenOnce[this->pd_n_include_file_names] = 1;
   this->pd_include_file_names[this->pd_n_include_file_names++] = n;
 }
 
@@ -730,8 +682,8 @@ IDL_GlobalData::validate_included_idl_files (void)
   size_t n_post_preproc_includes = idl_global->n_include_file_names ();
   UTL_String **post_preproc_includes = idl_global->include_file_names ();
 
-  char pre_abspath[MAXPATHLEN];
-  char post_abspath[MAXPATHLEN];
+  char pre_abspath[MAXPATHLEN] = "";
+  char post_abspath[MAXPATHLEN] = "";
   char **path_tmp = 0;
   char *post_tmp = 0;
   char *full_path = 0;
@@ -760,6 +712,8 @@ IDL_GlobalData::validate_included_idl_files (void)
                     {
                       continue;
                     }
+
+                  ACE_OS::fclose (test);
 
                   // This file name is valid.
                   valid_file = 1;
@@ -800,6 +754,8 @@ IDL_GlobalData::validate_included_idl_files (void)
                               continue;
                             }
 
+                          ACE_OS::fclose (test);
+
                           // This file name is valid.
                           valid_file = 1;
                           ++n_found;
@@ -818,7 +774,7 @@ IDL_GlobalData::validate_included_idl_files (void)
       // Remove the file, if it is not valid.
       if (valid_file == 0)
         {
-          delete pre_preproc_includes[j];
+          delete [] pre_preproc_includes[j];
           pre_preproc_includes[j] = 0;
         }
       else
@@ -1051,7 +1007,7 @@ IDL_GlobalData::destroy (void)
       delete [] trash;
       trash = 0;
     }
-    
+
   for (unsigned long j = 0; j < this->pd_n_include_file_names; ++j)
     {
       // Delete the contained char* but not the UTL_String -
@@ -1059,15 +1015,15 @@ IDL_GlobalData::destroy (void)
       this->pd_include_file_names[j]->destroy ();
       this->pd_include_file_names[j] = 0;
     }
-    
+
   this->pd_n_include_file_names = 0;
-  
+
   for (size_t k = 0; k < n_included_idl_files_; ++k)
     {
       // No memory allocated for these, so just set to 0.
       this->included_idl_files_[k] = 0;
     }
-    
+
   this->n_included_idl_files_ = 0;
 
   this->pd_root->destroy ();
@@ -1320,6 +1276,18 @@ IDL_GlobalData::pass_orb_idl (idl_bool val)
   this->pass_orb_idl_ = val;
 }
 
+bool
+IDL_GlobalData::using_ifr_backend (void) const
+{
+  return this->using_ifr_backend_;
+}
+
+void
+IDL_GlobalData::using_ifr_backend (bool val)
+{
+  this->using_ifr_backend_ = val;
+}
+
 // Return 0 on success, -1 failure. The <errno> corresponding to the
 // error that caused the GPERF execution is also set.
 int
@@ -1451,4 +1419,86 @@ IDL_GlobalData::fini (void)
   this->temp_dir_ = 0;
   delete [] this->ident_string_;
   this->ident_string_ = 0;
+}
+
+void
+IDL_GlobalData::create_uses_multiple_stuff (
+    AST_Component *c,
+    AST_Component::port_description &pd
+  )
+{
+  ACE_CString struct_name (pd.id->get_string ());
+  struct_name += "Connection";
+  Identifier struct_id (struct_name.c_str ());
+  UTL_ScopedName sn (&struct_id, 0);
+  AST_Structure *connection =
+    idl_global->gen ()->create_structure (&sn, 0, 0);
+  struct_id.destroy ();
+
+  Identifier object_id ("objref");
+  UTL_ScopedName object_name (&object_id,
+                              0);
+  AST_Field *object_field =
+    idl_global->gen ()->create_field (pd.impl,
+                                      &object_name,
+                                      AST_Field::vis_NA);
+  (void) DeclAsScope (connection)->fe_add_field (object_field);
+  object_id.destroy ();
+
+  Identifier local_id ("Cookie");
+  UTL_ScopedName local_name (&local_id,
+                             0);
+  Identifier module_id ("Components");
+  UTL_ScopedName scoped_name (&module_id,
+                              &local_name);
+  AST_Decl *d = c->lookup_by_name (&scoped_name,
+                                   I_TRUE);
+  local_id.destroy ();
+  module_id.destroy ();
+
+  if (d == 0)
+    {
+      // This would happen if we haven't included Componennts.idl.
+      idl_global->err ()->lookup_error (&scoped_name);
+      return;
+    }
+
+  AST_ValueType *cookie = AST_ValueType::narrow_from_decl (d);
+
+  Identifier cookie_id ("ck");
+  UTL_ScopedName cookie_name (&cookie_id,
+                              0);
+  AST_Field *cookie_field =
+    idl_global->gen ()->create_field (cookie,
+                                      &cookie_name,
+                                      AST_Field::vis_NA);
+  (void) DeclAsScope (connection)->fe_add_field (cookie_field);
+  cookie_id.destroy ();
+
+  (void) c->fe_add_structure (connection);
+
+  idl_uns_long bound = 0;
+  AST_Expression *bound_expr =
+    idl_global->gen ()->create_expr (bound,
+                                     AST_Expression::EV_ulong);
+  AST_Sequence *sequence =
+    idl_global->gen ()->create_sequence (bound_expr,
+                                         connection,
+                                         0,
+                                         0,
+                                         0);
+
+  ACE_CString seq_string (pd.id->get_string ());
+  seq_string += "Connections";
+  Identifier seq_id (seq_string.c_str ());
+  UTL_ScopedName seq_name (&seq_id,
+                           0);
+  AST_Typedef *connections =
+    idl_global->gen ()->create_typedef (sequence,
+                                        &seq_name,
+                                        0,
+                                        0);
+  seq_id.destroy ();
+
+  (void) c->fe_add_typedef (connections);
 }

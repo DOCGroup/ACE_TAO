@@ -14,7 +14,7 @@
 int send_broadcast (u_short to_port)
 {
   const char *message = "this is the message!\n";
-  ACE_INET_Addr my_addr (ACE_static_cast (u_short, 10101));
+  ACE_INET_Addr my_addr (static_cast<u_short> (10101));
   ACE_SOCK_Dgram_Bcast udp (my_addr);
   ssize_t sent = udp.send (message,
                            ACE_OS::strlen (message) + 1,

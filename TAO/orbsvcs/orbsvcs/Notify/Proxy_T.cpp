@@ -5,10 +5,6 @@
 #ifndef TAO_Notify_PROXY_T_CPP
 #define TAO_Notify_PROXY_T_CPP
 
-#if ! defined (__ACE_INLINE__)
-#include "Proxy_T.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_Proxy_T, "$Id$")
 
 template <class SERVANT_TYPE>
@@ -99,7 +95,12 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::add_filter (CosNotifyFilter::Filter_ptr new_fi
                       CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
-  return this->filter_admin_.add_filter (new_filter ACE_ENV_ARG_PARAMETER);
+  CosNotifyFilter::FilterID fid =
+    this->filter_admin_.add_filter (new_filter ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
+  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN(fid);
+  return fid;
 }
 
 template <class SERVANT_TYPE> void

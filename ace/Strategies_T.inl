@@ -95,9 +95,9 @@ ACE_Creation_Strategy<SVC_HANDLER>::~ACE_Creation_Strategy (void)
 }
 
 template <class SVC_HANDLER> ACE_INLINE
-ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy (const char dll_name[],
-                                                 const char factory_function[],
-                                                 const char svc_name[],
+ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy (const ACE_TCHAR dll_name[],
+                                                 const ACE_TCHAR factory_function[],
+                                                 const ACE_TCHAR svc_name[],
                                                  ACE_Service_Repository *svc_rep,
                                                  ACE_Thread_Manager *thr_mgr)
 {
@@ -122,7 +122,7 @@ template <class SVC_HANDLER> ACE_INLINE
 ACE_Concurrency_Strategy<SVC_HANDLER>::ACE_Concurrency_Strategy (int flags)
   : flags_ (flags)
 {
-  ACE_TRACE ("ACE_Concurrency_Strategy<SVC_HANDLER>::~ACE_Concurrency_Strategy");
+  ACE_TRACE ("ACE_Concurrency_Strategy<SVC_HANDLER>::ACE_Concurrency_Strategy");
 }
 
 template <class SVC_HANDLER> ACE_INLINE

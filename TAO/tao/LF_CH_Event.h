@@ -105,10 +105,6 @@ private:
   int prev_state_;
 };
 
-#if defined (__ACE_INLINE__)
-# include "LF_Invocation_Event.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif  /* TAO_LF_CH_EVENT_H */

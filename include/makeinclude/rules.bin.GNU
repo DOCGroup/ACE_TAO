@@ -35,8 +35,13 @@ PSRC += $(addsuffix .cpp, $(CLEANUP_BIN))
 CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(VAR)$(EXEEXT))
 
 CHORUSLINK ?=
+VXWORKSLINK ?=
 using_aix_vacpp ?=
 
+ifeq ($(VXWORKSLINK),true)
+$(BIN): $(DEFAULTRULE)
+	mv $(DEFAULTRULE) $@
+else # !VXWORKSLINK
 ifeq ($(CHORUSLINK),true)
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
 	$(LINK.cc) $(CC_OUTPUT_FLAG) $@ $(sort $(VDIR)$@.$(OBJEXT) $(VOBJS)) $(VLDLIBS) $(LDFLAGS) $(POSTLINK)
@@ -59,4 +64,5 @@ $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $(sort $(VDIR)$@.$(OBJEXT) $(VOBJS)) $(VLDLIBS) $(POSTLINK)
     endif # kylix
   endif # using_aix_vacpp
+endif
 endif

@@ -26,21 +26,24 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_OBJECTIDLISTC_H_
 #define _TAO_IDL_ORIG_OBJECTIDLISTC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Sequence_T.h"
+
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
-#include "tao/CDR.h"
+#include "tao/ORB.h"
+#include "tao/Environment.h"
+#include "tao/Sequence_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 
@@ -57,9 +60,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -72,34 +73,34 @@
 
 namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:376
-
+  
   typedef char * ORB_ObjectId;
   typedef CORBA::String_var ORB_ObjectId_var;
   typedef CORBA::String_out ORB_ObjectId_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ORB_ObjectId;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_ORB_OBJECTIDLIST_CH_)
 #define _CORBA_ORB_OBJECTIDLIST_CH_
-
+  
   class ORB_ObjectIdList;
-
+  
   typedef
     TAO_MngSeq_Var_T<
         ORB_ObjectIdList,
         TAO_SeqElem_String_Manager
       >
     ORB_ObjectIdList_var;
-
+  
   typedef
     TAO_MngSeq_Out_T<
         ORB_ObjectIdList,
@@ -107,7 +108,7 @@ namespace CORBA
         TAO_SeqElem_String_Manager
       >
     ORB_ObjectIdList_out;
-
+  
   class TAO_Export ORB_ObjectIdList
     : public
         TAO_Unbounded_String_Sequence
@@ -118,20 +119,20 @@ namespace CORBA
     ORB_ObjectIdList (
         CORBA::ULong max,
         CORBA::ULong length,
-        char ** buffer,
+        char ** buffer, 
         CORBA::Boolean release = 0
       );
     ORB_ObjectIdList (const ORB_ObjectIdList &);
     ~ORB_ObjectIdList (void);
-
+    
     typedef ORB_ObjectIdList_var _var_type;
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ORB_ObjectIdList;
 
 // TAO_IDL - Generated from
@@ -165,13 +166,13 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_ORB_ObjectIdList_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
-#include "ObjectIdListC.i"
+#include "ObjectIdListC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -182,4 +183,5 @@ TAO_Export CORBA::Boolean operator>> (
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 

@@ -8,6 +8,7 @@
 #include "orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h"
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+#include "ace/OS_NS_stdio.h"
 
 ReplicationManagerFaultConsumerAdapter::ReplicationManagerFaultConsumerAdapter()
   : orb_(CORBA::ORB::_nil())
@@ -248,7 +249,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
     size_t replicaCount = this->replica_iors_.size();
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("Number of replicas being monitored: (%u)\n"),
-      ACE_static_cast (unsigned int, replicaCount)
+      static_cast<unsigned int> (replicaCount)
     ));
     for (size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
     {
@@ -334,9 +335,12 @@ int ReplicationManagerFaultConsumerAdapter::init (
     // Signal that we are ready to go.
     if (result == 0 && this->readyFile_ != 0)
     {
-      ofstream ready (this->readyFile_, ios::out);
-      ready << "ready" << endl;
-      ready.close();
+	  FILE* ready = ACE_OS::fopen (this->readyFile_, "w");
+	  if (ready)
+	  {
+		ACE_OS::fprintf (ready, "ready\n");
+		ACE_OS::fclose (ready);
+	  }
     }
   }
 

@@ -3,12 +3,6 @@
 #ifndef TAO_ESF_PEER_ADMIN_CPP
 #define TAO_ESF_PEER_ADMIN_CPP
 
-
-
-#if ! defined (__ACE_INLINE__)
-#include "ESF_Peer_Admin.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ESF_Peer_Workers.h"
 
 ACE_RCSID(ESF, ESF_Peer_Admin, "$Id$")

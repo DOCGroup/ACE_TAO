@@ -99,11 +99,8 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
       << node->name () << "_init *" << be_nl << node->name ()
       << "_init::_downcast (CORBA::ValueFactoryBase *v)" << be_nl
       << "{" << be_idt_nl
-      << "if (v == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "return dynamic_cast< ::" << node->name () << "_init * > (v);" << be_uidt_nl
+      << "return dynamic_cast< ::" << node->name () 
+      << "_init * > (v);" << be_uidt_nl
       << "}";
 
   // tao_repository_id
@@ -154,7 +151,8 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
 }
 
 int
-be_visitor_valuetype_init_cs::visit_factory (be_factory *)
+be_visitor_valuetype_init_cs::visit_eventtype (be_eventtype *node)
 {
-  return 0;
+  return this->visit_valuetype (node);
 }
+

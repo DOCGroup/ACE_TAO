@@ -112,7 +112,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 
   if (node->is_local ())
     {
-      *os << "return 0;";
+      *os << "return false;";
     }
   else
     {

@@ -110,12 +110,6 @@ private:
   TAO_Pluggable_Messaging *messaging_object_;
 };
 
-
-
-#if defined (__ACE_INLINE__)
-#include "UIOP_Transport.i"
-#endif /* __ACE_INLINE__ */
-
 # endif  /* TAO_HAS_UIOP == 1 */
 
 #include /**/ "ace/post.h"

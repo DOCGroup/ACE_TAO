@@ -4,8 +4,10 @@
 #include "Profile_Transport_Resolver.h"
 #include "Stub.h"
 #include "Transport.h"
+#include "Connection_Handler.h"
 #include "operation_details.h"
 #include "ORB_Core.h"
+#include "Protocols_Hooks.h"
 #include "debug.h"
 
 ACE_RCSID (tao,
@@ -106,6 +108,8 @@ namespace TAO
                                    TAO_OutputCDR &out_stream
                                    ACE_ENV_ARG_DECL)
   {
+    this->resolver_.transport ()->clear_translators (0,
+                                                     &out_stream);
     // Send the request for the header
     if (this->resolver_.transport ()->generate_request_header (this->details_,
                                                                spec,
@@ -137,6 +141,20 @@ namespace TAO
                                    ACE_Time_Value *max_wait_time
                                    ACE_ENV_ARG_DECL)
   {
+    TAO_Protocols_Hooks *tph =
+      this->resolver_.stub ()->orb_core ()->get_protocols_hooks ();
+
+    CORBA::Boolean set_client_network_priority =
+      tph->set_client_network_priority (this->resolver_.transport ()->tag (),
+                                        this->resolver_.stub ()
+                                        ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    TAO_Connection_Handler *connection_handler =
+      this->resolver_.transport ()->connection_handler ();
+
+    connection_handler->set_dscp_codepoint (set_client_network_priority);
+
     const int retval =
       this->resolver_.transport ()->send_request (
         this->resolver_.stub (),

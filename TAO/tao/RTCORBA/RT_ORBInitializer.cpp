@@ -35,8 +35,8 @@ ACE_RCSID (RTCORBA,
 #include "ace/Svc_Conf.h"
 #include "ace/Sched_Params.h"
 
-static const char *rt_poa_factory_name = "TAO_RT_POA";
-static const char *rt_poa_factory_directive = "dynamic TAO_RT_POA Service_Object * TAO_RTPortableServer:_make_TAO_RT_Object_Adapter_Factory()";
+static const char *rt_poa_factory_name = "TAO_RT_Object_Adapter_Factory";
+static const char *rt_poa_factory_directive = "dynamic TAO_RT_Object_Adapter_Factory Service_Object * TAO_RTPortableServer:_make_TAO_RT_Object_Adapter_Factory()";
 
 TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
                                               int network_priority_mapping_type,
@@ -80,14 +80,6 @@ TAO_RT_ORBInitializer::pre_init (
   // If the application resolves the root POA, make sure we load the RT POA.
   TAO_ORB_Core::set_poa_factory (rt_poa_factory_name,
                                  rt_poa_factory_directive);
-
-  // Sets the client_protocol policy.
-  TAO_RT_Protocols_Hooks::set_client_protocols_hook
-    (TAO_ClientProtocolPolicy::hook);
-
-  // Sets the server_protocol policy.
-  TAO_RT_Protocols_Hooks::set_server_protocols_hook
-    (TAO_ServerProtocolPolicy::hook);
 
   // Create the initial priority mapping instance.
   TAO_Priority_Mapping *pm;

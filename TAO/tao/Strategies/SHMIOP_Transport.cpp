@@ -19,11 +19,6 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Message_Lite.h"
 
-
-#if !defined (__ACE_INLINE__)
-# include "SHMIOP_Transport.i"
-#endif /* ! __ACE_INLINE__ */
-
 ACE_RCSID (Strategies, SHMIOP_Transport, "$Id$")
 
 TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handler,

@@ -11,8 +11,8 @@
 
   <title>componentizedSender::Receiver Servants</title>
 
-  <idl id="IDL:Hello/Receiver:1.0" 
-       homeid="IDL:Hello/ReceiverHome:1.0">
+  <idl id="IDL:Protocols/Receiver:1.0" 
+       homeid="IDL:Protocols/ReceiverHome:1.0">
    <fileinarchive name="Receiver.idl"/>
   </idl>
 
@@ -28,7 +28,7 @@
 
    <code>
      <!-- No need to specify extension below since ACE takes care of that, -->
-     <fileinarchive name="Receiver_svnt"/>
+     <fileinarchive name="Protocols_Receiver_svnt"/>
      <entrypoint>createReceiverHome_Servant</entrypoint>
    </code>
 

@@ -105,10 +105,6 @@ public:
       ACE_ENV_ARG_DECL);
 };
 
-#if defined (__ACE_INLINE__)
-# include "tao/Service_Callbacks.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /*TAO_SERVICE_CALLBACK_H*/

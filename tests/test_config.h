@@ -98,6 +98,9 @@ const size_t ACE_MAX_THREADS = 4;
 #if defined (VXWORKS)
   // This is the only way I could figure out to avoid an error
   // about attempting to unlink a non-existant file.
+
+#include "ace/OS_NS_fcntl.h"
+
 #define ACE_INIT_LOG(NAME) \
   ACE_TCHAR temp[MAXPATHLEN]; \
   ACE_OS::sprintf (temp, ACE_TEXT ("%s%s%s"), \

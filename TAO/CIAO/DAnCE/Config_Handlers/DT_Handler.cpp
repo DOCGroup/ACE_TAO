@@ -1,9 +1,10 @@
 //$Id$
 
 #include "DT_Handler.h"
+#include "Utils.h"
 #include "tao/Typecode.h"
 #include "ace/Auto_Ptr.h"
-#include "Utils.h"
+#include "ace/OS_NS_string.h"
 
 void
 CIAO::Config_Handler::DT_Handler::process_basic_tc (DOMNodeIterator * iter,

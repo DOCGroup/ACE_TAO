@@ -20,9 +20,11 @@
 #include "be_valuetype_fwd.h"
 #include "be_component_fwd.h"
 #include "be_component.h"
+#include "be_home.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
 #include "be_operation.h"
+#include "be_attribute.h"
 #include "be_argument.h"
 #include "be_array.h"
 #include "be_enum.h"
@@ -342,6 +344,55 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
 }
 
 int
+be_visitor_arg_traits::visit_attribute (be_attribute *node)
+{
+  if (this->ctx_->alias () != 0 || this->generated (node))
+    {
+      return 0;
+    }
+
+  AST_String *st = AST_String::narrow_from_decl (node->field_type ());
+  
+  if (st == 0)
+    {
+      return 0;
+    }
+    
+  unsigned long bound = st->max_size ()->ev ()->u.ulval;
+  
+  if (bound == 0)
+    {
+      return 0;
+    }
+    
+  TAO_OutStream *os = this->ctx_->stream ();
+  idl_bool wide = (st->width () != 1);
+
+  // It is legal IDL to declare a bounded (w)string as an operation
+  // parameter type. There could be any number of identical
+  // declarations in the same build, translation unit, or even in
+  // the same operation, so we use the argument's flat name to
+  // declare an empty struct, and use that struct as the template
+  // parameter for Arg_Traits<>.
+  *os << be_nl << be_nl
+      << "struct " << node->flat_name () << " {};"
+      << be_nl << be_nl
+      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+      << "class " << be_global->stub_export_macro () << " "
+      << this->S_ << "Arg_Traits<" << node->flat_name ()
+      << ">" << be_idt_nl
+      << ": public" << be_idt << be_idt_nl
+      << "BD_" << (wide ? "W" : "")
+      << "String_" << this->S_ << "Arg_Traits<" << bound << ">"
+      << be_uidt << be_uidt << be_uidt_nl
+      << "{" << be_nl
+      << "};";
+  
+  this->generated (node, I_TRUE);
+  return 0;
+}
+
+int
 be_visitor_arg_traits::visit_argument (be_argument *node)
 {
   if (this->ctx_->alias () != 0 || this->generated (node))
@@ -541,12 +592,42 @@ be_visitor_arg_traits::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  std::string guard_suffix =
-    std::string (this->S_) + std::string ("arg_traits");
+  // This should be generated even for imported nodes. The ifdef guard prevents
+  // multiple declarations.
+//  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
 
-  // This should be generated even for imported nodes. The ifdef
-  // guard prevents multiple declarations.
-  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
+  // Generate the array traits specialization definitions,
+  // guarded by #ifdef on unaliased array element type and length.
+
+  ACE_CString unique;
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  AST_Decl::NodeType nt = bt->node_type ();
+
+  if (nt == AST_Decl::NT_typedef)
+    {
+      be_typedef *td = be_typedef::narrow_from_decl (bt);
+      unique = td->primitive_base_type ()->flat_name ();
+    }
+  else
+    {
+      unique = bt->flat_name ();
+    }
+
+  char buf[NAMEBUFSIZE];
+
+  for (unsigned long i = 0; i < node->n_dims (); ++i)
+    {
+      ACE_OS::memset (buf,
+                      '\0',
+                      NAMEBUFSIZE);
+      ACE_OS::sprintf (buf,
+                       "_%ld",
+                       node->dims ()[i]->ev ()->u.ulval);
+      unique += buf;
+    }
+
+  unique += "_traits";
+  os->gen_ifdef_macro (unique.fast_rep ());
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
@@ -626,54 +707,6 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
 }
 
 int
-be_visitor_arg_traits::visit_predefined_type (be_predefined_type *node)
-{
-  if (this->generated (node) || !node->seen_in_operation ())
-    {
-      return 0;
-    }
-
-  // Only for an Any used in an operation.
-  if (node->pt () != AST_PredefinedType::PT_any)
-    {
-      this->generated (node, I_TRUE);
-      return 0;
-    }
-
-  // This should be generated even for imported nodes. The ifdef guard prevents
-  // multiple declarations.
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  std::string guard_suffix =
-    std::string (this->S_) + std::string ("arg_traits");
-
-  // This should be generated even for imported nodes. The ifdef
-  // guard prevents multiple declarations.
-  os->gen_ifdef_macro ("corba_any", guard_suffix.c_str ());
-
-  *os << be_nl << be_nl
-      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
-      << "class " << be_global->stub_export_macro () << " "
-      << this->S_ << "Arg_Traits<CORBA::Any>" << be_idt_nl
-      << ": public" << be_idt << be_idt_nl
-      << "Var_Size_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << "CORBA::Any," << be_nl
-      << "CORBA::Any_var," << be_nl
-      << "CORBA::Any_out" << be_uidt_nl
-      << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
-      << "{" << be_nl
-      << "};";
-
-  os->gen_endif ();
-
-  this->generated (node, I_TRUE);
-  return 0;
-}
-
-int
 be_visitor_arg_traits::visit_structure (be_structure *node)
 {
   if (this->generated (node) || !node->seen_in_operation ())
@@ -720,6 +753,24 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
 
   os->gen_endif ();
 
+  /* Set this before visiting the scope so things like
+  
+      interface foo
+      {
+        struct bar
+        {
+          ....
+          foo foo_member;
+        };
+        
+        void op (in bar inarg);
+      };
+      
+     will not cause infinite recursion in this visitor.
+  */
+  
+  this->generated (node, I_TRUE);
+
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -728,7 +779,6 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
                         -1);
     }
 
-  this->generated (node, I_TRUE);
   return 0;
 }
 
@@ -817,6 +867,24 @@ be_visitor_arg_traits::visit_union (be_union *node)
 
   os->gen_endif ();
 
+  /* Set this before visiting the scope so things like
+  
+      interface foo
+      {
+        struct bar
+        {
+          ....
+          foo foo_member;
+        };
+        
+        void op (in bar inarg);
+      };
+      
+     will not cause infinite recursion in this visitor.
+  */
+  
+  this->generated (node, I_TRUE);
+
   int status = this->visit_scope (node);
 
   if (status != 0)
@@ -827,7 +895,6 @@ be_visitor_arg_traits::visit_union (be_union *node)
                         -1);
     }
 
-  this->generated (node, I_TRUE);
   return 0;
 }
 
@@ -932,3 +999,10 @@ be_visitor_arg_traits::visit_component_fwd (be_component_fwd *node)
 {
   return this->visit_interface_fwd (node);
 }
+
+int
+be_visitor_arg_traits::visit_home (be_home *node)
+{
+  return this->visit_interface (node);
+}
+

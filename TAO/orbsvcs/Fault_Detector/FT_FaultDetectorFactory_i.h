@@ -16,8 +16,9 @@
 
 #ifndef FT_FAULTDETECTORFACTORY_I_H_
 #define FT_FAULTDETECTORFACTORY_I_H_
-#include /**/ <ace/pre.h>
-#include <ace/ACE.h>
+#include /**/ "ace/pre.h"
+#include "ace/ACE.h"
+#include "ace/SString.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -343,5 +344,5 @@ namespace TAO
   };
 }   // namespace TAO
 
-#include /**/ <ace/post.h>
+#include /**/ "ace/post.h"
 #endif /* FT_FAULTDETECTORFACTORY_I_H_  */

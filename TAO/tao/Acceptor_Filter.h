@@ -62,9 +62,5 @@ public:
   virtual int encode_endpoints (TAO_MProfile &mprofile) = 0;
 };
 
-#if defined (__ACE_INLINE__)
-# include "Acceptor_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_ACCEPTOR_FILTER_H */

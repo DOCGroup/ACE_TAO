@@ -217,6 +217,8 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
   intf->compute_full_name ("AMH_", "ResponseHandler_ptr", buf);
 
   *os << buf << " _tao_rh";
-  delete [] buf;
+  // buf was allocated by ACE_OS::strdup, so we must use free instead
+  // of delete.
+  ACE_OS::free (buf);
   buf = 0;
 }

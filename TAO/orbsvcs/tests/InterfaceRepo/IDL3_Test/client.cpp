@@ -26,12 +26,6 @@ main (int argc, char *argv[])
           int status = client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          const char *result_string = status ? "test failed" : "test ok";
-
-          ACE_DEBUG ((LM_DEBUG,
-                      "%s\n",
-                      result_string));
-
           if (status == -1)
             {
               return 1;

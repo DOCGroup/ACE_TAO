@@ -392,8 +392,7 @@ Temperature_Criterion_impl::
 Temperature_Criterion_impl (CORBA::ULong origin_id, CORBA::Float temp)
 {
   this->origin_id_ (origin_id);
-  Temperature_var tmp (ACE_static_cast(Temperature*,
-                                       new Temperature_impl (temp)));
+  Temperature_var tmp (static_cast<Temperature*> (new Temperature_impl (temp)));
   this->meltingpoint (tmp.in ());
 }
 
@@ -567,7 +566,7 @@ Criterion_List_impl::store_criterion (Criterion *c
 {
   if (!my_list ())
     {
-      Event_List_var ev(ACE_static_cast(Event_List*,new Event_List_impl));
+      Event_List_var ev(static_cast<Event_List*> (new Event_List_impl));
       my_list (ev);
     }
 

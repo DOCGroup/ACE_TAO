@@ -72,6 +72,27 @@ namespace CCF
 
       TypeInfo const& ConcreteValueType::
       static_type_info () { return concrete_value_type_; }
+
+
+      // ValueTypeFactory
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        value_type_factory_init_ ()
+        {
+          TypeInfo ti (typeid (ValueTypeFactory));
+          ti.add_base (
+            Access::PUBLIC, true, TwoWayOperation::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo value_type_factory_ (value_type_factory_init_ ());
+      }
+
+      TypeInfo const& ValueTypeFactory::
+      static_type_info () { return value_type_factory_; }
     }
   }
 }

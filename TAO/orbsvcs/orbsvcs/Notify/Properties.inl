@@ -60,6 +60,18 @@ TAO_Notify_Properties::asynch_updates (CORBA::Boolean asynch_updates)
   this->asynch_updates_ = asynch_updates;
 }
 
+ACE_INLINE bool
+TAO_Notify_Properties::allow_reconnect (void)
+{
+  return this->allow_reconnect_;
+}
+
+ACE_INLINE void
+TAO_Notify_Properties::allow_reconnect (bool b)
+{
+  this->allow_reconnect_ = b;
+}
+
 ACE_INLINE CORBA::Boolean
 TAO_Notify_Properties::updates (void)
 {

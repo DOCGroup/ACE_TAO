@@ -21,7 +21,7 @@
 
 #include "orbsvcs/CosLoadBalancingC.h"
 #include "tao/LocalObject.h"
-#include "tao/IORInterceptor/IORInterceptorC.h"
+#include "tao/IORInterceptor/IORInterceptor.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

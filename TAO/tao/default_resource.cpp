@@ -21,10 +21,6 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/Auto_Ptr.h"
 
-#if !defined (__ACE_INLINE__)
-# include "tao/default_resource.i"
-#endif /* ! __ACE_INLINE__ */
-
 ACE_RCSID (tao,
            default_resource,
            "$Id$")
@@ -179,7 +175,8 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             char **endPtr =0;
             ncs = ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
                                   endPtr, 0);
-  }
+          }
+
         // Validate the CodesetId
         if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
           {
@@ -264,23 +261,23 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             ACE_TCHAR* name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
-                                    ACE_TEXT("lru")) == 0)
+                                    ACE_TEXT ("lru")) == 0)
               this->connection_purging_type_ =
                 TAO_Resource_Factory::LRU;
             else if (ACE_OS::strcasecmp (name,
-                                         ACE_TEXT("lfu")) == 0)
+                                         ACE_TEXT ("lfu")) == 0)
               this->connection_purging_type_ =
                 TAO_Resource_Factory::LFU;
             else if (ACE_OS::strcasecmp (name,
-                                         ACE_TEXT("fifo")) == 0)
+                                         ACE_TEXT ("fifo")) == 0)
               this->connection_purging_type_ =
                 TAO_Resource_Factory::FIFO;
             else if (ACE_OS::strcasecmp (name,
-                                         ACE_TEXT("null")) == 0)
+                                         ACE_TEXT ("null")) == 0)
               this->connection_purging_type_ =
                   TAO_Resource_Factory::NOOP;
             else
-              this->report_option_value_error (ACE_TEXT("-ORBConnectionCachingStrategy"), name);
+              this->report_option_value_error (ACE_TEXT ("-ORBConnectionCachingStrategy"), name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -972,7 +969,7 @@ TAO_Default_Resource_Factory::create_purging_strategy (void)
     {
       ACE_NEW_RETURN (strategy,
                       TAO_LRU_Connection_Purging_Strategy (
-                                           this->cache_maximum ()),
+                          this->cache_maximum ()),
                       0);
     }
   else

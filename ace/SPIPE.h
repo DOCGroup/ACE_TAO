@@ -81,8 +81,20 @@ public:
   /// Dump the state of an object.
   void dump (void) const;
 
+#if defined (ACE_HAS_STREAM_PIPES)
+  /// Temporary store of duplex pipe handle.
+  void set_duplex_handle (ACE_HANDLE handle);
+#endif /* ACE_HAS_STREAM_PIPES */
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+
+private:
+#if defined (ACE_HAS_STREAM_PIPES)
+  /// Duplex to the pipe I/O handle.
+  /// Stored here for latter cleaning.
+  ACE_HANDLE duplex_pipe_handle_;
+#endif /* ACE_HAS_STREAM_PIPES */
 
 protected:
   /// Ensure that this class is an abstract base class

@@ -39,7 +39,7 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-
+#include "ace/OS_main.h"
 #include "asnmp/octet.h"
 #include "asnmp/target.h"
 #include "test_config.h"
@@ -135,9 +135,9 @@ static void TestSnmpTarget()
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST ("Target_Test");
+  ACE_START_TEST (ACE_TEXT ("Target_Test"));
   TestSnmpTarget();
 
   ACE_END_TEST;

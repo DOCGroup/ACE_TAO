@@ -250,8 +250,7 @@ ACE_HTTP_Addr::set (const ACE_TCHAR *host_name,
 
   ACE_TCHAR *buffer;
   ACE_ALLOCATOR_RETURN (buffer,
-                        ACE_reinterpret_cast(ACE_TCHAR *,
-                                             ACE_OS::malloc (size)),
+                        reinterpret_cast<ACE_TCHAR *> (ACE_OS::malloc (size)),
                         -1);
   if (this->addr_to_string (buffer, size, 1) == -1)
     return -1;
@@ -609,8 +608,7 @@ ACE_FTP_Addr::set (const ACE_TCHAR *host_name,
 
   ACE_TCHAR *buffer;
   ACE_ALLOCATOR_RETURN (buffer,
-                        ACE_reinterpret_cast(ACE_TCHAR *,
-                                             ACE_OS::malloc (size)),
+                        reinterpret_cast<ACE_TCHAR *> (ACE_OS::malloc (size)),
                         -1);
   if (this->addr_to_string (buffer, size, 1) == -1)
     return -1;
@@ -839,8 +837,7 @@ ACE_Mailto_Addr::set (const ACE_TCHAR *user,
   size_t size = this->url_size (1);
   ACE_TCHAR *buffer;
   ACE_ALLOCATOR_RETURN (buffer,
-                        ACE_reinterpret_cast(ACE_TCHAR *,
-                                             ACE_OS::malloc (size)),
+                        reinterpret_cast<ACE_TCHAR *> (ACE_OS::malloc (size)),
                         -1);
   if (this->addr_to_string (buffer, size, 1) == -1)
     return -1;

@@ -993,19 +993,19 @@ namespace
     virtual void
     pre (InParameter&)
     {
-      os << "in ";
+      os << endl << "in ";
     }
 
     virtual void
     pre (OutParameter&)
     {
-      os << "out ";
+      os << endl << "out ";
     }
 
     virtual void
     pre (InOutParameter&)
     {
-      os << "inout ";
+      os << endl << "inout ";
     }
 
     virtual void
@@ -1640,7 +1640,8 @@ generate (CommandLine const& cl,
     string suffix (cl.get_value ("lem-file-suffix", "E.idl"));
 
     string expr (cl.get_value (
-                   "lem-file-regex", "/(\\.(idl|cidl))?$/" + suffix + "/"));
+                   "lem-file-regex",
+                   "/(\\.(idl|cidl|cdl))?$/" + suffix + "/"));
 
     string lem_file_name (regex::perl_s (file_name, expr));
 

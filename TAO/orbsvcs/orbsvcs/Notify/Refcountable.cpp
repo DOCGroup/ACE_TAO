@@ -3,11 +3,6 @@
 #include "Refcountable.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
-
-#if ! defined (__ACE_INLINE__)
-#include "Refcountable.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/Guard_T.h"
 
 ACE_RCSID(Notify, TAO_Notify_Refcountable, "$Id$")

@@ -14,8 +14,8 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include <XSCRT/XMLSchema.hpp>
-#include <XSCRT/Parser.hpp>
+#include "XSCRT/XMLSchema.hpp"
+#include "XSCRT/Parser.hpp"
 
 #include "Basic_Deployment_Data.hpp"
 
@@ -29,7 +29,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // label
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& label () const;
       ::XMLSchema::string< char >& label ();
@@ -39,7 +39,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > label_;
 
       // UUID
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& UUID () const;
       ::XMLSchema::string< char >& UUID ();
@@ -49,7 +49,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > UUID_;
 
       // sharedResource
-      // 
+      //
       public:
       bool sharedResource_p () const;
       ::CIAO::Config_Handlers::SharedResource const& sharedResource () const;
@@ -60,7 +60,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SharedResource > sharedResource_;
 
       // node
-      // 
+      //
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::Node >::iterator node_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::Node >::const_iterator node_const_iterator;
@@ -74,7 +74,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::Node > node_;
 
       // infoProperty
-      // 
+      //
       public:
       bool infoProperty_p () const;
       ::CIAO::Config_Handlers::Property const& infoProperty () const;

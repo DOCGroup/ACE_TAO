@@ -69,16 +69,14 @@ be_operation::be_operation (AST_Type *rt,
       return;
     }
     
-  ACE_SET_BITS (idl_global->decls_seen_info_,
-                idl_global->decls_seen_masks.operation_seen_);
+  idl_global->operation_seen_ = true;
 
   if (!this->is_local ())
     {
       be_type *bt = be_type::narrow_from_decl (rt);
       bt->seen_in_operation (I_TRUE);
       this->set_arg_seen_bit (bt);
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.non_local_op_seen_);
+      idl_global->non_local_op_seen_ = true;
     }
 }
 

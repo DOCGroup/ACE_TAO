@@ -70,7 +70,7 @@ HA_Status::init (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("HAStatus ListenPort ")
                        ACE_TEXT ("does not exist\n")),
                       -1);
-  this->listen_addr_.set (ACE_static_cast (u_short, status_port));
+  this->listen_addr_.set (static_cast<u_short> (status_port));
 
   if (this->acceptor_.open (this->listen_addr_) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -103,7 +103,7 @@ HA_Status::info (ACE_TCHAR **str, size_t len) const
       *str = ACE::strnew (buf);
     else
       ACE_OS::strncpy (*str, buf, len);
-    return ACE_static_cast (int, ACE_OS::strlen (*str));
+    return static_cast<int> (ACE_OS::strlen (*str));
   }
 // Listing 3
 
