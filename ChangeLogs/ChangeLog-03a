@@ -1,3 +1,17 @@
+Mon Aug 20 00:01:29 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Connector.h: Clarify the conditions under which errno
+          will be ETIME (caller-specified timeout expires w/o connect)
+          vs. ETIMEDOUT (protocol layer timed out the connect).
+
+        * ace/SOCK_Connector.cpp: Add "|| errno == ETIME" to a couple
+          places where an ACE_ERROR is _not_ done for certain conditions.
+
+        * ace/ACE.cpp (handle_timed_complete): If the user-specified timeout
+          expires before the connect is resolved one way or the other,
+          set errno to ETIME, not ETIMEDOUT. This makes it match the
+          documented behavior in the ACE_SOCK_Connector man page.
+
 Sun Aug 19 20:33:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/nightlybuilds/builds.lst:

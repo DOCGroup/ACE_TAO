@@ -51,9 +51,12 @@ public:
    * the connection is done using non-blocking mode.  In this case, if
    * the connection can't be made immediately the value of -1 is
    * returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
-   * this is the maximum amount of time to wait before timing out.  If the
-   * time expires before the connection is made <errno == ETIME>.  The
-   * <local_sap> is the value of local address to bind to.  If it's
+   * this is the maximum amount of time to wait before timing out; if the
+   * time expires before the connection is made <errno == ETIME>. Note
+   * the difference between this case and when a blocking connect
+   * is attmpted that TCP times out - in the latter case, errno will
+   * be ETIMEDOUT.
+   * The <local_sap> is the value of local address to bind to.  If it's
    * the default value of <ACE_Addr::sap_any> then the user is letting
    * the OS do the binding.  If <reuse_addr> == 1 then the
    * <local_addr> is reused, even if it hasn't been cleanedup yet.
@@ -80,12 +83,15 @@ public:
    * using non-blocking mode.  In this case, if the connection can't
    * be made immediately the value of -1 is returned with <errno ==
    * EWOULDBLOCK>.  If *timeout > {0, 0} then this is the amount of
-   * time to wait before timing out.  If the time expires before the
-   * connection is made <errno == ETIME>.  The <local_sap> is the
-   * value of local address to bind to.  If it's the default value of
-   * <ACE_Addr::sap_any> then the user is letting the OS do the
-   * binding.  If <reuse_addr> == 1 then the <local_addr> is reused,
-   * even if it hasn't been cleanedup yet.
+   * time to wait before timing out; if the time expires before the
+   * connection is made <errno == ETIME>.  Note the difference between
+   * this case and when a blocking connect is attmpted that TCP times
+   * out - in the latter case, errno will be ETIMEDOUT.
+   * The <local_sap> is the value of local address to bind to.  If
+   * it's the default value of <ACE_Addr::sap_any> then the user is
+   * letting the OS do the binding.
+   * If <reuse_addr> == 1 then the <local_addr> is reused,
+   * even if it hasn't been cleaned up yet.
    * The <protocol_family> and <protocol> parameters are passed down
    * to the <socket> call, whereas <flags> and <perms> are ignored.
    */
@@ -110,9 +116,12 @@ public:
    * the connection is done using non-blocking mode.  In this case, if
    * the connection can't be made immediately the value of -1 is
    * returned with <errno == EWOULDBLOCK>.  If *timeout > {0, 0} then
-   * this is the maximum amount of time to wait before timing out.  If the
-   * time expires before the connection is made <errno == ETIME>.  The
-   * <local_sap> is the value of local address to bind to.  If it's
+   * this is the maximum amount of time to wait before timing out; if the
+   * time expires before the connection is made <errno == ETIME>.   Note
+   * the difference between this case and when a blocking connect
+   * is attmpted that TCP times out - in the latter case, errno will
+   * be ETIMEDOUT.
+   * The <local_sap> is the value of local address to bind to.  If it's
    * the default value of <ACE_Addr::sap_any> then the user is letting
    * the OS do the binding.  If <reuse_addr> == 1 then the
    * <local_addr> is reused, even if it hasn't been cleanedup yet.
@@ -140,11 +149,14 @@ public:
    * using non-blocking mode.  In this case, if the connection can't
    * be made immediately the value of -1 is returned with <errno ==
    * EWOULDBLOCK>.  If *timeout > {0, 0} then this is the amount of
-   * time to wait before timing out.  If the time expires before the
-   * connection is made <errno == ETIME>.  The <local_sap> is the
-   * value of local address to bind to.  If it's the default value of
-   * <ACE_Addr::sap_any> then the user is letting the OS do the
-   * binding.  If <reuse_addr> == 1 then the <local_addr> is reused,
+   * time to wait before timing out; if the time expires before the
+   * connection is made <errno == ETIME>.  Note the difference between
+   * this case and when a blocking connect is attmpted that TCP times
+   * out - in the latter case, errno will be ETIMEDOUT.
+   * The <local_sap> is the value of local address to bind to.  If
+   * it's the default value of <ACE_Addr::sap_any> then the user is
+   * letting the OS do the binding.
+   * If <reuse_addr> == 1 then the <local_addr> is reused,
    * even if it hasn't been cleanedup yet.
    */
   int connect (ACE_SOCK_Stream &new_stream,
