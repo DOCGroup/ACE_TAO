@@ -956,5 +956,28 @@ ACE_OS::set_win32_resource_module (HINSTANCE instance)
 {
   ACE_OS::win32_resource_module_ = instance;
 }
+
+ACE_INLINE LPSECURITY_ATTRIBUTES
+ACE_OS::default_win32_security_attributes (LPSECURITY_ATTRIBUTES sa)
+{
+#if defined (ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES)
+  if (sa == 0)
+    {
+      // @@ This is a good place to use pthread_once.
+      static SECURITY_ATTRIBUTES default_sa;
+      static SECURITY_DESCRIPTOR sd;
+      InitializeSecurityDescriptor(&sd, SECURITY_DESCRIPTOR_REVISION);
+      SetSecurityDescriptorDacl(&sd, TRUE, 0, FALSE);
+      default_sa.nLength = sizeof(SECURITY_ATTRIBUTES);
+      default_sa.lpSecurityDescriptor = &sd;
+      default_sa.bInheritHandle       = TRUE;
+      sa = &default_sa;
+    }
+  return sa;
+#else /* !ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES */
+  return sa;
+#endif /* ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES */
+}
+
 #endif /* ACE_WIN32 */
 #endif
