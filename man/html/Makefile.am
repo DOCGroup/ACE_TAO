@@ -14,12 +14,9 @@ AUTOMAKE_OPTIONS = 1.4
 
 htmldir = $(pkgdatadir)/html
 html_DATA := \
- $(shell (for p in $(top_builddir)/man/man3/*.3; \
-          do basename $$p | sed -e 's/\.3$$/\.html/'; done))
+  $(shell echo $(top_builddir)/man/man3/*.3 | xargs -n 1 basename | sed -e 's/\.3/\.html/')
 
-DISTCLEANFILES = $(html_DATA)
-
-EXTRA_DIST = $(html_DATA)
+MAINTAINERCLEANFILES = $(html_DATA)
 
 ## Only add rule to create ACE.html since it more efficient to make
 ## man2html create all of the html man pages in one shot.
@@ -28,5 +25,7 @@ $(html_DATA):
 	  $(top_builddir)/man/man3/`echo $@ | sed -e 's/\.html$$/\.3/'` \
 	  > /dev/null
 
-all-local:
-	echo ACE HTML man pages have been built.
+## For some reason Automake couldn't automatically copy the HTML man
+## pages to the distribution directory so do it manually.
+dist-hook:
+	(tar cf - ./ACE*.html) | (cd $(distdir); tar xfBp -)
