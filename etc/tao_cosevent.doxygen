@@ -133,7 +133,7 @@ TAGFILES              = html/ace/ACE.tag=../../ace \
 	html/tao/TAO.tag=.. \
 	html/tao/portableserver/TAO_PortableServer.tag=../portableserver \
 	html/tao/esf/TAO_ESF.tag=../esf
-GENERATE_TAGFILE      = html/tao/rtevent/TAO_RTEvent.tag
+GENERATE_TAGFILE      = html/tao/cosevent/TAO_CosEvent.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
