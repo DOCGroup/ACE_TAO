@@ -1,0 +1,70 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -l .. -p BasicSP -i BMDisplay"
+
+project(BMDisplay_stub): ciao_client {
+  depends += BasicSP_stub
+  sharedname = BMDisplay_stub
+  idlflags += -Wb,stub_export_macro=BMDISPLAY_STUB_Export -Wb,stub_export_include=BMDisplay_stub_export.h -Wb,skel_export_macro=BMDISPLAY_SVNT_Export -Wb,skel_export_include=BMDisplay_svnt_export.h
+  dllflags   = BMDISPLAY_STUB_BUILD_DLL
+
+  IDL_Files {
+    BMDisplay.idl
+  }
+
+  Source_Files {
+    BMDisplayC.cpp
+  }
+}
+
+project(BMDisplay_svnt) : ciao_server {
+  depends += BasicSP_svnt BMDisplay_stub
+  sharedname  = BMDisplay_svnt
+  libs    += BMDisplay_stub BasicSP_stub BasicSP_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=BMDISPLAY_SVNT_Export -Wb,export_include=BMDisplay_svnt_export.h
+  dllflags = BMDISPLAY_SVNT_BUILD_DLL
+
+  Source_Files {
+    BMDisplayEC.cpp
+    BMDisplayS.cpp
+  }
+
+  Define_Custom(CIDL) {
+    automatic = 1
+    command = ..\..\..\..\bin\cidlc --lem-file-suffix "E.idl" --
+    inputext    = cidl
+    source_outputext = _svnt.cpp
+    generic_outputext = E.idl
+  }
+
+  CIDL_Files {
+    BMDisplay.cidl
+  }
+
+  IDL_Files {
+    BMDisplayE.idl
+  }
+
+  Source_Files {
+    BMDisplay_svnt.cpp
+  }
+}
+
+
+project(BMDisplay_exec) : ciao_server {
+  depends   += BMDisplay_svnt
+  sharedname = BMDisplay_exec
+  libs      += BMDisplay_stub BMDisplay_svnt BasicSP_stub BasicSP_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=BMDISPLAY_EXEC_Export -Wb,export_include=BMDisplay_exec_export.h
+  dllflags   = BMDISPLAY_EXEC_BUILD_DLL
+
+  IDL_Files {
+    BMDisplayEI.idl
+  }
+
+  Source_Files {
+    BMDisplayEIC.cpp
+    BMDisplay_exec.cpp
+  }
+}

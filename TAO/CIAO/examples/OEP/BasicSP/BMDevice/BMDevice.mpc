@@ -1,0 +1,74 @@
+// $Id$
+
+project(BMDevice_stub): ciao_client {
+  depends += BasicSP_stub
+  sharedname = BMDevice_stub
+
+  idlflags += -Wb,stub_export_macro=BMDEVICE_STUB_Export -Wb,stub_export_include=BMDevice_stub_export.h -Wb,skel_export_macro=BMDEVICE_SVNT_Export -Wb,skel_export_include=BMDevice_svnt_export.h
+  libpaths += ..
+  libs += BasicSP_stub
+  dllflags   = BMDEVICE_STUB_BUILD_DLL
+
+  IDL_Files {
+    BMDevice.idl
+  }
+
+  Source_Files {
+    BMDeviceC.cpp
+  }
+}
+
+project(BMDevice_svnt) : ciao_server {
+  depends += BMDevice_stub BasicSP_stub
+  sharedname  = BMDevice_svnt
+  libs    += BMDevice_stub BasicSP_stub BasicSP_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=BMDEVICE_SVNT_Export -Wb,export_include=BMDevice_svnt_export.h
+  dllflags = BMDEVICE_SVNT_BUILD_DLL
+
+  Source_Files {
+    BMDeviceEC.cpp
+    BMDeviceS.cpp
+  }
+
+  Define_Custom(CIDL) {
+    automatic = 1
+    command = ..\..\..\..\bin\cidlc --lem-file-suffix "E.idl" --
+    inputext    = cidl
+    source_outputext = _svnt.cpp
+    generic_outputext = E.idl
+  }
+
+  CIDL_Files {
+    BMDevice.cidl
+  }
+
+  IDL_Files {
+    BMDeviceE.idl
+  }
+
+  Source_Files {
+    BMDevice_svnt.cpp
+  }
+}
+
+
+project(BMDevice_exec) : ciao_server {
+  depends   += BMDevice_svnt
+  sharedname = BMDevice_exec
+  libs      += BMDevice_stub BMDevice_svnt BasicSP_stub BasicSP_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=BMDEVICE_EXEC_Export -Wb,export_include=BMDevice_exec_export.h
+  dllflags   = BMDEVICE_EXEC_BUILD_DLL
+
+  IDL_Files {
+    BMDeviceEI.idl
+  }
+
+  Source_Files {
+    BMDeviceES.cpp
+    BMDeviceEIC.cpp
+    BMDeviceEIS.cpp
+    BMDevice_exec.cpp
+  }
+}

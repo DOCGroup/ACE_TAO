@@ -21,6 +21,7 @@ project(BasicSP_svnt) : ciao_server {
   sharedname = BasicSP_svnt
   libs    += BasicSP_stub
 
+  idlflags  +=  -Wb,export_macro=BASICSP_SVNT_Export -Wb,export_include=BasicSP_svnt_export.h
   dllflags = BASICSP_SVNT_BUILD_DLL
 
   Source_Files {
