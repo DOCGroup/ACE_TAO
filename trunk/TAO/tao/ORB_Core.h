@@ -192,7 +192,7 @@ class TAO_Export TAO_ORB_Core
                                          char *argv[],
                                          const char *,
                                          CORBA_Environment &);
-
+  
 public:
 
   /// Constructor.
@@ -866,6 +866,9 @@ public:
    */
   TAO_Flushing_Strategy *flushing_strategy (void);
 
+  typedef ACE_Hash_Map_Manager<ACE_CString,ACE_CString,ACE_Null_Mutex> InitRefMap;
+  InitRefMap *init_ref_map ();
+
 protected:
 
   /// Destructor is protected since the ORB Core is a reference
@@ -996,7 +999,7 @@ protected:
   /// Parameters used by the ORB.
   TAO_ORB_Parameters orb_params_;
 
-  typedef ACE_Hash_Map_Manager<ACE_CString,ACE_CString,ACE_Null_Mutex> InitRefMap;
+  /// Return InitRefMap to find if a particular object id is present.
   InitRefMap init_ref_map_;
 
   /// Table that maps object key/name to (de-stringified) object

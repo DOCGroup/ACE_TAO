@@ -169,7 +169,8 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
 # if defined (TAO_HAS_VALUETYPE)
     valuetype_factory_map_ (0),
 # endif /* TAO_HAS_VALUETYPE */
-    use_omg_ior_format_ (1)
+    use_omg_ior_format_ (1),
+    timeout_ (0)
 {
 }
 
@@ -946,8 +947,7 @@ CORBA_ORB::resolve_policy_current (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
-                            ACE_Time_Value * /*timeout*/
+CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id
                             TAO_ENV_ARG_DECL)
 {
   const char *env_service_ior [] =
@@ -956,6 +956,22 @@ CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
     "TradingServiceIOR",
     "ImplRepoServiceIOR",
     "InterfaceRepoServiceIOR"
+  };
+
+  const char * env_service_port [] =
+  {
+    "NameServicePort",
+    "TradingServicePort",
+    "ImplRepoServicePort",
+    "InterfaceRepoServicePort"
+  };
+
+  u_short default_service_port [] =
+  {
+    TAO_DEFAULT_NAME_SERVER_REQUEST_PORT,
+    TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT,
+    TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT,
+    TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT
   };
 
  CORBA_Object_var return_value = CORBA_Object::_nil ();
@@ -977,8 +993,51 @@ CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
      return return_value._retn ();
    }
  else
-   return CORBA::Object::_nil ();
+   {
+     // First, determine if the port was supplied on the command line
+     u_short port =
+       this->orb_core_->orb_params ()->service_port (mcast_service_id);
+     
+     if (port == 0)
+       {
+         // Look for the port among our environment variables.
+         const char *port_number =
+           ACE_OS::getenv (env_service_port[mcast_service_id]);
 
+         if (port_number != 0)
+           port = (u_short) ACE_OS::atoi (port_number);
+         else
+           port = default_service_port[mcast_service_id];
+       }
+
+     /// Set the port value in ORB_Params: modify the default mcast
+     /// value.
+     const char prefix[] = "mcast://:";
+
+     char port_char[256];
+     
+     ACE_OS_String::itoa (port,
+                          port_char,
+                          10);
+
+     CORBA::String_var port_ptr =
+       CORBA::string_alloc (ACE_OS::strlen ((const char *) port_char));
+     
+     port_ptr = (const char *) port_char;
+     
+     CORBA::String_var def_init_ref =
+       CORBA::string_alloc (sizeof (prefix) +
+                            ACE_OS::strlen (port_ptr.in ()) +
+                            2);
+
+      ACE_OS::strcpy (def_init_ref, prefix);
+      ACE_OS::strcat (def_init_ref, port_ptr.in ());
+      ACE_OS::strcat (def_init_ref, "::");
+
+      this->orb_core_->orb_params ()->default_init_ref (def_init_ref.in ());
+
+      return CORBA::Object::_nil ();
+   }
 }
 
 CORBA_Object_ptr
@@ -1039,15 +1098,25 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
   // -----------------------------------------------------------------
 
-  // May be trying the explicitly specified services and the well
-  // known services should be tried first before falling on to default
-  // services.
+  /// Check ORBInitRef options.
+  ACE_CString ior;
+  ACE_CString object_id ((const char *) name);
 
-  // Did not find it in the InitRef table .. Try the hard-coded ways
-  // to find the basic services...
+  /// Is the service name in the IOR Table.
+  if (this->orb_core_->init_ref_map ()->find (object_id, ior) == 0)
+    return this->string_to_object (ior.c_str ()
+                                   TAO_ENV_ARG_PARAMETER);
+
+  /// May be trying the explicitly specified services and the well
+  /// known services should be tried first before falling on to default
+  /// services.
+
+  /// Set the timeout value.
+  this->set_timeout (timeout);
+  
   if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
     {
-      result = this->resolve_service (NAMESERVICE, timeout
+      result = this->resolve_service (NAMESERVICE
                                       TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -1056,7 +1125,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
     {
-      result = this->resolve_service (TRADINGSERVICE, timeout
+      result = this->resolve_service (TRADINGSERVICE
                                       TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -1065,7 +1134,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_IMPLREPOSERVICE) == 0)
     {
-      result = this->resolve_service (IMPLREPOSERVICE, timeout
+      result = this->resolve_service (IMPLREPOSERVICE
                                       TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -1074,7 +1143,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_INTERFACEREP) == 0)
     {
-      result = this->resolve_service (INTERFACEREPOSERVICE, timeout
+      result = this->resolve_service (INTERFACEREPOSERVICE
                                       TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -1854,6 +1923,18 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
   cdr.skip_bytes (length);
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
   return (CORBA::Boolean) cdr.good_bit ();
+}
+
+ACE_Time_Value *
+CORBA_ORB::get_timeout (void)
+{
+  return this->timeout_;
+}
+
+void
+CORBA_ORB::set_timeout (ACE_Time_Value *timeout)
+{
+  this->timeout_ = timeout;
 }
 
 // *************************************************************

@@ -2067,10 +2067,6 @@ TAO_ORB_Core::resolve_rir (const char *name
   ACE_CString ior;
   ACE_CString object_id ((const char *) name);
 
-  // Is the service name in the IOR Table.
-  if (this->init_ref_map_.find (object_id, ior) == 0)
-    return this->orb ()->string_to_object (ior.c_str () TAO_ENV_ARG_PARAMETER);
-
   // Get the list of initial reference prefixes specified through
   // -ORBDefaultInitRef.
   CORBA::String_var default_init_ref =
@@ -2875,6 +2871,11 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
   return TAO_Collocation_Strategies::CS_REMOTE_STRATEGY;
 }
 
+TAO_ORB_Core::InitRefMap *
+TAO_ORB_Core::init_ref_map ()
+{
+  return &this->init_ref_map_;
+}
 
 // ****************************************************************
 
