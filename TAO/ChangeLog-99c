@@ -1,3 +1,10 @@
+Sat Dec 11 14:31:45 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Makefile.am (pkginclude_HEADERS):
+
+	  Split header file list into `.h' files (HEADER_FILES) and `.i'
+	  (INLINE_FILES).  This gets around a limitation on Solaris.
+
 Sat Dec 11 10:15:42 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (init): Changed -ORBDebug flag to not
