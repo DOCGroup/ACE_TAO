@@ -1,3 +1,9 @@
+Wed Feb 12 12:40:21 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/auto_run_tests.lst: Prevented a few RTCORBA tests to be run
+	  in our daily builds since changing priorities requires root
+	  access. 
+
 Wed Feb 12 12:06:05 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/Strategies.h: Added this file for backward
