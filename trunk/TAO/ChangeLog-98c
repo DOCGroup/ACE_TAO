@@ -1,3 +1,19 @@
+Thu Jul  2 12:36:28 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader[_T].{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.{h,cpp}:
+	For the 'in' operator in the standard OMG constraint language, the 	
+	Constraint Interpreter needs to identify and extract from Anys
+	sequences of primitive types, regardless of how many times the
+	sequence has been typedef'd. Added code to do this.
+
+	* orbsvcs/tests/Trading/TTest.idl:
+	* orbsvcs/tests/Trading/TT_Info.cpp:
+	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
+	Now sends aliased sequences to the Trader to test the above
+	enhancement.
+
 Thu Jul  2 12:29:10 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	The Next round of changes for GPERF + TAO_IDL integration. NT
