@@ -1,3 +1,12 @@
+Fri Apr 30 13:08:04 2004  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DnC/DnC_Dump.h:
+        * DnC/DnC_Dump.cpp:
+        
+          Added these two new files. These two files created a
+          DnC_Dump class which is used to print out the contents
+          of various IDL data structures.
+
 Thu Apr 29 22:56:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Deployment.idl:
