@@ -133,9 +133,6 @@ private:
   int shutdown_;
   // Flag to tell server to exit.
 
-  int use_naming_service_;
-  // Flag toggling use of naming service to get IOR.
-
   CORBA::Environment env_;
   // Environment variable.
 
@@ -162,17 +159,12 @@ private:
 
   ACE_HANDLE f_handle_;
   // File handle to read the IOR.
-
-  TAO_Naming_Client my_name_client_;
-  // An instance of the name client used for resolving the factory
-  // objects.
 };
 
 // Constructor
 DII_Cubit_Client::DII_Cubit_Client (void)
   : loop_count_ (DEFAULT_LOOP_COUNT),			
     shutdown_ (0),
-    use_naming_service_ (1),
     orb_var_ (0),
     factory_var_ (CORBA::Object::_nil ()),
     obj_var_ (CORBA::Object::_nil ()),
@@ -222,17 +214,6 @@ DII_Cubit_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  // Exits gracefully when no IOR is provided and use_naming_service_
-  // is toggled off.
-  if (!ACE_OS::strcmp (this->factory_IOR_,
-		       DEFAULT_FACTORY_IOR) 
-      && !this->use_naming_service_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s: Must supply IOR, read it from a file, or use naming service."
-                       "\n",
-                       this->argv_ [0]),
-                      -1);
-
   TAO_TRY
     {
       // Initialize the ORB.
@@ -244,22 +225,16 @@ DII_Cubit_Client::init (int argc, char **argv)
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
-        return -1;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "DII_Cubit_Client::parse_args failed"),
+                          -1);
 
-      if (this->use_naming_service_)
-        {
-          // Get a factory object reference from the naming service.
-          if (this->init_naming_service () == -1)
-            return -1;
-        }
-      else
-        {
-          // Get a factory object reference from the factory IOR.
-          this->factory_var_ = 
-            this->orb_var_->string_to_object (this->factory_IOR_, 
-                                              TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-        }
+      // Get a factory object reference from the factory IOR.
+      this->factory_var_ = 
+        this->orb_var_->string_to_object (this->factory_IOR_, 
+                                          TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // Get a Cubit object with a DII request on the Cubit factory.
       CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit", TAO_TRY_ENV));
@@ -300,54 +275,6 @@ DII_Cubit_Client::init (int argc, char **argv)
   return 0;
 }
 
-// Get the factory IOR via a DII request on the naming service.
-
-int
-DII_Cubit_Client::init_naming_service (void)
-{
-  TAO_TRY
-    {
-      // Initialize the naming services
-      if (my_name_client_.init (orb_var_.in ()) != 0)
-	      ACE_ERROR_RETURN ((LM_ERROR,
-			                     " (%P|%t) Unable to initialize "
-			                     "the TAO_Naming_Client. \n"),
-			                    -1);
-       
-      // Build a Name object.
-      CosNaming::Name cubit_factory_name (2);
-      cubit_factory_name.length (2);
-      cubit_factory_name[0].id = CORBA::string_dup ("IDL_Cubit");
-      cubit_factory_name[1].id = CORBA::string_dup ("cubit_factory");
-
-      // Build up the <resolve> operation using the DII!
-      CORBA::Request_var req (my_name_client_->_request ("resolve", TAO_TRY_ENV));
-
-      TAO_CHECK_ENV;
-
-      req->add_in_arg () <<= cubit_factory_name;
-
-      req->set_return_type (CORBA::_tc_Object);
-
-      req->invoke ();
-
-      req->return_value () >>= this->factory_var_.inout ();
-
-      if (CORBA::is_nil (this->factory_var_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve cubit factory in Naming service <%s>\n"),
-                          -1);
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("DII_Cubit_Client::init_naming_service");
-      return -1;
-    }
-  TAO_ENDTRY;
-
-  return 0;
-}
-
 // Sort out the args in the command line.
 
 int
@@ -367,11 +294,9 @@ DII_Cubit_Client::parse_args (void)
         this->loop_count_ = ACE_OS::atoi (opts.optarg);
         break;        
       case 'i':	  // Get the IOR from the command line.	
-	      this->use_naming_service_ = 0;
         this->factory_IOR_ = opts.optarg;
         break;
       case 'f':   // Read the IOR from the file.
-	      this->use_naming_service_ = 0;
         result = this->read_ior (opts.optarg);
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
