@@ -1,3 +1,29 @@
+Tue Nov  7 12:00:32 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Portable_Interceptors/Benchmark/Client_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Benchmark/Client_ORBInitializer.h:
+        * tests/Portable_Interceptors/Benchmark/Interceptor_Type.cpp:
+        * tests/Portable_Interceptors/Benchmark/Interceptor_Type.h:
+        * tests/Portable_Interceptors/Benchmark/Makefile:
+        * tests/Portable_Interceptors/Benchmark/Server_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Benchmark/Server_ORBInitializer.h:
+        * tests/Portable_Interceptors/Benchmark/client.cpp:
+        * tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+        * tests/Portable_Interceptors/Benchmark/interceptors.h:
+        * tests/Portable_Interceptors/Benchmark/server.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Client_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Client_ORBInitializer.h:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Makefile:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Server_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Server_ORBInitializer.h:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/client.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp:
+          Got this to compile with the standard interfaces for Portable
+          Interceptors, they were using a TAO proprietary interface that
+          went the way of the dinosaur.
+
 Tue Nov  7 11:19:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/TAO_Static.dsp
@@ -13,81 +39,81 @@ Tue Nov  7 11:19:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Tue Nov  7 12:24:48 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Made the changes for
-	  the new caching scheme in SSLIOP.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Made the changes for
+          the new caching scheme in SSLIOP.
 
 Tue Nov  7 11:50:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/InterfaceC.cpp:
-	* tao/InterfaceC.h:
-	* tao/InterfaceC.i:
+        * tao/InterfaceC.cpp:
+        * tao/InterfaceC.h:
+        * tao/InterfaceC.i:
 
-	  TypeCodeFactory generated code moved from these files 
-	  to new files TypeCodeFactoryC.*.
+          TypeCodeFactory generated code moved from these files
+          to new files TypeCodeFactoryC.*.
 
-	* tao/PortableServer/POA_CORBA.h:
+        * tao/PortableServer/POA_CORBA.h:
 
-	  TypeCodeFactory generated code removed from this file.
+          TypeCodeFactory generated code removed from this file.
 
-	* tao/Interface.pidl:
+        * tao/Interface.pidl:
 
-	  Interface TypeCodeFactory modified to be local.
+          Interface TypeCodeFactory modified to be local.
 
-	* orbsvcs/IFR_Service/TypeCodeFactoryC.h:
-	* orbsvcs/IFR_Service/TypeCodeFactoryC.inl:
-	* orbsvcs/IFR_Service/TypeCodeFactoryC.cpp:
+        * orbsvcs/IFR_Service/TypeCodeFactoryC.h:
+        * orbsvcs/IFR_Service/TypeCodeFactoryC.inl:
+        * orbsvcs/IFR_Service/TypeCodeFactoryC.cpp:
 
-	  New files containing code removed from InterfaceC.*.
+          New files containing code removed from InterfaceC.*.
 
-	* orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
+        * orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
 
-	  Removed from project and Makefiles.
+          Removed from project and Makefiles.
 
-	* orbsvcs/IFR_Service/Repository_i.h:
-	* orbsvcs/IFR_Service/TCF_Loader.h:
-	* orbsvcs/IFR_Service/TCF_Loader.cpp:
-	* orbsvcs/IFR_Service/TypeCodeFactory_i.h:
-	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
-	* orbsvcs/IFR_Service/TypeCodeFactory_DLL.dsp:
-	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
-	* orbsvcs/IFR_Service/TypeCodeFactory_DLL.bor:
+        * orbsvcs/IFR_Service/Repository_i.h:
+        * orbsvcs/IFR_Service/TCF_Loader.h:
+        * orbsvcs/IFR_Service/TCF_Loader.cpp:
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.h:
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
+        * orbsvcs/IFR_Service/TypeCodeFactory_DLL.dsp:
+        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+        * orbsvcs/IFR_Service/TypeCodeFactory_DLL.bor:
 
-	  Other files modified to make TypeCodeFactory a local
-	  interface. The motivation for this change was a bug
-	  report by Mateu Batle <mbatle@iname.com> and one by
-	  Jean-Christophe Dubois <jcd@one.com> that the 
-	  TypeCodeFactory was blocking indefinitely upon startup.
-	  It turned out that there was an attempt to acquire the same
-	  lock twice, but the real solution seemed to be to make
-	  TypeCodeFactory, like DynamicAnyFactory, a local interface,
-	  which sidesteps the lock problem, and at the same time reduces
-	  TypeCodeFactory's size.
+          Other files modified to make TypeCodeFactory a local
+          interface. The motivation for this change was a bug
+          report by Mateu Batle <mbatle@iname.com> and one by
+          Jean-Christophe Dubois <jcd@one.com> that the
+          TypeCodeFactory was blocking indefinitely upon startup.
+          It turned out that there was an attempt to acquire the same
+          lock twice, but the real solution seemed to be to make
+          TypeCodeFactory, like DynamicAnyFactory, a local interface,
+          which sidesteps the lock problem, and at the same time reduces
+          TypeCodeFactory's size.
 
 Tue Nov  7 08:57:16 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/SHMIOP_Connector.cpp (close): Fixed a warning in KCC 3.4
-	  build. 
+        * tao/SHMIOP_Connector.cpp (close): Fixed a warning in KCC 3.4
+          build.
 
 Tue Nov  7 08:54:31 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Connection_Cache_Manager.h:
-	* tao/Connection_Cache_Manager.inl: Fixed compile errors on
-	  Digital Unix. The changes should hopefully fix the problem.
+        * tao/Connection_Cache_Manager.h:
+        * tao/Connection_Cache_Manager.inl: Fixed compile errors on
+          Digital Unix. The changes should hopefully fix the problem.
 
 Mon Nov 06 23:39:05 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer/POA.cpp (reference_to_id and
-	  reference_to_servant): Made sure that we are not dealing with a
-	  nil object reference.  If we are, then throw a
-	  CORBA::BAD_PARAM() exception.  Thanks to Sandro Doro
-	  <doro.s@flashnet.it> for suggesting this change.
+        * tao/PortableServer/POA.cpp (reference_to_id and
+          reference_to_servant): Made sure that we are not dealing with a
+          nil object reference.  If we are, then throw a
+          CORBA::BAD_PARAM() exception.  Thanks to Sandro Doro
+          <doro.s@flashnet.it> for suggesting this change.
 
 Mon Nov  6 17:26:30 2000  Carlos O'Ryan  <coryan@uci.edu>
 

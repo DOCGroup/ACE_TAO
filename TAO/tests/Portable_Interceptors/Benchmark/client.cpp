@@ -1,35 +1,23 @@
 // $Id$
 
-#include "ace/OS.h"
 #include "testC.h"
 #include "interceptors.h"
 #include "marker.h"
+#include "Client_ORBInitializer.h"
+#include "Interceptor_Type.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS.h"
 
 ACE_RCSID (Benchmark, client, "$Id$")
 
 const char *ior = "file://test.ior";
 int niterations = 5;
 int register_interceptor = 1;
-// The different type of interceptors have different functionality
-// to perform.
-// NOOP: does nothing on all interception points
-// CONTEXT: does service context manipulation
-// DYNAMIC: call upon dynamic interface methods and does extraction
-// from anys.
-enum Interceptor_Type
-{
-  IT_NONE,
-  IT_NOOP,
-  IT_CONTEXT,
-  IT_DYNAMIC
-};
-static Interceptor_Type interceptor_type = IT_NONE;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "ef:n:r:");
+  ACE_Get_Opt get_opts (argc, argv, "ef:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -43,19 +31,6 @@ parse_args (int argc, char *argv[])
       case 'n':
         niterations = ACE_OS::atoi (get_opts.optarg);
         break;
-      case 'r':
-        {
-          if (ACE_OS::strcmp (get_opts.optarg, ACE_TEXT ("none")) == 0)
-            interceptor_type = IT_NONE;
-          if (ACE_OS::strcmp (get_opts.optarg, ACE_TEXT ("noop")) == 0)
-            interceptor_type = IT_NOOP;
-          if (ACE_OS::strcmp (get_opts.optarg, ACE_TEXT ("context")) == 0)
-            interceptor_type = IT_CONTEXT;
-          if (ACE_OS::strcmp (get_opts.optarg, ACE_TEXT ("dynamic")) == 0)
-            interceptor_type = IT_DYNAMIC;
-
-          break;
-        }
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -204,8 +179,25 @@ main (int argc, char *argv[])
                     "server (%P|%t): sched_params failed\n"));
     }
 
+  int interceptor_type;
+  get_interceptor_type (argc, argv, interceptor_type);
+
   ACE_TRY_NEW_ENV
     {
+      PortableInterceptor::ORBInitializer_ptr temp_initializer;
+
+      ACE_NEW_RETURN (temp_initializer,
+                      Client_ORBInitializer (interceptor_type),
+                      -1);  // No exceptions yet!
+      PortableInterceptor::ORBInitializer_var initializer =
+        temp_initializer;
+
+      PortableInterceptor::register_orb_initializer (initializer.in (),
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Transfer ownership to the ORB.
+      (void) initializer._retn ();
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
@@ -229,45 +221,6 @@ main (int argc, char *argv[])
                              ior),
                             1);
         }
-
-#if (TAO_HAS_INTERCEPTORS == 1)
-      switch (interceptor_type)
-        {
-        case IT_NONE:
-          break;
-        case IT_NOOP:
-          {
-            PortableInterceptor::ClientRequestInterceptor_ptr interceptor = 0;
-            // Installing the Vault interceptor
-            ACE_NEW_RETURN (interceptor,
-                            Vault_Client_Request_NOOP_Interceptor (orb.in ()),
-                            -1);
-            orb->_register_client_interceptor (interceptor);
-            break;
-          }
-        case IT_CONTEXT:
-          {
-            PortableInterceptor::ClientRequestInterceptor_ptr interceptor = 0;
-            // Installing the Vault interceptor
-            ACE_NEW_RETURN (interceptor,
-                            Vault_Client_Request_Context_Interceptor (orb.in ()),
-                            -1);
-            orb->_register_client_interceptor (interceptor);
-            break;
-          }
-        case IT_DYNAMIC:
-          {
-            PortableInterceptor::ClientRequestInterceptor_ptr interceptor = 0;
-            // Installing the Vault interceptor
-            ACE_NEW_RETURN (interceptor,
-                            Vault_Client_Request_Dynamic_Interceptor (orb.in ()),
-                            -1);
-            orb->_register_client_interceptor (interceptor);
-            break;
-          }
-
-        }
-#endif /* (TAO_HAS_INTERCEPTORS == 1) */
 
       ACE_DEBUG ((LM_DEBUG, "\nFunctionality test begins now...\n"));
 
