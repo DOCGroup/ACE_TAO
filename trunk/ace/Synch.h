@@ -608,6 +608,13 @@ class ACE_Export ACE_RW_Process_Mutex
 {
   // = TITLE
   //     Wrapper for readers/writer locks that exist across processes.
+  // 
+  // = DESCRIPTION
+  //     Note that because this class uses the
+  //     <ACE_File_Lock> as its implementation it only can be reliably
+  //     used between separate processes, rather than threads in the
+  //     same process.  This isn't a limitation of ACE, it's simply
+  //     the file lock semantics on UNIX and Win32.
 public:
   ACE_RW_Process_Mutex (LPCTSTR name = 0,
                         int flags = O_CREAT|O_RDWR);

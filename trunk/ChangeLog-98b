@@ -1,8 +1,15 @@
+Tue Dec  1 22:22:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch.h: Added a comment to clarify the semantics of
+ 	  ACE_RW_Process_Mutex.  Thanks to Stanislav Meduna
+ 	  <stanom@etm.co.at> for reporting this.
+
 Tue Dec 01 17:22:00 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	    * tests/DLL_Test: Added the .dsp and tests.dsw to the repository.
+	* tests/DLL_Test: Added the .dsp and tests.dsw to the
+ 	  repository.
 
-		* tests/run_tests.bat: Added an entry for DLL_Test.
+	* tests/run_tests.bat: Added an entry for DLL_Test.
 		
 Tue Dec 01 13:54:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
