@@ -101,10 +101,10 @@ public:
       diff.tv_sec = end_.ru_utime.tv_sec - start_.ru_utime.tv_sec;
       diff.tv_usec = end_.ru_utime.tv_usec - start_.ru_utime.tv_usec;
       while (diff.tv_usec < 0)
-	{
-	  --diff.tv_sec;
-	  diff.tv_usec += ACE_ONE_SECOND_IN_USECS;
-	}
+        {
+          --diff.tv_sec;
+          diff.tv_usec += ACE_ONE_SECOND_IN_USECS;
+        }
 
       return diff.tv_sec + diff.tv_usec / double(ACE_ONE_SECOND_IN_USECS);
 #else
@@ -139,8 +139,8 @@ template<class T, class H> class CDR_Test
 public:
   CDR_Test (int total, int niter, int use_array);
   static void do_test (int total, int niter, int use_array,
-		       char* srcbuf, char* dstbuf,
-		       int src_offset = 0, int dst_offset = 0);
+                       char* srcbuf, char* dstbuf,
+                       int src_offset = 0, int dst_offset = 0);
   ~CDR_Test ();
 
   static void ttoh (const T& t, char* s);
@@ -173,7 +173,7 @@ void
 memabort ()
 {
   ACE_ERROR((LM_ERROR,
-	     ACE_TEXT ("new failed, aborting\n")));
+             ACE_TEXT ("new failed, aborting\n")));
   ACE_OS::exit (1);
 }
 
@@ -194,14 +194,14 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
     ACE_NEW(srcbuf, char[stotal]);
     if (srcbuf == 0)
       {
-	memabort ();
+        memabort ();
       }
     zero(srcbuf, stotal);
 
     ACE_NEW(dstbuf, char[stotal]);
     if (dstbuf == 0)
       {
-	memabort ();
+        memabort ();
       }
     zero(srcbuf, stotal);
   }
@@ -211,34 +211,34 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
       // We want to test all the possible loop unrolling deltas.
       int t;
       for (t = total - 3; t <= total; t++)
-	{
-	  int delta;
-	  if (sizeof(long) <= sizeof(T))
-	    {
-	      delta = 1;
-	    }
-	  else
-	    {
-	      delta = (int) (sizeof(long)/sizeof(T));
-	    }
+        {
+          int delta;
+          if (sizeof(long) <= sizeof(T))
+            {
+              delta = 1;
+            }
+          else
+            {
+              delta = (int) (sizeof(long)/sizeof(T));
+            }
 
-	  // We want to test all the posible source/destination buffer
-	  // alignment combinations.
-	  int sk;
-	  for (sk = 0; sk < delta; sk++)
-	    {
-	      int dk;
-	      for (dk = 0; dk < delta; dk++)
-		{
-		  int tdelta = t - mymax(sk, dk);
+          // We want to test all the posible source/destination buffer
+          // alignment combinations.
+          int sk;
+          for (sk = 0; sk < delta; sk++)
+            {
+              int dk;
+              for (dk = 0; dk < delta; dk++)
+                {
+                  int tdelta = t - mymax(sk, dk);
 
-		  CDR_Test<T, H>::do_test(tdelta, niter, 1,
-					  srcbuf, dstbuf,
-					  sk, dk);
+                  CDR_Test<T, H>::do_test(tdelta, niter, 1,
+                                          srcbuf, dstbuf,
+                                          sk, dk);
 
-		}
-	    }
-	}
+                }
+            }
+        }
     }
   else
     {
@@ -265,9 +265,9 @@ CDR_Test<T, H>::checkval (int i)
       unsigned char* s = ACE_reinterpret_cast(unsigned char*, (&v));
       unsigned int j;
       for (j = 0; j < sizeof(T); j++)
-	{
-	  s[j] = (unsigned char) ((j + i*sizeof(T)) % 256);
-	}
+        {
+          s[j] = (unsigned char) ((j + i*sizeof(T)) % 256);
+        }
 
       return v;
     }
@@ -321,9 +321,9 @@ check_seal (char* pos)
 {
   char* ps = ACE_reinterpret_cast(char*, &seal);
   return (pos[0] == ps[0]
-	  && pos[1] == ps[1]
-	  && pos[2] == ps[2]
-	  && pos[3] == ps[3]);
+          && pos[1] == ps[1]
+          && pos[2] == ps[2]
+          && pos[3] == ps[3]);
 }
 
 //
@@ -343,8 +343,8 @@ tellalign (const char* const ptr)
 
 template<class T, class H> void
 CDR_Test<T, H>::do_test (int total, int niter, int use_array,
-			 char* srcbuf, char* dstbuf,
-			 int src_offset, int dst_offset)
+                         char* srcbuf, char* dstbuf,
+                         int src_offset, int dst_offset)
 {
   if (!use_array)
     {
@@ -352,11 +352,11 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     }
 
   ACE_DEBUG((LM_DEBUG,
-	     ACE_TEXT( "Starting Test for %s: %d elements " )
-	     ACE_TEXT( "%susing arrays.\n" ),
-	     ACE_TEXT( H::name ()),
-	     total,
-	     ((use_array) ? ACE_TEXT( "" ) : ACE_TEXT( "not " ))));
+             ACE_TEXT( "Starting Test for %s: %d elements " )
+             ACE_TEXT( "%susing arrays.\n" ),
+             H::name (),
+             total,
+             ((use_array) ? ACE_TEXT( "" ) : ACE_TEXT( "not " ))));
 
 
   if (!use_array && (total % 4) != 0)
@@ -364,9 +364,9 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
       int lasttotal = total;
       total -= (total % 4);
       ACE_DEBUG((LM_DEBUG,
-		 ACE_TEXT( "Rounding from %d to %d elements.\n" ),
-		 lasttotal,
-		 total));
+                 ACE_TEXT( "Rounding from %d to %d elements.\n" ),
+                 lasttotal,
+                 total));
     }
 
   char* src = ACE_ptr_align_binary(srcbuf, sizeof(T));
@@ -378,12 +378,12 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     int i;
     for (i = 0; i < total; i++)
       {
-	idata[i] = CDR_Test<T, H>::checkval (i);
+        idata[i] = CDR_Test<T, H>::checkval (i);
       }
   }
 
   ACE_DEBUG((LM_DEBUG,
-	     ACE_TEXT( "Writting data...\n" )));
+             ACE_TEXT( "Writting data...\n" )));
 
   char* toread = 0;
   {
@@ -393,90 +393,90 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     int n;
     for (n = 0; n < niter; n++)
       {
-	int size = sizeof(T)*(dst_offset + total);
-	ACE_OutputCDR os (dstbuf, size);
+        int size = sizeof(T)*(dst_offset + total);
+        ACE_OutputCDR os (dstbuf, size);
 
-	// This is intrusive...
-	char* const end = os.begin ()->wr_ptr() + size;
+        // This is intrusive...
+        char* const end = os.begin ()->wr_ptr() + size;
 
-	do_seal (end);
+        do_seal (end);
 
-	double secs = 0.0;
-	if (use_array)
-	  {
-	    {
-	      int i;
-	      for (i = 0; i < dst_offset; i++)
-		{
-		  os << T(0);
-		}
-	    }
+        double secs = 0.0;
+        if (use_array)
+          {
+            {
+              int i;
+              for (i = 0; i < dst_offset; i++)
+                {
+                  os << T(0);
+                }
+            }
 
-	    if (n == 0)
-	      {
-		ACE_DEBUG((LM_DEBUG,
-			   "* src align = %d, dst align = %d\n",
-			   tellalign (src),
-			   tellalign (os.begin ()->wr_ptr ())));
-	      }
+            if (n == 0)
+              {
+                ACE_DEBUG((LM_DEBUG,
+                           ACE_TEXT ("* src align = %d, dst align = %d\n"),
+                           tellalign (src),
+                           tellalign (os.begin ()->wr_ptr ())));
+              }
 
-	    Crono crono;
-	    crono.start ();
-	    H::write_array (os, idata, total);
-	    crono.stop ();
-	    secs = crono.read_seconds ();
-	  }
-	else
-	  {
-	    int i = 0;
+            Crono crono;
+            crono.start ();
+            H::write_array (os, idata, total);
+            crono.stop ();
+            secs = crono.read_seconds ();
+          }
+        else
+          {
+            int i = 0;
 
-	    Crono crono;
-	    crono.start();
-	    while (i < total)
-	      {
-		os << idata[i++];
-		os << idata[i++];
-		os << idata[i++];
-		os << idata[i++];
-	      }
-	    crono.stop ();
-	    secs = crono.read_seconds ();
-	  }
+            Crono crono;
+            crono.start();
+            while (i < total)
+              {
+                os << idata[i++];
+                os << idata[i++];
+                os << idata[i++];
+                os << idata[i++];
+              }
+            crono.stop ();
+            secs = crono.read_seconds ();
+          }
 
-	if (!check_seal(end))
-	  {
-	    ACE_ERROR((LM_ERROR,
-		       ACE_TEXT( "Broken seal, aborting.\n" )));
-	    ACE_OS::exit(1);
-	  }
+        if (!check_seal(end))
+          {
+            ACE_ERROR((LM_ERROR,
+                       ACE_TEXT( "Broken seal, aborting.\n" )));
+            ACE_OS::exit(1);
+          }
 
-	totalsecs += secs;
+        totalsecs += secs;
 
-	if (n == niter - 1)
-	  {
-	    toread = os.begin ()->rd_ptr ();
-	  }
+        if (n == niter - 1)
+          {
+            toread = os.begin ()->rd_ptr ();
+          }
       }
 
     totalsecs = totalsecs / niter;
 
     ACE_DEBUG((LM_DEBUG,
-	       ACE_TEXT ("Writting to stream %d %s values: %f seconds.\n"),
-	       total,
-	       ACE_TEXT (H::name ()),
-	       totalsecs));
+               ACE_TEXT ("Writting to stream %d %s values: %f seconds.\n"),
+               total,
+               H::name (),
+               totalsecs));
   }
 
   {
     int i;
     for (i = 0; i < total; i++)
       {
-	idata[i] = 0;
+        idata[i] = 0;
       }
   }
 
   ACE_DEBUG((LM_DEBUG,
-	     ACE_TEXT( "Reading them back in opposing byte order...\n" )));
+             ACE_TEXT( "Reading them back in opposing byte order...\n" )));
 
   const int opposite_byte_order = 1 - ACE_CDR_BYTE_ORDER;
 
@@ -485,77 +485,77 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     int n;
     for (n = 0; n < niter; n++)
       {
-	int size = (total + dst_offset)*sizeof(T);
-	ACE_InputCDR is (toread, size, opposite_byte_order);
+        int size = (total + dst_offset)*sizeof(T);
+        ACE_InputCDR is (toread, size, opposite_byte_order);
 
-	// This is intrusive...
-	char* const end = is.rd_ptr () + size;
+        // This is intrusive...
+        char* const end = is.rd_ptr () + size;
 
-	do_seal (end);
+        do_seal (end);
 
-	double secs = 0.0;
-	if (use_array)
-	  {
-	    {
-	      int i;
-	      for (i = 0; i < dst_offset; i++)
-		{
-		  T v;
-		  is >> v;
-		}
-	    }
+        double secs = 0.0;
+        if (use_array)
+          {
+            {
+              int i;
+              for (i = 0; i < dst_offset; i++)
+                {
+                  T v;
+                  is >> v;
+                }
+            }
 
-	    if (n == 0)
-	      {
-		ACE_DEBUG((LM_DEBUG,
-			   "* src align = %d, dst align = %d\n",
-			   tellalign (is.rd_ptr ()),
-			   tellalign (src)));
-	      }
+            if (n == 0)
+              {
+                ACE_DEBUG((LM_DEBUG,
+                           ACE_TEXT ("* src align = %d, dst align = %d\n"),
+                           tellalign (is.rd_ptr ()),
+                           tellalign (src)));
+              }
 
-	    Crono crono;
-	    crono.start ();
-	    H::read_array (is, idata, total);
-	    crono.stop ();
-	    secs = crono.read_seconds ();
-	  }
-	else
-	  {
-	    int i = 0;
-	    Crono crono;
-	    crono.start ();
-	    while (i < total)
-	      {
-		is >> idata[i++];
-		is >> idata[i++];
-		is >> idata[i++];
-		is >> idata[i++];
-	      }
-	    crono.stop ();
-	    secs = crono.read_seconds ();
-	  }
-	totalsecs += secs;
+            Crono crono;
+            crono.start ();
+            H::read_array (is, idata, total);
+            crono.stop ();
+            secs = crono.read_seconds ();
+          }
+        else
+          {
+            int i = 0;
+            Crono crono;
+            crono.start ();
+            while (i < total)
+              {
+                is >> idata[i++];
+                is >> idata[i++];
+                is >> idata[i++];
+                is >> idata[i++];
+              }
+            crono.stop ();
+            secs = crono.read_seconds ();
+          }
+        totalsecs += secs;
 
-	if (!check_seal (end))
-	  {
-	    ACE_ERROR((LM_ERROR,
-		       ACE_TEXT( "Broken seal, aborting.\n" )));
-	    ACE_OS::exit(1);
-	  }
+        if (!check_seal (end))
+          {
+            ACE_ERROR((LM_ERROR,
+                       ACE_TEXT( "Broken seal, aborting.\n" )));
+            ACE_OS::exit(1);
+          }
       }
 
     totalsecs = totalsecs / niter;
 
     ACE_DEBUG((LM_DEBUG,
-	       ACE_TEXT ("Reading from stream %d %s values")
-	       ACE_TEXT (" (byte swapping): %f seconds.\n"),
-	       total,
-	       ACE_TEXT (H::name ()),
-	       totalsecs));
+               ACE_TEXT ("Reading from stream %d %s values")
+               ACE_TEXT (" (byte swapping): %f seconds.\n"),
+               total,
+               H::name (),
+               totalsecs));
   }
 
   ACE_DEBUG((LM_DEBUG,
-	     ACE_TEXT ("Now checking data...\n") ));
+             ACE_TEXT ("Now checking data...\n") ));
 
   int errors = 0;
   const int maxerrors = 6;
@@ -564,47 +564,47 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     int i;
     for (i = 0; i < total; i++)
       {
-	T rv;
+        T rv;
 
-	const char* src = ACE_reinterpret_cast(const char*, (idata + i));
-	char* dst = ACE_reinterpret_cast(char*, (&rv));
+        const char* src = ACE_reinterpret_cast(const char*, (idata + i));
+        char* dst = ACE_reinterpret_cast(char*, (&rv));
 
         H::swap(src, dst);
 
-	T cv = CDR_Test<T, H>::checkval (i);
-	if (rv != cv)
-	  {
-	    static char rs[32 + 1];
-	    static char cs[32 + 1];
-	    CDR_Test<T, H>::ttoh (rv, rs);
-	    CDR_Test<T, H>::ttoh (cv, cs);
-	    ACE_ERROR((LM_ERROR,
-		       ACE_TEXT ( "Wrong value at pos %d:" )
-		       ACE_TEXT ( " '%s' should be '%s'.\n" ),
-		       i, rs, cs));
-	    errors++;
-	    if (errors == maxerrors)
-	      {
-		ACE_ERROR((LM_ERROR,
-			   ACE_TEXT ( "%d errors found, ")
-			   ACE_TEXT ( "interrupting check.\n" ),
-			   errors));
-		break;
-	      }
-	  }
+        T cv = CDR_Test<T, H>::checkval (i);
+        if (rv != cv)
+          {
+            static char rs[32 + 1];
+            static char cs[32 + 1];
+            CDR_Test<T, H>::ttoh (rv, rs);
+            CDR_Test<T, H>::ttoh (cv, cs);
+            ACE_ERROR((LM_ERROR,
+                       ACE_TEXT ( "Wrong value at pos %d:" )
+                       ACE_TEXT ( " '%s' should be '%s'.\n" ),
+                       i, rs, cs));
+            errors++;
+            if (errors == maxerrors)
+              {
+                ACE_ERROR((LM_ERROR,
+                           ACE_TEXT ( "%d errors found, ")
+                           ACE_TEXT ( "interrupting check.\n" ),
+                           errors));
+                break;
+              }
+          }
       }
   }
 
   if (errors != 0)
     {
       ACE_ERROR((LM_ERROR,
-		 ACE_TEXT ("Inconsistencies found, aborting.\n") ));
+                 ACE_TEXT ("Inconsistencies found, aborting.\n") ));
       ACE_OS::exit(1);
     }
 
   ACE_DEBUG((LM_DEBUG,
-	     ACE_TEXT ("Data OK, Ending %s test.\n"),
-	     ACE_TEXT (H::name ())));
+             ACE_TEXT ("Data OK, Ending %s test.\n"),
+             H::name ()));
 }
 
 template <class T, class N>
@@ -619,23 +619,23 @@ CDR_Test<T, N>::~CDR_Test ()
 
 struct DoubleHelper
 {
-  static const char* name ()
+  static const ACE_TCHAR* name ()
     {
-      return "CDR::Double";
+      return ACE_TEXT ("CDR::Double");
     }
   static const int integral ()
     {
       return 0;
     }
   static void read_array (ACE_InputCDR& is,
-			  ACE_CDR::Double* x,
-			  ACE_UINT32 n)
+                          ACE_CDR::Double* x,
+                          ACE_UINT32 n)
     {
       is.read_double_array (x, n);
     }
   static void write_array (ACE_OutputCDR& os,
-			   ACE_CDR::Double* x,
-			   ACE_UINT32 n)
+                           ACE_CDR::Double* x,
+                           ACE_UINT32 n)
     {
       os.write_double_array (x, n);
     }
@@ -647,23 +647,23 @@ struct DoubleHelper
 
 struct FloatHelper
 {
-  static const char* name ()
+  static const ACE_TCHAR* name ()
     {
-      return "CDR::Float";
+      return ACE_TEXT ("CDR::Float");
     }
   static const int integral ()
     {
       return 0;
     }
   static void read_array (ACE_InputCDR& is,
-			  ACE_CDR::Float* x,
-			  ACE_UINT32 n)
+                          ACE_CDR::Float* x,
+                          ACE_UINT32 n)
     {
       is.read_float_array (x, n);
     }
   static void write_array (ACE_OutputCDR& os,
-			   ACE_CDR::Float* x,
-			   ACE_UINT32 n)
+                           ACE_CDR::Float* x,
+                           ACE_UINT32 n)
     {
       os.write_float_array (x, n);
     }
@@ -675,23 +675,23 @@ struct FloatHelper
 
 struct ShortHelper
 {
-  static const char* name ()
+  static const ACE_TCHAR* name ()
     {
-      return "CDR::Short";
+      return ACE_TEXT ("CDR::Short");
     }
   static const int integral ()
     {
       return 1;
     }
   static void read_array (ACE_InputCDR& is,
-			  ACE_CDR::Short* x,
-			  ACE_UINT32 n)
+                          ACE_CDR::Short* x,
+                          ACE_UINT32 n)
     {
       is.read_short_array (x, n);
     }
   static void write_array (ACE_OutputCDR& os,
-			   ACE_CDR::Short* x,
-			   ACE_UINT32 n)
+                           ACE_CDR::Short* x,
+                           ACE_UINT32 n)
     {
       os.write_short_array (x, n);
     }
@@ -703,23 +703,23 @@ struct ShortHelper
 
 struct LongHelper
 {
-  static const char* name ()
+  static const ACE_TCHAR* name ()
     {
-      return "CDR::Long";
+      return ACE_TEXT ("CDR::Long");
     }
   static const int integral ()
     {
       return 1;
     }
   static void read_array (ACE_InputCDR& is,
-			  ACE_CDR::Long* x,
-			  ACE_UINT32 n)
+                          ACE_CDR::Long* x,
+                          ACE_UINT32 n)
     {
       is.read_long_array (x, n);
     }
   static void write_array (ACE_OutputCDR& os,
-			   ACE_CDR::Long* x,
-			   ACE_UINT32 n)
+                           ACE_CDR::Long* x,
+                           ACE_UINT32 n)
     {
       os.write_long_array (x, n);
     }
@@ -731,23 +731,23 @@ struct LongHelper
 
 struct LongLongHelper
 {
-  static const char* name ()
+  static const ACE_TCHAR* name ()
     {
-      return "CDR::LongLong";
+      return ACE_TEXT ("CDR::LongLong");
     }
   static const int integral ()
     {
       return 1;
     }
   static void read_array (ACE_InputCDR& is,
-			  ACE_CDR::LongLong* x,
-			  ACE_UINT32 n)
+                          ACE_CDR::LongLong* x,
+                          ACE_UINT32 n)
     {
       is.read_longlong_array (x, n);
     }
   static void write_array (ACE_OutputCDR& os,
-			   ACE_CDR::LongLong* x,
-			   ACE_UINT32 n)
+                           ACE_CDR::LongLong* x,
+                           ACE_UINT32 n)
     {
       os.write_longlong_array (x, n);
     }
@@ -760,23 +760,23 @@ struct LongLongHelper
 
 struct CharHelper
 {
-  static const char* name ()
+  static const ACE_TCHAR* name ()
     {
-      return "CDR::Char";
+      return ACE_TEXT ("CDR::Char");
     }
   static const int integral ()
     {
       return 1;
     }
   static void read_array (ACE_InputCDR& is,
-			  ACE_CDR::Char* x,
-			  ACE_UINT32 n)
+                          ACE_CDR::Char* x,
+                          ACE_UINT32 n)
     {
       is.read_char_array (x, n);
     }
   static void write_array (ACE_OutputCDR& os,
-			   ACE_CDR::Char* x,
-			   ACE_UINT32 n)
+                           ACE_CDR::Char* x,
+                           ACE_UINT32 n)
     {
       os.write_char_array (x, n);
     }
@@ -789,22 +789,22 @@ struct CharHelper
 void usage (ACE_TCHAR* cmd)
 {
   ACE_ERROR((LM_ERROR,
-	     ACE_TEXT ("Usage: %s ")
-	     ACE_TEXT ("[-n n] " )
-	     ACE_TEXT ("[[-d n|-f n|-q n|-w n|-h n|-c n|-t n] | [-t n]]\n")
-	     ACE_TEXT ("  -n n: average time for n iterations.\n")
-	     ACE_TEXT ("  -d n: n double precision floating point\n")
-	     ACE_TEXT ("  -f n: n single precision floating point\n")
-	     ACE_TEXT ("  -q n: n quadwords (int64).\n")
-	     ACE_TEXT ("  -w n: n words (int32).\n")
-	     ACE_TEXT ("  -h n: n halfwords (int16).\n")
-	     ACE_TEXT ("  -c n: n chars.\n")
-	     ACE_TEXT ("  -t n: n iterations for every type.\n")
-	     ACE_TEXT ("  n must be >= 16 for dfqwhct.\n")
-	     ACE_TEXT ("  If you provide one of dfqwhc, then only the\n")
-	     ACE_TEXT ("  test for the corresponding type ")
-	     ACE_TEXT ("will be performed.\n"),
-	     cmd));
+             ACE_TEXT ("Usage: %s ")
+             ACE_TEXT ("[-n n] " )
+             ACE_TEXT ("[[-d n|-f n|-q n|-w n|-h n|-c n|-t n] | [-t n]]\n")
+             ACE_TEXT ("  -n n: average time for n iterations.\n")
+             ACE_TEXT ("  -d n: n double precision floating point\n")
+             ACE_TEXT ("  -f n: n single precision floating point\n")
+             ACE_TEXT ("  -q n: n quadwords (int64).\n")
+             ACE_TEXT ("  -w n: n words (int32).\n")
+             ACE_TEXT ("  -h n: n halfwords (int16).\n")
+             ACE_TEXT ("  -c n: n chars.\n")
+             ACE_TEXT ("  -t n: n iterations for every type.\n")
+             ACE_TEXT ("  n must be >= 16 for dfqwhct.\n")
+             ACE_TEXT ("  If you provide one of dfqwhc, then only the\n")
+             ACE_TEXT ("  test for the corresponding type ")
+             ACE_TEXT ("will be performed.\n"),
+             cmd));
   ACE_OS::exit(1);
 }
 
@@ -860,25 +860,25 @@ main (int argc, ACE_TCHAR *argv[])
       int got = 0;
       int i;
       for (i = 0; i < n; i++)
-	{
-	  if (opts[i].c == opt)
-	    {
-	      int v = ACE_OS::atoi (get_opt.optarg);
-	      if (!(opts[i].checkf) (v))
-		{
-		  usage(argv[0]);
-		}
+        {
+          if (opts[i].c == opt)
+            {
+              int v = ACE_OS::atoi (get_opt.optarg);
+              if (!(opts[i].checkf) (v))
+                {
+                  usage(argv[0]);
+                }
 
-	      *(opts[i].v) = v;
-	      got = 1;
-	      break;
-	    }
-	}
+              *(opts[i].v) = v;
+              got = 1;
+              break;
+            }
+        }
 
       if (!got)
-	{
-	  usage(argv[0]);
-	}
+        {
+          usage(argv[0]);
+        }
     }
 
   if (total == 0)
@@ -905,28 +905,28 @@ main (int argc, ACE_TCHAR *argv[])
   for (use_array = 0; use_array < 2; use_array++)
     {
       {
-	CDR_Test<ACE_CDR::Double, DoubleHelper>
-	  test (dtotal, niter, use_array);
+        CDR_Test<ACE_CDR::Double, DoubleHelper>
+          test (dtotal, niter, use_array);
       }
       {
-	CDR_Test<ACE_CDR::Float, FloatHelper>
-	  test (ftotal, niter, use_array);
+        CDR_Test<ACE_CDR::Float, FloatHelper>
+          test (ftotal, niter, use_array);
       }
       {
-	CDR_Test<ACE_CDR::LongLong, LongLongHelper>
-	  test (qtotal, niter, use_array);
+        CDR_Test<ACE_CDR::LongLong, LongLongHelper>
+          test (qtotal, niter, use_array);
       }
       {
-	CDR_Test<ACE_CDR::Long, LongHelper>
-	  test (wtotal, niter, use_array);
+        CDR_Test<ACE_CDR::Long, LongHelper>
+          test (wtotal, niter, use_array);
       }
       {
-	CDR_Test<ACE_CDR::Short, ShortHelper>
-	  test (htotal, niter, use_array);
+        CDR_Test<ACE_CDR::Short, ShortHelper>
+          test (htotal, niter, use_array);
       }
       {
-	CDR_Test<ACE_CDR::Char, CharHelper>
-	  test (ctotal, niter, use_array);
+        CDR_Test<ACE_CDR::Char, CharHelper>
+          test (ctotal, niter, use_array);
       }
     }
 

@@ -5365,6 +5365,7 @@ public:
   static ACE_TCHAR *getenv (const ACE_TCHAR *symbol);
   static int putenv (const ACE_TCHAR *string);
   static ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
+  static ACE_TCHAR *getenvstrings (void);
 
   static int getopt (int argc,
                      char *const *argv,
