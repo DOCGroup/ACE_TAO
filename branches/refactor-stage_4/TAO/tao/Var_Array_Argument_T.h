@@ -85,7 +85,7 @@ namespace TAO
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 
   private:
-    S_var x_;
+    S_slice *& x_;
   };
 
   /**

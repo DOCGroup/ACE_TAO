@@ -97,35 +97,36 @@ template<typename S>
 CORBA::Boolean
 TAO::Ret_Fixed_Size_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
 {
-  return cdr >> *this->x_;
+  return cdr >> this->x_;
 }
 
 template<typename S>
 void
 TAO::Ret_Fixed_Size_Argument_T<S>::interceptor_result (CORBA::Any * any)
 {
-  (*any) <<= *this->x_;
+  (*any) <<= this->x_;
 }
 
 template<typename S>
 CORBA::Boolean
 TAO::Ret_Fixed_Size_Argument_T<S>::interceptor_replace (CORBA::Any & any)
 {
-  return any >>= this->x_;
+  S * tmp = &this->x_;
+  return any >>= tmp;
 }
 
 template<typename S>
 S
 TAO::Ret_Fixed_Size_Argument_T<S>::excp (void)
 {
-  return *this->x_;
+  return this->x_;
 }
 
 template<typename S>
 S
 TAO::Ret_Fixed_Size_Argument_T<S>::retn (void)
 {
-  return *this->x_;
+  return this->x_;
 }
 
 // ============================================================
