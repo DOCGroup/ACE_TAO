@@ -1,3 +1,20 @@
+Tue Sep  1 19:57:46 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tests/Simple/Time/Time.dsw:
+	* tests/Simple/Time/client.dsp:
+	* tests/Simple/Time/client_static.dsp:
+	* tests/Simple/Time/server.dsp:
+	* tests/Simple/Time/server_static.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw:
+	* tests/Cubit/TAO/IDL_Cubit/client.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/server.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+	  Updated for MSVC 6.
+
+	* tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+	  Fixed a problem on NT with ACE_ROOT and updated it to use all
+	  the stuff I learned about Perl since the last time I was here.
+
 Tue Sep 01 19:28:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/Generic_Servant/client.cpp and
@@ -6,7 +23,7 @@ Tue Sep 01 19:28:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 Tue Sep  1 19:06:44 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_global.cpp : Fixed "strdup + delete"
-	bug!!! Replaced the strdup's with ACE_OS::strnew. Thanks to Darrel
+	bug!!! Replaced the strdup's with ACE_OS::strnew. Thanks to Darrell
 	for pointing this out. 
 
 Tue Sep  1 16:29:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
