@@ -118,7 +118,7 @@ main (int argc, char *argv[])
 			       key),
 			      3);
      
-	  // Stringify the objref we'll be implementing, and print it
+ 	  // Stringify the objref we'll be implementing, and print it
 	  // to stdout.  Someone will take that string and give it to
 	  // some client.  Then release the object.
 
