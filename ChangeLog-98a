@@ -1,3 +1,11 @@
+Sat Apr 18 01:14:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.cpp (start and stop): start and stop should only be done
+ 	  when ACE_Countdown_Time::max_wait_time_ is non-zero.
+
+	* ace/Acceptor.cpp (open): Only set the reactor if calls to open()
+ 	  and register_handler() succeeds.
+
 Fri Apr 17 21:00:21 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-hpux11.h: Changes and comments around the
