@@ -43,8 +43,7 @@ TAO_DynStruct_i::init_common (void)
   this->container_is_destroying_ = 0;
   this->has_components_ = 1;
   this->destroyed_ = 0;
-  this->component_count_ = ACE_static_cast (CORBA::ULong,
-                                            this->da_members_.size ());
+  this->component_count_ = static_cast <CORBA::ULong> (this->da_members_.size ());
   this->current_position_ = this->component_count_ ? 0 : -1;
 }
 
@@ -95,7 +94,7 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any
   if (impl->encoded ())
     {
       unk = dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-        
+
       in = unk->_tao_get_cdr ();
     }
   else
@@ -507,7 +506,7 @@ TAO_DynStruct_i::set_members_as_dyn_any (
       this->da_members_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      this->da_members_[i] = 
+      this->da_members_[i] =
         values[i].value->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
@@ -532,7 +531,7 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
     }
 
   CORBA::TypeCode_var tc = any.type ();
-  CORBA::Boolean equivalent = 
+  CORBA::Boolean equivalent =
     this->type_->equivalent (tc.in ()
                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -548,7 +547,7 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
       if (impl->encoded ())
         {
           unk = dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-          
+
           in = unk->_tao_get_cdr ();
         }
       else
@@ -559,7 +558,7 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
         }
 
       // If we have an exception type, unmarshal the repository ID.
-      CORBA::TCKind kind = 
+      CORBA::TCKind kind =
         TAO_DynAnyFactory::unalias (this->type_.in ()
                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -636,19 +635,18 @@ TAO_DynStruct_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
       out_cdr << this->type_->id ();
     }
 
-  bool type_known = false;
   TAO::Any_Impl *field_impl = 0;
   TAO::Unknown_IDL_Type *field_unk = 0;
   TAO_InputCDR field_in_cdr (static_cast<ACE_Message_Block *> (0));
 
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
-      CORBA::TypeCode_var field_tc = 
+      CORBA::TypeCode_var field_tc =
         this->da_members_[i]->type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // Recursive step.
-      CORBA::Any_var field_any = 
+      CORBA::Any_var field_any =
         this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
@@ -659,7 +657,7 @@ TAO_DynStruct_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
         {
           field_unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (field_impl);
-            
+
           field_in_cdr = field_unk->_tao_get_cdr ();
         }
       else
@@ -725,8 +723,7 @@ TAO_DynStruct_i::equal (DynamicAny::DynAny_ptr rhs
 
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
-      rhs->seek (ACE_static_cast (CORBA::Long,
-                                  i)
+      rhs->seek (static_cast <CORBA::Long> (i)
                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
@@ -801,8 +798,7 @@ TAO_DynStruct_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
       return DynamicAny::DynAny::_nil ();
     }
 
-  CORBA::ULong index = ACE_static_cast (CORBA::ULong,
-                                        this->current_position_);
+  CORBA::ULong index = static_cast <CORBA::ULong> (this->current_position_);
 
   this->set_flag (this->da_members_[index].in (),
                   0
