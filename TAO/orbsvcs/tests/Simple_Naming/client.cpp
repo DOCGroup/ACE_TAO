@@ -192,6 +192,9 @@ CosNaming_Client::init (int argc, char **argv)
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      this->orbmgr_.activate_poa_manager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         return -1;
@@ -1011,7 +1014,7 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context,
 
       root_context->unbind (test_name, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG, "Not found (case 3) test failed\n"));
+      ACE_DEBUG ((LM_DEBUG, "Not found (case 3) test failed - no exception was thrown\n"));
     }
   ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
