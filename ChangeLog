@@ -1,3 +1,9 @@
+Mon Sep  6 07:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS.h:
+          Removed include of sys/modem.h for HPUX, this is already done in
+          os_include/os_termios.h
+
 Fri Sep  3 15:53:19 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-sunos5.8.h: Added ACE_HAS_TIMEZONE. This may be
