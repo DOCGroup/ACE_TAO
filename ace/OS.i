@@ -5218,8 +5218,7 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (VXWORKS)
   ACE_hthread_t tid;
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::taskNameToId (thr_id), tid),
-              int, ERROR, tid);
+  ACE_OSCALL (::taskNameToId (thr_id), int, ERROR, tid);
 
   if (tid == ERROR)
     return -1;
