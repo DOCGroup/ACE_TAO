@@ -1,3 +1,13 @@
+Mon Dec 31 16:51:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/util/utl_scope.cpp (add_to_scope):
+
+          Modified check for redefinition error, caused by the
+          newly added addition of a forward declared interface to
+          a module's scope in
+
+          Mon Dec 31 15:55:19 2001  Jeff Parsons <parsons@cs.wustl.edu>.
+
 Mon Dec 31 16:46:06 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/RTCORBA/Activity/Periodic_Task.cpp: 
@@ -19,7 +29,8 @@ Mon Dec 31 15:55:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
           module contains a full interface definition, and then
           is reopened and contains a forward declaration of the
           same interface (legal but useless), the IDL compiler 
-          was seeing the second module as empty.
+          was seeing the second module as empty. Now the forward
+          declared interface is added to the module's scope.
 
         * tests/IDL_Test/union.idl:
 
