@@ -6,7 +6,7 @@ Fri Dec 19 23:05:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_traits.cpp:
 
-         Removed generation of semicolon at the closing brace of the TAO
+          Removed generation of semicolon at the closing brace of the TAO
 	  namespace that encloses the traits specialization
 	  declarations. Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
 	  for pointing out that this trailing semicolon causes problems
