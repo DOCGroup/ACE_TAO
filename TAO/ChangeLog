@@ -1,3 +1,10 @@
+Mon Nov 24 19:57:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+
+	  The last fix was bogus. Added a new target 'all'. Thanks to Don
+	  for pointing it out.
+
 Mon Nov 24 17:57:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/Notify/Lanes/Makefile:
