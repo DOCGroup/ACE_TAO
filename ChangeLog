@@ -15,24 +15,28 @@ Tue Jun 15 22:11:09 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Tue Jun 15 20:27:06 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/os_include/sys/os_select.h:
-	  Added #include of os_unistd.h to bring in select() declaration
-	  on 4.4BSD derived systems.
+        * ace/os_include/sys/os_select.h:
+          Added #include of os_unistd.h to bring in select() declaration
+          on 4.4BSD derived systems.
+          This fixes bugzilla bug 1842.
 
-	* configure.ac:
-	* ace/config_h.m4:
-	  Added check for gethostent which sets ACE_LACKS_GETHOSTENT if
-	  it does not exist.
+        * configure.ac:
+        * ace/config_h.m4:
+          Added check for gethostent which sets ACE_LACKS_GETHOSTENT if
+          it does not exist.
+          This fixes bugzilla bug 1838.
 
-	* configure.ac:
-	* ace/config_h.m4:
-	  Changed check for <stropts.h> to set ACE_LACKS_STROPTS_H if it
-	  doesn't exist.
+        * configure.ac:
+        * ace/config_h.m4:
+          Changed check for <stropts.h> to set ACE_LACKS_STROPTS_H if it
+          doesn't exist.
+          This fixes bugzilla bug 1837.
 
-	* ace/Log_Msg.cpp:
-	  Avoid declaring sys_nerr on those targets which provide one in
-	  their system headers to avoid conflicts due to differing const
-	  qualification, etc.
+        * ace/Log_Msg.cpp:
+          Avoid declaring sys_nerr on those targets which provide one in
+          their system headers to avoid conflicts due to differing const
+          qualification, etc.
+          This fixes bugzilla bug 1843.
 
 Tue Jun 15 12:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
