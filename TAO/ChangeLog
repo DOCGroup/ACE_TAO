@@ -1,3 +1,8 @@
+Tue Apr  1 07:20:15 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/CodeSets/simple/client.cpp (main): Put ACE_HAS_WCHAR guard
+          around wide character test.
+
 Tue Apr  1 13:55:04 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* orbsvcs/orbsvcs/ESF/ESF_Proxy_List.{h,i}:
