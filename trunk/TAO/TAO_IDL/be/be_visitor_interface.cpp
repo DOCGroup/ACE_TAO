@@ -1765,12 +1765,12 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
       *os << ": ACE_NESTED_CLASS ("
 	  << scope->name () << ","
 	  << node->local_name ()
-	  << ") (servant, stub, CORBA::B_TRUE)," << be_nl;
+	  << ") ()," << be_nl;
     }
   else
     {
       *os << ": " << node->name ()
-	  << " (servant, stub, CORBA::B_TRUE)," << be_nl;
+	  << " ()," << be_nl;
     }
 
   // @@ We should call the constructor for all base classes, since we
