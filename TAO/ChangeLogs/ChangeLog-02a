@@ -12,6 +12,11 @@ Thu Jul  6 11:04:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Added .in () to accesses of a TypeCode struct member,
 	  which is generated as a _var.
 
+	  Commented out the argument names in the functions that
+	  are stil marked TODO.
+
+	  Added a union member initialization to prevent egcs warnings.
+
 Sun Jul  2 18:29:10 2000  Marina Spivak  <marina@cs.wustl.edu>
 
         * peformance-tests/RTCorba/Orb_Per_Priority/client.cpp:
