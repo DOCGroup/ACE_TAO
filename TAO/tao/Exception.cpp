@@ -531,6 +531,7 @@ CORBA_UnknownUserException::CORBA_UnknownUserException (void)
 }
 
 CORBA_UnknownUserException::CORBA_UnknownUserException (CORBA_Any &ex)
+  : CORBA_UserException (CORBA::_tc_UnknownUserException)
 {
   ACE_NEW (this->exception_,
            CORBA_Any (ex));
