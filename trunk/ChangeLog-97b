@@ -1,3 +1,7 @@
+Sun Nov 02 18:09:14 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.3.35, released Sun Nov 02 18:09:14 1997.
+
 Sun Nov  2 15:31:45 1997  Douglas C. Schmidt  <schmidt@polka.cs.wustl.edu>
 
 	* ace/Select_Reactor.i (cancel_timer): Make sure that we don't try
