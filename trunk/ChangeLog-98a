@@ -5,6 +5,12 @@ Fri Jan 09 07:04:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.vxworks: added Env_Value_Test.
 
+        * include/makeinclude/platform_vxworks5.x_g++.GNU: added
+          target-dependent support for symbol table extractor, and
+          disabled symbol table extraction (POSTLINK) by default.
+          Thanks to Keith Nicewarner <knicewar@sanders.com> for
+          reporting problems with this on PPC604 targets.
+
 Fri Jan 09 00:14:20 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Connection_Handler_Acceptor.cpp:
