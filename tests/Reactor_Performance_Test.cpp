@@ -379,9 +379,11 @@ main (int argc, ASYS_TCHAR *argv[])
                 ASYS_TEXT ("(%t) %p\n"),
                 ASYS_TEXT ("thread create failed")));
 
+  ACE_Time_Value run_limit (10);
+
   ACE_Profile_Timer timer;
   timer.start ();
-  ACE_Reactor::instance()->run_event_loop ();
+  ACE_Reactor::instance()->run_event_loop (run_limit);
   timer.stop ();
 
   ACE_Profile_Timer::ACE_Elapsed_Time et;
