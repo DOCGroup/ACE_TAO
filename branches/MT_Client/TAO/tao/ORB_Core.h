@@ -155,6 +155,47 @@ public:
   // See if we have a collocated address, if yes, return the POA
   // associated with the address.
 
+  int leader_available (void);
+  // returns the refcount on the leader
+
+  int I_am_the_leader_thread (void);
+  // returns 1 if we are the leader thread,
+  // else 0
+
+  void set_leader_thread (void) ;
+  // sets the thread_available flag and the thread ID of the leader 
+  // thread in the leader-follower model
+
+  void set_leader_thread (ACE_thread_t thread_ID);
+  // sets the thread ID of the leader thread in the leader-follower
+  // model
+
+  void unset_leader_thread (void);
+  // sets the leader_available flag to false
+
+  int unset_leader_wake_up_follower (void);
+  // sets the leader_available flag to false
+  // and wakes up a new follower
+
+  ACE_SYNCH_MUTEX &leader_follower_lock (void);
+  // returns the leader-follower lock
+
+  int add_follower (ACE_SYNCH_CONDITION *follower_ptr);
+  // adds the a follower to the set of followers in the leader-
+  // follower model
+  // returns 0 on success, -1 on failure
+
+  int follower_available ();
+  // checks for the availablity of a follower
+  // returns 1 on available, 0 else
+
+  int remove_follower (ACE_SYNCH_CONDITION *follower_ptr);
+  // removes a follower from the leader-follower set
+  // returns 0 on success, -1 on failure
+
+  ACE_SYNCH_CONDITION *get_next_follower (void);
+  // returns randomly a follower from the leader-follower set
+  // returns follower on success, else 0
 private:
   int init (int& argc, char ** argv);
   // Initialize the guts of the ORB Core.  It is intended that this be
@@ -259,6 +300,20 @@ private:
   char *preconnections_;
   // A string of comma-separated <{host}>:<{port}> pairs used to
   // pre-establish connections using <preconnect>.
+
+  static ACE_SYNCH_MUTEX leader_follower_lock_; 
+  // do protect the access to the following three members
+
+  static ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
+  // keep a set of followers around (protected)
+
+  static int leaders_; 
+  // 0 if no leader is around, 1 if there is a leader
+  // > 1 if we do nested upcalls (protected)
+
+  static ACE_thread_t leader_thread_ID_;
+  // thread ID of the leader thread (protected)
+
 };
 
 class TAO_Default_Reactor : public ACE_Reactor

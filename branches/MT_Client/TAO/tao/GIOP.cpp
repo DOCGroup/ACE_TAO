@@ -905,6 +905,13 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
   TAO_SVC_HANDLER *handler = this->handler_;
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
                                                      this->inp_stream_);
+  {
+    //ACE_Guard<ACE_SYNCH_MUTEX> g (TAO_ORB_Core_instance ()->leader_follower_lock ());
+    TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->handler_);
+    ACE_DEBUG ((LM_DEBUG,
+               "(%P|%t) GIOP: resume.\n"));
+  }
+
   switch (m)
     {
     case TAO_GIOP::Reply:
@@ -1279,6 +1286,14 @@ TAO_GIOP_Invocation::invoke (TAO_Exception_Data *excepts,
   TAO_SVC_HANDLER *handler = this->handler_;
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
                                                      this->inp_stream_);
+
+  {
+    //ACE_Guard<ACE_SYNCH_MUTEX> g (TAO_ORB_Core_instance ()->leader_follower_lock ());
+    TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->handler_);
+    ACE_DEBUG ((LM_DEBUG,
+               "(%P|%t) GIOP: resume.\n"));
+  }
+
   switch (m)
     {
     case TAO_GIOP::Reply:
