@@ -1,9 +1,16 @@
+Sat May  3 18:18:07 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          When checking for $Id strings, when found jump out of the
+          while loop. This improved the speed of the check by factor
+          two on my system.
+
 Fri May  2 20:07:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * include/makeinclude/ace_flags.bor:
 
           Added some flag and lib definitions that will be used by
-          BCB with the new TAO libraries that will appear in a 
+          BCB with the new TAO libraries that will appear in a
           forthcoming CVS branch merge.
 
 Fri May  2 08:45:09 2003  Chad Elliott  <elliott_c@ociweb.com>
