@@ -15,7 +15,7 @@ endif # ! TAO_ROOT
 LDLIBS = -lTAO
 
 IDLFILES = testC testS
-BIN = client st_client server st_server
+BIN = client st_client deferred_synch_client server st_server
 
 ifdef AMI
 BIN += ami-latency-client ami-throughput-client
@@ -25,6 +25,7 @@ SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i)
 
 CLIENT_OBJS = client.o testC.o
 ST_CLIENT_OBJS = st_client.o testC.o
+DII_CLIENT_OBJS = dii_client.o testC.o
 SERVER_OBJS = server.o test_i.o $(addsuffix .o, $(IDLFILES))
 ST_SERVER_OBJS = st_server.o test_i.o $(addsuffix .o, $(IDLFILES))
 
@@ -64,6 +65,9 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 st_client: $(addprefix $(VDIR),$(ST_CLIENT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+
+deferred_synch_client: $(addprefix $(VDIR),$(DII_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
