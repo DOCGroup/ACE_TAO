@@ -1,3 +1,9 @@
+Fri Jan 23 06:27:51 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/IOStream.h: use std::string if
+          ACE_USES_STD_NAMESPACE_FORSTDCPP_LIB IOStream.h.  Thanks
+          to Gonzo for the patch.
+
 Thu Jan 22 16:34:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Connection/misc/Connection_Handler.cpp (svc): Fixed a
