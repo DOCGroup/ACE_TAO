@@ -7,7 +7,7 @@ ACE_RCSID (PortableGroup,
 
 
 int
-TAO_PG_MemberInfo::operator== (const struct TAO_PG_MemberInfo & rhs)
+TAO_PG_MemberInfo::operator== (const TAO_PG_MemberInfo & rhs)
 {
   // For the purposes of the member info set, only the location is
   // important.
