@@ -10,6 +10,7 @@ doc:
 	javadoc -d ${JACE_WRAPPER}/doc $(files) $(packages)
 
 files = LogMessageReceiver.java \
+	DefaultLMR.java \
 	LogRecord.java \
 	ServerLoggingAcceptor.java \
 	ServerLoggingHandler.java

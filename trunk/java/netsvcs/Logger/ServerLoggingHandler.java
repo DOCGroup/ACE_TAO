@@ -33,30 +33,41 @@ public class ServerLoggingHandler extends SvcHandler
   // Processes log messages
   private LogMessageReceiver receiver_;
 
-  // Constructor
+  /**
+   * Constructor
+   *
+   *@param receiver    LogMessageReceiver that handles what to do with a message
+   */
   public ServerLoggingHandler (LogMessageReceiver receiver)
   {
     super();
     this.receiver_ = receiver;
   }
 
-  // Start this handler in its own thread
+  /**
+   * Start this handler in its own thread
+   */
   public int open(Object obj)
   {
     new Thread (this).start();
     return 0;
   }
 
-  // Accessor: get the host name of the connected client
+  /**
+   * Accessor: get the host name of the connected client
+   */
   protected String hostName ()
   {
-    return new String(this.stream_.socket().getInetAddress().getHostName());
+    return new String(this.peer().socket().getInetAddress().getHostName());
   }
 
-  // Receive input from the client, and send it to the LMR
+  /**
+   * Receive input from the client, and send it to the LMR.  This is the
+   * main loop for this thread.
+   */
   public void run()
   {
-    DataInputStream dis = (DataInputStream) this.stream_.inputStream();
+    DataInputStream dis = new DataInputStream(this.peer().inputStream());
 
     for (;;)
       {

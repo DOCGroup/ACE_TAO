@@ -4,7 +4,8 @@
  *    netsvcs.Logger
  *
  * = FILENAME
- *    LogMessageReceiver.java
+ *    DefaultLMR.java
+ *
  *
  *@author Everett Anderson
  *
@@ -22,14 +23,16 @@ import netsvcs.Logger.LogRecord;
  * <blockquote>
  * The LogMessageReceiver removes the code that handles a log message from
  * the logging service acceptor.  The DefaultLMR simply calls the LogRecord's
- * print method.  Other implementations of this interface can be built and
- * given to the ServerLoggingAcceptor to change the result.
+ * print method.  
  *
  * @see netsvcs.Logger.ServerLoggingAcceptor
  * @see netsvcs.Logger.LogRecord
  */
-public interface LogMessageReceiver
+class DefaultLMR implements LogMessageReceiver
 {
   public void logRecord (String hostname,
-			 LogRecord record);
-};
+			 LogRecord record)
+    {
+      record.print(hostname, true, System.err);
+    }
+}
