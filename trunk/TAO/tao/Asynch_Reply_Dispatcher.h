@@ -26,16 +26,10 @@
 #include "tao/Transport.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/Asynch_Timeout_Handler.h"
+#include "tao/Messaging.h"
 
 class TAO_Pluggable_Reply_Params;
 class TAO_ORB_Core ;
-
-
-
-
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
-#include "tao/MessagingC.h"
-#endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
 
 /// Base class for TAO_Asynch_Reply_Dispatcher and
 /// TAO_DII_Deferred_Reply_Dispatcher
