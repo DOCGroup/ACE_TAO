@@ -6,9 +6,12 @@ Tue Oct 14 03:26:17 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Tue Oct 14 08:02:20 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* Managed_Object.{h,cpp} (ACE_Cleanup_Adapter): added virtual
+	* ace/Managed_Object.{h,cpp} (ACE_Cleanup_Adapter): added virtual
 	  destructor, needed by some compilers for vtable placement.
 	  Thanks to Stephen Coy <stevec@magna.com.au> for this patch.
+
+	* ace/Svc_Conf_y.cpp: commented out unused args and wrapped
+	  assignments in "if" conditionals to avoid g++ warnings.
 
 Tue Oct 14 03:13:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
