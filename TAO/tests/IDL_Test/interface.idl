@@ -120,6 +120,14 @@ interface Client
   attribute End::Value v;
 };
 
+// Tests arg_traits visitor for unaliased bounded (w)string
+// attributes.
+interface AttributeTester
+{
+  attribute string a_su;
+  attribute string<1> a_sb;
+};
+
 /*
  * Illegal recursion.
  * One day I'll add a mechanism to check for illegal IDL
