@@ -605,18 +605,6 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
       // same size as the ACE_Service_Repository).
       ACE_Reactor::instance ();
 
-      // See if we need to load the static services.
-      if (ACE_Service_Config::no_static_svcs_ == 0
-          && ACE_Service_Config::load_static_svcs () == -1)
-        result = -1;
-      else
-        {
-          int result =
-            ACE_Service_Config::process_commandline_directives ();
-          result =
-            ACE_Service_Config::process_directives () + result;
-        }
-
       // There's no point in dealing with this on NT since it doesn't
       // really support signals very well...
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
@@ -627,18 +615,34 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
         ACE_ERROR ((LM_ERROR,
                     ASYS_TEXT ("can't register signal handler\n")));
 #endif /* ACE_LACKS_UNIX_SIGNALS */
+
+      // See if we need to load the static services.
+      if (ACE_Service_Config::no_static_svcs_ == 0
+          && ACE_Service_Config::load_static_svcs () == -1)
+        result = -1;
+      else
+        {
+          if (ACE_Service_Config::process_commandline_directives () == -1)
+            result = -1;
+          else
+            result = ACE_Service_Config::process_directives ();
+        }
     }
 
-  ace_yy_delete_parse_buffer ();
+  {
+    // Make sure to save/restore errno properly.
+    ACE_Errno_Guard error (errno);
 
-  // Reset debugging back to the way it was when we came into into
-  // <open_i>.
-  if (debugging_enabled)
-    ACE_Log_Msg::enable_debug_messages ();
-   else
-     // Debugging was off when we entered <open_i>.
-    ACE_Log_Msg::disable_debug_messages ();
+    ace_yy_delete_parse_buffer ();
 
+    // Reset debugging back to the way it was when we came into into
+    // <open_i>.
+    if (debugging_enabled)
+      ACE_Log_Msg::enable_debug_messages ();
+    else
+      // Debugging was off when we entered <open_i>.
+      ACE_Log_Msg::disable_debug_messages ();
+  }
   return result;
 }
 

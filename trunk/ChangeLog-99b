@@ -1,5 +1,11 @@
 Thu Aug 19 09:34:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Service_Config: Updated the failure result comment for
+	  open() and cleaned up the return value and errno propagation for
+ 	  open_i() when process_commandline_directives() fails.  Thanks to
+ 	  Jerry D. De Master <jdemaste@ipdinc.com> for reporting the bug
+ 	  and suggesting a fix.
+
 	* ace/Service_Config.h: Moved the process_directives() method
 	  used to parse the svc.conf files out of the protected part of
  	  the class to the public part so that application programmers can
