@@ -123,7 +123,8 @@ namespace TAO
   FT_ServerRequest_Interceptor::check_iogr_version (
       const IOP::ServiceContext &svc
       ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+    ACE_THROW_SPEC ((CORBA::SystemException,
+		     PortableInterceptor::ForwardRequest))
   {
     TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
                                             svc.context_data.get_buffer ()
