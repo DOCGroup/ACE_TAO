@@ -40,9 +40,6 @@ static size_t n_iterations = 50;
 // switch on RW mutexes, else use ordinary mutexes
 // #define RW_MUTEX 1
 
-// Default number of loops.
-static size_t n_loops = 1000;
-
 // Default number of readers.
 static size_t n_readers = 10;
 
