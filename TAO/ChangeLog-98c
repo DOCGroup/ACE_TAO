@@ -1,3 +1,19 @@
+Thu Oct  2 13:48:31 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
+
+	* tests/multiCubit/svr.cpp: Modified the key generation scheme to
+ 	include thread ID.  This works around a current shortcoming in the
+ 	ORB Core in which the object table is shared throughout all object
+ 	adapters (yes, this is being fixed).
+
+	* tao/tao_internals.*: Added new class to scope static operations
+ 	and data completely internal to the ORB.
+
+	* tao/orbobj.{i,cpp}: Moved CORBA_ORB DTOR into cpp file.  Finally
+ 	got rid of icky static mutex in ORB_init().  Moved service config
+ 	initialization into TAO_Internal method.
+
+	* tao/Orb_Core.h: Added comments.
+
 Wed Oct  1 12:51:48 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* tao/corbacom.h: Removed CORBA:: name resolution from the class
