@@ -179,7 +179,11 @@ CORBA_Policy_ptr CORBA_Policy::_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/Policy:1.0");
   if (servant == 0)
+#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
+    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::Policy::_nil ());
+#else
     return new CORBA_Policy(stub);
+#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   return new POA_CORBA::_tao_collocated_Policy(
       ACE_reinterpret_cast(POA_CORBA::Policy_ptr, servant),
       stub
@@ -199,13 +203,18 @@ CORBA_Policy_ptr CORBA_Policy::_unchecked_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/Policy:1.0");
   if (servant == 0)
+#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
+    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::Policy::_nil ());
+#else
     return new CORBA_Policy(stub);
+#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   return new POA_CORBA::_tao_collocated_Policy(
       ACE_reinterpret_cast(POA_CORBA::Policy_ptr, servant),
       stub
     );
 }
 
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 CORBA::PolicyType CORBA_Policy::policy_type (
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -343,6 +352,7 @@ void CORBA_Policy::destroy (
   }
 
 }
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 CORBA::Boolean CORBA_Policy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
 {

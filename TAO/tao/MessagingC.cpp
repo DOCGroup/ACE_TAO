@@ -192,20 +192,11 @@ Messaging::RebindPolicy_ptr Messaging::RebindPolicy::_unchecked_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/RebindPolicy:1.0");
   if (servant == 0)
-    return new Messaging::RebindPolicy(stub);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RebindPolicy::_nil ());
   return new POA_Messaging::_tao_collocated_RebindPolicy(
       ACE_reinterpret_cast(POA_Messaging::RebindPolicy_ptr, servant),
       stub
     );
-}
-
-Messaging::RebindMode Messaging::RebindPolicy::rebind_mode (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-    Messaging::RebindMode _tao_retval = 0;
-    ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 }
 
 CORBA::Boolean Messaging::RebindPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -265,20 +256,11 @@ Messaging::SyncScopePolicy_ptr Messaging::SyncScopePolicy::_unchecked_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/SyncScopePolicy:1.0");
   if (servant == 0)
-    return new Messaging::SyncScopePolicy(stub);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::SyncScopePolicy::_nil ());
   return new POA_Messaging::_tao_collocated_SyncScopePolicy(
       ACE_reinterpret_cast(POA_Messaging::SyncScopePolicy_ptr, servant),
       stub
     );
-}
-
-Messaging::SyncScope Messaging::SyncScopePolicy::synchronization (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-    Messaging::SyncScope _tao_retval = 0;
-    ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 }
 
 CORBA::Boolean Messaging::SyncScopePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -366,22 +348,11 @@ Messaging::RequestPriorityPolicy_ptr Messaging::RequestPriorityPolicy::_unchecke
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/RequestPriorityPolicy:1.0");
   if (servant == 0)
-    return new Messaging::RequestPriorityPolicy(stub);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RequestPriorityPolicy::_nil ());
   return new POA_Messaging::_tao_collocated_RequestPriorityPolicy(
       ACE_reinterpret_cast(POA_Messaging::RequestPriorityPolicy_ptr, servant),
       stub
     );
-}
-
-Messaging::PriorityRange Messaging::RequestPriorityPolicy::priority_range (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-    Messaging::PriorityRange _tao_retval;
-    _tao_retval.min = 0;
-    _tao_retval.max = 0;
-    ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 }
 
 CORBA::Boolean Messaging::RequestPriorityPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -441,22 +412,11 @@ Messaging::ReplyPriorityPolicy_ptr Messaging::ReplyPriorityPolicy::_unchecked_na
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/ReplyPriorityPolicy:1.0");
   if (servant == 0)
-    return new Messaging::ReplyPriorityPolicy(stub);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::ReplyPriorityPolicy::_nil ());
   return new POA_Messaging::_tao_collocated_ReplyPriorityPolicy(
       ACE_reinterpret_cast(POA_Messaging::ReplyPriorityPolicy_ptr, servant),
       stub
     );
-}
-
-Messaging::PriorityRange Messaging::ReplyPriorityPolicy::priority_range (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-    Messaging::PriorityRange _tao_retval;
-    _tao_retval.min = 0;
-    _tao_retval.max = 0;
-    ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 }
 
 CORBA::Boolean Messaging::ReplyPriorityPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -516,24 +476,11 @@ Messaging::RequestStartTimePolicy_ptr Messaging::RequestStartTimePolicy::_unchec
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/RequestStartTimePolicy:1.0");
   if (servant == 0)
-    return new Messaging::RequestStartTimePolicy(stub);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RequestStartTimePolicy::_nil ());
   return new POA_Messaging::_tao_collocated_RequestStartTimePolicy(
       ACE_reinterpret_cast(POA_Messaging::RequestStartTimePolicy_ptr, servant),
       stub
     );
-}
-
-TimeBase::UtcT Messaging::RequestStartTimePolicy::start_time (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-    TimeBase::UtcT _tao_retval;
-    _tao_retval.time = 0;
-    _tao_retval.inacclo = 0;
-    _tao_retval.inacchi = 0;
-    _tao_retval.tdf = 0;
-    ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 }
 
 CORBA::Boolean Messaging::RequestStartTimePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -593,24 +540,11 @@ Messaging::RequestEndTimePolicy_ptr Messaging::RequestEndTimePolicy::_unchecked_
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/RequestEndTimePolicy:1.0");
   if (servant == 0)
-    return new Messaging::RequestEndTimePolicy(stub);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RequestEndTimePolicy::_nil ());
   return new POA_Messaging::_tao_collocated_RequestEndTimePolicy(
       ACE_reinterpret_cast(POA_Messaging::RequestEndTimePolicy_ptr, servant),
       stub
     );
-}
-
-TimeBase::UtcT Messaging::RequestEndTimePolicy::end_time (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-    TimeBase::UtcT _tao_retval;
-    _tao_retval.time = 0;
-    _tao_retval.inacclo = 0;
-    _tao_retval.inacchi = 0;
-    _tao_retval.tdf = 0;
-    ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 }
 
 CORBA::Boolean Messaging::RequestEndTimePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -670,24 +604,11 @@ Messaging::ReplyStartTimePolicy_ptr Messaging::ReplyStartTimePolicy::_unchecked_
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/ReplyStartTimePolicy:1.0");
   if (servant == 0)
-    return new Messaging::ReplyStartTimePolicy(stub);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::ReplyStartTimePolicy::_nil ());
   return new POA_Messaging::_tao_collocated_ReplyStartTimePolicy(
       ACE_reinterpret_cast(POA_Messaging::ReplyStartTimePolicy_ptr, servant),
       stub
     );
-}
-
-TimeBase::UtcT Messaging::ReplyStartTimePolicy::start_time (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-    TimeBase::UtcT _tao_retval;
-    _tao_retval.time = 0;
-    _tao_retval.inacclo = 0;
-    _tao_retval.inacchi = 0;
-    _tao_retval.tdf = 0;
-    ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 }
 
 CORBA::Boolean Messaging::ReplyStartTimePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -747,24 +668,11 @@ Messaging::ReplyEndTimePolicy_ptr Messaging::ReplyEndTimePolicy::_unchecked_narr
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/ReplyEndTimePolicy:1.0");
   if (servant == 0)
-    return new Messaging::ReplyEndTimePolicy(stub);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::ReplyEndTimePolicy::_nil ());
   return new POA_Messaging::_tao_collocated_ReplyEndTimePolicy(
       ACE_reinterpret_cast(POA_Messaging::ReplyEndTimePolicy_ptr, servant),
       stub
     );
-}
-
-TimeBase::UtcT Messaging::ReplyEndTimePolicy::end_time (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-    TimeBase::UtcT _tao_retval;
-    _tao_retval.time = 0;
-    _tao_retval.inacclo = 0;
-    _tao_retval.inacchi = 0;
-    _tao_retval.tdf = 0;
-    ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 }
 
 CORBA::Boolean Messaging::ReplyEndTimePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -824,20 +732,11 @@ Messaging::RelativeRequestTimeoutPolicy_ptr Messaging::RelativeRequestTimeoutPol
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/RelativeRequestTimeoutPolicy:1.0");
   if (servant == 0)
-    return new Messaging::RelativeRequestTimeoutPolicy(stub);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RelativeRequestTimeoutPolicy::_nil ());
   return new POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy(
       ACE_reinterpret_cast(POA_Messaging::RelativeRequestTimeoutPolicy_ptr, servant),
       stub
     );
-}
-
-TimeBase::TimeT Messaging::RelativeRequestTimeoutPolicy::relative_expiry (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-    TimeBase::TimeT _tao_retval = 0;
-    ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 }
 
 CORBA::Boolean Messaging::RelativeRequestTimeoutPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -897,20 +796,11 @@ Messaging::RelativeRoundtripTimeoutPolicy_ptr Messaging::RelativeRoundtripTimeou
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0");
   if (servant == 0)
-    return new Messaging::RelativeRoundtripTimeoutPolicy(stub);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RelativeRoundtripTimeoutPolicy::_nil ());
   return new POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy(
       ACE_reinterpret_cast(POA_Messaging::RelativeRoundtripTimeoutPolicy_ptr, servant),
       stub
     );
-}
-
-TimeBase::TimeT Messaging::RelativeRoundtripTimeoutPolicy::relative_expiry (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-    TimeBase::TimeT _tao_retval = 0;
-    ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 }
 
 CORBA::Boolean Messaging::RelativeRoundtripTimeoutPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -998,22 +888,11 @@ Messaging::RoutingPolicy_ptr Messaging::RoutingPolicy::_unchecked_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/RoutingPolicy:1.0");
   if (servant == 0)
-    return new Messaging::RoutingPolicy(stub);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::RoutingPolicy::_nil ());
   return new POA_Messaging::_tao_collocated_RoutingPolicy(
       ACE_reinterpret_cast(POA_Messaging::RoutingPolicy_ptr, servant),
       stub
     );
-}
-
-Messaging::RoutingTypeRange Messaging::RoutingPolicy::routing_range (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-    Messaging::RoutingTypeRange _tao_retval;
-    _tao_retval.min = Messaging::ROUTE_NONE;
-    _tao_retval.max = Messaging::ROUTE_NONE;
-    ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 }
 
 CORBA::Boolean Messaging::RoutingPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -1073,20 +952,11 @@ Messaging::MaxHopsPolicy_ptr Messaging::MaxHopsPolicy::_unchecked_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/MaxHopsPolicy:1.0");
   if (servant == 0)
-    return new Messaging::MaxHopsPolicy(stub);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::MaxHopsPolicy::_nil ());
   return new POA_Messaging::_tao_collocated_MaxHopsPolicy(
       ACE_reinterpret_cast(POA_Messaging::MaxHopsPolicy_ptr, servant),
       stub
     );
-}
-
-CORBA::UShort Messaging::MaxHopsPolicy::max_hops (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-    CORBA::UShort _tao_retval = 0;
-    ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 }
 
 CORBA::Boolean Messaging::MaxHopsPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -1146,20 +1016,11 @@ Messaging::QueueOrderPolicy_ptr Messaging::QueueOrderPolicy::_unchecked_narrow (
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:Messaging/QueueOrderPolicy:1.0");
   if (servant == 0)
-    return new Messaging::QueueOrderPolicy(stub);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), Messaging::QueueOrderPolicy::_nil ());
   return new POA_Messaging::_tao_collocated_QueueOrderPolicy(
       ACE_reinterpret_cast(POA_Messaging::QueueOrderPolicy_ptr, servant),
       stub
     );
-}
-
-Messaging::Ordering Messaging::QueueOrderPolicy::allowed_orders (
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-    Messaging::Ordering _tao_retval = 0;
-    ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 }
 
 CORBA::Boolean Messaging::QueueOrderPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)

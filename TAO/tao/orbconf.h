@@ -300,13 +300,46 @@
 // Minimum CORBA
 // #define TAO_HAS_MINIMUM_CORBA
 
+// Without Minimum CORBA, the user will get regular (no locality
+// constraints) policies by default.  With Minimum CORBA, the user
+// will get locality constraint policies by default.
+//
+// If #define TAO_HAS_REMOTE_POLICIES 0, then the user will always get
+// locality constraint policies (regardless of Minimum CORBA).
+//
+// If #define TAO_HAS_REMOTE_POLICIES 1, then the user will always get
+// regular policies (regardless of Minimum CORBA).
+
+// TAO_HAS_LOCALITY_CONSTRAINT_POLICIES is an internal macro and
+// should not be set by the user.
+#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
+# undef TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
+# warning TAO_HAS_LOCALITY_CONSTRAINT_POLICIES is an internal macro \
+and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
+#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
+
+#if defined (TAO_HAS_MINIMUM_CORBA)
+
 // With minimum CORBA, we don't have the ForwardRequest exception.
 // Therefore, we can't support the INS forwarding agent.
-#if defined (TAO_HAS_MINIMUM_CORBA)
 # if !defined (TAO_NO_IOR_TABLE)
 #  define TAO_NO_IOR_TABLE
 # endif /* TAO_NO_IOR_TABLE */
+
+# if !defined (TAO_HAS_REMOTE_POLICIES)
+#  define TAO_HAS_REMOTE_POLICIES 0
+# endif /* TAO_HAS_REMOTE_POLICIES */
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+// Policies are not locality constraint by default.
+#if !defined (TAO_HAS_REMOTE_POLICIES)
+# define TAO_HAS_REMOTE_POLICIES 1
+#endif /* TAO_HAS_REMOTE_POLICIES */
+
+#if (TAO_HAS_REMOTE_POLICIES == 0)
+# define TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
+#endif /* TAO_HAS_REMOTE_POLICIES */
 
 // CORBA Messaging
 #define TAO_HAS_CORBA_MESSAGING

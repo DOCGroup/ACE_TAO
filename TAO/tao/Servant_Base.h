@@ -223,14 +223,19 @@ public:
   // Returns hash value.
 };
 
-class TAO_Export TAO_Local_ServantBase : public TAO_ServantBase
+class TAO_Export TAO_Local_ServantBase : public virtual TAO_ServantBase
 {
   // = TITLE
   //   Base class for local skeletons and servants.
 protected:
   TAO_Stub *_create_stub (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // This is an auxiliar method for _this().  Make sure *not* to
-  // register with the default POA
+  // register with the default POA.
+
+  void _dispatch (CORBA::ServerRequest &request,
+                  void *context,
+                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Throws CORBA::BAD_OPERATION exception.
 };
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)

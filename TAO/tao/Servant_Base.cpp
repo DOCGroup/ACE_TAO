@@ -332,6 +332,14 @@ TAO_Local_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
                                                                ACE_TRY_ENV);
 }
 
+void
+TAO_Local_ServantBase::_dispatch (CORBA::ServerRequest &request,
+                                  void *context,
+                                  CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::BAD_OPERATION ());
+}
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 CORBA::Object_ptr

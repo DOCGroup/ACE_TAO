@@ -148,6 +148,7 @@ public:
     );
   static CORBA_Policy_ptr _nil (void);
 
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
   virtual CORBA::PolicyType policy_type (
       CORBA_Environment &TAO_IN_ENV =
         TAO_default_environment ()
@@ -160,6 +161,21 @@ public:
       CORBA_Environment &TAO_IN_ENV =
         TAO_default_environment ()
     );
+#else
+  virtual CORBA::PolicyType policy_type (
+      CORBA_Environment &TAO_IN_ENV =
+        TAO_default_environment ()
+    ) = 0;
+  virtual CORBA_Policy_ptr copy (
+      CORBA_Environment &TAO_IN_ENV =
+        TAO_default_environment ()
+    ) = 0;
+  virtual void destroy (
+      CORBA_Environment &TAO_IN_ENV =
+        TAO_default_environment ()
+    ) = 0;
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
+
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
       CORBA_Environment &TAO_IN_ENV =

@@ -73,12 +73,6 @@ POA_CORBA::DynAny::_downcast (const char* logical_type_id)
   return 0;
 }
 
-void POA_CORBA::DynAny::_dispatch (CORBA::ServerRequest &,
-                                   void *,
-                                   CORBA::Environment &)
-{
-}
-
 const char*
 POA_CORBA::DynAny::_interface_repository_id (void) const
 {
@@ -640,13 +634,6 @@ POA_CORBA::DynEnum::_downcast (
   return 0;
 }
 
-void
-POA_CORBA::DynEnum::_dispatch (CORBA::ServerRequest &,
-                               void *,
-                               CORBA::Environment &)
-{
-}
-
 const char*
 POA_CORBA::DynEnum::_interface_repository_id (void) const
 {
@@ -793,13 +780,6 @@ POA_CORBA::DynStruct::_downcast (
   return 0;
 }
 
-void
-POA_CORBA::DynStruct::_dispatch (CORBA::ServerRequest &,
-                                 void *,
-                                 CORBA::Environment &)
-{
-}
-
 const char*
 POA_CORBA::DynStruct::_interface_repository_id (void) const
 {
@@ -942,12 +922,6 @@ POA_CORBA::DynUnion::_downcast (
                            this);
 
   return 0;
-}
-
-void POA_CORBA::DynUnion::_dispatch (CORBA::ServerRequest &,
-                                    void *,
-                                    CORBA::Environment &)
-{
 }
 
 const char* POA_CORBA::DynUnion::_interface_repository_id (void) const
@@ -1133,13 +1107,6 @@ POA_CORBA::DynSequence::_downcast (
   return 0;
 }
 
-void
-POA_CORBA::DynSequence::_dispatch (CORBA::ServerRequest &,
-                                   void *,
-                                   CORBA::Environment &)
-{
-}
-
 const char*
 POA_CORBA::DynSequence::_interface_repository_id (void) const
 {
@@ -1282,13 +1249,6 @@ POA_CORBA::DynArray::_downcast (
                            this);
 
   return 0;
-}
-
-void
-POA_CORBA::DynArray::_dispatch (CORBA::ServerRequest &,
-                                void *,
-                                CORBA::Environment &)
-{
 }
 
 const char*
