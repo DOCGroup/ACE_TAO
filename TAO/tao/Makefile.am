@@ -840,8 +840,8 @@ nobase_include_HEADERS += \
   UB_String_Argument_T.inl \
   UB_String_SArgument_T.inl \
   ULongLongSeqC.inl \
-  ULongSeqC.i \
-  UShortSeqC.i \
+  ULongSeqC.inl \
+  UShortSeqC.inl \
   UserException.inl \
   VarOut_T.inl \
   Var_Array_Argument_T.inl \
