@@ -48,8 +48,8 @@ TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC !NO_MESSAGING
 TAO/examples/Simple/time/run_test.pl: !NO_MESSAGING
 TAO/examples/Quoter/run_test.pl: !MINIMUM
 TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !SUNCC5_1
-TAO/examples/PluggableUDP/tests/Basic/run_test.pl: !STATIC !ST
-TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl
+TAO/examples/PluggableUDP/tests/Basic/run_test.pl: !STATIC !ST !NO_DIOP
+TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl: !NO_DIOP
 TAO/examples/AMH/Sink_Server/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p TCP,UDP,RTP_UDP: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p SCTP_SEQ: !MINIMUM SCTP
