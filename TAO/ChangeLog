@@ -9,7 +9,7 @@ Tue Sep  3 17:08:32 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	  these #define madness
 
 	All the policies that are implemented in TAO are placed in
-        seperate pidl files. The compiler should link in only pieces that
+        seperate pidl files. The linker should link in only pieces that
         are required. More work is required to achieve that. This is just
 	a temporary check-in to facilitate stuff. 
 
