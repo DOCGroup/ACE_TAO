@@ -1,3 +1,9 @@
+Sat Nov  2 10:48:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Utils/Servant_Var.h:
+	* tao/Utils/Servant_Var.inl: Fixed errors in non-native exceptions
+	  build.
+	
 Fri Nov  1 20:12:09 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect): 

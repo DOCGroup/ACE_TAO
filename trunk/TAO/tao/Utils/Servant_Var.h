@@ -51,7 +51,8 @@ namespace TAO
 
       /// Destructor.  Removes a reference from the underlying object,
       /// possibly destroying it.
-      ~Servant_Var();
+      ~Servant_Var()
+        ACE_THROW_SPEC (());
 
       /// Assignment operator.  Assumes ownership of @c p.
       Servant_Var<T> & operator=(T * p);
