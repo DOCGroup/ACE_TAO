@@ -413,7 +413,7 @@ DRV_pre_proc(const char *myfile)
   // the next file will the previous args.
   argcount -= 2;
 
-  int status = 0;
+  ACE_exitcode status = 0;
   if (process.wait (&status) == -1)
     {
       cerr << idl_global->prog_name ()
