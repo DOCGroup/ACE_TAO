@@ -1,3 +1,15 @@
+Fri Aug 13 12:53:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/varout.i:
+	* tao/varout.cpp:
+	  Outline several functions because they were causing problems
+	  with forward declared interfaces.  In particular
+	  $TAO_ROOT/tao/InterfaceC.cpp would not compile under certain
+	  platforms.
+
+	* tao/Makefile:
+	  Updated dependencies
+
 Fri Aug 13 12:44:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: added support for creating kits with or without a new
