@@ -35,8 +35,14 @@ class ACE_Logging_Strategy : public ACE_Service_Object
   //     controlled. The output can be streamed to stderr, to a file,
   //     to a logging daemon, or it can be set to be "silent".
 public:
+  ACE_Logging_Strategy (void);
+  // Constructor.
+
   virtual int init (int argc, char *argv[]);
-  // Dynamic linking hook.
+  // Dynamic linking initialization hook.
+
+  virtual int fini (void);
+  // Dynamic linking termination hook.
 
   int parse_args (int argc, char *argv[]);
   // Parse svc.conf arguments.

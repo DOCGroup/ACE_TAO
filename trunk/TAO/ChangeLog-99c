@@ -1,3 +1,9 @@
+Fri Nov 26 15:27:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/Policy.h: Added TAO_AV_Export macros
+	  for all the TAO_AV_Policy classes.  Thanks to Paulo Breda Vieira
+ 	  <breda@inesca.pt> for reporting this.
+
 Sat Nov 27 15:04:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO version 1.0.9 released.
@@ -6,7 +12,7 @@ Fri Nov 26 09:30:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Negation_Filter.cpp:
 	  Fixed warning due to mismatched return types under g++ 2.7.2.3,
-	  thanks to David for pointing this out.
+ 	  thanks to David for pointing this out.
 
 Wed Nov 24 20:17:01 1999  David L. Levine  <levine@cs.wustl.edu>
 

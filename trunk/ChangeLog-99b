@@ -1,3 +1,13 @@
+Thu Nov 25 13:32:00 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/lib/Client_Logging_Handler.cpp (parse_args): Make sure
+	  to free() the host or logger key before calling strdup()!
+
+	* netsvcs/lib/Logging_Strategy.cpp (parse_args): Fixed up this
+	  code so that we correctly allocated and deallocate filename_
+ 	  using strdup()/free() to prevent weird memory problems.  Thanks
+ 	  to Dmitry Ergy <dergy@websci.ru> for reporting this.
+
 Sat Nov 27 15:01:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ACE version 5.0.9 released.
