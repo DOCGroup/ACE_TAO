@@ -72,6 +72,16 @@ module IOP
   // Real-Time CORBA Joint Revised Submission May 28, 1999
   const ServiceId RTCorbaPriority = 10;
   const ServiceId RTCorbaPriorityRange = 11;
+
+
+  // The following are defined in the ptc/2000-04-04:
+  // Fault Tolerant CORBA Specification, V1.0
+  const ComponentId TAG_FT_GROUP = 27; 
+  const ComponentId TAG_FT_PRIMARY = 28; 
+  const ComponentId TAG_FT_HEARTBEAT_ENABLED = 29; 
+  const ServiceId FT_GROUP_VERSION = 12; 
+  const ServiceId FT_REQUEST = 13; 
+
 };
 
 #pragma prefix ""

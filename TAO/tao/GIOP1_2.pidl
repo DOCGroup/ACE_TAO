@@ -18,6 +18,11 @@ module GIOP
   const short ProfileAddr = 1;
   const short ReferenceAddr = 2;
 
+  struct Version
+  {
+    octet major;
+    octet minor;
+  };
   struct IORAddressingInfo 
   {
     unsigned long selected_profile_index;
