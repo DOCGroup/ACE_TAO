@@ -816,8 +816,22 @@ CORBA_ORB::resolve_initial_references (const char *name,
     return this->resolve_ior_manipulation (ACE_TRY_ENV);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
-    return this->string_to_object ("DLL:TypeCodeFactory",
-                                   ACE_TRY_ENV);
+    {
+      if (CORBA::is_nil (this->orb_core ()->typecode_factory ()))
+        {
+          ACE_Service_Config::process_directive (
+              "dynamic TypeCodeFactory Service_Object * TypeCodeFactory_DLL:_make_TCF_Loader()"
+            );
+
+          CORBA::Object_ptr tf = 
+            this->dll_string_to_object (name, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+          this->orb_core ()->typecode_factory (tf);
+        }
+
+      return this->orb_core ()->typecode_factory ();
+    }
 
   // Is not one of the well known services, try to find it in the
   // InitRef table....
