@@ -1,3 +1,9 @@
+Mon Aug 23 07:08:17 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/run_tests.lst: disabled Process_Manager_Test,
+          because it never terminates when built with egcs
+          on both Solaris 7 and Linux.
+
 Sun Aug 22 21:15:13 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Makefile: with Green Hills for x86 target, use
