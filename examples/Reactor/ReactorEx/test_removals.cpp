@@ -1,20 +1,22 @@
-// ============================================================================
 // $Id$
-
+//
+// ============================================================================
 //
 // = LIBRARY
 //    examples
 // 
 // = FILENAME
-//    test_remove_handler.cpp
+//    test_removals.cpp
 //
 // = DESCRIPTION
+//
 //    Tests the ReactorEx's ability to handle simultaneous events.  If
 //    you pass anything on the command-line, then each handler
 //    requests to be removed from the ReactorEx after each event.
 //    
 // = AUTHOR
 //    Tim Harrison
+//    Irfan Pyarali
 // 
 // ============================================================================
 
@@ -35,10 +37,10 @@ public:
   Event_Handler (int event_number, 
 		 int close_down)
     : event_number_ (event_number),
-      close_down_ (close_down)
+    close_down_ (close_down)
     {
       if (ACE_ReactorEx::instance ()->register_handler (this,
-							      this->event_.handle ()) == -1)
+							this->event_.handle ()) == -1)
 	ACE_ERROR ((LM_ERROR, "%p\tevent handler %d cannot be added to ReactorEx\n", "", event_number_));
       this->event_.signal ();
     }

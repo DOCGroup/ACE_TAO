@@ -1,3 +1,28 @@
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+// 
+// = FILENAME
+//    test_exceptions.cpp
+//
+// = DESCRIPTION
+//
+//    This test application tests the state of ReactorEx when
+//    exceptions occurs when executing user callbacks. 
+//
+//    The thread count in ReactorEx is used to ensure that state of
+//    ReactorEx is not fouled up when exceptions occur in user code.
+//    This example also shows how to write event loops that survive
+//    user exceptions
+//
+// = AUTHOR
+//    Irfan Pyarali
+// 
+// ============================================================================
+
 #include "ace/ReactorEx.h"
 
 class Event_Handler : public ACE_Event_Handler
@@ -52,11 +77,9 @@ public:
 int
 main (int, char *[])
 {
-  Event_Handler *handler;
-  ACE_NEW_RETURN (handler, Event_Handler, -1);
-  ACE_ReactorEx::instance ()->register_handler (handler);
+  Event_Handler handler;
+  ACE_ReactorEx::instance ()->register_handler (&handler);
   ACE_ReactorEx_Test::doit ();
-  delete handler;
   return 0;
 }
 
