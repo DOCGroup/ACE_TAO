@@ -18,6 +18,8 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 
 - (JTC/Ossama) autoconf support for TAO
 
+- (Bala) Implementation Repository enhancements
+
 - (OCI) Naming Service implementation fixes
 
 - (OCI) Wait on LF No Upcalls wait strategy
