@@ -15,6 +15,7 @@ ACE_RCSID (PortableServer,
 #include "tao/StringSeqC.h"
 
 #include "tao/PortableServer/ThreadPolicyFactory.h"
+#include "tao/PortableServer/LifespanPolicyFactory.h"
 
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/PortableServer/ORT_Adapter.h"

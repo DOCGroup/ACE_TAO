@@ -1,3 +1,16 @@
+Thu Sep 30 12:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Object_Adapter.{h,cpp}:
+        * tao/PortableServer/Object_Adapter_Factory.{h,cpp}:
+          Moved Object_Adapter_Factory to its own file
+
+        * tao/PortableServer/PortableServer.cpp:
+          Because the Object_Adapter_Factory is in its own file, include that
+          file instead of Object_Adapter.h
+
+        * tao/PortableServer/POA.cpp:
+          Include the LifespanPolicyFactory.
+
 Thu Sep 30 12:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Id_Assignment_Strategy.h:

@@ -33,7 +33,6 @@
 // Local Object
 #include "tao/LocalObject.h"
 
-#include "ace/Service_Config.h"
 #include "ace/Reverse_Lock_T.h"
 #include "ace/Condition_Thread_Mutex.h"
 
@@ -878,27 +877,6 @@ private:
   /// every POA (unless overridden).
   TAO_POA_Policy_Set default_poa_policies_;
 };
-
-// ****************************************************************
-
-class TAO_PortableServer_Export TAO_Object_Adapter_Factory : public TAO_Adapter_Factory
-{
-public:
-  /// Constructor
-  TAO_Object_Adapter_Factory (void);
-
-  // = The TAO_Adapter_Factory methods, please read tao/Adapter.h for
-  // details.
-  virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
-
-  virtual int init (int argc,
-                    ACE_TCHAR* argv[]);
-};
-
-ACE_STATIC_SVC_DECLARE (TAO_Object_Adapter_Factory)
-ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_Object_Adapter_Factory)
-
-// ****************************************************************
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

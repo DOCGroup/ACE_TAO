@@ -12,7 +12,7 @@
 
 
 #include "PortableServer.h"
-#include "Object_Adapter.h"
+#include "Object_Adapter_Factory.h"
 #include "ThreadPolicyValue.h"
 #include "ThreadPolicyFactory.h"
 
