@@ -234,7 +234,7 @@
 
 // This is necessary since MFC users apparently can't #include
 // <windows.h> directly.
-#if defined (_AFXDLL) || defined (_WINDLL) || 
+#if defined (_AFXDLL) || defined (_WINDLL) || \
     ( defined(ACE_HAS_DLL) && defined(ACE_BUILD_DLL) && defined(ACE_HAS_MFC))
 	#include /**/ <afxwin.h>   /* He is doing MFC */
 		// Windows.h will be included via afxwin.h->afx.h->afx_ver_.h->afxv_w32.h
