@@ -45,7 +45,8 @@
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
+#include "tao/TypeCode_Constants.h"
 #include "tao/Objref_VarOut_T.h"
 
 #include "tao/IFR_Client/IFR_ExtendedC.h"
@@ -469,7 +470,7 @@ TAO_TypeCodeFactory_Export void operator<<= (CORBA::Any &, CORBA::TypeCodeFactor
 TAO_TypeCodeFactory_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::TypeCodeFactory_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
+// be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "TypeCodeFactoryC.inl"

@@ -26,57 +26,39 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "ServantLocatorC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
+#include "tao/String_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-static const CORBA::Long _oc_PortableServer_ServantLocator[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  46,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f53), 
-  ACE_NTOHL (0x65727661), 
-  ACE_NTOHL (0x6e744c6f), 
-  ACE_NTOHL (0x6361746f), 
-  ACE_NTOHL (0x723a322e), 
-  ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/ServantLocator:2.3
-    15,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x616e744c), 
-  ACE_NTOHL (0x6f636174), 
-  ACE_NTOHL (0x6f720000),  // name = ServantLocator
-  };
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/objref_typecode.cpp:73
 
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantLocator (
-    CORBA::tk_objref,
-    sizeof (_oc_PortableServer_ServantLocator),
-    (char *) &_oc_PortableServer_ServantLocator,
-    0,
-    0
-  );
+static TAO::TypeCode::Objref<char const *,
+                             CORBA::tk_local_interface,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_PortableServer_ServantLocator (
+    "IDL:omg.org/PortableServer/ServantLocator:2.3",
+    "ServantLocator");
 
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ServantLocator =
-    &_tc_TAO_tc_PortableServer_ServantLocator;
+    &_tao_tc_PortableServer_ServantLocator;
 }
+
+
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::ServantLocator>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -86,14 +68,14 @@ TAO::Any_Impl_T<PortableServer::ServantLocator>::to_object (
   return 1;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::ServantLocator>::marshal_value (TAO_OutputCDR &)
 {
   return false;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::ServantLocator>::demarshal_value (TAO_InputCDR &)
 {
@@ -156,6 +138,6 @@ operator>>= (
         PortableServer::ServantLocator \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

@@ -100,7 +100,7 @@ namespace Messaging
 {
   
   // TAO_IDL - Generated from
-  // be\be_valuetype.cpp:525
+  // be\be_valuetype.cpp:524
   
   
 
@@ -467,7 +467,7 @@ TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyHandler_ptr
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyHandler_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_valuetype.cpp:432
+// be\be_valuetype.cpp:431
 
 namespace CORBA
 {
