@@ -50,16 +50,18 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
   os->indent (); //start with whatever indentation level we are at now
 
+
+
   if (!node->cli_hdr_cdr_op_gen ())
   {
-      // Generate helper functions declaration.
-      if (node->gen_helper_header () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_cdr_op_ch::"
-                             "visit_valuetype - "
-                             "codegen for helper functions failed\n"), -1);
-        }
+    // Generate helper functions declaration.
+    if (node->gen_helper_header () == -1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_cdr_op_ch::"
+                           "visit_valuetype - "
+                           "codegen for helper functions failed\n"), -1);
+      }
 
       // generate the CDR << and >> operator declarations (prototypes)
 
@@ -75,6 +77,7 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
 
       node->cli_hdr_cdr_op_gen (1);
     }
+
 
   // set the substate as generating code for the types defined in our scope
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);
@@ -96,6 +99,8 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
       be_visitor_valuetype_marshal_ch visitor (new_ctx);
       visitor.visit_valuetype (node);
   }
+
+
 
   return 0;
 }

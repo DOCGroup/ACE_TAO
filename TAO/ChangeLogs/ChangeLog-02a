@@ -1,3 +1,16 @@
+Tue Feb 12 14:52:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAO_IDL/be/be_valuetype.cpp (gen_helper_inline): Hacked up the
+	  problem with the generation of add_ref () and remove_ref () for
+	  value types. The fundamental problem is that, these methods are
+	  getting generated within a #ifndef (__ACE_INLINE_) condition in
+	  the header file. In the inlined file they are just generated
+	  like the CDR operators. This gives problems with Win32 debug
+	  builds. The present hack adds a #if defined (__ACE_INLINE__)
+	  around the declaration of add_ref () and remove_ref (). This
+	  problem needs to be revisited later. Any other quick fixes
+	  breaks builds.
+
 Tue Feb 12 06:01:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/MCast/MCast.cpp: Making this checkin for
