@@ -1,5 +1,6 @@
 Wed Jun 16 16:05:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* performance-tests/POA/Object_Creation_And_Registration/run_test.pl: 
 	* examples/POA/Identity/run_test.pl:
 	* examples/POA/RootPOA/run_test.pl:
 	  Added scripts to timeout the test in case of failure
