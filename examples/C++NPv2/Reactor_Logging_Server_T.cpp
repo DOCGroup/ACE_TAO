@@ -16,7 +16,7 @@ Reactor_Logging_Server<ACCEPTOR>::Reactor_Logging_Server
 
   if (logger_port != 0)
     result = server_addr.set (logger_port,
-                              (ACE_UNIT32) INADDR_ANY);
+                              (ACE_UINT32) INADDR_ANY);
   else
     result = server_addr.set ("ace_logger",
                               (ACE_UINT32) INADDR_ANY);
