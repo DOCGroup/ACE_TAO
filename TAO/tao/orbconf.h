@@ -444,7 +444,7 @@ enum MCAST_SERVICEID
 # define TAO_HAS_MINIMUM_CORBA 0
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-// If TAO is configured for minimum CORBA, then DIOP will be disabled 
+// If TAO is configured for minimum CORBA, then DIOP will be disabled
 // by default; otherwise it is enabled.
 // To explicitly enable DIOP support uncomment the following
 // #define TAO_HAS_DIOP 1
@@ -967,6 +967,18 @@ enum TAO_Policy_Scope
 #if !defined (TAO_DEF_FT_CORBA_MINOR)
 #define TAO_DEF_FT_CORBA_MINOR 0
 #endif /* TAO_DEF_FT_CORBA_MINOR */
+
+#if !defined (TAO_CONNECTION_HANDLER_STACK_BUF_SIZE)
+#   define TAO_CONNECTION_HANDLER_STACK_BUF_SIZE 1024
+#endif /*TAO_CONNECTION_HANDLER_STACK_BUF_SIZE */
+
+#if !defined (TAO_RESUMES_CONNECTION_HANDLER)
+#   define TAO_RESUMES_CONNECTION_HANDLER 1
+#endif /*TAO_RESUMES_CONNECTION_HANDLER*/
+
+#if !defined (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
+#   define TAO_DOESNT_RESUME_CONNECTION_HANDLER 0
+#endif /*TAO_DOESNT_RESUMES_CONNECTION_HANDLER*/
 
 #include "ace/post.h"
 #endif  /* TAO_ORB_CONFIG_H */

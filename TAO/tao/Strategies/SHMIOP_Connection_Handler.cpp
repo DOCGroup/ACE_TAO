@@ -25,7 +25,8 @@ ACE_RCSID(Strategies, SHMIOP_Connection_Handler, "$Id$")
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SHMIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    pending_upcalls_ (1)
+    pending_upcalls_ (1),
+    resume_flag_ (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -38,10 +39,11 @@ TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager
 
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_core,
                                                               CORBA::Boolean /*flag*/,
-                                                          void *)
+                                                              void *)
   : TAO_SHMIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    pending_upcalls_ (1)
+    pending_upcalls_ (1),
+    resume_flag_ (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
 {
   TAO_SHMIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
@@ -221,7 +223,7 @@ TAO_SHMIOP_Connection_Handler::fetch_handle (void)
 int
 TAO_SHMIOP_Connection_Handler::resume_handler (void)
 {
-  return TAO_RESUMES_CONNECTION_HANDLER;
+  return this->resume_flag_;
 }
 
 int
@@ -229,8 +231,13 @@ TAO_SHMIOP_Connection_Handler::handle_output (ACE_HANDLE)
 {
   // Instantiate the resume handle here.. This will automatically
   // resume the handle once data is written..
-  TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->fetch_handle ());
+  //TAO_Resume_Handle  resume_handle (this->orb_core (),
+  //this->fetch_handle ());
+
+  // @@todo: We need to figure out whether we buy anything by resuming
+  // the handle ourselves. AFAICS, I dont think we buy anything. But I
+  // am not sure. Somebody can correct me if I am wrong.
+  this->resume_flag_ = TAO_DOESNT_RESUME_CONNECTION_HANDLER;
   return this->transport ()->handle_output ();
 }
 
@@ -262,6 +269,8 @@ TAO_SHMIOP_Connection_Handler::handle_input (ACE_HANDLE)
 {
   // Increase the reference count on the upcall that have passed us.
   this->pending_upcalls_++;
+
+  this->resume_flag_ = TAO_RESUMES_CONNECTION_HANDLER;
 
   TAO_Resume_Handle  resume_handle (this->orb_core (),
                                     this->fetch_handle ());
