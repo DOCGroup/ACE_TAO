@@ -49,13 +49,13 @@ typedef char *ACE_SOCKOPT_TYPE1;
 typedef const char *ACE_SOCKOPT_TYPE1;
 #endif /* ACE_HAS_VOIDPTR_SOCKOPT */
 
-#if defined (ACE_NEEDS_WRITEV)
+#if defined (ACE_LACKS_WRITEV)
 extern "C" ACE_Export int writev (ACE_HANDLE handle, ACE_WRITEV_TYPE *iov, int iovcnt);
-#endif /* ACE_NEEDS_WRITEV */
+#endif /* ACE_LACKS_WRITEV */
 
-#if defined (ACE_NEEDS_READV)
+#if defined (ACE_LACKS_READV)
 extern "C" ACE_Export ssize_t readv (ACE_HANDLE handle, ACE_READV_TYPE *iov, int iovcnt);
-#endif /* ACE_NEEDS_READV */
+#endif /* ACE_LACKS_READV */
 
 #if defined (ACE_NEEDS_FTRUNCATE)
 extern "C" ACE_Export int ftruncate (ACE_HANDLE handle, long len);
@@ -10402,4 +10402,40 @@ ACE_OS::rewinddir (DIR *d)
 #else
   ACE_UNUSED_ARG (d);
 #endif /* ACE_HAS_DIRENT */
+}
+
+ACE_INLINE void *
+ACE_OS::bsearch (const void *key,
+                 const void *base,
+                 size_t nel,
+                 size_t size,
+                 int (*compar)(const  void  *,  const  void *))
+{
+#if !defined (ACE_LACKS_BSEARCH)
+  return ::bsearch (key, base, nel, size, compar);
+#else
+  ACE_UNUSED_ARG (key);
+  ACE_UNUSED_ARG (base);
+  ACE_UNUSED_ARG (nel);
+  ACE_UNUSED_ARG (size);
+  ACE_UNUSED_ARG (compar);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_LACKS_BSEARCH */
+}
+
+ACE_INLINE void 
+ACE_OS::qsort (void *base,
+               size_t nel,
+               size_t width,
+               int (*compar) (const void *, const void *))
+{
+#if !defined (ACE_LACKS_QSORT)
+  return ::qsort (base, nel, width, compr);
+#else
+  ACE_UNUSED_ARG (base);
+  ACE_UNUSED_ARG (nel);
+  ACE_UNUSED_ARG (width);
+  ACE_UNUSED_ARG (compar);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_LACKS_QSORT */
 }

@@ -7,7 +7,7 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-#define ACE_NEEDS_SYSTIME_H
+#define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_GETPGID
 
 #define ACE_HAS_CHARPTR_SPRINTF

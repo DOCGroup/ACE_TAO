@@ -44,7 +44,7 @@
 # define ACE_HAS_VOIDPTR_SOCKOPT
 # define ACE_LACKS_GETPGID
 # define ACE_LACKS_RPC_H
-# define ACE_NEEDS_SYSTIME_H
+# define ACE_LACKS_SYSTIME_H
   // The strtok_r declaration is protected in string.h.
   extern "C" char *strtok_r __P ((char *__s, __const char *__delim,
                                   char **__save_ptr));

@@ -1,3 +1,22 @@
+Sat Sep 12 16:30:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/README: Reformatted this file and also changed 
+	  ACE_REQUIRES_FUNC_DEFINITIONS     
+	  ACE_NEEDS_READV
+	  ACE_NEEDS_SCHED_H
+	  ACE_NEEDS_SYSTIME_H
+	  ACE_NEEDS_WRITEV   
+
+	  to 
+
+	  ACE_NEEDS_FUNC_DEFINITIONS     
+	  ACE_LACKS_READV
+	  ACE_LACKS_SCHED_H
+	  ACE_LACKS_SYSTIME_H
+	  ACE_LACKS_WRITEV   
+
+	  respectively.
+
 Sat Sep 12 13:13:39 EDT 1998  James CE Johnson <jcej@lads.com>
 
           docs/tutorials/003/Makefile

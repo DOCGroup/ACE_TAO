@@ -60,9 +60,9 @@
 
 #define ACE_LACKS_FORK
 
-#define ACE_NEEDS_WRITEV
+#define ACE_LACKS_WRITEV
 
-#define ACE_NEEDS_READV
+#define ACE_LACKS_READV
 
 // rename the main entry point
 // #define ACE_MAIN extern "C" void root
@@ -172,7 +172,7 @@
 #define ACE_LACKS_UNIX_SIGNALS
 
 // #define ACE_MALLOC_ALIGN 8
-// #define ACE_NEEDS_SYSTIME_H
+// #define ACE_LACKS_SYSTIME_H
 
 #define ACE_PAGE_SIZE 4096
 

@@ -269,7 +269,7 @@
 //Compiler/platform lacks strcasecmp() (e.g., DG/UX, UNIXWARE, VXWORKS)
 #define ACE_LACKS_STRCASECMP
 //<time.h> doesn't automatically #include /**/ <sys/time.h>
-#define ACE_NEEDS_SYSTIME_H
+#define ACE_LACKS_SYSTIME_H
 
 //ACE_HAS_AIX_BROKEN_SOCKET_HEADER      Platform, such as AIX4, needs to wrap
 //                #include of sys/socket.h with #undef/#define of __cplusplus.
@@ -441,9 +441,9 @@
 //ACE_LACKS_UTSNAME_T                   Platform lacks struct utsname
 // (e.g., Win32 and VxWorks)
 //ACE_NDEBUG                            Turns off debugging features
-//ACE_NEEDS_READV                       Platform doesn't define readv, so
+//ACE_LACKS_READV                       Platform doesn't define readv, so
 // use our own
-//ACE_NEEDS_WRITEV                      Platform doesn't define writev, so
+//ACE_LACKS_WRITEV                      Platform doesn't define writev, so
 //use our own
 //ACE_NLOGGING                          Turns off the LM_DEBUG and LM_ERROR
 //logging macros...
