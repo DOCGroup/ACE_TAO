@@ -180,6 +180,11 @@ protected:
   size_t endpoint_count_;
 
   /**
+   * Override the hostname used in the ORBEndPoint.
+   */
+  char *hostname_in_ior_;
+
+  /**
    * The GIOP version for this endpoint
    * @@ Theoretically they shouldn't be here!! We need to look at a
    * way to move this out
