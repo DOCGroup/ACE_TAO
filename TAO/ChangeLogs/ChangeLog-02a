@@ -1,3 +1,8 @@
+Thu Jun 01 03:04:20 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Identity/run_test.pl: Added -ORBobjrefstyle url to
+	  make the IORs readable.
+
 Thu Jun 01 01:06:01 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.i: Repositioned two inline methods in order to avoid
