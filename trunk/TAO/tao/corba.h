@@ -81,7 +81,7 @@
 // needs to apply throughout an ORB.
 
 #if     defined (_MSC_VER)
-#       pragma  pack (push, 1)          // VC++, stack 1-byte alignment policy
+//#       pragma  pack (push, 1)          // VC++, stack 1-byte alignment policy
 
 #       ifdef   _DEBUG                  // convert from VC++ convention ...
 #               define  DEBUG           // ... to normal convention
@@ -173,7 +173,7 @@ typedef void (*TAO_Skeleton)(
 // by code emitted from an IDL compiler.
 
 #if defined (_MSC_VER)
-#pragma pack (pop)               // VC++, goes back to other padding rules
+//#pragma pack (pop)               // VC++, goes back to other padding rules
 #endif /* _MSC_VER */
 
 // Alignment macros
@@ -258,6 +258,3 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #endif /* ACE_NESTED_CLASS */
 
 #endif /* TAO_MASTER_CORBA_H */
-
-
-
