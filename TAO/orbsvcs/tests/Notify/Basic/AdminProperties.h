@@ -62,6 +62,8 @@ public:
   /// Init this object.
   void init (TAO_Notify_StructuredPushSupplier *supplier, AdminProperties* client);
 
+  virtual int init (int argc, char *argv []);
+
   virtual int svc (void);
   // The thread entry point.
 
