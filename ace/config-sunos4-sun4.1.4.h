@@ -51,7 +51,7 @@
 #define ACE_HAS_SEMUN
 
 // Compiler/platform provides the sockio.h file.
-#define ACE_HAS_SOCKIO_H
+#define ACE_HAS_SYS_SOCKIO_H
 
 // Compiler has brain-damaged SPARCwork signal prototype...
 #define ACE_HAS_SPARCWORKS_401_SIGNALS

@@ -54,7 +54,7 @@
 #define ACE_HAS_SEMUN
 
 // Compiler/platform provides the sockio.h file.
-#define ACE_HAS_SOCKIO_H
+#define ACE_HAS_SYS_SOCKIO_H
 
 // Compiler/platform supports struct strbuf
 #define ACE_HAS_STRBUF_T
