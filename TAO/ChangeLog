@@ -1,3 +1,8 @@
+Wed Jun  4 13:40:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator.bor:
+          Added TAO_Strategies library.
+
 Wed Jun  4 07:48:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/ImplRepo_Service/Makefile: Somehow missed the makefile
