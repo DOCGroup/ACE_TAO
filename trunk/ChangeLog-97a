@@ -1,50 +1,31 @@
-Mon Apr 28 19:54:05 1997  David L. Levine  <levine@cs.wustl.edu>
+Mon Apr 28 21:35:35 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp: protected
-	  the ACE_*Guard template instantiations with #ifdef ACE_HAS_THREADS.
+	* ace/IOStream.h: Added a new macro called
+ 	  ACE_LACKS_IOSTREAM_SETGET, which works around bugs with SGI C++
+ 	  on IRIX 6.2.  Thanks to Torbjorn Lindgren <tl@funcom.com> for
+ 	  reporting this.
 
-	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: protected
-	  the ACE_*Guard template instantiations with #ifdef ACE_HAS_THREADS.
+	* ace/Timer_List_T.h: Replaced the use of 
+	  ITERATOR with ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR> to
+	  work around problems with SGI C++.  Thanks to 
+	  Torbjorn Lindgren <tl@funcom.com> for reporting this.
 
-	* apps/JAWS/stress_testing/benchd.cpp (serve): added return -1 if
-	  the strcmp () fails so that the function always returns a value.
+	* ace/Timer_List_T.cpp: Removed the use of NODE * and replaced it
+ 	  with ACE_Timer_Node_T<TYPE, FUNCTOR> in order to work around
+ 	  bugs with certain C++ compilers (i.e., SGI).  Thanks to Torbjorn
+ 	  Lindgren <tl@funcom.com> for reporting this.
 
-Mon Apr 28 18:53:58 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+	* tests/Conn_Test.cpp: Removed some extraneous template
+ 	  specializations.  Thanks to Nanbor Wang <nw1@cs.wustl.edu> for
+ 	  reporting these.
 
-	* ace/OS.h: Added ACE_DEFAULT_TIMER_WHEEL_SIZE and 
-	  ACE_DEFAULT_TIMER_WHEEL_RESOLUTION constants.
-	
-	* ace/Timer_Wheel_T.h: switched to use these constants
-	  
-	* tests/Timer_Queue_Test.cpp: switched to use these constants
+	* apps/JAWS/client/Blob.cpp: Rearranged some of the template
+ 	  specializations in the hope of fixing a linker problem with
+ 	  SunC++ 4.2.
 
-Mon Apr 28 18:35:39 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
-
-	* ace/Timer_Wheel: added a new strategy for Timer Queues, one 
-	  based on a hash table of ordered lists.  
-		
-	  These files were added:
-	
-	  - ace/Timer_Wheel.h
-	  - ace/Timer_Wheel_T.h
-	  - ace/Timer_Wheel_T.cpp
-	
-	  These files were also changed to accomodate Timer Wheel
-	  
-	  - ace/Timer_Queue.cpp 
-	  - ace/Timer_Queue_T.h
-	  - ace/Timer_Queue_T.cpp
-	  - tests/Timer_Queue_Test.cpp 
-
-Mon Apr 28 17:32:04 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
-
-	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp: Added
- 	  template specializations.
-
-	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: Added
- 	  template specializations.
-
-Mon Apr 28 17:26:15 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+	* ace/config-irix-6.2*.h.  It appears that SGI IRIX 6.2 supports
+ 	  pread() and pwrite() so I enabled the ACE_HAS_P_READ_WRITE macro
+ 	  in the IRIX 6.2 config file.
 
 	* ace/OS.cpp: Implemented ACE_OS::pread() and ACE_OS::pwrite() for
  	  systems that lack this feature.  The implementation uses the new
@@ -64,13 +45,8 @@ Mon Apr 28 15:42:48 1997  David L. Levine  <levine@cs.wustl.edu>
 	  headers because ace/OS.h takes care of them.  They were causing
 	  warnings with g++ (because they were #included before OS.h).
 
-Mon Apr 28 14:12:04 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
-
-	* ace/OS.cpp (thr_create): Hopefully resolved tension
- 	  btw. priority determination algorithms for IRIX, LinuxThreads, and
- 	  DEC UNIX 4.0.  Thanks to Thilo for information that lead to this.
-
-Mon Apr 28 11:17:26 1997  David L. Levine  <levine@cs.wustl.edu>
+	* examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp: fixed
+	  typos in template specializations.
 
 	* tests/Conn_Test.cpp,Message_{Block,Queue}_Test.cpp,
 	  Process_Strategy_Test.cpp: fixed template specializations
@@ -111,31 +87,51 @@ Mon Apr 28 11:17:26 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp: fixed
 	  typos in template specializations.
 
-Mon Apr 28 10:33:36 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp: protected
+	  the ACE_*Guard template instantiations with #ifdef ACE_HAS_THREADS.
 
-	* ace/IOStream.h: Added a new macro called
- 	  ACE_LACKS_IOSTREAM_SETGET, which works around bugs with SGI C++
- 	  on IRIX 6.2.  Thanks to Torbjorn Lindgren <tl@funcom.com> for
- 	  reporting this.
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: protected
+	  the ACE_*Guard template instantiations with #ifdef ACE_HAS_THREADS.
 
-	* ace/Timer_List_T.h: Replaced the use of 
-	  ITERATOR with ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR> to
-	  work around problems with SGI C++.  Thanks to 
-	  Torbjorn Lindgren <tl@funcom.com> for reporting this.
+	* apps/JAWS/stress_testing/benchd.cpp (serve): added return -1 if
+	  the strcmp () fails so that the function always returns a value.
 
-	* ace/Timer_List_T.cpp: Removed the use of NODE * and replaced it
- 	  with ACE_Timer_Node_T<TYPE, FUNCTOR> in order to work around
- 	  bugs with certain C++ compilers (i.e., SGI).  Thanks to Torbjorn
- 	  Lindgren <tl@funcom.com> for reporting this.
+Mon Apr 28 18:53:58 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tests/Conn_Test.cpp: Removed some extraneous template
- 	  specializations.  Thanks to Nanbor Wang <nw1@cs.wustl.edu> for
- 	  reporting these.
+	* ace/OS.h: Added ACE_DEFAULT_TIMER_WHEEL_SIZE and 
+	  ACE_DEFAULT_TIMER_WHEEL_RESOLUTION constants.
+	
+	* ace/Timer_Wheel_T.h: switched to use these constants
+	  
+	* tests/Timer_Queue_Test.cpp: switched to use these constants
 
-Mon Apr 28 11:17:26 1997  David L. Levine  <levine@cs.wustl.edu>
+	* ace/Timer_Wheel: added a new strategy for Timer Queues, one 
+	  based on a hash table of ordered lists.  
+		
+	  These files were added:
+	
+	  - ace/Timer_Wheel.h
+	  - ace/Timer_Wheel_T.h
+	  - ace/Timer_Wheel_T.cpp
+	
+	  These files were also changed to accomodate Timer Wheel
+	  
+	  - ace/Timer_Queue.cpp 
+	  - ace/Timer_Queue_T.h
+	  - ace/Timer_Queue_T.cpp
+	  - tests/Timer_Queue_Test.cpp 
 
-	* examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp: fixed
-	  typos in template specializations.
+Mon Apr 28 17:32:04 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp: Added
+ 	  template specializations.
+
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: Added
+ 	  template specializations.
+
+	* ace/OS.cpp (thr_create): Hopefully resolved tension
+ 	  btw. priority determination algorithms for IRIX, LinuxThreads, and
+ 	  DEC UNIX 4.0.  Thanks to Thilo for information that lead to this.
 
 Mon Apr 28 00:25:17 1997    <irfan@TWOSTEP>
 
