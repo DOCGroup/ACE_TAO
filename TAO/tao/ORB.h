@@ -32,7 +32,7 @@
 #include "tao/IORManipulation.h"
 
 // Interceptor definitions.
-#include "tao/InterceptorC.h"
+#include "tao/Interceptor.h"
 
 // IRIX needs this for the throw specs
 #include "tao/PolicyC.h"
@@ -382,6 +382,7 @@ public:
                                                 CORBA_Environment &ACE_TRY_ENV = TAO_default_environment () );
 #endif /* TAO_HAS_VALUETYPE */
 
+#if defined (TAO_HAS_INTERCEPTORS)
   // = Interceptor registration routine
   //   Currently, we only support one interceptor per-ORB.
 
@@ -404,6 +405,7 @@ public:
   PortableInterceptor::ServerRequestInterceptor_ptr _get_server_interceptor
     (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // accessor to the server-side interceptor.  You get a duplicate.
+#endif /* TAO_HAS_INTERCEPTORS */
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
@@ -765,14 +767,16 @@ private:
   TAO_ORB_Core *orb_core_;
   // The ORB_Core that created us....
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
   TAO_ValueFactory_Map *valuetype_factory_map_;
   // If non-0 then this is the Factory for OBV unmarshaling
 #endif /* TAO_HAS_VALUETYPE */
 
+#if defined (TAO_HAS_INTERCEPTORS)
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor_;
   PortableInterceptor::ServerRequestInterceptor_var server_interceptor_;
   // Interceptor registries.
+#endif /* TAO_HAS_INTERCEPTORS */
 
   TAO_IOR_LookupTable lookup_table_;
   // Table of ObjectID->IOR mappings.

@@ -19,12 +19,14 @@
 //    return CORBA::string_dup ("TAO default");
 //  }
 
+#if defined (TAO_HAS_INTERCEPTORS)
 void POA_PortableInterceptor::
 ServerRequestInterceptor::preinvoke (CORBA::ULong,
                                      CORBA::Boolean,
                                      CORBA::Object_ptr,
                                      const char *,
                                      IOP::ServiceContextList &,
+                                     CORBA::NVList_ptr &,
                                      PortableInterceptor::Cookies &,
                                      CORBA::Environment &)
 {
@@ -37,6 +39,7 @@ ServerRequestInterceptor::postinvoke (CORBA::ULong,
                                       CORBA::Object_ptr,
                                       const char *,
                                       IOP::ServiceContextList&,
+                                      CORBA::NVList_ptr &,
                                       PortableInterceptor::Cookies&,
                                       CORBA::Environment &)
 {
@@ -62,6 +65,7 @@ ClientRequestInterceptor::preinvoke (CORBA::ULong,
                                      CORBA::Object_ptr,
                                      const char *,
                                      IOP::ServiceContextList &,
+                                     CORBA::NVList_ptr &,
                                      PortableInterceptor::Cookies &,
                                      CORBA::Environment &)
 {
@@ -74,6 +78,7 @@ ClientRequestInterceptor::postinvoke (CORBA::ULong,
                                       CORBA::Object_ptr,
                                       const char *,
                                       IOP::ServiceContextList&,
+                                      CORBA::NVList_ptr &,
                                       PortableInterceptor::Cookies&,
                                       CORBA::Environment &)
 {
@@ -92,3 +97,4 @@ ClientRequestInterceptor::exception_occurred (CORBA::ULong,
 {
   // No-op.
 }
+#endif /* TAO_HAS_INTERCEPTORS */

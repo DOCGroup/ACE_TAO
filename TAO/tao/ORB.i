@@ -315,6 +315,7 @@ CORBA_ORB::orb_core (void) const
   return this->orb_core_;
 }
 
+#if defined (TAO_HAS_INTERCEPTORS)
 ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
 CORBA_ORB::_register_client_interceptor
   (PortableInterceptor::ClientRequestInterceptor_ptr ci,
@@ -357,11 +358,12 @@ CORBA_ORB::_get_client_interceptor (CORBA_Environment &)
 }
 
 ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
-CORBA_ORB::_get_server_interceptor (CORBA_Environment &)
+CORBA_ORB::_get_server_interceptor (CORBA_Environment &ACE_TRY_ENV)
 {
   return
     PortableInterceptor::ServerRequestInterceptor::_duplicate (this->server_interceptor_);
 }
+#endif /* TAO_HAS_INTERCEPTORS */
 
 // ************************************************************
 // These are in CORBA namespace

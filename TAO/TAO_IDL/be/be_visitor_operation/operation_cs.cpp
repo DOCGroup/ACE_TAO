@@ -750,7 +750,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       << ");\n";
 
   // fish out the interceptor from the ORB
-  *os << "\n#if defined (TAO_HAS_INTERCEPTOR)" << be_nl
+  *os << "\n#if defined (TAO_HAS_INTERCEPTORS)" << be_nl
       << "TAO_ClientRequestInterceptor_Adapter" << be_idt_nl
       << "_tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));" << be_uidt_nl;
   if (this->gen_check_exception (bt) == -1)
@@ -762,10 +762,24 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                         -1);
 
     }
-  *os << "PortableInterceptor::Cookies _tao_cookies;\n" << be_nl
-      << "ACE_TRY" << be_idt_nl
+  *os << "PortableInterceptor::Cookies _tao_cookies;" << be_nl
+      << "CORBA::NVList_var _tao_interceptor_args;" << be_nl
+      << "istub->orb_core ()->orb ()->create_list "
+      << "(0, _tao_interceptor_args.inout (), ACE_TRY_ENV);\n";
+  if (this->gen_check_exception (bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for checking exception failed\n"),
+                        -1);
+
+    }
+
+  os->indent ();
+  *os << "ACE_TRY" << be_idt_nl
       << "{\n"
-      << "#endif /* ACE_HAS_INTERCEPTOR */\n";
+      << "#endif /* TAO_HAS_INTERCEPTORS */\n";
 
   *os << be_nl
       << "for (;;)" << be_nl
@@ -796,7 +810,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       *os << "1";
     }
   *os << ", this, " << this->compute_operation_name (node)
-      << ", _tao_call.service_info (), "
+      << ", _tao_call.service_info (), _tao_interceptor_args.inout (), "
       << "_tao_cookies, ACE_TRY_ENV));\n";
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
@@ -1028,7 +1042,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       *os << "1";
     }
   *os << ", this, " << this->compute_operation_name (node)
-      << ", _tao_call.service_info (), "
+      << ", _tao_call.service_info (), _tao_interceptor_args.inout (), "
       << "_tao_cookies, ACE_TRY_ENV));\n";
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
@@ -1045,7 +1059,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       << be_uidt_nl << "}\n";
 
   // Generate exception occurred interceptor code
-  *os << "#if defined (TAO_HAS_INTERCEPTOR)" << be_nl
+  *os << "#if defined (TAO_HAS_INTERCEPTORS)" << be_nl
       << be_uidt_nl << "}" << be_uidt_nl
       << "ACE_CATCHANY" << be_idt_nl
       << "{" << be_idt_nl
@@ -1074,7 +1088,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                         -1);
     }
 
-  *os << "#endif /* TAO_HAS_INTERCEPTOR */\n";
+  *os << "#endif /* TAO_HAS_INTERCEPTORS */\n";
 
   return 0;
 }

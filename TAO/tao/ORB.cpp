@@ -153,11 +153,13 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
     trading_service_ (CORBA_Object::_nil ()),
     implrepo_service_ (CORBA_Object::_nil ()),
     orb_core_ (orb_core),
-# ifdef TAO_HAS_VALUETYPE
+# if defined (TAO_HAS_VALUETYPE)
     valuetype_factory_map_ (0),
 # endif /* TAO_HAS_VALUETYPE */
+# if defined (TAO_HAS_INTERCEPTORS)
     client_interceptor_ (),
     server_interceptor_ (),
+# endif /* TAO_HAS_INTERCEPTORS */
     use_omg_ior_format_ (1)
 {
 }

@@ -7,14 +7,13 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "tao/InterceptorC.h"
-
 #include "tao/InterceptorS.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/InterceptorC.i"
 #endif /* !defined INLINE */
 
+#if defined (TAO_HAS_INTERCEPTORS)
 PortableInterceptor::Cookie_ptr PortableInterceptor::Cookie::_narrow (
     CORBA::Object_ptr obj,
     CORBA::Environment &ACE_TRY_ENV
@@ -692,3 +691,5 @@ template class TAO_Object_Manager<PortableInterceptor::ClientRequestInterceptor,
 #  pragma instantiate TAO_Object_Field_T<PortableInterceptor::ClientRequestInterceptor,PortableInterceptor::ClientRequestInterceptor_var>
 #  pragma instantiate TAO_Object_Manager<PortableInterceptor::ClientRequestInterceptor,PortableInterceptor::ClientRequestInterceptor_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_INTERCEPTORS */
