@@ -1471,9 +1471,9 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
   if (::semTake (*m, NO_WAIT) == ERROR)
     if (errno == S_objLib_OBJ_TIMEOUT)
       {
-	// couldn't get the semaphore
-	errno = EBUSY;
-	return -1;
+        // couldn't get the semaphore
+        errno = EBUSY;
+        return -1;
       }
     else
       // error
@@ -2109,9 +2109,19 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
     }
 
 #elif defined (VXWORKS)
-  // @@ David, should this be changed to set errno to EBUSY?
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semTake (s->sema_, NO_WAIT), ace_result_), 
-                     int, -1);
+  if (::semTake (s->sema_, NO_WAIT) == ERROR)
+    if (errno == S_objLib_OBJ_TIMEOUT)
+      {
+        // couldn't get the semaphore
+        errno = EBUSY;
+        return -1;
+      }
+    else
+      // error
+      return -1;
+  else
+    // got the semaphore
+    return 0;
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (s);
