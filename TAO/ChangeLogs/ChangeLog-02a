@@ -1,3 +1,11 @@
+Wed May 17 20:57:49 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/ORB.cpp:
+
+          The using std::set_unexpected needed to be used in Borland,
+          so I changed the #if guard around it to check for _MSC_VER
+          instead of ACE_WIN32. 
+
 Wed May 17 12:11:17 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/default_resource.cpp (allocate_reactor_impl):
