@@ -102,11 +102,11 @@ namespace TAO
     /// Return the target object
     CORBA::Object_ptr target (void) const;
 
-    /// Does this invocation return a rsponse?
+    /// Does this invocation return a response?
     CORBA::Boolean  response_expected (void) const;
+
     //@}
   protected:
-
     /// Don't allow creation of an object of type Invocation_Base.
     /**
      * @param otarget, The original target on which this invocation
@@ -132,6 +132,9 @@ namespace TAO
     /// Forwarded object reference.
     CORBA::Object_var forwarded_to_;
 
+    /// Is the response expected?
+    bool response_expected_;
+
   private:
 
     ACE_UNIMPLEMENTED_FUNC (Invocation_Base & operator= (const Invocation_Base &));
@@ -149,14 +152,15 @@ namespace TAO
 
     /// The effective target on which the invocation is on.
     CORBA::Object_ptr target_;
+
     //@}
-#if TAO_HAS_INTERCEPTORS == 1
-  public:
+
     /// Operations invoked by the
     /// PortableInterceptor::ClientRequestInfo object to get details
     /// about the operation and related stuff.
     //@{
-
+#if TAO_HAS_INTERCEPTORS == 1
+  public:
     /// Return the name of the operation.
     char *operation_name (void);
 
@@ -206,8 +210,7 @@ namespace TAO
     ClientRequestInterceptor_Adapter adapter_;
     TAO_ClientRequestInfo_i req_info_;
 
-    /// Is the response expected?
-    bool response_expected_;
+
 #endif /*TAO_HAS_INTERCEPTORS*/
   };
 }

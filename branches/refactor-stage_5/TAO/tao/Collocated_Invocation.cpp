@@ -25,6 +25,8 @@ namespace TAO
                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::Exception))
   {
+
+    /// Start the interception point
 #if TAO_HAS_INTERCEPTORS == 1
 
     Invocation_Status s =
@@ -49,7 +51,7 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
         if (this->forwarded_to_.in () ||
-            this->response_expected () == false)
+            this->response_expected_ == false)
           {
             s =
               this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -66,8 +68,10 @@ namespace TAO
       }
     ACE_CATCHANY
       {
-        if (this->response_expected () == false)
+        // Ignore exceptions for oneways
+        if (this->response_expected_ == false)
           return TAO_INVOKE_SUCCESS;
+
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus status =
           this->handle_any_exception (&ACE_ANY_EXCEPTION
@@ -110,4 +114,5 @@ namespace TAO
 
     return TAO_INVOKE_SUCCESS;
   }
+
 }
