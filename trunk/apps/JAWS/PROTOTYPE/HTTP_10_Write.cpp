@@ -29,6 +29,7 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
   JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put");
 
   JAWS_IO_Handler *handler = data->io_handler ();
+
   JAWS_Dispatch_Policy *policy = this->policy ();
   if (policy == 0) policy = data->policy ();
 
@@ -41,7 +42,7 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
     {
       data->payload (0);
       delete info;
-      return -1;
+      return -3;
     }
 
 #if 0
@@ -70,11 +71,12 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
       switch (handler->status ())
         {
         case JAWS_IO_Handler::WRITE_OK:
+        case JAWS_IO_Handler::WRITE_OK_A:
           if (info->status () == (int) JAWS_HTTP_10_Request::STATUS_QUIT)
             {
               data->payload (0);
               delete info;
-              return -1;
+              return -3;
             }
 
           data->payload (0);
@@ -104,12 +106,15 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 
       switch (handler->status ())
         {
-        case JAWS_IO_Handler::TRANSMIT_OK:
         case JAWS_IO_Handler::TRANSMIT_OK_A:
+          data->payload (0);
+          delete info;
+          return 1;
+
+        case JAWS_IO_Handler::TRANSMIT_OK:
           {
             JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put, OK");
             data->payload (0);
-cerr << "(" << thr_self () << ") O deleting info: " << info << "<<<-------" << endl;
             delete info;
             return 0;
           }
@@ -118,7 +123,6 @@ cerr << "(" << thr_self () << ") O deleting info: " << info << "<<<-------" << e
           {
             JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put, ERROR");
             data->payload (0);
-cerr << "(" << thr_self () << ") E deleting info: " << info << "<<<-------" << endl;
             delete info;
             return -1;
           }
@@ -126,7 +130,6 @@ cerr << "(" << thr_self () << ") E deleting info: " << info << "<<<-------" << e
           {
             JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put, DEFAULT");
             data->payload (0);
-cerr << "<" << thr_self () << "> D deleting info: " << info << "<<<-------" << endl;
             delete info;
             return 1;
           }
@@ -134,7 +137,6 @@ cerr << "<" << thr_self () << "> D deleting info: " << info << "<<<-------" << e
 
     }
 
-cerr << "<" << thr_self () << "> U deleting info: " << info << "<<<-------" << endl;
   data->payload (0);
   delete info;
   return -1;
