@@ -1,3 +1,19 @@
+Fri Mar  7 10:58:32 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Codec/test.idl (Foo::Bar::C):
+
+	  Changed type of this attribute from "long long" to unsigned long
+	  long".  It is better supported/emulated by ACE and TAO on
+	  platforms that lack 64 bit integer support (e.g. VxWorks).
+
+	* tests/Codec/client.cpp:
+
+	  Updated to take into account the above change.  The
+	  "Foo::Bar::C" attribute is now initialized with a value wrapped
+	  by the ACE_UINT64_LITERAL macro to allow for successful builds
+	  on platforms that lack 64 bit integer support.  Fixes
+	  compile-time errors on VxWorks builds.
+
 Fri Mar  7 10:43:57 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/DynamicInterface/Request.h:
