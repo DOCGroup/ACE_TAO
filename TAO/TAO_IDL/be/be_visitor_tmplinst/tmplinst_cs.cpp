@@ -142,11 +142,20 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
   // For Any impl template class.
   if (be_global->any_support ())
     {
+      TAO_OutStream *tmp = os;
+
+      if (be_global->gen_anyop_files ())
+        {
+          os = tao_cg->anyop_source ();
+        }
+
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::Any_Impl_T<" << this->linebreak_ << be_idt << be_idt_nl
           << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+      os = tmp;
     }
 
   this->this_mode_generated (node, I_TRUE);
@@ -224,11 +233,20 @@ be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
   // For Any impl template class.
   if (be_global->any_support ())
     {
+      TAO_OutStream *tmp = os;
+
+      if (be_global->gen_anyop_files ())
+        {
+          os = tao_cg->anyop_source ();
+        }
+
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::Any_Impl_T<" << this->linebreak_ << be_idt << be_idt_nl
           << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+      os = tmp;
     }
 
   this->this_mode_generated (node, I_TRUE);
@@ -369,12 +387,21 @@ be_visitor_tmplinst_cs::visit_sequence (be_sequence *node)
   // For Any impl template class.
   if (be_global->any_support ())
     {
+      TAO_OutStream *tmp = os;
+
+      if (be_global->gen_anyop_files ())
+        {
+          os = tao_cg->anyop_source ();
+        }
+
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::Any_Dual_Impl_T<" << this->linebreak_
           << be_idt << be_idt_nl
           << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+      os = tmp;
     }
 
   this->this_mode_generated (node, I_TRUE);
@@ -552,6 +579,13 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
   // For Any impl template class.
   if (be_global->any_support ())
     {
+      TAO_OutStream *tmp = os;
+
+      if (be_global->gen_anyop_files ())
+        {
+          os = tao_cg->anyop_source ();
+        }
+
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::Any_Array_Impl_T<" << this->linebreak_
@@ -559,6 +593,8 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
           << fname << "_slice," << this->linebreak_ << be_nl
           << fname << "_forany" << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+      os = tmp;
     }
 
   this->this_mode_generated (node, I_TRUE);
@@ -648,12 +684,21 @@ be_visitor_tmplinst_cs::visit_enum (be_enum *node)
 
   if (be_global->any_support ())
     {
+      TAO_OutStream *tmp = os;
+
+      if (be_global->gen_anyop_files ())
+        {
+          os = tao_cg->anyop_source ();
+        }
+
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::Any_Basic_Impl_T<" << this->linebreak_
           << be_idt << be_idt_nl
           << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+      os = tmp;
     }
 
   this->this_mode_generated (node, I_TRUE);
@@ -672,12 +717,21 @@ be_visitor_tmplinst_cs::visit_exception (be_exception *node)
 
   if (be_global->any_support ())
     {
+      TAO_OutStream *tmp = os;
+
+      if (be_global->gen_anyop_files ())
+        {
+          os = tao_cg->anyop_source ();
+        }
+
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::Any_Dual_Impl_T<" << this->linebreak_
           << be_idt << be_idt_nl
           << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+      os = tmp;
     }
 
   this->this_mode_generated (node, I_TRUE);
@@ -743,12 +797,21 @@ be_visitor_tmplinst_cs::visit_structure (be_structure *node)
 
   if (be_global->any_support ())
     {
+      TAO_OutStream *tmp = os;
+
+      if (be_global->gen_anyop_files ())
+        {
+          os = tao_cg->anyop_source ();
+        }
+
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::Any_Dual_Impl_T<" << this->linebreak_
           << be_idt << be_idt_nl
           << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+      os = tmp;
     }
 
   this->this_mode_generated (node, I_TRUE);
@@ -813,12 +876,21 @@ be_visitor_tmplinst_cs::visit_union (be_union *node)
 
   if (be_global->any_support ())
     {
+      TAO_OutStream *tmp = os;
+
+      if (be_global->gen_anyop_files ())
+        {
+          os = tao_cg->anyop_source ();
+        }
+
       *os << be_nl << be_nl
           << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
           << "TAO::Any_Dual_Impl_T<" << this->linebreak_
           << be_idt << be_idt_nl
           << node->name () << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+      os = tmp;
     }
 
   this->this_mode_generated (node, I_TRUE);
