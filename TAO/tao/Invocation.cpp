@@ -144,6 +144,9 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
 
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
+  /// Ossama remove this when you are done..
+  if (this->profile_)
+    this->profile_->_decr_refcnt ();
   TAO_Transport::release (this->transport_);
 }
 
@@ -586,6 +589,27 @@ TAO_GIOP_Invocation::location_forward_i (TAO_Stub *stubobj
   this->received_location_forward_ = 1;
 
   this->restart_flag_ = 1;
+}
+
+void
+TAO_GIOP_Invocation::profile (TAO_Profile *p)
+{
+  // @@ NOTE:This is just a workaround for a more serious problem with
+  // profile management. This would cover some potential issues that
+  // Ossama is working on.
+  // Ossama, please remove them when you are done.
+  TAO_Profile *tmp = this->profile_;
+
+  // Dont do anything if the incoming profile is null
+  if (p)
+    {
+      (void) p->_incr_refcnt ();
+      this->profile_ = p;
+      (void) this->profile_->_incr_refcnt ();
+
+      if (tmp)
+        (void) tmp->_decr_refcnt ();
+    }
 }
 
 // ****************************************************************

@@ -1,3 +1,13 @@
+Fri May  9 16:43:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation.i: Removed TAO_GIOP_Invocation::profile () from
+	  the inlined file to the cpp file.
+
+	* tao/Invocation.cpp: In TAO_GIOP_Invocation::profile () increment
+	  the refcount of the profile that is being stored in the
+	  class. Decerement the refcount of the profile, if one exists
+	  in the destructor.
+
 Fri May  9 16:21:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/SArgument.h:
