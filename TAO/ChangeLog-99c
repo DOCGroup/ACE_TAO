@@ -1,3 +1,18 @@
+Thu Jul  8 13:06:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynArray_i.cpp:
+	  Changed 
+
+	  //******************************
+
+	  to
+
+	  // ******************************
+
+	  Evidently, SunCC 5.0 sees the second and third 
+	  characters as a /*, whereas other compilers
+	  don't. Thanks to Alex for reporting this error.
+
 Thu Jul 08 12:05:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp: added "TO DO"
