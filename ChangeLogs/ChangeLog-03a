@@ -1,3 +1,10 @@
+Wed Nov 27 19:42:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/MT_Reactor_Upcall_Test.cpp: Send and receive each message
+          field specifically; don't rely on the type and size fields being
+          adjacent in memory. On 64-bit Solaris w/ Forte 7 and on 64-bit
+          Windows XP, they aren't.
+
 Wed Nov 27 15:47:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix5.1.h: Add #define ACE_HAS_AIO_CALLS, but commented
