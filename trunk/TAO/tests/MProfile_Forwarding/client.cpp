@@ -3,7 +3,6 @@
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "testC.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
 
 ACE_RCSID(MT_Server, client, "$Id$")
 
