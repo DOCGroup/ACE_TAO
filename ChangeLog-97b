@@ -11,6 +11,8 @@ Thu Sep 04 10:26:11 1997  David L. Levine  <levine@cs.wustl.edu>
 	  hacked in thr_yield () to give waited threads a chance to clean
 	  up before continuing.
 
+	* ace/OS.h (ACE_Cleanup_Info): added default ctor.
+
 	* ace/Token_Manager.{h,cpp}: register ACE_Token_Manager singleton
 	  for deletion with ACE_Object_Manager.
 
