@@ -1,3 +1,24 @@
+Wed Oct 20 10:01:52 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+
+          Added support for when TAO_NO_COPY_OCTET_SEQUENCES is defined to
+          be zero.  Certain forms of unbounded sequence constructors and
+          replace methods are not available in this situation.
+
+        * tests/OctetSeq/test_i.cpp:
+
+          Moved variable inside TAO_NO_COPY_OCTET_SEQUENCES to avoid a build
+          warning.
+
 Wed Oct 20 06:39:07 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * performance-tests/Protocols/sender.cpp:
