@@ -12,6 +12,10 @@ Fri Aug 14 09:46:44 1998  David L. Levine  <levine@cs.wustl.edu>
           replaced long static casts with ACE_U64_TO_U32, so that
           they work with ACE_LACKS_LONGLONG_T.
 
+        * tao/POA.cpp: reordered template instantiations so that they
+          build with g++ 2.7.2.3, and removed some unneeded ones so that links
+          succeed with ghs/VxWorks.
+
 Fri Aug 14 09:15:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/CosTimeBase.idl:
