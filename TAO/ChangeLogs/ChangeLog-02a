@@ -1,3 +1,10 @@
+Sun Feb 13 11:09:41 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/TAO: Added a fini() method so that the TAO_ORB_Manager
+	  can be instructed not to try to destroy the RootPOA a
+	  second time.  Thanks to Boris <boris@webglide.com>
+	  for reporting this.
+
 Sat Feb 12 21:06:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/Basic/Bitmask.cpp:

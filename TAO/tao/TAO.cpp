@@ -307,6 +307,21 @@ TAO_ORB_Manager::run (ACE_Time_Value &tv,
 }
 
 int
+TAO_ORB_Manager::fini (CORBA_Environment &ACE_TRY_ENV)
+{
+  this->poa_->destroy (1, 1, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->poa_ = 0;
+
+  this->orb_->destroy (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->orb_ = 0;
+  return 0;
+}
+
+int
 TAO_ORB_Manager::run (CORBA_Environment &ACE_TRY_ENV)
 {
   this->poa_manager_->activate (ACE_TRY_ENV);
