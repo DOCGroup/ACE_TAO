@@ -1,5 +1,10 @@
 Fri Jan 09 00:14:20 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
+	* apps/Gateway/Gateway/Connection_Handler_Acceptor.cpp:
+	* apps/Gateway/Gateway/Config_Files.cpp:  Defined
+	  ACE_BUILD_SVC_DLL flag.  All declarations of an exported class
+	  must be declared with the same exporting flag.
+
 	* apps/Gateway/Peer/Options.h: Updated the path of include file
  	  Event.h.
 
