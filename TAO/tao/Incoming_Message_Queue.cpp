@@ -326,6 +326,27 @@ copy_mb_span (ACE_Message_Block *dst, ACE_Message_Block *src, size_t span_size)
 
 /*static*/
 TAO_Queued_Data *
+TAO_Queued_Data::make_minimal_message (ACE_Message_Block *mb,
+                                       ACE_Allocator *alloc)
+{
+  register TAO_Queued_Data *new_qd = 0;
+
+  // Validate arguments.
+  if (mb == 0)
+    return 0 ;
+
+  new_qd = make_queued_data (alloc);
+  if (new_qd == 0)
+    return 0 ;
+
+  new_qd->msg_block_ = mb ;// ->duplicate() ;
+  new_qd->current_state_ = WAITING_TO_COMPLETE_HEADER;
+
+  return new_qd ;
+}
+
+/*static*/
+TAO_Queued_Data *
 TAO_Queued_Data::make_uncompleted_message (ACE_Message_Block *mb,
                                            TAO_Pluggable_Messaging &msging_obj,
                                            ACE_Allocator *alloc)
@@ -659,6 +680,66 @@ TAO_Queued_Data::consolidate (void)
       // Set the message block to the new consolidated message block
       this->msg_block_ = dest;
       this->more_fragments_ = 0;
+    }
+}
+
+void
+TAO_Queued_Data::dump_msg (const char *label)
+{
+  if (TAO_debug_level >= 5)
+    {
+      static const char *names[] =
+      {
+        "Request",
+        "Reply",
+        "CancelRequest",
+        "LocateRequest",
+        "LocateReply",
+        "CloseConnection",
+        "MessageError",
+        "Fragment"
+      };
+
+      // Message name.
+      const char *message_name = "UNKNOWN MESSAGE";
+      u_long slot = this->msg_type_ ;
+      if (slot < sizeof (names) / sizeof (names[0]))
+        message_name = names[slot];
+
+      // Print.
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - TAO_Queued_Data::dump_msg, "
+                  "%s GIOP v%d.%d msg, %d data bytes, %s endian, "
+                  "Type %s[%u]\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (label),
+                  this->major_version_,
+                  this->minor_version_,
+                  this->msg_block_->total_length (),
+                  (this->byte_order_ == TAO_ENCAP_BYTE_ORDER) ?
+                                               ACE_TEXT("my") :
+                                              ACE_TEXT("other"),
+                  ACE_TEXT_CHAR_TO_TCHAR(message_name),
+                  this->request_id_));
+
+      if (TAO_debug_level >= 10)
+        {
+          char* ptr = 0 ;
+          ACE_Message_Block tmp ;
+          if (this->msg_block_->cont () != 0)
+            {
+              ACE_CDR::consolidate (&tmp, this->msg_block_);
+              ptr = tmp.rd_ptr ();
+            }
+          else
+            {
+              ptr = this->msg_block_->rd_ptr ();
+            }
+
+          ACE_HEX_DUMP ((LM_DEBUG,
+                         ptr,
+                         this->msg_block_->total_length (),
+                         ACE_TEXT ("Queued Data Payload")));
+        }
     }
 }
 
