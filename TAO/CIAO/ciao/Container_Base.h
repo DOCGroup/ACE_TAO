@@ -156,7 +156,7 @@ namespace CIAO
   protected:
     long number_;
 
-    static ACE_Atomic_Op <ACE_Thread_Mutex, long> serial_number_;
+    static ACE_Atomic_Op <ACE_SYNCH_MUTEX, long> serial_number_;
   };
 
   typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
