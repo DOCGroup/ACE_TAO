@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 RtecScheduler::handle_t
 ECB_Consumer::rt_info (void) const
