@@ -25,6 +25,7 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Object_Proxy_Broker.h"
+#include "tao/Policy_ForwardC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

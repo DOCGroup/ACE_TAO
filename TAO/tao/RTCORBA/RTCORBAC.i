@@ -77,7 +77,7 @@ RTCORBA::ThreadpoolLane_var::operator= (const ::RTCORBA::ThreadpoolLane_var &p)
         {
           ThreadpoolLane *deep_copy =
             new ThreadpoolLane (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               ThreadpoolLane *tmp = deep_copy;
@@ -87,7 +87,7 @@ RTCORBA::ThreadpoolLane_var::operator= (const ::RTCORBA::ThreadpoolLane_var &p)
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -122,13 +122,13 @@ RTCORBA::ThreadpoolLane_var::operator const ::RTCORBA::ThreadpoolLane &() const 
 }
 
 ACE_INLINE
-RTCORBA::ThreadpoolLane_var::operator ::RTCORBA::ThreadpoolLane &() // cast
+RTCORBA::ThreadpoolLane_var::operator ::RTCORBA::ThreadpoolLane &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-RTCORBA::ThreadpoolLane_var::operator ::RTCORBA::ThreadpoolLane &() const // cast
+RTCORBA::ThreadpoolLane_var::operator ::RTCORBA::ThreadpoolLane &() const // cast 
 {
   return *this->ptr_;
 }
@@ -145,7 +145,7 @@ RTCORBA::ThreadpoolLane_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for fixed size
+// mapping for fixed size 
 ACE_INLINE ::RTCORBA::ThreadpoolLane &
 RTCORBA::ThreadpoolLane_var::out (void)
 {
@@ -170,176 +170,176 @@ RTCORBA::ThreadpoolLane_var::ptr (void) const
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_THREADPOOLLANES_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_THREADPOOLLANES_CI_
 
-  // = Static operations.
-  ACE_INLINE RTCORBA::ThreadpoolLane *
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
-  {
-    RTCORBA::ThreadpoolLane *retval = 0;
-    ACE_NEW_RETURN (retval, RTCORBA::ThreadpoolLane[size], 0);
-    return retval;
-  }
+// = Static operations.
+ACE_INLINE RTCORBA::ThreadpoolLane *
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  RTCORBA::ThreadpoolLane *retval = 0;
+  ACE_NEW_RETURN (retval, RTCORBA::ThreadpoolLane[size], 0);
+  return retval;
+}
 
-  ACE_INLINE void RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::freebuf (RTCORBA::ThreadpoolLane *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
+ACE_INLINE void RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::freebuf (RTCORBA::ThreadpoolLane *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
 
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (void) // Default constructor.
-  {
-  }
+ACE_INLINE
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (void) // Default constructor.
+{
+}
 
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (maximum))
-  {
-  }
+ACE_INLINE
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (maximum))
+{
+}
 
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (CORBA::ULong maximum,
-    CORBA::ULong length,
-    RTCORBA::ThreadpoolLane *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (const _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      RTCORBA::ThreadpoolLane *tmp1 = _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (this->maximum_);
-      RTCORBA::ThreadpoolLane * const tmp2 = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane * ACE_CAST_CONST, rhs.buffer_);
-
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-
-  ACE_INLINE RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::operator= (const _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        RTCORBA::ThreadpoolLane *tmp = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane *, this->buffer_);
-        _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (rhs.maximum_);
-
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-
-    RTCORBA::ThreadpoolLane *tmp1 = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane *, this->buffer_);
-    RTCORBA::ThreadpoolLane * const tmp2 = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane * ACE_CAST_CONST, rhs.buffer_);
-
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-
-    return *this;
-  }
-
-  // = Accessors.
-  ACE_INLINE RTCORBA::ThreadpoolLane &
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::operator[] (CORBA::ULong i)
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    RTCORBA::ThreadpoolLane* tmp = ACE_reinterpret_cast(RTCORBA::ThreadpoolLane*,this->buffer_);
-    return tmp[i];
-  }
-
-  ACE_INLINE const RTCORBA::ThreadpoolLane &
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    RTCORBA::ThreadpoolLane * const tmp = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
-  ACE_INLINE RTCORBA::ThreadpoolLane *
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::get_buffer (CORBA::Boolean orphan)
-  {
-    RTCORBA::ThreadpoolLane *result = 0;
-    if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(RTCORBA::ThreadpoolLane*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-
-  ACE_INLINE const RTCORBA::ThreadpoolLane *
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const RTCORBA::ThreadpoolLane * ACE_CAST_CONST, this->buffer_);
-  }
-
-  ACE_INLINE void
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::replace (CORBA::ULong max,
+ACE_INLINE
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (CORBA::ULong maximum,
   CORBA::ULong length,
   RTCORBA::ThreadpoolLane *data,
   CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (const _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      RTCORBA::ThreadpoolLane *tmp = ACE_reinterpret_cast(RTCORBA::ThreadpoolLane*,this->buffer_);
-      _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::freebuf (tmp);
-    }
-    this->buffer_ = data;
-    this->release_ = release;
+    RTCORBA::ThreadpoolLane *tmp1 = _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (this->maximum_);
+    RTCORBA::ThreadpoolLane * const tmp2 = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    this->buffer_ = tmp1;
   }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::operator= (const _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
+    return *this;
+  
+  if (this->release_)
+  {
+    if (this->maximum_ < rhs.maximum_)
+    {
+      // free the old buffer
+      RTCORBA::ThreadpoolLane *tmp = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane *, this->buffer_);
+      _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (rhs.maximum_);
+    }
+  }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (rhs.maximum_);
+  
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  RTCORBA::ThreadpoolLane *tmp1 = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane *, this->buffer_);
+  RTCORBA::ThreadpoolLane * const tmp2 = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE RTCORBA::ThreadpoolLane &
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  RTCORBA::ThreadpoolLane* tmp = ACE_reinterpret_cast(RTCORBA::ThreadpoolLane*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const RTCORBA::ThreadpoolLane &
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  RTCORBA::ThreadpoolLane * const tmp = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE RTCORBA::ThreadpoolLane *
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::get_buffer (CORBA::Boolean orphan)
+{
+  RTCORBA::ThreadpoolLane *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (RTCORBA::ThreadpoolLane*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(RTCORBA::ThreadpoolLane*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const RTCORBA::ThreadpoolLane *
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const RTCORBA::ThreadpoolLane * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::replace (CORBA::ULong max,
+CORBA::ULong length,
+RTCORBA::ThreadpoolLane *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    RTCORBA::ThreadpoolLane *tmp = ACE_reinterpret_cast(RTCORBA::ThreadpoolLane*,this->buffer_);
+    _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
 
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_RTCORBA_THREADPOOLLANES_CI_)
 #define _RTCORBA_THREADPOOLLANES_CI_
@@ -402,7 +402,7 @@ RTCORBA::ThreadpoolLanes_var::operator= (const ::RTCORBA::ThreadpoolLanes_var &p
         {
           ThreadpoolLanes *deep_copy =
             new ThreadpoolLanes (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               ThreadpoolLanes *tmp = deep_copy;
@@ -412,7 +412,7 @@ RTCORBA::ThreadpoolLanes_var::operator= (const ::RTCORBA::ThreadpoolLanes_var &p
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -440,20 +440,20 @@ RTCORBA::ThreadpoolLanes_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 RTCORBA::ThreadpoolLanes_var::operator const ::RTCORBA::ThreadpoolLanes &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-RTCORBA::ThreadpoolLanes_var::operator ::RTCORBA::ThreadpoolLanes &() // cast
+ACE_INLINE 
+RTCORBA::ThreadpoolLanes_var::operator ::RTCORBA::ThreadpoolLanes &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-RTCORBA::ThreadpoolLanes_var::operator ::RTCORBA::ThreadpoolLanes &() const // cast
+ACE_INLINE 
+RTCORBA::ThreadpoolLanes_var::operator ::RTCORBA::ThreadpoolLanes &() const // cast 
 {
   return *this->ptr_;
 }
@@ -482,7 +482,7 @@ RTCORBA::ThreadpoolLanes_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::RTCORBA::ThreadpoolLanes *&
 RTCORBA::ThreadpoolLanes_var::out (void)
 {
@@ -543,7 +543,7 @@ RTCORBA::ThreadpoolLanes_out::operator= (ThreadpoolLanes *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 RTCORBA::ThreadpoolLanes_out::operator ::RTCORBA::ThreadpoolLanes *&() // cast
 {
   return this->ptr_;
@@ -642,7 +642,7 @@ RTCORBA::Protocol_var::operator= (const ::RTCORBA::Protocol_var &p)
         {
           Protocol *deep_copy =
             new Protocol (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               Protocol *tmp = deep_copy;
@@ -652,7 +652,7 @@ RTCORBA::Protocol_var::operator= (const ::RTCORBA::Protocol_var &p)
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -675,20 +675,20 @@ RTCORBA::Protocol_var::operator const ::RTCORBA::Protocol &() const // cast
 }
 
 ACE_INLINE
-RTCORBA::Protocol_var::operator ::RTCORBA::Protocol &() // cast
+RTCORBA::Protocol_var::operator ::RTCORBA::Protocol &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-RTCORBA::Protocol_var::operator ::RTCORBA::Protocol &() const // cast
+RTCORBA::Protocol_var::operator ::RTCORBA::Protocol &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-RTCORBA::Protocol_var::operator ::RTCORBA::Protocol *&() // cast
+RTCORBA::Protocol_var::operator ::RTCORBA::Protocol *&() // cast 
 {
   return this->ptr_;
 }
@@ -705,7 +705,7 @@ RTCORBA::Protocol_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::RTCORBA::Protocol *&
 RTCORBA::Protocol_var::out (void)
 {
@@ -766,7 +766,7 @@ RTCORBA::Protocol_out::operator= (Protocol *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 RTCORBA::Protocol_out::operator ::RTCORBA::Protocol *&() // cast
 {
   return this->ptr_;
@@ -790,176 +790,176 @@ RTCORBA::Protocol_out::operator-> (void)
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CI_
 
-  // = Static operations.
-  ACE_INLINE RTCORBA::Protocol *
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
-  {
-    RTCORBA::Protocol *retval = 0;
-    ACE_NEW_RETURN (retval, RTCORBA::Protocol[size], 0);
-    return retval;
-  }
+// = Static operations.
+ACE_INLINE RTCORBA::Protocol *
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  RTCORBA::Protocol *retval = 0;
+  ACE_NEW_RETURN (retval, RTCORBA::Protocol[size], 0);
+  return retval;
+}
 
-  ACE_INLINE void RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::freebuf (RTCORBA::Protocol *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
+ACE_INLINE void RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::freebuf (RTCORBA::Protocol *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
 
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (void) // Default constructor.
-  {
-  }
+ACE_INLINE
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (void) // Default constructor.
+{
+}
 
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (maximum))
-  {
-  }
+ACE_INLINE
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (maximum))
+{
+}
 
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (CORBA::ULong maximum,
-    CORBA::ULong length,
-    RTCORBA::Protocol *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      RTCORBA::Protocol *tmp1 = _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (this->maximum_);
-      RTCORBA::Protocol * const tmp2 = ACE_reinterpret_cast (RTCORBA::Protocol * ACE_CAST_CONST, rhs.buffer_);
-
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-
-  ACE_INLINE RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList &
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::operator= (const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        RTCORBA::Protocol *tmp = ACE_reinterpret_cast (RTCORBA::Protocol *, this->buffer_);
-        _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (rhs.maximum_);
-
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-
-    RTCORBA::Protocol *tmp1 = ACE_reinterpret_cast (RTCORBA::Protocol *, this->buffer_);
-    RTCORBA::Protocol * const tmp2 = ACE_reinterpret_cast (RTCORBA::Protocol * ACE_CAST_CONST, rhs.buffer_);
-
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-
-    return *this;
-  }
-
-  // = Accessors.
-  ACE_INLINE RTCORBA::Protocol &
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::operator[] (CORBA::ULong i)
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    RTCORBA::Protocol* tmp = ACE_reinterpret_cast(RTCORBA::Protocol*,this->buffer_);
-    return tmp[i];
-  }
-
-  ACE_INLINE const RTCORBA::Protocol &
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    RTCORBA::Protocol * const tmp = ACE_reinterpret_cast (RTCORBA::Protocol* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
-  ACE_INLINE RTCORBA::Protocol *
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::get_buffer (CORBA::Boolean orphan)
-  {
-    RTCORBA::Protocol *result = 0;
-    if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (RTCORBA::Protocol*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(RTCORBA::Protocol*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-
-  ACE_INLINE const RTCORBA::Protocol *
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const RTCORBA::Protocol * ACE_CAST_CONST, this->buffer_);
-  }
-
-  ACE_INLINE void
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::replace (CORBA::ULong max,
+ACE_INLINE
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (CORBA::ULong maximum,
   CORBA::ULong length,
   RTCORBA::Protocol *data,
   CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      RTCORBA::Protocol *tmp = ACE_reinterpret_cast(RTCORBA::Protocol*,this->buffer_);
-      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::freebuf (tmp);
-    }
-    this->buffer_ = data;
-    this->release_ = release;
+    RTCORBA::Protocol *tmp1 = _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (this->maximum_);
+    RTCORBA::Protocol * const tmp2 = ACE_reinterpret_cast (RTCORBA::Protocol * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    this->buffer_ = tmp1;
   }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList &
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::operator= (const _TAO_Unbounded_Sequence_RTCORBA_ProtocolList &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
+    return *this;
+  
+  if (this->release_)
+  {
+    if (this->maximum_ < rhs.maximum_)
+    {
+      // free the old buffer
+      RTCORBA::Protocol *tmp = ACE_reinterpret_cast (RTCORBA::Protocol *, this->buffer_);
+      _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (rhs.maximum_);
+    }
+  }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (rhs.maximum_);
+  
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  RTCORBA::Protocol *tmp1 = ACE_reinterpret_cast (RTCORBA::Protocol *, this->buffer_);
+  RTCORBA::Protocol * const tmp2 = ACE_reinterpret_cast (RTCORBA::Protocol * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE RTCORBA::Protocol &
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  RTCORBA::Protocol* tmp = ACE_reinterpret_cast(RTCORBA::Protocol*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const RTCORBA::Protocol &
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  RTCORBA::Protocol * const tmp = ACE_reinterpret_cast (RTCORBA::Protocol* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE RTCORBA::Protocol *
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::get_buffer (CORBA::Boolean orphan)
+{
+  RTCORBA::Protocol *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (RTCORBA::Protocol*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(RTCORBA::Protocol*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const RTCORBA::Protocol *
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const RTCORBA::Protocol * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::replace (CORBA::ULong max,
+CORBA::ULong length,
+RTCORBA::Protocol *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    RTCORBA::Protocol *tmp = ACE_reinterpret_cast(RTCORBA::Protocol*,this->buffer_);
+    _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
 
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_RTCORBA_PROTOCOLLIST_CI_)
 #define _RTCORBA_PROTOCOLLIST_CI_
@@ -1015,7 +1015,7 @@ RTCORBA::ProtocolList_var::operator= (const ::RTCORBA::ProtocolList_var &p)
         {
           ProtocolList *deep_copy =
             new ProtocolList (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               ProtocolList *tmp = deep_copy;
@@ -1025,7 +1025,7 @@ RTCORBA::ProtocolList_var::operator= (const ::RTCORBA::ProtocolList_var &p)
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -1041,27 +1041,27 @@ RTCORBA::ProtocolList_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 RTCORBA::ProtocolList_var::operator const ::RTCORBA::ProtocolList &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-RTCORBA::ProtocolList_var::operator ::RTCORBA::ProtocolList &() // cast
+ACE_INLINE 
+RTCORBA::ProtocolList_var::operator ::RTCORBA::ProtocolList &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-RTCORBA::ProtocolList_var::operator ::RTCORBA::ProtocolList &() const // cast
+ACE_INLINE 
+RTCORBA::ProtocolList_var::operator ::RTCORBA::ProtocolList &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-RTCORBA::ProtocolList_var::operator ::RTCORBA::ProtocolList *&() // cast
+RTCORBA::ProtocolList_var::operator ::RTCORBA::ProtocolList *&() // cast 
 {
   return this->ptr_;
 }
@@ -1090,7 +1090,7 @@ RTCORBA::ProtocolList_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::RTCORBA::ProtocolList *&
 RTCORBA::ProtocolList_var::out (void)
 {
@@ -1151,7 +1151,7 @@ RTCORBA::ProtocolList_out::operator= (ProtocolList *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 RTCORBA::ProtocolList_out::operator ::RTCORBA::ProtocolList *&() // cast
 {
   return this->ptr_;
@@ -1285,7 +1285,7 @@ RTCORBA::PriorityBand_var::operator= (const ::RTCORBA::PriorityBand_var &p)
         {
           PriorityBand *deep_copy =
             new PriorityBand (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               PriorityBand *tmp = deep_copy;
@@ -1295,7 +1295,7 @@ RTCORBA::PriorityBand_var::operator= (const ::RTCORBA::PriorityBand_var &p)
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -1330,13 +1330,13 @@ RTCORBA::PriorityBand_var::operator const ::RTCORBA::PriorityBand &() const // c
 }
 
 ACE_INLINE
-RTCORBA::PriorityBand_var::operator ::RTCORBA::PriorityBand &() // cast
+RTCORBA::PriorityBand_var::operator ::RTCORBA::PriorityBand &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-RTCORBA::PriorityBand_var::operator ::RTCORBA::PriorityBand &() const // cast
+RTCORBA::PriorityBand_var::operator ::RTCORBA::PriorityBand &() const // cast 
 {
   return *this->ptr_;
 }
@@ -1353,7 +1353,7 @@ RTCORBA::PriorityBand_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for fixed size
+// mapping for fixed size 
 ACE_INLINE ::RTCORBA::PriorityBand &
 RTCORBA::PriorityBand_var::out (void)
 {
@@ -1378,176 +1378,176 @@ RTCORBA::PriorityBand_var::ptr (void) const
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CI_
 
-  // = Static operations.
-  ACE_INLINE RTCORBA::PriorityBand *
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
-  {
-    RTCORBA::PriorityBand *retval = 0;
-    ACE_NEW_RETURN (retval, RTCORBA::PriorityBand[size], 0);
-    return retval;
-  }
+// = Static operations.
+ACE_INLINE RTCORBA::PriorityBand *
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  RTCORBA::PriorityBand *retval = 0;
+  ACE_NEW_RETURN (retval, RTCORBA::PriorityBand[size], 0);
+  return retval;
+}
 
-  ACE_INLINE void RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::freebuf (RTCORBA::PriorityBand *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
+ACE_INLINE void RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::freebuf (RTCORBA::PriorityBand *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
 
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void) // Default constructor.
-  {
-  }
+ACE_INLINE
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void) // Default constructor.
+{
+}
 
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (maximum))
-  {
-  }
+ACE_INLINE
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (maximum))
+{
+}
 
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum,
-    CORBA::ULong length,
-    RTCORBA::PriorityBand *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-
-  ACE_INLINE
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      RTCORBA::PriorityBand *tmp1 = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (this->maximum_);
-      RTCORBA::PriorityBand * const tmp2 = ACE_reinterpret_cast (RTCORBA::PriorityBand * ACE_CAST_CONST, rhs.buffer_);
-
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-
-  ACE_INLINE RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands &
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::operator= (const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        RTCORBA::PriorityBand *tmp = ACE_reinterpret_cast (RTCORBA::PriorityBand *, this->buffer_);
-        _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (rhs.maximum_);
-
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-
-    RTCORBA::PriorityBand *tmp1 = ACE_reinterpret_cast (RTCORBA::PriorityBand *, this->buffer_);
-    RTCORBA::PriorityBand * const tmp2 = ACE_reinterpret_cast (RTCORBA::PriorityBand * ACE_CAST_CONST, rhs.buffer_);
-
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-
-    return *this;
-  }
-
-  // = Accessors.
-  ACE_INLINE RTCORBA::PriorityBand &
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::operator[] (CORBA::ULong i)
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    RTCORBA::PriorityBand* tmp = ACE_reinterpret_cast(RTCORBA::PriorityBand*,this->buffer_);
-    return tmp[i];
-  }
-
-  ACE_INLINE const RTCORBA::PriorityBand &
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    RTCORBA::PriorityBand * const tmp = ACE_reinterpret_cast (RTCORBA::PriorityBand* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
-  ACE_INLINE RTCORBA::PriorityBand *
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::get_buffer (CORBA::Boolean orphan)
-  {
-    RTCORBA::PriorityBand *result = 0;
-    if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (RTCORBA::PriorityBand*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(RTCORBA::PriorityBand*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-
-  ACE_INLINE const RTCORBA::PriorityBand *
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const RTCORBA::PriorityBand * ACE_CAST_CONST, this->buffer_);
-  }
-
-  ACE_INLINE void
-  RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::replace (CORBA::ULong max,
+ACE_INLINE
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (CORBA::ULong maximum,
   CORBA::ULong length,
   RTCORBA::PriorityBand *data,
   CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      RTCORBA::PriorityBand *tmp = ACE_reinterpret_cast(RTCORBA::PriorityBand*,this->buffer_);
-      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::freebuf (tmp);
-    }
-    this->buffer_ = data;
-    this->release_ = release;
+    RTCORBA::PriorityBand *tmp1 = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (this->maximum_);
+    RTCORBA::PriorityBand * const tmp2 = ACE_reinterpret_cast (RTCORBA::PriorityBand * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    this->buffer_ = tmp1;
   }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands &
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::operator= (const _TAO_Unbounded_Sequence_RTCORBA_PriorityBands &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
+    return *this;
+  
+  if (this->release_)
+  {
+    if (this->maximum_ < rhs.maximum_)
+    {
+      // free the old buffer
+      RTCORBA::PriorityBand *tmp = ACE_reinterpret_cast (RTCORBA::PriorityBand *, this->buffer_);
+      _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (rhs.maximum_);
+    }
+  }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (rhs.maximum_);
+  
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  RTCORBA::PriorityBand *tmp1 = ACE_reinterpret_cast (RTCORBA::PriorityBand *, this->buffer_);
+  RTCORBA::PriorityBand * const tmp2 = ACE_reinterpret_cast (RTCORBA::PriorityBand * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE RTCORBA::PriorityBand &
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  RTCORBA::PriorityBand* tmp = ACE_reinterpret_cast(RTCORBA::PriorityBand*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const RTCORBA::PriorityBand &
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  RTCORBA::PriorityBand * const tmp = ACE_reinterpret_cast (RTCORBA::PriorityBand* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE RTCORBA::PriorityBand *
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::get_buffer (CORBA::Boolean orphan)
+{
+  RTCORBA::PriorityBand *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (RTCORBA::PriorityBand*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(RTCORBA::PriorityBand*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const RTCORBA::PriorityBand *
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const RTCORBA::PriorityBand * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::replace (CORBA::ULong max,
+CORBA::ULong length,
+RTCORBA::PriorityBand *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    RTCORBA::PriorityBand *tmp = ACE_reinterpret_cast(RTCORBA::PriorityBand*,this->buffer_);
+    _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
 
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_RTCORBA_PRIORITYBANDS_CI_)
 #define _RTCORBA_PRIORITYBANDS_CI_
@@ -1610,7 +1610,7 @@ RTCORBA::PriorityBands_var::operator= (const ::RTCORBA::PriorityBands_var &p)
         {
           PriorityBands *deep_copy =
             new PriorityBands (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               PriorityBands *tmp = deep_copy;
@@ -1620,7 +1620,7 @@ RTCORBA::PriorityBands_var::operator= (const ::RTCORBA::PriorityBands_var &p)
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -1648,20 +1648,20 @@ RTCORBA::PriorityBands_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 RTCORBA::PriorityBands_var::operator const ::RTCORBA::PriorityBands &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-RTCORBA::PriorityBands_var::operator ::RTCORBA::PriorityBands &() // cast
+ACE_INLINE 
+RTCORBA::PriorityBands_var::operator ::RTCORBA::PriorityBands &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-RTCORBA::PriorityBands_var::operator ::RTCORBA::PriorityBands &() const // cast
+ACE_INLINE 
+RTCORBA::PriorityBands_var::operator ::RTCORBA::PriorityBands &() const // cast 
 {
   return *this->ptr_;
 }
@@ -1690,7 +1690,7 @@ RTCORBA::PriorityBands_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::RTCORBA::PriorityBands *&
 RTCORBA::PriorityBands_var::out (void)
 {
@@ -1751,7 +1751,7 @@ RTCORBA::PriorityBands_out::operator= (PriorityBands *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 RTCORBA::PriorityBands_out::operator ::RTCORBA::PriorityBands *&() // cast
 {
   return this->ptr_;
@@ -1824,7 +1824,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const RTCORBA::Thread
     return 1;
   else
     return 0;
-
+  
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, RTCORBA::ThreadpoolLane &_tao_aggregate)
@@ -1837,7 +1837,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, RTCORBA::ThreadpoolLan
     return 1;
   else
     return 0;
-
+  
 }
 
 
@@ -1865,12 +1865,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, RTCORBA::PriorityModel
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-
+  
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (RTCORBA::PriorityModel, _tao_temp);
     }
-
+  
   return _tao_result;
 }
 
@@ -1883,7 +1883,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const RTCORBA::Priori
     return 1;
   else
     return 0;
-
+  
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, RTCORBA::PriorityBand &_tao_aggregate)
@@ -1895,7 +1895,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, RTCORBA::PriorityBand 
     return 1;
   else
     return 0;
-
+  
 }
 
 

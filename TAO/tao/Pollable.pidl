@@ -11,8 +11,7 @@
  * The command used to generate code from this file is:
  *
  *   tao_idl
- *     -Ge 1
- *     -DNO_VALUE
+ *     -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
  *     -Wb,export_macro=TAO_Export
  *     -Wb,export_include="tao/corbafwd.h"
  *     -Wb,pre_include="ace/pre.h"
@@ -31,46 +30,40 @@
  */
 //=============================================================================
 
+#ifndef TAO_POLLABLE_PIDL
+#define TAO_POLLABLE_PIDL
 
 #pragma prefix "omg.org"
 
+module CORBA
+{
+  local interface PollableSet;
 
-// We should declare this stuff in the CORBA module, but then we
-// cannot support platforms that lack namespaces.
-// Instead we prefix all the names with CORBA_, then we add a number
-// of typedefs in corbafwd.h so it looks like they are in the CORBA
-// module.  Finally we modify the generated code to have all the right
-// interface repository ids.
-//
-// @@ module CORBA
-//    {
+  local interface Pollable {
+    boolean is_ready(in unsigned long timeout);
+    PollableSet create_pollable_set( );
+  };
 
-local interface CORBA_PollableSet;
+  local interface DIIPollable : Pollable { };
 
-local interface CORBA_Pollable {
-  boolean is_ready(in unsigned long timeout);
+  local interface PollableSet {
+    exception NoPossiblePollable { };
+    exception UnknownPollable { };
 
-  CORBA_PollableSet create_pollable_set( );
-};
+    DIIPollable create_dii_pollable();
 
-local interface CORBA_DIIPollable : CORBA_Pollable { };
+    void add_pollable(in Pollable potential );
 
-local interface CORBA_PollableSet {
+    Pollable poll(in unsigned long timeout)
+      raises( NoPossiblePollable );
 
-  exception NoPossiblePollable { };
-  exception UnknownPollable { };
+    void remove(in Pollable potential )
+      raises( UnknownPollable );
 
-  CORBA_DIIPollable create_dii_pollable();
-
-  void add_pollable(in CORBA_Pollable potential );
-
-  CORBA_Pollable poll(in unsigned long timeout)
-    raises( NoPossiblePollable );
-
-  void remove(in CORBA_Pollable potential )
-    raises( UnknownPollable );
-
-  unsigned short number_left( );
+    unsigned short number_left( );
+  };
 };
 
 #pragma prefix ""
+
+#endif /* TAO_POLLABLE_PIDL */

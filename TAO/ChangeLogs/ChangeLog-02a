@@ -1,3 +1,317 @@
+Thu Feb  7 17:06:24 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Exception.h:
+	* tao/Exception.i:
+	* tao/Exception.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+	  Generate new _tao_duplicate() virtual method for all
+	  exceptions.  This method performs a deep-copy of the exception.
+	  Also made sure that the operations are generated in the same
+	  order on both the header and source files.
+
+	* tao/Environment.cpp:
+	  Use the new _tao_duplicate() operation to safely keep a copy of
+	  the exception.
+	  Made some of the assignment operators exception safe.
+	  Documented the memory management rules for the exception()
+	  attribute.
+
+	* TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+	  Generate a space between the export macro and the return type
+	  (void) for the <<= and >>= operators.
+
+	* TAO_IDL/util/utl_scope.cpp:
+	  Update comments about TypeCode and TCKind inside the CORBA::
+	  namespace.
+
+	* examples/RTCORBA/Activity/POA_Holder.cpp:
+	  Use CORBA::Policy instead of CORBA_Policy.
+
+	* tao/Bounds.pidl:
+	  Add new pre-compiled IDL source for the CORBA::Bounds exception.
+
+	* tao/BoundsC.h:
+	* tao/BoundsC.i:
+	* tao/BoundsC.cpp:
+	  Re-generate the code to take advantage of namespaces, no need to
+	  keep complicated patches around.
+
+	* tao/Dynamic.pidl:
+	* tao/Current.pidl:
+	* tao/GIOP.pidl:
+	* tao/IIOP.pidl:
+	* tao/OctetSeq.pidl:
+	* tao/StringSeq.pidl:
+	* tao/TAO.pidl:
+	* tao/TimeBase.pidl:
+	* tao/iiop_endpoints.pidl:
+	* tao/IFR_Client/IFR_Base.pidl:
+	* tao/IORTable/IORTable.pidl:
+	* tao/PortableServer/PortableServer.pidl:
+	* tao/RTCORBA/RTCORBA.pidl:
+	  Update the comments about how the IDL compiler should be
+	  invoked.
+	  In some cases I changed the documentation to use Doxygen-style
+	  comments.
+
+	* tao/Domain.pidl:
+	* tao/IOP.pidl:
+	* tao/ObjectReferenceTemplate.pidl:
+	* tao/PortableInterceptor.pidl:
+	* tao/DynamicAny/DynamicAny.pidl:
+	  Change the comments to Doxygen style, and update them to
+	  describe the use of a single patch file, and reflect the fact
+	  that we take advantage of namespaces now.
+
+	* tao/DomainC.h:
+	* tao/DomainC.i:
+	* tao/DomainC.cpp:
+	* tao/IOPC.h:
+	* tao/IOPC.i:
+	* tao/IOPC.cpp:
+	* tao/ObjectReferenceTemplateC.h:
+	* tao/ObjectReferenceTemplateC.i:
+	* tao/ObjectReferenceTemplateC.cpp:
+	* tao/PortableInterceptorC.h:
+	* tao/PortableInterceptorC.i:
+	* tao/PortableInterceptorC.cpp:
+	* tao/WrongTransactionC.h:
+	* tao/WrongTransactionC.cpp:
+	* tao/Domain/DomainS.h:
+	* tao/Domain/DomainS.i:
+	* tao/Domain/DomainS.cpp:
+	* tao/Domain/DomainS_T.h:
+	* tao/Domain/DomainS_T.i:
+	* tao/Domain/DomainS_T.cpp:
+	* tao/DynamicAny/DynamicAnyC.h:
+	* tao/DynamicAny/DynamicAnyC.i:
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/IORManipulation/IORC.h:
+	* tao/IORManipulation/IORC.i:
+	* tao/IORManipulation/IORC.cpp:
+	* tao/IORTable/IORTableC.h:
+	* tao/IORTable/IORTableC.i:
+	* tao/IORTable/IORTableC.cpp:
+	* tao/PortableServer/ImplRepoC.h:
+	* tao/PortableServer/ImplRepoC.i:
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/ImplRepoS.h:
+	* tao/PortableServer/ImplRepoS.i:
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/PortableServer/ImplRepoS_T.h:
+	* tao/PortableServer/ImplRepoS_T.i:
+	* tao/PortableServer/ImplRepoS_T.cpp:
+	* tao/RTCORBA/RTCORBAC.h:
+	* tao/RTCORBA/RTCORBAC.i:
+	* tao/RTCORBA/RTCORBAC.cpp:
+	* tao/PortableServer/PortableServerC.h:
+	* tao/PortableServer/PortableServerC.i:
+	* tao/PortableServer/PortableServerC.cpp:
+	  Re-generate the code to get the new CORBA::Exception methods.
+
+	* tao/IOP_N.pidl:
+	  Removed, this file is no longer used or part of any
+	  specification.
+
+	* tao/InterfaceDef.pidl:
+	  New file to forward declare CORBA::InterfaceDef, makes the
+	  generation of other pre-compiled IDL files *much* simpler.
+
+	* tao/ORB.pidl:
+	* tao/InvalidName.pidl:
+	  New file to generate CORBA::ORB::InvalidName, unfortunately the
+	  code has to be manually inserted into tao/ORB.{h,i,cpp}, but it
+	  is still simpler than hacking the implementation "manually".
+	  Removed the ORB.pidl file.
+
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	  Use the newly generated source for CORBA::ORB::InvalidName.
+
+	* tao/Makefile:
+	* tao/Makefile.am:
+	* tao/Makefile.bor:
+	  Add the new Policy_ForwardC.* files.
+
+	* tao/Policy.pidl:
+	  Move some of the declarations to Policy_Forward.pidl, using a
+	  separate file to forward declare CORBA::Policy simplified the
+	  generation and patching of the code, as it breaks the cycle
+	  between CORBA::Policy and CORBA::Object.
+	  In detail: CORBA::Policy derives from CORBA::Object, but the
+	  latter uses CORBA::Policy as arguments to the
+	  set_policy_override operations (and friends), using a forward
+	  declaration allow us to use the arguments without requiring a
+	  complete definition (in the header file).
+	  Update the comments to Doxygen style.
+	  Document the use of a single patch file.
+
+	* tao/PolicyC.h:
+	* tao/PolicyC.i:
+	* tao/PolicyC.cpp:
+	* tao/PortableServer/PolicyS.h:
+	* tao/PortableServer/PolicyS.i:
+	* tao/PortableServer/PolicyS.cpp:
+	* tao/PortableServer/PolicyS_T.h:
+	* tao/PortableServer/PolicyS_T.i:
+	* tao/PortableServer/PolicyS_T.cpp:
+	  Re-generate the code using the new .pidl file.
+
+	* tao/Policy_Forward.pidl:
+	  Add new pre-compiled IDL file to declare the basic
+	  Policy-related types and forward declare CORBA::Policy.
+
+	* tao/Policy_ForwardC.h:
+	* tao/Policy_ForwardC.i:
+	* tao/Policy_ForwardC.cpp:
+	  Add new pre-compiled IDL files.
+
+	* tao/Policy_Manager.h:
+	* tao/Policy_Manager.i:
+	  Use CORBA::InvalidPolicies instead of CORBA_InvalidPolicies.
+	  
+	* tao/Pollable.pidl:
+	* tao/PollableC.h:
+	* tao/PollableC.i:
+	* tao/PollableC.cpp:
+	  Take advantage of namespaces to simplify the code generation.
+
+	* tao/Object.h:
+	* tao/Policy_Validator.h:
+	* tao/Protocols_Hooks.h:
+	* tao/RTCORBA/RT_Endpoint_Utils.h:
+	  Add #include for Policy_ForwardC.h
+
+	* tao/Synch_Reply_Dispatcher.h:
+	  Add missing #include
+
+	* tao/Typecode.h:
+	* tao/Typecode.cpp:
+	  Update the TypeCode::Bounds and TypeCode::BadKind exceptions to
+	  look more like what the IDL compiler would generated.
+	  I wanted to use real pre-compiled IDL for them, but it is
+	  impossible without significant changes to the IDL compiler: the
+	  CORBA::TypeCode pseudo-object is automagically inserted by the
+	  IDL compiler, and any attempt to define it in a .pidl file would
+	  fail.
+	
+	* tao/Typecode_Constants.cpp:
+	  Remove a number of TypeCodes that are defined in the generated
+	  code.
+
+	* tao/WrongTransaction.pidl:
+	  Add missing pre-compiled IDL source.
+
+	* tao/corbafwd.h:
+	  Removed obsolete comments about alignment and packing, the code
+	  the comments made reference was removed looong time ago.
+	  Removed a number of forward references that are better declared
+	  in the generated (from PIDL) files.
+	  
+	* tao/DynamicInterface/Unknown_User_Exception.h:
+	* tao/DynamicInterface/Unknown_User_Exception.cpp:
+	  Update hand-crafted code to include the new _tao_duplicate()
+	  method.  Unfortunately there is no PIDL source for this file,
+	  and I could not figure out how to reverse-engineer one of them.
+
+	* tao/IOR.pidl:
+	* tao/IORManipulation/IOR.pidl:
+	  Moved the IOR.pidl file to the only directory where it is
+	  actually used.
+
+	* tao/PortableServer/Default_ORT.pidl:
+	* tao/PortableServer/Default_ORTC.h:
+	* tao/PortableServer/Default_ORTC.i:
+	* tao/PortableServer/Default_ORTC.cpp:
+	  Add concrete valuetypes derived from
+	  PortableInterceptor::ObjectReferenceFactory and
+	  PortableInterceptor::ObjectReferenceTemplate, otherwise it is
+	  impossible to create concrete instances of the valuetypes.
+
+	* tao/PortableServer/ObjectReferenceFactory.h:
+	* tao/PortableServer/ObjectReferenceTemplate.h:
+	  Derive from the versions in OBV_TAO_Default_ORT.
+
+	* tao/PortableServer/AMH_Response_Handler.h:
+	  Re-order #includes
+
+	* tao/PortableServer/diffs/ImplRepo.diff:
+	* tao/PortableServer/diffs/PortableServer.diff:
+	* tao/PortableServer/diffs/Default_ORT.diff:
+	* tao/RTCORBA/diffs/RTCORBA.diff:
+	* tao/RTCORBA/diffs/RTCORBAC.cpp.diff:
+	* tao/RTCORBA/diffs/RTCORBAC.h.diff:
+	* tao/RTCORBA/diffs/RTCORBAC.i.diff:
+	* tao/DynamicAny/diffs/DynamicAny.diff:
+	* tao/DynamicAny/diffs/DynamicAnyC.h.diff:
+	* tao/DynamicAny/diffs/DynamicAnyC.i.diff:
+	* tao/DynamicAny/diffs/DynamicAnyC.cpp.diff:
+	* tao/IORManipulation/diffs/IOR.diff:
+	* tao/IORManipulation/diffs/IORC.cpp.diff:
+	* tao/IORManipulation/diffs/IORC.h.diff:
+	* tao/IORManipulation/diffs/IORC.i.diff:
+	* tao/IORTable/diffs/IORTable.diff:
+	* tao/IORTable/diffs/IORTableC.cpp.diff:
+	* tao/IORTable/diffs/IORTableC.h.diff:
+	* tao/IORTable/diffs/IORTableC.i.diff:
+	* tao/diffs/Bounds.diff:
+	* tao/diffs/Current.pidl.diff:
+	* tao/diffs/Domain.diff:
+	* tao/diffs/Domain.pidl.diff:
+	* tao/diffs/DomainC.cpp.diff:
+	* tao/diffs/DomainC.h.diff:
+	* tao/diffs/DomainC.i.diff:
+	* tao/diffs/DomainS.cpp.diff:
+	* tao/diffs/DomainS.h.diff:
+	* tao/diffs/DomainS.i.diff:
+	* tao/diffs/DomainS_T.cpp.diff:
+	* tao/diffs/DomainS_T.h.diff:
+	* tao/diffs/DomainS_T.i.diff:
+	* tao/diffs/IOP.diff:
+	* tao/diffs/IOPC.cpp.diff:
+	* tao/diffs/IOPC.h.diff:
+	* tao/diffs/IOPC.i.diff:
+	* tao/diffs/ObjectReferenceTemplate.diff:
+	* tao/diffs/OctetSeqC.cpp.diff:
+	* tao/diffs/Policy.diff:
+	* tao/diffs/Policy.pidl.diff:
+	* tao/diffs/PolicyC.cpp.diff:
+	* tao/diffs/PolicyC.h.diff:
+	* tao/diffs/PolicyC.i.diff:
+	* tao/diffs/PolicyS.cpp.diff:
+	* tao/diffs/PolicyS.h.diff:
+	* tao/diffs/PolicyS.i.diff:
+	* tao/diffs/PolicyS_T.cpp.diff:
+	* tao/diffs/PolicyS_T.h.diff:
+	* tao/diffs/PolicyS_T.i.diff:
+	* tao/diffs/Policy_Forward.diff:
+	* tao/diffs/Pollable.diff:
+	* tao/diffs/PollableC.cpp.diff:
+	* tao/diffs/PollableC.h.diff:
+	* tao/diffs/PollableC.i.diff:
+	* tao/diffs/PortableInterceptor.diff:
+	* tao/diffs/PortableInterceptorC.cpp.diff:
+	* tao/diffs/PortableInterceptorC.h.diff:
+	* tao/diffs/PortableInterceptorC.i.diff:
+	* tao/diffs/PortableServerC.cpp.diff:
+	* tao/diffs/PortableServerC.h.diff:
+	* tao/diffs/PortableServerC.i.diff:
+	* tao/diffs/WrongTransaction.diff:
+	  Removed the per-file patches.
+	  Generate a new patch file.
+
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp:
+	* tao/NVList.cpp:
+	* tests/Param_Test/Makefile:
+	* tao/Service_Context.cpp:
+	  Cosmetic fixes.
+
+	* TAO_IDL/Makefile.BE:
+	* TAO_IDL/Makefile.EXE:
+	* TAO_IDL/Makefile.FE:
+
 Thu Feb  7 16:37:16 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
@@ -79,7 +393,7 @@ Mon Feb 04 09:19:53 2002  Carlos O'Ryan  <coryan@uci.edu>
 	  Messaging::ExceptionHolder, that would make it possible to use
 	  AMH even if CORBA Messaging is disabled at compile time, plus it
 	  makes the ExceptionHolders lighter-weight.
-	  
+
 	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
 	  Improved the checks to detect *_excep() operations.
 	  Generate the right call to the raise_*() operation.
@@ -146,12 +460,12 @@ Mon Feb  4 10:47:52 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Feb  4 09:46:09 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* examples/RTCORBA/Activity/activity.dsp: 
+	* examples/RTCORBA/Activity/activity.dsp:
 	  Added missing idl compile section for Win32 Release.
 
 Sun Feb  3 07:55:49 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* examples/RTCORBA/Activity/activity.dsp: 
+	* examples/RTCORBA/Activity/activity.dsp:
 	  Fixed include path. Thanks to Bala.
 
 Sat Feb  2 21:56:41 2002  Ossama Othman  <ossama@uci.edu>
@@ -174,7 +488,7 @@ Sat Feb  2 21:33:43 2002  Ossama Othman  <ossama@uci.edu>
 	  instantiated if the service context with the given ServiceId
 	  exists in the service context list.
 
-	* tao/ClientRequestInfo_i.cpp (get_service_context_i): 
+	* tao/ClientRequestInfo_i.cpp (get_service_context_i):
 	* tao/PortableServer/ServerRequestInfo.cpp
 	  (get_service_context_i):
 
@@ -187,7 +501,7 @@ Sat Feb  2 21:33:43 2002  Ossama Othman  <ossama@uci.edu>
 
 Sat Feb  2 23:05:54 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* examples/RTCORBA/Activity/Makefile: 
+	* examples/RTCORBA/Activity/Makefile:
 	  Changed VLDLIBS to LDLIBS. This would hopefully fix errors
 	  regarding duplicate shared libraries.
 
@@ -195,7 +509,7 @@ Sat Feb  2 20:45:08 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:  Do not use ACE_CHECK or
 	  ACE_CHECK_RETURN macros if ACE_ENV_ARG_DECL_NOT_USED macro
-	  is defined, otherwise it messes up build which define exceptions=0. 
+	  is defined, otherwise it messes up build which define exceptions=0.
 
 Sat Feb  2 12:36:31 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -211,19 +525,19 @@ Sat Feb  2 12:36:31 2002  Ossama Othman  <ossama@uci.edu>
 
 Fri Feb  1 23:25:39 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp: 
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp: 
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp:
         * orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.dsp:
         * orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.dsp:
-	Fixed warnings about idl compiler. 
-	
-Fri Feb  1 22:00:00 2002  Rob Ruff  <rruff@scires.com> 
+	Fixed warnings about idl compiler.
+
+Fri Feb  1 22:00:00 2002  Rob Ruff  <rruff@scires.com>
                           Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/RTP.h (TAO_AV_RTP_Object::connection_gone_):
 	  Added.
 
-	* orbsvcs/orbsvcs/AV/RTP.cpp (TAO_AV_RTP_Object::handle_input): 
+	* orbsvcs/orbsvcs/AV/RTP.cpp (TAO_AV_RTP_Object::handle_input):
 	  Check errno to see if remote peer has disappeared.
 
 Fri Feb  1 21:53:45 2002  Craig Rodrigues  <crodrigu@bbn.com>
@@ -367,11 +681,11 @@ Thu Jan 31 10:37:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Jan 31 09:39:59 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/examples/Security/Send_File/Makefile: 
-	* orbsvcs/tests/Security/SecurityLevel1/Makefile (SRVR_LIBS): 
-	* orbsvcs/tests/Security/Secure_Invocation/Makefile: 
+	* orbsvcs/examples/Security/Send_File/Makefile:
+	* orbsvcs/tests/Security/SecurityLevel1/Makefile (SRVR_LIBS):
+	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
 	  Fixed KCC error complaining about duplicate shared lib.
-	
+
 Thu Jan 31 09:37:22 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.cpp:
@@ -383,8 +697,8 @@ Thu Jan 31 14:14:32 2002  Boris Kolpackov <bosk@ipmce.ru>
 
 	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp (visit_exception):
 
-	  Added generation of nested into valuetype exceptions. 
-	
+	  Added generation of nested into valuetype exceptions.
+
 Thu Jan 31 13:06:12 2002  Boris Kolpackov <bosk@ipmce.ru>
 
 	* TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
@@ -392,7 +706,7 @@ Thu Jan 31 13:06:12 2002  Boris Kolpackov <bosk@ipmce.ru>
 	  Eliminated code that triggers bug with fully-qualified names
 	  in VC++ 6. Thanks to Koushik Banerjee <koushik.banerjee@icmg.nu>
 	  for reporting this.
-	
+
 Wed Jan 30 21:08:22 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
 
 	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp:
@@ -452,11 +766,11 @@ Wed Jan 30 12:49:43 2002  Rob Ruff  <rruff@scires.com>
 	  ACE_ENV_ARG_DECL_NOT_USED.
 	* orbsvcs/orbsvcs/AV/RTCP.cpp:  Clean up debugging statements.
 	  Change value of RTCP_SDES_NOTE to "An important note..."
-	* orbsvcs/orbsvcs/AV/RTCP_Channel.cpp (update_seq): 
+	* orbsvcs/orbsvcs/AV/RTCP_Channel.cpp (update_seq):
 	  Only show debug statement if TAO_debug_level is > 0.
 	* orbsvcs/orbsvcs/AV/Transport.cpp: Default initialize timer_id_ to
 	  -1.  Only call cancel_timer() and handle_timeout() if timer_id_ is
-	  not -1. 
+	  not -1.
 	* orbsvcs/orbsvcs/AV/UDP.cpp:
 	 (TAO_AV_UDP_Connector::connect) Set the control address.
 	 (TAO_AV_UDP_Connection_Setup::setup) Treat the setup of sockets

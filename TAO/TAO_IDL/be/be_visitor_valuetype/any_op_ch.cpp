@@ -47,15 +47,15 @@ be_visitor_valuetype_any_op_ch::~be_visitor_valuetype_any_op_ch (void)
 int
 be_visitor_valuetype_any_op_ch::visit_valuetype (be_valuetype *node)
 {
-  if (node->cli_hdr_any_op_gen () 
-      || node->imported () 
+  if (node->cli_hdr_any_op_gen ()
+      || node->imported ()
       || node->is_local ())
     {
       return 0;
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-    
+
   // Generate the Any <<= and >>= operator declarations.
   os->indent ();
   *os << "// Any operators for valuetype " << node->name () << be_nl;

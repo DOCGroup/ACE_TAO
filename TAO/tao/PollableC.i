@@ -1,4 +1,4 @@
-// -*- C++ -*- $Id$ */
+// -*- C++ -*-
 //
 // $Id$
 
@@ -23,49 +23,6 @@
 #if !defined (_CORBA_POLLABLE___CI_)
 #define _CORBA_POLLABLE___CI_
 
-ACE_INLINE CORBA_Pollable_ptr
-tao_CORBA_Pollable_duplicate (
-    CORBA_Pollable_ptr p
-  )
-{
-  return CORBA_Pollable::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_CORBA_Pollable_release (
-    CORBA_Pollable_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE CORBA_Pollable_ptr
-tao_CORBA_Pollable_nil (
-    void
-  )
-{
-  return CORBA_Pollable::_nil ();
-}
-
-ACE_INLINE CORBA_Pollable_ptr
-tao_CORBA_Pollable_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return CORBA_Pollable::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_CORBA_Pollable_upcast (
-    void *src
-  )
-{
-  CORBA_Pollable **tmp =
-    ACE_static_cast (CORBA_Pollable **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
@@ -73,105 +30,20 @@ tao_CORBA_Pollable_upcast (
 #if !defined (_CORBA_DIIPOLLABLE___CI_)
 #define _CORBA_DIIPOLLABLE___CI_
 
-ACE_INLINE CORBA_DIIPollable_ptr
-tao_CORBA_DIIPollable_duplicate (
-    CORBA_DIIPollable_ptr p
-  )
-{
-  return CORBA_DIIPollable::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_CORBA_DIIPollable_release (
-    CORBA_DIIPollable_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE CORBA_DIIPollable_ptr
-tao_CORBA_DIIPollable_nil (
-    void
-  )
-{
-  return CORBA_DIIPollable::_nil ();
-}
-
-ACE_INLINE CORBA_DIIPollable_ptr
-tao_CORBA_DIIPollable_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return CORBA_DIIPollable::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_CORBA_DIIPollable_upcast (
-    void *src
-  )
-{
-  CORBA_DIIPollable **tmp =
-    ACE_static_cast (CORBA_DIIPollable **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
 // *************************************************************
-// Inline operations for exception CORBA_PollableSet::NoPossiblePollable
+// Inline operations for exception CORBA::PollableSet::NoPossiblePollable
 // *************************************************************
 
 // *************************************************************
-// Inline operations for exception CORBA_PollableSet::UnknownPollable
+// Inline operations for exception CORBA::PollableSet::UnknownPollable
 // *************************************************************
+
 
 #if !defined (_CORBA_POLLABLESET___CI_)
 #define _CORBA_POLLABLESET___CI_
-
-ACE_INLINE CORBA_PollableSet_ptr
-tao_CORBA_PollableSet_duplicate (
-    CORBA_PollableSet_ptr p
-  )
-{
-  return CORBA_PollableSet::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_CORBA_PollableSet_release (
-    CORBA_PollableSet_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE CORBA_PollableSet_ptr
-tao_CORBA_PollableSet_nil (
-    void
-  )
-{
-  return CORBA_PollableSet::_nil ();
-}
-
-ACE_INLINE CORBA_PollableSet_ptr
-tao_CORBA_PollableSet_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return CORBA_PollableSet::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_CORBA_PollableSet_upcast (
-    void *src
-  )
-{
-  CORBA_PollableSet **tmp =
-    ACE_static_cast (CORBA_PollableSet **, src);
-  return *tmp;
-}
 
 
 #endif /* end #if !defined */

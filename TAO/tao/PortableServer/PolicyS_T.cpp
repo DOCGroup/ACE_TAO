@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_POLICYS_T_CPP_
-#define _TAO_IDL_POLICYS_T_CPP_
+#ifndef _TAO_IDL_ORIG_POLICYS_T_CPP_
+#define _TAO_IDL_ORIG_POLICYS_T_CPP_
 
 #include "PolicyS_T.h"
 

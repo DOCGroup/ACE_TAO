@@ -22,6 +22,7 @@
 #include "tao/Reply_Dispatcher.h"
 #include "tao/LF_Event.h"
 #include "tao/GIOP_Message_Version.h"
+#include "tao/CDR.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

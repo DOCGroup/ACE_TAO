@@ -14,7 +14,7 @@
 //   The original file Interface.idl was split into four pieces, to
 //   keep the generated files to a manageable size and reduce build
 //   time. This IDL file contains the abstract base interfaces of
-//   the IFR as well as many of the non-interface data types used 
+//   the IFR as well as many of the non-interface data types used
 //   by all other IFR interfaces.
 //
 //   1. Patch this pidl file with
@@ -25,7 +25,7 @@
 //   declared in it as CORBA_foo, unalias the simple typedefs
 //   which don't have a CORBA_ analog in corbafwd.h.
 //
-//   2. Generate the code. The command used to generate code from this 
+//   2. Generate the code. The command used to generate code from this
 //   IDL file is:
 //
 //     tao_idl -o orig -Ge 1 -I.. \
@@ -38,7 +38,7 @@
 //   3. Copy the generated files to the current directory.
 //
 //   4. Patch the generated files, using
-//      
+//
 //      patch < diffs/IFR_BaseC.h.diff
 //      patch < diffs/IFR_BaseC.i.diff
 //      patch < diffs/IFR_BaseC.cpp.diff
@@ -52,8 +52,8 @@
 //
 //   5. Restore IFR_Base.pidl.
 //
-//   To regenerate the skeleton files IFR_BaseS.{h,i,cpp} and 
-//   IFR_BaseS_T.{h,i.cpp} in ACE_ROOT/TAO/orbsvcs/IFR_Service, use the 
+//   To regenerate the skeleton files IFR_BaseS.{h,i,cpp} and
+//   IFR_BaseS_T.{h,i.cpp} in ACE_ROOT/TAO/orbsvcs/IFR_Service, use the
 //   command
 //
 //     tao_idl -o ../../orbsvcs/IFR_Service/orig -Ge 1 \
@@ -68,43 +68,43 @@
 
 #pragma prefix "omg.org"
 
-module CORBA 
+module CORBA
 {
   typedef string Identifier;
   typedef string ScopedName;
   typedef string RepositoryId;
 
-  enum DefinitionKind 
+  enum DefinitionKind
   {
-    dk_none, 
+    dk_none,
     dk_all,
-    dk_Attribute, 
-    dk_Constant, 
-    dk_Exception, 
+    dk_Attribute,
+    dk_Constant,
+    dk_Exception,
     dk_Interface,
-    dk_Module, 
-    dk_Operation, 
+    dk_Module,
+    dk_Operation,
     dk_Typedef,
-    dk_Alias, 
-    dk_Struct, 
-    dk_Union, 
+    dk_Alias,
+    dk_Struct,
+    dk_Union,
     dk_Enum,
-    dk_Primitive, 
-    dk_String, 
-    dk_Sequence, 
+    dk_Primitive,
+    dk_String,
+    dk_Sequence,
     dk_Array,
     dk_Repository,
-    dk_Wstring, 
+    dk_Wstring,
     dk_Fixed,
-    dk_Value, 
-    dk_ValueBox, 
+    dk_Value,
+    dk_ValueBox,
     dk_ValueMember,
     dk_Native,
     dk_AbstractInterface,
     dk_LocalInterface
   };
 
-  interface IRObject 
+  interface IRObject
   {
     // read interface
     readonly attribute DefinitionKind def_kind;
@@ -118,7 +118,7 @@ module CORBA
   interface Repository;
   interface Container;
 
-  interface Contained : IRObject 
+  interface Contained : IRObject
   {
     // read/write interface
     attribute RepositoryId id;
@@ -129,8 +129,8 @@ module CORBA
     readonly attribute Container defined_in;
     readonly attribute ScopedName absolute_name;
     readonly attribute Repository containing_repository;
-    
-    struct Description 
+
+    struct Description
     {
       DefinitionKind kind;
       any value;
@@ -167,7 +167,7 @@ module CORBA
   interface LocalInterfaceDef;
   typedef sequence<LocalInterfaceDef> LocalInterfaceDefSeq;
 
-  struct StructMember 
+  struct StructMember
   {
     Identifier name;
     TypeCode type;
@@ -176,7 +176,7 @@ module CORBA
 
   typedef sequence <StructMember> StructMemberSeq;
 
-  struct Initializer 
+  struct Initializer
   {
     StructMemberSeq members;
     Identifier name;
@@ -184,7 +184,7 @@ module CORBA
 
   typedef sequence <Initializer> InitializerSeq;
 
-  struct UnionMember 
+  struct UnionMember
   {
     Identifier name;
     any label;
@@ -195,7 +195,7 @@ module CORBA
   typedef sequence <UnionMember> UnionMemberSeq;
   typedef sequence <Identifier> EnumMemberSeq;
 
-  interface Container : IRObject 
+  interface Container : IRObject
   {
     // read interface
     Contained lookup (
@@ -211,7 +211,7 @@ module CORBA
         in DefinitionKind limit_type,
         in boolean exclude_inherited
       );
-    struct Description 
+    struct Description
     {
       Contained contained_object;
       DefinitionKind kind;
@@ -312,16 +312,16 @@ module CORBA
       );
   };
 
-  interface IDLType : IRObject 
+  interface IDLType : IRObject
   {
     readonly attribute TypeCode type;
   };
 
-  interface TypedefDef : Contained, IDLType 
+  interface TypedefDef : Contained, IDLType
   {
   };
 
-  struct TypeDescription 
+  struct TypeDescription
   {
     Identifier name;
     RepositoryId id;

@@ -69,21 +69,25 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
       // Constructors and destructor.
       *os << node->local_name () << " (void);" << be_nl
-          << "// Default constructor." << be_nl << be_nl;
-      *os << node->local_name () << " (const " << node->local_name ()
+          << node->local_name () << " (const " << node->local_name ()
           << " &);" << be_nl
-          << "// Copy constructor." << be_nl << be_nl;
-      *os << "~" << node->local_name () << " (void);" << be_nl
-          << "// Destructor." << be_nl << be_nl;
-
-      if (!node->is_local ())
-        *os << "static void _tao_any_destructor (void*);" << be_nl << be_nl;
+          << "~" << node->local_name () << " (void);\n" << be_nl;
 
       // Assignment operator.
       *os << node->local_name () << " &operator= (const "
-          << node->local_name () << " &);" << be_nl << be_nl;
+          << node->local_name () << " &);\n" << be_nl;
 
-      *os << "virtual void _raise (void);\n" << be_nl
+      if (!node->is_local ())
+        *os << "static void _tao_any_destructor (void*);\n" << be_nl;
+
+      *os << "static " << node->local_name ()
+          << " *_downcast (CORBA::Exception *);" << be_nl;
+
+      *os << "static CORBA::Exception *_alloc (void);\n" << be_nl;
+
+      *os << "virtual CORBA::Exception *"
+          << "_tao_duplicate (void) const;\n" << be_nl
+          << "virtual void _raise (void);\n" << be_nl
           << "virtual void _tao_encode (" << be_idt << be_idt_nl
           << "TAO_OutputCDR &" << be_nl
           << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
@@ -91,9 +95,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
           << "virtual void _tao_decode (" << be_idt << be_idt_nl
           << "TAO_InputCDR &" << be_nl
           << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl
-          << "static " << node->local_name ()
-          << " *_downcast (CORBA::Exception *);\n\n";
+          << ");" << be_uidt_nl << be_nl;
 
       // Generate constructor that takes each member as a parameter. We need a
       // new state. Such a constructor exists if we have members.
@@ -114,17 +116,12 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
           delete visitor;
         }
 
-      *os << be_nl
-          << "// = TAO extension." << be_nl
-          << "static CORBA::Exception *_alloc (void);";
-
       if (!node->is_local () && be_global->tc_support ())
         {
           *os << be_nl <<"virtual CORBA::TypeCode_ptr _type (void) const;";
         }
 
-      *os << be_uidt_nl << "}; // Exception " << node->name ()
-          << ".\n\n";
+      *os << be_uidt_nl << "};\n\n";
 
       if (!node->is_local ())
         {

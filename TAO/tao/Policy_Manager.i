@@ -34,7 +34,7 @@ TAO_Policy_Manager::set_policy_overrides (
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
                        CORBA::SystemException,
-                       CORBA_InvalidPolicies
+                       CORBA::InvalidPolicies
                        ))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -113,7 +113,7 @@ TAO_Policy_Current::set_policy_overrides (const CORBA::PolicyList & policies,
                                           CORBA::SetOverrideType set_add
                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA_InvalidPolicies))
+                   CORBA::InvalidPolicies))
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
@@ -127,4 +127,3 @@ TAO_Policy_Current::get_cached_policy (TAO_Cached_Policy_Type type)
 
   return impl.get_cached_policy (type);
 }
-

@@ -100,9 +100,24 @@ public:
   /// Used in the non-copying Any insertion operator.
   static void _tao_any_destructor (void *);
 
-  // = Methods required for memory management support.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  /// Deep copy
+  /**
+   * The following operation is used in the implementation of
+   * it performs a deep copy of the
+   * exception, normally it is implemented as:
+   *
+   * <PRE>
+   * class SomeException : public // Derives from CORBA_Exception
+   * {
+   * public:
+   *   virtual CORBA_Exception *_tao_duplicate (void) const
+   *   {
+   *     return new SomeException (*this);
+   *   }
+   * };
+   * </PRE>
+   */
+  virtual CORBA_Exception *_tao_duplicate (void) const = 0;
 
 protected:
   CORBA_Exception (void);
@@ -111,17 +126,6 @@ protected:
 private:
   /// Storage of our repository id.
   char *id_;
-
-  /// Reference count to avoid copying overhead.
-  CORBA::ULong refcount_;
-
-  /**
-   * Mutex to protect the reference count; though in most cases this
-   * class is used only in one thread adding a mutex here is *not*
-   * expensive, because uses of this class should never be on the
-   * critical path.
-   */
-  TAO_SYNCH_MUTEX refcount_lock_;
 };
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -279,6 +283,7 @@ public: \
   virtual void _raise (void); \
   virtual CORBA::TypeCode_ptr _type (void) const; \
   static void _tao_any_destructor (void*); \
+  virtual CORBA_Exception *_tao_duplicate (void) const; \
 }; \
 TAO_Export void operator<<= (CORBA::Any &, const CORBA_##name &); \
 TAO_Export void operator<<= (CORBA::Any &, CORBA_##name *); \

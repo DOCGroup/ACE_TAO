@@ -42,15 +42,13 @@ extern CORBA::TypeCode_ptr TC_completion_status;
 // ****************************************************************
 
 CORBA_Exception::CORBA_Exception (const char *repository_id)
-  : id_ (CORBA::string_dup (repository_id)),
-    refcount_ (0)
+  : id_ (CORBA::string_dup (repository_id))
 {
   ACE_ASSERT (this->id_ != 0);
 }
 
 CORBA_Exception::CORBA_Exception (const CORBA_Exception &src)
-  : id_ (CORBA::string_dup (src.id_)),
-    refcount_ (0)
+  : id_ (CORBA::string_dup (src.id_))
 {
   ACE_ASSERT (this->id_ != 0);
 }
@@ -60,15 +58,12 @@ CORBA_Exception::CORBA_Exception (const CORBA_Exception &src)
 // can do this because it's got the typecode.
 
 CORBA_Exception::CORBA_Exception (void)
-  :  id_ (0),
-     refcount_ (0)
+  :  id_ (0)
 {
 }
 
 CORBA_Exception::~CORBA_Exception (void)
 {
-  ACE_ASSERT (this->refcount_ == 0);
-
   CORBA::string_free (this->id_);
 }
 
@@ -118,29 +113,6 @@ CORBA_Exception::_tao_any_destructor (void *x)
 {
   CORBA_Exception *tmp = ACE_static_cast (CORBA_Exception *, x);
   delete tmp;
-}
-
-CORBA::ULong
-CORBA_Exception::_incr_refcnt (void)
-{
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
-  return ++this->refcount_;
-}
-
-CORBA::ULong
-CORBA_Exception::_decr_refcnt (void)
-{
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return this->refcount_;
-
-    // release the lock before destroying the object.
-  }
-
-  delete this;
-  return 0;
 }
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -1150,6 +1122,17 @@ CORBA_##name ::_tao_any_destructor (void *x) \
 { \
   CORBA_##name *tmp = ACE_static_cast (CORBA_##name *, x); \
   delete tmp; \
+}
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+CORBA_Exception * \
+CORBA_##name ::_tao_duplicate (void) const \
+{ \
+  CORBA_Exception *result; \
+  ACE_NEW_RETURN (result, CORBA_##name (*this), 0); \
+  return result; \
 }
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION

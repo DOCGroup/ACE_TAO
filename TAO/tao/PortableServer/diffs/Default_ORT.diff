@@ -1,0 +1,19 @@
+--- orig/Default_ORTC.h	Thu Feb  7 15:05:40 2002
++++ Default_ORTC.h	Thu Feb  7 15:06:51 2002
+@@ -23,14 +23,14 @@
+ #define _TAO_IDL_ORIG_DEFAULT_ORTC_H_
+ 
+ #include "ace/pre.h"
+-#include "tao/corba.h"
++#include "tao/corbafwd.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+ #include "portableserver_export.h"
+-#include "ObjectReferenceTemplateC.h"
++#include "tao/ObjectReferenceTemplateC.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO

@@ -27,7 +27,7 @@
 //   command used for this is:
 //
 //     tao_idl.exe
-//          -Ge 1
+//        -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
 //          -Wb,export_macro=TAO_Export
 //          -Wb,export_include="tao/corbafwd.h"
 //          -Wb,pre_include="ace/pre.h"

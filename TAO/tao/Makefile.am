@@ -96,6 +96,7 @@ ORB_CORE_FILES = \
   ObjectIDList.cpp \
   ORB.cpp \
   corbafwd.cpp \
+  Policy_ForwardC.cpp \
   PolicyC.cpp \
   DomainC.cpp \
   TimeBaseC.cpp \
@@ -336,6 +337,7 @@ HEADER_FILES = \
   POA_CORBA.h \
   Pluggable.h \
   Transport.h \
+  Policy_ForwardC.h \
   PolicyC.h \
   Policy_Manager.h \
   PollableC.h \
@@ -475,6 +477,7 @@ INLINE_FILES = \
   POAManager.i \
   Pluggable.i \
   Transport.inl \
+  Policy_ForwardC.i \
   PolicyC.i \
   Policy_Manager.i \
   PollableC.i \
