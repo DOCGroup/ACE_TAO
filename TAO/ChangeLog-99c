@@ -1,3 +1,10 @@
+Tue Feb 23 11:48:15 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * TAO_IDL/be/be_codegen.cpp (start_client_stubs,
+          start_server_skeletons): removed #pragma once directives 
+          because they do not make sense in .cpp files, plus they
+          don't work with MSVC 5.  
+
 Mon Feb 22 20:34:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Totally broken.
