@@ -61,12 +61,6 @@ typedef unsigned long long uint64_t;
 #define ACE_HAS_AIO_CALLS
 #endif /* !ACE_HAS_AIO_CALLS */
 
-// 5.6 is set up for AIOCB proactor. From Solaris 7 on, we like the default,
-// ACE_POSIX_CB_Proactor, better.
-#if defined (ACE_POSIX_AIOCB_PROACTOR)
-#undef ACE_POSIX_AIOCB_PROACTOR
-#endif /* ACE_POSIX_AIOCB_PROACTOR */
-
 #ifdef ACE_HAS_LIMITED_SELECT
 #undef ACE_HAS_LIMITED_SELECT
 #endif /* ACE_HAS_LIMITED_SELECT */
