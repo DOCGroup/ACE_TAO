@@ -5,7 +5,15 @@ Thu Mar 11 15:34:24 1999  David L. Levine  <levine@cs.wustl.edu>
           <sealstd1@nortelnetworks.com> and Liang Chen
           <chenl@nortelnetworks.com> for suggesting this.
 
-Thu Mar 11 14:04:15 1999  David L. Levine  <levine@cs.wustl.edu>
+        * ace/OS.cpp (ACE_OS::thr_setspecific): on ACE_WIN32 with
+          ACE_HAS_TSS_EMULATION, don't register the one native key
+          with ACE_TSS_Cleanup::instance ().  There's no need, because
+          it doesn't have a destructor.  And, it prevents startup
+          because the ACE_TSS_Cleanup structures haven't been set up
+          completely when it is called.  Thanks to Terry Rosenbaum
+          <Terry.Rosenbaum@Radiology.MSU.edu> for reporting this.
+
+ Thu Mar 11 14:04:15 1999 David L. Levine <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_chorus_ghs.GNU: added protection
           to not reset exceptions flag if it was defined.
