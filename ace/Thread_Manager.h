@@ -61,11 +61,7 @@
 // extended period of time, you can safely disable the lock.
 
 #if !defined (ACE_DEFAULT_THREAD_MANAGER_LOCK)
-# if defined (ACE_HAS_THREADS)
-#   define ACE_DEFAULT_THREAD_MANAGER_LOCK ACE_Thread_Mutex
-# else
-#   define ACE_DEFAULT_THREAD_MANAGER_LOCK ACE_Null_Mutex
-# endif /* ACE_HAS_THREADS */
+# define ACE_DEFAULT_THREAD_MANAGER_LOCK ACE_SYNCH_MUTEX
 #endif /* ACE_DEFAULT_THREAD_MANAGER_LOCK */
 
 // Forward declarations.
@@ -603,7 +599,7 @@ protected:
 #endif /* ACE_HAS_THREADS */
 
 private:
-  ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_Thread_Mutex> thread_desc_freelist_;
+  ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_SYNCH_MUTEX> thread_desc_freelist_;
 
   static ACE_Thread_Manager *thr_mgr_;
   // Pointer to a process-wide <ACE_Thread_Manager>.
