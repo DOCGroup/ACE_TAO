@@ -17,13 +17,12 @@ CFG=Multiple Inheritance Server - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Multiple Inheritance Server - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Multiple Inheritance Server - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "Multiple Inheritance Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Multiple Inheritance Server - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -132,12 +131,13 @@ SOURCE=.\Multiple_Inheritance.idl
 
 !IF  "$(CFG)" == "Multiple Inheritance Server - Win32 Release"
 
+USERDEP__MULTI="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Multiple_Inheritance.idl
 InputName=Multiple_Inheritance
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -169,13 +169,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Multiple Inheritance Server - Win32 Debug"
 
-USERDEP__MULTI="..\..\tao_idl\tao_idl.exe"	
+USERDEP__MULTI="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Multiple_Inheritance.idl
 InputName=Multiple_Inheritance
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

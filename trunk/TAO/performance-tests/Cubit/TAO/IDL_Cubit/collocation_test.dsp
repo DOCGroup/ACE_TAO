@@ -13,18 +13,16 @@ CFG=IDL_Cubit Collocation Test - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "collocation_test.mak"\
- CFG="IDL_Cubit Collocation Test - Win32 Debug"
+!MESSAGE NMAKE /f "collocation_test.mak" CFG="IDL_Cubit Collocation Test - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "IDL_Cubit Collocation Test - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "IDL_Cubit Collocation Test - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "IDL_Cubit Collocation Test - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "IDL_Cubit Collocation Test - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -151,13 +149,14 @@ SOURCE=.\cubit.idl
 
 !IF  "$(CFG)" == "IDL_Cubit Collocation Test - Win32 Release"
 
-USERDEP__CUBIT="..\..\..\..\tao_idl\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+# PROP Ignore_Default_Tool 1
+USERDEP__CUBIT="..\..\..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	..\..\..\..\tao_idl\Release\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -189,13 +188,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "IDL_Cubit Collocation Test - Win32 Debug"
 
-USERDEP__CUBIT="..\..\..\..\tao_idl\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+USERDEP__CUBIT="..\..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	..\..\..\..\tao_idl\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

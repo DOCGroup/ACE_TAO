@@ -13,18 +13,16 @@ CFG=Quoter Factory Finder - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Factory_Finder.mak"\
- CFG="Quoter Factory Finder - Win32 Debug"
+!MESSAGE NMAKE /f "Factory_Finder.mak" CFG="Quoter Factory Finder - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Quoter Factory Finder - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Quoter Factory Finder - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "Quoter Factory Finder - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Quoter Factory Finder - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -147,13 +145,13 @@ SOURCE=.\Quoter.idl
 
 !IF  "$(CFG)" == "Quoter Factory Finder - Win32 Release"
 
-USERDEP__QUOTE="..\..\tao_idl\Release\tao_idl.exe"	
+USERDEP__QUOTE="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Quoter.idl
 InputName=Quoter
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl $(InputName).idl -I../../orbsvcs/orbsvcs
+	tao_idl $(InputName).idl -I../../orbsvcs/orbsvcs
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -185,13 +183,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Quoter Factory Finder - Win32 Debug"
 
-USERDEP__QUOTE="..\..\tao_idl\tao_idl.exe"	
+USERDEP__QUOTE="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Quoter.idl
 InputName=Quoter
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl $(InputName).idl -I../../orbsvcs/orbsvcs
+	tao_idl $(InputName).idl -I../../orbsvcs/orbsvcs
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

@@ -370,52 +370,52 @@ SOURCE=.\param_test.idl
 !IF  "$(CFG)" == "Param_Test Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__PARAM="..\..\tao_idl\Release\tao_idl.exe"	
+USERDEP__PARAM="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\param_test.idl
 InputName=param_test
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i $(InputName).idl
+	tao_idl -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i $(InputName).idl
 
 "$(InputName)Cli.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)Cli.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)Cli.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)Ser.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)Ser.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)Ser.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)Ser_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)Ser_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)Ser_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "Param_Test Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__PARAM="..\..\tao_idl\tao_idl.exe"	
+USERDEP__PARAM="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\param_test.idl
 InputName=param_test
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp -si Ser.i -st Ser_T.i $(InputName).idl
+	tao_idl -hc Cli.h -hs Ser.h -hT Ser_T.h -cs Cli.cpp -ci Cli.i -ss Ser.cpp -sT Ser_T.cpp -si Ser.i -st Ser_T.i $(InputName).idl
 
 "$(InputName)Cli.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

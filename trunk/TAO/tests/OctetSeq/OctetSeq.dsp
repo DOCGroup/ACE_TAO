@@ -17,12 +17,12 @@ CFG=OctetSeq - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "OctetSeq - Win32 Release" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "OctetSeq - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "OctetSeq - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -118,18 +118,54 @@ SOURCE=.\testS.h
 # Begin Source File
 
 SOURCE=.\test.idl
-USERDEP__TEST_="..\..\tao_idl\tao_idl.exe"	
 
 !IF  "$(CFG)" == "OctetSeq - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "OctetSeq - Win32 Debug"
-
+USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL compiler
 InputPath=.\test.idl
 InputName=test
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl   $(InputName).idl
+	tao_idl $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "OctetSeq - Win32 Debug"
+
+USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler
+InputPath=.\test.idl
+InputName=test
+
+BuildCmds= \
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
