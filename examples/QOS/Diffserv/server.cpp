@@ -109,7 +109,7 @@ run_test (u_short localport)
   ACE_INET_Addr local_addr (localport);
 
   Dgram_Endpoint *endpoint;
-  
+
   ACE_NEW_RETURN (endpoint,
                   Dgram_Endpoint (local_addr),
                   -1);
@@ -124,7 +124,7 @@ run_test (u_short localport)
                        "ACE_Reactor::register_handler"),
                       -1);
 
-  int ret; 
+  int ret;
   while(1){
     ACE_Time_Value tv(10, 0);
     ret = ACE_Reactor::instance ()->handle_events (&tv);
@@ -144,7 +144,7 @@ run_test (u_short localport)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Estabish call backs and socket names.
 
