@@ -1,3 +1,8 @@
+Mon Apr 26 08:52:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Resource_Factory.h:
+          Improved doxygen documentation
+
 Mon Apr 26 08:24:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Resource_Factory.h:
