@@ -177,8 +177,17 @@ sub relative {
       while(substr($value, $start) =~ /(\$\(([^)]+)\))/) {
         my($whole)  = $1;
         my($name)   = $2;
-        my($val) = $$rel{$name};
+        my($val)    = $$rel{$name};
         if (defined $val) {
+          if ($^O eq 'cygwin' &&
+              $cwd !~ /[A-Za-z]:/ && $val =~ /[A-Za-z]:/) {
+            my($cyg) = `cygpath -w $cwd`;
+            if (defined $cyg) {
+              $cyg =~ s/\\/\//g;
+              chop($cwd = $cyg);
+            }
+          }
+
           ## Fix up the value for Windows (capitalize the drive and
           ## switch the \\'s to /
           $val =~ s/\\/\//g;
