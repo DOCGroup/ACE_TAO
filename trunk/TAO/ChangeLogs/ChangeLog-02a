@@ -1,8 +1,16 @@
+Wed Feb 21 08:38:05 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/RT_ORBInitializer.cpp:
+          Add RT_ORB_Loader to the service repository, otherwise
+          resolve_initial_references("RT_ORB") fails for static builds.
+          Don't add a static service twice, otherwise the old copy is
+          destroyed and sometimes the ORB caches it.
+
 Wed Feb 21 10:50:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/Options.html: Changed the documentation for
-	  -ORBConnectionCachingStrategy and -ORBPurgePercentage
-	  options. 
+        * docs/Options.html: Changed the documentation for
+          -ORBConnectionCachingStrategy and -ORBPurgePercentage
+          options.
 
 Wed Feb 21 07:27:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
