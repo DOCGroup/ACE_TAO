@@ -1,4 +1,7 @@
 # Doxyfile 1.1.5
+#
+# $Id$
+#
 
 PROJECT_NAME          = ACE_RMCast
 PROJECT_NUMBER        = Snapshot
@@ -113,7 +116,7 @@ ENABLE_PREPROCESSING  = YES
 MACRO_EXPANSION       = YES
 EXPAND_ONLY_PREDEF    = YES
 SEARCH_INCLUDES       = YES
-INCLUDE_PATH          = ACE_wrappers
+INCLUDE_PATH          = .
 PREDEFINED            = ACE_HAS_WCHAR \
 			ACE_LACKS_STRCASECMP \
 			ACE_LACKS_STRCSPN \
@@ -127,8 +130,8 @@ EXPAND_AS_DEFINED     = ACE_RCSID
 # Configuration::addtions related to external references   
 #---------------------------------------------------------------------------
 
-TAGFILES              = ace_html/ACE.tag=../ace_html
-GENERATE_TAGFILE      = ace_rmcast_html/ACE_RMCast.tag
+TAGFILES              = html/ace/ACE.tag=..
+GENERATE_TAGFILE      = html/ace/rmcast/ACE_RMCast.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 

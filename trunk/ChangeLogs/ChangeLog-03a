@@ -1,3 +1,28 @@
+Wed Nov  8 10:27:00 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/generate_doxygen.pl:
+          Automates the invocation of doxygen. It modifies the doxygen
+          templates in $ACE_ROOT/etc and creates the right directory
+          hierarchy to receive the files.
+
+        * ace/config-doxygen.h:
+          Configuration file used to generate the doxygen files.
+          Notice that this is not a valid configuration for any platform,
+          for example, it enables both the Win32 and the POSIX AIO calls.
+
+        * etc/ace.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/tao.doxygen:
+        * etc/tao_dynamicany.doxygen:
+        * etc/tao_dynamicinterface.doxygen:
+        * etc/tao_esf.doxygen:
+        * etc/tao_iormanip.doxygen:
+        * etc/tao_iortable.doxygen:
+        * etc/tao_portableserver.doxygen:
+        * etc/tao_rtevent.doxygen:
+          Minor mods to make the generate_doxygen.pl job easier.
+
 Wed Nov  8 09:02:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * apps/Gateway/Gateway/Makefile:
