@@ -115,6 +115,10 @@ private:
 
   be_operation *generate_set_operation (be_attribute *node);
   // generate a set operation out of the attribute.
+
+  AST_Interface_ptr *create_inheritance_list (be_interface *node,
+                                              long &n_parents);
+  // Create an inheritance list for the reply handler.
 };
 
 
