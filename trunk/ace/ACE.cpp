@@ -8,7 +8,6 @@
 #include "ace/ACE.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Reactor.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/INET_Addr.h"
 #include "ace/SString.h"
 #include "ace/Process.h"
