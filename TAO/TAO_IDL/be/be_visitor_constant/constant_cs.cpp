@@ -51,8 +51,18 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
         {
           if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
             {
-              *os << "TAO_NAMESPACE_TYPE (const "
-                  << node->exprtype_to_string () << ")" << be_nl;
+              *os << "TAO_NAMESPACE_TYPE (const ";
+
+              if (node->et () == AST_Expression::EV_enum)
+                {
+                  *os << node->enum_full_name ();
+                }
+              else
+                {
+                  *os << node->exprtype_to_string ();
+                }
+
+              *os << ")" << be_nl;
               be_module *module = 
                 be_module::narrow_from_scope (node->defined_in ());
 
