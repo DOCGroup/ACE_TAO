@@ -19,32 +19,6 @@
 ACE_RCSID(tao, DIOP_Acceptor, "$Id$")
 
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Acceptor<TAO_DIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<TAO_DIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Accept_Strategy<TAO_DIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Creation_Strategy<TAO_DIOP_Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO_DIOP_Connection_Handler>;
-template class ACE_Scheduling_Strategy<TAO_DIOP_Connection_Handler>;
-template class TAO_Creation_Strategy<TAO_DIOP_Connection_Handler>;
-template class TAO_Concurrency_Strategy<TAO_DIOP_Connection_Handler>;
-template class TAO_Accept_Strategy<TAO_DIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Acceptor<TAO_DIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Strategy_Acceptor<TAO_DIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<TAO_DIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<TAO_DIOP_Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_DIOP_Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO_DIOP_Connection_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO_DIOP_Connection_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO_DIOP_Connection_Handler>
-#pragma instantiate TAO_Accept_Strategy<TAO_DIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_UDP_PROFILE),
     addrs_ (0),
@@ -52,11 +26,7 @@ TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (CORBA::Boolean flag)
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    lite_flag_ (flag),
-    base_acceptor_ (),
-    creation_strategy_ (0),
-    concurrency_strategy_ (0),
-    accept_strategy_ (0)
+    lite_flag_ (flag)
 {
 }
 
@@ -65,10 +35,6 @@ TAO_DIOP_Acceptor::~TAO_DIOP_Acceptor (void)
   // Make sure we are closed before we start destroying the
   // strategies.
   this->close ();
-
-  delete this->creation_strategy_;
-  delete this->concurrency_strategy_;
-  delete this->accept_strategy_;
 
   delete [] this->addrs_;
 
@@ -241,7 +207,8 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 int
 TAO_DIOP_Acceptor::close (void)
 {
-  return this->base_acceptor_.close ();
+  delete this->connection_handler_;
+  return 0;
 }
 
 int
@@ -407,20 +374,6 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 int
 TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
 {
-  ACE_NEW_RETURN (this->creation_strategy_,
-                  TAO_DIOP_CREATION_STRATEGY (this->orb_core_,
-                                              &(this->tcp_properties_),
-                                              this->lite_flag_),
-                  -1);
-
-  ACE_NEW_RETURN (this->concurrency_strategy_,
-                  TAO_DIOP_CONCURRENCY_STRATEGY (this->orb_core_),
-                  -1);
-
-  ACE_NEW_RETURN (this->accept_strategy_,
-                  TAO_DIOP_ACCEPT_STRATEGY (this->orb_core_),
-                  -1);
-
   // @@ Michael: UDP changes  ---------------
 
   ACE_NEW_RETURN (this->connection_handler_,
@@ -432,44 +385,18 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
   this->connection_handler_->local_addr (addr);
   this->connection_handler_->open_server ();
 
+  /*
   this->orb_core_->reactor ()->register_handler (this->connection_handler_,
-                                          ACE_Event_Handler::READ_MASK);
-
+                                                 ACE_Event_Handler::READ_MASK);
+  */
   // ------------------------------------
-  if (this->base_acceptor_.open (addr,
-                                 this->orb_core_->reactor (this),
-                                 this->creation_strategy_,
-                                 this->accept_strategy_,
-                                 this->concurrency_strategy_) == -1)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\n\nTAO (%P|%t) DIOP_Acceptor::open_i ")
-                    ACE_TEXT ("- %p\n\n"),
-                    ACE_TEXT ("cannot open acceptor")));
-      return -1;
-    }
 
-  ACE_INET_Addr address;
-
-  // We do this make sure the port number the endpoint is listening on
-  // gets set in the addr.
-  if (this->base_acceptor_.acceptor ().get_local_addr (address) != 0)
-    {
-      // @@ Should this be a catastrophic error???
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\n\nTAO (%P|%t) DIOP_Acceptor::open_i ")
-                    ACE_TEXT ("- %p\n\n"),
-                    ACE_TEXT ("cannot get local addr")));
-      return -1;
-    }
 
   // Set the port for each addr.  If there is more than one network
   // interface then the endpoint created on each interface will be on
   // the same port.  This is how a wildcard socket bind() is supposed
   // to work.
-  u_short port = address.get_port_number ();
+  u_short port = addr.get_port_number ();
   for (size_t j = 0; j < this->endpoint_count_; ++j)
     this->addrs_[j].set_port_number (port, 1);
 
@@ -805,70 +732,6 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
 int
 TAO_DIOP_Acceptor::init_tcp_properties (void)
 {
-#if (TAO_HAS_RT_CORBA == 1)
-
-  // @@ Currently (in the code below), we obtain protocol properties from
-  // ORB-level ServerProtocol, even though the policy may
-  // have been overridden on POA level.  That's because currently all
-  // endpoints (acceptors) are global.  Once endpoints become per POA,
-  // the code below will have to be changed to look at the POA-level
-  // ServerProtocol policy first.
-
-  // @@ Later we may want to factor some of the code below
-  // among different protocols and place it into TAO_Acceptor, for
-  // example.
-
-  // ServerProtocolProperties policy controls protocols configuration.
-  // Look for protocol properties in the effective ServerProtocolPolicy.
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  int send_buffer_size = 0;
-  int recv_buffer_size = 0;
-  int no_delay = 0;
-
-  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
-
-  if (tph != 0)
-    {
-      const char protocol [] = "diop";
-      const char *protocol_type = protocol;
-
-      int hook_return =
-        tph->call_server_protocols_hook (this->orb_core_,
-                                         send_buffer_size,
-                                         recv_buffer_size,
-                                         no_delay,
-                                         protocol_type);
-
-      if (hook_return == -1)
-        return -1;
-    }
-
-  this->tcp_properties_.send_buffer_size =
-    send_buffer_size;
-  this->tcp_properties_.recv_buffer_size =
-    recv_buffer_size;
-  this->tcp_properties_.no_delay =
-    no_delay;
-
-  // @@ NOTE.  RTCORBA treats a combination of transport+messaging
-  // as a single protocol.  Keep this in mind for when we adopt
-  // RTCORBA approach to protocols configuration for nonRT use.  In
-  // particular, what are the semantics of independent variation of
-  // messaging and transport layers, when one transport appears in
-  // combination with several messaging protocols, for example.
-
-#else /* TAO_HAS_RT_CORBA == 1 */
-
-  this->tcp_properties_.send_buffer_size =
-    this->orb_core_->orb_params ()->sock_sndbuf_size ();
-  this->tcp_properties_.recv_buffer_size =
-    this->orb_core_->orb_params ()->sock_rcvbuf_size ();
-  this->tcp_properties_.no_delay =
-    this->orb_core_->orb_params ()->nodelay ();
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
+  // @@ Michael: We use UDP, so we do not set TCP settings.
   return 0;
 }

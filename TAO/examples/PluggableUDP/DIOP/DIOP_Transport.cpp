@@ -31,7 +31,6 @@ TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
                    orb_core)
   , connection_handler_ (handler)
   , messaging_object_ (0)
-  , local_buffer_ (4192)
 {
   // @@ Michael: Here we hardcoded the size of the buffer!
   if (flag)
@@ -156,49 +155,15 @@ TAO_DIOP_Transport::recv_i (char *buf,
 {
   ACE_INET_Addr from_addr;
 
-  // We read always one datagram, the unread rest is buffered
-  // if not immediately read.
-  if (local_buffer_.length () == 0)
-    {
-      local_buffer_.crunch ();
-      ssize_t n = this->connection_handler_->dgram ().recv (local_buffer_.wr_ptr (),
-                                                            local_buffer_.size (),
-                                                            from_addr);
+  ssize_t n = this->connection_handler_->dgram ().recv (buf,
+                                                        len,
+                                                        from_addr);
 
-            // Remember the from addr to eventually use it as remote
-            // addr for the reply.
-            this->connection_handler_->addr (from_addr);
+  // Remember the from addr to eventually use it as remote
+  // addr for the reply.
+  this->connection_handler_->addr (from_addr);
 
-      if (n == -1)
-        return -1;
-      else
-        local_buffer_.wr_ptr (n);
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "Received %d bytes from %s:%d\n",
-                  n,
-                  this->connection_handler_->addr ().get_host_name (),
-                  this->connection_handler_->addr ().get_port_number ()));
-    }
-
-  if (local_buffer_.length () > 0)
-    {
-      ssize_t to_read = -1;
-      if (len >= local_buffer_.length ())
-        to_read = local_buffer_.length ();
-      else
-        to_read = len;
-
-      ACE_OS::memcpy (buf, local_buffer_.rd_ptr (), to_read);
-      local_buffer_.rd_ptr (to_read);
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "Read %d bytes\n",
-                  to_read));
-      return to_read;
-    }
-
-  return -1;
+  return n;
 }
 
 
