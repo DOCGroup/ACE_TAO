@@ -1,3 +1,15 @@
+Mon Aug 16 11:16:02 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/ACE.h:
+	* ace/ACE.cpp:
+
+	  Added remaining missing DLL export qualifiers.  Fixes
+	  "unresolved external symbol" errors in MS Windows builds.
+
+	  Moved variables in ACE namespace that are internal to ACE into
+	  the '.cpp' file.  They should be not be accessed or modified
+	  directly.
+
 Mon Aug 16 10:58:09 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/ACE.h (recv):
