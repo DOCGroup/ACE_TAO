@@ -310,7 +310,7 @@ protected:
   idl_bool redef_clash (AST_Decl::NodeType new_nt,
                         AST_Decl::NodeType scope_elem_nt);
 
-private:
+protected:
   // Data.
 
   // What type is this node? This is a cache of the information
