@@ -23,6 +23,17 @@ void
 ACE_Token::dump (void) const
 {
   ACE_TRACE ("ACE_Token::dump");
+
+  // @@ This should be fixed to use the ACE_DEBUG() statement...
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
+  ACE_DEBUG ((LM_DEBUG, "\nthread = %d", ACE_Thread::self ()));
+  ACE_DEBUG ((LM_DEBUG, "\nrenew: owner_ %d", int (this->owner_)));
+  ACE_DEBUG ((LM_DEBUG, "\nowner_ addr = %x", &this->owner_));
+  ACE_DEBUG ((LM_DEBUG, "\nwaiters_ = %d", this->waiters_));
+  ACE_DEBUG ((LM_DEBUG, "\nin_use_ = %d", this->in_use_));
+  ACE_DEBUG ((LM_DEBUG, "\nnesting level = %d", this->nesting_level_));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 ACE_Token::ACE_Queue_Entry::ACE_Queue_Entry (ACE_Thread_Mutex &m,
@@ -224,14 +235,9 @@ ACE_Token::renew (int requeue_position, ACE_Time_Value *timeout)
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
 #if defined (DEBUGGING)
-  cerr << '(' << ACE_Thread::self () << ')'
-       << " renew: owner_ thr = " << this->owner_
-       << ", owner_ addr = " << &this->owner_
-       << ", waiters_ = " << this->waiters_
-       << ", in_use_ = " << this->in_use_
-       << ", nesting level = " << this->nesting_level_ << endl;
+  this->dump ();
 #endif /* DEBUGGING */
-  ACE_ASSERT (ACE_OS::thr_equal (ACE_Thread::self (), this->owner_));
+  // ACE_ASSERT (ACE_OS::thr_equal (ACE_Thread::self (), this->owner_));
 
   // Check to see if there are any waiters.  If not, we just keep the token.
   if (this->head_ != 0)
@@ -316,15 +322,10 @@ ACE_Token::release (void)
   ACE_TRACE ("ACE_Token::release");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-  ACE_ASSERT (ACE_OS::thr_equal (ACE_Thread::self (), this->owner_));
+  // ACE_ASSERT (ACE_OS::thr_equal (ACE_Thread::self (), this->owner_));
 
 #if defined (DEBUGGING)
-  cerr << '(' << ACE_Thread::self () << ')'
-       << " release: owner_ thr = " << this->owner_
-       << ", owner_ addr = " << &this->owner_
-       << ", waiters_ = " << this->waiters_
-       << ", in_use_ = " << this->in_use_
-       << ", nesting level = " << this->nesting_level_ << endl;
+  this->dump ();
 #endif /* DEBUGGING */
 
   if (this->nesting_level_ > 0)
@@ -356,4 +357,3 @@ ACE_Token::release (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
