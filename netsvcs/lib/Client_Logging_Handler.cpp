@@ -28,11 +28,14 @@ ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (ACE_HANDLE output_handle
 // This is called when a <send> to the logging server fails...
 
 int
-ACE_Client_Logging_Handler::handle_signal (int, 
+ACE_Client_Logging_Handler::handle_signal (int signum, 
                                            siginfo_t *,
                                            ucontext_t *)
 {
-  return -1;
+  if (signum == SIGPIPE)
+    return 0;
+  else
+    return -1;
 }
 
 // This function is called every time a client connects to us.
