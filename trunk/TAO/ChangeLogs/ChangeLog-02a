@@ -1,62 +1,121 @@
+Mon Jan 31 19:02:34 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.cpp:
+          This filter quickly rejects events that do not match a given
+          bitmask.
+          If the event is not rejected based on the mask then the child is
+          consulted to finally accept or reject the event.
+          When composed with the Null_Filter it accepts any events that
+          satisfy:
+          (event.header.type & type_mask) != 0
+          && (event.header.type & source_mask) != 0
+
+        * orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.cpp:
+          This filter only accepts events whose type and/or source have a
+          given value when a bitmask is applied to them.
+          In short the filter checks that satisfy:
+          (event.header.type & type_mask) == type_value
+          && (event.header.source & source_mask) == source_value
+
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+          The basic factory can create the new filters.
+
+        * orbsvcs/orbsvcs/Event_Service_Constants.h:
+        * orbsvcs/orbsvcs/Event_Utilities.h:
+        * orbsvcs/orbsvcs/Event_Utilities.i:
+        * orbsvcs/orbsvcs/Event_Utilities.cpp:
+          Add support for the new filters into the ConsumerQoS factory.
+
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/Bitmask.cpp:
+          New test for the bitmask filters.
+
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.h:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.cpp:
+        * orbsvcs/tests/Event/Basic/Disconnect.h:
+        * orbsvcs/tests/Event/Basic/Disconnect.cpp:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.h:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.cpp:
+        * orbsvcs/tests/Event/Basic/Negation.h:
+        * orbsvcs/tests/Event/Basic/Negation.cpp:
+        * orbsvcs/tests/Event/Basic/Timeout.h:
+        * orbsvcs/tests/Event/Basic/Timeout.cpp:
+        * orbsvcs/tests/Event/Basic/Wildcard.h:
+        * orbsvcs/tests/Event/Basic/Wildcard.cpp:
+        * orbsvcs/tests/Event/Performance/Makefile:
+        * orbsvcs/tests/Event/lib/Makefile:
+        * orbsvcs/tests/Event/lib/Counting_Consumer.h:
+        * orbsvcs/tests/Event/lib/Counting_Consumer.cpp:
+        * orbsvcs/tests/Event/lib/Counting_Supplier.h:
+        * orbsvcs/tests/Event/lib/Counting_Supplier.cpp:
+          Refactor several tests, they all had some supplier or consumer
+          that simply counted events. The shared class is now in the
+          library.
+
 Mon Jan 31 20:21:24 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * Added the following changes for Borland C++Builder 4:  
-  
+        * Added the following changes for Borland C++Builder 4:
+
           TAO/orbsvcs/orbsvcs/Makefile.bor: Added new files.
 
- 	  TAO/tests/MProfile/test_i.cpp, test_i.h: Added definition of
- 	  missing constructor, added required ACE_THROW_SPEC and removed
- 	  reference to missing inline file.
+          TAO/tests/MProfile/test_i.cpp, test_i.h: Added definition of
+          missing constructor, added required ACE_THROW_SPEC and removed
+          reference to missing inline file.
 
-	  TAO/tests/Param_Test/client.bor: Added new file
-	  recursive_union.obj.
- 
+          TAO/tests/Param_Test/client.bor: Added new file
+          recursive_union.obj.
+
           Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
- 	  contributing these.
-  
+          contributing these.
+
 Mon Jan 31 20:29:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.ll:
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/lex.yy.cpp:
-	* TAO_IDL/fe/lex.yy.cpp.diff:
-	* TAO_IDL/fe/y.tab.h:
-	* TAO_IDL/fe/y.tab.cpp:
-	  Added keyword 'fixed' to lexer and parser.
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+          Added keyword 'fixed' to lexer and parser.
 
-	* TAO_IDL/util/utl_scope.cpp:
-	  Modified lookup_by_name_local() to output an error if it sees
- 	  any case variation of 'fixed'. The change to the lexer and
- 	  parser will catch the use of 'fixed' as a type. This change will
- 	  catch the use of 'fixed' as an identifier. Fixed types are not
- 	  implemented in TAO, so we need to output an error message
- 	  whenever the word is used in an IDL file.  Thanks to J. Scott
- 	  Evans <evans@cpi.com> for reporting this bug.
+        * TAO_IDL/util/utl_scope.cpp:
+          Modified lookup_by_name_local() to output an error if it sees
+          any case variation of 'fixed'. The change to the lexer and
+          parser will catch the use of 'fixed' as a type. This change will
+          catch the use of 'fixed' as an identifier. Fixed types are not
+          implemented in TAO, so we need to output an error message
+          whenever the word is used in an IDL file.  Thanks to J. Scott
+          Evans <evans@cpi.com> for reporting this bug.
 
 Mon Jan 31 20:15:25 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
-	  Had to expand several typedefs to workaround problems with SunCC
-	  4.2 apparently the compiler cannot deal with nested typedefs
-	  inside templates very well.
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+          Had to expand several typedefs to workaround problems with SunCC
+          4.2 apparently the compiler cannot deal with nested typedefs
+          inside templates very well.
 
-	* orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h:
-	  Fixed a comment.
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h:
+          Fixed a comment.
 
 Mon Jan 31 20:13:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
-	  Added missing ACE_TYPENAME macros, only HP/aCC seems to detect
-	  the problem.
+        * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
+          Added missing ACE_TYPENAME macros, only HP/aCC seems to detect
+          the problem.
 
-	* orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
-	* orbsvcs/orbsvcs/Event/EC_QOS_Info.i:
-	  Workaround a bug in the HP/aCC compiler, unless the copy
-	  constructor is explicitly defined the compiler crashes when
-	  trying to generate the code for it.
+        * orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+        * orbsvcs/orbsvcs/Event/EC_QOS_Info.i:
+          Workaround a bug in the HP/aCC compiler, unless the copy
+          constructor is explicitly defined the compiler crashes when
+          trying to generate the code for it.
 
 Mon Jan 31 13:21:48 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -72,17 +131,17 @@ Mon Jan 31 13:21:48 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Jan 31 14:54:14 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Leader_Followers: The thread-per-connection TAO server has
-	  problems when shutting down since there is no portable way to
-	  wakeup a thread blocked in read().  Therefore, changed the
-	  server to use a thread-pool instead of a thread-per-connection
-	  approach.
+        * tests/Leader_Followers: The thread-per-connection TAO server has
+          problems when shutting down since there is no portable way to
+          wakeup a thread blocked in read().  Therefore, changed the
+          server to use a thread-pool instead of a thread-per-connection
+          approach.
 
 Mon Jan 31 11:14:21 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	  Updated the project files.
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Updated the project files.
 
 Mon Jan 31 08:25:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 

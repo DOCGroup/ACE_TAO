@@ -116,7 +116,9 @@ ifneq (,$(findstring Event2,$(TAO_ORBSVCS)))
         Event/EC_ConsumerControl \
         Event/EC_SupplierControl \
         Event/EC_Reactive_ConsumerControl \
-        Event/EC_Reactive_SupplierControl
+        Event/EC_Reactive_SupplierControl \
+	Event/EC_Bitmask_Filter \
+	Event/EC_Masked_Type_Filter
 
   #### TAO's Event requires its Sched Service.
   ifeq (,$(findstring Sched,$(TAO_ORBSVCS)))

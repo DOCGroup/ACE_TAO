@@ -1,6 +1,8 @@
 // $Id$
 
 #include "MT_Disconnect.h"
+#include "Counting_Consumer.h"
+#include "Counting_Supplier.h"
 
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Utilities.h"
@@ -157,10 +159,10 @@ Task::run_iteration (CORBA::Environment &ACE_TRY_ENV)
 
   int iterations = 100;
 
-  Supplier supplier_0;
-  Supplier supplier_1;
-  Consumer consumer_0;
-  Consumer consumer_1;
+  EC_Counting_Supplier supplier_0;
+  EC_Counting_Supplier supplier_1;
+  EC_Counting_Consumer consumer_0 ("Consumer/0");
+  EC_Counting_Consumer consumer_1 ("Consumer/1");
 
   const int event_type = 20;
   const int event_source = 10;
@@ -247,114 +249,6 @@ Task::run_iteration (CORBA::Environment &ACE_TRY_ENV)
                 "supplier 1 (%d)\n",
                 supplier_1.disconnect_count, count_1,
                 use_callbacks));
-}
-
-// ****************************************************************
-
-Consumer::Consumer (void)
-  : disconnect_count (0)
-{
-}
-
-void
-Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                   const RtecEventChannelAdmin::ConsumerQOS &qos,
-                   CORBA::Environment &ACE_TRY_ENV)
-{
-  // The canonical protocol to connect to the EC
-
-  RtecEventComm::PushConsumer_var consumer =
-    this->_this (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->supplier_proxy_->connect_push_consumer (consumer.in (),
-                                                qos,
-                                                ACE_TRY_ENV);
-  ACE_CHECK;
-}
-
-void
-Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
-{
-  this->supplier_proxy_->disconnect_push_supplier (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  PortableServer::POA_var consumer_poa =
-    this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK;
-  PortableServer::ObjectId_var consumer_id =
-    consumer_poa->servant_to_id (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  consumer_poa->deactivate_object (consumer_id.in (), ACE_TRY_ENV);
-  ACE_CHECK;
-}
-
-void
-Consumer::push (const RtecEventComm::EventSet&,
-                CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Ignore events, it does not happen on this test.
-}
-
-void
-Consumer::disconnect_push_consumer (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  this->disconnect_count++;
-}
-
-// ****************************************************************
-
-Supplier::Supplier (void)
-  :  disconnect_count (0)
-{
-}
-
-void
-Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-                   const RtecEventChannelAdmin::SupplierQOS &qos,
-                   CORBA::Environment &ACE_TRY_ENV)
-{
-  RtecEventComm::PushSupplier_var supplier =
-    this->_this (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->consumer_proxy_->connect_push_supplier (supplier.in (),
-                                                qos,
-                                                ACE_TRY_ENV);
-  ACE_CHECK;
-}
-
-void
-Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
-{
-  this->consumer_proxy_->disconnect_push_consumer (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  PortableServer::POA_var supplier_poa =
-    this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK;
-  PortableServer::ObjectId_var supplier_id =
-    supplier_poa->servant_to_id (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  supplier_poa->deactivate_object (supplier_id.in (), ACE_TRY_ENV);
-  ACE_CHECK;
-}
-
-void
-Supplier::disconnect_push_supplier (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  this->disconnect_count++;
 }
 
 // ****************************************************************
