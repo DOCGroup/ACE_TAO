@@ -1,3 +1,23 @@
+Wed Dec 12 12:21:11 2001  Vladimir Chovanec  <Vladimir.CHOVANEC@asset.sk>
+
+	* ace/SSL/SSL_Accept_Handler.cpp (handle_input, handle_output):
+
+	  On Win32 platforms, cancel any previously scheduled "wakeup"
+	  before attempting to perform IO.  If necessary, a "wakeup" will
+	  be scheduled if the IO call would block.
+
+	  (ssl_accept):
+
+	  On Win32 platforms, it is necessary to schedule a "wakeup" in
+	  the Reactor if an IO call would block.  This is necessary since
+	  Windows events are only notified once.  Hence, event handlers
+	  must be rescheduled.
+
+	* ace/SSL/SSL_Connect_Handler.cpp (handle_input, handle_output,
+	  ssl_connect):
+
+	  Likewise.
+
 Wed Dec 12 06:56:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Petr Tuma to the hall of fame.

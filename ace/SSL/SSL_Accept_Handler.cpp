@@ -30,12 +30,26 @@ ACE_SSL_Accept_Handler::get_handle (void) const
 int
 ACE_SSL_Accept_Handler::handle_input (ACE_HANDLE)
 {
+#if defined (ACE_WIN32)
+  // Cancel the wakeup callback we set earlier because Winsock doesn't
+  // trigger multiple "You can write now"
+  (void) this->reactor ()->cancel_wakeup (this,
+                                          ACE_Event_Handler::READ_MASK);
+#endif  /* ACE_WIN32 */
+
   return this->ssl_accept ();
 }
 
 int
 ACE_SSL_Accept_Handler::handle_output (ACE_HANDLE)
 {
+#if defined (ACE_WIN32)
+  // Cancel the wakeup callback we set earlier because Winsock doesn't
+  // trigger multiple "You can write now"
+  (void) this->reactor ()->cancel_wakeup (this,
+                                          ACE_Event_Handler::WRITE_MASK);
+#endif  /* ACE_WIN32 */
+
   return this->ssl_accept ();
 }
 
@@ -72,13 +86,40 @@ ACE_SSL_Accept_Handler::ssl_accept (void)
       break;
 
     case SSL_ERROR_WANT_WRITE:
-    case SSL_ERROR_WANT_READ:
+#if defined (ACE_WIN32)
+      // On Win32 platforms, it is necessary to schedule a "wakeup" in
+      // the Reactor if an IO call would block.  This is necessary
+      // since Windows events are only notified once.  Hence, event
+      // handlers must be rescheduled.
+      if (this->reactor ()->schedule_wakeup (
+            this,
+            ACE_Event_Handler::WRITE_MASK) == -1)
+        return -1;
+#endif  /* ACE_WIN32 */
+
       // If data is still buffered within OpenSSL's internal buffer,
-      // then force the Reactor to invoke the SSL accept event handler
+      // then force the Reactor to invoke the SSL connect event handler
       // (with the appropriate mask) before waiting for more events
       // (e.g. blocking on select()).  All pending data must be
       // processed before waiting for more events to come in on the
       // SSL handle.
+      if (::SSL_pending (ssl))
+        return 1;
+
+      break;
+
+    case SSL_ERROR_WANT_READ:
+#if defined (ACE_WIN32)
+      // See SSL_ERROR_WANT_WRITE case for an explanation of why this
+      // is necessary.
+      if (this->reactor ()->schedule_wakeup (
+            this,
+            ACE_Event_Handler::READ_MASK) == -1)
+        return -1;
+#endif  /* ACE_WIN32 */
+
+      // See SSL_ERROR_WANT_WRITE case for an explanation of why this
+      // is necessary.
       if (::SSL_pending (ssl))
         return 1;
 
