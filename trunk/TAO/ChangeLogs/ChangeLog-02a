@@ -1,3 +1,11 @@
+Wed Mar 15 10:04:33 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/examples/Notify/README:
+	* orbsvcs/examples/Notify/Subscribe/README:
+	  Added README files.
+	* orbsvcs/orbsvcs/Notify/README:
+	  Updated to reflect recent changes.
+
 Wed Mar 15 09:36:46 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simple/time/README: reverted the note added by
