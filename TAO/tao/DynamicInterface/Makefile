@@ -214,7 +214,9 @@ endif
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/NVList.i
+  $(TAO_ROOT)/tao/NVList.i \
+  $(TAO_ROOT)/tao/Environment.h \
+  $(TAO_ROOT)/tao/Environment.i
 
 .obj/DII_Invocation.o .obj/DII_Invocation.so .shobj/DII_Invocation.o .shobj/DII_Invocation.so: DII_Invocation.cpp DII_Invocation.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -2874,6 +2876,8 @@ endif
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Any.i
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Environment.h \
+  $(TAO_ROOT)/tao/Environment.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
