@@ -258,26 +258,32 @@ marshalling of Name.  After that is fixed, it should run ok.
 <A NAME="ace"></A>ORB-related ACE Changes</H3>
 Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A> and <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyrarli</A>
 
-      <P>Future work:
+    <P>Recently Completed Work:
+    <UL>
+      <li>Added special declaration to OS.h for <code>inet_ntoa</code>
+      and other functions because VxWorks doesn't provide full
+      argument prototypes for these library functions.</li>
 
-      <ul>
-	<li>The current caching connector does not behave properly in
-	the face of a non-blocking connect request.  The "fix" is
-	simply to not support non-blocking connects through the cache.
-	When the <code>connect()</code> fails with
-	<code>EWOULDBLOCK</code>, morph the error to -1 and clean up
-	the request.</li>
+      <li>The current caching connector behaves properly in the face
+      of a non-blocking connect request.  The "fix" is simply to not
+      support non-blocking connects through the cache.  When the
+      <code>connect()</code> fails with <code>EWOULDBLOCK</code>,
+      morph the error to -1 and clean up the request.</li>
 
-	<li>Service handlers obtained from the caching connector are
-	not cleaned up.  The application needs to be able to signal
-	that it's not using it any longer, and, when the application
-	encounters an error, needs to effectively close down that
-	connection for good so that a new connection can be initiated.
-	We're still working through the details on how to accomplish
-	this.</li>
+      <li><em>Help, Irfan?</em> Service handlers obtained from the
+      caching connector are now cleaned up.  The application needs to
+      be able to signal that it's not using it any longer, and, when
+      the application encounters an error, needs to effectively close
+      down that connection for good so that a new connection can be
+      initiated.  We're still working through the details on how to
+      accomplish this.</li>
+    </UL>
 
-      </ul>
+    <P>Future work:
 
+      <blockquote>
+      <em>None currently scheduled.</em>
+      </blockquote>
 
 </BODY>
 <hr><P>
