@@ -60,9 +60,9 @@ class ACE_Export ACE_QtReactor : public QObject, public ACE_Select_Reactor
   void qapplication (QApplication *qapp);
 
   // = Timer operations.
-  virtual long schedule_timer (ACE_Event_Handler *handler,
+  virtual long schedule_timer (ACE_Event_Handler *event_handler,
                                const void *arg,
-                               const ACE_Time_Value &delay_time,
+                               const ACE_Time_Value &delay,
                                const ACE_Time_Value &interval);
 
   virtual int  cancel_timer (ACE_Event_Handler *handler,
