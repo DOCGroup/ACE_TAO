@@ -1204,7 +1204,7 @@ CORBA::Boolean POA_ImplementationRepository::ServerObject::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -5639,7 +5639,7 @@ CORBA::Boolean POA_ImplementationRepository::Administration::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
@@ -6827,7 +6827,7 @@ CORBA::Boolean POA_ImplementationRepository::ServerInformationIterator::_is_a (
         ) ||
       !ACE_OS::strcmp (
           (char *)value,
-          "IDL:org.omg/CORBA/Object:1.0"
+          "IDL:omg.org/CORBA/Object:1.0"
         )
      )
     {
