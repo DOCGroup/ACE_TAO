@@ -379,8 +379,8 @@ TAO_UIOP_Profile::parse_string (const char *string,
   else
     ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
 
-  if (this->version_.major != TAO_UIOP_Profile::DEF_UIOP_MAJOR
-      || this->version_.minor  > TAO_UIOP_Profile::DEF_UIOP_MINOR)
+  if (this->version_.major != TAO_UIOP_Profile::DEF_UIOP_MAJOR ||
+      this->version_.minor  > TAO_UIOP_Profile::DEF_UIOP_MINOR)
     {
       ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
     }
@@ -618,7 +618,7 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &env)
                                       this->object_key ());
 
   u_int buflen = (ACE_OS::strlen (::prefix_) +
-                  2 /* major # */ + 2 /* minor # */ + 1 /* decimal point */ +
+                  1 /* major # */ + 1 /* minor # */ + 1 /* decimal point */ +
                   2 /* double-slash separator */ +
                   ACE_OS::strlen (this->rendezvous_point_) +
                   1 /* slash separator */ +
@@ -630,7 +630,7 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &env)
   static const char digits [] = "0123456789";
 
   ACE_OS::sprintf (buf,
-                   "%s%d.%d//%s/%s",
+                   "%s%c.%c//%s/%s",
                    ::prefix_,
                    digits [this->version_.major],
                    digits [this->version_.minor],
