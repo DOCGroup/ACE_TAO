@@ -233,7 +233,7 @@ TAO_Notify_Service::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_Notify_Service::run (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Service::run ()
 {
   if (TAO_debug_level > 0 )
     ACE_DEBUG ((LM_DEBUG, "%s: Running the Notification Service\n",
