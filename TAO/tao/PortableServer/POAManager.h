@@ -101,6 +101,8 @@ protected:
 
   /// Method needed for notifying the IORInterceptors that the state
   /// of POAManager changed.
+  // @@ Priyanka, the below "CORBA::Environment &ACE_TRY_ENV" should
+  //    be "ACE_ENV_ARG_DECL" (without the "_WITH_DEFAULTS").
   void adapter_manager_state_changed (PortableServer::POAManager::State state,
                                       CORBA::Environment &ACE_TRY_ENV);
 
@@ -137,6 +139,11 @@ protected:
 
   TAO_Object_Adapter &object_adapter_;
 
+  // @@ Priyanka, why is this static!!!  This is a really bad idea.
+  //    A static manager ID forces all TAO_POA_Manager instances to
+  //    share the same ID.  There is nothing keeping an application
+  //    from using multiple POAManagers.  Please make this variable
+  //    strictly local to a given instance.
   static PortableInterceptor::AdapterManagerId poa_manager_id_;
 
 };

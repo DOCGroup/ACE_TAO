@@ -11,6 +11,11 @@
 # include "POAManager.i"
 #endif /* ! __ACE_INLINE__ */
 
+// @@ Priyanka, why is this static!!!  This is a really bad idea.
+//    A static manager ID forces all TAO_POA_Manager instances to
+//    share the same ID.  There is nothing keeping an application
+//    from using multiple POAManagers.  Please make this variable
+//    strictly local to a given instance.
 PortableInterceptor::AdapterManagerId TAO_POA_Manager::poa_manager_id_ = 0;
 
 TAO_POA_Manager::TAO_POA_Manager (TAO_Object_Adapter &object_adapter)
@@ -19,6 +24,11 @@ TAO_POA_Manager::TAO_POA_Manager (TAO_Object_Adapter &object_adapter)
     poa_collection_ (),
     object_adapter_ (object_adapter)
 {
+  // @@ Priyanka, this is busted/misguided code.  Since the variable
+  //    is static, all POAManagers will have the same ID.  The fact
+  //    that your incrementing the ID here invalidates the ID for
+  //    previously created POAManagers!  On top of that, this is NOT
+  //    thread-safe!
   ++TAO_POA_Manager::poa_manager_id_;
 }
 
@@ -44,6 +54,9 @@ TAO_POA_Manager::activate_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->state_ = PortableServer::POAManager::ACTIVE;
     }
+
+  // @@ Priyanka, why aren't you calling
+  //    this->adapter_manager_state_changed() here?
 }
 
 void
@@ -116,8 +129,14 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
   // manager known in the process; the wait_for_completion parameter
   // to deactivate will be the same as the similarly named parameter
   // of ORB::shutdown.
+
+  // @@ Priyanka, why aren't you calling
+  //    this->adapter_manager_state_changed() here?
 }
 
+// @@ Priyanka, the below "CORBA::Environment &" parameter should be
+//    "ACE_ENV_ARG_DECL".  You're not propagating the emulating
+//    exception up to the caller!
 void
 TAO_POA_Manager::
 adapter_manager_state_changed (PortableServer::POAManager::State state,
@@ -139,9 +158,21 @@ adapter_manager_state_changed (PortableServer::POAManager::State state,
 
   for (size_t i = 0; i < interceptor_count; ++i)
     {
+      // @@ Priyanka, your missing the "ACE_ENV_ARG_PARAMETER" in the
+      //    following method call.  This is really bad for the
+      //    emulated exceptions case.  Not only is the exception not
+      //    propagated up to the caller, but you're also introducing a
+      //    TSS access each time this method is called due to the
+      //    missing the ACE_ENV_ARG_PARAMETER.  The TSS access occurs
+      //    since the default CORBA::Environment argument call you
+      //    introduced by not passing in the ACE_ENV_ARG_PARAMETER
+      //    places the emulated exception results in TSS.
       interceptors[i]->adapter_manager_state_changed
         (TAO_POA_Manager::poa_manager_id_,
          adapter_state);
+      // @@ Priyanka, once you add the "ACE_ENV_ARG_PARAMETER" don't
+      //    forget the ACE_CHECK here.
+
     }
 }
 
@@ -201,6 +232,9 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion
           ACE_CHECK;
         }
     }
+
+  // @@ Priyanka, why aren't you calling
+  //    this->adapter_manager_state_changed() here?
 }
 
 void
@@ -259,6 +293,9 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion
           ACE_CHECK;
         }
     }
+
+  // @@ Priyanka, why aren't you calling
+  //    this->adapter_manager_state_changed() here?
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
