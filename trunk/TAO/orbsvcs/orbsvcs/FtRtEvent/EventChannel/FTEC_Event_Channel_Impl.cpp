@@ -6,11 +6,11 @@
 #include "FTEC_ConsumerAdmin.h"
 #include "FTEC_ProxyConsumer.h"
 #include "FTEC_ProxySupplier.h"
-//#include "../Utils/ScopeGuard.h"
 #include "FtEventServiceInterceptor.h"
 #include "FT_ProxyAdmin_Base.h"
 #include "IOGR_Maker.h"
 #include "Replication_Service.h"
+#include "../Utils/Safe_InputCDR.h"
 #include "orbsvcs/orbsvcs/FtRtecEventCommC.h"
 
 
@@ -489,7 +489,7 @@ void TAO_FTEC_Event_Channel_Impl::set_state (const FTRT::State & stat
 {
   FtRtecEventChannelAdmin::EventChannelState state;
 
-  TAO_InputCDR cdr((const char*)stat.get_buffer(), stat.length());
+  Safe_InputCDR cdr((const char*)stat.get_buffer(), stat.length());
   cdr >> state;
 
   FtEventServiceInterceptor::instance()->set_state(state.cached_operation_results);
@@ -507,7 +507,7 @@ void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s
   FTRTEC::Replication_Service::instance()->check_validity(ACE_ENV_SINGLE_ARG_PARAMETER);
 
   if (!Request_Context_Repository().is_executed_request()) {
-    TAO_InputCDR cdr((const char*)s.get_buffer(), s.length());
+    Safe_InputCDR cdr((const char*)s.get_buffer(), s.length());
 
     FtRtecEventChannelAdmin::Operation_var op(new FtRtecEventChannelAdmin::Operation);
     if (!(cdr >> *op)) {

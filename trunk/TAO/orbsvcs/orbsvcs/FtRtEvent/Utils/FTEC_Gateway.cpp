@@ -2,7 +2,7 @@
 #include "activate_with_id.h"
 #include "UUID.h"
 #include "resolve_init.h"
-#include "FtRtecEventCommS.h"
+#include "orbsvcs/orbsvcs/FtRtecEventCommS.h"
 
 ACE_RCSID (Utils,
            FTEC_Gateway,
