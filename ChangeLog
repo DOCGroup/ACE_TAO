@@ -1,3 +1,19 @@
+Wed May 21 09:25:16 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Parser.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Push escape_regex_special() back into Parser.
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Print out a relative path for files that are being processed.
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          If generating a workspace per project, don't modify the workspace
+          name.
+
 Wed May 21 14:12:16 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS.h:

@@ -472,6 +472,9 @@ sub write_workspace {
   my($error)     = '';
 
   if ($self->get_toplevel()) {
+    if (!$addfile) {
+      $self->{'per_project_workspace_name'} = 1;
+    }
     my($name) = $self->transform_file_name($self->workspace_file_name());
     if (defined $self->{'projects'}->[0]) {
       my($fh)   = new FileHandle();
@@ -531,6 +534,9 @@ sub write_workspace {
     else {
       print "WARNING: No projects were created.\n" .
             "         Workspace $name has not been created.\n";
+    }
+    if (!$addfile) {
+      $self->{'per_project_workspace_name'} = undef;
     }
   }
 
@@ -908,6 +914,13 @@ sub get_modified_workspace_name {
   my($pwd)    = $self->getcwd();
   my($type)   = $self->{'wctype'};
   my($wsname) = $self->get_workspace_name();
+
+  ## If this is a per project workspace, then we should not
+  ## modify the workspace name.  It may overwrite another workspace
+  ## but that's ok, it will also be a per project workspace.
+  if ($self->{'per_project_workspace_name'}) {
+    return "$name$ext";
+  }
 
   if (!defined $previous_workspace_name{$type}->{$pwd}) {
     $previous_workspace_name{$type}->{$pwd} = $wsname;
