@@ -1,3 +1,17 @@
+Thu Jun 17 23:43:25 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Adapter_Activator/server.cpp: Fixed servant leak by
+	  reference counting it.
+
+	* examples/POA/Adapter_Activator/run_test.pl
+	* examples/POA/Explicit_Activation/run_test.pl
+	* examples/POA/Loader/run_test.pl
+	* examples/POA/On_Demand_Activation/run_test.pl
+	* examples/POA/On_Demand_Loading/run_test.pl
+
+	  Scripts should create one servant at a time.  Otherwise, output
+	  is difficult to read.
+
 Thu Jun 17 22:41:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.h:
