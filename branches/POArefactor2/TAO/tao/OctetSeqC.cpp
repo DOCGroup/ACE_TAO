@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:303
+// be\be_codegen.cpp:301
 
 
 #include "OctetSeqC.h"
@@ -40,10 +40,10 @@
 
 #if !defined (__ACE_INLINE__)
 #include "OctetSeqC.inl"
-#endif /* !defined __ACE_INLINE__ */
+#endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// .\be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -52,7 +52,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/sequence_cs.cpp:65
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_OCTETSEQ_CS_)
 #define _CORBA_OCTETSEQ_CS_
@@ -105,7 +105,7 @@ void CORBA::OctetSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
+// be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_CORBA_OctetSeq_CPP_
 #define _TAO_CDR_OP_CORBA_OctetSeq_CPP_
@@ -199,7 +199,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_OctetSeq_CPP_ */
 
 // TAO_IDL - Generated from
-// w:\ace_wrappers\tao\tao_idl\be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -244,4 +244,3 @@ CORBA::Boolean operator>> (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
