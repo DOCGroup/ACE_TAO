@@ -31,7 +31,6 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "DOVEMIB.h"
 
 static const char usage [] = 
