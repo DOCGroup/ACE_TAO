@@ -312,14 +312,14 @@ namespace TAO
     virtual void _add_ref (void);
     virtual void _remove_ref (void);
 
+    /// Used to release these CORBA basic types.
+    static void _tao_any_string_destructor (void *);
+    static void _tao_any_wstring_destructor (void *);
+
   protected:
     Any_Impl (_tao_destructor,
               CORBA::TypeCode_ptr);
     virtual ~Any_Impl (void);
-
-    /// Used to release these CORBA basic types.
-    static void _tao_any_string_destructor (void *);
-    static void _tao_any_wstring_destructor (void *);
 
     TAO::Any_Impl::_tao_destructor value_destructor_;
     CORBA::TypeCode_ptr type_;
