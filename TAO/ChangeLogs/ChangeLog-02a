@@ -1,3 +1,9 @@
+Mon Mar 25 16:00:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * TAO/orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp: 
+          Changed format specifier for size_t type from %d to %u.
+          Thanks to Craig Rodrigues for this fix.
+
 Mon Mar 25 15:07:24 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/RTCORBA/Thread_Pool.cpp (validate_and_map_priority): We
