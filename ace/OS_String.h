@@ -21,11 +21,13 @@
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
-#include "ace/OS_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS_Export.h"
+#include /**/ <stddef.h>
 
 class ACE_OS_Export ACE_OS_String
   // = TITLE
