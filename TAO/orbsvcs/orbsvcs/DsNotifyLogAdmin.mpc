@@ -32,6 +32,7 @@ project(DsNotifyLogAdmin) : orbsvcslib, core, dslogadmin, dseventlogadmin, event
   }
 }
 
+
 project(DsNotifyLogAdmin_Skel) : orbsvcslib, core, dsnotifylogadmin, dseventlogadmin_skel, dslogadmin_skel, event_skel, notification_skel, portableserver {
   sharedname   = TAO_DsNotifyLogAdmin_Skel
   dynamicflags = TAO_NOTIFYLOG_SKEL_BUILD_DLL
@@ -45,13 +46,16 @@ project(DsNotifyLogAdmin_Skel) : orbsvcslib, core, dsnotifylogadmin, dseventloga
 
   Header_Files {
     DsNotifyLogAdminS.h
+    DsNotifyLogAdminS_T.h
   }
 
   Inline_Files {
     DsNotifyLogAdminS.inl
+    DsNotifyLogAdminS_T.inl
   }   
 
   Template_Files {
+    DsNotifyLogAdminS_T.cpp
   }
 }
 
