@@ -1,3 +1,10 @@
+Tue Jan 22 11:08:02 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/NestedUpcall/Simple/test.idl:
+
+          Changed several operation parameter types from 'UShort'
+          to 'unsigned short'.
+
 Tue Jan 22 10:46:41 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/util/utl_idlist.cpp (copy):
