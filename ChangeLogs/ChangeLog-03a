@@ -1,3 +1,9 @@
+Wed Oct 16 10:55:44 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/config-win32-msvc.h (ACE_HAS_ALLOCA): Enabled alloca support
+	  for MSVC. Thanks to Pat McNertney <pat@mcnerthney.com> for
+	  providing the patch.
+
 Tue Oct 15 18:49:25 2002  Stephen Torri <storri@cse.wustl.edu>
 
 	* tests/Recursive_Condition_Test.cpp:

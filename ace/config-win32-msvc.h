@@ -4,7 +4,7 @@
  *
  *  $Id$
  *
- *  @brief  Microsoft Visual C++ configuration file. 
+ *  @brief  Microsoft Visual C++ configuration file.
  *
  *  This file is the ACE configuration file for Microsoft Visual C++ versions
  *  5.0, 6.0, and 7.0 (.NET)
@@ -52,9 +52,12 @@
 # include "ace/config-win32-msvc-6.h"
 #elif (_MSC_VER >= 1100)
 # include "ace/config-win32-msvc-5.h"
-#else 
+#else
 # error This version of Microsoft Visual C++ not supported.
 #endif
+
+#include <malloc.h>
+#define ACE_HAS_ALLOCA 1
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_H */
