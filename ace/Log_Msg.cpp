@@ -23,7 +23,7 @@
 
 #include "ace/Thread_Manager.h"
 #include "ace/Synch_T.h"
-#include "ace/Signal.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
 # include "ace/Object_Manager.h"
@@ -118,7 +118,8 @@ ACE_Log_Msg_Manager::get_lock (void)
 
       // Allocate the ACE_Log_Msg IPC instance.
       ACE_NEW_RETURN (ACE_Log_Msg_Manager::message_queue_,
-                      ACE_LOG_MSG_IPC_STREAM, 0);
+                      ACE_LOG_MSG_IPC_STREAM,
+                      0);
     }
 
   return ACE_Log_Msg_Manager::lock_;
@@ -267,7 +268,8 @@ ACE_Log_Msg::instance (void)
   if (ACE_Log_Msg_Manager::message_queue_ == 0)
     ACE_NEW_RETURN (ACE_Log_Msg_Manager::message_queue_,
                     ACE_LOG_MSG_IPC_STREAM,
-                    0);
+                   0);
+
   // Singleton implementation.
   static ACE_Cleanup_Adapter<ACE_Log_Msg> *log_msg = 0;
   if (log_msg == 0)
@@ -1103,6 +1105,58 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
    return result;
 }
 
+#if !defined (ACE_WIN32)
+class ACE_Log_Msg_Sig_Guard
+{
+  // = TITLE
+  //     Bare-bones ACE_Sig_Guard.
+  //
+  // = DESCRIPTION
+  //     For use only by ACE_Log_Msg.
+  //     doesn't require the use of global variables or global
+  //     functions in an application).
+private:
+  ACE_Log_Msg_Sig_Guard (void);
+  ~ACE_Log_Msg_Sig_Guard (void);
+
+  sigset_t omask_;
+  // Original signal mask.
+
+  friend ssize_t ACE_Log_Msg::log (ACE_Log_Record &log_record,
+                                   int suppress_stderr);
+};
+
+ACE_Log_Msg_Sig_Guard::ACE_Log_Msg_Sig_Guard (void)
+{
+  ACE_OS::sigemptyset (&this->omask_);
+
+#if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
+  ACE_OS::sigprocmask (SIG_BLOCK,
+                       ACE_OS_Object_Manager::default_mask (),
+                       &this->omask_);
+#else
+  ACE_OS::thr_sigsetmask (SIG_BLOCK,
+                          ACE_OS_Object_Manager::default_mask (),
+                          &this->omask_);
+#endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+}
+
+ACE_Log_Msg_Sig_Guard::~ACE_Log_Msg_Sig_Guard (void)
+{
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
+# if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
+  ACE_OS::sigprocmask (SIG_SETMASK,
+                       &this->omask_,
+                       0);
+# else
+  ACE_OS::thr_sigsetmask (SIG_SETMASK,
+                          &this->omask_,
+                          0);
+# endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+#endif /* ! ACE_LACKS_UNIX_SIGNALS */
+}
+#endif /* ! ACE_WIN32 */
+
 ssize_t
 ACE_Log_Msg::log (ACE_Log_Record &log_record,
                   int suppress_stderr)
@@ -1118,7 +1172,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 
 #if !defined (ACE_WIN32)
       // Make this block signal-safe.
-      ACE_Sig_Guard sb;
+      ACE_Log_Msg_Sig_Guard sb;
 #endif /* ACE_WIN32 */
 
       // Make sure that the lock is held during all this.

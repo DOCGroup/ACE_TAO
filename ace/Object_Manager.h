@@ -291,7 +291,9 @@ public:
   // arrays.
 
   static ACE_Sig_Set &default_mask (void);
-  // Accesses a default signal set used in ACE_Sig_Guard methods.
+  // Accesses a default signal set used, for example, in ACE_Sig_Guard
+  // methods.
+  // Deprecated:  use ACE_Object_Manager::default_mask () instead.
 
 private:
   ACE_OS_Exit_Info exit_info_;
@@ -299,9 +301,6 @@ private:
 
   ACE_Object_Manager_Preallocations *preallocations_;
   // Preallocated objects collection.
-
-  ACE_Sig_Set *default_mask_;
-  // Default signal set used in ACE_Sig_Guard.
 
   ACE_Sig_Adapter *ace_service_config_sig_handler_;
   // ACE_Service_Config signal handler.
