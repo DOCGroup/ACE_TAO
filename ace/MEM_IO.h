@@ -20,7 +20,7 @@
 #include "ace/SOCK.h"
 #include "ace/MEM_SAP.h"
 #include "ace/Memory_Pool.h"
-#include "ace/Malloc_T.h"
+#include "ace/Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -95,6 +95,12 @@ public:
   // into <buf> from <handle> (uses the <recv> call).  If <recv> times
   // out a -1 is returned with <errno == ETIME>.  If it succeeds the
   // number of bytes received is returned.
+
+  ssize_t send (const ACE_Message_Block *message_block,
+                const ACE_Time_Value *timeout);
+  // Wait to to <timeout> amount of time to send the <message_block>.
+  // If <send> times out a -1 is returned with <errno == ETIME>.  If
+  // it succeeds the number of bytes sent is returned.
 
   void dump (void) const;
   // Dump the state of an object.

@@ -1,3 +1,10 @@
+Tue Feb 15 22:57:59 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_IO.h:
+	* ace/MEM_IO.cpp (send): Added a new method that sends a chain of
+	  Message_Block.  This function aggregates the data in
+	  Message_Block and copies them directly into shared memory.
+
 Tue Feb 15 21:26:00 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp,CPP-unserver.cpp (main),

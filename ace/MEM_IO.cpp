@@ -24,6 +24,49 @@ ACE_MEM_IO::dump (void) const
 // socket, allocates a buffer of this size, reads in the data, and
 // returns the number of bytes read.
 
+ssize_t
+ACE_MEM_IO::send (const ACE_Message_Block *message_block,
+                  const ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_MEM_IO::send");
+
+  ssize_t len = message_block->total_length ();
+
+  if (len != 0)
+    {
+      char *buf = ACE_static_cast (char *, this->acquire_buffer (len));
+      ssize_t n = 0;
+      while (message_block != 0)
+        {
+          ACE_OS::memcpy (buf + n,
+                          message_block->rd_ptr (),
+                          message_block->length ());
+          n += message_block->length ();
+
+          if (message_block->cont ())
+            message_block = message_block->cont ();
+          else
+            message_block = message_block->next ();
+        }
+
+      off_t offset = this->set_buf_len (buf, len);
+      if (ACE::send (this->get_handle (),
+                     (const char *) &offset,
+                     sizeof (offset),
+                     0,
+                     timeout) != sizeof (offset))
+        {
+          // unsucessful send, release the memory in the shared-memory.
+          this->release_buffer (buf);
+
+          return -1;
+        }
+      return len;
+    }
+  return 0;
+}
+
+
 #if 0
 ssize_t
 ACE_MEM_IO::recvv (iovec *io_vec,
