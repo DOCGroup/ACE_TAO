@@ -305,6 +305,9 @@ private:
   int ip_addr_size (void) const;
   int determine_type (void) const;
 
+  /// Initialize underlying inet_addr_ to default values
+  void reset (void);
+
   /// Underlying representation.
   /// This union uses the knowledge that the two structures share the
   /// first member, sa_family (as all sockaddr structures do).
