@@ -1704,12 +1704,94 @@ Schedule:
     Provisions for finer-grained, i.e. per-object, secure invocation
     enforcement are slated for TAO 1.1.12.
   </LI>
+
   <LI>
-    Security Level 1 completion by February 2001.
+    <FONT COLOR=BLUE>December 2000</FONT><BR>
+    The following milestones establish a strong foundation upon which
+    the remaining, more "interesting," CORBA Security Service features
+    will be built on.  Once they are in place, it will also be
+    possible to perform some real research on fault injection, and
+    real-time security. 
+    <UL>
+      <LI>
+        Complete full <CODE>SecurityLevel1</CODE> interface
+        implementation. 
+      </LI>
+      <LI>
+        Partial implementation of <CODE>SecurityManager</CODE>
+        interface. 
+      </LI>
+      <LI>
+        Full implementation of the <CODE>SecureInvocation</CODE>
+        policies.
+      </LI>
+      <LI>
+        SSLIOP performance enhancements.
+      </LI>
+    </UL>
   </LI>
+
   <LI>
-    Security Level 2 completion by <FONT COLOR=RED><STRONG>TBD</STRONG></FONT>.
+    <FONT COLOR=BLUE>February 2001</FONT>
+    <UL>
+      <LI>
+        Request authentication via
+        <A HREF="http://web.mit.edu/kerberos/www/">Kerberos</A>, as
+        detailed in the CORBA Security Service specification.  This
+        requires the SECIOP secure interoperability protocol, but
+        initial experiments will be performed via TAO's existing
+        SSLIOP pluggable protocol.
+      </LI>
+      <LI>
+        Partial implementation of the <CODE>SecurityLevel2</CODE>
+        interfaces.  This includes the <CODE>Credential</CODE> and
+        <CODE>Current</CODE> objects. 
+      </LI>
+      <LI>
+        Partial implementation of the <CODE>SecurityAdmin</CODE>
+        interfaces.
+      </LI>
+      <LI>
+        Begin implementation of <CODE>SecurityAudit</CODE> objects.
+        As a side benefit, this project will allow us to research how
+        to secure existing services such as
+        <A HREF="ec.html">TAO's Real-Time Event Service</A>.
+      </LI>
+      <LI>
+        Begin implementation of the interfaces in the
+        <CODE>SecurityReplaceable</CODE> IDL module.  They provide the
+        ability to replace key security components in the ORB with
+        another implementation with ease.  Thus, the security
+        components in the ORB become highly extensible.
+      </LI>
+    </UL
   </LI>
+
+  <LI>
+    <FONT COLOR=BLUE>March 2001</FONT><BR>
+    The following are slated for TAO 1.2 or soon after.
+    <UL>
+      <LI>
+        Complete implementation of the SECIOP secure interoperability
+        protocol (at least the client side).  Needed for more advanced
+        features, such as delegation.
+      </LI>
+      <LI>
+        Begin implementation of a <CODE>DomainManager</CODE> for TAO.
+        This is needed to support security domains.
+      </LI>
+    </UL>
+  </LI>
+
+  <LI>
+    <FONT COLOR=BLUE>May 2001</FONT>
+    <UL>
+      <LI>
+        Begin work on the CORBA Non-Repudiation Service.
+      </LI>
+    </UL>
+  </LI>
+
 </UL>
 
 <!-- END: CORBA Security Service Release Notes -->
