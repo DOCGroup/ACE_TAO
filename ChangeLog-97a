@@ -1,3 +1,9 @@
+Thu Jun 26 01:11:10 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Svc_Conf.y: Added some sanity checks to make sure we don't
+ 	  segfault when things go wrong during the svc.conf file parsing.
+  	  Thanks to Steve Huston for this suggestion.
+
 Thu Jun 26 08:36:37 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* Makefile: fix UPTODATE check (for release target) by not
