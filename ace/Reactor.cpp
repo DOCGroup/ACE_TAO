@@ -139,7 +139,6 @@ ACE_Reactor::run_event_loop (void)
         ACE_Service_Config::reconfigure ();
       else
 #endif /* !ACE_HAS_WINCE */
-
         if (result == -1)
           return -1;
     }
