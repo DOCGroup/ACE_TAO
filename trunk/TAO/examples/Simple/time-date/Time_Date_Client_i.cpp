@@ -19,8 +19,8 @@ Time_Date_Client_i::~Time_Date_Client_i (void)
 }
 
 int
-Time_Date_Client_i::parse_args (int argc,
-                                char *argv[])
+Time_Date_Client_i::parse_args (int,
+                                char *[])
 {
   return 0;
 }
