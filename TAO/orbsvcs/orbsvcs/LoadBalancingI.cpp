@@ -7,6 +7,8 @@
 #include "LB_ReplicaLocator.h"
 #include "LB_Balancing_Strategy.h"
 
+#include "LB_Minimum_Dispersion.h"  // @@ REMOVE ME!
+
 ACE_RCSID (LoadBalancing,
            LoadBalancingI,
            "$Id$")
@@ -22,14 +24,16 @@ TAO_LoadBalancing_ReplicationManager_i::TAO_LoadBalancing_ReplicationManager_i
     generic_factory_ (this->property_manager_,
                       this->object_group_map_),
     object_group_manager_ (this->property_manager_,
-                           this->object_group_map_)
+                           this->object_group_map_),
+    balancing_strategy_ (new TAO_LB_Minimum_Dispersion_Strategy) //@@ FIXME!
 {
-  //  (void) this->init ();
+  //  (void) this->init ();  
 }
 
 // Implementation skeleton destructor
 TAO_LoadBalancing_ReplicationManager_i::~TAO_LoadBalancing_ReplicationManager_i (void)
 {
+  delete this->balancing_strategy_; // @@ REMOVE ME!
 }
 
 void
@@ -49,6 +53,26 @@ TAO_LoadBalancing_ReplicationManager_i::get_load_notifier (
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     LoadBalancing::LoadNotifier::_nil ());
+}
+
+void
+TAO_LoadBalancing_ReplicationManager_i::register_load_monitor (
+    LoadBalancing::LoadMonitor_ptr /* load_monitor */,
+    const LoadBalancing::Location & /* the_location */,
+    CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
+
+LoadBalancing::LoadMonitor_ptr
+TAO_LoadBalancing_ReplicationManager_i::get_load_monitor (
+    const LoadBalancing::Location & /* the_location */,
+    CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   LoadBalancing::InterfaceNotFound))
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    LoadBalancing::LoadMonitor::_nil ());
 }
 
 void
