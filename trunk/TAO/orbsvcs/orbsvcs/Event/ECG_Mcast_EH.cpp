@@ -283,7 +283,7 @@ TAO_ECG_Mcast_EH::Observer::shutdown (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template void activate<>(TAO_Objref_Var_T<RtecEventChannelAdmin::Observer, RtecEventChannelAdmin::tao_Observer_life>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator&);
+template void activate(TAO_Objref_Var_T<RtecEventChannelAdmin::Observer, RtecEventChannelAdmin::tao_Observer_life>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator&);
 template class ACE_Hash_Map_Manager<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *>;
@@ -302,7 +302,7 @@ template class ACE_Array_Base<TAO_ECG_Mcast_EH::Subscription>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate void activate<>(TAO_Objref_Var_T<RtecEventChannelAdmin::Observer, RtecEventChannelAdmin::tao_Observer_life>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator&);
+#pragma instantiate void activate(TAO_Objref_Var_T<RtecEventChannelAdmin::Observer, RtecEventChannelAdmin::tao_Observer_life>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator&)
 #pragma instantiate ACE_Hash_Map_Manager<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *>

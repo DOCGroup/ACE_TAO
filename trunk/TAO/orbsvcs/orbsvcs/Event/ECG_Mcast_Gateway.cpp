@@ -695,10 +695,11 @@ ACE_FACTORY_DEFINE (TAO_RTEvent, TAO_ECG_Mcast_Gateway)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Dynamic_Service<TAO_ECG_Mcast_Gateway>;
-template void activate<>(TAO_Objref_Var_T<RtecUDPAdmin::AddrServer, RtecUDPAdmin::tao_AddrServer_life>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator&);
+template void activate(TAO_Objref_Var_T<RtecUDPAdmin::AddrServer, RtecUDPAdmin::tao_AddrServer_life>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator&);
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Dynamic_Service<TAO_ECG_Mcast_Gateway>
+#pragma instantiate activate(TAO_Objref_Var_T<RtecUDPAdmin::AddrServer, RtecUDPAdmin::tao_AddrServer_life>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator&)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
