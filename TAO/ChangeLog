@@ -1,3 +1,20 @@
+Sun Jun 14 11:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Operation_Table.cpp:
+          Also on AIX we must explictly instantiate static template members.
+          To make things easier to maintenance use the new
+          ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION macro to check
+          whether we need to do this. This macro is set for the GNU compiler for
+          AIX, HPUX and VxWorks. Thanks to Ciaran Moran
+          <ciaran.moran@similaritysystems.com> for reporting this. This fixes
+          bugzilla 1823.
+
+        * tao/ORB_Table.cpp:
+        * tao/ORBInitializer_Registry.cpp:
+        * tao/TSS_Resources.cpp:
+          Also use the new macro above to determine whether to explicitly
+          instantiate static template members.
+
 Fri Jun 12 12:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/AV/TCP.h:
