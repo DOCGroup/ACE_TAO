@@ -1,40 +1,45 @@
+Fri May 11 07:52:02 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/DSI_Latency/server.bor:
+          Add missing library to the Borland Makefile.
+
 Fri May 11 08:11:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: 
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
-	* orbvscs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
-	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
-	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
-	* orbsvc/orbsvcs/FaultTolerance/FT_Service_Activate.h:
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.h: More fixes for
-	  FORTE 6.1.
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
+        * orbvscs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
+        * orbsvc/orbsvcs/FaultTolerance/FT_Service_Activate.h:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.h: More fixes for
+          FORTE 6.1.
 
 Fri May 11 07:39:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Client_Priority_Policy.cpp:
-	* tao/Client_Priority_Policy.h:
-	* tao/LocalObject.cpp:
-	* tao/LocalObject.h:
-	* tao/Object.cpp:
-	* tao/Object.h:
-	* tao/Services_Activate.h:
-	* tao/PortableServer/Collocated_Object.cpp:
-	* tao/PortableServer/Collocated_Object.h:
-	* tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactory_Loader.h: Fixed compilation
-	  errors for FORTE 6.1. 
+        * tao/Client_Priority_Policy.cpp:
+        * tao/Client_Priority_Policy.h:
+        * tao/LocalObject.cpp:
+        * tao/LocalObject.h:
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Services_Activate.h:
+        * tao/PortableServer/Collocated_Object.cpp:
+        * tao/PortableServer/Collocated_Object.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_Loader.h: Fixed compilation
+          errors for FORTE 6.1.
 
 Thu May 10 22:31:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
-	  Fixed a nagging warning in g++.
+        * performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+          Fixed a nagging warning in g++.
 
 Thu May 10 20:42:18 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
