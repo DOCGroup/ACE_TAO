@@ -1,3 +1,12 @@
+Wed Feb 28 09:43:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Any:
+
+          Change the value() method to return the void* value_
+          member if the any owns its data. In this case, it
+          must return something meaningful because we call it
+          in the >>= operator for all but the simple types.
+
 Web Feb 28 09:36:03 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Makefile.bor
