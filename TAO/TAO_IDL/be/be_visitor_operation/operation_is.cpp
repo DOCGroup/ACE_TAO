@@ -94,7 +94,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
     }
   delete visitor;
 
-  char *classname;
+  const char *classname = 0;
 
   if (intf)
     {
@@ -112,7 +112,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
       int fnmlength = ACE_OS::strlen (node->flat_name ());
       fnmlength--;
 
-      classname =  str.substr (0,(fnmlength-lnmlength) ).rep ();
+      classname = str.substr (0,(fnmlength-lnmlength) ).rep ();
     }
   
   // STEP 2: generate the operation name
