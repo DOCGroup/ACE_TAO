@@ -22,7 +22,6 @@
 #include "ace/Synch.h"
 #include "ace/Thread.h"
 #include "ace/Service_Config.h"
-#include "ace/Get_Opt.h"
 #include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
@@ -49,6 +48,7 @@ static ACE_RW_Mutex rw_mutex;
 static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_readers, current_writers;
 
 // Explain usage and exit.
+#if 0
 static void 
 print_usage_and_die (void)
 {
@@ -56,6 +56,7 @@ print_usage_and_die (void)
 	      "usage: %n [-r n_readers] [-w n_writers] [-n iteration_count]\n"));
   ACE_OS::exit (1);
 }
+#endif /* 0 */
 
 // Iterate <n_iterations> each time checking that nobody modifies the data
 // while we have a read lock.
@@ -71,8 +72,8 @@ reader (void *)
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
       ACE_Read_Guard<ACE_RW_Mutex> g(rw_mutex);
-      int n = ++current_readers;
-      //ACE_DEBUG ((LM_DEBUG, "(%t) I'm reader number %d\n", n));
+      // int n = ++current_readers;
+      // ACE_DEBUG ((LM_DEBUG, "(%t) I'm reader number %d\n", n));
 
       if (current_writers > 0)
         ACE_DEBUG ((LM_DEBUG, "(%t) writers found!!!\n"));
