@@ -187,13 +187,11 @@ be_structure::gen_var_impl (char *,
 
   ci = tao_cg->client_inline ();
 
-  // Start with whatever was our current indent level.
-  ci->indent ();
-
   *ci << "// *************************************************************"
       << be_nl;
   *ci << "// Inline operations for class " << fname << be_nl;
-  *ci << "// *************************************************************\n\n";
+  *ci << "// *************************************************************"
+      << be_nl << be_nl;
 
   // Default constructor.
   *ci << "ACE_INLINE" << be_nl;
@@ -207,22 +205,19 @@ be_structure::gen_var_impl (char *,
   *ci << fname << "::" << lname << " (" << this->local_name ()
       << " *p)" << be_nl;
   *ci << "  : ptr_ (p)" << be_nl;
-  *ci << "{}\n\n";
+  *ci << "{}" << be_nl << be_nl;
 
   // Copy constructor.
-  ci->indent ();
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (const ::" << fname
       << " &p) // copy constructor" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
+  *ci << "{" << be_idt_nl;
   *ci << "if (p.ptr_)" << be_nl;
   *ci << "  ACE_NEW (this->ptr_, " << "::" << this->name ()
       << " (*p.ptr_));" << be_nl;
   *ci << "else" << be_nl;
-  *ci << "  this->ptr_ = 0;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "  this->ptr_ = 0;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
   // Fixed-size types only.
   if (this->size_type () == AST_Type::FIXED)
@@ -231,55 +226,49 @@ be_structure::gen_var_impl (char *,
       *ci << "ACE_INLINE" << be_nl;
       *ci << fname << "::" << lname << " (const "
           << "::" << this->name () << " &p)" << be_nl;
-      *ci << "{\n";
-      ci->incr_indent ();
+      *ci << "{" << be_idt_nl;
       *ci << "ACE_NEW (this->ptr_, " << "::" << this->name ()
-          << " (p));\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+          << " (p));" << be_uidt_nl;
+      *ci << "}" << be_nl << be_nl;
     }
 
   // Destructor.
-  ci->indent ();
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::~" << lname << " (void) // destructor" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "delete this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "{" << be_idt_nl;
+  *ci << "delete this->ptr_;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
   // Assignment operator from a pointer.
-  ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << be_nl;
   *ci << fname << "::operator= (" << this->local_name ()
-      << " *p)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
+      << " *_tao_struct_var)" << be_nl;
+  *ci << "{" << be_idt_nl;
   *ci << "delete this->ptr_;" << be_nl;
-  *ci << "this->ptr_ = p;" << be_nl;
-  *ci << "return *this;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "this->ptr_ = _tao_struct_var;" << be_nl;
+  *ci << "return *this;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
   // Assignment operator from _var.
-  ci->indent ();
   *ci << "ACE_INLINE ::" << fname << " &" << be_nl
       << fname << "::operator= (const ::" << fname
-      << " &p)" << be_nl
+      << " &_tao_struct_var)" << be_nl
       << "{" << be_idt_nl
-      << "if (this != &p)" << be_idt_nl
+      << "if (this != &_tao_struct_var)" << be_idt_nl
       << "{" << be_idt_nl
-      << "if (p.ptr_ == 0)" << be_idt_nl
+      << "if (_tao_struct_var.ptr_ == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "delete this->ptr_;" << be_nl
       << "this->ptr_ = 0;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl
-      << this->local_name () << " *deep_copy =" << be_idt_nl
-      << "new " << this->local_name () << " (*p.ptr_);"
-      << be_uidt_nl << be_nl
+      << this->local_name () << " *deep_copy = 0;" << be_nl
+      << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+      << "deep_copy," << be_nl
+      << this->local_name () << " (*_tao_struct_var.ptr_)," << be_nl
+      << "*this" << be_uidt_nl 
+      << ");" << be_uidt_nl << be_nl
       << "if (deep_copy != 0)" << be_idt_nl
       << "{" << be_idt_nl
       << this->local_name () << " *tmp = deep_copy;" << be_nl
@@ -290,173 +279,132 @@ be_structure::gen_var_impl (char *,
       << "}" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "return *this;" << be_uidt_nl
-      << "}\n\n";
+      << "}" << be_nl << be_nl;
 
   // Fixed-size types only.
   if (this->size_type () == AST_Type::FIXED)
     {
-      ci->indent ();
       *ci << "// fixed-size types only" << be_nl;
       *ci << "ACE_INLINE " << fname << " &" << be_nl;
       *ci << fname << "::operator= (const " << "::" << this->name ()
           << " &p)" << be_nl;
-      *ci << "{\n";
-      ci->incr_indent ();
+      *ci << "{" << be_idt_nl;
       *ci << "if (this->ptr_ != &p)" << be_nl;
-      *ci << "{\n";
-      ci->incr_indent ();
+      *ci << "{" << be_idt_nl;
       *ci << "delete this->ptr_;" << be_nl;
-      *ci << "ACE_NEW_RETURN (this->ptr_, ::"
-          << this->name () << " (p), *this);\n";
-      ci->decr_indent ();
-      *ci << "}" << be_nl;
-      *ci << "return *this;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+      *ci << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+          << "this->ptr_," << be_nl
+          << "::" << this->name () << " (p)," << be_nl
+          << "*this" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl;
+      *ci << "}" << be_nl << be_nl;
+      *ci << "return *this;" << be_uidt_nl;
+      *ci << "}" << be_nl << be_nl;
     }
 
   // Two arrow operators.
-  ci->indent ();
   *ci << "ACE_INLINE const " << "::" << this->name () << " *" << be_nl;
   *ci << fname << "::operator-> (void) const" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "{" << be_idt_nl;
+  *ci << "return this->ptr_;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
-  ci->indent ();
   *ci << "ACE_INLINE " << "::" << this->name () << " *" << be_nl;
   *ci << fname << "::operator-> (void)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "{" << be_idt_nl;
+  *ci << "return this->ptr_;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
   // Other extra methods - 3 cast operator ().
-  ci->indent ();
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::operator const " << "::" << this->name ()
       << " &() const // cast" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return *this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "{" << be_idt_nl;
+  *ci << "return *this->ptr_;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
-  ci->indent ();
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::operator " << "::" << this->name ()
       << " &() // cast " << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return *this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "{" << be_idt_nl;
+  *ci << "return *this->ptr_;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
-  ci->indent ();
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::operator " << "::" << this->name ()
       << " &() const // cast " << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return *this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "{" << be_idt_nl;
+  *ci << "return *this->ptr_;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
   // Variable-size types only.
   if (this->size_type () == AST_Type::VARIABLE)
     {
-      ci->indent ();
       *ci << "// variable-size types only" << be_nl;
       *ci << "ACE_INLINE" << be_nl;
       *ci << fname << "::operator " << "::" << this->name ()
           << " *&() // cast " << be_nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "return this->ptr_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+      *ci << "{" << be_idt_nl;
+      *ci << "return this->ptr_;" << be_uidt_nl;
+      *ci << "}" << be_nl << be_nl;
     }
 
   // in, inout, out, and _retn
-  ci->indent ();
   *ci << "ACE_INLINE const " << "::" << this->name () << " &" << be_nl;
   *ci << fname << "::in (void) const" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return *this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "{" << be_idt_nl;
+  *ci << "return *this->ptr_;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
-  ci->indent ();
   *ci << "ACE_INLINE " << "::" << this->name () << " &" << be_nl;
   *ci << fname << "::inout (void)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return *this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "{" << be_idt_nl;
+  *ci << "return *this->ptr_;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
   // The out is handled differently based on our size type.
-  ci->indent ();
   if (this->size_type () == AST_Type::VARIABLE)
     {
       *ci << "// mapping for variable size " << be_nl;
       *ci << "ACE_INLINE " << "::" << this->name () << " *&" << be_nl;
       *ci << fname << "::out (void)" << be_nl;
-      *ci << "{\n";
-      ci->incr_indent ();
+      *ci << "{" << be_idt_nl;
       *ci << "delete this->ptr_;" << be_nl;
       *ci << "this->ptr_ = 0;" << be_nl;
-      *ci << "return this->ptr_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+      *ci << "return this->ptr_;" << be_uidt_nl;
+      *ci << "}" << be_nl << be_nl;
 
-      ci->indent ();
       *ci << "ACE_INLINE " << "::" << this->name () << " *" << be_nl;
       *ci << fname << "::_retn (void)" << be_nl;
-      *ci << "{\n";
-      ci->incr_indent ();
+      *ci << "{" << be_idt_nl;
       *ci << "::" << this->name () << " *tmp = this->ptr_;" << be_nl;
       *ci << "this->ptr_ = 0;" << be_nl;
-      *ci << "return tmp;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
-
+      *ci << "return tmp;" << be_uidt_nl;
+      *ci << "}" << be_nl << be_nl;
     }
   else
     {
       *ci << "// mapping for fixed size " << be_nl;
       *ci << "ACE_INLINE " << "::" << this->name () << " &" << be_nl;
       *ci << fname << "::out (void)" << be_nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "return *this->ptr_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+      *ci << "{" << be_idt_nl;
+      *ci << "return *this->ptr_;" << be_uidt_nl;
+      *ci << "}" << be_nl << be_nl;
 
-      ci->indent ();
       *ci << "ACE_INLINE " << "::" << this->name () << be_nl;
       *ci << fname << "::_retn (void)" << be_nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "return *this->ptr_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+      *ci << "{" << be_idt_nl;
+      *ci << "return *this->ptr_;" << be_uidt_nl;
+      *ci << "}" << be_nl << be_nl;
 
     }
 
   // The additional ptr () member function.
-  ci->indent ();
   *ci << "ACE_INLINE " << "::" << this->name () << " *" << be_nl;
   *ci << fname << "::ptr (void) const" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "{" << be_idt_nl;
+  *ci << "return this->ptr_;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
   return 0;
 }
@@ -556,13 +504,11 @@ be_structure::gen_out_impl (char *,
 
   // Generate the var implementation in the inline file.
 
-  // Start with whatever was our current indent level.
-  ci->indent ();
-
   *ci << "// *************************************************************"
       << be_nl;
   *ci << "// Inline operations for class " << fname << be_nl;
-  *ci << "// *************************************************************\n\n";
+  *ci << "// *************************************************************"
+      << be_nl << be_nl;
 
   // Constructor from a pointer.
   ci->indent ();
@@ -570,88 +516,67 @@ be_structure::gen_out_impl (char *,
   *ci << fname << "::" << lname << " (" << "::"
       << this->name () << " *&p)" << be_nl;
   *ci << "  : ptr_ (p)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "this->ptr_ = 0;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "{" << be_idt_nl;
+  *ci << "this->ptr_ = 0;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
   // Constructor from _var &.
-  ci->indent ();
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (" << this->local_name ()
       << "_var &p) // constructor from _var" << be_nl;
   *ci << "  : ptr_ (p.out ())" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
+  *ci << "{" << be_idt_nl;
   *ci << "delete this->ptr_;" << be_nl;
-  *ci << "this->ptr_ = 0;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "this->ptr_ = 0;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
   // Copy constructor.
-  ci->indent ();
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (const ::" << fname
       << " &p) // copy constructor" << be_nl;
   *ci << "  : ptr_ (ACE_const_cast (" << lname << "&, p).ptr_)" << be_nl;
-  *ci << "{}\n\n";
+  *ci << "{}" << be_nl << be_nl;
 
   // assignment operator from _out &.
-  ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << be_nl;
   *ci << fname << "::operator= (const ::" << fname <<
     " &p)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
+  *ci << "{" << be_idt_nl;
   *ci << "this->ptr_ = ACE_const_cast (" << lname << "&, p).ptr_;" << be_nl;
-  *ci << "return *this;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "return *this;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
   // Assignment from _var is not allowed by a private declaration.
 
   // Assignment operator from pointer.
-  ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << be_nl;
-  *ci << fname << "::operator= (" << this->local_name () << " *p)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "this->ptr_ = p;" << be_nl;
-  *ci << "return *this;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << fname << "::operator= (" << this->local_name () << " *_tao_struct_out)" << be_nl;
+  *ci << "{" << be_idt_nl;
+  *ci << "this->ptr_ = _tao_struct_out;" << be_nl;
+  *ci << "return *this;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
   // Other extra methods - cast operator ().
-  ci->indent ();
   *ci << "ACE_INLINE " << be_nl;
   *ci << fname << "::operator " << "::" << this->name ()
       << " *&() // cast" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "{" << be_idt_nl;
+  *ci << "return this->ptr_;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
   // ptr function
-  ci->indent ();
   *ci << "ACE_INLINE " << "::" << this->name () << " *&" << be_nl;
   *ci << fname << "::ptr (void) // ptr" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "{" << be_idt_nl;
+  *ci << "return this->ptr_;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
   // operator ->
-  ci->indent ();
   *ci << "ACE_INLINE " << "::" << this->name () << " *" << be_nl;
   *ci << fname << "::operator-> (void)" << be_nl;
-  *ci << "{\n";
-  ci->incr_indent ();
-  *ci << "return this->ptr_;\n";
-  ci->decr_indent ();
-  *ci << "}\n\n";
+  *ci << "{" << be_idt_nl;
+  *ci << "return this->ptr_;" << be_uidt_nl;
+  *ci << "}" << be_nl << be_nl;
 
   return 0;
 }

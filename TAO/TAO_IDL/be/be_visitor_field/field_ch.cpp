@@ -94,6 +94,12 @@ be_visitor_field_ch::visit_array (be_array *node)
     {
       // This is the case for anonymous arrays.
 
+      AST_Type *elem = node->base_type ();
+
+      if (elem->is_child (this->ctx_->scope ()))
+        {
+        }
+
       // Instantiate a visitor context with a copy of our context. This info
       // will be modified based on what type of node we are visiting
       be_visitor_context ctx (*this->ctx_);

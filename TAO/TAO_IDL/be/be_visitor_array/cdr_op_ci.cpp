@@ -55,132 +55,175 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
       // array, i.e., this is a case of array of array.
       return this->visit_node (node);
     }
-  else
+
+  if (node->cli_inline_cdr_op_gen () || node->imported ())
     {
-      if (node->cli_inline_cdr_op_gen () || node->imported ())
-        {
-          return 0;
-        }
+      return 0;
+    }
 
-      be_type *bt = be_type::narrow_from_decl (node->base_type ());
-      TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  TAO_OutStream *os = this->ctx_->stream ();
 
-      if (!bt)
+  if (!bt)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_array_cdr_op_ci::"
+                         "visit_array - "
+                         "Bad base type\n"),
+                        -1);
+    }
+
+  // If we contain an anonymous sequence,
+  // generate code for the sequence here.
+
+  AST_Decl::NodeType nt = bt->node_type ();
+
+  // If the node is an array of anonymous sequence, we need to
+  // generate the sequence's cdr operator declaration here.
+  if (nt == AST_Decl::NT_sequence && bt->anonymous ())
+    {
+      be_visitor_sequence_cdr_op_ci visitor (this->ctx_);
+
+      if (bt->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_array_cdr_op_ci::"
+                             "be_visitor_array_cdr_op_ci::"
                              "visit_array - "
-                             "Bad base type\n"),
+                             "accept on anonymous base type failed\n"),
                             -1);
         }
+    }
 
-      // If we contain an anonymous sequence,
-      // generate code for the sequence here.
+  // If the array is an anonymous member and if its element type
+  // is a declaration (not a reference), we must generate code for
+  // the declaration.
+  if (this->ctx_->alias () == 0 // Not a typedef.
+      && bt->is_child (this->ctx_->scope ()))
+    {
+      int status = 0;
+      be_visitor_context ctx (*this->ctx_);
 
-      AST_Decl::NodeType nt = bt->node_type ();
+      switch (nt)
+      {
+        case AST_Decl::NT_enum:
+          {
+            ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
+            be_visitor_enum_cdr_op_ci ec_visitor (&ctx);
+            status = bt->accept (&ec_visitor);
+            break;
+          }
+        case AST_Decl::NT_struct:
+          {
+            ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
+            be_visitor_structure_cdr_op_ci sc_visitor (&ctx);
+            status = bt->accept (&sc_visitor);
+            break;
+          }
+        case AST_Decl::NT_union:
+          {
+            ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
+            be_visitor_union_cdr_op_ci uc_visitor (&ctx);
+            status = bt->accept (&uc_visitor);
+            break;
+          }
+        default:
+          break;
+      }
 
-      // If the node is an array of anonymous sequence, we need to
-      // generate the sequence's cdr operator declaration here.
-      if (nt == AST_Decl::NT_sequence && bt->anonymous ())
+      if (status == -1)
         {
-          be_visitor_sequence_cdr_op_ci visitor (this->ctx_);
-
-          if (bt->accept (&visitor) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_array_cdr_op_ci::"
-                                 "visit_array - "
-                                 "accept on anonymous base type failed\n"),
-                                -1);
-            }
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_array_ch::"
+                             "visit_array - "
+                             "array base type codegen failed\n"),
+                            -1);
         }
+    }
 
-      // For anonymous arrays, the type name has a _ prepended. We compute the
-      // full_name with or without the underscore and use it later on.
-      char fname [NAMEBUFSIZE];  // to hold the full and
+  // For anonymous arrays, the type name has a _ prepended. We compute the
+  // full_name with or without the underscore and use it later on.
+  char fname [NAMEBUFSIZE];  // to hold the full and
 
-      // Save the node's local name and full name in a buffer for quick use later
-      // on.
-      ACE_OS::memset (fname, 
-                      '\0', 
-                      NAMEBUFSIZE);
+  // Save the node's local name and full name in a buffer for quick use later
+  // on.
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
-      if (this->ctx_->tdef ())
+  if (this->ctx_->tdef ())
+    {
+      ACE_OS::sprintf (fname, "%s", node->full_name ());
+    }
+  else
+    {
+      // For anonymous arrays ...
+      // We have to generate a name for us that has an underscope prepended
+      // to our local name. This needs to be inserted after the parents's 
+      // name.
+
+      if (node->is_nested ())
         {
-          ACE_OS::sprintf (fname, "%s", node->full_name ());
+          be_decl *parent = 
+            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+          ACE_OS::sprintf (fname, 
+                           "%s::_%s", 
+                           parent->full_name (),
+                           node->local_name ()->get_string ());
         }
       else
         {
-          // For anonymous arrays ...
-          // We have to generate a name for us that has an underscope prepended
-          // to our local name. This needs to be inserted after the parents's 
-          // name.
-
-          if (node->is_nested ())
-            {
-              be_decl *parent = 
-                be_scope::narrow_from_scope (node->defined_in ())->decl ();
-              ACE_OS::sprintf (fname, 
-                               "%s::_%s", 
-                               parent->full_name (),
-                               node->local_name ()->get_string ());
-            }
-          else
-            {
-              ACE_OS::sprintf (fname, 
-                               "_%s", 
-                               node->full_name ());
-            }
+          ACE_OS::sprintf (fname, 
+                           "_%s", 
+                           node->full_name ());
         }
-
-      // Generate the CDR << and >> operator defns.
-
-      // Save the array node for further use.
-      this->ctx_->node (node);
-
-      //  Set the sub state as generating code for the output operator.
-      this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
-      *os << "ACE_INLINE CORBA::Boolean operator<< (" << be_idt << be_idt_nl
-          << "TAO_OutputCDR &strm," << be_nl
-          << "const " << fname << "_forany &_tao_array" << be_uidt_nl
-          << ")" << be_uidt_nl
-          << "{" << be_idt_nl;
-
-      if (bt->accept (this) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_array_cdr_op_ci::"
-                             "visit_array - "
-                             "Base type codegen failed\n"),
-                            -1);
-        }
-
-      *os << "}\n\n";
-
-      //  Set the sub state as generating code for the input operator.
-      os->indent ();
-
-      this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-      *os << "ACE_INLINE CORBA::Boolean operator>> (" << be_idt << be_idt_nl
-          << "TAO_InputCDR &strm," << be_nl
-          << fname << "_forany &_tao_array" << be_uidt_nl
-          << ")" << be_uidt_nl
-          << "{" << be_idt_nl;
-
-      if (bt->accept (this) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_array_cdr_op_ci::"
-                             "visit_array - "
-                             "Base type codegen failed\n"),
-                            -1);
-        }
-
-      *os << "}\n\n";
-
-      node->cli_inline_cdr_op_gen (1);
     }
 
+  // Generate the CDR << and >> operator defns.
+
+  // Save the array node for further use.
+  this->ctx_->node (node);
+
+  //  Set the sub state as generating code for the output operator.
+  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
+  *os << "ACE_INLINE CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+      << "TAO_OutputCDR &strm," << be_nl
+      << "const " << fname << "_forany &_tao_array" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl;
+
+  if (bt->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_array_cdr_op_ci::"
+                         "visit_array - "
+                         "Base type codegen failed\n"),
+                        -1);
+    }
+
+  *os << "}\n\n";
+
+  //  Set the sub state as generating code for the input operator.
+  os->indent ();
+
+  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
+  *os << "ACE_INLINE CORBA::Boolean operator>> (" << be_idt << be_idt_nl
+      << "TAO_InputCDR &strm," << be_nl
+      << fname << "_forany &_tao_array" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl;
+
+  if (bt->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_array_cdr_op_ci::"
+                         "visit_array - "
+                         "Base type codegen failed\n"),
+                        -1);
+    }
+
+  *os << "}" << be_nl << be_nl;
+
+  node->cli_inline_cdr_op_gen (1);
   return 0;
 }
 
