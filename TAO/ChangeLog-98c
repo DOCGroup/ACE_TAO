@@ -1,3 +1,17 @@
+Tue Jul 14 19:15:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/orbsvcs/Event/Module_Factory.h: 
+	* orbsvcs/orbsvcs/Event/Module_Factory.cpp: 
+	* orbsvcs/orbsvcs/Event/Fast_Reactor.h: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  The Event Channel modules are constructed using a Factory class,
+	  that will simplify configuration of the EC, like using RTU or
+	  FIFO dispatching, disabling correlation, or filtering, etc.
+
 Tue Jul 14 18:35:56 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp: 
