@@ -1,3 +1,14 @@
+Mon May 27 15:47:44 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: Add new service-related macro, ACE_Local_Service_Export.
+          This is intended for use in the ACE_FACTORY_DEFINE macro, for
+          static services whose factory functions need not be exported.
+          To use this when defining a factory function, do
+             ACE_FACTORY_DEFINE(ACE_Local_Service, StaticSvcClass)
+
+        * examples/C++NPv2/Service_Reporter.cpp: Use ACE_Local_Service
+          in the ACE_FACTORY_DEFINE for the Service_Reporter service.
+
 Mon May 27 15:21:57 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/Codecs.h:
@@ -42,7 +53,6 @@ Mon May 27 15:21:57 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
           Remove files named core.[0-9]+. Newer kernels dump a core file
           associated with each process separately.
-
 
 Mon May 27 15:04:31 2002  Steve Huston  <shuston@riverace.com>
 

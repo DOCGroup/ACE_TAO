@@ -103,7 +103,7 @@ int Service_Reporter::fini () {
 }
 
 // Define the service object make and gobble functions.
-ACE_FACTORY_DEFINE (UNUSED, Service_Reporter)
+ACE_FACTORY_DEFINE (ACE_Local_Service, Service_Reporter)
 
 // Define the ACE_Static_Svc_Descriptor that conveys the service information
 // to the ACE_Service_Config.
