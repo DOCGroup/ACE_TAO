@@ -10,7 +10,9 @@
 
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(tao, Active_Object_Map, "$Id$")
+ACE_RCSID(PortableServer,
+          Active_Object_Map,
+          "$Id$")
 
 /* static */
 size_t TAO_Active_Object_Map::system_id_size_ = 0;

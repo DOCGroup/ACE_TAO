@@ -2,7 +2,9 @@
 
 #include "Active_Object_Map_Entry.h"
 
-ACE_RCSID(tao, Active_Object_Map_Entry, "$Id$")
+ACE_RCSID(PortableServer,
+          Active_Object_Map_Entry,
+          "$Id$")
 
 TAO_Active_Object_Map_Entry::TAO_Active_Object_Map_Entry (void)
   : user_id_ (),
