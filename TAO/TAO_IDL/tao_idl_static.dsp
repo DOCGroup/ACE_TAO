@@ -37,13 +37,12 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir ""
+# PROP Output_Dir "Release"
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "include" /I "be_include" /I "../../" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /FD /c
-# SUBTRACT CPP /YX
+# ADD CPP /nologo /MT /W3 /GX /O2 /I "include" /I "be_include" /I "../../" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -51,8 +50,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_IDL_FE_LIBs.lib TAO_IDL_BE_LIBs.lib aces.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\bin\Release\tao_idl_static.exe" /libpath:"../../ace"
-# SUBTRACT LINK32 /map
+# ADD LINK32 TAO_IDL_BE_LIBs.lib TAO_IDL_FE_LIBs.lib aces.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\bin\Release\tao_idl_static.exe" /libpath:"..\..\ace"
+# SUBTRACT LINK32 /pdb:none /map
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler Static - Win32 Static Debug"
 
@@ -68,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "include" /I "be_include" /I "../../" /D "_CONSOLE" /D "_MBCS" /D "ACE_NO_INLINE" /D "_DEBUG" /D "WIN32" /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "include" /I "be_include" /I "../../" /D "_CONSOLE" /D "_MBCS" /D "ACE_NO_INLINE" /D "_DEBUG" /D "WIN32" /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -76,8 +75,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_IDL_FE_LIBsd.lib TAO_IDL_BE_LIBsd.lib acesd.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\bin\tao_idl_static.exe" /pdbtype:sept /libpath:"..\..\ace"
-# SUBTRACT LINK32 /pdb:none
+# ADD LINK32 TAO_IDL_FE_LIBsd.lib TAO_IDL_BE_LIBsd.lib acesd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\bin\tao_idl_static.exe" /pdbtype:sept /libpath:"..\..\ace"
+# SUBTRACT LINK32 /pdb:none /nodefaultlib
 
 !ENDIF 
 
