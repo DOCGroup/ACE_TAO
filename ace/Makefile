@@ -69,7 +69,7 @@ DEMUX_FILES = \
   TkReactor \
   WFMO_Reactor \
   XtReactor \
-  QtReactor 
+  QtReactor
 CONNECTION_FILES = \
   Asynch_IO \
   Asynch_IO_Impl \
@@ -287,10 +287,7 @@ ifeq (FOR_TAO,$(ACE_COMPONENTS))
     Streams \
     Memory
 else  # ! FOR_TAO
-  #### TAO doesn't need Filecache.  And, its ACE_Hash<ACE_CString> and
-  #### ACE_Equal_To<ACE_CString> explicit template instantiations collide
-  #### with those in ACE_wrappers/TAO/tao/POA.cpp.  That precludes building
-  #### a shared libTAO for VxWorks, for example.  And, it costs 14 Kb.
+  #### TAO doesn't need Filecache.  It costs 14 Kb.
   UTILS_FILES += Filecache
 endif # ! FOR_TAO
 
@@ -365,7 +362,7 @@ endif
 ifneq ($(qt_reactor),)
   DEMUX_FILES += QtReactor_moc
 endif #qt_recator
-  
+
 LSRC  = $(addsuffix .cpp,$(FILES))
 
 BUILD += ACE_COMPONENTS
@@ -483,7 +480,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
 #Some compilation for the QtReactor stuff. We need to run moc
 #ie. (Meta Object compiler) for our QtReactor.h. So, let me do it
 #here.
- 
+
 ifneq ($(qt_reactor),)
 QtReactor_moc.cpp: QtReactor.h
 		moc QtReactor.h >QtReactor_moc.cpp

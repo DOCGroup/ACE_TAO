@@ -715,8 +715,6 @@ template class ACE_Hash_Map_Iterator_Ex<const char *, ACE_Filecache_Object *, AC
 template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, ACE_Filecache_Object *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
 #else
 template class ACE_Hash_Map_Entry<ACE_CString, ACE_Filecache_Object *>;
-template class ACE_Hash<ACE_CString>;
-template class ACE_Equal_To<ACE_CString>;
 template class ACE_Hash_Map_Manager<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
@@ -737,8 +735,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Filecache_Objec
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, ACE_Filecache_Object *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 #else
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, ACE_Filecache_Object *>
-#pragma instantiate ACE_Hash<ACE_CString>
-#pragma instantiate ACE_Equal_To<ACE_CString>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>
