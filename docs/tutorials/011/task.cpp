@@ -29,6 +29,7 @@ Task::~Task (void)
 int 
 Task::open (void *)
 {
+
   barrier_;
 
   ACE_NEW_RETURN (barrier_,
@@ -36,7 +37,8 @@ Task::open (void *)
                   -1);
 
   return this->activate (THR_NEW_LWP,
-                         threads);
+                        this->n_threads_);
+
 }
 
 int 
