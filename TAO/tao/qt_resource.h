@@ -16,6 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/default_resource.h"
+#include "tao/TAO_QtReactor_export.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -33,7 +34,7 @@
  * stored in thread-specific storage, stored in shared memory,
  * etc.
  */
-class TAO_Export TAO_QtResource_Factory : public TAO_Default_Resource_Factory
+class TAO_QtReactor_Export TAO_QtResource_Factory : public TAO_Default_Resource_Factory
 {
 
 public:

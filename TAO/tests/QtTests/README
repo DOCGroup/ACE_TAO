@@ -20,6 +20,11 @@ library installed.  You should enable the build of the QtReactor by
 initializing qt_reactor. The path should point to the Qt/bin area so
 that the moc could be accessed by the Makefile.
 
+Bugs:
+It seems there is a problem with ORB shutdown, namely client does not
+shutdown nicely after QUIT button. Needs some additional investigations.
+
+
 ---------------------------------------------------------------------
 Technical Description:
 The technical details are similar to that of the XtReactor. Please

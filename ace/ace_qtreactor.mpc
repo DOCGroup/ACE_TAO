@@ -11,7 +11,7 @@ project(ACE_QtReactor) : acedefaults, aceversion, core, acelib, ace_qt {
   }
 
   Header_Files {
-    QtReactor_export.h
+    ACE_QtReactor_export.h
   }
 
   Source_Files(ACE_COMPONENTS) {

@@ -5,15 +5,6 @@
 
 ACE_RCSID (QtTests, server, "$Id$")
 
-int
-main (int, char *[])
-{
-  ACE_ERROR ((LM_INFO,
-              "Qt not supported on this platform\n"));
-  return 0;
-}
-
-#else
 // who defines index macro?
 #ifdef index
 #undef index
@@ -42,12 +33,14 @@ parse_args (int argc, char *argv[])
 
       case '?':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
+          // ignore the first unknown option
+          return 0;
+//         ACE_ERROR_RETURN ((LM_ERROR,
+//                            "usage:  %s "
+//                            "-o <iorfile>"
+//                            "\n",
+//                            argv [0]),
+//                           -1);
       }
   // Indicates sucessful parsing of the command line
   return 0;
