@@ -1,3 +1,10 @@
+Wed Mar 24 12:53:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/run_tests.bat: Do not run Time_Service_Test if
+	  netsvcs/servers/main.exe doesn't exist.  Thanks to
+	  Jeffrey_Franks@i-o.com for reporting the problem and David for
+	  suggesting the fix.
+
 Wed Mar 24 12:47:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added note to build netsvcs on Win32
