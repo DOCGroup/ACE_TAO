@@ -142,8 +142,7 @@ sub parse_line {
             $self->{'assign'} = {};
           }
           else {
-            $errorString = 'ERROR: Unable to ' .
-                           'generate all of the project files';
+            $errorString = 'Unable to generate all of the project files';
             $status = 0;
           }
 
@@ -174,12 +173,12 @@ sub parse_line {
               pop(@$rp);
 
               if (!$status) {
-                $errorString = "ERROR: Invalid parent: $parent";
+                $errorString = "Invalid parent: $parent";
               }
             }
             else {
               $status = 0;
-              $errorString = "ERROR: Unable to locate parent: $parent";
+              $errorString = "Unable to locate parent: $parent";
             }
           }
         }
@@ -188,7 +187,7 @@ sub parse_line {
         if (defined $name) {
           if ($name =~ /[\/\\]/) {
             $status = 0;
-            $errorString = 'ERROR: Workspaces can not have a slash ' .
+            $errorString = 'Workspaces can not have a slash ' .
                            'or a back slash in the name';
           }
           else {
@@ -210,7 +209,7 @@ sub parse_line {
         $self->process_assignment($values[1], $values[2]);
       }
       else {
-        $errorString = "ERROR: Invalid assignment name: $values[1]";
+        $errorString = "Invalid assignment name: $values[1]";
         $status = 0;
       }
     }
@@ -219,7 +218,7 @@ sub parse_line {
         $self->process_assignment_add($values[1], $values[2]);
       }
       else {
-        $errorString = "ERROR: Invalid addition name: $values[1]";
+        $errorString = "Invalid addition name: $values[1]";
         $status = 0;
       }
     }
@@ -228,7 +227,7 @@ sub parse_line {
         $self->process_assignment_sub($values[1], $values[2]);
       }
       else {
-        $errorString = "ERROR: Invalid subtraction name: $values[1]";
+        $errorString = "Invalid subtraction name: $values[1]";
         $status = 0;
       }
     }
@@ -245,7 +244,7 @@ sub parse_line {
       }
     }
     else {
-      $errorString = "ERROR: Unrecognized line: $line";
+      $errorString = "Unrecognized line: $line";
       $status = 0;
     }
   }
@@ -263,7 +262,7 @@ sub parse_exclude {
   my($fh)          = shift;
   my($typestr)     = shift;
   my($status)      = 0;
-  my($errorString) = 'ERROR: Unable to process exclude';
+  my($errorString) = 'Unable to process exclude';
 
   if ($typestr eq $self->get_default_component_name()) {
     $typestr = $self->{'wctype'};
@@ -500,7 +499,7 @@ sub write_workspace {
         my($name) = lc($self->{'project_info'}->{$project}->[0]);
         if (defined $names{$name}) {
           ++$duplicates;
-          print "ERROR: Duplicate case-insensitive project '$name'.\n";
+          $self->error("Duplicate case-insensitive project '$name'.");
         }
         else {
           $names{$name} = 1;
@@ -515,13 +514,14 @@ sub write_workspace {
 
     my($abort_creation) = 0;
     if ($duplicates > 0) {
-      print "ERROR: Duplicate project names are " .
-            "not allowed within a workspace.\n";
       $abort_creation = 1;
+      $error = "Duplicate case-insensitive project names are " .
+               "not allowed within a workspace.";
+      $status = 0;
     }
     else {
       if (!defined $self->{'projects'}->[0]) {
-        print "No projects were created.\n";
+        $self->information('No projects were created.');
         $abort_creation = 1;
       }
     }
@@ -555,7 +555,7 @@ sub write_workspace {
           }
         }
         else {
-          $error = "ERROR: Unable to open $tmp for output.";
+          $error = "Unable to open $tmp for output.";
           $status = 0;
         }
 
@@ -568,7 +568,7 @@ sub write_workspace {
               }
             }
             else {
-              $error = 'ERROR: Unable to open ' . $self->getcwd() .
+              $error = 'Unable to open ' . $self->getcwd() .
                        "/$name for output";
               $status = 0;
             }
@@ -594,14 +594,12 @@ sub write_workspace {
           }
         }
         else {
-          $error = "ERROR: Unable to open $name for output.";
+          $error = "Unable to open $name for output.";
           $status = 0;
         }
       }
     }
-    else {
-      print "Workspace $name has not been created.\n";
-    }
+
     if (!$addfile) {
       $self->{'per_project_workspace_name'} = undef;
     }
@@ -686,7 +684,7 @@ sub generate_hierarchy {
 
       my($status, $error) = $self->write_workspace($creator);
       if (!$status) {
-        print STDERR "$error\n";
+        $self->error($error);
       }
       $self->cd($cwd);
 
@@ -717,7 +715,7 @@ sub generate_hierarchy {
 
     my($status, $error) = $self->write_workspace($creator);
     if (!$status) {
-      print STDERR "$error\n";
+      $self->error($error);
     }
     $self->cd($cwd);
   }
@@ -845,7 +843,7 @@ sub generate_project_files {
             my($error) = '';
             ($status, $error) = $self->write_workspace($creator);
             if (!$status) {
-              print STDERR "$error\n";
+              $self->error($error);
             }
 
             ## Reset our project information to empty
@@ -1100,8 +1098,8 @@ sub sort_dependencies {
                 ## dependencies in question may have been generated and
                 ## that's not the users fault.
                 if (!$self->generate_implicit_project_dependencies()) {
-                  print 'WARNING: Circular dependency between ' .
-                        "$list[$j] and $project\n";
+                  $self->warning('Circular dependency between ' .
+                                 "$list[$j] and $project.");
                 }
               }
               else {
@@ -1181,7 +1179,7 @@ sub number_target_deps {
 sub optionError {
   my($self) = shift;
   my($str)  = shift;
-  print 'WARNING: ' . $self->get_current_input() . ": $str\n";
+  $self->warning($self->get_current_input() . ": $str.");
 }
 
 
@@ -1413,8 +1411,8 @@ sub get_validated_ordering {
           }
           if (!$found) {
             if ($warn && defined $ENV{MPC_VERBOSE_ORDERING}) {
-              print "WARNING: '$name' references '$dep' which has " .
-                    "not been processed\n";
+              $self->warning("'$name' references '$dep' which has " .
+                             "not been processed.");
             }
             $deps =~ s/\s*"$dep"\s*/ /g;
           }
