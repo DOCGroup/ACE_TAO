@@ -269,9 +269,6 @@
 
 #endif
 
-// glibc supports the mkstemp() function.
-#define ACE_HAS_MKSTEMP
-
 // glibc requires _XOPEN_SOURCE_EXTENDED to make this prototype
 // visible, so force ACE to declare one.  Yuk!
 #define ACE_LACKS_MKSTEMP_PROTOTYPE
