@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/SecurityLevel2C.h"
+#include "tao/LocalObject.h"
 
 /**
  * @class TAO_MechanismPolicy
