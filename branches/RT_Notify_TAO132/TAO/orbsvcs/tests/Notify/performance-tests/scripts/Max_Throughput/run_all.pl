@@ -14,8 +14,6 @@ use Getopt::Std;
 
 for $file (@list)
 {
-    print STDERR "found $file test\n";
-
     if (-d $file)
     {
         print STDERR "Running $file test\n";
