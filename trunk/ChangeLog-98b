@@ -1,3 +1,10 @@
+Fri Dec  4 12:45:04 1998  James CE Johnson <jcej@lads.com>
+
+	* docs/tutorials/linify:
+	* docs/tutorials/combine:
+	* docs/tutorials/fixMakefile:
+		Ensure that perms are 755 and that #!/.../perl is not used
+
 Wed Dec 02 14:21:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (fstat): This function needs to close down the c handle

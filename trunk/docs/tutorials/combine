@@ -1,4 +1,8 @@
-#!/usr/bin/perl
+
+eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
 #
 # This perl script will combine a set of files into one or more HTML pages.
 #
