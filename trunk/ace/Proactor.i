@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-int
+ACE_INLINE int
 ACE_Proactor::run_event_loop (void)
 {
   ACE_TRACE ("ACE_Proactor::run_event_loop");
@@ -13,7 +13,7 @@ ACE_Proactor::run_event_loop (void)
   return p->proactor_run_event_loop (ACE_Proactor::check_reconfiguration);
 }
 
-int
+ACE_INLINE int
 ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Proactor::run_event_loop (tv)");
@@ -26,7 +26,7 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
     (tv, ACE_Proactor::check_reconfiguration);
 }
 
-int
+ACE_INLINE int
 ACE_Proactor::reset_event_loop(void)
 {
   ACE_TRACE ("ACE_Proactor::reset_event_loop");
@@ -38,7 +38,7 @@ ACE_Proactor::reset_event_loop(void)
   return p->proactor_reset_event_loop ();
 }
 
-int
+ACE_INLINE int
 ACE_Proactor::end_event_loop (void)
 {
   ACE_TRACE ("ACE_Proactor::end_event_loop");
@@ -50,7 +50,7 @@ ACE_Proactor::end_event_loop (void)
   return p->proactor_end_event_loop ();
 }
 
-int
+ACE_INLINE int
 ACE_Proactor::event_loop_done (void)
 {
   ACE_TRACE ("ACE_Proactor::event_loop_done");
@@ -62,7 +62,7 @@ ACE_Proactor::event_loop_done (void)
   return p->proactor_event_loop_done ();
 }
 
-int
+ACE_INLINE int
 ACE_Proactor::post_wakeup_completions (int how_many)
 {
   ACE_TRACE ("ACE_Proactor::post_wakeup_completions");
