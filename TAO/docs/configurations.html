@@ -19,19 +19,22 @@ Configuring TAO's Components</h3>
 <p> As described in the <a href="Options.html">options</a>
 documentation, various components in TAO can be customized by
 specifying options for those components.  This document illustrates
-how to combine these options in order to affect the behavior and
-performance of a TAO ORB, particularly its <a
+how to combine these options to affect the behavior and performance of
+a TAO ORB, particularly its <a
 href="http://www.cs.wustl.edu/~schmidt/PDF/CACM-arch.pdf">concurrency
 model</a>.  </p>
 
 <p> TAO configures itself using the <a
-href="http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf">ACE
-Service Configurator</a> framework. Thus, options are specified in the
-familiar <tt>svc.conf</tt> file (if you want to use a different file
-name, use the <tt><a href="Options.html#svcfonf">-ORBSvcConf</a></tt>
-option).  You can also setup default configurations for your programs.
-Please see the <a href="#programming">Programming Considerations</a>
-for more detailed discussion on this.</p>
+href="http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf">ACE Service
+Configurator</a> framework.  Options are therefore specified using the
+<tt>svc.conf</tt> file (if you want to use a different file name, use
+the <tt><a href="Options.html#svcfonf">-ORBSvcConf</a></tt> option).
+Configurations selected via a <tt>svc.conf</tt> file are global
+<EM>per-process</EM>, e.g., all ORBs in a process will share the same
+concurrency model configured via a <code>svc.conf</code> file.  You
+can also setup default configurations for your programs.  Please see
+the <a href="#programming">Programming Considerations</a> for more
+detailed discussion on this.</p>
 
 <hr>
 <h3>
@@ -138,21 +141,21 @@ Roadmap</h3>
 
 <ul>
   <li><a name="orb"><b>Number of ORBs</b> -- </a></li>
-      TAO can assign multiple endpoints to an ORB.  Therefore,
-      it is not necessary to create multiple ORBs to accept
+      TAO can assign multiple endpoints to an ORB.  
+      It is therefore not necessary to create multiple ORBs to accept
       requests from multiple endpoints.  However, multiple ORBs can be
       used to support different policies within the same process,
       <EM>e.g.</EM>, handling requests in different thread
       priorities.  Multiple ORBs are most commonly used in the "ORB
       per-priority" pattern to avoid priority inversion in real-time
-      system. <p>
+      systems. <p>
 
   <li><a NAME="concurrency"></a><b>Server concurrency strategy</b> --
-      The default server strategy factory provided by down support two
-      different concurrency strategy.  It can be specified by adding
+      The default server strategy factory provided by TAO supports two
+      types of concurrency strategies that can be specified by adding
       the <tt>-ORBConcurrency</tt> flag in the <code><a
-      href="Options.html#orb_concurrency"> Server_Strategy_Factory
-      </a></code> entry of the <code>svc.conf</code> file. This
+      href="Options.html#orb_concurrency">Server_Strategy_Factory</a></code>
+      entry of the <code>svc.conf</code> file. This
       specifies the concurrency strategy an ORB uses.  This strategy
       is orthogonal the the number of ORBs or threads that are
       configured in a server process.  </li><P>
@@ -178,7 +181,7 @@ Roadmap</h3>
       <ul>
         <li><tt>reactive</tt>: In this approach, each thread
         in the thread pool has an ORB that accepts and processes
-            requests reactively. This is also called as the
+        requests reactively. This is also called as the
         "ORB-per-thread" model <P>  
 
         <li><P><tt>leader/followers</tt>: In this model, the user must
