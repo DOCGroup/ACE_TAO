@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    High_Res_Timer.h
  *
@@ -8,17 +8,19 @@
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_HIGH_RES_TIMER_H
 #define ACE_HIGH_RES_TIMER_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS.h"
 
 /**
  * @class ACE_High_Res_Timer

@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    SOCK_IO.h
  *
@@ -8,10 +8,11 @@
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_SOCK_IO_H
 #define ACE_SOCK_IO_H
+
 #include "ace/pre.h"
 
 #include "ace/SOCK.h"
@@ -19,6 +20,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ACE.h"
 
 /**
  * @class ACE_SOCK_IO
@@ -140,4 +143,5 @@ public:
 #endif
 
 #include "ace/post.h"
+
 #endif /* ACE_SOCK_IO_H */

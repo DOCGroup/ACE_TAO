@@ -1,7 +1,6 @@
-// $Id$
-
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/INET_Addr.h"
+#include "ace/ACE.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_Dgram_Mcast.i"
@@ -13,7 +12,9 @@
 #define IMR_MULTIADDR imr_multiaddr
 #endif /* ! defined (IMR_MULTIADDR) */
 
-ACE_RCSID(ace, SOCK_Dgram_Mcast, "$Id$")
+ACE_RCSID (ace,
+           SOCK_Dgram_Mcast,
+           "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Mcast)
 

@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    SPIPE_Addr.h
  *
@@ -8,20 +8,22 @@
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
+//==========================================================================
 
 
 #ifndef ACE_SPIPE_ADDR_H
 #define ACE_SPIPE_ADDR_H
+
 #include "ace/pre.h"
 
-#include "ace/Addr.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE.h"
+#include "ace/Addr.h"
+#include "ace/OS.h"
 
 /**
  * @class ACE_SPIPE_Addr
@@ -112,4 +114,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* ACE_SPIPE_ADDR_H */

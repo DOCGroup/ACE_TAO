@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SPIPE_Addr.h"
+#include "ace/ACE.h"
 
 /**
  * @class ACE_SPIPE_Stream

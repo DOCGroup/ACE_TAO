@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Dynamic.h
  *
@@ -9,20 +9,17 @@
  *  @author Doug Schmidt
  *  @author Irfan Pyarali.
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_DYNAMIC_H
 #define ACE_DYNAMIC_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Synch_T.h"
-#include "ace/Singleton.h"
 
 /**
  * @class ACE_Dynamic

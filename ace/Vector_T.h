@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Vector_T.h
  *
@@ -9,13 +9,13 @@
  *  @author Craig L. Ching <cching@mqsoftware.com>
  *  @author Gonzalo Diethelm <gonzalo.diethelm@aditiva.com>
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_VECTOR_T_H
 #define ACE_VECTOR_T_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
 #include "ace/Array.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -240,4 +240,5 @@ bool partial_compare (const ACE_Vector<T>& v1,
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
+
 #endif /* ACE_VECTOR_T_H */

@@ -9,6 +9,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 #include "ace/Thread.h"
 #include "ace/Timer_Heap.h"
@@ -966,16 +967,29 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending (const ACE_Time_Value &max_wait_time)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending (
+   const ACE_Time_Value &max_wait_time)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
+  ACE_TRACE ("ACE_Select_Reactor_T::work_pending");
+
+  ACE_Time_Value mwt (max_wait_time);
+  ACE_MT (ACE_Countdown_Time countdown (&mwt));
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN,
+                            ace_mon,
+                            this->token_,
+                            -1));
+
+  if (this->deactivated_)
+    return 0;
+
+  // Update the countdown to reflect time waiting for the mutex.
+  ACE_MT (countdown.update ());
 
   ACE_Time_Value timer_buf (0);
-  ACE_Time_Value *max_wait_timep = ACE_const_cast (ACE_Time_Value *,
-                                                   &max_wait_time);
   ACE_Time_Value *this_timeout =
-    this->timer_queue_->calculate_timeout (max_wait_timep,
-                                           &timer_buf);
+    this->timer_queue_->calculate_timeout (&mwt, &timer_buf);
+
   u_long width = (u_long) this->handler_rep_.max_handlep1 ();
 
   ACE_Select_Reactor_Handle_Set fd_set;
@@ -1269,12 +1283,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
 {
   ACE_TRACE ("ACE_Select_Reactor_T::handle_events");
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+
   // Stash the current time -- the destructor of this object will
   // automatically compute how much time elapsed since this method was
   // called.
   ACE_Countdown_Time countdown (max_wait_time);
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1);
 
   if (ACE_OS::thr_equal (ACE_Thread::self (),

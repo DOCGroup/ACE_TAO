@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Remote_Name_Space.h
  *
@@ -8,14 +8,15 @@
  *
  *  @author Prashant Jain
  */
-//=============================================================================
+//==========================================================================
 
 
 #ifndef ACE_REMOTE_NAME_SPACE_H
 #define ACE_REMOTE_NAME_SPACE_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -137,4 +138,5 @@ private:
 };
 
 #include "ace/post.h"
+
 #endif /* ACE_REMOTE_NAME_SPACE_H */

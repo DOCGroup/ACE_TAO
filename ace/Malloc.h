@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Malloc.h
  *
@@ -8,18 +8,20 @@
  *
  *  @author Doug Schmidt and Irfan Pyarali
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_MALLOC_H
 #define ACE_MALLOC_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS.h"
 #include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_MALLOC_STATS)
@@ -411,4 +413,5 @@ public:
 #include "ace/Memory_Pool.h"
 
 #include "ace/post.h"
+
 #endif /* ACE_MALLOC_H */

@@ -1,14 +1,15 @@
-// $Id$
-
 #include "ace/Activation_Queue.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Activation_Queue.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Activation_Queue, "$Id$")
+#include "ace/Malloc_Base.h"
 
-// Dump the state of an object.
+ACE_RCSID (ace,
+           Activation_Queue,
+           "$Id$")
+
 
 void 
 ACE_Activation_Queue::dump (void) const

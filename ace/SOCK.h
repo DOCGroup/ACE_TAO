@@ -14,7 +14,7 @@
 #define ACE_SOCK_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,6 +22,7 @@
 
 #include "ace/Addr.h"
 #include "ace/IPC_SAP.h"
+#include "ace/OS.h"
 
 /**
  * @class ACE_SOCK

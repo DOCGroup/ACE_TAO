@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Synch.h
  *
@@ -10,24 +10,20 @@
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_SYNCH_H
 #define ACE_SYNCH_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Forward declarations.
-/**
- * @class ACE_Time_Value;
- template <class ACE_COND_MUTEX> class ACE_Condition;
- */
-class ACE_Time_Value;
+#include "ace/OS.h"
+
 
 /**
  * @class ACE_Lock

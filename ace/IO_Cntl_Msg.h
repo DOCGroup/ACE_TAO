@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    IO_Cntl_Msg.h
  *
@@ -8,12 +8,20 @@
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
+//==========================================================================
 
 
 #ifndef ACE_IO_CNTL_MSG_H
 #define ACE_IO_CNTL_MSG_H
+
 #include "ace/pre.h"
+
+#include "ace/ACE_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 
 /**
  * @class ACE_IO_Cntl_Msg
@@ -92,4 +100,5 @@ private:
 };
 
 #include "ace/post.h"
+
 #endif /* ACE_IO_CNTL_MSG_H */
