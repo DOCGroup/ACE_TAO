@@ -292,7 +292,7 @@ namespace ACE_RMCast
 
   struct From : Profile
   {
-    static u16 const id = 0x0001;
+    static u16 const id;
 
   public:
     From (Header const& h, istream& is)
@@ -348,7 +348,7 @@ namespace ACE_RMCast
 
   struct To : Profile
   {
-    static u16 const id = 0x0002;
+    static u16 const id;
 
   public:
     To (Header const& h, istream& is)
@@ -403,7 +403,7 @@ namespace ACE_RMCast
 
   struct Data : Profile
   {
-    static u16 const id = 0x0003;
+    static u16 const id;
 
   public:
     Data (Header const& h, istream& is)
@@ -463,7 +463,7 @@ namespace ACE_RMCast
 
   struct SN : Profile
   {
-    static u16 const id = 0x0004;
+    static u16 const id;
 
   public:
     SN (Header const& h, istream& is)
@@ -509,7 +509,7 @@ namespace ACE_RMCast
 
   struct NAK : Profile
   {
-    static u16 const id = 0x0005;
+    static u16 const id;
 
 
 #if defined (__BORLANDC__) && (__BORLANDC__ <= 0x570)
@@ -628,7 +628,7 @@ namespace ACE_RMCast
 
   struct NRTM : Profile
   {
-    static u16 const id = 0x0006;
+    static u16 const id;
 
   public:
     NRTM (Header const& h, istream& is)
