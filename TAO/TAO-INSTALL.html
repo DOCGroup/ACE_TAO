@@ -137,34 +137,20 @@ C/C++ settings under Input.</P>
 
 <H4>Creating Static Libraries (*.lib)</H4>
 
-<P>Following is an example on how to create a project for a static library for TAO.
-Other projects (such as orbsvcs) should be just as easy to create static libraries
-for.  Just create a new project and copy the files and some of the settings from the 
-DLL project. </P>
+<P>TAO, orbsvcs, TAO_IDL, and the Simple Test all have extra project files 
+for static library builds.  TAOACE_static.dsw contains all these projects,
+and is set up much like <A HREF="#taoace">TAOACE.dsw</A>.  To use the static
+libraries in a project, make sure to the following settings are used in
+the Project Settings.</P>
 
-<OL>
-  <LI>Switch to FileView for the TAO.dsw Workspace
-  <LI>Add a new project to the workspace (right-click on workspace name)<BR>
-      <UL>
-	    <LI><B>Project type:</B> <CODE>Win32 Static Library</CODE>
-		<LI><B>Project name:</B> <CODE>TAO_Static</CODE>
-		<LI><B>Project directory:</B> <CODE>ACE_wrapper\TAO\tao</CODE>  (make sure to change
-		    this after the project name, since changing the project name affects this)
-		<LI><B>Select</B> "Add to Current Workspace"
-	  </UL>
-  <LI>Copy all folders (Source Files, Header Files...) to TAO_Static
-  <LI>Edit Project Settings<BR>
-      <UL>
-		<LI><B>C/C++ | General:</B> Add the Preprocessor Definitions 
-		    <CODE>TAO_HAS_DLL=0</CODE> and <CODE>__ACE_INLINE__=0</CODE>
-		<LI><B>C/C++ | Code Generation:</B> Change Run-time library to <CODE>Debug
-		    Multithreaded</CODE> (or <CODE>Multithreaded</CODE> for Release)
-	    <LI><B>C/C++ | Preprocessor:</B> Add <CODE>..\..\,..\</CODE> to the 
-		    additional include directories
-		<LI><B>Library:</B> Change the name to TAOs.lib and TAOsd.lib (for 
-		    consistency with the ACE library)
-	  </UL>
-</OL>
+<UL>
+  <LI><B>C/C++ | General:</B> Add the Preprocessor Definitions 
+      <CODE>TAO_HAS_DLL=0</CODE>, <CODE>ACE_HAS_DLL=0</CODE> and 
+      <CODE>__ACE_INLINE__=0</CODE>
+  <LI><B>C/C++ | Code Generation:</B> Change Run-time library to <CODE>Debug
+      Multithreaded</CODE> (or <CODE>Multithreaded</CODE> for Release)
+  <LI><B>Link:</B> Link with the static libs, such as TAOs.lib or TAOsd.lib
+</UL>
       
 <HR>
 <H3>
@@ -185,7 +171,8 @@ adding an IDL file named foobar.idl into a VC project.
   <LI>Now open the project setting window (Project -> Setting... or just 
       press Alt-F7.) Select the IDL files in both client and server projects. 
 	  Choose to set the setting for "All Configuration." Make sure the 
-	  "Exclude from build" under the "General" tab is unchecked.</LI>
+	  "Always use custom build step" is checked and "Exclude from build" is 
+	  unchecked.</LI>
 
   <LI>Click on the "Custom Build" tab. Add this entry as the build command 
       for IDL files:<BR><BR>
