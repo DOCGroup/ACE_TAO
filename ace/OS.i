@@ -5290,7 +5290,7 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
 #if defined (ACE_HAS_THREADS)
 #if defined (__FreeBSD__) || defined (CHORUS)
   ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_FSU_PTHREADS)
+#elif (defined (ACE_HAS_STHREADS) && (_POSIX_C_SOURCE - 0 < 199506L)) || defined (ACE_HAS_FSU_PTHREADS)
   *sig = ::sigwait (set);
   return *sig;
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
