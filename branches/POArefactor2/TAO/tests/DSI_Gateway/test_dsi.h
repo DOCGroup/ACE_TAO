@@ -18,6 +18,7 @@
 
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB.h"
 
 class DSI_Simple_Server : public TAO_DynamicImplementation
