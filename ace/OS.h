@@ -5774,7 +5774,7 @@ public:
   static int t_connect(int fildes,
                        struct t_call *sndcall,
                        struct t_call *rcvcall);
-  static void t_error (char *errmsg);
+  static void t_error (const char *errmsg);
   static int t_free (char *ptr,
                      int struct_type);
   static int t_getinfo (ACE_HANDLE fildes,
