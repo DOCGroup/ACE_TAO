@@ -15,7 +15,31 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Simple Client Static"=.\client_static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Simple Server"=.\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Simple Server Static"=.\server_static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

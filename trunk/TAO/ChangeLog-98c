@@ -1,3 +1,21 @@
+Sun Aug  9 18:20:59 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tests/Simple/client_static.dsp:
+	* tests/Simple/server_static.dsp:
+	* TAOACE_Static.dsw:
+	* TAO_IDL/tao_idl.dsp:
+	* TAO_IDL/tao_idl.dsw:
+	* TAO_IDL/tao_idl_static.dsp:
+	* orbsvcs/Naming_Service/Naming_Service.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	* tao/TAO_Static.dsp:
+	* tao/Typecode.cpp:
+	* tests/Simple/Simple_Object.dsw:
+	* tests/Simple/client.dsp:
+	* tests/Simple/server.dsp:
+	  Added and updated projects for a static version of the 
+	  TAO libraries.
+
 Sun Aug  9 12:56:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Param_Test/fixed_struct.cpp: 

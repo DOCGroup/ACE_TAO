@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="TAO_Static" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="TAO Static" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 
-CFG=TAO_Static - Win32 Debug
+CFG=TAO Static - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=TAO_Static - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "TAO_Static.mak" CFG="TAO_Static - Win32 Debug"
+!MESSAGE NMAKE /f "TAO_Static.mak" CFG="TAO Static - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "TAO_Static - Win32 Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "TAO_Static - Win32 Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "TAO Static - Win32 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "TAO Static - Win32 Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
@@ -26,7 +26,7 @@ CFG=TAO_Static - Win32 Debug
 # PROP Scc_LocalPath ""
 CPP=cl.exe
 
-!IF  "$(CFG)" == "TAO_Static - Win32 Release"
+!IF  "$(CFG)" == "TAO Static - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -47,7 +47,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"TAOs.lib"
 
-!ELSEIF  "$(CFG)" == "TAO_Static - Win32 Debug"
+!ELSEIF  "$(CFG)" == "TAO Static - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -72,8 +72,8 @@ LIB32=link.exe -lib
 
 # Begin Target
 
-# Name "TAO_Static - Win32 Release"
-# Name "TAO_Static - Win32 Debug"
+# Name "TAO Static - Win32 Release"
+# Name "TAO Static - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
@@ -196,6 +196,13 @@ SOURCE=.\params.cpp
 # Begin Source File
 
 SOURCE=.\POA.cpp
+
+!IF  "$(CFG)" == "TAO Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO Static - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
