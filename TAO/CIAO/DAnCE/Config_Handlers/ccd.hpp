@@ -29,7 +29,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // label
-      //
+      // 
       public:
       bool label_p () const;
       ::XMLSchema::string< char > const& label () const;
@@ -40,7 +40,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > label_;
 
       // UUID
-      //
+      // 
       public:
       bool UUID_p () const;
       ::XMLSchema::string< char > const& UUID () const;
@@ -51,7 +51,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > UUID_;
 
       // specificType
-      //
+      // 
       public:
       bool specificType_p () const;
       ::XMLSchema::string< char > const& specificType () const;
@@ -62,7 +62,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > specificType_;
 
       // supportedType
-      //
+      // 
       public:
       typedef ::std::vector< ::XMLSchema::string< char > >::iterator supportedType_iterator;
       typedef ::std::vector< ::XMLSchema::string< char > >::const_iterator supportedType_const_iterator;
@@ -76,7 +76,7 @@ namespace CIAO
       ::std::vector< ::XMLSchema::string< char > > supportedType_;
 
       // idlFile
-      //
+      // 
       public:
       typedef ::std::vector< ::XMLSchema::string< char > >::iterator idlFile_iterator;
       typedef ::std::vector< ::XMLSchema::string< char > >::const_iterator idlFile_const_iterator;
@@ -90,7 +90,7 @@ namespace CIAO
       ::std::vector< ::XMLSchema::string< char > > idlFile_;
 
       // configProperty
-      //
+      // 
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
@@ -104,7 +104,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // port
-      //
+      // 
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::ComponentPortDescription >::iterator port_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::ComponentPortDescription >::const_iterator port_const_iterator;
@@ -118,7 +118,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::ComponentPortDescription > port_;
 
       // property
-      //
+      // 
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::ComponentPropertyDescription >::iterator property_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::ComponentPropertyDescription >::const_iterator property_const_iterator;
@@ -132,7 +132,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::ComponentPropertyDescription > property_;
 
       // infoProperty
-      //
+      // 
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::Property >::iterator infoProperty_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::Property >::const_iterator infoProperty_const_iterator;
@@ -146,7 +146,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::Property > infoProperty_;
 
       // contentLocation
-      //
+      // 
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< char > const& contentLocation () const;
@@ -168,6 +168,363 @@ namespace CIAO
       private:
       char regulator__;
     };
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
+#include <XSCRT/Traversal.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      struct ComponentInterfaceDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ComponentInterfaceDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        label (Type&);
+
+        virtual void
+        label (Type const&);
+
+        virtual void
+        label_none (Type&);
+
+        virtual void
+        label_none (Type const&);
+
+        virtual void
+        UUID (Type&);
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void
+        UUID_none (Type&);
+
+        virtual void
+        UUID_none (Type const&);
+
+        virtual void
+        specificType (Type&);
+
+        virtual void
+        specificType (Type const&);
+
+        virtual void
+        specificType_none (Type&);
+
+        virtual void
+        specificType_none (Type const&);
+
+        virtual void
+        supportedType (Type&);
+
+        virtual void
+        supportedType (Type const&);
+
+        virtual void
+        supportedType_pre (Type&);
+
+        virtual void
+        supportedType_pre (Type const&);
+
+        virtual void
+        supportedType_next (Type&);
+
+        virtual void
+        supportedType_next (Type const&);
+
+        virtual void
+        supportedType_post (Type&);
+
+        virtual void
+        supportedType_post (Type const&);
+
+        virtual void
+        supportedType_none (Type&);
+
+        virtual void
+        supportedType_none (Type const&);
+
+        virtual void
+        idlFile (Type&);
+
+        virtual void
+        idlFile (Type const&);
+
+        virtual void
+        idlFile_pre (Type&);
+
+        virtual void
+        idlFile_pre (Type const&);
+
+        virtual void
+        idlFile_next (Type&);
+
+        virtual void
+        idlFile_next (Type const&);
+
+        virtual void
+        idlFile_post (Type&);
+
+        virtual void
+        idlFile_post (Type const&);
+
+        virtual void
+        idlFile_none (Type&);
+
+        virtual void
+        idlFile_none (Type const&);
+
+        virtual void
+        configProperty (Type&);
+
+        virtual void
+        configProperty (Type const&);
+
+        virtual void
+        configProperty_pre (Type&);
+
+        virtual void
+        configProperty_pre (Type const&);
+
+        virtual void
+        configProperty_next (Type&);
+
+        virtual void
+        configProperty_next (Type const&);
+
+        virtual void
+        configProperty_post (Type&);
+
+        virtual void
+        configProperty_post (Type const&);
+
+        virtual void
+        configProperty_none (Type&);
+
+        virtual void
+        configProperty_none (Type const&);
+
+        virtual void
+        port (Type&);
+
+        virtual void
+        port (Type const&);
+
+        virtual void
+        port_pre (Type&);
+
+        virtual void
+        port_pre (Type const&);
+
+        virtual void
+        port_next (Type&);
+
+        virtual void
+        port_next (Type const&);
+
+        virtual void
+        port_post (Type&);
+
+        virtual void
+        port_post (Type const&);
+
+        virtual void
+        port_none (Type&);
+
+        virtual void
+        port_none (Type const&);
+
+        virtual void
+        property (Type&);
+
+        virtual void
+        property (Type const&);
+
+        virtual void
+        property_pre (Type&);
+
+        virtual void
+        property_pre (Type const&);
+
+        virtual void
+        property_next (Type&);
+
+        virtual void
+        property_next (Type const&);
+
+        virtual void
+        property_post (Type&);
+
+        virtual void
+        property_post (Type const&);
+
+        virtual void
+        property_none (Type&);
+
+        virtual void
+        property_none (Type const&);
+
+        virtual void
+        infoProperty (Type&);
+
+        virtual void
+        infoProperty (Type const&);
+
+        virtual void
+        infoProperty_pre (Type&);
+
+        virtual void
+        infoProperty_pre (Type const&);
+
+        virtual void
+        infoProperty_next (Type&);
+
+        virtual void
+        infoProperty_next (Type const&);
+
+        virtual void
+        infoProperty_post (Type&);
+
+        virtual void
+        infoProperty_post (Type const&);
+
+        virtual void
+        infoProperty_none (Type&);
+
+        virtual void
+        infoProperty_none (Type const&);
+
+        virtual void
+        contentLocation (Type&);
+
+        virtual void
+        contentLocation (Type const&);
+
+        virtual void
+        contentLocation_none (Type&);
+
+        virtual void
+        contentLocation_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+    }
+  }
+}
+
+#include <XSCRT/Writer.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      struct ComponentInterfaceDescription : Traversal::ComponentInterfaceDescription, 
+      virtual ::XSCRT::Writer< char >
+      {
+        typedef ::CIAO::Config_Handlers::ComponentInterfaceDescription Type;
+        ComponentInterfaceDescription (::XSCRT::XML::Element< char >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        label (Type const&);
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void
+        specificType (Type const&);
+
+        virtual void
+        supportedType_pre (Type const&);
+
+        virtual void
+        supportedType_next (Type const&);
+
+        virtual void
+        supportedType_post (Type const&);
+
+        virtual void
+        idlFile_pre (Type const&);
+
+        virtual void
+        idlFile_next (Type const&);
+
+        virtual void
+        idlFile_post (Type const&);
+
+        virtual void
+        configProperty_pre (Type const&);
+
+        virtual void
+        configProperty_next (Type const&);
+
+        virtual void
+        configProperty_post (Type const&);
+
+        virtual void
+        port_pre (Type const&);
+
+        virtual void
+        port_next (Type const&);
+
+        virtual void
+        port_post (Type const&);
+
+        virtual void
+        property_pre (Type const&);
+
+        virtual void
+        property_next (Type const&);
+
+        virtual void
+        property_post (Type const&);
+
+        virtual void
+        infoProperty_pre (Type const&);
+
+        virtual void
+        infoProperty_next (Type const&);
+
+        virtual void
+        infoProperty_post (Type const&);
+
+        virtual void
+        contentLocation (Type const&);
+
+        protected:
+        ComponentInterfaceDescription ();
+      };
+    }
   }
 }
 

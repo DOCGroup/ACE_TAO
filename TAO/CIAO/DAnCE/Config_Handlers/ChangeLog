@@ -1,5 +1,29 @@
-Thu Oct  7 02:52:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+Thu Oct  7 03:39:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
+ 	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
+	* DAnCE/Config_Handlers/Deployment.cpp:
+	* DAnCE/Config_Handlers/Deployment.hpp:
+	* DAnCE/Config_Handlers/ccd.cpp:
+	* DAnCE/Config_Handlers/ccd.hpp:
+	* DAnCE/Config_Handlers/cdd.cpp:
+	* DAnCE/Config_Handlers/cdd.hpp:
+	* DAnCE/Config_Handlers/cdp.cpp:
+	* DAnCE/Config_Handlers/cdp.hpp:
+	* DAnCE/Config_Handlers/cid.cpp:
+	* DAnCE/Config_Handlers/cid.hpp:
+	* DAnCE/Config_Handlers/cpd.cpp:
+	* DAnCE/Config_Handlers/cpd.hpp:
+	* DAnCE/Config_Handlers/iad.cpp:
+	* DAnCE/Config_Handlers/iad.hpp:
+	* DAnCE/Config_Handlers/pcd.cpp:
+	* DAnCE/Config_Handlers/pcd.hpp:
+	* DAnCE/Config_Handlers/toplevel.cpp:
+	* DAnCE/Config_Handlers/toplevel.hpp:
+
+	  Jules wanted XSC generated code with Writers. So here it is. 
+
+Thu Oct  7 02:52:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/DP_Handler.cpp:
 	* DAnCE/Config_Handlers/DP_Handler.h:
