@@ -9,10 +9,8 @@
  */
 //=============================================================================
 
-#include "tao/PortableServer/ServantActivatorC.h"
-#include "tao/PortableServer/ServantLocatorC.h"
-
 #include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
+#include "tao/PortableServer/ServantManagerC.h"
 
 ACE_RCSID (PortableServer,
            Request_Processing,
