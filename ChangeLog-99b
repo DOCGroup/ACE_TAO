@@ -7,6 +7,17 @@ Fri May 21 11:27:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  operator.  Thanks to Knut Johannessen <knutj@funcom.com> for
 	  pointing out this problem.
 
+	* ace/Process: A nifty ACE::fork was added several months ago
+	  which offers the option to avoid zombies, but it is not used in
+	  ACE_Process::spawn.
+
+	  Mark L. Boriack <mboriack@sito.saic.com> provided patches which
+	  adds an <avoid_zombies_> data member to ACE_Process_Options,
+	  appropriate accessor functions, and changes the ACE_OS::fork
+	  call to ACE::fork in ACE_Process::spawn, making use of the
+	  option.  The default behavior is left unchanged, i.e., you get
+	  zombies.  Thanks Mark.
+
 Fri May 21 10:34:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/gethrtime.cpp,Makefile (gethrtime on Green
