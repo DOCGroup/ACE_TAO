@@ -111,6 +111,7 @@ OBJFILES = \
 	$(OBJDIR)\IOR_Parser.obj \
 	$(OBJDIR)\IORInfo.obj \
 	$(OBJDIR)\LF_Event.obj \
+	$(OBJDIR)\LF_Event_Binder.obj \
 	$(OBJDIR)\LF_Event_Loop_Thread_Helper.obj \
 	$(OBJDIR)\LF_Strategy.obj \
 	$(OBJDIR)\LF_Strategy_Complete.obj \

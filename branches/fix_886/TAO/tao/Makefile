@@ -49,6 +49,7 @@ PUB_HDRS = \
   ORB_Table \
   Follower \
   LF_Event \
+  LF_Event_Binder \
   LF_Event_Loop_Thread_Helper \
   LF_Strategy \
   LF_Strategy_Complete \
@@ -196,6 +197,7 @@ ORB_CORE_FILES = \
   Leader_Follower \
   Leader_Follower_Flushing_Strategy \
   LF_Event \
+  LF_Event_Binder \
   LF_Event_Loop_Thread_Helper \
   LF_Strategy \
   LF_Strategy_Complete \

@@ -51,9 +51,6 @@ public:
   /// Return the reply CDR.
   TAO_InputCDR &reply_cdr (void);
 
-  /// A flag to check if the reply
-  int &reply_received (void);
-
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
 
   virtual void connection_closed (void);
@@ -63,9 +60,6 @@ protected:
   IOP::ServiceContextList &reply_service_info_;
 
 private:
-  /// Flag that indicates the reply  has been received.
-  int reply_received_;
-
   /// Cache the ORB Core pointer.
   TAO_ORB_Core *orb_core_;
 

@@ -33,7 +33,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
 
       // If we got our reply, no need to run the event loop any
       // further.
-      if (rd.reply_received ())
+      if (!rd.keep_waiting ())
         break;
 
       // Did we timeout? If so, stop running the loop.
@@ -49,13 +49,13 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
       // Otherwise, keep going...
     }
 
-  if (result == -1 || rd.reply_received () == -1)
+  if (result == -1 || rd.error_detected ())
     return -1;
 
   // Return an error if there was a problem receiving the reply.
   if (max_wait_time != 0)
     {
-      if (rd.reply_received () != 1 &&
+      if (rd.successful () &&
           *max_wait_time == ACE_Time_Value::zero)
         {
           result = -1;
@@ -65,7 +65,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
   else
     {
       result = 0;
-      if (rd.reply_received () == -1)
+      if (rd.error_detected ())
         result = -1;
     }
 

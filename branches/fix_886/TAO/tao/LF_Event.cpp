@@ -51,15 +51,36 @@ TAO_LF_Event::state_changed_i (int new_state)
   if (this->state_ == TAO_LF_Event::LFS_IDLE)
     {
       // From the LFS_IDLE state we can only become active.
-      if (new_state ==  TAO_LF_Event::LFS_ACTIVE)
+      if (new_state == TAO_LF_Event::LFS_ACTIVE
+          || new_state == TAO_LF_Event::LFS_CONNECTION_CLOSED)
         this->state_ = new_state;
       return;
     }
-  // States other than LFS_ACTIVE are final
-  if (this->state_ !=  TAO_LF_Event::LFS_ACTIVE)
-    return;
-
-  this->state_ = new_state;
+  else if (this->state_ == TAO_LF_Event::LFS_ACTIVE)
+    {
+      // From LFS_ACTIVE we can only move to a few states
+      if (new_state != TAO_LF_Event::LFS_IDLE
+          && new_state != TAO_LF_Event::LFS_CONNECTION_CLOSED)
+        {
+          this->state_ = new_state;
+        }
+      return;
+    }
+  else if (this->state_ == TAO_LF_Event::LFS_SUCCESS
+           || this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED)
+    {
+      // From the two states above we can go back to ACTIVE, as when a
+      // request is restarted.
+      if (new_state == TAO_LF_Event::LFS_ACTIVE)
+        {
+          this->state_ = new_state;
+        }
+      return;
+    }
+  else /* if (this->state_ == TAO_LF_Event::LFS_TIMEOUT || FAILURE ) */
+    {
+      // Other states are final...
+    }
 }
 
 int
