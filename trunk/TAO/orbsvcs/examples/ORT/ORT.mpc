@@ -1,4 +1,6 @@
+// $Id$
 project(*Gateway) : orbsvcsexe, dynamicinterface, ifr_client {
+  avoids += minimum_corba
   source_files {
     GatewayC.cpp
     GatewayS.cpp
@@ -14,6 +16,7 @@ project(*Gateway) : orbsvcsexe, dynamicinterface, ifr_client {
 project(*Server) : orbsvcsexe, dynamicinterface, ifr_client {
   exename   = server
   after    += *Gateway
+  avoids += minimum_corba
   source_files {
     server.cpp
     GatewayC.cpp
@@ -31,6 +34,7 @@ project(*Server) : orbsvcsexe, dynamicinterface, ifr_client {
 }
 
 project(*Client) : orbsvcsexe, event {
+  avoids += minimum_corba
   after += *Server
   source_files {
     client.cpp

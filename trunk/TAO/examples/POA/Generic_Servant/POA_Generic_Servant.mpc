@@ -10,6 +10,7 @@ project(*lib): taolib_with_idl, portableserver {
 }
 
 project(*client): taoexe, portableserver {
+  avoids += minimum_corba
   after += *lib
   libs += Generic_Servant
   idl_files {
