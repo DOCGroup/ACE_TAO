@@ -73,6 +73,7 @@
 #define ACE_LACKS_ACE_TOKEN
 #define ACE_LACKS_ACE_OTHER
 #define ACE_LACKS_MSG_WFMO
+#define ACE_LACKS_UMASK
 
 #define ACE_HAS_WCHAR
 
