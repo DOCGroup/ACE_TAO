@@ -248,6 +248,7 @@ typedef ACE_Wide_To_Ascii ACE_OS_WString;
 #define ACE_TEXT_FreeEnvironmentStrings          ::FreeEnvironmentStringsW
 #define ACE_TEXT_GetComputerName                 ::GetComputerNameW
 #define ACE_TEXT_GetEnvironmentStrings           ::GetEnvironmentStringsW
+#define ACE_TEXT_GetFileAttributes               ::GetFileAttributesW
 #define ACE_TEXT_GetModuleFileName               ::GetModuleFileNameW
 #define ACE_TEXT_GetTempPath                     ::GetTempPathW
 #define ACE_TEXT_GetUserName                     ::GetUserNameW
@@ -295,6 +296,7 @@ typedef ACE_Wide_To_Ascii ACE_OS_WString;
 #define ACE_TEXT_FreeEnvironmentStrings          ::FreeEnvironmentStringsA
 #define ACE_TEXT_GetComputerName                 ::GetComputerNameA
 #define ACE_TEXT_GetEnvironmentStrings           ::GetEnvironmentStringsA
+#define ACE_TEXT_GetFileAttributes               ::GetFileAttributesA
 #define ACE_TEXT_GetModuleFileName               ::GetModuleFileNameA
 #define ACE_TEXT_GetTempPath                     ::GetTempPathA
 #define ACE_TEXT_GetUserName                     ::GetUserNameA
