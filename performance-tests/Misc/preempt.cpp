@@ -167,7 +167,6 @@ High_Priority_Task::svc (void)
 
   done_ = 1;
 
-  ACE_DEBUG ((LM_INFO, "(%P|%t) High finishes\n"));
   return 0;
 }
 
