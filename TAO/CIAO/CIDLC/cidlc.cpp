@@ -16,6 +16,7 @@
 
 #include "ExecutorMappingGenerator.hpp"
 #include "ServantGenerator.hpp"
+#include "RepositoryIdGenerator.hpp"
 #include "DescriptorGenerator.hpp"
 
 #include <iostream>
@@ -46,8 +47,8 @@ int main (int argc, char* argv[])
 
     ExecutorMappingGenerator lem_gen;
     ServantGenerator svnt_gen (cl);
+    RepositoryIdGenerator repid_gen;
     DescriptorGenerator desc_gen;
-
 
     if (cl.get_value ("help", false) || cl.get_value ("help-html", false))
     {
@@ -117,9 +118,9 @@ int main (int argc, char* argv[])
     //   get after eof.
     ifs.exceptions (ios_base::iostate (0));
 
-    std::istream& is = ifs.is_open ()
-    ? static_cast<std::istream&> (ifs)
-    : static_cast<std::istream&> (std::cin);
+    std::istream& is = 
+      ifs.is_open () ? static_cast<std::istream&> (ifs) 
+                     : static_cast<std::istream&> (std::cin);
 
     InputStreamAdapter isa (is);
     Preprocessor pp (isa);
@@ -136,6 +137,7 @@ int main (int argc, char* argv[])
 
         std::cout << c ;
       }
+      
       return 0;
     }
 
@@ -247,17 +249,22 @@ int main (int argc, char* argv[])
 
     if (diagnostic_stream.error_count () != 0) return -1;
 
-    // Generate executor mapping
+    // Generate executor mapping.
     {
       lem_gen.generate (cl, unit);
     }
 
-    // Generate servant code
+    // Generate servant code.
     {
       svnt_gen.generate (unit);
     }
+    
+    // Compute repository IDs in a separate pass.
+    {
+      repid_gen.generate (unit);
+    }
 
-    // Generate descriptor code
+    // Generate descriptor code.
     {
       desc_gen.generate (cl, unit);
     }
@@ -268,6 +275,6 @@ int main (int argc, char* argv[])
   }
   catch (...)
   {
-    cerr << "exception: " << "unknow" << endl;
+    cerr << "exception: " << "unknown" << endl;
   }
 }

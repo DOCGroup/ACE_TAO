@@ -57,7 +57,12 @@ namespace StringLiterals
     "namespace CIAO_GLUE",                                // GLUE_NS
 
     // Commonly used base class.
-    "public virtual PortableServer::RefCountServantBase"  // INH_RCSB
+    "public virtual PortableServer::RefCountServantBase", // INH_RCSB
+    
+    // Labels for things stored in a SyntaxTree node's Context.
+    "CIDLC::RepositoryIdGenerator::TypeId",               // TYPE_ID
+    "CIDLC::RepositoryIdGenerator::TypePrefix",           // TYPE_PREFIX
+    "CIDLC::RepositoryIdGenerator::RepoId"                // REPO_ID
   };
 
   // Index into the strings above.
@@ -87,6 +92,9 @@ namespace StringLiterals
     COMP_NAMES,
     COMP_ECB,
     GLUE_NS,
-    INH_RCSB
+    INH_RCSB,
+    TYPE_ID,
+    TYPE_PREFIX,
+    REPO_ID
   };
 }

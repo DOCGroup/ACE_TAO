@@ -14,7 +14,7 @@
 class RepositoryIdGenerator
 {
 public:
-  void
+  bool
   generate (CCF::CIDL::SyntaxTree::TranslationUnitPtr const&);
 };
 
