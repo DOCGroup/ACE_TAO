@@ -193,8 +193,8 @@ TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
     // Try to narrow to ForwardRequest
-    PortableServer::ForwardRequest_ptr forward_request =
-      (PortableServer::ForwardRequest_ptr)0;
+    PortableServer::ForwardRequest *forward_request =
+      (PortableServer::ForwardRequest *)0;
 
     if (value.value ())
       {

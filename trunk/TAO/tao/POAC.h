@@ -131,7 +131,6 @@ TAO_NAMESPACE PortableServer{
   // *************************************************************
 
   typedef TAO_Unbounded_Sequence<CORBA::Octet > _tao_seq_Octet;
-  typedef _tao_seq_Octet* _tao_seq_Octet_ptr;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc__tao_seq_Octet;
 
 #endif /* end #if !defined */
@@ -205,15 +204,6 @@ TAO_NAMESPACE PortableServer{
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-#if !defined (_PORTABLESERVER_FORWARDREQUEST___PTR_CH_)
-#define _PORTABLESERVER_FORWARDREQUEST___PTR_CH_
-
-  class ForwardRequest;
-  typedef ForwardRequest *ForwardRequest_ptr;
-
-#endif /* end #if !defined */
-
-
 #if !defined (_PORTABLESERVER_FORWARDREQUEST_CH_)
 #define _PORTABLESERVER_FORWARDREQUEST_CH_
 
@@ -243,11 +233,6 @@ TAO_NAMESPACE PortableServer{
 
     // = TAO extension
     static CORBA::Exception *_alloc (void);
-
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef ForwardRequest_ptr _ptr_type;
-#endif /* __GNUC__ */
-  // Useful for template programming.
 
   }; // exception PortableServer::ForwardRequest
 
@@ -1147,14 +1132,6 @@ TAO_NAMESPACE PortableServer{
     static void _tao_any_destructor (void*);
 
 
-#if !defined (_PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE___PTR_CH_)
-#define _PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE___PTR_CH_
-
-    class AdapterInactive;
-    typedef AdapterInactive *AdapterInactive_ptr;
-
-#endif /* end #if !defined */
-
 #if !defined (_PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_)
 #define _PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_
 
@@ -1735,14 +1712,6 @@ TAO_NAMESPACE PortableServer{
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-#if !defined (_PORTABLESERVER_POA_ADAPTERINACTIVE___PTR_CH_)
-#define _PORTABLESERVER_POA_ADAPTERINACTIVE___PTR_CH_
-
-    class AdapterInactive;
-    typedef AdapterInactive *AdapterInactive_ptr;
-
-#endif /* end #if !defined */
-
 #if !defined (_PORTABLESERVER_POA_ADAPTERINACTIVE_CH_)
 #define _PORTABLESERVER_POA_ADAPTERINACTIVE_CH_
 
@@ -1766,10 +1735,6 @@ TAO_NAMESPACE PortableServer{
       // = TAO extension
       static CORBA::Exception *_alloc (void);
 
-  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef AdapterInactive_ptr _ptr_type;
-  #endif /* __GNUC__ */
-
     }; // exception PortableServer::POA::AdapterInactive
 
     friend void operator<<= (CORBA::Any &, const AdapterInactive &); // copying version
@@ -1780,14 +1745,6 @@ TAO_NAMESPACE PortableServer{
 #endif /* end #if !defined */
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if !defined (_PORTABLESERVER_POA_ADAPTERNONEXISTENT___PTR_CH_)
-#define _PORTABLESERVER_POA_ADAPTERNONEXISTENT___PTR_CH_
-
-    class AdapterNonExistent;
-    typedef AdapterNonExistent *AdapterNonExistent_ptr;
-
-#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERNONEXISTENT_CH_)
 #define _PORTABLESERVER_POA_ADAPTERNONEXISTENT_CH_
@@ -1812,24 +1769,12 @@ TAO_NAMESPACE PortableServer{
       // = TAO extension
       static CORBA::Exception *_alloc (void);
 
-  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef AdapterNonExistent_ptr _ptr_type;
-  #endif /* __GNUC__ */
-
     }; // exception PortableServer::POA::AdapterNonExistent
 
     friend void operator<<= (CORBA::Any &, const AdapterNonExistent &); // copying version
     friend void operator<<= (CORBA::Any &, AdapterNonExistent*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, AdapterNonExistent *&);
     static CORBA::TypeCode_ptr _tc_AdapterNonExistent;
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLESERVER_POA_INVALIDPOLICY___PTR_CH_)
-#define _PORTABLESERVER_POA_INVALIDPOLICY___PTR_CH_
-
-    class InvalidPolicy;
-    typedef InvalidPolicy *InvalidPolicy_ptr;
 
 #endif /* end #if !defined */
 
@@ -1862,10 +1807,6 @@ TAO_NAMESPACE PortableServer{
       // = TAO extension
       static CORBA::Exception *_alloc (void);
 
-  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef InvalidPolicy_ptr _ptr_type;
-  #endif /* __GNUC__ */
-
     }; // exception PortableServer::POA::InvalidPolicy
 
     friend void operator<<= (CORBA::Any &, const InvalidPolicy &); // copying version
@@ -1876,14 +1817,6 @@ TAO_NAMESPACE PortableServer{
 #endif /* end #if !defined */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-
-#if !defined (_PORTABLESERVER_POA_NOSERVANT___PTR_CH_)
-#define _PORTABLESERVER_POA_NOSERVANT___PTR_CH_
-
-    class NoServant;
-    typedef NoServant *NoServant_ptr;
-
-#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_NOSERVANT_CH_)
 #define _PORTABLESERVER_POA_NOSERVANT_CH_
@@ -1908,10 +1841,6 @@ TAO_NAMESPACE PortableServer{
       // = TAO extension
       static CORBA::Exception *_alloc (void);
 
-  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef NoServant_ptr _ptr_type;
-  #endif /* __GNUC__ */
-
     }; // exception PortableServer::POA::NoServant
 
     friend void operator<<= (CORBA::Any &, const NoServant &); // copying version
@@ -1922,14 +1851,6 @@ TAO_NAMESPACE PortableServer{
 #endif /* end #if !defined */
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if !defined (_PORTABLESERVER_POA_OBJECTALREADYACTIVE___PTR_CH_)
-#define _PORTABLESERVER_POA_OBJECTALREADYACTIVE___PTR_CH_
-
-    class ObjectAlreadyActive;
-    typedef ObjectAlreadyActive *ObjectAlreadyActive_ptr;
-
-#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_)
 #define _PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_
@@ -1954,24 +1875,12 @@ TAO_NAMESPACE PortableServer{
       // = TAO extension
       static CORBA::Exception *_alloc (void);
 
-  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef ObjectAlreadyActive_ptr _ptr_type;
-  #endif /* __GNUC__ */
-
     }; // exception PortableServer::POA::ObjectAlreadyActive
 
     friend void operator<<= (CORBA::Any &, const ObjectAlreadyActive &); // copying version
     friend void operator<<= (CORBA::Any &, ObjectAlreadyActive*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, ObjectAlreadyActive *&);
     static CORBA::TypeCode_ptr _tc_ObjectAlreadyActive;
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLESERVER_POA_OBJECTNOTACTIVE___PTR_CH_)
-#define _PORTABLESERVER_POA_OBJECTNOTACTIVE___PTR_CH_
-
-    class ObjectNotActive;
-    typedef ObjectNotActive *ObjectNotActive_ptr;
 
 #endif /* end #if !defined */
 
@@ -1998,24 +1907,12 @@ TAO_NAMESPACE PortableServer{
       // = TAO extension
       static CORBA::Exception *_alloc (void);
 
-  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef ObjectNotActive_ptr _ptr_type;
-  #endif /* __GNUC__ */
-
     }; // exception PortableServer::POA::ObjectNotActive
 
     friend void operator<<= (CORBA::Any &, const ObjectNotActive &); // copying version
     friend void operator<<= (CORBA::Any &, ObjectNotActive*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, ObjectNotActive *&);
     static CORBA::TypeCode_ptr _tc_ObjectNotActive;
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLESERVER_POA_SERVANTALREADYACTIVE___PTR_CH_)
-#define _PORTABLESERVER_POA_SERVANTALREADYACTIVE___PTR_CH_
-
-    class ServantAlreadyActive;
-    typedef ServantAlreadyActive *ServantAlreadyActive_ptr;
 
 #endif /* end #if !defined */
 
@@ -2042,24 +1939,12 @@ TAO_NAMESPACE PortableServer{
       // = TAO extension
       static CORBA::Exception *_alloc (void);
 
-  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef ServantAlreadyActive_ptr _ptr_type;
-  #endif /* __GNUC__ */
-
     }; // exception PortableServer::POA::ServantAlreadyActive
 
     friend void operator<<= (CORBA::Any &, const ServantAlreadyActive &); // copying version
     friend void operator<<= (CORBA::Any &, ServantAlreadyActive*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, ServantAlreadyActive *&);
     static CORBA::TypeCode_ptr _tc_ServantAlreadyActive;
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLESERVER_POA_SERVANTNOTACTIVE___PTR_CH_)
-#define _PORTABLESERVER_POA_SERVANTNOTACTIVE___PTR_CH_
-
-    class ServantNotActive;
-    typedef ServantNotActive *ServantNotActive_ptr;
 
 #endif /* end #if !defined */
 
@@ -2086,24 +1971,12 @@ TAO_NAMESPACE PortableServer{
       // = TAO extension
       static CORBA::Exception *_alloc (void);
 
-  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef ServantNotActive_ptr _ptr_type;
-  #endif /* __GNUC__ */
-
     }; // exception PortableServer::POA::ServantNotActive
 
     friend void operator<<= (CORBA::Any &, const ServantNotActive &); // copying version
     friend void operator<<= (CORBA::Any &, ServantNotActive*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, ServantNotActive *&);
     static CORBA::TypeCode_ptr _tc_ServantNotActive;
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLESERVER_POA_WRONGADAPTER___PTR_CH_)
-#define _PORTABLESERVER_POA_WRONGADAPTER___PTR_CH_
-
-    class WrongAdapter;
-    typedef WrongAdapter *WrongAdapter_ptr;
 
 #endif /* end #if !defined */
 
@@ -2130,24 +2003,12 @@ TAO_NAMESPACE PortableServer{
       // = TAO extension
       static CORBA::Exception *_alloc (void);
 
-  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef WrongAdapter_ptr _ptr_type;
-  #endif /* __GNUC__ */
-
     }; // exception PortableServer::POA::WrongAdapter
 
     friend void operator<<= (CORBA::Any &, const WrongAdapter &); // copying version
     friend void operator<<= (CORBA::Any &, WrongAdapter*); // noncopying version
     friend CORBA::Boolean operator>>= (const CORBA::Any &, WrongAdapter *&);
     static CORBA::TypeCode_ptr _tc_WrongAdapter;
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLESERVER_POA_WRONGPOLICY___PTR_CH_)
-#define _PORTABLESERVER_POA_WRONGPOLICY___PTR_CH_
-
-    class WrongPolicy;
-    typedef WrongPolicy *WrongPolicy_ptr;
 
 #endif /* end #if !defined */
 
@@ -2173,10 +2034,6 @@ TAO_NAMESPACE PortableServer{
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);
-
-  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef WrongPolicy_ptr _ptr_type;
-  #endif /* __GNUC__ */
 
     }; // exception PortableServer::POA::WrongPolicy
 
@@ -2330,16 +2187,8 @@ TAO_NAMESPACE PortableServer{
     static Current_ptr _duplicate (Current_ptr obj);
     static Current_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
     static Current_ptr _nil (void);
+
     static void _tao_any_destructor (void*);
-
-
-#if !defined (_PORTABLESERVER_CURRENT_NOCONTEXT___PTR_CH_)
-#define _PORTABLESERVER_CURRENT_NOCONTEXT___PTR_CH_
-
-    class NoContext;
-    typedef NoContext *NoContext_ptr;
-
-#endif /* end #if !defined */
 
 #if !defined (_PORTABLESERVER_CURRENT_NOCONTEXT_CH_)
 #define _PORTABLESERVER_CURRENT_NOCONTEXT_CH_
@@ -2363,10 +2212,6 @@ TAO_NAMESPACE PortableServer{
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);
-
-  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef NoContext_ptr _ptr_type;
-  #endif /* __GNUC__ */
 
     }; // exception PortableServer::Current::NoContext
 

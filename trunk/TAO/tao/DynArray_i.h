@@ -48,7 +48,7 @@ public:
 
   // = Functions specific to DynArray
 
-  CORBA_AnySeq_ptr get_elements (CORBA::Environment &ACE_TRY_ENV =
+  CORBA_AnySeq *get_elements (CORBA::Environment &ACE_TRY_ENV =
                                    TAO_default_environment ());
   // Assign/dump elements using IDL defined type AnySeq
 

@@ -372,7 +372,6 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Address;
 
 class EnvironmentList;
 class EnvironmentList_var;
-typedef EnvironmentList* EnvironmentList_ptr;
 
 // *************************************************************
 // EnvironmentList
@@ -399,7 +398,6 @@ public:
   static void _tao_any_destructor (void*);
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-  typedef EnvironmentList_ptr _ptr_type;
   typedef EnvironmentList_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
@@ -669,7 +667,6 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServerInformation;
 
 class ServerInformationList;
 class ServerInformationList_var;
-typedef ServerInformationList* ServerInformationList_ptr;
 
 // *************************************************************
 // ServerInformationList
@@ -696,7 +693,6 @@ public:
   static void _tao_any_destructor (void*);
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-  typedef ServerInformationList_ptr _ptr_type;
   typedef ServerInformationList_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
@@ -934,27 +930,12 @@ public:
 
   static void _tao_any_destructor (void*);
 
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION_ALREADYREGISTERED___PTR_CH_)
-#define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION_ALREADYREGISTERED___PTR_CH_
-
-  class AlreadyRegistered;
-  typedef AlreadyRegistered *AlreadyRegistered_ptr;
-  
-#endif /* end #if !defined */
-
-
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION_ALREADYREGISTERED_CH_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION_ALREADYREGISTERED_CH_
 
   class TAO_Export AlreadyRegistered : public CORBA::UserException
   {
   public:
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef AlreadyRegistered_ptr _ptr_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
 
     AlreadyRegistered (void); // default ctor
     AlreadyRegistered (const AlreadyRegistered &); // copy ctor
@@ -985,26 +966,12 @@ public:
 
 #endif /* end #if !defined */
 
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION_CANNOTACTIVATE___PTR_CH_)
-#define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION_CANNOTACTIVATE___PTR_CH_
-
-  class CannotActivate;
-  typedef CannotActivate *CannotActivate_ptr;
-  
-#endif /* end #if !defined */
-
-
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION_CANNOTACTIVATE_CH_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION_CANNOTACTIVATE_CH_
 
   class TAO_Export CannotActivate : public CORBA::UserException
   {
   public:
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef CannotActivate_ptr _ptr_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
 
     TAO_String_Manager reason;
 
@@ -1040,27 +1007,12 @@ public:
 
 #endif /* end #if !defined */
 
-
-#if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION_NOTFOUND___PTR_CH_)
-#define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION_NOTFOUND___PTR_CH_
-
-  class NotFound;
-  typedef NotFound *NotFound_ptr;
-  
-#endif /* end #if !defined */
-
-
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION_NOTFOUND_CH_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION_NOTFOUND_CH_
 
   class TAO_Export NotFound : public CORBA::UserException
   {
   public:
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef NotFound_ptr _ptr_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
 
     NotFound (void); // default ctor
     NotFound (const NotFound &); // copy ctor

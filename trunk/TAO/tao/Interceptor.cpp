@@ -52,7 +52,7 @@ ServerRequestInterceptor::exception_occurred (CORBA::ULong,
                                               CORBA::Object_ptr,
                                               const char *,
                                               //IOP::ServiceContextList &,
-                                              //CORBA::Exception_ptr &,
+                                              //CORBA::Exception *&,
                                               PortableInterceptor::Cookies &,
                                               CORBA::Environment &)
 {
@@ -91,7 +91,7 @@ ClientRequestInterceptor::exception_occurred (CORBA::ULong,
                                               CORBA::Object_ptr,
                                               const char *,
                                               //IOP::ServiceContextList &,
-                                              //CORBA::Exception_ptr &,
+                                              //CORBA::Exception *&,
                                               PortableInterceptor::Cookies &,
                                               CORBA::Environment &)
 {
