@@ -38,8 +38,10 @@ sub new {
   my($dynamic)   = shift;
   my($static)    = shift;
   my($relative)  = shift;
+  my($progress)  = shift;
   my($self)      = Creator::new($class, $global, $inc,
-                                $template, $ti, $relative, 'workspace');
+                                $template, $ti, $relative,
+                                $progress, 'workspace');
   my($typecheck) = $self->{'type_check'};
 
   $self->{'workspace_name'} = undef;
@@ -383,7 +385,8 @@ sub project_creator {
                    $self->get_ti_override(),
                    $self->get_dynamic(),
                    $self->get_static(),
-                   $self->get_relative());
+                   $self->get_relative(),
+                   $self->get_progress_callback());
 }
 
 
