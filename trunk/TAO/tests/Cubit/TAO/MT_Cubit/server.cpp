@@ -634,8 +634,6 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
 
   for (i = number_of_low_priority_servants; i > 0; i--)
     {
-      char *args;
-
       ACE_OS::sprintf (orbport,
                       "-ORBport %d",
                        (GLOBALS::instance ()->base_port == 0) ? (int) 0 :GLOBALS::instance ()->base_port+i);
