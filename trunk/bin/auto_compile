@@ -73,7 +73,8 @@ $MODULE='ACE_wrappers';
       'TAO/examples/POA/Identity , Identity',
       'TAO/examples/POA/Adapter_Activator , run_test.pl',
       'TAO/tests/MT_Client , run_test.pl',
-      'TAO/tests/NestedUpcall/Reactor , run_test.pl'
+      'TAO/tests/NestedUpcall/Reactor , run_test.pl',
+      'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100'
 #      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
 #      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
 #      'TAO/orbsvcs/tests/Property , run_test.pl'
