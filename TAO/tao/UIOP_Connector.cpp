@@ -741,7 +741,7 @@ TAO_UIOP_Connector::init_uiop_properties (void)
 {
 #if (TAO_HAS_RT_CORBA == 1)
 
-  // Connector protocol properties are obtained from ORB-level 
+  // Connector protocol properties are obtained from ORB-level
   // RTCORBA::ClientProtocolProperties policy override.
   // If the override doesn't exist or doesn't contain the
   // properties, we use ORB default.
@@ -759,7 +759,7 @@ TAO_UIOP_Connector::init_uiop_properties (void)
   CORBA::Object_var auto_release = client_protocols;
   RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
     RTCORBA::UnixDomainProtocolProperties::_nil ();
-  
+
   if (client_protocols != 0)
     {
       RTCORBA::ProtocolList & protocols = client_protocols->protocols_rep ();
@@ -780,7 +780,7 @@ TAO_UIOP_Connector::init_uiop_properties (void)
     {
       // No tcp properties in ORB-level override.  Use ORB defaults.
       // Orb defaults should never be null - they were initialized by
-      // the ORB_Core. 
+      // the ORB_Core.
       client_protocols = this->orb_core_->default_client_protocol ();
       auto_release = client_protocols;
       RTCORBA::ProtocolList & protocols = client_protocols->protocols_rep ();
@@ -801,19 +801,15 @@ TAO_UIOP_Connector::init_uiop_properties (void)
     uiop_properties->send_buffer_size ();
   this->uiop_properties_.recv_buffer_size =
     uiop_properties->recv_buffer_size ();
-  this->uiop_properties_.no_delay =
-    uiop_properties->no_delay ();
 
 #else /* TAO_HAS_RT_CORBA == 1 */
 
   // Without RTCORBA, protocol configuration properties come from ORB
-  // options. 
+  // options.
   this->uiop_properties_.send_buffer_size =
     this->orb_core_->orb_params ()->sock_sndbuf_size ();
   this->uiop_properties_.recv_buffer_size =
     this->orb_core_->orb_params ()->sock_rcvbuf_size ();
-  this->uiop_properties_.no_delay =
-    this->orb_core_->orb_params ()->nodelay ();
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
