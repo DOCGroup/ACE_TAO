@@ -119,6 +119,11 @@ extern "C"
 #  endif /* _POSIX_RTSIG_MAX */
 #endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
 
+  // The maximum number of concurrent timers per process.
+# if !defined (_POSIX_TIMER_MAX)
+#   define _POSIX_TIMER_MAX 44
+# endif /* _POSIX_TIMER_MAX */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
