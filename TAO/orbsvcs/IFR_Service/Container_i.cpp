@@ -382,7 +382,7 @@ TAO_Container_i::lookup_i (const char *search_name,
   ACE_CHECK_RETURN (CORBA_Contained::_nil ());
 
   return CORBA_Contained::_narrow (obj.in (),
-                                 ACE_TRY_ENV);
+                                   ACE_TRY_ENV);
 }
 
 CORBA_ContainedSeq *
@@ -516,7 +516,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
 
       CORBA_Contained_var next_cont =
         CORBA_Contained::_narrow (obj.in (),
-                                ACE_TRY_ENV);
+                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
       retval[j] = next_cont._retn ();
@@ -588,7 +588,7 @@ TAO_Container_i::lookup_name_i (const char *search_name,
 
       CORBA_Contained_var next_cont =
         CORBA_Contained::_narrow (obj.in (),
-                                ACE_TRY_ENV);
+                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
       retval[i] = next_cont._retn ();
@@ -756,7 +756,7 @@ TAO_Container_i::create_module_i (const char *id,
   ACE_CHECK_RETURN (CORBA_ModuleDef::_nil ());
 
   return CORBA_ModuleDef::_narrow (obj.in (),
-                                 ACE_TRY_ENV);
+                                   ACE_TRY_ENV);
 }
 
 CORBA_ConstantDef_ptr
@@ -873,7 +873,7 @@ TAO_Container_i::create_constant_i (const char *id,
   ACE_CHECK_RETURN (CORBA_ConstantDef::_nil ());
 
   return CORBA_ConstantDef::_narrow (obj.in (),
-                                   ACE_TRY_ENV);
+                                     ACE_TRY_ENV);
 }
 
 CORBA_StructDef_ptr
@@ -993,7 +993,7 @@ TAO_Container_i::create_struct_i (const char *id,
   ACE_CHECK_RETURN (CORBA_StructDef::_nil ());
 
   return CORBA_StructDef::_narrow (obj.in (),
-                                 ACE_TRY_ENV);
+                                   ACE_TRY_ENV);
 }
 
 CORBA_UnionDef_ptr
@@ -1133,7 +1133,7 @@ TAO_Container_i::create_union_i (const char *id,
   ACE_CHECK_RETURN (CORBA_UnionDef::_nil ());
 
   return CORBA_UnionDef::_narrow (obj.in (),
-                                ACE_TRY_ENV);
+                                  ACE_TRY_ENV);
 }
 
 CORBA_EnumDef_ptr
@@ -1234,7 +1234,7 @@ TAO_Container_i::create_enum_i (const char *id,
   ACE_CHECK_RETURN (CORBA_EnumDef::_nil ());
 
   return CORBA_EnumDef::_narrow (obj.in (),
-                               ACE_TRY_ENV);
+                                 ACE_TRY_ENV);
 }
 
 CORBA_AliasDef_ptr
@@ -1315,7 +1315,7 @@ TAO_Container_i::create_alias_i (const char *id,
   ACE_CHECK_RETURN (CORBA_AliasDef::_nil ());
 
   return CORBA_AliasDef::_narrow (obj.in (),
-                                ACE_TRY_ENV);
+                                  ACE_TRY_ENV);
 }
 
 CORBA_InterfaceDef_ptr
@@ -1414,7 +1414,7 @@ TAO_Container_i::create_interface_i (const char *id,
   ACE_CHECK_RETURN (CORBA_InterfaceDef::_nil ());
 
   return CORBA_InterfaceDef::_narrow (obj.in (),
-                                    ACE_TRY_ENV);
+                                      ACE_TRY_ENV);
 }
 
 CORBA_ValueDef_ptr
@@ -1542,7 +1542,7 @@ TAO_Container_i::create_value_box_i (const char *id,
   ACE_CHECK_RETURN (CORBA_ValueBoxDef::_nil ());
 
   return CORBA_ValueBoxDef::_narrow (obj.in (),
-                                   ACE_TRY_ENV);
+                                     ACE_TRY_ENV);
 }
 
 CORBA_ExceptionDef_ptr
@@ -1649,7 +1649,7 @@ TAO_Container_i::create_exception_i (const char *id,
   ACE_CHECK_RETURN (CORBA_ExceptionDef::_nil ());
 
   return CORBA_ExceptionDef::_narrow (obj.in (),
-                                    ACE_TRY_ENV);
+                                      ACE_TRY_ENV);
 }
 
 CORBA_NativeDef_ptr
@@ -1714,7 +1714,7 @@ TAO_Container_i::create_native_i (const char *id,
   ACE_CHECK_RETURN (CORBA_NativeDef::_nil ());
 
   return CORBA_NativeDef::_narrow (obj.in (),
-                                 ACE_TRY_ENV);
+                                   ACE_TRY_ENV);
 }
 
 CORBA_AbstractInterfaceDef_ptr
@@ -1819,7 +1819,7 @@ TAO_Container_i::create_abstract_interface_i (
   ACE_CHECK_RETURN (CORBA_AbstractInterfaceDef::_nil ());
 
   return CORBA_AbstractInterfaceDef::_narrow (obj.in (),
-                                           ACE_TRY_ENV);
+                                              ACE_TRY_ENV);
 }
 
 CORBA_LocalInterfaceDef_ptr
@@ -1922,7 +1922,7 @@ TAO_Container_i::create_local_interface_i (
   ACE_CHECK_RETURN (CORBA_LocalInterfaceDef::_nil ());
 
   return CORBA_LocalInterfaceDef::_narrow (obj.in (),
-                                        ACE_TRY_ENV);
+                                           ACE_TRY_ENV);
 }
 
 CORBA::Boolean

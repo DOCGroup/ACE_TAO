@@ -10,10 +10,13 @@
 
 interface iface {};
 
-struct foo
+union foo switch (short)
 {
-  string foo_str_member;
-  iface foo_iface_member;
+  case -3:
+  case  4:
+  case -1: string foo_str_member;
+  default: iface foo_iface_member;
+  case  0: iface foo_iface_member2;
 };
 
 struct bar

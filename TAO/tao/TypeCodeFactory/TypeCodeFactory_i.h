@@ -231,6 +231,30 @@ private:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Code for structs and unions is identical except for TCKind.
+  CORBA::TypeCode_ptr struct_except_tc_common (
+      const char *id,
+      const char *name,
+      const CORBA_StructMemberSeq &members,
+      CORBA::TCKind kind,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// If any of these fail, we raise a spec-defined minor code
+  /// of BAD_PARAM or BAD_TYPECODE.
+  CORBA::Boolean valid_name (const char *name);
+  CORBA::Boolean valid_id (const char *id);
+  CORBA::Boolean valid_content_type (CORBA::TypeCode_ptr tc,
+                                     CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Boolean unique_label_values (const CORBA_UnionMemberSeq &members,
+                                      CORBA::TypeCode_ptr disc_tc,
+                                      CORBA::ULong default_index_slot,
+                                      CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Boolean valid_disc_type (CORBA::TypeCode_ptr tc,
+                                  CORBA::Environment &ACE_TRY_ENV);
+
   /// Prohibited
   TAO_TypeCodeFactory_i (const TAO_TypeCodeFactory_i &src);
   TAO_TypeCodeFactory_i &operator= (const TAO_TypeCodeFactory_i &src);

@@ -80,7 +80,7 @@ ifr_adding_visitor_exception::visit_scope (UTL_Scope *node)
       // IfR method create_exception does not use this - it just needs
       // to be non-null for marshaling.
       this->members_[i].type = 
-        CORBA::TypeCode::_duplicate (CORBA::_tc_null);
+        CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
       this->members_[i].type_def = 
         CORBA_IDLType::_duplicate (this->ir_current_.in ());
@@ -116,7 +116,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
 
               CORBA_Contained_ptr tmp = 
                 CORBA_Contained::_narrow (visitor.ir_current (),
-                                       ACE_TRY_ENV);
+                                          ACE_TRY_ENV);
               ACE_TRY_CHECK;
 
               // Since the enclosing ExceptionDef hasn't been created
@@ -134,7 +134,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
           // the current IR object holder.
           this->ir_current_ =
             CORBA_IDLType::_narrow (prev_def.in (),
-                                 ACE_TRY_ENV);
+                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Nothing prevents this struct's repo id from already being
@@ -187,7 +187,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
         {
           CORBA_ExceptionDef_var except_def =
             CORBA_ExceptionDef::_narrow (prev_def.in (),
-                                      ACE_TRY_ENV);
+                                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Nothing prevents this exception's repo id from already being
@@ -255,7 +255,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
 
           CORBA_Container_var new_container =
             CORBA_Container::_narrow (new_def.in (),
-                                   ACE_TRY_ENV);
+                                      ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           for (size_t i = 0; i < size; ++i)
@@ -336,7 +336,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
 
           CORBA_Contained_ptr tmp = 
             CORBA_Contained::_narrow (this->ir_current_.in (),
-                                   ACE_TRY_ENV);
+                                      ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           this->move_queue_.enqueue_tail (tmp);
@@ -347,7 +347,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
           // the current IR object holder.
           this->ir_current_ = 
             CORBA_IDLType::_narrow (prev_def.in (),
-                                 ACE_TRY_ENV);
+                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Nothing prevents this enum's repo id from already being
@@ -412,7 +412,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
 
               CORBA_Contained_ptr tmp = 
                 CORBA_Contained::_narrow (visitor.ir_current (),
-                                       ACE_TRY_ENV);
+                                          ACE_TRY_ENV);
               ACE_TRY_CHECK;
 
               // Since the enclosing ExceptionDef hasn't been created
@@ -430,7 +430,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
           // the current IR object holder.
           this->ir_current_ =
             CORBA_IDLType::_narrow (prev_def.in (),
-                                 ACE_TRY_ENV);
+                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Nothing prevents this union's repo id from already being

@@ -158,7 +158,7 @@ TAO_ConstantDef_i::type_def_i (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (CORBA_IDLType::_nil ());
 
   return CORBA_IDLType::_narrow (obj.in (),
-                               ACE_TRY_ENV);
+                                 ACE_TRY_ENV);
 }
 
 void 

@@ -414,7 +414,7 @@ TAO_Repository_i::get_primitive (CORBA::PrimitiveKind kind,
   ACE_CHECK_RETURN (CORBA_PrimitiveDef::_nil ());
 
   return CORBA_PrimitiveDef::_narrow (obj.in (),
-                                    ACE_TRY_ENV);
+                                      ACE_TRY_ENV);
 }
 
 CORBA_StringDef_ptr
@@ -473,7 +473,7 @@ TAO_Repository_i::create_string_i (CORBA::ULong bound,
   ACE_CHECK_RETURN (CORBA_StringDef::_nil ());
 
   return CORBA_StringDef::_narrow (obj.in (),
-                                 ACE_TRY_ENV);
+                                   ACE_TRY_ENV);
 }
 
 CORBA_WstringDef_ptr
@@ -532,7 +532,7 @@ TAO_Repository_i::create_wstring_i (CORBA::ULong bound,
   ACE_CHECK_RETURN (CORBA_WstringDef::_nil ());
 
   return CORBA_WstringDef::_narrow (obj.in (),
-                                  ACE_TRY_ENV);
+                                    ACE_TRY_ENV);
 }
 
 CORBA_SequenceDef_ptr
@@ -610,7 +610,7 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
   ACE_CHECK_RETURN (CORBA_SequenceDef::_nil ());
 
   return CORBA_SequenceDef::_narrow (obj.in (),
-                                   ACE_TRY_ENV);
+                                     ACE_TRY_ENV);
 }
 
 CORBA_ArrayDef_ptr
@@ -688,7 +688,7 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
   ACE_CHECK_RETURN (CORBA_ArrayDef::_nil ());
 
   return CORBA_ArrayDef::_narrow (obj.in (),
-                                ACE_TRY_ENV);
+                                  ACE_TRY_ENV);
 }
 
 CORBA_FixedDef_ptr
