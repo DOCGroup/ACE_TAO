@@ -24,6 +24,13 @@ Wed Oct 01 12:45:51 1997  David L. Levine  <levine@cs.wustl.edu>
 	  was int) and not necessary (::gethrtime () should never fail),
 	  so we can remove its overhead.
 
+	* tests/Time_Value_Test.cpp: undef ACE_NO_INLINE in the
+	  ACE_U_LongLong test hacks.
+
+	* tests/SV_Shared_Memory_Test.cpp: delay construction of allocator
+	  until first needed because it needs something that the
+	  ACE_Object_Manager constructs.
+
 	* tests/run_tests.vxworks: added console printout before each test.
 
 Tue Sep 30 21:42:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
