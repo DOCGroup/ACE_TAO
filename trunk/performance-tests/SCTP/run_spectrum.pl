@@ -21,7 +21,7 @@ run_spectrum.pl - Run a spectrum of performance tests.
 =head1 SYNOPSIS
 
  run_spectrum.pl [ --help ]
-                 [ --manual ] 
+                 [ --manual ]
                  [ --service (STREAM|SEQPACK) ]
                  [ --protocol (TCP|SCTP) ]
                  [ --config_file filename ]
@@ -199,12 +199,12 @@ $service =~ s/seqpacket/seqpack/;    # Accept "seqpacket" as synonym for "seqpac
 $service =~ /^(stream|seqpack)$/
     or pod2usage("Service must be STREAM or SEQPACK\n");
 
-$protocol =~ /^(tcp|sctp)$/ 
+$protocol =~ /^(tcp|sctp)$/
     or pod2usage("Protocol must be TCP or SCTP\n");
 
 $service eq "seqpack" and $protocol eq "tcp"
     and pod2usage("Cannot use SEQPACK service with TCP\n");
-                                  
+
 # Open config file
 open CONFIG, "< $config_file"
     or die "cannot open file: $config_file\n";
@@ -221,7 +221,7 @@ while (<CONFIG>) {
     }
 }
 
-# Close config file    
+# Close config file
 close CONFIG;
 
 # Print options
@@ -236,13 +236,13 @@ print "Read options from $config_file: \"$options\"\n\n";
 my $max_size = 16;
 $max_size = 15 if $protocol eq "sctp";
 for (my $i = 2; $i <= $max_size; ++$i) {
-    
+
     # Assemble client parameters and print out the command line
     my $client_params = "-t $protocol -s $i $options >> $output_file";
     print "$client_programs{$service} $client_params\n";
-    
+
     # Configure client
-    my $client = 
+    my $client =
         new PerlACE::Process($client_programs{$service}, $client_params);
 
     # Spawn client
