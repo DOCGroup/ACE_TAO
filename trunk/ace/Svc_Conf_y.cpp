@@ -305,7 +305,7 @@ ace_get_module (ACE_Static_Node *str_rec,
   const ACE_Service_Type *sv = svc_type->record ();
   type = sv->type ();
   ACE_Module_Type *mt = (ACE_Module_Type *) type;
-  ASYS_TCHAR *module_type_name = ACE_const_cast (ASYS_TCHAR *, svc_type->name ());
+  const char *module_type_name = svc_type->name ();
 
   if (sr == 0 || st == 0 || mt == 0)
     {
@@ -350,18 +350,18 @@ ace_create_service_type (const ASYS_TCHAR *name,
     case ACE_SVC_OBJ_T:
       ACE_NEW_RETURN (stp,
                       ACE_Service_Object_Type ((ACE_Service_Object *) symbol,
-                                               ASYS_WIDE_STRING (name), flags,
+                                               name, flags,
                                                gobbler),
                       0);
       break;
     case ACE_MODULE_T:
       ACE_NEW_RETURN (stp,
-                      ACE_Module_Type (symbol, ASYS_WIDE_STRING (name), flags),
+                      ACE_Module_Type (symbol, name, flags),
                       0);
       break;
     case ACE_STREAM_T:
       ACE_NEW_RETURN (stp,
-                      ACE_Stream_Type (symbol, ASYS_WIDE_STRING (name), flags),
+                      ACE_Stream_Type (symbol, name, flags),
                       0);
       break;
     default:
@@ -395,7 +395,7 @@ main (int argc, char *argv[])
   return ace_yyparse ();
 }
 #endif /* DEBUGGING */
-#line 400 "Svc_Conf_y.cpp"
+#line 399 "Svc_Conf_y.cpp"
 #define ACE_YYABORT goto ace_yyabort
 #define ACE_YYACCEPT goto ace_yyaccept
 #define ACE_YYERROR goto ace_yyerrlab
@@ -972,7 +972,7 @@ case 41:
 #line 298 "Svc_Conf.y"
 { ace_yyval.ident_ = 0; }
 break;
-#line 976 "Svc_Conf_y.cpp"
+#line 975 "Svc_Conf_y.cpp"
     }
     ace_yyssp -= ace_yym;
     ace_yystate = *ace_yyssp;
