@@ -145,7 +145,7 @@ private:
   //Dispatch_Queue_Item has its own instance of the QoSDescriptor.
   //The release time is stored as a long as if from
   //ACE_Time_Value.msec().
-  typedef ACE_Map_Manager<QoSDescriptor,long,ACE_SYNCH_NULL_MUTEX> Release_Time_Map;
+  typedef ACE_Map_Manager<QoSDescriptor,ACE_Time_Value,ACE_SYNCH_NULL_MUTEX> Release_Time_Map;
 
   Release_Time_Map releases_;
 
