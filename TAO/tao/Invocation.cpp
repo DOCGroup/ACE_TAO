@@ -1373,6 +1373,49 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
         // support from MProfiles ...)
         return TAO_INVOKE_RESTART;
       // NOTREACHED
+    case TAO_GIOP_LOC_SYSTEM_EXCEPTION:
+      {
+        // What else do we do??
+        // Pull the exception from the stream.
+        CORBA::String_var buf;
+
+        if ((this->rd_.reply_cdr () >> buf.inout ()) == 0)
+          {
+            // Could not demarshal the exception id, raise an local
+            // CORBA::MARSHAL
+            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                              CORBA::COMPLETED_MAYBE),
+                              TAO_INVOKE_EXCEPTION);
+          }
+
+        // This kind of exception shouldn't happen with oneways,
+        // but if it does, we turn it into a CORBA::UNKNOWN exception.
+        ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_YES),
+                          TAO_INVOKE_EXCEPTION);
+      }
+    case TAO_GIOP_LOC_NEEDS_ADDRESSING_MODE:
+      {
+        // We have received an exception with a request to change the
+        // addressing mode. First let us read the mode that the
+        // server/agent asks for. 
+        CORBA::Short addr_mode = 0;
+        if (this->rd_.reply_cdr ().read_short (addr_mode) == 0)
+          {
+            // Could not demarshal the addressing disposition, raise an local
+            // CORBA::MARSHAL
+            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                              CORBA::COMPLETED_MAYBE),
+                              TAO_INVOKE_OK);
+          }
+        
+        // Now set this addressing mode in the stub object, so that
+        // the next invocation need not go through this.
+        this->stub_->addressing_mode (addr_mode);
+        
+        // Now restart the invocation
+        return TAO_INVOKE_RESTART;
+      }
     }
 
   return TAO_INVOKE_OK;
