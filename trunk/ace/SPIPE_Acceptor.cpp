@@ -72,10 +72,10 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
   return 0;
 #elif defined (ACE_WIN32)
   // Create a new instance of the Named Pipe (WIN32).  A new instance
-  // of the named pipe must be created for every client process. If an
-  // instance of the named pipe that is already connected to a client
-  // process is reused with a new client process, ::ConnectNamedPipe()
-  // would fail.
+  // of the named pipe must be created for every client process.  If
+  // an instance of the named pipe that is already connected to a
+  // client process is reused with a new client process,
+  // ::ConnectNamedPipe() would fail.
 
   ACE_UNUSED_ARG(perms);
   ACE_TRACE ("ACE_SPIPE_Acceptor::create_new_instance");

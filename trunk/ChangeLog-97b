@@ -1,16 +1,11 @@
-Thu Sep 18 16:30:24 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* ace/Time_Value_Test.cpp: disable ACE_U_LongLong test except
-	  on Solaris because its hard to rig up the test properly on
-	  all platforms.  We still test it thoroughly on Solaris.
-	  ACE_U_LongLong isn't used on most platforms, including Win32.
-	  Thanks to Sandro Doro <doros@aureus.sublink.org> for reporting
-	  this.
-
-	* ace/Semaphore_Test: protected declarations of test_timeout_count
-	  and timeouts because they're not used on Solaris.
-
 Thu Sep 18 12:24:08 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* netsvcs/lib/Client_Logging_Handler.cpp: Make sure to clean up
+ 	  all our resources (e.g., acceptor-mode and data-mode sockets)
+ 	  when we close down.
+
+	* netsvcs/servers/main.cpp (main): Restored the entire contents of
+ 	  main().
 
 	* tests/Semaphore_Test.cpp: Updated the test to use a temporary
  	  ACE_Time_Value variable that is passed to
@@ -28,6 +23,18 @@ Thu Sep 18 12:24:08 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  portable and makes it easier to write a generic client logging
  	  daemon...  If a platform doesn't support ACE_SPIPEs, then we 
 	  revert to using sockets.
+
+Thu Sep 18 16:30:24 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Time_Value_Test.cpp: disable ACE_U_LongLong test except
+	  on Solaris because its hard to rig up the test properly on
+	  all platforms.  We still test it thoroughly on Solaris.
+	  ACE_U_LongLong isn't used on most platforms, including Win32.
+	  Thanks to Sandro Doro <doros@aureus.sublink.org> for reporting
+	  this.
+
+	* ace/Semaphore_Test: protected declarations of test_timeout_count
+	  and timeouts because they're not used on Solaris.
 
 Thu Sep 18 09:04:40 1997    <irfan@TWOSTEP>
 
