@@ -485,8 +485,8 @@ be_scope::decl (void)
     }
 }
 
-// Visiting methods
-int be_scope::accept (be_visitor *visitor)
+int
+be_scope::accept (be_visitor *visitor)
 {
   return visitor->visit_scope (this);
 }

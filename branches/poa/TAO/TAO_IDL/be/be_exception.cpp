@@ -511,8 +511,8 @@ int be_exception::write_as_return (TAO_OutStream *,
   return -1;
 }
 
-// Visiting methods
-int be_exception::accept (be_visitor *visitor)
+int
+be_exception::accept (be_visitor *visitor)
 {
   return visitor->visit_exception (this);
 }

@@ -205,8 +205,8 @@ be_module::compute_size_type (void)
   return 0;
 }
 
-// Visiting methods
-int be_module::accept (be_visitor *visitor)
+int
+be_module::accept (be_visitor *visitor)
 {
   return visitor->visit_module (this);
 }

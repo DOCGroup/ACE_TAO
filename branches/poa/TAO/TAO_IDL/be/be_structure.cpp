@@ -893,8 +893,8 @@ int be_structure::write_as_return (TAO_OutStream *stream,
   return 0;
 }
 
-// Visiting methods
-int be_structure::accept (be_visitor *visitor)
+int
+be_structure::accept (be_visitor *visitor)
 {
   return visitor->visit_structure (this);
 }

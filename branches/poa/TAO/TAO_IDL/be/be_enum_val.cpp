@@ -136,8 +136,8 @@ be_enum_val::tc_encap_len (void)
   return this->encap_len_;
 }
 
-// Visiting methods
-int be_enum_val::accept (be_visitor *visitor)
+int
+be_enum_val::accept (be_visitor *visitor)
 {
   return visitor->visit_enum_val (this);
 }
