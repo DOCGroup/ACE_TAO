@@ -111,11 +111,30 @@ public:
   // Align the message block to ACE_CDR::MAX_ALIGNMENT,
   // set by the CORBA spec at 8 bytes.
 
+  static size_t first_size (size_t minsize);
+  // Compute the size of the smallest buffer that can contain at least
+  // <minsize> bytes.
+  // To understand how a "best fit" is computed look at the
+  // algorithm in the code.
+  // Basically the buffers grow exponentially, up to a certain point,
+  // then the buffer size grows linearly. 
+  // The advantage of this algorithm is that is rapidly grows to a
+  // large value, but does not explode at the end.
+
+  static size_t next_size (size_t minsize);
+  // Compute not the smallest, but the second smallest buffer that
+  // will fir <minsize> bytes.
+
   static int grow (ACE_Message_Block *mb, size_t minsize);
   // Increase the capacity of mb to contain at least <minsize> bytes.
   // If <minsize> is zero the size is increased by an amount at least
   // large enough to contain any of the basic IDL types.  Return -1 on
   // failure, 0 on success.
+
+  static void consolidate (ACE_Message_Block *dst,
+                          const ACE_Message_Block *src);
+  // Copy a message block chain into a single message block,
+  // preserving the alignment of the original stream.
 
   static size_t total_length (const ACE_Message_Block *begin,
                               const ACE_Message_Block *end);

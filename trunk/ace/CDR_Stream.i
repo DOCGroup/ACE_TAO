@@ -71,6 +71,50 @@ ACE_CDR::mb_align (ACE_Message_Block *mb)
 #endif /* ACE_HAS_PURIFY */
 }
 
+ACE_INLINE size_t
+ACE_CDR::first_size (size_t minsize)
+{
+  if (minsize == 0)
+    return ACE_CDR::DEFAULT_BUFSIZE;
+
+  size_t newsize = ACE_CDR::DEFAULT_BUFSIZE;
+  while (newsize < minsize)
+    {
+      if (newsize < ACE_CDR::EXP_GROWTH_MAX)
+        {
+          // We grow exponentially at the beginning, this is fast and
+          // reduces the number of allocations.
+          newsize *= 2;
+        }
+      else
+        {
+          // but continuing with exponential growth can result in over
+          // allocations and easily yield an allocation failure.
+          // So we grow linearly when the buffer is too big.
+          newsize += ACE_CDR::LINEAR_GROWTH_CHUNK;
+        }
+    }
+  return newsize;
+}
+
+ACE_INLINE size_t
+ACE_CDR::next_size (size_t minsize)
+{
+  size_t newsize =
+    ACE_CDR::first_size (minsize);
+
+  if (newsize == minsize)
+    {
+      // If necessary increment the size
+      if (newsize < ACE_CDR::EXP_GROWTH_MAX)
+        newsize *= 2;
+      else
+        newsize += ACE_CDR::LINEAR_GROWTH_CHUNK;
+    }
+
+  return newsize;
+}
+
 // ****************************************************************
 
 // implementing the special types
