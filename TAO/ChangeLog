@@ -1,3 +1,10 @@
+Thu Feb 20 14:04:13 2003  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+
+	  Zapped remaining uses of "CORBA_Any", and replaced them with
+	  the correct "CORBA::Any".
+
 Thu Feb 20 13:57:36 2003  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_component/component_cs.cpp:

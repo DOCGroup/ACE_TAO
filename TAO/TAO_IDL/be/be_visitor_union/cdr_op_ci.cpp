@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union, 
-           cdr_op_ci, 
+ACE_RCSID (be_visitor_union,
+           cdr_op_ci,
            "$Id$")
 
 // ***************************************************************************
@@ -42,8 +42,8 @@ int
 be_visitor_union_cdr_op_ci::visit_union (be_union *node)
 {
   // already generated and/or we are imported. Don't do anything.
-  if (node->cli_inline_cdr_op_gen () 
-      || node->imported () 
+  if (node->cli_inline_cdr_op_gen ()
+      || node->imported ()
       || node->is_local ())
     {
       return 0;
@@ -57,7 +57,7 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_cdr_op_ci"
                          "::visit_union - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -79,17 +79,17 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
   switch (node->udisc_type ())
     {
       case AST_Expression::EV_bool:
-        *os << "CORBA_Any::from_boolean tmp (_tao_union._d ());" << be_nl
+        *os << "CORBA::Any::from_boolean tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_char:
-        *os << "CORBA_Any::from_char tmp (_tao_union._d ());" << be_nl
+        *os << "CORBA::Any::from_char tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_wchar:
-        *os << "CORBA_Any::from_wchar tmp (_tao_union._d ());" << be_nl
+        *os << "CORBA::Any::from_wchar tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
@@ -111,7 +111,7 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_cdr_op_ci::"
                          "visit_union - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -150,17 +150,17 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
   switch (node->udisc_type ())
     {
       case AST_Expression::EV_bool:
-        *os << "CORBA_Any::to_boolean tmp (_tao_discriminant);" << be_nl
+        *os << "CORBA::Any::to_boolean tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_char:
-        *os << "CORBA_Any::to_char tmp (_tao_discriminant);" << be_nl
+        *os << "CORBA::Any::to_char tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_wchar:
-        *os << "CORBA_Any::to_wchar tmp (_tao_discriminant);" << be_nl
+        *os << "CORBA::Any::to_wchar tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;
@@ -182,7 +182,7 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_cdr_op_ci::"
                          "visit_union - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -200,7 +200,7 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       *os << "break;" << be_uidt;
     }
 
-  *os << be_uidt_nl 
+  *os << be_uidt_nl
       << "}" << be_nl << be_nl
       << "return result;" << be_uidt_nl
       << "}";
