@@ -34,5 +34,5 @@ Logger_i::log (const char *message,
   // This is very simple-minded and can certainly be improved.
   ACE_DEBUG ((LM_DEBUG,
               "%s",
-              message);
+              message));
 }
