@@ -1,3 +1,12 @@
+Thu May  6 09:44:16 2004  Steve Totten  <totten_s@ociweb.com>
+
+        * docs/releasenotes/FT_FaultAnalyzerFramework.jpg:
+        * docs/releasenotes/FT_PrototypeArchitecture.jpg:
+
+          Added missing figures for the FT services release notes.
+          Thanks to Gautam Thaker <gthaker@atl.lmco.com> for noticing
+          they were missing.
+
 Wed May  5 23:46:42 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Messaging/Asynch_Invocation.h:
