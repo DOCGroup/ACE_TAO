@@ -76,6 +76,67 @@ LIB32=link.exe -lib
 # Name "server - Win32 Debug"
 # Begin Source File
 
+SOURCE=.\Foo.idl
+
+!IF  "$(CFG)" == "server - Win32 Release"
+
+# Begin Custom Build
+InputPath=.\Foo.idl
+
+BuildCmds= \
+	..\..\..\tao_idl\tao_idl Foo.idl
+
+"FooS.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"FooS.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"FooS.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"FooC.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"FooC.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"FooC.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "server - Win32 Debug"
+
+# Begin Custom Build
+InputPath=.\Foo.idl
+
+BuildCmds= \
+	..\..\..\tao_idl\tao_idl Foo.idl
+
+"FooS.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"FooS.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"FooS.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"FooC.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"FooC.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"FooC.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\FooC.cpp
 # End Source File
 # Begin Source File
