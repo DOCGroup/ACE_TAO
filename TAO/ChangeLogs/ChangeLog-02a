@@ -1,3 +1,8 @@
+Fri Aug 24 19:20:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+       * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+         Remove duplicate template instantiations.
+
 Fri Aug 24 16:15:36 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/performance-tests/EC_Federated_Latency/Peer.cpp:
