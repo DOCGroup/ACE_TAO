@@ -15,7 +15,9 @@
 // ============================================================================
 
 #ifndef TAO_IIOPORB_H
-#  define TAO_IIOPORB_H
+#define TAO_IIOPORB_H
+
+#include "ace/INET_Addr.h"
 
 #include "tao/ORB.h"
 
