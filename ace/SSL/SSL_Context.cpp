@@ -215,7 +215,9 @@ ACE_SSL_Context::set_mode (int mode)
   this->context_ = ::SSL_CTX_new (method);
   if (this->context_ == 0)
     {
+#ifndef ACE_NDEBUG
       ::ERR_print_errors_fp (stderr);
+#endif  /* ACE_NDEBUG */
       return -1;
     }
 
@@ -233,7 +235,10 @@ ACE_SSL_Context::set_mode (int mode)
                                        cert_file,
                                        cert_dir) <= 0)
     {
+#ifndef ACE_NDEBUG
       // ::ERR_print_errors_fp (stderr);
+#endif  /* ACE_NDEBUG */
+
       return -1;
     }
 

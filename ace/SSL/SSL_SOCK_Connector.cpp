@@ -110,12 +110,16 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream)
               errno = EWOULDBLOCK;
               break;
             default:
+#ifndef ACE_NDEBUG
               ERR_print_errors_fp (stderr);
+#endif  /* ACE_NDEBUG */
               break;
             }
         }
+#ifndef ACE_NDEBUG
       else
         ERR_print_errors_fp (stderr);
+#endif  /* ACE_NDEBUG */
 
       return -1;
     }
