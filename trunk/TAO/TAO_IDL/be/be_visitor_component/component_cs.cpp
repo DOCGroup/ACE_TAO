@@ -268,7 +268,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       << ")" << be_uidt << be_uidt_nl
       << " )" << be_nl
       << "{" << be_idt_nl
-      << "return 1; // success using local knowledge" << be_uidt_nl
+      << "return true; // success using local knowledge" << be_uidt_nl
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl
