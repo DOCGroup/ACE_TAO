@@ -1,3 +1,9 @@
+Thu May 06 12:28:54 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-FMM.html: replaced a > with &gt; and added RCS $Id$.
+
+        * ACE-INSTALL.html: added link to docs/ACE-FMM.html.
+
 Thu May 06 12:23:51 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (recvv, sendv): Added code to make these functions work
