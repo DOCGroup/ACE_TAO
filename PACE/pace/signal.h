@@ -16,6 +16,8 @@
 #ifndef PACE_SIGNAL_H_INDIRECT
 #define PACE_SIGNAL_H_INDIRECT
 
+#include "pace/config/defines.h"
+
 #if defined (PACE_HAS_POSIX)
 # include "pace/posix/signal.h"
 #elif defined (PACE_VXWORKS)

@@ -16,6 +16,8 @@
 #ifndef PACE_SETJMP_H_INDIRECT
 #define PACE_SETJMP_H_INDIRECT
 
+#include "pace/config/defines.h"
+
 #if defined (PACE_HAS_POSIX)
 # include "pace/posix/setjmp.h"
 #elif defined (PACE_VXWORKS)

@@ -16,6 +16,8 @@
 #ifndef PACE_TIME_H_INDIRECT
 #define PACE_TIME_H_INDIRECT
 
+#include "pace/config/defines.h"
+
 #if defined (PACE_HAS_POSIX)
 # include "pace/posix/time.h"
 #elif defined (PACE_VXWORKS)

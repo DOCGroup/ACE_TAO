@@ -1,3 +1,46 @@
+Tue Jun 20 15:14:44 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/sys/mman.h:
+	* pace/sys/socket.h:	
+	* pace/sys/stat.h:
+	* pace/sys/termios.h:
+	* pace/sys/times.h:
+	* pace/sys/types.h:
+	* pace/sys/utsname.h:	
+	* pace/netinet/in.h:
+	* pace/arpa/inet.h:
+	* pace/aio.h:
+	* pace/assert.h:
+	* pace/defines.h:
+	* pace/dirent.h:
+	* pace/fnctl.h:
+	* pace/grp.h:
+	* pace/limits.h:
+	* pace/locale.h:
+	* pace/mqueue.h:
+	* pace/netdb.h:
+	* pace/pthread.h:
+	* pace/pwd.h:
+	* pace/sched.h:
+	* pace/semaphore.h:
+	* pace/setjmp.h:
+	* pace/signal.h:
+	* pace/stdio.h:
+	* pace/stdlib.h:
+	* pace/string.h:
+	* pace/strings.h:
+	* pace/thread.h:
+	* pace/time.h:
+	* pace/unistd.h:
+	* pace/utime.h:
+	* pace/wait.h:
+
+	  Inserted #include "pace/config/defines.h".
+
+	* pace/config/defines.h:
+
+	  Removed from pace/ dir and placed in config dir.
+
 Tue Jun 20 14:53:12 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/defines.h:

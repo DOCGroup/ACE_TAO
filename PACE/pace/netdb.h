@@ -16,6 +16,8 @@
 #ifndef PACE_NETDB_H_INDIRECT
 #define PACE_NETDB_H_INDIRECT
 
+#include "pace/config/defines.h"
+
 #if defined (PACE_HAS_POSIX)
 # include "pace/posix/netdb.h"
 #elif defined (PACE_VXWORKS)

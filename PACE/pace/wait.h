@@ -16,6 +16,8 @@
 #ifndef PACE_WAIT_H_INDIRECT
 #define PACE_WAIT_H_INDIRECT
 
+#include "pace/config/defines.h"
+
 #if defined (PACE_HAS_POSIX)
 # include "pace/posix/wait.h"
 #elif defined (PACE_VXWORKS)
