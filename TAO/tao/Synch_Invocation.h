@@ -93,7 +93,7 @@ namespace TAO
   {
   public:
     Reply_Guard (Invocation_Base *s,
-                 Invocation_Status s);
+                 Invocation_Status is);
 
     ~Reply_Guard (void);
 

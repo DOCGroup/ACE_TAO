@@ -58,6 +58,7 @@ namespace TAO
     TAO_Stub *stub (void) const;
 
     CORBA::Object_ptr forwarded_reference (void);
+    void forwarded_reference (CORBA::Object_ptr o);
 
     TAO_Service_Context &request_service_context (void);
     TAO_Service_Context &reply_service_context (void);
@@ -74,8 +75,6 @@ namespace TAO
     Invocation_Base (CORBA::Object_ptr target,
                      TAO_Operation_Details &op,
                      bool response_expected = true);
-
-    void forwarded_reference (CORBA::Object_ptr o);
 
   protected:
 

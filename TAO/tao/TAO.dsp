@@ -270,6 +270,10 @@ SOURCE=.\ClientRequestInfo_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ClientRequestInterceptor_Adapter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CodecFactory.cpp
 # End Source File
 # Begin Source File
@@ -493,17 +497,6 @@ SOURCE=.\IIOP_Connection_Handler.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Connector.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -528,17 +521,6 @@ SOURCE=.\IIOP_Profile.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Transport.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -835,17 +817,6 @@ SOURCE=.\Profile.cpp
 # Begin Source File
 
 SOURCE=.\Profile_Transport_Resolver.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -1239,6 +1210,10 @@ SOURCE=.\ClientRequestInfo.h
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientRequestInterceptor_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -2187,6 +2162,10 @@ SOURCE=.\ClientInterceptorAdapter.inl
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo_i.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientRequestInterceptor_Adapter.inl
 # End Source File
 # Begin Source File
 

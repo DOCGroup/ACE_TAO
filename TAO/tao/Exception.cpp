@@ -1218,7 +1218,6 @@ STANDARD_EXCEPTION_LIST
 void \
 CORBA::name ::_raise (void) \
 { \
-  std::cout << "Here " << std::endl; \
   TAO_RAISE (*this); \
 }
 
