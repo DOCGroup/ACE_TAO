@@ -251,6 +251,9 @@ for (my $i = 2; $i <= $max_size; ++$i) {
     # Wait for client to finish
     $client->Wait();
 
+    # Remind the client that it's finished running
+    $client->{RUNNING} = 0;
+
     # Sleep for a while
     sleep 5;
 }
