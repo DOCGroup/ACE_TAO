@@ -66,12 +66,30 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   ACE_TRACE ("ACE_MEM_Connector::connect");
 
   ACE_SOCK_Stream temp_stream;
-  int result = ACE_SOCK_Connector::connect (temp_stream, remote_sap,
-					    timeout, local_sap,
-					    reuse_addr, flags, perms,
-					    protocol_family, protocol);
+  if (ACE_SOCK_Connector::connect (temp_stream, remote_sap,
+                                   timeout, local_sap,
+                                   reuse_addr, flags, perms,
+                                   protocol_family, protocol) == -1)
+    return -1;
 
-  new_stream.set_handle (temp_stream.get_handle ());
+  ACE_HANDLE new_handle = temp_stream.get_handle ();
+  new_stream.set_handle (new_handle);
   // Do not close the handle.
-  return result;
+
+  // now we should setup the mmap malloc.
+  char buf[MAXPATHLEN];
+
+  // @@ Need to handle timeout here.
+  ACE_INT16 buf_len;
+  // Byte-order is not a problem for this read.
+  if (ACE::recv (new_handle, &buf_len, sizeof (buf_len)) == -1)
+    return -1;
+
+  if (ACE::recv (new_handle, buf, buf_len) == -1)
+    return -1;
+
+  if (new_stream.create_shm_malloc (buf) == -1)
+    return -1;
+
+  return 0;
 }
