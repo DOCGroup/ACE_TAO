@@ -208,8 +208,8 @@ public:
   ACE_HANDLE handle (void) const;
   // I/O handle used for reading.
 
-  // Base class operations. These operations are here to kill some
-  // warnings. These methods call the base class methods.
+  // Base class operations. These operations are here to kill
+  // dominance warnings. These methods call the base class methods.
 
   u_long bytes_transferred (void) const;
   // Number of bytes transferred by the operation.
@@ -359,8 +359,8 @@ public:
   ACE_HANDLE handle (void) const;
   // I/O handle used for writing.
 
-  // Base class operations. These operations are here to kill some
-  // warnings. These methods call the base class methods.
+  // = Base class operations. These operations are here to kill some 
+  //   warnings. These methods call the base class methods.
 
   u_long bytes_transferred (void) const;
   // Number of bytes transferred by the operation.
@@ -456,9 +456,9 @@ public:
   virtual ~ACE_WIN32_Asynch_Write_Stream (void);
   // Destructor.
 
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
-  // methods are defined here to avoid VC++ warnings. They route the
-  // call to the ACE_WIN32_Asynch_Operation base class.
+  // = Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+  //   methods are defined here to avoid VC++ warnings. They route the 
+  //   call to the ACE_WIN32_Asynch_Operation base class.
 
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -501,9 +501,9 @@ class ACE_Export ACE_WIN32_Asynch_Read_File_Result : public virtual ACE_Asynch_R
   // Proactor class has special permission.
 
 public:
-  // These methods belong to ACE_WIN32_Asynch_Result class base class.
-  // These operations are here to kill some warnings. These methods
-  // call the base class methods.
+  // = These methods belong to ACE_WIN32_Asynch_Result class base
+  //   class. These operations are here to kill some warnings. These 
+  //   methods call the base class methods.
 
   u_long bytes_transferred (void) const;
   // Number of bytes transferred by the operation.
@@ -537,7 +537,7 @@ public:
 
   // The following methods belong to
   // ACE_WIN32_Asynch_Read_Stream_Result. They are here to avoid VC++
-  // warnings. These methods route their call to the
+  // dominance warnings. These methods route their call to the
   // ACE_WIN32_Asynch_Read_Stream_Result base class.
 
   u_long bytes_to_read (void) const;
@@ -612,9 +612,9 @@ public:
   virtual ~ACE_WIN32_Asynch_Read_File (void);
   // Destructor.
 
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
-  // methods are defined here to avoid VC++ warnings. They route the
-  // call to the ACE_WIN32_Asynch_Operation base class.
+  // = Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+  //   methods are defined here to avoid VC++ warnings. They route the 
+  //   call to the ACE_WIN32_Asynch_Operation base class.
 
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -671,8 +671,8 @@ class ACE_Export ACE_WIN32_Asynch_Write_File_Result : public virtual ACE_Asynch_
   // Proactor class has special permission.
 
 public:
-  // Base class operations. These operations are here to kill some
-  // warnings. These methods call the base class methods.
+  // = Base class operations. These operations are here to kill some
+  //   warnings. These methods call the base class methods.
 
   u_long bytes_transferred (void) const;
   // Number of bytes transferred by the operation.
@@ -778,9 +778,9 @@ public:
   virtual ~ACE_WIN32_Asynch_Write_File (void);
   // Destrcutor.
 
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
-  // methods are defined here to avoid VC++ warnings. They route the
-  // call to the ACE_WIN32_Asynch_Operation base class.
+  // = Methods belong to ACE_WIN32_Asynch_Operation base class. These 
+  //   methods are defined here to avoid VC++ warnings. They route the 
+  //   call to the ACE_WIN32_Asynch_Operation base class.
 
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -843,8 +843,8 @@ public:
   ACE_HANDLE accept_handle (void) const;
   // I/O handle for the new connection.
 
-  // Base class operations. These operations are here to kill some
-  // warnings. These methods call the base class methods.
+  // = Base class operations. These operations are here to kill some 
+  //   warnings. These methods call the base class methods. 
 
   u_long bytes_transferred (void) const;
   // Number of bytes transferred by the operation.

@@ -135,13 +135,16 @@ public:
 
   virtual int handle_events (ACE_Time_Value &wait_time);
   // Dispatch a single set of events.  If <wait_time> elapses before
-  // any events occur, return.  Return 0 on success, non-zero (-1) on
-  // timeouts/errors and errno is set accordingly.
+  // any events occur, return 0.  Return 1 on success i.e., when a
+  // completion is dispatched, non-zero (-1) on errors and errno is
+  // set accordingly. 
 
   virtual int handle_events (void);
   // Block indefinitely until at least one event is dispatched.
-  // Return 0 on success, non-zero (-1) on timeouts/errors and errno
-  // is set accordingly.
+  // Dispatch a single set of events.  If <wait_time> elapses before
+  // any events occur, return 0.  Return 1 on success i.e., when a
+  // completion is dispatched, non-zero (-1) on errors and errno is
+  // set accordingly. 
 
   int wake_up_dispatch_threads (void);
   // Add wakeup dispatch threads (reinit).
