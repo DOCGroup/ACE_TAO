@@ -38,8 +38,6 @@ const char *TAO_Internal::server_strategy_args_ = 0;
 const char *TAO_Internal::client_strategy_args_ = 0;
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 
-
-
 int
 TAO_Internal::open_services (int &argc, char **argv)
 {
@@ -136,6 +134,7 @@ TAO_Internal::open_services (int &argc, char **argv)
         }
       else if ((current_arg = arg_shifter.get_the_parameter ("-ORBServiceConfigLoggerKey")))
         {
+          len = svc_config_argv.length ();
           svc_config_argv.length (len + 2);  // 2 arguments to add
 
           svc_config_argv[len] = CORBA::string_dup ("-k");
