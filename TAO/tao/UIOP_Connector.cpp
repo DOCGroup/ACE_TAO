@@ -141,7 +141,19 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
                       buffer,
                       "errno"));
         }
-
+      // @@ Without this reset_hint() call the ORB crashes after
+      //    several attempts to reconnect, apparently because the
+      //    cached connector already destroyed the object.
+      //    Using reset_hint() seems to eliminate the problem, and
+      //    actually purify is happy with it, but i have some doubts
+      //    about it: wasn't the hint destroyed already by the
+      //    connector?  We (Fred and Carlos) thought about just
+      //    setting the hint to 0, but that would not be thread-safe
+      //    (other threads may be touching the same profile).
+      //    At this point (the day before 1.0) i'm reluctant to change 
+      //    ACE, and this fix passes all the TAO tests (including the
+      //    new ping/pong test in the tests/Faults directory).
+      uiop_profile->reset_hint ();
       return -1;
     }
 

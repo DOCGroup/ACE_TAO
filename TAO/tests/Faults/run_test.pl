@@ -24,8 +24,8 @@ if (ACE::waitforfile_timed ($iorfile, 15) == -1) {
 }
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-		       " -k file://$iorfile"
-		       . " -i 100");
+                       " -k file://$iorfile"
+                       . " -i 100");
 
 $client = $CL->TimedWait (20);
 if ($client == -1) {
@@ -37,8 +37,8 @@ if ($client == -1) {
 print STDERR "===== Client crash (abort) during upcall\n";
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-		       " -k file://$iorfile"
-		       . " -i 100 -s");
+                       " -k file://$iorfile"
+                       . " -i 100 -s");
 
 $client = $CL->TimedWait (20);
 if ($client == -1) {
@@ -50,8 +50,8 @@ if ($client == -1) {
 print STDERR "===== Client crash during upcall\n";
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-		       " -k file://$iorfile"
-		       . " -i 100 -z");
+                       " -k file://$iorfile"
+                       . " -i 100 -z");
 
 $client = $CL->TimedWait (20);
 if ($client == -1) {
@@ -63,8 +63,8 @@ if ($client == -1) {
 print STDERR "===== Server crash (abort) during upcall\n";
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-		       " -k file://$iorfile"
-		       . " -i 100 -a");
+                       " -k file://$iorfile"
+                       . " -i 100 -a");
 
 $client = $CL->TimedWait (20);
 if ($client == -1) {
@@ -93,8 +93,8 @@ if (ACE::waitforfile_timed ($iorfile, 15) == -1) {
 }
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-		       " -k file://$iorfile"
-		       . " -i 100 -c");
+                       " -k file://$iorfile"
+                       . " -i 100 -c");
 
 $client = $CL->TimedWait (20);
 if ($client == -1) {
@@ -139,10 +139,10 @@ if (ACE::waitforfile_timed ($middlefile, 15) == -1) {
 }
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-		       " -k file://$middlefile"
-		       . " -i 100 -s");
+                       " -k file://$middlefile"
+                       . " -i 100 -s");
 
-$client = $CL->TimedWait (60);
+$client = $CL->TimedWait (100);
 if ($client == -1) {
   print STDERR "ERROR: client (middle/-s) timedout\n";
   $CL->Kill (); $CL->TimedWait (1);
@@ -150,24 +150,24 @@ if ($client == -1) {
 }
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-		       " -k file://$middlefile"
-		       . " -i 10 -x");
+                       " -k file://$middlefile"
+                       . " -i 10 -x");
 
-$client = $CL->TimedWait (60);
+$client = $CL->TimedWait (100);
 if ($client == -1) {
   print STDERR "ERROR: client (middle/-x) timedout\n";
   $CL->Kill (); $CL->TimedWait (1);
   $status = 1;
 }
 
-$server = $SV->TimedWait (60);
+$server = $SV->TimedWait (20);
 if ($server == -1) {
   print STDERR "ERROR: server (middle/-x) timedout\n";
   $SV->Kill (); $SV->TimedWait (1);
   $status = 1;
 }
 
-$middle = $MD->TimedWait (60);
+$middle = $MD->TimedWait (20);
 if ($middle == -1) {
   print STDERR "ERROR: middle (-x) timedout\n";
   $MD->Kill (); $MD->TimedWait (1);
@@ -176,6 +176,36 @@ if ($middle == -1) {
 
 if ($middle != 0) {
   print STDERR "ERROR: the middle test failed\n";
+  $status = 1;
+}
+
+print STDERR "===== Ping-pong test, server crashes but client continues\n";
+
+unlink $iorfile;
+$SV = Process::Create ($EXEPREFIX."ping$EXE_EXT ",
+                       " -o $iorfile");
+
+if (ACE::waitforfile_timed ($iorfile, 15) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
+}
+
+$CL = Process::Create ($EXEPREFIX."pong$EXE_EXT ",
+                       " -k file://$iorfile"
+                       . " -p 100 -i 60 -t 30");
+
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: pong timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+  $status = 1;
+}
+
+$server = $SV->TimedWait (60);
+if ($server == -1) {
+  print STDERR "ERROR: ping timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
   $status = 1;
 }
 
