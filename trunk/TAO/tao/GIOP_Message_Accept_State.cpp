@@ -8,7 +8,7 @@
 #include "tao/GIOP_Utils.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/Tagged_Profile.h"
-
+#include "tao/OctetSeqC.h"
 
 ACE_RCSID(tao, GIOP_Message_Accept_State, "$Id$")
 
@@ -45,31 +45,31 @@ TAO_GIOP_Message_Accept_State::marshal_reply_status (
     }
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_GIOP_Message_Accept_State::unmarshall_object_key (
     TAO_ObjectKey &object_key,
     TAO_InputCDR &input
   )
 {
-  CORBA::Boolean hdr_status = 
+  CORBA::Boolean hdr_status =
     (CORBA::Boolean) input.good_bit ();
-  
+
   CORBA::Long key_length = 0;
   hdr_status = hdr_status && input.read_long (key_length);
 
   if (hdr_status)
     {
-      object_key.replace (key_length, 
+      object_key.replace (key_length,
                           key_length,
                           (CORBA::Octet*)input.rd_ptr (),
                           0);
       input.skip_bytes (key_length);
     }
-  
+
   return hdr_status;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_GIOP_Message_Accept_State::unmarshall_iop_profile (
     TAO_Tagged_Profile & /* profile */,
     TAO_InputCDR & /* cdr */
@@ -79,7 +79,7 @@ TAO_GIOP_Message_Accept_State::unmarshall_iop_profile (
 }
 
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_GIOP_Message_Accept_State::unmarshall_ref_addr (
     TAO_Tagged_Profile & /* profile */,
     TAO_InputCDR & /* cdr */
@@ -89,7 +89,7 @@ TAO_GIOP_Message_Accept_State::unmarshall_ref_addr (
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// TAO_GIOP_Message_Accept_State_10 methods 
+// TAO_GIOP_Message_Accept_State_10 methods
 ////////////////////////////////////////////////////////////////////////////////
 int
 TAO_GIOP_Message_Accept_State_10::parse_request_header (
@@ -108,12 +108,12 @@ TAO_GIOP_Message_Accept_State_10::parse_request_header (
   // Get the input CDR in the request class
   TAO_InputCDR& input = request.incoming ();
 
-  IOP::ServiceContextList &service_info = 
+  IOP::ServiceContextList &service_info =
     request.service_info ();
-  
+
   input >> service_info;
 
-  CORBA::Boolean hdr_status = 
+  CORBA::Boolean hdr_status =
     (CORBA::Boolean) input.good_bit ();
 
   CORBA::ULong req_id;
@@ -171,15 +171,19 @@ TAO_GIOP_Message_Accept_State_10::parse_request_header (
 
   if (hdr_status)
     {
-      CORBA::Principal_var principal;
+      /**** This has been deprecated in 2.4 ****/
+      /*CORBA::Principal_var principal;
 
-      // Beware extra data copying.
       input >> principal.out ();
 
-      request.requesting_principal (principal.in ());
+      request.requesting_principal (principal.in ()); */
 
+      CORBA_OctetSeq oct_seq;
+      input >> oct_seq;
+      request.requesting_principal (oct_seq);
       hdr_status = (CORBA::Boolean) input.good_bit ();
     }
+
 
   return hdr_status ? 0 : -1;
 }
@@ -224,7 +228,7 @@ TAO_GIOP_Message_Accept_State_10::write_reply_header (
 
       // Now increment it to account for the last dummy one...
       count++;
-      
+
       // Now marshal the rest of the service context objects
       output << count;
       for (i = 0; i != l; ++i)
@@ -243,10 +247,10 @@ TAO_GIOP_Message_Accept_State_10::write_reply_header (
     {
       // @@ Much of this code is GIOP 1.1 specific and should be
       ptr_arith_t target = reply.dsi_nvlist_align_;
-      
+
       ptr_arith_t current =
         ptr_arith_t (output.current_alignment ()) % ACE_CDR::MAX_ALIGNMENT;
-      
+
       CORBA::ULong pad = 0;
 
       if (target == 0)
@@ -294,7 +298,7 @@ TAO_GIOP_Message_Accept_State_10::write_reply_header (
           ACE_THROW_RETURN (CORBA::MARSHAL (),
                             0);
         }
-      
+
       output << CORBA::ULong (TAO_SVC_CONTEXT_ALIGN);
       output << pad;
 
@@ -304,12 +308,12 @@ TAO_GIOP_Message_Accept_State_10::write_reply_header (
         }
     }
 #endif /* TAO_HAS_MINIMUM_CORBA */
-  
+
   // Write the request ID
   output.write_ulong (reply.request_id_);
 
   // Write the reply status
-  this->marshal_reply_status (output, 
+  this->marshal_reply_status (output,
                               reply);
 
   ACE_UNUSED_ARG (ACE_TRY_ENV);
@@ -334,7 +338,7 @@ TAO_GIOP_Message_Accept_State_10::parse_locate_header (
   request.request_id (req_id);
 
   // Get the object key
-  hdr_status = 
+  hdr_status =
     this->unmarshall_object_key (request.object_key (),
                                  msg);
 
@@ -354,7 +358,7 @@ TAO_GIOP_Message_Accept_State_10::write_locate_reply_mesg (
 
   if (status_info.status == TAO_GIOP_OBJECT_FORWARD)
     {
-      CORBA::Object_ptr object_ptr = 
+      CORBA::Object_ptr object_ptr =
         status_info.forward_location_var.in ();
 
       if ((output << object_ptr) == 0)
@@ -396,7 +400,7 @@ TAO_GIOP_Message_Accept_State_11::minor_version (void)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// TAO_GIOP_Message_Accept_State_12 methods 
+// TAO_GIOP_Message_Accept_State_12 methods
 ////////////////////////////////////////////////////////////////////////////////
 
 // The methods below are not complete.
@@ -408,24 +412,23 @@ TAO_GIOP_Message_Accept_State_12::parse_request_header (
 
   // Get the input CDR in the request class
   TAO_InputCDR& input = request.incoming ();
-  
+
   CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 
-  CORBA::ULong req_id; 
+  CORBA::ULong req_id;
   // Get the rest of the request header ...
   hdr_status = hdr_status && input.read_ulong (req_id);
-  
+
   request.request_id (req_id);
-  
+
   CORBA::Octet response_flags;
   hdr_status = hdr_status && input.read_octet (response_flags);
-  
-  // Need to work around the hacks
-  request.response_expected ((response_flags > 1));
+
+  request.response_expected ((response_flags > 0));
 
   // The high bit of the octet has been set if the SyncScope policy
-  // value is SYNC_WITH_SERVER. 
-  request.sync_with_server ((response_flags == 2));
+  // value is SYNC_WITH_SERVER.
+  request.sync_with_server ((response_flags == 1));
 
   // Reserved field
   input.skip_bytes (3);
@@ -438,19 +441,19 @@ TAO_GIOP_Message_Accept_State_12::parse_request_header (
     {
       if (disc == GIOP::KeyAddr)
           {
-            hdr_status = 
+            hdr_status =
               this->unmarshall_object_key (request.object_key (),
                                            input);
           }
        else if (disc == GIOP::ProfileAddr)
           {
-            hdr_status = 
+            hdr_status =
               this->unmarshall_iop_profile (request.profile (),
                                             input);
           }
       else if (disc == GIOP::ReferenceAddr)
         {
-             hdr_status = 
+             hdr_status =
                this->unmarshall_ref_addr (request.profile (),
                                           input);
         }
@@ -496,14 +499,14 @@ TAO_GIOP_Message_Accept_State_12::parse_request_header (
   // verify a digital signature, if that is required in this security
   // environment.  It may be required even when using IPSEC security
   // infrastructure.
-  IOP::ServiceContextList &service_info = 
+  IOP::ServiceContextList &service_info =
     request.service_info ();
-  
+
   input >> service_info;
 
   // Reset the read_ptr to an 8-byte boundary.
   input.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
-  
+
   return hdr_status ? 0 : -1;
 }
 
@@ -516,86 +519,86 @@ TAO_GIOP_Message_Accept_State_12::parse_locate_header (
   TAO_InputCDR &msg = request.incoming_stream ();
 
   CORBA::Boolean hdr_status = 1;
-  
+
   // Get the request id.
   CORBA::ULong req_id = 0;
   hdr_status = msg.read_ulong (req_id);
-  
+
   // Store it in the Locate request classes
   request.request_id (req_id);
 
   // Read the discriminant of the union.
   CORBA::Short disc = 0;
-  hdr_status = 
+  hdr_status =
     hdr_status && msg.read_short (disc);
 
   if (hdr_status)
     {
       if (disc == GIOP::KeyAddr)
           {
-            hdr_status = 
+            hdr_status =
               this->unmarshall_object_key (request.object_key (),
                                            msg);
           }
        else if (disc == GIOP::ProfileAddr)
           {
-            hdr_status = 
+            hdr_status =
               this->unmarshall_iop_profile (request.profile (),
                                             msg);
           }
       else if (disc == GIOP::ReferenceAddr)
         {
-             hdr_status = 
+             hdr_status =
                this->unmarshall_ref_addr (request.profile (),
                                           msg);
         }
     }
-  
+
   // Reset the pointer to an 8-byte bouns]dary
   msg.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
 
   return hdr_status ? 0 : -1;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_GIOP_Message_Accept_State_12::unmarshall_iop_profile (
     TAO_Tagged_Profile &profile_addr,
     TAO_InputCDR &input
   )
 {
-  CORBA::Boolean hdr_status = 
+  CORBA::Boolean hdr_status =
     (CORBA::Boolean) input.good_bit ();
 
   // Get the IOP::Tagged profile.
-  IOP::TaggedProfile &tagged_profile = 
+  IOP::TaggedProfile &tagged_profile =
     profile_addr.tagged_profile ();
-    
+
   hdr_status &= input >> tagged_profile;
-  
+
   // Extract the object key from the TaggedProfile.
   hdr_status &=profile_addr.extract_object_key (tagged_profile);
 
   return hdr_status;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_GIOP_Message_Accept_State_12::unmarshall_ref_addr (
     TAO_Tagged_Profile &profile_addr,
     TAO_InputCDR &input
   )
 {
-  CORBA::Boolean hdr_status = 
+  CORBA::Boolean hdr_status =
     (CORBA::Boolean) input.good_bit ();
 
     // Get the IOP::Tagged profile.
-  GIOP::IORAddressingInfo &addr_info = 
+  GIOP::IORAddressingInfo &addr_info =
     profile_addr.addressing_info ();
 
   hdr_status &= input>> addr_info;
 
-  IOP::TaggedProfile &tag = 
+  IOP::TaggedProfile &tag =
     addr_info.ior.profiles [addr_info.selected_profile_index];
-  
+
   // Extract the object key from the TaggedProfile.
   hdr_status &= profile_addr.extract_object_key (tag);
 
@@ -612,9 +615,9 @@ TAO_GIOP_Message_Accept_State_12::write_reply_header (
 {
   // Write the request ID
   output.write_ulong (reply.request_id_);
-  
+
    // Write the reply status
-  if (reply.reply_status_ == 
+  if (reply.reply_status_ ==
       TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM)
     {
       // Not sure when we will use this.
@@ -628,7 +631,7 @@ TAO_GIOP_Message_Accept_State_12::write_reply_header (
     }
   else
     {
-      this->marshal_reply_status (output, 
+      this->marshal_reply_status (output,
                                   reply);
     }
 
@@ -644,7 +647,7 @@ TAO_GIOP_Message_Accept_State_12::write_reply_header (
       IOP::ServiceContextList &svc_ctx =
         reply.service_context_notowned ();
       CORBA::ULong l = svc_ctx.length ();
-      
+
       // Now marshal the rest of the service context objects
       output << l;
 
@@ -655,7 +658,7 @@ TAO_GIOP_Message_Accept_State_12::write_reply_header (
 
     }
 #endif /*TAO_HAS_MINIMUM_CORBA */
-  
+
   if (output.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
     {
       return 0;
@@ -664,7 +667,7 @@ TAO_GIOP_Message_Accept_State_12::write_reply_header (
   return 1;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_GIOP_Message_Accept_State_12::write_locate_reply_mesg (
     TAO_OutputCDR & output,
     CORBA::ULong request_id,
@@ -684,11 +687,11 @@ TAO_GIOP_Message_Accept_State_12::write_locate_reply_mesg (
   switch (status_info.status)
     {
     case TAO_GIOP_OBJECT_FORWARD:
-      
+
       // More likely than not we will not have this in TAO
     case TAO_GIOP_OBJECT_FORWARD_PERM:
       {
-        CORBA::Object_ptr object_ptr = 
+        CORBA::Object_ptr object_ptr =
           status_info.forward_location_var.in ();
 
         if ((output << object_ptr) == 0)
@@ -731,4 +734,3 @@ TAO_GIOP_Message_Accept_State_12::minor_version (void)
 {
   return (CORBA::Octet) 2;
 }
-

@@ -30,10 +30,10 @@
 
 #include "ace/SString.h"
 #include "tao/ORB.h"
-#include "tao/Principal.h"
+//#include "tao/Principal.h"
 #include "tao/GIOP_Message_Base.h"
 #include "tao/Tagged_Profile.h"
-
+#include "tao/OctetSeqC.h"
 
 class TAO_Export TAO_ServerRequest
 {
@@ -117,7 +117,7 @@ public:
   void send_no_exception_reply (void);
   // Used with reliable oneway requests.
 
-  CORBA::Principal_ptr principal (void) const;
+  // CORBA::Principal_ptr principal (void) const;
 
   TAO_ObjectKey &object_key (void);
 
@@ -138,8 +138,12 @@ public:
   void exception_type (CORBA::ULong except_type);
   // Set the exception type.
 
-  void requesting_principal (CORBA_Principal_ptr principal);
+  /**** Deprecated in CORBA 2.4 *****/
+  // void requesting_principal (CORBA_Principal_ptr principal);
   // Set the requesting principal.
+
+  void requesting_principal (const CORBA_OctetSeq & principal);
+  // Set the requesting principal
 
   TAO_Tagged_Profile &profile (void);
   // Return the reference to the tagged profile
@@ -202,7 +206,7 @@ private:
   TAO_Tagged_Profile profile_;
   // The tagged profile that has the addressing information.
 
-  CORBA::Principal_var requesting_principal_;
+  CORBA_OctetSeq_var requesting_principal_;
   // Identifies the requester.
 
   CORBA::Boolean is_dsi_;
