@@ -22,7 +22,7 @@
 #include <set>
 #include <string>
 
-#include "Trader_Base.h"
+#include "Trader.h"
 
 class TAO_Policies
 //

@@ -17,7 +17,7 @@
 #ifndef TAO_SERVICE_TYPE_MAP_H
 #define TAO_SERVICE_TYPE_MAP_H
 
-#include "Trader_Base.h"
+#include "Trader.h"
 #include "Monitor.h"
 
 class TAO_Offer_Id_Iterator;
