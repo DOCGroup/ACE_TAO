@@ -27,7 +27,7 @@ ACE_SOCK_Dgram::send (const void *buf,
 {
   ACE_TRACE ("ACE_SOCK_Dgram::send");
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
-  size_t len = addr.get_size ();
+  int len = addr.get_size ();
   return ACE_OS::sendto (this->get_handle (), 
 			 (const char *) buf,
                          n,
@@ -69,7 +69,7 @@ ACE_SOCK_Dgram::send (const iovec buffers[],
 {
   ACE_TRACE ("ACE_SOCK_Dgram::send");
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
-  size_t len = addr.get_size ();
+  int len = addr.get_size ();
   return ACE_OS::sendto (this->get_handle (), 
                          buffers,
                          buffer_count,

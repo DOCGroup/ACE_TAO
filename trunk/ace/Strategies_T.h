@@ -331,13 +331,13 @@ public:
   /// Initialize the strategy.
   ACE_Thread_Strategy (ACE_Thread_Manager *tm,
                        long thr_flags,
-                       size_t n_threads = 1,
+                       int n_threads = 1,
                        int flags = 0);
 
   /// Initialize the strategy.
   virtual int open (ACE_Thread_Manager *tm,
                     long thr_flags,
-                    size_t n_threads = 1,
+                    int n_threads = 1,
                     int flags = 0);
 
   virtual ~ACE_Thread_Strategy (void);
@@ -368,7 +368,7 @@ protected:
   long thr_flags_;
 
   /// Number of threads to spawn.
-  size_t n_threads_;
+  int n_threads_;
 };
 
 /**

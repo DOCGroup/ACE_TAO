@@ -348,7 +348,7 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const
   int remote_size = 0;
 
   ::GetAcceptExSockaddrs (message_block.rd_ptr (),
-                          bytes_to_read_,
+                          ACE_static_cast (DWORD, this->bytes_to_read_),
                           this->address_size (),
                           this->address_size (),
                           &local_addr,
@@ -439,14 +439,14 @@ ACE_Asynch_Acceptor<HANDLER>::reissue_accept (int new_value)
   this->reissue_accept_ = new_value;
 }
 
-template <class HANDLER> int
+template <class HANDLER> size_t
 ACE_Asynch_Acceptor<HANDLER>::bytes_to_read (void) const
 {
   return this->bytes_to_read_;
 }
 
 template <class HANDLER> void
-ACE_Asynch_Acceptor<HANDLER>::bytes_to_read (int new_value)
+ACE_Asynch_Acceptor<HANDLER>::bytes_to_read (size_t new_value)
 {
   this->bytes_to_read_ = new_value;
 }

@@ -506,5 +506,10 @@ typedef unsigned long long ACE_UINT64;
 #define SO_REUSEPORT 0x0400  // We just have to pick a value that won't conflict
 #endif
 
+#if defined (ACE_WIN64)
+// Data must be aligned on 8-byte boundaries, at a minimum.
+#  define ACE_MALLOC_ALIGN 8
+#endif /* ACE_WIN64 */
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */

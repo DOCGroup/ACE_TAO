@@ -4,7 +4,7 @@
 // FILE_IO.i
 
 ASYS_INLINE ssize_t
-ACE_FILE_IO::sendv_n (const iovec iov[], size_t n) const
+ACE_FILE_IO::sendv_n (const iovec iov[], int n) const
 {
   ACE_TRACE ("ACE_FILE_IO::sendv_n");
   return ACE::writev_n (this->get_handle (),
@@ -27,7 +27,7 @@ ACE_FILE_IO::send_n (const ACE_Message_Block *message_block,
 // Recv an n byte message from the file.
 
 ASYS_INLINE ssize_t
-ACE_FILE_IO::recvv_n (iovec iov[], size_t n) const
+ACE_FILE_IO::recvv_n (iovec iov[], int n) const
 {
   ACE_TRACE ("ACE_FILE_IO::recvv_n");
   // @@ Carlos, can you please update this to call the
@@ -40,7 +40,7 @@ ACE_FILE_IO::recvv_n (iovec iov[], size_t n) const
 // Send an <iovec> of size <n> to the file.
 
 ASYS_INLINE ssize_t
-ACE_FILE_IO::sendv (const iovec iov[], size_t n) const
+ACE_FILE_IO::sendv (const iovec iov[], int n) const
 {
   ACE_TRACE ("ACE_FILE_IO::sendv");
   return ACE_OS::writev (this->get_handle (), iov, n);
@@ -81,14 +81,14 @@ ACE_FILE_IO::recv (void *buf, size_t n) const
 }
 
 ASYS_INLINE ssize_t
-ACE_FILE_IO::send (const iovec iov[], size_t n) const
+ACE_FILE_IO::send (const iovec iov[], int n) const
 {
   ACE_TRACE ("ACE_FILE_IO::send");
   return ACE_OS::writev (this->get_handle (), iov, n);
 }
 
 ASYS_INLINE ssize_t
-ACE_FILE_IO::recv (iovec iov[], size_t n) const
+ACE_FILE_IO::recv (iovec iov[], int n) const
 {
   ACE_TRACE ("ACE_FILE_IO::recv");
   return ACE_OS::readv (this->get_handle (), iov, n);

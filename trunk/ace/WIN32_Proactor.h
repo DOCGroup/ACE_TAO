@@ -309,7 +309,7 @@ protected:
                           int signal_number = 0);
 
   /// This method calls the <handler>'s handle_timeout method.
-  virtual void complete (u_long bytes_transferred,
+  virtual void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error = 0);

@@ -3787,7 +3787,7 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
 
 int
 ACE_OS::string_to_argv (ACE_TCHAR *buf,
-                        size_t &argc,
+                        int &argc,
                         ACE_TCHAR **&argv,
                         int substitute_env_args)
 {
@@ -3855,7 +3855,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
 
   ACE_TCHAR *ptr = buf;
 
-  for (size_t i = 0; i < argc; i++)
+  for (int i = 0; i < argc; i++)
     {
       // Skip whitespace..
       while (ACE_OS::ace_isspace (*ptr))

@@ -167,7 +167,7 @@ class Connector: public ACE_Connector<Sender,ACE_SOCK_CONNECTOR>
 {
   friend class Sender;
 public:
-  long get_number_sessions (void) { return sessions_; }
+  size_t get_number_sessions (void) { return sessions_; }
   long get_total_snd (void) { return this->total_snd_; }
   long get_total_rcv (void) { return this->total_rcv_; }
   long get_total_w   (void) { return this->total_w_; }

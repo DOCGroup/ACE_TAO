@@ -32,7 +32,7 @@ public:
   virtual ~ACE_WIN32_Wakeup_Completion (void);
 
   /// This method calls the <handler>'s <handle_wakeup> method.
-  virtual void complete (u_long bytes_transferred = 0,
+  virtual void complete (size_t bytes_transferred = 0,
                          int success = 1,
                          const void *completion_key = 0,
                          u_long error = 0);
@@ -760,7 +760,7 @@ ACE_WIN32_Asynch_Timer::ACE_WIN32_Asynch_Timer (ACE_Handler &handler,
 }
 
 void
-ACE_WIN32_Asynch_Timer::complete (u_long bytes_transferred,
+ACE_WIN32_Asynch_Timer::complete (size_t bytes_transferred,
                                   int success,
                                   const void *completion_key,
                                   u_long error)
@@ -788,7 +788,7 @@ ACE_WIN32_Wakeup_Completion::~ACE_WIN32_Wakeup_Completion (void)
 }
 
 void
-ACE_WIN32_Wakeup_Completion::complete (u_long       /* bytes_transferred */,
+ACE_WIN32_Wakeup_Completion::complete (size_t       /* bytes_transferred */,
                                        int          /* success */,
                                        const void * /* completion_key */,
                                        u_long       /*  error */)

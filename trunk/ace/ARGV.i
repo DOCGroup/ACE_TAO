@@ -2,7 +2,7 @@
 // $Id$
 
 // Return the number of args
-ACE_INLINE size_t
+ACE_INLINE int
 ACE_ARGV::argc (void) const
 {
   ACE_TRACE ("ACE_ARGV::argc");
@@ -58,7 +58,7 @@ ACE_ARGV::operator[] (size_t i)
   ACE_TRACE ("ACE_ARGV::operator[]");
 
   // Don't go out of bounds.
-  if (i >= this->argc_)
+  if (i >= ACE_static_cast (size_t, this->argc_))
     return 0;
 
   return (const ACE_TCHAR *) this->argv ()[i];

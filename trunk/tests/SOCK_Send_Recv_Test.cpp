@@ -95,7 +95,7 @@ client (void *arg)
   // The server will verify that this data pattern gets there intact.
 
   for (i = 0; i < sizeof buffer; ++i)
-    buffer[i] = i;
+    buffer[i] = ACE_static_cast (u_char, i);
 
   iovec iov[5];
 

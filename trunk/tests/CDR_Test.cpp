@@ -112,7 +112,7 @@ short_stream (void)
   os.write_double_array (d_array, 3);
 
   const ACE_Message_Block *out_mb = os.begin ();
-  u_int len = out_mb->length ();
+  size_t len = out_mb->length ();
 
   // Create an input stream (copy constructor)
   ACE_InputCDR is (os);

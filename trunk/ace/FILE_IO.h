@@ -87,10 +87,10 @@ public:
 #endif /* ACE_HAS_STREAM_PIPES */
 
   /// Send iovecs via <::writev>.
-  ssize_t send (const iovec iov[], size_t n) const;
+  ssize_t send (const iovec iov[], int n) const;
 
   /// Recv iovecs via <::readv>.
-  ssize_t recv (iovec iov[], size_t n) const;
+  ssize_t recv (iovec iov[], int n) const;
 
   /**
    * Send N char *ptrs and int lengths.  Note that the char *'s
@@ -121,7 +121,7 @@ public:
 
   /// Send an <iovec> of size <n> to the file.
   ssize_t sendv (const iovec iov[],
-                 size_t n) const;
+                 int n) const;
 
   /**
    * Allows a client to read from a file without having to provide a
@@ -136,11 +136,11 @@ public:
   /// Send an <iovec> of size <n> to the file.  Will block until all
   /// bytes are sent or an error occurs.
   ssize_t sendv_n (const iovec iov[],
-                   size_t n) const;
+                   int n) const;
 
   /// Receive an <iovec> of size <n> to the file.
   ssize_t recvv_n (iovec iov[],
-                   size_t n) const;
+                   int n) const;
 
   /// Dump the state of an object.
   void dump (void) const;

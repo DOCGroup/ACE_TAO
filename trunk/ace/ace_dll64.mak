@@ -102,7 +102,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Handle_Ops.obj"
 	-@erase "$(INTDIR)\Handle_Set.obj"
 	-@erase "$(INTDIR)\Hash_Map_Manager.obj"
-	-@erase "$(INTDIR)\Hash_Map_Manager_rt.obj"
 	-@erase "$(INTDIR)\Hashable.obj"
 	-@erase "$(INTDIR)\High_Res_Timer.obj"
 	-@erase "$(INTDIR)\INET_Addr.obj"
@@ -389,7 +388,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\Handle_Ops.obj" \
 	"$(INTDIR)\Handle_Set.obj" \
 	"$(INTDIR)\Hash_Map_Manager.obj" \
-	"$(INTDIR)\Hash_Map_Manager_rt.obj" \
 	"$(INTDIR)\Hashable.obj" \
 	"$(INTDIR)\High_Res_Timer.obj" \
 	"$(INTDIR)\INET_Addr.obj" \
@@ -642,7 +640,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Handle_Ops.obj"
 	-@erase "$(INTDIR)\Handle_Set.obj"
 	-@erase "$(INTDIR)\Hash_Map_Manager.obj"
-	-@erase "$(INTDIR)\Hash_Map_Manager_rt.obj"
 	-@erase "$(INTDIR)\Hashable.obj"
 	-@erase "$(INTDIR)\High_Res_Timer.obj"
 	-@erase "$(INTDIR)\INET_Addr.obj"
@@ -929,7 +926,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\Handle_Ops.obj" \
 	"$(INTDIR)\Handle_Set.obj" \
 	"$(INTDIR)\Hash_Map_Manager.obj" \
-	"$(INTDIR)\Hash_Map_Manager_rt.obj" \
 	"$(INTDIR)\Hashable.obj" \
 	"$(INTDIR)\High_Res_Timer.obj" \
 	"$(INTDIR)\INET_Addr.obj" \
@@ -1182,7 +1178,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Handle_Ops.obj"
 	-@erase "$(INTDIR)\Handle_Set.obj"
 	-@erase "$(INTDIR)\Hash_Map_Manager.obj"
-	-@erase "$(INTDIR)\Hash_Map_Manager_rt.obj"
 	-@erase "$(INTDIR)\Hashable.obj"
 	-@erase "$(INTDIR)\High_Res_Timer.obj"
 	-@erase "$(INTDIR)\INET_Addr.obj"
@@ -1469,7 +1464,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\Handle_Ops.obj" \
 	"$(INTDIR)\Handle_Set.obj" \
 	"$(INTDIR)\Hash_Map_Manager.obj" \
-	"$(INTDIR)\Hash_Map_Manager_rt.obj" \
 	"$(INTDIR)\Hashable.obj" \
 	"$(INTDIR)\High_Res_Timer.obj" \
 	"$(INTDIR)\INET_Addr.obj" \
@@ -1720,7 +1714,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Handle_Ops.obj"
 	-@erase "$(INTDIR)\Handle_Set.obj"
 	-@erase "$(INTDIR)\Hash_Map_Manager.obj"
-	-@erase "$(INTDIR)\Hash_Map_Manager_rt.obj"
 	-@erase "$(INTDIR)\Hashable.obj"
 	-@erase "$(INTDIR)\High_Res_Timer.obj"
 	-@erase "$(INTDIR)\INET_Addr.obj"
@@ -2007,7 +2000,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\Handle_Ops.obj" \
 	"$(INTDIR)\Handle_Set.obj" \
 	"$(INTDIR)\Hash_Map_Manager.obj" \
-	"$(INTDIR)\Hash_Map_Manager_rt.obj" \
 	"$(INTDIR)\Hashable.obj" \
 	"$(INTDIR)\High_Res_Timer.obj" \
 	"$(INTDIR)\INET_Addr.obj" \
@@ -2509,11 +2501,6 @@ SOURCE=.\Handle_Set.cpp
 SOURCE=.\Hash_Map_Manager.cpp
 
 "$(INTDIR)\Hash_Map_Manager.obj" : $(SOURCE) "$(INTDIR)"
-
-
-SOURCE=.\Hash_Map_Manager_rt.cpp
-
-"$(INTDIR)\Hash_Map_Manager_rt.obj" : $(SOURCE) "$(INTDIR)"
 
 
 SOURCE=.\Hashable.cpp

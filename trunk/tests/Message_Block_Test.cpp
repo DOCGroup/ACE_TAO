@@ -98,7 +98,7 @@ Worker_Task::svc (void)
 
       ACE_ASSERT (this->msg_queue ()->dequeue_head (mb) != -1);
 
-      int length = mb->length ();
+      size_t length = mb->length ();
 
       // If there's a next() Task then "logically" copy the message by
       // calling <duplicate> and send it on down the pipeline.  Note
@@ -203,7 +203,7 @@ produce (Worker_Task &worker_task,
       ACE_TCHAR buf[BUFSIZ];
       ACE_OS::sprintf (buf, ACE_SIZE_T_FORMAT_SPECIFIER, count);
 
-      int n = (ACE_OS::strlen (buf) + 1) * sizeof (ACE_TCHAR);
+      size_t n = (ACE_OS::strlen (buf) + 1) * sizeof (ACE_TCHAR);
 
       // Allocate a new message.
       ACE_NEW_RETURN (mb,

@@ -4559,7 +4559,7 @@ public:
                              ACE_TCHAR *&buf,
                              int substitute_env_args = 1);
   static int string_to_argv (ACE_TCHAR *buf,
-                             size_t &argc,
+                             int &argc,
                              ACE_TCHAR **&argv,
                              int substitute_env_args = 1);
   static long sysconf (int);
