@@ -1192,6 +1192,9 @@ disable_signal (int sigmin, int sigmax)
     ACE_ERROR ((LM_ERROR,
                 "Error: (%P | %t):%p\n",
                 "pthread_sigmask failed"));
+#else
+  ACE_UNUSED_ARG(sigmin);
+  ACE_UNUSED_ARG(sigmax);
 #endif /* ACE_WIN32 */
 
   return 1;
