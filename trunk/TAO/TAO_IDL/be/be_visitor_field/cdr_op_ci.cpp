@@ -774,6 +774,60 @@ be_visitor_field_cdr_op_ci::visit_union (be_union *node)
   return 0;
 }
 
+// Visit structure type.
+int
+be_visitor_field_cdr_op_ci::visit_valuetype (be_valuetype *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // retrieve the field node.
+  be_field *f = this->ctx_->be_node_as_field ();
+
+  if (f == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
+                         "visit_valuetype - "
+                         "cannot retrieve field node\n"),
+                        -1);
+    }
+
+  // Check what is the code generations substate. Are we generating code for
+  // the in/out operators for our parent or for us?
+  switch (this->ctx_->sub_state ())
+    {
+    case TAO_CodeGen::TAO_CDR_INPUT:
+      *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
+      return 0;
+    case TAO_CodeGen::TAO_CDR_OUTPUT:
+      *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
+      return 0;
+    case TAO_CodeGen::TAO_CDR_SCOPE:
+      // Proceed further.
+      break;
+    default:
+      // Error.
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
+                         "visit_structure - "
+                         "bad sub state\n"),
+                        -1);
+    }
+
+  if (node->node_type () != AST_Decl::NT_typedef  // Not a typedef.
+      && node->is_child (this->ctx_->scope ()))   // Node is defined inside
+                                                  // the structure.
+    {
+      // Valuetype cannot be declared inside any structured type
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_field_cdr_op_ci::"
+                         "visit_valuetype - logic error. Please report.\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
 // ****************************************************************
 
 be_visitor_cdr_op_field_decl::be_visitor_cdr_op_field_decl (

@@ -1,8 +1,17 @@
+Mon Mar 18 15:34:26 2002  Boris Kolpackov  <bosk@ipmce.ru>
+
+	* TAO_IDL/be_include/be_visitor_field/cdr_op_ci.h:
+	* TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	  Valuetype-related minor bug fixes.
+
+
+
 Sat Mar 16 09:07:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAOACE.dsw: Added Messaging DLL as a dependency to the
 	  Event_Service and add TAO DLL as a dependency to the Messaging
-	  DLL.  
+	  DLL.
 
 Sat Mar 16 11:35:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
