@@ -69,18 +69,19 @@ public:
 
 // Collection Management operations
 
+  /**
+   * Insert a Token into the collection.  All ACE_Token type
+   * operations performed on the collection will also be performed on
+   * the new_proxy until it is removed.  Note that no operations
+   * performed prior to the insertion will be performed.  Returns: 0
+   * on success, -1 on failure with <errno> == problem.  If a token
+   * proxy already exists in the collection with the same name, the
+   * insertion will fail.  Also, <token> is copied.  Note that during
+   * the copy, client_id's are *not* inherited.  The client ID of the
+   * thread using the collection will be used.  Client ID's can be
+   * changed explicity on each proxy using is_member.
+   */
   int insert (ACE_Token_Proxy &token);
-
-  // Insert a Token into the collection.  All ACE_Token type
-  // operations performed on the collection will also be performed on
-  // the new_proxy until it is removed.  Note that no operations
-  // performed prior to the insertion will be performed.  Returns: 0
-  // on success, -1 on failure with <errno> == problem.  If a token
-  // proxy already exists in the collection with the same name, the
-  // insertion will fail.  Also, <token> is copied.  Note that during
-  // the copy, client_id's are *not* inherited.  The client ID of the
-  // thread using the collection will be used.  Client ID's can be
-  // changed explicity on each proxy using is_member.
 
   /**
    * removes the ACE_Token matching the given token_name from the
@@ -203,15 +204,13 @@ protected:
 
   /// Allows iterations through collection_
   /**
-   * @note Deprecated typedef.  Use COLLECTION::ITERATOR trait
-   *       instead.
+   * @deprecated Deprecated typedef.  Use COLLECTION::ITERATOR trait instead.
    */
   typedef COLLECTION::ITERATOR COLLECTION_ITERATOR;
 
   /// Allows iterations through collection_
   /**
-   * @note Deprecated typedef.  Use COLLECTION::ENTRY trait
-   *       instead.
+   * @deprecated Deprecated typedef.  Use COLLECTION::ENTRY trait instead.
    */
   typedef COLLECTION::ENTRY COLLECTION_ENTRY;
 

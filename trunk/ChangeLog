@@ -1,3 +1,16 @@
+Thu May 22 07:51:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+          Added defines ACE_HAS_STRPTIME and ACE_LACKS_NATIVE_STRPTIME
+
+        * ace/config-win32-mingw.h:
+          Added define ACE_HAS_STRPTIME
+
+        * ace/Token_Collection.h:
+        * ace/Token_Invariants.h:
+        * ace/Token_Manager.h:
+          Doxygen documentation fixes.
+
 Wed May 21 19:55:54 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	  Thanks to Tongzhe Cui <tonycui@yahoo.com> for motivating the

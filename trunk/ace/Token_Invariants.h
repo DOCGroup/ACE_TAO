@@ -194,15 +194,15 @@ protected:
 
   /// Allows iterations through collection.
   /**
-   * @note Deprecated typedef.  Use MUTEX_COLLECTION::ITERATOR trait
-   *       instead.
+   * @deprecated Deprecated typedef.  Use MUTEX_COLLECTION::ITERATOR trait
+   * instead.
    */
   typedef MUTEX_COLLECTION::ITERATOR MUTEX_COLLECTION_ITERATOR;
 
   /// Allows iterations through collection.
   /**
-   * @note Deprecated typedef.  Use MUTEX_COLLECTION::ENTRY trait
-   *       instead.
+   * @deprecated Deprecated typedef.  Use MUTEX_COLLECTION::ENTRY trait
+   * instead.
    */
   typedef MUTEX_COLLECTION::ENTRY MUTEX_COLLECTION_ENTRY;
 
@@ -215,15 +215,15 @@ protected:
 
   /// Allows iterations through collection.
   /**
-   * @note Deprecated typedef.  Use RWLOCK_COLLECTION::ITERATOR trait
-   *       instead.
+   * @deprecated Deprecated typedef.  Use RWLOCK_COLLECTION::ITERATOR trait
+   * instead.
    */
   typedef RWLOCK_COLLECTION::ITERATOR RWLOCK_COLLECTION_ITERATOR;
 
   /// Allows iterations through collection.
   /**
-   * @note Deprecated typedef.  Use RWLOCK_COLLECTION::ENTRY trait
-   *       instead.
+   * @deprecated Deprecated typedef.  Use RWLOCK_COLLECTION::ENTRY trait
+   * instead.
    */
   typedef RWLOCK_COLLECTION::ENTRY RWLOCK_COLLECTION_ENTRY;
 
