@@ -1,3 +1,8 @@
+Fri Jul 03 11:34:38 1998  Carlos O'Ryan  <coryan@JIG>
+
+	* orbsvcs/tests/EC_Throughput/Makefile: 
+	  Added new object files to the Makefile.
+
 Fri Jul 03 08:40:28 1998  Steve Huston  <shuston@riverace.com>
 
 	* tao/corba.h: Reordered some includes to get it to compile clean on
