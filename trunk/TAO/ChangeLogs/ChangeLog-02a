@@ -1,3 +1,11 @@
+Fri Aug 31 19:28:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Faults/server.cpp:
+	* tests/Faults/test_i.h: The servant implementation inherits from
+	  the PortableServer::RefCountServantBase. Changes were also done
+	  in the server.cpp file to create the servant on the heap. Thanks
+	  to Chris Kohlhoff for pointing this out.
+
 Fri Aug 31 18:58:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/File_IO/client.cpp: Fixed a warning.
