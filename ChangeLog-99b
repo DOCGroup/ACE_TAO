@@ -1,3 +1,12 @@
+Mon Sep 27 15:23:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.h:
+	* ace/OS.i:
+	  Fixed overloading problems for cond_init() under LynxOS and
+	  Chorus, thanks to John K. Black <jblack@s22ct.npt.nuwc.navy.mil>
+	  for reporting the problem and providing a fix.
+	  This fixes [BUGID:342]
+
 Mon Sep 27 13:11:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/SString.h: Added the default value for the ACE_CString

@@ -5392,7 +5392,7 @@ public:
   static int cond_broadcast (ACE_cond_t *cv);
   static int cond_destroy (ACE_cond_t *cv);
   static int cond_init (ACE_cond_t *cv,
-                        int type = ACE_DEFAULT_SYNCH_TYPE,
+                        short type = ACE_DEFAULT_SYNCH_TYPE,
                         LPCTSTR name = 0,
                         void *arg = 0);
   static int cond_init (ACE_cond_t *cv,
