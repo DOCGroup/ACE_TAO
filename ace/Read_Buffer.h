@@ -46,10 +46,14 @@ public:
                    int close_on_delete = 0,
                    ACE_Allocator * = 0);
 
+#if !defined (ACE_HAS_WINCE)
+  // Note that ACE_HANDLE = FILE under CE.
+
   /// Read from an open HANDLE.
   ACE_Read_Buffer (ACE_HANDLE handle,
                    int close_on_delete = 0,
                    ACE_Allocator * = 0);
+#endif  // ACE_HAS_WINCE
 
   /// Closes the FILE *.
   ~ACE_Read_Buffer (void);
