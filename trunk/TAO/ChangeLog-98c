@@ -1,3 +1,16 @@
+Tue Nov 18 14:27:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp: Added code to put use a
+ 	kinder, gentler high priority value on VxWorks.  This makes it
+ 	easier for the machine to remain running. :-\
+
+	* tao/corbacom.h: Added CVS id keyword.
+
+	* tao/{corba.h,tao_internals.h,tao_internals.cpp}: Backed out
+ 	tao_internals.h, which is not intended to be publicly visible.
+  	corba.h should contain only headers/inlines for things which
+ 	should be externally visible.
+
 Tue Nov 18 04:00:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tao/poa.cpp: 
