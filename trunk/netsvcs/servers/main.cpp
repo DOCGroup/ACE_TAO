@@ -17,17 +17,14 @@ main (int argc, char *argv[])
 
   ACE_Sig_Set sig_set;
   sig_set.sig_add (SIGINT);
-  sig_set.sig_add (SIGQUIT);
-
-  // Register ourselves to receive SIGINT and SIGQUIT so we can shut
-  // down gracefully via signals.
 #if !defined (ACE_WIN32)
+  sig_set.sig_add (SIGQUIT);
+#endif /* ACE_WIN32 */  
+
+  // Register ourselves to receive signals so we can shut down
+  // gracefully.
   if (ACE_Reactor::instance ()->register_handler (sig_set, &sa) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n"), -1);
-#else
-  if (ACE_Reactor::instance ()->register_handler (SIGINT, &sa) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n"), -1);
-#endif /* ACE_WIN32 */  
 
   // Try to link in the svc.conf entries dynamically.
   if (ACE_Service_Config::open (argc, argv) == -1)
