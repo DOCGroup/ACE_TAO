@@ -22,6 +22,8 @@ PACE_INLINE
 int
 pace_mlock (const void * addr, pace_size_t len)
 {
+  PACE_UNUSED_ARG (addr);
+  PACE_UNUSED_ARG (len);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
@@ -31,6 +33,7 @@ PACE_INLINE
 int
 pace_mlockall (int flags)
 {
+  PACE_UNUSED_ARG (flags);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
@@ -118,6 +121,8 @@ PACE_INLINE
 int
 pace_munlock (const void * addr, size_t len)
 {
+  PACE_UNUSED_ARG (addr);
+  PACE_UNUSED_ARG (len);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
@@ -142,15 +147,9 @@ pace_msync (void * addr,
             int flags)
 {
   PACE_UNUSED_ARG (flags);
-  if (FlushViewOfFile (addr, len))
-    {
-      return 0;
-    }
-  else
-    {
-      errno = GetLastError ();
-      return -1;
-    }
+  PACE_WIN32CALL_RETURN
+    (PACE_ADAPT_RETVAL
+     (FlushViewOfFile (addr, len), pace_result_), int, -1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -169,15 +168,9 @@ int
 pace_munmap (void * addr, size_t len)
 {
   PACE_UNUSED_ARG (len);
-  if (UnmapViewOfFile (addr))
-    {
-      return 0;
-    }
-  else
-    {
-      errno = GetLastError ();
-      return -1;
-    }
+  PACE_WIN32CALL_RETURN
+    (PACE_ADAPT_RETVAL
+     (UnmapViewOfFile (addr), pace_result_), int, -1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 

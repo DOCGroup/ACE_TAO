@@ -31,6 +31,8 @@ char *
 pace_asctime_r (const struct tm * time, char * buf)
 {
   char * retval = (char*)0;
+  PACE_UNUSED_ARG (time);
+  PACE_UNUSED_ARG (buf);
   PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
@@ -176,9 +178,9 @@ pace_nanosleep (const struct timespec * rqtp,
 #if (PACE_HAS_POSIX_CLS_UOF)
 PACE_INLINE
 size_t
-pace_strftime (char *s, size_t maxsize,
-               const char *format,
-               const struct tm *timeptr)
+pace_strftime (char * s, size_t maxsize,
+               const char * format,
+               const struct tm * timeptr)
 {
   return strftime (s, maxsize, format, timeptr);
 }
@@ -198,7 +200,7 @@ PACE_INLINE
 int
 pace_timer_create (clockid_t clock_id,
                    struct sigevent * evp,
-                   timer_t * timerid)
+                   pace_timer_t * timerid)
 {
   PACE_UNUSED_ARG (clock_id);
   PACE_UNUSED_ARG (evp);
@@ -210,7 +212,7 @@ pace_timer_create (clockid_t clock_id,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_timer_delete (timer_t timerid)
+pace_timer_delete (pace_timer_t timerid)
 {
   PACE_UNUSED_ARG (timerid);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
@@ -220,7 +222,7 @@ pace_timer_delete (timer_t timerid)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_timer_getoverrun (timer_t timerid)
+pace_timer_getoverrun (pace_timer_t timerid)
 {
   PACE_UNUSED_ARG (timerid);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
@@ -230,8 +232,8 @@ pace_timer_getoverrun (timer_t timerid)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_timer_gettime (timer_t timerid,
-                    struct itimerspec * value)
+pace_timer_gettime (pace_timer_t timerid,
+                    pace_itimerspec * value)
 {
   PACE_UNUSED_ARG (timerid);
   PACE_UNUSED_ARG (value);
@@ -242,10 +244,10 @@ pace_timer_gettime (timer_t timerid,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_timer_settime (timer_t timerid,
+pace_timer_settime (pace_timer_t timerid,
                     int flags,
-                    const struct itimerspec * value,
-                    struct itimerspec * ovalue)
+                    const pace_itimerspec * value,
+                    pace_itimerspec * ovalue)
 {
   PACE_UNUSED_ARG (timerid);
   PACE_UNUSED_ARG (flags);

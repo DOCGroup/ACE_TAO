@@ -1,3 +1,18 @@
+Sun Jul 23 20:21:02 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/*:
+	 
+	  Cleaned up alot of implementation.
+	
+	  Got rid of separate 'emulation' functions because only win32
+	  is in this directory (if we supported multiple platforms in
+	  this directory, then the code would get messy so we would do
+	  better to inline and call emulation funcs according to the 
+	  platform at hand).
+
+	  Inserted ACE style macros for WIN32 OS calls. Set errno
+	  properly and adapts return values to POSIX compliance.
+
 Sun Jul 23 19:17:33 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/pthread.h:

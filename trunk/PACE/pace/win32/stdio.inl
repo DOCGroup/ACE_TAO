@@ -49,8 +49,7 @@ FILE *
 pace_fdopen (int fildes,
              const char * type)
 {
-  return fdopen (fildes,
-                 type);
+  return fdopen (fildes, type);
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
@@ -127,12 +126,8 @@ PACE_INLINE
 void
 pace_flockfile (FILE * file)
 {
-#if defined (PACE_HAS_REENTRANT)
-  flockfile (file);
-#else /* ! PACE_HAS_REENTRANT */
   PACE_UNUSED_ARG (file);
   PACE_ERRNO_NO_SUPPORT ();
-#endif /* ! PACE_HAS_REENTRANT */
   return;
 }
 #endif /* PACE_HAS_POSIX_FL_UOF */
@@ -143,30 +138,25 @@ FILE *
 pace_fopen (const char * filename,
             const char * mode)
 {
-  return fopen (filename,
-                mode);
+  return fopen (filename, mode);
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
 #if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
-pace_fputc (int c,
-            FILE * stream)
+pace_fputc (int c, FILE * stream)
 {
-  return fputc (c,
-                stream);
+  return fputc (c, stream);
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
 #if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
-pace_fputs (const char * s,
-            FILE * stream)
+pace_fputs (const char * s, FILE * stream)
 {
-  return fputs (s,
-                stream);
+  return fputs (s, stream);
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
@@ -192,9 +182,7 @@ pace_freopen (const char * filename,
               const char * mode,
               FILE * stream)
 {
-  return freopen (filename,
-                  mode,
-                  stream);
+  return freopen (filename, mode, stream);
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
@@ -205,9 +193,7 @@ pace_fseek (FILE * stream,
             long offset,
             int whence)
 {
-  return fseek (stream,
-                offset,
-                whence);
+  return fseek (stream, offset, whence);
 }
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
@@ -234,12 +220,8 @@ PACE_INLINE
 int
 pace_ftrylockfile (FILE * file)
 {
-#if defined (PACE_HAS_REENTRANT)
-  return ftrylockfile (file);
-#else /* ! PACE_HAS_REENTRANT */
-  PACE_UNUSED_ARG(file);
+  PACE_UNUSED_ARG (file);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-#endif /* ! PACE_HAS_REENTRANT */
 }
 #endif /* PACE_HAS_POSIX_FL_UOF */
 
@@ -248,12 +230,8 @@ PACE_INLINE
 void
 pace_funlockfile (FILE * file)
 {
-#if defined (PACE_HAS_REENTRANT)
-  funlockfile (file);
-#else /* ! PACE_HAS_REENTRANT */
   PACE_UNUSED_ARG(file);
   PACE_ERRNO_NO_SUPPORT ();
-#endif /* ! PACE_HAS_REENTRANT */
   return;
 }
 #endif /* PACE_HAS_POSIX_FL_UOF */
@@ -283,12 +261,8 @@ PACE_INLINE
 int
 pace_getc_unlocked (FILE * stream)
 {
-#if defined (PACE_HAS_REENTRANT)
-  return getc_unlocked (stream);
-#else /* ! PACE_HAS_POSIX */
-  PACE_UNUSED_ARG(stream);
+  PACE_UNUSED_ARG (stream);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-#endif /* ! PACE_HAS_POSIX */
 }
 #endif /* PACE_HAS_POSIX_FL_UOF */
 
@@ -306,11 +280,7 @@ PACE_INLINE
 int
 pace_getchar_unlocked ()
 {
-#if defined (PACE_HAS_REENTRANT)
-  return getchar_unlocked ();
-#else /* ! PACE_HAS_REENTRANT */
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-#endif /* ! PACE_HAS_REENTRANT */
 }
 #endif /* PACE_HAS_POSIX_FL_UOF */
 
@@ -336,8 +306,7 @@ pace_perror (const char * s)
 #if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
-pace_putc (int c,
-           FILE * stream)
+pace_putc (int c, FILE * stream)
 {
   return putc (c, stream);
 }
@@ -349,13 +318,9 @@ int
 pace_putc_unlocked (int c,
                     FILE * stream)
 {
-#if defined (PACE_HAS_REENTRANT)
-  return putc_unlocked (c, stream);
-#else /* ! PACE_HAS_REENTRANT */
-  PACE_UNUSED_ARG(c);
-  PACE_UNUSED_ARG(stream);
+  PACE_UNUSED_ARG (c);
+  PACE_UNUSED_ARG (stream);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-#endif /* ! PACE_HAS_REENTRANT */
 }
 #endif /* PACE_HAS_POSIX_FL_UOF */
 
@@ -373,12 +338,8 @@ PACE_INLINE
 int
 pace_putchar_unlocked (int c)
 {
-#if defined (PACE_HAS_REENTRANT)
-  return putchar_unlocked (c);
-#else /* ! PACE_HAS_REENTRANT */
   PACE_UNUSED_ARG(c);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-#endif /* ! PACE_HAS_REENTRANT */
 }
 #endif /* PACE_HAS_POSIX_FL_UOF */
 
@@ -406,8 +367,7 @@ int
 pace_rename (const char * old_name,
              const char * new_name)
 {
-  return rename (old_name,
-                 new_name);
+  return rename (old_name, new_name);
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
