@@ -40,6 +40,8 @@
 
 #define ACE_HAS_LYNXOS_SIGNALS
 
+#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
+
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
 
