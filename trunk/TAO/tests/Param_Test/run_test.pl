@@ -26,3 +26,12 @@ foreach $type (@types)
 }
 
 $SV->Kill ();
+
+if ($^O eq "MSWin32")
+{
+  system ("del ".$iorfile);
+}
+else
+{
+  system ("rm ".$iorfile);
+}
