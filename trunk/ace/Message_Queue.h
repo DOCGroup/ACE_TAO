@@ -64,12 +64,12 @@ public:
 		     ACE_Notification_Strategy * = 0);
 
   // Create a message queue with all the defaults.
-  int open (size_t hwm = DEFAULT_HWM, 
-	    size_t lwm = DEFAULT_LWM,
-	    ACE_Notification_Strategy * = 0);
+  virtual int open (size_t hwm = DEFAULT_HWM, 
+                    size_t lwm = DEFAULT_LWM,
+                    ACE_Notification_Strategy * = 0);
   // Create a message queue with all the defaults.
 
-  int close (void);
+  virtual int close (void);
   // Close down the message queue and release all resources.
 
   virtual ~ACE_Message_Queue (void);
@@ -84,65 +84,65 @@ public:
   // or if the time specified in timeout elapses, (in which case errno
   // = EWOULDBLOCK).
 
-  int peek_dequeue_head (ACE_Message_Block *&first_item, 
-			 ACE_Time_Value *tv = 0);
+  virtual int peek_dequeue_head (ACE_Message_Block *&first_item, 
+                                 ACE_Time_Value *tv = 0);
   // Retrieve the first <ACE_Message_Block> without removing it.
   // Returns -1 on failure, else the number of items still on the
   // queue.
 
-  int enqueue_prio (ACE_Message_Block *new_item, 
-		    ACE_Time_Value *timeout = 0);
+  virtual int enqueue_prio (ACE_Message_Block *new_item, 
+                            ACE_Time_Value *timeout = 0);
   // Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
   // accordance with its <msg_priority> (0 is lowest priority).  FIFO
   // order is maintained when messages of the same priority are
   // inserted consecutively.  Returns -1 on failure, else the number
   // of items still on the queue.
 
-  int enqueue (ACE_Message_Block *new_item, ACE_Time_Value *timeout = 0);
+  virtual int enqueue (ACE_Message_Block *new_item, ACE_Time_Value *timeout = 0);
   // This is an alias for <enqueue_prio>.  It's only here for
   // backwards compatibility and will go away in a subsequent release.
   // Please use <enqueue_prio> instead.
 
-  int enqueue_tail (ACE_Message_Block *new_item, ACE_Time_Value *timeout = 0);
+  virtual int enqueue_tail (ACE_Message_Block *new_item, ACE_Time_Value *timeout = 0);
   // Enqueue an <ACE_Message_Block *> at the end of the queue.
   // Returns -1 on failure, else the number of items still on the
   // queue.
 
-  int enqueue_head (ACE_Message_Block *new_item, ACE_Time_Value *timeout = 0);
+  virtual int enqueue_head (ACE_Message_Block *new_item, ACE_Time_Value *timeout = 0);
   // Enqueue an <ACE_Message_Block *> at the head of the queue.
   // Returns -1 on failure, else the number of items still on the
   // queue.
 
-  int dequeue_head (ACE_Message_Block *&first_item, ACE_Time_Value *timeout = 0);
+  virtual int dequeue_head (ACE_Message_Block *&first_item, ACE_Time_Value *timeout = 0);
   // Dequeue and return the <ACE_Message_Block *> at the head of the
   // queue.  Returns -1 on failure, else the number of items still on
   // the queue.
 
   // = Check if queue is full/empty. 
-  int is_full (void);
+  virtual int is_full (void);
   // True if queue is full, else false.
-  int is_empty (void);
+  virtual int is_empty (void);
   // True if queue is empty, else false.
 
   // = Queue statistic methods.
-  size_t message_bytes (void);
+  virtual size_t message_bytes (void);
   // Number of total bytes on the queue.
-  size_t message_count (void);
+  virtual size_t message_count (void);
   // Number of total messages on the queue.
 
   // = Flow control routines 
-  size_t high_water_mark (void);
+  virtual size_t high_water_mark (void);
   // Get high watermark.
-  void high_water_mark (size_t hwm);
+  virtual void high_water_mark (size_t hwm);
   // Set high watermark.
-  size_t low_water_mark (void);
+  virtual size_t low_water_mark (void);
   // Get low watermark.
-  void low_water_mark (size_t lwm);
+  virtual void low_water_mark (size_t lwm);
   // Set low watermark.
 
   // = Activation control methods.
 
-  int deactivate (void);
+  virtual int deactivate (void);
   // Deactivate the queue and wakeup all threads waiting on the queue
   // so they can continue.  No messages are removed from the queue,
   // however.  Any other operations called until the queue is
@@ -150,7 +150,7 @@ public:
   // ESHUTDOWN.  Returns WAS_INACTIVE if queue was inactive before the
   // call and WAS_ACTIVE if queue was active before the call.
 
-  int activate (void);
+  virtual int activate (void);
   // Reactivate the queue so that threads can enqueue and dequeue
   // messages again.  Returns WAS_INACTIVE if queue was inactive
   // before the call and WAS_ACTIVE if queue was active before the
@@ -169,8 +169,8 @@ public:
   // the notification occurs.
 
   // = Get/set the notification strategy for the <Message_Queue>
-  ACE_Notification_Strategy *notification_strategy (void);
-  void notification_strategy (ACE_Notification_Strategy *s);
+  virtual ACE_Notification_Strategy *notification_strategy (void);
+  virtual void notification_strategy (ACE_Notification_Strategy *s);
 
   void dump (void) const;
   // Dump the state of an object.
@@ -198,30 +198,30 @@ protected:
   // queue.
 
   // = Check the boundary conditions (assumes locks are held).
-  int is_full_i (void);
+  virtual int is_full_i (void);
   // True if queue is full, else false.
-  int is_empty_i (void);
+  virtual int is_empty_i (void);
   // True if queue is empty, else false.
 
   // = Implementation of the public activate() and deactivate() methods above (assumes locks are held).
-  int deactivate_i (void);
+  virtual int deactivate_i (void);
   // Deactivate the queue.
-  int activate_i (void);
+  virtual int activate_i (void);
   // Activate the queue.
 
   // = Helper methods to factor out common #ifdef code.
-  int wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
-			  ACE_Time_Value *tv);
+  virtual int wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
+                                  ACE_Time_Value *tv);
   // Wait for the queue to become non-full.
 
-  int wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
-			   ACE_Time_Value *tv);
+  virtual int wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
+                                   ACE_Time_Value *tv);
   // Wait for the queue to become non-empty.
 
-  int signal_enqueue_waiters (void);
+  virtual int signal_enqueue_waiters (void);
   // Inform any threads waiting to enqueue that they can procede.
 
-  int signal_dequeue_waiters (void);
+  virtual int signal_dequeue_waiters (void);
   // Inform any threads waiting to dequeue that they can procede.
 
   ACE_Message_Block *head_;           
