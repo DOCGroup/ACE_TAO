@@ -156,10 +156,9 @@ TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
 
   if (TAO_debug_level > 0)
     {
-      CORBA::ULong msecs =
-        ACE_static_cast(CORBA::ULong, microseconds / 1000);
+      CORBA::ULong msecs = time_value.msec ();
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Timeout is <%u>\n"),
+                  ACE_TEXT ("TAO (%P|%t) - Timeout is <%u>\n"),
                   msecs));
     }
 }
@@ -290,4 +289,3 @@ TAO_Sync_Scope_Policy::destroy (CORBA_Environment &)
 }
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-

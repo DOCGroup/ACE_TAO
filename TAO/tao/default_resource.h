@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  @author Chris CleelandCarlos O'Ryan
+ *  @author Chris Cleeland
+ *  @author Carlos O'Ryan
  */
 //=============================================================================
 
@@ -92,6 +93,7 @@ public:
   virtual double purge_percentage (void) const;
   virtual TAO_Priority_Mapping *get_priority_mapping (void);
   virtual ACE_Lock *create_cached_connection_lock (void);
+  virtual TAO_Flushing_Strategy *create_flushing_strategy (void);
 
 protected:
   /// Obtain the reactor implementation
@@ -162,6 +164,15 @@ private:
 
   /// Type of lock used by the cached connector.
   Lock_Type cached_connection_lock_type_;
+
+  enum Flushing_Strategy_Type
+  {
+    TAO_REACTIVE_FLUSHING,
+    TAO_BLOCKING_FLUSHING
+  };
+
+  /// Type of flushing strategy configured
+  int flushing_strategy_type_;
 };
 
 #if defined (__ACE_INLINE__)

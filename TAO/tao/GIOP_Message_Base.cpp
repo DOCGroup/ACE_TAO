@@ -15,9 +15,7 @@
 # include "GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           GIOP_Message_Base,
-           "$Id$")
+ACE_RCSID(tao, GIOP_Message_Base, "$Id$")
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               size_t input_cdr_size)
@@ -431,7 +429,7 @@ TAO_GIOP_Message_Base::generate_exception_reply (TAO_OutputCDR &cdr,
 }
 
 int
-TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type t, 
+TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type t,
                                               TAO_OutputCDR &msg)
 {
   // Reset the message type
@@ -602,7 +600,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
       if (response_required)
 	{
-	  CORBA::UNKNOWN exception (CORBA::SystemException::_tao_minor_code 
+	  CORBA::UNKNOWN exception (CORBA::SystemException::_tao_minor_code
                                     (TAO_UNHANDLED_SERVER_CXX_EXCEPTION, 0),
                                     CORBA::COMPLETED_MAYBE);
 
@@ -855,7 +853,8 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
   ACE_Message_Block message_block(&data_block);
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
-  int result = transport->send (&message_block);
+  size_t bt;
+  int result = transport->send_message_block_chain (&message_block, bt);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -988,7 +987,9 @@ TAO_GIOP_Message_Base::
   ACE_Message_Block message_block(&data_block);
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
-  if (transport->send (&message_block) == -1 && errno != ENOENT)
+  size_t bt;
+  int result = transport->send_message_block_chain (&message_block, bt);
+  if (result == -1)
     {
       if (TAO_debug_level > 0)
 	ACE_ERROR ((LM_ERROR,

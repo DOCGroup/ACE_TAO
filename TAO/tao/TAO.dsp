@@ -187,6 +187,10 @@ SOURCE=.\Asynch_Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Queued_Message.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
@@ -199,11 +203,27 @@ SOURCE=.\Base_Transport_Property.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\BiDir_Adapter.cpp
+SOURCE=.\BiDir_ORBInitializer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_Policy_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_PolicyFactory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDirPolicyC.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Bind_Dispatcher_Guard.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Block_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -339,10 +359,6 @@ SOURCE=.\Endpoint.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Endpoint_Selector_Factory.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Environment.cpp
 # End Source File
 # Begin Source File
@@ -360,6 +376,10 @@ SOURCE=.\Fault_Tolerance_Service.cpp
 # Begin Source File
 
 SOURCE=.\FILE_Parser.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -496,6 +516,10 @@ SOURCE=.\Managed_Types.cpp
 # Begin Source File
 
 SOURCE=.\Marshal.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Message_Sent_Callback.cpp
 # End Source File
 # Begin Source File
 
@@ -659,6 +683,14 @@ SOURCE=.\Protocols_Hooks.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Queued_Message.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactive_Flushing_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Reactor_Registry.cpp
 # End Source File
 # Begin Source File
@@ -687,10 +719,6 @@ SOURCE=.\RT_Current.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\RT_Endpoint_Selector_Factory.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\RT_Invocation_Endpoint_Selectors.cpp
 # End Source File
 # Begin Source File
@@ -700,10 +728,6 @@ SOURCE=.\RT_Mutex.cpp
 # Begin Source File
 
 SOURCE=.\RT_ORB.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Pool.cpp
 # End Source File
 # Begin Source File
 
@@ -775,6 +799,10 @@ SOURCE=.\Sync_Strategies.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Synch_Queued_Message.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Synch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
@@ -836,10 +864,6 @@ SOURCE=.\Typecode.cpp
 # Begin Source File
 
 SOURCE=.\Typecode_Constants.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\TypeCodeFactory_Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -907,6 +931,10 @@ SOURCE=.\Asynch_Invocation.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Queued_Message.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
@@ -919,7 +947,27 @@ SOURCE=.\Base_Transport_Property.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\BiDir_ORBInitializer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_Policy_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_PolicyFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDirPolicyC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Block_Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -1067,10 +1115,6 @@ SOURCE=.\Endpoint.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Endpoint_Selector_Factory.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Environment.h
 # End Source File
 # Begin Source File
@@ -1088,6 +1132,10 @@ SOURCE=.\Fault_Tolerance_Service.h
 # Begin Source File
 
 SOURCE=.\FILE_Parser.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -1244,6 +1292,14 @@ SOURCE=.\Managed_Types.h
 # Begin Source File
 
 SOURCE=.\marshal.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Message_Sent_Callback.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Message_Sent_Callback.inl
 # End Source File
 # Begin Source File
 
@@ -1427,6 +1483,18 @@ SOURCE=.\Protocols_Hooks.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Queued_Message.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Queued_Message.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactive_Flushing_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Reactor_Registry.h
 # End Source File
 # Begin Source File
@@ -1455,10 +1523,6 @@ SOURCE=.\RT_Current.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\RT_Endpoint_Selector_Factory.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\RT_Invocation_Endpoint_Selectors.h
 # End Source File
 # Begin Source File
@@ -1468,10 +1532,6 @@ SOURCE=.\RT_Mutex.h
 # Begin Source File
 
 SOURCE=.\RT_ORB.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Pool.h
 # End Source File
 # Begin Source File
 
@@ -1552,6 +1612,10 @@ SOURCE=.\stub.h
 # Begin Source File
 
 SOURCE=.\Sync_Strategies.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Synch_Queued_Message.h
 # End Source File
 # Begin Source File
 
@@ -1647,10 +1711,6 @@ SOURCE=.\typecode.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\TypeCodeFactory_Adapter.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\ValueBase.h
 # End Source File
 # Begin Source File
@@ -1716,6 +1776,14 @@ SOURCE=.\Asynch_Reply_Dispatcher.i
 # Begin Source File
 
 SOURCE=.\Base_Transport_Property.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_Policy_i.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDirPolicyC.i
 # End Source File
 # Begin Source File
 
@@ -2120,10 +2188,6 @@ SOURCE=.\RT_Mutex.i
 # Begin Source File
 
 SOURCE=.\RT_ORB.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Pool.i
 # End Source File
 # Begin Source File
 

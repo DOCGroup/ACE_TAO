@@ -38,6 +38,7 @@
 
 #include "IORInfo.h"
 
+#include "Flushing_Strategy.h"
 
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
@@ -47,10 +48,7 @@
 # include "ORB_Core.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (TAO,
-           ORB_Core,
-           "$Id$")
-
+ACE_RCSID(tao, ORB_Core, "$Id$")
 
 // ****************************************************************
 
@@ -162,6 +160,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     transport_cache_ (),
     bidir_adapter_ (0),
     bidir_giop_policy_ (0)
+  , flushing_strategy_ (0)
 {
 #if defined(ACE_MVS)
   ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
@@ -206,6 +205,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
 {
+  delete this->flushing_strategy_;
+
   ACE_OS::free (this->orbid_);
 
   delete this->from_iso8859_;
@@ -1013,6 +1014,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
   // init the ORB core's pointer
   this->protocol_factories_ = trf->get_protocol_factories ();
+
+  // Initialize the flushing strategy
+  this->flushing_strategy_ = trf->create_flushing_strategy ();
 
   // Now that we have a complete list of available protocols and their
   // related factory objects, set default policies and initialize the
@@ -1971,8 +1975,14 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
       if (TAO_debug_level >= 3)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - blocking on handle events\n")));
+                    ACE_TEXT ("TAO (%P|%t) - calling handle_events\n")));
+
       result = r->handle_events (tv);
+
+      if (TAO_debug_level >= 3)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - handle_events returns %d\n"),
+                    result));
 
       if (result == -1)
         {
