@@ -6313,7 +6313,7 @@ public:
                      ACE_OVERLAPPED *overlapped,
                      ACE_OVERLAPPED_COMPLETION_FUNC func);
 
-  /// QoS-enabled <ioctl> wrapper.
+  /// Manipulate the options associated with a socket.
   static int setsockopt (ACE_HANDLE handle,
                          int level,
                          int optname,

@@ -1,3 +1,17 @@
+Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* examples/Misc/test_read_buffer.cpp (main): Changed <int> to
+	  <ACE_HANDLE> so this will work properly on Win32 platforms.
+	  Thanks to Johnny Willemsen for reporting the problem.
+
+	* examples/Misc/test_XtReactor2.cpp (main): Fixed a stray ')'.
+	  Thanks to Johnny Willemsen for reporting the problem.  
+
+Thu May  3 17:33:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS.h: Fixed a mistake in the setsockopt() comment.  Thanks
+	  to Craig Rodrigues for reporting this.
+
 Thu May  3 17:43:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Acceptor.cpp (ACE_Acceptor): Fixed a warning in g++ builds. 
