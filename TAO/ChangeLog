@@ -1,3 +1,8 @@
+Thu Dec  5 11:16:40 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Server_Connection_Purging/run_test.pl: Missed this in my
+	  last checkin.
+
 Thu Dec  5 08:24:23 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1020_Regression/Bug_1020_Regression.dsw (Project):
