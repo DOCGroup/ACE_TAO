@@ -1,3 +1,9 @@
+Sun Aug  8 22:43:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-integritySCA.h:
+	* m4/config_h.m4:
+	  Removed vestigial mentions of ACE_HAS_ONE_DEFINITION_RULE.
+
 Sun Aug  8 17:38:05 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/README:

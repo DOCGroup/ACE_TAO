@@ -262,9 +262,6 @@ AH_TEMPLATE([ACE_THREADS_DONT_INHERIT_LOG_MSG],
 [Specify this if you don't want threads to inherit parent thread's
 ACE_Log_Msg properties.])
 
-AH_TEMPLATE([ACE_HAS_ONE_DEFINITION_RULE],
-[Compiler enforces C++ One Definition Rule])
-
 AH_TEMPLATE([ACE_HAS_PRIOCNTL],[OS has priocntl (2)])
 
 AH_TEMPLATE([ACE_HAS_RLIMIT_RESOURCE_ENUM],
