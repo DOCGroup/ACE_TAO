@@ -1,3 +1,44 @@
+Tue Oct 21 22:55:36 1997    <irfan@TWOSTEP>
+
+	* ace/WFMO_Reactor: Removed ACE_Event_Handler::CLOSE_MASK and the
+ 	  explicit registration for the closing of sockets from
+ 	  WFMO_Reactor.  This is essentially for compatibility with UNIX
+ 	  programs.  UNIX does not have a CLOSE_MASK and the notification
+ 	  of the closing of a socket is implicit in the socket becoming
+ 	  read ready.  Therefore when you register for
+ 	  ACE_Event_Handler::READ_MASK with WFMO_Reactor, you will
+ 	  register for FD_READ and FD_CLOSE.  When FD_CLOSE is triggered,
+ 	  handle_input() will be called on the Event_Handler.  As on UNIX,
+ 	  read() will return 0 and the programmer will be able to tell
+ 	  that the socket has actually closed down.
+
+	  Arguably, this is lame for Win32 programmers as they have the
+ 	  explicit close notification, but portability and existing code
+ 	  base wins in this case.
+
+	  One other change. When an event_handler returns -1 from the
+ 	  callback, unbind() is called with ALL_EVENTS_MASK rather than
+ 	  the NULL_MASK.
+
+	  The upcall routine still needs to threat the two masks
+ 	  separately. (FD_CLOSE | FD_READ) will not work as both maybe
+ 	  simultaneously enabled. Therefore handle_input() maybe be called
+ 	  twice (once for FD_READ and once for FD_CLOSE) unless the user
+ 	  returns -1 from the first callback.
+
+	* ace/Event_Handler: Removed the CLOSE_MASK. 
+
+	* examples/Logger/simple-server/Logging_Handler.cpp: Minor fixes.
+
+	* examples/Logger/Acceptor-server/server_loggerd.cpp: Minor
+ 	  changes. No need to register the acceptor with the
+ 	  Reactor. Acceptor::open() does that.
+
+	* examples/Reactor/ReactorEx/test_network_events: Removed the use
+ 	  of CLOSE_MASK.
+
+	* tests/Reactor_Performance_Test: Removed the use of CLOSE_MASK.
+
 Tue Oct 21 21:48:54 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.[hi]: moved ACE_PTHREAD_CLEANUP_PUSH/POP definitions from
