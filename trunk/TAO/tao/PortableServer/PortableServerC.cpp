@@ -155,6 +155,8 @@ namespace TAO
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:262
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 #if !defined (__TAO_SEQ_PORTABLESERVER_OBJECTID___ARG_TRAITS_CS_)
 #define __TAO_SEQ_PORTABLESERVER_OBJECTID___ARG_TRAITS_CS_
 
@@ -170,6 +172,8 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:390
@@ -188,6 +192,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 #if !defined (_PORTABLESERVER_THREADPOLICY__ARG_TRAITS_CS_)
 #define _PORTABLESERVER_THREADPOLICY__ARG_TRAITS_CS_
 
@@ -204,6 +210,8 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:390
@@ -324,6 +332,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY__ARG_TRAITS_CS_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY__ARG_TRAITS_CS_
 
@@ -340,6 +350,8 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:390
@@ -358,6 +370,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY__ARG_TRAITS_CS_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY__ARG_TRAITS_CS_
 
@@ -374,6 +388,8 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:390
@@ -392,6 +408,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY__ARG_TRAITS_CS_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY__ARG_TRAITS_CS_
 
@@ -408,6 +426,8 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if !defined (_PORTABLESERVER_POAMANAGER__ARG_TRAITS_CS_)
 #define _PORTABLESERVER_POAMANAGER__ARG_TRAITS_CS_
@@ -443,6 +463,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_CS_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_CS_
 
@@ -476,6 +498,8 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if !defined (_PORTABLESERVER_POA__ARG_TRAITS_CS_)
 #define _PORTABLESERVER_POA__ARG_TRAITS_CS_
@@ -5678,6 +5702,8 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_cs.cpp:50
 
@@ -5707,8 +5733,6 @@ TAO::Any_Dual_Impl_T<PortableServer::ForwardRequest>::demarshal_value (
 
   return 1;
 }
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 // Copying insertion.
 void operator<<= (
@@ -7427,6 +7451,8 @@ CORBA::Boolean operator>> (
         PortableServer::ThreadPolicyValue
       >;
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
   template class TAO::Objref_Traits<PortableServer::ThreadPolicy>;
 
   template class
@@ -7443,6 +7469,8 @@ CORBA::Boolean operator>> (
     TAO::Any_Impl_T<
         PortableServer::ThreadPolicy
       >;
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   template class
     TAO::Any_Basic_Impl_T<
@@ -7515,6 +7543,8 @@ CORBA::Boolean operator>> (
         PortableServer::ImplicitActivationPolicyValue
       >;
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
   template class TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>;
 
   template class
@@ -7532,10 +7562,14 @@ CORBA::Boolean operator>> (
         PortableServer::ImplicitActivationPolicy
       >;
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
   template class
     TAO::Any_Basic_Impl_T<
         PortableServer::ServantRetentionPolicyValue
       >;
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   template class TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>;
 
@@ -7554,10 +7588,14 @@ CORBA::Boolean operator>> (
         PortableServer::ServantRetentionPolicy
       >;
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
   template class
     TAO::Any_Basic_Impl_T<
         PortableServer::RequestProcessingPolicyValue
       >;
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   template class TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>;
 
@@ -7575,6 +7613,8 @@ CORBA::Boolean operator>> (
     TAO::Any_Impl_T<
         PortableServer::RequestProcessingPolicy
       >;
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   template class
     TAO::Any_Basic_Impl_T<
@@ -7597,6 +7637,8 @@ CORBA::Boolean operator>> (
     TAO::Any_Impl_T<
         PortableServer::POAManager
       >;
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   template class TAO::Objref_Traits<PortableServer::AdapterActivator>;
 
@@ -7666,6 +7708,8 @@ CORBA::Boolean operator>> (
         PortableServer::ServantLocator
       >;
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
   template class TAO::Objref_Traits<PortableServer::Current>;
 
   template class
@@ -7683,10 +7727,19 @@ CORBA::Boolean operator>> (
         PortableServer::Current
       >;
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
   template class
     TAO::Any_Dual_Impl_T<PortableServer::ForwardRequest>;
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+
   template class
     TAO::Any_Dual_Impl_T<PortableServer::NotAGroupObject>;
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   template class
     TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>;
@@ -7793,6 +7846,8 @@ CORBA::Boolean operator>> (
         PortableServer::ThreadPolicyValue \
       >
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 # pragma instantiate TAO::Objref_Traits<PortableServer::ThreadPolicy>
 
 # pragma instantiate \
@@ -7809,6 +7864,8 @@ CORBA::Boolean operator>> (
     TAO::Any_Impl_T< \
         PortableServer::ThreadPolicy \
       >
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
@@ -7881,6 +7938,8 @@ CORBA::Boolean operator>> (
         PortableServer::ImplicitActivationPolicyValue \
       >
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 # pragma instantiate TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>
 
 # pragma instantiate \
@@ -7898,10 +7957,14 @@ CORBA::Boolean operator>> (
         PortableServer::ImplicitActivationPolicy \
       >
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
         PortableServer::ServantRetentionPolicyValue \
       >
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 # pragma instantiate TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>
 
@@ -7920,10 +7983,14 @@ CORBA::Boolean operator>> (
         PortableServer::ServantRetentionPolicy \
       >
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
         PortableServer::RequestProcessingPolicyValue \
       >
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 # pragma instantiate TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>
 
@@ -7941,6 +8008,8 @@ CORBA::Boolean operator>> (
     TAO::Any_Impl_T< \
         PortableServer::RequestProcessingPolicy \
       >
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
@@ -7963,6 +8032,8 @@ CORBA::Boolean operator>> (
     TAO::Any_Impl_T< \
         PortableServer::POAManager \
       >
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 # pragma instantiate TAO::Objref_Traits<PortableServer::AdapterActivator>
 
@@ -8032,6 +8103,8 @@ CORBA::Boolean operator>> (
         PortableServer::ServantLocator \
       >
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 # pragma instantiate TAO::Objref_Traits<PortableServer::Current>
 
 # pragma instantiate \
@@ -8048,5 +8121,22 @@ CORBA::Boolean operator>> (
     TAO::Any_Impl_T< \
         PortableServer::Current \
       >
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T<PortableServer::ForwardRequest>
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T<PortableServer::NotAGroupObject>
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
