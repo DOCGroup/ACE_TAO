@@ -1215,7 +1215,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 		    long flags,
 		    ACE_thread_t *thr_id,
 		    ACE_hthread_t *thr_handle,
-                    u_int priority,
+                    long priority,
 		    void *stack,
 		    size_t stacksize)
 {
@@ -1241,49 +1241,87 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #endif /* ACE_HAS_SETKIND_NP */
     return -1;
 #if !defined (ACE_LACKS_SETSCHED)
-  else if (priority != 0)
+  else
     {
-      struct sched_param sparam;
-
-      ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
-
-#if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_SETKIND_NP)
-      sparam.sched_priority = priority > PRIORITY_MAX ? PRIORITY_MAX : priority;
-#elif defined(ACE_HAS_IRIX62_THREADS) || defined (ACE_HAS_PTHREADS_XAVIER)
-      sparam.sched_priority = priority > PTHREAD_MAX_PRIORITY ? PTHREAD_MAX_PRIORITY : priority;
-#elif defined (PTHREAD_MAX_PRIORITY) /* For MIT pthreads... */
-      sparam.prio = priority > PTHREAD_MAX_PRIORITY ? PTHREAD_MAX_PRIORITY : priority;
-#else
-      sparam.sched_priority = priority;
-#endif /* ACE_HAS_DCETHREADS */
-
-#if !defined (ACE_HAS_FSU_PTHREADS)
-      int retval = 0;
-#if defined (ACE_HAS_SETKIND_NP)
-      if (::pthread_attr_setsched (&attr, SCHED_OTHER) != 0)
-#else /* ACE_HAS_SETKIND_NP */
-      retval = ::pthread_attr_setschedparam (&attr, &sparam);
-      if (retval != 0)
-#endif /* ACE_HAS_SETKIND_NP */
+#  if defined(ACE_HAS_PTHREADS_1003_DOT_1C)
+      // If we wish to explicitly set a scheduling policy, we also
+      // have to specify a priority.
+      // We choose a "middle" priority as default.
+      // Maybe this is also necessary on other POSIX'ish implementations?
+      if ((   ACE_BIT_ENABLED(flags, THR_SCHED_FIFO)
+	   || ACE_BIT_ENABLED(flags, THR_SCHED_RR)
+	   || ACE_BIT_ENABLED(flags, THR_SCHED_DEFAULT))
+	  && priority == -1)
 	{
-#if defined (ACE_HAS_SETKIND_NP)
-	  ::pthread_attr_delete (&attr);
-#else /* ACE_HAS_SETKIND_NP */
-	  ::pthread_attr_destroy (&attr);
-#endif /* ACE_HAS_SETKIND_NP */
-	  errno = retval;
-	  return -1;
+	  if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
+	    priority = PRI_FIFO_MIN + (PRI_FIFO_MAX - PRI_FIFO_MIN)/2;
+	  else if (ACE_BIT_ENABLED(flags, THR_SCHED_RR))
+	    priority = PRI_RR_MIN + (PRI_RR_MAX - PRI_RR_MIN)/2;
+	  else // THR_SCHED_DEFAULT
+	    priority = PRI_OTHER_MIN + (PRI_OTHER_MAX - PRI_OTHER_MIN)/2;
 	}
-#else
-      if ((sparam.sched_priority >= PTHREAD_MIN_PRIORITY)
-	  && (sparam.sched_priority <= PTHREAD_MAX_PRIORITY))
-	attr.prio = sparam.sched_priority;
-      else
+#  endif //ACE_HAS_PTHREADS_1003_DOT_1C
+      if (priority != -1)
 	{
-	  pthread_attr_destroy (&attr);
-	  return -1;
+	  struct sched_param sparam;
+
+	  ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
+
+#  if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_SETKIND_NP)
+	  sparam.sched_priority = ACE_MAX(priority, PRIORITY_MAX);
+#  elif defined(ACE_HAS_IRIX62_THREADS) || defined (ACE_HAS_PTHREADS_XAVIER)
+	  sparam.sched_priority = ACE_MAX(priority, PTHREAD_MAX_PRIORITY);
+#  elif defined (PTHREAD_MAX_PRIORITY) /* For MIT pthreads... */
+	  sparam.prio = ACE_MAX(priority, PTHREAD_MAX_PRIORITY);
+#  elif defined(ACE_HAS_PTHREADS_1003_DOT_1C)
+	  // The following code forces priority into range.
+	  if (ACE_BIT_ENABLED(flags, THR_SCHED_FIFO))
+	    {
+	      sparam.sched_priority = 
+		ACE_MIN(PRI_FIFO_MIN, ACE_MAX(PRI_FIFO_MAX, priority));
+	    }
+	  else if (ACE_BIT_ENABLED(flags, THR_SCHED_RR))
+	    {
+	      sparam.sched_priority =
+		ACE_MIN(PRI_RR_MIN, ACE_MAX(PRI_RR_MAX, priority));
+	    }
+	  else // Default policy, whether set or not
+	    {
+	      sparam.sched_priority =
+		ACE_MIN(PRI_OTHER_MIN, ACE_MAX(PRI_OTHER_MAX, priority));
+	    }
+#  else
+	  sparam.sched_priority = priority;
+#  endif
+
+#  if !defined (ACE_HAS_FSU_PTHREADS)
+	  int retval = 0;
+#    if defined (ACE_HAS_SETKIND_NP)
+	  retval = ::pthread_attr_setsched (&attr, SCHED_OTHER);
+#    else /* ACE_HAS_SETKIND_NP */
+	  retval = ::pthread_attr_setschedparam (&attr, &sparam);
+#    endif /* ACE_HAS_SETKIND_NP */
+	  if (retval != 0)
+	    {
+#    if defined (ACE_HAS_SETKIND_NP)
+	      ::pthread_attr_delete (&attr);
+#    else /* ACE_HAS_SETKIND_NP */
+	      ::pthread_attr_destroy (&attr);
+#    endif /* ACE_HAS_SETKIND_NP */
+	      errno = retval;
+	      return -1;
+	    }
+#  else
+	  if ((sparam.sched_priority >= PTHREAD_MIN_PRIORITY)
+	      && (sparam.sched_priority <= PTHREAD_MAX_PRIORITY))
+	    attr.prio = sparam.sched_priority;
+	  else
+	    {
+	      pthread_attr_destroy (&attr);
+	      return -1;
+	    }
+#  endif	/* ACE_HAS_FSU_PTHREADS */
 	}
-#endif	/* ACE_HAS_FSU_PTHREADS */
     }
 #endif /* ACE_LACKS_SETSCHED */
 
@@ -1359,6 +1397,17 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  }
 #endif /* ACE_LACKS_SETDETACH */
 #if !defined (ACE_LACKS_SETSCHED)
+	// If we wish to set the priority explicitly, we have to enable
+	// explicit scheduling, and a policy, too.
+	if (priority != -1)
+	  {
+	    ACE_SET_BITS(flags, THR_EXPLICIT_SCHED);
+	    if (ACE_BIT_DISABLED(flags, THR_SCHED_FIFO)
+		&& ACE_BIT_DISABLED(flags, THR_SCHED_RR)
+		&& ACE_BIT_DISABLED(flags, THR_SCHED_DEFAULT))
+	      ACE_SET_BITS(flags, THR_SCHED_DEFAULT);
+	  }
+
 	if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO)
 	    || ACE_BIT_ENABLED (flags, THR_SCHED_RR)
 	    || ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
@@ -1495,7 +1544,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       int result;
       int start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
 
-      if (priority > 0)
+      if (priority >= 0)
 	// If we need to set the priority, then we need to start the
 	// thread in a suspended mode.
 	ACE_SET_BITS (flags, THR_SUSPENDED);
@@ -1506,7 +1555,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
       if (result != -1)
 	{
-	  if (priority > 0)
+	  if (priority >= 0)
 	    {
 	      // Set the priority of the new thread and then let it
 	      // continue, but only if the user didn't start it suspended
@@ -1552,7 +1601,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         {
 	  int start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
 
-	  if (priority > 0)
+	  if (priority >= 0)
 	    // If we need to set the priority, then we need to start the
 	    // thread in a suspended mode.
 	    ACE_SET_BITS (flags, THR_SUSPENDED);
@@ -1565,7 +1614,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	     flags,
 	     (unsigned int *) thr_id);
 
-	  if (priority > 0 && *thr_handle != 0)
+	  if (priority >= 0 && *thr_handle != 0)
 	    {
 	      // Set the priority of the new thread and then let it
 	      // continue, but only if the user didn't start it suspended
@@ -1609,7 +1658,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       // an even integer.
 
       // If called with thr_create() defaults, use same default values as ::sp ():
-      if (priority == 0) priority = 100;
+      if (priority == -1) priority = 100;
       if (flags == 0) flags = VX_FP_TASK; // Assumes that there is a
                                           // floating point coprocessor.
                                           // As noted above, ::sp () hardcodes
