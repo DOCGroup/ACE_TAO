@@ -114,8 +114,9 @@ Low_Priority_Null_Task::Low_Priority_Null_Task() :
   ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task ctor\n"));
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
-                  1, 0, LOW_PRIORITY);
+  if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
+                      1, 0, LOW_PRIORITY))
+    ACE_OS::perror ("activate");
 
 #if DEBUG > 0
   ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task ctor, activated\n"));
@@ -198,8 +199,9 @@ Suspend_Resume_Test::Suspend_Resume_Test (const ACE_UINT32 iterations) :
   ACE_DEBUG ((LM_DEBUG, "Suspend_Resume_Test ctor\n"));
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
-                  1, 0, HIGH_PRIORITY);
+  if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
+                  1, 0, HIGH_PRIORITY))
+    ACE_OS::perror ("activate");
 }
 
 Suspend_Resume_Test::~Suspend_Resume_Test()
@@ -307,8 +309,9 @@ High_Priority_Simple_Task::High_Priority_Simple_Task() :
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task ctor\n"));
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
-                  1, 0, HIGH_PRIORITY);
+  if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
+                  1, 0, HIGH_PRIORITY))
+    ACE_OS::perror ("activate");
 
 #if DEBUG > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task ctor, activated\n"));
@@ -411,8 +414,9 @@ Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (
   ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test ctor\n"));
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
-                  1, 0, LOW_PRIORITY);
+  if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
+                  1, 0, LOW_PRIORITY))
+    ACE_OS::perror ("activate");
 }
 
 Ping_Suspend_Resume_Test::~Ping_Suspend_Resume_Test()
@@ -552,8 +556,9 @@ Yield_Test::Yield_Test (const ACE_UINT32 iterations) :
   timer_.start ();
 #endif /* ! VXWORKS */
 
-  this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
-                  2, 0, LOW_PRIORITY);
+  if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
+                  2, 0, LOW_PRIORITY))
+    ACE_OS::perror ("activate");
 
 #if !defined (VXWORKS)
   timer_barrier_.wait ();
@@ -791,8 +796,9 @@ High_Priority_Synchronized_Task::High_Priority_Synchronized_Task (
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Synchronized_Task ctor\n"));
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
-                  1, 0, HIGH_PRIORITY);
+  if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
+                  1, 0, HIGH_PRIORITY))
+    ACE_OS::perror ("activate");
 
 #if DEBUG > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Synchronized_Task ctor, activated\n"));
@@ -839,7 +845,6 @@ High_Priority_Synchronized_Task::svc ()
                   "High_Priority_Synchronized_Task::svc, wait on sem ("
                   "%u)\n", thread_id_));
 #endif /* DEBUG */
-
 
       if (sem_.acquire () != 0)
         {
@@ -953,8 +958,9 @@ Synchronized_Suspend_Resume_Test::Synchronized_Suspend_Resume_Test (
   ACE_DEBUG ((LM_DEBUG, "Synchronized_Suspend_Resume_Test ctor\n"));
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
-                  1, 0, LOW_PRIORITY);
+  if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
+                  1, 0, LOW_PRIORITY))
+    ACE_OS::perror ("activate");
 }
 
 Synchronized_Suspend_Resume_Test::~Synchronized_Suspend_Resume_Test()
@@ -1039,7 +1045,7 @@ Synchronized_Suspend_Resume_Test::svc ()
   // The high priority thread will be block on the semaphore, so
   // release it.
   if (sem_.release () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "sem_.acquire"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "sem_.release"), -1);
 
 #if DEBUG > 0
   ACE_DEBUG ((LM_DEBUG,
@@ -1274,7 +1280,7 @@ main (int argc, char *argv [])
                   synchronized_suspend_resume_test.
                     average_context_switch_time () / 1000u,
                   synchronized_suspend_resume_test.
-                    average_context_switch_time () / 1000u));
+                    average_context_switch_time () % 1000u));
 
       // Give, e.g., Draft 4 Posix platforms a chance to cleanup threads.
       const ACE_Time_Value half_sec (0L, 500000L);
