@@ -536,12 +536,11 @@ DRV_parse_args (long ac, char **av)
                   int options = ACE_OS::strlen(av[i]) - 3;
                   int j;
                   int k=i;
-                  //cout<<"The option is "<<options<<endl;
                   // optimized typecode support
                   idl_global->gen_impl_files (1);
                   for (j=0;j<options;j++)
                     {
-                      //cout<<"The option string is "<<av[i+1]<<endl;
+                     
                       if (av[k][j+3] == 's')
                         {
                           
@@ -581,7 +580,7 @@ DRV_parse_args (long ac, char **av)
                 }
               else
                 {
-                  //cout<<"It is here...WHY??"<<endl;
+
                   cerr << GTDEVEL("IDL: missing argument after '")
                        << av[i]
                        << GTDEVEL("' flag\n");
