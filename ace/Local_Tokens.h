@@ -498,7 +498,7 @@ class ACE_Export ACE_Mutex_Token : public ACE_Tokens
 {
 public:
   /// Constructor
-  ACE_EXPLICIT ACE_Mutex_Token (const ACE_TCHAR* name);
+  explicit ACE_Mutex_Token (const ACE_TCHAR* name);
 
   /// Destructor
   virtual ~ACE_Mutex_Token (void);
@@ -593,7 +593,7 @@ class ACE_Export ACE_RW_Token : public ACE_Tokens
 {
 public:
   /// Constructor.
-  ACE_EXPLICIT ACE_RW_Token (const ACE_TCHAR* name);
+  explicit ACE_RW_Token (const ACE_TCHAR* name);
 
   /// Destructor.
   virtual ~ACE_RW_Token (void);

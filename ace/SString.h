@@ -464,7 +464,7 @@ protected:
 class ACE_Export ACE_Auto_String_Free
 {
 public:
-  ACE_EXPLICIT ACE_Auto_String_Free (char* p = 0);
+  explicit ACE_Auto_String_Free (char* p = 0);
   ACE_Auto_String_Free (ACE_Auto_String_Free &rhs);
   ACE_Auto_String_Free& operator= (ACE_Auto_String_Free &rhs);
   ~ACE_Auto_String_Free (void);

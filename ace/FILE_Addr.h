@@ -44,7 +44,7 @@ public:
   int set (const ACE_FILE_Addr &sa);
 
   /// Create a ACE_FILE_Addr from a pathname.
-  ACE_EXPLICIT ACE_FILE_Addr (const ACE_TCHAR *filename);
+  explicit ACE_FILE_Addr (const ACE_TCHAR *filename);
 
   /// Create a ACE_FILE_Addr from a pathname.
   int set (const ACE_TCHAR *filename);

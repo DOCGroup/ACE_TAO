@@ -679,8 +679,6 @@ AH_TEMPLATE([ACE_LACKS_FCNTL],[Platform lacks POSIX-style fcntl ()])
 
 AH_TEMPLATE([ACE_LACKS_FSYNC],[Platform lacks fsync()])
 
-AH_TEMPLATE([ACE_LACKS_RTTI],[Compiler does not support dynamic_cast.])
-
 AH_TEMPLATE([ACE_LACKS_READDIR_R],[Platform lacks readdir_r()])
 
 AH_TEMPLATE([ACE_LACKS_SEEKDIR],[Platform lacks seekdir()])
@@ -912,9 +910,6 @@ AH_TEMPLATE([ACE_HAS_UNIXWARE_SVR4_SIGNAL_T],
 AH_TEMPLATE([ACE_HAS_WCHAR],[Platform/compiler supports wchar_t])
 
 AH_TEMPLATE([ACE_HAS_UTIME],[Platform has <utime.h> header file])
-
-AH_TEMPLATE([ACE_HAS_EXPLICIT_KEYWORD],
-[Compiler supports explicit constructors.])
 
 AH_TEMPLATE([ACE_HAS_TYPENAME_KEYWORD],
 [Compiler supports the C++ typename keyword])

@@ -38,7 +38,7 @@ public:
   ACE_Dirent (void);
 
   /// Constructor calls <opendir>
-  ACE_EXPLICIT ACE_Dirent (const ACE_TCHAR *dirname);
+  explicit ACE_Dirent (const ACE_TCHAR *dirname);
 
   /// Opens the directory named by filename and associates a directory
   /// stream with it.

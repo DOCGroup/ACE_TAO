@@ -43,7 +43,7 @@ public:
   int set (const ACE_DEV_Addr &sa);
 
   /// Create a ACE_DEV_Addr from a device name.
-  ACE_EXPLICIT ACE_DEV_Addr (const ACE_TCHAR *devname);
+  explicit ACE_DEV_Addr (const ACE_TCHAR *devname);
 
   /// Create a ACE_Addr from a ACE_DEV pathname.
   void set (const ACE_TCHAR *devname);

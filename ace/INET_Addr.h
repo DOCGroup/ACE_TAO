@@ -61,7 +61,7 @@ public:
    * is assumed to be a port number, with the IP address being
    * INADDR_ANY.
    */
-  ACE_EXPLICIT ACE_INET_Addr (const char address[]);
+  explicit ACE_INET_Addr (const char address[]);
 
   /**
    * Creates an <ACE_INET_Addr> from a <port_number> and an Internet
@@ -92,7 +92,7 @@ public:
                  const wchar_t host_name[],
                  int address_family = AF_UNSPEC);
 
-  ACE_EXPLICIT ACE_INET_Addr (const wchar_t address[]);
+  explicit ACE_INET_Addr (const wchar_t address[]);
 
   ACE_INET_Addr (const wchar_t port_name[],
                  const wchar_t host_name[],
