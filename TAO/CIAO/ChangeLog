@@ -1,3 +1,11 @@
+Wed Mar 30 22:03:23 2005  Will Otte <wotte@dre.vanderbilt.edu>
+
+	* docs/schema/xsc-banner.cpp
+	* docs/schema/xsc-banner.h
+	
+	These files are the banners that should be included at 
+	the top of XSC generated code.
+	
 Wed Mar 30 13:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ciao/ComponentsC.h:
