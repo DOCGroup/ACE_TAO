@@ -49,8 +49,7 @@ run Handle_Set_Test		# uses Handle_Set
 run Mem_Map_Test		# uses Mem_Map
 
 run SV_Shared_Memory_Test	# uses SV_Shared_Memory, fork
-run Shared_Memory_SV_Test	# uses Shared_Memory_SV, fork
-run Shared_Memory_MM_Test	# uses Shared_Memory, fork, Thread_Manager
+run MM_Shared_Memory_Test
 run Mutex_Test			# uses Process_Mutex
 
 run Timer_Queue_Test		# uses Event_Handler, Timer_Queue
@@ -58,6 +57,7 @@ run Timer_Queue_Test		# uses Event_Handler, Timer_Queue
 run Task_Test			# uses Thread_Manager, Task
 run Thread_Manager_Test		# uses Thread_Manager, Task
 run Thread_Pool_Test		# uses Thread_Manager, Task
+run Future_Test			# uses Thread_Manager, Task
 run CPP_Test			# uses Thread_Manager, SAP
 run TSS_Test			# uses Task, Mutex, Guard
 run Reactors_Test		# uses Task, Mutex, Reactor
@@ -82,7 +82,7 @@ run Pipe_Test
 
 echo "Tests complete..."
 
-/bin/rm -f ace_pipe_name pattern $tmp/ace_temp_file $tmp/ace_temp_file2 $tmp/ace_test_file $tmp/Naming_Test
+/bin/rm -f ace_pipe_name pattern $tmp/ace_temp_file $tmp/ace_temp_file2 $tmp/ace_test_file $tmp/Naming_Test*
 echo; echo
 ipcs
 
