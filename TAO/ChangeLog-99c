@@ -1,3 +1,20 @@
+Mon May 31 11:22:53 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Simple/time-date: Added a new example that illustrates
+ 	  how to dynamically link the TAO ORB into an application using
+ 	  the ACE Service Configurator.  Thanks to Michael Kircher for
+ 	  helping with this implementation.
+
+	* examples/Simple/Simple_Util: Fixed a few inconsistencies in the
+ 	  programming style.
+
+	* tao/ORB_Core.cpp (init),
+	  tao/TAO_Internal.cpp (close_services): Added the
+ 	  SkipServiceConfigOpen option to ensure the ORB doesn't try to
+ 	  perform the Service Config open() processing, which is important
+ 	  if the ORB is already being linked by the ACE Service
+ 	  Configurator.
+
 Sun May 30 21:23:31 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/sfp.idl : 

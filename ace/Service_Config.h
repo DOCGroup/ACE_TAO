@@ -113,16 +113,20 @@ public:
 
   static int open_i (const ASYS_TCHAR program_name[],
                      LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY,
-                     int ignore_default_svc_conf = 0);
-  // Performs an open without parsing command-line arguments.  Returns
-  // number of errors that occurred on failure and 0 otherwise.
+                     int ignore_default_svc_conf_file = 0);
+  // Performs an open without parsing command-line arguments.  If
+  // <ignore_default_svc_conf_file> is non-0 then the "svc.conf" file
+  // will be ignored.  Returns number of errors that occurred on
+  // failure and 0 otherwise.
 
   static int open (const ASYS_TCHAR program_name[],
                    LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY,
                    int ignore_static_svcs = 1,
-                   int ignore_default_svc_conf = 0);
-  // Performs an open without parsing command-line arguments.  Returns
-  // number of errors that occurred on failure and 0 otherwise.
+                   int ignore_default_svc_conf_file = 0);
+  // Performs an open without parsing command-line arguments.  If
+  // <ignore_default_svc_conf_file> is non-0 then the "svc.conf" file
+  // will be ignored.  Returns number of errors that occurred on
+  // failure and 0 otherwise.
 
   static int open (int argc,
                    ASYS_TCHAR *argv[],
@@ -369,6 +373,13 @@ private:
 
   static ACE_Sig_Adapter *signal_handler_;
   // Handles the reconfiguration signals.
+
+  static int is_initialized_;
+  // Keep track of whether the <ACE_Service_Config> is already
+  // initialized.  If so, we can't allow <yyparse> to be called since
+  // it's not reentrant.  This variable is incremented by the
+  // <ACE_Service_Config::open> method and decremented by the
+  // <ACE_Service_Config::close> method.
 };
 
 #if defined (__ACE_INLINE__)

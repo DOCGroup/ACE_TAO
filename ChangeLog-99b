@@ -1,52 +1,47 @@
+Mon May 31 11:51:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config: Added a static variable called is_initialized
+	  that keeps track of whether the <ACE_Service_Config> is already
+	  initialized.  If it is, we can't allow <yyparse> to be called
+	  since it's not reentrant...  
+
 Sun May 30 14:08:48 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Makefile:
 	* ace/Vector.{h,i,cpp}:
 	* tests/Makefile:
-	* tests/Vector_Test.cpp:
-
-	  Removed the ACE_Vector implementation from the distribution.
+	* tests/Vector_Test.cpp: Removed the ACE_Vector implementation
+ 	  from the distribution.
 
 Sat May 29 14:14:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Vector.{h,i,cpp}:
+	* ace/Vector.{h,i,cpp}: Added STL Vector-style insert() and
+ 	  erase() methods.  Also added a new constructor that creates an
+ 	  ACE_Vector from a specified range of iterators.  ACE_Vector
+ 	  class is now Purify clean (i.e. fixed any and all memory leaks).
 
-	  Added STL Vector-style insert() and erase() methods.  Also added
-	  a new constructor that creates an ACE_Vector from a specified
-	  range of iterators.
-
-	  ACE_Vector class is now Purify clean (i.e. fixed any and all
-	  memory leaks).
-
-	* tests/Vector_Test.cpp:
-
-	  Added tests for the newly added ACE_Vector<T>::insert() and
-	  ACE_Vector<T>::erase() methods.
+	* tests/Vector_Test.cpp: Added tests for the newly added
+ 	  ACE_Vector<T>::insert() and ACE_Vector<T>::erase() methods.
 
 Fri May 28 20:19:50 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Vector.{h,i,cpp}:
-	* tests/Vector_Test.cpp:
-	
-	  Implemented an ACE_Vector class based on the ACE_Array class.
-	  It is not derived from it, however.  The ACE_Vector class
-	  provides an STL Vector-like interface.  The Vector_Test tests
-	  the important features of the ACE_Vector class and sends output
-	  to `logs/Vector_Test.log'.
+	* ace/Vector.{h,i,cpp},
+	  tests/Vector_Test.cpp: Implemented an ACE_Vector class based on
+ 	  the ACE_Array class.  It is not derived from it, however.  The
+ 	  ACE_Vector class provides an STL Vector-like interface.  The
+ 	  Vector_Test tests the important features of the ACE_Vector class
+ 	  and sends output to `logs/Vector_Test.log'.
 
-	* ace/Makefile:
-	* tests/Makefile:
-
-	  Added ACE_Vector related files to the makefiles and updated the
-	  dependencies.
+	* ace/Makefile,
+	  tests/Makefile: Added ACE_Vector related files to the makefiles
+ 	  and updated the dependencies.
 
 Thu May 27 15:50:17 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/UNIX_Addr.cpp (set): 
-
-	  Explicitly set the sun_family to AF_UNIX, otherwise it will be
-	  zero by a previous call to memset().  AF_UNSPEC, which is zero,
-	  is what the call to memset() cause the sun_family to be.
+	* ace/UNIX_Addr.cpp (set), Explicitly set the sun_family to
+ 	  AF_UNIX, otherwise it will be zero by a previous call to
+ 	  memset().  AF_UNSPEC, which is zero, is what the call to
+ 	  memset() cause the sun_family to be.
 
 Wed May 26 01:46:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -59,10 +54,9 @@ Wed May 26 01:46:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Tue May 25 21:38:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/UNIX_Addr.cpp:
-	  The default constructor was not setting the address family to
-	  AF_UNIX.  Now that we do so we can let the OS select a ephemeral 
-	  UNIX domain endpoint for us.
+	* ace/UNIX_Addr.cpp: The default constructor was not setting the
+ 	  address family to AF_UNIX.  Now that we do so we can let the OS
+ 	  select a ephemeral UNIX domain endpoint for us.
 
 Tue May 25 19:20:15 1999  Steve Huston  <shuston@riverace.com>
 

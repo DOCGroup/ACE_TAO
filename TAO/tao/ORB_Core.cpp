@@ -186,6 +186,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   size_t rcv_sock_size = 0;
   size_t snd_sock_size = 0;
 
+  // Should we skip the <ACE_Service_Config::open> method, e.g., if we
+  // already being configured by the ACE Service Configurator.
+  int skip_service_config_open = 0;
+
   // Use dotted decimal addresses
   // @@ This option will be treated as a suggestion to each loaded protocol to
   // @@ use a character representation for the numeric address, otherwise
@@ -597,6 +601,11 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
+      else if (ACE_OS::strcmp (current_arg, "-ORBSkipServiceConfigOpen") == 0)
+        {
+          arg_shifter.consume_arg ();
+          skip_service_config_open = 1;
+        }
       else
         arg_shifter.ignore_arg ();
     }
@@ -636,7 +645,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // and protocols.  Will need to call the open () method on
   // the registries!
   int result = TAO_Internal::open_services (svc_config_argc,
-                                            svc_config_argv);
+                                            svc_config_argv,
+                                            0,
+                                            skip_service_config_open);
+
   // Make sure to free up all the dynamically allocated memory.  If we
   // decide we don't need to allocate this stuff dynamically then we
   // can remove this.

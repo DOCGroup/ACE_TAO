@@ -38,22 +38,18 @@ public:
   // Destructor
 
   virtual void bin_date (CORBA::Long_out time_date,
-                         CORBA::Environment &ACE_TRY_ENV);
+						 CORBA::Environment &);
   // Obtain the time and date in binary format.
 
   virtual void str_date (CORBA::String_out time_date,
-                         CORBA::Environment &ACE_TRY_ENV);
+						 CORBA::Environment &);
   // Obtain the time and date in string format.
 
-  virtual void shutdown (CORBA::Environment &env);
-  // Shutdown the server.
-
-  void orb (CORBA::ORB_ptr o);
-  // Set the ORB pointer.
+  void orb (CORBA::ORB_ptr orb_ptr);
 
 private:
-  CORBA::ORB_var orb_;
-  // ORB pointer.
+   CORBA::ORB_var orb_var_;
+
 };
 
 #endif /* TIME_DATE_I_H */
