@@ -1,3 +1,16 @@
+Thu Sep 11 06:39:23 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Fixed a bug with the automatic project dependencies that was
+          related to directories and the location that mwc.pl was run.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Added support for poor AIX compilers that don't deal with
+          templates correctly.  This was basically a cut and paste into the
+          template from the original ACE_wrappers/tests/Makefile.
+
 Wed Sep 10 13:26:14 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
         * bin/performance_stats.sh:
