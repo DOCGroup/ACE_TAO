@@ -1,3 +1,8 @@
+Wed Aug 26 19:11:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/count_lines: 
+	  A nice Perl script to count lines of code.
+
 Wed Aug 26 17:35:43 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Reactors_Test.cpp (close): Oops, the ACE_ASSERT() was
