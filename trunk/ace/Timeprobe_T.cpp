@@ -3,6 +3,8 @@
 #if !defined (ACE_TIMEPROBE_T_C)
 #define ACE_TIMEPROBE_T_C
 
+#include "ace/Timeprobe.h"
+
 #if defined (ACE_COMPILE_TIMEPROBES)
 #include "ace/High_Res_Timer.h"
 
