@@ -4,7 +4,7 @@
 //
 // = TAO tests
 //    Throughput measurement using the TTCP benchmark adapted to work
-//    using TAO 
+//    using TAO
 //
 // = FILENAME
 //   server.cpp
@@ -73,8 +73,8 @@ main (int argc, char **argv)
   CORBA::String      key = (CORBA::String) "key0"; // key assigned to our
                                                    // target object
   CORBA::Object_var obj_var;
-  char              *oa_name = "RootPOA"; // name of our OA
-  char              *orb_name = "internet"; // name of our ORB
+  const char *oa_name = "RootPOA"; // name of our OA
+  const char *orb_name = "internet"; // name of our ORB
   CORBA::String      str; // for stringified representation of the object reference
   FILE *ior_file = 0;
 
