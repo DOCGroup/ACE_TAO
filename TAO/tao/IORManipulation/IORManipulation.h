@@ -155,6 +155,8 @@ public:
         CORBA::SystemException,
         TAO_IOP::EmptyProfileList
       ));
+private:
+
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
