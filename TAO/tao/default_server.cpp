@@ -112,7 +112,7 @@ TAO_Default_Server_Strategy_Factory::init (int argc, char *argv[])
   if (this->parse_args (argc, argv) == 0
       && reactive_strategy_.open (orb_core->reactor ()) == 0
       && threaded_strategy_.open (orb_core->thr_mgr (),
-				   this->thread_flags_) == 0)
+                                  this->thread_flags_) == 0)
     return 0;
   else
     return -1;
