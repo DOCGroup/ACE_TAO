@@ -5,14 +5,15 @@
 # is a line to verify in this file - if you are using DCE threads, "-lcma"
 # needs to be on the SHLIBBUILD line, below.  If you are not using DCE threads,
 # then use the SHLIBBUILD without -lcma.
-#
+
+debug = 1
+
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
 HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= /bin/cc
 CXX		= /opt/aCC/bin/aCC
-CFLAGS		+= $(DCFLAGS)
 CCFLAGS		+= $(CFLAGS)
 DCFLAGS		+= -g -D_THREAD_SAFE -D_REENTRANT -DHPUX_VERS=$(HPUX_VERS)
 DLD		= $(CXX)
@@ -21,7 +22,6 @@ PIC		= +Z
 ARFLAGS		= ruv
 RANLIB		= echo
 LDFLAGS		= -Wl,+s
-#LIBS		+=
 PRELIB		= $(CXX) -c -g +inst_close $^
 PRELIB_USES_OBJ_ONLY = 1
 SOFLAGS		= -b +inst_none -g

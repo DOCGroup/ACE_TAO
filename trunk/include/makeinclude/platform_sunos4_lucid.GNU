@@ -1,10 +1,13 @@
 # $Id$
 
 # SunOS 4.x (Solaris 1.x) with Lucid
+
+debug = 1
+
 CC		= lcc
 CXX		= lcc
-CFLAGS		= $(DCFLAGS) -Xa # use ANSI c complier
-CCFLAGS		= $(DCCFLAGS) -XF -Xpt- # use c++ ARM compiler with auto templates turned off
+CFLAGS		= -Xa # use ANSI c complier
+CCFLAGS		= -XF -Xpt- # use c++ ARM compiler with auto templates turned off
 DCFLAGS		+= -g
 DCCFLAGS	+= $(DCFLAGS)
 DLD		= /bin/ld

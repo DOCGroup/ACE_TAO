@@ -9,6 +9,9 @@
 ####    add a global variable or function to that .cpp file.  See
 ####    ace/IOStream_T.cpp for an explanation and example.
 
+debug = 1
+static_libs_only = 1
+
 
 #### BEGIN CPU-specific settings
 
@@ -50,7 +53,7 @@ CFLAGS          += -DVXWORKS -D_REENTRANT -I. -I$(ACE_ROOT) -I$(WIND_BASE)/targe
 ####       g++ cygnus-2.7.2-960126 for pc486 target.  Some
 ####       member functions don't get instantiated.  Wind River knows
 ####       about this problem (SPR 8483).
-CCFLAGS         += $(DCFLAGS) $(CFLAGS) #### -fno-implicit-templates
+CCFLAGS         += $(CFLAGS) #### -fno-implicit-templates
 DCFLAGS         += -g
 INCLDIRS        +=
 LD              = ld$(TOOLENV)
@@ -60,9 +63,6 @@ AR              = ar$(TOOLENV)
 ARFLAGS         = rv
 RANLIB          = /bin/true
 PRELINK         = nm$(TOOLENV) .obj/$@.o $(ACE_ROOT)/ace/libACE.a | munch | egrep -v '\.cpp' > __ctordtor.c; $(COMPILE.c) -traditional -o .obj/__ctordtor.o __ctordtor.c; /bin/rm __ctordtor.c;
-
-#### don't build shared objects:
-static_libs_only = 1
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
 LINK.c           = override

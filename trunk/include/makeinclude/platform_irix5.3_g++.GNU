@@ -2,9 +2,10 @@
 
 # Irix 5.3 with GNU C++
 
+debug = 1
+
 CC              = gcc
 CXX             = g++
-CFLAGS		+= $(DCFLAGS)
 CCFLAGS		+= $(CFLAGS) -O2 -fno-implicit-templates
 DCFLAGS		+= -g
 DLD             = $(CXX)

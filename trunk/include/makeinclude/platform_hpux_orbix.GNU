@@ -1,9 +1,12 @@
 # $Id$
 
 # Assume the existence of Orbix with HP/UX...
+
+debug = 1
+
 CC		= /bin/cc
 CXX		= /usr/bin/CC
-CFLAGS		= $(DCFLAGS) -Aa -z +z
+CFLAGS		= -Aa -z +z
 CCFLAGS		= $(CFLAGS) -pta -ptb
 DCFLAGS		+= -g
 DLD		= $(CXX)

@@ -2,9 +2,11 @@
 
 # SCO v5.0.2; gcc version 2.7-95q4(Skunkware96 distribution from media images)
 
+debug = 1
+
 CC              = gcc
 CXX		= g++
-CFLAGS		+= $(DCFLAGS) -b elf -w -O2
+CFLAGS		+= -b elf -w -O2
 CCFLAGS		+= $(CFLAGS) -Xpg4plus -fno-implicit-templates \
 		   -I/usr/progressive/lib/g++-include
 DCFLAGS		+= -gstabs

@@ -2,9 +2,12 @@
 
 # SunOS 5.x (Solaris 2.x) with SunC++ 4.x
 # *not* using Orbix
+
+debug = 1
+
 CC		= gcc
 CXX             = g++
-CFLAGS		+= $(DCFLAGS) -w -O2
+CFLAGS		+= -w -O2
 CCFLAGS		+= $(CFLAGS) -D__m88k__ -fno-implicit-templates -fno-strict-prototypes
 DCFLAGS		+= -g
 DLD		= $(CXX) 

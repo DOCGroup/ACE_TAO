@@ -6,9 +6,10 @@
 # ACE code but should not matter.  The warnings can be turned on
 # again by removing the -woff clause in the CPPFLAGS definition.
 
+debug = 1
+
 CC		= cc
 CXX		= CC
-CFLAGS		+= $(DCFLAGS)
 CCFLAGS		+= $(CFLAGS)
 DCFLAGS		+= -g
 DLD		= $(CXX)

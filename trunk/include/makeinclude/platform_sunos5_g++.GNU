@@ -1,9 +1,12 @@
 # $Id$
 
 # SunOS 5.x (Solaris 2.x) with g++ *not* using Orbix
+
+debug = 1
+
 CC              = gcc
 CXX             = g++
-CFLAGS          += $(DCFLAGS) -Wall -Wpointer-arith -O2 -pipe #### -Winline
+CFLAGS          += -Wall -Wpointer-arith -O2 -pipe #### -Winline
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
 DLD             = $(CXX)
