@@ -2,7 +2,8 @@ Thu Jun 05 18:28:36 1997    <irfan@TWOSTEP>
 
 	* ace/Asynch_Acceptor.cpp (open): The Proactor was beening passed
  	  implicitly. I have made this explicit by making this a parameter
- 	  to open .
+ 	  to open. Thanks to MehulM@spa-marketing.com (Mehul Mahimtura)
+	  for this.
 
 Thu Jun  5 12:06:45 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
 
