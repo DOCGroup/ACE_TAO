@@ -273,7 +273,8 @@ public:
     TAO_OBV_OPERATION_ARGLIST_OTHERS,          // ... for all other cases
 
     // Emitting code for AMI.
-    TAO_OPERATION_AMI,                     // AMI stub generation.  
+    TAO_OPERATION_AMI_CH,                  // AMI stub generation.  
+    TAO_OPERATION_AMI_CS,                  // AMI stub generation.  
     TAO_OPERATION_ARGLIST_AMI,             // AMI stubs in client header
     TAO_OPERATION_ARG_AMI,                 // AMI stub.
     TAO_ARGUMENT_AMI,                      // Argument in AMI stub.
