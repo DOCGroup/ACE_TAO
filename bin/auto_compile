@@ -448,7 +448,7 @@ close(HIST)
 unlink $disable_file
     || die "cannot unlink disable file";
 
-if ($report_success) {
+if ($report_success && $STATUS eq "OK") {
   report_errors "Congratulations: No errors or warnings detected\n";
 }
 
