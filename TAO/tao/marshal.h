@@ -47,7 +47,7 @@ class TAO_Marshal_Alias;
 class TAO_Marshal_Except;
 class TAO_Marshal_WString;
 
-class ACE_Svc_Export TAO_Marshal_Factory
+class TAO_Export TAO_Marshal_Factory
 {
   // = TITLE
   // A Factory for generating specialized marshaling objects
@@ -91,7 +91,7 @@ private:
 #endif /* 0 */
 };
 
-class ACE_Svc_Export TAO_Marshal
+class TAO_Export TAO_Marshal
 // = TITLE
 //    Namespace in which to put otherwise "global" methods like
 //    initialize, etc.
@@ -102,7 +102,7 @@ public:
   static TAO_Marshal_Factory* DEFAULT_MARSHAL_FACTORY;
 };
 
-class ACE_Svc_Export TAO_Marshal_Object
+class TAO_Export TAO_Marshal_Object
 {
   // = TITLE
   //    The Marshaling object that provides a common interface to the
@@ -133,7 +133,7 @@ public:
   // destructor
 };
 
-class ACE_Svc_Export TAO_Marshal_Primitive: public TAO_Marshal_Object
+class TAO_Export TAO_Marshal_Primitive: public TAO_Marshal_Object
 {
   // @@ Andy, please fill in here and add comments to this class.
   // = TITLE
@@ -163,7 +163,7 @@ public:
                                                   CORBA::Environment &env);
 };
 
-class ACE_Svc_Export TAO_Marshal_Any: public TAO_Marshal_Object
+class TAO_Export TAO_Marshal_Any: public TAO_Marshal_Object
 {
   // = TITLE
   // = DESCRIPTION
@@ -192,7 +192,7 @@ public:
                                                   CORBA::Environment &env);
 };
 
-class ACE_Svc_Export TAO_Marshal_TypeCode: public TAO_Marshal_Object
+class TAO_Export TAO_Marshal_TypeCode: public TAO_Marshal_Object
 {
   // = TITLE
   // = DESCRIPTION
@@ -221,7 +221,7 @@ public:
                                                   CORBA::Environment &env);
 };
 
-class ACE_Svc_Export TAO_Marshal_Principal: public TAO_Marshal_Object
+class TAO_Export TAO_Marshal_Principal: public TAO_Marshal_Object
 {
   // = TITLE
   // = DESCRIPTION
@@ -250,7 +250,7 @@ public:
                                                   CORBA::Environment &env);
 };
 
-class ACE_Svc_Export TAO_Marshal_ObjRef: public TAO_Marshal_Object
+class TAO_Export TAO_Marshal_ObjRef: public TAO_Marshal_Object
 {
   // = TITLE
   // = DESCRIPTION
@@ -279,7 +279,7 @@ public:
                                                   CORBA::Environment &env);
 };
 
-class ACE_Svc_Export TAO_Marshal_Struct: public TAO_Marshal_Object
+class TAO_Export TAO_Marshal_Struct: public TAO_Marshal_Object
 {
   // = TITLE
   // = DESCRIPTION
@@ -308,7 +308,7 @@ public:
                                                   CORBA::Environment &env);
 };
 
-class ACE_Svc_Export TAO_Marshal_Union: public TAO_Marshal_Object
+class TAO_Export TAO_Marshal_Union: public TAO_Marshal_Object
 {
   // = TITLE
   // = DESCRIPTION
@@ -337,7 +337,7 @@ public:
                                                   CORBA::Environment &env);
 };
 
-class ACE_Svc_Export TAO_Marshal_String: public TAO_Marshal_Object
+class TAO_Export TAO_Marshal_String: public TAO_Marshal_Object
 {
   // = TITLE
   // = DESCRIPTION
@@ -366,7 +366,7 @@ public:
                                                   CORBA::Environment &env);
 };
 
-class ACE_Svc_Export TAO_Marshal_Sequence: public TAO_Marshal_Object
+class TAO_Export TAO_Marshal_Sequence: public TAO_Marshal_Object
 {
   // = TITLE
   // = DESCRIPTION
@@ -395,7 +395,7 @@ public:
                                                   CORBA::Environment &env);
 };
 
-class ACE_Svc_Export TAO_Marshal_Array: public TAO_Marshal_Object
+class TAO_Export TAO_Marshal_Array: public TAO_Marshal_Object
 {
   // = TITLE
   // = DESCRIPTION
@@ -424,7 +424,7 @@ public:
                                                   CORBA::Environment &env);
 };
 
-class ACE_Svc_Export TAO_Marshal_Alias: public TAO_Marshal_Object
+class TAO_Export TAO_Marshal_Alias: public TAO_Marshal_Object
 {
   // = TITLE
   // = DESCRIPTION
@@ -453,7 +453,7 @@ public:
                                                   CORBA::Environment &env);
 };
 
-class ACE_Svc_Export TAO_Marshal_Except: public TAO_Marshal_Object
+class TAO_Export TAO_Marshal_Except: public TAO_Marshal_Object
 {
   // = TITLE
   // = DESCRIPTION
@@ -481,7 +481,7 @@ public:
                                                   CORBA::Environment &env);
 };
 
-class ACE_Svc_Export TAO_Marshal_WString : public TAO_Marshal_Object
+class TAO_Export TAO_Marshal_WString : public TAO_Marshal_Object
 {
   // = TITLE
   // = DESCRIPTION

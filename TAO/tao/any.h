@@ -21,7 +21,7 @@
 #if !defined (TAO_ANY_H)
 #define TAO_ANY_H
 
-class ACE_Svc_Export CORBA_Any : public IUnknown
+class TAO_Export CORBA_Any : public IUnknown
   // = TITLE
   //   Class "Any" can wrap values of any type, with the assistance
   //   of a TypeCode to describe that type.
@@ -249,7 +249,7 @@ private:
   CORBA::Boolean operator>>= (unsigned char&) const;
 };
 
-class ACE_Svc_Export CORBA_Any_var
+class TAO_Export CORBA_Any_var
   // = TITLE
   //   Provide for automatic storage deallocation on going out of scope. 
 {
@@ -297,7 +297,7 @@ private:
   CORBA_Any *ptr_;
 };
 
-class ACE_Svc_Export CORBA_Any_out
+class TAO_Export CORBA_Any_out
   // = TITLE
   //   @@ Please document me.
 {

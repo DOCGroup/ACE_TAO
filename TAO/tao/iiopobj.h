@@ -23,7 +23,7 @@
 #if !defined (TAO_IIOPOBJ_H)
 #  define TAO_IIOPOBJ_H
 
-class ACE_Svc_Export IIOP
+class TAO_Export IIOP
   // = TITLE
   //   This class provides a namespace.
 {
@@ -81,7 +81,7 @@ public:
   };
 };
 
-class ACE_Svc_Export IIOP_Object : public STUB_Object
+class TAO_Export IIOP_Object : public STUB_Object
   // = TITLE
   //   Representation of an IIOP objref: the profile body, and any
   //   forwarded pointer.  Implementations of basic invocation code;

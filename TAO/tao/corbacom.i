@@ -18,20 +18,20 @@
 
 // String utility support
 
-ACE_INLINE ACE_Svc_Export CORBA::String
+ACE_INLINE TAO_Export CORBA::String
 CORBA::string_alloc (CORBA::ULong len)
 {
   // allocate 1 + strlen to accomodate the null terminating character
   return new CORBA::Char[size_t (len + 1)];
 }
 
-ACE_INLINE ACE_Svc_Export CORBA::String
+ACE_INLINE TAO_Export CORBA::String
 CORBA::string_dup (const CORBA::Char *str)
 {
   return CORBA::string_copy (str);
 }
 
-ACE_INLINE ACE_Svc_Export void
+ACE_INLINE TAO_Export void
 CORBA::string_free (CORBA::Char *str)
 {
   delete [] str;

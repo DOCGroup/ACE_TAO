@@ -24,7 +24,7 @@
 #if !defined (TAO_SVRRQST_H)
 #define TAO_SVRRQST_H
 
-class ACE_Svc_Export CORBA_ServerRequest : public IUnknown
+class TAO_Export CORBA_ServerRequest : public IUnknown
   // = TITLE
   //   XXX this is currently in an intermediate state; this is not
   //   supposed to be IIOP-specific, or to expose quite so many
@@ -71,7 +71,7 @@ public:
   virtual CORBA::ORB_ptr __stdcall orb (void) = 0;
 };
 
-class ACE_Svc_Export IIOP_ServerRequest : public CORBA_ServerRequest
+class TAO_Export IIOP_ServerRequest : public CORBA_ServerRequest
   // = TITLE
   // @@ Please comment me.
 {
