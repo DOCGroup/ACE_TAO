@@ -21,7 +21,7 @@
 #include "tao/Managed_Types.h"
 #include "tao/Sequence.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
