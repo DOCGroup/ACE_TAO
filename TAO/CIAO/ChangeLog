@@ -1,8 +1,24 @@
-2004-06-28  turkaye  <turkaye@lambada.isis.vanderbilt.edu>
+Mon Jun 28 10:44:00 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+	* DnC/tests/Config_Handlers/Handler_Test.cpp: 
+	* DnC/tests/Config_Handlers/CompImplDesc_Handler_Test.cpp:
+	* DnC/tests/Config_Handlers/CompIntrDesc_Handler_Test.cpp:
+	* DnC/tests/Config_Handlers/CompPkgDesc_Handler_Test.cpp:
+	* DnC/tests/Config_Handlers/Domain_Handler_Test.cpp:
+	* DnC/tests/Config_Handlers/Handler_Test.h:
+	* DnC/tests/Config_Handlers/IAD_Handler_Test.cpp:
+	* DnC/tests/Config_Handlers/PC_Handler_Test.cpp:
+	* DnC/tests/Config_Handlers/Plan_Handler_Test.cpp:
+	* DnC/tests/Config_Handlers/handler_test.mpb:
+
+	  Fixed the VC6 errors by excluding the DnC tests on the
+	  compilers ACE_HAS_BROKEN_NESTED_TEMPLATES.
+
+Mon Jun 28 10:40:00 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 	* DnC/tests/Config_Handlers/RobotAssembly/README.html: 
 
-	Deleted "file://" from -p & -d options of executor.
+	  Deleted "file://" from -p & -d options of executor.
 
 Mon Jun 28 08:03:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
