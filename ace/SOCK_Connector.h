@@ -58,6 +58,8 @@ public:
    * the default value of <ACE_Addr::sap_any> then the user is letting
    * the OS do the binding.  If <reuse_addr> == 1 then the
    * <local_addr> is reused, even if it hasn't been cleanedup yet.
+   * The <protocol_family> and <protocol> parameters are passed down
+   * to the <socket> call, whereas <flags> and <perms> are ignored.
    */
   ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                       const ACE_Addr &remote_sap,
@@ -85,6 +87,8 @@ public:
    * <ACE_Addr::sap_any> then the user is letting the OS do the
    * binding.  If <reuse_addr> == 1 then the <local_addr> is reused,
    * even if it hasn't been cleanedup yet.
+   * The <protocol_family> and <protocol> parameters are passed down
+   * to the <socket> call, whereas <flags> and <perms> are ignored.
    */
   ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                       const ACE_Addr &remote_sap,
@@ -114,6 +118,8 @@ public:
    * the OS do the binding.  If <reuse_addr> == 1 then the
    * <local_addr> is reused, even if it hasn't been cleanedup yet.
    * Note that the <new_stream> always starts out in blocking mode.
+   * The <protocol_family> and <protocol> parameters are passed down
+   * to the <socket> call, whereas <flags> and <perms> are ignored.
    */
   int connect (ACE_SOCK_Stream &new_stream,
                const ACE_Addr &remote_sap,

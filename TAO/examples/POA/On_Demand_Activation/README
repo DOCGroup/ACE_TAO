@@ -13,7 +13,7 @@ Servant managers are associated with POAs. A servant manager supplies
 a POA with the ability to objects on demand when the POA receives a
 request targeted at an inactive object. A servant manager is
 registered with a POA as a callback object, to be invoked by the POA
-when necessary.An application server that activates all its needed
+when necessary.  An application server that activates all its needed
 objects at the beginning of execution does not need to use a servant
 manager; it is used only for the case in which an object must be
 activated during request processing.

@@ -26,6 +26,16 @@ Fri Nov 24 11:42:42 2000  Darrell Brunsch <brunsch@uci.edu>
           MSVC 4.2 projects.  Thanks to Johhny Willemsen
           <johnny.willemsen@meco.nl> for pointing this out.
 
+Fri Nov 24 05:48:26 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Signal.h: Enhanced the documentation to clarify the role of sigkey.
+	  Thanks to Oscar Rodriquez <Oscar.Rodriquez@eln.ericsson.se> for
+ 	  motivating this.
+
+	* ace/SOCK_Connector.h: Updated the documentation to clarify the parameters to 
+	  the constructors and the connect() method.  Thanks to Pierre
+ 	  Oberson <oberson@nagra-kudelski.ch> for suggesting this.
+
 Thu Nov 23 21:17:16 2000  David L. Levine <levine@cs.wustl.edu>
 
         * tests/Reactor_Notify_Test.cpp (main): added
@@ -40,17 +50,21 @@ Thu Nov 23 18:38:54 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
           Add ACE_wrappers/html to the list of files tagged, even though
           they are not included in the tar or zip files.
 
+Thu Nov 23 18:13:32 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+          Don't use 'grep -q' because Solaris' grep does not support it.
+
 Thu Nov 23 18:27:52 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * Makefile:
           The ACE-INSTALL file is generated in the staging directory,
           there is no need to generate it locally too.
 
-Thu Nov 23 18:13:32 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+Thu Nov 23 17:46:56 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-        * bin/make_release:
-          Don't use 'grep -q' because Solaris' grep does not support it.
-
+	* ace/Method_Request: Made the priority() method const.  Thanks
+	  to Johnny Willemsen <jwillemsen@remedy.nl>
+  
 Thu Nov 23 14:43:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Makefile:
@@ -232,6 +246,12 @@ Sun Nov 19 08:05:08 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
           Not all methods in Dynamic_Service were based on the SERVICE
           types. Moved those to the base class 'Dynamic_Service_Base' and
           the Dynamic_Service inherits from the base class.
+
+Sat Nov 18 15:39:49 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp: 
+	  Fixed a mistake in the "usage" string.  Thanks to Mike Curtis
+ 	  <mccurry@my-deja.com> for pointing this out.
 
 Sat Nov 18 11:35:53 2000  Darrell Brunsch <brunsch@uci.edu>
 

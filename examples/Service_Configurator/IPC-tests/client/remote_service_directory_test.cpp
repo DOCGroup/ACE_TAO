@@ -21,7 +21,9 @@ static int remote_reconfigure = 0;
 static void 
 print_usage_and_die (void)
 {
-  ACE_ERROR ((LM_ERROR, "usage: %n [-p portnum] [-h host_name] [-r] [-f file]\n%a", 1));
+  ACE_ERROR ((LM_ERROR,
+              "usage: %n [-p portnum] [-h host_name] [-r]\n%a",
+              1));
 }
 
 void
@@ -59,8 +61,14 @@ main (int argc, char *argv[])
   ACE_SOCK_Stream   sc;
   ACE_SOCK_Connector con;
 
-  if (con.connect (sc, ACE_INET_Addr (port_number, host_name)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n%a", "connect", 1), -1);
+  if (con.connect (sc,
+                   ACE_INET_Addr (port_number,
+                                  host_name)) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "%p\n%a",
+                       "connect",
+                       1),
+                      -1);
 
   if (remote_reconfigure)
     // Remotely instruct the server to reconfigure itself.
@@ -68,17 +76,32 @@ main (int argc, char *argv[])
 
   // Send the command.
 
-  if (sc.send_n (buf, ACE_OS::strlen (buf) + 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n%a", "send", 1), -1);
+  if (sc.send_n (buf, 
+                 ACE_OS::strlen (buf) + 1) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n%a",
+                       "send",
+                       1), -1);
 
   // Next, read the response.
 
-  while ((n = sc.recv (buf, sizeof buf)) > 0)
-    if (ACE_OS::write (ACE_STDOUT, buf, n) != n)
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n%a", "write", 1), -1);
+  while ((n = sc.recv (buf,
+                       sizeof buf)) > 0)
+    if (ACE_OS::write (ACE_STDOUT,
+                       buf,
+                       n) != n)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n%a",
+                         "write",
+                         1),
+                        -1);
 	 
   if (sc.close () == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n%a", "close", 1), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n%a",
+                         "close",
+                         1),
+                        -1);
     
   return 0;
 }
