@@ -1,9 +1,18 @@
+Mon Dec  8 16:00:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocation_Tests/Collocation_Tests.mpc:
+          Changed exename so that it matches the run_test.pl script
+
+        * tests/Bug_1551_Regression/test.mpc:
+        * tests/Bug_1482_Regression/test.mpc:
+          Added these MPC files.
+
 Mon Dec  8 10:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/tests/Time/Time.mpc:
 	  Changed name of project to fix msvc6 duplicate project error. Set
 	  exename to client to match the perl script.
- 
+
 Mon Dec  8 09:10:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
@@ -15,7 +24,7 @@ Sun Dec  7 22:34:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Fix for a race condition that I dreamt up, but could
 	  happen. This is just a continuation to "Sat Dec  6 23:42:13 2003
-	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>". 
+	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>".
 
 Sun Dec  7 20:36:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -43,7 +52,7 @@ Sun Dec  7 18:32:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Sun Dec  7 12:26:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
-	  
+
 	  Fixed a compile error due to the changes in IOP_IOR.pidl.
 
 Sun Dec  7 17:59:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>

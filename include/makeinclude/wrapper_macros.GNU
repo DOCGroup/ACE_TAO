@@ -54,6 +54,7 @@
 #  gtk_reactor      Build the GtkReactor.
 #  ssl              Build with OpenSSL support.
 #  rapi             Build with RAPI
+#  rwho             Build with rwho, this results in building apps/drwho
 #  pipes            Build with pipe support, resulting in adding -pipe to the
 #                   compiler options.
 #  split            Build the library by first splitting up the ACE source
@@ -64,7 +65,7 @@
 #                   Setting this to 1 overrides debug to 0.
 #  sctp             Build support for TAO SCIOP and for ACE SCTP
 #                   wrapper-facades. The sctp macro should be set to a string
-#                   value representing a particular SCTP implementation. 
+#                   value representing a particular SCTP implementation.
 #                   Recognized values include: openss7
 #
 #  versioned_so     Add versioning to libraries.  Defaults to 1 (true). If 0,
@@ -870,6 +871,11 @@ endif
 
 ifeq ($(rmcast),1)
   ACE_MAKE_OPTIONS += rmcast
+endif
+
+# If not explicitly is set that we don't have rwho, assume we have it.
+ifndef rwho
+  rwho = 1
 endif
 
 #----------------------------------------------------------------------------
