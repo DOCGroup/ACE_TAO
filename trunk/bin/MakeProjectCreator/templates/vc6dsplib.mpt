@@ -12,7 +12,7 @@ common_defines        = WIN32 _WINDOWS
 Release {
   use_debug_libraries   = 0
   optimize              = 1
-  compile_flags         = /W3 /GX /MD /Zi /GR
+  compile_flags         = /W3 /GX /MD /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Release
@@ -36,7 +36,7 @@ Debug {
 MFC Release {
   use_debug_libraries   = 0
   optimize              = 1
-  compile_flags         = /W3 /GX /MD /Zi /GR
+  compile_flags         = /W3 /GX /MD /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = MFC_Release
