@@ -145,13 +145,13 @@ print (const char *process_name,
   for (Test_Data *t = data; t != 0; t = t->next_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "<<<< (%P) %s\ni1_ = %d, i2_ = %d, i3_ = %d\n",
+                  ASYS_TEXT ("<<<< (%P) %s\ni1_ = %d, i2_ = %d, i3_ = %d\n"),
                   process_name,
                   t->i1_,
                   t->i2_,
                   t->i3_));
       ACE_DEBUG ((LM_DEBUG,
-                  "*t->bpl_ = %d, t->long_test_->array_[0] = %d\n>>>>\n",
+                  ASYS_TEXT ("*t->bpl_ = %d, t->long_test_->array_[0] = %d\n>>>>\n"),
                   *t->long_test_->bpl_,
                   t->long_test_->array_[0]));
     }
@@ -198,10 +198,12 @@ main (int argc, ASYS_TCHAR *[])
   if (argc == 1)
     {
       ACE_START_TEST (ASYS_TEXT ("Malloc_Test"));
+      ACE_INIT_LOG (ASYS_TEXT ("Malloc_Test-child"));
 
       // No arguments means we're the initial test.
       ACE_Process_Options options (1);
-      options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
+      options.command_line (ACE_TEXT (".") 
+                            ACE_DIRECTORY_SEPARATOR_STR
                             ACE_TEXT ("Malloc_Test")
                             ACE_PLATFORM_EXE_SUFFIX
                             ACE_TEXT (" run_as_test"));
@@ -210,7 +212,7 @@ main (int argc, ASYS_TCHAR *[])
       ACE_ASSERT (data != 0);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P) data allocated at address %x in parent\n",
+                  ASYS_TEXT ("(%P) data allocated at address %x in parent\n"),
                   data));
 
       int result = myallocator ()->bind ("foo", data);
@@ -231,7 +233,7 @@ main (int argc, ASYS_TCHAR *[])
   else
     {
       // In this case we're the child process.
-      ACE_APPEND_LOG (ASYS_TEXT ("Malloc_Test"));
+      ACE_APPEND_LOG (ASYS_TEXT ("Malloc_Test-child"));
 
       void *data = 0;
       int result = myallocator (CHILD_BASE_ADDR)->find ("foo",
@@ -239,7 +241,7 @@ main (int argc, ASYS_TCHAR *[])
       ACE_ASSERT (result != -1);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P) data allocated at address %x in child\n",
+                  ASYS_TEXT ("(%P) data allocated at address %x in child\n"),
                   data));
 
       child ();

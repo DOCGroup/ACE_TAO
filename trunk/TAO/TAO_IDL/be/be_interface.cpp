@@ -1537,7 +1537,7 @@ int
 be_interface::gen_gperf_lookup_methods (void)
 {
   // Using ACE_Process.
-  ACE_Process process_manager;
+  ACE_Process process;
   ACE_Process_Options process_options;
 
   // Codegen's singleton.
@@ -1666,16 +1666,16 @@ be_interface::gen_gperf_lookup_methods (void)
 
 
   // Spawn a process for gperf.
-  if (process_manager.spawn (process_options) == -1)
+  if (process.spawn (process_options) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p:Couldnt spawn a process for gperf program\n"),
                       -1);
 
   // Wait for gperf to complete.
-  if (process_manager.wait () == -1)
+  if (process.wait () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p:Error on wait'ing for completion of gperf program.\n",
-                       "process_manager.wait"),
+                       "process.wait"),
                       -1);
 
   // Adjust the file offset to the EOF for the server skeleton file.

@@ -1,3 +1,66 @@
+Sat Aug 21 12:36:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Process_Manager_Test.cpp: Completed the first major 
+	  enhancement to the test that exercises the new
+ 	  ACE_Process_Manager features.  This test builds and runs cleanly
+ 	  on Solaris using CC and should run on other versions of UNIX
+ 	  that support threads and processes.  It would be great if
+ 	  someone could improve it to run on Win32, as well.
+	
+	* ace/Process_Manager: Added support for the spawn_n() method,
+	  which creates N new processes.
+
+	* tests: Cleaned up the use of ACE_INIT_LOG/ACE_APPEND_LOG in 
+	  Process_Manager_Test.cpp and Malloc_Test.cpp so we don't lose
+ 	  information.  Both these tests now write their child processes'
+ 	  output to "<testname>-child.log".
+
+	* ace/Thread_Manager.h: Added a default value of 0 to the 
+	  exit() method since this is a common return status.
+
+        * ace/config-win32-common.h: Added ACE_LACKS_GETPPID.
+	
+	* ace: Added a new wrapper for getppid().  For platforms that
+	  don't support this system call, please add ACE_LACKS_GETPPID.
+
+	* tests: Moved the $ACE_ROOT/examples/Threads/process_manager.cpp
+	  example into the $ACE_ROOT/tests directory, renamed it to
+ 	  Process_Manager_Test.cpp, and revised the test to illustrate the
+ 	  new ACE_Process_Manager features.
+
+	* tests/run_tests.lst: Added the Process_Manager_Test to the 
+	  list of tests to run.
+
+	* tests/Malloc_Test.cpp (main): Added some necessary ASYS_TEXT
+	  macros.
+
+	* ace/Process.i: Rather than replicate the #ifdef logic in
+	  ACE_OS::kill() within ACE_Process:kill(), we just forward to
+ 	  ACE_OS::kill() and let it sort this out!
+
+	* ace/Process: Moved several of the short wait() methods from the
+	  *.cpp file to the *.i file and inlined them.
+
+	* ace/Process_Manager.cpp: The logic for the implementation of
+ 	  terminate() was incorrect, i.e., the process table entry should
+ 	  be removed *if* ACE::terminate_process() succeeds but *not* if
+ 	  it fails!
+
+	* ace/OS.h: Added a new method called wait() that works portably 
+	  on Win32 and UNIX/POSIX platforms.
+
+	* ace/Process: Added an optional "options" parameter to the former
+	  "blocking" wait() method on ACE_Process.  This allows clients to
+ 	  use the WNOHANG option to avoid blocking if the child process
+ 	  hasn't exited yet.  Also changed the type of the return value to
+ 	  pid_t rather than int.  Finally, added an optional status
+ 	  pointer to the "timed" wait() method (which only works on
+ 	  Win32).
+
+	* ace/OS.h: On platforms that do not define WNOHANG natively,
+	  changed #ifdef of WNOHANG to 0100 (which can be used in bitmask
+ 	  comparisons) rather than Douglas Adams favorite constant: 42.
+
 Sat Aug 21 14:13:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ACE version 5.0.2 released.
@@ -10,6 +73,26 @@ Sat Aug 21 11:52:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* bin/make_release:
 	  The shell did not like the embedded script to print the
 	  ChangeLog entry.
+
+Fri Aug 20 15:40:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Process_Manager: Added a new method called wait() that's
+	  just syntactic sugar for ACE_Process_Manager::reap().  Thanks to
+ 	  Dave Madden <dhm@mersenne.com> for suggesting this.
+
+	* ace/OS: Added support for ACE_OS::atexit().  At the moment,
+	  this just calls ::atexit() (unless a platform's config.h file
+ 	  #defines ACE_LACKS_ATEXIT).  Ultimately, we might want to have
+ 	  this hook into the ACE_Object_Manager's at_exit() support, which
+ 	  may be more portable and reliable.
+
+        * ace/ACE_Process_Manager.h: Made the destructor virtual so it's
+	  possible to subclass from this class.
+	
+	* ace/Process_Manager.h: Updated the comments on the wait() 
+	  method to indicate that a signal handler must be used to keep
+ 	  track of the number of remaining child processes.  Thanks to
+ 	  Dave Binder <dbinder@globalmt.com> for motivating this.
 
 Thu Aug 19 18:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 

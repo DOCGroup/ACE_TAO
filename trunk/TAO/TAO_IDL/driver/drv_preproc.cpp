@@ -379,7 +379,7 @@ DRV_pre_proc(const char *myfile)
 
   // We use ACE instead of the (low level) fork facilities, this also
   // work on NT.
-  ACE_Process manager;
+  ACE_Process process;
   ACE_Process_Options cpp_options;
   DRV_cpp_putarg (tmp_ifile);
   DRV_cpp_putarg (0); // Null terminate the arglist.
@@ -392,7 +392,7 @@ DRV_pre_proc(const char *myfile)
     return;
   }
   cpp_options.set_handles (ACE_INVALID_HANDLE, fd);
-  if (manager.spawn (cpp_options) == -1)
+  if (process.spawn (cpp_options) == -1)
     {
       cerr << idl_global->prog_name()
            << GTDEVEL(": spawn of ")
@@ -415,7 +415,7 @@ DRV_pre_proc(const char *myfile)
   argcount -= 2;
 
   int status = 0;
-  if (manager.wait (&status) == -1)
+  if (process.wait (&status) == -1)
     {
       cerr << idl_global->prog_name ()
            << GTDEVEL(": wait for child process failed\n");
