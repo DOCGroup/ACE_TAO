@@ -3,9 +3,9 @@
 
 //////////////////////////////////////////////////////////////////////////////////
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE 
-ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation,
-                                                                                                                                         int delete_implementation)
+template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation,
+                                                                                                         int delete_implementation)
   : implementation_ (implementation),
     delete_implementation_ (delete_implementation)
 {
@@ -17,100 +17,89 @@ ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY
     }
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE 
-ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::~ACE_Caching_Strategy_Adapter (void)
+template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::~ACE_Caching_Strategy_Adapter (void)
 {
   if (this->delete_implementation_)
-    delete this->implementation_;
-  this->delete_implementation_ = 0;
-  this->implementation_ = 0;
+    {
+      delete this->implementation_;
+      this->delete_implementation_ = 0;
+      this->implementation_ = 0;
+    }
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE int
-ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::open (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s,
-                                                                                                                 int delete_cleanup_strategy,
-                                                                                                                 CACHING_STRATEGY_UTILITY *utility_s,
-                                                                                                                 int delete_caching_strategy_utility)
-{
-  return this->implementation_->open (cleanup_s,
-                                      delete_cleanup_strategy,
-                                      utility_s,
-                                      delete_caching_strategy_utility);
-}
-
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE ATTRIBUTES
-ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::attributes (void)
+template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE ATTRIBUTES
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::attributes (void)
 {
   return this->implementation_->attributes ();
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE double
-ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::purge_percent (void)
+template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE double
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::purge_percent (void)
 {
   return this->implementation_->purge_percent ();
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE void
-ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::purge_percent (double percentage)
+template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE void
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::purge_percent (double percentage)
 {
   this->implementation_->purge_percent (percentage);
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE int
-ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::notify_bind (int result,
-                                                                                                                        const ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE int
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::notify_bind (int result,
+                                                                                        const ATTRIBUTES &attr)
 {
   return this->implementation_->notify_bind (result,
                                              attr);
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE int
-ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::notify_find (int result,
-                                                                                                                        ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE int
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::notify_find (int result,
+                                                                                        ATTRIBUTES &attr)
 {
   return this->implementation_->notify_find (result,
                                              attr);
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE int
-ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::notify_unbind (int result,
-                                                                                                                          const ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE int
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::notify_unbind (int result,
+                                                                                          const ATTRIBUTES &attr)
 {
   return this->implementation_->notify_unbind (result,
                                                attr);
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE int
-ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::notify_trybind (int result,
-                                                                                                                           ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE int
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::notify_trybind (int result,
+                                                                                           ATTRIBUTES &attr)
 {
   return this->implementation_->notify_trybind (result,
                                                 attr);
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE int
-ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::notify_rebind (int result,
-                                                                                                                          const ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE int
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::notify_rebind (int result,
+                                                                                          const ATTRIBUTES &attr)
 {
   return this->implementation_->notify_rebind (result,
                                                attr);
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE int
-ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::clear_cache (CONTAINER &container)
-{
-  return this->implementation_->clear_cache (container);
-}
-
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE IMPLEMENTATION &
-ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::implementation (void)
+template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE IMPLEMENTATION &
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::implementation (void)
 {
   return *this->implementation_;
 }
 
+template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE CACHING_UTILITY &
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::caching_utility (void)
+{
+  return this->implementation_->caching_utility ();
+}
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> ACE_INLINE void
-ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::dump (void) const
+template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE void
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::dump (void) const
 {
   ACE_TRACE ("ACE_Caching_Strategy_Adapter::dump");
 
@@ -120,42 +109,39 @@ ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY
 
 //////////////////////////////////////////////////////////////////////////////////
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE ATTRIBUTES
-ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::attributes (void)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE ATTRIBUTES
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::attributes (void)
 {
   return this->timer_;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE double
-ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::purge_percent (void)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE double
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (void)
 {
   return this->purge_percent_;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE void
-ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::purge_percent (double percentage)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (double percentage)
 {
   this->purge_percent_ = percentage;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_bind (int result,
-                                                                                                    const ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
+                                                                    const ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
   if (result == 0)
-    {
-      ++this->timer_;
-      ++this->entries_;
-    }
+    ++this->timer_;
 
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_find (int result,
-                                                                                                    ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
+                                                                    ATTRIBUTES &attr)
 {
   if (result == 0)
     {
@@ -166,26 +152,26 @@ ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_unbind (int result,
-                                                                                                      const ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (int result,
+                                                                      const ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_trybind (int result,
-                                                                                                       ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_trybind (int result,
+                                                                       ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_rebind (int result,
-                                                                                                      const ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int result,
+                                                                      const ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
@@ -195,8 +181,14 @@ ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE void
-ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::dump (void) const
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE CACHING_UTILITY &
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
+{
+  return this->caching_utility_;
+}
+
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
 {
   ACE_TRACE ("ACE_LRU_Caching_Strategy::dump");
 
@@ -207,39 +199,36 @@ ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
 
 //////////////////////////////////////////////////////////////////////////////////
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE ATTRIBUTES
-ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::attributes (void)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE ATTRIBUTES
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::attributes (void)
 {
   return 0;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE double
-ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::purge_percent (void)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE double
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (void)
 {
   return this->purge_percent_;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE void
-ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::purge_percent (double percentage)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (double percentage)
 {
   this->purge_percent_ = percentage;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_bind (int result,
-                                                                                                    const ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
+                                                                    const ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
-
-  if (result == 0)
-    ++this->entries_;
 
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_find (int result,
-                                                                                                    ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
+                                                                    ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
@@ -249,37 +238,40 @@ ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_trybind (int result,
-                                                                                                       ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_trybind (int result,
+                                                                       ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_rebind (int result,
-                                                                                                      const ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int result,
+                                                                      const ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
-  if (result == 0)
-    ++this->entries_;
-
   return result;
 }
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_unbind (int result,
-                                                                                                      const ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (int result,
+                                                                      const ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE void
-ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::dump (void) const
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE CACHING_UTILITY &
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
+{
+  return this->caching_utility_;
+}
+
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
 {
   ACE_TRACE ("ACE_LFU_Caching_Strategy::dump");
 
@@ -289,84 +281,83 @@ ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE ATTRIBUTES
-ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::attributes (void)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE ATTRIBUTES
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::attributes (void)
 {
   return this->order_;
 }
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE double
-ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::purge_percent (void)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE double
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (void)
 {
   return this->purge_percent_;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE void
-ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::purge_percent (double percentage)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (double percentage)
 {
   this->purge_percent_ = percentage;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_bind (int result,
-                                                                                                     const ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
+                                                                     const ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
   if (result == 0)
-    {
-      ++this->order_;
-      ++this->entries_;
-    }
+    ++this->order_;
 
   return result;
 }
 
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_find (int result,
-                                                                                                     ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
+                                                                     ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_unbind (int result,
-                                                                                                       const ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (int result,
+                                                                       const ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_trybind (int result,
-                                                                                                        ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_trybind (int result,
+                                                                        ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_rebind (int result,
-                                                                                                       const ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int result,
+                                                                       const ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
   if (result == 0)
-    {
-      ++this->order_;
-      ++this->entries_;
-    }
+    ++this->order_;
 
   return result;
 }
 
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE CACHING_UTILITY &
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
+{
+  return this->caching_utility_;
+}
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE void
-ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::dump (void) const
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
 {
   ACE_TRACE ("ACE_FIFO_Caching_Strategy::dump");
 
@@ -377,71 +368,77 @@ ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UT
 
 //////////////////////////////////////////////////////////////////////////////////
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE ATTRIBUTES
-ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::attributes (void)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE ATTRIBUTES
+ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::attributes (void)
 {
   return 0;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE double
-ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::purge_percent (void)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE double
+ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (void)
 {
   return 0;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE void
-ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::purge_percent (double percentage)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
+ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (double percentage)
 {
   ACE_UNUSED_ARG (percentage);
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_bind (int result,
-                                                                                                     const ATTRIBUTES &attr)
-{
-  ACE_UNUSED_ARG (attr);
-
-  return result;
-}
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_find (int result,
-                                                                                                     ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
+                                                                     const ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_unbind (int result,
-                                                                                                       const ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
+                                                                     ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_trybind (int result,
-                                                                                                        ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (int result,
+                                                                       const ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
   return result;
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE int
-ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::notify_rebind (int result,
-                                                                                                       const ATTRIBUTES &attr)
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_trybind (int result,
+                                                                        ATTRIBUTES &attr)
 {
   ACE_UNUSED_ARG (attr);
 
   return result;
 }
 
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
+ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int result,
+                                                                       const ATTRIBUTES &attr)
+{
+  ACE_UNUSED_ARG (attr);
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> ACE_INLINE void
-ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::dump (void) const
+  return result;
+}
+
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE CACHING_UTILITY &
+ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
+{
+  return this->caching_utility_;
+}
+
+template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
+ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
 {
   ACE_TRACE ("ACE_Null_Caching_Strategy::dump");
 
