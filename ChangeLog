@@ -1,3 +1,22 @@
+Tue Oct 24 03:24:42 2000  Darrell Brunsch  <brunsch@uci.edu>
+
+	* ace/Basic_Types.h:
+	* ace/config-win32-common.h:
+
+	  Moved the code that defines ACE_SIZEOF_WCHAR to the config file,
+	  so it is easier to add it to other platforms.
+
+	* ace/config-linux-common.h:
+
+	  Added ACE_SIZEOF_WCHAR, ACE_LACKS_ITOW, ACE_LACKS_WCSICMP, and
+	  ACE_LACKS_WCSNICMP definitions.
+
+	* ace/Synch.h:
+
+	  Moved the ACE_LEGACY_MODE includes further down in the file.  It
+	  was producing errors the way it was, since Test_and_Set needed
+	  the Guard classes defined before it was included.
+
 Mon Oct 23 15:31:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Malloc_Allocator.cpp:

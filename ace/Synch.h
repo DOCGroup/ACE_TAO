@@ -1363,14 +1363,6 @@ public:
 // Include the templates here.
 #include "ace/Synch_T.h"
 
-#if defined (ACE_LEGACY_MODE)
-# include "ace/File_Lock.h"
-# include "ace/Process_Semaphore.h"
-# include "ace/Process_Mutex.h"
-# include "ace/RW_Process_Mutex.h"
-# include "ace/Test_and_Set.h"
-#endif  /* ACE_LEGACY_MODE */
-
 template <class ACE_LOCK>
 class ACE_Guard;
 
@@ -1444,6 +1436,14 @@ public:
   int tryacquire (void) { return 0; }
   void dump (void) const {}
 };
+
+#if defined (ACE_LEGACY_MODE) 
+# include "ace/File_Lock.h" 
+# include "ace/Process_Semaphore.h" 
+# include "ace/Process_Mutex.h" 
+# include "ace/RW_Process_Mutex.h" 
+# include "ace/Test_and_Set.h" 
+#endif  /* ACE_LEGACY_MODE */ 
 
 #include "ace/post.h"
 #endif /* ACE_SYNCH_H */

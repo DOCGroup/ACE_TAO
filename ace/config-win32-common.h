@@ -486,5 +486,7 @@ typedef unsigned __int64 ACE_UINT64;
 # endif /* WINSOCK_VERSION */
 #endif /* ACE_HAS_WINSOCK2_GQOS */
 
+#define ACE_SIZEOF_WCHAR 2
+
 #include "ace/post.h"
 #endif /* ACE_WIN32_COMMON_H */
