@@ -1,3 +1,10 @@
+Thu Mar 31 08:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CDR_Encaps_Codec.cpp:
+        * tao/Union_TypeCode.cpp:
+        * tao/skip.cpp:
+          Fixed compile problem in emulated exceptions build
+
 Thu Mar 31 08:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/append.cpp:

@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:70
+// be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT___CI_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT___CI_
