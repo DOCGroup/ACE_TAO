@@ -1,3 +1,16 @@
+Tue Oct 06 22:49:27 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Connect.cpp (handle_close): Replaced this->shutdown() with
+ 	  explicit removal from the reactor and explicit closing of the
+ 	  socket.  this->shutdown() also doing too much since it was also
+ 	  purging the recycling act from the recycler. We need the
+ 	  recycling act to be available until all the reference to the
+ 	  Svc_Handlers are removed and the Svc_Handler is destroyed since
+ 	  we need the recycling act to check the hint.
+
+	  Thanks to Mark L. Boriack <mboriack@std.saic.com> for helping in
+ 	  tracking down this problem.
+
 Tue Oct  6 22:12:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Simple/grid/Grid_i.cpp: Fixed bugs with exceptions.
