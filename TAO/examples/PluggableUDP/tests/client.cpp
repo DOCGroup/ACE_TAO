@@ -88,12 +88,10 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (udp_var.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
-                             ior),
-                            1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Object reference <%s> is nil\n",
+                           ior),
+                          1);
 
       // Activate POA to handle the call back.
 
@@ -128,7 +126,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Instantiate client
-      UDP_Client_i* client = new UDP_Client_i (orb.in (),
+      UDP_Client_i *client = new UDP_Client_i (orb.in (),
                                                udp_var.in (),
                                                udpHandler_var.in (),
                                                msec,
@@ -144,9 +142,9 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (true,  // ethernalize objects
- 					               false, // wait for completion
-						             ACE_TRY_ENV);
+      root_poa->destroy (1,  // ethernalize objects
+                         0, // wait for completion
+                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_TRY_ENV);
