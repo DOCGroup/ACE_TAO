@@ -58,6 +58,9 @@ Tue Sep 08 07:28:05 1998  David L. Levine  <levine@cs.wustl.edu>
           LynxOS >= 3.0.0.  It requires that libg++ be linked in
           to the IOStream tests.
 
+        * docs/ACE-guidelines.html: notify via email if a particular
+          individual's attention is needed to address a comment in the code.
+
 Mon Sep  7 22:12:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/config-freebsd.h: Added ACE_HAS_SIGINFO_T,
