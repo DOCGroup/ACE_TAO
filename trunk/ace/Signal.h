@@ -45,7 +45,7 @@ public:
   // Create a set that includes all signals defined by the system.
 
   int sig_add (int signo);
-  // Adds the individual signal specified by <signo> to the set. 
+  // Adds the individual signal specified by <signo> to the set.
 
   int sig_del (int signo);
   // Deletes the individual signal specified by <signo> from the set.
@@ -54,7 +54,10 @@ public:
   // Checks whether the signal specified by <signo> is in the set.
 
   operator sigset_t *();
-  // Returns a pointer to the underlying sigset_t.
+  // Returns a pointer to the underlying <sigset_t>.
+
+  sigset_t sigset (void);
+  // Returns a copy of the underlying <sigset_t>.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -76,6 +79,9 @@ public:
   ACE_Sig_Action (void);
   ACE_Sig_Action (ACE_SignalHandler handler,
 		  sigset_t *sigmask = 0,
+		  int flags = 0);
+  ACE_Sig_Action (ACE_SignalHandler handler,
+		  ACE_Sig_Set &sigmask,
 		  int flags = 0);
   ACE_Sig_Action (ACE_SignalHandler handler,
 		  int signum,
