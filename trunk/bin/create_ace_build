@@ -1,3 +1,4 @@
+# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
@@ -142,6 +143,25 @@ foreach $file ( @files ) {
         }
     }
 }
+
+####
+#### Find all the symlinks in the build directory
+####
+open (LINKS, "find $build -type l |") ||
+    die "$0 cannot find symlinks in $build\n";
+
+while (<LINKS>) {
+    chop;
+    local @s = stat $_;
+    if ($#s == -1) {
+	print "Removing $_ \n" if $verbose;
+	unlink $_ ||
+	    warn "$0 unlink of $_ failed\n";
+    }
+
+}
+close (LINKS) ||
+    die "$0 cannot close symlinks pipe\n";
 
 ####
 #### Done: print message.
