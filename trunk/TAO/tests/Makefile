@@ -37,6 +37,7 @@ DIRS  = CDR \
 	Param_Test \
 	DSI_Gateway \
 	AMI \
+	AMI_Timeouts \
 	Timeout \
 	Timed_Buffered_Oneways \
 	Smart_Proxies \
