@@ -1,3 +1,37 @@
+Thu Nov 20 18:28:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IFR_Client_Adapter.h:
+	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+	* tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+	  
+	  Added TAO_HAS_MINIMUM_CORBA around create_operation_list. 
+
+	* tao/orbconf.h:
+	* rules.tao.GNU:
+	
+	  Nowhere in the CORBA spec does it say that messaging and
+	  RTCORBA needs to disabled when minimum corba is enabled. It has
+	  been a TAO artifact from legacy code. This prevented users from
+	  using RTCORBA in minimum_corba mode, which IMHO is insane to say
+	  the least. I am sure Bill Beckwith would support my argument:-)
+
+	  Just enabled RTCORBA and messaging in minimum_corba builds.
+	
+	* tao/RTCORBA/RTCORBA.cpp:
+	* tao/RTCORBA/RTCORBA.h:
+
+	  Set the #defined  properly.
+
+	* tests/RTCORBA/Linear_Priority/Makefile:
+	* tests/RTCORBA/Persistent_IOR/Makefile:
+	* tests/RTCORBA/Policy_Combinations/Makefile:
+	* tests/RTCORBA/Priority_Inversion_With_Bands/Makefile:
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/Makefile:
+	* tests/RTCORBA/Thread_Pool/Makefile:
+
+	  These tests specifically use the minimum_poa features. So
+	  prevented these tests from compiling in minimum_corba builds.  
+
 Thu Nov 20 18:05:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Valuetype/AbstractBase.cpp:

@@ -2,7 +2,7 @@
 
 #include "RTCORBA.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+#if TAO_HAS_CORBA_MESSAGING == 1
 
 #include "RT_ORB_Loader.h"
 
