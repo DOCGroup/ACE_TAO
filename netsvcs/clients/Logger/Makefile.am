@@ -22,7 +22,7 @@ direct_logging_SOURCES = \
   direct_logging.cpp
 
 direct_logging_LDADD = \
- $(top_builddir)/ace/libnetsvcs.la $(top_builddir)/ace/libACE.la
+ $(top_builddir)/netsvcs/lib/libnetsvcs.la $(top_builddir)/ace/libACE.la
 
 ## Makefile.indirect_logging.am 
 noinst_PROGRAMS += indirect_logging
@@ -36,7 +36,7 @@ indirect_logging_SOURCES = \
   indirect_logging.cpp
 
 indirect_logging_LDADD = \
- $(top_builddir)/ace/libnetsvcs.la $(top_builddir)/ace/libACE.la
+ $(top_builddir)/netsvcs/lib/libnetsvcs.la $(top_builddir)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

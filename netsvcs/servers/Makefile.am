@@ -24,7 +24,7 @@ main_SOURCES = \
   main.cpp
 
 main_LDADD = \
- $(top_builddir)/ace/libnetsvcs.la $(top_builddir)/ace/libACE.la
+ $(top_builddir)/netsvcs/lib/libnetsvcs.la $(top_builddir)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

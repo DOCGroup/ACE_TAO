@@ -128,6 +128,9 @@ typedef unsigned long long ACE_UINT64;
 #define ACE_SIZEOF_SHORT 2
 #define ACE_SIZEOF_VOID_P 8
 #define ACE_SIZEOF_WCHAR 4
+#define ACE_SSIZE_T_FORMAT_SPECIFIER	ACE_LIB_TEXT ("%ld")
+#define ACE_SIZE_T_FORMAT_SPECIFIER	ACE_LIB_TEXT ("%lu")
+
 #elif defined(__i386__)
 #define ACE_SIZEOF_DOUBLE 8
 #define ACE_SIZEOF_FLOAT 4

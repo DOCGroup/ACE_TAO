@@ -1,9 +1,45 @@
+Mon Aug 30 18:31:28 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-netbsd.h:
+
+	  Add ACE_SSIZE_T_FORMAT_SPECIFIER and ACE_SIZE_T_FORMAT_SPECIFIER
+	  definitions for NetBSD/amd64.
+
+	* netsvcs/clients/Logger/Makefile.am:
+	* netsvcs/clients/Naming/Client/Makefile.am:
+	* netsvcs/clients/Naming/Dump_Restore/Makefile.am:
+	* netsvcs/servers/Makefile.am:
+
+	  Fix the _LDADD definitions that MPC doesn't get right yet.
+
+	* configure.ac:
+
+	  Added checks for: ACE_LACKS_STRCHR, ACE_LACKS_STRCSPN,
+	  ACE_LACKS_STRERROR, ACE_LACKS_STRPBRK, ACE_LACKS_STRSPN,
+	  ACE_LACKS_STRTOD, ACE_LACKS_STRTOL, ACE_LACKS_STRTOUL,
+	  and ACE_LACKS_SWAB.
+
+	  Added check for ACE_HAS_STRNLEN.
+
+	  Added checks for: ACE_LACKS_ARPA_INET_H, ACE_LACKS_DIRENT_H,
+	  ACE_LACKS_DLFCN_H, ACE_LACKS_ERRNO_H ACE_LACKS_FCNTL_H,
+	  ACE_LACKS_NET_IF_H, ACE_LACKS_NETDB_H, ACE_LACKS_NETINET_IN_H,
+	  ACE_LACKS_SEARCH_H, ACE_LACKS_SEMAPHORE_H, ACE_LACKS_SIGNAL_H,
+	  ACE_LACKS_STDLIB_H, ACE_LACKS_STRING_H, ACE_LACKS_STRINGS_H,
+	  ACE_LACKS_SYS_IOCTL_H, ACE_LACKS_SYS_IPC_H, ACE_LACKS_SYS_MMAN_H,
+	  ACE_LACKS_SYS_RESOURCE_H, ACE_LACKS_SYS_SEM_H, ACE_LACKS_SYS_SHM_H,
+	  ACE_LACKS_SYS_SOCKET_H, ACE_LACKS_SYS_STAT_H, ACE_LACKS_SYS_TIME_H,
+	  ACE_LACKS_SYS_UN_H, ACE_LACKS_SYS_WAIT_H, ACE_LACKS_TERMIOS_H, and
+	  ACE_LACKS_TIME_H.
+
+	  Removed checks for ACE_HAS_SYS_IOCTL_H.
+
 Mon Aug 30 15:55:10 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Message_Queue_T.inl (is_full_i): Reverted the change
-  
+
           Sat Aug 28 11:15:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-	  
+
 	  since it seemed to break some regression tests.  If Rick
  	  Robinson can figure out how to fix things so the tests don't
  	  break we'll try again later.  Thanks to Chris Cleeland for

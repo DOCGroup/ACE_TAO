@@ -535,29 +535,83 @@ AC_CHECK_HEADER([sys/procfs.h],
      ])
   ],)
 
+ACE_CHECK_LACKS_HEADERS(arpa/inet.h)
+
+ACE_CHECK_LACKS_HEADERS(dirent.h)
+
+ACE_CHECK_LACKS_HEADERS(dlfcn.h)
+
+ACE_CHECK_LACKS_HEADERS(errno.h)
+
+ACE_CHECK_LACKS_HEADERS(fcntl.h)
+
+ACE_CHECK_LACKS_HEADERS(search.h)
+
 ACE_CHECK_HAS_HEADERS(select.h)
 
-ACE_CHECK_LACKS_HEADERS(sys/select.h)
+ACE_CHECK_LACKS_HEADERS(semaphore.h)
+
+ACE_CHECK_LACKS_HEADERS(signal.h)
+
+ACE_CHECK_LACKS_HEADERS(stdlib.h)
+
+ACE_CHECK_LACKS_HEADERS(string.h)
+
+ACE_CHECK_LACKS_HEADERS(strings.h)
+
+ACE_CHECK_LACKS_HEADERS(netdb.h)
+
+ACE_CHECK_LACKS_HEADERS(netinet/in.h)
 
 ACE_CHECK_LACKS_HEADERS(netinet/tcp.h)
 
-ACE_CHECK_HAS_HEADERS(sys/sockio.h)
-
-ACE_CHECK_HAS_HEADERS(sysent.h)
-
-AC_CHECK_HEADER([sys/systeminfo.h],[],[])
+ACE_CHECK_LACKS_HEADERS(net/if.h)
 
 ACE_CHECK_HAS_HEADERS(sys/filio.h)
 
+ACE_CHECK_LACKS_HEADERS(sys/ioctl.h)
+
+ACE_CHECK_LACKS_HEADERS(sys/ipc.h)
+
 ACE_CHECK_HAS_HEADERS(sys/loadavg.h)
+
+ACE_CHECK_LACKS_HEADERS(sys/mman.h)
 
 ACE_CHECK_HAS_HEADERS(sys/pstat.h)
 
-ACE_CHECK_LACKS_HEADERS(sys/uio.h)
+ACE_CHECK_LACKS_HEADERS(sys/resource.h)
 
-ACE_CHECK_HAS_HEADERS(sys/ioctl.h)
+ACE_CHECK_LACKS_HEADERS(sys/sem.h)
+
+ACE_CHECK_LACKS_HEADERS(sys/shm.h)
+
+ACE_CHECK_LACKS_HEADERS(sys/select.h)
+
+ACE_CHECK_HAS_HEADERS(sys/sockio.h)
+
+ACE_CHECK_LACKS_HEADERS(sys/socket.h)
+
+ACE_CHECK_LACKS_HEADERS(sys/stat.h)
+
+ACE_CHECK_LACKS_HEADERS(sys/time.h)
 
 ACE_CHECK_LACKS_HEADERS(sys/types.h)
+
+ACE_CHECK_LACKS_HEADERS(sys/uio.h)
+
+ACE_CHECK_LACKS_HEADERS(sys/un.h)
+
+ACE_CHECK_LACKS_HEADERS(sys/wait.h)
+
+ACE_CHECK_HAS_HEADERS(sysent.h)
+
+ACE_CHECK_LACKS_HEADERS(time.h)
+
+ACE_CHECK_LACKS_HEADERS(termios.h)
+
+
+
+AC_CHECK_HEADER([sys/systeminfo.h],[],[])
 
 AC_CHECK_HEADER([sys/termios.h],
   [
@@ -565,7 +619,7 @@ AC_CHECK_HEADER([sys/termios.h],
       [
 #include <sys/termios.h>
 
-#if defined (ACE_HAS_SYS_IOCTL_H)
+#if !defined (ACE_LACKS_SYS_IOCTL_H)
 # include <sys/ioctl.h>
 #endif
 
@@ -3134,9 +3188,37 @@ ACE_CHECK_LACKS_FUNCS(bsearch)
 
 ACE_CHECK_HAS_FUNCS(clock_gettime)
 
+ACE_CHECK_LACKS_FUNCS(difftime)
+
+ACE_CHECK_LACKS_FUNCS(fgetwc fcntl fsync)
+
+ACE_CHECK_LACKS_FUNCS(gethostent)
+
+ACE_CHECK_HAS_FUNCS(getifaddrs)
+
 ACE_CHECK_HAS_FUNCS(itoa)
 
 ACE_CHECK_LACKS_FUNCS(qsort)
+
+ACE_CHECK_HAS_FUNCS(strnlen)
+
+ACE_CHECK_LACKS_FUNCS(strchr)
+
+ACE_CHECK_LACKS_FUNCS(strcspn)
+
+ACE_CHECK_LACKS_FUNCS(strerror)
+
+ACE_CHECK_LACKS_FUNCS(strpbrk)
+
+ACE_CHECK_LACKS_FUNCS(strspn)
+
+ACE_CHECK_LACKS_FUNCS(strtod)
+
+ACE_CHECK_LACKS_FUNCS(strtol)
+
+ACE_CHECK_LACKS_FUNCS(strtoul)
+
+ACE_CHECK_LACKS_FUNCS(swab)
 
 dnl ACE uses execv, execvp and execve, so we don't bother to check
 dnl for the others (e.g. execl, execlp, execle)
@@ -3149,8 +3231,6 @@ if test "$ac_cv_func_execv" != yes &&
   AC_DEFINE([ACE_LACKS_EXEC])
 fi
 
-ACE_CHECK_LACKS_FUNCS(fgetwc fcntl fsync)
-
 AC_CHECK_FUNC([getmsg],
   [
    AC_RUN_IFELSE([AC_LANG_SOURCE([[
@@ -3158,9 +3238,9 @@ AC_CHECK_FUNC([getmsg],
 # include <unistd.h>
 #endif  /* !ACE_LACKS_UNISTD_H */
 
-#ifdef ACE_HAS_SYS_IOCTL_H
+#ifndef ACE_LACKS_SYS_IOCTL_H
 # include <sys/ioctl.h>
-#endif  /* ACE_HAS_SYS_IOCTL_H */
+#endif  /* ACE_LACKS_SYS_IOCTL_H */
 
 #ifdef ACE_HAS_STREAMS
 #  include <stropts.h>
@@ -3198,12 +3278,6 @@ main ()
   ],)
 
 AC_CHECK_FUNC([gethostbyaddr],,)
-
-ACE_CHECK_LACKS_FUNCS(gethostent)
-
-ACE_CHECK_HAS_FUNCS(getifaddrs)
-
-ACE_CHECK_LACKS_FUNCS(difftime)
 
 dnl Check for 64 bit llseek() or lseek64()
 case "$host" in
