@@ -39,6 +39,7 @@
 
 #include	<corba/debug.h>		// ... and debugging
 
+ACE_RCSID(TAO, cubit, "$Id$")
 
 //
 // CUBE OCTET

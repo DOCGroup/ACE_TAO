@@ -11,6 +11,7 @@
 
 #include "test1.h"
 
+ACE_RCSID(TAO, test1, "$Id$")
 
 //
 // Define all the stubs ... it's a lot less error prone to do it with

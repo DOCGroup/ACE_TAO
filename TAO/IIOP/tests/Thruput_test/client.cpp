@@ -6,6 +6,8 @@
 #include <iostream.h>
 #include <fstream.h>
 
+ACE_RCSID(Thruput_test, client, "$Id$")
+
 void print_exception (const CORBA_Exception     *x,
                       const char                  *info,
                       FILE                        *stream

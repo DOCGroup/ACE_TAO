@@ -17,6 +17,8 @@
 #include "connect.h"
 #include "params.h"
 
+ACE_RCSID(TAO, cubit_i, "$Id$")
+
 Cubit_i::Cubit_i(const char* obj_name)
 : _skel_Cubit(obj_name)
 {

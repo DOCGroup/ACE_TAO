@@ -4,6 +4,8 @@
 
 #include "cubit.hh"
 
+ACE_RCSID(factory_client, cubitS, "$Id$")
+
 
 #define Cubit_dispatch_impl
 

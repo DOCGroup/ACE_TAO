@@ -2,6 +2,8 @@
 
 #include "cubit.h"
 
+ACE_RCSID(tpr, cubitS, "$Id$")
+
 
 #define Cubit_dispatch_impl
 
