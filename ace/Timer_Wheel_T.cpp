@@ -168,14 +168,12 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Wheel_T (void)
   {
     // Free all the nodes starting at the root
     ACE_Timer_Node_T<TYPE>* root = this->spokes_[i];
-    for (ACE_Timer_Node_T<TYPE>* a = root->get_next(); a != root;)
+    for (ACE_Timer_Node_T<TYPE>* n = root->get_next(); n != root;)
     {
-      ACE_Timer_Node_T<TYPE>* b = a->get_next();
-      this->upcall_functor().deletion(*this, a->get_type(), a->get_act());
-      a->set_prev(0);
-      a->set_next(0);
-      this->free_node (a);
-      a = b->get_next();
+      ACE_Timer_Node_T<TYPE>* next = n->get_next();
+      this->upcall_functor().deletion(*this, n->get_type(), n->get_act());
+      this->free_node (n);
+      n = next;
     }
     delete root;
   }
@@ -412,21 +410,19 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::schedule_i (ACE_Timer_Node_T<TYPE>* 
     root->set_next(n);
     return;
   }
-  // Note : It might be beneficial in the real world to check to see
-  // if the new timer belongs on the end of the spoke, but in testing
-  // it made no difference, so we just skip it.
 
-  // We use <= here so that the timers with equal values will
-  // be scheduled in the right order
-  ACE_Timer_Node_T<TYPE>* next = root->get_next();
-  while (next != root && next->get_timer_value() <= expire)
-    next = next->get_next();
+  // We always want to search backwards from the tail of the list, because
+  // this minimizes the search in the extreme case when lots of timers are
+  // scheduled for exactly the same time
+  ACE_Timer_Node_T<TYPE>* p = root->get_prev();
+  while (p != root && p->get_timer_value() > expire)
+    p = p->get_prev();
 
-  // insert before
-  n->set_prev(next->get_prev());
-  n->set_next(next);
-  next->get_prev()->set_next(n);
-  next->set_prev(n);
+  // insert after
+  n->set_prev(p);
+  n->set_next(p->get_next());
+  p->get_next()->set_prev(n);
+  p->set_next(n);
 }
 
 

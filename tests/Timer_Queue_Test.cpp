@@ -56,6 +56,11 @@ static int max_iterations = 2000;
 static int max_iterations = ACE_DEFAULT_TIMERS * 100;
 #endif
 
+// Amount of time between each timer. 
+// (0 schedules all the timers to expire at exactly the same time.)
+// in milliseconds
+static int TIMER_DISTANCE = 50;
+
 // Keep track of the timer ids that were assigned to us.
 static long *timer_ids = 0;
 
@@ -216,9 +221,9 @@ test_performance (ACE_Timer_Queue *tq,
   ACE_Time_Value *times;
   ACE_NEW (times, ACE_Time_Value[max_iterations]);
 
-  // Set up a bunch of times 50ms apart.
+  // Set up a bunch of times TIMER_DISTANCE ms apart.
   for (i = 0; i < max_iterations; i++)
-    times[i] = tq->gettimeofday() + ACE_Time_Value(0, i * 50 * 1000);
+    times[i] = tq->gettimeofday() + ACE_Time_Value(0, i * TIMER_DISTANCE * 1000);
 
   ACE_Time_Value last_time = times[max_iterations-1];
 

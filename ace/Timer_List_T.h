@@ -33,14 +33,16 @@ class ACE_Timer_List_T;
  * node of a timer queue.
  */
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
-class ACE_Timer_List_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, ACE_LOCK>
+class ACE_Timer_List_Iterator_T 
+: public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, ACE_LOCK>
 {
 public:
+  typedef ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> List;
   /// Constructor.
-  ACE_Timer_List_Iterator_T (ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> &);
+  ACE_Timer_List_Iterator_T (List& lst);
 
   /// Destructor.
-  ~ACE_Timer_List_Iterator_T (void);
+  virtual ~ACE_Timer_List_Iterator_T (void);
 
   /// Positions the iterator at the earliest node in the Timer Queue
   virtual void first (void);
@@ -56,10 +58,10 @@ public:
 
 protected:
   /// Pointer to the <ACE_Timer_List> that we are iterating over.
-  ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> &timer_list_;
+  List& list_;
 
   /// Current position in the <ACE_Timer_List>
-  ACE_Timer_Node_T<TYPE> *position_;
+  ACE_Timer_Node_T<TYPE>* current_node_;
 };
 
 /**
@@ -84,13 +86,15 @@ class ACE_Timer_List_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
 {
 public:
   /// Type of iterator
-  typedef ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> LIST_ITERATOR;
+  typedef ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> Iterator;
 
   /// Iterator is a friend
   friend class ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>;
 
+  typedef ACE_Timer_Node_T<TYPE> Node;
   /// Type inherited from
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> INHERITED;
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> Base;
+  typedef ACE_Free_List<Node> FreeList;
 
   // = Initialization and termination methods.
   /**
@@ -99,8 +103,7 @@ public:
    * default FUNCTOR will be created.  <freelist> the freelist of
    * timer nodes.  If 0, then a default freelist will be created.
    */
-  ACE_Timer_List_T (FUNCTOR *upcall_functor = 0,
-                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
+  ACE_Timer_List_T (FUNCTOR* upcall_functor = 0, FreeList* freelist = 0);
 
   /// Destructor
   virtual ~ACE_Timer_List_T (void);
@@ -110,7 +113,7 @@ public:
 
   /// Returns the time of the earlier node in the <ACE_Timer_List>.
   /// Must be called on a non-empty queue.
-  virtual const ACE_Time_Value &earliest_time (void) const;
+  virtual const ACE_Time_Value& earliest_time (void) const;
 
   /**
    * Schedule <type> that will expire at <future_time>,
@@ -127,10 +130,10 @@ public:
    * wrong timer.  Returns -1 on failure (which is guaranteed never to
    * be a valid <timer_id>).
    */
-  virtual long schedule (const TYPE &type,
-                         const void *act,
-                         const ACE_Time_Value &future_time,
-                         const ACE_Time_Value &interval = ACE_Time_Value::zero);
+  virtual long schedule (const TYPE& type,
+                         const void* act,
+                         const ACE_Time_Value& future_time,
+                         const ACE_Time_Value& interval = ACE_Time_Value::zero);
 
   /**
    * Resets the interval of the timer represented by <timer_id> to
@@ -140,14 +143,14 @@ public:
    * timer.  Returns 0 if successful, -1 if not.
    */
   virtual int reset_interval (long timer_id,
-                              const ACE_Time_Value &interval);
+                              const ACE_Time_Value& interval);
 
   /**
    * Cancel all timers associated with <type>.  If <dont_call> is 0
    * then the <functor> will be invoked.  Returns number of timers
    * cancelled.
    */
-  virtual int cancel (const TYPE &type,
+  virtual int cancel (const TYPE& type,
                       int dont_call_handle_close = 1);
 
   /**
@@ -160,14 +163,14 @@ public:
    * succeeded and 0 if the <timer_id> wasn't found.
    */
   virtual int cancel (long timer_id,
-                      const void **act = 0,
+                      const void** act = 0,
                       int dont_call_handle_close = 1);
 
   /// Returns a pointer to this <ACE_Timer_Queue>'s iterator.
-  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> &iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>& iter (void);
 
   /// Removes the earliest node from the queue and returns it
-  virtual ACE_Timer_Node_T<TYPE> *remove_first (void);
+  virtual ACE_Timer_Node_T<TYPE>* remove_first (void);
 
   /// Dump the state of an object.
   virtual void dump (void) const;
@@ -177,29 +180,30 @@ public:
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
 
   /// Reads the earliest node from the queue and returns it.
-  virtual ACE_Timer_Node_T<TYPE> *get_first (void);
+  virtual ACE_Timer_Node_T<TYPE>* get_first (void);
 
-protected:
-  /// Factory method that allocates a new node (uses operator new).
-/*  virtual ACE_Timer_Node_T<TYPE> *alloc_node (void);
-
-  /// Factory method that frees a previously allocated node (uses
-  /// operator delete).
-  virtual void free_node (ACE_Timer_Node_T<TYPE> *);
-*/
 private:
+
+  void schedule_i(ACE_Timer_Node_T<TYPE>* n, const ACE_Time_Value& exp);
+  ACE_Timer_Node_T<TYPE>* find_node(long timer_id) const;
+  void cancel_i (ACE_Timer_Node_T<TYPE>* n, int skip_close);
+  void unlink (ACE_Timer_Node_T<TYPE>* n);
+  ACE_Timer_Node_T<TYPE>* get_first_i(void) const;
+
+private:
+
   /// Pointer to linked list of <ACE_Timer_Handles>.
-  ACE_Timer_Node_T<TYPE> *head_;
+  ACE_Timer_Node_T<TYPE>* head_;
 
   /// Iterator used to expire timers.
-  LIST_ITERATOR *iterator_;
+  Iterator* iterator_;
 
   /**
    * Keeps track of the timer id that uniquely identifies each timer.
-   * This id can be used to cancel a timer via the <cancel (int)>
+   * This id can be used to cancel a timer via the <cancel(long)>
    * method.
    */
-  long timer_id_;
+  long id_counter_;
 
   // = Don't allow these operations for now.
   ACE_UNIMPLEMENTED_FUNC (ACE_Timer_List_T (const ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> &))
