@@ -104,7 +104,7 @@ main (int argc, char *argv [])
 
   IOStream_Acceptor peer_acceptor;
 
-  ACE_INET_Addr addr (argc > 1 ? atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT);
+  ACE_INET_Addr addr (argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT);
 
   if (peer_acceptor.open (addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

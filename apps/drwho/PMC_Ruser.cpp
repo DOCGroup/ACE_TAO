@@ -103,8 +103,8 @@ PMC_Ruser::handle_protocol_entries (const char *cp,
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
 
   protocol_record.set_host (host_name);
-  current_node->set_inactive_count (atoi (cp));
-  current_node->set_active_count (atoi (cp = ACE_OS::strchr (cp, ' ') + 1));
+  current_node->set_inactive_count (ACE_OS::atoi (cp));
+  current_node->set_active_count (ACE_OS::atoi (cp = ACE_OS::strchr (cp, ' ') + 1));
   current_node->set_login_name (cp = ACE_OS::strchr (cp, ' ') + 1);
   current_node->set_real_name (cp = ACE_OS::strchr (cp, '\0') + 1);
 

@@ -41,14 +41,14 @@ Handle_Timeout::init (int argc, char *argv[])
          interval.sec (ACE_OS::atoi (get_opt.opt_arg ()));
          break;
        case 'a':
-         arg = atoi (get_opt.opt_arg ());
+         arg = ACE_OS::atoi (get_opt.opt_arg ());
          break;
        default:
          break;
        }
 
   if (ACE_Reactor::instance ()->schedule_timer (this,
-                                                ACE_reinterpret_cast (void *, 
+                                                ACE_reinterpret_cast (void *,
                                                                       arg),
                                                       delta,
                                                       interval) == -1)

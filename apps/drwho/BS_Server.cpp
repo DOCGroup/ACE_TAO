@@ -12,7 +12,7 @@ BS_Server::BS_Server (const char *packet)
 {
   const char *buf_ptr = packet + MAXUSERIDNAMELEN;
 
-  this->count_ = atoi (packet);
+  this->count_ = ACE_OS::atoi (packet);
   this->buffer_ = buf_ptr;
 
   ACE_NEW (this->protocol_record_,

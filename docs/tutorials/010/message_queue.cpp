@@ -76,8 +76,8 @@ main (int argc, char *argv[])
 {
   /* Set the number of iterations through our putq() loop and the
     number of threads to use in our Task<> derivative.  */
-  int iterations = argc > 1 ? atoi (argv[1]) : 9;
-  int threads = argc > 2 ? atoi (argv[2]) : 2;
+  int iterations = argc > 1 ? ACE_OS::atoi (argv[1]) : 9;
+  int threads = argc > 2 ? ACE_OS::atoi (argv[2]) : 2;
 
   run_test (iterations, threads);
 
