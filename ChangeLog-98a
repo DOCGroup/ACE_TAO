@@ -1,3 +1,8 @@
+Fri Feb 06 10:30:00 1998  Chris Gill <cdgill@cs.wustl.edu>
+
+        * ace/Containers.cpp: fixed error in 
+          ACE_Doubly_Linked_List_Iterator<T>::first (void);
+
 Fri Feb 06 08:27:32 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * ace/Containers.{cpp,h} : added "first" methods to all container

@@ -684,8 +684,8 @@ ACE_Double_Linked_List_Iterator<T>::advance (void)
 template <class T> int
 ACE_Double_Linked_List_Iterator<T>::first (void)
 {
-  this->current_ = dll.head_->next_; 
-  return this->not_done ();
+  this->current_ = dllist_.head_->next_; 
+  return this->not_done () ? 1 : 0;
 }
 
 template <class T> int
