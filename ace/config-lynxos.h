@@ -122,9 +122,13 @@
 #if ACE_MT_SAFE == 1
   // Platform supports threads.
 # define ACE_HAS_PTHREADS
-# if __LYNXOS_SDK_VERSION >= 199901L
-    /* LynxOS >= 3.1.0 */
+# if __GNUG__ > 2  ||  __GNUC_MINOR__ >= 9
+    // g++ >= 2.9, assume LynxOS 3.1.0 or greater
 #   define ACE_HAS_PTHREADS_STD
+    // Though there's a pthread_sigmask man page, there isn't a
+    // declaration in a system header file.
+#   include <signal.h>
+    int pthread_sigmask (int, const sigset_t *, sigset_t *);
 # else  /* LynxOS < 3.1.0 */
 #   define ACE_HAS_PTHREADS_DRAFT4
 #   define ACE_HAS_STDARG_THR_DEST
