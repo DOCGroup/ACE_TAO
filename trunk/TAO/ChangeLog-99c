@@ -1,3 +1,8 @@
+Mon May 31 15:55:07 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* Removed tests/InterOp-Naming/InterOp_test.cpp as it was 
+	  obsolete.
+
 Mon May 31 16:44:22 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Acceptor_Registry.{h,cpp} (close_all):
@@ -48,6 +53,7 @@ Mon May 31 16:44:22 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  addition, ACE_CString was mispelled "ACE_Cstring."  
 
 Mon May 31 15:55:07 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
 	Fixed a warning on VxWorks. Replaces long int * ACE_UINT64
 	with ACE_UINT64 * ACE_UINT64. Changed the following files :
 
