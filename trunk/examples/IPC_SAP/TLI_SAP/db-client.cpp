@@ -11,20 +11,22 @@ int
 main (int argc, char *argv[])
 {
   if (argc < 2)
-    ACE_ERROR_RETURN ((LM_ERROR, "Usage: %s employee_id [server-host port-number]\n",
-		      argv[0]), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Usage: %s employee_id [server-host port-number]\n",
+		      argv[0]),
+                      -1);
 
-  const char *emp_num   = argv[1];
+  const char *emp_num = argv[1];
   const char *host_name = argc < 3 ? ACE_DEFAULT_SERVER_HOST : argv[2];
   unsigned   short port	= argc < 4 ? ACE_DEFAULT_SERVER_PORT : ACE_OS::atoi (argv[3]);
-  int	     n;
-  char	     buf[MAXLINE];
+  int n;
+  char buf[MAXLINE];
 
   ACE_TLI_Stream client;
   ACE_TLI_Connector con;
 
   if (con.connect (client, ACE_INET_Addr (port, host_name)) == -1)
-    ACE_OS::t_error ((char *)host_name), ACE_OS::exit (1);
+    ACE_OS::t_error ((char *) host_name), ACE_OS::exit (1);
 
   ACE_OS::strcpy (buf, emp_num);
   n = ACE_OS::strlen (buf);
@@ -48,6 +50,8 @@ main (int argc, char *argv[])
 #else
 int main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, "your platform must support ACE_TLI\n"), 1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "your platform isn't configured to support TLI\n"),
+                    1);
 }
 #endif /* ACE_HAS_TLI */

@@ -14,7 +14,7 @@ main (int argc, char *argv[])
 
   const char *filename  = argv[1];
   const char *host_name = argc < 3 ? ACE_DEFAULT_SERVER_HOST : argv[2];
-  unsigned   short port	= argc < 4 ? ACE_DEFAULT_SERVER_PORT : ACE_OS::atoi (argv[3]);
+  u_short port = argc < 4 ? ACE_DEFAULT_SERVER_PORT : ACE_OS::atoi (argv[3]);
 
   ACE_TLI_Stream client;
   ACE_TLI_Connector con;
@@ -39,6 +39,8 @@ main (int argc, char *argv[])
 #else
 int main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, "your platform does not support ACE_TLI\n"), 1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "your platform isn't configured to support TLI\n"),
+                    1);
 }
 #endif /* ACE_HAS_TLI */

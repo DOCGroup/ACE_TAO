@@ -21,7 +21,8 @@ int main (int argc, char *argv[])
   ACE_INET_Addr remote_addr (r_port, host);
   ACE_INET_Addr local_addr (l_port);
 
-  ACE_DEBUG ((LM_DEBUG, "starting non-blocking connect\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "starting non-blocking connect\n"));
 
   // Initiate timed, non-blocking connection with server.
   ACE_TLI_Connector con;
@@ -31,18 +32,25 @@ int main (int argc, char *argv[])
 		   local_addr, 1) == -1)
     {
       if (errno != EWOULDBLOCK)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connection failed"), 1);
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "connection failed"),
+                          1);
 
-      ACE_DEBUG ((LM_DEBUG, "starting timed connect\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "starting timed connect\n"));
 
-      // Check if non-blocking connection is in progress, 
-      // and wait up to timeout seconds for it to complete.
+      // Check if non-blocking connection is in progress, and wait up
+      // to timeout seconds for it to complete.
       ACE_Time_Value tv (timeout);
 
       if (con.complete (cli_stream, &remote_addr, &tv) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connection failed"), 1);
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "connection failed"), 1);
       else
-	ACE_DEBUG ((LM_DEBUG, "connected to %s\n", 
+	ACE_DEBUG ((LM_DEBUG,
+                    "connected to %s\n", 
 		    remote_addr.get_host_name ()));
     }
 
@@ -51,11 +59,17 @@ int main (int argc, char *argv[])
   for (int r_bytes;
        (r_bytes = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0; )
     if (cli_stream.send_n (buf, r_bytes) == -1) 
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_n"), 1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "send_n"),
+                        1);
 
   /* Explicitly close the connection */
   if (cli_stream.close () == -1) 
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "close"),
+                      -1);
 
   return 0;
 }                                                       
@@ -63,6 +77,7 @@ int main (int argc, char *argv[])
 int main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, 
-		     "your platform must support ACE_TLI\n"), 1);
+		     "your platform isn't configured to support TLI\n"),
+                    1);
 }
 #endif /* ACE_HAS_TLI */
