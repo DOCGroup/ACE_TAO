@@ -1,3 +1,12 @@
+Tue Jan 19 10:24:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * apps/JAWS/PROTOTYPE/HTTPU/HTTPU.{dsp, dsw}: converted to MSVC++ 6.0
+	  (and backward compatible) format.
+
+        * apps/JAWS/PROTOTYPE/HTTPU/http_headers.{cpp, h}: fixed ACE_RB_Tree 
+	  templates, template instantiations.  Thanks to Sridhar Sabella
+	  (ssabbella@cemax.com) for pointing this out.
+
 Tue Jan 19 00:42:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Log_Msg/test_callback.cpp (log): Removed the use of
