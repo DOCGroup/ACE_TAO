@@ -55,7 +55,7 @@ TAO_NAMESPACE  CONV_FRAME
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CONV_FRAME_CODESETCOMPONENT__TAO_SEQ_CODESETID_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_CONV_FRAME_CODESETCOMPONENT__TAO_SEQ_CODESETID_CH_
 
-      class _TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId : public TAO_Unbounded_Base_Sequence
+      class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId : public TAO_Unbounded_Base_Sequence
       {
       public:
         // = Initialization and termination methods.
