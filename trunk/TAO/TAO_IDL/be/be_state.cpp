@@ -2428,6 +2428,7 @@ be_state_typedef::gen_code (be_type *bt, be_decl *d, be_type *type)
                     }
                 }
             }
+			break;
           case TAO_CodeGen::TAO_TYPEDEF_CS:
             {
               // if we are not here recursively, then we need to generate the
@@ -2442,6 +2443,7 @@ be_state_typedef::gen_code (be_type *bt, be_decl *d, be_type *type)
                     }
                 }
             }
+			break;
           default:
             break;
           } // end of switch state

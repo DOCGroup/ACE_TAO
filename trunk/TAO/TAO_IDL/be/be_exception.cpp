@@ -72,6 +72,22 @@ be_exception::member_count (void)
 int
 be_exception::gen_client_header (void)
 {
+  if (!this->cli_hdr_gen_) // not already generated
+    {
+      TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+      TAO_OutStream *ch = cg->client_header (); // output stream
+      TAO_NL  nl;        // end line
+
+      cg->outstream (ch);
+      ch->indent (); // start from whatever indentation level we were at
+
+      *ch << "static CORBA::TypeCode_ptr " << this->tc_name
+	()->last_component () << ";\n\n";
+
+      this->cli_hdr_gen_ = I_TRUE;
+    }
+  
   return 0;
 }
 

@@ -231,6 +231,18 @@ be_predefined_type::compute_tc_name (void)
         this->tc_name_->nconc (new UTL_ScopedName (new Identifier ("_tc_any", 1, 0,
                                                              I_FALSE), NULL));
       }
+    break;
+    case AST_PredefinedType::PT_pseudo:
+      // TODO: This is a kind of hack, there are other things that are
+      // pseudo objects, not only objref (aka CORBA::Object).
+      {
+        this->tc_name_->nconc (new UTL_ScopedName (new Identifier ("_tc_Object", 1, 0,
+                                                             I_FALSE), NULL));
+      }
+    break;
+    default:
+      ACE_ERROR ((LM_WARNING, "Unknown or invalid predefined type"));
+      break;
     }
 }
 

@@ -442,9 +442,11 @@ be_operation::gen_server_skeletons (void)
   // retrieve our enclosing interface decl
   intf = be_interface::narrow_from_decl (ScopeAsDecl (this->defined_in ()));
 
-  *ss << "void " << intf->full_skel_name () << "::" << this->local_name () <<
-    "_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, " <<
-    "CORBA::Environment &env)" << nl;
+  *ss << "void " << intf->full_skel_name () << "::"
+      << this->local_name () << "_skel ("
+      << "CORBA::ServerRequest &_tao_server_request, "
+      << "CORBA::Object_ptr _tao_object_reference, "
+      << "CORBA::Environment &_tao_enviroment)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
   // define an NVList to hold arguments
@@ -532,7 +534,7 @@ be_operation::gen_server_skeletons (void)
   // declare an NVList and create one
   ss->indent ();
   *ss << "// create an NV list and populate it with typecodes" << nl;
-  *ss << "req.orb ()->create_list (0, nvlist); // initialize a list" << nl;
+  *ss << "_tao_server_request.orb ()->create_list (0, nvlist); // initialize a list" << nl;
 
   // add each argument according to the in, out, inout semantics
   *ss << "// add each argument according to the in, out, inout semantics" << nl;
@@ -561,13 +563,13 @@ be_operation::gen_server_skeletons (void)
                   switch (bd->direction ())
                     {
                     case AST_Argument::dir_IN:
-                      *ss << "CORBA::ARG_IN, env);" << nl;
+                      *ss << "CORBA::ARG_IN, _tao_enviroment);" << nl;
                       break;
                     case AST_Argument::dir_INOUT:
-                      *ss << "CORBA::ARG_INOUT, env);" << nl;
+                      *ss << "CORBA::ARG_INOUT, _tao_enviroment);" << nl;
                       break;
                     case AST_Argument::dir_OUT:
-                      *ss << "CORBA::ARG_OUT, env);" << nl;
+                      *ss << "CORBA::ARG_OUT, _tao_enviroment);" << nl;
                       break;
                     }
                 } // end if argument node
@@ -579,11 +581,11 @@ be_operation::gen_server_skeletons (void)
 
   // parse the arguments
   *ss << "// parse the arguments" << nl;
-  *ss << "req.params (nvlist, env);" << nl;
-  *ss << "if (env.exception ()) return;" << nl;
+  *ss << "_tao_server_request.params (nvlist, _tao_enviroment);" << nl;
+  *ss << "if (_tao_enviroment.exception ()) return;" << nl;
 
   // make the upcall
-  *ss << "impl = (" << intf->full_skel_name () << "_ptr) obj->get_subclass ();"
+  *ss << "impl = (" << intf->full_skel_name () << "_ptr) _tao_object_reference->get_subclass ();"
       << nl;
   if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
     {
@@ -617,6 +619,7 @@ be_operation::gen_server_skeletons (void)
 	  d = si->item ();
 	  if (!d->imported ())
 	    {
+	      bd = be_argument::narrow_from_decl (d);
               // only if this is an argument node
               if (d->node_type () == AST_Decl::NT_argument)
                 {
@@ -627,7 +630,7 @@ be_operation::gen_server_skeletons (void)
         } // end of while
       delete si; // free the iterator object
     } // end of arg list
-  *ss << "env);" << nl;
+  *ss << "_tao_enviroment);" << nl;
 
   // if there is any return type, send it via the ServerRequest
   if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
@@ -640,14 +643,14 @@ be_operation::gen_server_skeletons (void)
           {
             *ss << "result = new CORBA::Any (" << rt->tc_name () <<
               ", retval, 0); // ORB does not own" << nl;
-            *ss << "req.result (result, env);" << nl;
+            *ss << "_tao_server_request.result (result, _tao_enviroment);" << nl;
           }
           break;
         default:
           {
             *ss << "result = new CORBA::Any (" << rt->tc_name () <<
               ", retval, 1); // ORB owns" << nl;
-            *ss << "req.result (result, env);" << nl;
+            *ss << "_tao_server_request.result (result, _tao_enviroment);" << nl;
           }
         }
 #if 0

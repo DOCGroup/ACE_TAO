@@ -235,6 +235,8 @@ be_sequence::gen_client_header (void)
       *ch << "CORBA::Boolean release_;\n";
       ch->decr_indent ();
       *ch << "};\n";
+      *ch << "typedef " << this->local_name () << "* "
+	  << this->local_name () << "_ptr;" << nl;
 
       // generate the var and out types
       if (this->gen_var_defn () == -1)
@@ -658,7 +660,7 @@ be_sequence::gen_var_impl (void)
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
   *ci << fname << "::operator= (const " << fname <<
-    "_var &p) // deep copy" << nl;
+    " &p) // deep copy" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "if (this != &p)" << nl;
@@ -674,7 +676,7 @@ be_sequence::gen_var_impl (void)
 
   // two arrow operators
   ci->indent ();
-  *ci << "ACE_INLINE const " << fname << " *" << nl;
+  *ci << "ACE_INLINE const " << this->name () << " *" << nl;
   *ci << fname << "::operator-> (void) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -683,7 +685,7 @@ be_sequence::gen_var_impl (void)
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << fname << " *" << nl;
+  *ci << "ACE_INLINE " << this->name () << " *" << nl;
   *ci << fname << "::operator-> (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -729,7 +731,7 @@ be_sequence::gen_var_impl (void)
       ACE_ERROR_RETURN ((LM_ERROR,
           "be_sequence::gen_var_impl - base type codegen failed\n"), -1);
     }
-  *ci << " " << nl;
+  *ci << "&" << nl;
   *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -1019,7 +1021,7 @@ be_sequence::gen_out_impl (void)
       ACE_ERROR_RETURN ((LM_ERROR,
           "be_sequence::gen_out_impl - base type codegen failed\n"), -1);
     }
-  *ci << nl;
+  *ci << "& " << nl;
   *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
