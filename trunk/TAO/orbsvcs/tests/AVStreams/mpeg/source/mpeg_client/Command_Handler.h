@@ -78,9 +78,11 @@ class Receiver_i
   Receiver_i (Command_Handler *handler);
   // constructor.
 
-  void push_audio_mmdevice (CORBA::Object_ptr mmdevice,
-                            const char* audio_file,
-                            CORBA::Environment&);
+  void push_mmdevice (CORBA::Object_ptr audio_mmdevice,
+                      const char* audio_file,
+                      CORBA::Object_ptr video_mmdevice,
+                      const char *video_file,
+                      CORBA::Environment&);
 
  private:
   Command_Handler *command_handler_;
@@ -410,8 +412,10 @@ public:
   TAO_ORB_Manager *orb_manager (void);
   // returns the orbmanager reference
 
-  void set_audio_mmdevice (CORBA::Object_ptr audio_mmdevice,
-                           const char *audio_file);
+  void set_mmdevice (CORBA::Object_ptr audio_mmdevice,
+                     const char *audio_file,
+                     CORBA::Object_ptr video_mmdevice,
+                     const char *video_file);
   // sets the audio mmdevice object ptr.
 
   void set_video_data_handle (ACE_HANDLE data_fd);

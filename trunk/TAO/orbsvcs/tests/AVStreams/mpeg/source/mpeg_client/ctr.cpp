@@ -1093,7 +1093,20 @@ int CTRmain(int argc,
 
   // and run the event loop
   //  TAO_ORB_Core_instance ()->reactor ()->run_event_loop ();
-  command_handler.run ();
+  //  int result;
+//   while (1)
+//     {
+      int result = command_handler.run ();
+//       cerr << "result " << result << " ";
+//       //      ACE_DEBUG ((LM_DEBUG,"Command_Handler::run result is %s\n",result));
+//       if (errno == EINTR)
+//         {
+//           cerr << "Interrupted run ";
+//           continue;
+//         }
+//       else
+//         break;
+//     }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Exited the client command handler event loop\n"
