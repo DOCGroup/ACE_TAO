@@ -1,3 +1,11 @@
+Thu Aug 26 07:29:42 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,i} (ACE_Time_Value): reverted
+          Wed Aug 25 22:05:54 1999  David L. Levine  <levine@cs.wustl.edu>
+          change.  It caused overload ambiguity when the types of
+          sec and usec didn't match, and on Sun CC 4.2/SunOS 5.6.
+          Thanks to Andy for reporting that.
+
 Wed Aug 25 22:05:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,i} (ACE_Time_Value): added four new
