@@ -852,7 +852,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("ORB Core unable to find a Resource Factory instance")));
+                  ACE_TEXT ("ORB Core unable to find a ")
+                  ACE_TEXT ("Resource Factory instance")));
       ACE_THROW_RETURN (CORBA::INTERNAL (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_ORB_CORE_INIT_LOCATION_CODE,
@@ -1016,7 +1017,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
   // registries!
 
   // Set ORB-level policy defaults.
-  TAO_Protocols_Hooks *tph = this->get_protocols_hooks (TAO_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Protocols_Hooks *tph =
+    this->get_protocols_hooks (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   int status = tph->set_default_policies (TAO_ENV_SINGLE_ARG_PARAMETER);
@@ -1312,7 +1314,7 @@ TAO_ORB_Core::get_protocols_hooks (TAO_ENV_SINGLE_ARG_DECL)
 
   // Initialize the protocols hooks instance.
   this->protocols_hooks_->init_hooks (this
-                                       TAO_ENV_ARG_PARAMETER);
+                                      TAO_ENV_ARG_PARAMETER);
 
   return this->protocols_hooks_;
 }
@@ -1356,7 +1358,7 @@ TAO_ORB_Core::service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
       return this->ft_service_.service_callback ()->
                  raise_comm_failure (invoke,
                                      profile
-                                      TAO_ENV_ARG_PARAMETER);
+                                     TAO_ENV_ARG_PARAMETER);
     }
 
   invoke->close_connection ();
@@ -1379,7 +1381,7 @@ TAO_ORB_Core::service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
       return this->ft_service_.service_callback ()->
                  raise_transient_failure (invoke,
                                           profile
-                                           TAO_ENV_ARG_PARAMETER);
+                                          TAO_ENV_ARG_PARAMETER);
     }
 
   ACE_THROW_RETURN (CORBA::TRANSIENT (
@@ -1407,14 +1409,14 @@ TAO_ORB_Core::service_context_list (
       this->ft_service_.service_callback ()->service_context_list (stub,
                                                                    service_context.service_info (),
                                                                    restart
-                                                                    TAO_ENV_ARG_PARAMETER);
+                                                                   TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
   this->protocols_hooks_->rt_service_context (stub,
                                               service_context,
                                               restart
-                                               TAO_ENV_ARG_PARAMETER);
+                                              TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -1768,11 +1770,11 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
   if (this->has_shutdown () == 0)
     {
       this->adapter_registry_.check_close (wait_for_completion
-                                            TAO_ENV_ARG_PARAMETER);
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       this->adapter_registry_.close (wait_for_completion
-                                      TAO_ENV_ARG_PARAMETER);
+                                     TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // Set the shutdown flag
@@ -2059,7 +2061,7 @@ TAO_ORB_Core::resolve_rir (const char *name
       list_of_profiles += object_id;
 
       return this->orb ()->string_to_object (list_of_profiles.c_str ()
-                                              TAO_ENV_ARG_PARAMETER);
+                                             TAO_ENV_ARG_PARAMETER);
     }
 
   return CORBA::Object::_nil ();
@@ -2804,7 +2806,7 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
 
       int collocated =
         orb_core->collocation_resolver ().is_collocated (object
-                                                          TAO_ENV_ARG_PARAMETER);
+                                                         TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (collocated)
@@ -2869,6 +2871,9 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<
 
 template class ACE_Array_Base<void *>;
 
+template class ACE_Dynamic_Service<TAO_Server_Strategy_Factory>;
+template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Lock_Adapter<ACE_Null_Mutex>
@@ -2897,5 +2902,8 @@ template class ACE_Array_Base<void *>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Array_Base<void *>
+
+#pragma instantiate ACE_Dynamic_Service<TAO_Server_Strategy_Factory>
+#pragma instantiate ACE_Dynamic_Service<TAO_Client_Strategy_Factory>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

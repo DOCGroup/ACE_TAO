@@ -1,3 +1,28 @@
+Sat Jan 26 23:09:56 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.h:
+	* tao/ORB.cpp (id, register_initial_reference):
+
+	  The CORBA specification recently added these methods to the
+	  CORBA::ORB interface.  Implemented them.
+
+	* tao/ORB_Core.cpp:
+
+	  Moved template instantiations from `ORB.cpp' to this file. They
+	  aren't used in the former.
+	
+	* tao/Object_Ref_Table.h:
+	* tao/Object_Ref_Table.cpp:
+
+	  Synchronize access to the underlying hash map by instantiating
+	  the template(s) with a TAO_SYNCH_MUTEX instead of an
+	  ACE_Null_Mutex.  Multiple threads may potentially attempt to
+	  register an object reference concurrently.
+
+	* tao/ClientRequestInfo_i.cpp (get_service_context_i):
+
+	  Corrected exception minor code (26 instead of 23).
+
 Sat Jan 26 22:53:04 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* examples/Callback_Quoter/Notifier_i.cpp:
