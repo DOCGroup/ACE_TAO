@@ -19,7 +19,7 @@ IDL_SRC	= NotifierC.cpp NotifierS.cpp ConsumerC.cpp ConsumerS.cpp
 PROG_SRCS = \
 	consumer.cpp \
         supplier.cpp \
-	Supplier.cpp \
+	Supplier_i.cpp \
 	notifier.cpp \
 	Notifier_Input_Handler.cpp \
 	Notifier_i.cpp \
@@ -39,7 +39,7 @@ CONSUMER_CLT_OBJS = \
 MARKET_CLT_OBJS = \
 		NotifierC.o \
 		NotifierS.o \
-		Supplier.o \
+		Supplier_i.o \
 		supplier.o \
 		ConsumerC.o\
 		ConsumerS.o \
@@ -1310,7 +1310,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h
-.obj/supplier.o .obj/supplier.so .shobj/supplier.o .shobj/supplier.so: supplier.cpp Supplier.h \
+.obj/supplier.o .obj/supplier.so .shobj/supplier.o .shobj/supplier.so: supplier.cpp Supplier_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -1562,7 +1562,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  NotifierC.h ConsumerC.h ConsumerC.i NotifierC.i
-.obj/Supplier.o .obj/Supplier.so .shobj/Supplier.o .shobj/Supplier.so: Supplier.cpp \
+.obj/Supplier_i.o .obj/Supplier_i.so .shobj/Supplier_i.o .shobj/Supplier_i.so: Supplier_i.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1622,7 +1622,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Read_Buffer.i \
- Supplier.h \
+ Supplier_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
