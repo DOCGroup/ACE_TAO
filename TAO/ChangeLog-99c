@@ -1,3 +1,11 @@
+Thu Jul 15 17:44:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/GIOP.h:
+	* tao/GIOP.i:
+	* tao/Transport_Mux_Strategy.cpp:
+	  Optimized TSS buffer managment: the input CDR was reset twice
+	  during the upcall.
+
 Thu Jul 15 17:25:29 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/union_cs.cpp (visit_union): Made a

@@ -189,7 +189,7 @@ public:
   // Constructor.
   // The parameters are used to initialize the InputCDR stream
 
-  void reset (void);
+  void reset (int reset_contents = 1);
   // Reset the message header state and prepare it to receive the next
   // event.
   // already read.
