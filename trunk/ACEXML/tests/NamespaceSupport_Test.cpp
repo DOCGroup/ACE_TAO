@@ -27,7 +27,7 @@ int main (int, ACE_TCHAR *[])
                 ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
                 uri, lName, n1));
 
-  ACEXML_Char *n2 = ACE_TEXT ("dc:title");
+  const ACEXML_Char *n2 = ACE_TEXT ("dc:title");
   if (xmlns.processName(n2, uri, lName, 0) != 0)
     ACE_DEBUG ((LM_ERROR,
                 ACE_TEXT ("Fail to resolve namespace name %S\n"),
@@ -37,7 +37,7 @@ int main (int, ACE_TCHAR *[])
                 ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
                 uri, lName, n2));
 
-  ACEXML_Char *n3 = ACE_TEXT ("xml:title");
+  const ACEXML_Char *n3 = ACE_TEXT ("xml:title");
   if (xmlns.processName(n3, uri, lName, 0) != 0)
     ACE_DEBUG ((LM_ERROR,
                 ACE_TEXT ("Fail to resolve namespace name %S\n"),
