@@ -83,7 +83,7 @@ unlink $iorfile;
 
 sleep 2;
 
-print "Running IDL_Cubit with the default ORB protocol.\n\n";
+print stderr "\nRunning IDL_Cubit with the default ORB protocol.\n\n";
 
 $SV = Process::Create ($exepref."server".$EXE_EXT,
                        $svflags.
@@ -120,12 +120,14 @@ if ($OSNAME ne "MSWin32")
 {
   # Only run the UIOP test on Unix platforms.
 
+  Process::Wait();
+
   # No need to unlink the iorfile again.
   # unlink $iorfile;
 
   sleep 2;
 
-  print "Running IDL_Cubit with the UIOP protocol.\n\n";
+  print stderr "\nRunning IDL_Cubit with the UIOP protocol.\n\n";
 
   # Save the original server flags.
   $save_svflags = $svflags;
