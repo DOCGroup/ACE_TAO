@@ -1,3 +1,17 @@
+Sun Jul 20 12:10:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+          Removed ACE_INLINE from struct Observer_Entry, this was a workaround
+          for the GCC 2.7.x compiler and we don't support that version anymore.
+
+        * orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.h:
+          Doxygen improvement.
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+          Removed two explicit template instantiations that where also in
+          ECG_Mcast_EC.cpp. This should fix the multiple definitions error in the
+          VxWorks build.
+
 Fri Jul 18 17:26:32 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tao/default_resource.cpp: As an experiment, change the typedef
@@ -11,7 +25,7 @@ Fri Jul 18 17:26:32 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 Fri Jul 18 17:22:49 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tests/Bug_1551_Regression/Reply_Handler.h (Reply_Handler): 
+	* tests/Bug_1551_Regression/Reply_Handler.h (Reply_Handler):
 
 	  Use TAO_SYNCH_MUTEX preprocessor macro rather than
 	  ACE_Thread_Mutex directly so that things build properly on
@@ -54,7 +68,7 @@ Fri Jul 18 10:35:23 2003  George Edwards <g.edwards@vanderbilt.edu>
         IORInterceptor_Adapter. This is accomplished via the new
         IORInterceptor_Adapter_Factory class. This change was made so that
         processes with multiple ORBs can have different IOR interceptors
-        registered with each ORB. 
+        registered with each ORB.
 
 Fri Jul 18 15:29:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
