@@ -9,7 +9,7 @@
 #include "IO_Test.h"
 
 // Name of program.
-static char *program_name;
+static const char *program_name;
 
 // Name of default input file.
 static char *input_filename = "/usr/dict/words";
@@ -99,7 +99,7 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
   for (i = 0; test_vector[i] != 0; i++)
     {
       if (ACE_OS::ftruncate (fileno (output_fp), 0) == -1)
-	ACE_ERROR_RETURN ((ACE_ERROR, "%s\n", "ftruncate"));
+	ACE_ERROR ((LM_ERROR, "%s\n", "ftruncate"));
 
       cerr << "--------------------\n" 
 	   << "starting " << test_vector[i]->name () << " for " << iterations
@@ -123,7 +123,12 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
 int
 main (int argc, char *argv[])
 {
-  program_name = ACE::basename (argv[0]);
+#if defined (ACE_WIN32)
+  char delim = '\\';
+#else
+  char delim = '/';
+#endif /* ACE_WIN32 */
+  program_name = ACE::basename (argv[0], delim);
   parse_args (argc, argv);
 
   ACE_Sig_Action sa ((ACE_SignalHandler) cleanup, SIGINT);
@@ -133,10 +138,10 @@ main (int argc, char *argv[])
   FILE *output_fp = ACE_OS::fopen (output_filename, "w+");
 
   if (input_fp == 0)
-    ACE_ERROR_RETURN ((ACE_ERROR, "%s\n", "input_filename"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%s\n", "input_filename"), -1);
 
   if (output_fp == 0)
-    ACE_ERROR_RETURN ((ACE_ERROR, "%s\n", "output_filename"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%s\n", "output_filename"), -1);
 
   ACE_OS::unlink (output_filename);
 
@@ -144,7 +149,7 @@ main (int argc, char *argv[])
 
   if (ACE_OS::fclose (input_fp) == -1 
       || ACE_OS::fclose (output_fp) == -1)
-    ACE_ERROR_RETURN ((ACE_ERROR, "%s\n", "fclose"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%s\n", "fclose"), -1);
 
   cleanup ();
   return 0;
