@@ -15,10 +15,21 @@
 #  -Wl,+vnocompatwarnings is added to shut up the "At least one PA 2.0 object
 # file detected..." messages.
 
-buildbits = 0
-debug = 1
-distrib = 0
-threads = 1
+ifeq (,$(buildbits))
+  buildbits = 0
+endif
+ifeq (,$(debug))
+  debug = 1
+endif
+ifeq (,$(distrib))
+  distrib = 0
+endif
+ifeq (,$(optimize))
+  optimize = 0
+endif
+ifeq (,$(threads))
+  threads = 1
+endif
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))

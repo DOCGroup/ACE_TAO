@@ -6,9 +6,19 @@
 # Original contributed by Ian Wright <I.Wright@elsevier.co.uk>. Updated for
 # AIX 4 and egcs by Steve Huston <shuston@riverace.com>.
 
-debug = 1
-optimize = 0
-threads = 1
+
+ifeq (,$(debug))
+  debug = 1
+endif
+ifeq (,$(distrib))
+  distrib = 0
+endif
+ifeq (,$(optimize))
+  optimize = 0
+endif
+ifeq (,$(threads))
+  threads = 1
+endif
  
 # In case anything here or in the config depends on OS version number,
 # grab it here and pass it all to the compiler as well.
@@ -25,7 +35,12 @@ CCFLAGS        += $(CFLAGS) -fno-implicit-templates
 DCFLAGS        += -g
 DLD             = $(CXX)
 LD              = $(CXX)
-LDFLAGS	       += -Wl,-bI:/lib/pse.exp 
+LDFLAGS	       += -Wl,-bI:/lib/pse.exp
+# Linking TAO_IDL runs out of TOC space unless -bbigtoc is given to ld.
+# Don't do it for everything because it decreases run-time performance.
+ifeq ($(notdir $(shell pwd)), TAO_IDL)
+LDFLAGS        += -Wl,-bbigtoc
+endif
 OCFLAGS         = -O2
 OCCFLAGS        = $(OCFLAGS)
 ifeq ($(threads),1)
