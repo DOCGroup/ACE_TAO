@@ -11,6 +11,7 @@ CIAO::ComponentServer_Impl::ComponentServer_Impl (CORBA::ORB_ptr o,
 
 ACE_INLINE void
 CIAO::ComponentServer_Impl::set_objref (Components::Deployment::ServerActivator_ptr act,
+                                        const Components::ConfigValues &config,
                                         Components::Deployment::ComponentServer_ptr cs
                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -18,6 +19,7 @@ CIAO::ComponentServer_Impl::set_objref (Components::Deployment::ServerActivator_
   if (!CORBA::is_nil (this->activator_.in ()) || !CORBA::is_nil (this->objref_.in ()))
     ACE_THROW (CORBA::BAD_INV_ORDER ());
 
+  this->config_ = new Components::ConfigValues (config);
   this->activator_ = Components::Deployment::ServerActivator::_duplicate (act);
   this->objref_ = Components::Deployment::ComponentServer::_duplicate (cs);
 }

@@ -14,6 +14,7 @@
 #include "ServerActivator_Impl.h"
 #include "ComponentInstallation_Impl.h"
 #include "Daemon_Impl.h"
+#include "Server_init.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
@@ -24,11 +25,13 @@ char *comserv_path_ = "../ComponentServer/ComponentServer";
 CORBA::ULong spawn_wait_ = 5;
 char *installation_datafile_ = "CIAO_Installation_Data.ini";
 char *section_name_ = 0;
+char *default_svcconf_ = 0;
+char *svcconf_config_ = 0;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:n:o:d:s:");
+  ACE_Get_Opt get_opts (argc, argv, "i:n:o:d:s:c:m:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -53,6 +56,14 @@ parse_args (int argc, char *argv[])
 
       case 's':  // get the section name to use in ComponentInstallation data file
         section_name_ = get_opts.opt_arg ();
+        break;
+
+      case 'c':  // get the default svc.conf filename for ComponentServer
+        default_svcconf_ = get_opts.opt_arg ();
+        break;
+
+      case 'm':  // get the svc.conf map configuration filename
+        svcconf_config_ = get_opts.opt_arg ();
         break;
 
       case '?':  // display help for use of the server.
@@ -99,6 +110,8 @@ main (int argc, char *argv[])
                                             argv
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      CIAO::Server_init (orb.in ());
 
       if (parse_args (argc, argv) != 0)
         return -1;
@@ -182,7 +195,9 @@ main (int argc, char *argv[])
 
       activator_servant->init (comserv_path_,
                                spawn_wait_,
-                               str.in ()
+                               str.in (),
+                               default_svcconf_,
+                               svcconf_config_
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

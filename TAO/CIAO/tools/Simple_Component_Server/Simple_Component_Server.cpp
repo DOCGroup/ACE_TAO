@@ -93,6 +93,7 @@ int breakdown (char *source,
   for (p = line.next ();
        p && cntr < len;
        ++cntr, p=line.next ())
+    // @@ More memory leaks?
     list[cntr] = ACE::strnew (p);
 
   return cntr;

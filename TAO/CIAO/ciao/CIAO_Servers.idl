@@ -13,7 +13,8 @@ module CIAO
 {
   interface Activator_Callback
   {
-    ::Components::Deployment::ServerActivator
-    register_component_server (in ::Components::Deployment::ComponentServer svr);
+    Components::Deployment::ServerActivator
+    register_component_server (in Components::Deployment::ComponentServer svr,
+                               out Components::ConfigValues config);
   };
 };

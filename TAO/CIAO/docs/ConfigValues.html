@@ -38,6 +38,21 @@ operation.  CIAO accepts the following feature names:<p>
     </td>
   </tr>
   <tr>
+    <td>CIAO-svcconf-id</td>
+    <td>string</td>
+    <td>
+        Optional
+    </td>
+    <td>
+        Specify the canonical svc.conf id.  This id should only serve
+        as a hint for the deployment framework in determining the
+        actual svc.conf file used to start up the component server.
+        Currently, CIAO's ServerActivator maintains a set of svc.conf
+        files and use this id value to map to the exact svc.conf file
+        name.
+    </td>
+  </tr>
+  <tr>
     <td>CIAO-ORB[option]</td>
     <td>string</td>
     <td>
