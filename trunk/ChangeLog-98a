@@ -1,3 +1,9 @@
+Tue Mar 24 19:48:44 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Proactor.cpp (timeout): Changed comparison from || to
+ 	  &&. Thanks to Jason Katz <Jason@email.rts-inc.com> for reporting
+ 	  this.
+
 Tue Mar 24 18:14:18 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/Env_Value_T.h: added #include "ace/OS.h" to get the definition
