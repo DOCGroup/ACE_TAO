@@ -1,3 +1,67 @@
+Sun Jan 20 23:14:47 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP.idl:
+
+	  Added structures to be filled in with certificate and key
+	  information.  These will be used in conjunction with the
+	  SecurityLevel2::PrincipalAuthenticator object, i.e passed in via
+	  the authenticate() method.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp
+	  (retrieve_credentials):
+
+	  Set the RSA private key for the current invocation if one was
+	  set in the retrieved credentials.
+	
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_RSA.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_RSA.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_RSA.cpp:
+
+	  New TAO_SSLIOP_RSA_var class that provides CORBA-style memory
+	  management of the OpenSSL "RSA" key data structure.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
+
+	  The Credentials objects now hold a pointer to an OpenSSL "RSA"
+	  key data structure.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h (make_X509, make_RSA):
+
+	  Added these methods to the TAO_SSLIOP_Vault class.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp (acquire_credentials):
+
+	  Completed initial implementation of this method.  Support for
+	  ASN.1 and PEM encoded certificates and RSA private keys is
+	  available.
+
+	  (make_X509, make_RSA):
+
+	  New methods create OpenSSL X509 and RSA data structures,
+	  respectively, based on authentication data supplied by the user.
+
+	  (TAO_SSLIOP_password_callback):
+
+	  Callback method passed to OpenSSL calls that require passwords
+	  or passphrases to decrypt PEM files.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.h:
+
+	  Include "ace/config-all.h" instead of "tao/corbafwd.h."  The
+	  former is all that is needed.
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP:
+	* orbsvcs/orbsvcs/SSLIOP.bor:
+	* orbsvcs/orbsvcs/SSLIOP.dsp:
+
+	  Added new SSLIOP_RSA.* files to the appropriate file lists.
+
 Mon Jan 21 00:13:42 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * orbsvcs/Notify_Service/NT_Notify_Service.bor:
