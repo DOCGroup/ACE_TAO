@@ -6,6 +6,10 @@ Tue Oct  3 15:03:42 2000  Darrell Brunsch <brunsch@uci.edu>
           forgot to call wchar_rep on the ACE_Ascii_To_Wide temp
           class I was using.
 
+        * ace/OS.h:
+
+          ACE_PLATFORM_EXE_SUFFIX was being defined incorrectly.
+
 Tue Oct  3 14:25:09 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.cpp:
