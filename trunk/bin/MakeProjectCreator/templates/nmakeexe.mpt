@@ -29,6 +29,7 @@ Release {
   intermediate_dir      = Release
   debug_switch          =
   ssl_libs              = libeay32 ssleay32
+  zzip_libs             = z zzip
 }
 
 Debug {
@@ -40,6 +41,7 @@ Debug {
   intermediate_dir      = Debug
   lib_modifier          = d
   ssl_libs              = libeay32 ssleay32
+  zzip_libs             = z zzip
 }
 
 Static Release {
@@ -76,6 +78,7 @@ MFC Release {
   lib_modifier          = mfc
   debug_switch          =
   ssl_libs              = libeay32 ssleay32
+  zzip_libs             = z zzip
 }
 
 MFC Debug {
@@ -88,6 +91,7 @@ MFC Debug {
   intermediate_dir      = MFC_Debug
   lib_modifier          = mfcd
   ssl_libs              = libeay32 ssleay32
+  zzip_libs             = z zzip
 }
 
 Static MFC Release {
@@ -116,3 +120,4 @@ Static MFC Debug {
 }
 
 conditional_include "vcfullmacros"
+conditional_include "zziplib"

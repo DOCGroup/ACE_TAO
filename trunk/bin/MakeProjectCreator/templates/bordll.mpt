@@ -1,3 +1,4 @@
 type_is_binary  = 1
 type_is_dynamic = 1
 common_defines  = WIN32
+conditional_include "zziplib"
