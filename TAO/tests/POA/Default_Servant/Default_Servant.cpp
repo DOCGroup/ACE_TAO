@@ -47,7 +47,6 @@ test_get_servant_manager (PortableServer::POA_ptr poa)
     {
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   if (!succeed)
   {
