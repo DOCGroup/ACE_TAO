@@ -1,3 +1,15 @@
+Fri Nov 10 08:59:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao_idl/be/be_visitor_argument/request_info_sh.cpp:
+
+	  In request info class generation, changed the generation
+	  of a private member which is a valuetype from '*&' to
+	  '*' for an IN argument, to match the generation of the
+	  valuetype in the class constructor arglist. This 
+	  discrepancy caused BCB builds to fail in AMI_Test. Thanks
+	  to Johnny Willemsen <jwillemsen@remedy.nl> for pointing
+	  it out.
+
 Fri Nov  10 09:20:58 2000 Johnny Willemsen <jwillemsen@remedy.nl>
 
         * */Makefile.bor:
