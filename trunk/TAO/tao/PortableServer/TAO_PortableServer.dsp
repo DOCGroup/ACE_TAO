@@ -212,10 +212,6 @@ SOURCE=.\Object_Adapter.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ObjectReferenceFactory.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\ObjectReferenceTemplate.cpp
 # End Source File
 # Begin Source File
@@ -349,10 +345,6 @@ SOURCE=.\Key_Adapters.h
 # Begin Source File
 
 SOURCE=.\Object_Adapter.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ObjectReferenceFactory.h
 # End Source File
 # Begin Source File
 
