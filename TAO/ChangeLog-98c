@@ -1,3 +1,16 @@
+Wed Feb 18 17:56:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs:
+	  Moved all the implementations to the orbsvcs libraries, this is
+	  the first step to give the user control over object
+	  collocation.
+	  Please note that this version is only known to compile on
+	  Solaris/CC, it will *not* compile on NT (some "export" macros
+	  are missing); since this change is very disruptive (because it
+	  moves files around) it was thought that holding it for a long
+	  time will result in more harm than good.
+	  A top-level make on $TAO_ROOT/orbsvcs works OK.
+
 Wed Feb 18 17:10:23 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* tao/tao_util.cpp (init): The ORB_Manager class does not create

@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#include "orbsvcs/AVStreams_i.h"
+#include "orbsvcs/AV/AVStreams_i.h"
 /* #include "tao/tao.h" */
 #include "tao/tao_util.h"
 

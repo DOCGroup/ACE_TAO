@@ -20,7 +20,7 @@
 #define	COSNAMING_I_H
 
 #include "orbsvcs/CosNamingS.h"
-#include "NS_CosNaming.h"
+#include "Entries.h"
   
 class NS_NamingContext : public POA_CosNaming::NamingContext
   // = TITLE

@@ -3,8 +3,8 @@
 #if !defined (ACE_CORBA_UTILS_C)
 #define ACE_CORBA_UTILS_C
 
-#include "CORBA_Utils_T.h"
 #include "ace/Log_Msg.h"
+#include "CORBA_Utils_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "CORBA_Utils_T.i"

@@ -20,7 +20,7 @@
 
 #include "ace/OS.h"
 #include "orbsvcs/CosPropertyServiceS.h"
-#include "orbsvcs/CosProperty_Hash.h"
+#include "CosProperty_Hash.h"
 
 class TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
 {
@@ -75,7 +75,7 @@ class TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet
   // = DESCRIPTION
   //     Uses a HashTable to manage the properties. 
 public:
-  typdef Hash_Property_Map<EXT_ID, INT_ID, ACE_Null_Mutex> CosProperty_Hash_Map;
+  typedef ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_Null_Mutex> CosProperty_Hash_Map;
   
   TAO_PropertySet (void);
   // Default constructor 
