@@ -1,3 +1,8 @@
+Tue Mar 16 23:51:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Cache_Manager[_T].{h,cpp}: Reverted back to Mar 2nd version
+	  temporarily.
+
 Tue Mar 16 19:48:57 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Makefile and tests/Makefile: Reverted these files to the
