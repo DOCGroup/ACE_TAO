@@ -59,7 +59,7 @@ FP_Segment_Sched_Param_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void 
-FP_Segment_Sched_Param_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL)
+FP_Segment_Sched_Param_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
