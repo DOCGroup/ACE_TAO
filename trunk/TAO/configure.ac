@@ -259,6 +259,9 @@ AC_CONFIG_FILES([
   orbsvcs/tests/FaultTolerance/IOGR/Makefile
   orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile
   orbsvcs/tests/FtRtEvent/Makefile
+  utils/Makefile
+  utils/catior/Makefile
+  utils/nslist/Makefile
  ])
 
 dnl Note that the "TAO_VERSION" in the message below is an M4 macro
