@@ -1,3 +1,11 @@
+Tue Jan 20 16:59:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+       * tao/Policy_Set.i: 
+
+	  Fixed warnings in VC71 builds. Thanks to Grutzmacher
+	  Lukas<gruetzmacher@ais-dresden.de> for reporting the problem and
+	  providing patches.
+
 Tue Jan 20 17:24:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Borland/ChatClient.bpr:
