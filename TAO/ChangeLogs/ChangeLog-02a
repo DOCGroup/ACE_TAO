@@ -1,3 +1,10 @@
+Thu May  9 14:26:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+	  A pretty ugly for bug mentioned in bug id 1204. The change sets
+	  a pointer to null after deletion. This would mask the actual
+	  problem. The bug report should remind us of the problem anyway. 
+
 Thu May  9 11:38:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	This checkin is to move the TAO_Connector_Registry to a lane. May

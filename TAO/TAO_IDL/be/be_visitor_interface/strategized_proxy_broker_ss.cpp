@@ -59,7 +59,17 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
       << "{" << be_idt_nl // idt = 1
       << "for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)"
       << be_idt_nl // idt = 2
+      << "{" << be_idt_nl // idt =3
       << "delete this->proxy_cache_[i];"
+      << be_nl << be_nl
+      << "// Hack to prevent bug mentioned in 1204. Refer to 1204"
+      << be_nl
+      << "// for details.."
+      << be_nl
+      << "this->proxy_cache_[i] = 0;"
+      << be_uidt_nl // idt = 2
+      << "}"
+
       << be_uidt_nl // idt = 1
       << be_uidt_nl // idt = 0
       << "}" << be_nl << be_nl;
