@@ -790,6 +790,11 @@ private:
 #   define ACE_SOCK_CONNECTOR ACE_SOCK_Connector
 #   define ACE_SOCK_STREAM ACE_SOCK_Stream
 
+// Handle ACE_SOCK_SEQPACK_*
+#   define ACE_SOCK_SEQPACK_ACCEPTOR ACE_SOCK_SEQPACK_Acceptor
+#   define ACE_SOCK_SEQPACK_CONNECTOR ACE_SOCK_SEQPACK_Connector
+#   define ACE_SOCK_SEQPACK_ASSOCIATION ACE_SOCK_SEQPACK_Association
+
 // Handle ACE_MEM_*
 #   define ACE_MEM_ACCEPTOR ACE_MEM_Acceptor
 #   define ACE_MEM_CONNECTOR ACE_MEM_Connector
@@ -870,6 +875,11 @@ private:
 #   define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor, ACE_INET_Addr
 #   define ACE_SOCK_CONNECTOR ACE_SOCK_Connector, ACE_INET_Addr
 #   define ACE_SOCK_STREAM ACE_SOCK_Stream, ACE_INET_Addr
+
+// Handel ACE_SOCK_SEQPACK_*
+#   define ACE_SOCK_SEQPACK_ACCEPTOR ACE_SOCK_SEQPACK_Acceptor, ACE_INET_Addr
+#   define ACE_SOCK_SEQPACK_CONNECTOR ACE_SOCK_SEQPACK_Connector, ACE_INET_Addr
+#   define ACE_SOCK_SEQPACK_ASSOCIATION ACE_SOCK_SEQPACK_Association, ACE_INET_Addr
 
 // Handle ACE_MEM_*
 #   define ACE_MEM_ACCEPTOR ACE_MEM_Acceptor, ACE_MEM_Addr
@@ -1275,11 +1285,7 @@ struct cancel_state
 # if defined (ACE_HAS_WINCE)
 #   include /**/ <types.h>
 
-#   if (_WIN32_WCE < 400)
 typedef unsigned long  ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
-#   else
-#     include /**/ <stddef.h>        // WinCE .NET puts it in stddef.h
-#   endif
 
 //typedef DWORD  nlink_t;
 
@@ -1859,7 +1865,7 @@ typedef u_int ACE_thread_key_t;
 #     include /**/ <sysLib.h>
 #     include /**/ <taskLib.h>
 #     include /**/ <taskHookLib.h>
-#     include /**/ <inetLib.h>
+
 extern "C"
 struct sockaddr_un {
   short sun_family;    // AF_UNIX.
@@ -2927,19 +2933,6 @@ typedef ACE_UINT64 ACE_hrtime_t;
 #   endif // ACE_LACKS_LONGLONG_T
 
 // Win32 dummies to help compilation.
-
-// These are used in SPIPE_Acceptor/Connector, but are ignored at runtime.
-#   if defined (ACE_HAS_WINCE)
-#     if !defined (PIPE_TYPE_MESSAGE)
-#       define PIPE_TYPE_MESSAGE  0
-#     endif
-#     if !defined (PIPE_READMODE_MESSAGE)
-#       define PIPE_READMODE_MESSAGE  0
-#     endif
-#     if !defined (PIPE_WAIT)
-#       define PIPE_WAIT  0
-#     endif
-#   endif /* ACE_HAS_WINCE */
 
 #   if !defined (__BORLANDC__)
 typedef DWORD nlink_t;
@@ -4410,23 +4403,6 @@ extern "C" {
   typedef int (*ACE_COMPARE_FUNC)(const void *, const void *);
 }
 
-#if defined (ACE_HAS_WINCE)
-// WinCE doesn't have most of the standard C library time functions. It
-// also doesn't define struct tm. SYSTEMTIME has pretty much the same
-// info though, so we can map it when needed. Define struct tm here and
-// use it when needed. This is taken from the standard C library.
-struct tm {
-  int tm_sec;
-  int tm_min;
-  int tm_hour;
-  int tm_mday;      // Day of the month
-  int tm_mon;
-  int tm_year;
-  int tm_wday;      // Day of the week
-  int tm_yday;      // Day in the year
-  int tm_isdst;     // >0 if dst in effet; 0 if not; <0 if unknown
-};
-#endif /* ACE_HAS_WINCE */
 
 
 /// Helper for the ACE_OS::timezone() function
@@ -4440,12 +4416,9 @@ struct tm {
  */
 inline long ace_timezone()
 {
-#if !defined (VXWORKS) && !defined (ACE_PSOS) && !defined (CHORUS)
-# if defined (ACE_HAS_WINCE)
-  TIME_ZONE_INFORMATION tz;
-  GetTimeZoneInformation (&tz);
-  return tz.Bias * 60;
-# elif defined (ACE_WIN32)
+#if !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined (ACE_PSOS) \
+    && !defined (CHORUS)
+# if defined (ACE_WIN32)
   return _timezone;  // For Win32.
 # elif ( defined (__Lynx__) || defined (__FreeBSD__) || defined (ACE_HAS_SUNOS4_GETTIMEOFDAY) ) && ( !defined (__linux__) )
   long result = 0;
@@ -5042,9 +5015,9 @@ public:
   //@}
 
   //@{ @name A set of wrappers for operations on time.
-
-  // Get the current time.
+# if !defined (ACE_HAS_WINCE)
   static time_t mktime (struct tm *timeptr);
+# endif /* !ACE_HAS_WINCE */
 
   // wrapper for time zone information.
   static void tzset (void);
@@ -6894,20 +6867,18 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 } \
 int ace_main_i
 
-// Supporting legacy 'main' is A LOT easier for users than changing existing
-// code on WinCE. Unfortunately, evc 3 can't grok a #include within the macro
-// expansion, so it needs to go out here.
-#     include "ace/Argv_Type_Converter.h"
+// Supporting legacy 'main' is A LOT easier for users than changing existing code on WinCE.
 #     define main \
 ace_main_i (int, char *[]);  /* forward declaration */ \
+#include <ace/Argv_Type_Converter.h> \
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
 { \
-  ACE_CE_ARGV ce_argv (lpCmdLine); \
-  ACE::init (); \
+  ACE_CE_ARGV ce_argv(lpCmdLine); \
+  ACE::init(); \
   ACE_MAIN_OBJECT_MANAGER \
-  ACE_Argv_Type_Converter command_line (ce_argv.argc (), ce_argv.argv ()); \
-  int i = ace_main_i (command_line.get_argc(), command_line.get_ASCII_argv());\
-  ACE::fini (); \
+  ACE_Argv_Type_Converter command_line(ce_argv.argc(), ce_argv.argv()); \
+  int i = ace_main_i (command_line.get_argc(), command_line.get_ASCII_argv()); \
+  ACE::fini(); \
   return i; \
 } \
 int ace_main_i
