@@ -22,7 +22,7 @@ SHOBJ	= $(addsuffix .so,$(FILES))
 
 INCLDIRS += -I../..
 
-LDLIBS	= $(addprefix .shobj/,$(SHOBJ)) -lm
+LDLIBS	= $(addprefix .shobj/,$(SHOBJ))
  
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
