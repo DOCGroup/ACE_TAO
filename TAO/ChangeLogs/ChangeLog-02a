@@ -1,3 +1,23 @@
+Fri Mar 24 15:40:25 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/CosNaming.dsp:
+
+          Changed the release version of the IDL custom build to use 
+          "Naming\naming_export.h" instead of just "naming_export.h"
+
+        * examples/mfc/StdAfx.h:
+        * examples/mfc/server.cpp:
+        * examples/mfc/client.dsp:
+        * examples/mfc/server.dsp:
+
+          As was pointed out by David Dunn <dunn@tripos.com>, the release
+          version wasn't compiling since the headers were not in the proper 
+          order.  Moved the ACE/TAO headers to the beginning of StdAfx.
+          While I was there, I fixed up the dsp files to be more consistent
+          with the rest of our project files.
+
+          [Bug 512]
+
 Fri Mar 24 10:21:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_expression.cpp:

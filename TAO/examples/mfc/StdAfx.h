@@ -12,6 +12,9 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include "tao\corba.h"
+#include "ace\Thread_Manager.h"
+
 #define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
 
 #include <afxwin.h>         // MFC core and standard components
