@@ -1,5 +1,16 @@
 Thu Aug 12 22:05:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.i (sema_wait, rw_tryrdlock, rw_trywrlock):
+	  Replaced more ad hoc uses of the  
+
+	  int error = 0;
+	  ...
+	  error = errno;
+	  ...
+	  errno = error;
+  
+          idiom with the ACE_Errno_Guard.
+
 	* ace/Synch.h: Updated the comment to remind folks who would
 	  like to have a working ACE_Process_Condition to contact us if
  	  they know how to do this.  Thanks to Craig Anderson
