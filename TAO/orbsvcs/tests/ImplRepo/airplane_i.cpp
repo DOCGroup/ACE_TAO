@@ -1,6 +1,5 @@
 // $Id$
 
-#include "time.h"
 #include "airplane_i.h"
 #include "tao/corba.h"
 
