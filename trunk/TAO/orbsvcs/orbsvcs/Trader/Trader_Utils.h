@@ -186,6 +186,10 @@ class TAO_ORBSVCS_Export TAO_Dynamic_Property :
 {
 public:
 
+  TAO_Dynamic_Property (const TAO_Dynamic_Property& dp)
+    {
+    }
+  
   virtual ~TAO_Dynamic_Property (void);
   
   virtual CORBA::Any* evalDP(const char* name,
@@ -194,11 +198,14 @@ public:
 			     CORBA::Environment& _env) 
     TAO_THROW_SPEC ((CORBA::SystemException,
 		     CosTradingDynamic::DPEvalFailure)) = 0;
-
+  // Dynamic property evaluation call-back method.
+  
   CosTradingDynamic::DynamicProp*
     construct_dynamic_prop (const char* name,			    
 			    CORBA::TypeCode_ptr returned_type,
 			    const CORBA::Any& extra_info);
+  // Method to construct a dynamic property structure suitable for
+  // exporting in a CosTrading::PropertyStruct to the Trading Service.
 };
 
 
@@ -745,8 +752,8 @@ public:
   TAO_Property_Filter (const TAO_Property_Filter& prop_filter);
   TAO_Property_Filter& operator= (const TAO_Property_Filter& prop_filter);
   
-  void filter_offer (CosTrading::Offer& source,
-		     CosTrading::Offer& destination);
+  void filter_offer (CosTrading::Offer* source,
+                      CosTrading::Offer& destination);
   // Copy the desired properties from the source offer to the
   // destination offer.
   

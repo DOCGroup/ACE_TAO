@@ -180,7 +180,7 @@ TAO_Support_Attributes_Impl::type_repos (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
 			 CosTrading::TypeRepository::_nil ());
-  return this->type_repos_;
+  return this->type_repos_.ptr ();
 }
   
 void
@@ -198,9 +198,7 @@ type_repos (CosTrading::TypeRepository_ptr new_value)
 CosTradingRepos::ServiceTypeRepository_ptr
 TAO_Support_Attributes_Impl::service_type_repos (void) const
 {
-  ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
-			 CosTradingRepos::ServiceTypeRepository::_nil ());
-  return this->service_type_repos_;
+  return this->service_type_repos_.ptr ();
 }
 
 
@@ -436,7 +434,7 @@ TAO_Trading_Components_Impl::lookup_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
 			 CosTrading::Lookup::_nil ());  
-  return this->lookup_;
+  return this->lookup_.ptr ();
 }
 
 void
@@ -451,7 +449,7 @@ TAO_Trading_Components_Impl::register_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
 			 CosTrading::Register::_nil ());  
-  return this->register_;
+  return this->register_.ptr ();
 }
 
 void
@@ -466,7 +464,7 @@ TAO_Trading_Components_Impl::link_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
 			 CosTrading::Link::_nil ());  
-  return this->link_;
+  return this->link_.ptr ();
 }
 
 void
@@ -481,7 +479,7 @@ TAO_Trading_Components_Impl::proxy_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
 			 CosTrading::Proxy::_nil ());  
-  return this->proxy_;
+  return this->proxy_.ptr ();
 }
   
 void
@@ -496,7 +494,7 @@ TAO_Trading_Components_Impl::admin_if (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
 			 CosTrading::Admin::_nil ());  
-  return this->admin_;
+  return this->admin_.ptr ();
 }
 
 void
@@ -661,34 +659,34 @@ TAO_Trader_Factory::manufacture_trader (void)
   typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex> TRADER;
 
 #if defined ACE_HAS_THREADS
-  typedef TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>  MT_TRADER;
+  typedef TAO_Trader<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>  MT_TRADER;
 #else
   typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>  MT_TRADER;
 #endif /* ACE_HAS_THREADS */
   
   TAO_TRADER* return_value = 0;
-  int components = ACE_static_cast (int, TAO_TRADER::LOOKUP);
+  int components = ACE_static_cast (int, TAO_Trader_Base::LOOKUP);
 
   if (this->conformance_ >= TAO_TRADER_SIMPLE)
-    components |= ACE_static_cast (int, TAO_TRADER::REGISTER);
+    components |= ACE_static_cast (int, TAO_Trader_Base::REGISTER);
   
   if (this->conformance_ >= TAO_TRADER_STANDALONE)
-    components |= ACE_static_cast (int, TAO_TRADER::ADMIN);
+    components |= ACE_static_cast (int, TAO_Trader_Base::ADMIN);
 
   if (this->conformance_ >= TAO_TRADER_LINKED)
-    components |= ACE_static_cast (int, TAO_TRADER::LINK);
+    components |= ACE_static_cast (int, TAO_Trader_Base::LINK);
 
   if (this->threadsafe_)
     {
       ACE_NEW_RETURN (return_value,
-                      MT_TRADER (ACE_static_cast (TAO_TRADER::Trader_Components,
+                      MT_TRADER (ACE_static_cast (TAO_Trader_Base::Trader_Components,
                                                   components)),
                       0);
     }
   else
     {
       ACE_NEW_RETURN (return_value,
-                      TRADER (ACE_static_cast (TAO_TRADER::Trader_Components,
+                      TRADER (ACE_static_cast (TAO_Trader_Base::Trader_Components,
                                                components)),
                       0);
     }
@@ -892,25 +890,25 @@ sequence_type (CORBA::TypeCode* type_code,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-template class TAO_Offer_Database<ACE_RW_Mutex>;
-template class TAO_Service_Offer_Iterator<ACE_RW_Mutex>;
-template class TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>;
-template class TAO_Lookup<ACE_Thread_Mutex, ACE_RW_Mutex>;
-template class TAO_Register<ACE_Thread_Mutex, ACE_RW_Mutex>;
-template class TAO_Admin<ACE_Thread_Mutex, ACE_RW_Mutex>;
-template class TAO_Link<ACE_Thread_Mutex, ACE_RW_Mutex>;
-template class TAO_Proxy<ACE_Thread_Mutex, ACE_RW_Mutex>;
-template class TAO_Register_Offer_Iterator<ACE_RW_Mutex>;
+template class TAO_Offer_Database<ACE_RW_Thread_Mutex>;
+template class TAO_Service_Offer_Iterator<ACE_RW_Thread_Mutex>;
+template class TAO_Trader<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>;
+template class TAO_Lookup<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>;
+template class TAO_Register<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>;
+template class TAO_Admin<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>;
+template class TAO_Link<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>;
+template class TAO_Proxy<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>;
+template class TAO_Register_Offer_Iterator<ACE_RW_Thread_Mutex>;
 template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTrading::Link::LinkInfo>;
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>;
-template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>;
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*>;
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Thread_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Thread_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Thread_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Thread_Mutex>;
+template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Thread_Mutex>::Offer_Map_Entry*>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Thread_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Thread_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Thread_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Thread_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
 #endif /* ACE_MT_SAFE */
 template class TAO_Offer_Database<ACE_Null_Mutex>;
 template class TAO_Service_Offer_Iterator<ACE_Null_Mutex>;
@@ -939,8 +937,8 @@ template class ACE_Node<char*>;
 template class ACE_Unbounded_Queue<char*>;
 template class ACE_Unbounded_Queue_Iterator<char*>;
 template class ACE_Node<CosTrading::Admin::OctetSeq>;
-template class ACE_Unbounded_Set<CosTrading::Admin::OctetSeq>;
-template class ACE_Unbounded_Set_Iterator<CosTrading::Admin::OctetSeq>;
+template class ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq>;
+template class ACE_Unbounded_Queue_Iterator<CosTrading::Admin::OctetSeq>;
 template class ACE_Node<TAO_String_Hash_Key>;
 template class ACE_Unbounded_Set<TAO_String_Hash_Key>;
 template class ACE_Unbounded_Set_Iterator<TAO_String_Hash_Key>;
@@ -971,25 +969,25 @@ template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Offer_Datab
 template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key,TAO_Offer_Database<ACE_Null_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#pragma instantiate TAO_Register_Offer_Iterator<ACE_RW_Mutex>
-#pragma instantiate TAO_Offer_Database<ACE_RW_Mutex>
-#pragma instantiate TAO_Service_Offer_Iterator<ACE_RW_Mutex>
-#pragma instantiate TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>
-#pragma instantiate TAO_Lookup<ACE_Thread_Mutex, ACE_RW_Mutex>
-#pragma instantiate TAO_Register<ACE_Thread_Mutex, ACE_RW_Mutex>
-#pragma instantiate TAO_Admin<ACE_Thread_Mutex, ACE_RW_Mutex>
-#pragma instantiate TAO_Link<ACE_Thread_Mutex, ACE_RW_Mutex>
-#pragma instantiate TAO_Proxy<ACE_Thread_Mutex, ACE_RW_Mutex>
+#pragma instantiate TAO_Register_Offer_Iterator<ACE_RW_Thread_Mutex>
+#pragma instantiate TAO_Offer_Database<ACE_RW_Thread_Mutex>
+#pragma instantiate TAO_Service_Offer_Iterator<ACE_RW_Thread_Mutex>
+#pragma instantiate TAO_Trader<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>
+#pragma instantiate TAO_Lookup<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>
+#pragma instantiate TAO_Register<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>
+#pragma instantiate TAO_Admin<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>
+#pragma instantiate TAO_Link<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>
+#pragma instantiate TAO_Proxy<ACE_Thread_Mutex, ACE_RW_Thread_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTrading::Link::LinkInfo>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Thread_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Thread_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Thread_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CosTrading::Link::LinkInfo, ACE_RW_Thread_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Thread_Mutex>::Offer_Map_Entry*>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Thread_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Thread_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Thread_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Offer_Database<ACE_RW_Thread_Mutex>::Offer_Map_Entry*,ACE_Null_Mutex>
 #endif /* ACE_MT_SAFE */
 #pragma instantiate TAO_Offer_Database<ACE_Null_Mutex>
 #pragma instantiate TAO_Service_Offer_Iterator<ACE_Null_Mutex>
@@ -1018,8 +1016,8 @@ template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key,TAO_Offer_Database
 #pragma instantiate ACE_Unbounded_Queue<char*>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<char*>
 #pragma instantiate ACE_Node<CosTrading::Admin::OctetSeq>
-#pragma instantiate ACE_Unbounded_Set<CosTrading::Admin::OctetSeq>
-#pragma instantiate ACE_Unbounded_Set_Iterator<CosTrading::Admin::OctetSeq>
+#pragma instantiate ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<CosTrading::Admin::OctetSeq>
 #pragma instantiate ACE_Node<TAO_String_Hash_Key>
 #pragma instantiate ACE_Unbounded_Set<TAO_String_Hash_Key>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_String_Hash_Key>

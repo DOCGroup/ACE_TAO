@@ -30,6 +30,7 @@ TAO_Lookup (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
   : TAO_Trader_Components<POA_CosTrading::Lookup> (trader.trading_components ()),
     TAO_Support_Attributes<POA_CosTrading::Lookup> (trader.support_attributes ()),
     TAO_Import_Attributes<POA_CosTrading::Lookup> (trader.import_attributes ()),
+    IDS_SAVED (100),
     trader_ (trader)
 {
 }
@@ -37,6 +38,15 @@ TAO_Lookup (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Lookup (void)
 {
+  ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
+  for (Request_Ids::ITERATOR riter (this->request_ids_);
+       ! riter.done ();
+       riter.advance ())
+    {
+      CosTrading::Admin::OctetSeq** old_seq = 0;
+      riter.next (old_seq);
+      delete *old_seq;
+    }  
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> void
@@ -69,14 +79,10 @@ query (const char *type,
 
   // If a federated query returns to us, ignore it to prevent
   // redundant results and infinite loops.
-  CosTrading::Admin::OctetSeq_ptr request_id = policies.request_id (env);
-  TAO_CHECK_ENV_RETURN_VOID (env);  
-
-  {
-    ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
-    if (request_id != 0 && this->request_ids_.insert (*request_id))
-      return;
-  }
+  CosTrading::Admin::OctetSeq* request_id = 0;
+  if (this->seen_request_id (policies, request_id, env))
+    return;
+  TAO_CHECK_ENV_RETURN_VOID (env);
   
   // The presence of a link interface determines whether we should
   // attempt to forward or propagate queries.
@@ -120,7 +126,7 @@ query (const char *type,
   ACE_NEW (returned_offers, CosTrading::OfferSeq);
 
   // Obtain a reference to the offer database. 
-  Offer_Database& offer_database = this->trader_.offer_database ();  
+  TAO_Offer_Database<MAP_LOCK_TYPE>& offer_database = this->trader_.offer_database ();  
   
   // TAO_Offer_Filter -- ensures that we don't consider offers with
   // modifiable or dynamic properties if the Trader doesn't support
@@ -196,29 +202,6 @@ query (const char *type,
       
       if (should_follow && links->length () != 0)
         {
-          // Perform the sequence of federated queries.
-          CosTrading::Admin::OctetSeq_var rid;
-          if (request_id == 0)
-            {
-              // If a query id needs to be generated, do so. 
-              CosTrading::Admin_ptr admin_if =
-                this->trader_.trading_components ().admin_if ();
-              request_id = admin_if->request_id_stem (env);
-              TAO_CHECK_ENV_RETURN_VOID (env);
-
-              if (request_id != 0)
-                {
-                  // Remember this sequence number, in case it makes
-                  // its unholy return. 
-                  rid = request_id;                  
-                  ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
-                  this->request_ids_.insert (*request_id);
-                  TAO_CHECK_ENV_RETURN_VOID (env);
-                }
-              else
-                return;
-            }
-
           // Query those links we've accumulated!
           this->federated_query (links.in (),
                                  policies,
@@ -242,7 +225,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 lookup_one_type (const char* type,
-		 Offer_Database& offer_database,
+		 TAO_Offer_Database<MAP_LOCK_TYPE>& offer_database,
 		 TAO_Constraint_Interpreter& constr_inter,
 		 TAO_Preference_Interpreter& pref_inter,
 		 TAO_Offer_Filter& offer_filter)
@@ -286,7 +269,7 @@ void
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 lookup_all_subtypes (const char* type,
 		     CosTradingRepos::ServiceTypeRepository::IncarnationNumber& inc_num,
-		     Offer_Database& offer_database,
+		     TAO_Offer_Database<MAP_LOCK_TYPE>& offer_database,
 		     CosTradingRepos::ServiceTypeRepository_ptr rep,
 		     TAO_Constraint_Interpreter& constr_inter,
 		     TAO_Preference_Interpreter& pref_inter,
@@ -423,11 +406,9 @@ fill_receptacles (const char* type,
 
       // Pull the next ordered offer out of the preference interpreter.
       pref_inter.remove_offer (offer, offer_id);
-      CosTrading::Offer& source = *offer;
-      CosTrading::Offer& destination = offers[i];
 
       // Filter out the undesired properties. 
-      prop_filter.filter_offer (source, destination);
+      prop_filter.filter_offer (offer, offers[i]);
       CORBA::string_free (offer_id);
     }
     
@@ -647,7 +628,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
           CORBA::Object_var obj =
             orb->string_to_object (link_info->target, TAO_TRY_ENV);
           TAO_CHECK_ENV;
-          remote_lookup = CosTrading::Lookup::_narrow (obj, TAO_TRY_ENV);
+          remote_lookup = CosTrading::Lookup::_narrow (obj.in (), TAO_TRY_ENV);
           TAO_CHECK_ENV;
 #else
           remote_lookup = CosTrading::Lookup::_duplicate (link_info->target);
@@ -778,7 +759,7 @@ forward_query (const char* next_hop,
       CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
       CORBA::Object_var obj = orb->string_to_object (link_info->target, TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      remote_lookup = CosTrading::Lookup::_narrow (obj, TAO_TRY_ENV);
+      remote_lookup = CosTrading::Lookup::_narrow (obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 #else
       remote_lookup = CosTrading::Lookup::_duplicate (link_info->target);
@@ -788,7 +769,7 @@ forward_query (const char* next_hop,
       TAO_CHECK_ENV;
       
       CORBA::Boolean self_loop =
-        remote_lookup->_is_equivalent (us, TAO_TRY_ENV);
+        remote_lookup->_is_equivalent (us.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
       if (! self_loop)
@@ -829,6 +810,69 @@ forward_query (const char* next_hop,
       TAO_THROW (CosTrading::Lookup::InvalidPolicyValue (policy));
     }
   TAO_ENDTRY;
+}
+
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CORBA::Boolean
+TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+seen_request_id (TAO_Policies& policies,
+                 CosTrading::Admin::OctetSeq*& seq,
+                 CORBA::Environment& _env)
+  TAO_THROW_SPEC ((CORBA::SystemException,
+                   CosTrading::Lookup::PolicyTypeMismatch))
+{
+  CORBA::Boolean return_value = CORBA::B_FALSE;
+  
+  seq = policies.request_id (_env);
+  TAO_CHECK_ENV_RETURN (_env, CORBA::B_TRUE);
+  
+  if (seq == 0)
+    {
+      CosTrading::Admin_ptr admin_if =
+        this->trader_.trading_components ().admin_if ();
+      seq = admin_if->request_id_stem (_env);
+      TAO_CHECK_ENV_RETURN (_env, CORBA::B_TRUE);
+    }
+  else
+    {
+      // Allocate memory so memory mangement is the same for both
+      // cases. 
+      ACE_NEW_RETURN (seq,
+                      CosTrading::Admin::OctetSeq (*seq),
+                      CORBA::B_FALSE);
+    }
+
+  if (seq == 0)
+    TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), CORBA::B_TRUE);
+  
+  ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_, CORBA::B_TRUE);
+  for (Request_Ids::ITERATOR riter (this->request_ids_);
+       ! riter.done ();
+       riter.advance ())
+    {
+      CosTrading::Admin::OctetSeq** old_seq = 0;
+      riter.next (old_seq);
+
+      if (**old_seq == *seq)
+        {
+          return_value = CORBA::B_TRUE;
+          break;
+        }
+    }
+
+  if (return_value == CORBA::B_FALSE)
+    {
+      if (this->request_ids_.size () == IDS_SAVED)
+        {
+          CosTrading::Admin::OctetSeq* octet_seq = 0;
+          this->request_ids_.dequeue_head (octet_seq);
+          delete octet_seq;
+        }
+      
+      this->request_ids_.enqueue_tail (seq);
+    }
+
+  return return_value;
 }
 
   // *************************************************************
@@ -952,7 +996,7 @@ describe (const char *id,
   CosTrading::Register::OfferInfo *offer_info = 0;
   ACE_NEW_RETURN (offer_info, CosTrading::Register::OfferInfo, 0);
 
-  offer_info->reference = offer->reference->_duplicate (offer->reference);
+  offer_info->reference = offer->reference->_duplicate (offer->reference.in ());
   offer_info->type = CORBA::string_dup (type);
 
   // Let the offer_info prop_seq "borrow" the sequence of properties.
@@ -1120,7 +1164,7 @@ resolve (const CosTrading::TraderName &name,
       CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
       CORBA::Object_var obj = orb->string_to_object (link_info->target_reg, TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      remote_reg = CosTrading::Register::_narrow (obj, TAO_TRY_ENV);
+      remote_reg = CosTrading::Register::_narrow (obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 #else 
       remote_reg = CosTrading::Register::_narrow (link_info->target_reg);
@@ -1139,7 +1183,7 @@ resolve (const CosTrading::TraderName &name,
     TAO_THROW_RETURN (CosTrading::Register::RegisterNotSupported (name),
 		      CosTrading::Register::_nil ());
 
-  CosTrading::Register_ptr return_value = remote_reg;
+  CosTrading::Register_ptr return_value = remote_reg.in ();
   
   if (name.length () > 1)
     {
@@ -1194,7 +1238,7 @@ validate_properties (const char* type,
 	}
       else
 	{
-	  if (! prop_type->equal (prop_struct.value_type, _env))
+	  if (! prop_type->equal (prop_struct.value_type.in (), _env))
 	    {
 	      // Offer cannot redefine the type of an property. 
 	      const CosTrading::Property* prop = prop_eval.get_property (prop_name);
@@ -1224,9 +1268,7 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
 {
   // A random 4-bytes will prefix the sequence number space for each
   // trader, making it extremely unlikely that the sequence spaces for 
-  // two traders will over lap. 
-  const int RANDOM_PREFIX_LENGTH = 4;
-  
+  // two traders will over lap.   
   size_t time_value = ACE_OS::time ();
 # if defined (ACE_HAS_BROKEN_RANDR)
   ACE_RANDR_TYPE seed = (ACE_RANDR_TYPE) time_value;
@@ -1234,11 +1276,11 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
   ACE_RANDR_TYPE seed = (ACE_RANDR_TYPE) &time_value;
 # endif /* ACE_HAS_BROKEN_RANDR */ 
 
-  CORBA::ULong length = RANDOM_PREFIX_LENGTH + sizeof (CORBA::ULong);
-  this->stem_id_.length (length);
-
-  for (int i = length - 1, j = 0; j < RANDOM_PREFIX_LENGTH; i--, j++) 
-    this->stem_id_[i] = (CORBA::Octet) (ACE_OS::rand_r (seed) %  256);
+  this->stem_id_.length (8);
+  this->stem_id_[0] = ACE_static_cast (CORBA::Octet, ACE_OS::rand_r (seed) %  256);
+  this->stem_id_[1] = ACE_static_cast (CORBA::Octet, ACE_OS::rand_r (seed) %  256);
+  this->stem_id_[2] = ACE_static_cast (CORBA::Octet, ACE_OS::rand_r (seed) %  256);
+  this->stem_id_[3] = ACE_static_cast (CORBA::Octet, ACE_OS::rand_r (seed) %  256);
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -1252,11 +1294,16 @@ TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::request_id_stem (CORBA::Environment& 
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_, 0);
-  // Add one to the sequence_number and concatenate it to the unique
-  // prefix. The sequence number is four octets long.
-  for (int i = sizeof (CORBA::ULong) - 1; i >= 0; i--)
-    this->stem_id_[i] = (this->sequence_number_ >> (8*i)) & 0xff;
 
+  // Add one to the sequence_number and concatenate it to the unique
+  // prefix. The sequence number is four octets long, the unique
+  // prefix, also 4 bytes long. 
+  
+  this->stem_id_[4] = this->sequence_number_ & 0xff;
+  this->stem_id_[5] = (this->sequence_number_ >> 8) & 0xff;
+  this->stem_id_[6] = (this->sequence_number_ >> 16) & 0xff;
+  this->stem_id_[7] = (this->sequence_number_ >> 24) & 0xff;
+  
   // Increment the sequence number and return a copy of the stem_id.
   this->sequence_number_++;
   return new CosTrading::Admin::OctetSeq (this->stem_id_);

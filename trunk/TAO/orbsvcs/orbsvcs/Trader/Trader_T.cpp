@@ -27,7 +27,7 @@
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> 
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::
-TAO_Trader (TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::Trader_Components components)
+TAO_Trader (TAO_Trader_Base::Trader_Components components)
 {
   CORBA::Environment env;
   for (int i = LOOKUP_IF; i <= LINK_IF; i++)
@@ -104,7 +104,7 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader (void)
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::Offer_Database&
+TAO_Offer_Database<MAP_LOCK_TYPE>&
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::offer_database (void) 
 {
   return this->offer_database_;

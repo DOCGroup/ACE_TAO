@@ -269,7 +269,6 @@ TAO_Service_Offer_Iterator<LOCK_TYPE>::
 TAO_Service_Offer_Iterator (const char* type,
 			    TAO_Offer_Database<LOCK_TYPE>& offer_database)
   : stm_ (offer_database),
-    entry_ (0),
     offer_iter_ (0),
     type_ (type)
 {
@@ -278,15 +277,17 @@ TAO_Service_Offer_Iterator (const char* type,
   if (this->stm_.db_lock_.acquire_read () == -1)
     ;
 
-  if (this->stm_.offer_db_.find (service_type, this->entry_) == -1)
+  TAO_Offer_Database<LOCK_TYPE>::Offer_Map_Entry* entry = 0;
+  if (this->stm_.offer_db_.find (service_type, entry) == -1)
     return;
   else
-    {  
-      if (this->entry_->lock_.acquire_read () == -1)
+    {
+      this->lock_ = &entry->lock_;
+      if (this->lock_->acquire_read () == -1)
 	;
       
       ACE_NEW (offer_iter_,
-	       TAO_Offer_Map::iterator (*this->entry_->offer_map_));
+	       TAO_Offer_Map::iterator (*entry->offer_map_));
     }
 }
 
@@ -296,9 +297,9 @@ TAO_Service_Offer_Iterator<LOCK_TYPE>::~TAO_Service_Offer_Iterator (void)
   if (this->stm_.db_lock_.release () == -1)
     ;
 
-  if (this->entry_ != 0)
+  if (this->lock_ != 0)
     {
-      if (this->entry_->lock_.release () == -1)
+      if (this->lock_->release () == -1)
 	;
 
       delete this->offer_iter_;
@@ -332,25 +333,6 @@ TAO_Service_Offer_Iterator<LOCK_TYPE>::next_offer (void)
   if (this->offer_iter_ != 0)
     this->offer_iter_->advance ();
 }
-
-/*
-ACE_Hash_Map_Entry<CORBA::ULong, CosTrading::Offer>::
-ACE_Hash_Map_Entry (ACE_Hash_Map_Entry<CORBA::ULong, CosTrading::Offer> *next,
-		    ACE_Hash_Map_Entry<CORBA::ULong, CosTrading::Offer> *prev)
-  : ext_id_ (0),
-    next_ (next),
-    prev_ (prev)
-{
-}
-
-u_long
-ACE_Hash_Map_Manager<CORBA::ULong, CosTrading::Offer, ACE_Null_Mutex>::
-hash (const CORBA::ULong &ext_id)
-{
-  return ext_id;
-  //return 0;
-}
-*/
 
 #endif /* TAO_OFFER_DATABASE_C */
 

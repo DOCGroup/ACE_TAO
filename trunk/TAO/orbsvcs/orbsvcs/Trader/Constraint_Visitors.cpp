@@ -673,7 +673,7 @@ TAO_Constraint_Validator
   for (int i = 0; i < length; i++)
     {
       CORBA::TypeCode_ptr corba_type =
-        CORBA::TypeCode::_duplicate (prop_seq[i].value_type);
+        CORBA::TypeCode::_duplicate (prop_seq[i].value_type.in ());
 
       TAO_String_Hash_Key prop_name_str = (const char*) prop_seq[i].name;
       this->type_map_.bind (prop_name_str, corba_type);

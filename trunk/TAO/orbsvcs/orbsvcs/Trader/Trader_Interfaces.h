@@ -156,17 +156,13 @@ public:
   
 private:
 
-  typedef
-    TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::Offer_Database
-    Offer_Database;
-  
   TAO_Offer_Iterator* create_offer_iterator (const TAO_Property_Filter&);
   // Factory method for creating an appropriate Offer Iterator based
   // on the presence of the Register Interface. 
   
   void lookup_all_subtypes (const char* type,
 			    CosTradingRepos::ServiceTypeRepository::IncarnationNumber& inc_num,
-                            Offer_Database& offer_database,
+                            TAO_Offer_Database<MAP_LOCK_TYPE>& offer_database,
 			    CosTradingRepos::ServiceTypeRepository_ptr rep,
 			    TAO_Constraint_Interpreter& constr_inter,
 			    TAO_Preference_Interpreter& pref_inter,
@@ -175,7 +171,7 @@ private:
   // subtypes of the root type.
   
   void lookup_one_type (const char* type,
-			Offer_Database& offer_database,
+			TAO_Offer_Database<MAP_LOCK_TYPE>& offer_database,
 			TAO_Constraint_Interpreter& constr_inter,
 			TAO_Preference_Interpreter& pref_inter,
 			TAO_Offer_Filter& offer_filter);
@@ -265,15 +261,23 @@ private:
   void order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
                               CosTrading::OfferSeq& offers);
   // Merge the results from a federated query into the collected results.
+
+  CORBA::Boolean seen_request_id (TAO_Policies& policies,
+                                  CosTrading::Admin::OctetSeq*& seq,
+                                  CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                     CosTrading::Lookup::PolicyTypeMismatch));
   
   // = Disallow these operations.
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
   ACE_UNIMPLEMENTED_FUNC (TAO_Lookup (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
-  
+
+  const int IDS_SAVED;
+    
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
   // A reference to the trader for obtaining offer maps.
   
-  typedef ACE_Unbounded_Set<CosTrading::Admin::OctetSeq> Request_Ids;
+  typedef ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq*> Request_Ids;
   
   Request_Ids request_ids_;
   // A list of recent request_id_stems 

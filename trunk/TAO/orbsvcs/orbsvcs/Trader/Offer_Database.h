@@ -114,7 +114,7 @@ public:
   // Lookup an offer whose type is <type> and id, <id>. Return 0 on
   // failure. 
 
-  int remove_offer (const char* type,  CORBA::ULong id);
+  int remove_offer (const char* type, CORBA::ULong id);
   // Remove an offers whose id is <offer_id>. Returns 0 on success, -1 
   // on failure, and throws a CosTrading::IllegalOfferId if it can't 
   // parse the CosTrading::OfferId.
@@ -145,12 +145,10 @@ public:
 template <class LOCK_TYPE>
 class TAO_Service_Offer_Iterator
 // = TITLE
-//   Local_Offer_Iterator iterates over the set of exported
+//   TAO_Service_Offer_Iterator iterates over the set of exported
 //   offers for a given type. Handily, it takes care of all the
 //   necessary locking, acquiring them in the constructor, and
-//   releasing them in the destructor. Since Local_Offer_Iterator
-//   is dynamically allocated by TAO_Offer_Id_Iterator, make sure
-//   to EXPLICITLY CALL DELETE when you're done with it.
+//   releasing them in the destructor. 
 {
  public:
 
@@ -180,8 +178,8 @@ class TAO_Service_Offer_Iterator
   TAO_Offer_Database<LOCK_TYPE>& stm_;
   // Lock the top_level map.
 
-  TAO_Offer_Database<LOCK_TYPE>::Offer_Map_Entry* entry_;
-  // Entry we're iterating over.
+  LOCK_TYPE* lock_;
+  // Lock for the internal map.
 
   TAO_Offer_Map::iterator* offer_iter_;
   // Iterator over the actual offer map.

@@ -549,8 +549,9 @@ validate_inheritance (Prop_Map& prop_map,
 	      // same. 
 	      const CosTradingRepos::ServiceTypeRepository::PropStruct&
 		property_in_map = *existing_prop->int_id_;
-	      
-	      if (! super_props[j].value_type->equal (property_in_map.value_type, _env) ||
+
+              CORBA::TypeCode_ptr prop_type = property_in_map.value_type.in ();
+	      if (! super_props[j].value_type->equal (prop_type, _env) ||
                   super_props[j].mode > property_in_map.mode)
 		{
 		  TAO_THROW (CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition
