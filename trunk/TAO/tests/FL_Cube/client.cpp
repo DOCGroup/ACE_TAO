@@ -91,7 +91,6 @@ int main (int argc, char* argv[])
       return 1;
     }
   ACE_ENDTRY;
-#endif /* ACE_HAS_FL */
   return 0;
 }
 
@@ -207,3 +206,4 @@ Client::parse_args (int argc, char *argv[],
     Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
   ACE_CHECK;
 }
+#endif /* ACE_HAS_FL */
