@@ -116,6 +116,13 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "_tao_any._tao_get_cdr ()," << be_nl
       << "_tao_any._tao_byte_order ()" << be_uidt_nl
       << ");" << be_uidt_nl
+      << "CORBA::String_var interface_repository_id;" << be_nl
+      << "if (!(stream >> interface_repository_id.out ()))" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+      << "if (ACE_OS::strcmp (" << be_idt << be_idt_nl
+      << "interface_repository_id.in ()," << be_nl
+      << "\"" << node->repoID () << "\"))" << be_uidt_nl
+      << "return 0;" << be_uidt_nl
       << "if (stream >> *tmp)" << be_nl
       << "{" << be_idt_nl
       << "((CORBA::Any *)&_tao_any)->_tao_replace ("
