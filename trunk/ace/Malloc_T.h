@@ -115,6 +115,9 @@ public:
   /// Return a chunk of memory back to free list cache.
   void free (void *);
 
+  /// Return the number of chunks available in the cache.
+  size_t pool_depth (void);
+
 private:
   /// Remember how we allocate the memory in the first place so
   /// we can clear things up later.
@@ -176,6 +179,9 @@ public:
 
   /// Return a chunk of memory back to free list cache.
   void free (void *);
+
+  /// Return the number of chunks available in the cache.
+  size_t pool_depth (void);
 
 private:
   /// Remember how we allocate the memory in the first place so

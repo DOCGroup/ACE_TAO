@@ -1,3 +1,15 @@
+Tue Sep 14 11:07:25 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Malloc_T.{h inl}: Added ACE_Cached_Allocator<>::pool_depth()
+	  and ACE_Dynamic_Cached_Allocator<>::pool_depth(). Each returns the
+	  number of items in the cache available for allocating. Thank you to
+	  Jeff Jones <jjones@zonetrading.com> for this addition.
+
+	* tests/Cached_Allocator_Test.cpp: Added tests of the new pool_depth()
+	  method.
+
+	* THANKS: Added Jeff Jones to the Hall of Fame.
+
 Tue Sep 14 11:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dynamic_Service.h:
