@@ -474,21 +474,6 @@ friend class ace_dewarn_gplusplus
 // These hooks enable ACE to have all dynamic memory management
 // automatically handled on a per-object basis.
 
-# if defined (ACE_HAS_ALLOC_HOOKS)
-#   define ACE_ALLOC_HOOK_DECLARE \
-  void *operator new (size_t bytes); \
-  void operator delete (void *ptr);
-
-  // Note that these are just place holders for now.  Some day they
-  // may be be replaced by <ACE_Malloc>.
-#   define ACE_ALLOC_HOOK_DEFINE(CLASS) \
-  void *CLASS::operator new (size_t bytes) { return ::new char[bytes]; } \
-  void CLASS::operator delete (void *ptr) { delete [] ((char *) ptr); }
-# else
-#   define ACE_ALLOC_HOOK_DECLARE struct __Ace {} /* Just need a dummy... */
-#   define ACE_ALLOC_HOOK_DEFINE(CLASS)
-# endif /* ACE_HAS_ALLOC_HOOKS */
-
 # if defined (ACE_LACKS_KEY_T)
 #   if defined (ACE_WIN32)
    // Win32 doesn't use numeric values to name its semaphores, it uses
