@@ -4457,14 +4457,14 @@ endif
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
@@ -7890,16 +7890,16 @@ endif
   $(TAO_ROOT)/tao/Messaging/TAO_ExtC.h \
   $(TAO_ROOT)/tao/Messaging/TAO_ExtC.i \
   $(TAO_ROOT)/tao/TAOC.h \
-  $(TAO_ROOT)/tao/TAOC.i \
-  PortableGroupC.h PortableGroup/portablegroup_export.h CosNamingC.h \
+  $(TAO_ROOT)/tao/TAOC.i PortableGroupC.h \
+  PortableGroup/portablegroup_export.h CosNamingC.h \
   Naming/naming_export.h CosNamingC.i \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
-  $(TAO_ROOT)/tao/GIOPC.i \
-  PortableGroupC.i CosLoadBalancingC.i \
+  $(TAO_ROOT)/tao/GIOPC.i PortableGroupC.i \
+  CosLoadBalancingC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -7949,8 +7949,8 @@ endif
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
 .obj/CosLoadBalancingS.o .obj/CosLoadBalancingS.so .shobj/CosLoadBalancingS.o .shobj/CosLoadBalancingS.so: CosLoadBalancingS.cpp CosLoadBalancingS.h \
-  $(ACE_ROOT)/ace/pre.h \
-  PortableGroupS.h CosNamingS.h CosNamingC.h \
+  $(ACE_ROOT)/ace/pre.h PortableGroupS.h \
+  CosNamingS.h CosNamingC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
