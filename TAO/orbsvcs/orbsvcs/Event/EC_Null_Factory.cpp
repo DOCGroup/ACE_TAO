@@ -19,10 +19,6 @@
 
 #include "tao/ORB_Core.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Null_Factory.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_Null_Factory, "$Id$")
 
 TAO_EC_Null_Factory::TAO_EC_Null_Factory (void)
@@ -240,8 +236,3 @@ TAO_EC_Null_Factory::destroy_supplier_control (TAO_EC_SupplierControl* x)
   delete x;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

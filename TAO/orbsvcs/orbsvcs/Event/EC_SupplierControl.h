@@ -69,10 +69,6 @@ public:
                                  ACE_ENV_ARG_DECL_NOT_USED);
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_SupplierControl.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_EC_SUPPLIERCONTROL_H */

@@ -7,10 +7,6 @@
 
 #include "ace/Reactor.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "ECG_Reactive_ConsumerEC_Control.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, ECG_Reactive_ConsumerEventChannelControl, "$Id$")
 
 TAO_ECG_Reactive_ConsumerEC_Control::
@@ -246,8 +242,3 @@ TAO_ECG_Reactive_ConsumerEC_Control_Adapter::handle_timeout (
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -52,10 +52,6 @@ public:
                         int own_factory = 0);
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_Event_Channel.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_EC_EVENT_CHANNEL_H */

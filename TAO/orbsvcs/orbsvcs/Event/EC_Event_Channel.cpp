@@ -4,10 +4,6 @@
 #include "EC_Default_Factory.h"
 #include "ace/Dynamic_Service.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Event_Channel.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_Event_Channel, "$Id$")
 
 TAO_EC_Event_Channel::

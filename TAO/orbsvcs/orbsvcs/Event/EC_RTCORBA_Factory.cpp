@@ -5,10 +5,6 @@
 
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_RTCORBA_Factory.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_RTCORBA_Factory, "$Id$")
 
 TAO_EC_RTCORBA_Factory::
@@ -273,6 +269,3 @@ TAO_EC_RTCORBA_Factory::destroy_supplier_control (TAO_EC_SupplierControl* x)
   this->body_->destroy_supplier_control (x);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

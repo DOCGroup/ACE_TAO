@@ -86,9 +86,5 @@ private:
   TAO_ECG_Dgram_Handler* receiver_;
 };
 
-#if defined(__ACE_INLINE__)
-#include "ECG_Simple_Mcast_EH.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_ECG_SIMPLE_Mcast_EH_H */
