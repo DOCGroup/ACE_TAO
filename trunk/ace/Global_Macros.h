@@ -104,6 +104,7 @@ CLASSNAME (void); \
 CLASSNAME (const CLASSNAME&); \
 friend class ace_dewarn_gplusplus
 
+// ----------------------------------------------------------------
 
 # if (ACE_NTRACE == 1)
 #   define ACE_TRACE(X)
@@ -111,6 +112,7 @@ friend class ace_dewarn_gplusplus
 #   define ACE_TRACE(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
 # endif /* ACE_NTRACE */
 
+// ----------------------------------------------------------------
 
 // Convenient macro for testing for deadlock, as well as for detecting
 // when mutexes fail.
@@ -136,6 +138,264 @@ friend class ace_dewarn_gplusplus
 # define ACE_READ_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) return RETURN;
+
+// ----------------------------------------------------------------
+
+# define ACE_DES_NOFREE(POINTER,CLASS) \
+   do { \
+        if (POINTER) \
+          { \
+            (POINTER)->~CLASS (); \
+          } \
+      } \
+   while (0)
+
+# define ACE_DES_ARRAY_NOFREE(POINTER,SIZE,CLASS) \
+   do { \
+        if (POINTER) \
+          { \
+            for (size_t i = 0; \
+                 i < SIZE; \
+                 ++i) \
+            { \
+              (&(POINTER)[i])->~CLASS (); \
+            } \
+          } \
+      } \
+   while (0)
+
+# define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
+   do { \
+        if (POINTER) \
+          { \
+            (POINTER)->~CLASS (); \
+            DEALLOCATOR (POINTER); \
+          } \
+      } \
+   while (0)
+
+# define ACE_DES_ARRAY_FREE(POINTER,SIZE,DEALLOCATOR,CLASS) \
+   do { \
+        if (POINTER) \
+          { \
+            for (size_t i = 0; \
+                 i < SIZE; \
+                 ++i) \
+            { \
+              (&(POINTER)[i])->~CLASS (); \
+            } \
+            DEALLOCATOR (POINTER); \
+          } \
+      } \
+   while (0)
+
+# if defined (ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR)
+#   define ACE_DES_NOFREE_TEMPLATE(POINTER,T_CLASS,T_PARAMETER) \
+     do { \
+          if (POINTER) \
+            { \
+              (POINTER)->~T_CLASS (); \
+            } \
+        } \
+     while (0)
+#   define ACE_DES_ARRAY_NOFREE_TEMPLATE(POINTER,SIZE,T_CLASS,T_PARAMETER) \
+     do { \
+          if (POINTER) \
+            { \
+              for (size_t i = 0; \
+                   i < SIZE; \
+                   ++i) \
+              { \
+                (&(POINTER)[i])->~T_CLASS (); \
+              } \
+            } \
+        } \
+     while (0)
+#if defined(__IBMCPP__) && (__IBMCPP__ >= 400)
+#   define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
+     do { \
+          if (POINTER) \
+            { \
+              (POINTER)->~T_CLASS T_PARAMETER (); \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+#else
+#   define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
+     do { \
+          if (POINTER) \
+            { \
+              (POINTER)->~T_CLASS (); \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+#endif /* defined(__IBMCPP__) && (__IBMCPP__ >= 400) */
+#   define ACE_DES_ARRAY_FREE_TEMPLATE(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAMETER) \
+     do { \
+          if (POINTER) \
+            { \
+              for (size_t i = 0; \
+                   i < SIZE; \
+                   ++i) \
+              { \
+                (&(POINTER)[i])->~T_CLASS (); \
+              } \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+#if defined(__IBMCPP__) && (__IBMCPP__ >= 400)
+#   define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
+     do { \
+          if (POINTER) \
+            { \
+              (POINTER)->~T_CLASS <T_PARAM1, T_PARAM2> (); \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+#else
+#   define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
+     do { \
+          if (POINTER) \
+            { \
+              (POINTER)->~T_CLASS (); \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+#endif /* defined(__IBMCPP__) && (__IBMCPP__ >= 400) */
+#   define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3) \
+     do { \
+          if (POINTER) \
+            { \
+              (POINTER)->~T_CLASS (); \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+#   define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3, T_PARAM4) \
+     do { \
+          if (POINTER) \
+            { \
+              (POINTER)->~T_CLASS (); \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+#   define ACE_DES_ARRAY_FREE_TEMPLATE2(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
+     do { \
+          if (POINTER) \
+            { \
+              for (size_t i = 0; \
+                   i < SIZE; \
+                   ++i) \
+              { \
+                (&(POINTER)[i])->~T_CLASS (); \
+              } \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+# else /* ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
+#   define ACE_DES_NOFREE_TEMPLATE(POINTER,T_CLASS,T_PARAMETER) \
+     do { \
+          if (POINTER) \
+            { \
+              (POINTER)->T_CLASS T_PARAMETER::~T_CLASS (); \
+            } \
+        } \
+     while (0)
+#   define ACE_DES_ARRAY_NOFREE_TEMPLATE(POINTER,SIZE,T_CLASS,T_PARAMETER) \
+     do { \
+          if (POINTER) \
+            { \
+              for (size_t i = 0; \
+                   i < SIZE; \
+                   ++i) \
+              { \
+                (POINTER)[i].T_CLASS T_PARAMETER::~T_CLASS (); \
+              } \
+            } \
+        } \
+     while (0)
+#   if defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L
+  // LynxOS 3.0.0's g++ has trouble with the real versions of these.
+#     define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER)
+#     define ACE_DES_ARRAY_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER)
+#     define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
+#     define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
+#     define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
+#     define ACE_DES_ARRAY_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
+#   else
+#     define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
+       do { \
+            if (POINTER) \
+              { \
+                POINTER->T_CLASS T_PARAMETER::~T_CLASS (); \
+                DEALLOCATOR (POINTER); \
+              } \
+          } \
+       while (0)
+#     define ACE_DES_ARRAY_FREE_TEMPLATE(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAMETER) \
+       do { \
+            if (POINTER) \
+              { \
+                for (size_t i = 0; \
+                     i < SIZE; \
+                     ++i) \
+                { \
+                  POINTER[i].T_CLASS T_PARAMETER::~T_CLASS (); \
+                } \
+                DEALLOCATOR (POINTER); \
+              } \
+          } \
+       while (0)
+#     define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
+       do { \
+            if (POINTER) \
+              { \
+                POINTER->T_CLASS <T_PARAM1, T_PARAM2>::~T_CLASS (); \
+                DEALLOCATOR (POINTER); \
+              } \
+          } \
+       while (0)
+#     define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3) \
+       do { \
+            if (POINTER) \
+              { \
+                POINTER->T_CLASS <T_PARAM1, T_PARAM2, T_PARAM3>::~T_CLASS (); \
+                DEALLOCATOR (POINTER); \
+              } \
+          } \
+       while (0)
+#     define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3,T_PARAM4) \
+       do { \
+            if (POINTER) \
+              { \
+                POINTER->T_CLASS <T_PARAM1, T_PARAM2, T_PARAM3, T_PARAM4>::~T_CLASS (); \
+                DEALLOCATOR (POINTER); \
+              } \
+          } \
+       while (0)
+#     define ACE_DES_ARRAY_FREE_TEMPLATE2(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
+       do { \
+            if (POINTER) \
+              { \
+                for (size_t i = 0; \
+                     i < SIZE; \
+                     ++i) \
+                { \
+                  POINTER[i].T_CLASS <T_PARAM1, T_PARAM2>::~T_CLASS (); \
+                } \
+                DEALLOCATOR (POINTER); \
+              } \
+          } \
+       while (0)
+#   endif /* defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L */
+# endif /* defined ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
 
 #include "ace/post.h"
 
