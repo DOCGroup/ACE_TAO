@@ -44,6 +44,8 @@ void
 Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DEBUG ((LM_DEBUG,
+             "(%P|%t) Shutting down \n"));
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
