@@ -1,3 +1,8 @@
+Mon Oct 19 11:24:40 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Simple_Naming/client.cpp (already_bound_test,
+          already_bound_test2): added .in () dereference to obj arg.
+
 Sun Oct 18 22:05:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
@@ -7,26 +12,26 @@ Sun Oct 18 22:05:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
           orbsvcs/orbsvcs/Sched/SchedEntry.{cpp,h,i}
           orbsvcs/orbsvcs/Sched/Scheduler.h:
           Propagated warnings for unresolved remote RT_Info dependencies
-	  throughout the call graph in the strategized scheduler, enabled 
-	  schedule table generation even when there are unresolved remote 
-	  dependencies or the utilization bound is exceeded. These changes 
-	  allow iterative development of a schedule with useful scheduler 
-	  warnings in debug mode.
-	
+          throughout the call graph in the strategized scheduler, enabled
+          schedule table generation even when there are unresolved remote
+          dependencies or the utilization bound is exceeded. These changes
+          allow iterative development of a schedule with useful scheduler
+          warnings in debug mode.
+
 Sun Oct 18 21:40:23 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
-	* performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
-	* performance-tests/Cubit/TAO/MT_Cubit/client.h:
-	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp: Fixed some
- 	unreferenced variables that caused warnings.  Deleted some
- 	variables that were not being used.  Cleaned up the code a bit.
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp: Fixed some
+        unreferenced variables that caused warnings.  Deleted some
+        variables that were not being used.  Cleaned up the code a bit.
 
 Sun Oct 18 15:59:36 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* tests/Param_Test/param_test_i.cpp: Changed use of "TRUE" to 1
-	  for a Boolean value. Thanks David!
+        * tests/Param_Test/param_test_i.cpp: Changed use of "TRUE" to 1
+          for a Boolean value. Thanks David!
 
 Sun Oct 18 14:20:35 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
