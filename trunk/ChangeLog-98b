@@ -1,3 +1,7 @@
+Mon May 11 14:50:47 CDT 1998  Everett Anderson  <eea1@cs.wustl.edu>
+
+	* ace/Name_Proxy.cpp: Changed one last recv to recv_n.
+
 Mon May 11 13:14:22 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.{cpp,h,i}: (new) Red-Black Tree data structure
