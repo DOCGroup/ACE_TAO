@@ -10790,12 +10790,12 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 
   ::QueryPerformanceCounter (&freq);
 
-#  if defined (ghs)
+#  if defined (ACE_LACKS_LONGLONG_T)
   ACE_UINT64 uint64_freq(freq.u.LowPart, ACE_static_cast (unsigned int, freq.u.HighPart));
   return uint64_freq;
 #  else
   return freq.QuadPart;
-#  endif //ghs
+#  endif //ACE_LACKS_LONGLONG_T
 
 #elif defined (CHORUS)
   if (op == ACE_OS::ACE_HRTIMER_GETTIME)

@@ -189,7 +189,7 @@ ACE_High_Res_Timer::global_scale_factor (void)
             if (::QueryPerformanceFrequency (&freq))
               {
                 // We have a high-res timer
-#             if defined (ghs)
+#             if defined (ACE_LACKS_LONGLONG_T)
                 ACE_UINT64 uint64_freq(freq.u.LowPart, (ACE_UINT32) freq.u.HighPart);
                 ACE_High_Res_Timer::global_scale_factor
                   (uint64_freq / (ACE_UINT32) ACE_ONE_SECOND_IN_USECS);
@@ -197,7 +197,7 @@ ACE_High_Res_Timer::global_scale_factor (void)
                 ACE_High_Res_Timer::global_scale_factor
                   (ACE_static_cast (unsigned int,
                                     freq.QuadPart / ACE_HR_SCALE_CONVERSION));
-#             endif // (ghs)
+#             endif // (ACE_LACKS_LONGLONG_T)
 
                 ACE_High_Res_Timer::global_scale_factor_status_ = 1;
               }

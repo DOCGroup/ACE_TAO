@@ -1088,7 +1088,7 @@ ACE_OS_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
                                          const ACE_Time_Value &tv2);
 
 // This forward declaration is needed by the set() and FILETIME() functions
-#if defined (ghs)
+#if defined (ACE_LACKS_LONGLONG_T)
   class ACE_Export ACE_U_LongLong;
 #endif //ghs
 // -------------------------------------------------------------------
@@ -1255,11 +1255,11 @@ public:
 
 # if defined (ACE_WIN32)
   /// Const time difference between FILETIME and POSIX time.
-#  if defined (ghs)
+#  if defined (ACE_LACKS_LONGLONG_T)
   static const ACE_U_LongLong FILETIME_to_timval_skew;
 #  else
   static const DWORDLONG FILETIME_to_timval_skew;
-#  endif // ghs
+#  endif // ACE_LACKS_LONGLONG_T
 # endif /* ACE_WIN32 */
 
 private:
@@ -3529,7 +3529,7 @@ typedef HANDLE ACE_hthread_t;
       typedef DWORD ACE_thread_key_t;
 #   endif /* ! ACE_HAS_TSS_EMULATION */
 
-#   if !defined (ghs)
+#   if !defined (ACE_LACKS_LONGLONG_T)
 // 64-bit quad-word definitions.
 typedef unsigned __int64 ACE_QWORD;
 typedef unsigned __int64 ACE_hrtime_t;
@@ -3539,7 +3539,7 @@ inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
 #   else
 // Can't find ANY place that ACE_QWORD is used, but hrtime_t is.
 typedef ACE_UINT64 ACE_hrtime_t;
-#   endif
+#   endif // ACE_LACKS_LONGLONG_T
 
 // Win32 dummies to help compilation.
 

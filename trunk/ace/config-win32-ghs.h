@@ -95,6 +95,9 @@
 // Set the following to zero to placate SString.h ACE_WString CTOR
 # undef ACE_WSTRING_HAS_USHORT_SUPPORT
 
+// Green Hills Native x86 does not support __int64 keyword
+# define ACE_LACKS_LONGLONG_T
+
 /* need to ensure these are included before <iomanip> */
 # include <time.h>
 # include <stdlib.h>
