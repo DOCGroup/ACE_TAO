@@ -1,3 +1,9 @@
+Mon Jun 10 13:55:48 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp:
+	  Oops, I did it again :-) .. forgot to delare the CORBA
+	  environemnt variable macro. The builds should be happy now.
+
 Mon Jun 10 14:30:18 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/RTPortableServer/RT_Collocation_Resolver.cpp:
@@ -18,7 +24,7 @@ Sun Jun  9 19:16:57 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 Fri Jun  7 16:32:17 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp (test_method):
+	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp:
 	  Modified RH calls for platforms without native exceptions.
 
 Fri Jun  7 09:26:44 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
