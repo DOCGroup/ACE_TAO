@@ -1,9 +1,25 @@
+The Sep 12 18:00:00 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Event_Comm/Consumer.dsp:
+        * examples/Event_Comm/Notifier.dsp:
+        * examples/Event_Comm/Supplier.dsp:
+        * examples/Simple/time-date/client.dsp:
+        * orbsvcs/IFR_Service/IFR_Service.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_child.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_client.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_server.dsp:
+        * orbsvcs/tests/Property/client.dsp:
+        * orbsvcs/tests/Property/server.dsp:
+        * orbsvcs/tests/Simple_Naming/client.dsp:
+          More IORTable related fixes, my previous commit had a few typos
+          and mistakes.
+
 Tue Sep 12 18:19:38 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/PolicyS.h: Addes this nearly empty file to keep generated
 	  code that includes Policy.pidl happy.
 
-	* tao/PortableSeer/PolicyS.cpp: Changed one of the includes to
+	* tao/PortableServer/PolicyS.cpp: Changed one of the includes to
 	  PolicyS.h instead of PolicyC.h. Now POlicyC.h is included in
 	  PolicyS.h. At the outset, it may look like we have brokenn the
 	  model a bit by having the header file in one place and the cpp
