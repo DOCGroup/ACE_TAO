@@ -3555,7 +3555,6 @@ ACE_POSIX_AIOCB_Asynch_Read_Dgram::~ACE_POSIX_AIOCB_Asynch_Read_Dgram (void)
 ssize_t
 ACE_POSIX_AIOCB_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                                          u_long num_bytes_to_read,
-                                         size_t &number_of_bytes_recvd,
                                          int flags,
                                          int protocol_family,
                                          const void *act,
