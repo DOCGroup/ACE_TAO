@@ -1,16 +1,23 @@
+Fri Jun 11 13:05:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Reactor_Performance_Test.cpp (main): return error
+          status from run_event_loop () call.  And, added a few
+          ACE_ERROR printouts.  Thanks to Steve for mentioned
+          this.
+
 Fri Jun 11 13:00:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/ACEutils.pm:
-	* bin/Process_Unix.pm:
-	* bin/Process_Win32.pm:
-	  Added new routines to wait for a process with a timeout, ditto
-	  for the ACE::waitforfile() routine.  They can be used to write
-	  more reliable test drivers.
+        * bin/ACEutils.pm:
+        * bin/Process_Unix.pm:
+        * bin/Process_Win32.pm:
+          Added new routines to wait for a process with a timeout, ditto
+          for the ACE::waitforfile() routine.  They can be used to write
+          more reliable test drivers.
 
 Fri Jun 11 12:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * tests/RB_Tree_Test.{cpp, h (new)}: factored out class template
-	  declaration into a .h file to make AIX C++ happy.
+          declaration into a .h file to make AIX C++ happy.
 
 Fri Jun 11 10:43:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
