@@ -1,3 +1,13 @@
+Mon Dec 24 20:12:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Synch_T.h: 
+	* ace/Synch_T.cpp: Changed a copy constructor in ACE_Atomic_Op to 
+  	  take ACE_Atomic_Op  as an argument instead of
+	  ACE_Atomic_Op_Ex. This should fix compile errors in g++. 
+
+	* ace/Atomic_Op.i: Made a cosmetic change.
+
+
 Mon Dec 24 08:08:40 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Atomic_Op.i: Make sure to initialize the mutex_ reference in the 

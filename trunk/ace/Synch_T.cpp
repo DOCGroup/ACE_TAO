@@ -93,10 +93,10 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (const TYPE &c)
   // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op"); 
 } 
  
-template <class ACE_LOCK, class TYPE> ACE_INLINE 
+template <class ACE_LOCK, class TYPE>
 ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op 
-  (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &rhs) 
-  : ACE_Atomic_Op_Ex < ACE_LOCK,TYPE > 
+  (const ACE_Atomic_Op<ACE_LOCK, TYPE> &rhs) 
+  : ACE_Atomic_Op_Ex <ACE_LOCK,TYPE > 
     ( this->own_mutex_, rhs.value() ) 
 { 
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op"); 
