@@ -330,6 +330,14 @@ Added support for the -ORBInitRef option. This allows run-time specification of
 an ObjectId:IOR mapping. It is used by resolve_initial_references () and
 overrides the orb-install-time defaults.</LI>
 
+<LI>
+Added minimal support for CORBA Contexts. This is an inherently un-typesafe
+feature, and many believe it will disappear from CORBA eventually, but in
+order to make _create_request() compliant, we have added a 
+CORBA_Context class. The only permissible value for a Context pointer
+passed as an argument to _create_request is 0. If a non-zero
+pointer is passed, a NO_IMPLEMENT exception is raised.</LI>
+
 </UL>
 <B>Ongoing Work:</B>
 <UL>
@@ -363,24 +371,6 @@ a couple of hours.
 The real strategy/solution is to make <TT>CORBA::Object</TT> not keep
 a pointer to its orb sitting around anywhere. It should only get it when
 it needs it. This should not be difficult to change.</UL>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The interface Dynamic
-Any (CORBA v.2.2) is being implemented. It will conform to and implement
-all areas of the spec except for the following:
-<UL>
-<LI>
-Interface DynFixed not implemented since TAO does not currently support
-the IDL fixed data type.</LI>
-
-<LI>
-Long double data type not supported in accessor and mutator functions.</LI>
-
-<LI>
-Wstring (wide character string) data type not supported in accessor and
-mutator functions.</LI>
-
-<LI>
-DynUnion attribute set_as_default in treated as read only.</LI>
-</UL>
 <B>Critical Work:</B>
 <UL>
 <LI>
