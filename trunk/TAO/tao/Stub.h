@@ -41,8 +41,11 @@
 #include "tao/ORB.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
-#include "tao/MessagingS.h"
-#include "tao/TAOS.h"
+// Forward declarations.
+class TAO_RelativeRoundtripTimeoutPolicy_i;
+class TAO_Client_Priority_Policy;
+class TAO_Sync_Scope_Policy;
+class TAO_Buffering_Constraint_Policy;
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 class TAO_Sync_Strategy;
@@ -282,13 +285,13 @@ public:
         TAO_default_environment ()
     );
 
-  POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void);
+  TAO_RelativeRoundtripTimeoutPolicy_i *relative_roundtrip_timeout (void);
 
-  POA_TAO::ClientPriorityPolicy *client_priority (void);
+  TAO_Client_Priority_Policy *client_priority (void);
 
-  POA_Messaging::SyncScopePolicy *sync_scope (void);
+  TAO_Sync_Scope_Policy *sync_scope (void);
 
-  POA_TAO::BufferingConstraintPolicy *buffering_constraint (void);
+  TAO_Buffering_Constraint_Policy *buffering_constraint (void);
 
   CORBA::Policy_ptr get_client_policy (
       CORBA::PolicyType type,

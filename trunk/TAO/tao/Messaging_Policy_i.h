@@ -30,9 +30,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_RelativeRoundtripTimeoutPolicy_i : public virtual PortableServer::RefCountServantBase,
-                                                        public virtual POA_Messaging::RelativeRoundtripTimeoutPolicy
-
+class TAO_Export TAO_RelativeRoundtripTimeoutPolicy_i : public PortableServer::RefCountServantBase,
+                                                        public POA_Messaging::RelativeRoundtripTimeoutPolicy
 {
   // = TITLE
   //   Messaging::RelativeRoundtripTimeoutPolicy implementation
@@ -52,7 +51,11 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
     );
-  // Helper method for the implementation of CORBA::ORB::create_policy
+  // Helper method for the implementation of
+  // CORBA::ORB::create_policy.
+
+  virtual TAO_RelativeRoundtripTimeoutPolicy_i *clone (void) const;
+  // Returns a copy of <this>.
 
   // = The Messaging::RelativeRoundtripTimeoutPolicy methods
   virtual TimeBase::TimeT relative_expiry (
@@ -82,8 +85,8 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class TAO_Export TAO_Sync_Scope_Policy : public virtual PortableServer::RefCountServantBase,
-                                         public virtual POA_Messaging::SyncScopePolicy
+class TAO_Export TAO_Sync_Scope_Policy : public PortableServer::RefCountServantBase,
+                                         public POA_Messaging::SyncScopePolicy
 
 {
   // = TITLE
@@ -103,6 +106,9 @@ public:
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
+
+  virtual TAO_Sync_Scope_Policy *clone (void) const;
+  // Returns a copy of <this>.
 
   // = The Messaging::SyncScopePolicy methods.
 

@@ -3,7 +3,7 @@
 
 #include "tao/Sync_Strategies.h"
 
-#include "tao/TAOS.h"
+#include "tao/Buffering_Constraint_Policy.h"
 #include "tao/Stub.h"
 
 #if !defined (__ACE_INLINE__)
@@ -188,7 +188,7 @@ int
 TAO_None_Sync_Strategy::buffering_constraints_reached (TAO_Stub &stub,
                                                        TAO_Transport_Buffering_Queue &buffering_queue)
 {
-  POA_TAO::BufferingConstraintPolicy *buffering_constraint_policy =
+  TAO_Buffering_Constraint_Policy *buffering_constraint_policy =
     stub.buffering_constraint ();
 
   if (buffering_constraint_policy == 0)

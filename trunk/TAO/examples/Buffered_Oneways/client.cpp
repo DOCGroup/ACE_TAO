@@ -122,10 +122,19 @@ main (int argc, char **argv)
       if (parse_args_result != 0)
         return parse_args_result;
 
-      // Get an object reference from the argument string.
       CORBA::Object_var base =
-        orb->string_to_object (IOR,
-                               ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (base.in (),
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Get an object reference from the argument string.
+      base = orb->string_to_object (IOR,
+                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a <test> reference.
@@ -133,14 +142,14 @@ main (int argc, char **argv)
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Look for the ORB Policy Manager.
-      base = orb->resolve_initial_references ("ORBPolicyManager",
+      // Obtain PolicyCurrent.
+      base = orb->resolve_initial_references ("PolicyCurrent",
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Narrow down to correct type.
-      CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (base.in (),
+      CORBA::PolicyCurrent_var policy_current =
+        CORBA::PolicyCurrent::_narrow (base.in (),
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -180,7 +189,7 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Setup the constraints (at the ORB level).
-      policy_manager->set_policy_overrides (buffering_constraint_policy_list,
+      policy_current->set_policy_overrides (buffering_constraint_policy_list,
                                             CORBA::ADD_OVERRIDE,
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -209,7 +218,7 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Setup the none sync scope (at the ORB level).
-      policy_manager->set_policy_overrides (sync_none_policy_list,
+      policy_current->set_policy_overrides (sync_none_policy_list,
                                             CORBA::ADD_OVERRIDE,
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -253,7 +262,7 @@ main (int argc, char **argv)
               i % flush_count == 0)
             {
               // Setup explicit flushing.
-              policy_manager->set_policy_overrides (sync_flush_policy_list,
+              policy_current->set_policy_overrides (sync_flush_policy_list,
                                                     CORBA::ADD_OVERRIDE,
                                                     ACE_TRY_ENV);
               ACE_TRY_CHECK;
@@ -267,7 +276,7 @@ main (int argc, char **argv)
               ACE_TRY_CHECK;
 
               // Reset buffering policy.
-              policy_manager->set_policy_overrides (sync_none_policy_list,
+              policy_current->set_policy_overrides (sync_none_policy_list,
                                                     CORBA::ADD_OVERRIDE,
                                                     ACE_TRY_ENV);
               ACE_TRY_CHECK;
@@ -299,6 +308,11 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       sync_flush_policy_list[0]->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      root_poa->destroy (1,
+                         1,
+                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Destroy the ORB.  On some platforms, e.g., Win32, the socket

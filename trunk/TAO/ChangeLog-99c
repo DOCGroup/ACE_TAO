@@ -1,3 +1,41 @@
+Wed Oct 13 15:48:40 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Policy_Manager: The policy manager now holds on directly to
+	  the servant class instead of the skeletons.  This solves the
+	  problem of objects getting registered with the POA.
+
+	* tao/Stub:
+	* tao/Sync_Strategies:
+	* tao/ORB_Core:
+
+	  Changes to deal with the above skeleton to servant changes.
+
+	* tao/corba.h:
+
+	  Includes TAOC.h and MessagingC.h now that Policy_Manager
+	  doesn't.
+
+	* tao/Messaging_Policy_i.h:
+	* tao/Client_Priority_Policy.h:
+	* tao/Buffering_Constraint_Policy.h:
+
+	  Added a clone() method to the policy servants. Also changed the
+	  virtual inheritance from the base classes to normal multiple
+	  inheritance.  This will let us cast skeleton pointers to servant
+	  pointers without requiring the use of RTTI. As far as I can
+	  tell, there shouldn't be any negative side effects to this.
+
+	* examples/Buffered_Oneways/client.cpp (main): The policies are
+	  now set on the policy current (i.e., thread specific) rather
+	  than on the policy manager (i.e., orb specific).  This use case
+	  is closer to the Boeing use case.
+
+	  Also, destroyed the POA at the end of main().  Even though this
+	  example is (mostly) client only, the POA is create as a side
+	  effect of creating the policy.  Therefore, destroying the POA at
+	  the end of main() avoids memory leaks.  We should probably come
+	  up with a better solution, but for now this is sufficient.
+
 Tue Oct 12 16:32:16 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/MProfile_Forwarding/Servant_Locator.cpp :

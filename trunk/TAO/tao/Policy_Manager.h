@@ -25,12 +25,16 @@
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
 #include "tao/POA_CORBA.h"
-#include "tao/MessagingS.h"
-#include "tao/TAOS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+// Forward declarations.
+class TAO_RelativeRoundtripTimeoutPolicy_i;
+class TAO_Client_Priority_Policy;
+class TAO_Sync_Scope_Policy;
+class TAO_Buffering_Constraint_Policy;
 
 class TAO_Export TAO_Policy_Manager_Impl
 {
@@ -83,13 +87,13 @@ public:
 
   // = Direct accesors to the policy implementations, for speedy
   //   lookups.
-  POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
+  TAO_RelativeRoundtripTimeoutPolicy_i *relative_roundtrip_timeout (void) const;
 
-  POA_TAO::ClientPriorityPolicy *client_priority (void) const;
+  TAO_Client_Priority_Policy *client_priority (void) const;
 
-  POA_Messaging::SyncScopePolicy *sync_scope (void) const;
+  TAO_Sync_Scope_Policy *sync_scope (void) const;
 
-  POA_TAO::BufferingConstraintPolicy *buffering_constraint (void) const;
+  TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Manager_Impl operator=(const TAO_Policy_Manager_Impl&))
@@ -103,13 +107,13 @@ private:
   // The known policies are kept as pointers to the implementation
   // objects, this allow us to query the supported policies really
   // fast, without memory allocations.
-  POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout_;
+  TAO_RelativeRoundtripTimeoutPolicy_i *relative_roundtrip_timeout_;
 
-  POA_TAO::ClientPriorityPolicy *client_priority_;
+  TAO_Client_Priority_Policy *client_priority_;
 
-  POA_Messaging::SyncScopePolicy *sync_scope_;
+  TAO_Sync_Scope_Policy *sync_scope_;
 
-  POA_TAO::BufferingConstraintPolicy *buffering_constraint_;
+  TAO_Buffering_Constraint_Policy *buffering_constraint_;
 
   CORBA::PolicyList other_policies_;
   // Other policies that are not optimized for fast querying
@@ -146,13 +150,13 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-  POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
+  TAO_RelativeRoundtripTimeoutPolicy_i *relative_roundtrip_timeout (void) const;
 
-  POA_TAO::ClientPriorityPolicy *client_priority (void) const;
+  TAO_Client_Priority_Policy *client_priority (void) const;
 
-  POA_Messaging::SyncScopePolicy *sync_scope (void) const;
+  TAO_Sync_Scope_Policy *sync_scope (void) const;
 
-  POA_TAO::BufferingConstraintPolicy *buffering_constraint (void) const;
+  TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
 
 private:
   TAO_Policy_Manager_Impl impl_;
@@ -184,13 +188,13 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-  POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
+  TAO_RelativeRoundtripTimeoutPolicy_i *relative_roundtrip_timeout (void) const;
 
-  POA_TAO::ClientPriorityPolicy *client_priority (void) const;
+  TAO_Client_Priority_Policy *client_priority (void) const;
 
-  POA_Messaging::SyncScopePolicy *sync_scope (void) const;
+  TAO_Sync_Scope_Policy *sync_scope (void) const;
 
-  POA_TAO::BufferingConstraintPolicy *buffering_constraint (void) const;
+  TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
 
 private:
   TAO_Policy_Manager_Impl manager_impl_;
@@ -225,13 +229,13 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-  POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
+  TAO_RelativeRoundtripTimeoutPolicy_i *relative_roundtrip_timeout (void) const;
 
-  POA_TAO::ClientPriorityPolicy *client_priority (void) const;
+  TAO_Client_Priority_Policy *client_priority (void) const;
 
-  POA_Messaging::SyncScopePolicy *sync_scope (void) const;
+  TAO_Sync_Scope_Policy *sync_scope (void) const;
 
-  POA_TAO::BufferingConstraintPolicy *buffering_constraint (void) const;
+  TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
 
   // = Set and get the implementation.
   TAO_Policy_Current_Impl &implementation (void) const;

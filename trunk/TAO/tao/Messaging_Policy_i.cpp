@@ -67,6 +67,16 @@ TAO_RelativeRoundtripTimeoutPolicy_i::create (
   return result._retn ();
 }
 
+TAO_RelativeRoundtripTimeoutPolicy_i *
+TAO_RelativeRoundtripTimeoutPolicy_i::clone (void) const
+{
+  TAO_RelativeRoundtripTimeoutPolicy_i *copy = 0;
+  ACE_NEW_RETURN (copy,
+                  TAO_RelativeRoundtripTimeoutPolicy_i (*this),
+                  0);
+  return copy;
+}
+
 CORBA::Policy_ptr
 TAO_RelativeRoundtripTimeoutPolicy_i::copy (
       CORBA_Environment &ACE_TRY_ENV
@@ -153,6 +163,16 @@ TAO_Sync_Scope_Policy::create (PortableServer::POA_ptr poa,
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return result._retn ();
+}
+
+TAO_Sync_Scope_Policy *
+TAO_Sync_Scope_Policy::clone (void) const
+{
+  TAO_Sync_Scope_Policy *copy = 0;
+  ACE_NEW_RETURN (copy,
+                  TAO_Sync_Scope_Policy (*this),
+                  0);
+  return copy;
 }
 
 CORBA::Policy_ptr
