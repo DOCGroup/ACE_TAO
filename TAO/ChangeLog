@@ -1,3 +1,17 @@
+Mon Jun 09 15:34:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Latency/Single_Threaded/svc.conf.xml: 
+	* performance-tests/Latency/Single_Threaded/svc.conf: Removed the
+	  deprecated -ORBResources option.
+
+	* performance-tests/Latency/Single_Threaded/client.dsp:
+	* performance-tests/Latency/Single_Threaded/server.dsp: Removed
+	  extraneous library inclusions on the link line. Removed the -GC
+	  option while invoking the IDL compiler. Other than being
+	  inconsistent, doing exraneous things skews up displayed results
+	  from tools like quantify which creates a hurdle when one is
+	  doing performance analysis.
+
 Mon Jun  9 14:38:44 2003  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* performance-tests/Sequence_Latency/Single_Threaded/client.cpp:
