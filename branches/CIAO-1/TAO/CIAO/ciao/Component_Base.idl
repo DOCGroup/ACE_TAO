@@ -4,9 +4,6 @@
  * @@ Compile this file with:
  *
  *     tao_idl -Gv -I W:/ACE_wrappers/TAO -I W:/ACE_wrappers/TAO/orbsvcs/orbsvcs Component_Base.idl
- *
- * @@ CosPersistentState related stuff are removed completely.
- *
  */
 
 //  import ::CORBA
@@ -382,47 +379,6 @@ module Components {
                 SystemError);
     };
   };
-
-  // @@ module Notification doesn't seem to exist anymore.
-    module Notification {
-
-        typedef CosNotification::EventHeader EventHeader;
-        /**
-         * @@ Typo with "CosNotifyChannnelAdmin::ChannelId"?
-         */
-        typedef CosNotifyChannelAdmin::ChannelID Channel;
-
-        exception ChannelUnavailable {};
-        exception InvalidSubscription {};
-        exception InvalidName {};
-        exception InvalidChannel {};
-
-        local interface LocalCookie {
-            boolean same_as (in LocalCookie cookie);
-        };
-
-        local interface Event {
-            EventConsumerBase create_channel
-                (out Channel chid)
-                raises (ChannelUnavailable);
-            LocalCookie subscribe (
-                in EventConsumerBase ecb,
-                in Channel chid)
-                raises (ChannelUnavailable);
-            void unsubscribe (in LocalCookie cookie)
-                raises (InvalidSubscription);
-            EventConsumerBase obtain_channel (
-                in string supp_name,
-                in EventHeader hdr)
-                raises (InvalidName);
-            void listen (in EventConsumerBase ecb,
-                in string csmr_name)
-                raises (InvalidName);
-            void push (in EventBase evt);
-            void destroy_channel (in Channel chid)
-                raises (InvalidChannel);
-        };
-    };
 
   // *************** Basic Container interfaces ***************
 
