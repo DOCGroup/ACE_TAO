@@ -22,6 +22,7 @@ DIRS  = orbsvcs \
         LifeCycle_Service \
 	Logging_Service \
 	Trading_Service \
+	LoadBalancer \
         tests \
         examples
 
