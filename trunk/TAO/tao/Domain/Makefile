@@ -322,7 +322,6 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \

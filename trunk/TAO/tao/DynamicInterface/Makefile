@@ -1050,7 +1050,6 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   Server_Request.inl \
   $(TAO_ROOT)/tao/Invocation.h \
@@ -1350,10 +1349,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
-  Server_Request.inl \
-  $(TAO_ROOT)/tao/ORB_Core.h \
+  Server_Request.inl $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Services.h \
   $(TAO_ROOT)/tao/Services.i \
@@ -1763,8 +1760,7 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i Request.inl \
-  DII_Invocation.h \
-  $(TAO_ROOT)/tao/Invocation.h \
+  DII_Invocation.h $(TAO_ROOT)/tao/Invocation.h \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
@@ -2100,7 +2096,6 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   Server_Request.inl $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \

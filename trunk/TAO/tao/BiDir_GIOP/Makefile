@@ -189,8 +189,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  BiDirPolicyC.h $(TAO_ROOT)/tao/PolicyC.h \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h BiDirPolicyC.h \
+  $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
@@ -446,8 +446,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  BiDirPolicyC.h $(TAO_ROOT)/tao/PolicyC.h \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h BiDirPolicyC.h \
+  $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
@@ -665,8 +665,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  BiDirPolicyC.h BiDirPolicyC.i
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h BiDirPolicyC.h \
+  BiDirPolicyC.i
 
 .obj/BiDir_PolicyFactory.o .obj/BiDir_PolicyFactory.so .shobj/BiDir_PolicyFactory.o .shobj/BiDir_PolicyFactory.so: BiDir_PolicyFactory.cpp BiDir_PolicyFactory.h \
   $(ACE_ROOT)/ace/pre.h bidirgiop_export.h \
@@ -859,8 +859,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  BiDirPolicyC.h BiDirPolicyC.i BiDir_Policy_i.h BiDir_Policy_i.inl
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h BiDirPolicyC.h \
+  BiDirPolicyC.i BiDir_Policy_i.h BiDir_Policy_i.inl
 
 .obj/BiDir_Policy_i.o .obj/BiDir_Policy_i.so .shobj/BiDir_Policy_i.o .shobj/BiDir_Policy_i.so: BiDir_Policy_i.cpp BiDir_Policy_i.h \
   $(ACE_ROOT)/ace/pre.h bidirgiop_export.h \
@@ -993,8 +993,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  BiDirPolicyC.h $(TAO_ROOT)/tao/PolicyC.h \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h BiDirPolicyC.h \
+  $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
@@ -1260,8 +1260,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  BiDirPolicyC.h $(TAO_ROOT)/tao/PolicyC.h \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h BiDirPolicyC.h \
+  $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \

@@ -935,8 +935,8 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/RTCORBA/Thread_Pool.i
 
 .obj/RT_Object_Adapter_Factory.o .obj/RT_Object_Adapter_Factory.so .shobj/RT_Object_Adapter_Factory.o .shobj/RT_Object_Adapter_Factory.so: RT_Object_Adapter_Factory.cpp \
-  RT_Object_Adapter_Factory.h \
-  $(ACE_ROOT)/ace/pre.h rtportableserver_export.h \
+  RT_Object_Adapter_Factory.h $(ACE_ROOT)/ace/pre.h \
+  rtportableserver_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -1234,8 +1234,8 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Collocation_Resolver.i \
   $(TAO_ROOT)/tao/RTPortableServer/RT_Collocation_Resolver.i
 
-.obj/RT_POA.o .obj/RT_POA.so .shobj/RT_POA.o .shobj/RT_POA.so: RT_POA.cpp RT_POA.h \
-  $(ACE_ROOT)/ace/pre.h rtportableserver_export.h \
+.obj/RT_POA.o .obj/RT_POA.so .shobj/RT_POA.o .shobj/RT_POA.so: RT_POA.cpp RT_POA.h $(ACE_ROOT)/ace/pre.h \
+  rtportableserver_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -2213,7 +2213,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Tagged_Profile.i \
   $(TAO_ROOT)/tao/Service_Context.h \
   $(TAO_ROOT)/tao/Service_Context.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

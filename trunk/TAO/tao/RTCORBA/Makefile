@@ -868,8 +868,8 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/Basic_Types.i \
-  Priority_Mapping.h RTCORBAC.h rtcorba_export.h \
+  $(ACE_ROOT)/ace/Basic_Types.i Priority_Mapping.h \
+  RTCORBAC.h rtcorba_export.h \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(TAO_ROOT)/tao/Any.h \
@@ -1013,8 +1013,7 @@ endif # corba_messaging
   Priority_Mapping.i
 
 .obj/Priority_Mapping_Manager.o .obj/Priority_Mapping_Manager.so .shobj/Priority_Mapping_Manager.o .shobj/Priority_Mapping_Manager.so: Priority_Mapping_Manager.cpp \
-  Priority_Mapping_Manager.h \
-  $(ACE_ROOT)/ace/pre.h \
+  Priority_Mapping_Manager.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/post.h \
@@ -1430,8 +1429,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i RTCORBAC.i \
-  RT_ORB_Loader.h \
-  $(ACE_ROOT)/ace/Service_Object.h \
+  RT_ORB_Loader.h $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Service_Object.i \
@@ -1740,8 +1738,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/PortableInterceptor.h \
   $(TAO_ROOT)/tao/RequestInfo_Util.h \
   $(TAO_ROOT)/tao/ClientRequestInfo.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/ClientRequestInfo.inl \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
@@ -3073,8 +3069,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h RT_ORB.i
 
-.obj/RT_ORB.o .obj/RT_ORB.so .shobj/RT_ORB.o .shobj/RT_ORB.so: RT_ORB.cpp RT_ORB.h \
-  $(ACE_ROOT)/ace/pre.h \
+.obj/RT_ORB.o .obj/RT_ORB.so .shobj/RT_ORB.o .shobj/RT_ORB.so: RT_ORB.cpp RT_ORB.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/post.h \
@@ -5372,8 +5367,8 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/Module.i \
   $(ACE_ROOT)/ace/Module.cpp \
   $(ACE_ROOT)/ace/Stream_Modules.h \
-  $(ACE_ROOT)/ace/Stream_Modules.cpp \
-  Thread_Pool.i $(TAO_ROOT)/tao/ORB_Core.h \
+  $(ACE_ROOT)/ace/Stream_Modules.cpp Thread_Pool.i \
+  $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Services.h \
   $(TAO_ROOT)/tao/Services.i \
