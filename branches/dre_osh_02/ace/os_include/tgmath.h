@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    tgmath.h
+ *  @file    os_tgmath.h
  *
  *  type-generic macros
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_TGMATH_H
-#define ACE_OS_INCLUDE_TGMATH_H
+#ifndef ACE_OS_INCLUDE_OS_TGMATH_H
+#define ACE_OS_INCLUDE_OS_TGMATH_H
 
 #include "ace/pre.h"
 
@@ -28,8 +28,18 @@
 #include "ace/os_include/complex.h"
 
 #if !defined (ACE_LACKS_TGMATH_H)
-# include /**/ <tgmath.h>
+#  include /**/ <tgmath.h>
 #endif /* !ACE_LACKS_TGMATH_H */
 
+// Place all additions (especially function declarations) within extern "C" {}
+#ifdef __cplusplus
+extern "C"
+{
+#endif /* __cplusplus */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_TGMATH_H */
+#endif /* ACE_OS_INCLUDE_OS_TGMATH_H */

@@ -11,6 +11,8 @@
 #define ACE_CONFIG_H
 #include "ace/pre.h"
 
+#define ACE_LACKS_STDINT_H
+
 // Before we do anything, we should include <sys/feature_tests.h> to
 // ensure that things are set up properly.
 #include <sys/feature_tests.h>

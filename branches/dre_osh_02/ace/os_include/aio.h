@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    aio.h 
+ *  @file    os_aio.h 
  *  
  *  asynchronous input and output (REALTIME)
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_AIO_H
-#define ACE_OS_INCLUDE_AIO_H
+#ifndef ACE_OS_INCLUDE_OS_AIO_H
+#define ACE_OS_INCLUDE_OS_AIO_H
 
 #include "ace/pre.h"
 
@@ -33,5 +33,15 @@
 # include /**/ <aio.h>
 #endif /* !ACE_LACKS_AIO_H */
 
+// Place all additions (especially function declarations) within extern "C" {}
+#ifdef __cplusplus
+extern "C"
+{
+#endif /* __cplusplus */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_AIO_H */
+#endif /* ACE_OS_INCLUDE_OS_AIO_H */
