@@ -1,6 +1,14 @@
+Fri Jul  6 15:55:54 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.h (ACE_FD_SETSIZE):
+
+	  Integrated patch from Jody Hagins <jody@atdesk.com>.  Set the
+	  default reactor file descriptor set size to be an integer
+	  constant rather than a preprocessor constant.
+
 Fri Jul 06 18:20:39 2001  Steve Huston  <shuston@riverace.com>
 
-        * netsvcs/lib/Client_Logging_Handler.cpp: #if 0'd out a bunch of
+	* netsvcs/lib/Client_Logging_Handler.cpp: #if 0'd out a bunch of
           ACE_DEBUG statements that aren't appropriate for use in commercial
           logging. These can be #if 1'd if there's some doubt while debugging
           this stuff, but they aren't useful once debugged, and are
