@@ -1,3 +1,11 @@
+Thu Sep 07 11:16:36 2000  Steve Huston  <shuston@riverace.com>
+
+        * examples/Reactor/WFMO_Reactor/test_network_events.cpp: Add a
+          destructor to Network_Listener which will unregister it from the
+          reactor, and prevent a doomed call to handle_close when the
+          reactor runs down. Thanks to John Buckman <john@lyris.com> for
+          reporting this.
+
 Wed Sep 06 19:06:57 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ACE version 5.1.9 released.
