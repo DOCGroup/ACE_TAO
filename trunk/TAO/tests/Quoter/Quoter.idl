@@ -15,10 +15,7 @@
 //
 // ============================================================================
 
-// @@ Is there a way to get TAO's IDL compiler to accept "relative
-// names" via the use of a command-line option?  It seems wrong to
-// hard-code the pathname here.
-#include "../../orbsvcs/orbsvcs/CosLifeCycle.idl"
+#include "CosLifeCycle.idl"
 
 module Stock
 {
