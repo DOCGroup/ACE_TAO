@@ -1,3 +1,8 @@
+Mon Jun 14 20:53:44 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: Fixed a few more
+	  ACE_THROW_SPEC errors. Thanks to Carlos for pointing these. 
+
 Mon Jun 14 19:38:47 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: 
