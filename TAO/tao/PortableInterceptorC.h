@@ -2859,8 +2859,8 @@ TAO_NAMESPACE CORBA
 TAO_NAMESPACE_CLOSE
 //@@ Boris: end experimental
 
-TAO_ExportCORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceFactory *);
-TAO_ExportCORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceFactory *&);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceFactory *);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceFactory *&);
 //@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
@@ -2870,8 +2870,8 @@ TAO_NAMESPACE CORBA
 TAO_NAMESPACE_CLOSE
 //@@ Boris: end experimental
 
-TAO_ExportCORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceTemplate *);
-TAO_ExportCORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceTemplate *&);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceTemplate *);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceTemplate *&);
 
 #if !defined _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_H_
 #define _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_H_
