@@ -126,7 +126,8 @@ private:
   TAO_LB_ObjectGroup_Map_Entry *get_group_entry (
       LoadBalancing::ObjectGroup_ptr object_group,
       CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((LoadBalancing::ObjectGroupNotFound));
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     LoadBalancing::ObjectGroupNotFound));
 
 private:
 
