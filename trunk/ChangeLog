@@ -1,3 +1,8 @@
+Wed Jan  5 09:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dev_Poll_Reactor.cpp:
+          Fixed includes for Solaris x86 isis build
+
 Tue Jan  4 17:38:23 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Makefile.am:
