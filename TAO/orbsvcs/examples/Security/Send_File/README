@@ -37,14 +37,16 @@ phrase (it is 'test').
 
 ======= Testing IIOP interoperability
 
-	We also want to verify that the client and
-server can interoperate with regular IIOP servers and clients.
+	We also want to verify that the client and server (assuming
+	"-SSLNoProtection" flag is set in server's `server.conf' file)
+	can interoperate with regular IIOP servers and clients.
 	First setup a pure IIOP server:
 
 $ server -o test.ior
 $ client -ORBSvcConf client.conf -k file://test.ior < myfile
 
-	next a pure IIOP client:
+	next a pure IIOP client (assuming "-SSLNoProtection" flag is
+        set in server's `server.conf' file):
 
 $ server -ORBSvcConf server.conf -o test.ior
 $ client -k file://test.ior < myfile
