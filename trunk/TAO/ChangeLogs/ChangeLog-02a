@@ -1,3 +1,8 @@
+Wed Jul 19 14:41:06 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
+	  Added new Notify files, updated dependencies.
+	
 Wed Jul 19 11:32:27 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Adapter_Activator/server.cpp (unknown_adapter):
