@@ -541,6 +541,8 @@ TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                                     const AVStreams::flowSpec &the_spec,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
+  CORBA::Boolean retv = 0;
+
   ACE_TRY
     {
       AVStreams::flowSpec flow_spec (the_spec);
@@ -556,7 +558,7 @@ TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
       ACE_TRY_CHECK;
 
       // Make the upcall to the app
-      return this->handle_postconnect (flow_spec);
+      retv = this->handle_postconnect (flow_spec);
     }
   ACE_CATCHANY
     {
@@ -564,9 +566,7 @@ TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
-#if !defined (__KCC)
-  return 1;
-#endif /* __KCC */
+  return retv;
 }
 
 
