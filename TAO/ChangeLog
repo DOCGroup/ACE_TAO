@@ -1,3 +1,13 @@
+Fri Mar 25 11:58:40 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+
+          Committing Paul Calabrese's change from TAO 1.4a.
+
+          Alter this test to properly count the events received in the
+          consumer (instead of counting batches).
+
 Fri Mar 25 12:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Pollable.pidl:
@@ -110,10 +120,10 @@ Tue Mar 22 15:42:00 2005  Gary Maxey  <gary.maxey@hp.com>
 
 Tue Mar 22 10:00:32 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/RTCORBAEvent.mpc:
+        * orbsvcs/orbsvcs/RTCORBAEvent.mpc:
 
-	  Removed stray inheritance from naming, removed idlflags
-	  definition (as there are no IDL files for this project).
+          Removed stray inheritance from naming, removed idlflags
+          definition (as there are no IDL files for this project).
 
 Mon Mar 21 09:28:35 2005  Chad Elliott  <elliott_c@ociweb.com>
 
