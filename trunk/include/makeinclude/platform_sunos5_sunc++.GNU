@@ -106,7 +106,7 @@ else  # ! 4.2
       #### Support RTTI by default.  And, use explicit template instantiation
       #### because automatic instantiation appears to be broken, at least
       #### with early releases of CC 5.0.  And, use old iostreams.
-      CCFLAGS += $(CFLAGS) -instances=explicit
+      CCFLAGS += -instances=explicit
       ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
         CCFLAGS += -library=iostream,no%Cstd
       else
