@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<!-- $Id$ -->
+<html> <head>
+<title>CIAO Release Information and TODOs</title>
+</head>
+
+<body>
+<h1>CIAO Release Information and TODOs</h1>
+
+<ul>
+  <li><a href="#status">Current Status</a>
+  <li><a href="#todos">TO-DO list</a>
+</ul>
+
+<hr>
+<h2>Current Status</h2><a name="status">
+<table border="1" width="90%">
+  <th> Modules </th>
+  <th> Status </th>
+
+  <tr>
+    <td>CCM Core</td>
+    <td>We are currently working on a prototype that can install a
+        component remotely using the CCM
+        <code>ComponentInstallation</code> interface.  Since TAO_IDL
+        still doesn't generate component specific code yet, and we
+        still don't have a CIDL implementation, we will also write up
+        an example to show how the code should be generated in both
+        TAO_IDL and CIAO_CIDL compiler.</td>
+  </tr>
+
+  <tr>
+    <td>TAO_IDL</td>
+    <td>
+        TAO_IDL front-end has been extended to handle the keyword
+        extension added by compnent model specification.  The next
+        stage will be to start implementing the code for backend code
+        generation.  Check out <a
+        href="http://cvs.doc.wustl.edu/ace-latest.cgi/ACE_wrappers/TAO/docs/releasenotes/index.html#idl"> TAO IDL compiler</a> for more details.
+    </td>
+  </tr>
+
+  <tr>
+    <td>CIAO_CIDL</td>
+    <td>
+        CIAO_CIDL is still an unknown at this point.  We do know that
+        we have no plan to support persistentstate service in the near
+        future.  For starter, we will probably only support a simple
+        construct like the followingsee :
+<pre>
+        import ::some_idl_module;
+
+        module component_composit_nasee me {
+          composition session component_home_executor {
+            implements component_home;
+            manages component_executor;
+          };
+        };
+</pre>
+        We will need to generate the implementation for the following
+        interfaces/operations (also see this <a
+        href="imgs/executor-example.png"> example </a>):
+        <ul>
+          <li><code>Navigation</code>
+          <li><code>Receptacle</code>
+          <li><code>Event</code>
+          <li>Internal/callback interface?
+          <li>Executor stuff?
+        </ul>
+    </td>
+  </tr>
+
+
+</table>
+<hr>
+<h2>TO-DOs</h2><a name="todos">
+This to-do list is currently arranged in chronological order,
+<i>i.e.</i>, we group features that are expected to be available in
+certain release together.  All interfaces and types are under
+<CODE>Components</code> module namespace if not specified explicitly.
+
+<ul>
+  <li><b>CIAO 0.1 alpha release</b> - (TAO 1.3, Oct. 2002)
+      <UL>
+        <li>Default implementation of <code>
+            <ul>
+              <li>Navigations
+              <li>Receptacles
+              <li>Events
+            </ul>
+            </code>
+            interfaces and their supporting data types that
+            <code>CCMObject</code> interface requires.  These
+            interfaces are defined in <code>
+            <a href="../ciao/CIAO_Base.pidl">CIAO_Base.pidl</a></code>
+            and <code><a
+            href="../ciao/CIAO_Event.pidl">CIAO_Event.pidl</a></code>.
+        <li>Default implementation of <code>
+            <ul>
+              <li>CCMObject
+              <li>CCMHome
+              <li>KeylessCCMHome
+            </ul>
+            </code> and their supporting data types as defined in part
+            of the <code><a href="../ciao/CIAO_Component.pidl">
+            CIAO_Component.pidl </a></code>.
+        <li>Partial support for basic container/callback interfaces: <code>
+            <ul>
+              <li>CCMContext, SessionContext
+              <li>EnterpriseComponent, SessionComponent
+            </ul>
+            </code>
+        <li>Extension to CORBA Core
+            <ul>
+              <li><code>CORBA::LocalObject</code> interface has been
+                  added a long time ago.
+              <li><code>get_component()</code> method in
+                  <code>CORBA::{Object|LocalObject}</code>
+                  interfaces.
+            </ul>
+        <li><code>HomeExecutorBase</code> interface
+        <li>Support (handcrafted) monolithic executor implementation
+        <li>Extension to IDL compiler and Typecode factory.  IDL
+            compiler shall recognize all CCM keyword extensions but not
+            necessarily generate code for these added keywords.
+        <li>Partial implementation of <code>Deployment</code> module.
+            <!-- support some descriptors -->
+      </UL>
+      AT this stange, we only implement "enough" CCM defined interface
+      capability to allow manual implementation of components and a
+      simple framework that offer some remote installation/composition
+      capability.  This will help design how CIDL generated code
+      should look like.
+
+      <p>
+
+  <LI><b>CIAO 0.2 beta release</b> - (TAO 1.3.X, Apr. 2003)
+      <ul>
+        <li>Support for various RT and QoS Policies
+        <li>Support for policy-based adaptation mechanism
+        <li><code>HomeFinder</code> interface
+        <li><code>HomeRegistration</code> interface
+        <li>Configuration interfaces <code>
+            <ul>
+              <li>Configurator
+              <li>StandardConfigurator
+              <li>HomeConfiguration
+            </ul>
+            </code>
+        <li>Other basic container programming interfaces <code>
+            <ul>
+              <li>EntityContext
+              <li>EntityComponent
+            </ul>
+            </code>
+        <li>Extension to Interface Repository.
+        <li>IDL should generate correct client/server side mapping for
+            component extension
+        <li>CIDL implementation that generates skeleton implementation for
+            <ul>
+              <li><code>Navigations</code>, <code>Receptacles</code>,
+                  and <code>Events</code> interfaces of a components
+              <li>component executor and home_executor templates for
+                  monolithic component implementation
+              <li>What else???
+            </ul>
+        <li>Complete <code>Deployment</code> implementation, assuming
+            the revised deployment specification will be available
+            <!-- Support more descriptors -->
+      </ul>
+
+      <p>
+
+  <li><b>CIAO 1.0</b> - (TAO 1.4, Oct. 2003)
+      <ul>
+        <li>Interface <code>SessionSynchronization</code> and other
+            interfaces in <code>Transaction</code> module, assuming
+            time permitting  and
+            <a href="http://xots.sourceforge.net/"> XOTS </a> will be
+            available in April 2003 timeframe
+        <li>PSS functionality?
+        <li><code>CCM2Context, Session2Context, Entity2Context</code>
+            and <code>
+        <li>Support for <code>ExecutorLocator</code> based component
+            implementation
+        <li><code>ProxyHomeRegistration</code> interface
+            <!-- support complete descriptors -->
+      </ul>
+
+      <p>
+
+</ul>
+
+<hr>
+<address></address>
+<!-- hhmts start -->
+Last modified: Sun Aug 11 21:12:55 Central Daylight Time 2002
+<!-- hhmts end -->
+<address>Nanbor Wang &lt;nanbor@cs.wustl.edu&gt;</address>
+</body> </html>
