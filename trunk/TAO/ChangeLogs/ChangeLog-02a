@@ -1,3 +1,8 @@
+Wed Mar 20 11:20:14 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tests/MT_Timeout/Client_Task.cpp: Include Messaging.h instead of
+	  MessagingC.h.
+
 Wed Mar 20 06:59:58 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.cpp (TAO_find): 
