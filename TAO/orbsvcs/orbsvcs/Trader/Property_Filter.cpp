@@ -48,7 +48,8 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer& source,
   CosTrading::PropertySeq& s_props = source.properties;
   CosTrading::PropertySeq& d_props = destination.properties;
   int length = s_props.length (), elem = 0;
-  
+
+  destination.reference = source.reference->_duplicate (source.reference);
   if (this->policy_ != CosTrading::Lookup::none)
     {
       for (int i = 0; i < length; i++)
