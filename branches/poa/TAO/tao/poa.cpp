@@ -318,7 +318,7 @@ TAO_POA_Policies::parse_policies (const PortableServer::PolicyList& policies,
        i < policies.length () && env.exception () == 0;
        i++)
     {
-      this->parse_policy (policies[i].in (), env);
+      this->parse_policy (policies[i], env);
     }
 }
 
@@ -1565,9 +1565,12 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
       // WrongAdapter exception is raised.
       PortableServer::ObjectId_var id;
       TAO_POA::String poa_name;
+      CORBA::Boolean persistent = CORBA::B_FALSE;
 
-      int result = this->parse_key (key.in (), poa_name, id.out ());
-      if (result != 0 || poa_name != this->complete_name ())
+      int result = this->parse_key (key.in (), poa_name, id.out (), persistent);
+      if (result != 0 || 
+          poa_name != this->complete_name () || 
+          persistent != this->persistent ()) 
         {
           CORBA::Exception *exception = new PortableServer::POA::WrongAdapter;
           env.exception (exception);
@@ -1618,9 +1621,12 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   TAO::ObjectKey_var key = reference->key (env);
   PortableServer::ObjectId_var id;
   TAO_POA::String poa_name;
+  CORBA::Boolean persistent = CORBA::B_FALSE;
 
-  int result = this->parse_key (key.in (), poa_name, id.out ());
-  if (result != 0 || poa_name != this->complete_name ())
+  int result = this->parse_key (key.in (), poa_name, id.out (), persistent);
+  if (result != 0 || 
+      poa_name != this->complete_name () || 
+      persistent != this->persistent ()) 
     {
       CORBA::Exception *exception = new PortableServer::POA::WrongAdapter;
       env.exception (exception);
@@ -1745,17 +1751,18 @@ TAO_POA::locate_servant_i (const TAO::ObjectKey &key,
 {
   PortableServer::ObjectId_var id;
   TAO_POA::String poa_name;
+  CORBA::Boolean persistent = CORBA::B_FALSE;
 
-  int result = this->parse_key (key, poa_name, id.out ());
+  int result = this->parse_key (key, poa_name, id.out (), persistent);
   if (result != 0)
     {
       CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
       env.exception (exception);
       return 0;
- }
+    }
 
   TAO_POA *poa = this->find_POA_i (poa_name,
-                                   CORBA::B_FALSE,
+                                   persistent,
                                    env);
 
   if (env.exception () != 0)
@@ -1772,34 +1779,86 @@ TAO_POA::locate_servant_i (const TAO::ObjectKey &key,
 int
 TAO_POA::parse_key (const TAO::ObjectKey &key, 
                     TAO_POA::String &poa_name,
-                    PortableServer::ObjectId_out id)
+                    PortableServer::ObjectId_out id,
+                    CORBA::Boolean &persistent)
 {
   // Grab the id buffer
   TAO_POA::String object_key (TAO_POA::ObjectKey_to_const_string (key));
   
-  // Try to find the name separator
-  int token_position = object_key.rfind (TAO_POA::name_separator ());
+  // Try to find the first separator
+  int first_token_position = object_key.find (TAO_POA::name_separator ());
 
   // If not found, the name is not correct
-  if (token_position == TAO_POA::String::npos)
+  if (first_token_position == TAO_POA::String::npos)
     {
       return -1;
     }
-  else
+
+  // Try to find the second separator
+  int second_token_position = object_key.rfind (TAO_POA::name_separator ());
+
+  // If not found or the token are not distinct, the name is not correct
+  if (second_token_position == TAO_POA::String::npos || 
+      first_token_position == second_token_position)
     {
-      // If found, take the substring from 0 to token_position for the
-      // poa_name and the substring from (token_position +
-      // separator_length) to length for the objectId
-      poa_name = object_key.substr (0, token_position);
-
-      TAO_POA::String objectId = object_key.substr (token_position + TAO_POA::name_separator_length (), 
-                                                    object_key.length ());
-      
-      id = TAO_POA::string_to_ObjectId (objectId.c_str ());
-
-      // Success
-      return 0;
+      return -1;
     }
+
+  // Take the substring from 0 to first_token_position for the
+  // object_key_type.
+  TAO_POA::String object_key_type = object_key.substr (0, first_token_position);
+  if (object_key_type == this->persistent_key_type ())
+    persistent = 1;
+  else if (object_key_type == this->transient_key_type ())
+    persistent = 0;
+  else
+    // Incorrect key
+    return -1;
+
+  // Take the substring from (first_token_position + separator_length)
+  // to second_token_position for the POA name
+  poa_name = object_key.substr (first_token_position + TAO_POA::name_separator_length (),
+                                second_token_position);
+
+  // Take the substring from (second_token_position +
+  // separator_length) to length for the objectId
+
+  TAO_POA::String objectId = object_key.substr (second_token_position + TAO_POA::name_separator_length (), 
+                                                object_key.length ());
+      
+  id = TAO_POA::string_to_ObjectId (objectId.c_str ());
+
+  // Success
+  return 0;
+}
+
+CORBA::Boolean
+TAO_POA::persistent (void)
+{
+  return this->policies ().lifespan () == PortableServer::TRANSIENT;
+}
+
+const TAO_POA::String &
+TAO_POA::object_key_type (void)
+{
+  if (this->persistent ())
+    return TAO_POA::persistent_key_type ();
+  else
+    return TAO_POA::transient_key_type ();    
+}
+
+const TAO_POA::String &
+TAO_POA::persistent_key_type (void)
+{
+  static TAO_POA::String persistent = "Persistent";
+  return persistent;
+}
+
+const TAO_POA::String &
+TAO_POA::transient_key_type (void)
+{
+  static TAO_POA::String transient = "Transient";
+  return transient;
 }
 
 PortableServer::ObjectId *
@@ -1841,6 +1900,8 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
   // Calculate the required buffer size.
   // Note: 1 is for the null terminator
   int buffer_size =
+    this->object_key_type ().length () +
+    TAO_POA::name_separator_length () +
     this->complete_name_.length () +
     TAO_POA::name_separator_length () +
     id.length () +
@@ -1854,7 +1915,9 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 
   // Make an object key
   ACE_OS::sprintf ((CORBA::String) buffer,
-                   "%s%c%s",
+                   "%s%c%s%c%s",
+                   this->object_key_type ().c_str (),
+                   TAO_POA::name_separator (),
                    this->complete_name_.c_str (),
                    TAO_POA::name_separator (),
                    id_buffer);
@@ -1865,18 +1928,6 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
                              buffer_size,
                              buffer,
                              CORBA::B_TRUE);
-}
-
-PortableServer::POA_ptr
-TAO_POA::_this (CORBA_Environment &env)
-{
-  STUB_Object *stub = new IIOP_Object (CORBA::string_copy (this->_interface_repository_id ()),
-                                       TAO_ORB_Core_instance ()->orb_params ()->addr (),
-                                       0);
-  if (env.exception () != 0)
-    return 0;
-
-  return new POA_PortableServer::_tao_collocated_POA (this, stub);
 }
 
 int

@@ -16,9 +16,9 @@ public:
 
   typedef TAO_ServantBase ServantBase;
   typedef ServantBase *Servant;
-  
+
   typedef TAO_Local_ServantBase LocalServantBase;
-  
+
   typedef CORBA::String Identifier;
   typedef CORBA::String_var Identifier_var;
   typedef CORBA::String_out Identifier_out;
@@ -111,57 +111,60 @@ class CurrentBase;
 
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
-    CurrentBase (void); // default constructor
-    CurrentBase (STUB_Object *objref);
-      public:
-virtual ~CurrentBase (void);
-private:
-  CurrentBase (const CurrentBase&);
-  void operator= (const CurrentBase&);
-};
+    CurrentBase (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~CurrentBase (void);
+  private:
+    CurrentBase (const CurrentBase&);
+    void operator= (const CurrentBase&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_CurrentBase;
+  static CORBA::TypeCode_ptr _tc_CurrentBase;
 
-
+  
 #if !defined (_PORTABLESERVER_POLICY___PTR_CH_)
 #define _PORTABLESERVER_POLICY___PTR_CH_
 
 class Policy;
-typedef Policy *Policy_ptr;
-
+  typedef Policy *Policy_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POLICY___VAR_CH_)
 #define _PORTABLESERVER_POLICY___VAR_CH_
 
-class TAO_Export Policy_var
-{
-public:
-  Policy_var (void); // default constructor
-  Policy_var (Policy_ptr);
-  Policy_var (const Policy_var &); // copy constructor
-  ~Policy_var (void); // destructor
-  
-  Policy_var &operator= (Policy_ptr);
-  Policy_var &operator= (const Policy_var &);
-  Policy_ptr operator-> (void) const;
-  
-  operator const Policy_ptr &() const;
-  operator Policy_ptr &();
-  // in, inout, out, _retn 
-  Policy_ptr in (void) const;
-  Policy_ptr &inout (void);
-  Policy_ptr &out (void);
-  Policy_ptr _retn (void);
-  Policy_ptr ptr (void) const;
+  class TAO_Export Policy_var
+  {
+  public:
+    Policy_var (void); // default constructor
+    Policy_var (Policy_ptr);
+    Policy_var (const Policy_var &); // copy constructor
+    ~Policy_var (void); // destructor
+    
+    Policy_var &operator= (Policy_ptr);
+    Policy_var &operator= (const Policy_var &);
+    Policy_ptr operator-> (void) const;
+    
+    operator const Policy_ptr &() const;
+    operator Policy_ptr &();
+    // in, inout, out, _retn 
+    Policy_ptr in (void) const;
+    Policy_ptr &inout (void);
+    Policy_ptr &out (void);
+    Policy_ptr _retn (void);
+    Policy_ptr ptr (void) const;
 
-private:
-  Policy_ptr ptr_;
-};
+  private:
+    Policy_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -170,22 +173,22 @@ private:
 #if !defined (_PORTABLESERVER_POLICY___OUT_CH_)
 #define _PORTABLESERVER_POLICY___OUT_CH_
 
-class TAO_Export Policy_out
-{
-public:
-  Policy_out (Policy_ptr &);
-  Policy_out (Policy_var &);
-  Policy_out (Policy_out &);
-  Policy_out &operator= (Policy_out &);
-  Policy_out &operator= (const Policy_var &);
-  Policy_out &operator= (Policy_ptr);
-  operator Policy_ptr &();
-  Policy_ptr &ptr (void);
-  Policy_ptr operator-> (void);
-  
-private:
-  Policy_ptr &ptr_;
-};
+  class TAO_Export Policy_out
+  {
+  public:
+    Policy_out (Policy_ptr &);
+    Policy_out (Policy_var &);
+    Policy_out (Policy_out &);
+    Policy_out &operator= (Policy_out &);
+    Policy_out &operator= (const Policy_var &);
+    Policy_out &operator= (Policy_ptr);
+    operator Policy_ptr &();
+    Policy_ptr &ptr (void);
+    Policy_ptr operator-> (void);
+    
+  private:
+    Policy_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -194,91 +197,47 @@ private:
 #if !defined (_PORTABLESERVER_POLICY_CH_)
 #define _PORTABLESERVER_POLICY_CH_
 
-class TAO_Export Policy: public virtual CORBA::Object
-{
-public:
-  // the static operations
-  static Policy_ptr _duplicate (Policy_ptr obj);
-  static Policy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-  static Policy_ptr _nil (void);
-  static Policy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
-
-  virtual Policy_ptr  copy (CORBA::Environment &env);
-  virtual void  destroy (CORBA::Environment &env);
-  virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-  Policy (void); // default constructor
-  Policy (STUB_Object *objref);
+  class TAO_Export Policy: public virtual CORBA::Object
+  {
   public:
-virtual ~Policy (void);
-private:
-Policy (const Policy&);
-void operator= (const Policy&);
-};
+    // the static operations
+    static Policy_ptr _duplicate (Policy_ptr obj);
+    static Policy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static Policy_ptr _nil (void);
+    static Policy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+
+    virtual Policy_ptr  copy (CORBA::Environment &env);
+    virtual void  destroy (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    Policy (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~Policy (void);
+  private:
+    Policy (const Policy&);
+    void operator= (const Policy&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_Policy;
+  static CORBA::TypeCode_ptr _tc_Policy;
 
 
 #if !defined (_PORTABLESERVER__TAO_SEQ_POLICY_CH_)
 #define _PORTABLESERVER__TAO_SEQ_POLICY_CH_
 
-// *************************************************************
-// class _tao_seq_Policy
-// *************************************************************
-
-class TAO_Export _tao_seq_Policy
-{
-public:
-class TAO_Export TAO_ObjRefMngType
-{
-public:
-  friend _tao_seq_Policy;
-  TAO_ObjRefMngType(const TAO_ObjRefMngType &); // copy ctor 
-  TAO_ObjRefMngType(Policy_ptr*, CORBA::Boolean release);
-  ~TAO_ObjRefMngType (void); // destructor
+  // *************************************************************
+  // _tao_seq_Policy
+  // *************************************************************
   
-  TAO_ObjRefMngType &operator= (const TAO_ObjRefMngType&);
-  TAO_ObjRefMngType &operator= (Policy_ptr);
-  operator const Policy_ptr &() const;
-  operator Policy_ptr &();
-  // in, inout, out, _retn 
-  const Policy_ptr in (void) const;
-  Policy_ptr &inout (void);
-  Policy_ptr &out (void);
-  Policy_ptr _retn (void);
-  
-private:
-  Policy_ptr *ptr_;
-  CORBA::Boolean release_;
-};
-
-_tao_seq_Policy (void); // default constructor
-_tao_seq_Policy (CORBA::ULong max);
-_tao_seq_Policy (CORBA::ULong max, CORBA::ULong length, 
-	Policy_ptr *value, CORBA::Boolean release=CORBA::B_FALSE);
-_tao_seq_Policy(const _tao_seq_Policy &); // copy constructor
-~_tao_seq_Policy (void);
-_tao_seq_Policy &operator= (const _tao_seq_Policy &);
-CORBA::ULong maximum (void) const;
-void length (CORBA::ULong);
-CORBA::ULong length (void) const;
-ACE_NESTED_CLASS (PortableServer,_tao_seq_Policy::TAO_ObjRefMngType) operator[] (CORBA::ULong index);
-const ACE_NESTED_CLASS (PortableServer,_tao_seq_Policy::TAO_ObjRefMngType) operator[] (CORBA::ULong index) const;
-static Policy_ptr *allocbuf (CORBA::ULong nelems);
-static void freebuf (Policy_ptr *);
-static void freebuf (
-Policy_ptr *, CORBA::ULong);
-private:
-CORBA::ULong maximum_;
-CORBA::ULong length_;
-Policy_ptr *buffer_;
-CORBA::Boolean release_;
-};
-typedef _tao_seq_Policy* _tao_seq_Policy_ptr;
-static CORBA::TypeCode_ptr _tc__tao_seq_Policy;
+  typedef TAO_Unbounded_Object_Sequence<Policy > _tao_seq_Policy;
+  typedef _tao_seq_Policy* _tao_seq_Policy_ptr;
+  static CORBA::TypeCode_ptr _tc__tao_seq_Policy;
 
 
 #endif // end #if !defined
@@ -288,36 +247,36 @@ static CORBA::TypeCode_ptr _tc__tao_seq_Policy;
 #define _PORTABLESERVER__TAO_SEQ_POLICY___VAR_CH_
 
 // *************************************************************
-// class PortableServer::_tao_seq_Policy_var
-// *************************************************************
+  // class PortableServer::_tao_seq_Policy_var
+  // *************************************************************
 
-class TAO_Export _tao_seq_Policy_var
-{
-public:
-_tao_seq_Policy_var (void); // default constructor
-_tao_seq_Policy_var (_tao_seq_Policy *);
-_tao_seq_Policy_var (const _tao_seq_Policy_var &); // copy constructor
-~_tao_seq_Policy_var (void); // destructor
+  class TAO_Export _tao_seq_Policy_var
+  {
+  public:
+    _tao_seq_Policy_var (void); // default constructor
+    _tao_seq_Policy_var (_tao_seq_Policy *);
+    _tao_seq_Policy_var (const _tao_seq_Policy_var &); // copy constructor
+    ~_tao_seq_Policy_var (void); // destructor
+    
+    _tao_seq_Policy_var &operator= (_tao_seq_Policy *);
+    _tao_seq_Policy_var &operator= (const _tao_seq_Policy_var &);
+    _tao_seq_Policy *operator-> (void);
+    const _tao_seq_Policy *operator-> (void) const;
+    
+    operator const _tao_seq_Policy &() const;
+    operator _tao_seq_Policy &();
+    operator _tao_seq_Policy &() const;
+    TAO_Object_Manager <Policy > operator[] (CORBA::ULong index);
+    // in, inout, out, _retn 
+    const _tao_seq_Policy &in (void) const;
+    _tao_seq_Policy &inout (void);
+    _tao_seq_Policy *&out (void);
+    _tao_seq_Policy *_retn (void);
+    _tao_seq_Policy *ptr (void) const;
 
-_tao_seq_Policy_var &operator= (_tao_seq_Policy *);
-_tao_seq_Policy_var &operator= (const _tao_seq_Policy_var &);
-_tao_seq_Policy *operator-> (void);
-const _tao_seq_Policy *operator-> (void) const;
-
-operator const _tao_seq_Policy &() const;
-operator _tao_seq_Policy &();
-operator _tao_seq_Policy &() const;
-ACE_NESTED_CLASS (PortableServer,_tao_seq_Policy::TAO_ObjRefMngType) operator[] (CORBA::ULong index);
-// in, inout, out, _retn 
-const _tao_seq_Policy &in (void) const;
-_tao_seq_Policy &inout (void);
-_tao_seq_Policy *&out (void);
-_tao_seq_Policy *_retn (void);
-_tao_seq_Policy *ptr (void) const;
-
-private:
-_tao_seq_Policy *ptr_;
-};
+  private:
+    _tao_seq_Policy *ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -326,36 +285,36 @@ _tao_seq_Policy *ptr_;
 #if !defined (_PORTABLESERVER__TAO_SEQ_POLICY___OUT_CH_)
 #define _PORTABLESERVER__TAO_SEQ_POLICY___OUT_CH_
 
-class TAO_Export _tao_seq_Policy_out
-{
-public:
-_tao_seq_Policy_out (_tao_seq_Policy *&);
-_tao_seq_Policy_out (_tao_seq_Policy_var &);
-_tao_seq_Policy_out (_tao_seq_Policy_out &);
-_tao_seq_Policy_out &operator= (_tao_seq_Policy_out &);
-_tao_seq_Policy_out &operator= (_tao_seq_Policy *);
-operator _tao_seq_Policy *&();
-_tao_seq_Policy *&ptr (void);
-_tao_seq_Policy *operator-> (void);
-ACE_NESTED_CLASS (PortableServer,_tao_seq_Policy::TAO_ObjRefMngType) operator[] (CORBA::ULong index);
-
-private:
-_tao_seq_Policy *&ptr_;
-// assignment from T_var not allowed
-void operator= (const _tao_seq_Policy_var &);
-};
+  class TAO_Export _tao_seq_Policy_out
+  {
+  public:
+    _tao_seq_Policy_out (_tao_seq_Policy *&);
+    _tao_seq_Policy_out (_tao_seq_Policy_var &);
+    _tao_seq_Policy_out (_tao_seq_Policy_out &);
+    _tao_seq_Policy_out &operator= (_tao_seq_Policy_out &);
+    _tao_seq_Policy_out &operator= (_tao_seq_Policy *);
+    operator _tao_seq_Policy *&();
+    _tao_seq_Policy *&ptr (void);
+    _tao_seq_Policy *operator-> (void);
+    TAO_Object_Manager <Policy > operator[] (CORBA::ULong index);
+    
+  private:
+    _tao_seq_Policy *&ptr_;
+    // assignment from T_var not allowed
+    void operator= (const _tao_seq_Policy_var &);
+  };
 
 
 #endif // end #if !defined
 
-typedef _tao_seq_Policy PolicyList;
-typedef _tao_seq_Policy_var PolicyList_var;
-typedef _tao_seq_Policy_out PolicyList_out;
+  typedef _tao_seq_Policy PolicyList;
+  typedef _tao_seq_Policy_var PolicyList_var;
+  typedef _tao_seq_Policy_out PolicyList_out;
 
-static CORBA::TypeCode_ptr _tc_PolicyList;
+  static CORBA::TypeCode_ptr _tc_PolicyList;
 
-class POA;
-
+  class POA;
+  
 #if !defined (_PORTABLESERVER_POA___PTR_CH_)
 #define _PORTABLESERVER_POA___PTR_CH_
 
@@ -367,30 +326,30 @@ typedef POA *POA_ptr;
 #if !defined (_PORTABLESERVER_POA___VAR_CH_)
 #define _PORTABLESERVER_POA___VAR_CH_
 
-class TAO_Export POA_var
-{
-public:
-POA_var (void); // default constructor
-POA_var (POA_ptr);
-POA_var (const POA_var &); // copy constructor
-~POA_var (void); // destructor
+  class TAO_Export POA_var
+  {
+  public:
+    POA_var (void); // default constructor
+    POA_var (POA_ptr);
+    POA_var (const POA_var &); // copy constructor
+    ~POA_var (void); // destructor
+    
+    POA_var &operator= (POA_ptr);
+    POA_var &operator= (const POA_var &);
+    POA_ptr operator-> (void) const;
+    
+    operator const POA_ptr &() const;
+    operator POA_ptr &();
+    // in, inout, out, _retn 
+    POA_ptr in (void) const;
+    POA_ptr &inout (void);
+    POA_ptr &out (void);
+    POA_ptr _retn (void);
+    POA_ptr ptr (void) const;
 
-POA_var &operator= (POA_ptr);
-POA_var &operator= (const POA_var &);
-POA_ptr operator-> (void) const;
-
-operator const POA_ptr &() const;
-operator POA_ptr &();
-// in, inout, out, _retn 
-POA_ptr in (void) const;
-POA_ptr &inout (void);
-POA_ptr &out (void);
-POA_ptr _retn (void);
-POA_ptr ptr (void) const;
-
-private:
-POA_ptr ptr_;
-};
+  private:
+    POA_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -399,22 +358,22 @@ POA_ptr ptr_;
 #if !defined (_PORTABLESERVER_POA___OUT_CH_)
 #define _PORTABLESERVER_POA___OUT_CH_
 
-class TAO_Export POA_out
-{
-public:
-POA_out (POA_ptr &);
-POA_out (POA_var &);
-POA_out (POA_out &);
-POA_out &operator= (POA_out &);
-POA_out &operator= (const POA_var &);
-POA_out &operator= (POA_ptr);
-operator POA_ptr &();
-POA_ptr &ptr (void);
-POA_ptr operator-> (void);
-
-private:
-POA_ptr &ptr_;
-};
+  class TAO_Export POA_out
+  {
+  public:
+    POA_out (POA_ptr &);
+    POA_out (POA_var &);
+    POA_out (POA_out &);
+    POA_out &operator= (POA_out &);
+    POA_out &operator= (const POA_var &);
+    POA_out &operator= (POA_ptr);
+    operator POA_ptr &();
+    POA_ptr &ptr (void);
+    POA_ptr operator-> (void);
+    
+  private:
+    POA_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -423,35 +382,13 @@ POA_ptr &ptr_;
 #if !defined (_PORTABLESERVER__TAO_SEQ_OCTET_CH_)
 #define _PORTABLESERVER__TAO_SEQ_OCTET_CH_
 
-// *************************************************************
-// class _tao_seq_Octet
-// *************************************************************
-
-class TAO_Export _tao_seq_Octet
-{
-public:
-_tao_seq_Octet (void); // default constructor
-_tao_seq_Octet (CORBA::ULong max);
-_tao_seq_Octet (CORBA::ULong max, CORBA::ULong length, 
-	CORBA::Octet  *value, CORBA::Boolean release=CORBA::B_FALSE);
-_tao_seq_Octet(const _tao_seq_Octet &); // copy constructor
-~_tao_seq_Octet (void);
-_tao_seq_Octet &operator= (const _tao_seq_Octet &);
-CORBA::ULong maximum (void) const;
-void length (CORBA::ULong);
-CORBA::ULong length (void) const;
-CORBA::Octet &operator[] (CORBA::ULong index);
-const CORBA::Octet &operator[] (CORBA::ULong index) const;
-static CORBA::Octet  *allocbuf (CORBA::ULong nelems);
-static void freebuf (CORBA::Octet  *);
-private:
-CORBA::ULong maximum_;
-CORBA::ULong length_;
-CORBA::Octet  *buffer_;
-CORBA::Boolean release_;
-};
-typedef _tao_seq_Octet* _tao_seq_Octet_ptr;
-static CORBA::TypeCode_ptr _tc__tao_seq_Octet;
+  // *************************************************************
+  // _tao_seq_Octet
+  // *************************************************************
+  
+  typedef TAO_Unbounded_Sequence<CORBA::Octet > _tao_seq_Octet;
+  typedef _tao_seq_Octet* _tao_seq_Octet_ptr;
+  static CORBA::TypeCode_ptr _tc__tao_seq_Octet;
 
 
 #endif // end #if !defined
@@ -461,36 +398,36 @@ static CORBA::TypeCode_ptr _tc__tao_seq_Octet;
 #define _PORTABLESERVER__TAO_SEQ_OCTET___VAR_CH_
 
 // *************************************************************
-// class PortableServer::_tao_seq_Octet_var
-// *************************************************************
+  // class PortableServer::_tao_seq_Octet_var
+  // *************************************************************
 
-class TAO_Export _tao_seq_Octet_var
-{
-public:
-_tao_seq_Octet_var (void); // default constructor
-_tao_seq_Octet_var (_tao_seq_Octet *);
-_tao_seq_Octet_var (const _tao_seq_Octet_var &); // copy constructor
-~_tao_seq_Octet_var (void); // destructor
+  class TAO_Export _tao_seq_Octet_var
+  {
+  public:
+    _tao_seq_Octet_var (void); // default constructor
+    _tao_seq_Octet_var (_tao_seq_Octet *);
+    _tao_seq_Octet_var (const _tao_seq_Octet_var &); // copy constructor
+    ~_tao_seq_Octet_var (void); // destructor
+    
+    _tao_seq_Octet_var &operator= (_tao_seq_Octet *);
+    _tao_seq_Octet_var &operator= (const _tao_seq_Octet_var &);
+    _tao_seq_Octet *operator-> (void);
+    const _tao_seq_Octet *operator-> (void) const;
+    
+    operator const _tao_seq_Octet &() const;
+    operator _tao_seq_Octet &();
+    operator _tao_seq_Octet &() const;
+    CORBA::Octet &operator[] (CORBA::ULong index);
+    // in, inout, out, _retn 
+    const _tao_seq_Octet &in (void) const;
+    _tao_seq_Octet &inout (void);
+    _tao_seq_Octet *&out (void);
+    _tao_seq_Octet *_retn (void);
+    _tao_seq_Octet *ptr (void) const;
 
-_tao_seq_Octet_var &operator= (_tao_seq_Octet *);
-_tao_seq_Octet_var &operator= (const _tao_seq_Octet_var &);
-_tao_seq_Octet *operator-> (void);
-const _tao_seq_Octet *operator-> (void) const;
-
-operator const _tao_seq_Octet &() const;
-operator _tao_seq_Octet &();
-operator _tao_seq_Octet &() const;
-CORBA::Octet  &operator[] (CORBA::ULong index);
-// in, inout, out, _retn 
-const _tao_seq_Octet &in (void) const;
-_tao_seq_Octet &inout (void);
-_tao_seq_Octet *&out (void);
-_tao_seq_Octet *_retn (void);
-_tao_seq_Octet *ptr (void) const;
-
-private:
-_tao_seq_Octet *ptr_;
-};
+  private:
+    _tao_seq_Octet *ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -499,108 +436,108 @@ _tao_seq_Octet *ptr_;
 #if !defined (_PORTABLESERVER__TAO_SEQ_OCTET___OUT_CH_)
 #define _PORTABLESERVER__TAO_SEQ_OCTET___OUT_CH_
 
-class TAO_Export _tao_seq_Octet_out
-{
-public:
-_tao_seq_Octet_out (_tao_seq_Octet *&);
-_tao_seq_Octet_out (_tao_seq_Octet_var &);
-_tao_seq_Octet_out (_tao_seq_Octet_out &);
-_tao_seq_Octet_out &operator= (_tao_seq_Octet_out &);
-_tao_seq_Octet_out &operator= (_tao_seq_Octet *);
-operator _tao_seq_Octet *&();
-_tao_seq_Octet *&ptr (void);
-_tao_seq_Octet *operator-> (void);
-CORBA::Octet  &operator[] (CORBA::ULong index);
-
-private:
-_tao_seq_Octet *&ptr_;
-// assignment from T_var not allowed
-void operator= (const _tao_seq_Octet_var &);
-};
+  class TAO_Export _tao_seq_Octet_out
+  {
+  public:
+    _tao_seq_Octet_out (_tao_seq_Octet *&);
+    _tao_seq_Octet_out (_tao_seq_Octet_var &);
+    _tao_seq_Octet_out (_tao_seq_Octet_out &);
+    _tao_seq_Octet_out &operator= (_tao_seq_Octet_out &);
+    _tao_seq_Octet_out &operator= (_tao_seq_Octet *);
+    operator _tao_seq_Octet *&();
+    _tao_seq_Octet *&ptr (void);
+    _tao_seq_Octet *operator-> (void);
+    CORBA::Octet &operator[] (CORBA::ULong index);
+    
+  private:
+    _tao_seq_Octet *&ptr_;
+    // assignment from T_var not allowed
+    void operator= (const _tao_seq_Octet_var &);
+  };
 
 
 #endif // end #if !defined
 
-typedef _tao_seq_Octet ObjectId;
-typedef _tao_seq_Octet_var ObjectId_var;
-typedef _tao_seq_Octet_out ObjectId_out;
+  typedef _tao_seq_Octet ObjectId;
+  typedef _tao_seq_Octet_var ObjectId_var;
+  typedef _tao_seq_Octet_out ObjectId_out;
 
-static CORBA::TypeCode_ptr _tc_ObjectId;
+  static CORBA::TypeCode_ptr _tc_ObjectId;
 
-
+  
 #if !defined (_PORTABLESERVER_FORWARDREQUEST___PTR_CH_)
 #define _PORTABLESERVER_FORWARDREQUEST___PTR_CH_
 
-class ForwardRequest;
-typedef ForwardRequest *ForwardRequest_ptr;
-
+  class ForwardRequest;
+  typedef ForwardRequest *ForwardRequest_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_FORWARDREQUEST_CH_)
 #define _PORTABLESERVER_FORWARDREQUEST_CH_
 
-class TAO_Export ForwardRequest : public CORBA::UserException
-{
-public:
-ForwardRequest (void); // default ctor
-ForwardRequest (const ForwardRequest &); // copy ctor
-~ForwardRequest(void); // dtor
-ForwardRequest(const CORBA::Object_ptr&);
-ForwardRequest &operator= (const ForwardRequest &);
-static ForwardRequest *_narrow (CORBA::Exception *);
-CORBA::Object_var forward_reference;
-};
-static CORBA::TypeCode_ptr _tc_ForwardRequest;
+  class TAO_Export ForwardRequest : public CORBA::UserException
+  {
+  public:
+    ForwardRequest (void); // default ctor
+    ForwardRequest (const ForwardRequest &); // copy ctor
+    ~ForwardRequest(void); // dtor
+    ForwardRequest(const CORBA::Object_ptr&);
+    ForwardRequest &operator= (const ForwardRequest &);
+    static ForwardRequest *_narrow (CORBA::Exception *);
+    CORBA::Object_var forward_reference;
+  };
+    static CORBA::TypeCode_ptr _tc_ForwardRequest;
 
 
 #endif // end #if !defined
 
-enum ThreadPolicyValue
-{
-ORB_CTRL_MODEL, 
-SINGLE_THREAD_MODEL
-};
-typedef ThreadPolicyValue &ThreadPolicyValue_out;
-static CORBA::TypeCode_ptr _tc_ThreadPolicyValue;
+  enum ThreadPolicyValue
+  {
+    ORB_CTRL_MODEL, 
+    SINGLE_THREAD_MODEL
+  };
+  typedef ThreadPolicyValue &ThreadPolicyValue_out;
+  static CORBA::TypeCode_ptr _tc_ThreadPolicyValue;
 
-
+  
 #if !defined (_PORTABLESERVER_THREADPOLICY___PTR_CH_)
 #define _PORTABLESERVER_THREADPOLICY___PTR_CH_
 
 class ThreadPolicy;
-typedef ThreadPolicy *ThreadPolicy_ptr;
-
+  typedef ThreadPolicy *ThreadPolicy_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_THREADPOLICY___VAR_CH_)
 #define _PORTABLESERVER_THREADPOLICY___VAR_CH_
 
-class TAO_Export ThreadPolicy_var
-{
-public:
-ThreadPolicy_var (void); // default constructor
-ThreadPolicy_var (ThreadPolicy_ptr);
-ThreadPolicy_var (const ThreadPolicy_var &); // copy constructor
-~ThreadPolicy_var (void); // destructor
+  class TAO_Export ThreadPolicy_var
+  {
+  public:
+    ThreadPolicy_var (void); // default constructor
+    ThreadPolicy_var (ThreadPolicy_ptr);
+    ThreadPolicy_var (const ThreadPolicy_var &); // copy constructor
+    ~ThreadPolicy_var (void); // destructor
+    
+    ThreadPolicy_var &operator= (ThreadPolicy_ptr);
+    ThreadPolicy_var &operator= (const ThreadPolicy_var &);
+    ThreadPolicy_ptr operator-> (void) const;
+    
+    operator const ThreadPolicy_ptr &() const;
+    operator ThreadPolicy_ptr &();
+    // in, inout, out, _retn 
+    ThreadPolicy_ptr in (void) const;
+    ThreadPolicy_ptr &inout (void);
+    ThreadPolicy_ptr &out (void);
+    ThreadPolicy_ptr _retn (void);
+    ThreadPolicy_ptr ptr (void) const;
 
-ThreadPolicy_var &operator= (ThreadPolicy_ptr);
-ThreadPolicy_var &operator= (const ThreadPolicy_var &);
-ThreadPolicy_ptr operator-> (void) const;
-
-operator const ThreadPolicy_ptr &() const;
-operator ThreadPolicy_ptr &();
-// in, inout, out, _retn 
-ThreadPolicy_ptr in (void) const;
-ThreadPolicy_ptr &inout (void);
-ThreadPolicy_ptr &out (void);
-ThreadPolicy_ptr _retn (void);
-ThreadPolicy_ptr ptr (void) const;
-
-private:
-ThreadPolicy_ptr ptr_;
-};
+  private:
+    ThreadPolicy_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -609,22 +546,22 @@ ThreadPolicy_ptr ptr_;
 #if !defined (_PORTABLESERVER_THREADPOLICY___OUT_CH_)
 #define _PORTABLESERVER_THREADPOLICY___OUT_CH_
 
-class TAO_Export ThreadPolicy_out
-{
-public:
-ThreadPolicy_out (ThreadPolicy_ptr &);
-ThreadPolicy_out (ThreadPolicy_var &);
-ThreadPolicy_out (ThreadPolicy_out &);
-ThreadPolicy_out &operator= (ThreadPolicy_out &);
-ThreadPolicy_out &operator= (const ThreadPolicy_var &);
-ThreadPolicy_out &operator= (ThreadPolicy_ptr);
-operator ThreadPolicy_ptr &();
-ThreadPolicy_ptr &ptr (void);
-ThreadPolicy_ptr operator-> (void);
-
-private:
-ThreadPolicy_ptr &ptr_;
-};
+  class TAO_Export ThreadPolicy_out
+  {
+  public:
+    ThreadPolicy_out (ThreadPolicy_ptr &);
+    ThreadPolicy_out (ThreadPolicy_var &);
+    ThreadPolicy_out (ThreadPolicy_out &);
+    ThreadPolicy_out &operator= (ThreadPolicy_out &);
+    ThreadPolicy_out &operator= (const ThreadPolicy_var &);
+    ThreadPolicy_out &operator= (ThreadPolicy_ptr);
+    operator ThreadPolicy_ptr &();
+    ThreadPolicy_ptr &ptr (void);
+    ThreadPolicy_ptr operator-> (void);
+    
+  private:
+    ThreadPolicy_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -633,77 +570,80 @@ ThreadPolicy_ptr &ptr_;
 #if !defined (_PORTABLESERVER_THREADPOLICY_CH_)
 #define _PORTABLESERVER_THREADPOLICY_CH_
 
-class TAO_Export ThreadPolicy: public virtual Policy
-{
-public:
-// the static operations
-static ThreadPolicy_ptr _duplicate (ThreadPolicy_ptr obj);
-static ThreadPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-static ThreadPolicy_ptr _nil (void);
-static ThreadPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+  class TAO_Export ThreadPolicy: public virtual Policy
+  {
+  public:
+    // the static operations
+    static ThreadPolicy_ptr _duplicate (ThreadPolicy_ptr obj);
+    static ThreadPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static ThreadPolicy_ptr _nil (void);
+    static ThreadPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-virtual ThreadPolicyValue value (CORBA::Environment &env);
-virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-ThreadPolicy (void); // default constructor
-ThreadPolicy (STUB_Object *objref);
-public:
-virtual ~ThreadPolicy (void);
-private:
-ThreadPolicy (const ThreadPolicy&);
-void operator= (const ThreadPolicy&);
-};
+    virtual ThreadPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    ThreadPolicy (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~ThreadPolicy (void);
+  private:
+    ThreadPolicy (const ThreadPolicy&);
+    void operator= (const ThreadPolicy&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_ThreadPolicy;
+  static CORBA::TypeCode_ptr _tc_ThreadPolicy;
 
-enum LifespanPolicyValue
-{
-TRANSIENT, 
-PERSISTENT
-};
-typedef LifespanPolicyValue &LifespanPolicyValue_out;
-static CORBA::TypeCode_ptr _tc_LifespanPolicyValue;
+  enum LifespanPolicyValue
+  {
+    TRANSIENT, 
+    PERSISTENT
+  };
+  typedef LifespanPolicyValue &LifespanPolicyValue_out;
+  static CORBA::TypeCode_ptr _tc_LifespanPolicyValue;
 
-
+  
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY___PTR_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY___PTR_CH_
 
 class LifespanPolicy;
-typedef LifespanPolicy *LifespanPolicy_ptr;
-
+  typedef LifespanPolicy *LifespanPolicy_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY___VAR_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY___VAR_CH_
 
-class TAO_Export LifespanPolicy_var
-{
-public:
-LifespanPolicy_var (void); // default constructor
-LifespanPolicy_var (LifespanPolicy_ptr);
-LifespanPolicy_var (const LifespanPolicy_var &); // copy constructor
-~LifespanPolicy_var (void); // destructor
+  class TAO_Export LifespanPolicy_var
+  {
+  public:
+    LifespanPolicy_var (void); // default constructor
+    LifespanPolicy_var (LifespanPolicy_ptr);
+    LifespanPolicy_var (const LifespanPolicy_var &); // copy constructor
+    ~LifespanPolicy_var (void); // destructor
+    
+    LifespanPolicy_var &operator= (LifespanPolicy_ptr);
+    LifespanPolicy_var &operator= (const LifespanPolicy_var &);
+    LifespanPolicy_ptr operator-> (void) const;
+    
+    operator const LifespanPolicy_ptr &() const;
+    operator LifespanPolicy_ptr &();
+    // in, inout, out, _retn 
+    LifespanPolicy_ptr in (void) const;
+    LifespanPolicy_ptr &inout (void);
+    LifespanPolicy_ptr &out (void);
+    LifespanPolicy_ptr _retn (void);
+    LifespanPolicy_ptr ptr (void) const;
 
-LifespanPolicy_var &operator= (LifespanPolicy_ptr);
-LifespanPolicy_var &operator= (const LifespanPolicy_var &);
-LifespanPolicy_ptr operator-> (void) const;
-
-operator const LifespanPolicy_ptr &() const;
-operator LifespanPolicy_ptr &();
-// in, inout, out, _retn 
-LifespanPolicy_ptr in (void) const;
-LifespanPolicy_ptr &inout (void);
-LifespanPolicy_ptr &out (void);
-LifespanPolicy_ptr _retn (void);
-LifespanPolicy_ptr ptr (void) const;
-
-private:
-LifespanPolicy_ptr ptr_;
-};
+  private:
+    LifespanPolicy_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -712,22 +652,22 @@ LifespanPolicy_ptr ptr_;
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY___OUT_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY___OUT_CH_
 
-class TAO_Export LifespanPolicy_out
-{
-public:
-LifespanPolicy_out (LifespanPolicy_ptr &);
-LifespanPolicy_out (LifespanPolicy_var &);
-LifespanPolicy_out (LifespanPolicy_out &);
-LifespanPolicy_out &operator= (LifespanPolicy_out &);
-LifespanPolicy_out &operator= (const LifespanPolicy_var &);
-LifespanPolicy_out &operator= (LifespanPolicy_ptr);
-operator LifespanPolicy_ptr &();
-LifespanPolicy_ptr &ptr (void);
-LifespanPolicy_ptr operator-> (void);
-
-private:
-LifespanPolicy_ptr &ptr_;
-};
+  class TAO_Export LifespanPolicy_out
+  {
+  public:
+    LifespanPolicy_out (LifespanPolicy_ptr &);
+    LifespanPolicy_out (LifespanPolicy_var &);
+    LifespanPolicy_out (LifespanPolicy_out &);
+    LifespanPolicy_out &operator= (LifespanPolicy_out &);
+    LifespanPolicy_out &operator= (const LifespanPolicy_var &);
+    LifespanPolicy_out &operator= (LifespanPolicy_ptr);
+    operator LifespanPolicy_ptr &();
+    LifespanPolicy_ptr &ptr (void);
+    LifespanPolicy_ptr operator-> (void);
+    
+  private:
+    LifespanPolicy_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -736,77 +676,80 @@ LifespanPolicy_ptr &ptr_;
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY_CH_
 
-class TAO_Export LifespanPolicy: public virtual Policy
-{
-public:
-// the static operations
-static LifespanPolicy_ptr _duplicate (LifespanPolicy_ptr obj);
-static LifespanPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-static LifespanPolicy_ptr _nil (void);
-static LifespanPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+  class TAO_Export LifespanPolicy: public virtual Policy
+  {
+  public:
+    // the static operations
+    static LifespanPolicy_ptr _duplicate (LifespanPolicy_ptr obj);
+    static LifespanPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static LifespanPolicy_ptr _nil (void);
+    static LifespanPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-virtual LifespanPolicyValue value (CORBA::Environment &env);
-virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-LifespanPolicy (void); // default constructor
-LifespanPolicy (STUB_Object *objref);
-public:
-virtual ~LifespanPolicy (void);
-private:
-LifespanPolicy (const LifespanPolicy&);
-void operator= (const LifespanPolicy&);
-};
+    virtual LifespanPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    LifespanPolicy (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~LifespanPolicy (void);
+  private:
+    LifespanPolicy (const LifespanPolicy&);
+    void operator= (const LifespanPolicy&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_LifespanPolicy;
+  static CORBA::TypeCode_ptr _tc_LifespanPolicy;
 
-enum IdUniquenessPolicyValue
-{
-UNIQUE_ID, 
-MULTIPLE_ID
-};
-typedef IdUniquenessPolicyValue &IdUniquenessPolicyValue_out;
-static CORBA::TypeCode_ptr _tc_IdUniquenessPolicyValue;
+  enum IdUniquenessPolicyValue
+  {
+    UNIQUE_ID, 
+    MULTIPLE_ID
+  };
+  typedef IdUniquenessPolicyValue &IdUniquenessPolicyValue_out;
+  static CORBA::TypeCode_ptr _tc_IdUniquenessPolicyValue;
 
-
+  
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY___PTR_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY___PTR_CH_
 
 class IdUniquenessPolicy;
-typedef IdUniquenessPolicy *IdUniquenessPolicy_ptr;
-
+  typedef IdUniquenessPolicy *IdUniquenessPolicy_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY___VAR_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY___VAR_CH_
 
-class TAO_Export IdUniquenessPolicy_var
-{
-public:
-IdUniquenessPolicy_var (void); // default constructor
-IdUniquenessPolicy_var (IdUniquenessPolicy_ptr);
-IdUniquenessPolicy_var (const IdUniquenessPolicy_var &); // copy constructor
-~IdUniquenessPolicy_var (void); // destructor
+  class TAO_Export IdUniquenessPolicy_var
+  {
+  public:
+    IdUniquenessPolicy_var (void); // default constructor
+    IdUniquenessPolicy_var (IdUniquenessPolicy_ptr);
+    IdUniquenessPolicy_var (const IdUniquenessPolicy_var &); // copy constructor
+    ~IdUniquenessPolicy_var (void); // destructor
+    
+    IdUniquenessPolicy_var &operator= (IdUniquenessPolicy_ptr);
+    IdUniquenessPolicy_var &operator= (const IdUniquenessPolicy_var &);
+    IdUniquenessPolicy_ptr operator-> (void) const;
+    
+    operator const IdUniquenessPolicy_ptr &() const;
+    operator IdUniquenessPolicy_ptr &();
+    // in, inout, out, _retn 
+    IdUniquenessPolicy_ptr in (void) const;
+    IdUniquenessPolicy_ptr &inout (void);
+    IdUniquenessPolicy_ptr &out (void);
+    IdUniquenessPolicy_ptr _retn (void);
+    IdUniquenessPolicy_ptr ptr (void) const;
 
-IdUniquenessPolicy_var &operator= (IdUniquenessPolicy_ptr);
-IdUniquenessPolicy_var &operator= (const IdUniquenessPolicy_var &);
-IdUniquenessPolicy_ptr operator-> (void) const;
-
-operator const IdUniquenessPolicy_ptr &() const;
-operator IdUniquenessPolicy_ptr &();
-// in, inout, out, _retn 
-IdUniquenessPolicy_ptr in (void) const;
-IdUniquenessPolicy_ptr &inout (void);
-IdUniquenessPolicy_ptr &out (void);
-IdUniquenessPolicy_ptr _retn (void);
-IdUniquenessPolicy_ptr ptr (void) const;
-
-private:
-IdUniquenessPolicy_ptr ptr_;
-};
+  private:
+    IdUniquenessPolicy_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -815,22 +758,22 @@ IdUniquenessPolicy_ptr ptr_;
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY___OUT_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY___OUT_CH_
 
-class TAO_Export IdUniquenessPolicy_out
-{
-public:
-IdUniquenessPolicy_out (IdUniquenessPolicy_ptr &);
-IdUniquenessPolicy_out (IdUniquenessPolicy_var &);
-IdUniquenessPolicy_out (IdUniquenessPolicy_out &);
-IdUniquenessPolicy_out &operator= (IdUniquenessPolicy_out &);
-IdUniquenessPolicy_out &operator= (const IdUniquenessPolicy_var &);
-IdUniquenessPolicy_out &operator= (IdUniquenessPolicy_ptr);
-operator IdUniquenessPolicy_ptr &();
-IdUniquenessPolicy_ptr &ptr (void);
-IdUniquenessPolicy_ptr operator-> (void);
-
-private:
-IdUniquenessPolicy_ptr &ptr_;
-};
+  class TAO_Export IdUniquenessPolicy_out
+  {
+  public:
+    IdUniquenessPolicy_out (IdUniquenessPolicy_ptr &);
+    IdUniquenessPolicy_out (IdUniquenessPolicy_var &);
+    IdUniquenessPolicy_out (IdUniquenessPolicy_out &);
+    IdUniquenessPolicy_out &operator= (IdUniquenessPolicy_out &);
+    IdUniquenessPolicy_out &operator= (const IdUniquenessPolicy_var &);
+    IdUniquenessPolicy_out &operator= (IdUniquenessPolicy_ptr);
+    operator IdUniquenessPolicy_ptr &();
+    IdUniquenessPolicy_ptr &ptr (void);
+    IdUniquenessPolicy_ptr operator-> (void);
+    
+  private:
+    IdUniquenessPolicy_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -839,77 +782,80 @@ IdUniquenessPolicy_ptr &ptr_;
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY_CH_
 
-class TAO_Export IdUniquenessPolicy: public virtual Policy
-{
-public:
-// the static operations
-static IdUniquenessPolicy_ptr _duplicate (IdUniquenessPolicy_ptr obj);
-static IdUniquenessPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-static IdUniquenessPolicy_ptr _nil (void);
-static IdUniquenessPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+  class TAO_Export IdUniquenessPolicy: public virtual Policy
+  {
+  public:
+    // the static operations
+    static IdUniquenessPolicy_ptr _duplicate (IdUniquenessPolicy_ptr obj);
+    static IdUniquenessPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static IdUniquenessPolicy_ptr _nil (void);
+    static IdUniquenessPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-virtual IdUniquenessPolicyValue value (CORBA::Environment &env);
-virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-IdUniquenessPolicy (void); // default constructor
-IdUniquenessPolicy (STUB_Object *objref);
-public:
-virtual ~IdUniquenessPolicy (void);
-private:
-IdUniquenessPolicy (const IdUniquenessPolicy&);
-void operator= (const IdUniquenessPolicy&);
-};
+    virtual IdUniquenessPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    IdUniquenessPolicy (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~IdUniquenessPolicy (void);
+  private:
+    IdUniquenessPolicy (const IdUniquenessPolicy&);
+    void operator= (const IdUniquenessPolicy&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_IdUniquenessPolicy;
+  static CORBA::TypeCode_ptr _tc_IdUniquenessPolicy;
 
-enum IdAssignmentPolicyValue
-{
-USER_ID, 
-SYSTEM_ID
-};
-typedef IdAssignmentPolicyValue &IdAssignmentPolicyValue_out;
-static CORBA::TypeCode_ptr _tc_IdAssignmentPolicyValue;
+  enum IdAssignmentPolicyValue
+  {
+    USER_ID, 
+    SYSTEM_ID
+  };
+  typedef IdAssignmentPolicyValue &IdAssignmentPolicyValue_out;
+  static CORBA::TypeCode_ptr _tc_IdAssignmentPolicyValue;
 
-
+  
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY___PTR_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY___PTR_CH_
 
 class IdAssignmentPolicy;
-typedef IdAssignmentPolicy *IdAssignmentPolicy_ptr;
-
+  typedef IdAssignmentPolicy *IdAssignmentPolicy_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY___VAR_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY___VAR_CH_
 
-class TAO_Export IdAssignmentPolicy_var
-{
-public:
-IdAssignmentPolicy_var (void); // default constructor
-IdAssignmentPolicy_var (IdAssignmentPolicy_ptr);
-IdAssignmentPolicy_var (const IdAssignmentPolicy_var &); // copy constructor
-~IdAssignmentPolicy_var (void); // destructor
+  class TAO_Export IdAssignmentPolicy_var
+  {
+  public:
+    IdAssignmentPolicy_var (void); // default constructor
+    IdAssignmentPolicy_var (IdAssignmentPolicy_ptr);
+    IdAssignmentPolicy_var (const IdAssignmentPolicy_var &); // copy constructor
+    ~IdAssignmentPolicy_var (void); // destructor
+    
+    IdAssignmentPolicy_var &operator= (IdAssignmentPolicy_ptr);
+    IdAssignmentPolicy_var &operator= (const IdAssignmentPolicy_var &);
+    IdAssignmentPolicy_ptr operator-> (void) const;
+    
+    operator const IdAssignmentPolicy_ptr &() const;
+    operator IdAssignmentPolicy_ptr &();
+    // in, inout, out, _retn 
+    IdAssignmentPolicy_ptr in (void) const;
+    IdAssignmentPolicy_ptr &inout (void);
+    IdAssignmentPolicy_ptr &out (void);
+    IdAssignmentPolicy_ptr _retn (void);
+    IdAssignmentPolicy_ptr ptr (void) const;
 
-IdAssignmentPolicy_var &operator= (IdAssignmentPolicy_ptr);
-IdAssignmentPolicy_var &operator= (const IdAssignmentPolicy_var &);
-IdAssignmentPolicy_ptr operator-> (void) const;
-
-operator const IdAssignmentPolicy_ptr &() const;
-operator IdAssignmentPolicy_ptr &();
-// in, inout, out, _retn 
-IdAssignmentPolicy_ptr in (void) const;
-IdAssignmentPolicy_ptr &inout (void);
-IdAssignmentPolicy_ptr &out (void);
-IdAssignmentPolicy_ptr _retn (void);
-IdAssignmentPolicy_ptr ptr (void) const;
-
-private:
-IdAssignmentPolicy_ptr ptr_;
-};
+  private:
+    IdAssignmentPolicy_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -918,22 +864,22 @@ IdAssignmentPolicy_ptr ptr_;
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY___OUT_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY___OUT_CH_
 
-class TAO_Export IdAssignmentPolicy_out
-{
-public:
-IdAssignmentPolicy_out (IdAssignmentPolicy_ptr &);
-IdAssignmentPolicy_out (IdAssignmentPolicy_var &);
-IdAssignmentPolicy_out (IdAssignmentPolicy_out &);
-IdAssignmentPolicy_out &operator= (IdAssignmentPolicy_out &);
-IdAssignmentPolicy_out &operator= (const IdAssignmentPolicy_var &);
-IdAssignmentPolicy_out &operator= (IdAssignmentPolicy_ptr);
-operator IdAssignmentPolicy_ptr &();
-IdAssignmentPolicy_ptr &ptr (void);
-IdAssignmentPolicy_ptr operator-> (void);
-
-private:
-IdAssignmentPolicy_ptr &ptr_;
-};
+  class TAO_Export IdAssignmentPolicy_out
+  {
+  public:
+    IdAssignmentPolicy_out (IdAssignmentPolicy_ptr &);
+    IdAssignmentPolicy_out (IdAssignmentPolicy_var &);
+    IdAssignmentPolicy_out (IdAssignmentPolicy_out &);
+    IdAssignmentPolicy_out &operator= (IdAssignmentPolicy_out &);
+    IdAssignmentPolicy_out &operator= (const IdAssignmentPolicy_var &);
+    IdAssignmentPolicy_out &operator= (IdAssignmentPolicy_ptr);
+    operator IdAssignmentPolicy_ptr &();
+    IdAssignmentPolicy_ptr &ptr (void);
+    IdAssignmentPolicy_ptr operator-> (void);
+    
+  private:
+    IdAssignmentPolicy_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -942,77 +888,80 @@ IdAssignmentPolicy_ptr &ptr_;
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY_CH_)
 #define _PORTABLESERVER_IDASSIGNMENTPOLICY_CH_
 
-class TAO_Export IdAssignmentPolicy: public virtual Policy
-{
-public:
-// the static operations
-static IdAssignmentPolicy_ptr _duplicate (IdAssignmentPolicy_ptr obj);
-static IdAssignmentPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-static IdAssignmentPolicy_ptr _nil (void);
-static IdAssignmentPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+  class TAO_Export IdAssignmentPolicy: public virtual Policy
+  {
+  public:
+    // the static operations
+    static IdAssignmentPolicy_ptr _duplicate (IdAssignmentPolicy_ptr obj);
+    static IdAssignmentPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static IdAssignmentPolicy_ptr _nil (void);
+    static IdAssignmentPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-virtual IdAssignmentPolicyValue value (CORBA::Environment &env);
-virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-IdAssignmentPolicy (void); // default constructor
-IdAssignmentPolicy (STUB_Object *objref);
-public:
-virtual ~IdAssignmentPolicy (void);
-private:
-IdAssignmentPolicy (const IdAssignmentPolicy&);
-void operator= (const IdAssignmentPolicy&);
-};
+    virtual IdAssignmentPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    IdAssignmentPolicy (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~IdAssignmentPolicy (void);
+  private:
+    IdAssignmentPolicy (const IdAssignmentPolicy&);
+    void operator= (const IdAssignmentPolicy&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_IdAssignmentPolicy;
+  static CORBA::TypeCode_ptr _tc_IdAssignmentPolicy;
 
-enum ImplicitActivationPolicyValue
-{
-IMPLICIT_ACTIVATION, 
-NO_IMPLICIT_ACTIVATION
-};
-typedef ImplicitActivationPolicyValue &ImplicitActivationPolicyValue_out;
-static CORBA::TypeCode_ptr _tc_ImplicitActivationPolicyValue;
+  enum ImplicitActivationPolicyValue
+  {
+    IMPLICIT_ACTIVATION, 
+    NO_IMPLICIT_ACTIVATION
+  };
+  typedef ImplicitActivationPolicyValue &ImplicitActivationPolicyValue_out;
+  static CORBA::TypeCode_ptr _tc_ImplicitActivationPolicyValue;
 
-
+  
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY___PTR_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY___PTR_CH_
 
 class ImplicitActivationPolicy;
-typedef ImplicitActivationPolicy *ImplicitActivationPolicy_ptr;
-
+  typedef ImplicitActivationPolicy *ImplicitActivationPolicy_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY___VAR_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY___VAR_CH_
 
-class TAO_Export ImplicitActivationPolicy_var
-{
-public:
-ImplicitActivationPolicy_var (void); // default constructor
-ImplicitActivationPolicy_var (ImplicitActivationPolicy_ptr);
-ImplicitActivationPolicy_var (const ImplicitActivationPolicy_var &); // copy constructor
-~ImplicitActivationPolicy_var (void); // destructor
+  class TAO_Export ImplicitActivationPolicy_var
+  {
+  public:
+    ImplicitActivationPolicy_var (void); // default constructor
+    ImplicitActivationPolicy_var (ImplicitActivationPolicy_ptr);
+    ImplicitActivationPolicy_var (const ImplicitActivationPolicy_var &); // copy constructor
+    ~ImplicitActivationPolicy_var (void); // destructor
+    
+    ImplicitActivationPolicy_var &operator= (ImplicitActivationPolicy_ptr);
+    ImplicitActivationPolicy_var &operator= (const ImplicitActivationPolicy_var &);
+    ImplicitActivationPolicy_ptr operator-> (void) const;
+    
+    operator const ImplicitActivationPolicy_ptr &() const;
+    operator ImplicitActivationPolicy_ptr &();
+    // in, inout, out, _retn 
+    ImplicitActivationPolicy_ptr in (void) const;
+    ImplicitActivationPolicy_ptr &inout (void);
+    ImplicitActivationPolicy_ptr &out (void);
+    ImplicitActivationPolicy_ptr _retn (void);
+    ImplicitActivationPolicy_ptr ptr (void) const;
 
-ImplicitActivationPolicy_var &operator= (ImplicitActivationPolicy_ptr);
-ImplicitActivationPolicy_var &operator= (const ImplicitActivationPolicy_var &);
-ImplicitActivationPolicy_ptr operator-> (void) const;
-
-operator const ImplicitActivationPolicy_ptr &() const;
-operator ImplicitActivationPolicy_ptr &();
-// in, inout, out, _retn 
-ImplicitActivationPolicy_ptr in (void) const;
-ImplicitActivationPolicy_ptr &inout (void);
-ImplicitActivationPolicy_ptr &out (void);
-ImplicitActivationPolicy_ptr _retn (void);
-ImplicitActivationPolicy_ptr ptr (void) const;
-
-private:
-ImplicitActivationPolicy_ptr ptr_;
-};
+  private:
+    ImplicitActivationPolicy_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1021,22 +970,22 @@ ImplicitActivationPolicy_ptr ptr_;
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY___OUT_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY___OUT_CH_
 
-class TAO_Export ImplicitActivationPolicy_out
-{
-public:
-ImplicitActivationPolicy_out (ImplicitActivationPolicy_ptr &);
-ImplicitActivationPolicy_out (ImplicitActivationPolicy_var &);
-ImplicitActivationPolicy_out (ImplicitActivationPolicy_out &);
-ImplicitActivationPolicy_out &operator= (ImplicitActivationPolicy_out &);
-ImplicitActivationPolicy_out &operator= (const ImplicitActivationPolicy_var &);
-ImplicitActivationPolicy_out &operator= (ImplicitActivationPolicy_ptr);
-operator ImplicitActivationPolicy_ptr &();
-ImplicitActivationPolicy_ptr &ptr (void);
-ImplicitActivationPolicy_ptr operator-> (void);
-
-private:
-ImplicitActivationPolicy_ptr &ptr_;
-};
+  class TAO_Export ImplicitActivationPolicy_out
+  {
+  public:
+    ImplicitActivationPolicy_out (ImplicitActivationPolicy_ptr &);
+    ImplicitActivationPolicy_out (ImplicitActivationPolicy_var &);
+    ImplicitActivationPolicy_out (ImplicitActivationPolicy_out &);
+    ImplicitActivationPolicy_out &operator= (ImplicitActivationPolicy_out &);
+    ImplicitActivationPolicy_out &operator= (const ImplicitActivationPolicy_var &);
+    ImplicitActivationPolicy_out &operator= (ImplicitActivationPolicy_ptr);
+    operator ImplicitActivationPolicy_ptr &();
+    ImplicitActivationPolicy_ptr &ptr (void);
+    ImplicitActivationPolicy_ptr operator-> (void);
+    
+  private:
+    ImplicitActivationPolicy_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1045,77 +994,80 @@ ImplicitActivationPolicy_ptr &ptr_;
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY_CH_
 
-class TAO_Export ImplicitActivationPolicy: public virtual Policy
-{
-public:
-// the static operations
-static ImplicitActivationPolicy_ptr _duplicate (ImplicitActivationPolicy_ptr obj);
-static ImplicitActivationPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-static ImplicitActivationPolicy_ptr _nil (void);
-static ImplicitActivationPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+  class TAO_Export ImplicitActivationPolicy: public virtual Policy
+  {
+  public:
+    // the static operations
+    static ImplicitActivationPolicy_ptr _duplicate (ImplicitActivationPolicy_ptr obj);
+    static ImplicitActivationPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static ImplicitActivationPolicy_ptr _nil (void);
+    static ImplicitActivationPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-virtual ImplicitActivationPolicyValue value (CORBA::Environment &env);
-virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-ImplicitActivationPolicy (void); // default constructor
-ImplicitActivationPolicy (STUB_Object *objref);
-public:
-virtual ~ImplicitActivationPolicy (void);
-private:
-ImplicitActivationPolicy (const ImplicitActivationPolicy&);
-void operator= (const ImplicitActivationPolicy&);
-};
+    virtual ImplicitActivationPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    ImplicitActivationPolicy (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~ImplicitActivationPolicy (void);
+  private:
+    ImplicitActivationPolicy (const ImplicitActivationPolicy&);
+    void operator= (const ImplicitActivationPolicy&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_ImplicitActivationPolicy;
+  static CORBA::TypeCode_ptr _tc_ImplicitActivationPolicy;
 
-enum ServantRetentionPolicyValue
-{
-RETAIN, 
-NON_RETAIN
-};
-typedef ServantRetentionPolicyValue &ServantRetentionPolicyValue_out;
-static CORBA::TypeCode_ptr _tc_ServantRetentionPolicyValue;
+  enum ServantRetentionPolicyValue
+  {
+    RETAIN, 
+    NON_RETAIN
+  };
+  typedef ServantRetentionPolicyValue &ServantRetentionPolicyValue_out;
+  static CORBA::TypeCode_ptr _tc_ServantRetentionPolicyValue;
 
-
+  
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY___PTR_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY___PTR_CH_
 
 class ServantRetentionPolicy;
-typedef ServantRetentionPolicy *ServantRetentionPolicy_ptr;
-
+  typedef ServantRetentionPolicy *ServantRetentionPolicy_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY___VAR_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY___VAR_CH_
 
-class TAO_Export ServantRetentionPolicy_var
-{
-public:
-ServantRetentionPolicy_var (void); // default constructor
-ServantRetentionPolicy_var (ServantRetentionPolicy_ptr);
-ServantRetentionPolicy_var (const ServantRetentionPolicy_var &); // copy constructor
-~ServantRetentionPolicy_var (void); // destructor
+  class TAO_Export ServantRetentionPolicy_var
+  {
+  public:
+    ServantRetentionPolicy_var (void); // default constructor
+    ServantRetentionPolicy_var (ServantRetentionPolicy_ptr);
+    ServantRetentionPolicy_var (const ServantRetentionPolicy_var &); // copy constructor
+    ~ServantRetentionPolicy_var (void); // destructor
+    
+    ServantRetentionPolicy_var &operator= (ServantRetentionPolicy_ptr);
+    ServantRetentionPolicy_var &operator= (const ServantRetentionPolicy_var &);
+    ServantRetentionPolicy_ptr operator-> (void) const;
+    
+    operator const ServantRetentionPolicy_ptr &() const;
+    operator ServantRetentionPolicy_ptr &();
+    // in, inout, out, _retn 
+    ServantRetentionPolicy_ptr in (void) const;
+    ServantRetentionPolicy_ptr &inout (void);
+    ServantRetentionPolicy_ptr &out (void);
+    ServantRetentionPolicy_ptr _retn (void);
+    ServantRetentionPolicy_ptr ptr (void) const;
 
-ServantRetentionPolicy_var &operator= (ServantRetentionPolicy_ptr);
-ServantRetentionPolicy_var &operator= (const ServantRetentionPolicy_var &);
-ServantRetentionPolicy_ptr operator-> (void) const;
-
-operator const ServantRetentionPolicy_ptr &() const;
-operator ServantRetentionPolicy_ptr &();
-// in, inout, out, _retn 
-ServantRetentionPolicy_ptr in (void) const;
-ServantRetentionPolicy_ptr &inout (void);
-ServantRetentionPolicy_ptr &out (void);
-ServantRetentionPolicy_ptr _retn (void);
-ServantRetentionPolicy_ptr ptr (void) const;
-
-private:
-ServantRetentionPolicy_ptr ptr_;
-};
+  private:
+    ServantRetentionPolicy_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1124,22 +1076,22 @@ ServantRetentionPolicy_ptr ptr_;
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY___OUT_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY___OUT_CH_
 
-class TAO_Export ServantRetentionPolicy_out
-{
-public:
-ServantRetentionPolicy_out (ServantRetentionPolicy_ptr &);
-ServantRetentionPolicy_out (ServantRetentionPolicy_var &);
-ServantRetentionPolicy_out (ServantRetentionPolicy_out &);
-ServantRetentionPolicy_out &operator= (ServantRetentionPolicy_out &);
-ServantRetentionPolicy_out &operator= (const ServantRetentionPolicy_var &);
-ServantRetentionPolicy_out &operator= (ServantRetentionPolicy_ptr);
-operator ServantRetentionPolicy_ptr &();
-ServantRetentionPolicy_ptr &ptr (void);
-ServantRetentionPolicy_ptr operator-> (void);
-
-private:
-ServantRetentionPolicy_ptr &ptr_;
-};
+  class TAO_Export ServantRetentionPolicy_out
+  {
+  public:
+    ServantRetentionPolicy_out (ServantRetentionPolicy_ptr &);
+    ServantRetentionPolicy_out (ServantRetentionPolicy_var &);
+    ServantRetentionPolicy_out (ServantRetentionPolicy_out &);
+    ServantRetentionPolicy_out &operator= (ServantRetentionPolicy_out &);
+    ServantRetentionPolicy_out &operator= (const ServantRetentionPolicy_var &);
+    ServantRetentionPolicy_out &operator= (ServantRetentionPolicy_ptr);
+    operator ServantRetentionPolicy_ptr &();
+    ServantRetentionPolicy_ptr &ptr (void);
+    ServantRetentionPolicy_ptr operator-> (void);
+    
+  private:
+    ServantRetentionPolicy_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1148,78 +1100,81 @@ ServantRetentionPolicy_ptr &ptr_;
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY_CH_)
 #define _PORTABLESERVER_SERVANTRETENTIONPOLICY_CH_
 
-class TAO_Export ServantRetentionPolicy: public virtual Policy
-{
-public:
-// the static operations
-static ServantRetentionPolicy_ptr _duplicate (ServantRetentionPolicy_ptr obj);
-static ServantRetentionPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-static ServantRetentionPolicy_ptr _nil (void);
-static ServantRetentionPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+  class TAO_Export ServantRetentionPolicy: public virtual Policy
+  {
+  public:
+    // the static operations
+    static ServantRetentionPolicy_ptr _duplicate (ServantRetentionPolicy_ptr obj);
+    static ServantRetentionPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static ServantRetentionPolicy_ptr _nil (void);
+    static ServantRetentionPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-virtual ServantRetentionPolicyValue value (CORBA::Environment &env);
-virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-ServantRetentionPolicy (void); // default constructor
-ServantRetentionPolicy (STUB_Object *objref);
-public:
-virtual ~ServantRetentionPolicy (void);
-private:
-ServantRetentionPolicy (const ServantRetentionPolicy&);
-void operator= (const ServantRetentionPolicy&);
-};
+    virtual ServantRetentionPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    ServantRetentionPolicy (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~ServantRetentionPolicy (void);
+  private:
+    ServantRetentionPolicy (const ServantRetentionPolicy&);
+    void operator= (const ServantRetentionPolicy&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_ServantRetentionPolicy;
+  static CORBA::TypeCode_ptr _tc_ServantRetentionPolicy;
 
-enum RequestProcessingPolicyValue
-{
-USE_ACTIVE_OBJECT_MAP_ONLY, 
-USE_DEFAULT_SERVANT, 
-USE_SERVANT_MANAGER
-};
-typedef RequestProcessingPolicyValue &RequestProcessingPolicyValue_out;
-static CORBA::TypeCode_ptr _tc_RequestProcessingPolicyValue;
+  enum RequestProcessingPolicyValue
+  {
+    USE_ACTIVE_OBJECT_MAP_ONLY, 
+    USE_DEFAULT_SERVANT, 
+    USE_SERVANT_MANAGER
+  };
+  typedef RequestProcessingPolicyValue &RequestProcessingPolicyValue_out;
+  static CORBA::TypeCode_ptr _tc_RequestProcessingPolicyValue;
 
-
+  
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY___PTR_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY___PTR_CH_
 
-class TAO_Export RequestProcessingPolicy;
-typedef RequestProcessingPolicy *RequestProcessingPolicy_ptr;
-
+class RequestProcessingPolicy;
+  typedef RequestProcessingPolicy *RequestProcessingPolicy_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY___VAR_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY___VAR_CH_
 
-class TAO_Export RequestProcessingPolicy_var
-{
-public:
-RequestProcessingPolicy_var (void); // default constructor
-RequestProcessingPolicy_var (RequestProcessingPolicy_ptr);
-RequestProcessingPolicy_var (const RequestProcessingPolicy_var &); // copy constructor
-~RequestProcessingPolicy_var (void); // destructor
+  class TAO_Export RequestProcessingPolicy_var
+  {
+  public:
+    RequestProcessingPolicy_var (void); // default constructor
+    RequestProcessingPolicy_var (RequestProcessingPolicy_ptr);
+    RequestProcessingPolicy_var (const RequestProcessingPolicy_var &); // copy constructor
+    ~RequestProcessingPolicy_var (void); // destructor
+    
+    RequestProcessingPolicy_var &operator= (RequestProcessingPolicy_ptr);
+    RequestProcessingPolicy_var &operator= (const RequestProcessingPolicy_var &);
+    RequestProcessingPolicy_ptr operator-> (void) const;
+    
+    operator const RequestProcessingPolicy_ptr &() const;
+    operator RequestProcessingPolicy_ptr &();
+    // in, inout, out, _retn 
+    RequestProcessingPolicy_ptr in (void) const;
+    RequestProcessingPolicy_ptr &inout (void);
+    RequestProcessingPolicy_ptr &out (void);
+    RequestProcessingPolicy_ptr _retn (void);
+    RequestProcessingPolicy_ptr ptr (void) const;
 
-RequestProcessingPolicy_var &operator= (RequestProcessingPolicy_ptr);
-RequestProcessingPolicy_var &operator= (const RequestProcessingPolicy_var &);
-RequestProcessingPolicy_ptr operator-> (void) const;
-
-operator const RequestProcessingPolicy_ptr &() const;
-operator RequestProcessingPolicy_ptr &();
-// in, inout, out, _retn 
-RequestProcessingPolicy_ptr in (void) const;
-RequestProcessingPolicy_ptr &inout (void);
-RequestProcessingPolicy_ptr &out (void);
-RequestProcessingPolicy_ptr _retn (void);
-RequestProcessingPolicy_ptr ptr (void) const;
-
-private:
-RequestProcessingPolicy_ptr ptr_;
-};
+  private:
+    RequestProcessingPolicy_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1228,22 +1183,22 @@ RequestProcessingPolicy_ptr ptr_;
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY___OUT_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY___OUT_CH_
 
-class TAO_Export RequestProcessingPolicy_out
-{
-public:
-RequestProcessingPolicy_out (RequestProcessingPolicy_ptr &);
-RequestProcessingPolicy_out (RequestProcessingPolicy_var &);
-RequestProcessingPolicy_out (RequestProcessingPolicy_out &);
-RequestProcessingPolicy_out &operator= (RequestProcessingPolicy_out &);
-RequestProcessingPolicy_out &operator= (const RequestProcessingPolicy_var &);
-RequestProcessingPolicy_out &operator= (RequestProcessingPolicy_ptr);
-operator RequestProcessingPolicy_ptr &();
-RequestProcessingPolicy_ptr &ptr (void);
-RequestProcessingPolicy_ptr operator-> (void);
-
-private:
-RequestProcessingPolicy_ptr &ptr_;
-};
+  class TAO_Export RequestProcessingPolicy_out
+  {
+  public:
+    RequestProcessingPolicy_out (RequestProcessingPolicy_ptr &);
+    RequestProcessingPolicy_out (RequestProcessingPolicy_var &);
+    RequestProcessingPolicy_out (RequestProcessingPolicy_out &);
+    RequestProcessingPolicy_out &operator= (RequestProcessingPolicy_out &);
+    RequestProcessingPolicy_out &operator= (const RequestProcessingPolicy_var &);
+    RequestProcessingPolicy_out &operator= (RequestProcessingPolicy_ptr);
+    operator RequestProcessingPolicy_ptr &();
+    RequestProcessingPolicy_ptr &ptr (void);
+    RequestProcessingPolicy_ptr operator-> (void);
+    
+  private:
+    RequestProcessingPolicy_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1252,69 +1207,72 @@ RequestProcessingPolicy_ptr &ptr_;
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY_CH_)
 #define _PORTABLESERVER_REQUESTPROCESSINGPOLICY_CH_
 
-class TAO_Export RequestProcessingPolicy: public virtual Policy
-{
-public:
-// the static operations
-static RequestProcessingPolicy_ptr _duplicate (RequestProcessingPolicy_ptr obj);
-static RequestProcessingPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-static RequestProcessingPolicy_ptr _nil (void);
-static RequestProcessingPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+  class TAO_Export RequestProcessingPolicy: public virtual Policy
+  {
+  public:
+    // the static operations
+    static RequestProcessingPolicy_ptr _duplicate (RequestProcessingPolicy_ptr obj);
+    static RequestProcessingPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static RequestProcessingPolicy_ptr _nil (void);
+    static RequestProcessingPolicy_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-virtual RequestProcessingPolicyValue value (CORBA::Environment &env);
-virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-RequestProcessingPolicy (void); // default constructor
-RequestProcessingPolicy (STUB_Object *objref);
-public:
-virtual ~RequestProcessingPolicy (void);
-private:
-RequestProcessingPolicy (const RequestProcessingPolicy&);
-void operator= (const RequestProcessingPolicy&);
-};
+    virtual RequestProcessingPolicyValue value (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    RequestProcessingPolicy (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~RequestProcessingPolicy (void);
+  private:
+    RequestProcessingPolicy (const RequestProcessingPolicy&);
+    void operator= (const RequestProcessingPolicy&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_RequestProcessingPolicy;
+  static CORBA::TypeCode_ptr _tc_RequestProcessingPolicy;
 
-
+  
 #if !defined (_PORTABLESERVER_POAMANAGER___PTR_CH_)
 #define _PORTABLESERVER_POAMANAGER___PTR_CH_
 
 class POAManager;
-typedef POAManager *POAManager_ptr;
-
+  typedef POAManager *POAManager_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POAMANAGER___VAR_CH_)
 #define _PORTABLESERVER_POAMANAGER___VAR_CH_
 
-class TAO_Export POAManager_var
-{
-public:
-POAManager_var (void); // default constructor
-POAManager_var (POAManager_ptr);
-POAManager_var (const POAManager_var &); // copy constructor
-~POAManager_var (void); // destructor
+  class TAO_Export POAManager_var
+  {
+  public:
+    POAManager_var (void); // default constructor
+    POAManager_var (POAManager_ptr);
+    POAManager_var (const POAManager_var &); // copy constructor
+    ~POAManager_var (void); // destructor
+    
+    POAManager_var &operator= (POAManager_ptr);
+    POAManager_var &operator= (const POAManager_var &);
+    POAManager_ptr operator-> (void) const;
+    
+    operator const POAManager_ptr &() const;
+    operator POAManager_ptr &();
+    // in, inout, out, _retn 
+    POAManager_ptr in (void) const;
+    POAManager_ptr &inout (void);
+    POAManager_ptr &out (void);
+    POAManager_ptr _retn (void);
+    POAManager_ptr ptr (void) const;
 
-POAManager_var &operator= (POAManager_ptr);
-POAManager_var &operator= (const POAManager_var &);
-POAManager_ptr operator-> (void) const;
-
-operator const POAManager_ptr &() const;
-operator POAManager_ptr &();
-// in, inout, out, _retn 
-POAManager_ptr in (void) const;
-POAManager_ptr &inout (void);
-POAManager_ptr &out (void);
-POAManager_ptr _retn (void);
-POAManager_ptr ptr (void) const;
-
-private:
-POAManager_ptr ptr_;
-};
+  private:
+    POAManager_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1323,22 +1281,22 @@ POAManager_ptr ptr_;
 #if !defined (_PORTABLESERVER_POAMANAGER___OUT_CH_)
 #define _PORTABLESERVER_POAMANAGER___OUT_CH_
 
-class TAO_Export POAManager_out
-{
-public:
-POAManager_out (POAManager_ptr &);
-POAManager_out (POAManager_var &);
-POAManager_out (POAManager_out &);
-POAManager_out &operator= (POAManager_out &);
-POAManager_out &operator= (const POAManager_var &);
-POAManager_out &operator= (POAManager_ptr);
-operator POAManager_ptr &();
-POAManager_ptr &ptr (void);
-POAManager_ptr operator-> (void);
-
-private:
-POAManager_ptr &ptr_;
-};
+  class TAO_Export POAManager_out
+  {
+  public:
+    POAManager_out (POAManager_ptr &);
+    POAManager_out (POAManager_var &);
+    POAManager_out (POAManager_out &);
+    POAManager_out &operator= (POAManager_out &);
+    POAManager_out &operator= (const POAManager_var &);
+    POAManager_out &operator= (POAManager_ptr);
+    operator POAManager_ptr &();
+    POAManager_ptr &ptr (void);
+    POAManager_ptr operator-> (void);
+    
+  private:
+    POAManager_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1347,99 +1305,102 @@ POAManager_ptr &ptr_;
 #if !defined (_PORTABLESERVER_POAMANAGER_CH_)
 #define _PORTABLESERVER_POAMANAGER_CH_
 
-class TAO_Export POAManager: public virtual CORBA::Object
-{
-public:
-// the static operations
-static POAManager_ptr _duplicate (POAManager_ptr obj);
-static POAManager_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-static POAManager_ptr _nil (void);
-static POAManager_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+  class TAO_Export POAManager: public virtual CORBA::Object
+  {
+  public:
+    // the static operations
+    static POAManager_ptr _duplicate (POAManager_ptr obj);
+    static POAManager_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static POAManager_ptr _nil (void);
+    static POAManager_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-
+    
 #if !defined (_PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE___PTR_CH_
 
-class AdapterInactive;
-typedef AdapterInactive *AdapterInactive_ptr;
-
+    class AdapterInactive;
+    typedef AdapterInactive *AdapterInactive_ptr;
+    
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_)
 #define _PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_
 
-class TAO_Export AdapterInactive : public CORBA::UserException
-{
-public:
-AdapterInactive (void); // default ctor
-AdapterInactive (const AdapterInactive &); // copy ctor
-~AdapterInactive(void); // dtor
-AdapterInactive &operator= (const AdapterInactive &);
-static AdapterInactive *_narrow (CORBA::Exception *);
-};
-static CORBA::TypeCode_ptr _tc_AdapterInactive;
+    class TAO_Export AdapterInactive : public CORBA::UserException
+    {
+    public:
+      AdapterInactive (void); // default ctor
+      AdapterInactive (const AdapterInactive &); // copy ctor
+      ~AdapterInactive(void); // dtor
+      AdapterInactive &operator= (const AdapterInactive &);
+      static AdapterInactive *_narrow (CORBA::Exception *);
+    };
+        static CORBA::TypeCode_ptr _tc_AdapterInactive;
 
 
 #endif // end #if !defined
 
-virtual void  activate (CORBA::Environment &env);
-virtual void  hold_requests (CORBA::Boolean wait_for_completion, CORBA::Environment &env);
-virtual void  discard_requests (CORBA::Boolean wait_for_completion, CORBA::Environment &env);
-virtual void  deactivate (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA::Environment &env);
-virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-POAManager (void); // default constructor
-POAManager (STUB_Object *objref);
-public:
-virtual ~POAManager (void);
-private:
-POAManager (const POAManager&);
-void operator= (const POAManager&);
-};
+    virtual void  activate (CORBA::Environment &env);
+    virtual void  hold_requests (CORBA::Boolean wait_for_completion, CORBA::Environment &env);
+    virtual void  discard_requests (CORBA::Boolean wait_for_completion, CORBA::Environment &env);
+    virtual void  deactivate (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    POAManager (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~POAManager (void);
+  private:
+    POAManager (const POAManager&);
+    void operator= (const POAManager&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_POAManager;
+  static CORBA::TypeCode_ptr _tc_POAManager;
 
-
+  
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___PTR_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR___PTR_CH_
 
 class AdapterActivator;
-typedef AdapterActivator *AdapterActivator_ptr;
-
+  typedef AdapterActivator *AdapterActivator_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___VAR_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR___VAR_CH_
 
-class TAO_Export AdapterActivator_var
-{
-public:
-AdapterActivator_var (void); // default constructor
-AdapterActivator_var (AdapterActivator_ptr);
-AdapterActivator_var (const AdapterActivator_var &); // copy constructor
-~AdapterActivator_var (void); // destructor
+  class TAO_Export AdapterActivator_var
+  {
+  public:
+    AdapterActivator_var (void); // default constructor
+    AdapterActivator_var (AdapterActivator_ptr);
+    AdapterActivator_var (const AdapterActivator_var &); // copy constructor
+    ~AdapterActivator_var (void); // destructor
+    
+    AdapterActivator_var &operator= (AdapterActivator_ptr);
+    AdapterActivator_var &operator= (const AdapterActivator_var &);
+    AdapterActivator_ptr operator-> (void) const;
+    
+    operator const AdapterActivator_ptr &() const;
+    operator AdapterActivator_ptr &();
+    // in, inout, out, _retn 
+    AdapterActivator_ptr in (void) const;
+    AdapterActivator_ptr &inout (void);
+    AdapterActivator_ptr &out (void);
+    AdapterActivator_ptr _retn (void);
+    AdapterActivator_ptr ptr (void) const;
 
-AdapterActivator_var &operator= (AdapterActivator_ptr);
-AdapterActivator_var &operator= (const AdapterActivator_var &);
-AdapterActivator_ptr operator-> (void) const;
-
-operator const AdapterActivator_ptr &() const;
-operator AdapterActivator_ptr &();
-// in, inout, out, _retn 
-AdapterActivator_ptr in (void) const;
-AdapterActivator_ptr &inout (void);
-AdapterActivator_ptr &out (void);
-AdapterActivator_ptr _retn (void);
-AdapterActivator_ptr ptr (void) const;
-
-private:
-AdapterActivator_ptr ptr_;
-};
+  private:
+    AdapterActivator_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1448,22 +1409,22 @@ AdapterActivator_ptr ptr_;
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___OUT_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR___OUT_CH_
 
-class TAO_Export AdapterActivator_out
-{
-public:
-AdapterActivator_out (AdapterActivator_ptr &);
-AdapterActivator_out (AdapterActivator_var &);
-AdapterActivator_out (AdapterActivator_out &);
-AdapterActivator_out &operator= (AdapterActivator_out &);
-AdapterActivator_out &operator= (const AdapterActivator_var &);
-AdapterActivator_out &operator= (AdapterActivator_ptr);
-operator AdapterActivator_ptr &();
-AdapterActivator_ptr &ptr (void);
-AdapterActivator_ptr operator-> (void);
-
-private:
-AdapterActivator_ptr &ptr_;
-};
+  class TAO_Export AdapterActivator_out
+  {
+  public:
+    AdapterActivator_out (AdapterActivator_ptr &);
+    AdapterActivator_out (AdapterActivator_var &);
+    AdapterActivator_out (AdapterActivator_out &);
+    AdapterActivator_out &operator= (AdapterActivator_out &);
+    AdapterActivator_out &operator= (const AdapterActivator_var &);
+    AdapterActivator_out &operator= (AdapterActivator_ptr);
+    operator AdapterActivator_ptr &();
+    AdapterActivator_ptr &ptr (void);
+    AdapterActivator_ptr operator-> (void);
+    
+  private:
+    AdapterActivator_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1472,69 +1433,72 @@ AdapterActivator_ptr &ptr_;
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR_CH_
 
-class TAO_Export AdapterActivator: public virtual CORBA::Object
-{
-public:
-// the static operations
-static AdapterActivator_ptr _duplicate (AdapterActivator_ptr obj);
-static AdapterActivator_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-static AdapterActivator_ptr _nil (void);
-static AdapterActivator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+  class TAO_Export AdapterActivator: public virtual CORBA::Object
+  {
+  public:
+    // the static operations
+    static AdapterActivator_ptr _duplicate (AdapterActivator_ptr obj);
+    static AdapterActivator_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static AdapterActivator_ptr _nil (void);
+    static AdapterActivator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-virtual CORBA::Boolean  unknown_adapter (POA_ptr parent, const char *name, CORBA::Environment &env);
-virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-AdapterActivator (void); // default constructor
-AdapterActivator (STUB_Object *objref);
-public:
-virtual ~AdapterActivator (void);
-private:
-AdapterActivator (const AdapterActivator&);
-void operator= (const AdapterActivator&);
-};
+    virtual CORBA::Boolean  unknown_adapter (POA_ptr parent, const char *name, CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    AdapterActivator (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~AdapterActivator (void);
+  private:
+    AdapterActivator (const AdapterActivator&);
+    void operator= (const AdapterActivator&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_AdapterActivator;
+  static CORBA::TypeCode_ptr _tc_AdapterActivator;
 
-
+  
 #if !defined (_PORTABLESERVER_SERVANTMANAGER___PTR_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER___PTR_CH_
 
 class ServantManager;
-typedef ServantManager *ServantManager_ptr;
-
+  typedef ServantManager *ServantManager_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_SERVANTMANAGER___VAR_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER___VAR_CH_
 
-class TAO_Export ServantManager_var
-{
-public:
-ServantManager_var (void); // default constructor
-ServantManager_var (ServantManager_ptr);
-ServantManager_var (const ServantManager_var &); // copy constructor
-~ServantManager_var (void); // destructor
+  class TAO_Export ServantManager_var
+  {
+  public:
+    ServantManager_var (void); // default constructor
+    ServantManager_var (ServantManager_ptr);
+    ServantManager_var (const ServantManager_var &); // copy constructor
+    ~ServantManager_var (void); // destructor
+    
+    ServantManager_var &operator= (ServantManager_ptr);
+    ServantManager_var &operator= (const ServantManager_var &);
+    ServantManager_ptr operator-> (void) const;
+    
+    operator const ServantManager_ptr &() const;
+    operator ServantManager_ptr &();
+    // in, inout, out, _retn 
+    ServantManager_ptr in (void) const;
+    ServantManager_ptr &inout (void);
+    ServantManager_ptr &out (void);
+    ServantManager_ptr _retn (void);
+    ServantManager_ptr ptr (void) const;
 
-ServantManager_var &operator= (ServantManager_ptr);
-ServantManager_var &operator= (const ServantManager_var &);
-ServantManager_ptr operator-> (void) const;
-
-operator const ServantManager_ptr &() const;
-operator ServantManager_ptr &();
-// in, inout, out, _retn 
-ServantManager_ptr in (void) const;
-ServantManager_ptr &inout (void);
-ServantManager_ptr &out (void);
-ServantManager_ptr _retn (void);
-ServantManager_ptr ptr (void) const;
-
-private:
-ServantManager_ptr ptr_;
-};
+  private:
+    ServantManager_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1543,22 +1507,22 @@ ServantManager_ptr ptr_;
 #if !defined (_PORTABLESERVER_SERVANTMANAGER___OUT_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER___OUT_CH_
 
-class TAO_Export ServantManager_out
-{
-public:
-ServantManager_out (ServantManager_ptr &);
-ServantManager_out (ServantManager_var &);
-ServantManager_out (ServantManager_out &);
-ServantManager_out &operator= (ServantManager_out &);
-ServantManager_out &operator= (const ServantManager_var &);
-ServantManager_out &operator= (ServantManager_ptr);
-operator ServantManager_ptr &();
-ServantManager_ptr &ptr (void);
-ServantManager_ptr operator-> (void);
-
-private:
-ServantManager_ptr &ptr_;
-};
+  class TAO_Export ServantManager_out
+  {
+  public:
+    ServantManager_out (ServantManager_ptr &);
+    ServantManager_out (ServantManager_var &);
+    ServantManager_out (ServantManager_out &);
+    ServantManager_out &operator= (ServantManager_out &);
+    ServantManager_out &operator= (const ServantManager_var &);
+    ServantManager_out &operator= (ServantManager_ptr);
+    operator ServantManager_ptr &();
+    ServantManager_ptr &ptr (void);
+    ServantManager_ptr operator-> (void);
+    
+  private:
+    ServantManager_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1567,68 +1531,71 @@ ServantManager_ptr &ptr_;
 #if !defined (_PORTABLESERVER_SERVANTMANAGER_CH_)
 #define _PORTABLESERVER_SERVANTMANAGER_CH_
 
-class TAO_Export ServantManager: public virtual CORBA::Object
-{
-public:
-// the static operations
-static ServantManager_ptr _duplicate (ServantManager_ptr obj);
-static ServantManager_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-static ServantManager_ptr _nil (void);
-static ServantManager_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+  class TAO_Export ServantManager: public virtual CORBA::Object
+  {
+  public:
+    // the static operations
+    static ServantManager_ptr _duplicate (ServantManager_ptr obj);
+    static ServantManager_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static ServantManager_ptr _nil (void);
+    static ServantManager_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-ServantManager (void); // default constructor
-ServantManager (STUB_Object *objref);
-public:
-virtual ~ServantManager (void);
-private:
-ServantManager (const ServantManager&);
-void operator= (const ServantManager&);
-};
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    ServantManager (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~ServantManager (void);
+  private:
+    ServantManager (const ServantManager&);
+    void operator= (const ServantManager&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_ServantManager;
+  static CORBA::TypeCode_ptr _tc_ServantManager;
 
-
+  
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR___PTR_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR___PTR_CH_
 
 class ServantActivator;
-typedef ServantActivator *ServantActivator_ptr;
-
+  typedef ServantActivator *ServantActivator_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR___VAR_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR___VAR_CH_
 
-class TAO_Export ServantActivator_var
-{
-public:
-ServantActivator_var (void); // default constructor
-ServantActivator_var (ServantActivator_ptr);
-ServantActivator_var (const ServantActivator_var &); // copy constructor
-~ServantActivator_var (void); // destructor
+  class TAO_Export ServantActivator_var
+  {
+  public:
+    ServantActivator_var (void); // default constructor
+    ServantActivator_var (ServantActivator_ptr);
+    ServantActivator_var (const ServantActivator_var &); // copy constructor
+    ~ServantActivator_var (void); // destructor
+    
+    ServantActivator_var &operator= (ServantActivator_ptr);
+    ServantActivator_var &operator= (const ServantActivator_var &);
+    ServantActivator_ptr operator-> (void) const;
+    
+    operator const ServantActivator_ptr &() const;
+    operator ServantActivator_ptr &();
+    // in, inout, out, _retn 
+    ServantActivator_ptr in (void) const;
+    ServantActivator_ptr &inout (void);
+    ServantActivator_ptr &out (void);
+    ServantActivator_ptr _retn (void);
+    ServantActivator_ptr ptr (void) const;
 
-ServantActivator_var &operator= (ServantActivator_ptr);
-ServantActivator_var &operator= (const ServantActivator_var &);
-ServantActivator_ptr operator-> (void) const;
-
-operator const ServantActivator_ptr &() const;
-operator ServantActivator_ptr &();
-// in, inout, out, _retn 
-ServantActivator_ptr in (void) const;
-ServantActivator_ptr &inout (void);
-ServantActivator_ptr &out (void);
-ServantActivator_ptr _retn (void);
-ServantActivator_ptr ptr (void) const;
-
-private:
-ServantActivator_ptr ptr_;
-};
+  private:
+    ServantActivator_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1637,22 +1604,22 @@ ServantActivator_ptr ptr_;
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR___OUT_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR___OUT_CH_
 
-class TAO_Export ServantActivator_out
-{
-public:
-ServantActivator_out (ServantActivator_ptr &);
-ServantActivator_out (ServantActivator_var &);
-ServantActivator_out (ServantActivator_out &);
-ServantActivator_out &operator= (ServantActivator_out &);
-ServantActivator_out &operator= (const ServantActivator_var &);
-ServantActivator_out &operator= (ServantActivator_ptr);
-operator ServantActivator_ptr &();
-ServantActivator_ptr &ptr (void);
-ServantActivator_ptr operator-> (void);
-
-private:
-ServantActivator_ptr &ptr_;
-};
+  class TAO_Export ServantActivator_out
+  {
+  public:
+    ServantActivator_out (ServantActivator_ptr &);
+    ServantActivator_out (ServantActivator_var &);
+    ServantActivator_out (ServantActivator_out &);
+    ServantActivator_out &operator= (ServantActivator_out &);
+    ServantActivator_out &operator= (const ServantActivator_var &);
+    ServantActivator_out &operator= (ServantActivator_ptr);
+    operator ServantActivator_ptr &();
+    ServantActivator_ptr &ptr (void);
+    ServantActivator_ptr operator-> (void);
+    
+  private:
+    ServantActivator_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1661,70 +1628,73 @@ ServantActivator_ptr &ptr_;
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR_CH_)
 #define _PORTABLESERVER_SERVANTACTIVATOR_CH_
 
-class TAO_Export ServantActivator: public virtual ServantManager
-{
-public:
-// the static operations
-static ServantActivator_ptr _duplicate (ServantActivator_ptr obj);
-static ServantActivator_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-static ServantActivator_ptr _nil (void);
-static ServantActivator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+  class TAO_Export ServantActivator: public virtual ServantManager
+  {
+  public:
+    // the static operations
+    static ServantActivator_ptr _duplicate (ServantActivator_ptr obj);
+    static ServantActivator_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static ServantActivator_ptr _nil (void);
+    static ServantActivator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-virtual Servant  incarnate (const ObjectId &oid, POA_ptr adapter, CORBA::Environment &env);
-virtual void  etherealize (const ObjectId &oid, POA_ptr adapter, Servant serv, CORBA::Boolean cleanup_in_progress, CORBA::Boolean remaining_activations, CORBA::Environment &env);
-virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-ServantActivator (void); // default constructor
-ServantActivator (STUB_Object *objref);
-public:
-virtual ~ServantActivator (void);
-private:
-ServantActivator (const ServantActivator&);
-void operator= (const ServantActivator&);
-};
+    virtual Servant  incarnate (const ObjectId &oid, POA_ptr adapter, CORBA::Environment &env);
+    virtual void  etherealize (const ObjectId &oid, POA_ptr adapter, Servant serv, CORBA::Boolean cleanup_in_progress, CORBA::Boolean remaining_activations, CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    ServantActivator (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~ServantActivator (void);
+  private:
+    ServantActivator (const ServantActivator&);
+    void operator= (const ServantActivator&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_ServantActivator;
+  static CORBA::TypeCode_ptr _tc_ServantActivator;
 
-
+  
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR___PTR_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR___PTR_CH_
 
 class ServantLocator;
-typedef ServantLocator *ServantLocator_ptr;
-
+  typedef ServantLocator *ServantLocator_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR___VAR_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR___VAR_CH_
 
-class TAO_Export ServantLocator_var
-{
-public:
-ServantLocator_var (void); // default constructor
-ServantLocator_var (ServantLocator_ptr);
-ServantLocator_var (const ServantLocator_var &); // copy constructor
-~ServantLocator_var (void); // destructor
+  class TAO_Export ServantLocator_var
+  {
+  public:
+    ServantLocator_var (void); // default constructor
+    ServantLocator_var (ServantLocator_ptr);
+    ServantLocator_var (const ServantLocator_var &); // copy constructor
+    ~ServantLocator_var (void); // destructor
+    
+    ServantLocator_var &operator= (ServantLocator_ptr);
+    ServantLocator_var &operator= (const ServantLocator_var &);
+    ServantLocator_ptr operator-> (void) const;
+    
+    operator const ServantLocator_ptr &() const;
+    operator ServantLocator_ptr &();
+    // in, inout, out, _retn 
+    ServantLocator_ptr in (void) const;
+    ServantLocator_ptr &inout (void);
+    ServantLocator_ptr &out (void);
+    ServantLocator_ptr _retn (void);
+    ServantLocator_ptr ptr (void) const;
 
-ServantLocator_var &operator= (ServantLocator_ptr);
-ServantLocator_var &operator= (const ServantLocator_var &);
-ServantLocator_ptr operator-> (void) const;
-
-operator const ServantLocator_ptr &() const;
-operator ServantLocator_ptr &();
-// in, inout, out, _retn 
-ServantLocator_ptr in (void) const;
-ServantLocator_ptr &inout (void);
-ServantLocator_ptr &out (void);
-ServantLocator_ptr _retn (void);
-ServantLocator_ptr ptr (void) const;
-
-private:
-ServantLocator_ptr ptr_;
-};
+  private:
+    ServantLocator_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1733,22 +1703,22 @@ ServantLocator_ptr ptr_;
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR___OUT_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR___OUT_CH_
 
-class TAO_Export ServantLocator_out
-{
-public:
-ServantLocator_out (ServantLocator_ptr &);
-ServantLocator_out (ServantLocator_var &);
-ServantLocator_out (ServantLocator_out &);
-ServantLocator_out &operator= (ServantLocator_out &);
-ServantLocator_out &operator= (const ServantLocator_var &);
-ServantLocator_out &operator= (ServantLocator_ptr);
-operator ServantLocator_ptr &();
-ServantLocator_ptr &ptr (void);
-ServantLocator_ptr operator-> (void);
-
-private:
-ServantLocator_ptr &ptr_;
-};
+  class TAO_Export ServantLocator_out
+  {
+  public:
+    ServantLocator_out (ServantLocator_ptr &);
+    ServantLocator_out (ServantLocator_var &);
+    ServantLocator_out (ServantLocator_out &);
+    ServantLocator_out &operator= (ServantLocator_out &);
+    ServantLocator_out &operator= (const ServantLocator_var &);
+    ServantLocator_out &operator= (ServantLocator_ptr);
+    operator ServantLocator_ptr &();
+    ServantLocator_ptr &ptr (void);
+    ServantLocator_ptr operator-> (void);
+    
+  private:
+    ServantLocator_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1757,73 +1727,76 @@ ServantLocator_ptr &ptr_;
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR_CH_
 
-class TAO_Export ServantLocator: public virtual ServantManager
-{
-public:
-  
-  typedef void *Cookie;
-  
-// the static operations
-static ServantLocator_ptr _duplicate (ServantLocator_ptr obj);
-static ServantLocator_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-static ServantLocator_ptr _nil (void);
-static ServantLocator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+  class TAO_Export ServantLocator: public virtual ServantManager
+  {
+  public:
 
-virtual Servant  preinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie the_cookie, CORBA::Environment &env);
-virtual void  postinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie the_cookie, Servant the_servant, CORBA::Environment &env);
-virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-ServantLocator (void); // default constructor
-ServantLocator (STUB_Object *objref);
-public:
-virtual ~ServantLocator (void);
-private:
-ServantLocator (const ServantLocator&);
-void operator= (const ServantLocator&);
-};
+    typedef void *Cookie;
+    
+    // the static operations
+    static ServantLocator_ptr _duplicate (ServantLocator_ptr obj);
+    static ServantLocator_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static ServantLocator_ptr _nil (void);
+    static ServantLocator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+
+    virtual Servant  preinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie the_cookie, CORBA::Environment &env);
+    virtual void  postinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie the_cookie, Servant the_servant, CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    ServantLocator (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~ServantLocator (void);
+  private:
+    ServantLocator (const ServantLocator&);
+    void operator= (const ServantLocator&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_ServantLocator;
+  static CORBA::TypeCode_ptr _tc_ServantLocator;
 
-
+  
 #if !defined (_PORTABLESERVER_POA___PTR_CH_)
 #define _PORTABLESERVER_POA___PTR_CH_
 
 class POA;
-typedef POA *POA_ptr;
-
+  typedef POA *POA_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POA___VAR_CH_)
 #define _PORTABLESERVER_POA___VAR_CH_
 
-class TAO_Export POA_var
-{
-public:
-POA_var (void); // default constructor
-POA_var (POA_ptr);
-POA_var (const POA_var &); // copy constructor
-~POA_var (void); // destructor
+  class TAO_Export POA_var
+  {
+  public:
+    POA_var (void); // default constructor
+    POA_var (POA_ptr);
+    POA_var (const POA_var &); // copy constructor
+    ~POA_var (void); // destructor
+    
+    POA_var &operator= (POA_ptr);
+    POA_var &operator= (const POA_var &);
+    POA_ptr operator-> (void) const;
+    
+    operator const POA_ptr &() const;
+    operator POA_ptr &();
+    // in, inout, out, _retn 
+    POA_ptr in (void) const;
+    POA_ptr &inout (void);
+    POA_ptr &out (void);
+    POA_ptr _retn (void);
+    POA_ptr ptr (void) const;
 
-POA_var &operator= (POA_ptr);
-POA_var &operator= (const POA_var &);
-POA_ptr operator-> (void) const;
-
-operator const POA_ptr &() const;
-operator POA_ptr &();
-// in, inout, out, _retn 
-POA_ptr in (void) const;
-POA_ptr &inout (void);
-POA_ptr &out (void);
-POA_ptr _retn (void);
-POA_ptr ptr (void) const;
-
-private:
-POA_ptr ptr_;
-};
+  private:
+    POA_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1832,22 +1805,22 @@ POA_ptr ptr_;
 #if !defined (_PORTABLESERVER_POA___OUT_CH_)
 #define _PORTABLESERVER_POA___OUT_CH_
 
-class TAO_Export POA_out
-{
-public:
-POA_out (POA_ptr &);
-POA_out (POA_var &);
-POA_out (POA_out &);
-POA_out &operator= (POA_out &);
-POA_out &operator= (const POA_var &);
-POA_out &operator= (POA_ptr);
-operator POA_ptr &();
-POA_ptr &ptr (void);
-POA_ptr operator-> (void);
-
-private:
-POA_ptr &ptr_;
-};
+  class TAO_Export POA_out
+  {
+  public:
+    POA_out (POA_ptr &);
+    POA_out (POA_var &);
+    POA_out (POA_out &);
+    POA_out &operator= (POA_out &);
+    POA_out &operator= (const POA_var &);
+    POA_out &operator= (POA_ptr);
+    operator POA_ptr &();
+    POA_ptr &ptr (void);
+    POA_ptr operator-> (void);
+    
+  private:
+    POA_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -1856,397 +1829,400 @@ POA_ptr &ptr_;
 #if !defined (_PORTABLESERVER_POA_CH_)
 #define _PORTABLESERVER_POA_CH_
 
-class TAO_Export POA: public virtual CORBA::Object
-{
-public:
-// the static operations
-static POA_ptr _duplicate (POA_ptr obj);
-static POA_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-static POA_ptr _nil (void);
-static POA_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+  class TAO_Export POA: public virtual CORBA::Object
+  {
+  public:
+    // the static operations
+    static POA_ptr _duplicate (POA_ptr obj);
+    static POA_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static POA_ptr _nil (void);
+    static POA_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-
+    
 #if !defined (_PORTABLESERVER_POA_ADAPTERALREADYEXISTS___PTR_CH_)
 #define _PORTABLESERVER_POA_ADAPTERALREADYEXISTS___PTR_CH_
 
-class AdapterAlreadyExists;
-typedef AdapterAlreadyExists *AdapterAlreadyExists_ptr;
-
+    class AdapterAlreadyExists;
+    typedef AdapterAlreadyExists *AdapterAlreadyExists_ptr;
+    
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERALREADYEXISTS_CH_)
 #define _PORTABLESERVER_POA_ADAPTERALREADYEXISTS_CH_
 
-class TAO_Export AdapterAlreadyExists : public CORBA::UserException
-{
-public:
-AdapterAlreadyExists (void); // default ctor
-AdapterAlreadyExists (const AdapterAlreadyExists &); // copy ctor
-~AdapterAlreadyExists(void); // dtor
-AdapterAlreadyExists &operator= (const AdapterAlreadyExists &);
-static AdapterAlreadyExists *_narrow (CORBA::Exception *);
-};
-static CORBA::TypeCode_ptr _tc_AdapterAlreadyExists;
+    class TAO_Export AdapterAlreadyExists : public CORBA::UserException
+    {
+    public:
+      AdapterAlreadyExists (void); // default ctor
+      AdapterAlreadyExists (const AdapterAlreadyExists &); // copy ctor
+      ~AdapterAlreadyExists(void); // dtor
+      AdapterAlreadyExists &operator= (const AdapterAlreadyExists &);
+      static AdapterAlreadyExists *_narrow (CORBA::Exception *);
+    };
+        static CORBA::TypeCode_ptr _tc_AdapterAlreadyExists;
 
 
 #endif // end #if !defined
 
-
+    
 #if !defined (_PORTABLESERVER_POA_ADAPTERINACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POA_ADAPTERINACTIVE___PTR_CH_
 
-class AdapterInactive;
-typedef AdapterInactive *AdapterInactive_ptr;
-
+    class AdapterInactive;
+    typedef AdapterInactive *AdapterInactive_ptr;
+    
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERINACTIVE_CH_)
 #define _PORTABLESERVER_POA_ADAPTERINACTIVE_CH_
 
-class TAO_Export AdapterInactive : public CORBA::UserException
-{
-public:
-AdapterInactive (void); // default ctor
-AdapterInactive (const AdapterInactive &); // copy ctor
-~AdapterInactive(void); // dtor
-AdapterInactive &operator= (const AdapterInactive &);
-static AdapterInactive *_narrow (CORBA::Exception *);
-};
-static CORBA::TypeCode_ptr _tc_AdapterInactive;
+    class TAO_Export AdapterInactive : public CORBA::UserException
+    {
+    public:
+      AdapterInactive (void); // default ctor
+      AdapterInactive (const AdapterInactive &); // copy ctor
+      ~AdapterInactive(void); // dtor
+      AdapterInactive &operator= (const AdapterInactive &);
+      static AdapterInactive *_narrow (CORBA::Exception *);
+    };
+        static CORBA::TypeCode_ptr _tc_AdapterInactive;
 
 
 #endif // end #if !defined
 
-
+    
 #if !defined (_PORTABLESERVER_POA_ADAPTERNONEXISTENT___PTR_CH_)
 #define _PORTABLESERVER_POA_ADAPTERNONEXISTENT___PTR_CH_
 
-class AdapterNonExistent;
-typedef AdapterNonExistent *AdapterNonExistent_ptr;
-
+    class AdapterNonExistent;
+    typedef AdapterNonExistent *AdapterNonExistent_ptr;
+    
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POA_ADAPTERNONEXISTENT_CH_)
 #define _PORTABLESERVER_POA_ADAPTERNONEXISTENT_CH_
 
-class TAO_Export AdapterNonExistent : public CORBA::UserException
-{
-public:
-AdapterNonExistent (void); // default ctor
-AdapterNonExistent (const AdapterNonExistent &); // copy ctor
-~AdapterNonExistent(void); // dtor
-AdapterNonExistent &operator= (const AdapterNonExistent &);
-static AdapterNonExistent *_narrow (CORBA::Exception *);
-};
-static CORBA::TypeCode_ptr _tc_AdapterNonExistent;
+    class TAO_Export AdapterNonExistent : public CORBA::UserException
+    {
+    public:
+      AdapterNonExistent (void); // default ctor
+      AdapterNonExistent (const AdapterNonExistent &); // copy ctor
+      ~AdapterNonExistent(void); // dtor
+      AdapterNonExistent &operator= (const AdapterNonExistent &);
+      static AdapterNonExistent *_narrow (CORBA::Exception *);
+    };
+        static CORBA::TypeCode_ptr _tc_AdapterNonExistent;
 
 
 #endif // end #if !defined
 
-
+    
 #if !defined (_PORTABLESERVER_POA_INVALIDPOLICY___PTR_CH_)
 #define _PORTABLESERVER_POA_INVALIDPOLICY___PTR_CH_
 
-class InvalidPolicy;
-typedef InvalidPolicy *InvalidPolicy_ptr;
-
+    class InvalidPolicy;
+    typedef InvalidPolicy *InvalidPolicy_ptr;
+    
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POA_INVALIDPOLICY_CH_)
 #define _PORTABLESERVER_POA_INVALIDPOLICY_CH_
 
-class TAO_Export InvalidPolicy : public CORBA::UserException
-{
-public:
-InvalidPolicy (void); // default ctor
-InvalidPolicy (const InvalidPolicy &); // copy ctor
-~InvalidPolicy(void); // dtor
-InvalidPolicy(const CORBA::UShort);
-InvalidPolicy &operator= (const InvalidPolicy &);
-static InvalidPolicy *_narrow (CORBA::Exception *);
-CORBA::UShort index;
-};
-static CORBA::TypeCode_ptr _tc_InvalidPolicy;
+    class TAO_Export InvalidPolicy : public CORBA::UserException
+    {
+    public:
+      InvalidPolicy (void); // default ctor
+      InvalidPolicy (const InvalidPolicy &); // copy ctor
+      ~InvalidPolicy(void); // dtor
+      InvalidPolicy(const CORBA::UShort);
+      InvalidPolicy &operator= (const InvalidPolicy &);
+      static InvalidPolicy *_narrow (CORBA::Exception *);
+      CORBA::UShort index;
+    };
+        static CORBA::TypeCode_ptr _tc_InvalidPolicy;
 
 
 #endif // end #if !defined
 
-
+    
 #if !defined (_PORTABLESERVER_POA_NOSERVANT___PTR_CH_)
 #define _PORTABLESERVER_POA_NOSERVANT___PTR_CH_
 
-class NoServant;
-typedef NoServant *NoServant_ptr;
-
+    class NoServant;
+    typedef NoServant *NoServant_ptr;
+    
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POA_NOSERVANT_CH_)
 #define _PORTABLESERVER_POA_NOSERVANT_CH_
 
-class TAO_Export NoServant : public CORBA::UserException
-{
-public:
-NoServant (void); // default ctor
-NoServant (const NoServant &); // copy ctor
-~NoServant(void); // dtor
-NoServant &operator= (const NoServant &);
-static NoServant *_narrow (CORBA::Exception *);
-};
-static CORBA::TypeCode_ptr _tc_NoServant;
+    class TAO_Export NoServant : public CORBA::UserException
+    {
+    public:
+      NoServant (void); // default ctor
+      NoServant (const NoServant &); // copy ctor
+      ~NoServant(void); // dtor
+      NoServant &operator= (const NoServant &);
+      static NoServant *_narrow (CORBA::Exception *);
+    };
+        static CORBA::TypeCode_ptr _tc_NoServant;
 
 
 #endif // end #if !defined
 
-
+    
 #if !defined (_PORTABLESERVER_POA_OBJECTALREADYACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POA_OBJECTALREADYACTIVE___PTR_CH_
 
-class ObjectAlreadyActive;
-typedef ObjectAlreadyActive *ObjectAlreadyActive_ptr;
-
+    class ObjectAlreadyActive;
+    typedef ObjectAlreadyActive *ObjectAlreadyActive_ptr;
+    
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_)
 #define _PORTABLESERVER_POA_OBJECTALREADYACTIVE_CH_
 
-class TAO_Export ObjectAlreadyActive : public CORBA::UserException
-{
-public:
-ObjectAlreadyActive (void); // default ctor
-ObjectAlreadyActive (const ObjectAlreadyActive &); // copy ctor
-~ObjectAlreadyActive(void); // dtor
-ObjectAlreadyActive &operator= (const ObjectAlreadyActive &);
-static ObjectAlreadyActive *_narrow (CORBA::Exception *);
-};
-static CORBA::TypeCode_ptr _tc_ObjectAlreadyActive;
+    class TAO_Export ObjectAlreadyActive : public CORBA::UserException
+    {
+    public:
+      ObjectAlreadyActive (void); // default ctor
+      ObjectAlreadyActive (const ObjectAlreadyActive &); // copy ctor
+      ~ObjectAlreadyActive(void); // dtor
+      ObjectAlreadyActive &operator= (const ObjectAlreadyActive &);
+      static ObjectAlreadyActive *_narrow (CORBA::Exception *);
+    };
+        static CORBA::TypeCode_ptr _tc_ObjectAlreadyActive;
 
 
 #endif // end #if !defined
 
-
+    
 #if !defined (_PORTABLESERVER_POA_OBJECTNOTACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POA_OBJECTNOTACTIVE___PTR_CH_
 
-class ObjectNotActive;
-typedef ObjectNotActive *ObjectNotActive_ptr;
-
+    class ObjectNotActive;
+    typedef ObjectNotActive *ObjectNotActive_ptr;
+    
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POA_OBJECTNOTACTIVE_CH_)
 #define _PORTABLESERVER_POA_OBJECTNOTACTIVE_CH_
 
-class TAO_Export ObjectNotActive : public CORBA::UserException
-{
-public:
-ObjectNotActive (void); // default ctor
-ObjectNotActive (const ObjectNotActive &); // copy ctor
-~ObjectNotActive(void); // dtor
-ObjectNotActive &operator= (const ObjectNotActive &);
-static ObjectNotActive *_narrow (CORBA::Exception *);
-};
-static CORBA::TypeCode_ptr _tc_ObjectNotActive;
+    class TAO_Export ObjectNotActive : public CORBA::UserException
+    {
+    public:
+      ObjectNotActive (void); // default ctor
+      ObjectNotActive (const ObjectNotActive &); // copy ctor
+      ~ObjectNotActive(void); // dtor
+      ObjectNotActive &operator= (const ObjectNotActive &);
+      static ObjectNotActive *_narrow (CORBA::Exception *);
+    };
+        static CORBA::TypeCode_ptr _tc_ObjectNotActive;
 
 
 #endif // end #if !defined
 
-
+    
 #if !defined (_PORTABLESERVER_POA_SERVANTALREADYACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POA_SERVANTALREADYACTIVE___PTR_CH_
 
-class ServantAlreadyActive;
-typedef ServantAlreadyActive *ServantAlreadyActive_ptr;
-
+    class ServantAlreadyActive;
+    typedef ServantAlreadyActive *ServantAlreadyActive_ptr;
+    
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POA_SERVANTALREADYACTIVE_CH_)
 #define _PORTABLESERVER_POA_SERVANTALREADYACTIVE_CH_
 
-class TAO_Export ServantAlreadyActive : public CORBA::UserException
-{
-public:
-ServantAlreadyActive (void); // default ctor
-ServantAlreadyActive (const ServantAlreadyActive &); // copy ctor
-~ServantAlreadyActive(void); // dtor
-ServantAlreadyActive &operator= (const ServantAlreadyActive &);
-static ServantAlreadyActive *_narrow (CORBA::Exception *);
-};
-static CORBA::TypeCode_ptr _tc_ServantAlreadyActive;
+    class TAO_Export ServantAlreadyActive : public CORBA::UserException
+    {
+    public:
+      ServantAlreadyActive (void); // default ctor
+      ServantAlreadyActive (const ServantAlreadyActive &); // copy ctor
+      ~ServantAlreadyActive(void); // dtor
+      ServantAlreadyActive &operator= (const ServantAlreadyActive &);
+      static ServantAlreadyActive *_narrow (CORBA::Exception *);
+    };
+        static CORBA::TypeCode_ptr _tc_ServantAlreadyActive;
 
 
 #endif // end #if !defined
 
-
+    
 #if !defined (_PORTABLESERVER_POA_SERVANTNOTACTIVE___PTR_CH_)
 #define _PORTABLESERVER_POA_SERVANTNOTACTIVE___PTR_CH_
 
-class ServantNotActive;
-typedef ServantNotActive *ServantNotActive_ptr;
-
+    class ServantNotActive;
+    typedef ServantNotActive *ServantNotActive_ptr;
+    
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POA_SERVANTNOTACTIVE_CH_)
 #define _PORTABLESERVER_POA_SERVANTNOTACTIVE_CH_
 
-class TAO_Export ServantNotActive : public CORBA::UserException
-{
-public:
-ServantNotActive (void); // default ctor
-ServantNotActive (const ServantNotActive &); // copy ctor
-~ServantNotActive(void); // dtor
-ServantNotActive &operator= (const ServantNotActive &);
-static ServantNotActive *_narrow (CORBA::Exception *);
-};
-static CORBA::TypeCode_ptr _tc_ServantNotActive;
+    class TAO_Export ServantNotActive : public CORBA::UserException
+    {
+    public:
+      ServantNotActive (void); // default ctor
+      ServantNotActive (const ServantNotActive &); // copy ctor
+      ~ServantNotActive(void); // dtor
+      ServantNotActive &operator= (const ServantNotActive &);
+      static ServantNotActive *_narrow (CORBA::Exception *);
+    };
+        static CORBA::TypeCode_ptr _tc_ServantNotActive;
 
 
 #endif // end #if !defined
 
-
+    
 #if !defined (_PORTABLESERVER_POA_WRONGADAPTER___PTR_CH_)
 #define _PORTABLESERVER_POA_WRONGADAPTER___PTR_CH_
 
-class WrongAdapter;
-typedef WrongAdapter *WrongAdapter_ptr;
-
+    class WrongAdapter;
+    typedef WrongAdapter *WrongAdapter_ptr;
+    
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POA_WRONGADAPTER_CH_)
 #define _PORTABLESERVER_POA_WRONGADAPTER_CH_
 
-class TAO_Export WrongAdapter : public CORBA::UserException
-{
-public:
-WrongAdapter (void); // default ctor
-WrongAdapter (const WrongAdapter &); // copy ctor
-~WrongAdapter(void); // dtor
-WrongAdapter &operator= (const WrongAdapter &);
-static WrongAdapter *_narrow (CORBA::Exception *);
-};
-static CORBA::TypeCode_ptr _tc_WrongAdapter;
+    class TAO_Export WrongAdapter : public CORBA::UserException
+    {
+    public:
+      WrongAdapter (void); // default ctor
+      WrongAdapter (const WrongAdapter &); // copy ctor
+      ~WrongAdapter(void); // dtor
+      WrongAdapter &operator= (const WrongAdapter &);
+      static WrongAdapter *_narrow (CORBA::Exception *);
+    };
+        static CORBA::TypeCode_ptr _tc_WrongAdapter;
 
 
 #endif // end #if !defined
 
-
+    
 #if !defined (_PORTABLESERVER_POA_WRONGPOLICY___PTR_CH_)
 #define _PORTABLESERVER_POA_WRONGPOLICY___PTR_CH_
 
-class WrongPolicy;
-typedef WrongPolicy *WrongPolicy_ptr;
-
+    class WrongPolicy;
+    typedef WrongPolicy *WrongPolicy_ptr;
+    
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_POA_WRONGPOLICY_CH_)
 #define _PORTABLESERVER_POA_WRONGPOLICY_CH_
 
-class TAO_Export WrongPolicy : public CORBA::UserException
-{
-public:
-WrongPolicy (void); // default ctor
-WrongPolicy (const WrongPolicy &); // copy ctor
-~WrongPolicy(void); // dtor
-WrongPolicy &operator= (const WrongPolicy &);
-static WrongPolicy *_narrow (CORBA::Exception *);
-};
-static CORBA::TypeCode_ptr _tc_WrongPolicy;
+    class TAO_Export WrongPolicy : public CORBA::UserException
+    {
+    public:
+      WrongPolicy (void); // default ctor
+      WrongPolicy (const WrongPolicy &); // copy ctor
+      ~WrongPolicy(void); // dtor
+      WrongPolicy &operator= (const WrongPolicy &);
+      static WrongPolicy *_narrow (CORBA::Exception *);
+    };
+        static CORBA::TypeCode_ptr _tc_WrongPolicy;
 
 
 #endif // end #if !defined
 
-virtual POA_ptr  create_POA (const char *adapter_name, POAManager_ptr a_POAManager, const PolicyList &policies, CORBA::Environment &env);
-virtual POA_ptr  find_POA (const char *adapter_name, CORBA::Boolean activate_it, CORBA::Environment &env);
-virtual void  destroy (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA::Environment &env);
-virtual ThreadPolicy_ptr  create_thread_policy (ThreadPolicyValue value, CORBA::Environment &env);
-virtual LifespanPolicy_ptr  create_lifespan_policy (LifespanPolicyValue value, CORBA::Environment &env);
-virtual IdUniquenessPolicy_ptr  create_id_uniqueness_policy (IdUniquenessPolicyValue value, CORBA::Environment &env);
-virtual IdAssignmentPolicy_ptr  create_id_assignment_policy (IdAssignmentPolicyValue value, CORBA::Environment &env);
-virtual ImplicitActivationPolicy_ptr  create_implicit_activation_policy (ImplicitActivationPolicyValue value, CORBA::Environment &env);
-virtual ServantRetentionPolicy_ptr  create_servant_retention_policy (ServantRetentionPolicyValue value, CORBA::Environment &env);
-virtual RequestProcessingPolicy_ptr  create_request_processing_policy (RequestProcessingPolicyValue value, CORBA::Environment &env);
-virtual char * the_name (CORBA::Environment &env);
-virtual POA_ptr  the_parent (CORBA::Environment &env);
-virtual POAManager_ptr  the_POAManager (CORBA::Environment &env);
-virtual AdapterActivator_ptr  the_activator (CORBA::Environment &env);
-virtual void the_activator(AdapterActivator_ptr the_activator, CORBA::Environment &env);
-virtual ServantManager_ptr  get_servant_manager (CORBA::Environment &env);
-virtual void  set_servant_manager (ServantManager_ptr imgr, CORBA::Environment &env);
-virtual Servant  get_servant (CORBA::Environment &env);
-virtual void  set_servant (Servant p_servant, CORBA::Environment &env);
-virtual ObjectId * activate_object (Servant p_servant, CORBA::Environment &env);
-virtual void  activate_object_with_id (const ObjectId &id, Servant p_servant, CORBA::Environment &env);
-virtual void  deactivate_object (const ObjectId &oid, CORBA::Environment &env);
-virtual CORBA::Object_ptr  create_reference (const char *intf, CORBA::Environment &env);
-virtual CORBA::Object_ptr  create_reference_with_id (const ObjectId &oid, const char *intf, CORBA::Environment &env);
-virtual ObjectId * servant_to_id (Servant p_servant, CORBA::Environment &env);
-virtual CORBA::Object_ptr  servant_to_reference (Servant p_servant, CORBA::Environment &env);
-virtual Servant  reference_to_servant (CORBA::Object_ptr reference, CORBA::Environment &env);
-virtual ObjectId * reference_to_id (CORBA::Object_ptr reference, CORBA::Environment &env);
-virtual Servant  id_to_servant (const ObjectId &oid, CORBA::Environment &env);
-virtual CORBA::Object_ptr  id_to_reference (const ObjectId &oid, CORBA::Environment &env);
-virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-POA (void); // default constructor
-POA (STUB_Object *objref);
-public:
-virtual ~POA (void);
-private:
-POA (const POA&);
-void operator= (const POA&);
-};
+    virtual POA_ptr  create_POA (const char *adapter_name, POAManager_ptr a_POAManager, const PolicyList &policies, CORBA::Environment &env);
+    virtual POA_ptr  find_POA (const char *adapter_name, CORBA::Boolean activate_it, CORBA::Environment &env);
+    virtual void  destroy (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA::Environment &env);
+    virtual ThreadPolicy_ptr  create_thread_policy (ThreadPolicyValue value, CORBA::Environment &env);
+    virtual LifespanPolicy_ptr  create_lifespan_policy (LifespanPolicyValue value, CORBA::Environment &env);
+    virtual IdUniquenessPolicy_ptr  create_id_uniqueness_policy (IdUniquenessPolicyValue value, CORBA::Environment &env);
+    virtual IdAssignmentPolicy_ptr  create_id_assignment_policy (IdAssignmentPolicyValue value, CORBA::Environment &env);
+    virtual ImplicitActivationPolicy_ptr  create_implicit_activation_policy (ImplicitActivationPolicyValue value, CORBA::Environment &env);
+    virtual ServantRetentionPolicy_ptr  create_servant_retention_policy (ServantRetentionPolicyValue value, CORBA::Environment &env);
+    virtual RequestProcessingPolicy_ptr  create_request_processing_policy (RequestProcessingPolicyValue value, CORBA::Environment &env);
+    virtual char * the_name (CORBA::Environment &env);
+    virtual POA_ptr  the_parent (CORBA::Environment &env);
+    virtual POAManager_ptr  the_POAManager (CORBA::Environment &env);
+    virtual AdapterActivator_ptr  the_activator (CORBA::Environment &env);
+    virtual void the_activator(AdapterActivator_ptr the_activator, CORBA::Environment &env);
+    virtual ServantManager_ptr  get_servant_manager (CORBA::Environment &env);
+    virtual void  set_servant_manager (ServantManager_ptr imgr, CORBA::Environment &env);
+    virtual Servant  get_servant (CORBA::Environment &env);
+    virtual void  set_servant (Servant p_servant, CORBA::Environment &env);
+    virtual ObjectId * activate_object (Servant p_servant, CORBA::Environment &env);
+    virtual void  activate_object_with_id (const ObjectId &id, Servant p_servant, CORBA::Environment &env);
+    virtual void  deactivate_object (const ObjectId &oid, CORBA::Environment &env);
+    virtual CORBA::Object_ptr  create_reference (const char *intf, CORBA::Environment &env);
+    virtual CORBA::Object_ptr  create_reference_with_id (const ObjectId &oid, const char *intf, CORBA::Environment &env);
+    virtual ObjectId * servant_to_id (Servant p_servant, CORBA::Environment &env);
+    virtual CORBA::Object_ptr  servant_to_reference (Servant p_servant, CORBA::Environment &env);
+    virtual Servant  reference_to_servant (CORBA::Object_ptr reference, CORBA::Environment &env);
+    virtual ObjectId * reference_to_id (CORBA::Object_ptr reference, CORBA::Environment &env);
+    virtual Servant  id_to_servant (const ObjectId &oid, CORBA::Environment &env);
+    virtual CORBA::Object_ptr  id_to_reference (const ObjectId &oid, CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    POA (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~POA (void);
+  private:
+    POA (const POA&);
+    void operator= (const POA&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_POA;
+  static CORBA::TypeCode_ptr _tc_POA;
 
-
+  
 #if !defined (_PORTABLESERVER_CURRENT___PTR_CH_)
 #define _PORTABLESERVER_CURRENT___PTR_CH_
 
 class Current;
-typedef Current *Current_ptr;
-
+  typedef Current *Current_ptr;
+  
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_CURRENT___VAR_CH_)
 #define _PORTABLESERVER_CURRENT___VAR_CH_
 
-class TAO_Export Current_var
-{
-public:
-Current_var (void); // default constructor
-Current_var (Current_ptr);
-Current_var (const Current_var &); // copy constructor
-~Current_var (void); // destructor
+  class TAO_Export Current_var
+  {
+  public:
+    Current_var (void); // default constructor
+    Current_var (Current_ptr);
+    Current_var (const Current_var &); // copy constructor
+    ~Current_var (void); // destructor
+    
+    Current_var &operator= (Current_ptr);
+    Current_var &operator= (const Current_var &);
+    Current_ptr operator-> (void) const;
+    
+    operator const Current_ptr &() const;
+    operator Current_ptr &();
+    // in, inout, out, _retn 
+    Current_ptr in (void) const;
+    Current_ptr &inout (void);
+    Current_ptr &out (void);
+    Current_ptr _retn (void);
+    Current_ptr ptr (void) const;
 
-Current_var &operator= (Current_ptr);
-Current_var &operator= (const Current_var &);
-Current_ptr operator-> (void) const;
-
-operator const Current_ptr &() const;
-operator Current_ptr &();
-// in, inout, out, _retn 
-Current_ptr in (void) const;
-Current_ptr &inout (void);
-Current_ptr &out (void);
-Current_ptr _retn (void);
-Current_ptr ptr (void) const;
-
-private:
-Current_ptr ptr_;
-};
+  private:
+    Current_ptr ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -2255,22 +2231,22 @@ Current_ptr ptr_;
 #if !defined (_PORTABLESERVER_CURRENT___OUT_CH_)
 #define _PORTABLESERVER_CURRENT___OUT_CH_
 
-class TAO_Export Current_out
-{
-public:
-Current_out (Current_ptr &);
-Current_out (Current_var &);
-Current_out (Current_out &);
-Current_out &operator= (Current_out &);
-Current_out &operator= (const Current_var &);
-Current_out &operator= (Current_ptr);
-operator Current_ptr &();
-Current_ptr &ptr (void);
-Current_ptr operator-> (void);
-
-private:
-Current_ptr &ptr_;
-};
+  class TAO_Export Current_out
+  {
+  public:
+    Current_out (Current_ptr &);
+    Current_out (Current_var &);
+    Current_out (Current_out &);
+    Current_out &operator= (Current_out &);
+    Current_out &operator= (const Current_var &);
+    Current_out &operator= (Current_ptr);
+    operator Current_ptr &();
+    Current_ptr &ptr (void);
+    Current_ptr operator-> (void);
+    
+  private:
+    Current_ptr &ptr_;
+  };
 
 
 #endif // end #if !defined
@@ -2279,65 +2255,68 @@ Current_ptr &ptr_;
 #if !defined (_PORTABLESERVER_CURRENT_CH_)
 #define _PORTABLESERVER_CURRENT_CH_
 
-class TAO_Export Current: public virtual CurrentBase
-{
-public:
-// the static operations
-static Current_ptr _duplicate (Current_ptr obj);
-static Current_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-static Current_ptr _nil (void);
-static Current_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
+  class TAO_Export Current: public virtual CurrentBase
+  {
+  public:
+    // the static operations
+    static Current_ptr _duplicate (Current_ptr obj);
+    static Current_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static Current_ptr _nil (void);
+    static Current_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-
+    
 #if !defined (_PORTABLESERVER_CURRENT_NOCONTEXT___PTR_CH_)
 #define _PORTABLESERVER_CURRENT_NOCONTEXT___PTR_CH_
 
-class NoContext;
-typedef NoContext *NoContext_ptr;
-
+    class NoContext;
+    typedef NoContext *NoContext_ptr;
+    
 #endif // end #if !defined
 
 
 #if !defined (_PORTABLESERVER_CURRENT_NOCONTEXT_CH_)
 #define _PORTABLESERVER_CURRENT_NOCONTEXT_CH_
 
-class TAO_Export NoContext : public CORBA::UserException
-{
-public:
-NoContext (void); // default ctor
-NoContext (const NoContext &); // copy ctor
-~NoContext(void); // dtor
-NoContext &operator= (const NoContext &);
-static NoContext *_narrow (CORBA::Exception *);
-};
-static CORBA::TypeCode_ptr _tc_NoContext;
+    class TAO_Export NoContext : public CORBA::UserException
+    {
+    public:
+      NoContext (void); // default ctor
+      NoContext (const NoContext &); // copy ctor
+      ~NoContext(void); // dtor
+      NoContext &operator= (const NoContext &);
+      static NoContext *_narrow (CORBA::Exception *);
+    };
+        static CORBA::TypeCode_ptr _tc_NoContext;
 
 
 #endif // end #if !defined
 
-virtual POA_ptr  get_POA (CORBA::Environment &env);
-virtual ObjectId * get_object_id (CORBA::Environment &env);
-virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-protected:
-Current (void); // default constructor
-Current (STUB_Object *objref);
-public:
-virtual ~Current (void);
-private:
-Current (const Current&);
-void operator= (const Current&);
-};
+    virtual POA_ptr  get_POA (CORBA::Environment &env);
+    virtual ObjectId * get_object_id (CORBA::Environment &env);
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
+  protected:
+    Current (
+        STUB_Object *objref = 0,
+        TAO_ServantBase *servant = 0,
+        CORBA::Boolean collocated = CORBA::B_FALSE
+      );
+  public:
+    virtual ~Current (void);
+  private:
+    Current (const Current&);
+    void operator= (const Current&);
+  };
 
 
 #endif // end #if !defined
 
-static CORBA::TypeCode_ptr _tc_Current;
+  static CORBA::TypeCode_ptr _tc_Current;
 
 };
 
 
 #if defined (__ACE_INLINE__)
-#include "POAC.i"
+#include "poaC.i"
 #endif // defined INLINE
 
 

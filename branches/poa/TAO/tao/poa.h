@@ -319,8 +319,6 @@ public:
   virtual CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid,
                                              CORBA::Environment &env);
 
-  PortableServer::POA_ptr _this (CORBA::Environment &_tao_environment);
-
   static char *ObjectId_to_string (const PortableServer::ObjectId &id);
 
   static wchar_t *ObjectId_to_wstring (const PortableServer::ObjectId &id);
@@ -459,7 +457,16 @@ protected:
 
   virtual int parse_key (const TAO::ObjectKey &key, 
                          String &poa_name,
-                         PortableServer::ObjectId_out id);
+                         PortableServer::ObjectId_out id,
+                         CORBA::Boolean &persistent);
+
+  virtual CORBA::Boolean persistent (void);
+
+  virtual const String &object_key_type (void);
+
+  static const String &persistent_key_type (void);
+
+  static const String &transient_key_type (void);
 
   static const char *ObjectId_to_const_string (const PortableServer::ObjectId &id);
 

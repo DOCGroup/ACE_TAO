@@ -6,17 +6,23 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 ACE_INLINE
-PortableServer::CurrentBase::CurrentBase (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::CurrentBase::CurrentBase (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::CurrentBase::CurrentBase(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::CurrentBase::~CurrentBase (void) // destructor
 {}
+
+ACE_INLINE PortableServer::CurrentBase_ptr
+PortableServer::CurrentBase::_nil (void)
+{
+  return (PortableServer::CurrentBase_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_CURRENTBASE___VAR_CI_)
@@ -193,17 +199,23 @@ PortableServer::CurrentBase_out::operator-> (void)
 #endif // end #if !defined
 
 ACE_INLINE
-PortableServer::Policy::Policy (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::Policy::Policy (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::Policy::Policy(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::Policy::~Policy (void) // destructor
 {}
+
+ACE_INLINE PortableServer::Policy_ptr
+PortableServer::Policy::_nil (void)
+{
+  return (PortableServer::Policy_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_POLICY___VAR_CI_)
@@ -380,101 +392,6 @@ PortableServer::Policy_out::operator-> (void)
 #endif // end #if !defined
 
 
-#if !defined (_PORTABLESERVER__TAO_SEQ_POLICY_TAO_OBJREFMNGTYPE_CI_)
-#define _PORTABLESERVER__TAO_SEQ_POLICY_TAO_OBJREFMNGTYPE_CI_
-
-// *************************************************************
-// Inline operations for class PortableServer::_tao_seq_Policy::TAO_ObjRefMngType
-// *************************************************************
-
-ACE_INLINE 
-PortableServer::_tao_seq_Policy::TAO_ObjRefMngType::~TAO_ObjRefMngType (void) // destructor
-{}
-
-ACE_INLINE 
-PortableServer::_tao_seq_Policy::TAO_ObjRefMngType::TAO_ObjRefMngType(PortableServer::Policy_ptr* buffer, CORBA::Boolean release)
-	: ptr_ (buffer),
-	  release_ (release)
-{}
-
-ACE_INLINE 
-PortableServer::_tao_seq_Policy::TAO_ObjRefMngType::operator const PortableServer::Policy_ptr &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-PortableServer::_tao_seq_Policy::TAO_ObjRefMngType::operator PortableServer::Policy_ptr &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const PortableServer::Policy_ptr
-PortableServer::_tao_seq_Policy::TAO_ObjRefMngType::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE PortableServer::Policy_ptr&
-PortableServer::_tao_seq_Policy::TAO_ObjRefMngType::inout (void)
-{
-  return *this->ptr_;
-}
-
-
-#endif // end #if !defined
-
-
-#if !defined (_PORTABLESERVER__TAO_SEQ_POLICY_CI_)
-#define _PORTABLESERVER__TAO_SEQ_POLICY_CI_
-
-// *************************************************************
-// class PortableServer::_tao_seq_Policy
-// *************************************************************
-
-ACE_INLINE void
-PortableServer::_tao_seq_Policy::freebuf (PortableServer::Policy_ptr *seq)
-{
-  delete []seq;
-}
-
-//default constructor
-ACE_INLINE 
-PortableServer::_tao_seq_Policy::_tao_seq_Policy (void)
-	: maximum_ (0),
-	  length_ (0),
-	  buffer_ (0),
-	  release_ (0) // does not own
-{}
-
-ACE_INLINE CORBA::ULong
-PortableServer::_tao_seq_Policy::maximum (void) const
-{
-  return this->maximum_;
-}
-
-ACE_INLINE CORBA::ULong
-PortableServer::_tao_seq_Policy::length  (void) const
-{
-  return this->length_;
-}
-
-ACE_INLINE PortableServer::_tao_seq_Policy::TAO_ObjRefMngType 
-PortableServer::_tao_seq_Policy::operator[] (CORBA::ULong index) // read/write
-{
-  return PortableServer::_tao_seq_Policy::TAO_ObjRefMngType (&this->buffer_[index], this->release_);
-}
-
-ACE_INLINE const PortableServer::_tao_seq_Policy::TAO_ObjRefMngType 
-PortableServer::_tao_seq_Policy::operator[] (CORBA::ULong index) const // read
-{
-  return PortableServer::_tao_seq_Policy::TAO_ObjRefMngType (&this->buffer_[index], this->release_);
-}
-
-
-#endif // end #if !defined
-
-
 #if !defined (_PORTABLESERVER__TAO_SEQ_POLICY___VAR_CI_)
 #define _PORTABLESERVER__TAO_SEQ_POLICY___VAR_CI_
 
@@ -488,7 +405,7 @@ PortableServer::_tao_seq_Policy_var::_tao_seq_Policy_var (void) // default const
 {}
 
 ACE_INLINE
-PortableServer::_tao_seq_Policy_var::_tao_seq_Policy_var (PortableServer::_tao_seq_Policy_ptr p)
+PortableServer::_tao_seq_Policy_var::_tao_seq_Policy_var (PortableServer::_tao_seq_Policy *p)
 	: ptr_ (p)
 {}
 
@@ -556,7 +473,7 @@ PortableServer::_tao_seq_Policy_var::operator PortableServer::_tao_seq_Policy &(
   return *this->ptr_;
 }
 
-ACE_INLINE PortableServer::_tao_seq_Policy::TAO_ObjRefMngType 
+ACE_INLINE TAO_Object_Manager <PortableServer::Policy > 
 PortableServer::_tao_seq_Policy_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
@@ -660,7 +577,7 @@ PortableServer::_tao_seq_Policy_out::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE PortableServer::_tao_seq_Policy::TAO_ObjRefMngType 
+ACE_INLINE TAO_Object_Manager <PortableServer::Policy > 
 PortableServer::_tao_seq_Policy_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
@@ -844,56 +761,6 @@ PortableServer::POA_out::operator-> (void)
 #endif // end #if !defined
 
 
-#if !defined (_PORTABLESERVER__TAO_SEQ_OCTET_CI_)
-#define _PORTABLESERVER__TAO_SEQ_OCTET_CI_
-
-// *************************************************************
-// class PortableServer::_tao_seq_Octet
-// *************************************************************
-
-ACE_INLINE void
-PortableServer::_tao_seq_Octet::freebuf (CORBA::Octet  *seq)
-{
-  delete []seq;
-}
-
-//default constructor
-ACE_INLINE 
-PortableServer::_tao_seq_Octet::_tao_seq_Octet (void)
-	: maximum_ (0),
-	  length_ (0),
-	  buffer_ (0),
-	  release_ (0) // does not own
-{}
-
-ACE_INLINE CORBA::ULong
-PortableServer::_tao_seq_Octet::maximum (void) const
-{
-  return this->maximum_;
-}
-
-ACE_INLINE CORBA::ULong
-PortableServer::_tao_seq_Octet::length  (void) const
-{
-  return this->length_;
-}
-
-ACE_INLINE CORBA::Octet &
-PortableServer::_tao_seq_Octet::operator[] (CORBA::ULong index) // read/write
-{
-  return this->buffer_[index];
-}
-
-ACE_INLINE const CORBA::Octet &
-PortableServer::_tao_seq_Octet::operator[] (CORBA::ULong index) const // read
-{
-  return this->buffer_[index];
-}
-
-
-#endif // end #if !defined
-
-
 #if !defined (_PORTABLESERVER__TAO_SEQ_OCTET___VAR_CI_)
 #define _PORTABLESERVER__TAO_SEQ_OCTET___VAR_CI_
 
@@ -907,7 +774,7 @@ PortableServer::_tao_seq_Octet_var::_tao_seq_Octet_var (void) // default constru
 {}
 
 ACE_INLINE
-PortableServer::_tao_seq_Octet_var::_tao_seq_Octet_var (PortableServer::_tao_seq_Octet_ptr p)
+PortableServer::_tao_seq_Octet_var::_tao_seq_Octet_var (PortableServer::_tao_seq_Octet *p)
 	: ptr_ (p)
 {}
 
@@ -975,7 +842,7 @@ PortableServer::_tao_seq_Octet_var::operator PortableServer::_tao_seq_Octet &() 
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA::Octet  &
+ACE_INLINE CORBA::Octet &
 PortableServer::_tao_seq_Octet_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
@@ -1079,7 +946,7 @@ PortableServer::_tao_seq_Octet_out::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE CORBA::Octet  &
+ACE_INLINE CORBA::Octet &
 PortableServer::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
@@ -1106,17 +973,23 @@ PortableServer::ForwardRequest::~ForwardRequest (void)
 }
 
 ACE_INLINE
-PortableServer::ThreadPolicy::ThreadPolicy (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::ThreadPolicy::ThreadPolicy (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::ThreadPolicy::ThreadPolicy(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::ThreadPolicy::~ThreadPolicy (void) // destructor
 {}
+
+ACE_INLINE PortableServer::ThreadPolicy_ptr
+PortableServer::ThreadPolicy::_nil (void)
+{
+  return (PortableServer::ThreadPolicy_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_THREADPOLICY___VAR_CI_)
@@ -1293,17 +1166,23 @@ PortableServer::ThreadPolicy_out::operator-> (void)
 #endif // end #if !defined
 
 ACE_INLINE
-PortableServer::LifespanPolicy::LifespanPolicy (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::LifespanPolicy::LifespanPolicy (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::LifespanPolicy::LifespanPolicy(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::LifespanPolicy::~LifespanPolicy (void) // destructor
 {}
+
+ACE_INLINE PortableServer::LifespanPolicy_ptr
+PortableServer::LifespanPolicy::_nil (void)
+{
+  return (PortableServer::LifespanPolicy_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY___VAR_CI_)
@@ -1480,17 +1359,23 @@ PortableServer::LifespanPolicy_out::operator-> (void)
 #endif // end #if !defined
 
 ACE_INLINE
-PortableServer::IdUniquenessPolicy::IdUniquenessPolicy (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::IdUniquenessPolicy::IdUniquenessPolicy (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::IdUniquenessPolicy::IdUniquenessPolicy(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::IdUniquenessPolicy::~IdUniquenessPolicy (void) // destructor
 {}
+
+ACE_INLINE PortableServer::IdUniquenessPolicy_ptr
+PortableServer::IdUniquenessPolicy::_nil (void)
+{
+  return (PortableServer::IdUniquenessPolicy_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY___VAR_CI_)
@@ -1667,17 +1552,23 @@ PortableServer::IdUniquenessPolicy_out::operator-> (void)
 #endif // end #if !defined
 
 ACE_INLINE
-PortableServer::IdAssignmentPolicy::IdAssignmentPolicy (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::IdAssignmentPolicy::IdAssignmentPolicy (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::IdAssignmentPolicy::IdAssignmentPolicy(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::IdAssignmentPolicy::~IdAssignmentPolicy (void) // destructor
 {}
+
+ACE_INLINE PortableServer::IdAssignmentPolicy_ptr
+PortableServer::IdAssignmentPolicy::_nil (void)
+{
+  return (PortableServer::IdAssignmentPolicy_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY___VAR_CI_)
@@ -1854,17 +1745,23 @@ PortableServer::IdAssignmentPolicy_out::operator-> (void)
 #endif // end #if !defined
 
 ACE_INLINE
-PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::ImplicitActivationPolicy::~ImplicitActivationPolicy (void) // destructor
 {}
+
+ACE_INLINE PortableServer::ImplicitActivationPolicy_ptr
+PortableServer::ImplicitActivationPolicy::_nil (void)
+{
+  return (PortableServer::ImplicitActivationPolicy_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY___VAR_CI_)
@@ -2041,17 +1938,23 @@ PortableServer::ImplicitActivationPolicy_out::operator-> (void)
 #endif // end #if !defined
 
 ACE_INLINE
-PortableServer::ServantRetentionPolicy::ServantRetentionPolicy (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::ServantRetentionPolicy::ServantRetentionPolicy (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::ServantRetentionPolicy::ServantRetentionPolicy(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::ServantRetentionPolicy::~ServantRetentionPolicy (void) // destructor
 {}
+
+ACE_INLINE PortableServer::ServantRetentionPolicy_ptr
+PortableServer::ServantRetentionPolicy::_nil (void)
+{
+  return (PortableServer::ServantRetentionPolicy_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY___VAR_CI_)
@@ -2228,17 +2131,23 @@ PortableServer::ServantRetentionPolicy_out::operator-> (void)
 #endif // end #if !defined
 
 ACE_INLINE
-PortableServer::RequestProcessingPolicy::RequestProcessingPolicy (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::RequestProcessingPolicy::RequestProcessingPolicy (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::RequestProcessingPolicy::RequestProcessingPolicy(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::RequestProcessingPolicy::~RequestProcessingPolicy (void) // destructor
 {}
+
+ACE_INLINE PortableServer::RequestProcessingPolicy_ptr
+PortableServer::RequestProcessingPolicy::_nil (void)
+{
+  return (PortableServer::RequestProcessingPolicy_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY___VAR_CI_)
@@ -2415,17 +2324,23 @@ PortableServer::RequestProcessingPolicy_out::operator-> (void)
 #endif // end #if !defined
 
 ACE_INLINE
-PortableServer::POAManager::POAManager (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::POAManager::POAManager (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::POAManager::POAManager(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::POAManager::~POAManager (void) // destructor
 {}
+
+ACE_INLINE PortableServer::POAManager_ptr
+PortableServer::POAManager::_nil (void)
+{
+  return (PortableServer::POAManager_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_POAMANAGER___VAR_CI_)
@@ -2619,17 +2534,23 @@ PortableServer::POAManager::AdapterInactive::~AdapterInactive (void)
 }
 
 ACE_INLINE
-PortableServer::AdapterActivator::AdapterActivator (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::AdapterActivator::AdapterActivator (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::AdapterActivator::AdapterActivator(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::AdapterActivator::~AdapterActivator (void) // destructor
 {}
+
+ACE_INLINE PortableServer::AdapterActivator_ptr
+PortableServer::AdapterActivator::_nil (void)
+{
+  return (PortableServer::AdapterActivator_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR___VAR_CI_)
@@ -2806,17 +2727,23 @@ PortableServer::AdapterActivator_out::operator-> (void)
 #endif // end #if !defined
 
 ACE_INLINE
-PortableServer::ServantManager::ServantManager (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::ServantManager::ServantManager (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::ServantManager::ServantManager(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::ServantManager::~ServantManager (void) // destructor
 {}
+
+ACE_INLINE PortableServer::ServantManager_ptr
+PortableServer::ServantManager::_nil (void)
+{
+  return (PortableServer::ServantManager_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_SERVANTMANAGER___VAR_CI_)
@@ -2993,17 +2920,23 @@ PortableServer::ServantManager_out::operator-> (void)
 #endif // end #if !defined
 
 ACE_INLINE
-PortableServer::ServantActivator::ServantActivator (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::ServantActivator::ServantActivator (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::ServantActivator::ServantActivator(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::ServantActivator::~ServantActivator (void) // destructor
 {}
+
+ACE_INLINE PortableServer::ServantActivator_ptr
+PortableServer::ServantActivator::_nil (void)
+{
+  return (PortableServer::ServantActivator_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_SERVANTACTIVATOR___VAR_CI_)
@@ -3180,17 +3113,23 @@ PortableServer::ServantActivator_out::operator-> (void)
 #endif // end #if !defined
 
 ACE_INLINE
-PortableServer::ServantLocator::ServantLocator (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::ServantLocator::ServantLocator (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::ServantLocator::ServantLocator(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::ServantLocator::~ServantLocator (void) // destructor
 {}
+
+ACE_INLINE PortableServer::ServantLocator_ptr
+PortableServer::ServantLocator::_nil (void)
+{
+  return (PortableServer::ServantLocator_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR___VAR_CI_)
@@ -3367,17 +3306,23 @@ PortableServer::ServantLocator_out::operator-> (void)
 #endif // end #if !defined
 
 ACE_INLINE
-PortableServer::POA::POA (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::POA::POA (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::POA::POA(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::POA::~POA (void) // destructor
 {}
+
+ACE_INLINE PortableServer::POA_ptr
+PortableServer::POA::_nil (void)
+{
+  return (PortableServer::POA_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_POA___VAR_CI_)
@@ -3741,17 +3686,23 @@ PortableServer::POA::WrongPolicy::~WrongPolicy (void)
 }
 
 ACE_INLINE
-PortableServer::Current::Current (void) // default constructor
-{}
-
-ACE_INLINE
-PortableServer::Current::Current (STUB_Object *objref) // constructor
-	: ACE_CORBA_1 (Object) (objref)
+PortableServer::Current::Current(
+    STUB_Object *objref,
+    TAO_ServantBase *servant,
+    CORBA::Boolean collocated
+  )
+ : ACE_CORBA_1 (Object) (objref, servant, collocated)
 {}
 
 ACE_INLINE
 PortableServer::Current::~Current (void) // destructor
 {}
+
+ACE_INLINE PortableServer::Current_ptr
+PortableServer::Current::_nil (void)
+{
+  return (PortableServer::Current_ptr)0;
+}
 
 
 #if !defined (_PORTABLESERVER_CURRENT___VAR_CI_)

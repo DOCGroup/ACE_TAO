@@ -7,9 +7,10 @@
 
 #include "tao/corba.h"
 #include "poaC.h"
+#include "poaS.h"
 
 #if !defined (__ACE_INLINE__)
-#include "POAC.i"
+#include "poaC.i"
 #endif // !defined INLINE
 
 static const CORBA::Long _oc_PortableServer_Identifier[] =
@@ -42,39 +43,35 @@ PortableServer::CurrentBase_ptr PortableServer::CurrentBase::_duplicate (Portabl
   return obj;
 } // end of _duplicate
 
-PortableServer::CurrentBase_ptr PortableServer::CurrentBase::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::CurrentBase_ptr PortableServer::CurrentBase::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::CurrentBase::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/CurrentBase:1.0", env))
     return PortableServer::CurrentBase::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::CurrentBase_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::CurrentBase::_nil ();
+    
+    new_obj = new PortableServer::CurrentBase (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::CurrentBase::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::CurrentBase_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::CurrentBase (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::CurrentBase *servant =
-    (POA_PortableServer::CurrentBase *) obj->_servant ()->_downcast ("IDL:PortableServer/CurrentBase:1.0");
-
-  if (servant == 0)
-    return PortableServer::CurrentBase::_nil ();
-
-  return new POA_PortableServer::_tao_collocated_CurrentBase (servant, istub);
-
-} // end of _narrow
-
-PortableServer::CurrentBase_ptr PortableServer::CurrentBase::_nil (void)
-{
-  return (PortableServer::CurrentBase_ptr)NULL;
-} // end of _nil
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/CurrentBase:1.0");
+  return new POA_PortableServer::_tao_collocated_CurrentBase(
+      ACE_reinterpret_cast(POA_PortableServer::CurrentBase_ptr, servant),
+      stub
+    );
+}
 
 PortableServer::CurrentBase_ptr PortableServer::CurrentBase::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -94,14 +91,14 @@ PortableServer::CurrentBase_ptr PortableServer::CurrentBase::_bind (const char *
   	return PortableServer::CurrentBase::_narrow (objref, env);
 }
 
-CORBA::Boolean PortableServer::CurrentBase::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::CurrentBase::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/CurrentBase:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_CurrentBase[] =
@@ -121,39 +118,35 @@ PortableServer::Policy_ptr PortableServer::Policy::_duplicate (PortableServer::P
   return obj;
 } // end of _duplicate
 
-PortableServer::Policy_ptr PortableServer::Policy::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::Policy_ptr PortableServer::Policy::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::Policy::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/Policy:1.0", env))
     return PortableServer::Policy::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::Policy_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::Policy::_nil ();
+    
+    new_obj = new PortableServer::Policy (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::Policy::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::Policy_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::Policy (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::Policy *servant =
-    (POA_PortableServer::Policy *) obj->_servant ()->_downcast ("IDL:PortableServer/Policy:1.0");
-
-  if (servant == 0)
-    return PortableServer::Policy::_nil ();
-
-  return new POA_PortableServer::_tao_collocated_Policy (servant, istub);
-
-} // end of _narrow
-
-PortableServer::Policy_ptr PortableServer::Policy::_nil (void)
-{
-  return (PortableServer::Policy_ptr)NULL;
-} // end of _nil
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/Policy:1.0");
+  return new POA_PortableServer::_tao_collocated_Policy(
+      ACE_reinterpret_cast(POA_PortableServer::Policy_ptr, servant),
+      stub
+    );
+}
 
 PortableServer::Policy_ptr PortableServer::Policy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -220,14 +213,14 @@ void  PortableServer::Policy::destroy (CORBA::Environment &env)
   
 }
 
-CORBA::Boolean PortableServer::Policy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::Policy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_Policy[] =
@@ -240,167 +233,8 @@ static CORBA::TypeCode _tc__tc_PortableServer_Policy (CORBA::tk_objref, sizeof (
 CORBA::TypeCode_ptr PortableServer::_tc_Policy = &_tc__tc_PortableServer_Policy;
 
 
-#if !defined (_PORTABLESERVER__TAO_SEQ_POLICY_TAO_OBJREFMNGTYPE_CS_)
-#define _PORTABLESERVER__TAO_SEQ_POLICY_TAO_OBJREFMNGTYPE_CS_
-
-PortableServer::_tao_seq_Policy::TAO_ObjRefMngType::TAO_ObjRefMngType(const PortableServer::_tao_seq_Policy::TAO_ObjRefMngType &_tao_mng_type)
-{
-  *this->ptr_ = PortableServer::Policy::_duplicate (*_tao_mng_type.ptr_);
-  this->release_ = _tao_mng_type.release_;
-}
-
-PortableServer::_tao_seq_Policy::TAO_ObjRefMngType&
-PortableServer::_tao_seq_Policy::TAO_ObjRefMngType::operator= (const PortableServer::_tao_seq_Policy::TAO_ObjRefMngType &_tao_mng_type)
-{
-  if (this == &_tao_mng_type) return *this;
-  if (this->release_) // need to free old one
-    CORBA::release (*this->ptr_);
-  *this->ptr_ = PortableServer::Policy::_duplicate (*_tao_mng_type.ptr_);
-  return *this;
-}
-
-PortableServer::_tao_seq_Policy::TAO_ObjRefMngType &
-PortableServer::_tao_seq_Policy::TAO_ObjRefMngType::operator= (PortableServer::Policy_ptr p)
-{
-  if (this->release_) // need to free old one
-    CORBA::release (*this->ptr_);
-  *this->ptr_ = p; // no copy
-  return *this;
-}
-
-// mapping for variable size 
-PortableServer::Policy_ptr &
-PortableServer::_tao_seq_Policy::TAO_ObjRefMngType::out (void)
-{
-  if (this->release_)
-    CORBA::release (*this->ptr_);
-  *this->ptr_ = PortableServer::Policy::_nil ();
-  return *this->ptr_;
-}
-
-PortableServer::Policy_ptr
-PortableServer::_tao_seq_Policy::TAO_ObjRefMngType::_retn (void)
-{
-  PortableServer::Policy_ptr tmp = *this->ptr_;
-  *this->ptr_ = PortableServer::Policy::_nil ();
-  return tmp;
-}
-
-
-#endif // end #if !defined
-
-
 #if !defined (_PORTABLESERVER__TAO_SEQ_POLICY_CS_)
 #define _PORTABLESERVER__TAO_SEQ_POLICY_CS_
-
-// *************************************************************
-// class PortableServer::_tao_seq_Policy
-// *************************************************************
-
-// copy constructor
-PortableServer::_tao_seq_Policy::_tao_seq_Policy (const PortableServer::_tao_seq_Policy &seq)
-	: maximum_ (seq.maximum_),
-	  length_ (seq.length_),
-	  buffer_ (PortableServer::_tao_seq_Policy::allocbuf (seq.maximum_)),
-	  release_ (1) // we always own it
-{
-  for (CORBA::ULong i=0; i < seq.length_; i++)
-  {
-  	this->buffer_[i] = PortableServer::Policy::_duplicate (seq.buffer_[i]);
-  }
-}
-
-// constructor for unbounded seq
-PortableServer::_tao_seq_Policy::_tao_seq_Policy(CORBA::ULong max )
-	: maximum_ (max),
-	  length_ (0),
-	  buffer_ (PortableServer::_tao_seq_Policy::allocbuf (max)),
-	  release_ (1) // owns
-{
-}
-
-// constructor from data buffer
-PortableServer::_tao_seq_Policy::_tao_seq_Policy (CORBA::ULong max, CORBA::ULong length, 
-	PortableServer::Policy_ptr *value, CORBA::Boolean release)
-	: maximum_ (max),
-	  length_ (length),
-	  buffer_ (value),
-	  release_ (release) // ownership depends on release
-{
-}
-
-// destructor
-PortableServer::_tao_seq_Policy::~_tao_seq_Policy (void)
-{
-  if (this->release_) // we own the buffer
-  {
-    PortableServer::_tao_seq_Policy::freebuf (this->buffer_, this->maximum_);
-  }
-}
-
-// assignment operator
-PortableServer::_tao_seq_Policy& 
-PortableServer::_tao_seq_Policy::operator= (const PortableServer::_tao_seq_Policy &seq)
-{
-  if (this == &seq) return *this;
-  if (this->release_)
-  {
-    PortableServer::_tao_seq_Policy::freebuf (this->buffer_, this->maximum_);
-  }
-  this->length_ = seq.length_;
-  this->maximum_ = seq.maximum_;
-  this->buffer_ = PortableServer::_tao_seq_Policy::allocbuf (seq.maximum_),
-  this->release_ = 1; // we always own it
-  for (CORBA::ULong i=0; i < seq.length_; i++)
-  {
-  	this->buffer_[i] = PortableServer::Policy::_duplicate (seq.buffer_[i]);
-  }
-  return *this;
-}
-
-void
-PortableServer::_tao_seq_Policy::length (CORBA::ULong length)
-{
-  if (length > this->maximum_) // need realloc
-  {
-    PortableServer::Policy_ptr *tmp = PortableServer::_tao_seq_Policy::allocbuf (length);
-    if (!tmp)
-    	return;
-    CORBA::ULong i;
-    // copy old buffer
-    for (i=0; i < this->length_; i++)
-    {
-    	tmp[i] = PortableServer::Policy::_duplicate (this->buffer_[i]);
-    }
-    if (this->release_) // free old one if we own it
-    {
-      PortableServer::_tao_seq_Policy::freebuf (this->buffer_, this->maximum_);
-    }
-    //assign the newly reallocated buffer
-    this->buffer_ = tmp;
-    this->release_ = 1; //after reallocation, we own it
-    this->maximum_ = length;
-  }
-  this->length_ = length;
-}
-
-PortableServer::Policy_ptr *
-PortableServer::_tao_seq_Policy::allocbuf (CORBA::ULong nelems)
-{
-  PortableServer::Policy_ptr *buf = new PortableServer::Policy_ptr[nelems]; // allocate from heap
-  for (CORBA::ULong i=0; i < nelems; i++)
-  	buf[i] = PortableServer::Policy::_nil ();
-  return buf;
-}
-
-void
-PortableServer::_tao_seq_Policy::freebuf (PortableServer::Policy_ptr *seq, CORBA::ULong nelems)
-{
-  if (!seq) return; // null sequence
-  for (CORBA::ULong i=0; i < nelems; i++)
-  	CORBA::release (seq[i]);
-  PortableServer::_tao_seq_Policy::freebuf (seq);
-}
 
 static const CORBA::Long _oc_PortableServer__tao_seq_Policy[] =
 {
@@ -439,100 +273,6 @@ CORBA::TypeCode_ptr PortableServer::_tc_PolicyList = &_tc__tc_PortableServer_Pol
 
 #if !defined (_PORTABLESERVER__TAO_SEQ_OCTET_CS_)
 #define _PORTABLESERVER__TAO_SEQ_OCTET_CS_
-
-// *************************************************************
-// class PortableServer::_tao_seq_Octet
-// *************************************************************
-
-// copy constructor
-PortableServer::_tao_seq_Octet::_tao_seq_Octet (const PortableServer::_tao_seq_Octet &seq)
-	: maximum_ (seq.maximum_),
-	  length_ (seq.length_),
-	  buffer_ (PortableServer::_tao_seq_Octet::allocbuf (seq.maximum_)),
-	  release_ (1) // we always own it
-{
-  for (CORBA::ULong i=0; i < seq.length_; i++)
-  	this->buffer_[i] = seq.buffer_[i];
-}
-
-// constructor for unbounded seq
-PortableServer::_tao_seq_Octet::_tao_seq_Octet(CORBA::ULong max )
-	: maximum_ (max),
-	  length_ (0),
-	  buffer_ (PortableServer::_tao_seq_Octet::allocbuf (max)),
-	  release_ (1) // owns
-{
-}
-
-// constructor from data buffer
-PortableServer::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max, CORBA::ULong length, 
-	CORBA::Octet  *value, CORBA::Boolean release)
-	: maximum_ (max),
-	  length_ (length),
-	  buffer_ (value),
-	  release_ (release) // ownership depends on release
-{
-}
-
-// destructor
-PortableServer::_tao_seq_Octet::~_tao_seq_Octet (void)
-{
-  if (this->release_) // we own the buffer
-  {
-    PortableServer::_tao_seq_Octet::freebuf (this->buffer_);
-  }
-}
-
-// assignment operator
-PortableServer::_tao_seq_Octet& 
-PortableServer::_tao_seq_Octet::operator= (const PortableServer::_tao_seq_Octet &seq)
-{
-  if (this == &seq) return *this;
-  if (this->release_)
-  {
-    PortableServer::_tao_seq_Octet::freebuf (this->buffer_);
-  }
-  this->length_ = seq.length_;
-  this->maximum_ = seq.maximum_;
-  this->buffer_ = PortableServer::_tao_seq_Octet::allocbuf (seq.maximum_),
-  this->release_ = 1; // we always own it
-  for (CORBA::ULong i=0; i < seq.length_; i++)
-  	this->buffer_[i] = seq.buffer_[i];
-  return *this;
-}
-
-void
-PortableServer::_tao_seq_Octet::length (CORBA::ULong length)
-{
-  if (length > this->maximum_) // need realloc
-  {
-    CORBA::Octet  *tmp = PortableServer::_tao_seq_Octet::allocbuf (length);
-    if (!tmp)
-    	return;
-    CORBA::ULong i;
-    // copy old buffer
-    for (i=0; i < this->length_; i++)
-    {
-    	tmp[i] = this->buffer_[i];
-    }
-    if (this->release_) // free old one if we own it
-    {
-      PortableServer::_tao_seq_Octet::freebuf (this->buffer_);
-    }
-    //assign the newly reallocated buffer
-    this->buffer_ = tmp;
-    this->release_ = 1; //after reallocation, we own it
-    this->maximum_ = length;
-  }
-  this->length_ = length;
-}
-
-CORBA::Octet  *
-PortableServer::_tao_seq_Octet::allocbuf (CORBA::ULong nelems)
-{
-  CORBA::Octet  *buf = new CORBA::Octet [nelems]; // allocate from heap
-  return buf;
-}
 
 static const CORBA::Long _oc_PortableServer__tao_seq_Octet[] =
 {
@@ -627,39 +367,35 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_duplicate (Porta
   return obj;
 } // end of _duplicate
 
-PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::ThreadPolicy::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/ThreadPolicy:1.0", env))
     return PortableServer::ThreadPolicy::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::ThreadPolicy_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::ThreadPolicy::_nil ();
+    
+    new_obj = new PortableServer::ThreadPolicy (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::ThreadPolicy::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::ThreadPolicy_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::ThreadPolicy (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::ThreadPolicy *servant =
-    (POA_PortableServer::ThreadPolicy *) obj->_servant ()->_downcast ("IDL:PortableServer/ThreadPolicy:1.0");
-
-  if (servant == 0)
-    return PortableServer::ThreadPolicy::_nil ();
-
-  return new POA_PortableServer::_tao_collocated_ThreadPolicy (servant, istub);
-
-} // end of _narrow
-
-PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_nil (void)
-{
-  return (PortableServer::ThreadPolicy_ptr)NULL;
-} // end of _nil
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/ThreadPolicy:1.0");
+  return new POA_PortableServer::_tao_collocated_ThreadPolicy(
+      ACE_reinterpret_cast(POA_PortableServer::ThreadPolicy_ptr, servant),
+      stub
+    );
+}
 
 PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -702,15 +438,15 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
   
 }
 
-CORBA::Boolean PortableServer::ThreadPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::ThreadPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ThreadPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_ThreadPolicy[] =
@@ -743,39 +479,35 @@ PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_duplicate (P
   return obj;
 } // end of _duplicate
 
-PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::LifespanPolicy::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/LifespanPolicy:1.0", env))
     return PortableServer::LifespanPolicy::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::LifespanPolicy_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::LifespanPolicy::_nil ();
+    
+    new_obj = new PortableServer::LifespanPolicy (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::LifespanPolicy::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::LifespanPolicy_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::LifespanPolicy (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::LifespanPolicy *servant =
-    (POA_PortableServer::LifespanPolicy *) obj->_servant ()->_downcast ("IDL:PortableServer/LifespanPolicy:1.0");
-
-  if (servant == 0)
-    return PortableServer::LifespanPolicy::_nil ();
-
-  return new POA_PortableServer::_tao_collocated_LifespanPolicy (servant, istub);
-
-} // end of _narrow
-
-PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_nil (void)
-{
-  return (PortableServer::LifespanPolicy_ptr)NULL;
-} // end of _nil
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/LifespanPolicy:1.0");
+  return new POA_PortableServer::_tao_collocated_LifespanPolicy(
+      ACE_reinterpret_cast(POA_PortableServer::LifespanPolicy_ptr, servant),
+      stub
+    );
+}
 
 PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -818,15 +550,15 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
   
 }
 
-CORBA::Boolean PortableServer::LifespanPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::LifespanPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/LifespanPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_LifespanPolicy[] =
@@ -859,39 +591,35 @@ PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_dupl
   return obj;
 } // end of _duplicate
 
-PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::IdUniquenessPolicy::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/IdUniquenessPolicy:1.0", env))
     return PortableServer::IdUniquenessPolicy::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::IdUniquenessPolicy_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::IdUniquenessPolicy::_nil ();
+    
+    new_obj = new PortableServer::IdUniquenessPolicy (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::IdUniquenessPolicy::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::IdUniquenessPolicy_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::IdUniquenessPolicy (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::IdUniquenessPolicy *servant =
-    (POA_PortableServer::IdUniquenessPolicy *) obj->_servant ()->_downcast ("IDL:PortableServer/IdUniquenessPolicy:1.0");
-
-  if (servant == 0)
-    return PortableServer::IdUniquenessPolicy::_nil ();
-
-  return new POA_PortableServer::_tao_collocated_IdUniquenessPolicy (servant, istub);
-
-} // end of _narrow
-
-PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_nil (void)
-{
-  return (PortableServer::IdUniquenessPolicy_ptr)NULL;
-} // end of _nil
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/IdUniquenessPolicy:1.0");
+  return new POA_PortableServer::_tao_collocated_IdUniquenessPolicy(
+      ACE_reinterpret_cast(POA_PortableServer::IdUniquenessPolicy_ptr, servant),
+      stub
+    );
+}
 
 PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -934,15 +662,15 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
   
 }
 
-CORBA::Boolean PortableServer::IdUniquenessPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::IdUniquenessPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/IdUniquenessPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_IdUniquenessPolicy[] =
@@ -975,39 +703,35 @@ PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_dupl
   return obj;
 } // end of _duplicate
 
-PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::IdAssignmentPolicy::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/IdAssignmentPolicy:1.0", env))
     return PortableServer::IdAssignmentPolicy::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::IdAssignmentPolicy_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::IdAssignmentPolicy::_nil ();
+    
+    new_obj = new PortableServer::IdAssignmentPolicy (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::IdAssignmentPolicy::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::IdAssignmentPolicy_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::IdAssignmentPolicy (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::IdAssignmentPolicy *servant =
-    (POA_PortableServer::IdAssignmentPolicy *) obj->_servant ()->_downcast ("IDL:PortableServer/IdAssignmentPolicy:1.0");
-
-  if (servant == 0)
-    return PortableServer::IdAssignmentPolicy::_nil ();
-
-  return new POA_PortableServer::_tao_collocated_IdAssignmentPolicy (servant, istub);
-
-} // end of _narrow
-
-PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_nil (void)
-{
-  return (PortableServer::IdAssignmentPolicy_ptr)NULL;
-} // end of _nil
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/IdAssignmentPolicy:1.0");
+  return new POA_PortableServer::_tao_collocated_IdAssignmentPolicy(
+      ACE_reinterpret_cast(POA_PortableServer::IdAssignmentPolicy_ptr, servant),
+      stub
+    );
+}
 
 PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -1050,15 +774,15 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
   
 }
 
-CORBA::Boolean PortableServer::IdAssignmentPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::IdAssignmentPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/IdAssignmentPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_IdAssignmentPolicy[] =
@@ -1091,39 +815,35 @@ PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationP
   return obj;
 } // end of _duplicate
 
-PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::ImplicitActivationPolicy::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/ImplicitActivationPolicy:1.0", env))
     return PortableServer::ImplicitActivationPolicy::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::ImplicitActivationPolicy_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::ImplicitActivationPolicy::_nil ();
+    
+    new_obj = new PortableServer::ImplicitActivationPolicy (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::ImplicitActivationPolicy::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::ImplicitActivationPolicy_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::ImplicitActivationPolicy (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::ImplicitActivationPolicy *servant =
-    (POA_PortableServer::ImplicitActivationPolicy *) obj->_servant ()->_downcast ("IDL:PortableServer/ImplicitActivationPolicy:1.0");
-
-  if (servant == 0)
-    return PortableServer::ImplicitActivationPolicy::_nil ();
-
-  return new POA_PortableServer::_tao_collocated_ImplicitActivationPolicy (servant, istub);
-
-} // end of _narrow
-
-PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_nil (void)
-{
-  return (PortableServer::ImplicitActivationPolicy_ptr)NULL;
-} // end of _nil
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/ImplicitActivationPolicy:1.0");
+  return new POA_PortableServer::_tao_collocated_ImplicitActivationPolicy(
+      ACE_reinterpret_cast(POA_PortableServer::ImplicitActivationPolicy_ptr, servant),
+      stub
+    );
+}
 
 PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -1166,15 +886,15 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
   
 }
 
-CORBA::Boolean PortableServer::ImplicitActivationPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::ImplicitActivationPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ImplicitActivationPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicy[] =
@@ -1207,39 +927,35 @@ PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolic
   return obj;
 } // end of _duplicate
 
-PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::ServantRetentionPolicy::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/ServantRetentionPolicy:1.0", env))
     return PortableServer::ServantRetentionPolicy::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::ServantRetentionPolicy_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::ServantRetentionPolicy::_nil ();
+    
+    new_obj = new PortableServer::ServantRetentionPolicy (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::ServantRetentionPolicy::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::ServantRetentionPolicy_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::ServantRetentionPolicy (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::ServantRetentionPolicy *servant =
-    (POA_PortableServer::ServantRetentionPolicy *) obj->_servant ()->_downcast ("IDL:PortableServer/ServantRetentionPolicy:1.0");
-
-  if (servant == 0)
-    return PortableServer::ServantRetentionPolicy::_nil ();
-
-  return new POA_PortableServer::_tao_collocated_ServantRetentionPolicy (servant, istub);
-
-} // end of _narrow
-
-PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_nil (void)
-{
-  return (PortableServer::ServantRetentionPolicy_ptr)NULL;
-} // end of _nil
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/ServantRetentionPolicy:1.0");
+  return new POA_PortableServer::_tao_collocated_ServantRetentionPolicy(
+      ACE_reinterpret_cast(POA_PortableServer::ServantRetentionPolicy_ptr, servant),
+      stub
+    );
+}
 
 PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -1282,15 +998,15 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
   
 }
 
-CORBA::Boolean PortableServer::ServantRetentionPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::ServantRetentionPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantRetentionPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_ServantRetentionPolicy[] =
@@ -1324,39 +1040,35 @@ PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPol
   return obj;
 } // end of _duplicate
 
-PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::RequestProcessingPolicy::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/RequestProcessingPolicy:1.0", env))
     return PortableServer::RequestProcessingPolicy::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::RequestProcessingPolicy_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::RequestProcessingPolicy::_nil ();
+    
+    new_obj = new PortableServer::RequestProcessingPolicy (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::RequestProcessingPolicy::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::RequestProcessingPolicy_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::RequestProcessingPolicy (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::RequestProcessingPolicy *servant =
-    (POA_PortableServer::RequestProcessingPolicy *) obj->_servant ()->_downcast ("IDL:PortableServer/RequestProcessingPolicy:1.0");
-
-  if (servant == 0)
-    return PortableServer::RequestProcessingPolicy::_nil ();
-
-  return new POA_PortableServer::_tao_collocated_RequestProcessingPolicy (servant, istub);
-
-} // end of _narrow
-
-PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_nil (void)
-{
-  return (PortableServer::RequestProcessingPolicy_ptr)NULL;
-} // end of _nil
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/RequestProcessingPolicy:1.0");
+  return new POA_PortableServer::_tao_collocated_RequestProcessingPolicy(
+      ACE_reinterpret_cast(POA_PortableServer::RequestProcessingPolicy_ptr, servant),
+      stub
+    );
+}
 
 PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -1399,15 +1111,15 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
   
 }
 
-CORBA::Boolean PortableServer::RequestProcessingPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::RequestProcessingPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/RequestProcessingPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_RequestProcessingPolicy[] =
@@ -1427,38 +1139,35 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_duplicate (PortableS
   return obj;
 } // end of _duplicate
 
-PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::POAManager::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/POAManager:1.0", env))
     return PortableServer::POAManager::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::POAManager_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::POAManager::_nil ();
+    
+    new_obj = new PortableServer::POAManager (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::POAManager::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::POAManager_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::POAManager (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::POAManager *servant = 
-    (POA_PortableServer::POAManager *) obj->_servant ()->_downcast ("IDL:PortableServer/POAManager:1.0");
-
-  if (servant == 0)
-    return PortableServer::POAManager::_nil ();
-  
-  return new POA_PortableServer::_tao_collocated_POAManager (servant, istub);
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/POAManager:1.0");
+  return new POA_PortableServer::_tao_collocated_POAManager(
+      ACE_reinterpret_cast(POA_PortableServer::POAManager_ptr, servant),
+      stub
+    );
 }
-
-PortableServer::POAManager_ptr PortableServer::POAManager::_nil (void)
-{
-  return (PortableServer::POAManager_ptr)NULL;
-} // end of _nil
 
 PortableServer::POAManager_ptr PortableServer::POAManager::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -1608,14 +1317,14 @@ void  PortableServer::POAManager::deactivate (CORBA::Boolean etherealize_objects
   
 }
 
-CORBA::Boolean PortableServer::POAManager::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::POAManager::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/POAManager:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_POAManager[] =
@@ -1635,38 +1344,35 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_duplicat
   return obj;
 } // end of _duplicate
 
-PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::AdapterActivator::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/AdapterActivator:1.0", env))
     return PortableServer::AdapterActivator::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::AdapterActivator_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::AdapterActivator::_nil ();
+    
+    new_obj = new PortableServer::AdapterActivator (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::AdapterActivator::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::AdapterActivator_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::AdapterActivator (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::AdapterActivator *servant =
-    (POA_PortableServer::AdapterActivator *) obj->_servant ()->_downcast ("IDL:PortableServer/AdapterActivator:1.0");
-
-  if (servant == 0)
-    return PortableServer::AdapterActivator::_nil ();
-  
-  return new POA_PortableServer::_tao_collocated_AdapterActivator (servant, istub);
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/AdapterActivator:1.0");
+  return new POA_PortableServer::_tao_collocated_AdapterActivator(
+      ACE_reinterpret_cast(POA_PortableServer::AdapterActivator_ptr, servant),
+      stub
+    );
 }
-
-PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_nil (void)
-{
-  return (PortableServer::AdapterActivator_ptr)NULL;
-} // end of _nil
 
 PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -1713,14 +1419,14 @@ CORBA::Boolean  PortableServer::AdapterActivator::unknown_adapter (PortableServe
   
 }
 
-CORBA::Boolean PortableServer::AdapterActivator::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::AdapterActivator::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/AdapterActivator:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_AdapterActivator[] =
@@ -1740,39 +1446,35 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_duplicate (P
   return obj;
 } // end of _duplicate
 
-PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::ServantManager::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/ServantManager:1.0", env))
     return PortableServer::ServantManager::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::ServantManager_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::ServantManager::_nil ();
+    
+    new_obj = new PortableServer::ServantManager (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::ServantManager::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::ServantManager_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::ServantManager (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::ServantManager *servant =
-    (POA_PortableServer::ServantManager *) obj->_servant ()->_downcast ("IDL:PortableServer/ServantManager:1.0");
-
-  if (servant == 0)
-    return PortableServer::ServantManager::_nil ();
-
-  return new POA_PortableServer::_tao_collocated_ServantManager (servant, istub);
-
-} // end of _narrow
-
-PortableServer::ServantManager_ptr PortableServer::ServantManager::_nil (void)
-{
-  return (PortableServer::ServantManager_ptr)NULL;
-} // end of _nil
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/ServantManager:1.0");
+  return new POA_PortableServer::_tao_collocated_ServantManager(
+      ACE_reinterpret_cast(POA_PortableServer::ServantManager_ptr, servant),
+      stub
+    );
+}
 
 PortableServer::ServantManager_ptr PortableServer::ServantManager::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -1792,14 +1494,14 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_bind (const 
   	return PortableServer::ServantManager::_narrow (objref, env);
 }
 
-CORBA::Boolean PortableServer::ServantManager::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::ServantManager::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantManager:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_ServantManager[] =
@@ -1819,39 +1521,35 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_duplicat
   return obj;
 } // end of _duplicate
 
-PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::ServantActivator::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/ServantActivator:1.0", env))
     return PortableServer::ServantActivator::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::ServantActivator_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::ServantActivator::_nil ();
+    
+    new_obj = new PortableServer::ServantActivator (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::ServantActivator::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::ServantActivator_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::ServantActivator (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::ServantActivator *servant =
-    (POA_PortableServer::ServantActivator *) obj->_servant ()->_downcast ("IDL:PortableServer/ServantActivator:1.0");
-
-  if (servant == 0)
-    return PortableServer::ServantActivator::_nil ();
-
-  return new POA_PortableServer::_tao_collocated_ServantActivator (servant, istub);
-
-} // end of _narrow
-
-PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_nil (void)
-{
-  return (PortableServer::ServantActivator_ptr)NULL;
-} // end of _nil
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/ServantActivator:1.0");
+  return new POA_PortableServer::_tao_collocated_ServantActivator(
+      ACE_reinterpret_cast(POA_PortableServer::ServantActivator_ptr, servant),
+      stub
+    );
+}
 
 PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -1885,15 +1583,15 @@ void  PortableServer::ServantActivator::etherealize (const PortableServer::Objec
 
 }
 
-CORBA::Boolean PortableServer::ServantActivator::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::ServantActivator::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantActivator:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantManager:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_ServantActivator[] =
@@ -1913,39 +1611,35 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_duplicate (P
   return obj;
 } // end of _duplicate
 
-PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::ServantLocator::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/ServantLocator:1.0", env))
     return PortableServer::ServantLocator::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::ServantLocator_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::ServantLocator::_nil ();
+    
+    new_obj = new PortableServer::ServantLocator (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::ServantLocator::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::ServantLocator_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::ServantLocator (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::ServantLocator *servant =
-    (POA_PortableServer::ServantLocator *) obj->_servant ()->_downcast ("IDL:PortableServer/ServantLocator:1.0");
-
-  if (servant == 0)
-    return PortableServer::ServantLocator::_nil ();
-
-  return new POA_PortableServer::_tao_collocated_ServantLocator (servant, istub);
-
-} // end of _narrow
-
-PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_nil (void)
-{
-  return (PortableServer::ServantLocator_ptr)NULL;
-} // end of _nil
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/ServantLocator:1.0");
+  return new POA_PortableServer::_tao_collocated_ServantLocator(
+      ACE_reinterpret_cast(POA_PortableServer::ServantLocator_ptr, servant),
+      stub
+    );
+}
 
 PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -1979,15 +1673,15 @@ void  PortableServer::ServantLocator::postinvoke (const PortableServer::ObjectId
 
 }
 
-CORBA::Boolean PortableServer::ServantLocator::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::ServantLocator::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantLocator:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantManager:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_ServantLocator[] =
@@ -2007,39 +1701,35 @@ PortableServer::POA_ptr PortableServer::POA::_duplicate (PortableServer::POA_ptr
   return obj;
 } // end of _duplicate
 
-PortableServer::POA_ptr PortableServer::POA::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::POA_ptr PortableServer::POA::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::POA::_nil ();
-
   if (!obj->_is_a ("IDL:PortableServer/POA:1.0", env))
-      return PortableServer::POA::_nil (); 
-  
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
     return PortableServer::POA::_nil ();
-  
-  if (!obj->_is_collocated () || obj->_servant () == 0)
+  if (!obj->_is_collocated () || !obj->_servant())
   {
+    STUB_Object *istub;
     PortableServer::POA_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::POA::_nil ();
+    
     new_obj = new PortableServer::POA (istub); // construct obj ref using the stub object
     return new_obj;
   } // end of if
-  
-  POA_PortableServer::POA *servant = 
-    (POA_PortableServer::POA *) obj->_servant ()->_downcast ("IDL:PortableServer/POA:1.0");
-  
-  if (servant == 0)
-    return PortableServer::POA::_nil (); 
 
-  return new POA_PortableServer::_tao_collocated_POA (servant, istub);
-
-} // end of _narrow
-
-PortableServer::POA_ptr PortableServer::POA::_nil (void)
-{
-  return (PortableServer::POA_ptr)NULL;
-} // end of _nil
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
+    return PortableServer::POA::_nil ();
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/POA:1.0");
+  return new POA_PortableServer::_tao_collocated_POA(
+      ACE_reinterpret_cast(POA_PortableServer::POA_ptr, servant),
+      stub
+    );
+}
 
 PortableServer::POA_ptr PortableServer::POA::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -3045,14 +2735,14 @@ CORBA::Object_ptr  PortableServer::POA::id_to_reference (const PortableServer::O
   
 }
 
-CORBA::Boolean PortableServer::POA::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::POA::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/POA:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_POA[] =
@@ -3072,39 +2762,35 @@ PortableServer::Current_ptr PortableServer::Current::_duplicate (PortableServer:
   return obj;
 } // end of _duplicate
 
-PortableServer::Current_ptr PortableServer::Current::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+PortableServer::Current_ptr PortableServer::Current::_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &env
+  )
 {
-  if (CORBA::is_nil (obj)) 
+  if (CORBA::is_nil (obj))
     return PortableServer::Current::_nil ();
-  
   if (!obj->_is_a ("IDL:PortableServer/Current:1.0", env))
     return PortableServer::Current::_nil ();
+  if (!obj->_is_collocated () || !obj->_servant())
+  {
+    STUB_Object *istub;
+    PortableServer::Current_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+      return PortableServer::Current::_nil ();
+    
+    new_obj = new PortableServer::Current (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
 
-  STUB_Object *istub;
-  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
+  STUB_Object *stub = obj->_servant ()->_create_stub (env);
+  if (env.exception () != 0)
     return PortableServer::Current::_nil ();
-
-  if (!obj->_is_collocated () || obj->_servant () == 0)
-    {
-      PortableServer::Current_ptr new_obj; // to be returned 
-      new_obj = new PortableServer::Current (istub); // construct obj ref using the stub object
-      return new_obj;
-    }
-
-  POA_PortableServer::Current *servant =
-    (POA_PortableServer::Current *) obj->_servant ()->_downcast ("IDL:PortableServer/Current:1.0");
-
-  if (servant == 0)
-    return PortableServer::Current::_nil ();
-
-  return new POA_PortableServer::_tao_collocated_Current (servant, istub);
-
-} // end of _narrow
-
-PortableServer::Current_ptr PortableServer::Current::_nil (void)
-{
-  return (PortableServer::Current_ptr)NULL;
-} // end of _nil
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/Current:1.0");
+  return new POA_PortableServer::_tao_collocated_Current(
+      ACE_reinterpret_cast(POA_PortableServer::Current_ptr, servant),
+      stub
+    );
+}
 
 PortableServer::Current_ptr PortableServer::Current::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
@@ -3206,15 +2892,15 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
   
 }
 
-CORBA::Boolean PortableServer::Current::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean PortableServer::Current::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Current:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/CurrentBase:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
 	return 1; // success using local knowledge
   else
-  	return this->CORBA_Object::_is_a (value, env); // remote call
+  	return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
 static const CORBA::Long _oc_PortableServer_Current[] =
