@@ -28,7 +28,7 @@ namespace TAO
     template <class POLICYTYPE, class POLICYVALUE>
     void create_policy (
         POLICYTYPE *& policy,
-        POLICYVALUE value,
+        POLICYVALUE &value,
         const CORBA::Any& val
         ACE_ENV_ARG_DECL)
       {
