@@ -1,3 +1,12 @@
+Sun May 30 15:43:24 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/NodeApplication/NodeApplication.mpc:
+        * DnC/NodeApplication/NodeApplication.cpp:
+
+          Resolved compilation and link errors. Now the NodeApplication
+          can be started generating an ior! Next step will be to write a
+          test client to install homes and create components.
+
 Sun May 30 14:36:21 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/NodeApplication/NodeApplication.mpc:
