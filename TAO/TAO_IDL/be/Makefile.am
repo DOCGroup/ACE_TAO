@@ -76,6 +76,8 @@ libbe_la_SOURCES = \
   be_visitor_context.cpp \
   be_visitor_decl.cpp \
   be_visitor_enum.cpp \
+  be_visitor_eventtype.cpp \
+  be_visitor_eventtype_fwd.cpp \
   be_visitor_exception.cpp \
   be_visitor_factory.cpp \
   be_visitor_field.cpp \
