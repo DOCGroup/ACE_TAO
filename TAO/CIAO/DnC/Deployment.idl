@@ -531,14 +531,16 @@ module Deployment {
     string UUID;
     ComponentInterfaceDescription realizes;
     Properties configProperty;
+    Properties infoProperty;
     PackagedComponentImplementations implementation;
   };
 
   struct PackageConfiguration {
-    string name;
     string label;
+    string UUID;
     ::CORBA::ULongSeq specializedConfigRef;
     ComponentPackageDescriptions basePackage;
+    ComponentPackageReferences reference;
     Requirements selectRequirement;
     Properties configProperty;
   };
