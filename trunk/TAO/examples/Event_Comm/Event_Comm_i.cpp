@@ -192,7 +192,6 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 	  // already being used.
 
 	  ACE_THROW (Event_Comm::Notifier::CannotSubscribe ("Duplicate consumer and filtering criteria found.\n"));
-	  return;
 	}
     }
 
@@ -366,7 +365,7 @@ Notifier_i::push (const Event_Comm::Event &event,
             }
 	  ACE_CATCHANY
             {
-	      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+	      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                    "Unexpected exception\n");
               continue;
             }

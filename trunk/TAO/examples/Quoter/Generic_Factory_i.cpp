@@ -44,17 +44,18 @@ CosNaming::NamingContext_ptr
 Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_key,
                                               CORBA::Environment &ACE_TRY_ENV)
 {
-  // Get a reference to the ORB.
-  CORBA::ORB_ptr orb_ptr =
-    TAO_ORB_Core_instance ()->orb ();
-
+  CosNaming::NamingContext_var quoterNamingContext_var;
   ACE_TRY
     {
+      // @@ FIXME Get a reference to the ORB.
+      CORBA::ORB_ptr orb_ptr =
+        TAO_ORB_Core_instance ()->orb ();
+ 
       // Get the Naming Service object reference.
       CORBA::Object_var namingObj_var =
         orb_ptr->resolve_initial_references ("NameService", ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (CORBA::is_nil (namingObj_var.in ()))
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) Unable get the Naming Service.\n"));
@@ -74,12 +75,10 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
         namingContext_var->resolve (quoterContextName, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CosNaming::NamingContext_var quoterNamingContext_var =
+      quoterNamingContext_var =
         CosNaming::NamingContext::_narrow (quoterNamingObj_var.in (),
                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      return quoterNamingContext_var._retn ();
     }
   ACE_CATCHANY
     {
@@ -87,7 +86,7 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
                         CosNaming::NamingContext::_nil ());
     }
   ACE_ENDTRY;
-  return CosNaming::NamingContext::_nil ();
+  return quoterNamingContext_var._retn ();
 }
 
 
@@ -101,6 +100,7 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
                        CosLifeCycle::InvalidCriteria,
                        CosLifeCycle::CannotMeetCriteria))
 {
+  Stock::Quoter_var quoter_var;
   ACE_TRY
     {
       CosNaming::NamingContext_var quoterNamingContext_var =
@@ -143,7 +143,7 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
                   "Factory reference OK.\n"));
 
       // Now retrieve the Quoter obj ref corresponding to the key.
-      Stock::Quoter_var quoter_var =
+      quoter_var =
         factory_var->create_quoter ("test",
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -161,7 +161,6 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
       ACE_DEBUG ((LM_DEBUG,
                   "Return a object reference to a new object.\n"));
 
-      return quoter_var._retn ();
     }
   ACE_CATCHANY
     {
@@ -169,5 +168,5 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
                         CORBA::Object::_nil ());
     }
   ACE_ENDTRY;
-  return CORBA::Object::_nil ();
+  return quoter_var._retn ();
 }

@@ -165,10 +165,8 @@ FactoryClient::resolve_factory (CORBA::Environment &ACE_TRY_ENV)
 CosEventChannelFactory::ChannelFactory_ptr
 FactoryClient::create_factory (CORBA::Environment &ACE_TRY_ENV)
 {
-  // TBD:
   ACE_THROW_RETURN (CORBA::UNKNOWN (),
                     CosEventChannelFactory::ChannelFactory::_nil ());
-  return 0;
 }
 
 CosEventChannelAdmin::EventChannel_ptr
