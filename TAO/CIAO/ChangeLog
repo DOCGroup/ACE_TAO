@@ -1,3 +1,10 @@
+Sat Oct 11 00:18:13 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/generate_component_mpc.pl: My previous change didn't
+	  completely fix the script.  It was using the obsolet dependency
+	  MPC keyword "depends" instead of "after", and the dependencies
+	  was partially broken.
+
 Fri Oct 10 18:39:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/CIDLC.vcproj:
@@ -6,7 +13,7 @@ Fri Oct 10 18:39:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIDLC/RepositoryIdGenerator.cpp:
         * CIDLC/RepositoryIdGenerator.hpp:
         * CIDLC/cidlc.cpp:
-          
+
           Added backend support for typeid and typeprefix, used in
           computing the repository id string.
 
