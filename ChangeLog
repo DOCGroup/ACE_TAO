@@ -1,7 +1,11 @@
+Fri Jul 30 17:28:44 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* NEWS:  Added ACE 5.4.2 noteworthy items.
+
 Fri Jul 30 23:29:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release:
-	  
+
 	  The chgrp on deuce.doc freaked out again. This checkin fixes
 	  this problem using a hack. Cutting a beta on deuce.doc should
 	  probably be avoided.
@@ -11,10 +15,10 @@ Fri Jul 30 19:18:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
  	* bin/make_release:
 
 	  Added generation of Borland makefiles along with the
-	  release. Thanks to Johnny for reminding me on this. 
+	  release. Thanks to Johnny for reminding me on this.
 
 Thu Jul 29 18:19:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
- 
+
 	* ace/config-irix6.x-common.h:
 	* ace/config-irix6.x-g++.h:
 	* ace/config-irix6.x-kcc.h:
