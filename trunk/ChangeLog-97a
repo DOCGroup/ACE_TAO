@@ -1,5 +1,15 @@
 Tue Mar 18 13:20:59 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
+	* netsvcs/lib/Client_Logging_Handler.cpp: Added a check in fini()
+ 	  to make sure we have a valid handler.  If the connect attempt
+ 	  failed, this->handler_ will be set to 0.
+
+	* tests/Mem_Map_Test.cpp: Added code that removes all temporary
+ 	  files created by the test.
+
+	* tests/Time_Service_Test.cpp: Made sure we remove the backing
+ 	  store file left behind by a aborted clerk process.
+
 	* examples/Reactor/Ntalker/ntalker.cpp: The ntalker now uses
  	  ACE::register_stdin_handler to register the STDIN. This function
  	  allows for portability.
