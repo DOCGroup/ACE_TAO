@@ -419,7 +419,7 @@ ECM_Driver::parse_args (int argc, char *argv [])
                       "-l <localname> "
                       "-p <pid file name> "
                       "-c <config file name> "
-		      "-f federation,federation,... "
+                      "-f federation,federation,... "
                       "\n",
                       argv[0]));
           return -1;
@@ -899,14 +899,14 @@ ECM_Consumer::open (const char* name,
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
   scheduler->set (this->rt_info_,
-		  RtecScheduler::VERY_HIGH_CRITICALITY,
-		  time, time, time,
-		  0,
-		  RtecScheduler::VERY_LOW_IMPORTANCE,
-		  time,
-		  0,
-		  RtecScheduler::OPERATION,
-		  _env);
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  0,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  0,
+                  RtecScheduler::OPERATION,
+                  _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   // = Connect as a consumer.
@@ -918,11 +918,11 @@ ECM_Consumer::open (const char* name,
 
 void
 ECM_Consumer::connect (ACE_RANDR_TYPE &seed,
-		       CORBA::Environment& _env)
+                       CORBA::Environment& _env)
 {
   if (CORBA::is_nil (this->consumer_admin_.in ()))
     return;
-  
+
   this->supplier_proxy_ =
     this->consumer_admin_->obtain_push_supplier (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
@@ -930,26 +930,26 @@ ECM_Consumer::connect (ACE_RANDR_TYPE &seed,
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
   qos.insert_type (ACE_ES_EVENT_SHUTDOWN,
-		   this->rt_info_);
+                   this->rt_info_);
   const ECM_Federation* federation = this->federation_->federation ();
   for (int i = 0; i < federation->consumer_types (); ++i)
     {
       if (ACE_OS::rand_r (seed) < RAND_MAX / 2)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Federation %s leaves group %s\n",
-		      federation->name (),
-		      federation->consumer_name (i)));
-	  this->federation_->subscribed_bit (i, 0);
-	  continue;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Federation %s leaves group %s\n",
+                      federation->name (),
+                      federation->consumer_name (i)));
+          this->federation_->subscribed_bit (i, 0);
+          continue;
+        }
       ACE_DEBUG ((LM_DEBUG,
-		  "Federation %s joins group %s\n",
-		  federation->name (),
-		  federation->consumer_name (i)));
+                  "Federation %s joins group %s\n",
+                  federation->name (),
+                  federation->consumer_name (i)));
       this->federation_->subscribed_bit (i, 1);
       qos.insert_type (federation->consumer_ipaddr (i),
-		       this->rt_info_);
+                       this->rt_info_);
     }
 
   RtecEventComm::PushConsumer_var objref = this->_this (_env);
@@ -978,7 +978,7 @@ void
 ECM_Consumer::close (CORBA::Environment &_env)
 {
   this->disconnect (_env);
-  this->consumer_admin_ = 
+  this->consumer_admin_ =
     RtecEventChannelAdmin::ConsumerAdmin::_nil ();
 }
 
@@ -1015,7 +1015,7 @@ ECM_Local_Federation::ECM_Local_Federation (ECM_Federation *federation,
      publication_change_period_ (10000)
 {
   ACE_NEW (this->subscription_subset_,
-	   CORBA::Boolean[this->consumer_types ()]);
+           CORBA::Boolean[this->consumer_types ()]);
 }
 
 ECM_Local_Federation::~ECM_Local_Federation (void)
@@ -1115,8 +1115,8 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
   if (4 * p < maxp)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "Reconfiguring federation %s: %f %f\n",
-		  this->name (), p, maxp));
+                  "Reconfiguring federation %s: %f %f\n",
+                  this->name (), p, maxp));
       this->consumer_.disconnect (_env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
       this->consumer_.connect (this->seed_, _env);
@@ -1145,15 +1145,15 @@ ECM_Local_Federation::consumer_push (ACE_hrtime_t,
 
       int j = 0;
       for (; j < this->federation_->consumer_types (); ++j)
-	{
-	  CORBA::ULong type = e.header.type;
-	  if (type == this->federation_->consumer_ipaddr(j))
-	    {
-	      if (this->subscribed_bit (j) == 0)
-		this->unfiltered_count_++;
-	      break;
-	    }
-	}
+        {
+          CORBA::ULong type = e.header.type;
+          if (type == this->federation_->consumer_ipaddr(j))
+            {
+              if (this->subscribed_bit (j) == 0)
+                this->unfiltered_count_++;
+              break;
+            }
+        }
       if (j == this->federation_->consumer_types ())
         this->invalid_count_++;
     }
@@ -1178,7 +1178,7 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
   this->receiver_.init (ec, scheduler,
                         buf,
                         local_addr,
-			addr_server,
+                        addr_server.in (),
                         _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
@@ -1213,8 +1213,8 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
   for (int i = 0; i < this->consumer_types (); ++i)
     {
       qos.insert (source,
-		  this->consumer_ipaddr (i),
-		  rt_info, 1);
+                  this->consumer_ipaddr (i),
+                  rt_info, 1);
     }
 
   RtecEventChannelAdmin::SupplierQOS qos_copy =
