@@ -341,7 +341,8 @@ TAO_FT_IOGR_Property::get_primary_profile (
 CORBA::Boolean
 TAO_FT_IOGR_Property::get_tagged_component (
     const CORBA::Object_ptr iogr,
-    FT::TagFTGroupTaggedComponent &fgtc) const
+    FT::TagFTGroupTaggedComponent &fgtc
+    ACE_ENV_ARG_DECL) const
 {
   TAO_Stub *stub =
     iogr->_stubobj ();
@@ -361,6 +362,7 @@ TAO_FT_IOGR_Property::get_tagged_component (
        i < mprofile.profile_count ();
        i++)
     {
+
       // Get the Tagged Components
       const TAO_Tagged_Components &pfile_tagged =
         mprofile.get_profile (i)->tagged_components ();
@@ -376,17 +378,20 @@ TAO_FT_IOGR_Property::get_tagged_component (
           CORBA::Boolean byte_order;
 
           if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-            return 0;
+            ACE_THROW_RETURN (CORBA::MARSHAL (),
+                              0);
 
           cdr.reset_byte_order (ACE_static_cast (int,byte_order));
 
-          if ((cdr >> fgtc) == 0)
-            return 0;
+	  if ((cdr >> fgtc) == 1)
+	    return 1;
+	  else
+            ACE_THROW_RETURN (CORBA::MARSHAL (),
+                              0);
         }
     }
 
-  // Success
-  return 1;
+  return 0;
 }
 
 CORBA::Boolean

@@ -20,7 +20,7 @@
 #include "tao/corbafwd.h"
 #include "tao/ORB.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
-#include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
+#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 
 
 ACE_RCSID(IORManipluation, IORTest, "$Id$")
@@ -166,6 +166,32 @@ main (int argc, char *argv[])
       if (retval)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("\tWe have set the property\n")));
+      else
+	return -1;
+
+      /// Extract the property
+      FT::TagFTGroupTaggedComponent ftc;
+      TAO_FT_IOGR_Property tmp_prop;
+
+      retval =
+        tmp_prop.get_tagged_component (merged.in (),
+                                       ftc
+                                       ACE_ENV_ARG_PARAMETER);
+
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Testing for tagged component \n"));
+
+
+      if ((ftc.object_group_ref_version != 5) &&
+          (ftc.object_group_id != 10))
+        ACE_ERROR ((LM_ERROR,
+                    "%P|%t) Not working right \n"));
+
+
+
+
     }
   ACE_CATCH (TAO_IOP::NotFound, userex)
     {

@@ -1,3 +1,15 @@
+Sat Sep 20 16:46:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+	  Added explicit template specifications.
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h: Added
+	  exception specification for  get_tagged_components ().
+
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp: 
+	  Test for get_tagged_components () added.
+
 Fri Sep 19 20:02:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
