@@ -9,7 +9,7 @@
 
 #include "DiamondS.h"
 
-class Top_i : public POA_Diamond::Top
+class Diamond_Export Top_i : public POA_Diamond::Top
 {
 public:
   Top_i ();
@@ -20,7 +20,7 @@ public:
   // Return the shape of this object (interface.)
 };
 
-class Left_i : public POA_Diamond::Left
+class Diamond_Export Left_i : public POA_Diamond::Left
 {
 public:
   Left_i ();
@@ -34,7 +34,7 @@ public:
   // Return the color of this object (interface.)
 };
 
-class Right_i : public POA_Diamond::Right
+class Diamond_Export Right_i : public POA_Diamond::Right
 {
 public:
   Right_i ();
@@ -51,7 +51,7 @@ public:
   // Return the width of the stuff.
 };
 
-class Buttom_i : public POA_Diamond::Buttom
+class Diamond_Export Buttom_i : public POA_Diamond::Buttom
 {
 public:
   Buttom_i ();
