@@ -53,24 +53,30 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
   this->orb_core_ = orb_core;
 
-  TAO_Cached_Connector_Lock *connector_lock = 0;
-  ACE_NEW_RETURN (connector_lock,
-                  TAO_Cached_Connector_Lock (this->orb_core_),
-                  -1);
-
   int result = this->make_caching_strategy ();
   if (result == -1)
     return -1;
 
-  // @@ We should use ACE_NEW here
-  this->cached_connect_strategy_ =
-    new CACHED_CONNECT_STRATEGY (*this->caching_strategy_,
-        new TAO_IIOP_Connect_Creation_Strategy (this->orb_core_->thr_mgr (),
-                                                this->orb_core_),
-        0,
-        0,
-        connector_lock,
-        1);
+ TAO_Cached_Connector_Lock *connector_lock = 0;
+ ACE_NEW_RETURN (connector_lock,
+                 TAO_Cached_Connector_Lock (this->orb_core_),
+                 -1);
+
+  TAO_IIOP_Connect_Creation_Strategy *connect_creation_strategy = 0;
+  ACE_NEW_RETURN (connect_creation_strategy,
+                  TAO_IIOP_Connect_Creation_Strategy (
+                                             this->orb_core_->thr_mgr (),
+                                             this->orb_core_),
+                  -1);
+
+  ACE_NEW_RETURN (this->cached_connect_strategy_,
+                  CACHED_CONNECT_STRATEGY (*this->caching_strategy_,
+                                           connect_creation_strategy,
+                                           0,
+                                           0,
+                                           connector_lock,
+                                           1),
+                  -1);
 
   return this->base_connector_.open (this->orb_core_->reactor (),
                                      &this->null_creation_strategy_,
@@ -81,17 +87,13 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 int
 TAO_IIOP_Connector::close (void)
 {
-  //
-  // @@ Can we delete the strategies that the connector uses before we
-  // close the connector itself??
-  //
+  this->base_connector_.close ();
 
   // Zap the creation strategy that we created earlier
   delete this->cached_connect_strategy_->creation_strategy ();
   delete this->cached_connect_strategy_;
   delete this->caching_strategy_;
 
-  this->base_connector_.close ();
   return 0;
 }
 
