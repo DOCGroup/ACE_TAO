@@ -3,10 +3,10 @@
 // ============================================================================
 //
 // = FILENAME
-//    QuoterFactoryFinder.cpp
+//    FactoryFinder.h
 //
 // = DESCRIPTION
-//   Server for the Quoter Factory Finder 
+//    Server for the Quoter Factory Finder 
 //
 // = AUTHOR
 //    Michael Kircher (mk1@cs.wustl.edu)
@@ -45,8 +45,11 @@ private:
   TAO_ORB_Manager orb_manager_;
   // instance of the ORB Manager
 
-  QuoterFactoryFinder_i *quoterFactoryFinder_Impl_ptr_;
+  QuoterFactoryFinderImpl *quoterFactoryFinderImpl_ptr_;
   // instance of the Quoter Factory Finder
+  
+  CosNaming::NamingContext_var quoterNamingContext_var_;
+  // reference to the Quoter naming context
 
   int argc_;
   // Number of commandline arguments.
