@@ -1,3 +1,12 @@
+Tue Dec 07 21:32:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp: Per Bala, added GIOPC.*.
+
+	  Added tao.rc to project files.  One can use GetFileVersionInfo
+	  on Win32 to get the TAO library version info now.  Thanks to
+	  David Hauck <davidh@realtimeint.com> for suggesting this.
+
 Tue Dec  7 20:38:32 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/client.cpp
