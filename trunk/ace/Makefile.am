@@ -251,6 +251,7 @@ libACE_Utils_la_SOURCES = \
   Flag_Manip.cpp \
   Framework_Component.cpp \
   Functor.cpp \
+  Functor_String.cpp \
   Get_Opt.cpp \
   Hash_Map_Manager.cpp \
   Connection_Recycling_Strategy.cpp \
@@ -753,6 +754,7 @@ HEADER_FILES = \
   Framework_Component_T.h \
   Free_List.h \
   Functor.h \
+  Functor_String.h \
   Functor_T.h \
   Future.h \
   Future_Set.h \
@@ -1107,6 +1109,7 @@ INLINE_FILES = \
   FlReactor.i \
   Free_List.i \
   Functor.i \
+  Functor_String.inl \
   Functor_T.i \
   Get_Opt.i \
   Handle_Gobbler.i \
