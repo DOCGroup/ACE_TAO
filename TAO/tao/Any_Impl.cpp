@@ -37,6 +37,7 @@ TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
   return this->marshal_value (cdr);
 }
 
+// Deprecated by the OMG.
 const void *
 TAO::Any_Impl::value (void) const
 {
