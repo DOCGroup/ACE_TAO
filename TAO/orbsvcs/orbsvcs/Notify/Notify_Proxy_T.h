@@ -24,6 +24,7 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/CosNotificationS.h"
 #include "ace/Containers_T.h"
+#include "notify_export.h"
 
 class TAO_Notify_Resource_Manager;
 class TAO_Notify_Event_Manager;
@@ -36,7 +37,7 @@ class TAO_Notify_Event_Manager;
 #endif /* _MSC_VER */
 
 template <class SERVANT_TYPE>
-class TAO_ORBSVCS_Export TAO_Notify_Proxy : public SERVANT_TYPE, public TAO_Notify_Update_Listener
+class TAO_Notify_Export TAO_Notify_Proxy : public SERVANT_TYPE, public TAO_Notify_Update_Listener
 {
   // = TITLE
   //   TAO_Notify_Proxy

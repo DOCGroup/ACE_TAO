@@ -295,7 +295,7 @@ protected:
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_AV_RTCP_Flow_Factory)
-ACE_FACTORY_DECLARE (TAO_ORBSVCS, TAO_AV_RTCP_Flow_Factory)
+ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_RTCP_Flow_Factory)
 
 #include "ace/post.h"
 #endif /* TAO_AV_RTCP_H */

@@ -30,8 +30,9 @@
 
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "CEC_Defaults.h"
+#include "event_export.h"
 
-class TAO_ORBSVCS_Export TAO_CEC_EventChannel_Attributes
+class TAO_Event_Export TAO_CEC_EventChannel_Attributes
 {
   // = TITLE
   //   Defines the construction time attributes for the Event
@@ -84,7 +85,7 @@ private:
   // The POAs
 };
 
-class TAO_ORBSVCS_Export TAO_CEC_EventChannel : public POA_CosEventChannelAdmin::EventChannel
+class TAO_Event_Export TAO_CEC_EventChannel : public POA_CosEventChannelAdmin::EventChannel
 {
   // = TITLE
   //   The CosEventChannelAdmin::EventChannel implementation.

@@ -41,7 +41,7 @@
 #include "orbsvcs/CosTradingS.h"
 #include "orbsvcs/CosTradingReposS.h"
 #include "orbsvcs/CosTradingDynamicS.h"
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/Trader/trading_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -57,7 +57,7 @@ class TAO_Trader_Base;
   // TAO_Trader_Factory
   // *************************************************************
 
-class TAO_ORBSVCS_Export TAO_Trader_Factory
+class TAO_Trading_Export TAO_Trader_Factory
 // = TITLE
 //   Uses command line arguments to construct a trader instance with
 //   the correct interface support, locking, and policy settings.
@@ -137,7 +137,7 @@ public:
 };
 
 
-class TAO_ORBSVCS_Export TAO_Support_Attributes_i
+class TAO_Trading_Export TAO_Support_Attributes_i
   // = TITLE
   //     This class stores, allows access to and modification of
   //     trader's support attributes.
@@ -187,7 +187,7 @@ private:
   // Already narrowed reference to the ServiceTypeRepository.
 };
 
-class TAO_ORBSVCS_Export TAO_Link_Attributes_i
+class TAO_Trading_Export TAO_Link_Attributes_i
   // = TITLE
   //     This class stores, allows access to and modification of
   //     trader's link attributes.
@@ -216,7 +216,7 @@ private:
   //
 };
 
-class TAO_ORBSVCS_Export TAO_Import_Attributes_i
+class TAO_Trading_Export TAO_Import_Attributes_i
   // = TITLE
   //     This class stores, allows access to and modification of
   //     trader's import attributes.
@@ -310,7 +310,7 @@ private:
   // overrides both link and importer policies.
 };
 
-class TAO_ORBSVCS_Export TAO_Trading_Components_i
+class TAO_Trading_Export TAO_Trading_Components_i
   //
   // = TITLE
   //     Set/get methods for references to various
@@ -380,7 +380,7 @@ private:
   // TAO_Trader_Base
   // *************************************************************
 
-class TAO_ORBSVCS_Export TAO_Trader_Base : public TAO_Lockable
+class TAO_Trading_Export TAO_Trader_Base : public TAO_Lockable
   //
   // = TITLE
   //     TAO_Trader inherits from this "helper" class.

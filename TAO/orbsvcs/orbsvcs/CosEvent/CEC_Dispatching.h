@@ -21,6 +21,7 @@
 #define TAO_CEC_DISPATCHING_H
 
 #include "orbsvcs/CosEventCommC.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,7 +29,7 @@
 
 class TAO_CEC_ProxyPushSupplier;
 
-class TAO_ORBSVCS_Export TAO_CEC_Dispatching
+class TAO_Event_Export TAO_CEC_Dispatching
 {
   // = TITLE
   //   Define the interface for the dispatching strategies.
@@ -64,7 +65,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_CEC_Reactive_Dispatching : public TAO_CEC_Dispatching
+class TAO_Event_Export TAO_CEC_Reactive_Dispatching : public TAO_CEC_Dispatching
 {
   // = TITLE
   //   Dispatch using the caller thread.

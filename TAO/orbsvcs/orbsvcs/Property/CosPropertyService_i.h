@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/Property/property_export.h"
 #include "orbsvcs/CosPropertyServiceS.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -35,7 +35,7 @@
 
 // =  Classes to deal with the ACE_Hash_Map_Manager.
 
-class TAO_ORBSVCS_Export CosProperty_Hash_Key
+class TAO_Property_Export CosProperty_Hash_Key
 {
   // = TITLE
   //     Key for the Hash Table. The EXT_ID of the
@@ -70,7 +70,7 @@ public:
   // Storage pointer.
 };
 
-class TAO_ORBSVCS_Export CosProperty_Hash_Value
+class TAO_Property_Export CosProperty_Hash_Value
 {
   // = TITLE
   //     This will be the value part in the Hash_Table. The INT_ID of
@@ -107,7 +107,7 @@ class TAO_PropertySet;
 
 // ============================================================================
 
-class TAO_ORBSVCS_Export TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
+class TAO_Property_Export TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
 {
   // = TITLE
   //     Factory class for the TAO_PropertySet class objects.
@@ -160,7 +160,7 @@ class TAO_PropertySetDef;
 
 // ============================================================================
 
-class TAO_ORBSVCS_Export TAO_PropertySetDefFactory : public virtual POA_CosPropertyService::PropertySetDefFactory
+class TAO_Property_Export TAO_PropertySetDefFactory : public virtual POA_CosPropertyService::PropertySetDefFactory
 {
   // = TITLE
   //     Factory class for the TAO_PropertySetDef objects.
@@ -206,7 +206,7 @@ private:
 
 // ============================================================================
 
-class TAO_ORBSVCS_Export TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet
+class TAO_Property_Export TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet
 {
   // = TITLE
   //    Gives operations for defining, deleting, enumerating and
@@ -359,7 +359,7 @@ protected:
 
 // ============================================================================
 
-class TAO_ORBSVCS_Export TAO_PropertySetDef : public virtual POA_CosPropertyService::PropertySetDef,
+class TAO_Property_Export TAO_PropertySetDef : public virtual POA_CosPropertyService::PropertySetDef,
                                               public virtual TAO_PropertySet
 {
   // = TITLE
@@ -482,7 +482,7 @@ public:
 
 // ============================================================================
 
-class TAO_ORBSVCS_Export TAO_PropertyNamesIterator : public virtual PortableServer::RefCountServantBase,
+class TAO_Property_Export TAO_PropertyNamesIterator : public virtual PortableServer::RefCountServantBase,
                                                      public virtual POA_CosPropertyService::PropertyNamesIterator
 {
   // = TITLE
@@ -543,7 +543,7 @@ private:
 
 // ============================================================================
 
-class TAO_ORBSVCS_Export TAO_PropertiesIterator : public virtual PortableServer::RefCountServantBase,
+class TAO_Property_Export TAO_PropertiesIterator : public virtual PortableServer::RefCountServantBase,
                                                   public virtual POA_CosPropertyService::PropertiesIterator
 {
   // = TITLE

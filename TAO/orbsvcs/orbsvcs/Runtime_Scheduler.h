@@ -20,8 +20,9 @@
 
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecSchedulerS.h"
+#include "orbsvcs/Sched/sched_export.h"
 
-class TAO_ORBSVCS_Export ACE_Runtime_Scheduler : public POA_RtecScheduler::Scheduler
+class TAO_RTSched_Export ACE_Runtime_Scheduler : public POA_RtecScheduler::Scheduler
 {
   // = TITLE
   //   A fast and simple servant for RtecScheduler::Scheduler based on

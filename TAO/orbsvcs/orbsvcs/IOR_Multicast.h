@@ -23,7 +23,7 @@
 #define TAO_IOR_MULTICAST_H
 
 #include "tao/corba.h"
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/svc_utils_export.h"
 #include "ace/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -35,7 +35,7 @@
 
 #include "tao/IOR_LookupTable.h"
 
-class TAO_ORBSVCS_Export TAO_IOR_Multicast : public ACE_Event_Handler
+class TAO_Svc_Utils_Export TAO_IOR_Multicast : public ACE_Event_Handler
 {
   // = TITLE
   //     Event Handler that services multicast requests for IOR of a

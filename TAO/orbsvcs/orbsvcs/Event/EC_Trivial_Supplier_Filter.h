@@ -28,6 +28,7 @@
 
 #include "EC_Supplier_Filter.h"
 #include "EC_Supplier_Filter_Builder.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +38,7 @@ class TAO_EC_ProxyPushSupplier_Set;
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Trivial_Supplier_Filter : public TAO_EC_Supplier_Filter
+class TAO_RTEvent_Export TAO_EC_Trivial_Supplier_Filter : public TAO_EC_Supplier_Filter
 {
   // = TITLE
   //   A null filtering strategy.
@@ -74,7 +75,7 @@ private:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Trivial_Supplier_Filter_Builder : public TAO_EC_Supplier_Filter_Builder
+class TAO_RTEvent_Export TAO_EC_Trivial_Supplier_Filter_Builder : public TAO_EC_Supplier_Filter_Builder
 {
   // = TITLE
   //   Create a single Trivial_Supplier_Filter.

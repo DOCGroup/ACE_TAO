@@ -37,7 +37,7 @@
 class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushSupplier;
 
-class TAO_ORBSVCS_Export TAO_EC_Timeout_Filter : public TAO_EC_Filter
+class TAO_RTEvent_Export TAO_EC_Timeout_Filter : public TAO_EC_Filter
 {
   // = TITLE
   //   A filter based on event type/source

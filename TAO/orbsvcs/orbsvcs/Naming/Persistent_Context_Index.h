@@ -19,8 +19,9 @@
 #define TAO_PERSISTENT_CONTEXT_INDEX_H
 
 #include "Persistent_Entries.h"
+#include "naming_export.h"
 
-class TAO_ORBSVCS_Export TAO_Persistent_Context_Index
+class TAO_Naming_Export TAO_Persistent_Context_Index
 {
   // = TITLE
   //     This class facilitates implementation of Persistent

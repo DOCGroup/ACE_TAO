@@ -27,6 +27,7 @@
 #define TAO_EC_PRIORITY_DISPATCHING_H
 
 #include "orbsvcs/RtecSchedulerC.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +38,7 @@
 class TAO_EC_Dispatching_Task;
 class TAO_EC_Event_Channel;
 
-class TAO_ORBSVCS_Export TAO_EC_Priority_Dispatching : public TAO_EC_Dispatching
+class TAO_RTEvent_Export TAO_EC_Priority_Dispatching : public TAO_EC_Dispatching
 {
   // = TITLE
   //   Dispatching strategy that minimizes priority inversion.

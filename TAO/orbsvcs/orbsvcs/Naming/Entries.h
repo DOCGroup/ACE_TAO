@@ -29,8 +29,9 @@
 
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
+#include "naming_export.h"
 
-class TAO_ORBSVCS_Export TAO_IntId
+class TAO_Naming_Export TAO_IntId
 {
   // = TITLE
   //     Helper class for TAO_Transient_Bindings_Map: unifies several
@@ -70,7 +71,7 @@ public:
   // Binding type for <ref_>.
 };
 
-class TAO_ORBSVCS_Export TAO_ExtId
+class TAO_Naming_Export TAO_ExtId
 {
   // = TITLE
   //     Helper class for TAO_Transient_Bindings_Map: unifies several

@@ -18,13 +18,14 @@
 #define TAO_HASH_NAMING_CONTEXT_H
 
 #include "Naming_Context_Interface.h"
+#include "naming_export.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_Bindings_Map
+class TAO_Naming_Export TAO_Bindings_Map
 {
   // = TITLE
   //    This abstract base class defines an interface for hash-based
@@ -78,7 +79,7 @@ public:
 
 };
 
-class TAO_ORBSVCS_Export TAO_Hash_Naming_Context :public TAO_Naming_Context_Impl
+class TAO_Naming_Export TAO_Hash_Naming_Context :public TAO_Naming_Context_Impl
 {
   // = TITLE
   //     This class factors out common code for two 'ConcreteImplementors'

@@ -6,11 +6,11 @@
 
 #include "ace/Hash_Map_Manager.h"
 #include "tao/corba.h"
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/Trader/trading_export.h"
 
 // =  Classes to deal with the ACE_Hash_Map_Manager.
 
-class TAO_ORBSVCS_Export TAO_String_Hash_Key : public CORBA::String_var
+class TAO_Trading_Export TAO_String_Hash_Key : public CORBA::String_var
 {
   // = TITLE
   //     Key for the Hash Table. The EXT_ID of the

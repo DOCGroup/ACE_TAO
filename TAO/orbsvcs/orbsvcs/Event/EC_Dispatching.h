@@ -27,6 +27,7 @@
 #define TAO_EC_DISPATCHING_H
 
 #include "orbsvcs/RtecEventCommC.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,7 +36,7 @@
 class TAO_EC_QOS_Info;
 class TAO_EC_ProxyPushSupplier;
 
-class TAO_ORBSVCS_Export TAO_EC_Dispatching
+class TAO_RTEvent_Export TAO_EC_Dispatching
 {
   // = TITLE
   //   Abstract base class for the dispatching strategies.
@@ -76,7 +77,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Reactive_Dispatching : public TAO_EC_Dispatching
+class TAO_RTEvent_Export TAO_EC_Reactive_Dispatching : public TAO_EC_Dispatching
 {
   // = TITLE
   //   Dispatch using the caller thread.

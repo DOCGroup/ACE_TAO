@@ -27,6 +27,7 @@
 #define TAO_EC_FILTER_H
 
 #include "orbsvcs/RtecEventCommC.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,7 +35,7 @@
 
 class TAO_EC_QOS_Info;
 
-class TAO_ORBSVCS_Export TAO_EC_Filter
+class TAO_RTEvent_Export TAO_EC_Filter
 {
   // = TITLE
   //   Abstract base class for the filter hierarchy.
@@ -149,7 +150,7 @@ private:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Null_Filter : public TAO_EC_Filter
+class TAO_RTEvent_Export TAO_EC_Null_Filter : public TAO_EC_Filter
 {
   // = TITLE
   //   A null filter

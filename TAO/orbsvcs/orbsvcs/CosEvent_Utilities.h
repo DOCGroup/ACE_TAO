@@ -25,6 +25,7 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "orbsvcs/Event_Utilities.h"
+#include "CosEvent/event_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -35,7 +36,7 @@
 
 class TAO_CosEC_EventChannel_i;
 
-class TAO_ORBSVCS_Export CosEC_ServantBase :
+class TAO_Event_Export CosEC_ServantBase :
   public virtual POA_CosEventChannelAdmin::EventChannel,
   public virtual PortableServer::RefCountServantBase
 {

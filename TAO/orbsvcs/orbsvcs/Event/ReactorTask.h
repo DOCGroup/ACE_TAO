@@ -23,7 +23,7 @@
 #include "Local_ESTypes.h"
 #include "RT_Task.h"
 
-class TAO_ORBSVCS_Export ACE_ES_Reactor_Task : public ACE_RT_Task
+class TAO_RTEvent_Export ACE_ES_Reactor_Task : public ACE_RT_Task
 // = TITLE
 //    Event Service Timer Task
 //

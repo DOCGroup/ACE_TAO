@@ -27,12 +27,13 @@
 #define TAO_EC_CONJUNCTION_FILTER_H
 
 #include "EC_Filter.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_EC_Conjunction_Filter : public TAO_EC_Filter
+class TAO_RTEvent_Export TAO_EC_Conjunction_Filter : public TAO_EC_Filter
 {
   // = TITLE
   //   The conjunction filter.

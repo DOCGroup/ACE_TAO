@@ -21,7 +21,7 @@
 #include "ace/pre.h"
 #define TAO_EC_SUPPLIERCONTROL_H
 
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/Event/event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +32,7 @@
 class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushConsumer;
 
-class TAO_ORBSVCS_Export TAO_EC_SupplierControl
+class TAO_RTEvent_Export TAO_EC_SupplierControl
 {
   // = TITLE
   //   SupplierControl

@@ -26,7 +26,7 @@
 
 #include "CEC_Defaults.h"
 
-class TAO_ORBSVCS_Export TAO_CEC_Default_Factory : public TAO_CEC_Factory
+class TAO_Event_Export TAO_CEC_Default_Factory : public TAO_CEC_Factory
 {
   // = TITLE
   //   A generic factory for EC experimentation.
@@ -160,7 +160,7 @@ private:
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_CEC_Default_Factory)
-ACE_FACTORY_DECLARE (TAO_ORBSVCS, TAO_CEC_Default_Factory)
+ACE_FACTORY_DECLARE (TAO_Event, TAO_CEC_Default_Factory)
 
 #include "ace/post.h"
 #endif /* TAO_CEC_DEFAULT_FACTORY_H */

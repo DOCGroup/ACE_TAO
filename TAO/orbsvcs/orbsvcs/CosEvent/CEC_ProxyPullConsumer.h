@@ -25,12 +25,13 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Event/EC_Worker.h"
+#include "event_export.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_Dispatching;
 class TAO_CEC_ProxyPullSupplier;
 
-class TAO_ORBSVCS_Export TAO_CEC_ProxyPullConsumer : public POA_CosEventChannelAdmin::ProxyPullConsumer
+class TAO_Event_Export TAO_CEC_ProxyPullConsumer : public POA_CosEventChannelAdmin::ProxyPullConsumer
 {
   // = TITLE
   //   ProxyPullConsumer

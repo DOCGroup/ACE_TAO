@@ -32,7 +32,7 @@ class TAO_Notify_Resource_Manager;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_Notify_StructuredProxyPushSupplier_i : public TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier>, public PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_StructuredProxyPushSupplier_i : public TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier>, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   TAO_Notify_StructuredProxyPushSupplier_i

@@ -27,12 +27,13 @@
 #define TAO_EC_NULL_SCHEDULING_H
 
 #include "EC_Scheduling_Strategy.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_EC_Null_Scheduling : public TAO_EC_Scheduling_Strategy
+class TAO_RTEvent_Export TAO_EC_Null_Scheduling : public TAO_EC_Scheduling_Strategy
 {
   // = TITLE
   //   A scheduling strategy that uses TAO's real-time scheduler

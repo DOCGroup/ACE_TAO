@@ -23,6 +23,7 @@
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "sched_export.h"
 
 //////////////////////
 // Helper Functions //
@@ -37,7 +38,7 @@ class Dispatch_Entry_Link;
 class Dispatch_Proxy_Iterator;
 
 
-class TAO_ORBSVCS_Export Dispatch_Entry_Link
+class TAO_RTSched_Export Dispatch_Entry_Link
 // = TITLE
 //        Dispatch Entry Link
 //
@@ -81,7 +82,7 @@ private:
 
 
 
-class TAO_ORBSVCS_Export Task_Entry
+class TAO_RTSched_Export Task_Entry
 // = TITLE
 //    Task Entry.
 //
@@ -287,7 +288,7 @@ private:
 
 
 // Wrapper for dependencies between RT_Infos
-class TAO_ORBSVCS_Export Task_Entry_Link
+class TAO_RTSched_Export Task_Entry_Link
 {
 public:
 
@@ -336,7 +337,7 @@ private:
 };
 
 
-class TAO_ORBSVCS_Export Dispatch_Entry
+class TAO_RTSched_Export Dispatch_Entry
 {
 // = TITLE
 //        Dispatch Entry
@@ -444,7 +445,7 @@ private:
 
 };
 
-class TAO_ORBSVCS_Export Dispatch_Proxy_Iterator
+class TAO_RTSched_Export Dispatch_Proxy_Iterator
 // = TITLE
 //   This class implements an iterator abstraction over a virtual
 //   frame size and number of calls, using an actual ordered
@@ -542,7 +543,7 @@ private:
 
 
 
-class TAO_ORBSVCS_Export TimeLine_Entry
+class TAO_RTSched_Export TimeLine_Entry
 {
 public:
 
@@ -600,7 +601,7 @@ private:
 
 };
 
-class TAO_ORBSVCS_Export TimeLine_Entry_Link
+class TAO_RTSched_Export TimeLine_Entry_Link
 {
 public:
 

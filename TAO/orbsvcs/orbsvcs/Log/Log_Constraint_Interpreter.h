@@ -22,10 +22,11 @@
 #include "orbsvcs/orbsvcs/Trader/Constraint_Visitors.h"
 #include "orbsvcs/orbsvcs/Trader/Interpreter.h"
 #include "orbsvcs/orbsvcs/DsLogAdminC.h"
+#include "log_export.h"
 
 class TAO_Constraint_Evaluator;
 
-class TAO_Log_Constraint_Interpreter : public TAO_Interpreter
+class TAO_Log_Export TAO_Log_Constraint_Interpreter : public TAO_Interpreter
 {
   //
   // = TITLE

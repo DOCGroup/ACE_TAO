@@ -37,7 +37,7 @@ class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushSupplier;
 class TAO_EC_Supplier_Filter;
 
-class TAO_ORBSVCS_Export TAO_EC_ProxyPushConsumer : public POA_RtecEventChannelAdmin::ProxyPushConsumer
+class TAO_RTEvent_Export TAO_EC_ProxyPushConsumer : public POA_RtecEventChannelAdmin::ProxyPushConsumer
 {
   // = TITLE
   //   ProxyPushConsumer

@@ -22,6 +22,7 @@
 #define NOTIFY_STRUCTUREDPUSHCONSUMER_H
 
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
+#include "notify_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -30,7 +31,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_Notify_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   Notify_StructuredPushConsumer

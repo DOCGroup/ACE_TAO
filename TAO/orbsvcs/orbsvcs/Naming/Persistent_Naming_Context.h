@@ -19,8 +19,9 @@
 
 #include "Hash_Naming_Context.h"
 #include "Persistent_Entries.h"
+#include "naming_export.h"
 
-class TAO_ORBSVCS_Export TAO_Persistent_Bindings_Map : public TAO_Bindings_Map
+class TAO_Naming_Export TAO_Persistent_Bindings_Map : public TAO_Bindings_Map
 {
   // = TITLE
   //     Provides hash-table-based persistent storage for
@@ -134,7 +135,7 @@ protected:
 
 class TAO_Persistent_Context_Index;
 
-class TAO_ORBSVCS_Export TAO_Persistent_Naming_Context : public TAO_Hash_Naming_Context
+class TAO_Naming_Export TAO_Persistent_Naming_Context : public TAO_Hash_Naming_Context
 {
   // = TITLE
   //     This class plays a role of a 'ConcreteImplementor' in the

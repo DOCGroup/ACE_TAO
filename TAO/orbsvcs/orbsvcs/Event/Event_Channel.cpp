@@ -197,7 +197,7 @@ IntervalToPriority (RtecScheduler::Time interval)
   return ACE_Scheduler_MIN_PREEMPTION_PRIORITY;
 }
 
-class TAO_ORBSVCS_Export Shutdown_Consumer : public ACE_ES_Dispatch_Request
+class TAO_RTEvent_Export Shutdown_Consumer : public ACE_ES_Dispatch_Request
 {
   // = TITLE
   //    Shutdown Consumer command
@@ -280,7 +280,7 @@ public:
   ACE_ES_Consumer_Module *consumer_module_;
 };
 
-class TAO_ORBSVCS_Export Shutdown_Channel : public ACE_ES_Dispatch_Request
+class TAO_RTEvent_Export Shutdown_Channel : public ACE_ES_Dispatch_Request
 {
 public:
   Shutdown_Channel (ACE_EventChannel *channel) :
@@ -308,7 +308,7 @@ public:
   ACE_EventChannel *channel_;
 };
 
-class TAO_ORBSVCS_Export Flush_Queue_ACT : public ACE_Command_Base
+class TAO_RTEvent_Export Flush_Queue_ACT : public ACE_Command_Base
 {
   // = TITLE
   //    Flush Queue Asynchronous Completion Token

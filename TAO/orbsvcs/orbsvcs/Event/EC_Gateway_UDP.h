@@ -63,11 +63,11 @@
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecUDPAdminS.h"
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/Event/event_export.h"
 
 class TAO_ECG_UDP_Out_Endpoint;
 
-class TAO_ORBSVCS_Export TAO_ECG_UDP_Sender : public POA_RtecEventComm::PushConsumer
+class TAO_RTEvent_Export TAO_ECG_UDP_Sender : public POA_RtecEventComm::PushConsumer
 {
   //
   // = TITLE
@@ -218,7 +218,7 @@ private:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_ECG_UDP_Out_Endpoint
+class TAO_RTEvent_Export TAO_ECG_UDP_Out_Endpoint
 {
   //
   // = TITLE
@@ -266,7 +266,7 @@ private:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_ECG_UDP_Request_Index
+class TAO_RTEvent_Export TAO_ECG_UDP_Request_Index
 {
   // = TITLE
   //   Index to the request map.
@@ -298,7 +298,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_ECG_UDP_Request_Entry
+class TAO_RTEvent_Export TAO_ECG_UDP_Request_Entry
 {
   // = TITLE
   //   Keeps information about an incomplete request.
@@ -375,7 +375,7 @@ private:
 
 class TAO_ECG_UDP_Receiver;
 
-class TAO_ORBSVCS_Export TAO_ECG_UDP_TH : public ACE_Event_Handler
+class TAO_RTEvent_Export TAO_ECG_UDP_TH : public ACE_Event_Handler
 {
   //
   // = TITLE
@@ -400,7 +400,7 @@ private:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_ECG_UDP_Receiver : public POA_RtecEventComm::PushSupplier
+class TAO_RTEvent_Export TAO_ECG_UDP_Receiver : public POA_RtecEventComm::PushSupplier
 {
   //
   // = TITLE
@@ -510,7 +510,7 @@ private:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_ECG_UDP_EH : public ACE_Event_Handler
+class TAO_RTEvent_Export TAO_ECG_UDP_EH : public ACE_Event_Handler
 {
   //
   // = TITLE
@@ -549,7 +549,7 @@ private:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_ECG_Mcast_EH : public ACE_Event_Handler
+class TAO_RTEvent_Export TAO_ECG_Mcast_EH : public ACE_Event_Handler
 {
   //
   // = TITLE

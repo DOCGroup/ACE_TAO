@@ -35,7 +35,7 @@ class TAO_Notify_EventType
   //   This type is used to compare different event types.
   //   It is used by the Event Manager as a key to find subscription lists.
   //
- public:
+public:
   // = Initialization and termination
   TAO_Notify_EventType (void);
   TAO_Notify_EventType (const char* domain_name, const char* type_name);
@@ -63,7 +63,7 @@ class TAO_Notify_EventType
   const CosNotification::EventType& get_native (void) const;
   // Get the type underneath us.
 
-  protected:
+protected:
   void recompute_hash (void);
   // Recompute the hash value.
 
@@ -86,7 +86,7 @@ class TAO_Notify_Event
   // = DESCRIPTION
   //   Abstraction for an event
   //
- public:
+public:
   virtual CORBA::Boolean is_special_event_type (void) const = 0;
   // Is this the "special" event type.
 
@@ -106,14 +106,14 @@ class TAO_Notify_Event
   virtual void do_push (CosEventComm::PushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const = 0;
   virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const = 0;
   // Push self to <consumer>
- protected:
+protected:
   CORBA::Boolean is_owner_;
   // Do we own the data.
 };
 
 class TAO_Notify_Any : public TAO_Notify_Event
 {
- public:
+public:
   TAO_Notify_Any (void);
   TAO_Notify_Any (const CORBA::Any & data);
   virtual ~TAO_Notify_Any ();
@@ -128,14 +128,14 @@ class TAO_Notify_Any : public TAO_Notify_Event
   virtual void do_push (CosEventComm::PushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const;
   virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const;
 
- protected:
+protected:
   CORBA::Any* data_;
   // The data
 };
 
 class TAO_Notify_StructuredEvent : public TAO_Notify_Event
 {
- public:
+public:
   TAO_Notify_StructuredEvent (void);
   TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent & notification);
   virtual ~TAO_Notify_StructuredEvent ();
@@ -149,7 +149,7 @@ class TAO_Notify_StructuredEvent : public TAO_Notify_Event
   virtual void do_push (CosEventComm::PushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const;
   virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const;
 
- protected:
+protected:
   CosNotification::StructuredEvent* data_;
   // The data
 
@@ -168,7 +168,7 @@ class EVENTTYPE_LIST : public ACE_Unbounded_Set <TAO_Notify_EventType>
 
   typedef ACE_Unbounded_Set <TAO_Notify_EventType> inherited;
 
- public:
+public:
   void populate (CosNotification::EventTypeSeq& event_type_seq);
   // Populate <event_type_seq> with the contents of this object.
 

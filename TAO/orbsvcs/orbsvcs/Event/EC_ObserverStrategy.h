@@ -35,13 +35,14 @@
 #include "ace/RB_Tree.h"
 #include "ace/Map_Manager.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
+#include "event_export.h"
 
 class ACE_Lock;
 class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
 
-class TAO_ORBSVCS_Export TAO_EC_ObserverStrategy
+class TAO_RTEvent_Export TAO_EC_ObserverStrategy
 {
   // = TITLE
   //   The strategy to handle observers for the Event Channel
@@ -96,7 +97,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Null_ObserverStrategy : public TAO_EC_ObserverStrategy
+class TAO_RTEvent_Export TAO_EC_Null_ObserverStrategy : public TAO_EC_ObserverStrategy
 {
   // = TITLE
   //   A null observer strategy.
@@ -136,7 +137,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Basic_ObserverStrategy : public TAO_EC_ObserverStrategy
+class TAO_RTEvent_Export TAO_EC_Basic_ObserverStrategy : public TAO_EC_ObserverStrategy
 {
   // = TITLE
   //   A simple observer strategy.

@@ -34,7 +34,7 @@ class TAO_EC_Event_Channel;
 
 class TAO_EC_Reactive_SupplierControl;
 
-class TAO_ORBSVCS_Export TAO_EC_SupplierControl_Adapter : public ACE_Event_Handler
+class TAO_RTEvent_Export TAO_EC_SupplierControl_Adapter : public ACE_Event_Handler
 {
   // = TITLE
   //   Forwards timeout events to the Reactive SupplierControl
@@ -57,7 +57,7 @@ private:
   // The adapted object
 };
 
-class TAO_ORBSVCS_Export TAO_EC_Reactive_SupplierControl : public TAO_EC_SupplierControl
+class TAO_RTEvent_Export TAO_EC_Reactive_SupplierControl : public TAO_EC_SupplierControl
 {
   // = TITLE
   //   SupplierControl

@@ -21,6 +21,7 @@
 
 #include "Notify_ID_Pool_T.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -35,7 +36,7 @@
 
 class TAO_Notify_Resource_Manager;
 
-class TAO_ORBSVCS_Export TAO_Notify_EventChannelFactory_i : public virtual POA_CosNotifyChannelAdmin::EventChannelFactory, public virtual PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_EventChannelFactory_i : public virtual POA_CosNotifyChannelAdmin::EventChannelFactory, public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   TAO_Notify_EventChannelFactory_i

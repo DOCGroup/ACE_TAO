@@ -27,7 +27,7 @@
 #include "ace/pre.h"
 #define TAO_EC_TIMEOUT_GENERATOR_H
 
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/Event/event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +38,7 @@
 
 class TAO_EC_QOS_Info;
 
-class TAO_ORBSVCS_Export TAO_EC_Timeout_Generator
+class TAO_RTEvent_Export TAO_EC_Timeout_Generator
 {
   // = TITLE
   //   Define the interface for the generators of timeout events.
@@ -75,7 +75,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Timeout_Adapter : public ACE_Event_Handler
+class TAO_RTEvent_Export TAO_EC_Timeout_Adapter : public ACE_Event_Handler
 {
   // = TITLE
   //   Adapt the EC_Filter interface as an Event_Handler.

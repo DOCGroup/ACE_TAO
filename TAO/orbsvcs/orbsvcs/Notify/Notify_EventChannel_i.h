@@ -39,7 +39,7 @@ class TAO_Notify_Resource_Manager;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_Notify_EventChannel_i : public virtual POA_CosNotifyChannelAdmin::EventChannel, public PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_EventChannel_i : public virtual POA_CosNotifyChannelAdmin::EventChannel, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //

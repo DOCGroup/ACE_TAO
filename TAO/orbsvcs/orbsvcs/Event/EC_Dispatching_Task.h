@@ -34,10 +34,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecEventCommC.h"
+#include "event_export.h"
 
 class TAO_EC_ProxyPushSupplier;
 
-class TAO_ORBSVCS_Export TAO_EC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
+class TAO_RTEvent_Export TAO_EC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
 {
   // = TITLE
   //   Implement the dispatching queues for FIFO and Priority
@@ -66,7 +67,7 @@ private:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Dispatch_Command : public ACE_Message_Block
+class TAO_RTEvent_Export TAO_EC_Dispatch_Command : public ACE_Message_Block
 {
 public:
   TAO_EC_Dispatch_Command (ACE_Allocator *mb_allocator = 0);
@@ -85,7 +86,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Shutdown_Task_Command : public TAO_EC_Dispatch_Command
+class TAO_RTEvent_Export TAO_EC_Shutdown_Task_Command : public TAO_EC_Dispatch_Command
 {
 public:
   TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
@@ -97,7 +98,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Push_Command : public TAO_EC_Dispatch_Command
+class TAO_RTEvent_Export TAO_EC_Push_Command : public TAO_EC_Dispatch_Command
 {
 public:
   TAO_EC_Push_Command (TAO_EC_ProxyPushSupplier* proxy,

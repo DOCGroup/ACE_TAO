@@ -19,9 +19,9 @@
 #define ORBSVCS_TIME_UTILITIES_H
 
 #include "orbsvcs/TimeBaseC.h"
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/svc_utils_export.h"
 
-class TAO_ORBSVCS_Export ORBSVCS_Time
+class TAO_Svc_Utils_Export ORBSVCS_Time
 {
   // = TITLE
   //   Time conversion utilities.

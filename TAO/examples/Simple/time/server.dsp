@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib orbsvcs.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 ace.lib TAO.lib TAO_CosNaming.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
 
 !ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Debug"
 
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib TAOd.lib orbsvcsd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 aced.lib TAOd.lib TAO_CosNamingd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
 
 !ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Debug"
 
@@ -320,8 +320,6 @@ DEP_CPP_SERVE=\
 	"..\..\..\tao\CDR.h"\
 	"..\..\..\tao\CDR.i"\
 	"..\..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\..\tao\Connect.h"\
-	"..\..\..\tao\Connect.i"\
 	"..\..\..\tao\corba.h"\
 	"..\..\..\tao\CurrentC.h"\
 	"..\..\..\tao\CurrentC.i"\
@@ -334,8 +332,6 @@ DEP_CPP_SERVE=\
 	"..\..\..\tao\Environment.i"\
 	"..\..\..\tao\Exception.h"\
 	"..\..\..\tao\Exception.i"\
-	"..\..\..\tao\GIOP.h"\
-	"..\..\..\tao\GIOP.i"\
 	"..\..\..\tao\Invocation.h"\
 	"..\..\..\tao\Invocation.i"\
 	"..\..\..\tao\Marshal.h"\
@@ -351,9 +347,6 @@ DEP_CPP_SERVE=\
 	"..\..\..\tao\ORB.i"\
 	"..\..\..\tao\ORB_Core.h"\
 	"..\..\..\tao\ORB_Core.i"\
-	"..\..\..\tao\ORB_Strategies_T.cpp"\
-	"..\..\..\tao\ORB_Strategies_T.h"\
-	"..\..\..\tao\ORB_Strategies_T.i"\
 	"..\..\..\tao\orbconf.h"\
 	"..\..\..\tao\params.h"\
 	"..\..\..\tao\params.i"\
@@ -394,12 +387,19 @@ DEP_CPP_SERVE=\
 NODEP_CPP_SERVE=\
 	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\tao\Align.h"\
+	"..\..\..\tao\Connect.h"\
+	"..\..\..\tao\Connect.i"\
+	"..\..\..\tao\GIOP.h"\
+	"..\..\..\tao\GIOP.i"\
 	"..\..\..\tao\IIOP_Interpreter.h"\
 	"..\..\..\tao\IIOP_Object.h"\
 	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\IIOP_ORB.h"\
 	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Object_Table.h"\
+	"..\..\..\tao\ORB_Strategies_T.cpp"\
+	"..\..\..\tao\ORB_Strategies_T.h"\
+	"..\..\..\tao\ORB_Strategies_T.i"\
 	".\Server_impl.h"\
 	".\Time_impl.h"\
 	".\TimeC.h"\
@@ -599,8 +599,6 @@ DEP_CPP_TIMEC=\
 	"..\..\..\tao\CDR.h"\
 	"..\..\..\tao\CDR.i"\
 	"..\..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\..\tao\Connect.h"\
-	"..\..\..\tao\Connect.i"\
 	"..\..\..\tao\corba.h"\
 	"..\..\..\tao\CurrentC.h"\
 	"..\..\..\tao\CurrentC.i"\
@@ -613,8 +611,6 @@ DEP_CPP_TIMEC=\
 	"..\..\..\tao\Environment.i"\
 	"..\..\..\tao\Exception.h"\
 	"..\..\..\tao\Exception.i"\
-	"..\..\..\tao\GIOP.h"\
-	"..\..\..\tao\GIOP.i"\
 	"..\..\..\tao\Invocation.h"\
 	"..\..\..\tao\Invocation.i"\
 	"..\..\..\tao\Marshal.h"\
@@ -630,9 +626,6 @@ DEP_CPP_TIMEC=\
 	"..\..\..\tao\ORB.i"\
 	"..\..\..\tao\ORB_Core.h"\
 	"..\..\..\tao\ORB_Core.i"\
-	"..\..\..\tao\ORB_Strategies_T.cpp"\
-	"..\..\..\tao\ORB_Strategies_T.h"\
-	"..\..\..\tao\ORB_Strategies_T.i"\
 	"..\..\..\tao\orbconf.h"\
 	"..\..\..\tao\params.h"\
 	"..\..\..\tao\params.i"\
@@ -672,12 +665,19 @@ DEP_CPP_TIMEC=\
 NODEP_CPP_TIMEC=\
 	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\tao\Align.h"\
+	"..\..\..\tao\Connect.h"\
+	"..\..\..\tao\Connect.i"\
+	"..\..\..\tao\GIOP.h"\
+	"..\..\..\tao\GIOP.i"\
 	"..\..\..\tao\IIOP_Interpreter.h"\
 	"..\..\..\tao\IIOP_Object.h"\
 	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\IIOP_ORB.h"\
 	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Object_Table.h"\
+	"..\..\..\tao\ORB_Strategies_T.cpp"\
+	"..\..\..\tao\ORB_Strategies_T.h"\
+	"..\..\..\tao\ORB_Strategies_T.i"\
 	".\TimeC.h"\
 	".\TimeC.i"\
 	".\TimeS.h"\
@@ -860,8 +860,6 @@ DEP_CPP_TIMES=\
 	"..\..\..\tao\CDR.h"\
 	"..\..\..\tao\CDR.i"\
 	"..\..\..\tao\Client_Strategy_Factory.h"\
-	"..\..\..\tao\Connect.h"\
-	"..\..\..\tao\Connect.i"\
 	"..\..\..\tao\corba.h"\
 	"..\..\..\tao\CurrentC.h"\
 	"..\..\..\tao\CurrentC.i"\
@@ -874,8 +872,6 @@ DEP_CPP_TIMES=\
 	"..\..\..\tao\Environment.i"\
 	"..\..\..\tao\Exception.h"\
 	"..\..\..\tao\Exception.i"\
-	"..\..\..\tao\GIOP.h"\
-	"..\..\..\tao\GIOP.i"\
 	"..\..\..\tao\Invocation.h"\
 	"..\..\..\tao\Invocation.i"\
 	"..\..\..\tao\Marshal.h"\
@@ -891,9 +887,6 @@ DEP_CPP_TIMES=\
 	"..\..\..\tao\ORB.i"\
 	"..\..\..\tao\ORB_Core.h"\
 	"..\..\..\tao\ORB_Core.i"\
-	"..\..\..\tao\ORB_Strategies_T.cpp"\
-	"..\..\..\tao\ORB_Strategies_T.h"\
-	"..\..\..\tao\ORB_Strategies_T.i"\
 	"..\..\..\tao\orbconf.h"\
 	"..\..\..\tao\params.h"\
 	"..\..\..\tao\params.i"\
@@ -933,12 +926,19 @@ DEP_CPP_TIMES=\
 NODEP_CPP_TIMES=\
 	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\tao\Align.h"\
+	"..\..\..\tao\Connect.h"\
+	"..\..\..\tao\Connect.i"\
+	"..\..\..\tao\GIOP.h"\
+	"..\..\..\tao\GIOP.i"\
 	"..\..\..\tao\IIOP_Interpreter.h"\
 	"..\..\..\tao\IIOP_Object.h"\
 	"..\..\..\tao\IIOP_Object.i"\
 	"..\..\..\tao\IIOP_ORB.h"\
 	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Object_Table.h"\
+	"..\..\..\tao\ORB_Strategies_T.cpp"\
+	"..\..\..\tao\ORB_Strategies_T.h"\
+	"..\..\..\tao\ORB_Strategies_T.i"\
 	".\TimeC.h"\
 	".\TimeC.i"\
 	".\TimeS.h"\

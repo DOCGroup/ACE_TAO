@@ -20,12 +20,13 @@
 #define TAO_NOTIFY_QOSADMIN_I_H
 
 #include "orbsvcs/CosNotificationS.h"
+#include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_Notify_QoSAdmin_i/* : public virtual POA_CosNotification::QoSAdmin */
+class TAO_Notify_Export TAO_Notify_QoSAdmin_i/* : public virtual POA_CosNotification::QoSAdmin */
 {
   // = TITLE
   //   TAO_Notify_QoSAdmin_i

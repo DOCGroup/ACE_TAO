@@ -28,15 +28,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/Event/event_export.h"
 
 
-TAO_ORBSVCS_Export u_long ACE_BCU (u_long n);
+TAO_RTEvent_Export u_long ACE_BCU (u_long n);
 // Check if a specific, hardcoded number is prime (via ACE::is_prime) <n>
 // times.
 
 
-TAO_ORBSVCS_Export u_long ACE_BCU (u_long number, u_long n);
+TAO_RTEvent_Export u_long ACE_BCU (u_long number, u_long n);
 // Check if <number> is prime (via ACE::is_prime ()) <n> times.
 
 #include "ace/post.h"

@@ -295,7 +295,7 @@ TAO_AV_Source::ns (void) const
 ACE_INLINE ACE_UINT32 
 TAO_AV_Source::ehs (void) const
 { 
-  return (- (fs_ & 0xffff0000) | cs_); 
+  return ((fs_ & 0xffff0000) | cs_); 
 }
 
 ACE_INLINE ACE_UINT32 
