@@ -81,9 +81,6 @@ public:
   /// Set the underlying transport object
   void transport (TAO_Transport* transport);
 
-  /// Get the underlying handle
-  virtual ACE_HANDLE fetch_handle (void) = 0;
-
 protected:
 
   /// Return our TAO_ORB_Core pointer

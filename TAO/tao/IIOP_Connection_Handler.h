@@ -108,9 +108,6 @@ public:
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
 
-  /// Return the underlying handle
-  virtual ACE_HANDLE fetch_handle (void);
-
   /// Send a TRUE value to the reactor, so that the reactor does not
   /// resume the handler
   virtual int resume_handler (void);

@@ -1,3 +1,24 @@
+Wed Aug 1 8:38:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/orbconf.h: Removed the #define TAO_DOESNT_YADA_YADA as there
+	  is no use for it.
+
+	* tao/Connection_Handler.h: Removed the fetch_handle () as there
+	  is no use for it.
+
+	* tao/IIOP_Connection_Handler.h:
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.h:
+	* tao/Strategies/SHMIOP_Connection_Handler.h:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.h:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Removed
+	  the implementation of fetch_handle (). Thanks to Carlos, the
+	  foot-print police!!, for motivating this change.
+
 Wed Aug 1 8:02:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.h:
