@@ -12,10 +12,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ThreadStrategyFactoryImpl::~ThreadStrategyFactoryImpl (void)
-    {
-    }
-
     ThreadStrategy*
     ThreadStrategyFactoryImpl::create (
       ::PortableServer::ThreadPolicyValue value)

@@ -30,10 +30,6 @@ namespace TAO
     {
     }
 
-    ServantRetentionStrategyNonRetain::~ServantRetentionStrategyNonRetain (void)
-    {
-    }
-
     void
     ServantRetentionStrategyNonRetain::strategy_init (
       TAO_Root_POA *poa

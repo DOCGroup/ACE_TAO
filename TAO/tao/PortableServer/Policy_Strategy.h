@@ -31,7 +31,7 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export Policy_Strategy
-      : public virtual ACE_Service_Object
+      : public ACE_Service_Object
     {
     public:
       virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL) = 0;

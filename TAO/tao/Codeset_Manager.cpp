@@ -474,7 +474,9 @@ TAO_Codeset_Manager::get_wchar_trans (CONV_FRAME::CodeSetId tcs)
         {
           if (TAO_debug_level > 9)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT("TAO (%P|%t) Using utf16 BOM translator\n")));
+                        ACE_TEXT ("TAO (%P|%t) - Codeset_Manager::")
+                        ACE_TEXT ("get_wchar_trans, ")
+                        ACE_TEXT ("Using utf16 BOM translator\n")));
           if (this->utf16_bom_translator_ == 0)
             {
               this->utf16_bom_translator_ =

@@ -26,7 +26,7 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export StrategyFactory :
-      public virtual ACE_Service_Object
+      public ACE_Service_Object
     {
     public:
       virtual ~StrategyFactory (void);

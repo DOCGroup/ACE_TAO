@@ -39,7 +39,7 @@ namespace TAO
     class TAO_PortableServer_Export POA_Guard
     {
     public:
-      POA_Guard (TAO_Root_POA &poa
+      POA_Guard (::TAO_Root_POA &poa
                  ACE_ENV_ARG_DECL,
                  int check_for_destruction = 1);
 

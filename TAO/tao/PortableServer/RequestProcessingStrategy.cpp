@@ -15,18 +15,12 @@ ACE_RCSID (PortableServer,
            RequestProcessingStrategy,
            "$Id$")
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   namespace Portable_Server
   {
     RequestProcessingStrategy::RequestProcessingStrategy()
       : poa_ (0)
-    {
-    }
-
-    RequestProcessingStrategy::~RequestProcessingStrategy()
     {
     }
 
@@ -61,6 +55,4 @@ namespace TAO
     }
   }
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 

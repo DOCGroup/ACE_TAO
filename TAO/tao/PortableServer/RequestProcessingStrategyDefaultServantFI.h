@@ -30,11 +30,9 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export RequestProcessingStrategyDefaultServantFactoryImpl
-       : public virtual RequestProcessingStrategyFactory
+       : public RequestProcessingStrategyFactory
     {
     public:
-      virtual ~RequestProcessingStrategyDefaultServantFactoryImpl (void);
-
       /// Create a new servant retention strategy
       virtual RequestProcessingStrategy* create (
         ::PortableServer::RequestProcessingPolicyValue value,

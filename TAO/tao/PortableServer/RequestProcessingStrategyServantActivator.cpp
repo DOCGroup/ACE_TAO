@@ -23,10 +23,6 @@ namespace TAO
     {
     }
 
-    RequestProcessingStrategyServantActivator::~RequestProcessingStrategyServantActivator (void)
-    {
-    }
-
     void
     RequestProcessingStrategyServantActivator::strategy_cleanup (
       ACE_ENV_SINGLE_ARG_DECL)

@@ -31,12 +31,10 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export RequestProcessingStrategyServantManager
-      : public virtual RequestProcessingStrategy
+      : public RequestProcessingStrategy
     {
     public:
       RequestProcessingStrategyServantManager (void);
-
-      virtual ~RequestProcessingStrategyServantManager (void);
 
       PortableServer::Servant get_servant (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,

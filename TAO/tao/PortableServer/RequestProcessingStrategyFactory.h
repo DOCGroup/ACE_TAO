@@ -31,7 +31,7 @@ namespace TAO
     class RequestProcessingStrategy;
 
     class TAO_PortableServer_Export RequestProcessingStrategyFactory
-      : public virtual StrategyFactory
+      : public StrategyFactory
     {
     public:
       /// Create a new servant retention strategy

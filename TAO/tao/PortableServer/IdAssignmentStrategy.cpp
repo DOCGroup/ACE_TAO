@@ -10,10 +10,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    IdAssignmentStrategy::~IdAssignmentStrategy (void)
-    {
-    }
-
     void
     IdAssignmentStrategy::strategy_init (TAO_Root_POA * /*poa*/ ACE_ENV_ARG_DECL_NOT_USED)
     {

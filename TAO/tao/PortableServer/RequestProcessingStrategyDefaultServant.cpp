@@ -24,10 +24,6 @@ namespace TAO
     {
     }
 
-    RequestProcessingStrategyDefaultServant::~RequestProcessingStrategyDefaultServant (void)
-    {
-    }
-
     void
     RequestProcessingStrategyDefaultServant::strategy_cleanup(
       ACE_ENV_SINGLE_ARG_DECL_NOT_USED)

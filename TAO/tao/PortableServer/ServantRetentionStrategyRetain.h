@@ -29,12 +29,10 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export ServantRetentionStrategyRetain
-       : public virtual ServantRetentionStrategyNonRetain
+       : public ServantRetentionStrategyNonRetain
     {
     public:
       ServantRetentionStrategyRetain (void);
-
-      virtual ~ServantRetentionStrategyRetain (void);
 
       CORBA::ULong waiting_servant_deactivation (void) const;
 

@@ -10,10 +10,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    IdAssignmentStrategySystem::~IdAssignmentStrategySystem()
-    {
-    }
-
     char
     IdAssignmentStrategySystem::id_assignment_key_type (void) const
     {

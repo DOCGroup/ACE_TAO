@@ -10,10 +10,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    IdUniquenessStrategyMultiple::~IdUniquenessStrategyMultiple()
-    {
-    }
-
     void
     IdUniquenessStrategyMultiple::strategy_init (
       TAO_Root_POA * /*poa*/

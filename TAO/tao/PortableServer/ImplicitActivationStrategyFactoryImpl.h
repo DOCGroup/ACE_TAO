@@ -28,11 +28,9 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export ImplicitActivationStrategyFactoryImpl
-      : public virtual ImplicitActivationStrategyFactory
+      : public ImplicitActivationStrategyFactory
     {
     public:
-      virtual ~ImplicitActivationStrategyFactoryImpl (void);
-
       /// Create a new servant retention strategy
       virtual ImplicitActivationStrategy* create (
         ::PortableServer::ImplicitActivationPolicyValue value);

@@ -28,11 +28,9 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export ThreadStrategyFactoryImpl
-       : public virtual ThreadStrategyFactory
+       : public ThreadStrategyFactory
     {
     public:
-      virtual ~ThreadStrategyFactoryImpl (void);
-
       /// Create a new servant retention strategy
       virtual ThreadStrategy* create (
         ::PortableServer::ThreadPolicyValue value);

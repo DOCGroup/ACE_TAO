@@ -19,10 +19,6 @@ namespace TAO
     {
     }
 
-    RequestProcessingStrategyServantManager::~RequestProcessingStrategyServantManager (void)
-    {
-    }
-
     PortableServer::Servant
     RequestProcessingStrategyServantManager::get_servant (
       ACE_ENV_SINGLE_ARG_DECL)
