@@ -185,7 +185,7 @@ TAO_GIOP_Message_Base::generate_reply_header (
 int
 TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
                                      int /*block */,
-                                     ACE_Time_Value *max_wait_time)
+                                     ACE_Time_Value * /*max_wait_time*/)
 {
   // Call the handler to read and do a simple parse of the header of
   // the message.
@@ -329,7 +329,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // same Event_Handler in two threads at the same time.
 
   // Steal the input CDR from the message block
-  TAO_InputCDR input_cdr (msg_block->data_block (),
+  TAO_InputCDR input_cdr (msg_block->data_block ()->duplicate (),
                           ACE_CDR_BYTE_ORDER,
                           orb_core);
 
@@ -350,6 +350,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   msg_block->reset ();
   this->message_handler_.message_state ().reset (0);
 
+
+  int retval = 0;
   // We know we have some request message. Check whether it is a
   // GIOP_REQUEST or GIOP_LOCATE_REQUEST to take action.
   switch (this->message_handler_.message_state ().message_type)
@@ -361,12 +363,13 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
       return this->process_request (transport,
                                     orb_core,
                                     input_cdr);
+
     case TAO_GIOP_LOCATEREQUEST:
       return this->process_locate_request (transport,
                                            orb_core,
                                            input_cdr);
     default:
-      return -1;
+    return -1;
     }
 }
 
@@ -380,7 +383,7 @@ TAO_GIOP_Message_Base::process_reply_message (
     this->message_handler_.message_block ();
 
   // Steal the input CDR from the message block
-  TAO_InputCDR input_cdr (msg_block->data_block (),
+  TAO_InputCDR input_cdr (msg_block->data_block ()->duplicate (),
                           ACE_CDR_BYTE_ORDER);
 
   // When the data block is used for creating the CDR stream, we loose
@@ -402,11 +405,13 @@ TAO_GIOP_Message_Base::process_reply_message (
       // Should be taken care by the state specific parsing
       return this->generator_parser_->parse_reply (input_cdr,
                                                    params);
+
+
     case TAO_GIOP_LOCATEREPLY:
       return this->generator_parser_->parse_locate_reply (input_cdr,
                                                           params);
-    default:
-      return -1;
+      default:
+        return -1;
     }
 }
 
@@ -506,13 +511,14 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
   CORBA::ULong request_id = 0;
   CORBA::Boolean response_required = 0;
 
-  cout << "Amba are we here " <<endl;
   int parse_error = 0;
+
 
   ACE_TRY
     {
       parse_error =
         this->generator_parser_->parse_request_header (request);
+
 
       // Throw an exception if the
       if (parse_error != 0)
