@@ -13,7 +13,7 @@
 #define ACE_THREAD_ADAPTER_H
 #include "ace/pre.h"
 
-#include "ace/Base_Thread_Adapter.h"
+#include "ace/OS/Base_Thread_Adapter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -85,7 +85,7 @@ private:
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "ace/Thread_Adapter.inl"
+#   include "ace/Threads/Thread_Adapter.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/post.h"

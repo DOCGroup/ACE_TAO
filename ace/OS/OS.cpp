@@ -514,17 +514,17 @@ ACE_OS_Exit_Info::call_hooks ()
     }
 }
 
+#ifdef ACE_SUBSET_0
 void
 ACE_Time_Value::dump (void) const
 {
   ACE_OS_TRACE ("ACE_Time_Value::dump");
-#if 0
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntv_sec_ = %d"), this->tv_.tv_sec));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntv_usec_ = %d\n"), this->tv_.tv_usec));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* 0 */
 }
+#endif
 
 void
 ACE_Time_Value::normalize (void)
@@ -983,12 +983,12 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
 }
 #endif /* VXWORKS */
 
+#ifdef ACE_SUBSET_0
 void
 ACE_OS::ace_flock_t::dump (void) const
 {
   ACE_OS_TRACE ("ACE_OS::ace_flock_t::dump");
 
-#if 0
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("handle_ = %u"), this->handle_));
 #if defined (ACE_WIN32)
@@ -1003,8 +1003,8 @@ ACE_OS::ace_flock_t::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_type = %d"), this->lock_.l_type));
 #endif /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* 0 */
 }
+#endif /* ACE_SUBSET_0 */
 
 void
 ACE_OS::mutex_lock_cleanup (void *mutex)
@@ -1720,19 +1720,19 @@ ACE_TSS_Info::operator != (const ACE_TSS_Info &info) const
   return !(*this == info);
 }
 
+#ifdef ACE_SUBSET_0
 void
 ACE_TSS_Info::dump (void)
 {
   //  ACE_OS_TRACE ("ACE_TSS_Info::dump");
 
-#if 0
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("key_ = %u\n"), this->key_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("destructor_ = %u\n"), this->destructor_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("tss_obj_ = %u\n"), this->tss_obj_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* 0 */
 }
+#endif /* 0 */
 
 // Moved class ACE_TSS_Keys declaration to OS.h so it can be visible
 // to the single file of template instantiations.
@@ -2562,7 +2562,7 @@ HANDLE WINAPI __IBMCPP__beginthreadex(void *stack,
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 int ACE_SEH_Default_Exception_Selector (void *)
 {
-#if 0
+#ifdef ACE_SUBSET_0
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("(%t) Win32 structured exception exiting thread\n")));
 #endif /* 0 */

@@ -19,14 +19,14 @@
 #define ACE_CLASSIX_OS_H
 
 /* ------------------------------------------------------------------------- */
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Select_Reactor.h"
-#include "ace/Singleton.h"
+#include "ace/Demux/Select_Reactor.h"
+#include "ace/Utils/Templates/Singleton.h"
 #include "ace/CLASSIX/CLASSIX_Port_Core.h"
 
 #include <ipc/chIpc.h>

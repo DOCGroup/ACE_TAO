@@ -3,7 +3,7 @@
 
 #include "ace/OS/Handle_Set.h"
 
-#if 0
+#ifdef ACE_SUBSET_0
 #include "ace/Logging/Log_Msg.h"
 #endif
 
@@ -22,7 +22,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)
 #define fds_bits __fds_bits
 #endif  /* linux && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1 && !_GNU_SOURCE */
 
-#if 0
+#ifdef ACE_SUBSET_0
 void
 ACE_Handle_Set::dump (void) const
 {
@@ -247,7 +247,7 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set_Iterator)
 
-#if 0
+#ifdef ACE_SUBSET_0
 void
 ACE_Handle_Set_Iterator::dump (void) const
 {

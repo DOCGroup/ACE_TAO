@@ -14,21 +14,21 @@
 #define ACE_SELECT_REACTOR_BASE_H
 #include "ace/pre.h"
 
-#include "ace/Signal.h"
+#include "ace/IPC/Signal.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Timer_Queue.h"
-#include "ace/Event_Handler.h"
-#include "ace/Handle_Set.h"
-#include "ace/Token.h"
-#include "ace/Pipe.h"
-#include "ace/Reactor_Impl.h"
+#include "ace/Timer/Timer_Queue.h"
+#include "ace/Demux/Event_Handler.h"
+#include "ace/OS/Handle_Set.h"
+#include "ace/Threads/Token.h"
+#include "ace/IPC/Pipe.h"
+#include "ace/Demux/Reactor_Impl.h"
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-#include "ace/Unbounded_Queue.h"
+#include "ace/Utils/Unbounded_Queue.h"
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
 // Add useful typedefs to simplify the following code.
@@ -37,7 +37,7 @@ typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);
 
 // Forward declaration.
 class ACE_Select_Reactor_Impl;
-
+/
 /**
  * @class ACE_Select_Reactor_Handle_Set
  *
@@ -530,7 +530,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Select_Reactor_Base.i"
+#include "ace/Demux/Select_Reactor_Base.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

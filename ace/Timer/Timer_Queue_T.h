@@ -16,13 +16,13 @@
 #define ACE_TIMER_QUEUE_T_H
 #include "ace/pre.h"
 
-#include "ace/Free_List.h"
+#include "ace/Utils/Templates/Free_List.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Test_and_Set.h"
+#include "ace/Utils/Test_and_Set.h"
 
 /**
  * @class ACE_Timer_Node_Dispatch_Info_T
@@ -483,11 +483,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Timer_Queue_T.i"
+#include "ace/Timer/Timer_Queue_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE) && !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
-#include "ace/Timer_Queue_T.cpp"
+#include "ace/Timer/Timer_Queue_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE && !ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

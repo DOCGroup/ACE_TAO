@@ -17,7 +17,7 @@
 #define ACE_TOKEN_H
 #include "ace/pre.h"
 
-#include "ace/Synch.h"
+#include "ace/Threads/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -273,8 +273,8 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Synch_T.h"
-#include "ace/Token.i"
+#include "ace/Threads/Synch_T.h"
+#include "ace/Threads/Token.i"
 #endif /* __ACE_INLINE__ */
 #else
 class ACE_Export ACE_Token
