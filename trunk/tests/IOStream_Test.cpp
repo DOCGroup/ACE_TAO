@@ -377,7 +377,7 @@ server (void *arg = 0)
   // check for proper received values
   ACE_ASSERT (i == -1  && (f1 >= -0.13 && f1 <= -0.11)
               && l == -666555444  &&  (f2 >= -24.0 && f2 <= -22.0)
-              && (d >= -45e+9 && d <= 47e+9));
+              && (d >= 45e+9 && d <= 47e+9));
 
   client_handler.close ();
 
