@@ -140,7 +140,7 @@ Sender::init (int argc,
                    "r");
 
   if (this->input_file_ == 0)
-    ACE_ERROR_RETURN ((LM_DEBUG,
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open input file %s\n",
                        this->filename_.c_str ()),
                       -1);
