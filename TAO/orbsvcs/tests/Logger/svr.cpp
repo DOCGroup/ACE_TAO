@@ -19,8 +19,7 @@
 // ============================================================================
 
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/LoggerS.h"
-#include "logger_i.h"
+#include "orbsvcs/Log/Logger_i.h"
 
 int
 main (int argc, char ** argv)
