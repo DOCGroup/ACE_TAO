@@ -5,7 +5,12 @@ Wed Apr 21 16:41:08 1999  David L. Levine  <levine@cs.wustl.edu>
           test from hanging forever if some of the connections
           are lost.
 
-        * tests/run_tests.sh: enabled Reactor_Performance_Test on LynxOS.
+        * tests/Priority_Reactor_Test.cpp: default to 5 children
+          instead of 10 on LynxOS.  Beyond 8, the test seems to
+          take forever on LynxOS 3.0.0.
+
+        * tests/run_tests.sh: enabled Reactor_Performance_Test and
+          Priority_Reactor_Test on LynxOS.
 
 Wed Apr 21 16:35:21 1999  Steve Huston  <shuston@riverace.com>
 
