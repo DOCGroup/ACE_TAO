@@ -1,8 +1,7 @@
 // -*- C++ -*-
+//
 // $Id$
 
-//File: SecurityAdmin.idl
-//Part of the Security Service
 
 #ifdef _SECURITY_ADMIN_IDL_
 #define _SECURITY_ADMIN_IDL_
@@ -90,14 +89,14 @@ module SecurityAdmin {
             in   Security::AuditEventTypeList events,
             in   Security::SelectorValueList  selectors,
             in   Security::AuditCombinator    audit_combinator
-        ); 
+        );
 
         void get_audit_selectors (
             in   CORBA::RepositoryId           object_type,
             in   Security::AuditEventTypeList  events,
             in   Security::SelectorValueList  selectors,
             in   Security::AuditCombinator    audit_combinator
-        ); 
+        );
 
         void set_audit_channel (
             in   Security::AuditChannelId      audit_channel_id
@@ -113,14 +112,14 @@ module SecurityAdmin {
             in   CORBA::RepositoryId              object_type,
             in   Security::RequiresSupports       requires_supports,
             in   Security::CommunicationDirection direction,
-            in   Security::AssociationOptions     options 
+            in   Security::AssociationOptions     options
         );
 
         Security::AssociationOptions get_association_options(
             in   CORBA::RepositoryID              object_type,
             in   Security::RequiresSupports       requires_supports,
             in   Security::CommunicationDirection direction
-        ); 
+        );
     };
 
     // interface DelegationPolicy
