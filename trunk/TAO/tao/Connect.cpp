@@ -646,7 +646,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
 TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SVC_HANDLER (t == 0 ? TAO_ORB_Core_instance ()->thr_mgr () : t, 0, 0),
     input_available_ (0),
-    calling_thread_ (0)
+    calling_thread_ (ACE_OS::NULL_thread)
 {
   this->cond_response_available_ = 
     new ACE_SYNCH_CONDITION (TAO_ORB_Core_instance ()->leader_follower_lock ());
@@ -784,7 +784,7 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
               // the reactor any more.
               this->input_available_ = 0;
               this->expecting_response_ = 0;
-              this->calling_thread_ = 0;
+              this->calling_thread_ = ACE_OS::NULL_thread;
               return 0;
             }
         }
@@ -831,7 +831,7 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
       // Make use reusable
       this->input_available_ = 0;
       this->expecting_response_ = 0;
-      this->calling_thread_ = 0;
+      this->calling_thread_ = ACE_OS::NULL_thread;
     }
   
   return 0;
@@ -898,7 +898,7 @@ TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
       return -1;
     }
   
-  if (this->calling_thread_ == ACE_Thread::self ())
+  if (ACE_OS::thr_equal (this->calling_thread_, ACE_Thread::self ()))
     {
       // we are now a leader getting its response
       

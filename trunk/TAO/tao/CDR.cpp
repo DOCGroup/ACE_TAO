@@ -896,32 +896,38 @@ TAO_InputCDR::read_array (void* x,
       else
         {
           // I cannot see any fast way out of this....
-          typedef void (*SWAPPER)(const char*, char*);
-          SWAPPER swapper;
+          char *target = ACE_reinterpret_cast(char*,x);
+          char *end = target + size*length;
           switch (size)
             {
             case 2:
-              swapper = CDR::swap_2;
+	      for (; target != end; target += size, buf += size)
+		{
+		  CDR::swap_2(buf, target);
+		}
               break;
             case 4:
-              swapper = CDR::swap_4;
+	      for (; target != end; target += size, buf += size)
+		{
+		  CDR::swap_4(buf, target);
+		}
               break;
             case 8:
-              swapper = CDR::swap_8;
+	      for (; target != end; target += size, buf += size)
+		{
+		  CDR::swap_8(buf, target);
+		}
               break;
             case 16:
-              swapper = CDR::swap_16;
+	      for (; target != end; target += size, buf += size)
+		{
+		  CDR::swap_16(buf, target);
+		}
               break;
             default:
               // TODO: print something?
               this->good_bit_ = 0;
               return 0;
-            }
-          char *target = ACE_reinterpret_cast(char*,x);
-          char *end = target + size*length;
-          for (; target != end; target += size, buf += size)
-            {
-              (*swapper)(buf, target);
             }
         }
 #else
