@@ -22,7 +22,7 @@
 
 #include "tao/Remote_Invocation.h"
 
-class TAO_Operation_Deatils;
+class TAO_Operation_Details;
 class TAO_Synch_Reply_Dispatcher;
 
 namespace TAO
@@ -60,4 +60,6 @@ namespace TAO
   };
 }
 
+
+#include "ace/post.h"
 #endif /*TAO_SYNCH_INVOCATION_H*/

@@ -1099,7 +1099,7 @@ operator>>= (const CORBA::Any &any, const CORBA::Any *&a)
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, const char *&s)
+operator>>= (const CORBA::Any &any, const CORBA::Char *&s)
 {
   return TAO::Any_Impl_T<char>::extract (
       any,

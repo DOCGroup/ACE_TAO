@@ -1,3 +1,22 @@
+Mon Jul  7 21:38:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any.h:
+	* tao/Any.cpp: Cosmetic fix. Changed char*& in the >>= operator to
+	  CORBA::Char *&.
+
+	* tao/Basic_Arguments.h: Added a public keyword in the class
+	  Arg_Traits<void>. Classes by default have all the members
+	  private unlike structs which are the other way around.
+
+	* tao/Synch_Invocation.h: Fixed typos.
+
+	* tao/UB_String_Argument_T.h: Fixed a typo in the doxygen
+	  comments. 
+	
+	* tao/UB_String_Argument_T.cpp (interceptor_replace): Fixed a
+	  bunch of compile errors with g++ 3.3 which required a explicit
+	  const qualifier to pick up the right extraction operator. 
+
 Mon Jul  7 17:53:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_argument.cpp:
