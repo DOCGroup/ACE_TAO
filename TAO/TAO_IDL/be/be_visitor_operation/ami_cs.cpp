@@ -546,7 +546,10 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
 
   *os << be_nl
       << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
-      << "continue;" << be_uidt_nl
+      << "{" << be_nl
+      << "  _tao_call.restart_flag (1);" << be_nl
+      << "  continue;" <<be_nl
+      << "}"<< be_uidt_nl
       << "if (_invoke_status != TAO_INVOKE_OK)" << be_nl
       << "{" << be_idt_nl;
 

@@ -1,3 +1,10 @@
+Mon Oct  2 13:08:16 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp: Set the restart_flag
+	  in the Inocation class if the previous invocation returns a
+	  TAO_INVOKE_RESTART.
+
 Mon Oct  2 10:58:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Wait_On_Leader_Follower.cpp (connection_closed): Fixed a
