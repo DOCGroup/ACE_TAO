@@ -1,3 +1,10 @@
+Tue Sep  5 11:26:56 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * be/be_visitor_operation/operation_cs.cpp: Added a line in the
+	  generated code to reset the reply_received field in the
+	  Invocation class. This was added on <Fri Jul 21 17:54:55 2000
+	  <bala@cs.wustl.edu> but seem to have dissappeared in between.
+
 Tue Sep  5 10:51:53 2000  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.cpp
