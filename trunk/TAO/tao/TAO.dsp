@@ -993,6 +993,44 @@ SOURCE=.\Forwarding_Servant.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\FT_CORBAC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\FT_CORBAS.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Accept_State.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3562,6 +3600,22 @@ SOURCE=.\Forwarding_Servant.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\FT_CORBAC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FT_CORBAS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ftcorbafwd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ftpoafwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\giop.h
 # End Source File
 # Begin Source File
@@ -4147,6 +4201,14 @@ SOURCE=.\Environment.i
 # Begin Source File
 
 SOURCE=.\Exception.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\FT_CORBAC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\FT_CORBAS.i
 # End Source File
 # Begin Source File
 
