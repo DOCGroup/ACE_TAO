@@ -175,7 +175,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::~ACE_Thread_Timer_Queue_Adapter (void)
     }
 }
 
-template<class TQ> ACE_Recursive_Thread_Mutex &
+template<class TQ> ACE_SYNCH_RECURSIVE_MUTEX &
 ACE_Thread_Timer_Queue_Adapter<TQ>::mutex (void)
 {
   return this->mutex_;
@@ -188,7 +188,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::schedule
      const ACE_Time_Value &future_time,
      const ACE_Time_Value &interval)
 {
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, this->mutex_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mutex_, -1);
 
   long result = this->timer_queue_->schedule (handler, act, future_time, interval);
   this->condition_.signal ();
@@ -199,7 +199,7 @@ template<class TQ> int
 ACE_Thread_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
                                             const void **act)
 {
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, this->mutex_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mutex_, -1);
 
   int result = this->timer_queue_->cancel (timer_id, act);
   condition_.signal ();
@@ -209,7 +209,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
 template<class TQ> void
 ACE_Thread_Timer_Queue_Adapter<TQ>::deactivate (void)
 {
-  ACE_GUARD (ACE_Recursive_Thread_Mutex, guard, this->mutex_);
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mutex_);
 
   this->active_ = 0;
   this->condition_.signal ();
@@ -218,7 +218,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::deactivate (void)
 template<class TQ> int
 ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
 {
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, this->mutex_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mutex_, -1);
 
   this->thr_id_ = ACE_Thread::self ();
 
