@@ -2,7 +2,7 @@
 // $Id$
 //
 
-typedef sequence<long> LongSeq;
+typedef sequence<long> DSI_LongSeq;
 
 struct Structure
 {
