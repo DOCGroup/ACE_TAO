@@ -1,3 +1,13 @@
+Wed Aug 13 18:16:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/driver/drv_args.cpp:
+
+          Added command line option to generate explicit template
+          instantiations, which is now off by default.
+
 Tue Aug 12 13:45:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
