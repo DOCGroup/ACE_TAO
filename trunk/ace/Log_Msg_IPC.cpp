@@ -49,18 +49,16 @@ int
 ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
 {
 #if defined (ACE_HAS_STREAM_PIPES)
-  ACE_Str_Buf log_msg (ACE_static_cast (void *,
-                                        &log_record),
-                       ACE_static_cast (int,
-                                        log_record.length ()));
+  ACE_Str_Buf log_msg (static_cast<void *> (&log_record),
+                       static_cast<int> (log_record.length ()));
 
   // Try to use the <putpmsg> API if possible in order to
   // ensure correct message queueing according to priority.
   return
     this->message_queue_.send
-      (ACE_static_cast (const ACE_Str_Buf *, 0),
+      (static_cast<const ACE_Str_Buf *> (0),
        &log_msg,
-       ACE_static_cast (int, log_record.priority ()),
+       static_cast<int> (log_record.priority ()),
        MSG_BAND);
 #else
   // We're running over sockets, so we'll need to indicate the

@@ -32,7 +32,7 @@ ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags 
   ACE_Locked_Data_Block<ACE_LOCK> *nb;
 
   ACE_NEW_MALLOC_RETURN (nb,
-                         ACE_static_cast(ACE_Locked_Data_Block<ACE_LOCK>*,
+                         static_cast<ACE_Locked_Data_Block<ACE_LOCK>*> (
                                          this->data_block_allocator ()->malloc (sizeof (ACE_Locked_Data_Block<ACE_LOCK>))),
                          ACE_Locked_Data_Block<ACE_LOCK> (this->size (),
                                                    this->msg_type (),

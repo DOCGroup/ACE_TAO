@@ -77,8 +77,7 @@ ACE_Message_Block::copy (const char *buf, size_t n)
 {
   ACE_TRACE ("ACE_Message_Block::copy");
 
-  /*size_t len = ACE_static_cast(size_t,
-    this->end () - this->wr_ptr ());*/
+  /*size_t len = static_cast<size_t> (this->end () - this->wr_ptr ());*/
   // Note that for this to work correct, end () *must* be >= mark ().
   size_t len = this->space ();
 
@@ -99,8 +98,7 @@ ACE_Message_Block::copy (const char *buf)
 {
   ACE_TRACE ("ACE_Message_Block::copy");
 
-  /* size_t len = ACE_static_cast(size_t,
-     (this->end () - this->wr_ptr ())); */
+  /* size_t len = static_cast<size_t> (this->end () - this->wr_ptr ()); */
   // Note that for this to work correct, end() *must* be >= wr_ptr().
   size_t len = this->space ();
 
@@ -672,7 +670,7 @@ ACE_Message_Block::init_i (size_t size,
       // Allocate the <ACE_Data_Block> portion, which is reference
       // counted.
       ACE_NEW_MALLOC_RETURN (db,
-                             ACE_static_cast(ACE_Data_Block *,
+                             static_cast<ACE_Data_Block *> (
                                data_block_allocator->malloc (sizeof (ACE_Data_Block))),
                              ACE_Data_Block (size,
                                              msg_type,
@@ -982,7 +980,7 @@ ACE_Message_Block::duplicate (void) const
                   0);
   else // Otherwise, use the message_block_allocator passed in.
     ACE_NEW_MALLOC_RETURN (nb,
-                           ACE_static_cast(ACE_Message_Block*,
+                           static_cast<ACE_Message_Block*> (
                              message_block_allocator_->malloc (sizeof (ACE_Message_Block))),
                            ACE_Message_Block (0, // size
                                               ACE_Message_Type (0), // type
@@ -1070,7 +1068,7 @@ ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask) const
   ACE_Data_Block *nb;
 
   ACE_NEW_MALLOC_RETURN (nb,
-                         ACE_static_cast(ACE_Data_Block*,
+                         static_cast<ACE_Data_Block*> (
                            this->data_block_allocator_->malloc (sizeof (ACE_Data_Block))),
                          ACE_Data_Block (this->max_size_, // size
                                          this->type_,     // type
@@ -1130,7 +1128,7 @@ ACE_Message_Block::clone (Message_Flags mask) const
       // the cloned data block that was created above.  If we used
       // ACE_NEW_MALLOC_RETURN, there would be a memory leak because the
       // above db pointer would be left dangling.
-      nb = ACE_static_cast(ACE_Message_Block*,message_block_allocator_->malloc (sizeof (ACE_Message_Block)));
+      nb = static_cast<ACE_Message_Block*> (message_block_allocator_->malloc (sizeof (ACE_Message_Block)));
       if(nb != 0)
         new (nb) ACE_Message_Block (0, // size
                                     ACE_Message_Type (0), // type

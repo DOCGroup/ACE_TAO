@@ -97,7 +97,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 
       if (remote_sap != 0)
         {
-          addr = ACE_reinterpret_cast (sockaddr *, &inet_addr);
+          addr = reinterpret_cast<sockaddr *> (&inet_addr);
           len = sizeof (inet_addr);
           len_ptr = &len;
         }
@@ -115,7 +115,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 
       if (remote_sap != 0)
         {
-          ACE_INET_Addr temp (ACE_reinterpret_cast (sockaddr_in *, addr),
+          ACE_INET_Addr temp (reinterpret_cast<sockaddr_in *> (addr),
                               len);
           remote_sap->set_port_number(temp.get_port_number ());
         }
@@ -195,14 +195,14 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   // Client will decide what signaling strategy to use.
 
   // Now set up the shared memory malloc pool.
-  if (new_stream.init (buf, ACE_static_cast (ACE_MEM_IO::Signal_Strategy, client_signaling),
+  if (new_stream.init (buf,
+                       static_cast<ACE_MEM_IO::Signal_Strategy> (client_signaling),
                        &this->malloc_options_) == -1)
     return -1;
 
   // @@ Need to handle timeout here.
-  ACE_UINT16 buf_len = ACE_static_cast (ACE_UINT16,
-                                        (ACE_OS::strlen (buf) + 1) *
-                                         sizeof (ACE_TCHAR));
+  ACE_UINT16 buf_len = static_cast<ACE_UINT16> ((ACE_OS::strlen (buf) + 1) *
+                                                sizeof (ACE_TCHAR));
 
   // No need to worry about byte-order because both parties should always
   // be on the same machine.

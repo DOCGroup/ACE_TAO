@@ -196,7 +196,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
 
       if (use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED)
         {
-          this->base_addr_ = ACE_const_cast (void *, options->base_addr_);
+          this->base_addr_ = const_cast<void *> (options->base_addr_);
           ACE_SET_BITS (flags_, MAP_FIXED);
         }
       this->write_each_page_ = options->write_each_page_;
@@ -273,7 +273,7 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
        cur_block += seek_len)
     {
       map_size = ACE_OS::lseek (this->mmap_.handle (),
-                                ACE_static_cast (off_t, seek_len - 1),
+                                static_cast<off_t> (seek_len - 1),
                                 SEEK_END);
 
       if (map_size == -1
@@ -539,7 +539,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
       // Check if the current mapping is up to date.
       off_t current_map_size = ACE_OS::filesize (this->mmap_.handle ());
 
-      if (ACE_static_cast (size_t, current_map_size) == this->mmap_.size ())
+      if (static_cast<size_t> (current_map_size) == this->mmap_.size ())
         {
           // The mapping is up to date so this really is a bad
           // address.  Thus, remove current signal handler so process
@@ -653,8 +653,7 @@ ACE_Shared_Memory_Pool::in_use (off_t &offset,
                                 size_t &counter)
 {
   offset = 0;
-  SHM_TABLE *st = ACE_reinterpret_cast (SHM_TABLE *,
-                                        this->base_addr_);
+  SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->base_addr_);
   shmid_ds buf;
 
   for (counter = 0;
@@ -679,8 +678,7 @@ ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
                                   size_t &counter)
 {
   offset = 0;
-  SHM_TABLE *st = ACE_reinterpret_cast (SHM_TABLE *,
-                                        this->base_addr_);
+  SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->base_addr_);
   shmid_ds buf;
 
   for (counter = 0;
@@ -717,8 +715,7 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
   ACE_TRACE ("ACE_Shared_Memory_Pool::commit_backing_store_name");
 
   size_t counter;
-  SHM_TABLE *st = ACE_reinterpret_cast (SHM_TABLE *,
-                                        this->base_addr_);
+  SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->base_addr_);
 
   if (this->in_use (offset, counter) == -1)
     return -1;
@@ -817,8 +814,7 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
                         -1);
 
   void *address = (void *) (((char *) this->base_addr_) + offset);
-  SHM_TABLE *st = ACE_reinterpret_cast (SHM_TABLE *,
-                                        this->base_addr_);
+  SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->base_addr_);
 
   void *shmem = ACE_OS::shmat (st[counter].shmid_, (char *) address, 0);
 
@@ -852,9 +848,7 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const ACE_TCHAR *backing_store_n
   if (options)
     {
       this->base_addr_ =
-        ACE_reinterpret_cast (void *,
-                              ACE_const_cast (char *,
-                                              options->base_addr_));
+        reinterpret_cast<void *> (const_cast<char *> (options->base_addr_));
       this->max_segments_ = options->max_segments_;
       this->file_perms_ = options->file_perms_;
       this->minimum_bytes_ = options->minimum_bytes_;
@@ -954,10 +948,9 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
       // want...
       this->base_addr_ =
         ACE_OS::shmat (shmid,
-                       ACE_reinterpret_cast (char *,
-                                             this->base_addr_),
+                       reinterpret_cast<char *> (this->base_addr_),
                        0);
-      if (this->base_addr_ == ACE_reinterpret_cast (void *, -1))
+      if (this->base_addr_ == reinterpret_cast<void *> (-1))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) %p, base_addr = %u\n",
                            "shmat",
@@ -972,17 +965,15 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
       // want...
       this->base_addr_ =
         ACE_OS::shmat (shmid,
-                       ACE_reinterpret_cast (char *,
-                                             this->base_addr_),
+                       reinterpret_cast<char *> (this->base_addr_),
                        0);
-      if (this->base_addr_ == ACE_reinterpret_cast (char *, -1))
+      if (this->base_addr_ == reinterpret_cast<char *> (-1))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) %p, base_addr = %u\n",
                            "shmat",
                            this->base_addr_), 0);
 
-      SHM_TABLE *st = ACE_reinterpret_cast (SHM_TABLE *,
-                                            this->base_addr_);
+      SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->base_addr_);
       st[0].key_ = this->base_shm_key_;
       st[0].shmid_ = shmid;
 
@@ -1009,8 +1000,7 @@ ACE_Shared_Memory_Pool::release (int)
   ACE_TRACE ("ACE_Shared_Memory_Pool::release");
 
   int result = 0;
-  SHM_TABLE *st = ACE_reinterpret_cast (SHM_TABLE *,
-                                        this->base_addr_);
+  SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->base_addr_);
 
   for (size_t counter = 0;
        counter < this->max_segments_ && st[counter].used_ == 1;
@@ -1227,10 +1217,8 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
       DWORD size_high;
       DWORD size_low;
 #if defined (ACE_WIN64)
-      size_high = ACE_static_cast (DWORD,
-                                   this->local_cb_.sh_.max_size_ >> 32);
-      size_low  = ACE_static_cast (DWORD,
-                                   this->local_cb_.sh_.max_size_ & 0xFFFFFFFF);
+      size_high = static_cast<DWORD> (this->local_cb_.sh_.max_size_ >> 32);
+      size_low  = static_cast<DWORD> (this->local_cb_.sh_.max_size_ & 0xFFFFFFFF);
 #else
       size_high = 0;
       size_low = this->local_cb_.sh_.max_size_;
