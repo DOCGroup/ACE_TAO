@@ -32,10 +32,7 @@
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
 
-// The Irix 6.x float.h doesn't allow us to distinguish between a
-// double and a long double.  So, we have to hard-code this.  We
-// assume that it is necessary on Irix 5.2 also.
-#define ACE_SIZEOF_LONG_DOUBLE 16
+#define ACE_SIZEOF_LONG_DOUBLE 8
 
 #define IRIX5
 #define ACE_HAS_ALLOCA 
