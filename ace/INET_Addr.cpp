@@ -348,7 +348,7 @@ static int get_port_number_from_name (const char port_name[],
   ACE_UNUSED_ARG (port_name);
   ACE_UNUSED_ARG (protocol);
 #else
-  port_number = 0;
+  port_number = -1;
   servent sentry;
   ACE_SERVENT_DATA buf;
   servent *sp = ACE_OS::getservbyname_r (port_name,

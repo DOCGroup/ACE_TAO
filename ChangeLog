@@ -1,3 +1,9 @@
+Thu Jan 15 08:02:23 2004  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* ace/INET_Addr.cpp (get_port_number_from_name): Changed
+	  initial value of port_number from 0 to -1.  Thanks to
+	  Stephen Moon <stephenm@sychron.com> for this fix.
+
 Thu Jan 15 16:06:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Export/test_export.h:
