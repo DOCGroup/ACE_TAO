@@ -1093,7 +1093,7 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_string x)
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_wstring x)
 {
-  ACE_CDR::ULong len;
+  ACE_CDR::ULong len = 0;;
   if (x.val_ != 0)
     len = ACE_OS::wslen (x.val_);
   os.write_wstring (len, x.val_);
