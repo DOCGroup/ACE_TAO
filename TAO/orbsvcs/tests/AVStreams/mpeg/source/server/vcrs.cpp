@@ -189,6 +189,7 @@ main(int argc, char *argv[])
       freopen("/dev/null", "w", stdout);
     }
   }
+
   for (;;)
   {
     int val;
