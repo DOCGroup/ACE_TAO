@@ -28,7 +28,7 @@
 
 #include "tao/IORS.h"
 
-class TAO_IOR_Manipulation_impl : public POA_TAO_IOP::TAO_IOR_Manipulation
+class TAO_Export TAO_IOR_Manipulation_impl : public POA_TAO_IOP::TAO_IOR_Manipulation
 {
 // = TITLE
   //     IOR Manipulation class

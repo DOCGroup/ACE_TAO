@@ -1,3 +1,15 @@
+Wed Sep  1 11:18:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/run_tests.lst: Disabled the Process_Manager_Test
+	  until it's stable.  Thanks to David for reporting this.
+
+Wed Sep  1 00:05:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-win32-borland.h: Added a #define for ACE_CC_COMPILER  
+	  so that things will work properly on Borland.  Thanks to
+ 	  Goldshtain Dmitry <goldshtain.dmitry@usa.net> and Adrian
+ 	  Mercieca <adrian@anvil.co.uk> for reporting this.
+  
 Wed Sep 01 10:45:15 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,cpp} (ACE_OS_Object_Manager::init,fini): replaced
