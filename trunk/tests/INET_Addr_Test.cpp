@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
   ACE_UNUSED_ARG(argc);
   ACE_UNUSED_ARG(argv);
 
-  char *ipv4_addresses[] = {
+  const char *ipv4_addresses[] = {
     "127.0.0.1", "138.38.180.251", "64.219.54.121", "192.0.0.1", "10.0.0.1", 0
   };
 
