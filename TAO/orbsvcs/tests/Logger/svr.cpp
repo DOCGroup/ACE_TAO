@@ -81,7 +81,7 @@ main (int argc, char ** argv)
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG, "running scheduling service\n"));
+      ACE_DEBUG ((LM_DEBUG, "running logging service\n"));
       if (orb->run () == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
 
