@@ -9,7 +9,6 @@
 
 module AVStreams
 {
-
   struct QoS
   {
     string QoSType;
