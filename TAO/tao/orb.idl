@@ -6,11 +6,6 @@
 
 module CORBA
 {
-  interface Object {};
-
-  interface ORB {};
-
-  interface TypeCode {};
 };
 
 #pragma prefix ""
