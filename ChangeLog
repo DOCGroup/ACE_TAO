@@ -1,3 +1,8 @@
+Sat Jan 18 17:11:21 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/make_release: Use doxygen 1.2.18 as opposed to doxygen
+	  1.2.13.1. 
+
 Fri Jan 17 09:00:17 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ACE-INSTALL.html (make): Removed all claims that we support 
