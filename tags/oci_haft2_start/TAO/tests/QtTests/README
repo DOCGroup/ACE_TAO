@@ -1,0 +1,26 @@
+# $Id$
+
+Introduction:
+
+This example illustrates the usage of the QtReactor from TAO.  The
+server creates a display dialog which has a lcd display. The client
+creates a dialog with a quit button & a slider. On dragging the slider
+the display on the server dialog box will change. On pressing the Quit
+button the ORB would be shutdown and the movement of the slider will
+NOT be communicated to the server. The user can kill the windows to
+exit. 
+
+To run the server and the client simply do the following:
+
+$ server -o foo.ior
+$ client -k file://foo.ior
+
+Note: this test only does something useful if the user has the Qt
+library installed.  You should enable the build of the QtReactor by
+initializing qt_reactor. The path should point to the Qt/bin area so
+that the moc could be accessed by the Makefile.
+
+---------------------------------------------------------------------
+Technical Description:
+The technical details are similar to that of the XtReactor. Please
+refer $TAO_ROOT/tests/Xt_Stopwatch/README for a good description.

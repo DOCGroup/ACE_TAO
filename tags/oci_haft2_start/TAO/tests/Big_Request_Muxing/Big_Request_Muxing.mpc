@@ -1,0 +1,17 @@
+project(*Server): taoserver, messaging, corba_messaging {
+  Source_Files {
+    Payload_Receiver.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoclient, messaging, corba_messaging {
+  exename = client
+
+  Source_Files {
+    TestC.cpp
+    Client_Task.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,8 @@
+#
+# Makefile for building the RTCosScheduling test
+#
+
+MAKEFILES = RTCosScheduling_Client.bor RTCosScheduling_Server.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+

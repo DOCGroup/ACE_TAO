@@ -1,0 +1,4 @@
+project : taolib, objreftemplate, valuetype, iorinterceptor {
+  after   += PortableServer
+  libs    += TAO_PortableServer
+}

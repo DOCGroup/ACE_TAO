@@ -1,0 +1,7 @@
+#
+# Makefile for building the callback performance-tests executables
+#
+
+MAKEFILES = server.bor client.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,0 +1,35 @@
+#
+# Makefile for building the Trading Service executable
+#
+
+NAME = Trading_Service
+
+OBJFILES = \
+	$(OBJDIR)\Trading_Service.obj \
+	$(OBJDIR)\Trading_Server.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_DYNAMICANY_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS) \
+	$(TAO_TRADING_CFLAGS) \
+	$(TAO_VALUETYPE_CFLAGS) \
+	$(TAO_IORINTERCEPTOR_CFLAGS) \
+	$(TAO_ORT_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_DYNAMICANY_LIB) \
+	$(TAO_SVC_UTILS_LIB) \
+	$(TAO_TRADING_LIB) \
+	$(TAO_VALUETYPE_LIB) \
+	$(TAO_IORINTERCEPTOR_LIB) \
+	$(TAO_ORT_LIB)
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>

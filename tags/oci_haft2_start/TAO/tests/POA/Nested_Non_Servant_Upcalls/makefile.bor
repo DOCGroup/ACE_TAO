@@ -1,0 +1,27 @@
+
+#
+# Makefile for building the POA Nested_Non_Servant_Upcalls test
+#
+
+NAME = Nested_Non_Servant_Upcalls
+
+OBJFILES = \
+	$(OBJDIR)\testC.obj \
+	$(OBJDIR)\testS.obj \
+	$(OBJDIR)\Nested_Non_Servant_Upcalls.obj
+
+IDLFILES = \
+        $(IDLDIR)\test.idl
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\testC.cpp $(IDLDIR)\testS.cpp: $(IDLDIR)\test.idl
+	$(TAO_IDL) $**
