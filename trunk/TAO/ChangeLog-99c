@@ -1,3 +1,16 @@
+Fri May  7 16:55:08 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Typecode.h (CORBA_TypeCode): 
+	Changed the _narrow definitions in TypeCode::BadKind and
+	Type_code::Bounds to be of type static. THis will now be according
+	to the spec. This is the result of test run on the header module.
+	
+	* tao/ORB.h:
+	* ORB.cpp
+	Changed the signature of the method, resol_initial_reference
+	(). This now takes in const string and it was previously a
+	non-const one. We had to make this change to be compatible with
+	the spec and the vsOrb test suite checks for this.
 Fri May  7 12:56:08 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Integrated Byron
