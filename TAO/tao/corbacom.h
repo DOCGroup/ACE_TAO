@@ -107,26 +107,49 @@ ACE_Svc_Export void CORBA_string_free (CORBA_Char *const);
 
 class CORBA_String_var
   // = TITLE
-  // @@ Please add a comment here.
+  // String var class. Provides automatic deallocation of storage for the
+  // string once it goes out of scope. 
 {
 public:
-  // @@ Please add comments here.
   CORBA_String_var (void);
+  // default constructor
+
   CORBA_String_var (char *p);
+  // constructor, owns p
+
   CORBA_String_var (const char *p);
+  // constructor. Makes a copy of p
+
   CORBA_String_var (const CORBA_String_var &s);
+  // copy constructor
+
   ~CORBA_String_var (void);
+  // destructor
 
   CORBA_String_var &operator= (char *p);
+  // assignment operator
+
   CORBA_String_var &operator= (const char *p);
+  // assignment to a const char*. Makes a copy.
+
   CORBA_String_var &operator= (const CORBA_String_var &s);
+  // assignment operator
+
   operator char* () { return ptr_; }
+  // access and modify
+
   operator const char* () const {return ptr_; };
+  // only read privileges
+
   char &operator[] (CORBA_ULong index);
+  // allows access and modification using an index
+
   char operator[] (CORBA_ULong index) const;
+  // allows only accessing thru an index
 
 private:
   char *ptr_;
+  // instance
 };
 
 // 94-9-32 Appendix A defines 16-bit UNICODE characters as

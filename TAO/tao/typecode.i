@@ -17,15 +17,16 @@ CORBA_TypeCode::_duplicate (CORBA_TypeCode_ptr tc)
 // Constructor for CONSTANT typecodes with empty parameter lists.
 // These are only created once, and those constants are shared.
 
-ACE_INLINE CORBA_TypeCode::CORBA_TypeCode (CORBA_TCKind k)
+ACE_INLINE CORBA_TypeCode::CORBA_TypeCode (CORBA_TCKind kind)
   : _length (0),
+    non_aligned_buffer_ (0),
     _buffer (0),
-    _kind (k),
+    _kind (kind),
     _parent (0),
     refcount_ (1),
     _delete_flag (CORBA_B_FALSE),
     _orb_owns (CORBA_B_TRUE),
-    _private_state (new TC_Private_State)
+    _private_state (new TC_Private_State (kind))
 {
 }
 

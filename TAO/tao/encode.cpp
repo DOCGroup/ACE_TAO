@@ -518,9 +518,10 @@ TAO_Marshal_Union::encode (CORBA_TypeCode_ptr tc,
 			   CORBA_Environment &env)
 {
   CDR *stream = (CDR *) context;  // context is the CDR stream
-  CORBA_TypeCode_ptr discrim_tc = tc->discriminator_type (env);
 
+  CORBA_TypeCode_ptr discrim_tc = tc->discriminator_type (env);
   // get the discriminator type
+
   if (env.exception () == 0)
     {
       CORBA_TypeCode_ptr member_tc;
@@ -542,7 +543,7 @@ TAO_Marshal_Union::encode (CORBA_TypeCode_ptr tc,
           if (env.exception () == 0)
             {
               discrim_val = data; // save the pointer to the discriminator
-	      // value 
+				  // value 
               // move the pointer to point to the actual value
               data = (char *) data + discrim_size_with_pad;
               data2 = (char *) data2 + discrim_size_with_pad;
@@ -550,8 +551,8 @@ TAO_Marshal_Union::encode (CORBA_TypeCode_ptr tc,
               default_index = tc->default_index (env);
               if (env.exception () == 0)
                 {
+		  // get the member count
                   member_count = tc->member_count (env);
-
                   if (env.exception () == 0)
                     {
                       // Check which label value matches with the
@@ -630,11 +631,15 @@ TAO_Marshal_Union::encode (CORBA_TypeCode_ptr tc,
                       if (default_tc)
 			return stream->encode (default_tc, data, data2, env);
                       else
-			return CORBA_TypeCode::TRAVERSE_CONTINUE;
+			{
+			  env.exception (new CORBA_MARSHAL (COMPLETED_NO));
+			  dmsg ("Union::encode - failed. No match and no default case");
+			  return CORBA_TypeCode::TRAVERSE_STOP;
+			}
                     } 
                   else // error getting member count
                     {
-                      env.exception (new CORBA_MARSHAL (COMPLETED_MAYBE));
+                      env.exception (new CORBA_MARSHAL (COMPLETED_NO));
                       dmsg ("Union::encode - error getting member count");
                       return CORBA_TypeCode::TRAVERSE_STOP;
                     }
@@ -703,11 +708,14 @@ TAO_Marshal_String::encode (CORBA_TypeCode_ptr tc,
 
               // Encode the string, followed by a NUL character.
 
-              for (continue_encoding = stream->put_ulong (len + 1);
+              for (continue_encoding = stream->put_ulong (len + 1); // length +
+								    // 1 for
+								    // the NULL
+								    // character
                    continue_encoding != CORBA_B_FALSE && *str;
                    continue_encoding = stream->put_char (*str++))
                 continue;
-
+	      // put a NULL terminating character
               stream->put_char (0);
               return CORBA_TypeCode::TRAVERSE_CONTINUE;
             }

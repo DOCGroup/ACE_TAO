@@ -44,15 +44,8 @@ TAO_Client_Factory::concurrency_strategy (void)
 
 ACE_INLINE
 TAO_Server_Factory::TAO_Server_Factory (void)
-  : concurrency_strategy_ (0),
-    objtable_ (0)
+  : concurrency_strategy_ (0)
 {
-}
-
-ACE_INLINE void
-TAO_Server_Factory::object_lookup_strategy (TAO_Object_Table *ot)
-{
-  this->objtable_ = ot;  // we assume ownership
 }
 
 ACE_INLINE TAO_Client_Factory::CONNECTOR*

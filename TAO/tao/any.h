@@ -73,6 +73,7 @@ public:
 		const void *value,
 		CORBA_Boolean orb_owns_data,
 		CORBA_Environment &env);
+  // replace the current typecode and data with the specified one
 
   CORBA_TypeCode_ptr type (void) const;
   // Return <type> of <Any>.
@@ -125,3 +126,5 @@ private:
 #  endif
 
 #endif /* TAO_ANY_H */
+
+

@@ -41,10 +41,11 @@
 CORBA_Boolean is_nil (CORBA_BOA_ptr obj);
 
 // Decrement reference count on <obj>.
-void release (CORBA_BOA_ptr obj);
+ACE_INLINE void CORBA_release (CORBA_BOA_ptr obj);
 
 extern "C" const IID IID_BOA;
 
+// =Forward declarations
 struct TAO_Dispatch_Context;
 class TAO_Object_Table;
 
