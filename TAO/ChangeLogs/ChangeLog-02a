@@ -1,3 +1,10 @@
+Mon Feb 19 15:58:03 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* orbsvcs/examples/RtEC/Schedule/Service.cpp:
+	  Added a #ifdef to make sure that we are enabling the
+	typedef TAO_Reconfig_Scheduler only if we are compiling with
+	g++-2.8 or above.
+
 Mon Feb 19 12:18:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/IFR_Service/Makefile.BE:
