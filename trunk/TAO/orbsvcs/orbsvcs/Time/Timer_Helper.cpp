@@ -30,6 +30,12 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
   int no_of_servers = 0;
   CORBA::ULongLong sum = 0;
 
+  // The following are used to keep a track of the inaccuracy
+  // in synchronization.
+
+  CORBA::ULongLong lowest_time = 0xFFFFFFFFFFFFFFFF;
+  CORBA::ULongLong highest_time  = 0;
+
   TAO_TRY
     {
       IORS::TYPE* value;
@@ -71,10 +77,20 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
 		      (UTO_server->utc_time ()).tdf));
           #endif
 
-	  // This is a remote call.
-	  sum += (CORBA::ULongLong) UTO_server->time (TAO_TRY_ENV);
+	  CORBA::ULongLong curr_server_time = UTO_server->time (TAO_TRY_ENV);
+
+	  sum += curr_server_time;
 
 	  ++no_of_servers;
+
+	  // Set the highest time to the largest time seen so far.
+	  if (curr_server_time > highest_time)
+	    highest_time = curr_server_time;
+	  
+	  // Set the lowest time to the smallest time seen so far.
+	  if (curr_server_time < lowest_time)
+	    lowest_time = curr_server_time;
+ 
 	}
 
       ACE_DEBUG ((LM_DEBUG,
@@ -91,6 +107,12 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
 
       ACE_OS::tzset();
       clerk_->time_displacement_factor (ACE_OS::timezone () / 60);
+
+      // Set the inaccuracy.
+      if (highest_time > lowest_time)
+	clerk_->inaccuracy (highest_time - lowest_time);
+      else
+	clerk_->inaccuracy (0);
       
       // Record the current time in a timestamp to know when global
       // updation of time was done.

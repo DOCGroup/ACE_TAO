@@ -102,10 +102,10 @@ Client_i::test_for_new_universal_time (void)
       ACE_ASSERT (UTO_server->inaccuracy (TAO_TRY_ENV) == 9999);
       ACE_ASSERT (UTO_server->tdf (TAO_TRY_ENV) == 99);
       ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).time == 999999999);
-      ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).inacchi == 9999 / 2);
-      ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).inacclo == 9999 - 9999 / 2);
+      ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).inacchi == 0);
+      ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).inacclo == 9999);
       ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).tdf == 99);
-
+		  
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -133,15 +133,19 @@ Client_i::test_for_uto_from_utc (void)
     {
       CosTime::UTO_var UTO_server = this->clerk_->uto_from_utc (utc_struct,
                                                                 TAO_TRY_ENV);
-
+      
+      TimeBase::InaccuracyT inaccuracy = utc_struct.inacchi;
+      inaccuracy <<= 32;
+      inaccuracy |= utc_struct.inacclo;
+      
       ACE_ASSERT (UTO_server->time (TAO_TRY_ENV) == 999999999);
-      ACE_ASSERT (UTO_server->inaccuracy (TAO_TRY_ENV) == 100);
+      ACE_ASSERT (UTO_server->inaccuracy (TAO_TRY_ENV) == inaccuracy);
       ACE_ASSERT (UTO_server->tdf (TAO_TRY_ENV) == 99);
       ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).time == 999999999);
       ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).inacclo == 50);
       ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).inacchi == 50);
       ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).tdf == 99);
-
+      
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -178,7 +182,7 @@ Client_i::test_for_new_interval (void)
                   "[CLIENT] Process/Thread Id : (%P/%t) Test new_interval () fails.\n"));
     }
   TAO_ENDTRY;
-
+  
   return;
 }
 
