@@ -1117,7 +1117,11 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 map_dependency_i (RtecScheduler::handle_t key,
                   RtecScheduler::handle_t handle,
-                  ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &map,
+                  ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::Dependency_Set*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> &map,
                   CORBA::Long number_of_calls,
                   RtecScheduler::Dependency_Type_t dependency_type,
                   CORBA::Environment &ACE_TRY_ENV)
@@ -1435,7 +1439,11 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::sched_strategy ()
 // Accesses map for O(1) lookup of Config_Infos by priority level.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
-ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::CONFIG_INFO_MAP &
+ACE_Hash_Map_Manager_Ex<RtecScheduler::Preemption_Priority_t,
+                                  RtecScheduler::Config_Info*,
+                                  ACE_Hash<RtecScheduler::Preemption_Priority_t>,
+                                  ACE_Equal_To<RtecScheduler::Preemption_Priority_t>,
+                                  ACE_LOCK> &
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::config_info_map ()
 {
   return this->config_info_map_;
@@ -1455,7 +1463,11 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::config_info_count ()
 // Accesses map for O(1) lookup of RT_Infos by handle.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
-ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP &
+ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                      RtecScheduler::RT_Info*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> &
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::rt_info_map ()
 {
   return this->rt_info_map_;
@@ -1474,7 +1486,10 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::rt_info_count ()
 // Accesses tree for O(log n) lookup of RT_Infos by name.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
-ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_TREE &
+ACE_RB_Tree<const char *,
+                      RtecScheduler::RT_Info*,
+                      ACE_Less_Than<const char *>,
+                      ACE_LOCK> &
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::rt_info_tree ()
 {
   return this->rt_info_tree_;
@@ -1485,7 +1500,11 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::rt_info_tree ()
 // set by the caller operation's handle.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
-ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &
+ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                        RtecScheduler::Dependency_Set*,
+                        ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> &
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::calling_dependency_set_map ()
 {
   return this->calling_dependency_set_map_;
@@ -1496,7 +1515,11 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::calling_dependency_se
 // set by the called operation's handle.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
-ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &
+ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                  RtecScheduler::Dependency_Set*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
+                                  ACE_LOCK> &
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::called_dependency_set_map ()
 {
   return this->called_dependency_set_map_;

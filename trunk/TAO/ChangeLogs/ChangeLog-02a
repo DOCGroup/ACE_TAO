@@ -1,3 +1,10 @@
+Mon Mar 26 09:10:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.h:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: Fixed
+	  compilation problem with VXWORKS GCC.  
+
 Mon Mar 26 07:56:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/Schedule/Service.cpp: Removed redundant
