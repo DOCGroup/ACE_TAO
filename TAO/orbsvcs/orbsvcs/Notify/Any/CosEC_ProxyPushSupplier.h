@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file ProxyPushSupplier.h
+ *  @file CosEC_ProxyPushSupplier.h
  *
  *  $Id$
  *

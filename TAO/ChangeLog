@@ -1,3 +1,12 @@
+Sun Oct 27 09:04:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Property.h:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.h:
+        * orbsvcs/orbsvcs/Notify/Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Constraint_Interpreter.h:
+          Fixed fuzz build errors.
+
 Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
 
         Updated framework for TAO's Notification Service:
