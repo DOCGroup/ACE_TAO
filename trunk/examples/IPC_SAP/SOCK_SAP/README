@@ -20,12 +20,12 @@ describes each set of tests in more detail:
 
         . CPP-inserver-fancy.cpp -- This program is a more glitzy
           version of CPP-inserver.cpp that illustrates additional
-          features of ACE.
+          features of ACE, such as ACE_Svc_Handler.
 
 	. CPP-inserver-poll.cpp -- This test illustrates how to
 	  write single-threaded concurrent servers using UNIX SVR4
 	  poll().  You can run this test using the CPP-inclient.cpp
-	  program as the client.
+	  program as the oneway client.
 
 	. CPP-{unclient,unserver}.cpp -- This test is basically
 	  a C++ wrapper version of the preceeding "C++" test using
