@@ -1,3 +1,15 @@
+Fri Dec 12 19:27:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/OBV/Makefile:
+	* tests/Portable_Interceptors/Makefile:
+	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Makefile:
+
+	  Added missing directories to the build.
+
+	* tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl:
+
+	  Changed the executable name for the test.
+
 Fri Dec 12 19:10:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/OBV/Collocated/Forward/Makefile:
