@@ -1,8 +1,0 @@
-#
-# $Id$
-#
-
-DIRS = \
-  Single_Threaded
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

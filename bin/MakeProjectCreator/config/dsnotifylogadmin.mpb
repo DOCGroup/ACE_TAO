@@ -1,4 +1,0 @@
-project : dslogadmin {
-  after      += DsNotifyLogAdmin
-  libs       += TAO_DsNotifyLogAdmin
-}

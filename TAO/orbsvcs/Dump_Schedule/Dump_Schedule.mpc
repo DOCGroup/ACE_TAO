@@ -1,3 +1,0 @@
-project : orbsvcsexe, core, rtsched, naming, svc_utils, iortable, portableserver {
-  exename  = Dump_Schedule
-}
