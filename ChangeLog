@@ -1,3 +1,10 @@
+Tue May 28 09:35:17 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+
+          Added DLL_Manager.* to these projects.
+
 Tue May 28 10:47:50 UTC 2002  Don Hinton <dhinton@ieee.org>
 
 	* tests/Logging_Strategy_Test.cpp:
