@@ -18,6 +18,9 @@ Mon Feb 18 11:27:00 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	* orbsvcs/orbsvcs/AV/AV.bor:
 	  Add Fill_ACE_QoS.* and QoS_UDP.* to Win32 makefiles.
 
+	* TAOACE.dsw:
+	  Add ACE_QoS.dsp to workspace.
+	
 Mon Feb 18 09:26:02 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/ETCL/ETCL.dsp:
