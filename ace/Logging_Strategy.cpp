@@ -118,7 +118,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
   this->interval_ = 0;
   this->max_size_ = ACE_DEFAULT_MAX_LOGFILE_SIZE;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT ("f:i:m:p:s:t:wn:o"), 0);
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT ("f:i:k:m:p:s:t:wn:o"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -132,6 +132,12 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
         case 'i':
           // Interval (in secs) at which logfile size is sampled.
           this->interval_ = ACE_OS::strtoul (get_opt.optarg, 0, 10);
+          break;
+        case 'k':
+          // Ensure that the LOGGER flag is set
+          ACE_SET_BITS (this->flags_, ACE_Log_Msg::LOGGER);
+          delete [] this->logger_key_;
+          this->logger_key_ = ACE::strnew (get_opt.optarg);
           break;
         case 'm':
           // Maximum logfile size (in KB).  Must be a non-zero value.
@@ -199,12 +205,14 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
   ACE_OS::strcat (this->filename_,
                   ACE_LIB_TEXT ("logfile"));
 #endif /* ACE_DEFAULT_LOGFILE */
+  this->logger_key_ = ACE::strnew (ACE_DEFAULT_LOGGER_KEY);
 }
 
 int
 ACE_Logging_Strategy::fini (void)
 {
   delete [] this->filename_;
+  delete [] this->logger_key_;
   return 0;
 }
 
@@ -289,7 +297,7 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
 
   return ACE_LOG_MSG->open (ACE_LIB_TEXT ("Logging_Strategy"),
                             ACE_LOG_MSG->flags (),
-                            ACE_DEFAULT_LOGGER_KEY);
+                            this->logger_key_);
 }
 
 int

@@ -81,6 +81,7 @@ public:
         SILENT, VERBOSE_LITE) used to control logging. 
    '-i' The interval (in seconds) at which the logfile size is sampled
         (default is 0, i.e., do not sample by default).
+   '-k' Set the logging key.
    '-m' Maximum logfile size in Kbytes.
    '-n' The maximum number of logfiles that we want created.
    '-o' Specifies that we want the no standard logfiles ordering
@@ -119,6 +120,9 @@ private:
 
   /// File name we're logging to.
   ACE_TCHAR *filename_;
+
+  /// Logger key for distributed logging.
+  ACE_TCHAR *logger_key_;
 
   /// If non-0 then wipeout the logfile, otherwise append to it.
   /// Default value is 0.  
