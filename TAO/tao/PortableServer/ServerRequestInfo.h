@@ -73,7 +73,7 @@ namespace TAO
 
     /// Constructor.
     ServerRequestInfo (TAO_ServerRequest & server_request,
-                       TAO::Argument ** args,
+                       TAO::Argument * const * args,
                        size_t nargs,
                        void * servant_upcall,
                        PortableServer::ServantBase * servant,
@@ -287,7 +287,7 @@ namespace TAO
     TAO_ServerRequest & server_request_;
 
     /// Operation argument list.
-    TAO::Argument ** const args_;
+    TAO::Argument * const * const args_;
 
     /// Number of element in the operation argument list.
     size_t const nargs_;

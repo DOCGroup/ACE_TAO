@@ -100,15 +100,15 @@ TAO::ServerRequestInfo::arguments (ACE_ENV_SINGLE_ARG_DECL)
   // skeleton.  It shouldn't be included in the parameter list.
   // Skip it.
 
-  TAO::Argument ** const begin = this->args_ + 1;
-  TAO::Argument ** const end   = this->args_ + this->nargs_;
+  TAO::Argument * const * const begin = this->args_ + 1;
+  TAO::Argument * const * const end   = this->args_ + this->nargs_;
 
   ACE_ASSERT (end - begin >= 0);
 
   parameter_list->length (static_cast<CORBA::ULong> (end - begin));
 
   CORBA::ULong p = 0;
-  for (TAO::Argument ** i = begin; i != end; ++i, ++p)
+  for (TAO::Argument * const * i = begin; i != end; ++i, ++p)
     {
       // Insert the operation parameters into the
       // Dynamic::ParameterList.
@@ -145,7 +145,8 @@ TAO::ServerRequestInfo::exceptions (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::ULong e = 0;
   for (CORBA::TypeCode_ptr const * i = begin; i != end; ++i, ++e)
     {
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (i, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (
+        const_cast<CORBA::TypeCode_ptr *> (i), 1);
       (*exception_list)[e] = tcp_object;
     }
 
