@@ -1,3 +1,17 @@
+Mon Dec 18 12:01:49 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+
+        * tao/Exception.cpp:
+        * tao/Dynamic_Adapter.h:
+        * tao/Dynamic_Adapter.cpp:
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.h:
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
+
+          Had to move the implementation of 
+          TAO_Exceptions::make_unknown_user_typecode() back into
+          TAO. Since it is called before the service repository
+          is initialized, it can't be implemented by a dynamic
+          service object. Thanks to Bala for pointing this out.
+
 Mon Dec 18 10:45:33 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
