@@ -27,7 +27,7 @@ extern "C" void handler (int)
    port is 10002 (at least on my system) and that's good enough for what  we
    want to do here.  Obviously, a more robust application would take a command
    line parameter or read from a configuration file or do some other  clever
-   thing.  Just like the signal handler above, though, that's what we want to
+   thing.  Just like the signal handler above, though, that's not what we want to
    focus on, so we're taking the easy way out.     
  */
 

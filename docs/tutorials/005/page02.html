@@ -17,7 +17,18 @@
 <HR WIDTH="100%">
 
 <P>We begin with <I><A HREF="server.cpp">server.cpp</A></I>.
-
+<P>
+Abstraction by Kirthika:
+<UL>
+This tutorial is a re-cap of the client-server hookup tutorial with much
+ cleaner code (for instance: use of destroy() to delete objects and
+process() which does the task of reading in data from the client).
+<P>
+We again enroll the services of the reactor to handle events. Everything
+occurs in a single thread. 
+<P>
+This tutorial is a stepping stone towards a mutithreaded server model.
+</ul>
 <P>
 <HR WIDTH="100%">
 
@@ -62,7 +73,7 @@ a more robust application would take a command</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; line parameter or read from
 a configuration file or do some other&nbsp; clever</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; thing.&nbsp; Just like the
-signal handler above, though, that's what we want to</FONT>
+signal handler above, though, that's not what we want to</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; focus on, so we're taking
 the easy way out.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
