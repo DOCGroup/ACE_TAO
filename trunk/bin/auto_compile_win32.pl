@@ -36,15 +36,15 @@ EOD
 
 %Lib_Collections = ( "$Lists[0]" => <<EOD ,
 ace/ace.dsw, ACE static library:
-TAO/tao/TAO.dsw, TAO_Static:
+TAO/tao/TAO.dsw, TAO Static:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler Static:
-TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs_static:
+TAO/orbsvcs/orbsvcs/orbsvcs.dsw, ORB Services Static:
 EOD
                      "$Lists[1]" => <<EOD ,
 ace/ace.dsw, ACE static library:
-TAO/tao/TAO.dsw, TAO_Static:
+TAO/tao/TAO.dsw, TAO Static:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler Static:
-TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs_static:
+TAO/orbsvcs/orbsvcs/orbsvcs.dsw, ORB Services Static:
 EOD
                      "$Lists[2]" => <<EOD ,
 ace/ace.dsw, ACE static library:
@@ -75,7 +75,7 @@ sub Build_Config
         ($Project_File, $Project_Name) = split /,\s*/, $Bname;
         chdir ("$ENV{ACE_ROOT}/$Project_Dir");
         $Status =
-            system "msdev.com $Project_File /MAKE \"$Project_Name - $Config\" /USEENV /REBUILD /Y3";
+            system "msdev.com $Project_File /MAKE \"$Project_Name - $Config\" /USEENV /BUILD /Y3";
 #        print "$Status = msdev.com $Project_File /MAKE \"$Project_Name - $Config\"\n";
         if ($Ignore_error == 0)
         {
