@@ -1,3 +1,23 @@
+Fri Dec 18 23:02:08 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Loading: Removed the following entries:
+	  examples/POA/On_Demand_Loading/Dir_Service.idl
+	  examples/POA/On_Demand_Loading/Dir_Sevice_i.{h,cpp}
+	  examples/POA/On_Demand_Loading/Makefile.DirService
+	  examples/POA/On_Demand_Loading/Makefile.Client
+	  examples/POA/On_Demand_Loading/client.cpp
+
+	  Now this example uses the
+	  examples/POA/Generic_Servant/MyFooServant as the servant which
+	  will be loaded on demand.
+
+	* examples/POA/Generic_Servant/Makefile: Added changes so that an
+	  libMyFoo.so is created.
+
+	* examples/POA/Generic_Servant/MyFooServant.cpp (create_MyFoo):
+	  Added this extern "C" function which creates an MyFoo object.
+		
+	
 Fri Dec 18 16:18:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Any.{i,cpp} (free_value):  Moved it to cpp file.
