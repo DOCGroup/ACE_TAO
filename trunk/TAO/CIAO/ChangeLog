@@ -1,3 +1,13 @@
+Tue May 25 22:40:23 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/Core/NodeApp_CB_Impl.cpp:
+	* DnC/Core/NodeApp_CB_Impl.h:
+	* DnC/Core/NodeApplication_CallBack.idl:
+	  Added these files for NodeApplication callback interface.
+
+	* DnC/Core/CCM_Core.mpc:
+	  Updated the file to reflect above changes.
+
 Tue May 25 13:05:35 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/Deployment.idl:
