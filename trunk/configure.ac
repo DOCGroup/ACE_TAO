@@ -923,10 +923,6 @@ ACE_CHECK_LACKS_HEADERS(utime.h)
 AC_CHECK_HEADER([wchar.h],
   [AC_DEFINE([ACE_HAS_WCHAR])],)
 
-ACE_CHECK_HAS_HEADERS(libc.h)
-
-ACE_CHECK_HAS_HEADERS(osfcn.h)
-
 AC_CHECK_HEADER([new],
   [AC_DEFINE([ACE_HAS_NEW_NO_H])],
   [
@@ -6838,6 +6834,8 @@ int main ()
 fi dnl test "$ace_user_enable_threads" = yes
 
 
+AC_CHECK_HEADER(libc.h)
+AC_CHECK_HEADER(osfcn.h)
 if test "$ac_cv_header_libc_h" != yes ||
    test "$ac_cv_header_osfcn_h" != yes; then
   AC_DEFINE([ACE_HAS_CPLUSPLUS_HEADERS])
