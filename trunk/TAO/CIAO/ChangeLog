@@ -1,3 +1,17 @@
+Sun Oct 12 18:36:16 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * performance-tests/Benchmark/Benchmark.mpc:
+        * performance-tests/Benchmark/Benchmark.idl:
+        * performance-tests/Benchmark/server.cpp:
+        * performance-tests/Benchmark/svc.conf:
+        * performance-tests/Benchmark/LatencyTest.h:
+        * performance-tests/Benchmark/LatencyTest.cpp:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.idl:
+        * performance-tests/Benchmark/RoundTripClient/client.cpp:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.idl:
+          Added test scenario in which a CORBA component interacts with
+          a CORBA server.
+
 Sat Oct 11 00:18:13 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/generate_component_mpc.pl: My previous change didn't
