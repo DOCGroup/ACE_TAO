@@ -488,7 +488,11 @@ TAO_EC_ProxyPushSupplier::consumer_non_existent (
       return 0;
     }
 
+#if !defined(TAO_HAS_MINIMUM_CORBA)
   return this->consumer_->_non_existent (ACE_TRY_ENV);
+#else
+  return 0;
+#endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
 void
