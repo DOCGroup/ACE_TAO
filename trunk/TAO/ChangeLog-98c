@@ -1,6 +1,6 @@
 Sun Sep 28 03:18:24 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* tests/Cubit/TAO/cubitC.h (Object): Changed refering of base
+	* tests/Cubit/TAO/cubitC.h (Object): Changed references of base
 	  class from "CORBA::Object" to "CORBA_Object."  MSVC doesn't
 	  allow this.
 
@@ -8,6 +8,7 @@ Sun Sep 28 03:18:24 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 	  added conditionally inclusion of Orb_Core.i at the end.
 
 	* tao/corbacom.h: Added ACE_Svc_Export to all IID constants.
+	  Notice that we must put ACE_Svc_Export _after_ extern "C".
 
 Sat Sep 27 09:31:42 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
