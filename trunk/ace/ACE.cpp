@@ -1953,7 +1953,7 @@ ACE::send (ACE_HANDLE handle,
 ssize_t
 ACE::send_n (ACE_HANDLE handle,
              const void *buf,
-             size_t n,
+             size_t len,
              int flags,
              const ACE_Time_Value *timeout)
 {
@@ -1961,15 +1961,18 @@ ACE::send_n (ACE_HANDLE handle,
   size_t bytes_written;
 
   // Actual number of bytes written in each <send> attempt.
-  ssize_t i = 0;
+  ssize_t n = 0;
 
   for (bytes_written = 0;
        bytes_written < n;
-       bytes_written += i)
+       bytes_written += n)
     {
-      i = ACE::send (handle, (char *) buf + bytes_written,
-                     n - bytes_written, flags, timeout);
-      if (i == -1)
+      n = ACE::send (handle,
+                     (char *) buf + bytes_written,
+                     n - bytes_written,
+                     flags,
+                     timeout);
+      if (n == -1)
         if (errno == EWOULDBLOCK)
           n = 0; // Keep trying to send.
         else
