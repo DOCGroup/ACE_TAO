@@ -1,3 +1,15 @@
+Sun Jun 30 15:32:47 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/C++NPv2/TP_Logging_Server.h: 
+	* examples/C++NPv2/Reactor_Logging_Server_Adapter.cpp: Added some
+	  new code to safely allocate an array.
+
+Sun Jun 30 08:55:18 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/Enum_Interfaces_Test.cpp (ACE_TMAIN): Fixed this to use
+	  ACE_Sock_Connect::get_ip_interfaces() rather than ACE::get_ip_interfaces().
+	  Thanks to <rjgebis@hotmailer.com> for reporting this.
+
 Sun Jun 30 12:22:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* etc/tao_portablegroup.doxygen:

@@ -102,17 +102,19 @@ public:
 
   virtual int init (int argc, ACE_TCHAR *argv[]) {
     int i;
-    const int MAX_ARGS = 10;
-    char *char_argv[MAX_ARGS];
-    for (i = 0; i < argc && i < MAX_ARGS; ++i)
+    char *array = 0;
+    ACE_NEW_RETURN (array, new char *[argc], -1);
+    ACE_Auto_Array_Ptr<char *> char_argv (array);
+
+    for (i = 0; i < argc; ++i)
       char_argv[i] = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (argv[i]));
-    ACE_NEW_RETURN
+    ACE_NEW_NORETURN
       (logging_dispatcher_,
        TP_Logging_Server::LOGGING_DISPATCHER
-         (i, char_argv, ACE_Reactor::instance ()), -1);
-    for (i = 0; i < argc && i < MAX_ARGS; ++i)
-      ACE::strdelete (char_argv[i]);
-    return TP_LOGGING_TASK::instance ()->open ();
+       (i, char_argv, ACE_Reactor::instance ()), -1);
+    for (i = 0; i < argc; ++i) ACE::strdelete (char_argv[i]);
+    if (logging_dispatcher_ == 0) return -1;
+    else return TP_LOGGING_TASK::instance ()->open ();
   }
 
   virtual int fini () {
