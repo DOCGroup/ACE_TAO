@@ -16,6 +16,8 @@ Sun Sep 14 22:36:17 1997    <irfan@TWOSTEP>
 
 Sun Sep 14 21:02:31 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* all Makefiles: ran "make depend" to update all ACE Makefiles.
+
 	* include/makeinclude/platform_irix6.x-32_sgic++.GNU,
 	  platform_tandem.GNU: added debug = 1, to disable ACE_NDEBUG.
 
