@@ -1,3 +1,27 @@
+Thu Sep  5 09:46:38 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h: 
+	  Fixed the mismatched ace/pre.h and post.h
+
+Thu Sep  5 09:37:12 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/tests/ImplRepo/locked/run_test.pl: 
+	  Replaced ImR_Locator with ImplRepo_Service. ImplRepo_Serive is
+	  the executable that performs the locator service.
+
+	* orbsvcs/ImplRepo_Service/Options.cpp:
+	* orbsvcs/ImplRepo_Service/Options.h:
+	* orbsvcs/ImplRepo_Service/Server_Repository.cpp: 
+	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp: 
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp: 
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+	  Fixed the errors and warnings for Debian Full Reactor build.  
+
+	* orbsvcs/ImplRepo_Service/Repository_Configuration.cpp: 
+	* orbsvcs/ImplRepo_Service/Repository_Configuration.h: 
+	  Modified the constructor to take in a const char * instead of a
+	  char *.
+	
 Thu Sep  5 09:54:04 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
 	* orbsvcs/ImplRepo_Service/Options.cpp (Options): 
