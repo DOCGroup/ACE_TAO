@@ -495,8 +495,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   if (t_id == 0)
     {
       char *thr_id;
-      ACE_NEW_RETURN (thr_id, char[16], -1);
-      ACE_OS::strcpy (thr_id, "ace_t");
+      ACE_NEW_RETURN (thr_id, char[32], -1);
+      ACE_OS::strcpy (thr_id, "==ace_t==");
       t_id = &thr_id;
     }
 #else  /* ! VXWORKS */
@@ -794,7 +794,7 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
   this->thr_list_.remove (td);
 
 #if defined (VXWORKS)
-  if (tid && ACE_OS::strcmp (tid, "ace_t") == 0)
+  if (tid && ACE_OS::strcmp (tid, "==ace_t==") == 0)
     {
       delete tid;
     }
