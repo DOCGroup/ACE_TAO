@@ -84,6 +84,9 @@ public:
   typedef ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> ITERATOR;
   typedef ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> REVERSE_ITERATOR;
 
+  typedef ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> iterator;
+  typedef ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> reverse_iterator;
+
   // = Initialization and termination methods.
   ACE_Map_Manager (ACE_Allocator *alloc = 0);
   // Initialize a <Map_Manager> with the <ACE_DEFAULT_MAP_SIZE>.
