@@ -1,3 +1,8 @@
+Thu Jul 15 20:50:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Makefile:
+	  Removed IDL_Test from the build until I fix some of these errors.
+
 Thu Jul 15 20:29:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/IDL_Test/main.cpp:
