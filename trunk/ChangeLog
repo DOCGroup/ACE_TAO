@@ -1,3 +1,12 @@
+Mon Jul  2 13:18:14 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* Moved ACE-configurations.txt into the docs directory.  Also
+	  removed the hopelessly out of date BIBLIOGRAPHY file.
+
+	* Moved all the ChangeLog-* files into the new ChangeLogs
+	  directory.  Thanks to Holger P. Krekel <krekel@merlinux.de> for
+ 	  this suggestion.
+  
 Mon Jul 02 11:20:52 2001  Ossama Othman  <ossama@uci.edu>
 
 	* config.guess:
