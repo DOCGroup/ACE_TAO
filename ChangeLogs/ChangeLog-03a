@@ -1,3 +1,8 @@
+Tue Jun 27 12:09:43 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * netsvcs/servers/main.cpp: Logging_Strategy.h had been moved.
+          Changed include path accordingly.
+
 Tue Jun 27 11:11:41 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/OS_Test.cpp: Remove more output which triggers false fails
@@ -13,8 +18,8 @@ Tue Jun 27 09:23:01 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 Tue Jun 27 08:55:21 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * ace/OS_Dirent.cpp: Fixed the algorithm of reading a directory
-	  in the readdir_emulation () method. Thanks to Zoran Ivanovic
-	  <Zoran_Ivanovic@i2.com> for pointing this out.
+          in the readdir_emulation () method. Thanks to Zoran Ivanovic
+          <Zoran_Ivanovic@i2.com> for pointing this out.
 
 Tue Jun 27 08:30:21 2000  Steve Huston  <shuston@riverace.com>
 
@@ -28,16 +33,16 @@ Tue Jun 27 08:24:49 2000  Steve Huston  <shuston@riverace.com>
 
 Mon Jun 26 18:26:47 2000  Ossama Othman  <ossama@uci.edu>
 
-	* netsvcs/lib/Makefile.am (libnetsvcs_la_SOURCES, noinst_HEADERS):
-	* netsvcs/lib/Makefile.bor (OBJFILES):
+        * netsvcs/lib/Makefile.am (libnetsvcs_la_SOURCES, noinst_HEADERS):
+        * netsvcs/lib/Makefile.bor (OBJFILES):
 
-	  Removed Logging_Strategy.* from these make variables.  The
-	  Logging_Strategy files have been moved to ACE.
+          Removed Logging_Strategy.* from these make variables.  The
+          Logging_Strategy files have been moved to ACE.
 
 Mon Jun 26 17:42:15 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/SSL/ACE_SSL.dsw:
-	  Add a new workspace for the SSL adaptation library.
+          Add a new workspace for the SSL adaptation library.
 
         * ace/SSL/ACE_SSL.dsp:
           Fixed include paths, removed ACE_HAS_SSL from the command line
