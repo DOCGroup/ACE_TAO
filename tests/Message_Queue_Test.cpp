@@ -12,13 +12,13 @@
 //      This is:
 //      1) a simple test of the ACE_Message_Queue that illustrates how to
 //         use the forward and reverse iterators;
-//      2) a simple performance measurement tool for both single-threaded
-//         (null synch) and thread-safe ACE_Message_Queues, and the
+//      2) a simple performance measurement test for both single-threaded
+//         (null synch) and thread-safe ACE_Message_Queues, and
 //         ACE_Message_Queue_Vx, which wraps VxWorks message queues; and
-//      3) a test of ACE_Message_Queue_Vx.
+//      3) a test/usage example of ACE_Message_Queue_Vx.
 //
-// = AUTHOR
-//    Irfan Pyarali
+// = AUTHORS
+//    Irfan Pyarali and David L. Levine
 //
 // ============================================================================
 
@@ -44,14 +44,28 @@ typedef ACE_Message_Queue<ACE_SYNCH> SYNCH_QUEUE;
 
 struct Queue_Wrapper
 {
+  // = TITLE
+  //     Container for data passed to sender and receiver in performance test.
+  //
+  // = DESCRIPTION
+  //     For use in multithreaded performance test.
   union
     {
-      QUEUE *q_;
       SYNCH_QUEUE *sq_;
+      // The message queue, synchronized.
+
+      QUEUE *q_;
+      // The message queue, unsynchronized.  For VxWorks message queue.
     };
   u_int synch_queue_;
+  // Tag field indicating whether to use the synchronized or unsynchronized
+  // message queue.
 
-  Queue_Wrapper () : q_ (0), synch_queue_ (0) {}
+  ACE_Message_Block **send_block_;
+  // Pointer to messages blocks for sender to send to reciever.
+
+  Queue_Wrapper () : q_ (0), synch_queue_ (0), send_block_ (0) {}
+  // Default constructor.
 };
 
 const int MAX_MESSAGES = 10000;
@@ -172,15 +186,15 @@ single_thread_performance_test (int queue_type = 0)
                     ACE_Message_Block (test_message, MAX_MESSAGE_SIZE),
                     -1);
 
+  ACE_Message_Block **receive_block_p;
+  ACE_NEW_RETURN (receive_block_p, ACE_Message_Block *[messages], -1);
+
+#if defined (VXWORKS)
   // Set up blocks to receive the messages.  Allocate these off the
   // heap in case messages is large relative to the amount of
   // stack space available.
-  // We really only need to create receive blocks for VxWorks message
-  // queues.
   ACE_Message_Block *receive_block;
   ACE_NEW_RETURN (receive_block, ACE_Message_Block[messages], -1);
-  ACE_Message_Block **receive_block_p;
-  ACE_NEW_RETURN (receive_block_p, ACE_Message_Block *[messages], -1);
 
   for (i = 0; i < messages; ++i)
     {
@@ -193,6 +207,7 @@ single_thread_performance_test (int queue_type = 0)
       // assigned.  It will be used by dequeue_head ().
       receive_block_p[i] = &receive_block[i];
     }
+#endif /* VXWORKS */
 
   timer->start ();
 
@@ -218,7 +233,10 @@ single_thread_performance_test (int queue_type = 0)
   timer->reset ();
 
   delete [] receive_block_p;
+#if defined (VXWORKS)
   delete [] receive_block;
+#endif /* VXWORKS */
+
   for (i = 0; i < messages; ++i)
     delete send_block[i];
   delete [] send_block;
@@ -234,16 +252,15 @@ receiver (void *arg)
   Queue_Wrapper *queue_wrapper = ACE_reinterpret_cast (Queue_Wrapper *, arg);
   int i;
 
+  ACE_Message_Block **receive_block_p;
+  ACE_NEW_RETURN (receive_block_p, ACE_Message_Block *[messages], (void *) -1);
+
+#if defined (VXWORKS)
   // Set up blocks to receive the messages.  Allocate these off the
   // heap in case messages is large relative to the amount of
   // stack space available.
-  // We really only need to create receive blocks for VxWorks message
-  // queues.
   ACE_Message_Block *receive_block;
   ACE_NEW_RETURN (receive_block, ACE_Message_Block[messages], (void *) -1);
-  ACE_Message_Block **receive_block_p;
-  ACE_NEW_RETURN (receive_block_p, ACE_Message_Block *[messages],
-                  (void *) -1);
 
   for (i = 0; i < messages; ++i)
     {
@@ -256,33 +273,24 @@ receiver (void *arg)
       // assigned.  It will be used by dequeue_head ().
       receive_block_p[i] = &receive_block[i];
     }
+#endif /* VXWORKS */
 
   for (i = 0; i < messages; ++i)
     if (queue_wrapper->synch_queue_)
-      {
+      { // Do not remove the brace!!!!
         if (queue_wrapper->sq_->dequeue_head (receive_block_p[i]) == -1)
-          {
-            // ACE_ERROR_RETURN can't be used here with Sun C++'s strict
-            // cast checking.
-            ACE_ERROR ((LM_ERROR, "%p\n", "dequeue_head"));
-            return (void *) -1;
-          }
-      }
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "dequeue_head"), 0);
+      } // Do not remove the brace!!!!
     else
-      {
-        if (queue_wrapper->q_->dequeue_head (receive_block_p[i]) == -1)
-          {
-            // ACE_ERROR_RETURN can't be used here with Sun C++'s strict
-            // cast checking.
-            ACE_ERROR ((LM_ERROR, "%p\n", "dequeue_head"));
-            return (void *) -1;
-          }
-      }
+      if (queue_wrapper->q_->dequeue_head (receive_block_p[i]) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "dequeue_head"), 0);
 
   timer->stop ();
 
   delete [] receive_block_p;
+#if defined (VXWORKS)
   delete [] receive_block;
+#endif /* VXWORKS */
 
   return 0;
 }
@@ -294,44 +302,20 @@ sender (void *arg)
   Queue_Wrapper *queue_wrapper = ACE_reinterpret_cast (Queue_Wrapper *, arg);
   int i;
 
-  // Create the messages.  Allocate off the heap in case messages
-  // is large relative to the amount of stack space available.
-  ACE_Message_Block **send_block;
-  ACE_NEW_RETURN (send_block, ACE_Message_Block *[messages], (void *) -1);
-
-  for (i = 0; i < messages; ++i)
-    ACE_NEW_RETURN (send_block[i],
-                    ACE_Message_Block (test_message, MAX_MESSAGE_SIZE),
-                    (void *) -1);
-
   timer->start ();
 
   // Send the messages.
   for (i = 0; i < messages; ++i)
     if (queue_wrapper->synch_queue_)
-      {
-        if (queue_wrapper->sq_->enqueue_tail (send_block[i]) == -1)
-          {
-            // ACE_ERROR_RETURN can't be used here with Sun C++'s strict
-            // cast checking.
-            ACE_ERROR ((LM_ERROR, "%p\n", "enqueue"));
-            return (void *) -1;
-          }
-      }
+      { // Do not remove the brace!!!!
+        if (queue_wrapper->sq_->
+              enqueue_tail (queue_wrapper->send_block_[i]) == -1)
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "enqueue"), 0);
+      } // Do not remove the brace!!!!
     else
-      {
-        if (queue_wrapper->q_->enqueue_tail (send_block[i]) == -1)
-          {
-            // ACE_ERROR_RETURN can't be used here with Sun C++'s strict
-            // cast checking.
-            ACE_ERROR ((LM_ERROR, "%p\n", "enqueue"));
-            return (void *) -1;
-          }
-      }
-
-  for (i = 0; i < messages; ++i)
-    delete send_block[i];
-  delete [] send_block;
+      if (queue_wrapper->q_->
+            enqueue_tail (queue_wrapper->send_block_[i]) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "enqueue"), 0);
 
   return 0;
 }
@@ -342,6 +326,21 @@ performance_test (int queue_type = 0)
 {
   Queue_Wrapper queue_wrapper;
   const ASYS_TCHAR *message = "ACE_Message_Queue<ACE_SYNCH>";
+  int i;
+
+  // Create the messages.  Allocate off the heap in case messages
+  // is large relative to the amount of stack space available.
+  // Allocate it here instead of in the sender, so that we can
+  // delete it after the _receiver_ is done.
+  ACE_Message_Block **send_block;
+  ACE_NEW_RETURN (send_block, ACE_Message_Block *[messages], -1);
+
+  for (i = 0; i < messages; ++i)
+    ACE_NEW_RETURN (send_block[i],
+                    ACE_Message_Block (test_message, MAX_MESSAGE_SIZE),
+                    -1);
+
+  queue_wrapper.send_block_ = send_block;
 
   if (queue_type == 0)
     {
@@ -401,6 +400,10 @@ performance_test (int queue_type = 0)
     }
 #endif /* VXWORKS */
 
+  for (i = 0; i < messages; ++i)
+    delete send_block[i];
+  delete [] send_block;
+
   return 0;
 }
 #endif /* ACE_HAS_THREADS */
@@ -432,6 +435,7 @@ main (int argc, ASYS_TCHAR *argv[])
     single_thread_performance_test ();
 
 # if defined (VXWORKS)
+  // Test ACE_Message_Queue_Vx.
   if (status == 0)
     single_thread_performance_test (1);
 # endif /* VXWORKS */
@@ -440,6 +444,7 @@ main (int argc, ASYS_TCHAR *argv[])
     performance_test ();
 
 # if defined (VXWORKS)
+  // Test ACE_Message_Queue_Vx.
   if (status == 0)
     performance_test (1);
 # endif /* VXWORKS */
