@@ -15,12 +15,18 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:314
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:351
 
 
 #include "NavDisplayEIC.h"
@@ -44,243 +50,88 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// c:\usr\src\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:61
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:63
 
 int HUDisplay::NavDisplay_Exec::_tao_class_id = 0;
 
 HUDisplay::NavDisplay_Exec_ptr
-tao_HUDisplay_NavDisplay_Exec_duplicate (
-    HUDisplay::NavDisplay_Exec_ptr p
+HUDisplay::tao_NavDisplay_Exec_life::tao_duplicate (
+    NavDisplay_Exec_ptr p
   )
 {
-  return HUDisplay::NavDisplay_Exec::_duplicate (p);
+  return NavDisplay_Exec::_duplicate (p);
 }
 
 void
-tao_HUDisplay_NavDisplay_Exec_release (
-    HUDisplay::NavDisplay_Exec_ptr p
+HUDisplay::tao_NavDisplay_Exec_life::tao_release (
+    NavDisplay_Exec_ptr p
   )
 {
   CORBA::release (p);
 }
 
 HUDisplay::NavDisplay_Exec_ptr
-tao_HUDisplay_NavDisplay_Exec_nil (
+HUDisplay::tao_NavDisplay_Exec_life::tao_nil (
     void
   )
 {
-  return HUDisplay::NavDisplay_Exec::_nil ();
+  return NavDisplay_Exec::_nil ();
+}
+
+CORBA::Boolean
+HUDisplay::tao_NavDisplay_Exec_life::tao_marshal (
+    NavDisplay_Exec_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
 }
 
 HUDisplay::NavDisplay_Exec_ptr
-tao_HUDisplay_NavDisplay_Exec_narrow (
+HUDisplay::tao_NavDisplay_Exec_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
 {
-  return HUDisplay::NavDisplay_Exec::_narrow (p ACE_ENV_ARG_PARAMETER);
+  return NavDisplay_Exec::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
-tao_HUDisplay_NavDisplay_Exec_upcast (
+HUDisplay::tao_NavDisplay_Exec_cast::tao_upcast (
     void *src
   )
-{
-  HUDisplay::NavDisplay_Exec **tmp =
-    ACE_static_cast (HUDisplay::NavDisplay_Exec **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// be\be_interface.cpp:715
-
-// *************************************************************
-// HUDisplay::NavDisplay_Exec_var
-// *************************************************************
-
-HUDisplay::NavDisplay_Exec_var::NavDisplay_Exec_var (void)
-  : ptr_ (NavDisplay_Exec::_nil ())
-{}
-
-::HUDisplay::NavDisplay_Exec_ptr
-HUDisplay::NavDisplay_Exec_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-HUDisplay::NavDisplay_Exec_var::NavDisplay_Exec_var (const ::HUDisplay::NavDisplay_Exec_var &p)
-  : TAO_Base_var (),
-    ptr_ (NavDisplay_Exec::_duplicate (p.ptr ()))
-{}
-
-HUDisplay::NavDisplay_Exec_var::~NavDisplay_Exec_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-HUDisplay::NavDisplay_Exec_var &
-HUDisplay::NavDisplay_Exec_var::operator= (NavDisplay_Exec_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-HUDisplay::NavDisplay_Exec_var &
-HUDisplay::NavDisplay_Exec_var::operator= (const ::HUDisplay::NavDisplay_Exec_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::HUDisplay::NavDisplay_Exec::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-HUDisplay::NavDisplay_Exec_var::operator const ::HUDisplay::NavDisplay_Exec_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-HUDisplay::NavDisplay_Exec_var::operator ::HUDisplay::NavDisplay_Exec_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::HUDisplay::NavDisplay_Exec_ptr
-HUDisplay::NavDisplay_Exec_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::HUDisplay::NavDisplay_Exec_ptr
-HUDisplay::NavDisplay_Exec_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::HUDisplay::NavDisplay_Exec_ptr &
-HUDisplay::NavDisplay_Exec_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::HUDisplay::NavDisplay_Exec_ptr &
-HUDisplay::NavDisplay_Exec_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::HUDisplay::NavDisplay_Exec::_nil ();
-  return this->ptr_;
-}
-
-::HUDisplay::NavDisplay_Exec_ptr
-HUDisplay::NavDisplay_Exec_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::HUDisplay::NavDisplay_Exec_ptr val = this->ptr_;
-  this->ptr_ = ::HUDisplay::NavDisplay_Exec::_nil ();
-  return val;
-}
-
-::HUDisplay::NavDisplay_Exec_ptr
-HUDisplay::NavDisplay_Exec_var::tao_duplicate (NavDisplay_Exec_ptr p)
-{
-  return ::HUDisplay::NavDisplay_Exec::_duplicate (p);
-}
-
-void
-HUDisplay::NavDisplay_Exec_var::tao_release (NavDisplay_Exec_ptr p)
-{
-  CORBA::release (p);
-}
-
-::HUDisplay::NavDisplay_Exec_ptr
-HUDisplay::NavDisplay_Exec_var::tao_nil (void)
-{
-  return ::HUDisplay::NavDisplay_Exec::_nil ();
-}
-
-::HUDisplay::NavDisplay_Exec_ptr
-HUDisplay::NavDisplay_Exec_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::HUDisplay::NavDisplay_Exec::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-HUDisplay::NavDisplay_Exec_var::tao_upcast (void *src)
 {
   NavDisplay_Exec **tmp =
     ACE_static_cast (NavDisplay_Exec **, src);
   return *tmp;
 }
 
-// TAO_IDL - Generated from
-// be\be_interface.cpp:1024
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        HUDisplay::NavDisplay_Exec,
+        HUDisplay::tao_NavDisplay_Exec_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        HUDisplay::NavDisplay_Exec,
+        HUDisplay::tao_NavDisplay_Exec_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        HUDisplay::NavDisplay_Exec, \
+        HUDisplay::tao_NavDisplay_Exec_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        HUDisplay::NavDisplay_Exec, \
+        HUDisplay::tao_NavDisplay_Exec_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// *************************************************************
-// HUDisplay::NavDisplay_Exec_out
-// *************************************************************
-
-HUDisplay::NavDisplay_Exec_out::NavDisplay_Exec_out (NavDisplay_Exec_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::HUDisplay::NavDisplay_Exec::_nil ();
-}
-
-HUDisplay::NavDisplay_Exec_out::NavDisplay_Exec_out (NavDisplay_Exec_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::HUDisplay::NavDisplay_Exec::_nil ();
-}
-
-HUDisplay::NavDisplay_Exec_out::NavDisplay_Exec_out (const ::HUDisplay::NavDisplay_Exec_out &p)
-  : ptr_ (ACE_const_cast (NavDisplay_Exec_out &, p).ptr_)
-{}
-
-::HUDisplay::NavDisplay_Exec_out &
-HUDisplay::NavDisplay_Exec_out::operator= (const ::HUDisplay::NavDisplay_Exec_out &p)
-{
-  this->ptr_ = ACE_const_cast (NavDisplay_Exec_out&, p).ptr_;
-  return *this;
-}
-
-HUDisplay::NavDisplay_Exec_out &
-HUDisplay::NavDisplay_Exec_out::operator= (const ::HUDisplay::NavDisplay_Exec_var &p)
-{
-  this->ptr_ = ::HUDisplay::NavDisplay_Exec::_duplicate (p.ptr ());
-  return *this;
-}
-
-HUDisplay::NavDisplay_Exec_out &
-HUDisplay::NavDisplay_Exec_out::operator= (NavDisplay_Exec_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-HUDisplay::NavDisplay_Exec_out::operator ::HUDisplay::NavDisplay_Exec_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::HUDisplay::NavDisplay_Exec_ptr &
-HUDisplay::NavDisplay_Exec_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::HUDisplay::NavDisplay_Exec_ptr
-HUDisplay::NavDisplay_Exec_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from
-// c:\usr\src\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:225
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:245
 
 HUDisplay::NavDisplay_Exec::NavDisplay_Exec (void)
 {}
@@ -288,7 +139,7 @@ HUDisplay::NavDisplay_Exec::NavDisplay_Exec (void)
 HUDisplay::NavDisplay_Exec::~NavDisplay_Exec (void)
 {}
 
-void
+void 
 HUDisplay::NavDisplay_Exec::_tao_any_destructor (void *_tao_void_pointer)
 {
   NavDisplay_Exec *tmp = ACE_static_cast (NavDisplay_Exec *, _tao_void_pointer);
@@ -304,7 +155,7 @@ HUDisplay::NavDisplay_Exec::_narrow (
   return NavDisplay_Exec::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-HUDisplay::NavDisplay_Exec_ptr
+HUDisplay::NavDisplay_Exec_ptr 
 HUDisplay::NavDisplay_Exec::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -314,7 +165,7 @@ HUDisplay::NavDisplay_Exec::_unchecked_narrow (
     {
       return NavDisplay_Exec::_nil ();
     }
-
+  
   return
       ACE_reinterpret_cast (
           NavDisplay_Exec_ptr,
@@ -334,14 +185,14 @@ HUDisplay::NavDisplay_Exec::_duplicate (NavDisplay_Exec_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
 void *HUDisplay::NavDisplay_Exec::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
-
+  
   if (type == ACE_reinterpret_cast (
               ptrdiff_t,
               &ACE_NESTED_CLASS (::HUDisplay, NavDisplay_Exec)::_tao_class_id)
@@ -402,12 +253,12 @@ void *HUDisplay::NavDisplay_Exec::_tao_QueryInterface (ptrdiff_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-
+  
   if (retv != 0)
     {
       this->_add_ref ();
     }
-
+  
   return retv;
 }
 
@@ -416,28 +267,34 @@ const char* HUDisplay::NavDisplay_Exec::_interface_repository_id (void) const
   return "IDL:HUDisplay/NavDisplay_Exec:1.0";
 }
 
+CORBA::Boolean
+HUDisplay::NavDisplay_Exec::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
 // TAO_IDL - Generated from
-// c:\usr\src\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_HUDisplay_NavDisplay_Exec[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   34,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x48554469),
-  ACE_NTOHL (0x73706c61),
-  ACE_NTOHL (0x792f4e61),
-  ACE_NTOHL (0x76446973),
-  ACE_NTOHL (0x706c6179),
-  ACE_NTOHL (0x5f457865),
-  ACE_NTOHL (0x633a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x48554469), 
+  ACE_NTOHL (0x73706c61), 
+  ACE_NTOHL (0x792f4e61), 
+  ACE_NTOHL (0x76446973), 
+  ACE_NTOHL (0x706c6179), 
+  ACE_NTOHL (0x5f457865), 
+  ACE_NTOHL (0x633a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:HUDisplay/NavDisplay_Exec:1.0
-  16,
-  ACE_NTOHL (0x4e617644),
-  ACE_NTOHL (0x6973706c),
-  ACE_NTOHL (0x61795f45),
+    16,
+  ACE_NTOHL (0x4e617644), 
+  ACE_NTOHL (0x6973706c), 
+  ACE_NTOHL (0x61795f45), 
   ACE_NTOHL (0x78656300),  // name = NavDisplay_Exec
-};
+  };
 
 static CORBA::TypeCode _tc_TAO_tc_HUDisplay_NavDisplay_Exec (
     CORBA::tk_objref,
@@ -457,40 +314,33 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// c:\usr\src\ace_wrappers\tao\tao_idl\be\be_visitor_interface/any_op_cs.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
 
-// Copying version.
+// Copying insertion.
 void
 operator<<= (
     CORBA::Any &_tao_any,
     HUDisplay::NavDisplay_Exec_ptr _tao_elem
   )
 {
-  _tao_any._tao_replace (
-      HUDisplay::_tc_NavDisplay_Exec,
-      1,
-      HUDisplay::NavDisplay_Exec::_duplicate (_tao_elem),
-      HUDisplay::NavDisplay_Exec::_tao_any_destructor
-    );
-
-  _tao_any.contains_local (1);
+  HUDisplay::NavDisplay_Exec_ptr _tao_objptr =
+    HUDisplay::NavDisplay_Exec::_duplicate (_tao_elem);
+  _tao_any <<= &_tao_objptr;
 }
 
-// Non-copying version.
+// Non-copying insertion.
 void
 operator<<= (
     CORBA::Any &_tao_any,
     HUDisplay::NavDisplay_Exec_ptr *_tao_elem
   )
 {
-  _tao_any._tao_replace (
+  TAO::Any_Impl_T<HUDisplay::NavDisplay_Exec>::insert (
+      _tao_any,
+      HUDisplay::NavDisplay_Exec::_tao_any_destructor,
       HUDisplay::_tc_NavDisplay_Exec,
-      1,
-      *_tao_elem,
-      HUDisplay::NavDisplay_Exec::_tao_any_destructor
+      *_tao_elem
     );
-
-  _tao_any.contains_local (1);
 }
 
 CORBA::Boolean
@@ -499,43 +349,19 @@ operator>>= (
     HUDisplay::NavDisplay_Exec_ptr &_tao_elem
   )
 {
-  ACE_TRY_NEW_ENV
-  {
-    _tao_elem = HUDisplay::NavDisplay_Exec::_nil ();
-    CORBA::TypeCode_var type = _tao_any.type ();
-
-    CORBA::Boolean _tao_result =
-      type->equivalent (
-          HUDisplay::_tc_NavDisplay_Exec
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-
-    if (!_tao_result)
-      {
-        return 0; // not equivalent
-      }
-
-    _tao_elem =
-      ACE_reinterpret_cast (
-          HUDisplay::NavDisplay_Exec_ptr,
-          ACE_const_cast (void *, _tao_any.value ())
-        );
-
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-
-  _tao_elem = HUDisplay::NavDisplay_Exec::_nil ();
-  return 0;
+  return
+    TAO::Any_Impl_T<HUDisplay::NavDisplay_Exec>::extract (
+        _tao_any,
+        HUDisplay::NavDisplay_Exec::_tao_any_destructor,
+        HUDisplay::_tc_NavDisplay_Exec,
+        _tao_elem
+      );
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<HUDisplay::NavDisplay_Exec,HUDisplay::NavDisplay_Exec_var>;
+  template class TAO::Any_Impl_T<HUDisplay::NavDisplay_Exec>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<HUDisplay::NavDisplay_Exec,HUDisplay::NavDisplay_Exec_var>
+# pragma instantiate TAO::Any_Impl_T<HUDisplay::NavDisplay_Exec>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
