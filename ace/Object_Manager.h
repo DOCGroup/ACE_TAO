@@ -61,13 +61,15 @@ class ACE_Export ACE_Object_Manager_Base
   //
   // = DESCRIPTION
   //     Encapsulates the most useful ACE_Object_Manager data structures.
-# if defined (ACE_PSOS) && defined (__DIAB)
-// the Diab compiler got confused and complained about access rights
-// if this section was protected (changing this to public makes it happy)
+# if (defined (ACE_PSOS) && defined (__DIAB))  || \
+     (defined (__DECCXX_VER) && __DECCXX_VER < 60000000)
+  // The Diab compiler got confused and complained about access rights
+  // if this section was protected (changing this to public makes it happy).
+  // Similarly, DEC CXX 5.6 needs the methods to be public.
 public:
-# else /* ! defined (ACE_PSOS) && defined (__DIAB) */
+# else  /* ! (ACE_PSOS && __DIAB)  ||  ! __DECCXX_VER < 60000000 */
 protected:
-# endif /* ! defined (ACE_PSOS) && defined (__DIAB) */
+# endif /* ! (ACE_PSOS && __DIAB)  ||  ! __DECCXX_VER < 60000000 */
   ACE_Object_Manager_Base (void);
   // Default constructor.
 
