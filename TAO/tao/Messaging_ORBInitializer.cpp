@@ -24,7 +24,9 @@ TAO_Messaging_ORBInitializer::pre_init (
     (TAO_RelativeRoundtripTimeoutPolicy::hook);
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
   
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
   TAO_ORB_Core::set_sync_scope_hook (TAO_Sync_Scope_Policy::hook);
+#endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 }
 
 void

@@ -1858,6 +1858,8 @@ Messaging::ReplyHandler::ReplyHandler (
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
+#if (TAO_HAS_PRIORITY_POLICIES == 1)
+
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::PriorityRange &_tao_aggregate)
 {
   if (
@@ -1882,6 +1884,10 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::PriorityRan
 
 }
 
+#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
+
+#if (TAO_HAS_ROUTING_POLICY == 1)
+
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::RoutingTypeRange &_tao_aggregate)
 {
   if (
@@ -1905,6 +1911,8 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::RoutingType
     return 0;
 
 }
+
+#endif /* TAO_HAS_ROUTING_POLICY == 1 */
 
 
 #if !defined _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_I_

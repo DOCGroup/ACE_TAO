@@ -19,8 +19,11 @@ TAO_RT_ORB_Loader::create_object (CORBA::ORB_ptr orb,
                                   CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+#if (TAO_HAS_RT_CORBA == 1)
+
   /// Return RT_ORB
   CORBA::Object_ptr rt_orb;
+
   ACE_NEW_THROW_EX (rt_orb,
                     TAO_RT_ORB (orb),
                     CORBA::NO_MEMORY (
@@ -37,15 +40,24 @@ TAO_RT_ORB_Loader::create_object (CORBA::ORB_ptr orb,
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return safe_rt_orb._retn ();
+
+#else
+  ACE_UNUSED_ARG (orb);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  return CORBA::Object::_nil ();
+#endif /* TAO_HAS_RT_CORBA == 1 */
 }
 
 void
 TAO_RT_ORB_Loader::set_objects (TAO_ORB_Core *orb_core,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
+#if (TAO_HAS_RT_CORBA == 1)
+
   // Setup the RT_Current object in the ORB
 
   CORBA::Object_ptr current;
+
   ACE_NEW_THROW_EX (current,
                     TAO_RT_Current (orb_core),
                     CORBA::NO_MEMORY (
@@ -57,6 +69,11 @@ TAO_RT_ORB_Loader::set_objects (TAO_ORB_Core *orb_core,
 
   CORBA::Object_var safe_current = current;
   orb_core->rt_current (safe_current.in ());
+
+#else
+  ACE_UNUSED_ARG (orb_core);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+#endif /* TAO_HAS_RT_CORBA == 1 */
 }
 
 ACE_FACTORY_DEFINE (TAO, TAO_RT_ORB_Loader)
