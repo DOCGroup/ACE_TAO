@@ -35,7 +35,8 @@ public:
   // Destructor.
 
   virtual void foo(Object_A_ptr object_A_ptr,
-                   CORBA::Environment &env);
+                   CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 #endif /* OBJECT_B_IMPL_H */
