@@ -1,3 +1,8 @@
+Fri Jul 31 11:18:24 1998  Steve Huston  <shuston@riverace.com>
+
+	* ACE-INSTALL.html: Removed the direction to set global include/library
+	  paths in MSVC 4.2.
+
 Fri Jul 31 08:23:14 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Misc/test_XtReactor[12].cpp: Updated these files so
