@@ -125,7 +125,6 @@
 				</FileConfiguration>
 <%endfor%>
 			</File>
-		</Filter>
 <%endif%>
 <%foreach(source_files)%>
 			<File
@@ -162,20 +161,20 @@
 					Name="<%configuration%>|<%platform%>">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Invoking TAO_IDL Compiler on <%basename(idl_file)%> located in <%dirname(idl_file)%>"
+						Description="Invoking IDL Compiler on <%basename(idl_file)%> located in <%dirname(idl_file)%>"
 <%if(flag_overrides(idl_file, idlgendir))%>
-						CommandLine="<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
+						CommandLine="<%idl_compiler("$(ACE_ROOT)\\bin\\tao_idl")%> -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
 						Outputs="<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>C.h;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>C.i;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>C.cpp;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>S.h;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>S.i;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>S.cpp"/>
 <%else%>
 <%if(idlgendir)%>
-						CommandLine="<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
+						CommandLine="<%idl_compiler("$(ACE_ROOT)\\bin\\tao_idl")%> -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
 						Outputs="<%idlgendir%>\<%basenoextension(idl_file)%>C.h;<%idlgendir%>\<%basenoextension(idl_file)%>C.i;<%idlgendir%>\<%basenoextension(idl_file)%>C.cpp;<%idlgendir%>\<%basenoextension(idl_file)%>S.h;<%idlgendir%>\<%basenoextension(idl_file)%>S.i;<%idlgendir%>\<%basenoextension(idl_file)%>S.cpp"/>
 <%else%>
 <%if(dirname_found)%>
-						CommandLine="<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
+						CommandLine="<%idl_compiler("$(ACE_ROOT)\\bin\\tao_idl")%> -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
 						Outputs="<%basenoextension(idl_file)%>C.h;<%basenoextension(idl_file)%>C.i;<%basenoextension(idl_file)%>C.cpp;<%basenoextension(idl_file)%>S.h;<%basenoextension(idl_file)%>S.i;<%basenoextension(idl_file)%>S.cpp"/>
 <%else%>
-						CommandLine="<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
+						CommandLine="<%idl_compiler("$(ACE_ROOT)\\bin\\tao_idl")%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
 						Outputs="<%noextension(idl_file)%>C.h;<%noextension(idl_file)%>C.i;<%noextension(idl_file)%>C.cpp;<%noextension(idl_file)%>S.h;<%noextension(idl_file)%>S.i;<%noextension(idl_file)%>S.cpp"/>
 <%endif%>
 <%endif%>

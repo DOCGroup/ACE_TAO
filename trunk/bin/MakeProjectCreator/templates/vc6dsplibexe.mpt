@@ -30,3 +30,28 @@ Static Debug {
   output_dir            = Static_Debug
   intermediate_dir      = Static_Debug
 }
+
+MFC Release {
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /GX /O2 /MD /GR
+  common_defines        = WIN32 _WINDOWS
+  defines               = NDEBUG _AFXDLL ACE_HAS_MFC
+  compile_flags_removed = /YX
+  lib_modifier          = mfcs
+  output_dir            = MFC_Release
+  intermediate_dir      = MFC_Release
+  debug_switch          =
+  use_mfc               = 1
+}
+
+MFC Debug {
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  common_defines        = WIN32 _WINDOWS
+  defines               = _DEBUG _AFX_DLL ACE_HAS_MFC
+  compile_flags_removed = /YX
+  lib_modifier          = mfcsd
+  output_dir            = MFC_Debug
+  intermediate_dir      = MFC_Debug
+  use_mfc               = 1
+}

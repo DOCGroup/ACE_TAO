@@ -2,12 +2,6 @@
 #       Macros
 #----------------------------------------------------------------------------
 <%marker(top)%>
-<%if(tao)%>
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif
-
-<%endif%>
 SOEXT         = so
 MAKEFILE      = <%project_file%>
 <%if(exename)%>

@@ -29,3 +29,27 @@ Static Debug {
   pdb                   = 1
 }
 
+MFC Release {
+  use_debug_libraries   = 0
+  compile_flags         = /G5 /W3 /GX /O2 /MD /Zi /GR
+  defines               = NDEBUG ACE_HAS_MFC ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
+  compile_flags_removed = /YX
+  output_dir            = MFC_Release
+  intermediate_dir      = MFC_Release
+  lib_modifier          = mfcs
+  debug_switch          =
+  use_mfc               = 1
+}
+
+MFC Debug {
+  use_debug_libraries   = 1
+  compile_flags         = /G5 /W3 /Gm /GX /Zi /Od /GR /Gy /MDd
+  defines               = _DEBUG ACE_HAS_MFC ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
+  compile_flags_removed = /Fr /YX
+  output_dir            = MFC_Debug
+  intermediate_dir      = MFC_Debug
+  lib_modifier          = mfcsd
+  pdb                   = 1
+  use_mfc               = 1
+}
+
