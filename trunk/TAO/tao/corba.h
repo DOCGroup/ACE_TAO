@@ -55,7 +55,7 @@
 #include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Containers.h"
-#include "ace/CDR.h"
+#include "ace/CDR_Stream.h"
 
 #if !defined (TAO_HAS_DLL)
 // On Windows NT, the default is to build TAO as a DLL library.
