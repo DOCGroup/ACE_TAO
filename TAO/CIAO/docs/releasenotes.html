@@ -25,7 +25,7 @@
         <code>ComponentInstallation</code> interface.  Since we
         still don't have a CIDL implementation, we will also write up
         an example to show how the code should be generated in both
-        CIAO_CIDL compiler and provide example component
+        CCIDL compiler and provide example component
         implementations.</td>
   </tr>
 
@@ -40,12 +40,12 @@
   </tr>
 
   <tr>
-    <td>CIAO_CIDL</td>
+    <td>CCIDL (CIAO Component Implementation IDL) Compiler</td>
     <td>
         We still have no solid schedule as to when an implemention of
-        CIAO_CIDL will be available at
+        CCIDL will be available at
         this point and we do not have immediate plan to integrate
-        Persistence State Service with CIDL.  For starter, we will
+        Persistence State Service into CCIDL.  For starter, we will
         probably only support a simple construct like the following:
 <pre>
         import ::some_idl_module;
@@ -130,7 +130,7 @@ certain release together.  All interfaces and types are under
       AT this stage, we only implement "enough" CCM defined interface
       capability to allow manual implementation of components and a
       simple framework that offer some remote installation/composition
-      capability.  This will help design how CIDL generated code
+      capability.  This will help design how CCIDL generated code
       should look like.
 
       <p>
@@ -157,7 +157,7 @@ certain release together.  All interfaces and types are under
         <li>Extension to Interface Repository.
         <li>IDL should generate correct client/server side mapping for
             component extension
-        <li>CIDL implementation that generates skeleton implementation for
+        <li>CCIDL implementation that generates skeleton implementation for
             <ul>
               <li><code>Navigations</code>, <code>Receptacles</code>,
                   and <code>Events</code> interfaces of a components
@@ -195,10 +195,10 @@ certain release together.  All interfaces and types are under
 <hr>
 <address></address>
 <!-- hhmts start -->
-Last modified: Thu Sep 19 19:24:15 Central Daylight Time 2002
+Last modified: Sun Oct 06 00:03:32 Central Daylight Time 2002
 <!-- hhmts end -->
 <address>Nanbor Wang &lt;nanbor@cs.wustl.edu&gt;</address>
 </body> </html>
 
-<!--  LocalWords:  TODOs CCM IDL CIDL backend idl
+<!--  LocalWords:  TODOs CCM IDL CCIDL CIDL backend idl
  -->
