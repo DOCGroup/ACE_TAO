@@ -41,9 +41,9 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     purge_percentage_ (TAO_PURGE_PERCENT),
     reactor_mask_signals_ (1),
     dynamically_allocated_reactor_ (0),
-    cached_connection_lock_type_ (TAO_THREAD_LOCK),
     options_processed_ (0),
     factory_disabled_ (0),
+    cached_connection_lock_type_ (TAO_THREAD_LOCK),
     flushing_strategy_type_ (TAO_LEADER_FOLLOWER_FLUSHING)
 {
 }

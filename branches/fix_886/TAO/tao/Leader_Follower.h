@@ -13,6 +13,7 @@
 #define TAO_LEADER_FOLLOWER_H
 #include "ace/pre.h"
 
+#include "tao/Follower.h"
 #include "tao/ORB_Core.h"
 #include "ace/Intrusive_List.h"
 
@@ -20,7 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Follower;
 class TAO_LF_Event;
 
 class TAO_Export TAO_Leader_Follower

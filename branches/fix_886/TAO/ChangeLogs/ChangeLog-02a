@@ -1,38 +1,44 @@
+Fri Jul 27 17:34:40 2001  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * tao/Leader_Follower.h:
+        * tao/default_resource.cpp:
+          Fixed warnings and compilation errors for gcc-2.7.2
+
 Fri Jul 27 10:59:50 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/LF_Event.h:
         * tao/LF_Event.inl:
-	  Add new method to unbind a LF_Event and its Follower:
-	  Reply_Dispatchers can be used multiple times to wait for several
-	  replys, mostly when a LOCATION_FORWARD message is received.
+          Add new method to unbind a LF_Event and its Follower:
+          Reply_Dispatchers can be used multiple times to wait for several
+          replys, mostly when a LOCATION_FORWARD message is received.
 
         * tao/LF_Event.cpp:
-	  Modify the state machine: the state can go back to ACTIVE from
-	  CONNECTION_CLOSED or SUCCESSFUL.  This represents the location
-	  forward scenario described above.
+          Modify the state machine: the state can go back to ACTIVE from
+          CONNECTION_CLOSED or SUCCESSFUL.  This represents the location
+          forward scenario described above.
 
         * tao/LF_Event_Binder.h:
         * tao/LF_Event_Binder.inl:
         * tao/LF_Event_Binder.cpp:
-	  Helper class to automate the bind/unbind calls to a LF_Event.
+          Helper class to automate the bind/unbind calls to a LF_Event.
 
         * tao/Leader_Follower.cpp:
-	  Use LF_Event_Binder to handle the bind/unbind calls into the
-	  LF_Event.
+          Use LF_Event_Binder to handle the bind/unbind calls into the
+          LF_Event.
 
         * tao/Makefile:
         * tao/Makefile.bor:
         * tao/TAO.dsp:
         * tao/TAO_Static.dsp:
-	  Add new files to the projects and Makefiles.
+          Add new files to the projects and Makefiles.
 
         * tao/Invocation.cpp:
         * tao/Wait_On_Read.cpp:
         * tao/Wait_On_Reactor.cpp:
         * tao/Synch_Reply_Dispatcher.h:
         * tao/Synch_Reply_Dispatcher.cpp:
-	  Remove the reply_received() flag from Synch_Reply_Dispatcher,
-	  the LF_Event state is enough to know what happens.
+          Remove the reply_received() flag from Synch_Reply_Dispatcher,
+          the LF_Event state is enough to know what happens.
 
 Thu Jul 26 18:00:12 2001  Carlos O'Ryan  <coryan@uci.edu>
 
