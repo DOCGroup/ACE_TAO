@@ -36,9 +36,14 @@ class Supplier_Input_Handler : public ACE_Service_Object
   //   be more selective and only send to those Consumers
   //   whose filtering criteria matches!
 public:
-  Supplier_Input_Handler (Notifier_Handler *,
-			  ACE_HANDLE = ACE_STDIN);
-  // Use stdin by default.
+  Supplier_Input_Handler ();
+  // Constructor.
+
+  ~Supplier_Input_Handler (void);
+  // Destructor.
+
+  int initialize (Notifier_Handler *, ACE_HANDLE = ACE_STDIN);
+  // Initialization, uses stdin by default.
 
   virtual int handle_input (ACE_HANDLE);
   // Frame input events and notify <Consumers>.
@@ -59,10 +64,6 @@ protected:
 
   FILE *fp_;
   // Pointer to an input ACE_FILE.
-
-private:
-  ~Supplier_Input_Handler (void);
-  // Ensure dynamic allocation.
 };
 
 #endif /* SUPPLIER_INPUT_HANDLER_H */

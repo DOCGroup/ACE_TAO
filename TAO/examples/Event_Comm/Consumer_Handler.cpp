@@ -4,102 +4,138 @@
 
 ACE_RCSID(Consumer, Consumer_Handler, "$Id$")
 
+Consumer_Handler::Consumer_Handler (void)
+:   notifier_ (0),
+    receiver_ (0)
+{
+  // No-Op.
+}
+
+// Destroy a Receiver target object.
+
+Consumer_Handler::~Consumer_Handler (void)
+{
+  // No-Op.
+}
+
 int
 Consumer_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-// ACE_ST_CORBA_Handler::remove_service (Event_Comm_Consumer_IMPL);
-
   if (this->receiver_ != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "closing down Consumer_Handler\n"));
-      /*CORBA_HANDLER::instance ()->deactivate_service (Event_Comm_Consumer_IMPL,
-						      this->receiver_->_marker ());
-      */
-      CORBA::release (this->receiver_);
+
+      CORBA::release (this->receiver_.in());
       this->receiver_ = 0;
-      CORBA::release (this->notifier_);
+      CORBA::release (this->notifier_.in());
       this->notifier_ = 0;
-      // *Must* be allocated dynamically in order to delete this!
-      delete this;
     }
   return 0;
 }
 
-Consumer_Handler::Consumer_Handler (int argc, char *argv[])
-  : notifier_ (0),
-    receiver_ (0)
+int
+Consumer_Handler::init (int argc, char *argv[])
 {
-  // @@ Orbix specific things. figure out TAO equivalents
-  /*
-  const char *server_name = ""; // @@ fill this in.
-    // Event_Comm_Consumer_IMPL;
-    // @@ what is this??
-  char buf[BUFSIZ];
-  char *receiver_marker = buf;
-  char *filtering_criteria;
-  char *host;
-  char *notifier_marker;
-  char *service_location = argv[0];
+  char *filtering_criteria = "";
 
-  // First see if we have any environment variables.
+   // First see if we have any environment variables.
   filtering_criteria = ACE_OS::getenv ("FILTERING_CRITERIA");
-  host = ACE_OS::getenv ("HOST");
-  notifier_marker = ACE_OS::getenv ("NOTIFIER_MARKER");
 
-  // Then override these variables with command-line arguments.
+   // Then override these variables with command-line arguments.
   filtering_criteria = argc > 1 ? argv[1] : "";
-  host = argc > 2 ? argv[2] : "tango.cs";
-  notifier_marker = argc > 3 ? argv[3] : "notifier:" ;
-  // Event_Comm_Notifier_IR; @@ what is this?
 
-  // CORBA::Orbix.setDiagnostics (0);
-
-  utsname name;
-
-  // Make the marker name be the "/hostname/processid"
-  ACE_OS::uname (&name);
-  sprintf (buf, "/%s/%d", name.nodename, ACE_OS::getpid ());
-
-  CORBA_HANDLER::instance ()->activate_service (Event_Comm_Consumer_IMPL,
-						receiver_marker,
-                                                service_location);
-
-  // Create the receiver object.
-  ACE_NEW (this->receiver_,
-           TIE_Event_Comm_Consumer (Consumer_i)
-           (new Consumer_i));
-
-  this->receiver_->_marker (receiver_marker);
-
-  ACE_ASSERT (this->receiver_);
-
-  TRY
+  TAO_TRY
     {
-      // Get a binding to the notifier.
-      this->notifier_ = Event_Comm::Notifier::_bind (notifier_marker, host, IT_X);
+      // Retrieve the ORB.
+      this->orb_ = CORBA::ORB_init (argc,
+				    argv,
+				    0,
+				    TAO_TRY_ENV);
 
-      if (this->notifier_ != CORBA::OBJECT_NIL)
-        // Subscribe ourselves with the notifier's broker.
-        this->notifier_->subscribe (this->receiver_,
-                                    filtering_criteria, IT_X);
+      TAO_CHECK_ENV;
+
+      this->receiver_ =
+      this->receiver_i_._this (TAO_TRY_ENV);
+
+      TAO_CHECK_ENV;
+
+
+      if (get_notifier() == -1)
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to get the notifier "
+                           "the TAO_Naming_Client. \n"),
+                          -1);
+
+      // Subscribe ourselves with the notifier's broker.
+      this->notifier_->subscribe (this->receiver_,
+				  filtering_criteria,
+				  TAO_TRY_ENV);
     }
-  CATCHANY
+  TAO_CATCHANY
+   {
+     TAO_TRY_ENV.print_exception ("Consumer_Handler::init\n");
+     return -1;
+   }
+  TAO_ENDTRY;
+}
+
+int
+Consumer_Handler::get_notifier(void)
+{
+ TAO_TRY
     {
-      cerr << "Unexpected exception " << IT_X << endl;
-      ACE_OS::exit (1);
-    }
-  ENDTRY;
-  // Print out context.
+      // Initialization of the naming service.
+      if (naming_services_client_.init (orb_.in ()) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize "
+                           "the TAO_Naming_Client. \n"),
+                          -1);
 
-  receiver_marker = (char *) this->receiver_->_marker ();
-  CORBA::BOA::activationMode mode = CORBA::Orbix.myActivationMode ();
-  ACE_DEBUG ((LM_DEBUG,
-              "starting up a %spersistent server in mode %d with marker name %s\n",
-              mode == CORBA::BOA::persistentActivationMode ? "" : "non-",
-              mode,
-              receiver_marker));
-*/
+      CosNaming::Name notifier_ref_name (1);
+      notifier_ref_name.length (1);
+      notifier_ref_name[0].id = CORBA::string_dup (NOTIFIER_BIND_NAME);
+
+      CORBA::Object_var notifier_obj =
+        this->naming_services_client_->resolve (notifier_ref_name,
+                                                TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // The CORBA::Object_var object is downcast to Notifier_var using
+      // the <_narrow> method.
+      this->notifier_ =
+         Event_Comm::Notifier::_narrow (notifier_obj.in (),
+					TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+ TAO_CATCHANY
+   {
+     TAO_TRY_ENV.print_exception ("Consumer_Handler::get_notifier\n");
+     return -1;
+   }
+ TAO_ENDTRY;
+
+ return 0;
+}
+
+void
+Consumer_Handler:: close (void)
+{
+  this->orb_->shutdown();
+}
+
+int
+Consumer_Handler::run (void)
+{
+ // Run the ORB.
+ this->orb_->run ();
+ return 0;
+}
+
+ACE_Reactor*
+Consumer_Handler::reactor(void)
+{
+  return TAO_ORB_Core_instance ()->reactor ();
 }
 
 Event_Comm::Consumer *
@@ -112,12 +148,4 @@ Event_Comm::Notifier *
 Consumer_Handler::notifier (void)
 {
   return this->notifier_;
-}
-
-// Destroy a Receiver target object.
-
-Consumer_Handler::~Consumer_Handler (void)
-{
-  this->handle_close (-1,
-                      ACE_Event_Handler::ALL_EVENTS_MASK);
 }
