@@ -168,12 +168,12 @@ main (int argc, char *argv[])
   find (*ns_context,  1, -1);
   find (*ns_context, -1, -1);
 
-  delete ns_context;
-
   ACE_OS::sprintf (temp_file, __TEXT ("%s%s%s"),
 		   name_options->namespace_dir (),
 		   ACE_DIRECTORY_SEPARATOR_STR,
 		   name_options->database ());
+
+  delete ns_context;
 
   // Remove any existing files.  No need to check return value here
   // since we don't care if the file doesn't exist.
