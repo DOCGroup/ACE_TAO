@@ -76,9 +76,10 @@ JAWS_Synch_IO::receive_file (char *filename,
       ACE_SOCK_Stream stream;
       stream.set_handle (this->handle_);
 
-      ACE_OS::memcpy (vf->addr (), initial_data, initial_data_length);
+      int bytes_to_memcpy = ACE_MIN (entire_length, initial_data_length);
+      ACE_OS::memcpy (vf->addr (), initial_data, bytes_to_memcpy);
       
-      int bytes_to_read = entire_length - initial_data_length;
+      int bytes_to_read = entire_length - bytes_to_memcpy;
       
       int bytes = stream.recv_n ((char *) vf->addr () + initial_data_length,
 				 bytes_to_read);
