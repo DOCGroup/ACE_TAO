@@ -1,3 +1,9 @@
+Thu Jun  8 20:23:58 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/releasenotes/index.html:
+
+	  Added release notes for TAO's new Load Balancer.
+
 Thu Jun  8 19:09:31 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs.dsw: (removed)
