@@ -1,3 +1,9 @@
+Fri Sep  1 23:51:56 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Simple/time-date/svc.conf:
+          Make the POA a dynamically loadable service into the service
+          configurator, otherwise it cannot be found by the ORB.
+
 Fri Sep  1 22:01:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
