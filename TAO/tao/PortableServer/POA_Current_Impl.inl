@@ -9,12 +9,12 @@ namespace TAO
   namespace Portable_Server
   {
     ACE_INLINE void
-    POA_Current_Impl::poa (TAO_Root_POA *p)
+    POA_Current_Impl::poa (::TAO_Root_POA *p)
     {
       this->poa_ = p;
     }
 
-    ACE_INLINE TAO_Root_POA *
+    ACE_INLINE ::TAO_Root_POA *
     POA_Current_Impl::poa (void) const
     {
       return this->poa_;
