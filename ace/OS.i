@@ -5483,6 +5483,10 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
       errno = error;
       return 0;
     }
+# else
+  ACE_UNUSED_ARG (key);
+  ACE_UNUSED_ARG (data);
+  ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (key);
