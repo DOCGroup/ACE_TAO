@@ -1,3 +1,31 @@
+Fri Feb 13 11:51:17 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CIDLC/ExecutorMappingGenerator.cpp:
+
+	  Added generation of file caption to local executor mapping.
+
+	* CIDLC/ServantHeaderGenerator.cpp:
+	* CIDLC/ServantSourceGenerator.cpp:
+
+	  Fixed bug in name generation when decalartions are in file
+	  scope.
+
+	* CIDLC/DescriptorGenerator.cpp:
+
+          Fixed inconsistent tags.
+
+	* CIDLC/Literals.cpp:
+	* CIDLC/Literals.hpp:
+
+	  Split literals into header and source.
+
+	* CIDLC/CIDLC.mpc:
+	* CIDLC/CIDLC.vcproj:
+	* CIDLC/Makefile:
+	* CIDLC/Makefile.alt:
+
+	  Added Literals.cpp
+
 Thu Feb 12 17:40:33 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* CIDLC/CIDLC.mwc:
