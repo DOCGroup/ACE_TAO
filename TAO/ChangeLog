@@ -1,3 +1,9 @@
+Wed Mar  3 10:55:13 2004  David Smith  <dts@prismtechnologies.com>
+
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+
+	  Fixed compile problem with aCC 3.37.
+
 Tue Mar  2 21:15:47 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* docs/Security/Conformance.html:
