@@ -12,6 +12,18 @@ ACE_FILE_IO::sendv_n (const iovec iov[], size_t n) const
                         n);
 }
 
+ASYS_INLINE ssize_t
+ACE_FILE_IO::send_n (const ACE_Message_Block *message_block,
+                     const ACE_Time_Value *timeout,
+                     size_t *bytes_transferred)
+{
+  ACE_TRACE ("ACE_FILE_IO::send_n");
+  return ACE::send_n (this->get_handle (),
+                      message_block,
+                      timeout,
+                      bytes_transferred);
+}
+
 // Recv an n byte message from the file.
 
 ASYS_INLINE ssize_t

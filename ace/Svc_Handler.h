@@ -6,10 +6,10 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt and Irfan Pyrarli.
+ *  @author Douglas Schmidt <schmidt@cs.wustl.edu> and 
+ *   Irfan Pyrarli <irfan@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_SVC_HANDLER_H
 #define ACE_SVC_HANDLER_H

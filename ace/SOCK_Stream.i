@@ -133,6 +133,18 @@ ACE_SOCK_Stream::sendv_n (const iovec iov[],
 }
 
 ASYS_INLINE ssize_t
+ACE_SOCK_Stream::send_n (const ACE_Message_Block *message_block,
+                         const ACE_Time_Value *timeout,
+                         size_t *bytes_transferred) const
+{
+  ACE_TRACE ("ACE_SOCK_Stream::send_n");
+  return ACE::send_n (this->get_handle (),
+                      message_block,
+                      timeout,
+                      bytes_transferred);
+}
+
+ASYS_INLINE ssize_t
 ACE_SOCK_Stream::send_urg (const void *ptr,
                            size_t len,
                            const ACE_Time_Value *timeout) const

@@ -1,3 +1,42 @@
+Wed Aug  8 06:21:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Makefile: Moved Message_Block from STREAMS_FILES to
+ 	  UTILS_FILES.
+
+	* ace/OS_Dirent.inl (closedir): Changed delete d->directory_name_ to
+	  delete [] d->directory_name_.  Thanks to Olivier Brunet
+ 	  <obrunet@groupama-ccama.tm.fr> for reporting this.
+
+Tue Aug  7 21:59:42 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/Svc_Handler_Test.cpp: Modified the test to dump the contents
+	  of the temporary file to the log file.
+
+Tue Aug  7 19:14:24 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/CDR_Stream.i:
+	* ace/SOCK_Stream.h: Fixed incorrect comments.
+	  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be> for reporting
+ 	  these.
+
+Tue Aug  7 15:19:38 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace: Changed all uses of IOV_MAX to use the new ACE_IOV_MAX.  
+    
+	* ace/OS.h: Added a new ACE_IOV_MAX that makes it clear this is
+	  an ACE-level #define.  We use this in C++NP v1.
+
+Tue Aug  7 14:16:57 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Svc_Handler.cpp: Reimplemented the flush() method to use
+	  the new send_n() method on the various ACE I/O classes.
+
+	* ace/SOCK_Stream.{h,i}:
+  	* ace/FILE_IO.{h,i}: Added a new send_n() method that sends all
+	  the <message_block>s chained through their <next> and <cont>
+ 	  pointers using the underlying OS gather-write operation to
+ 	  reduce the domain-crossing penalty.
+
 Tue Aug  7 17:27:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Collection_test.cpp: Fixed a compile error with g++. This
@@ -27,8 +66,8 @@ Tue Aug 07 16:40:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
           check that the iterator instance is assigned to itself
 
         * tests/Hash_Map_Manager_Test.cpp
-          Extended this test to test the new const_iterator capabilities of
-          the hash map
+          Extended this test to test the new const_iterator capabilities
+ 	  of the hash map
 
         * ace/Unbounded_Set.cpp:
           Implemented missing operator* for the const iterator

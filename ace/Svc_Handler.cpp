@@ -419,70 +419,24 @@ template <PR_ST_1, ACE_SYNCH_DECL> int
 ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::flush (void)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, m, this->msg_queue ()->lock (), -1);
-  ACE_Message_Block *entry = 0;
-  iovec iov[IOV_MAX];
-  size_t i = 0;
+
+  ACE_Message_Queue_Iterator<ACE_SYNCH_USE> iterator (*this->msg_queue ());
+  ACE_Message_Block *mblk;
   int result = 0;
 
-  // Iterate over all the <ACE_Message_Block>s in the
-  // <ACE_Message_Queue> and prepare them to be written out.
-  for (ACE_Message_Queue_Iterator<ACE_SYNCH_USE> iterator (*this->msg_queue ());
-       iterator.next (entry) != 0
-         && result == 0;
-       iterator.advance ())
-    {
-      // Iterate over all the <Message_Block>s in a chain, including
-      // continuations.
-      for (ACE_Message_Block *temp = entry;
-           temp != 0;
-           temp = temp->cont ())
-        {
-          iov[i].iov_len = temp->length ();
-          iov[i].iov_base = temp->rd_ptr ();
-
-          i++;
-
-          // Flush the <iovec>s when we've reached the maximum size
-          // for the platform.
-          if (i == IOV_MAX)
-            {
-#if defined (ACE_DEBUGGING)
-              ACE_DEBUG ((LM_DEBUG,
-                          "sending data (inside loop, i = %d)\n",
-                          i));
-#endif /* ACE_DEBUGGING */
-              // Send off the data.
-              if (this->peer ().sendv_n (iov,
-                                         i) == -1)
-                {
-                  result = -1;
-                  break;
-                }
-              i = 0;
-            }
-        }
-    }
-
-  // Take care of any remaining <iovec>s.
-  if (i > 0 && result != -1)
-    {
-      if (this->peer ().sendv_n (iov, i) == -1)
-        result = -1;
-#if defined (ACE_DEBUGGING)
-      ACE_DEBUG ((LM_DEBUG,
-                  "sending data (final flush, i = %d)\n",
-                  i));
-#endif /* ACE_DEBUGGING */
-    }
+  // Get the first <ACE_Message_Block> so that we can write everything
+  // out via the <send_n>.
+  if (iterator.next (mblk) != 0)
+    result = this->peer ().send_n (mblk);
 
   // Remove all the <ACE_Message_Block>s in the <ACE_Message_Queue>
   // and <release> their memory.
   while (this->msg_queue ()->is_empty () == 0)
     {
-      if (this->msg_queue ()->dequeue_head (entry) == -1)
+      if (this->msg_queue ()->dequeue_head (mblk) == -1)
         break;
 
-      entry->release ();
+      mblk->release ();
     }
 
   if (this->timeoutp_ != 0)

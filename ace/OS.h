@@ -2976,6 +2976,8 @@ typedef unsigned int size_t;
 #  define IOV_MAX 16
 # endif /* IOV_MAX */
 
+#define ACE_IOV_MAX IOV_MAX
+
 # if defined (ACE_PSOS_SNARFS_HEADER_INFO)
   // Header information snarfed from compiler provided header files
   // that are not included because there is already an identically
