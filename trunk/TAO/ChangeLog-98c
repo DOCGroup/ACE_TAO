@@ -1,98 +1,103 @@
+Tue Sep 22 22:29:30 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * exmaples/POA/{Forwarding,TIE}: added FooS_T.* to
+          realclean target.
+
 Tue Sep 22 19:18:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.h: 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
-	  Updated the comments and removed some warnings.
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+          Updated the comments and removed some warnings.
 
-	* utils/IOR-parser/ior-handler.cpp: 
-	  Fixed out-of-bounds error in an array.
-	  the IorHander::hexChar2int() function was not returning a value
-	  on every execution path.
+        * utils/IOR-parser/ior-handler.cpp:
+          Fixed out-of-bounds error in an array.
+          the IorHander::hexChar2int() function was not returning a value
+          on every execution path.
 
-	* examples/Simple/chat/Client_i.cpp: 
-	* examples/Simple/bank/Server_i.cpp: 
-	  Removed unreached statement.
+        * examples/Simple/chat/Client_i.cpp:
+        * examples/Simple/bank/Server_i.cpp:
+          Removed unreached statement.
 
-	* examples/Simple/bank/Client_i.cpp: 
-	  Removed unused variable.
+        * examples/Simple/bank/Client_i.cpp:
+          Removed unused variable.
 
-	* examples/Simple/grid/Client_i.cpp: 
-	* examples/Simple/chat/Client_i.cpp: 
-	  Reordered initializers to match the declaration.
+        * examples/Simple/grid/Client_i.cpp:
+        * examples/Simple/chat/Client_i.cpp:
+          Reordered initializers to match the declaration.
 
-	* examples/POA/On_Demand_Activation/server.cpp: 
-	  Removed signed/unsigned comparison warning.
+        * examples/POA/On_Demand_Activation/server.cpp:
+          Removed signed/unsigned comparison warning.
 
 Tue Sep 22 18:19:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/IIOP_Object.cpp: 
-	  Fixed unreachable statement warning: this was an excellent
-	  warning because the semantics were broken.
+        * tao/IIOP_Object.cpp:
+          Fixed unreachable statement warning: this was an excellent
+          warning because the semantics were broken.
 
-	* TAO_IDL/util/utl_scope.cpp: 
-	  Removed unused variable.
+        * TAO_IDL/util/utl_scope.cpp:
+          Removed unused variable.
 
-	* docs/releasenotes/TODO.html: 
-	  Added brief note about a (potential) EC bug.
+        * docs/releasenotes/TODO.html:
+          Added brief note about a (potential) EC bug.
 
-	* docs/configurations.html: 
-	  Added more documentation about the use of dotted decimal
-	  addresses to work in platforms without a DNS server.
+        * docs/configurations.html:
+          Added more documentation about the use of dotted decimal
+          addresses to work in platforms without a DNS server.
 
 Tue Sep 22 18:03:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/Simple/chat/Client_i.h: 
-	  Added missing file.
+        * examples/Simple/chat/Client_i.h:
+          Added missing file.
 
 Tue Sep 22 16:59:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB.cpp (CORBA_ORB): Changed
-	  leader_follower_info_.leader_thread_ID_ = 0;
+        * tao/ORB.cpp (CORBA_ORB): Changed
+          leader_follower_info_.leader_thread_ID_ = 0;
 
-	  to
+          to
 
-	  leader_follower_info_.leader_thread_ID_ = ACE_OS::NULL_thread;
+          leader_follower_info_.leader_thread_ID_ = ACE_OS::NULL_thread;
 
-	  Thanks to Alan Scheinine <scheinin@crs4.it> for reporting this.
+          Thanks to Alan Scheinine <scheinin@crs4.it> for reporting this.
 
 Tue Sep 22 16:16:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Updated dependencies for many Makefiles.
+        * Updated dependencies for many Makefiles.
 
 Tue Sep 22 15:33:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.h: 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
-	  Added simple support for dynamic reconfiguration of the consumer
-	  subscriptions; we still have to propagate this to the multicast
-	  groups that we join.
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+          Added simple support for dynamic reconfiguration of the consumer
+          subscriptions; we still have to propagate this to the multicast
+          groups that we join.
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.h: 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
-	  Added support for configuring a local scheduler, without using
-	  the naming service.
+        * orbsvcs/orbsvcs/Scheduler_Factory.h:
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+          Added support for configuring a local scheduler, without using
+          the naming service.
 
 Tue Sep 22 14:29:29 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Made changes to the ACE_DEBUG to print the server/client Process
-	ID/ thread ID for all messages to console. Also modified README to
-	include the description of tests done by client.
+        Made changes to the ACE_DEBUG to print the server/client Process
+        ID/ thread ID for all messages to console. Also modified README to
+        include the description of tests done by client.
 
-	* examples/Simple/bank/README:
-	* examples/Simple/bank/ AccountManager_i.cpp
-	* examples/Simple/bank/ Account_i.cpp
-	* examples/Simple/bank/ Client_i.cpp
-	* examples/Simple/bank/Server_i.cpp
-	* examples/Simple/bank/client.cpp
-	* examples/Simple/bank/server.cpp
+        * examples/Simple/bank/README:
+        * examples/Simple/bank/ AccountManager_i.cpp
+        * examples/Simple/bank/ Account_i.cpp
+        * examples/Simple/bank/ Client_i.cpp
+        * examples/Simple/bank/Server_i.cpp
+        * examples/Simple/bank/client.cpp
+        * examples/Simple/bank/server.cpp
 
 Tue Sep 22 13:21:02 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp (init): Don't look for
- 	  an existing naming service, just become one.
+        * orbsvcs/Naming_Service/Naming_Service.cpp (init): Don't look for
+          an existing naming service, just become one.
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (destroy): Must destroy
- 	  self only after releasing the lock.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (destroy): Must destroy
+          self only after releasing the lock.
 
 Tue Sep 22 07:12:31 1998  David L. Levine  <levine@cs.wustl.edu>
 
