@@ -13,7 +13,7 @@ Grid_Client_i::Grid_Client_i (void)
     setx_ (0),
     sety_ (0),
     value_ (0)
-   
+
 {
   //no-op
 }
@@ -24,29 +24,27 @@ Grid_Client_i::~Grid_Client_i (void)
   //no-op
 }
 
-int 
+int
 Grid_Client_i::parse_args (int argc,
                            char *argv[])
 {
   // Parses some of the options that are specific to this example
   ACE_Get_Opt get_opts (argc, argv, "w:h:p:q:v:");
 
-    int c = 0;
-  int result = 0;
-
+  int c = 0;
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'p': // A horizontal position of the grid where 
+      case 'p': // A horizontal position of the grid where
                 // the value is stored
         setx_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
-      case 'q': // A vertical position of the grid where a 
+      case 'q': // A vertical position of the grid where a
                 // value is stored
-        sety_ = (u_int) ACE_OS::atoi (get_opts.optarg);    
+        sety_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
       case 'w':
-        width_ = (u_int) ACE_OS::atoi (get_opts.optarg); 
+        width_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
       case 'h':
         height_ = (u_int) ACE_OS::atoi (get_opts.optarg);
@@ -55,7 +53,7 @@ Grid_Client_i::parse_args (int argc,
         value_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
       }
-  
+
   if (setx_ == 0 )
     setx_ = Grid::DEFAULT_LOCATION;
   if (sety_ == 0 )
@@ -76,25 +74,25 @@ Grid_Client_i::run (int argc,
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  TAO_TRY 
+  TAO_TRY
     {
       // Make the Grid.
-      
+
       Grid_ptr grid = client->make_grid (width_,
                                          height_,
                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Made the grid succesfully"));
-      
+
       // Set a value on the grid
       grid->set (setx_,
                  sety_,
                  value_,
                  TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Setting a value for the grid\n"));
 
