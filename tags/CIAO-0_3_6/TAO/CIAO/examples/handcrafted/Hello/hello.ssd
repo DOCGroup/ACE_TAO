@@ -1,0 +1,53 @@
+<?xml version="1.0"?> <!-- -*- SGML -*-  -->
+
+<!-- If this file is moved to a different directory, make sure to change the
+     path to the DTD below. Otherwise the examples won't work. -->
+<!DOCTYPE softpkg SYSTEM "../../../docs/XML/softpkg.dtd">
+
+<!-- Hello World's Servant Software Descriptor  -->
+<!-- This file describes various HelloWorld servant -->
+<!-- implementations. -->
+
+
+<softpkg name="CIAO-HelloWorld-Servant" version="1.0">
+  <pkgtype>CIAO Servant</pkgtype>
+  <title>Hello World Servants</title>
+  <author>
+    <company>Washington University in St. Louis</company>
+    <webpage href="http://www.cs.wustl.edu/~doc/"/>
+  </author>
+  <description>A Hello World executor implementation.</description>
+  <license href="http://www.cs.wustl.edu/~schmidt/ACE-copying.html"/>
+  <idl id="IDL:HelloWorld:1.0" homeid="IDL:HelloHome:1.0">
+    <fileinarchive name="hello.idl"/>
+  </idl>
+
+  <!-- Duplicate information.  We should use the copy in hello.csd -->
+  <!-- So, do we really need this one? -->
+  <descriptor type="CORBA Component">
+    <fileinarchive name="hello.ccd"/>
+  </descriptor>
+
+  <implementation id="DCE:05833d92-4783-4b85-ac14-e2575dac26f7">
+    <!-- The following stuff should match those defined in csd file. -->
+    <os name="WinNT" version="4.0"/>
+    <os name="WinXP" version="5.0"/>
+    <processor name="x86"/>
+    <compile name="MSVC" version="6.0"/>
+    <programminglanguage name="C++"/>
+    <dependency type="ORB">
+      <name>TAO</name>
+    </dependency>
+
+    <code>
+      <!-- No need to specify extension below since ACE takes care of that, -->
+      <fileinarchive name="hello_servants"/>
+      <entrypoint>createHelloHome_Servant</entrypoint>
+    </code>
+
+  </implementation>
+
+  <!-- Let's add more implementation description later when we try to -->
+  <!-- compile this stuff on, say, Solaris and Linux.                 -->
+
+</softpkg>

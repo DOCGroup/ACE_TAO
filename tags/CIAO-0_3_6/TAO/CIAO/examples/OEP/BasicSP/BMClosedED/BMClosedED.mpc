@@ -1,0 +1,61 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay -i BMClosedED"
+// This file has been manually modified to add a second component implementation.
+
+project(BMClosedED_stub): ciao_client {
+  after += BasicSP_stub
+  sharedname = BMClosedED_stub
+  idlflags += -Wb,stub_export_macro=BMCLOSEDED_STUB_Export -Wb,stub_export_include=BMClosedED_stub_export.h -Wb,skel_export_macro=BMCLOSEDED_SVNT_Export -Wb,skel_export_include=BMClosedED_svnt_export.h
+  dynamicflags   = BMCLOSEDED_STUB_BUILD_DLL
+
+  IDL_Files {
+    BMClosedED.idl
+  }
+
+  Source_Files {
+    BMClosedEDC.cpp
+  }
+}
+
+project(BMClosedED_svnt) : ciao_servant {
+  after += BasicSP_svnt BMClosedED_stub
+  sharedname  = BMClosedED_svnt
+  libs    += BMClosedED_stub BasicSP_stub BasicSP_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=BMCLOSEDED_SVNT_Export -Wb,export_include=BMClosedED_svnt_export.h
+  dynamicflags = BMCLOSEDED_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    BMClosedED.cidl
+  }
+
+  IDL_Files {
+    BMClosedEDE.idl
+  }
+
+  Source_Files {
+    BMClosedEDEC.cpp
+    BMClosedEDS.cpp
+    BMClosedED_svnt.cpp
+  }
+}
+
+
+project(BMClosedED_exec) : ciao_component {
+  after   += BMClosedED_svnt
+  sharedname = BMClosedED_exec
+  libs      += BMClosedED_stub BMClosedED_svnt BasicSP_stub BasicSP_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=BMCLOSEDED_EXEC_Export -Wb,export_include=BMClosedED_exec_export.h
+  dynamicflags   = BMCLOSEDED_EXEC_BUILD_DLL
+
+  IDL_Files {
+    BMClosedEDEI.idl
+  }
+
+  Source_Files {
+    BMClosedEDEIC.cpp
+    BMClosedED_exec.cpp
+  }
+}
+
