@@ -11,11 +11,6 @@ MFILES = \
          Makefile.Bug_1395_Client
 
 $(TARGETS_NESTED):
-ifneq (Windows,$(findstring Windows,$(OS)))
 	@for file in $(MFILES); do \
 	$(MAKE) -f `basename $$file` -C `dirname $$file` $(@); \
 	done
-else
-	-@cmd /c "$(MAKE) -f Makefile.Bug_1395_Server -C . $(@)"
-	-@cmd /c "$(MAKE) -f Makefile.Bug_1395_Client -C . $(@)"
-endif
