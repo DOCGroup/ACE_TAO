@@ -11,7 +11,8 @@
 
 CONTROLLED_FILES = CIAO
 
-RELEASE_FILES = $(addprefix ACE_wrappers/TAO/,$(CONTROLLED_FILES)) 
+RELEASE_FILES = $(addprefix ACE_wrappers/TAO/,$(CONTROLLED_FILES)) \
+                ACE_wrappers/TAO/CIAO/CIAO-INSTALL
 
 .PHONY: CIAO tag
 
