@@ -1,3 +1,12 @@
+Mon Apr 14 17:09:03 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.x_diab.GNU:
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU:
+          Changed the default of rtti to 1 because it is now needed to build
+          TAO. In the config.h file it can be overruled to 0 again for the
+          persons that want rtti disabled, but then they can't build TAO.
+
 Mon Apr 14 08:43:31 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/mkcsregdb/mkcsregdb.mpc:

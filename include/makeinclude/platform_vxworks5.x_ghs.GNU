@@ -45,7 +45,7 @@ ifndef optimize
   optimize = 1
 endif
 ifndef rtti
-  rtti = 0
+  rtti = 1
 endif # rtti
 shared_libs =
 static_libs = 1

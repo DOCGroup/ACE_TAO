@@ -24,7 +24,7 @@ ifndef optimize
   optimize = 1
 endif # ! optimize
 ifndef rtti
-  rtti = 0
+  rtti = 1
 endif # ! rtti
 
 shared_libs =
