@@ -1,3 +1,28 @@
+Mon Jul 21 14:07:09 2003  Aniruddha Gokhale  <gokhale@doc.dre.vanderbilt.edu>
+
+	* tao/Makefile.tao:
+          tao/BiDir_GIOP/Makefile:
+          tao/Domain/Makefile:
+          tao/DynamicAny/Makefile:
+          tao/DynamicInterface/Makefile:
+          tao/IFR_Client/Makefile:
+          tao/IORInterceptor/Makefile:
+          tao/IORManipulation/Makefile:
+          tao/IORTable/Makefile:
+          tao/Messaging/Makefile:
+          tao/ObjRefTemplate/Makefile:
+          tao/PortableServer/Makefile:
+          tao/RTCORBA/Makefile:
+          tao/RTPortableServer/Makefile:
+          tao/RTScheduling/Makefile:
+          tao/SmartProxies/Makefile:
+          tao/Strategies/Makefile:
+          tao/TypeCodeFactory/Makefile:
+          tao/Utils/Makefile:
+          tao/Valuetype/Makefile:
+
+	  Updated dependencies
+	
 Mon Jul 21 13:41:54 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tao/Makefile.bor:
