@@ -240,7 +240,7 @@ ACE::hash_pjw (const ACE_USHORT16 *str)
  * SUCH DAMAGE.
  */
 
-static u_long ACE::crctab[] =
+u_long ACE::crctab[] =
 {
   0x0,
   0x04c11db7, 0x09823b6e, 0x0d4326d9, 0x130476dc, 0x17c56b6b,
