@@ -1,92 +1,97 @@
+Thu Jul 23 12:18:04 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/MT_Cubit/server.cpp: added
+          ACE_Singleton<Globals, ACE_Null_Mutex> template instantiation.
+
 Wed Jul 22 19:18:03 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (inherit_from_parent_thread): Added the
- 	  inheritance of the Acceptor, Reactor, and the Connector to the
- 	  newly created thread.
+        * tao/ORB_Core.cpp (inherit_from_parent_thread): Added the
+          inheritance of the Acceptor, Reactor, and the Connector to the
+          newly created thread.
 
 Wed Jul 22 17:33:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/compat/initguid.h: 
-	* tao/compat/objbase.h: 
-	  This files are not used anymore, in fact, I thought I had
-	  removed them already.
+        * tao/compat/initguid.h:
+        * tao/compat/objbase.h:
+          This files are not used anymore, in fact, I thought I had
+          removed them already.
 
 Wed Jul 22 16:37:56 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.{h,cpp}: Added a new Globals
-	class which is used as a singleton by the various threads for
-	accessing the global parameters. Also added code so that the
-	server accepts -ORB arguments on the command line.
+        * tests/Cubit/TAO/MT_Cubit/server.{h,cpp}: Added a new Globals
+        class which is used as a singleton by the various threads for
+        accessing the global parameters. Also added code so that the
+        server accepts -ORB arguments on the command line.
 
 Wed Jul 22 16:26:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Makefile: 
-	* tao/Marshal.h: 
-	* tao/Marshal.i: 
-	* tao/deep_copy.cpp: 
-	  The deep_copy methods are not used any more, Anys using
-	  marshalling instead.
+        * tao/Makefile:
+        * tao/Marshal.h:
+        * tao/Marshal.i:
+        * tao/deep_copy.cpp:
+          The deep_copy methods are not used any more, Anys using
+          marshalling instead.
 
-	* tao/ORB.h: 
-	* tao/NVList.h: 
-	* tao/NVList.i: 
-	* tao/Request.h: 
-	* tao/Request.i: 
-	  Added T_var and T_out classes for NVList, NamedValue and
-	  Request.
+        * tao/ORB.h:
+        * tao/NVList.h:
+        * tao/NVList.i:
+        * tao/Request.h:
+        * tao/Request.i:
+          Added T_var and T_out classes for NVList, NamedValue and
+          Request.
 
-	* tao/Object.i: 
-	* tao/Object.cpp: 
-	  All the Object_out and Object_var methods are defined as inline
-	  methods.
+        * tao/Object.i:
+        * tao/Object.cpp:
+          All the Object_out and Object_var methods are defined as inline
+          methods.
 
-	* tests/Param_Test/client.cpp: 
-	  Use the new CORBA::Request_var class.
+        * tests/Param_Test/client.cpp:
+          Use the new CORBA::Request_var class.
 
-	* tests/Param_Test/any.cpp: 
-	* tests/Param_Test/any.h: 
-	* tests/Param_Test/bd_long_seq.cpp: 
-	* tests/Param_Test/bd_long_seq.h: 
-	* tests/Param_Test/bd_short_seq.cpp: 
-	* tests/Param_Test/bd_short_seq.h: 
-	* tests/Param_Test/bd_str_seq.cpp: 
-	* tests/Param_Test/bd_str_seq.h: 
-	* tests/Param_Test/bd_string.cpp: 
-	* tests/Param_Test/bd_string.h: 
-	* tests/Param_Test/bd_struct_seq.cpp: 
-	* tests/Param_Test/bd_struct_seq.h: 
-	* tests/Param_Test/fixed_array.cpp: 
-	* tests/Param_Test/fixed_array.h: 
-	* tests/Param_Test/fixed_struct.cpp: 
-	* tests/Param_Test/fixed_struct.h: 
-	* tests/Param_Test/nested_struct.cpp: 
-	* tests/Param_Test/nested_struct.h: 
-	* tests/Param_Test/objref.cpp: 
-	* tests/Param_Test/objref.h: 
-	* tests/Param_Test/short.cpp: 
-	* tests/Param_Test/short.h: 
-	* tests/Param_Test/typecode.cpp: 
-	* tests/Param_Test/typecode.h: 
-	* tests/Param_Test/ub_any_seq.cpp: 
-	* tests/Param_Test/ub_any_seq.h: 
-	* tests/Param_Test/ub_long_seq.cpp: 
-	* tests/Param_Test/ub_long_seq.h: 
-	* tests/Param_Test/ub_objref_seq.cpp: 
-	* tests/Param_Test/ub_objref_seq.h: 
-	* tests/Param_Test/ub_short_seq.cpp: 
-	* tests/Param_Test/ub_short_seq.h: 
-	* tests/Param_Test/ub_str_seq.cpp: 
-	* tests/Param_Test/ub_str_seq.h: 
-	* tests/Param_Test/ub_string.cpp: 
-	* tests/Param_Test/ub_string.h: 
-	* tests/Param_Test/ub_struct_seq.cpp: 
-	* tests/Param_Test/ub_struct_seq.h: 
-	* tests/Param_Test/var_array.cpp: 
-	* tests/Param_Test/var_array.h: 
-	* tests/Param_Test/var_struct.cpp: 
-	* tests/Param_Test/var_struct.h: 
-	  The add_args() method receives NVList_ptr parameters instead of
-	  NVList_ptr& otherwise it is too hard to use a NVList_var.
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/any.h:
+        * tests/Param_Test/bd_long_seq.cpp:
+        * tests/Param_Test/bd_long_seq.h:
+        * tests/Param_Test/bd_short_seq.cpp:
+        * tests/Param_Test/bd_short_seq.h:
+        * tests/Param_Test/bd_str_seq.cpp:
+        * tests/Param_Test/bd_str_seq.h:
+        * tests/Param_Test/bd_string.cpp:
+        * tests/Param_Test/bd_string.h:
+        * tests/Param_Test/bd_struct_seq.cpp:
+        * tests/Param_Test/bd_struct_seq.h:
+        * tests/Param_Test/fixed_array.cpp:
+        * tests/Param_Test/fixed_array.h:
+        * tests/Param_Test/fixed_struct.cpp:
+        * tests/Param_Test/fixed_struct.h:
+        * tests/Param_Test/nested_struct.cpp:
+        * tests/Param_Test/nested_struct.h:
+        * tests/Param_Test/objref.cpp:
+        * tests/Param_Test/objref.h:
+        * tests/Param_Test/short.cpp:
+        * tests/Param_Test/short.h:
+        * tests/Param_Test/typecode.cpp:
+        * tests/Param_Test/typecode.h:
+        * tests/Param_Test/ub_any_seq.cpp:
+        * tests/Param_Test/ub_any_seq.h:
+        * tests/Param_Test/ub_long_seq.cpp:
+        * tests/Param_Test/ub_long_seq.h:
+        * tests/Param_Test/ub_objref_seq.cpp:
+        * tests/Param_Test/ub_objref_seq.h:
+        * tests/Param_Test/ub_short_seq.cpp:
+        * tests/Param_Test/ub_short_seq.h:
+        * tests/Param_Test/ub_str_seq.cpp:
+        * tests/Param_Test/ub_str_seq.h:
+        * tests/Param_Test/ub_string.cpp:
+        * tests/Param_Test/ub_string.h:
+        * tests/Param_Test/ub_struct_seq.cpp:
+        * tests/Param_Test/ub_struct_seq.h:
+        * tests/Param_Test/var_array.cpp:
+        * tests/Param_Test/var_array.h:
+        * tests/Param_Test/var_struct.cpp:
+        * tests/Param_Test/var_struct.h:
+          The add_args() method receives NVList_ptr parameters instead of
+          NVList_ptr& otherwise it is too hard to use a NVList_var.
 
 Wed Jul 22 15:58:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -94,10 +99,10 @@ Wed Jul 22 15:58:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Jul 22 14:16:53 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* Makefile: Removed the reference to "client.h" which was
-	confusing the compiler and causing all sorts of mayhem (since
-	client.h has been removed). Huzzah. 
-	
+        * Makefile: Removed the reference to "client.h" which was
+        confusing the compiler and causing all sorts of mayhem (since
+        client.h has been removed). Huzzah.
+
 Wed Jul 22 14:12:34 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
       * TAO/tests/Cubit/TAO/DII_Cubit/client.cpp
@@ -114,33 +119,33 @@ Wed Jul 22 13:43:15 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 Wed Jul 22 12:41:22 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Database.h:
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_T.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
-	  Used CORBA::is_nil consistently. Fixed purify warning.
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Database.h:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
+          Used CORBA::is_nil consistently. Fixed purify warning.
 
 Wed Jul 22 11:55:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Any.cpp: 
-	  Removed uses == operator for TypeCode_var and TypeCode_ptr,
-	  NT does not like this (it is ambigous) and the semantics are
-	  also broken, we use TypeCode::equal() instead; thanks to Darrell
-	  Brunsch for reporting this.
+        * tao/Any.cpp:
+          Removed uses == operator for TypeCode_var and TypeCode_ptr,
+          NT does not like this (it is ambigous) and the semantics are
+          also broken, we use TypeCode::equal() instead; thanks to Darrell
+          Brunsch for reporting this.
 
-	* tao/Server_Request.cpp: 
-	* tao/NVList.cpp: 
-	  We were passing a TypeCode_var without calling .in() first,
-	  thansk to Seth B. Widoff for catching up this one.
+        * tao/Server_Request.cpp:
+        * tao/NVList.cpp:
+          We were passing a TypeCode_var without calling .in() first,
+          thansk to Seth B. Widoff for catching up this one.
 
 Wed Jul 22 11:18:51 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* Makefile: Updated the Makefile to include the server_i and
-	client_i. This should fix failing compiles. I should have done
-	this in my previous commit. Gomen  ^_^
-	
+        * Makefile: Updated the Makefile to include the server_i and
+        client_i. This should fix failing compiles. I should have done
+        this in my previous commit. Gomen  ^_^
+
 Wed Jul 22 11:15:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp (compute_scheduling):
