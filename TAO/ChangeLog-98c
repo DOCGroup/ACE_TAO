@@ -1,3 +1,14 @@
+Mon Mar  9 14:57:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/sequence.h: 
+	* tao/sequence.cpp: 
+	* tao/sequence_T.h: 
+	* tao/sequence_T.cpp: 
+	  Removed the _narrow_fixup() method, it was causing problem with
+	  sequences of TypeCodes and it is not really needed: the
+	  functionality can be implemented in the stubs (skeletons) and/or
+	  the >>= methods.
+
 Mon Mar 09 09:59:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: removed
