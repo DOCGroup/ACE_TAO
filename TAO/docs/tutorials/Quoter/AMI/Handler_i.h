@@ -20,7 +20,23 @@ public:
   void get_price_and_names_excep (Quoter::AMI_Single_Query_StockExceptionHolder_ptr)
     throw (CORBA::SystemException);
 
+  void get_symbol(const char *)
+    throw (CORBA::SystemException);
+  void get_symbol_excep (Quoter::AMI_StockExceptionHolder *)
+    throw (CORBA::SystemException);
+
+  void get_full_name (const char *)
+    throw (CORBA::SystemException);
+  void get_full_name_excep (Quoter::AMI_StockExceptionHolder *)
+    throw (CORBA::SystemException);
+
+  void price (double)
+    throw (CORBA::SystemException);
+  void price_excep (Quoter::AMI_StockExceptionHolder *)
+    throw (CORBA::SystemException);
+
 private:
+
   int *response_count_;
 };
 

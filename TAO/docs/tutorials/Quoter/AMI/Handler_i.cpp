@@ -33,3 +33,49 @@ Single_Query_Stock_Handler_i::
        << endl;
   (*this->response_count_)++;
 }
+
+
+void
+Single_Query_Stock_Handler_i::get_symbol (const char *)
+  throw (CORBA::SystemException)
+{
+  throw CORBA::NO_IMPLEMENT ();
+}
+
+void
+Single_Query_Stock_Handler_i::
+    get_symbol_excep (Quoter::AMI_StockExceptionHolder *)
+  throw (CORBA::SystemException)
+{
+  throw CORBA::NO_IMPLEMENT ();
+}
+
+void
+Single_Query_Stock_Handler_i::get_full_name (const char *)
+  throw (CORBA::SystemException)
+{
+    throw CORBA::NO_IMPLEMENT ();
+}
+
+void
+Single_Query_Stock_Handler_i::
+   get_full_name_excep (Quoter::AMI_StockExceptionHolder *)
+  throw (CORBA::SystemException)
+{
+    throw CORBA::NO_IMPLEMENT ();
+}
+
+void
+Single_Query_Stock_Handler_i::price (double)
+  throw (CORBA::SystemException)
+{
+  throw CORBA::NO_IMPLEMENT ();
+}
+
+void
+Single_Query_Stock_Handler_i::
+    price_excep (Quoter::AMI_StockExceptionHolder *)
+  throw (CORBA::SystemException)
+{
+    throw CORBA::NO_IMPLEMENT ();
+}
