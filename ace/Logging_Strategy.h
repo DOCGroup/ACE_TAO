@@ -62,7 +62,19 @@ public:
    */
   virtual int handle_timeout (const ACE_Time_Value& tv, const void* arg);
 
-  /// Parse svc.conf arguments.
+  /** Parse arguments provided in svc.conf file.
+   '-f'
+   '-i'
+   '-m'
+   '-n' The maximum number of log_files that we want created.
+   '-o' Specifies that we want the no standard log_files ordering
+        (fastest processing in <handle_timeout>).  Default is not to order
+        log files.  
+   '-p'
+   '-s'
+   '-t'
+   '-w'
+   */
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
@@ -86,13 +98,32 @@ private:
   ACE_TCHAR *filename_;
 
   /// If non-0 then wipeout the logfile, otherwise append to it.
+  /// Default value is 0.  
   int wipeout_logfile_;
+
+  /// This tells us in what file we last wrote. It will be increased
+  /// to enable multiple log files
+  int count_;
+
+  /// If non-0 we have a maximum number of log files we can write.
+  /// Default value is 0, i.e., no maximum number.
+  int fixed_number_;
+
+  /// If non-0 we order the files as we rotate them.  Default value
+  /// is 0, i.e., we do not rotate files by default.
+  int order_files_;
+
+  /// Tells us what is the maximum log file to write. We will write
+  /// <max_file_number_> + 1 files (includes the current log file).
+  /// Default value is 1, i.e., 2 files by default.
+  int max_file_number_;
 
   /// If non-zero, sampling interval (in secs) at which maximum logfile
   /// size is checked, otherwise logfile size can grow indefinitely.
+  /// Default value is 0.
   u_long interval_;
 
-  /// Maximum logfile size (in KB).
+  /// Maximum logfile size (in KB).  Default value is <ACE_DEFAULT_MAX_LOGFILE_SIZE>.
   u_long max_size_;
 };
 
