@@ -1576,6 +1576,9 @@ protected:
   long waiters_;
   // Number of waiting threads.
 
+  ACE_thread_mutex_t waiters_lock_;
+  // Serialize access to the waiters count.
+
   ACE_sema_t sema_;
   // Queue up threads waiting for the condition to become signaled.
 
