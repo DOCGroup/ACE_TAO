@@ -163,6 +163,8 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
       TAO_RETHROW_RETURN (0);
     }
   TAO_ENDTRY;
+
+  return 0;
 }
 
 // Allows a client to create a new TAO_PropertySet with specific
@@ -215,6 +217,8 @@ TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Pr
       TAO_RETHROW_RETURN (0);
     }
   TAO_ENDTRY;
+
+  return 0;
 }
 
 // Destructor.
@@ -305,6 +309,8 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
       TAO_RETHROW_RETURN (0);
     }
   TAO_ENDTRY;
+
+  return 0;
 }
 
 // Allows the client to create a new TAO_PropertySetDef with specific
@@ -359,6 +365,8 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
       TAO_RETHROW_RETURN (0);
     }
   TAO_ENDTRY;
+
+  return 0;
 }
 
 // Makes default sized hash_table_. All the sequences are set the max
@@ -642,7 +650,7 @@ TAO_PropertySet::define_properties (const CosPropertyService::Properties &nprope
   size_t sequence_length = nproperties.length ();
 
   // Define multiple exceptions object.
-  MultipleExceptions multi_ex;
+  CosPropertyService::MultipleExceptions multi_ex;
 
   for (int pi = 0; pi < sequence_length; pi++)
     {
@@ -708,14 +716,14 @@ TAO_PropertySet::define_properties (const CosPropertyService::Properties &nprope
          {
             // Print it and throw it again.
            TAO_TRY_ENV.print_exception ("Unknown Exception");
-            TAO_RETHROW;
+           TAO_RETHROW;
          }
        TAO_ENDTRY;
     }
 
   // Raise the multi exception if needed.
   if (multi_ex.exceptions.length () > 0)
-    TAO_THROW (MultipleExceptions (multi_ex));
+    TAO_THROW (CosPropertyService::MultipleExceptions (multi_ex));
 }
 
 // Returns the current number of properties associated with this
@@ -1092,7 +1100,7 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
 
   // Raise the multiple exceptions if there are any.
   if (multi_ex.exceptions.length () > 0)
-    TAO_THROW (MultipleExceptions (multi_ex));
+    TAO_THROW (CosPropertyService::MultipleExceptions (multi_ex));
 
   ACE_DEBUG ((LM_DEBUG, "delete_properties done\n"));
 
@@ -1371,7 +1379,7 @@ TAO_PropertySetDef::define_properties_with_modes (const CosPropertyService::Prop
   size_t sequence_length = property_defs.length ();
 
   // Define multiple exceptions object.
-  MultipleExceptions multi_ex;
+  CosPropertyService::MultipleExceptions multi_ex;
 
   // Try defining the propdefs one by one.
   for (size_t i = 0; i < sequence_length; i++)
@@ -1456,7 +1464,7 @@ TAO_PropertySetDef::define_properties_with_modes (const CosPropertyService::Prop
 
   // Raise the multi exception if needed.
   if (multi_ex.exceptions.length () > 0)
-    TAO_THROW (MultipleExceptions (multi_ex));
+    TAO_THROW (CosPropertyService::MultipleExceptions (multi_ex));
 }
 
 // Get the mode of a property. Raises InvalidpropertyName,
@@ -1778,7 +1786,7 @@ TAO_PropertyNamesIterator::next_one (CORBA::String_out property_name,
   if (this->iterator_.next (entry_ptr) != 0)
     {
       property_name =
-        CORBA::string_copy (entry_ptr->ext_id_.pname_);
+        entry_ptr->ext_id_.pname_.in ();
       this->iterator_.advance ();
       return CORBA::B_TRUE;
     }
