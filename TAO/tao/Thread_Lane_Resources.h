@@ -59,7 +59,7 @@ public:
   /// Destructor.
   ~TAO_Thread_Lane_Resources (void);
 
-  // Does <mprofile> belong to us?
+  // Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
 
   /// Open the acceptor registry.
@@ -73,12 +73,12 @@ public:
   void shutdown_reactor (void);
 
   /// @name Accessors
-  // @{
+  //@{
 
   TAO_Acceptor_Registry &acceptor_registry (void);
 
   /*
-   * @@ NOTE: Returning a pointer helps to return 0 in case of
+   * @note Returning a pointer helps to return 0 in case of
    * exceptions.
    */
   TAO_Connector_Registry *connector_registry (ACE_ENV_SINGLE_ARG_DECL);
@@ -122,7 +122,7 @@ public:
    * locks.
    */
   ACE_Allocator *output_cdr_msgblock_allocator (void);
-  // @}
+  //@}
 
 private:
 
@@ -156,19 +156,19 @@ private:
   /// Generator of new leader threads.
   TAO_New_Leader_Generator *new_leader_generator_;
 
-  /// The allocators for the input CDR streams.
+  /// @name The allocators for the input CDR streams.
   //@{
   ACE_Allocator *input_cdr_dblock_allocator_;
   ACE_Allocator *input_cdr_buffer_allocator_;
   ACE_Allocator *input_cdr_msgblock_allocator_;
   //@}
 
-  /// The allocators for the buffering messages in the transport.
+  /// @name The allocators for the buffering messages in the transport.
   //@{
   ACE_Allocator *transport_message_buffer_allocator_;
   //@}
 
-  /// The allocators for the output CDR streams.
+  /// @name The allocators for the output CDR streams.
   //@{
   ACE_Allocator *output_cdr_dblock_allocator_;
   ACE_Allocator *output_cdr_buffer_allocator_;
