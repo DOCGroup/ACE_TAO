@@ -1427,11 +1427,20 @@ ACE_Reactor::resume_i (ACE_HANDLE handle)
     return -1;
 
   if (this->suspend_set_.rd_mask_.is_set (handle))
-    this->wait_set_.rd_mask_.set_bit (handle);
+    {
+      this->wait_set_.rd_mask_.set_bit (handle);
+      this->suspend_set_.rd_mask_.clr_bit(handle);
+    }
   if (this->suspend_set_.wr_mask_.is_set (handle))
-    this->wait_set_.wr_mask_.set_bit (handle);
+    {  
+      this->wait_set_.wr_mask_.set_bit (handle);
+      this->suspend_set_.wr_mask_.clr_bit(handle);
+    }
   if (this->suspend_set_.ex_mask_.is_set (handle))
-    this->wait_set_.ex_mask_.set_bit (handle);
+    {
+      this->wait_set_.ex_mask_.set_bit (handle);
+      this->suspend_set_.ex_mask_.clr_bit(handle);
+    }
   return 0;
 }
 
@@ -1445,11 +1454,20 @@ ACE_Reactor::suspend_i (ACE_HANDLE handle)
     return -1;
 
   if (this->wait_set_.rd_mask_.is_set (handle))
-    this->suspend_set_.rd_mask_.set_bit (handle);
+    {
+      this->suspend_set_.rd_mask_.set_bit (handle);
+      this->wait_set_.wr_mask_.clr_bit(handle);
+    }
   if (this->wait_set_.wr_mask_.is_set (handle))
-    this->suspend_set_.wr_mask_.set_bit (handle);
+    {
+      this->suspend_set_.wr_mask_.set_bit (handle);
+      this->wait_set_.wr_mask_.clr_bit(handle);
+    }
   if (this->wait_set_.ex_mask_.is_set (handle))
-    this->suspend_set_.ex_mask_.set_bit (handle);
+    {
+      this->suspend_set_.ex_mask_.set_bit (handle);
+      this->ex_mask_.clr_bit(handle);
+    }
   return 0;
 }
 
