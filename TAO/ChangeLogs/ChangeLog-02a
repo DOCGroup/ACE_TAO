@@ -1,3 +1,12 @@
+Wed Apr 19 11:00:16 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+          Deactivation of the proxies is handled by the ESF classes, we
+          don't need to do that anymore.
+
 Wed Apr 19 10:55:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * docs/tutorials/Quoter/AMI/Makefile:
