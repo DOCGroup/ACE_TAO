@@ -1,3 +1,37 @@
+Wed Jan  6 14:05:21 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_array/array_ch.cpp:
+
+	  g++ was issuing warnings for the helper methods defined for
+	  arrays (e.g., _alloc, _dup, _copy, _free). These warnings
+	  appeared only when the helper methods were in the outermost
+	  global scope because they were defined static and the compiler
+	  could not find their implementation. Thus, we now do not
+	  generate the "static" keyword for these helpers if they are in
+	  the outermost scope. However, this change made Sun C++ compiler
+	  unhappy since it did not like the _free and _alloc in the inline
+	  file (*.i) and their forward declarations did not have the
+	  inline word. So now also generate the ACE_INLINE macro for the
+	  _free and _alloc methods if they are in the outermost scope. Now
+	  both compilers are happy. Hopefully others are too.
+
+	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+	  TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+	  The var and out implementation was not guarded by the #if
+	  !defined conditionla. As a result, there were instances when we
+	  could get multiple definitions. Thanks to Virginie Amar
+	  <vamar@amadeus.net> for submitting the bugreport. 
+
+	  We had also forgotten to set the "is_generated" flag to true
+	  once we had generated code for the sequence node.
+
+	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+
+	  Since we now use the TAO_Object_Field_T<T> for object reference
+	  members of union, we couldn't call CORBA::release in the "reset"
+	  method. We now simply call "delete".
+	
 Wed Jan 06 11:55:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Simple/echo/Client_i.cpp (echo_list): Changed <l> to of
