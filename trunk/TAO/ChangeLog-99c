@@ -1,3 +1,9 @@
+Wed Apr 21 00:56:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i_T.cpp
+	  (operator=): Added an empty implementation to stop MSVC from
+	  complaining.
+
 Tue Apr 20 23:21:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Typecode.cpp:
@@ -24,14 +30,14 @@ Tue Apr 20 20:43:25 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 	operator= declaration to avoid this being generated which leads to
 	undefined operator= for the PropertyTypes member when linking orbsvcs.
 	Thanks to Irfan Pyarali for the fix.
-	
+
 Tue Apr 20 20:27:48 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/ImplRepo_Service/*:  Added an options class for storing
           program options and also changed the repository class to not
-          use the ACE Naming Context.  It doesn't have persistence now, 
+          use the ACE Naming Context.  It doesn't have persistence now,
           but that will be added soon.
-          
+
         * orbsvcs/tests/ImplRepo/*:  Changed to work with the above changes.
 
 Tue Apr 20 17:31:28 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
@@ -42,7 +48,7 @@ Tue Apr 20 17:31:28 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Tue Apr 20 15:24:00 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * tests/MT_Client/orb_creation.dsp: 
+        * tests/MT_Client/orb_creation.dsp:
         * tests/MT_Client/MT_Client.dsp:
           New MSVC project file for orb_creation.
 
@@ -70,8 +76,8 @@ Tue Apr 20 11:09:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/default_resource.h:
 	* tao/default_resource.i:
 	* tao/default_resource.cpp:
-	  Merged the App_Allocated and Pre_Allocated classes into a single 
-	  class, it is easier to control their lifetime and it didn't make 
+	  Merged the App_Allocated and Pre_Allocated classes into a single
+	  class, it is easier to control their lifetime and it didn't make
 	  sense to have two.
 
 	* tao/IIOP_Connector.cpp:
