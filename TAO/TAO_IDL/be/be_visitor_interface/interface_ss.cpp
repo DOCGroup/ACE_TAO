@@ -962,16 +962,23 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
   if (be_global->gen_thru_poa_collocation ()
       || be_global->gen_direct_collocation ())
     {
-      ctx = *this->ctx_;
-      be_visitor_interface_strategized_proxy_broker_ss ispb_visitor (&ctx);
 
-      if (node->accept (&ispb_visitor) == -1)
+      // Do not generate strategized proxy broker for thru-POA case.
+      // It isn't necessary.
+      if (be_global->gen_direct_collocation ())
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ss::"
-                             "generate_proxy_classes - "
-                             "codegen for Base Proxy Broker class failed\n"),
-                            -1);
+          ctx = *this->ctx_;
+          be_visitor_interface_strategized_proxy_broker_ss ispb_visitor (&ctx);
+
+          if (node->accept (&ispb_visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_interface_ss::"
+                                 "generate_proxy_classes - "
+                                 "codegen for Base Proxy Broker "
+                                 "class failed\n"),
+                                -1);
+            }
         }
 
       *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
@@ -984,12 +991,33 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
           << node->base_proxy_broker_name ()
           << "_Factory_function (CORBA::Object_ptr)" << be_nl
           << "{" << be_idt_nl
-          << "return" << be_idt_nl
-          << "::"
-          << node->full_strategized_proxy_broker_name ()
-          << "::" <<"the"
-          << node->strategized_proxy_broker_name ()
-          << " ();" << be_uidt << be_uidt_nl
+          << "return";
+
+      if (be_global->gen_direct_collocation ())
+        {
+          *os << be_idt_nl
+              << "::"
+              << node->full_strategized_proxy_broker_name ()
+              << "::" <<"the"
+              << node->strategized_proxy_broker_name ()
+              << " ();" << be_uidt;
+        }
+      else
+        {
+          // @@ HACK!
+
+          // Dummy function pointer for the thru-POA case.  It isn't
+          // used to call a function but it is used to determine if
+          // collocation is available.
+
+          // @todo Change the way TAO's ORB_Core detects collocation,
+          //       or at least augment it so that we don't have to
+          //       resort this hack.
+          *os << " reinterpret_cast<TAO::Collocation_Proxy_Broker *> (0xdead);"
+              << " // Dummy";
+        }
+
+      *os << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       // Proxy Broker Function Pointer Initializer.
@@ -1025,24 +1053,6 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
           << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl << be_nl;
     }
-
-
-  // Proxy Impl Implementations.
-//   if (be_global->gen_thru_poa_collocation ())
-//     {
-//       ctx = *this->ctx_;
-//       ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS);
-//       be_visitor_interface_thru_poa_proxy_impl_ss itppi_visitor (&ctx);
-
-//       if (node->accept (&itppi_visitor) == -1)
-//         {
-//           ACE_ERROR_RETURN ((LM_ERROR,
-//                              "be_visitor_interface_cs::"
-//                              "generate_proxy_classes - "
-//                              "codegen for Base Proxy Broker class failed\n"),
-//                             -1);
-//         }
-//     }
 
   if (be_global->gen_direct_collocation ())
     {

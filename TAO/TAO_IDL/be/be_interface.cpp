@@ -1054,19 +1054,6 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   << full_skeleton_name << "::"
                   << d->local_name () << "_skel,";
 
-//               if (be_global->gen_thru_poa_collocation ())
-//                 {
-//                   *os << " &"
-//                       << derived_interface->full_thru_poa_proxy_impl_name ()
-//                       << "::" << d->local_name ();
-//                 }
-//               else
-//                 {
-//                   *os << " 0";
-//                 }
-
-//               *os << ",";
-
               if (be_global->gen_direct_collocation ())
                 {
                   *os << " &"
@@ -1096,19 +1083,6 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   << "\", &" << full_skeleton_name
                   << "::_get_" << d->local_name () << "_skel,";
 
-//               if (be_global->gen_thru_poa_collocation ())
-//                 {
-//                   *os << " &"
-//                       << derived_interface->full_thru_poa_proxy_impl_name ()
-//                       << "::_get_" << d->local_name ();
-//                 }
-//               else
-//                 {
-//                   *os << " 0";
-//                 }
-
-//               *os << ",";
-
               if (be_global->gen_direct_collocation ())
                 {
                   *os << " &"
@@ -1130,19 +1104,6 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   *os << "{\"_set_" << d->original_local_name ()
                       << "\", &" << full_skeleton_name
                       << "::_set_" << d->local_name () << "_skel,";
-
-//                   if (be_global->gen_thru_poa_collocation ())
-//                     {
-//                       *os << " &"
-//                           << derived_interface->full_thru_poa_proxy_impl_name ()
-//                           << "::_set_" << d->local_name ();
-//                     }
-//                   else
-//                     {
-//                       *os << " 0";
-//                     }
-
-//                   *os << ",";
 
                   if (be_global->gen_direct_collocation ())
                     {
@@ -1189,19 +1150,6 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   << full_skeleton_name << "::"
                   << d->local_name () << "_skel,";
 
-//               if (be_global->gen_thru_poa_collocation ())
-//                 {
-//                   *os << " &"
-//                       << derived_interface->full_thru_poa_proxy_impl_name ();
-//                   *os << "::" << d->local_name ();
-//                 }
-//               else
-//                 {
-//                   *os << " 0";
-//                 }
-
-//               *os << ",";
-
               if (be_global->gen_direct_collocation ())
                 {
                   *os << " &"
@@ -1232,19 +1180,6 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   << full_skeleton_name << "::_get_"
                   << d->local_name () << "_skel,";
 
-//               if (be_global->gen_thru_poa_collocation ())
-//                 {
-//                   *os << " &"
-//                       << derived_interface->full_thru_poa_proxy_impl_name ()
-//                       << "::_get_" << d->local_name ();
-//                 }
-//               else
-//                 {
-//                   *os << " 0";
-//                 }
-
-//               *os << ",";
-
               if (be_global->gen_direct_collocation ())
                 {
                   *os << " &"
@@ -1266,19 +1201,6 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   *os << "_set_" << d->original_local_name () << ",&"
                       << full_skeleton_name << "::_set_"
                       << d->local_name () << "_skel,";
-
-//                   if (be_global->gen_thru_poa_collocation ())
-//                     {
-//                       *os << " &"
-//                           << derived_interface->full_thru_poa_proxy_impl_name ()
-//                           << "::_set_" << d->local_name ();
-//                     }
-//                   else
-//                     {
-//                       *os << " 0";
-//                     }
-
-//                   *os << ",";
 
                   if (be_global->gen_direct_collocation ())
                     {
@@ -1314,7 +1236,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
                                         be_interface *ancestor,
                                         AST_Decl *d,
                                         const char *prefix,
-                                        idl_bool direct,
+                                        idl_bool /* direct */,
                                         UTL_ExceptList *list,
                                         TAO_OutStream *os)
 {
@@ -1324,8 +1246,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
   // Generate the static method corresponding to this method.
   *os << be_nl << be_nl
       << "ACE_INLINE void" << be_nl
-      << (direct ? derived->full_direct_proxy_impl_name ()
-                 : derived->full_thru_poa_proxy_impl_name ())
+      << derived->full_direct_proxy_impl_name ()
       << "::" << prefix << d->local_name () << " (" << be_idt << be_idt_nl
       << "TAO_Abstract_ServantBase *servant," << be_nl
       << "TAO::Argument ** args," << be_nl
@@ -1337,8 +1258,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
 
   *os << be_uidt_nl
       << "{" << be_idt_nl
-      << (direct ? ancestor->full_direct_proxy_impl_name ()
-                 : ancestor->full_thru_poa_proxy_impl_name ())
+      << ancestor->full_direct_proxy_impl_name ()
       << "::" << prefix << d->local_name () << " (" << be_idt << be_idt_nl
       << "servant," << be_nl
       << "args," << be_nl
@@ -2227,17 +2147,6 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
         {
           op = be_operation::narrow_from_decl (d);
 
-//           if (be_global->gen_thru_poa_collocation ())
-//             {
-//               be_interface::gen_collocated_skel_body (derived,
-//                                                       ancestor,
-//                                                       d,
-//                                                       "",
-//                                                       I_FALSE,
-//                                                       op->exceptions (),
-//                                                       os);
-//             }
-
           if (be_global->gen_direct_collocation ())
             {
               be_interface::gen_collocated_skel_body (derived,
@@ -2258,19 +2167,6 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
               return -1;
             }
 
-//           if (be_global->gen_thru_poa_collocation ())
-//             {
-//               be_interface::gen_collocated_skel_body (
-//                   derived,
-//                   ancestor,
-//                   d,
-//                   "_get_",
-//                   I_FALSE,
-//                   attr->get_get_exceptions (),
-//                   os
-//                 );
-//             }
-
           if (be_global->gen_direct_collocation ())
             {
               be_interface::gen_collocated_skel_body (
@@ -2286,19 +2182,6 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
 
           if (!attr->readonly ())
             {
-//               if (be_global->gen_thru_poa_collocation ())
-//                 {
-//                   be_interface::gen_collocated_skel_body (
-//                       derived,
-//                       ancestor,
-//                       d,
-//                       "_set_",
-//                       I_FALSE,
-//                       attr->get_set_exceptions (),
-//                       os
-//                     );
-//                 }
-
               if (be_global->gen_direct_collocation ())
                 {
                   be_interface::gen_collocated_skel_body (
@@ -2589,20 +2472,6 @@ be_interface::full_remote_proxy_impl_name (void)
 {
   return this->strategy_->full_remote_proxy_impl_name ();
 }
-
-const char *
-be_interface::thru_poa_proxy_impl_name (void)
-{
-  return this->strategy_->thru_poa_proxy_impl_name ();
-}
-
-
-const char *
-be_interface::full_thru_poa_proxy_impl_name (void)
-{
-  return this->strategy_->full_thru_poa_proxy_impl_name ();
-}
-
 
 const char *
 be_interface::direct_proxy_impl_name (void)

@@ -26,7 +26,7 @@
 class be_visitor_interface_smart_proxy_ch : public be_visitor_interface
 {
   // = TITLE
-  //   Generate the "thru_poa collocated" class declaration.
+  //   Generate the "smart proxy" class declaration.
 
 public:
   be_visitor_interface_smart_proxy_ch (be_visitor_context *ctx);
