@@ -1,3 +1,20 @@
+Wed Jan  5 19:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor_Impl.{h,cpp,i}:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Completion_Handler.{h,cpp,i}:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.{h,cpp,i}:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector_Impl.{h,cpp,i}:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Profile.{h,cpp,i}:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.{h,cpp,i}:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.{h,cpp,i}:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.{h,cpp,i}:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.{h,cpp,i}:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.{h,cpp,i}:
+          Removed i/inl file, update h/cpp
+
+        * orbsvcs/orbsvcs/Makefile.am
+          Updated for change above
+
 Wed Jan  5 19:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.{h,cpp,i,inl}:
