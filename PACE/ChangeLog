@@ -1,3 +1,13 @@
+Sun Jul 23 17:32:44 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/pthread.h:
+
+	  Missing pace_* prefix on two sigset_t args.
+	  Missing pace_* prefix on pthread_t arg.
+
+	  Became evident on NT because there are no definitions for
+	  the native types.
+
 Sat Jul 22 09:24:34 2000  Ossama Othman  <ossama@uci.edu>
 
 	* pace/Makefile.am (DESTDIRS):
@@ -21,7 +31,7 @@ Fri Jul 21 20:35:38 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/wait.h:
 	* pace/win32/wait.inl:
-	 
+
 	  ACE implements waitpid with an additional argument (HANDLE).
 	  Eliminated POSIX support here.
 
@@ -32,7 +42,7 @@ Fri Jul 21 20:35:38 2000  Luther J Baker  <luther@cs.wustl.edu>
 Fri Jul 21 20:23:55 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/utsname.inl (pace_uname):
-	  
+
 	  Partial emulation made. But more work to be done!
 
 	* pace/docs/PACE_POSIX_support.txt
@@ -41,11 +51,11 @@ Fri Jul 21 20:23:55 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 Fri Jul 21 19:49:19 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/utime.h (pace_utime):	
+	* pace/win32/utime.h (pace_utime):
 	* pace/win32/utime.inl (pace_utime):
 
 	  Implemented the "RIGHT ANSWER[TM]" but it doesn't work so
-	  casted away and made the current func work. Left the 
+	  casted away and made the current func work. Left the
 	  correct implementation in the file.
 
 	* pace/docs/PACE_POSIX_support.txt

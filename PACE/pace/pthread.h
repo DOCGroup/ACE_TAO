@@ -354,7 +354,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 16.2.7.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_equal (pace_pthread_t t1, pthread_t t2);
+  PACE_INLINE int pace_pthread_equal (pace_pthread_t t1, pace_pthread_t t2);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -639,8 +639,8 @@ extern "C" {
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
   PACE_INLINE int pace_pthread_sigmask (int how,
-                                        const sigset_t * set,
-                                        sigset_t * oset);
+                                        const pace_sigset_t * set,
+                                        pace_sigset_t * oset);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
