@@ -139,7 +139,7 @@ AST_Argument::dump(ostream &o)
  * Data accessors
  */
 
-const AST_Argument::Direction
+AST_Argument::Direction
 AST_Argument::direction()
 {
   return pd_direction;

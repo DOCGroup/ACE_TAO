@@ -90,7 +90,7 @@ public:
   virtual ~AST_Attribute() {}
 
   // Data Accessors
-  const idl_bool readonly();
+  idl_bool readonly();
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_Attribute, AST_Field);

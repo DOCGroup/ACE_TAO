@@ -119,7 +119,7 @@ be_state_struct_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
         // make a recursive call
         return this->gen_code (t, f, temp);
       } // end of switch
-      break;
+      //break;  unreachable statement!
     }
   // the enclosing structure will be variable length the field is variable
   // length

@@ -96,7 +96,7 @@ public:
   virtual ~AST_Argument() {}
 
   // Data Accessors
-  const Direction direction();
+  Direction direction();
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_Argument, AST_Field);

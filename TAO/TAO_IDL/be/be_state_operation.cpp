@@ -652,7 +652,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
         // make a recursive call
         return this->gen_code (t, d, temp);
       } // end of switch
-      break;
+      //break; unreachable statement!
     } // switch of main switch
   return 0;
 }
