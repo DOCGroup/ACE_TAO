@@ -1,3 +1,17 @@
+Sun Aug  4 13:30:41 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.zero_lock.conf:
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+	* tests/Collocation/svc.conf:
+	* tests/OctetSeq/svc1.conf:
+	* tests/OctetSeq/svc2.conf:
+	* tests/Smart_Proxies/Collocation/svc.conf:
+	* tests/Strategies/advanced_svc.conf:
+	* tests/Strategies/svc.conf: Removed the usage of -ORBResources
+	  option from all the above files since the option has been
+	  deprecated. 
+
 Sun Aug 04 09:56:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/releasenotes/orbcore.html: Updated the release notes. Looks
