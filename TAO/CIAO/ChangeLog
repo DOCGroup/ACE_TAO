@@ -1,3 +1,22 @@
+Thu Mar 17 10:18:33 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/Literals.cpp:
+        * CIDLC/Literals.hpp:
+        * CIDLC/ServantGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/TypeNameEmitter.cpp:
+        * CIDLC/TypeNameEmitter.hpp:
+        
+          Added command line option 'custom-container' to the CIDL
+          compiler backend, and code generation to execute if the
+          argument to the new option is 'upgradeable'. CIAO
+          infrastructure changes to support dynamic component
+          swapping will be merged from a branch shortly - these
+          CIDL compiler changes will not affect any existing builds
+          or tests since they don't use the new command line option.
+
 Fri Mar 11 10:33:28 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	
 	* docs/schema/cdp.xsd

@@ -33,7 +33,6 @@ namespace StringLiterals
     // ACE Environment portability macros.
     "ACE_ENV_ARG_DECL_WITH_DEFAULTS",                     // ENV_HDR
     "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS",              // ENV_SNGL_HDR
-    "ACE_ENV_SINGLE_ARG_DECL_NOT_USED",                   // ENV_SNGL_HDR_NOTUSED
     "ACE_ENV_ARG_DECL",                                   // ENV_SRC
     "ACE_ENV_ARG_DECL_NOT_USED",                          // ENV_SRC_NOTUSED
     "ACE_ENV_SINGLE_ARG_DECL",                            // ENV_SNGL_SRC
@@ -64,6 +63,7 @@ namespace StringLiterals
     "::Components::EventConsumerBase",                    // COMP_ECB
     "::Components::EnterpriseComponent",                  // COMP_EC
     "::Components::SessionContext",                       // COMP_SC
+    "::Components::ConsumerDescriptions",                 // COMP_CD
 
     // This could change - don't want it scattered all over.
     "namespace CIAO_GLUE",                                // GLUE_NS
