@@ -48,27 +48,18 @@ class TAO_RTCORBA_Export TAO_RT_Invocation_Endpoint_Selector :
 {
 public:
 
-  void select_endpoint (TAO_GIOP_Invocation *invocation
-                        ACE_ENV_ARG_DECL);
-
   void select_endpoint (TAO::Profile_Transport_Resolver *r,
                         ACE_Time_Value *val
                         ACE_ENV_ARG_DECL);
 
 protected:
-  void select_endpoint_based_on_client_protocol_policy (TAO_GIOP_Invocation *invocation,
-                                                        RTCORBA::ClientProtocolPolicy_ptr client_protocol_policy,
-                                                        RTCORBA::ProtocolList &protocols
-                                                        ACE_ENV_ARG_DECL);
-
-  int endpoint_from_profile (TAO_GIOP_Invocation *invocation
-                             ACE_ENV_ARG_DECL);
-
-  void select_endpoint_based_on_client_protocol_policy (TAO::Profile_Transport_Resolver &r,
-                                                        RTCORBA::ClientProtocolPolicy_ptr client_protocol_policy,
-                                                        RTCORBA::ProtocolList &protocols,
-                                                        ACE_Time_Value *v
-                                                        ACE_ENV_ARG_DECL);
+  void select_endpoint_based_on_client_protocol_policy (
+      TAO::Profile_Transport_Resolver &r,
+      RTCORBA::ClientProtocolPolicy_ptr client_protocol_policy,
+      RTCORBA::ProtocolList &protocols,
+      ACE_Time_Value *v
+      ACE_ENV_ARG_DECL
+    );
 
   int endpoint_from_profile (TAO::Profile_Transport_Resolver &r,
                              ACE_Time_Value *v
