@@ -1,14 +1,13 @@
-#include "ace/Thread_Manager.h"
 // $Id$
 
+#define  ACE_BUILD_SVC_DLL
+#include "ace/Thread_Manager.h"
 #include "Options.h"
 #include "Benchmark.h"
 
 #if defined (ACE_HAS_THREADS)
 
-extern int synch_count;
-
-class Pipe_Thr_Test : public Benchmark
+class ACE_Svc_Export Pipe_Thr_Test : public Benchmark
 {
 public:
   virtual int init (int, char **);
@@ -71,12 +70,8 @@ Pipe_Thr_Test::svc (void)
   return 0;
 }
 
-extern "C" ACE_Service_Object *pipe_thr_test (void);
-
-ACE_Service_Object *pipe_thr_test (void)
-{
-  return new Pipe_Thr_Test;
-}
+ACE_SVC_FACTORY_DECLARE (Pipe_Thr_Test)
+ACE_SVC_FACTORY_DEFINE  (Pipe_Thr_Test)
 
 // ACE_Service_Object_Type ptt (&pipe_thr_test, "Pipe_Thr_Test");
 #endif /* ACE_HAS_THREADS */

@@ -1,12 +1,13 @@
-#include "ace/SV_Semaphore_Simple.h"
 // $Id$
 
+#define  ACE_BUILD_SVC_DLL
+#include "ace/SV_Semaphore_Simple.h"
 #include "Options.h"
 #include "Benchmark.h"
 
 #if defined (ACE_HAS_THREADS)
 
-class SYSVSema_Test : public Benchmark
+class ACE_Svc_Export SYSVSema_Test : public Benchmark
 {
 public:
   virtual int svc (void);
@@ -36,12 +37,8 @@ SYSVSema_Test::svc (void)
   return 0;
 }
 
-extern "C" ACE_Service_Object *sysvsema_test (void);
-
-ACE_Service_Object *sysvsema_test (void)
-{
-  return new SYSVSema_Test;
-}
+ACE_SVC_FACTORY_DECLARE (SYSVSema_Test)
+ACE_SVC_FACTORY_DEFINE  (SYSVSema_Test)
 
 // ACE_Service_Object_Type st (&sysvsema_test, "SYSVSema_Test");
 #endif /* ACE_HAS_THREADS */

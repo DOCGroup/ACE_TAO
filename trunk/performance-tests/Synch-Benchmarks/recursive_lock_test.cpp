@@ -1,12 +1,13 @@
-#include "ace/Synch.h"
 // $Id$
 
+#define  ACE_BUILD_SVC_DLL
+#include "ace/Synch.h"
 #include "Options.h"
 #include "Benchmark.h"
 
 #if defined (ACE_HAS_THREADS)
 
-class Recursive_Lock_Test : public Benchmark
+class ACE_Svc_Export Recursive_Lock_Test : public Benchmark
 {
 public:
   virtual int svc (void);
@@ -34,12 +35,8 @@ Recursive_Lock_Test::svc (void)
   return 0;
 }
 
-extern "C" ACE_Service_Object *recursive_lock_test (void);
-
-ACE_Service_Object *recursive_lock_test (void)
-{
-  return new Recursive_Lock_Test;
-}
+ACE_SVC_FACTORY_DECLARE (Recursive_Lock_Test)
+ACE_SVC_FACTORY_DEFINE  (Recursive_Lock_Test)
 
 // ACE_Service_Object_Type rlt (&recursive_lock_test, "Recursive_Lock_Test");
 #endif /* ACE_HAS_THREADS */

@@ -13,7 +13,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-class Options
+class ACE_Svc_Export Options
 {
 public:
   Options (void);
@@ -119,7 +119,7 @@ private:
 };
 
 // Make this available to any code that wants to see it!
-extern Options options;
+extern ACE_Svc_Export Options options;
 
 #include "Options.i"
 #endif /* ACE_HAS_THREADS */

@@ -1,12 +1,13 @@
-#include "ace/Synch.h"
 // $Id$
 
+#define  ACE_BUILD_SVC_DLL
+#include "ace/Synch.h"
 #include "Options.h"
 #include "Benchmark.h"
 
 #if defined (ACE_HAS_THREADS)
 
-class Sema_Test : public Benchmark
+class ACE_Svc_Export Sema_Test : public Benchmark
 {
 public:
   virtual int svc (void);
@@ -35,12 +36,8 @@ Sema_Test::svc (void)
   return 0;
 }
 
-extern "C" ACE_Service_Object *sema_test (void);
-
-ACE_Service_Object *sema_test (void)
-{
-  return new Sema_Test;
-}
+ACE_SVC_FACTORY_DECLARE (Sema_Test)
+ACE_SVC_FACTORY_DEFINE  (Sema_Test)
 
 // ACE_Service_Object_Type semt (&sema_test, "Semaphore_Test");
 #endif /* ACE_HAS_THREADS */

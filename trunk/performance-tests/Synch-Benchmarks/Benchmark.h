@@ -13,7 +13,7 @@
 #if defined (ACE_HAS_THREADS)
 
 extern int buffer;
-extern int synch_count;
+extern ACE_Svc_Export int synch_count;
 
 #if defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
 
@@ -40,7 +40,7 @@ private:
 };
 #endif /* ACE_HAS_PTHREADS || VXWORKS */
 
-class Benchmark : public ACE_Service_Object
+class ACE_Svc_Export Benchmark : public ACE_Service_Object
   // TITLE
   //   Base class for all the timing tests.
 {
