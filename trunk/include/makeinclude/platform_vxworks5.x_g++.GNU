@@ -79,21 +79,21 @@ endif # default CPU
 ifeq ($(CPU),PPC604)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC604
-  CCFLAGS += -fno-implicit-templates
+  CCFLAGS += -fno-implicit-templates -mlongcall
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = ppc
 else
 ifeq ($(CPU),PPC603)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC603
-  CCFLAGS += -fno-implicit-templates
+  CCFLAGS += -fno-implicit-templates -mlongcall
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = ppc
 else
 ifeq ($(CPU),PPC860)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC860 -mcpu=860
-  CCFLAGS += -fno-implicit-templates
+  CCFLAGS += -fno-implicit-templates -mlongcal
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = ppc
 else
@@ -145,9 +145,38 @@ ifeq ($(CPU),SPARC)
   CCFLAGS += -fno-implicit-templates
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sparc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = sparc
+ifeq ($(CPU),MC68020)
+  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68020 -m68020 -m68881
+  CCFLAGS += -fno-implicit-templates -DACE_VXWORKS=0x540
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/cygnus-2.7.2-960126
+  TOOLENV = 68k
+else
+ifeq ($(CPU),MC68030)
+  BINXSYM_NAME = xsym
+  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68030 -m68030 -m68881
+  CCFLAGS += -fno-implicit-templates -DACE_VXWORKS=0x540
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/cygnus-2.7.2-960126
+  TOOLENV = 68k
+else
+ifeq ($(CPU),MC68040)
+  BINXSYM_NAME = xsym
+  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68040 -m68040 -m68881
+  CCFLAGS += -fno-implicit-templates -DACE_VXWORKS=0x540
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/cygnus-2.7.2-960126
+  TOOLENV = 68k
+else
+ifeq ($(CPU),MC68060)
+  BINXSYM_NAME = xsym
+  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68060 -m68040 -m68881
+  CCFLAGS += -fno-implicit-templates -DACE_VXWORKS=0x540
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/cygnus-2.7.2-960126
+  TOOLENV = 68k
 else
   BINXSYM_NAME = xsym
   CCFLAGS += -fno-implicit-templates
+endif # MC68020
+endif # MC68030
+endif # MC68040
 endif # SPARC
 endif # SIMSPARCSOLARIS
 endif # I80386
@@ -158,7 +187,6 @@ endif # SIMNT
 endif # PPC860
 endif # PPC603
 endif # PPC604
-
 
 #### END target CPU-specific settings
 
