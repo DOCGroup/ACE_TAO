@@ -1558,7 +1558,7 @@ ACE::count_interfaces (ACE_HANDLE handle,
 // retrieve ifconf list of ifreq structs no SIOCGIFNUM on SunOS 4.x,
 // so use guess and scan algorithm
 
-  const int MAX_IF = 10; // probably hard to put this many ifs in a unix box..
+  const int MAX_IF = 50; // probably hard to put this many ifs in a unix box..
   int num_ifs = MAX_IF; // HACK - set to an unreasonable number
   struct ifconf ifcfg;
   struct ifreq *p_ifs = NULL;
@@ -1589,13 +1589,11 @@ ACE::count_interfaces (ACE_HANDLE handle,
   int if_count = 0, i ;
 
   // get if address out of ifreq buffers.
+  // ioctl puts a blank-named interface to mark the end of the
+  // returned interfaces.
   for (i = 0; i < num_ifs; p_ifs++, i++) 
     {
-      ACE_OS::memcpy ((char *)&addr,
-		      (char *) &p_ifs->ifr_addr.sa_data + 2,
-		      sizeof (addr)); 
-
-      if (addr == 0) 	// no more addrs found
+      if (p_ifs->ifr_name[0] == '\0')
 	  break;
       if_count++;
     }
@@ -1823,19 +1821,20 @@ ACE::get_ip_interfaces (size_t &count,
   ACE_TRACE ("ACE::get_ip_interfaces");
   size_t num_ifs;
 
-  const int FUDGE = 2; /* offset into sa_data[] for ip address on sparc */
-
-  ACE_HANDLE handle = get_handle();		// call specific routine as necessary
+  ACE_HANDLE handle = get_handle();	// call specific routine as necessary
 
   if (handle == ACE_INVALID_HANDLE) 
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE::get_ip_interfaces:open"), -1);
- 
+
   if (ACE::count_interfaces (handle, num_ifs))
     {
       ACE_OS::close (handle);
       return -1;
     }
 
+  // ioctl likes to have an extra ifreq structure to mark the end of what it
+  // returned, so increase the num_ifs by one.
+  ++num_ifs;
   auto_ptr<struct ifreq> p_ifs (new struct ifreq[num_ifs]);
 
   if (p_ifs.get() == 0) 
@@ -1859,26 +1858,22 @@ ACE::get_ip_interfaces (size_t &count,
   ACE_OS::close (handle);
 
   // ------------ now create and initialize output array -------------
-  count = 0;
+
   ACE_NEW_RETURN (addrs, ACE_INET_Addr[num_ifs], -1); // caller must free
 
   struct ifreq *pcur = p_ifs.get ();
-  // Get if address out of ifreq buffers have yet to see a non PF_INET
-  // data type, but don't chance it which means allocation might be
-  // larger than actually used
-
+  // Pull the address out of each INET interface.  Not every interface is
+  // for IP, so be careful to count properly.  When setting the INET_Addr,
+  // note that the 3rd arg (0) says to leave the byte order (already in net
+  // byte order from the interface structure) as is.
+  count = 0;
   for (size_t i = 0; i < num_ifs; pcur++, i++) 
     {
-      ACE_UINT32 tmp_addr; 
-
-      // SPARC w/Solaris 2.x TODO: see if fudge factor can be removed.
-      if (pcur->ifr_addr.sa_family == PF_INET)
+      if (pcur->ifr_addr.sa_family == AF_INET)
         {
-          ACE_OS::memcpy ((char *) &tmp_addr, 
-			  (char *) &pcur->ifr_addr.sa_data +FUDGE,
-			  sizeof tmp_addr);
+	  struct sockaddr_in *_addr_ = (struct sockaddr_in *)&(pcur->ifr_addr);
+	  addrs[count].set ((u_short)0, _addr_->sin_addr.s_addr, 0);
           count++;
-          addrs[i].set ((u_short) 0, tmp_addr, 0); // 0 = data in net byte order
         }
     }
   return 0; 
