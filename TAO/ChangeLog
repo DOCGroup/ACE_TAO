@@ -1,3 +1,11 @@
+Wed Feb  4 11:08:31 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_tmplinst.cpp:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        
+          Added some missing explicit template instantiations. Thanks
+          to Olli Savia <ops@iki.fi> for reporting them.
+
 Tue Feb  3 14:12:01 2004  Gautam Thaker  <gthaker@atl.lmco.com>
 
         * docs/releasenotes/index.html:

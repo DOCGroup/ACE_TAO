@@ -1182,6 +1182,21 @@ CORBA::Boolean operator>> (
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
+    TAO::In_Object_Argument_T<
+        ImplementationRepository::Administration_ptr
+      >;
+
+  template class
+    TAO::In_Var_Size_Argument_T<
+        ImplementationRepository::Locator::ServerNameList
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        ImplementationRepository::Locator::ServerNameList
+      >;
+
+  template class
     TAO::Objref_Traits<
         ImplementationRepository::Locator
       >;
@@ -1207,6 +1222,21 @@ CORBA::Boolean operator>> (
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO::In_Object_Argument_T< \
+        ImplementationRepository::Administration_ptr \
+      >
+
+# pragma instantiate \
+    TAO::In_Var_Size_Argument_T< \
+        ImplementationRepository::Locator::ServerNameList \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        ImplementationRepository::Locator::ServerNameList \
+      >
 
 # pragma instantiate \
     TAO::Objref_Traits< \
