@@ -155,12 +155,9 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &env)
   if (env.exception () != 0)
     return 0;
 
-  // CORBA::RepositoryId interface = this->_primary_interface (poa_current->object_id (),
-  //                                                           poa.in (),
-  //                                                           env);
-  PortableServer::RepositoryId interface = this->_primary_interface (poa_current->object_id (),
-                                                                     poa.in (),
-                                                                     env);
+  CORBA::RepositoryId interface = this->_primary_interface (poa_current->object_id (),
+                                                            poa.in (),
+                                                            env);
   if (env.exception () != 0)
     return 0;
 

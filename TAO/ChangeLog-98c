@@ -1,3 +1,59 @@
+Wed May 27 16:08:10 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/{be_visitor_enum, be_visitor_exception,
+	be_visitor_interface, be_visitor_sequence, be_visitor_structure,
+	be_visitor_typedef, be_visitor_union}.cpp:
+
+	The typecode declarations generated in the header file for
+	user-defined IDL types used to be "static" if the data type was
+	enclosed inside a module. However, for platforms that support
+	"namespaces", this should be extern. Hence we generate a macro
+	called "TAO_NAMESPACE_STORAGE_CLASS" defined in tao/orbconf.h
+
+	* orbsvcs/orbsvcs/Makefile: Ran make depend since some files in
+	TAO/tao were removed.
+
+	* tao/PolicyS.{h, i}: Removed from the CVS repository
+
+	* tao/CurrentC.{h, i, cpp}
+	  tao/CurrentS.cpp: Added to the repository. This defined the
+	  interface Current in the CORBA namespace. *NOTE* these are newly
+	  added files.
+
+	* tao/ORB.h: Moved Declarations for RepositoryID and Identifier
+	from the POA namespace to the CORBA namespace. Also added some
+	more TypeCode declarations e.g., _tc_Current, _tc_Identifier,
+	others.
+
+	* tao/POAC.{h, i, cpp}: Removed everything related to
+	CurrentBase. RepositoryID and Identifier are now in the CORBA
+	namespace instead of the PortableServer namespace.
+
+	* tao/POAS.{h, cpp}: PortableServer::Current now inherits from
+	POA_CORBA::Current instead of PortableServer::CurrentBase.
+
+	* tao/POA_CORBA.h: Merger of the PolicyS.h and CurrentS.h
+	files. It defines the POA_CORBA namespace which is the C++ mapping
+	for the CORBA module for the server-side. It defines the Policy
+	and Current classes for the server-side. *NOTE* This is a newly
+	introduced file.
+
+	* tao/PolicyC.cpp: Moved the definition of the _tc_Policy typecode
+	to the TypeCode constants file since this is owned by the ORB.
+
+	* tao/Servant_Base.{h, cpp}: PortableServer::RepositoryId is now
+	CORBA::RepositoryId.
+
+	* tao/Typecode_Constants.cpp: Added new typecode definitions for
+	all the newly introduced stuff as well as moved stuff such as
+	Current, Policy, PolicyType, PolicyList, RepositoryId, and
+	Identifier.
+
+	* tao/orbconf.h: TAO_NAMESPACE macro is now "namespace" for
+	platforms that supports it. Needs to be checked.
+
+	* tao/Makefile: Did make depend.
+
 Wed May 27 12:53:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Multiple/Makefile: ran make depend to

@@ -11,10 +11,6 @@
 
 #include "tao/corba.h"
 
-#if !defined (__ACE_INLINE__)
-#include "PolicyS.i"
-#endif /* !defined INLINE */
-
 static const TAO_operation_db_entry CORBA_Policy_operations [] = {
   {"_get_policy_type", &POA_CORBA::Policy::_get_policy_type_skel},
   {"copy", &POA_CORBA::Policy::copy_skel},
