@@ -71,7 +71,7 @@ static const char *TAO_GIOP_Timeprobe_Description[] =
     "GIOP::recv_request - start",
     "GIOP::recv_request - end",
 
-    "GIOP::read_buffer - start"
+    "GIOP::read_buffer - start",
     "GIOP::read_buffer - end",
 
     "GIOP::LocateRequestHeader_init - start",
