@@ -520,7 +520,7 @@ public:
   virtual int set_protocol_object (const char *flowname,
                                    TAO_AV_Protocol_Object *object);
 
-  virtual void set_handler (const char *flowname,
+  virtual void set_flow_handler (const char *flowname,
                             TAO_AV_Flow_Handler *handler);
 };
 
@@ -1138,8 +1138,8 @@ public:
 
   int set_flowname (const char *flowname);
 
-  virtual void set_handler (const char *flowname,
-                            TAO_AV_Flow_Handler *handler);
+  virtual void set_flow_handler (const char *flowname,
+                                 TAO_AV_Flow_Handler *handler);
 
   virtual int set_protocol_object (const char *flowname,
                                    TAO_AV_Protocol_Object *object);

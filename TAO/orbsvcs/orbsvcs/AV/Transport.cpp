@@ -1,4 +1,5 @@
 // $Id$
+#include "ace/Dynamic_Service.h"
 #include "tao/TAO.h"
 #include "AVStreams_i.h"
 #include "sfp.h"
@@ -1150,6 +1151,8 @@ TAO_AV_Flow_Handler::schedule_timer (void)
                                                                 *tv);
   if (this->timer_id_ < 0)
     return -1;
+
+  return 0;
 }
 
 int
@@ -1172,8 +1175,8 @@ TAO_AV_Flow_Handler::stop (TAO_FlowSpec_Entry::Role role)
 }
 
 int
-TAO_AV_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                     const void *arg)
+TAO_AV_Flow_Handler::handle_timeout (const ACE_Time_Value &/*tv*/,
+                                     const void */*arg*/)
 {
   this->callback_->handle_timeout (this->timeout_arg_);
   ACE_Event_Handler *event_handler = this->event_handler ();

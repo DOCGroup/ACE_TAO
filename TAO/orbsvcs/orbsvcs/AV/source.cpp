@@ -520,7 +520,7 @@ TAO_AV_SourceManager::sortactive (char* cp) const
     *cp = 0;
     return;
   }
-  qsort (srctab, n, sizeof (*srctab), compare);
+  ACE_OS::qsort (srctab, n, sizeof (*srctab), compare);
   for  (int i = 0; i < n; ++i) {
     strcpy (cp, srctab[i]->name ());
     cp += strlen (cp);

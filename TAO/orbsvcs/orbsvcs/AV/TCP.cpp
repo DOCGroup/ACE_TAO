@@ -213,7 +213,7 @@ TAO_AV_TCP_Object::handle_input (void)
 
 int
 TAO_AV_TCP_Object::send_frame (ACE_Message_Block *frame,
-                               TAO_AV_frame_info *frame_info)
+                               TAO_AV_frame_info */*frame_info*/)
 {
   int result = this->transport_->send (frame);
   if (result < 0)
@@ -224,7 +224,7 @@ TAO_AV_TCP_Object::send_frame (ACE_Message_Block *frame,
 int
 TAO_AV_TCP_Object::send_frame (const iovec *iov,
                                int iovcnt,
-                               TAO_AV_frame_info *frame_info)
+                               TAO_AV_frame_info */*frame_info*/)
 {
   return this->transport_->send (iov,iovcnt);
 }
@@ -350,7 +350,7 @@ int
 TAO_AV_TCP_Connector::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
 {
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Connector::make_svc_handler\n"));
-  TAO_AV_Callback *callback = 0;
+  //  TAO_AV_Callback *callback = 0;
   if (this->endpoint_ != 0)
     {
 //       this->endpoint_->get_callback (this->flowname_.c_str (),
@@ -368,7 +368,7 @@ TAO_AV_TCP_Connector::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
       //      callback->protocol_object (object);
 //       this->endpoint_->set_protocol_object (this->flowname_.c_str (),
 //                                             object);
-      this->endpoint_->set_handler (this->flowname_.c_str (),tcp_handler);
+      this->endpoint_->set_flow_handler (this->flowname_.c_str (),tcp_handler);
       this->entry_->protocol_object (object);
       this->entry_->handler (tcp_handler);
     }
@@ -481,7 +481,7 @@ TAO_AV_TCP_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
       //      callback->protocol_object (object);
 //       this->endpoint_->set_protocol_object (this->flowname_.c_str (),
 //                                             object);
-      this->endpoint_->set_handler (this->flowname_.c_str (),tcp_handler);
+      this->endpoint_->set_flow_handler (this->flowname_.c_str (),tcp_handler);
       this->entry_->protocol_object (object);
       this->entry_->handler (tcp_handler);
     }
@@ -562,7 +562,7 @@ TAO_AV_TCP_Acceptor::close (void)
 // TAO_AV_TCP_Flow_Handler
 //------------------------------------------------------------
 
-TAO_AV_TCP_Flow_Handler::TAO_AV_TCP_Flow_Handler (TAO_AV_Callback *callback)
+TAO_AV_TCP_Flow_Handler::TAO_AV_TCP_Flow_Handler (TAO_AV_Callback */*callback*/)
   //  :TAO_AV_Flow_Handler (callback)
 {
   ACE_NEW (this->transport_,
@@ -576,7 +576,7 @@ TAO_AV_TCP_Flow_Handler::transport (void)
 }
 
 int
-TAO_AV_TCP_Flow_Handler::open (void *arg)
+TAO_AV_TCP_Flow_Handler::open (void */*arg*/)
 {
 
   int nodelay = 1;
@@ -617,6 +617,7 @@ TAO_AV_TCP_Flow_Handler::open (void *arg)
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("unable to register client handler")),
                       -1);
+  return 0;
 }
 
 int
