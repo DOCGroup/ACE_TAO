@@ -1,3 +1,10 @@
+Tue Dec 11 15:06:00 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/orbconf.h:
+	  My clever trick using /**/ inside the TAO_ENV_EMIT_CODE2() macro
+	  call to generate the extra comma does not work on windows.
+	  Change for another "clever" trick that should be more reliable.
+
 Tue Dec 11 09:54:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/orbconf.h:
@@ -24,10 +31,10 @@ Tue Dec 11 09:13:19 2001  Justin Michel  <michel_j@ociweb.com>
 Mon Dec 10 20:24:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: Fixed a compile
-	  error. 
+	  error.
 
-	* orbsvcs/orbsvcs/Makefile.*: Updated dependencies. 
-	
+	* orbsvcs/orbsvcs/Makefile.*: Updated dependencies.
+
 Mon Dec 10 17:57:59 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/AV.dsp:
@@ -86,19 +93,19 @@ Mon Dec 10 16:33:39 2001  Justin Michel  <michel_j@ociweb.com>
         The server.exe was returning 1 on error, but perl
         SpawnWaitKill() returned -1. Updated to check == 0.
         Added the servant implementation files and updated
-        the vc++ project to be like the other tests. 
+        the vc++ project to be like the other tests.
 
 Mon Dec 10 15:52:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	The effect of breaking ace/Strategies into multiple files. 
-	
+	The effect of breaking ace/Strategies into multiple files.
+
         Tue Nov 27 21:30:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Cache_Entries.h:
-	* tao/DLL_ORB.h: 
+	* tao/DLL_ORB.h:
 	* tao/Transport.h: Added additional #includes to fix compilation
-	  errors.  
-	
+	  errors.
+
 	* tao/*/Makefile: Updated dependencies.
 
 Mon Dec 10 13:31:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
