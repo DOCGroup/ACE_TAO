@@ -97,7 +97,7 @@ ACE_OS::strdup (const char *s)
 
   return ACE_OS::strcpy (t, s);
 #else
-  return ::strdup (s);
+  return ACE_STD_NAMESPACE::strdup (s);
 #endif /* ACE_HAS_STRDUP_EMULATION */
 }
 
