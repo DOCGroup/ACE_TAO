@@ -51,8 +51,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -79,6 +79,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "ace/Singleton.h"
 #include        "ace/Synch.h"
 #include        "ace/Log_Msg.h"
+#include        "ace/Containers.h"
 
 /*
  * BE includes
@@ -108,7 +109,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"be_array.h"		// class BE_Array
 #include	"be_sequence.h"	        // class BE_Sequence
 #include	"be_string.h"		// class BE_String
-#include	"be_typedef.h"	        // class BE_Typedef 
+#include	"be_typedef.h"	        // class BE_Typedef
 #include        "be_root.h"             // class BE_Root
 
 #include        "be_helper.h"           // helper functions

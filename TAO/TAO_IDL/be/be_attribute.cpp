@@ -417,8 +417,8 @@ be_attribute::gen_server_header (void)
 
   // generate the static method corresponding to the method
   *sh << "static void _get_" << this->local_name () <<
-    "_skel (CORBA::ServerRequest &req, " <<
-    "CORBA::Object_ptr obj, CORBA::Environment &env);\n\n";
+    "_skel (CORBA::ServerRequest &req, void *obj, " <<
+    "void *context, CORBA::Environment &env);\n\n";
 
 
   // now the set method. However, this is not defined if we are readonly
@@ -445,8 +445,8 @@ be_attribute::gen_server_header (void)
 
   // generate the static method corresponding to the method
   *sh << "static void _set_" << this->local_name () <<
-    "_skel (CORBA::ServerRequest &req, " <<
-    "CORBA::Object_ptr obj, CORBA::Environment &env);\n\n";
+    "_skel (CORBA::ServerRequest &req, void *obj, " <<
+    "void *context, CORBA::Environment &env);\n\n";
 
 
   return 0;
@@ -492,12 +492,13 @@ be_attribute::gen_server_skeletons (void)
   *ss << "void " << intf->full_skel_name () << "::_get_"
       << this->local_name () << "_skel ("
       << "CORBA::ServerRequest &_tao_server_request, "
-      << "CORBA::Object_ptr _tao_object_reference, "
+      << "void *_tao_object_reference, void */*context*/, "
       << "CORBA::Environment &_tao_environment)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
   // define a variable that will eventually point to our implementation object
-  *ss << intf->full_skel_name () << "_ptr \t impl;" << nl;
+  *ss << intf->full_skel_name () << "_ptr impl = (" << intf->full_skel_name ()
+      << "_ptr) _tao_object_reference;" << nl;
   // store the result in this Any
   *ss << "CORBA::Any *result;" << nl;
   // emit the return type
@@ -518,8 +519,6 @@ be_attribute::gen_server_skeletons (void)
   *ss << "// this method has no incoming parameters. Nothing to parse" << nl;
 
   // make the upcall
-  *ss << "impl = (" << intf->full_skel_name () << "_ptr) _tao_object_reference->get_subclass ();"
-      << nl;
   cg->push (TAO_CodeGen::TAO_ATTRIBUTE_RETVAL_ASSIGN_SS);
   s = cg->make_state ();
   // emit code to assign to retval
@@ -558,14 +557,15 @@ be_attribute::gen_server_skeletons (void)
   *ss << "void " << intf->full_skel_name () << "::_set_"
       << this->local_name () << "_skel ("
       << "CORBA::ServerRequest &_tao_server_request, "
-      << "CORBA::Object_ptr _tao_object_reference, "
+      << "void *_tao_object_reference, void */*context*/, "
       << "CORBA::Environment &_tao_environment)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
   // define an NVList to hold the in argument
   *ss << "CORBA::NVList_ptr \t nvlist;" << nl;
   // define a variable that will eventually point to our implementation object
-  *ss << intf->full_skel_name () << "_ptr \t impl;" << nl;
+  *ss << intf->full_skel_name () << "_ptr \t impl = (" << intf->full_skel_name
+    () << "_ptr)_tao_object_reference;" << nl;
 
   // if we have any arguments, get each one of them and allocate an Any and
   // NamedValue for each. In addition, define a variable of that type
@@ -607,9 +607,6 @@ be_attribute::gen_server_skeletons (void)
   cg->pop ();
 
   // make the upcall
-  *ss << "impl = (" << intf->full_skel_name () << "_ptr) _tao_object_reference->get_subclass ();"
-      << nl;
-
   *ss << "impl->" << this->local_name () << "(";
   cg->push (TAO_CodeGen::TAO_ATTRIBUTE_UPCALL_SS);
   s = cg->make_state ();

@@ -72,7 +72,6 @@ int
 be_string::gen_client_header (void)
 {
   TAO_OutStream *ch; // output stream
-  TAO_NL  nl;        // end line
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();

@@ -27,7 +27,8 @@
 
 // default constructor
 be_interface::be_interface (void)
-  : full_skel_name_ (0)
+  : full_skel_name_ (0),
+    skel_count_ (0)
 {
   this->size_type (be_decl::VARIABLE); // always the case
 }
@@ -38,7 +39,8 @@ be_interface::be_interface (UTL_ScopedName *n, AST_Interface **ih, long nih,
   : AST_Interface (n, ih, nih, p),
     AST_Decl (AST_Decl::NT_interface, n, p),
     UTL_Scope (AST_Decl::NT_interface),
-    full_skel_name_ (0)
+    full_skel_name_ (0),
+    skel_count_ (0)
 {
   this->size_type (be_decl::VARIABLE); // always the case
 }
@@ -109,6 +111,7 @@ be_interface::compute_fullskelname (void)
   return;
 }
 
+// retrieve the fully scoped skeleton name
 const char*
 be_interface::full_skel_name (void)
 {
@@ -216,6 +219,11 @@ int be_interface::gen_client_header (void)
           ACE_ERROR ((LM_ERROR, "Scope code generation failure\n"));
           return -1;
         }
+
+      // the _is_a method
+      ch->indent ();
+      *ch << "virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, " <<
+        "CORBA::Environment &env);\n";
 
       // generate the "protected" constructor so that users cannot instantiate
       // us
@@ -399,6 +407,29 @@ int be_interface::gen_client_stubs (void)
       return -1;
     }
 
+  // generate the is_a method
+  cs->indent ();
+  *cs << "CORBA::Boolean " << this->name () << "::_is_a (" <<
+    "const CORBA::Char *value, CORBA::Environment &env)" << nl;
+  *cs << "{\n";
+  cs->incr_indent ();
+  *cs << "if (\n";
+  cs->incr_indent (0);
+  if (this->traverse_inheritance_graph (be_interface::is_a_helper, cs) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_interface::gen_client_stubs - "
+                         "inheritance graph failed\n"), -1);
+    }
+  cs->indent ();
+  *cs << "(!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))\n";
+  *cs << "\treturn 1; // success using local knowledge\n";
+  cs->decr_indent ();
+  *cs << "else" << nl;
+  *cs << "\treturn CORBA::Object::_is_a (value, env); // remote call\n";
+  cs->decr_indent ();
+  *cs << "}\n\n";
+
   // generate the typecode information here
   cs->indent (); // start from current indentation level
   *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
@@ -501,8 +532,21 @@ int be_interface::gen_server_header (void)
   // add our _is_a method
   sh->indent ();
   *sh << "static void _is_a_skel (CORBA::ServerRequest &req, " <<
-    "CORBA::Object_ptr obj, CORBA::Environment &env);\n\n";
+    "void *obj, void *context, CORBA::Environment &env);\n\n";
 
+  // generate skeletons for operations of our base classes. These skeletons
+  // just cast the pointer to the appropriate type before invoking the call
+  if (this->traverse_inheritance_graph (be_interface::gen_skel_helper, sh) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_interface::gen_server_header - "
+                         "inheritance graph traversal failed\n"), -1);
+    }
+
+  // add the dispatch method
+  sh->indent ();
+  *sh << "virtual void dispatch (CORBA::ServerRequest &req, " <<
+    "void *context, CORBA::Environment &env);" << nl;
   sh->decr_indent ();
   *sh << "};\n\n";
 
@@ -513,12 +557,8 @@ int be_interface::gen_server_header (void)
 int be_interface::gen_server_skeletons (void)
 {
   TAO_OutStream *ss; // output stream
-  long i;            // loop index
   TAO_NL  nl;        // end line
   AST_Decl *d;        // temporary
-
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (i);
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -545,7 +585,8 @@ int be_interface::gen_server_skeletons (void)
   // find if we are at the top scope or inside some module
   d = ScopeAsDecl (this->defined_in ());
 
-  if (d && d->node_type () == AST_Decl::NT_root)
+  //  if (d && d->node_type () == AST_Decl::NT_root)
+  if (!this->is_nested ())
     {
       // we are outermost. So the POA_ prefix is prepended to our name
       *ss << this->full_skel_name () << "::POA_" << this->local_name () <<
@@ -571,28 +612,11 @@ int be_interface::gen_server_skeletons (void)
   *ss << "this->optable_ = &tao_" << this->flatname () << "_optable;" << nl <<
     nl;
   *ss << "// set up an IIOP object" << nl;
-#if 0
-  *ss << "data = new IIOP_Object (CORBA::string_dup (repoID));" << nl;
-  *ss << "data->profile.iiop_version.major = IIOP::MY_MAJOR;" << nl;
-  *ss << "data->profile.iiop_version.minor = IIOP::MY_MINOR;" << nl;
-  *ss << "const ACE_INET_Addr &addr = ocp->orb_params ()->addr ();" << nl;
-  *ss << "data->profile.host = ACE_OS::strdup (" <<
-    "addr.get_host_name ());" << nl;
-  *ss << "data->profile.port = addr.get_port_number ();" << nl;
-  *ss << "data->profile.object_key.length = " <<
-    "ACE_OS::strlen (obj_name);" << nl;
-  *ss << "data->profile.object_key.maximum = " <<
-    "data->profile.object_key.length;" << nl;
-  *ss << "data->profile.object_key.buffer = " <<
-    "new CORBA::Octet [(size_t)data->profile.object_key.length+1];" << nl;
-  *ss << "ACE_OS::strcpy ((char *)data->profile.object_key.buffer, obj_name);"
-      << " // set the object key" << nl;
-#endif
   *ss << "data = new IIOP_Object (CORBA::string_dup (repoID), addr, obj_name);"
       << nl;
   *ss << "this->set_parent (data); // store the IIOP obj ref with us" <<
     nl;
-  *ss << "this->sub_ = this; // set the most derived type to be us" << nl;
+  //  *ss << "this->sub_ = this; // set the most derived type to be us" << nl;
   *ss << "if (oa) oa->bind (data->profile.object_key, this); " <<
     "// register ourselves\n";
   ss->decr_indent ();
@@ -610,7 +634,7 @@ int be_interface::gen_server_skeletons (void)
   ss->indent ();
   *ss << "void " << this->full_skel_name () <<
     "::_is_a_skel (CORBA::ServerRequest &req, " <<
-    "CORBA::Object_ptr /* obj */, CORBA::Environment &env)" << nl;
+    "void * /* obj */, void * /*context*/, CORBA::Environment &env)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
   *ss << "const CORBA::String type_id = \"" << this->repoID () <<
@@ -627,11 +651,16 @@ int be_interface::gen_server_skeletons (void)
   *ss << "req.params (nvlist, env); // parse the args" << nl;
   *ss << "if (env.exception () != 0) return;" << nl;
   *ss << "value = *(CORBA::String *)nv->value ()->value ();" << nl;
-  *ss << "if (ACE_OS::strcmp ((char *)value, (char *)type_id) == 0" << nl;
-  *ss << "  || ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env)) == 0)\n"
-      << nl;
-  *ss << "\tretval = new CORBA::Boolean (CORBA::B_TRUE);" << nl;
-  * ss << "else" << nl;
+  *ss << "if (\n";
+  ss->incr_indent (0);
+  if (this->traverse_inheritance_graph (be_interface::is_a_helper, ss) == -1)
+    {
+    }
+  ss->indent ();
+  *ss << "(!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))\n";
+  *ss << "\tretval = new CORBA::Boolean (CORBA::B_TRUE);\n";
+  ss->decr_indent ();
+  *ss << "else" << nl;
   *ss << "\tretval = new CORBA::Boolean (CORBA::B_FALSE);" << nl;
   *ss << "any = new CORBA::Any (CORBA::_tc_boolean, retval, CORBA::B_TRUE);" <<
     nl;
@@ -639,94 +668,30 @@ int be_interface::gen_server_skeletons (void)
   ss->decr_indent ();
   *ss << "}\n\n";
 
-  cg->pop ();
-  return 0;
-}
-
-// helper
-int
-be_interface::gen_operation_table (void)
-{
-  int count = 0;
-  UTL_ScopeActiveIterator *si;
-  AST_Decl *d;
-  TAO_OutStream *ss; // output stream
-  long i;            // loop index
-  TAO_NL  nl;        // end line
-
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (i);
-
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-
-  ss = cg->server_skeletons ();
-
-  ss->indent (); // start from current indentation level
-  *ss << "static const TAO_operation_db_entry " << this->flatname () <<
-    "_operations [] = {\n";
+  // now the dispatch method
+  ss->indent ();
+  *ss << "void " << this->full_skel_name () <<
+    "::dispatch (CORBA::ServerRequest &req, " <<
+    "void *context, CORBA::Environment &env)" << nl;
+  *ss << "{\n";
   ss->incr_indent ();
-  if (this->nmembers () > 0)
-    {
-      // if there are elements in this scope
-
-      si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
-      // instantiate a scope iterator.
-
-      while (!(si->is_done ()))
-	{
-	  // get the next AST decl node
-	  d = si->item ();
-	  if (!d->imported ())
-	    {
-	      // we are not imported.
-
-              if (d->node_type () == AST_Decl::NT_op)
-                {
-                  // we are an operation node
-                  *ss << "{\"" << d->local_name () << "\", &" << this->full_skel_name
-                    () << "::" << d->local_name () << "_skel},"
-                      << nl;
-                  count++;
-                }
-              else if (d->node_type () == AST_Decl::NT_attr)
-                {
-                  AST_Attribute *attr;
-
-                  // generate only the "get" entry if we are readonly
-                  *ss << "{\"_get_" << d->local_name () << "\", &" <<
-                    this->full_skel_name () << "::_get_" << d->local_name () <<
-                    "_skel}," << nl;
-                  count++;
-
-                  attr = AST_Attribute::narrow_from_decl (d);
-                  if (!attr)
-                    return -1;
-
-                  if (!attr->readonly ())
-                    {
-                      // the set method
-                      *ss << "{\"_set_" << d->local_name () << "\", &" <<
-                        this->full_skel_name () << "::_set_" << d->local_name
-                        () << "_skel}," << nl;
-                      count++;
-                    }
-                }
-            }
-          si->next ();
-        } // end of while
-      delete si; // free the iterator object
-    }
-  *ss << "{\"_is_a\", &" << this->full_skel_name () << "::_is_a_skel}\n";
-  count++;
+  *ss << "TAO_Skeleton skel; // pointer to skeleton for operation" << nl;
+  *ss << "CORBA::String opname = req.op_name (); // retrieve operation name" <<
+                                                 nl;
+  *ss << "// find the skeleton corresponding to this opname" << nl;
+  *ss << "if (this->find (opname, skel) == -1)" << nl;
+  *ss << "{\n";
+  ss->incr_indent ();
+  *ss << "env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));" <<
+    nl;
+  *ss << "ACE_ERROR ((LM_ERROR, \"Bad operation <%s>\\n\", opname));\n";
   ss->decr_indent ();
-  *ss << "};" << nl << nl;
-
-  // XXXASG - this code should be based on using different strategies for
-  // demux - for next release
-  *ss << "TAO_Dynamic_Hash_OpTable tao_" << this->flatname () << "_optable " <<
-    "(" << this->flatname () << "_operations, " << count << ", " << 2*count << ");"
-      << nl;
+  *ss << "}\n";
+  *ss << "else" << nl;
+  *ss << "\tskel (req, this, context, env);\n";
+  ss->decr_indent ();
+  *ss << "}\n";
+  cg->pop ();
   return 0;
 }
 
@@ -827,6 +792,15 @@ be_interface::gen_server_inline (void)
 
   *si << "{" << nl;
   *si << "}\n";
+
+  // generate skeletons for operations of our base classes. These skeletons
+  // just cast the pointer to the appropriate type before invoking the call
+  if (this->traverse_inheritance_graph (be_interface::gen_skel_helper, si) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_interface::gen_server_inline - "
+                         "inheritance graph traversal failed\n"), -1);
+    }
 
   return 0;
 }
@@ -1373,7 +1347,381 @@ be_interface::tc_encap_len (void)
   return this->encap_len_;
 }
 
+// helper
+int
+be_interface::gen_operation_table (void)
+{
+  TAO_OutStream *ss; // output stream
+  TAO_NL  nl;        // end line
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ss = cg->server_skeletons ();
+
+  ss->indent (); // start from current indentation level
+  *ss << "static const TAO_operation_db_entry " << this->flatname () <<
+    "_operations [] = {\n";
+  ss->incr_indent (0);
+
+  if (this->traverse_inheritance_graph (be_interface::gen_optable_helper, ss) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_interface::gen_operation_table - "
+                         "inheritance graph traversal failed\n"), -1);
+    }
+
+  // generate the skeleton for the is_a method
+  ss->indent ();
+  *ss << "{\"_is_a\", &" << this->full_skel_name () << "::_is_a_skel}\n";
+  this->skel_count_++;
+
+  ss->decr_indent ();
+  *ss << "};" << nl << nl;
+
+  // XXXASG - this code should be based on using different strategies for
+  // demux - for next release
+  *ss << "TAO_Dynamic_Hash_OpTable tao_" << this->flatname () << "_optable " <<
+    "(" << this->flatname () << "_operations, " << this->skel_count_ << ", " <<
+    2*this->skel_count_ << ");"
+      << nl;
+  return 0;
+}
+
+// we separate the generation of operation table entries from the
+// "gen_operation_table" method. This enables us to invoke generation of
+// entries for interfaces from which we inherit without any additional
+// code. The parameter "derived" is the one for which the entire operation
+// table is being built.
+int
+be_interface::gen_optable_entries (be_interface *derived)
+{
+  UTL_ScopeActiveIterator *si;
+  AST_Decl *d;
+  TAO_OutStream *ss; // output stream
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ss = cg->server_skeletons ();
+
+  if (this->nmembers () > 0)
+    {
+      // if there are elements in this scope i.e., any operations and
+      // attributes defined by "this" which happens to be the same as "derived"
+      // or one of its ancestors.
+
+      si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
+      // instantiate a scope iterator.
+
+      while (!(si->is_done ()))
+        {
+          // get the next AST decl node
+          d = si->item ();
+          if (d->node_type () == AST_Decl::NT_op)
+            {
+              ss->indent (); // start from current indentation level
+              // we are an operation node
+              *ss << "{\"" << d->local_name () << "\", &" << derived->full_skel_name
+                () << "::" << d->local_name () << "_skel},\n";
+              derived->skel_count_++;
+            }
+          else if (d->node_type () == AST_Decl::NT_attr)
+            {
+              AST_Attribute *attr;
+
+              ss->indent (); // start from current indentation level
+              // generate only the "get" entry if we are readonly
+              *ss << "{\"_get_" << d->local_name () << "\", &" <<
+                derived->full_skel_name () << "::_get_" << d->local_name () <<
+                "_skel},\n";
+              derived->skel_count_++;
+
+              attr = AST_Attribute::narrow_from_decl (d);
+              if (!attr)
+                return -1;
+
+              if (!attr->readonly ())
+                {
+                  // the set method
+                  ss->indent (); // start from current indentation level
+                  *ss << "{\"_set_" << d->local_name () << "\", &" <<
+                    derived->full_skel_name () << "::_set_" << d->local_name
+                    () << "_skel},\n";
+                  derived->skel_count_++;
+                }
+            }
+          si->next ();
+        } // end of while
+      delete si; // free the iterator object
+    }
+  return 0;
+}
+
+// template method that traverses the inheritance graph in a breadth-first
+// style. The actual work on each element in the inheritance graph is carried
+// out by the function passed as argument
+int be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
+                                              TAO_OutStream *os)
+{
+  long i;            // loop index
+  ACE_Unbounded_Queue <be_interface*> queue; // Queue data structure needed for
+                                            // breadth-first traversal of
+                                            // inheritance tree
+  // insert ourselves in the Queue
+  if (queue.enqueue_tail (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "(%N:%l) be_interface::gen_operation_table - "
+                         "error generating entries\n"), -1);
+    }
+
+  // do until queue is empty
+  while (!queue.is_empty ())
+    {
+      be_interface *bi;  // element inside the queue
+
+      // use breadth-first strategy i.e., first generate entries for ourselves,
+      // followed by nodes that we immediately inherit from, and so on. In the
+      // process make sure that we do not generate code for the same node more
+      // than once. Such a case may arise due to multiple inheritance forming a
+      // diamond like inheritance graph.
+
+      // dequeue the element at the head of the queue
+      if (queue.dequeue_head (bi))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_interface::traverse_graph - "
+                             "dequeue_head failed\n"), -1);
+        }
+
+      // use the helper method to generate code for ourself using the
+      // properties of the element dequeued. For the first iteration, the
+      // element dequeued and "this" will be the same i.e., ourselves
+      if (gen (this, bi, os) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_interface::traverse_graph - "
+                             "helper code gen failed\n"), -1);
+        }
+
+      // now check if the dequeued element has any ancestors. If yes, insert
+      // them inside the queue making sure that there are no duplicates
+      for (i=0; i < bi->n_inherits (); i++)
+        {
+          be_interface *parent;  // parent of the dequeued element
+
+          // initialize an iterator to search the queue for duplicates
+          ACE_Unbounded_Queue_Iterator<be_interface*> q_iter (queue);
+
+          // retrieve the next parent from which the dequeued element inherits
+          parent = be_interface::narrow_from_decl (bi->inherits ()[i]);
+          if (!parent)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_interface::gen_server_skeletons - "
+                                 "bad inherited interface\n"), -1);
+            }
+
+          // now insert this node at the tail of the queue, but make sure that
+          // it doesn't already exist in the queue
+          int found = 0;
+          while (!q_iter.done ())
+            {
+              be_interface **temp;  // queue element
+
+              (void) q_iter.next (temp);
+              if (!ACE_OS::strcmp (parent->fullname (), (*temp)->fullname ()))
+                {
+                  // we exist in this queue and cannot be inserted
+                  found = 1;
+                }
+              if (found)
+                break;
+              (void) q_iter.advance ();
+            } // end of while
+          if (!found)
+            {
+              // insert the parent in the queue
+              if (queue.enqueue_tail (parent) == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_interface::gen_server_skeletons - "
+                                 "enqueue op failed\n"), -1);
+                }
+            }
+        } // end of for loop
+    } // end of while queue not empty
+  return 0;
+}
+
+// helpers passed to the template method
+
+int
+be_interface::gen_optable_helper (be_interface *derived,
+                                  be_interface *ancestor,
+                                  TAO_OutStream */*os*/)
+{
+  // generate entries for the derived class using the properties of its
+  // ancestors
+  if (ancestor->gen_optable_entries (derived) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_interface::gen_operation_table - "
+                         "error generating entries for inherited"
+                         "interfaces\n"), -1);
+    }
+  return 0;
+}
+
+int
+be_interface::is_a_helper (be_interface */*derived*/, be_interface *bi, TAO_OutStream *os)
+{
+  // emit the comparison code
+  os->indent ();
+  *os << "(!ACE_OS::strcmp ((char *)value, \"" << bi->repoID () <<
+    "\")) ||\n";
+
+  return 0;
+}
+
+int
+be_interface::gen_skel_helper (be_interface *derived,
+                               be_interface *ancestor,
+                               TAO_OutStream *os)
+{
+  UTL_ScopeActiveIterator *si;
+  AST_Decl *d;
+  TAO_NL  nl;        // end line
+
+  // if derived and ancestor are same, skip it
+  if (derived == ancestor)
+    return 0;
+
+  // else generate code that does the cast to the appropriate type
+
+  if (ancestor->nmembers () > 0)
+    {
+      // if there are elements in ancestor scope i.e., any operations and
+      // attributes defined by "ancestor", become methods on the derived class
+      // which call the corresponding method of the base class by doing the
+      // proper casting
+
+      si = new UTL_ScopeActiveIterator (ancestor, UTL_Scope::IK_decls);
+      // instantiate a scope iterator.
+
+      while (!(si->is_done ()))
+        {
+          // get the next AST decl node
+          d = si->item ();
+          if (d->node_type () == AST_Decl::NT_op)
+            {
+              os->indent (); // start from current indentation level
+              if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
+                {
+                  // generate the static method corresponding to this method
+                  *os << "static void " << d->local_name () <<
+                    "_skel (CORBA::ServerRequest &req, void *obj,"
+                      << " void *context, CORBA::Environment &env);\n\n";
+                }
+              else
+                { // generate code in the inline file
+                  // generate the static method corresponding to this method
+                  *os << "ACE_INLINE void " << derived->full_skel_name () <<
+                    "::" << d->local_name () <<
+                    "_skel (CORBA::ServerRequest &req, " <<
+                    "void *obj, void *context, CORBA::Environment &env)" << nl;
+                  *os << "{\n";
+                  os->incr_indent ();
+                  *os << ancestor->full_skel_name () << "_ptr impl = (" <<
+                    derived->full_skel_name () << "_ptr) obj;" << nl;
+                  *os << ancestor->full_skel_name () << "::" << d->local_name
+                    () << "_skel (req, impl, context, env);\n";
+                  os->decr_indent ();
+                  *os << "}\n";
+                }
+            }
+          else if (d->node_type () == AST_Decl::NT_attr)
+            {
+              AST_Attribute *attr;
+
+              attr = AST_Attribute::narrow_from_decl (d);
+              if (!attr)
+                return -1;
+
+              os->indent (); // start from current indentation level
+              if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
+                {
+                  // generate the static method corresponding to this method
+                  *os << "static void _get_" << d->local_name () <<
+                    "_skel (CORBA::ServerRequest &req, void *obj,"
+                      << " void *context, CORBA::Environment &env);\n\n";
+                }
+              else
+                { // generate code in the inline file
+                  // generate the static method corresponding to this method
+                  *os << "ACE_INLINE void " << derived->full_skel_name () <<
+                    "::_get_" << d->local_name () <<
+                    "_skel (CORBA::ServerRequest &req, " <<
+                    "void *obj, void *context, CORBA::Environment &env)" << nl;
+                  *os << "{\n";
+                  os->incr_indent ();
+                  *os << ancestor->full_skel_name () << "_ptr impl = (" <<
+                    derived->full_skel_name () << "_ptr) obj;" << nl;
+                  *os << ancestor->full_skel_name () << "::_get_" << d->local_name
+                    () << "_skel (req, impl, context, env);\n";
+                  os->decr_indent ();
+                  *os << "}\n";
+                }
+
+              if (!attr->readonly ())
+                {
+                  // the set method
+                  os->indent (); // start from current indentation level
+                  if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
+                    {
+                      // generate the static method corresponding to this method
+                      *os << "static void _set_" << d->local_name () <<
+                        "_skel (CORBA::ServerRequest &req, void *obj,"
+                          << " void *context, CORBA::Environment &env);\n\n";
+                    }
+                  else
+                    { // generate code in the inline file
+                      // generate the static method corresponding to this method
+                      *os << "ACE_INLINE void " << derived->full_skel_name ()
+                          << "::_set_" << d->local_name () <<
+                        "_skel (CORBA::ServerRequest &req, " <<
+                        "void *obj, void *context, CORBA::Environment &env)" <<
+                        nl;
+                      *os << "{\n";
+                      os->incr_indent ();
+                      *os << ancestor->full_skel_name () << "_ptr impl = (" <<
+                        derived->full_skel_name () << "_ptr) obj;" << nl;
+                      *os << ancestor->full_skel_name () << "::_get_" <<
+                        d->local_name () << "_skel (req, impl, context, env);\n";
+                      os->decr_indent ();
+                      *os << "}\n";
+                    }
+
+                }
+            }
+          si->next ();
+        } // end of while
+      delete si; // free the iterator object
+    }
+  return 0;
+}
+
 // Narrowing
 IMPL_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_interface)
 IMPL_NARROW_FROM_SCOPE (be_interface)
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Node <be_interface*>;
+template class ACE_Unbounded_Queue <be_interface*>;
+template class ACE_Unbounded_Queue_Iterator <be_interface*>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Node<be_interface*>
+#pragma instantiate ACE_Unbounded_Queue<be_interface*>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<be_interface*>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
