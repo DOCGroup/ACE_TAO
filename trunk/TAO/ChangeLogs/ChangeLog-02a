@@ -1,3 +1,10 @@
+Sat Feb  3 15:56:43 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+
+          Renamed some variables to remove multiply defined variables
+          on MSVC, which resulted from different for loop scoping rules.
+
 Fri Feb  2 14:45:57 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/NT_Service.h:

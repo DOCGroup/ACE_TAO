@@ -1872,10 +1872,10 @@ TAO_StreamEndPoint::start (const AVStreams::flowSpec &flow_spec,
       for (u_int i=0;i<flow_spec.length ();i++)
         {
           TAO_AV_FlowSpecSetItor end = this->forward_flow_spec_set.end ();
-          for (TAO_AV_FlowSpecSetItor begin = this->forward_flow_spec_set.begin ();
-               begin != end; ++begin)
+          for (TAO_AV_FlowSpecSetItor forward_begin = this->forward_flow_spec_set.begin ();
+               forward_begin != end; ++forward_begin)
             {
-              TAO_FlowSpec_Entry *entry = *begin;
+              TAO_FlowSpec_Entry *entry = *forward_begin;
               if (ACE_OS::strcmp (entry->flowname (), flow_spec [i]) == 0)
                 {
                   //                  entry->protocol_object ()->start ();
@@ -1885,10 +1885,10 @@ TAO_StreamEndPoint::start (const AVStreams::flowSpec &flow_spec,
             }
 
           end = this->forward_flow_spec_set.end ();
-          for (TAO_AV_FlowSpecSetItor begin = this->reverse_flow_spec_set.begin ();
-               begin != end; ++begin)
+          for (TAO_AV_FlowSpecSetItor reverse_begin = this->reverse_flow_spec_set.begin ();
+               reverse_begin != end; ++reverse_begin)
             {
-              TAO_FlowSpec_Entry *entry = *begin;
+              TAO_FlowSpec_Entry *entry = *reverse_begin;
               if (ACE_OS::strcmp (entry->flowname (), flow_spec [i]) == 0)
                 {
                   //                  entry->protocol_object ()->start ();
@@ -1901,20 +1901,20 @@ TAO_StreamEndPoint::start (const AVStreams::flowSpec &flow_spec,
   else
     {
       TAO_AV_FlowSpecSetItor end = this->forward_flow_spec_set.end ();
-      for (TAO_AV_FlowSpecSetItor begin = this->forward_flow_spec_set.begin ();
-           begin != end; ++begin)
+      for (TAO_AV_FlowSpecSetItor forwardbegin = this->forward_flow_spec_set.begin ();
+           forwardbegin != end; ++forwardbegin)
         {
-          TAO_FlowSpec_Entry *entry = *begin;
+          TAO_FlowSpec_Entry *entry = *forwardbegin;
           //          entry->protocol_object ()->start ();
           if (entry->handler () != 0)
             entry->handler ()->start (entry->role ());
         }
       
       end = this->reverse_flow_spec_set.end ();
-      for (TAO_AV_FlowSpecSetItor begin = this->reverse_flow_spec_set.begin ();
-           begin != end; ++begin)
+      for (TAO_AV_FlowSpecSetItor reversebegin = this->reverse_flow_spec_set.begin ();
+           reversebegin != end; ++reversebegin)
         {
-          TAO_FlowSpec_Entry *entry = *begin;
+          TAO_FlowSpec_Entry *entry = *reversebegin;
           //          entry->protocol_object ()->start ();
           if (entry->handler () != 0)
             entry->handler ()->start (entry->role ());
