@@ -28,7 +28,7 @@ Video_Control_Waiting_State::handle_input (ACE_HANDLE h)
 {
   int result;
   
-  fprintf (stderr, "VS: waiting for a new command...\n");
+  //  fprintf (stderr, "VS: waiting for a new command...\n");
     
   VIDEO_SINGLETON::instance ()->precmd = VIDEO_SINGLETON::instance ()->cmd;
   result = VIDEO_SINGLETON::instance ()->CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
