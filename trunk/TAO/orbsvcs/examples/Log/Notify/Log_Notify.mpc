@@ -11,6 +11,6 @@ project(*Consumer) : orbsvcsexe, notification, dsnotifylogadmin, naming {
 project(*Supplier) : orbsvcsexe, notification, dsnotifylogadmin, naming {
   exename = supplier
   source_files {
-    Notify_Consumer.cpp
+    Notify_Supplier.cpp
   }
 }
