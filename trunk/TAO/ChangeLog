@@ -1,3 +1,9 @@
+Mon Aug  9 23:31:45 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/PSS/PSDL_Scope.cpp:
+	  Change call to ACE_OS::to_lower() to ACE_OS::ace_tolower()
+	  to adapt to API change.
+
 Mon Aug  9 17:43:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Utils/Servant_Var.inl:
