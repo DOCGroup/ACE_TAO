@@ -347,7 +347,7 @@ TAO_EC_Default_Factory::create_dispatching (TAO_EC_Event_Channel *)
     return new TAO_EC_Reactive_Dispatching ();
 #if 0
   else if (this->dispatching_ == 1)
-    return new TAO_EC_Priority_Dispatching (scheduler???);
+    return new TAO_EC_Priority_Dispatching (scheduler /* ??? */);
 #endif
   return 0;
 }
