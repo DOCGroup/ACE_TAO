@@ -2,7 +2,7 @@ Thu Jun 12 15:20:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Template_Instantiations.cpp: This file now contains some
 	  useful template definitions that would be used by ACE+TAO and
-	  its applications. We have started of by doing
+	  its applications. We have started by doing
 	  ACE_Unbounded_Queue<long>. In future we will add other basic 
 	  types on a case by case basis.
 
