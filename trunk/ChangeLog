@@ -1,3 +1,17 @@
+Fri Nov 19 09:55:35 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/Kokyu.{h,cpp}: 
+
+	  Changed the return type of Dispatcher_Factory::create_dispatcher
+	  method from auto_ptr<Dispatcher> to Dispatcher*. This was
+	  causing build errors in some beta compilers and warnings in
+	  MSVC6, Tru64 and OpenVMS compilers. It looks like these
+	  compilers are broken in terms of auto_ptr implementation,
+	  specifically returning auto_ptr types from
+	  functions/methods. Thanks to Johnny Willemsen
+	  (jwillemsen@remedy.nl) for pointing this out.
+
+
 Fri Nov 19 07:33:33 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/APG/Logging/Trace.h:
