@@ -137,6 +137,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -242,8 +243,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -275,7 +278,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -291,17 +293,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -331,6 +322,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -339,6 +332,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -355,6 +357,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -460,8 +463,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -493,7 +498,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -509,17 +513,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -549,6 +542,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -557,6 +552,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -572,6 +576,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -677,8 +682,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -710,7 +717,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -727,17 +733,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -767,6 +762,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -775,6 +772,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -791,6 +797,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -896,8 +903,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -929,7 +938,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -945,17 +953,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -985,6 +982,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -993,6 +992,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -1010,6 +1018,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1115,8 +1124,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -1148,7 +1159,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -1164,17 +1174,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1204,6 +1203,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1212,6 +1213,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -1228,6 +1238,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1333,8 +1344,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -1366,7 +1379,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -1382,17 +1394,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1422,6 +1423,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1430,6 +1433,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -1446,6 +1458,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1551,8 +1564,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -1584,7 +1599,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -1600,17 +1614,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1640,6 +1643,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1648,6 +1653,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -1664,6 +1678,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1769,8 +1784,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -1802,7 +1819,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -1818,17 +1834,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1858,6 +1863,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1866,6 +1873,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -1889,6 +1905,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1994,8 +2011,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -2027,7 +2046,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -2043,17 +2061,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2083,6 +2090,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -2091,6 +2100,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -2113,6 +2131,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2218,8 +2237,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -2251,7 +2272,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -2267,17 +2287,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2307,6 +2316,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -2315,6 +2326,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -2331,6 +2351,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2436,8 +2457,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -2469,7 +2492,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -2485,17 +2507,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2525,6 +2536,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -2533,6 +2546,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -2549,6 +2571,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2654,8 +2677,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -2687,7 +2712,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -2703,17 +2727,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2743,6 +2756,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -2751,6 +2766,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -2767,6 +2791,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2872,8 +2897,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -2905,7 +2932,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -2921,17 +2947,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2961,6 +2976,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -2969,6 +2986,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -2985,6 +3011,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3090,8 +3117,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -3123,7 +3152,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -3139,17 +3167,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -3179,6 +3196,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -3187,6 +3206,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -3203,6 +3231,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3308,8 +3337,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -3341,7 +3372,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -3357,17 +3387,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -3397,6 +3416,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -3405,6 +3426,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -3421,6 +3451,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3526,8 +3557,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -3559,7 +3592,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -3575,17 +3607,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -3615,6 +3636,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -3623,6 +3646,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -3639,6 +3671,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3744,8 +3777,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -3777,7 +3812,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -3793,17 +3827,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -3833,6 +3856,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -3841,6 +3866,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -3859,6 +3893,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3964,8 +3999,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -3997,7 +4034,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -4013,17 +4049,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -4053,6 +4078,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -4061,6 +4088,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -4077,6 +4113,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4182,8 +4219,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -4215,7 +4254,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -4231,17 +4269,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -4271,6 +4298,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -4279,6 +4308,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -4295,6 +4333,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4400,8 +4439,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -4433,7 +4474,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -4449,17 +4489,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -4489,6 +4518,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -4497,6 +4528,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -4513,6 +4553,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4618,8 +4659,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -4651,7 +4694,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -4667,17 +4709,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -4707,6 +4738,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -4715,6 +4748,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -4731,6 +4773,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4836,8 +4879,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -4869,7 +4914,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -4885,17 +4929,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -4925,6 +4958,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -4933,6 +4968,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -4949,6 +4993,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5054,8 +5099,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -5087,7 +5134,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -5103,17 +5149,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -5143,6 +5178,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -5151,6 +5188,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -5169,6 +5215,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5274,8 +5321,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -5307,7 +5356,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -5323,17 +5371,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -5363,6 +5400,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -5371,6 +5410,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -5387,6 +5435,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5492,8 +5541,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -5525,7 +5576,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -5541,17 +5591,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -5581,6 +5620,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -5589,6 +5630,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -5605,6 +5655,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5710,8 +5761,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -5743,7 +5796,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -5759,17 +5811,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -5799,6 +5840,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -5807,6 +5850,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -5823,6 +5875,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5928,8 +5981,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -5961,7 +6016,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -5977,17 +6031,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -6017,6 +6060,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -6025,6 +6070,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -6041,6 +6095,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6146,8 +6201,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -6179,7 +6236,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -6195,17 +6251,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -6235,6 +6280,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -6243,6 +6290,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -6260,6 +6316,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6365,8 +6422,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -6398,7 +6457,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -6414,15 +6472,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -6452,6 +6501,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -6460,6 +6511,13 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -6478,6 +6536,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6583,8 +6642,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -6616,7 +6677,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -6632,12 +6692,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -6667,6 +6721,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -6675,6 +6731,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -6695,6 +6755,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6800,8 +6861,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -6833,7 +6896,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -6849,17 +6911,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -6889,6 +6940,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -6897,6 +6950,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -6913,6 +6975,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7018,8 +7081,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -7051,7 +7116,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -7067,17 +7131,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -7107,6 +7160,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -7115,6 +7170,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -7131,6 +7195,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7236,8 +7301,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -7269,7 +7336,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -7285,17 +7351,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -7325,6 +7380,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -7333,6 +7390,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -7351,6 +7417,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7456,8 +7523,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -7489,7 +7558,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -7505,17 +7573,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -7545,6 +7602,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -7553,6 +7612,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -7571,6 +7639,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7676,8 +7745,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -7709,7 +7780,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -7725,17 +7795,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -7765,6 +7824,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -7773,6 +7834,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -7789,6 +7859,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7894,8 +7965,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -7927,7 +8000,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -7943,17 +8015,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -7983,6 +8044,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -7991,6 +8054,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -8007,6 +8079,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -8112,8 +8185,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -8145,7 +8220,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -8161,17 +8235,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -8201,6 +8264,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -8209,6 +8274,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -8225,6 +8299,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -8333,8 +8408,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -8366,7 +8443,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -8382,17 +8458,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -8422,6 +8487,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -8430,6 +8497,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -8446,6 +8522,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -8551,8 +8628,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -8584,7 +8663,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -8600,17 +8678,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -8640,6 +8707,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -8648,6 +8717,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -8664,6 +8742,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -8769,8 +8848,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -8802,7 +8883,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -8818,17 +8898,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -8858,6 +8927,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -8866,6 +8937,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -8893,6 +8973,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -8998,8 +9079,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -9031,7 +9114,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -9047,17 +9129,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -9087,6 +9158,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -9095,6 +9168,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -9111,6 +9193,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -9216,8 +9299,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -9249,7 +9334,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -9265,17 +9349,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -9305,6 +9378,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -9313,6 +9388,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -9329,6 +9413,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -9434,8 +9519,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -9467,7 +9554,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -9483,17 +9569,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -9523,6 +9598,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -9531,6 +9608,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -9547,6 +9633,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -9652,8 +9739,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -9685,7 +9774,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -9701,17 +9789,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -9741,6 +9818,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -9749,6 +9828,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -9767,6 +9855,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -9871,8 +9960,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -9904,7 +9995,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -9920,12 +10010,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -9955,6 +10039,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -9963,6 +10049,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -9984,6 +10074,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -10089,8 +10180,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -10122,7 +10215,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -10138,17 +10230,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -10178,6 +10259,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -10186,6 +10269,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
@@ -10202,6 +10294,7 @@ endif # cxvx86
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -10307,8 +10400,10 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Connector.h \
@@ -10340,7 +10435,6 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Acceptor.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/Align.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -10356,17 +10450,6 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.h \
- $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
- $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -10396,6 +10479,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/Connect.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -10404,6 +10489,15 @@ endif # cxvx86
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_Object.i \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
