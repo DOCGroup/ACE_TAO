@@ -13,7 +13,7 @@ module Test
   };
 
   /// A factory to create simple objects
-  interface Factory
+  interface _Factory
   {
     /// Create the object
     Simple create_simple_object ();
