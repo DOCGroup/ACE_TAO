@@ -122,8 +122,8 @@ run_test (int argc, ACE_TCHAR *argv[])
 
   // Process the Service Configurator directives in this test's
   ACE_ASSERT (new_argv.add (argv) != -1
-              && new_argv.add ("-f") != -1
-              && new_argv.add ("Service_Config_Test.conf") != -1);
+              && new_argv.add (ACE_TEXT ("-f")) != -1
+              && new_argv.add (ACE_TEXT ("Service_Config_Test.conf")) != -1);
 
   // We need this scope to make sure that the destructor for the
   // <ACE_Service_Config> gets called.

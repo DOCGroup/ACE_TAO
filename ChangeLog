@@ -1,3 +1,10 @@
+Tue Jul 31 22:10:48 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Service_Config_Test.cpp (run_test):
+
+	  Wrap strings passed to ACE_ARGV::add() within an ACE_TEXT
+	  macro.  Fixes Unicode conversion problems.
+
 Tue Jul 31 16:53:57 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Svc_Conf.h (ace_yyrestart, ace_yy_delete_parse_buffer,
