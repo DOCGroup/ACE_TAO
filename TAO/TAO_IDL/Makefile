@@ -19,10 +19,6 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ifeq ($(CROSS-COMPILE),)
   include $(ACE_ROOT)/include/makeinclude/macros.GNU
   include $(TAO_ROOT)/rules.tao.GNU
-  include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-  include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-  include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-  include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 endif # ! CROSS-COMPILE
 
 #----------------------------------------------------------------------------
