@@ -35,7 +35,7 @@ ACE_Service_Config::dump (void) const
 
 // Allocate a Service Manager.
 
-ACE_SVC_FACTORY_DEFINE (ACE_Service_Manager)
+ACE_FACTORY_DEFINE (ACE, ACE_Service_Manager)
 
 // ----------------------------------------
 
@@ -351,11 +351,15 @@ ACE_Service_Config::load_static_svcs (void)
     {
       ACE_Static_Svc_Descriptor *ssd = *ssdp;
 
+      ACE_Service_Object_Exterminator gobbler;
+      void *sym = (*ssd->alloc_)(&gobbler);
+
       ACE_Service_Type_Impl *stp =
         ace_create_service_type (ssd->name_,
                                  ssd->type_,
-                                 (*ssd->alloc_)(),
-                                 ssd->flags_);
+                                 sym,
+                                 ssd->flags_,
+                                 gobbler);
       if (stp == 0)
         continue;
 

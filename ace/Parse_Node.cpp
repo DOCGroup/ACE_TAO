@@ -423,7 +423,7 @@ ACE_Object_Node::ACE_Object_Node (const char *path,
 }
 
 void *
-ACE_Object_Node::symbol (void)
+ACE_Object_Node::symbol (ACE_Service_Object_Exterminator *)
 {
   ACE_TRACE ("ACE_Object_Node::symbol");
   if (this->open_handle () != 0)
@@ -483,12 +483,12 @@ ACE_Function_Node::ACE_Function_Node (const char *path,
 }
 
 void *
-ACE_Function_Node::symbol (void)
+ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
 {
   ACE_TRACE ("ACE_Function_Node::symbol");
   if (this->open_handle () != 0)
     {
-      void *(*func) (void) = 0;
+      void *(*func) (ACE_Service_Object_Exterminator *) = 0;
       this->symbol_ = 0;
 
       // Locate the factory function <function_name> in the shared
@@ -497,7 +497,7 @@ ACE_Function_Node::symbol (void)
       ASYS_TCHAR *wname = ACE_const_cast (ASYS_TCHAR *,
                                           ASYS_WIDE_STRING (this->function_name_));
 
-      func = (void *(*)(void))
+      func = (void *(*)(ACE_Service_Object_Exterminator *))
         ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
                        wname);
 
@@ -527,7 +527,7 @@ ACE_Function_Node::symbol (void)
             }
         }
       // Invoke the factory function and record it's return value.
-      this->symbol_ = (*func) ();
+      this->symbol_ = (*func) (gobbler);
 
       if (this->symbol_ == 0)
         {
@@ -596,7 +596,7 @@ ACE_Static_Function_Node::ACE_Static_Function_Node (const char *func_name)
 }
 
 void *
-ACE_Static_Function_Node::symbol (void)
+ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *)
 {
   ACE_TRACE ("ACE_Static_Function_Node::symbol");
 
