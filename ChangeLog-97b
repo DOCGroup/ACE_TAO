@@ -21,6 +21,10 @@ Wed Oct 15 07:21:05 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* examples/threads/tss1.cpp: removed unused static "lock".
 
+	* examples/IPC_SAP/TLI_SAP/ftp-server.cpp (read_file): convert
+	  void *fd to long if ACE_HAS_64BIT_LONGS.  And, put "n" in
+	  ACE_UNUSED_ARG. (main): put "return 0" in ACE_NOTREACHED.
+
 	* include/makeinclude/platform_osf1_4.0.GNU: minor cleanup, incl.
 	  addition of -use_ld_input to SOFLAGS.
 
