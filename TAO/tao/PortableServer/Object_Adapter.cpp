@@ -22,7 +22,9 @@
 # include "Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, Object_Adapter, "$Id$")
+ACE_RCSID (TAO_PortableServer,
+           Object_Adapter,
+           "$Id$")
 
 // Timeprobes class
 #include "tao/Timeprobe.h"
@@ -636,17 +638,15 @@ TAO_Object_Adapter::dispatch (TAO_ObjectKey &key,
       return TAO_Adapter::DS_MISMATCHED_KEY;
     }
 
+  int result = 0;
+
 #if TAO_HAS_INTERCEPTORS == 1
   TAO_ServerRequestInterceptor_Adapter sri_adapter (
     this->orb_core_.server_request_interceptors (),
     request.interceptor_count ());
 
   TAO_ServerRequestInfo ri (request);
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-  int result = 0;
-
-#if TAO_HAS_INTERCEPTORS == 1
   ACE_TRY
     {
       // The receive_request_service_contexts() interception point

@@ -46,7 +46,7 @@ TAO_ClientRequestInfo::reply_status (int invoke_status)
 
 ACE_INLINE void
 TAO_ClientRequestInfo::forward_reference (
-  PortableInterceptor::ForwardRequest &exc)
+  PortableInterceptor::ForwardRequest &)
 {
   // Note that we're converting the ForwardRequest exception in to a
   // LOCATION_FORWARD reply, so we do not set the exception status.

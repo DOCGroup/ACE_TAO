@@ -1,16 +1,35 @@
+Thu Mar  1 10:39:49 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ClientRequestInfo.inl (forward_reference):
+
+	  Fixed "unused argument" warning.
+
+	* tao/ClientRequestInfo.cpp (get_request_policy):
+
+	  Only call CORBA::Object::_get_policy() if CORBA Messaging is
+	  enabled at compile-time.  Fixes a compile-time error reported by
+	  Erik Johannes <ejohannes@oresis.com>.
+
+	* tao/PortableServer/Object_Adapter.cpp (dispatch):
+
+	  Cleaned up the interceptor related code slightly.
+
 Thu Mar 01 12:18:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-  * tests/AMI_Timeouts/client.cpp:
-    Added a ".in ()" when passing a _var as _ptr.
+	* tests/AMI_Timeouts/client.cpp:
+	
+	  Added a ".in ()" when passing a _var as _ptr.
 
-  * tests/AMI_Timeouts/Makefile:
-    Added a missing space.
+	* tests/AMI_Timeouts/Makefile:
 
-  * tests/AMI_Timeouts/timeout_i.cpp:
-    Removed the name of some parameters which were not used.
+	  Added a missing space.
 
-    This should fix several compile warnings and errors. Thanks to
-    Bala for hooking up the AMI_Timeouts test and reporting this.
+	* tests/AMI_Timeouts/timeout_i.cpp:
+
+	  Removed the name of some parameters which were not used.
+
+	  This should fix several compile warnings and errors. Thanks to
+	  Bala for hooking up the AMI_Timeouts test and reporting this.
 
 Thu Mar 01 09:38:28 2001  Ossama Othman  <ossama@uci.edu>
 
