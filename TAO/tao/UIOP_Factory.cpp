@@ -10,6 +10,7 @@
 
 ACE_RCSID(tao, UIOP_Factory, "$Id$")
 
+static const char prefix_[] = "uiop";
 
 TAO_UIOP_Protocol_Factory::TAO_UIOP_Protocol_Factory (void)
   :  major_ (TAO_DEF_GIOP_MAJOR),
@@ -24,12 +25,15 @@ TAO_UIOP_Protocol_Factory::~TAO_UIOP_Protocol_Factory (void)
 int
 TAO_UIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
-  const char protocol[] = "uiop";
-  // This is valid for any protocol beginning with `uiop'.
-
   // Check for the proper prefix in the IOR.  If the proper prefix isn't
   // in the IOR then it is not an IOR we can use.
-  return (ACE_OS::strcasecmp (prefix.c_str (), protocol) == 0);
+  return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_) == 0);
+}
+
+const char *
+TAO_UIOP_Protocol_Factory::prefix (void) const
+{
+  return ::prefix_;
 }
 
 TAO_Acceptor *

@@ -38,14 +38,17 @@ public:
   // Initialization hook.
 
   virtual int match_prefix (const ACE_CString &prefix);
-  // verify prefix is a match
+  // Verify prefix is a match
+
+  virtual const char *prefix (void) const;
+  // Returns the prefix used by the protocol.
 
   // Factory methods
   virtual TAO_Acceptor  *make_acceptor (void);
-  // create an acceptor
+  // Create an acceptor
 
   virtual TAO_Connector *make_connector  (void);
-  // create a connector
+  // Create a connector
 
 };
 
