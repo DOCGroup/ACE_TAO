@@ -1,3 +1,22 @@
+Mon Apr  7 11:56:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_root/root.cpp (visit_root):
+
+          Added a check at this higher level before creating and 
+          launching a visitor for OBV_* module code. This visitor
+          should not be created unless we are generating code in
+          stub files. Formerly the check of context state that catches
+          this was done at a lower level, in visit_* methods of
+          subclassed visitors. One case for eventtypes was missed,
+          which was the cause of the invesitgation.
+
+        * TAO_IDL/be/be_visitor_valuetype/obv_module.cpp (visit_eventtype):
+
+          Removed error message for case which is now caught at a 
+          higher level as described above, and made other cosmetic
+          changes to the source code. Thanks to Nanbor Wang
+          <nanbor@cse.wustl.edu> for reporting the problem.
+
 Mon Apr  7 10:39:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynCommon.cpp (get_any):
