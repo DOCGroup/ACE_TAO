@@ -18,6 +18,7 @@
 #include "tao/Invocation.h"
 #include "tao/varout.h"
 #include "tao/POA_CORBA.h"
+#include "tao/ORB.h"
 
 #if !defined (__ACE_INLINE__)
 #include "DomainC.i"

@@ -11,6 +11,7 @@
 #include "tao/Server_Request.h"
 #include "tao/Operation_Table.h"
 #include "tao/ORB_Core.h"
+#include "tao/ORB.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/POAS.i"
