@@ -24,30 +24,62 @@ static char *ior_output_file = 0;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:d");
+  ACE_Get_Opt get_opts (argc, argv, "f:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'o':
+      case 'f':
         ior_output_file = get_opts.optarg;
         break;
+
       case 'd':
 	TAO_debug_level++;
 	break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "[-oior_output_file]"
-			   "[-d]"
+                           "[-f ior_output_file] "
                            "\n",
                            argv [0]),
                           -1);
       }
 
   // Indicates successful parsing of command line.
+  return 0;
+}
+
+static int
+write_iors_to_file (const char *first_ior)
+{
+  if (ior_output_file == 0)
+    // No filename was specified; simply return
+    return 0;
+
+  FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+  
+  if (output_file == 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IOR: %s\n", 
+                       ior_output_file), 
+                      -1);
+  
+  int result = 0;
+
+  result = ACE_OS::fprintf (output_file,
+                            "%s", 
+                            first_ior);
+  if (result != ACE_OS::strlen (first_ior))
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "ACE_OS::fprintf failed while writing %s to %s\n", 
+                       first_ior,
+                       ior_output_file),
+                      -1);
+  
+  ACE_OS::fclose (output_file);
+
   return 0;
 }
 
@@ -190,22 +222,13 @@ main (int argc, char **argv)
       return -1;
     }
 
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"%s\n",
-		database_agent_ior.in ()));
+  ACE_DEBUG ((LM_DEBUG,"%s\n",
+              database_agent_ior.in ()));
   
-  // If the ior_output_file exists, output the ior to it
-  if (ior_output_file != 0)
-    {
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-	ACE_ERROR_RETURN ((LM_DEBUG, "Cannot open output file for writing IOR: %s", 
-			   ior_output_file),
-			  -1);  
-      ACE_OS::fprintf (output_file, "%s", database_agent_ior.in ());
-      ACE_OS::fclose (output_file);
-    }
-  
+  int write_result = write_iors_to_file (database_agent_ior.in ());
+  if (write_result != 0)
+    return write_result;
+
   // set the state of the poa_manager to active i.e ready to process requests
   poa_manager->activate (env);
   if (env.exception () != 0)

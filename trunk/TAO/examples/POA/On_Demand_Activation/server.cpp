@@ -38,7 +38,7 @@ parse_args (int argc, char **argv)
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "[-f ior_output_file]"
+                           "[-f ior_output_file] "
                            "\n",
                            argv [0]),
                           -1);
