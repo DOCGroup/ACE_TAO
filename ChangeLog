@@ -1,3 +1,10 @@
+Thu Oct 19 09:50:30 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Log_Msg.cpp:
+          Fixed problems during TSS cleanup, the ipc_backend_ object was
+          used after being destroyed. Apparently this only happens on some
+          platforms, but fortunately David's build detected the bug.
+
 Thu Oct 19 09:07:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RMCast/RMCast_Copy_On_Write.h:
