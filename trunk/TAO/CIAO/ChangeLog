@@ -1,7 +1,16 @@
+Thu Jul  8 16:59:26 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
+        *
+          DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/NodeDaemon_Impl.cpp:
+
+          Fix build errors.
+
 Thu Jul  8 16:53:06 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Moved the call to populate_port_tables() from the
           component servant constructor to the end of
           the ciao_postactivate() method in the component servant,
