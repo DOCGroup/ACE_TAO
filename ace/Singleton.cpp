@@ -168,6 +168,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance (void)
         }
       else
         {
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
           // Obtain a lock from the ACE_Object_Manager.  The pointer
           // is static, so we only obtain one per
           // ACE_Unmanaged_Singleton instantiation.
@@ -177,6 +178,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance (void)
             return 0;
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
+#endif /* ACE_MT_SAFE */
 
           if (singleton == 0)
             ACE_NEW_RETURN (singleton,
@@ -338,6 +340,7 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
         }
       else
         {
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
           // Obtain a lock from the ACE_Object_Manager.  The pointer
           // is static, so we only obtain one per
           // ACE_Unmanaged_Singleton instantiation.
@@ -347,6 +350,7 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
             return 0;
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
+#endif /* ACE_MT_SAFE */
 
           if (singleton == 0)
             ACE_NEW_RETURN (singleton,

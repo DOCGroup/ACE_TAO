@@ -1,8 +1,12 @@
 /**
 @page wchar Wide Character/Unicode support in ACE
 
-Here's a first stab at some sort of documentation for the magic wchar stuff
-in ACE.
+Here's a first stab at some sort of documentation for the magic
+wide-character (wchar) stuff in ACE.  It should be possible to compile
+ACE with wchar support on most platforms that ACE runs on.  In some
+cases, we don't enable wchar support by default since it increases the
+footprint a bit.  If you run into any problems, please use the
+$ACE_ROOT/PROBLEM-REPORT-FORM to let us know.
 
 @subsection wchar_overview Overview
 

@@ -112,17 +112,11 @@ operator<< (ostream& os, const ACE_U_LongLong& ll)
   char buffer[32];
 
   if ((flags & ios::oct) != 0)
-    {
-      os << ll.as_string (buffer, 8);
-    }
+    os << ll.as_string (buffer, 8);
   else if ((flags & ios::hex) != 0)
-    {
-      os << ll.as_string (buffer, 16, (flags & ios::uppercase));
-    }
+    os << ll.as_string (buffer, 16, (flags & ios::uppercase));
   else
-    {
-      os << ll.as_string (buffer);
-    }
+    os << ll.as_string (buffer);
   return os;
 }
 #endif
