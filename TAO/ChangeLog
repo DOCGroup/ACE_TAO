@@ -1,3 +1,26 @@
+Mon Apr 12 10:50:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp (destroy_i):
+        
+          Added temporary caching and restoring for the current 
+          ACE_Configuration_Section_Key, while we are calling
+          destroy_i() on the containers contents. If the container
+          is a module that contains another module, the destroy_i()
+          we are in will be called recursively so the state must
+          be preserved. Thanks to Ramiro Penataro <ramiro.penataro@iac.es>
+          for reporting the problem.
+          
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        
+          Added missing destroy() call to an object returned from an
+          IFR query.
+          
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Time/Timer_Helper.cpp:
+        
+          Added some explicit casts to eliminate converstion warnings
+          from MSVC.
+
 Mon Apr 12 10:46:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/TODO:
