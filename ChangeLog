@@ -1,3 +1,11 @@
+Tue May 30 14:23:22 2000  Ossama Othman  <ossama@uci.edu>
+
+	* apps/Gateway/Gateway/gatewayd.cpp:
+	* examples/ASX/UPIPE_Event_Server/Options.cpp:
+	* examples/Naming/test_multiple_contexts.cpp:
+
+	  Added missing "ace/Log_Msg.h" include.
+
 Tue May 30 10:41:34 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Makefile.bor:
