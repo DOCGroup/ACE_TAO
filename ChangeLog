@@ -1,3 +1,11 @@
+Fri Mar  5 09:47:55 2004  Olli Savia  <ops@iki.fi>
+
+	* ACE-INSTALL.html
+	  Updated LynxOS section and fixed some HTML errors.
+
+	* include/makeinclude/platform_lynxos.GNU
+	  Compile flag -Wall is now used on all versions of LynxOS.
+
 Fri Mar  5 01:41:54 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * ace/Node.h:
