@@ -1,11 +1,12 @@
 Thu Oct 15 22:10:48 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-	* performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
- 	* performance-tests/Cubit/TAO/MT_Cubit/README:
-	Synchronized the README file with the actual options in the source
- 	files.  Cleaned up the wording for the help in the README and sou
- 	rce files.
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:	
+ 	* performance-tests/Cubit/TAO/MT_Cubit/README: Synchronized the
+ 	README file with the actual options in the source files.  Cleaned
+ 	up the wording for the help in the README and source files.
+  	Thanks to Brian Gilstrap <gilstrap_b@ociweb.com> for pointing this
+ 	out.
 
 Thu Oct 15 22:06:48 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
