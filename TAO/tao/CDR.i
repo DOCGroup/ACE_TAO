@@ -171,3 +171,9 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 {
   return ACE_static_cast(ACE_InputCDR&,is) >> x;
 }
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is, 
+                                      CORBA::Char* &x)
+{
+  return ACE_static_cast(ACE_InputCDR&,is) >> x;
+}
