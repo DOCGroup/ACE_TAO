@@ -1,34 +1,36 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Makefile for the ACE client-side Name_Server test
+#       Makefile for the ACE client-side Name_Server test
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
-BIN   	= main 
+BIN   	= main
 LIB   	= libClient_Test.a
-SHLIB 	= libClient_Test.$(SOEXT)
+SHLIB   = libClient_Test.$(SOEXT)
 
-FILES 	= Client_Test
+FILES   = Client_Test
 
 PSRC   	= $(addsuffix .cpp,$(BIN))
-OBJ   	= $(SRC:%.cpp=$(VDIR)%.o)
+OBJ     = $(SRC:%.cpp=$(VDIR)%.o)
 
 LSRC   	= $(addsuffix .cpp,$(FILES))
 LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
-SHOBJ	= $(addsuffix .so,$(FILES))
+SHOBJ   = $(addsuffix .so,$(FILES))
+
+LIBS    += $(ACELIB)
 
 LDLIBS 	= -lClient_Test
  
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD 	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
+BUILD   = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -40,11 +42,11 @@ include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Dependencies
+#       Dependencies
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
