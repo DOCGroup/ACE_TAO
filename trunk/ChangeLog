@@ -1,3 +1,18 @@
+Tue Dec 17 11:22:31 2002  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* ace/Codeset_IBM1047.h:
+	* ace/Codeset_IBM1047.cpp:
+
+	  Added implementations of ncs and tcs methods to return the proper
+	  values as defined by the OSF's code and character set registry.
+
+	* ace/CDR_Stream.cpp:
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.i:
+
+	  Stripped out the reference counting on translator objects to avoid
+	  build problems. 
+
 Tue Dec 17 11:30:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ACE-INSTALL.html: Fixed fuzz errors.

@@ -68,6 +68,13 @@ public:
   virtual ACE_CDR::Boolean write_char_array (ACE_OutputCDR &,
                                              const ACE_CDR::Char *,
                                              ACE_CDR::ULong);
+
+  /// return the native codeset ID as defined in the OSF code and character
+  /// set registry, 0x10020417
+  virtual ACE_CDR::ULong ncs ();
+  /// return the translated codeset ID as defined in the OSF code and character
+  /// set registry, 0x00010001
+  virtual ACE_CDR::ULong tcs ();
 };
 
 /**
@@ -104,6 +111,13 @@ public:
   virtual ACE_CDR::Boolean write_char_array (ACE_OutputCDR &,
                                              const ACE_CDR::Char *,
                                              ACE_CDR::ULong);
+
+  /// return the native codeset ID as defined in the OSF code and character
+  /// set registry, 0x00010001
+  virtual ACE_CDR::ULong ncs ();
+  /// return the translated codeset ID as defined in the OSF code and character
+  /// set registry, 0x10020417
+  virtual ACE_CDR::ULong tcs ();
 };
 
 #endif /* ACE_MVS */

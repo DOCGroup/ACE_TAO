@@ -34,6 +34,18 @@ ACE_IBM1047_ISO8859::~ACE_IBM1047_ISO8859 (void)
 {
 }
 
+ACE_CDR::ULong
+ACE_IBM1047_ISO8859::ncs ()
+{
+  return 0x10020417;
+}
+
+ACE_CDR::ULong
+ACE_IBM1047_ISO8859::tcs ()
+{
+  return 0x00010001;
+}
+
 ACE_CDR::Boolean
 ACE_IBM1047_ISO8859::read_char (ACE_InputCDR &in,
                                 ACE_CDR::Char &x)
@@ -138,6 +150,19 @@ ACE_ISO8859_IBM1047::ACE_ISO8859_IBM1047 (void)
 ACE_ISO8859_IBM1047::~ACE_ISO8859_IBM1047 (void)
 {
 }
+
+ACE_CDR::ULong
+ACE_ISO8859_IBM1047::ncs ()
+{
+  return 0x00010001;
+}
+
+ACE_CDR::ULong
+ACE_ISO8859_IBM1047::tcs ()
+{
+  return 0x10020417;
+}
+
 
 ACE_CDR::Boolean
 ACE_ISO8859_IBM1047::read_char (ACE_InputCDR& in,
