@@ -57,7 +57,7 @@ HASH_STRING_ENTRY::~ACE_Hash_Map_Entry (void)
 {
   char *key = ext_id_;
   char *value = int_id_;
-  
+
   if (key != 0 && value != 0)
     ACE_DEBUG ((LM_DEBUG, "Freeing `%s' and `%s'\n", key, value));
   ACE_OS::free (key);
@@ -83,7 +83,7 @@ HASH_STRING_MAP::equal (char *const &id1, char *const &id2)
 
 // Do this if we don't have template specialization
 
-#include "Hash_Map_Manager_Test.h"	// Dumb_String is in here
+#include "Hash_Map_Manager_Test.h"      // Dumb_String is in here
 
 #define HASH_STRING_ENTRY ACE_Hash_Map_Entry<Dumb_String, Dumb_String>
 #define HASH_STRING_MAP \
@@ -186,7 +186,7 @@ main (int, char *[])
            hash_iter.next (i);
            hash_iter.advance ())
         ACE_DEBUG ((LM_DEBUG, "iterating: [%s, %s]\n",
-                    i->ext_id_, i->int_id_));
+                    (char *) i->ext_id_, (char *) i->int_id_));
     }
 
     hash.unbind ("goodbye", entry);
@@ -205,7 +205,7 @@ main (int, char *[])
            hash_iter.next (i);
            hash_iter.advance ())
         ACE_DEBUG ((LM_DEBUG, "iterating: [%s, %s]\n",
-                    i->ext_id_, i->int_id_));
+                    (char *) i->ext_id_, (char *) i->int_id_));
     }
   }
 
@@ -223,4 +223,3 @@ template class ACE_Hash_Map_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
 #pragma instantiate ACE_Hash_Map_Manager<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
