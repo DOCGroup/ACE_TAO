@@ -825,7 +825,7 @@ protected:
   TAO_ORB_Core *orb_core_;
 
   /// Our entry in the cache. We dont own this. It is here for our
-  /// convinience. We cannot just change things around.
+  /// convenience. We cannot just change things around.
   TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry_;
 
   /// Strategy to decide whether multiple requests can be sent over the

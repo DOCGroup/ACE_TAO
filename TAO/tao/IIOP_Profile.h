@@ -55,7 +55,7 @@ public:
                     const TAO_GIOP_Message_Version &version,
                     TAO_ORB_Core *orb_core);
 
-  ///  Profile constructor, this is the most efficient since it
+  /// Profile constructor, this is the most efficient since it
   /// doesn't require any address resolution processing.
   TAO_IIOP_Profile (const char *host,
                     CORBA::UShort port,
@@ -78,9 +78,9 @@ public:
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL);
   /**
-   * Add <endp> to this profile's list of endpoints (it is inserted
+   * Add @a endp to this profile's list of endpoints (it is inserted
    * next to the head of the list).  This profiles takes ownership of
-   * <endp>.
+   * @a endp.
    */
   void add_endpoint (TAO_IIOP_Endpoint *endp);
 

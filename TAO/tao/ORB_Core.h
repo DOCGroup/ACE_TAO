@@ -1015,7 +1015,7 @@ protected:
   int fini (void);
 
 #if 0
-  /// @@todo: All these need to go! We dont put input cdr's on the TSS
+  /// @@todo All these need to go! We dont put input cdr's on the TSS
   /// anyway.
   /// Implement the input_cdr_*_allocator() routines using pre-fetched
   /// TSS resources.  This minimizes the number of calls to them.
@@ -1157,7 +1157,7 @@ protected:
   TAO_Resource_Factory *resource_factory_;
 
 #if 0
-  /// @@todo: All these need to go!
+  /// @@todo All these need to go!
   /// The allocators for the message blocks
   //@{
   ACE_Allocator *message_block_dblock_allocator_;

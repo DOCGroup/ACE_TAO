@@ -67,7 +67,7 @@ public:
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   /**
-   * Returns the effective policy if <type> is a known client-exposed
+   * Returns the effective policy if @a type is a known client-exposed
    * policy type.  Returns the effective override for all other policy
    * types.
    */
@@ -255,7 +255,7 @@ public:
   /// Make a call on to services to see whether they have some
   /// preferences on selecting the right profiles.
   /**
-   * @todo Deprecated.  Remove after TAO 1.2.1 is released.
+   * @deprecated  Remove after TAO 1.2.1 is released.
    */
   CORBA::Boolean service_profile_selection (void);
 
