@@ -888,8 +888,8 @@ protected:
 
   // = Helpers
   void check_hint_i (SVC_HANDLER *&sh,
-                     HASH_ADDRESS &search_addr,
-                     CONNECTION_MAP_ENTRY *&entry,
+                     ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> &search_addr,
+                     ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> >, SVC_HANDLER *> *&entry,
                      int &found);
 
   int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
@@ -899,8 +899,8 @@ protected:
                                     int reuse_addr,
                                     int flags,
                                     int perms,
-                                    HASH_ADDRESS &search_addr,
-                                    CONNECTION_MAP_ENTRY *&entry,
+                                    ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> &search_addr,
+                                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> >, SVC_HANDLER *> *&entry,
                                     int &found);
 
   CONNECTION_MAP connection_cache_;
