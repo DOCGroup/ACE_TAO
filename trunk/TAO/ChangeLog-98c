@@ -1,3 +1,7 @@
+Wed Nov 19 12:07:42 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.37, released Wed Nov 19 12:07:42 1997.
+
 Wed Nov 19 10:37:19 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* orbsvcs/lib/Scheduler_Factory.cpp: 
