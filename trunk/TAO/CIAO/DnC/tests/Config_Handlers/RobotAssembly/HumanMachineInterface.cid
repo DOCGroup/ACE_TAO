@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ComponentImplementationDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>20264D1E-DBA1-497E-9DE8-37DE3FA69D14</UUID>
+
+  <implements href="HumanMachineInterface.ccd"/>
+
+  <monolithicImpl>
+    <primaryArtifact>
+      <name>HumanMachineInterface_exec</name>
+      <referencedArtifact href="HumanMachineInterface_exec.iad"/>
+    </primaryArtifact>
+    <primaryArtifact>
+      <name>HumanMachineInterface_stub</name>
+      <referencedArtifact href="HumanMachineInterface_stub.iad"/>
+    </primaryArtifact>
+    <primaryArtifact>
+      <name>HumanMachineInterface_svnt</name>
+      <referencedArtifact href="HumanMachineInterface_svnt.iad"/>
+    </primaryArtifact>
+  </monolithicImpl>
+
+  <ConfigProperty>
+    <name>ComponentIOR</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>HMI.ior</string>
+      </value>
+    </value>
+  </ConfigProperty>
+
+</Deployment:ComponentImplementationDescription>
