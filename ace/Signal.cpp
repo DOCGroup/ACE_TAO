@@ -180,14 +180,14 @@ ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
   this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (sig_handler);
 #endif /* !ACE_HAS_TANDEM_SIGNALS */
 
-#if (ACE_NSIG > 0)
+#if (ACE_NSIG > 0)  &&  !defined(ACE_LACKS_UNIX_SIGNALS)
   for (int s = 1; s < ACE_NSIG; s++)
     if (signals.is_member (s)
         && ACE_OS::sigaction (s, &this->sa_, 0) == -1)
       break;
-#else
+#else  /* ACE_NSIG <= 0  ||  ACE_LACKS_UNIX_SIGNALS */
   ACE_UNUSED_ARG (signals);
-#endif /* ACE_NSIG */
+#endif /* ACE_NSIG <= 0  ||  ACE_LACKS_UNIX_SIGNALS */
 }
 
 ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
@@ -209,14 +209,14 @@ ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
   this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (sig_handler);
 #endif /* !ACE_HAS_TANDEM_SIGNALS */
 
-#if (ACE_NSIG > 0)
+#if (ACE_NSIG > 0)  &&  !defined(ACE_LACKS_UNIX_SIGNALS)
   for (int s = 1; s < ACE_NSIG; s++)
     if (signals.is_member (s)
         && ACE_OS::sigaction (s, &this->sa_, 0) == -1)
       break;
-#else
+#else  /* ACE_NSIG <= 0  ||  ACE_LACKS_UNIX_SIGNALS */
   ACE_UNUSED_ARG (signals);
-#endif /* ACE_NSIG */
+#endif /* ACE_NSIG <= 0  ||  ACE_LACKS_UNIX_SIGNALS */
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Handler)
