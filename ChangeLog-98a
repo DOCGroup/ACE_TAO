@@ -1,3 +1,9 @@
+Mon May  4 13:08:18 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/config-sunos5.6.h: Removed a mysterious "30" at the end of
+ 	  an #undef.  Thanks to J. Russell Noseworthy
+ 	  <rnosewor@objectsciences.com> for reporting this problem.
+
 Mon May 04 08:49:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (ACE_Thread_Adapter::invoke): with ACE_NEEDS_LWP_PRIO_SET,
