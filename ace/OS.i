@@ -8909,15 +8909,11 @@ ACE_OS::wait (int *stat_loc)
 
   ACE_NOTSUP_RETURN (0);
 #else
-# if !defined (AIX)
-#   if defined (ACE_HAS_UNION_WAIT)
+# if defined (ACE_HAS_UNION_WAIT)
   ACE_OSCALL_RETURN (::wait ((union wait *) stat_loc), pid_t, -1);
-#   else
-  ACE_OSCALL_RETURN (::wait (stat_loc), pid_t, -1);
-#   endif /* ACE_HAS_UNION_WAIT */
 # else
-  ACE_OSCALL_RETURN (::wait ((union wait *) stat_loc), pid_t, -1);
-# endif /* defined (AIX) */
+  ACE_OSCALL_RETURN (::wait (stat_loc), pid_t, -1);
+# endif /* ACE_HAS_UNION_WAIT */
 #endif /* defined (ACE_WIN32) */
 }
 
