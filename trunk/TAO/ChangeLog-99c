@@ -1,3 +1,17 @@
+Tue May 25 17:00:08 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Supplier_i.cpp (via_naming_service): 
+	* examples/Callback_Quoter/Consumer_Handler.cpp
+	* examples/Callback_Quoter/Consumer_Input_Handler.cpp
+	* examples/Callback_Quoter/Consumer_Signal_Handler.cpp
+	* examples/Callback_Quoter/Notifier_Input_Handler.cpp
+	* examples/Callback_Quoter/Notifier_i.cpp
+	* examples/Callback_Quoter/Supplier_i.cpp
+	* examples/Callback_Quoter/notifier.cpp : Removed some
+	ACE_TRY_NEW_ENV's and cleaned up the way exception handling is
+	being done.
+	
+
 Tue May 25 16:24:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (set_endpoint): Seveal "reason" strings for
