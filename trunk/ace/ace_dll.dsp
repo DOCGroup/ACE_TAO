@@ -4642,6 +4642,7 @@ DEP_CPP_NAMIN=\
 	".\SString.h"\
 	".\SString.i"\
 	".\stdcpp.h"\
+	".\Stream.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -4663,7 +4664,6 @@ DEP_CPP_NAMIN=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
-	{$(INCLUDE)}"ostream.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -5864,10 +5864,10 @@ DEP_CPP_REGIS=\
 	".\SString.h"\
 	".\SString.i"\
 	".\stdcpp.h"\
+	".\Stream.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
-	{$(INCLUDE)}"ostream.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -5975,6 +5975,7 @@ DEP_CPP_REGIST=\
 	".\SString.h"\
 	".\SString.i"\
 	".\stdcpp.h"\
+	".\Stream.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -5996,7 +5997,6 @@ DEP_CPP_REGIST=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
-	{$(INCLUDE)}"ostream.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -13066,25 +13066,7 @@ SOURCE=.\UPIPE_Stream.i
 # Begin Source File
 
 SOURCE=.\Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
