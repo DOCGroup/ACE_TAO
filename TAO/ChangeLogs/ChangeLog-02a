@@ -1,3 +1,13 @@
+Tue Dec 12 11:03:15 2000  Jeff Parsons   <parsons@cs.wustl.edu>
+
+		* tao/Dynamic_Adapter.cpp:
+
+		  In the CORBA::release methods, replaced the hard-coded
+		  string "Dynamic_Adapter" in the instantiation of the
+		  service object with the call to the string value set
+		  in the ORB core. This was causing a null pointer to
+		  be returned for the service object instance.
+
 Mon Dec 11 15:36:54 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/IORTable/IORTable.pidl:
