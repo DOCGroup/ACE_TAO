@@ -1,3 +1,9 @@
+Tue Dec  9 01:19:09 1997  James C Hu  <jxh@cs.wustl.edu>
+
+	* stress_testing/util.cpp: Off by one errors when parsing a URL.
+	  Did I write this code?  I don't think so.  Thanks to Valik
+	  Solorzano Barboza <valik@geodan.nl> for pointing this out.
+
 Thu Nov 20 00:36:34 1997  James C Hu  <jxh@cs.wustl.edu>
 
 	* server/Pipeline.h: Added methods and members so that the
