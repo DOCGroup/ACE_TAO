@@ -151,9 +151,10 @@ TAO_UIOP_Server_Connection_Handler::open (void*)
     return -1;
 
   if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) UIOP connection from client <%s> on %d\n",
-                  addr.get_path_name (), this->peer ().get_handle ()));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) UIOP connection from client ")
+                ACE_TEXT ("<%s> on %d\n"),
+                addr.get_path_name (), this->peer ().get_handle ()));
 
   return 0;
 }
@@ -397,7 +398,8 @@ TAO_UIOP_Client_Connection_Handler::open (void *)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) UIOP connection to server <%s> on %d\n",
+                ACE_TEXT ("TAO (%P|%t) UIOP connection to server ")
+                ACE_TEXT ("<%s> on %d\n"),
                 addr.get_path_name (), this->peer ().get_handle ()));
 
   // Register the handler with the Reactor if necessary.
@@ -469,8 +471,9 @@ TAO_UIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) UIOP_Client_Connection_Handler::handle_close"
-                 " (%d, %d)\n",
+                 ACE_TEXT ("TAO (%P|%t) ")
+                 ACE_TEXT ("UIOP_Client_Connection_Handler::handle_close")
+                 ACE_TEXT (" (%d, %d)\n"),
                  handle,
                  rm));
 
@@ -494,8 +497,11 @@ TAO_UIOP_Client_Connection_Handler::handle_close_i (ACE_HANDLE handle,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) IIOP_Client_Connection_Handler::"
-                 "handle_close_i (%d, %d)\n", handle, rm));
+                 ACE_TEXT ("TAO (%P|%t) ")
+                 ACE_TEXT ("IIOP_Client_Connection_Handler::")
+                 ACE_TEXT ("handle_close_i (%d, %d)\n"),
+                 handle,
+                 rm));
 
   if (this->recycler ())
     this->recycler ()->mark_as_closed_i (this->recycling_act ());
