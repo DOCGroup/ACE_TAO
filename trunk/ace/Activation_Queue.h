@@ -33,36 +33,83 @@
  * @brief Reifies a method into a request.  Subclasses typically
  * represent necessary state and behavior.
  *
- * A <Method_Request> is inserted in the <Activation_Queue>,
- * where it is subsequently removed by the <Scheduler>, which
- * invokes its <call> method..
+ * Maintains a priority-ordered queue of ACE_Method_Request objects.
+ * A scheduler class (often derived from ACE_Task) subsequently removes
+ * each method request and invokes its @c call() method.
+ *
+ * This class is discussed in depth in the Active Object chapter
+ * of POSA2. In that book, it is referred to as an Activation List.
+ *
+ * @sa ACE_Method_Request
  */
 class ACE_Export ACE_Activation_Queue
 {
 public:
   // = Initialization and termination methods.
   /// Constructor.
+  /**
+   * Initializes a new activation queue.
+   *
+   * @arg new_queue  The activation queue uses an ACE_Message_Queue to
+   *                 queue and order the method requests. If this argument
+   *                 is 0, a new ACE_Message_Queue is created for this
+   *                 object's use and will be deleted when this object is
+   *                 destroyed. If a non-zero pointer is supplied, the
+   *                 passed object will be used and will not be deleted when
+   *                 this object is destroyed. If an ACE_Task is being created
+   *                 to act as the scheduler, for instance, its
+   *                 ACE_Message_Queue pointer can be passed to this object.
+   * @arg alloc      Optional, the allocator to use when allocating
+   *                 ACE_Message_Block instances that wrap the method requests
+   *                 queued to this activation queue. Defaults to
+   *                 ACE_Allocator::instance().
+   * @arg db_alloc   Optional, the allocator to use when allocating
+   *                 data blocks for the ACE_Message_Block instances that
+   *                 wrap the method requests queued to this activation queue.
+   *                 Defaults to ACE_Allocator::instance().
+   */
   ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = 0,
-						ACE_Allocator *alloc = 0,
-						ACE_Allocator *db_alloc = 0);
+                        ACE_Allocator *alloc = 0,
+                        ACE_Allocator *db_alloc = 0);
 
   /// Destructor.
   virtual ~ACE_Activation_Queue (void);
 
   // = Activate Queue operations.
 
-  // For the following two methods if <timeout> == 0, the caller will
-  // block until action is possible, else will wait until the absolute
-  // time specified in *<timeout> elapses.  These calls will return,
-  // however, when queue is closed, deactivated, when a signal occurs,
-  // or if the time specified in timeout elapses, (in which case errno
-  // = EWOULDBLOCK).
-
-  /// Dequeue the next available <Method_Request>.
+  /// Dequeue the next available ACE_Method_Request.
+  /**
+   * @arg tv    If 0, the method will block until a method request is
+   *            available, else will wait until the absolute time specified
+   *            in the referenced ACE_Time_Value.  This method will return,
+   *            earlier, however, if queue is closed, deactivated, or when
+   *            a signal occurs.
+   *
+   * @retval    Pointer to the dequeued ACE_Method_Request object.
+   * @retval    0 an error occurs; errno contains further information. If
+   *            the specified timeout elapses, errno will be @c EWOULDBLOCK.
+   */
   ACE_Method_Request *dequeue (ACE_Time_Value *tv = 0);
 
-  /// Enqueue the <Method_Request> in priority order.  The priority is
-  /// determined by the <priority> method of the <new_message_request>.
+  /// Enqueue the ACE_Method_Request in priority order.
+  /**
+   * The priority of the method request is obtained via the @c priority()
+   * method of the queued method request. Priority ordering is determined
+   * by the ACE_Message_Queue class; 0 is the lowest priority.
+   *
+   * @arg new_method_request  Pointer to the ACE_Method_Request object to
+   *            queue. This object's @c priority() method is called to obtain
+   *            the priority.
+   * @arg tv    If 0, the method will block until the method request can
+   *            be queued, else will wait until the absolute time specified
+   *            in the referenced ACE_Time_Value.  This method will return,
+   *            earlier, however, if queue is closed, deactivated, or when
+   *            a signal occurs.
+   *
+   * @retval    0 on success.
+   * @retval    -1 if an error occurs; errno contains further information. If
+   *            the specified timeout elapses, errno will be @c EWOULDBLOCK.
+   */
   int enqueue (ACE_Method_Request *new_method_request,
                ACE_Time_Value *tv = 0);
 

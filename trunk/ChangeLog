@@ -1,3 +1,8 @@
+Wed Apr 17 18:41:30 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Activation_Queue.h:
+        * ace/Method_Request.h: Doxygen-ize and improve some documentation.
+
 Wed Apr 17 15:24:36 2002  Ossama Othman  <ossama@uci.edu>
 
 	* bin/auto_run_tests.lst:
