@@ -264,8 +264,8 @@ static void yy_flex_free YY_PROTO(( void * ));
 typedef unsigned char YY_CHAR;
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
 typedef int yy_state_type;
-extern char *yytext;
-#define yytext_ptr yytext
+extern char yytext[];
+
 
 static yy_state_type yy_get_previous_state YY_PROTO(( void ));
 static yy_state_type yy_try_NUL_trans YY_PROTO(( yy_state_type current_state ));
@@ -280,6 +280,9 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 	yyleng = (int) (yy_cp - yy_bp); \
 	yy_hold_char = *yy_cp; \
 	*yy_cp = '\0'; \
+	if ( yyleng >= YYLMAX ) \
+		YY_FATAL_ERROR( "token too large, exceeds YYLMAX" ); \
+	yy_flex_strncpy( yytext, yytext_ptr, yyleng + 1 ); \
 	yy_c_buf_p = yy_cp;
 
 #define YY_NUM_RULES 59
@@ -549,7 +552,12 @@ static char *yy_last_accepting_cpos;
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
-char *yytext;
+#ifndef YYLMAX
+#define YYLMAX 8192
+#endif
+
+char yytext[YYLMAX];
+char *yytext_ptr;
 #line 1 "idl.ll"
 #define INITIAL 0
 #line 3 "idl.ll"
@@ -606,8 +614,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -635,6 +643,8 @@ static double	idl_atof(char *);
 static long	idl_atoi(char *, long);
 static void	idl_parse_line_and_file(char *);
 static void	idl_store_pragma(char *);
+
+
 
 // HPUX has yytext typed to unsigned char *. We make sure here that
 // we'll always use char *
@@ -793,7 +803,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 92 "idl.ll"
+#line 96 "idl.ll"
 
 
 
@@ -881,200 +891,200 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 94 "idl.ll"
+#line 98 "idl.ll"
 return ANY;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 95 "idl.ll"
+#line 99 "idl.ll"
 return MODULE;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 96 "idl.ll"
+#line 100 "idl.ll"
 return RAISES;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 97 "idl.ll"
+#line 101 "idl.ll"
 return READONLY;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 98 "idl.ll"
+#line 102 "idl.ll"
 return ATTRIBUTE;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 99 "idl.ll"
+#line 103 "idl.ll"
 return EXCEPTION;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 100 "idl.ll"
+#line 104 "idl.ll"
 return CONTEXT;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 101 "idl.ll"
+#line 105 "idl.ll"
 return INTERFACE;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 102 "idl.ll"
+#line 106 "idl.ll"
 return CONST;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 103 "idl.ll"
+#line 107 "idl.ll"
 return TYPEDEF;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 104 "idl.ll"
+#line 108 "idl.ll"
 return STRUCT;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 105 "idl.ll"
+#line 109 "idl.ll"
 return ENUM;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 106 "idl.ll"
+#line 110 "idl.ll"
 return STRING;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 107 "idl.ll"
+#line 111 "idl.ll"
 return WSTRING;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 108 "idl.ll"
+#line 112 "idl.ll"
 return SEQUENCE;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 109 "idl.ll"
+#line 113 "idl.ll"
 return UNION;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 110 "idl.ll"
+#line 114 "idl.ll"
 return SWITCH;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 111 "idl.ll"
+#line 115 "idl.ll"
 return CASE;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 112 "idl.ll"
+#line 116 "idl.ll"
 return DEFAULT;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 113 "idl.ll"
+#line 117 "idl.ll"
 return FLOAT;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 114 "idl.ll"
+#line 118 "idl.ll"
 return DOUBLE;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 115 "idl.ll"
+#line 119 "idl.ll"
 return LONG;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 116 "idl.ll"
+#line 120 "idl.ll"
 return SHORT;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 117 "idl.ll"
+#line 121 "idl.ll"
 return UNSIGNED;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 118 "idl.ll"
+#line 122 "idl.ll"
 return CHAR;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 119 "idl.ll"
+#line 123 "idl.ll"
 return WCHAR;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 120 "idl.ll"
+#line 124 "idl.ll"
 return BOOLEAN;
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 121 "idl.ll"
+#line 125 "idl.ll"
 return OCTET;
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 122 "idl.ll"
+#line 126 "idl.ll"
 return VOID;
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 124 "idl.ll"
+#line 128 "idl.ll"
 return TRUETOK;
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 125 "idl.ll"
+#line 129 "idl.ll"
 return FALSETOK;
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 127 "idl.ll"
+#line 131 "idl.ll"
 return INOUT;
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 128 "idl.ll"
+#line 132 "idl.ll"
 return IN;
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 129 "idl.ll"
+#line 133 "idl.ll"
 return OUT;
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 130 "idl.ll"
+#line 134 "idl.ll"
 return ONEWAY;
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 132 "idl.ll"
+#line 136 "idl.ll"
 return LEFT_SHIFT;
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 133 "idl.ll"
+#line 137 "idl.ll"
 return RIGHT_SHIFT;
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 134 "idl.ll"
+#line 138 "idl.ll"
 {
-		  yylval.strval = "::";    
+		  yylval.strval = "::";
 		  return SCOPE_DELIMITOR;
 		}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 139 "idl.ll"
+#line 143 "idl.ll"
 {
     char *z = (char *) malloc(strlen(__yytext) + 1);
     strcpy(z, __yytext);
@@ -1084,7 +1094,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 146 "idl.ll"
+#line 150 "idl.ll"
 {
                   yylval.dval = idl_atof(__yytext);
                   return FLOATING_PT_LITERAL;
@@ -1092,7 +1102,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 150 "idl.ll"
+#line 154 "idl.ll"
 {
                   yylval.dval = idl_atof(__yytext);
                   return FLOATING_PT_LITERAL;
@@ -1100,7 +1110,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 155 "idl.ll"
+#line 159 "idl.ll"
 {
 		  yylval.ival = idl_atoi(__yytext, 10);
 		  return INTEGER_LITERAL;
@@ -1108,7 +1118,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 159 "idl.ll"
+#line 163 "idl.ll"
 {
 		  yylval.ival = idl_atoi(__yytext, 16);
 		  return INTEGER_LITERAL;
@@ -1116,7 +1126,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 163 "idl.ll"
+#line 167 "idl.ll"
 {
 		  yylval.ival = idl_atoi(__yytext, 8);
 		  return INTEGER_LITERAL;
@@ -1124,7 +1134,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 168 "idl.ll"
+#line 172 "idl.ll"
 {
 		  __yytext[strlen(__yytext)-1] = '\0';
 		  yylval.sval = new String(__yytext + 1);
@@ -1133,7 +1143,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 173 "idl.ll"
+#line 177 "idl.ll"
 {
 		  yylval.cval = __yytext[1];
 		  return CHARACTER_LITERAL;
@@ -1141,7 +1151,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 177 "idl.ll"
+#line 181 "idl.ll"
 {
 		  // octal character constant
 		  yylval.cval = idl_escape_reader(__yytext + 1);
@@ -1150,7 +1160,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 182 "idl.ll"
+#line 186 "idl.ll"
 {
 		  yylval.cval = idl_escape_reader(__yytext + 1);
 		  return CHARACTER_LITERAL;
@@ -1158,7 +1168,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 186 "idl.ll"
+#line 190 "idl.ll"
 {/* remember pragma */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		  idl_store_pragma(__yytext);
@@ -1166,28 +1176,28 @@ YY_RULE_SETUP
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 190 "idl.ll"
+#line 194 "idl.ll"
 {
 		  idl_parse_line_and_file(__yytext);
 		}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 193 "idl.ll"
+#line 197 "idl.ll"
 {
 		  idl_parse_line_and_file(__yytext);
 		}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 196 "idl.ll"
+#line 200 "idl.ll"
 {
 		  idl_parse_line_and_file(__yytext);
 	        }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 199 "idl.ll"
+#line 203 "idl.ll"
 {
 		  /* ignore cpp ident */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
@@ -1195,7 +1205,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 203 "idl.ll"
+#line 207 "idl.ll"
 {
 		  /* ignore comments */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
@@ -1203,7 +1213,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 207 "idl.ll"
+#line 211 "idl.ll"
 {
 		  for(;;) {
 		    char c = yyinput();
@@ -1213,7 +1223,7 @@ YY_RULE_SETUP
 			break;
 		      else
 			yyunput(c, NULL);
-	              if (c == '\n') 
+	              if (c == '\n')
 		        idl_global->set_lineno(idl_global->lineno() + 1);
 		    }
 	          }
@@ -1221,24 +1231,24 @@ YY_RULE_SETUP
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 221 "idl.ll"
+#line 225 "idl.ll"
 ;
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 222 "idl.ll"
+#line 226 "idl.ll"
 {
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 225 "idl.ll"
+#line 229 "idl.ll"
 return __yytext[0];
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 227 "idl.ll"
+#line 231 "idl.ll"
 ECHO;
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
@@ -2128,7 +2138,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 227 "idl.ll"
+#line 231 "idl.ll"
 
 	/* subroutines */
 
@@ -2171,7 +2181,7 @@ idl_parse_line_and_file(char *buf)
   for (; *r != '\0' && *r != ' ' && *r != '\t'; r++);
   *r++ = 0;
   idl_global->set_lineno(idl_atoi(h, 10));
-  
+
   /* Find file name, if present */
   for (; *r != '"'; r++) {
     if (*r == '\n' || *r == '\0')
@@ -2198,7 +2208,7 @@ idl_parse_line_and_file(char *buf)
     idl_global->store_include_file_name(nm);
   }
 }
-    
+
 /*
  * Store a #pragma line into the list of pragmas
  */
@@ -2221,7 +2231,7 @@ idl_store_pragma(char *buf)
   if (strcmp(pragma, "import") == 0) {
     idl_global->set_import(I_TRUE);
     return;
-  } 
+  }
   if (strcmp(pragma, "include") == 0) {
     idl_global->set_import(I_FALSE);
     return;
@@ -2325,7 +2335,7 @@ idl_atof(char *s)
 	if (neg) d *= -1.0;
 
 	return d;
-}	
+}
 
 /*
  * Convert (some) escaped characters into their ascii values
