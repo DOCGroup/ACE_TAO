@@ -224,6 +224,8 @@ protected:
   PortableServer::RequestProcessingPolicyValue request_processing_;
 };
 
+class TAO_POA_Current;
+
 class TAO_Export TAO_POA : public POA_PortableServer::POA
 {
 public:
@@ -495,13 +497,13 @@ protected:
                                    void *context,
                                    CORBA::Environment &env);
 
-  virtual void pre_invoke (const TAO_ObjectKey &key,
-                           const PortableServer::ObjectId &id,
-                           PortableServer::Servant servant,
+  virtual void pre_invoke (TAO_POA_Current &upcall_context,
+                           TAO_POA_Current *&previous_context,
                            CORBA::Environment &env);
 
   virtual void post_invoke (PortableServer::Servant servant,
                             const char *operation,
+                            TAO_POA_Current *previous_context,
                             CORBA::Environment &env);
 
   virtual CORBA::Boolean persistent (void);
@@ -767,6 +769,12 @@ public:
 
   TAO_POA_Current (void);
   // Constructor
+
+  TAO_POA_Current (TAO_POA *impl,
+                   const TAO_ObjectKey &key,
+                   const PortableServer::ObjectId &id,
+                   PortableServer::Servant servant);
+  // Convenience constructor combining construction & initialization.
 
   virtual ~TAO_POA_Current (void);
   // Destructor

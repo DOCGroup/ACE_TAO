@@ -248,9 +248,6 @@ send_error (TAO_Client_Connection_Handler *&handler)
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) aborted socket %d\n", which));
 }
 
-// @@ Can't we remove this stuff and replace it with recv_n () on the
-// <peer>?
-
 // Loop on data read ... this is required with some implementations of
 // sockets (e.g. winsock, HP/UX) since even when async mode is not
 // set, recv () won't block until the requested amount of data is
@@ -610,8 +607,6 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
 
   assert (data_ != 0);
 
-  // @@ Why is this lock here, i.e., what is it protecting?  Can
-  // we remove it?
   CORBA::Object_ptr obj = 0;
 
   // Get a CORBA::Object_ptr from _data using <QueryInterface>.
@@ -628,7 +623,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   {
     // Begin a new scope so we keep this lock only as long as
     // necessary
-#if 0 /* @@ don't delete this, chris */
+#if 0 /* Keep this around for when forwarding might be implemented (if ever) */
     ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock ()));
 #endif
     if (data_->fwd_profile_i () != 0)
@@ -658,8 +653,9 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   if (con->connect (this->handler_,
                     *server_addr_p) == -1)
     {
-      // @@ Need to figure out which exception to set...this one is
-      // pretty vague.
+      // There might be a better exception to set, but it's unclear
+      // which one should be used.  This one applies, even if it's
+      // vague.
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
       return;
     }
@@ -855,7 +851,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // not just the connection.  Without reinitializing, we'd give
       // false error reports to applications.
       {
-#if 0 /* @@ don't delete this, chris */
+#if 0 /* Keep this around in case forwarding is ever implemented */
         ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
 #endif
 
@@ -1094,7 +1090,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
         // be recorded here. (This is just an optimization, and is not
         // related to correctness.)
 
-#if 0 /* @@ don't delete this, chris */
+#if 0 /* Keep this around in case forwarding is ever implemented. */
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION);
 #endif
 
@@ -1108,8 +1104,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
         // Make sure a new connection is used next time.
         this->handler_->close ();
         this->handler_ = 0; // @@ not sure this is correct!
-        // @@ We shouldn't need to do this b/c TAO_GIOP_Invocations
-        // get created on a per-call basis.  Must check on this.
+        // We may not need to do this since TAO_GIOP_Invocations
+        // get created on a per-call basis. For now we'll play it safe.
       }
     break;
     }
