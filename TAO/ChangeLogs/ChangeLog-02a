@@ -72,12 +72,14 @@ Tue Jun 06 20:59:31 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 Tue Jun 06 17:26:41 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Pluggable.cpp (send_buffered_messages): If we are successful
-	  in sending the queued data, reset the queue appropriately.
+	* tao/Pluggable.cpp (send_buffered_messages):
+	  If we are successful in sending the queued data, reset the queue
+	  appropriately.
 
 Tue Jun 06 14:53:34 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: Updated method invocation on TAO_Profile to
+	* tao/ORB_Core.cpp:
+	  Updated method invocation on TAO_ORB_Core to
 	  reflect the change done on the TAO_Profile class.
 
 Tue Jun 06 14:47:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
@@ -86,25 +88,26 @@ Tue Jun 06 14:47:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* tao/Profile.h
 	* tao/Profile.i
 
-	  Changed signature of policy list accessors. And added new
-	  protected method to handle the "lazy" creation of the policy
-	  list.
+	  Changed signature of policy list accessors. Added new
+	  private method <_create_policy_list> to handle the "lazy"
+	  decoding and encoding of the policy list.
 
           Added guard to check if the CORBA Messaging support is enbabled.
 
-	* tao/RTCORBAC.h: Added CDR encoding support to class
-	  ProtocolProperties.
-
-	* tao/RTCORBAC.cpp: Changed return value in
-	  ProtocolProperties::_tao_encode() and
-	  ProtocolProperties::_tao_encode().
+	* tao/RTCORBAC.h:
+	* tao/RTCORBAC.cpp:
+	  Changed RTCORBA::ProtocolProperties to inherit from
+	  TAO_Encodable.  Implemented <ProtocolProperties::_tao_encode>
+	  and <ProtocolProperties::_tao_encode>.
 
 	* tao/RT_Policy_i.h
 	* tao/RT_Policy_i.cpp
 
-	  Added class TAO_ProtocolPropertiesFactory, and a
-	  TAO_GIOPProperties. The factory is needed to create the right
-	  Property durin demarsharling.
+	  Added TAO_GIOPProperties class, which implements
+	  RTCORBA::GIOPProtocolProperties interface.
+
+	  Added TAO_ProtocolPropertiesFactory to create the right
+	  properties during demarsharling.
 
 Tue Jun  6 14:28:19 2000  Chris Cleeland  <cleeland@cs.wustl.edu>
 
@@ -297,7 +300,6 @@ Sun Jun  4 11:07:50 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* tao/RT_Policy_i.cpp
 	Removed (temporarily) unused argument.
 
-
 Sat Jun  3 20:56:46 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/AV/MCast.cpp:
@@ -338,13 +340,11 @@ Sat Jun 03 11:55:23 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* tao/Policy_Factory.h
 	* tao/Policy_Factory.i
 
-	- Added guard to selecttively import and instantiate
-	RT-Corba related stuff.
+        - Added ifdefs to protect RT-Corba related stuff.
 
 	* tao/Profile.i
 
-	- Modified constructor of Profile class.
-
+          Modified TAO_Profile constructor to initialize <policy_list_>.
 
 Sat Jun 03 04:17:38 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -366,93 +366,79 @@ Sat Jun 03 04:17:38 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Sat Jun 3 00:06:25 2000 Angelo Corsaro <corsaro@cs.wustl.edu>
 
-	* tao/RT_Policy_i.h
-	* tao/RT_Policy_i.i
-	* tao/RT_Policy_i.cpp
+        * tao/RT_Policy_i.h
+        * tao/RT_Policy_i.i
+        * tao/RT_Policy_i.cpp
 
-	Added support for serialization to client exposed
-	Policies servant.
-
+          Overloaded <write_to> and <read_from> methods in all
+	  client-exposed RT policies to encode/decode their content into a
+	  cdr stream.
 
 	* tao/POA.h
 	* tao/POA.cpp
 
-	Added modification to support Policies propagation,
-	and exactly the method:
-	  - const CORBA::PolicyList& get_client_exposed_policies()
-	was added, together with the member variable:
-	  - CORBA::PolicyList client_exposed_policies_
-	Also the method:
-	  - TAO_POA::key_to_object
-	was modified.
-
+	  Modified TAO_POA to keep client-exposed policies (added
+	  <get_client_exposed_policies> accessor and
+	  <client_exposed_policies_> member), and modified
+	  method <key_to_object> to pass these policies to the ORB core
+	  when doing the stub creation.
 
 	* tao/ORB_Core.h
 	* tao/ORB_Core.cpp
 
-	Modified the signature of the method:
-	   - TAO_ORB_Core::create_stub_object()
-	to receive the PolicyList from the POA.
-
+        Modified the signature of the method
+        <TAO_ORB_Core::create_stub_object>
+        to receive the PolicyList from the POA.
 
 	* tao/Servant_Base.cpp
 
-	Changed Methods to support  policies propagation
-	  - TAO_ServantBase::_create_stub()
-	  - TAO_DynamicImplementation::_create_stub
-
+        Changed these methods to support policies propagation.
+         <TAO_ServantBase::_create_stub>
+         <TAO_DynamicImplementation::_create_stub>
 
 	* tao/GIOP_Server_Request.i
 	* tao/GIOP_Server_Request.cpp
 
-	Changed method to support client exposed policies,
-	and the following mehtod:
-	  - TAO_GIOP_ServerRequest::objref
-	has been moved from GIOP_Server_Request.i to GIOP_Server_Request.cpp.
-	Added (in GIOP_Server_Request.cpp) #include "tao/POA.h"  for
-	supporting method invocation on POA.
-
+          Changed <objref> method to support client exposed policies.
+	  Also moved this method from GIOP_Server_Request.i to
+	  GIOP_Server_Request.cpp.
+        Added #include "tao/POA.h" in GIOP_Server_Request.cpp for
+        supporting method invocation on POA.
 
 	* tao/Profile.h
 	* tao/Profile.cpp
 
-	Added Methods:
-	  -  virtual void set_policies(const CORBA::PolicyList *policy_list);
-	  -  virtual const CORBA::PolicyList * policy_list get_policies();
-	Added Member Variable:
-	  - CORBA::PolicyList *policy_list_;
-	Modified Constructor TAO_Profile::TAO_Profile to suppor the
-	new member variabel initialization.
+	  Modified TAO_Profile class to store client exposed policies.
+          Added the following methods:
+          void set_policies (const CORBA::PolicyList *policy_list)
+          const CORBA::PolicyList * policy_list get_policies (void)
+          Added member variable: CORBA::PolicyList *policy_list_;
 
+          Modified Constructor TAO_Profile::TAO_Profile to support to
+	  initialize <policy_list_>.
 
-	* tao/PolicyC.h
-	* tao/PolicyC.cpp
+        * tao/PolicyC.h
+        * tao/PolicyC.cpp
 
-	Now CORBA::Policy inherits from Encodable.
+          Changed CORBA::Policy to inherit from TAO_Encodable.
 
 	* tao/Encodable.h
 	* tao/Encodable.cpp
 
-	Interface that defines the methods to serialize an object
-	into a CDR.
-
+          Interface that defines the methods to serialize an object
+          into a CDR.
 
 	* tao/Policy_Factory.h
 	* tao/Policy_Factory.i
 	* tao/Policy_Factory.cpp
 
-	Factory used to create the policy while extracting
-	them form the IOR.
+          Factory class for creating policies while extracting
+          them from the IOR.
 
+        * tao/TAO.dsp
+        * tao/Makefile
 
-	* tao/TAO.dsp
-
-	Updated VC++ Project File.
-
-
-	* tao/Makefile
-
-	Update Makefile to include the new files.
+          Update Makefile/Project file.
 
 Fri Jun  2 20:39:14 2000  Darrell Brunsch <brunsch@uci.edu>
 
