@@ -38,6 +38,9 @@ Fri Aug 28 11:19:04 1998  David L. Levine  <levine@cs.wustl.edu>
         * utils/Ior-Parser/ior-handler.cpp (interpretIor): removed
           unused local "nullOctet".
 
+        * tests/POA/Forwarding/Servant_Locator.cpp (MyFooServantLocator ctor):
+          reordered initializers to match declaration order.
+
 Fri Aug 28 02:45:36 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tests/POA/TIE/client.cpp (run_test): Fixed the use of explicit
