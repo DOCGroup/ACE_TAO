@@ -3,6 +3,9 @@ Mon Dec 31 11:48:26 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * TAO_IDL/TAO_IDL_FE.bor:
           Added new ast_factory file
 
+        * TAO_IDL/TAO_IDL_BE.bor:
+          Added new be_factory file
+
 Mon Dec 31 11:39:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/OBV/Makefile.bor:

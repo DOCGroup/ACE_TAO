@@ -15,7 +15,8 @@ OBJFILES = \
 	$(OBJDIR)\be_enum_val.obj \
 	$(OBJDIR)\be_exception.obj \
 	$(OBJDIR)\be_expression.obj \
-	$(OBJDIR)\be_field.obj \
+        $(OBJDIR)\be_factory.obj \
+        $(OBJDIR)\be_field.obj \
 	$(OBJDIR)\be_generator.obj \
 	$(OBJDIR)\be_global.obj \
 	$(OBJDIR)\be_helper.obj \
