@@ -550,11 +550,7 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
                                    KEY_ALL_ACCESS,
                                    0,
                                    &result_key,
-#if defined (__MINGW32__)
- (PDWORD) 0
-#else
                                    0
-#endif /* __MINGW32__ */
                                    ) != ERROR_SUCCESS)
         return -1;
     }

@@ -73,6 +73,9 @@ public:
 
   // = Passive connection acceptance method.
 
+  /// Accept a new data transfer connection.  A <timeout> of 0 means
+  /// block forever, a <timeout> of {0, 0} means poll.  <restart> == 1
+  /// means "restart if interrupted."
   int accept (ACE_ATM_Stream &new_sap,
               ACE_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
@@ -80,10 +83,6 @@ public:
               int reset_new_handle = 0,
               ACE_ATM_Params params = ACE_ATM_Params(),
               ACE_ATM_QoS qos = ACE_ATM_QoS());
-
-  // Accept a new data transfer connection.  A <timeout> of 0 means
-  // block forever, a <timeout> of {0, 0} means poll.  <restart> == 1
-  // means "restart if interrupted."
 
   /// Get the local address currently listening on
   int get_local_addr( ACE_ATM_Addr &local_addr );

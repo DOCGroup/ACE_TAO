@@ -51,7 +51,7 @@ public:
   void event_handler (ACE_Event_Handler *eh);
 
   /// Get the reactor mask.
-  ACE_Reactor_Mask mask (void);
+  ACE_Reactor_Mask mask (void) const;
 
   /// Set the reactor mask.
   void mask (ACE_Reactor_Mask m);
