@@ -1,3 +1,47 @@
+Sat Nov 22 20:00:38 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/Select_Reactor.cpp: 
+	  The comparison for increasing the handle_limit was wrong, it
+	  will only decrease it, not increase it, thanks to Arturo Montes
+	  <mitosys@colomsat.net.co> for detecting this.
+
+	* ace/ACE.cpp: 
+	  Added support for RLIM_INFINITY in ACE::set_handle_limit().
+	  Thanks to Arturo Montes <mitosys@colomsat.net.co> for suggesting
+	  this.
+
+Sat Nov 22 19:16:35 1997    <irfan@TWOSTEP>
+
+	* tests/Process_Strategy_Test.cpp:
+
+	  main: Removed signal handling code.  It is unnecessary since we
+ 	  do not use kill() anymore.
+
+	  Process_Strategy: This subclass of ACE_Process_Strategy
+ 	  overwrites the process creation method to include connection
+ 	  counting.
+	
+	  connection_completed: Made sure that the Reactor is woken up
+ 	  after all the connections have completed.
+	
+	* ace/Priority_Reactor.cpp (init_bucket): Removed extra code.
+
+	* ace/Acceptor.cpp (activate_svc_handler): open svc_handler only
+ 	  if result is 0.  Also removed extra tracing code.
+
+	* ace/Handle_Set.i (reset): Purify is reporting a UMR
+ 	  (uninitialized memory copy) when copying a Handle_Set.  This
+ 	  comes from the mask fd_set not being memset to 0 by FD_ZERO.
+  	  This is therefore a harmless error.
+
+	* tests/Priority_Reactor_Test.cpp (main): The ordering of
+ 	  auto_ptrs is very subtle....  "auto_ptr<ACE_Reactor> reactor"
+ 	  should come before "auto_ptr<ACE_Select_Reactor> impl", i.e.,
+ 	  the implementation should be destroyed *before* the forwarding
+ 	  class.  This is apparent when the implementation class is
+ 	  removing registered event handlers that hold a pointer to the
+ 	  forwarding class.
+
 Sat Nov 22 16:04:07 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/Message_Queue.cpp: 
@@ -100,6 +144,35 @@ Fri Nov 21 12:18:28 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Fri Nov 21 02:23:47 1997    <irfan@TWOSTEP>
 
+	* tests/Process_Strategy_Test.cpp: 
+
+	  - The event loop execution was based on a fragile timeout
+ 	    mechanism.  This was changed to a more robust mechanism that
+ 	    counts the connections.
+
+	  - The unlinking of the file was moved from the server to the
+ 	    client.  This is necessary since there maybe multiple server
+ 	    processes that cannot really coordinate when the file should
+ 	    be removed.
+	
+	* ace/Strategies_T.cpp (ACE_Concurrency_Strategy):
+ 	  ACE_Concurrency_Strategy and all three of the subclasses
+ 	  (ACE_Reactive_Strategy, ACE_Process_Strategy, and
+ 	  ACE_Thread_Strategy) were messed up.  Only ACE_Reactive_Strategy
+ 	  was (trying) to set the correct blocking mode of the socket.
+  	  Therefore, moved the socket mode setting code to the base class,
+ 	  ACE_Concurrency_Strategy, so that all the classes can share it.
+
+	  This did create one problem though.  If the implementation of
+ 	  the reactor uses event associations (i.e., WFMO_Reactor), we
+ 	  cannot try to set the socket mode since the registration of the
+ 	  svc_handler caused an event association to be created for the
+ 	  socket and by default (thanks Microslush) the socket is set to
+ 	  non-blocking mode.  If the user is excepting to have a socket in
+ 	  blocking mode, he is in for a surprise.  Maybe we should return
+ 	  a failure if the user is expecting a socket in blocking mode.
+  	  This is probably too harsh for now.
+
 	* tests/Future_Test.cpp (open): Added THR_DETACHED since we don't
  	  wait for this thread.
 
@@ -114,7 +187,7 @@ Fri Nov 21 02:23:47 1997    <irfan@TWOSTEP>
  	  wakeup_all_threads_handler_.  Unfortunately, the order of the
  	  two registrations is very important since the optimization for
  	  owner thread takes advantage of this ordering.  Therefore,
- 	  revert the order of register to notify_handler_ followed by
+ 	  revert the order of registertion to notify_handler_ followed by
  	  wakeup_all_threads_handler_.
 
 	* tests/version_tests/run_all_tests.bat: Added new bat file to
