@@ -9,9 +9,11 @@
 #include "tao/Transport.h"
 #include "tao/Muxed_TMS.h"
 #include "tao/ORB_Constants.h"
+#include "tao/debug.h"
+#include "ace/Auto_Ptr.h"
 
-ACE_RCSID (tao,
-           Invocation_Adapter,
+ACE_RCSID (Messaging,
+           Asynch_Invocation_Adapter,
            "$Id$")
 
 
@@ -37,13 +39,21 @@ namespace TAO
   }
 
   void
-  Asynch_Invocation_Adapter::invoke (Messaging::ReplyHandler_ptr reply_handler_ptr,
-                                     const TAO_Reply_Handler_Skeleton &reply_handler_skel
-                                     ACE_ENV_ARG_DECL)
+  Asynch_Invocation_Adapter::invoke (
+      Messaging::ReplyHandler_ptr reply_handler_ptr,
+      const TAO_Reply_Handler_Skeleton &reply_handler_skel
+      ACE_ENV_ARG_DECL)
   {
     TAO_Stub *stub =
       this->get_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
+
+    if (TAO_debug_level >= 4)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_Messaging (%P|%t) - Asynch_Invocation_Adapter::"
+                    "invoke\n"));
+      }
 
     // If the reply handler is nil, we do not create a reply dispatcher.
     // The ORB will drop replies to which it cannot associate a reply
@@ -73,6 +83,7 @@ namespace TAO
                                             ACE_ENV_ARG_DECL)
   {
     ACE_Time_Value tmp_wait_time;
+
     bool is_timeout  =
       this->get_timeout (tmp_wait_time);
 
@@ -81,43 +92,83 @@ namespace TAO
     if (is_timeout)
       max_wait_time = &tmp_wait_time;
 
-    // Initial state
-    // TAO::Invocation_Status status = TAO_INVOKE_START;
+    TAO::Invocation_Status s = TAO_INVOKE_START;
 
-    Profile_Transport_Resolver resolver (this->target_,
-                                         stub);
-    resolver.resolve (max_wait_time
-                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    auto_ptr<TAO_Asynch_Reply_Dispatcher> safe_rd (this->rd_);
 
-    // Update the request id now that we have a transport
-    op.request_id (resolver.transport ()->tms ()->request_id ());
-
-    if (this->rd_)
+    while (s == TAO_INVOKE_START ||
+           s == TAO_INVOKE_RESTART)
       {
-        // Cache the  transport in the reply dispatcher
-        this->rd_->transport (resolver.transport ());
+        // Resolver for resolving transports for htis profile.
+        Profile_Transport_Resolver resolver (this->target_,
+                                             stub);
 
-        // AMI Timeout Handling Begin
-        if (is_timeout)
+        (void) resolver.resolve (max_wait_time
+                                 ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        op.request_id (resolver.transport ()->tms ()->request_id ());
+
+        if (this->rd_)
           {
-            this->rd_->schedule_timer (op.request_id (),
-                                       *max_wait_time);
+            // Cache the  transport in the reply dispatcher
+            this->rd_->transport (resolver.transport ());
+
+            // AMI Timeout Handling Begin
+            if (is_timeout)
+              {
+                this->rd_->schedule_timer (op.request_id (),
+                                           *max_wait_time);
+              }
+          }
+
+        op.response_flags (TAO_TWOWAY_RESPONSE_FLAG);
+
+        TAO::Asynch_Remote_Invocation asynch (this->target_,
+                                              resolver,
+                                              op,
+                                              this->rd_);
+        s =
+          asynch.remote_invocation (max_wait_time
+                                    ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        if (s != TAO_INVOKE_FAILURE)
+          safe_rd.release ();
+
+        if (TAO_debug_level > 3 &&
+            s == TAO_INVOKE_RESTART)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO_Messaging (%P|%t) - Asynch_Invocation_Adapter::invoke_remote -"
+                        " retstarting invocation again \n"));
           }
       }
-
-    // @@ NOTE:Need to change this to something better. Too many
-    // hash defines meaning the same  thing..
-    op.response_flags (TAO_TWOWAY_RESPONSE_FLAG);
-    TAO::Asynch_Remote_Invocation asynch (this->target_,
-                                          resolver,
-                                          op,
-                                          this->rd_);
-
-    (void) asynch.remote_invocation (max_wait_time
-                                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
   }
 
-
 } // End namespace TAO
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class auto_ptr<CORBA::SystemException>;
+template class auto_ptr<CORBA::Exception>;
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+template class ACE_Auto_Basic_Ptr<CORBA::SystemException>;
+template class ACE_Auto_Basic_Ptr<CORBA::Exception>;
+#  endif  /* ACE_LACKS_AUTO_PTR */
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate auto_ptr<CORBA::SystemException>
+#pragma instantiate auto_ptr<CORBA::Exception>
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+#    pragma instantiate ACE_Auto_Basic_Ptr<CORBA::SystemException>
+#    pragma instantiate ACE_Auto_Basic_Ptr<CORBA::Exception>
+#  endif  /* ACE_LACKS_AUTO_PTR */
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,7 +1,44 @@
+Wed Oct  8 18:16:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/Muxed_TMS.cpp: In bind_dispatcher (), check whether the reply
+          dispatcher is null. If null do not add it to the dispatcher
+	  table. Clients using AMI can pass a null reply handler to the
+	  ORB. Under such circumstances, the ORB will not take create a
+	  reply_dispatcher. 
+
+	* tao/Object_T.cpp (unchecked_narrow): Added a check for null
+	  object pointer.
+
+	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+	* tao/Messaging/Asynch_Reply_Dispatcher.h: Removed the annoying
+	  #if for TAO_HAS_AMI_CALLBACK. Fixed some debug statements. 
+	
+	* tao/Messaging/Asynch_Invocation.cpp:
+	* tao/Messaging/Asynch_Invocation_Adapter.cpp: Did a cleanup to
+	  handle exceptions and errors properly. This also helped to clean
+	  up some of the errors observed in my nightly build.
+
+	* tests/Stack_Recursion/Client_Task.cpp: 
+	* tests/File_IO/client.cpp:
+	* tests/NestedUpcall/MT_Client_Test/MT_Object_i.cpp:
+	* tests/NestedUpcall/MT_Client_Test/client.cpp:
+	* tests/NestedUpcall/MT_Client_Test/local_server.cpp:
+	* tests/NestedUpcall/MT_Client_Test/server.cpp:
+	* tests/NestedUpcall/Triangle_Test/Object_A_i.cpp:
+	* tests/NestedUpcall/Triangle_Test/Object_B_i.cpp:
+	* tests/NestedUpcall/Triangle_Test/initiator.cpp:
+	* tests/NestedUpcall/Triangle_Test/server_A.cpp:
+	* tests/NestedUpcall/Triangle_Test/server_B.cpp: Removed annoying
+	  debug statements that fills up our daily logs for no reason. 
+	
+	* tests/Policies/Manipulation.cpp: Changed the call from _narrow
+	  () to unchecked_narrow ().
+        
+
 Wed Oct  8 00:00:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1482_Regression/Client_Task.cpp: Revrted the change
-	  since it was not needed and was covering up a bug.
+	* tests/Bug_1482_Regression/Client_Task.cpp: Reverted the change
+	  since it was not needed, and was covering up a bug.
 
 Tue Oct  7 23:53:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 

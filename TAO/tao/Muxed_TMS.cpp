@@ -8,8 +8,8 @@
 #include "ORB_Core.h"
 #include "Client_Strategy_Factory.h"
 
-ACE_RCSID (tao, 
-           Muxed_TMS, 
+ACE_RCSID (tao,
+           Muxed_TMS,
            "$Id$")
 
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
@@ -33,9 +33,9 @@ CORBA::ULong
 TAO_Muxed_TMS::request_id (void)
 {
   // @@ What is a good error return value?
-  ACE_GUARD_RETURN (ACE_Lock, 
+  ACE_GUARD_RETURN (ACE_Lock,
                     ace_mon,
-                    *this->lock_, 
+                    *this->lock_,
                     0);
 
   ++this->request_id_generator_;
@@ -72,8 +72,17 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
                     *this->lock_,
                     -1);
 
+  if (TAO_debug_level > 0 && rd == 0)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::bind_dispatcher -")
+                ACE_TEXT ("null reply dispatcher\n")));
+
+  if (rd == 0)
+    return 0;
+
   int result =
     this->dispatcher_table_.bind (request_id, rd);
+
 
   if (result != 0)
     {
@@ -121,15 +130,15 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 
     if (TAO_debug_level > 8)
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t)- TAO_Muxed_TMS::dispatch_reply, "
+                  "TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, "
                   "id = %d\n",
                   params.request_id_));
 
     if (result != 0)
       {
-        if (TAO_debug_level > 0)
+        if (TAO_debug_level > 0 && result != 0)
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P | %t):TAO_Muxed_TMS::dispatch_reply: ")
+                      ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply-")
                       ACE_TEXT ("unbind dispatcher failed: result = %d\n"),
                       result));
 
@@ -143,7 +152,7 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 
     if (TAO_debug_level > 8)
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t)- TAO_Muxed_TMS::dispatch_reply, "
+                  "TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, "
                   "id = %d\n",
                   params.request_id_));
 
@@ -151,7 +160,7 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       {
         if (TAO_debug_level > 0)
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P | %t):TAO_Muxed_TMS::dispatch_reply: ")
+                      ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply: ")
                       ACE_TEXT ("unbind dispatcher failed: result = %d\n"),
                       result));
 
@@ -163,8 +172,8 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       }
 
     // Do not move it outside the scope of the lock. A follower thread
-    // could have timedout unwinding teh stack and the reply
-    // dispatcher and that would mean the present thread could be left
+    // could have timedout unwinding the stack and the reply
+    // dispatcher, and that would mean the present thread could be left
     // with a dangling pointer and may crash. To safeguard againt such
     // cases we dispatch with the lock held.
     // Dispatch the reply.
