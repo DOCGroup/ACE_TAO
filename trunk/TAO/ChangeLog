@@ -11,7 +11,7 @@ Sat Apr 26 16:08:15 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 Sat Apr 26 11:12:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: Fixed a compile error in
-	  builds whenexceptions are turned off.
+	  builds where exceptions are turned off.
 
 Sat Apr 26 11:08:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
