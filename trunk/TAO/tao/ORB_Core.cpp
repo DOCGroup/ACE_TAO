@@ -1294,6 +1294,10 @@ TAO_ORB_Core::fini (void)
 
   (void) TAO_Internal::close_services ();
 
+
+  delete this->reactor_registry_;
+
+
   // @@ This is not needed since the default resource factory
   //    is statically added to the service configurator, fredk
   if (!this->resource_factory_from_service_config_)
@@ -1310,8 +1314,6 @@ TAO_ORB_Core::fini (void)
   //    is statically added to the service configurator, fredk
   if (!this->server_factory_from_service_config_)
     delete server_factory_;
-
-  delete this->reactor_registry_;
 
   delete this;
 
