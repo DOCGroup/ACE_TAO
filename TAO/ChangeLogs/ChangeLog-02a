@@ -1,3 +1,15 @@
+Fri Jul 20 09:25:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+ 
+        * tests/ior_corbaloc/run_test.pl:
+        * tests/InterOp-Naming/run_test.pl:
+ 
+          Do not include ACEutils Perl module in scripts which use
+          PerlACE::Run_Test module.  ACEutils prevents
+          PerlACE::Run_Test from seeing the -ExeSubDir argument.
+          This causes test failures on certain platforms.
+          Thanks to Darrell Brunsch for explaining this and pointing
+          this out.
+
 Tue Jul 20 08:27:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/receiver.dsp: Fixed
