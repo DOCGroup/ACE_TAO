@@ -14,17 +14,14 @@ CFLAGS          += -pthread
 #### or by setting the CXX_VER environment variable to POST_5X.
 # WARNING_FLAGS +=
 # 9:   nested comment not allowed, but there's one in /usr/include/pdsc.h
-# 111: statement is unreachable
 # 174: expr_has_no_effect
 # 193: zero used for undefined preprocessing identifier
 # 236: controlling expression is constant
 # 340: value copied to temporary, reference to temporary used
 # 401: base_class_with_nonvirtual_dtor
-# 550: set_but_not_used
-# 835: unreferenced_function_param
 ifeq ($(CXX_VER),POST_5X)
   WARNING_FLAGS += -w0 -msg_display_number -msg_display_tag \
-                   -msg_disable 9,111,174,193,236,340,401,550,835
+                   -msg_disable 9,174,193,236,340,401
 endif
 
 CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
