@@ -19,7 +19,7 @@
 #if !defined (PARAM_TEST_NESTED_STRUCT_H)
 #define PARAM_TEST_NESTED_STRUCT_H
 
-#include "param_testC.h"
+#include "param_testCli.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 //           test nested structs

@@ -19,7 +19,7 @@
 #if !defined (PARAM_TEST_FIXED_ARRAY_H)
 #define PARAM_TEST_FIXED_ARRAY_H
 
-#include "param_testC.h"
+#include "param_testCli.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 //                        test fixed arrays

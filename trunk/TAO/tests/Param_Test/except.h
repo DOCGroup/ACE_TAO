@@ -19,7 +19,7 @@
 #if !defined (PARAM_TEST_EXCEPTION_H)
 #define PARAM_TEST_EXCEPTION_H
 
-#include "param_testC.h"
+#include "param_testCli.h"
 
 class Test_Exception
 {

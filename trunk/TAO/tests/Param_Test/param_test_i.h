@@ -16,7 +16,7 @@
 #if !defined (PARAM_TEST_I_H)
 #define PARAM_TEST_I_H
 
-#include "param_testS.h"
+#include "param_testSer.h"
 
 // Implementation of the Coffee interface
 class Coffee_i : public POA_Coffee
