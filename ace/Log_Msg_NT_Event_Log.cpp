@@ -50,18 +50,18 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
                          reg_key,
                          &hkey);
   DWORD flags = EVENTLOG_ERROR_TYPE | EVENTLOG_WARNING_TYPE | EVENTLOG_INFORMATION_TYPE;
-  RegSetValueEx (hkey,
-                 "TypesSupported",
-                 0,
-                 REG_DWORD,
-                 (LPBYTE) &flags,
-                 sizeof (DWORD));
-  RegSetValueEx (hkey,
-                 "EventMessageFile", 
-                 0,
-                 REG_SZ,
-                 (LPBYTE) msg_file,
-                 msg_file_length + 1);
+  ACE_TEXT_RegSetValueEx (hkey,
+                          ACE_LIB_TEXT ("TypesSupported"),
+                          0,
+                          REG_DWORD,
+                          (LPBYTE) &flags,
+                          sizeof (DWORD));
+  ACE_TEXT_RegSetValueEx (hkey,
+                          ACE_LIB_TEXT ("EventMessageFile"),
+                          0,
+                          REG_SZ,
+                          (LPBYTE) msg_file,
+                          msg_file_length + 1);
   RegCloseKey (hkey);
 
   // Obtain a handle to the event source.
