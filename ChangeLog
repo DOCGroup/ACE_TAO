@@ -1,3 +1,11 @@
+Mon Jun 23 11:51:13 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Added another MPC environment variable to allow a user to get an
+          informational message about which projects were skipped due to the
+          current set of features.
+
 Sun Jun 22 13:58:08 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Lib_Find.h:
@@ -34,10 +42,10 @@ Sun Jun 22 04:32:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Moved ssize_t typedef here from Basic_Types.h.
 
         * ace/config-win32-common.h:
-		  Add ACE_LACKS_PTHREAD_H.
+                  Add ACE_LACKS_PTHREAD_H.
 
         * /ace/Malloc_Allocator.i:
-		  Fixed typo.
+                  Fixed typo.
 
 Sun Jun 22 03:27:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -100,7 +108,7 @@ Sun Jun 22 03:27:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Removed include of OS.h and/or ACE.h from headers and adjusted
           includes in headers and other files by including appropriate
           headers in order to reduce dependencies as part of the
-          subsetting effort.          
+          subsetting effort.
 
         * ace/OS.h:
         * ace/Asynch_IO.cpp:
@@ -116,7 +124,7 @@ Sun Jun 22 03:27:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * ace/Global_Macros.h:
           Moved definitions for many macros including
           LPSECURITY_ATTRIBUTES and GENERIC_READ, etc... here from OS.h.
-          Moved the ACE_ALLOCATOR_* macros here from OS.h. 
+          Moved the ACE_ALLOCATOR_* macros here from OS.h.
 
         * ace/Makefile.ace:
           Added Date_Time so it will get build if
@@ -159,12 +167,12 @@ Fri Jun 20 17:57:10 2003  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 Fri Jun 20 13:32:21 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* include/makeinclude/platform_linux.GNU (PLATFORM_SSL_CPPFLAGS):
+        * include/makeinclude/platform_linux.GNU (PLATFORM_SSL_CPPFLAGS):
 
-	  Some Linux OpenSSL installations compile in Kerberos support.
-	  Add the Kerberos include path to preprocessor include path.
-	  Fixes build problems on Red Hat 9 installations.  Note that this
-	  is an interim fix.
+          Some Linux OpenSSL installations compile in Kerberos support.
+          Add the Kerberos include path to preprocessor include path.
+          Fixes build problems on Red Hat 9 installations.  Note that this
+          is an interim fix.
 
 Fri Jun 20 10:07:39 2003  Chad Elliott  <elliott_c@ociweb.com>
 
