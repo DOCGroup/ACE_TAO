@@ -21,6 +21,9 @@ Client_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
+  // Make the connections ..
+  this->validate_connection ();
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   // Now get the big replies..
@@ -47,7 +50,9 @@ Client_Task::svc (void)
 void
 Client_Task::validate_connection (void)
 {
-   ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Validating connection ..\n"));
+
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   // Try to setup a connection to the remote server, ignoring all the
   // exceptions  that are expected (see bug 189 on why it is so). We

@@ -1,3 +1,11 @@
+Mon Jul 23 22:31:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Big_Reply/Client_Task.cpp: Added some debufg
+	  statments. Further fixed a small goof up. A method to
+	  validate connections was added but never called :(. Fixed that
+	  by calling validate_connection () before an actual call to the
+	  server object.
+
 Mon Jul 23 22:24:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/time-date/svc.conf: Removed the entry for
