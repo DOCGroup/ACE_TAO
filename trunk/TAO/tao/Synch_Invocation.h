@@ -54,15 +54,15 @@ namespace TAO
   public:
     /// Constructor used by TAO::Invocation_Adapter
     /**
-     * @param otarget, The original target on which this invocation
+     * @param otarget The original target on which this invocation
      * was started. This is there to be passed up to its parent
      * class.
      *
-     * @param resolver, The profile and transport holder.
+     * @param resolver The profile and transport holder.
      *
-     * @param op, operation details of the invocation on the target
+     * @param detail Operation details of the invocation on the target
      *
-     * @param response_expected, flag to indicate whether the
+     * @param response_expected Flag to indicate whether the
      * operation encapsulated by @a op returns a response or not.
      */
     Synch_Twoway_Invocation (CORBA::Object_ptr otarget,
@@ -153,15 +153,15 @@ namespace TAO
   public:
     /// Constructor used by TAO::Invocation_Adapter
     /**
-     * @param otarget, The original target on which this invocation
+     * @param otarget The original target on which this invocation
      * was started. This is there to be passed up to its parent
      * class.
      *
-     * @param resolver, The profile and transport holder.
+     * @param resolver The profile and transport holder.
      *
-     * @param op, operation details of the invocation on the target
+     * @param detail Operation details of the invocation on the target
      *
-     * @param response_expected, flag to indicate whether the
+     * @param response_expected Flag to indicate whether the
      * operation encapsulated by @a op returns a response or not.
      */
     Synch_Oneway_Invocation (CORBA::Object_ptr otarget,
