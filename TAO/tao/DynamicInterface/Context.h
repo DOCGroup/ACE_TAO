@@ -24,6 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "DII_CORBA_methods.h"
+
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/orbconf.h"
 #include "tao/Basic_Types.h"
@@ -47,19 +49,7 @@ namespace CORBA
   class NVList;
   typedef NVList *NVList_ptr;
 
-  class ContextList;
-  typedef ContextList *ContextList_ptr;
-
-  class Context;
-  typedef Context *Context_ptr;
-
   class Environment;
-
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Context_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Context_ptr);
-
-  TAO_NAMESPACE_INLINE_FUNCTION void release (ContextList_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ContextList_ptr );
 
   typedef TAO_Pseudo_Var_T<Context> Context_var;
   typedef TAO_Pseudo_Out_T<Context, Context_var> Context_out;

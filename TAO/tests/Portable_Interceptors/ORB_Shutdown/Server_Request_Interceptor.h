@@ -51,9 +51,6 @@ public:
   /// Constructor.
   Server_Request_Interceptor (bool & destroy_called);
 
-  /// Destructor.
-  ~Server_Request_Interceptor (void);
-
   /**
    * @name Methods Required by the Server Request Interceptor
    * Interface
@@ -99,6 +96,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
   //@}
+
+protected:
+
+  /// Destructor.
+  ~Server_Request_Interceptor (void);
 
 private:
 

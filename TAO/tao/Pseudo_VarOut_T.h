@@ -6,16 +6,37 @@
  *
  *  $Id$
  *
- *  @author Jeff Parsons
+ * @note This header should be included after all types to be passed
+ * as template parameters to the TAO_Pseudo_{Var,Out}_T template
+ * classes have been declared.  If the types in question are defined
+ * in another header, include that header before this one.
+ * @par
+ * Including other headers like "tao/CORBA_methods.h" here can cause
+ * circular dependency related problems when using compilers that
+ * lookup and bind non-dependent names in templates at definition time
+ * (i.e. while parsing the code) instead of at instantiation time.
+ *
+ * @todo Look into adding a template parameter to each of the
+ *       templates in question that would be a trait containing the
+ *       means for releasing references managed by the templates.
+ *       Doing so should work around the non-dependent name issues in
+ *       g++ 3.4, thus easing the requirement that this header be
+ *       parsed last.
+ *
+ *         -Ossama
+ *
+ *
+ * @author Jeff Parsons
  */
 //=============================================================================
 
 
 #ifndef TAO_PSEUDO_VAROUT_T_H
 #define TAO_PSEUDO_VAROUT_T_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/CORBA_methods.h"
+//#include "tao/CORBA_methods.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -9,10 +9,13 @@
  * @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
+
 #ifndef TAO_DEFAULT_ENVIRONMENT_H
 #define TAO_DEFAULT_ENVIRONMENT_H
+
 #include /**/ "ace/pre.h"
-#include "ace/config-all.h"
+
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,4 +35,5 @@ namespace CORBA
 TAO_Export CORBA::Environment& TAO_default_environment (void);
 
 #include /**/ "ace/post.h"
-#endif /*TAO_DEFAULT_ENVIRONMENT_H*/
+
+#endif /* TAO_DEFAULT_ENVIRONMENT_H */

@@ -29,8 +29,9 @@
 // that registers the dynamic service object.
 #include "Dynamic_Adapter_Impl.h"
 
-#include "Context.h"
 #include "ExceptionList.h"
+#include "Context.h"
+
 #include "tao/ORB.h"
 #include "tao/NVList.h"
 #include "tao/Environment.h"

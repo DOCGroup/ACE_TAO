@@ -1,4 +1,3 @@
-
 #include "TX_ObjectC.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
@@ -42,7 +41,11 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc,
+                         argv,
+                         ""
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (::parse_args (argc, argv) != 0)
@@ -63,7 +66,7 @@ main (int argc, char *argv[])
 
       DataSeq data_input;
 
-      CORBA::ULong len = 3461724;
+      const CORBA::ULong len = 3461724;
 
       data_input.length (len);
 
@@ -73,7 +76,7 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "Sending  octet sequence of length:\t%u\n",
-                  data_input.length()));
+                  data_input.length ()));
 
       txObject->send (data_input ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -85,7 +88,7 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "Received octet sequence of length:\t%u\n",
-                  data_output->length()));
+                  data_output->length ()));
 
       txObject->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

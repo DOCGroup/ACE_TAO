@@ -197,7 +197,6 @@ namespace TAO
      * Protect internal state.
      */
     TAO_SYNCH_MUTEX internals_;
-    typedef ACE_Guard<TAO_SYNCH_MUTEX> InternalGuard;
 
     /// The default property set.
     TAO::PG_Property_Set default_properties_;

@@ -57,10 +57,12 @@ TAO::PG_Property_Set::~PG_Property_Set ()
   this->clear ();
 }
 
-void TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set ACE_ENV_ARG_DECL)
+void
+TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set
+                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  InternalGuard guard(this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
   size_t count = property_set.length ();
   for (size_t nItem = 0; nItem < count; ++nItem)
@@ -71,14 +73,18 @@ void TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_se
     // @@ TODO: fix this
     const CosNaming::NameComponent & nc = nsName[0];
 
-    this->set_property (ACE_static_cast (const char *, nc.id), property.val ACE_ENV_ARG_PARAMETER);
+    this->set_property (ACE_static_cast (const char *, nc.id),
+                        property.val
+                        ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
 #if 0
     ACE_CString name = ACE_static_cast (const char *, nc.id);
 
     const PortableGroup::Value * value_copy;
-    ACE_NEW_THROW_EX (value_copy, PortableGroup::Value (property.val), CORBA::NO_MEMORY ());
+    ACE_NEW_THROW_EX (value_copy,
+                      PortableGroup::Value (property.val),
+                      CORBA::NO_MEMORY ());
     ACE_CHECK;
 
     const PortableGroup::Value * replaced_value = 0;
@@ -106,7 +112,7 @@ void TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_se
 
 void TAO::PG_Property_Set::clear ()
 {
-  InternalGuard guard(this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   for (ValueMapIterator it = this->values_.begin ();
        it != this->values_.end ();
        ++it)
@@ -119,7 +125,7 @@ void TAO::PG_Property_Set::clear ()
 void TAO::PG_Property_Set::remove (const PortableGroup::Properties & property_set)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  InternalGuard guard(this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   size_t count = property_set.length ();
   for (size_t nItem = 0; nItem < count; ++nItem)
   {
@@ -207,7 +213,7 @@ void TAO::PG_Property_Set::export_properties(PortableGroup::Properties & propert
 
 void TAO::PG_Property_Set::merge_properties (ValueMap & merged_values) const
 {
-  InternalGuard guard(ACE_const_cast (TAO::PG_Property_Set *, this)->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   if (0 != this->defaults_)
   {
     this->defaults_->merge_properties (merged_values);
@@ -228,7 +234,7 @@ int TAO::PG_Property_Set::find (
   const ACE_CString & key,
   const PortableGroup::Value *& pValue) const
 {
-  InternalGuard guard(ACE_const_cast (TAO::PG_Property_Set *, this)->internals_);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->internals_, 0);
   int found = (0 == this->values_.find (key, pValue));
   if (! found)
   {
