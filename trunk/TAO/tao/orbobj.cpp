@@ -245,9 +245,9 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 }
 
 int
-CORBA_ORB::run (ACE_Time_Value &tv)
+CORBA_ORB::run (const ACE_Time_Value &tv)
 {
-  return this->run (&tv);
+  return this->run ((ACE_Time_Value *) &tv);
 }
 
 CORBA_Object_ptr
