@@ -27,7 +27,6 @@ Fri Jan 18 22:16:06 2002  Boris Kolpackov <bosk@ipmce.ru>
 	* tao/skip.cpp:
 	  Added Any and TypeCode support for valuetypes.
 	
-	
 Fri Jan 18 11:50:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* */Makefile: Regenerated dependencies.
