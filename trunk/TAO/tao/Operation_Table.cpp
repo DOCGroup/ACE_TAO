@@ -1,3 +1,4 @@
+// $Id$
 #include "tao/corba.h"
 
 // destructor
@@ -14,6 +15,7 @@ ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>::equal (c
 }
 
 // Template Specialization for char *
+
 u_long
 ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>::hash (const char *const &ext_id)
 {
@@ -21,41 +23,44 @@ ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>::hash (co
 }
 
 // constructor
+
 TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry *db,
 						    CORBA::ULong dbsize,
 						    CORBA::ULong hashtblsize)
 {
   if (hashtblsize > 0)
     this->hash_.open (hashtblsize);
-  // otherwise, some default is chosen by the ACE_Hash_Map_Manager class
+  // Otherwise, some default is chosen by the ACE_Hash_Map_Manager
+  // class
 
-  // the job of the constructor is to go thru each entry of the database and
-  // bind the operation name to its corresponding skeleton
+  // The job of the constructor is to go thru each entry of the
+  // database and bind the operation name to its corresponding
+  // skeleton.
+
   for (CORBA::ULong i=0; i < dbsize; i++)
-    {
-      // @@ (ASG): what happens if bind fails ???
-      (void)this->bind (db[i].opname_, db[i].skel_ptr_);
-    }
+    // @@ (ASG): what happens if bind fails ???
+    (void)this->bind (db[i].opname_, db[i].skel_ptr_);
 }
 
 TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable (void)
 {
-  // we need to go thru each entry and free up storage allocated to hold the
-  // external ids. In this case, these are strings.
-  OP_MAP_MANAGER::ITERATOR iterator (this->hash_);  // initialize an iterator
+  // Initialize an iterator.  We need to go thru each entry and free
+  // up storage allocated to hold the external ids.  In this case,
+  // these are strings.
+  OP_MAP_MANAGER::ITERATOR iterator (this->hash_);  
 
   for (OP_MAP_MANAGER::ENTRY *entry = 0;
        iterator.next (entry) != 0;
        iterator.advance ())
     {
-      CORBA::string_free ((char *)entry->ext_id_); // we had allocated memory
-                                                   // and stored the string. So
-                                                   // we free the memory
+      // We had allocated memory and stored the string. So we free the
+      // memory.
+      CORBA::string_free ((char *) entry->ext_id_); 
       entry->ext_id_ = 0;
-      entry->int_id_ = 0;  // we do not own this. So we just set it to 0
-    }
 
-  this->hash_.close ();
+      // We do not own this. So we just set it to 0.
+      entry->int_id_ = 0;  
+    }
 }
 
 int
@@ -73,6 +78,7 @@ TAO_Dynamic_Hash_OpTable::find (const char *opname,
 }
 
 // Linear search strategy
+
 TAO_Linear_OpTable::TAO_Linear_OpTable (const TAO_operation_db_entry *db,
                                         CORBA::ULong dbsize)
   : next_ (0),
