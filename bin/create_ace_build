@@ -1,4 +1,3 @@
-# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
@@ -61,26 +60,26 @@ PERL5_CWD
 #### Process command line args.
 ####
 while ($#ARGV >= 0  &&  $ARGV[0] =~ /^-/) {
-    if ($ARGV[0] eq '-v') {
-        $verbose = 1;
-    } elsif ($ARGV[0] eq '-d') {
-        if ($ARGV[1] =~ /^\d+$/) {
-            $directory_mode = eval ($ARGV[1]); shift;
-        } else {
-            warn "$0:  must provide argument for -d option\n";
-            die $usage;
-        }
-    } elsif ($ARGV[0] eq '-a') {
-        $source = &cwd ();
-        $absolute = 1;
-    } elsif ($ARGV[0] eq '-?') {
-        print "$usage";
-        exit;
+  if ($ARGV[0] eq '-v') {
+    $verbose = 1;
+  } elsif ($ARGV[0] eq '-d') {
+    if ($ARGV[1] =~ /^\d+$/) {
+      $directory_mode = eval ($ARGV[1]); shift;
     } else {
-        warn "$0:  unknown option $ARGV[0]\n";
-        die $usage;
+      warn "$0:  must provide argument for -d option\n";
+      die $usage;
     }
-    shift;
+  } elsif ($ARGV[0] eq '-a') {
+    $source = &cwd ();
+    $absolute = 1;
+  } elsif ($ARGV[0] eq '-?') {
+    print "$usage";
+    exit;
+  } else {
+    warn "$0:  unknown option $ARGV[0]\n";
+    die $usage;
+  }
+  shift;
 }
 
 die $usage unless $#ARGV == 0;
@@ -100,7 +99,7 @@ if (-e '/usr/bin/find') {
 #### Check that we're in an ACE "top level" directory.
 ####
 (-d 'ace' && -d 'include')  ||
-    die "$0:  must be in an ACE top level (ACE_ROOT) directory!\n";
+  die "$0:  must be in an ACE top level (ACE_ROOT) directory!\n";
 
 ####
 #### Create build directories, if needed.
@@ -123,33 +122,33 @@ if (-e '/usr/bin/find') {
 #### Create directories and symlinks to files.
 ####
 foreach $file (@files) {
-   chop $file;         #### remove trailing newline (from find command above)
-   $file =~ s%^./%%g;  #### excise leading ./ directory component
+  chop $file;         #### remove trailing newline (from find command above)
+  $file =~ s%^./%%g;  #### excise leading ./ directory component
 
-   if (-d $file) {
-        unless (-d "$build/$file") {
-            print "mkdir $build/$file, $directory_mode\n" if $verbose;
-            mkdir ("$build/$file", $directory_mode);
+  if (-d $file) {
+     unless (-d "$build/$file") {
+       print "mkdir $build/$file, $directory_mode\n" if $verbose;
+       mkdir ("$build/$file", $directory_mode);
+     }
+  } else {
+    unless (-e "$build/$file") {
+      if (!$absolute) {
+        $up = '../..';
+        while ($file =~ m%/%g) {
+          $up .= '/..';
         }
-    } else {
-        unless (-e "$build/$file") {
-            if (!$absolute) {
-                $up = '../..';
-                while ($file =~ m%/%g) {
-                  $up .= '/..';
-                }
 
-                print "symlink $up/$file $build/$file\n" if $verbose;
-                symlink ("$up/$file", "$build/$file")  ||
-                    warn "$0: symlink to $build/$file failed\n";
-            } else {
-                $path = $source . '/' . $file;
-                print "symlink $path $build/$file\n" if $verbose;
-                symlink ("$path", "$build/$file")  ||
-                    warn "$0: symlink to $build/$file failed\n";
-            }
-        }
+        print "symlink $up/$file $build/$file\n" if $verbose;
+        symlink ("$up/$file", "$build/$file")  ||
+          warn "$0: symlink to $build/$file failed\n";
+      } else {
+        $path = $source . '/' . $file;
+        print "symlink $path $build/$file\n" if $verbose;
+        symlink ("$path", "$build/$file")  ||
+        warn "$0: symlink to $build/$file failed\n";
+      }
     }
+  }
 }
 
 ####
@@ -157,19 +156,18 @@ foreach $file (@files) {
 #### that are no longer actually linked to a file.
 ####
 open (LINKS, "$find $build -type l |") ||
-    die "$0: cannot find symlinks in $build\n";
+  die "$0: cannot find symlinks in $build\n";
 
 while (<LINKS>) {
-    chop;
-    local @s = stat $_;
-    if ($#s == -1) {
-	print "Removing $_ \n" if $verbose;
-	unlink $_  ||  warn "$0: unlink of $_ failed\n";
-    }
-
+  chop;
+  local @s = stat $_;
+  if ($#s == -1) {
+    print "Removing $_ \n" if $verbose;
+    unlink $_  ||  warn "$0: unlink of $_ failed\n";
+  }
 }
 close (LINKS) ||
-    die "$0: cannot close symlinks pipe\n";
+  die "$0: cannot close symlinks pipe\n";
 
 ####
 #### Done: print message.
@@ -178,8 +176,8 @@ print "\nCompleted creation of $build/.\n";
 
 unless (-e "$build/ace/config.h"  &&
         -e "$build/include/makeinclude/platform_macros.GNU") {
-    print "Be sure to setup $build/ace/config.h and\n" .
-          "$build/include/makeinclude/platform_macros.GNU symlinks.\n";
+  print "Be sure to setup $build/ace/config.h and\n" .
+        "$build/include/makeinclude/platform_macros.GNU symlinks.\n";
 }
 
 #### EOF
