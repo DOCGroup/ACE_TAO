@@ -164,7 +164,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Any &x)
                                               0,
                                               &cdr,
                                               ACE_TRY_ENV);
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
       if (status== CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 1;
@@ -191,7 +191,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
                                                    0,
                                                    &cdr,
                                                    ACE_TRY_ENV);
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
       if (status == CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 1;
@@ -334,7 +334,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Any &x)
                                               0,
                                               &cdr,
                                               ACE_TRY_ENV);
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
       if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 0;
@@ -359,7 +359,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
                                                    0,
                                                    &cdr,
                                                    ACE_TRY_ENV);
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
       if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 0;
