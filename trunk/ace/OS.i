@@ -227,17 +227,6 @@ ACE_CE_Errno::operator= (int x)
 }
 #endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 
-ACE_INLINE ACE_Time_Value &
-ACE_Time_Value::operator *= (double d)
-{
-  double time = this->sec () * ACE_ONE_SECOND_IN_USECS + this->usec ();
-  time *= d;
-  this->sec ((long)(time / ACE_ONE_SECOND_IN_USECS));
-  this->usec (((long)time) % ACE_ONE_SECOND_IN_USECS);
-
-  return *this;
-}
-
 ACE_INLINE ACE_Time_Value
 operator * (double d, const ACE_Time_Value &tv)
 {
@@ -398,6 +387,17 @@ ACE_Time_Value::usec (long usec)
 {
   ACE_TRACE ("ACE_Time_Value::usec");
   this->tv_.tv_usec = usec;
+}
+
+ACE_INLINE ACE_Time_Value &
+ACE_Time_Value::operator *= (double d)
+{
+  double time = this->sec () * ACE_ONE_SECOND_IN_USECS + this->usec ();
+  time *= d;
+  this->sec ((long)(time / ACE_ONE_SECOND_IN_USECS));
+  this->usec (((long)time) % ACE_ONE_SECOND_IN_USECS);
+
+  return *this;
 }
 
 // True if tv1 > tv2.
