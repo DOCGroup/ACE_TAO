@@ -1,6 +1,6 @@
 // $Id$
 
-//================================================================================
+// ============================================================================
 //
 // = LIBRARY
 //     TAO/tests/POA/On_Demand_Activation/Servant_Locator
@@ -15,7 +15,7 @@
 // = AUTHOR
 //     Irfan Pyarali
 //
-//==================================================================================
+// ============================================================================
 
 #include "Servant_Locator.h"
 #include "MyFooServant.h"
@@ -33,6 +33,8 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
                                 PortableServer::ServantLocator::Cookie &cookie,
                                 CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (operation);
+
   // Convert ObjectID to String.
 
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
@@ -65,6 +67,11 @@ MyFooServantLocator::postinvoke (const PortableServer::ObjectId &oid,
                                  PortableServer::Servant servant,
                                  CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (oid);
+  ACE_UNUSED_ARG (poa);
+  ACE_UNUSED_ARG (operation);
+  ACE_UNUSED_ARG (env);
+
   // Check the passed servant with the cookie.
 
   PortableServer::Servant my_servant = (PortableServer::Servant) cookie;
