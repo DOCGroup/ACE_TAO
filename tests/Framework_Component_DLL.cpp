@@ -64,9 +64,9 @@ ACE_FACTORY_DEFINE (Framework_Component_DLL, Server_2)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class Server_T<1>;
 template class Server_T<2>;
-template class FWCT_DLL_Singleton_Adapter_T<Simple_Service>
+template class FWCT_DLL_Singleton_Adapter_T<Simple_Service>;
 template class ACE_DLL_Singleton_T< FWCT_DLL_Singleton_Adapter_T <Simple_Service>,
-                                    ACE_SYNCH_MUTEX >
+                                    ACE_SYNCH_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate Server_T<1>
 #pragma instantiate Server_T<2>
