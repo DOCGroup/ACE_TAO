@@ -69,7 +69,7 @@ Grid_Client_i::run (char *name,
                     char *argv[])
 {
   // Initialize the client.
-  if (client.init (name,argc, argv) == -1)
+  if (client.init (name, argc, argv) == -1)
     return -1;
 
   if (this->parse_args (argc, argv) == -1)
@@ -112,12 +112,14 @@ Grid_Client_i::run (char *name,
     }
   ACE_CATCH (CORBA::UserException, range_ex)
     {
-      ACE_PRINT_EXCEPTION (range_ex,"\tFrom get and set grid");
+      ACE_PRINT_EXCEPTION (range_ex,
+                           "\tFrom get and set grid");
       return -1;
     }
   ACE_CATCH (CORBA::SystemException, memex)
     {
-      ACE_PRINT_EXCEPTION (memex,"Cannot make grid as Memory exhausted");
+      ACE_PRINT_EXCEPTION (memex,
+                           "Cannot make grid as Memory exhausted");
       return -1;
     }
   ACE_ENDTRY;
