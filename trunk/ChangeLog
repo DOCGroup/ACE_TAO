@@ -1,3 +1,12 @@
+Wed Aug 27 17:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Proactor/test_cancel.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        * examples/Reactor/Proactor/test_udp_proactor.cpp:
+          Added a main that is used when these examples are build on a
+          platform on which these examples don't work. This fixes the link
+          errors in the Cygwin build.
+
 Wed Aug 27 10:32:03 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
