@@ -151,7 +151,15 @@ ACE_Message_Queue<ACE_SYNCH_USE>::deactivated (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::deactivated");
 
-  return this->deactivated_;
+  return this->state_ == ACE_Message_Queue_Base::DEACTIVATED;
+}
+
+template <ACE_SYNCH_DECL> ACE_INLINE int
+ACE_Message_Queue<ACE_SYNCH_USE>::state (void)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::state");
+
+  return this->state_;
 }
 
 #if 0
@@ -290,6 +298,14 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::deactivated (void)
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::deactivated");
 
   return this->queue_.deactivated ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::state (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::state");
+
+  return this->queue_.state ();
 }
 
 #if 0
