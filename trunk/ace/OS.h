@@ -194,11 +194,19 @@
 #endif /* ACE_DEFAULT_RENDEZVOUS */
 
 #if !defined (ACE_DEFAULT_LOGGER_KEY)
+#if defined (ACE_HAS_UNICODE) && defined (UNICODE)
+#if defined (ACE_HAS_STREAM_PIPES)
+#define ACE_DEFAULT_LOGGER_KEY L"/tmp/server_daemon"
+#else
+#define ACE_DEFAULT_LOGGER_KEY L"localhost:10012"
+#endif /* ACE_HAS_STREAM_PIPES */
+#else /* ACE_HAS_UNICODE */
 #if defined (ACE_HAS_STREAM_PIPES)
 #define ACE_DEFAULT_LOGGER_KEY "/tmp/server_daemon"
 #else
 #define ACE_DEFAULT_LOGGER_KEY "localhost:10012"
 #endif /* ACE_HAS_STREAM_PIPES */
+#endif /* ACE_HAS_UNICODE && UNICODE */
 #endif /* ACE_DEFAULT_LOGGER_KEY */
 
 #if !defined (ACE_DEFAULT_SERVER_HOST)
@@ -2449,6 +2457,13 @@ typedef void (*ACE_SignalHandlerV)(...);
 
 #define ACE_INVALID_SEM_KEY 0
 
+#if defined (ACE_HAS_WINCE)
+// @@ WinCE probably doesn't have structural exception support
+//    But I need to double check to find this out
+#define ACE_SEH_TRY if (1)
+#define ACE_SEH_EXCEPT(X) while (0)
+#define ACE_SEH_FINALLY if (1)
+#else
 #if defined(__BORLANDC__)
 #define ACE_SEH_TRY try
 #define ACE_SEH_FINALLY catch(...)
@@ -2457,6 +2472,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define ACE_SEH_FINALLY __finally
 #endif /* __BORLANDC__ */
 #define ACE_SEH_EXCEPT(X) __except(X)
+#endif /* ACE_HAS_WINCE */
 
 // The "null" device on Win32.
 #define ACE_DEV_NULL "nul"
@@ -4072,10 +4088,12 @@ public:
 #endif /* difftime */
 
   // = A set of wrappers for operations on time.
+#if !defined (ACE_HAS_WINCE)
+  static time_t mktime (struct tm *timeptr);
+#endif /* !ACE_HAS_WINCE */
   static double difftime (time_t t1,
                           time_t t0);
   static time_t time (time_t *tloc = 0);
-  static time_t mktime (struct tm *timeptr);
   static struct tm *localtime (const time_t *clock);
   static struct tm *localtime_r (const time_t *clock,
                                  struct tm *res);
@@ -4291,6 +4309,8 @@ public:
   static int pipe (ACE_HANDLE handles[]);
 
   // = A set of wrappers for directory operations.
+  static mode_t umask (mode_t cmask);
+#if !defined (ACE_HAS_UNICODE_ONLY)
   static int chdir (const char *path);
   static int mkdir (const char *path,
                     mode_t mode = ACE_DEFAULT_DIR_PERMS);
@@ -4299,10 +4319,10 @@ public:
   static char *mktemp (char *t);
   static char *getcwd (char *,
                        size_t);
-  static mode_t umask (mode_t cmask);
   static int unlink (const char *path);
   static char *tempnam (const char *dir,
                         const char *pfx);
+#endif /* ACE_HAS_UNICODE_ONLY */
 
   // = A set of wrappers for random number operations.
   static int rand (void);
@@ -4660,7 +4680,8 @@ public:
   static int mkdir (const wchar_t *path,
                     mode_t mode = ACE_DEFAULT_DIR_PERMS);
   static int chdir (const wchar_t *path);
-
+  static wchar_t *getcwd (wchar_t *,
+                          size_t);
 #endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */
 

@@ -234,7 +234,7 @@ ACE_OS::uname (struct utsname *name)
   // ACE_TRACE ("ACE_OS::uname");
 #if defined (ACE_WIN32)
   size_t maxnamelen = sizeof name->nodename;
-  ACE_OS::strcpy (name->sysname, "Win32");
+  ACE_OS::strcpy (name->sysname, __TEXT ("Win32"));
 
   OSVERSIONINFO vinfo;
   vinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -243,7 +243,7 @@ ACE_OS::uname (struct utsname *name)
   SYSTEM_INFO sinfo;
   ::GetSystemInfo(&sinfo);
 
-  ACE_OS::strcpy (name->sysname, "Win32");
+  ACE_OS::strcpy (name->sysname, __TEXT ("Win32"));
 
   if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
   {
@@ -649,6 +649,50 @@ ACE_OS::sprintf (wchar_t *buf, const char *format, ...)
 #endif /* 0 */
 
 #endif /* ACE_WIN32 */
+
+#if defined (ACE_LACKS_MKTEMP)
+wchar_t *
+ACE_OS::mktemp (wchar_t *s)
+{
+  // ACE_TRACE ("ACE_OS::mktemp");
+  if (s == 0)
+    // check for null template string failed!
+    return 0;
+  else
+    {
+      wchar_t *xxxxxx = ACE_OS::strstr (s, L"XXXXXX");
+
+      if (xxxxxx == 0)
+        // the template string doesn't contain "XXXXXX"!
+        return s;
+      else
+        {
+          wchar_t unique_letter = L'a';
+          struct stat sb;
+
+          // Find an unused filename for this process.  It is assumed
+          // that the user will open the file immediately after
+          // getting this filename back (so, yes, there is a race
+          // condition if multiple threads in a process use the same
+          // template).  This appears to match the behavior of the
+          // Solaris 2.5 mktemp().
+          ACE_OS::sprintf (xxxxxx, L"%05d%c", getpid (), unique_letter);
+          while (ACE_OS::stat (s, &sb) >= 0)
+            {
+              if (++unique_letter <= L'z')
+                ACE_OS::sprintf (xxxxxx, L"%05d%c", getpid (), unique_letter);
+              else
+                {
+                  // maximum of 26 unique files per template, per process
+                  ACE_OS::sprintf (xxxxxx, L"%s", L"");
+                  return s;
+                }
+            }
+        }
+      return s;
+    }
+}
+#endif /* ACE_LACKS_MKTEMP */
 #endif /* ACE_HAS_UNICODE */
 
 int
@@ -2868,11 +2912,11 @@ ftruncate (ACE_HANDLE handle, long len)
 }
 #endif /* ACE_NEEDS_FTRUNCATE */
 
+#if defined (ACE_LACKS_MKTEMP) && !defined (ACE_HAS_UNICODE_ONLY)
 char *
 ACE_OS::mktemp (char *s)
 {
   // ACE_TRACE ("ACE_OS::mktemp");
-#if defined (ACE_LACKS_MKTEMP)
   if (s == 0)
     // check for null template string failed!
     return 0;
@@ -2909,11 +2953,8 @@ ACE_OS::mktemp (char *s)
         }
       return s;
     }
-
-#else
-  return ::mktemp (s);
-#endif /* ACE_LACKS_MKTEMP */
 }
+#endif /* ACE_LACKS_MKTEMP && !ACE_HAS_UNICODE_ONLY */
 
 int
 ACE_OS::socket_init (int version_high, int version_low)
@@ -2924,10 +2965,19 @@ ACE_OS::socket_init (int version_high, int version_low)
       // cout << "WSAStartup" << endl;
       WORD version_requested = MAKEWORD (version_high, version_low);
       WSADATA wsa_data;
-      int error = ::WSAStartup (version_requested, &wsa_data);
+      int error = WSAStartup (version_requested, &wsa_data);
 
       if (error != 0)
+#if defined (ACE_HAS_WINCE)
+        {
+          wchar_t fmt[] = L"%s failed, WSAGetLastError returned %d";
+          wchar_t buf[80];  // @@ Eliminate magic number.
+          ACE_OS::sprintf (buf, fmt, L"WSAStartup", error);
+          ::MessageBox (NULL, buf, L"WSAStartup failed!", MB_OK);
+        }
+#else
         cerr << "WSAStartup failed, WSAGetLastError returned " << error << endl;
+#endif /* ACE_HAS_WINCE */
 
       ACE_OS::socket_initialized_ = 1;
     }
@@ -2945,18 +2995,23 @@ ACE_OS::socket_fini (void)
   if (ACE_OS::socket_initialized_ != 0)
     {
       // cout << "WSACleanup" << endl;
-      if (::WSACleanup () != 0)
+      if (WSACleanup () != 0)
         {
           int error = ::WSAGetLastError ();
+#if defined (ACE_HAS_WINCE)
+          wchar_t fmt[] = L"%s failed, WSAGetLastError returned %d";
+          wchar_t buf[80];  // @@ Eliminate magic number.
+          ACE_OS::sprintf (buf, fmt, L"WSACleanup", error);
+          ::MessageBox (NULL, buf , L"WSACleanup failed!", MB_OK);
+#else
           cerr << "WSACleanup failed, WSAGetLastError returned " << error << endl;
+#endif /* ACE_HAS_WINCE */
         }
       ACE_OS::socket_initialized_ = 0;
     }
 #endif /* ACE_WIN32 */
   return 0;
 }
-
-////     #error "here"
 
 #if defined (ACE_LACKS_SYS_NERR)
 int sys_nerr = ERRMAX + 1;
@@ -3211,6 +3266,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 #endif /* ACE_HAD_P_READ_WRITE */
 }
 
+#if !defined (ACE_HAS_WINCE)
 time_t
 ACE_OS::mktime (struct tm *t)
 {
@@ -3226,6 +3282,7 @@ ACE_OS::mktime (struct tm *t)
   ACE_OSCALL_RETURN (::mktime (t), time_t, (time_t) -1);
 #endif /* ACE_HAS_MT_SAFE_MKTIME */
 }
+#endif /* !ACE_HAS_WINCE */
 
 #if !defined (ACE_HAS_THREADS) || !defined (ACE_HAS_STHREADS) || defined (ACE_LACKS_RWLOCK_T)
 // The ACE_HAS_THREADS and ACE_HAS_STHREADS case is in OS.i
