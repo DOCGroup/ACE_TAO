@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
+#include        "../../tao/Version.h"
 
 ACE_RCSID(be, be_init, "$Id$")
 
@@ -98,5 +99,7 @@ BE_init()
 void
 BE_version()
 {
-  cerr << GTDEVEL("TAO C++ BE, version 0.1.0\n");
+  cerr << GTDEVEL("TAO C++ BE, version ")
+       << GTDEVEL(TAO_VERSION)
+       << endl;
 }
