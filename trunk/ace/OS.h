@@ -3252,7 +3252,7 @@ PAGE_NOACCESS
 PAGE_NOCACHE  */
 
 #   if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-#     include "ace/ws2tcpip.h"
+#     include /**/ <ws2tcpip.h>
 #   endif /* ACE_HAS_WINSOCK2 */
 
 // error code mapping

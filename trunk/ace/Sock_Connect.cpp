@@ -305,7 +305,7 @@ ACE_Sock_Connect::get_bcast_addr (ACE_UINT32 &bcast_addr,
 
 int
 ACE_Sock_Connect::get_ip_interfaces (size_t &count,
-                        ACE_INET_Addr *&addrs)
+                                     ACE_INET_Addr *&addrs)
 {
   ACE_TRACE ("ACE_Sock_Connect::get_ip_interfaces");
 
@@ -324,9 +324,9 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
   defined (_MSC_VER) && (_MSC_VER >= 1100)
 #endif /* 0 */
 
-    int i, n_interfaces, status;
+  int i, n_interfaces, status;
+
   INTERFACE_INFO info[64];
-  LPINTERFACE_INFO lpii;
   SOCKET sock;
 
   // Get an (overlapped) DGRAM socket to test with
@@ -337,8 +337,10 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
   DWORD bytes;
   status = WSAIoctl(sock,
                     SIO_GET_INTERFACE_LIST,
-                    0, 0,
-                    info, sizeof(info),
+                    0, 
+                    0,
+                    info, 
+                    sizeof(info),
                     &bytes,
                     0,
                     0);
@@ -358,6 +360,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
   // because they're down or don't have an IP address.
   for (count = 0, i = 0; i < n_interfaces; i++)
     {
+      LPINTERFACE_INFO lpii;
       struct sockaddr_in *addrp;
 
       lpii = &info[i];
@@ -370,7 +373,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
         continue;
 
       // Set the address for the caller.
-      addrs[count].set(addrp, sizeof(lpii->iiAddress));
+      addrs[count].set(addrp, sizeof(sockaddr_in));
       ++count;
     }
 
