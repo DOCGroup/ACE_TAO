@@ -1,3 +1,11 @@
+Wed Mar  9 10:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-11.00.h:
+          With the latest versions of the HP aCC compiler, when the compiler
+          option -AA is passed, then _INCLUDE__STDC_A1_SOURCE is defined and
+          then we get a three parameter wcstok. We define at that moment
+          ACE_HAS_3_PARAM_WCSTOK.
+
 Wed Mar  9 09:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
