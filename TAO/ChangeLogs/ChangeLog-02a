@@ -1,3 +1,14 @@
+Tue Aug  7 23:02:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Thread_Pool_Latency/svc.conf: Looks like our
+	  past seems to haunt us. Once upon a time this svc.conf file was
+	  used in Latency measurements. When the tests were changed to a
+	  new directory the svc.conf file was copied. The svc.conf file
+	  had a RW connection handler. That was enough to cause the test
+	  to hang. Further removed the -ORBReactor type as it was trying
+	  to load a TP reactor. This should fix the problem in the daily
+	  builds with this test.
+
 Tue Aug  7 14:37:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.cpp (handle_input_i): Added the transport
