@@ -449,7 +449,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head_i (ACE_Message_Block *&first_item)
 
   this->cur_count_--;
 
-  if (this->signal_dequeue_waiters () == -1)
+  if (this->signal_enqueue_waiters () == -1)
     return -1;
   else
     return this->cur_count_;
