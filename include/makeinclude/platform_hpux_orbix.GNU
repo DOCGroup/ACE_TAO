@@ -1,15 +1,16 @@
 # Assume the existence of Orbix with HP/UX...
 CC		= /bin/cc
 CXX		= /usr/bin/CC
+CFLAGS		= $(DCFLAGS) -Aa -z +z
+CCFLAGS		= $(CFLAGS) -pta -ptb
+DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX) 
 INCLDIRS        = -I$(ORBIX_ROOT)/include
 PIC		= 
 ARFLAGS		= ruv
 RANLIB		= echo
-CFLAGS		= -Aa -z +z $(DCFLAGS) 
 LDFLAGS		= -L$(ORBIX_ROOT)/lib -L$(WRAPPER_ROOT)/ace -Wl,+s
-CCFLAGS		= -Aa -z +z -pta -ptb
 SOFLAGS		= -b
 SOBUILD     = @echo ""; \
   echo "$(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<"; \

@@ -1,7 +1,8 @@
 CC              = gcc
 CXX		= g++
-CFLAGS		+= -w -O2
-CCFLAGS		+= -w -O2 -fno-implicit-templates -fno-strict-prototypes
+CFLAGS		+= $(DCFLAGS) -w -O2
+CCFLAGS		+= $(CFLAGS) -fno-implicit-templates -fno-strict-prototypes
+DCFLAGS		+= -g #### should this be -gstabs?
 DLD             = $(CXX)
 LD		= $(CXX)
 LIBS            = -lsocket

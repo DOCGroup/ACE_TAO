@@ -58,8 +58,6 @@ include $(WRAPPER_ROOT)/include/makeinclude/platform_macros.GNU
 #----------------------------------------------------------------------------
 
 CPPFLAGS	+= $(DEFFLAGS) $(INCLDIRS)
-DCFLAGS		+= -g
-DCCFLAGS	+= -g
 IDL		= idl
 IDLFLAGS	= -s S.cpp -c C.cpp
 INCLDIRS	+= -I. -I$(WRAPPER_ROOT)
@@ -69,11 +67,10 @@ INSLIB		= $(WRAPPER_ROOT)/ace
 INSMAN		= $(WRAPPER_ROOT)/man
 LDFLAGS		+= -L$(WRAPPER_ROOT)/ace -L./
 LEX		= flex
-# LINK_COMMAND = quantify -cache-dir=/tmp/quantify
 OCFLAGS		+= -O
 OCCFLAGS	+= -O
-PCFLAGS		+= # -p
-PCCFLAGS	+= # -p
+PCFLAGS		+= #### set in platform_macros.GNU file, e.g., -p
+PCCFLAGS	+= #### set in platform_macros.GNU file, e.g., -p
 RM		= /bin/rm
 VAR		=
 VDIR		= .obj/
@@ -110,12 +107,11 @@ CCFLAGS	+= $(PCCFLAGS)
 
 else
 ifdef optimize
-CFLAGS  += $(OCFLAGS) #-DNDEBUG
-CCFLAGS += $(OCCFLAGS) #-DNDEBUG
+CFLAGS  += $(OCFLAGS) -DNDEBUG
+CCFLAGS += $(OCCFLAGS) -DNDEBUG
 
 else # default settings
-CFLAGS  += $(DCFLAGS) #-DNDEBUG
-CCFLAGS += $(DCCFLAGS) #-DNDEBUG
+
 endif # optimize
 endif # profile
 endif # debug
@@ -134,8 +130,8 @@ ifdef purify
 PRELINK += purify -best-effort -cache-dir=/tmp/purifycache -chain-length=20 -inuse-at-exit -fds-inuse-at-exit=no
 endif # purify
 
-COMPILE.c	=$(CC) $(CFLAGS) $(CPPFLAGS)  -c
-COMPILE.cc	=$(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)  -c
+COMPILE.c	=$(CC) $(CFLAGS) $(CPPFLAGS) -c
+COMPILE.cc	=$(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
 # 960905 Marius Kjeldahl <marius@funcom.com>
 # Added the line below to be used for compiling executable shared objects
 COMPILEESO.cc   =$(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)

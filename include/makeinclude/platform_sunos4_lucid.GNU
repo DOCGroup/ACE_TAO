@@ -1,8 +1,10 @@
 # SunOS 4.x (Solaris 1.x) with Lucid
 CC		= lcc
 CXX		= lcc
-CFLAGS		= -Xa       # use ANSI c complier
-CCFLAGS		= -XF -Xpt- # use c++ ARM compiler with auto templates turned off
+CFLAGS		= $(DCFLAGS) -Xa # use ANSI c complier
+CCFLAGS		= $(DCCFLAGS) -XF -Xpt- # use c++ ARM compiler with auto templates turned off
+DCFLAGS		+= -g
+DCCFLAGS	+= $(DCFLAGS)
 DLD		= /bin/ld
 LD		= $(CXX)
 LIBS		+= 

@@ -17,7 +17,7 @@
 #
 CC              = cc
 CXX             = CC
-CFLAGS          += -mt                #### -xO3
+CFLAGS          += $(DCFLAGS) -mt
 #### -pta instantiates all template members, which makes libraries bigger.
 #### But, it's supposed to put each member into it's own .o, so executable
 #### size should not be penalized.
@@ -26,7 +26,8 @@ CFLAGS          += -mt                #### -xO3
 #### Sun C++ 4.2 only:
 #### Dynamic casting and RTTI can coexist with ACE, but it doesn't
 #### use them.  To disable, add: -features=no%castop,no%rtti
-CCFLAGS         += -mt -noex -pta     #### -O3
+CCFLAGS         += $(CFLAGS) -noex -pta
+DCFLAGS		+= -g
 DLD             = $(CXX) 
 LD		= $(CXX)
 LDFLAGS         += -R $(WRAPPER_ROOT)/ace 
