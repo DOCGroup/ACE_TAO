@@ -1,3 +1,14 @@
+Tue Jul 20 19:03:46 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/IIOP_Connector.cpp:
+	* tao/UIOP_Connector.cpp:
+	* tao/ORB.cpp:
+	* tao/Resource_Factory.cpp:
+
+	  Moved template instantiations for TAO_Cached_Connector_Lock to
+	  Resource_Factory.cpp since that file is a more appropriate
+	  location to put them.
+
 Tue Jul 20 15:12:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_sunsoft.cpp:
