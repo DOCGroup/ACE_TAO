@@ -1,3 +1,15 @@
+Sun Dec 16 16:42:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.{h,cpp}:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.{h,cpp}:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/FD-unclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp:
+
+          Made these examples compiling when ACE_USES_WCHAR is set
+
 Sun Dec 16 08:04:23 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tests/Message_Queue_Test_Ex.cpp : fixed a compiler error
@@ -16,7 +28,7 @@ Sat Dec 15 09:30:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* tests/Logging_Strategy_Test.cpp: include ace/Logging_Strategy.h
 	  rather than ace/Logging_Strategy.cpp.  Thanks to Mike Connors
  	  <mike.connors@ghs.com> for reporting this.
-  
+
 Sat Dec 15 16:20:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/ace_os_dll.vcp: Added the files OS_QoS.{h,cpp}.
@@ -26,7 +38,7 @@ Sat Dec 15 09:52:14 2001  Carlos O'Ryan  <coryan@uci.edu>
 	* examples/Misc/test_set.cpp:
 	  Add missing #include for Tru64/DU/CXX, probably implicitly
 	  included on other platforms due to the
-	  ACE_TEMPLATES_REQUIRE_SOURCE. 
+	  ACE_TEMPLATES_REQUIRE_SOURCE.
 
 Sat Dec 15 09:30:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
