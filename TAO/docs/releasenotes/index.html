@@ -1493,16 +1493,15 @@ Service </a> prototype was updated in TAO 1.3.
 <hr WIDTH="100%">
 <h3><a NAME="notify"></a>CORBA Notification Service </h3>
 
-<h4> Last updated:Sat Jul 27 07:24:51 CDT 2002 </h4>
-Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
+<h4> Last updated:Thu Nov 21 18:41:11 2002 </h4>
+Point of contact: <a href="mailto:pradeep@oomworks.com">Pradeep Gore</a>
 <p>
 Work is underway to implement the TAO Real-Time Notification
 Service. This is an extension to TAO's CORBA Notification Service with
 Real-Time CORBA support.
 
 The current <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf">
-Notification Service </a> implementation (first released in TAO 1.2.2
-) consists of the following
+Notification Service </a> implementation consists of the following
 (see the associated README's for more information):
 <ul>
         <li>
@@ -1526,144 +1525,37 @@ Notification Service </a> implementation (first released in TAO 1.2.2
         </li>
 
         <li>
-            Feature tests are under <tt>$TAO_ROOT/orbsvcs/tests/Notify/</tt>
+            Feature unit tests are under <tt>$TAO_ROOT/orbsvcs/tests/Notify/</tt>
         </li>
-</ul>
-
-<h3> Features supported thus far:</h3>
-
-<ul>
-  <li>
-      The following QoS properties are supported - per-message event
-      priority,order policy, discard policy, maximum batch size,
-      pacing interval, and max events per consumer.
-  </li>
-
-  <li>
-      The following Admin. properties are supported - max. queue
-      length, max_consumers, max_suppliers and reject_new_events.
-  </li>
-
-  <li>
-      All Proxy objects support the <tt>Subscribe</tt> and <tt>Publish</tt>
-      interface methods and will inform connected clients about
-      <tt>subscription_change</tt> and <tt>offer_change</tt>.
-  </li>
-
-  <li>
-      Assignment of ID's: All object factories assign ID's to objects created.
-  </li>
-
-  <li>
-      The SequenceProxyPushSupplier now pushes sequences of structured
-      events to SequenceProxyPushConsumers.
-  </li>
-
-  <li>
-      The EventChannel's default Filter Factory can be used to create filters.
-      We noe support the OMG Extended Trader Constraint Language (ETCL) grammar.
-      This is an extension of the Trader Constraint Language grammar which was
-      created specifically for the Notification Service. The ETCL parser has been
-      implemented in TAO as a separate library in TAO/orbsvcs/orbsvcs. The TAO
-      Notification Service no longer depends on the TAO Trading Service or uses
-      its TCL parser.
-  </li>
-
-  <li>
-      This implementation is backward compatible with the <a href="#ec">
-      CORBA Event Service</a>.
-  </li>
-
-  <li>
-      A runnning theme in this project is to isolate the patterns identified
-      in the implementation of the <a href="ec.html"> RTEC </a> and reuse them.
-      A  collection of C++ template classes that capture these patterns is being used in this
-      implementation. These templates are the Event Service Framework <tt>TAO/orbsvcs/orbsvcs/ESF</tt>.
-  </li>
-
-  <li>
-      Concurrency:
-      <ul>
+        
         <li>
-            The service is thread safe.
+            The <a href="notify.html" >Notification feature matrix </a>lists the features implemented.
         </li>
-
-        <li> MT dispatching of events to consumers - The EventChannel
-            will deliver the event in another thread, different from the thread
-            that evaluated (checking subscriptions and filters) it.
-        </li>
-
-        <li> MT Filter evaluation of events - Events delivered to the
-            ProxySuppliers will be evaluated in another thread, different
-            from the delivering thread.
-        </li>
-
-        <li>
-            MT dispatching of updates - subscription/offer_change
-            updates are delivered on another thread.
-        </li>
-
-      </ul>
-  </li>
-
-
-  <li>
-      Memory Management
-      <ul>
-        <li>
-            (almost) All memory allocations are via factory interfaces.
-        </li>
-
-        <li>
-            Uses service configurator to load resource factories and
-            supply strartup options to the service.
-        </li>
-
-      </ul>
-  </li>
-
 </ul>
 
 Note that this implementation does not support Pull interfaces and
 Typed Event style communication.
+<p>
+New features (TAO 1.2.6 onwards):
+<li>
+      Dead or unresponsive consumers and
+      suppliers are detected and automatically disconnected from the Notification Service.
+</li>
 
-<h3> Project Schedule </h3>
-The TODO list runs like this:
-<ul>
+<p>
+Known bugs:
+<li>
+      Blocking test is failing in several places. This will be fixed
+between TAO 1.2.6 and TAO 1.3.
+</li>
 
-  <li>
-      Implement the QoS properties - Expiry times, Earliest
-      delivery times.
-  </li>
+<li>
+        RedGreen test SEGVs with lookup.conf on shutdown on Debian and RedHat.
+</li>
 
-  <li>
-      Filters:
-      <ul>
-        <li>
-            Implement CosNotifyFilter::MappingFilter.
-        </li>
-
-        <li>
-            (Wish list) Add a "filter cache" to cache the expression
-            tree for frequently used constraint expressions.
-        </li>
-
-      </ul>
-  </li>
-
-  <li>
-      Come up with a rigorous test suite for this service to measure its
-      performance.
-  </li>
-
-  <li>
-      Implement Pull interfaces.
-  </li>
-
-  <li>
-      Support policies to remove dead or unresponsive consumers and
-      suppliers in the Notification Service.
-  </li>
+<li>
+        Filter test is running into an exception on RedHat.
+</li>
 
 </ul>
 
