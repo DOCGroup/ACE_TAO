@@ -1,3 +1,14 @@
+Sun Oct 18 14:20:35 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * tao/DynAny_i.h:
+        * tao/DynArray_i.h:
+        * tao/DynEnum_i.h:
+        * tao/DynSequence_i.h:
+        * tao/DynStruct_i.h:
+        * tao/DynUnion_i.h:
+        * tao/DynUnion_i_T.h:
+          Edited files to conform to TAO layout style.
+
 Sun Oct 18 09:32:38 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Event_Latency/Event_Latency.cpp (push,
