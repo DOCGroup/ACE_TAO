@@ -56,7 +56,7 @@ namespace TAO
 // Traits specializations for MIF_Scheduling::SegmentSchedulingParameterPolicy.
 
 MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
-TAO::Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>::tao_duplicate (
+TAO::Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>::duplicate (
     MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr p
   )
 {
@@ -64,7 +64,7 @@ TAO::Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>::tao_duplic
 }
 
 void
-TAO::Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>::tao_release (
+TAO::Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>::release (
     MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr p
   )
 {
@@ -72,13 +72,13 @@ TAO::Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>::tao_releas
 }
 
 MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
-TAO::Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>::tao_nil (void)
+TAO::Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>::nil (void)
 {
   return MIF_Scheduling::SegmentSchedulingParameterPolicy::_nil ();
 }
 
 CORBA::Boolean
-TAO::Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>::tao_marshal (
+TAO::Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>::marshal (
     MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -200,14 +200,14 @@ static const CORBA::Long _oc_MIF_Scheduling_SegmentSchedulingParameterPolicy[] =
   ACE_NTOHL (0x6963793a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:MIF_Scheduling/SegmentSchedulingParameterPolicy:1.0
     33,
-  ACE_NTOHL (0x5365676d), 
-  ACE_NTOHL (0x656e7453), 
-  ACE_NTOHL (0x63686564), 
-  ACE_NTOHL (0x756c696e), 
-  ACE_NTOHL (0x67506172), 
-  ACE_NTOHL (0x616d6574), 
-  ACE_NTOHL (0x6572506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x5365676d),
+  ACE_NTOHL (0x656e7453),
+  ACE_NTOHL (0x63686564),
+  ACE_NTOHL (0x756c696e),
+  ACE_NTOHL (0x67506172),
+  ACE_NTOHL (0x616d6574),
+  ACE_NTOHL (0x6572506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = SegmentSchedulingParameterPolicy
   };
 
@@ -231,7 +231,7 @@ namespace MIF_Scheduling
 // Traits specializations for MIF_Scheduling::MIF_Scheduler.
 
 MIF_Scheduling::MIF_Scheduler_ptr
-TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::tao_duplicate (
+TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::duplicate (
     MIF_Scheduling::MIF_Scheduler_ptr p
   )
 {
@@ -239,7 +239,7 @@ TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::tao_duplicate (
 }
 
 void
-TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::tao_release (
+TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::release (
     MIF_Scheduling::MIF_Scheduler_ptr p
   )
 {
@@ -247,13 +247,13 @@ TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::tao_release (
 }
 
 MIF_Scheduling::MIF_Scheduler_ptr
-TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::tao_nil (void)
+TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::nil (void)
 {
   return MIF_Scheduling::MIF_Scheduler::_nil ();
 }
 
 CORBA::Boolean
-TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::tao_marshal (
+TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::marshal (
     MIF_Scheduling::MIF_Scheduler_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -262,7 +262,7 @@ TAO::Objref_Traits<MIF_Scheduling::MIF_Scheduler>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*MIF_Scheduling__TAO_MIF_Scheduler_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -273,7 +273,7 @@ MIF_Scheduling::MIF_Scheduler::MIF_Scheduler (void)
 MIF_Scheduling::MIF_Scheduler::~MIF_Scheduler (void)
 {}
 
-void 
+void
 MIF_Scheduling::MIF_Scheduler::_tao_any_destructor (void *_tao_void_pointer)
 {
   MIF_Scheduler *_tao_tmp_pointer =
@@ -291,10 +291,10 @@ MIF_Scheduling::MIF_Scheduler::_narrow (
     {
       return MIF_Scheduler::_nil ();
     }
-  
+
   MIF_Scheduler_ptr proxy =
     dynamic_cast<MIF_Scheduler_ptr> (_tao_objref);
-  
+
   return MIF_Scheduler::_duplicate (proxy);
 }
 
@@ -305,7 +305,7 @@ MIF_Scheduling::MIF_Scheduler::_duplicate (MIF_Scheduler_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -360,20 +360,20 @@ static const CORBA::Long _oc_MIF_Scheduling_MIF_Scheduler[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x4d49465f), 
-  ACE_NTOHL (0x53636865), 
-  ACE_NTOHL (0x64756c69), 
-  ACE_NTOHL (0x6e672f4d), 
-  ACE_NTOHL (0x49465f53), 
-  ACE_NTOHL (0x63686564), 
-  ACE_NTOHL (0x756c6572), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x4d49465f),
+  ACE_NTOHL (0x53636865),
+  ACE_NTOHL (0x64756c69),
+  ACE_NTOHL (0x6e672f4d),
+  ACE_NTOHL (0x49465f53),
+  ACE_NTOHL (0x63686564),
+  ACE_NTOHL (0x756c6572),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:MIF_Scheduling/MIF_Scheduler:1.0
     14,
-  ACE_NTOHL (0x4d49465f), 
-  ACE_NTOHL (0x53636865), 
-  ACE_NTOHL (0x64756c65), 
+  ACE_NTOHL (0x4d49465f),
+  ACE_NTOHL (0x53636865),
+  ACE_NTOHL (0x64756c65),
   ACE_NTOHL (0x72000000),  // name = MIF_Scheduler
   };
 
@@ -543,7 +543,7 @@ operator>>= (
     TAO_Objref_Var_T<
         MIF_Scheduling::SegmentSchedulingParameterPolicy
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         MIF_Scheduling::SegmentSchedulingParameterPolicy
@@ -563,7 +563,7 @@ operator>>= (
     TAO_Objref_Var_T<
         MIF_Scheduling::MIF_Scheduler
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         MIF_Scheduling::MIF_Scheduler
@@ -585,7 +585,7 @@ operator>>= (
     TAO_Objref_Var_T< \
         MIF_Scheduling::SegmentSchedulingParameterPolicy
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         MIF_Scheduling::SegmentSchedulingParameterPolicy
@@ -605,7 +605,7 @@ operator>>= (
     TAO_Objref_Var_T< \
         MIF_Scheduling::MIF_Scheduler
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         MIF_Scheduling::MIF_Scheduler
@@ -616,5 +616,4 @@ operator>>= (
         MIF_Scheduling::MIF_Scheduler \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
