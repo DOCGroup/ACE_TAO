@@ -522,7 +522,12 @@ TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type
     result = this->policies_->get_cached_policy (type);
 
   if (CORBA::is_nil (result.in ()))
-    result = this->orb_core_->get_cached_policy_including_current (type);
+    {
+      result =
+        this->orb_core_->get_cached_policy_including_current (type
+                                                              ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    }
 
   return result._retn ();
 }
