@@ -115,7 +115,8 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
 
       // Set the proper strategy
       be_interface_strategy *old_strategy = 
-        node->set_strategy (new be_interface_ami_strategy (node));
+        node->set_strategy (new be_interface_ami_strategy (node,
+                                                           reply_handler));
       if (old_strategy)
         delete old_strategy;
 

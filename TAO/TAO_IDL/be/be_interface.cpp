@@ -2057,6 +2057,13 @@ be_interface::original_interface ()
   return this->original_interface_;
 }
 
+be_interface *
+be_interface::replacement (void)
+{
+  // Return a node, which can be used as a replacement.
+  return this->strategy_->replacement ();
+}
+
 // Narrowing
 IMPL_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_interface)

@@ -241,6 +241,10 @@ public:
   // Returns the original interface from which this one was created,
   // applies only to implied IDL 
 
+  be_interface *replacement ();
+  // Returns an interface, which can be used instead.
+  // Needs to get set by the strategy.
+
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);
   // Output the header (type declaration and %%) to the gperf's input
