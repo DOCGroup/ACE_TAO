@@ -72,7 +72,7 @@ namespace TAO
         if (cpb_ != 0)
           {
             strat =
-              TAO_ORB_Core::collocation_strategy (effective_target
+              TAO_ORB_Core::collocation_strategy (effective_target.in ()
                                                   ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
           }
@@ -158,7 +158,7 @@ namespace TAO
     TAO::Invocation_Status status = TAO_INVOKE_START;
 
     Collocated_Invocation coll_inv (this->target_,
-                                    effective_target,
+                                    effective_target.in (),
                                     stub,
                                     details,
                                     this->type_ == TAO_TWOWAY_INVOCATION);
