@@ -1,3 +1,7 @@
+Tue Apr 03 12:40:59 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/PortableServerC.cpp: Fixed fuzz warnings.
+
 Tue Apr  3 13:04:55 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/be_include/be_codegen.h:

@@ -84,6 +84,7 @@
   {
     PortableServer::POA **tmp = ACE_static_cast (PortableServer::POA**, target);
     *tmp = PortableServer::POA::_narrow (src, ACE_TRY_ENV);
+    ACE_CHECK;
   }
 
   CORBA_Object*
@@ -2413,11 +2414,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Ob
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::_tc_ObjectId, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (PortableServer::_tc_ObjectId, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -2499,11 +2504,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Fo
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::_tc_ForwardRequest, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (PortableServer::_tc_ForwardRequest, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableServer::ForwardRequest *)_tao_any.value ();
@@ -2568,11 +2577,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ThreadPo
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::_tc_ThreadPolicyValue, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (PortableServer::_tc_ThreadPolicyValue, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -2615,11 +2628,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Lifespan
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::_tc_LifespanPolicyValue, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (PortableServer::_tc_LifespanPolicyValue, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -2660,11 +2677,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdUnique
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::_tc_IdUniquenessPolicyValue, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (PortableServer::_tc_IdUniquenessPolicyValue, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -2705,11 +2726,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdAssign
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::_tc_IdAssignmentPolicyValue, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (PortableServer::_tc_IdAssignmentPolicyValue, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -2752,11 +2777,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Implicit
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::_tc_ImplicitActivationPolicyValue, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (PortableServer::_tc_ImplicitActivationPolicyValue, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -2797,11 +2826,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantR
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::_tc_ServantRetentionPolicyValue, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (PortableServer::_tc_ServantRetentionPolicyValue, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -2842,11 +2875,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::RequestP
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (PortableServer::_tc_RequestProcessingPolicyValue, ACE_TRY_ENV)) // not equal
+    CORBA::Boolean result =
+      type->equivalent (PortableServer::_tc_RequestProcessingPolicyValue, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
       {
         return 0;
       }
-    ACE_TRY_CHECK;
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
