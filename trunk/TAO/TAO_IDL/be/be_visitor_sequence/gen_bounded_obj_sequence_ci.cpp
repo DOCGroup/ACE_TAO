@@ -109,7 +109,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   // allocbuf
   *os << "ACE_INLINE "; pt->accept (visitor);
   *os << " **" << be_nl;
-  *os << full_class_name << "::allocbuf (CORBA::ULong length) "
+  *os << full_class_name << "::allocbuf (CORBA::ULong /* length */) "
       << "// Allocate storage for a sequence.." << be_nl
       << "{" << be_idt_nl;
   // the accept is here the first time used and if an
