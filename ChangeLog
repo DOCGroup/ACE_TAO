@@ -1,3 +1,17 @@
+Thu Mar 22 21:33:37 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * ace/INET_Addr.h: VxWorks' inet_ntoa doesn't behave like most
+ 	others, and our use was causing memory leaks.  VxWorks prefers
+ 	that you use its own inet_ntoa_b, which takes the buffer to fill
+ 	as an argument.  Thus, for VxWorks, added a data member char buf
+ 	of the appropriate length so that get_host_addr can use
+	inet_ntoa_b to fill that in.
+	
+        * ace/INET_Addr.i (get_host_addr): For VxWorks only, changed this
+	to use the preferred inet_ntoa_b.  This eliminate memory leaks
+	under VxWorks.  Thanks to Erik Johannes <ejohannes@oresis.com> for 
+	the suggested fix.
+
 Wed Mar 21 19:20:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* apps/Gateway/Peer/Peer.cpp (nonblk_put): Fixed a compile error
