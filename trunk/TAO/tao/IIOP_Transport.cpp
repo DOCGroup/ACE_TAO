@@ -35,7 +35,7 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                    orb_core),
     connection_handler_ (handler),
     messaging_object_ (0),
-    bidirectional_flag_ (0)
+    bidirectional_flag_ (-1)
 {
   if (flag)
     {
@@ -310,13 +310,17 @@ TAO_IIOP_Transport::send_request_header (TAO_Operation_Details &opdetails,
   // regarding this before...
   if (this->orb_core ()->bidir_giop_policy () &&
       this->messaging_object_->is_ready_for_bidirectional () &&
-      this->bidirectional_flag_ == 0)
+      this->bidirectional_flag_ < 0)
     {
       this->set_bidir_context_info (opdetails);
 
-      // Set the flag to 1
-      this->bidirectional_flag_ = 1;
+      // Set the flag to 0
+      this->bidirectional_flag_ = 0;
     }
+
+  // Modify the request id if we have BiDirectional client/server
+  // setup
+  opdetails.modify_request_id (this->bidirectional_flag_);
 
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
