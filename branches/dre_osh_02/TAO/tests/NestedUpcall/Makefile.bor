@@ -1,0 +1,10 @@
+#
+# Makefile for building the TAO NestedUpCall tests
+#
+
+DIRS = \
+        MT_Client_Test \
+        Simple \
+        Triangle_Test
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,0 +1,97 @@
+# $Id$
+#
+# This is the list of run_test.pl's that need to be run by
+# auto_run_tests.pl.
+# Each line has its own test, and a test can be followed by a
+# list of configurations it does _not_ run on.
+#
+# Example: TAO\examples\foo\run_test.pl: !MINIMUM !ST
+#
+# NOTE: This file contains examples and other service level test  for
+# TAO's. Please do not include regular tests here.
+TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: !MINIMUM !ST
+TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test_lite.pl: !MINIMUM !ST !STATIC
+TAO/performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: !ST !OpenBSD
+TAO/performance-tests/Latency/Single_Threaded/run_test.pl
+TAO/performance-tests/Latency/Thread_Pool/run_test.pl: !ST
+TAO/performance-tests/Latency/Thread_Per_Connection/run_test.pl: !ST
+TAO/performance-tests/Latency/AMI/run_test.pl: !MINIMUM !ST
+TAO/performance-tests/Latency/DSI/run_test.pl: !MINIMUM
+TAO/performance-tests/Latency/DII/run_test.pl: !MINIMUM
+TAO/performance-tests/Latency/Deferred/run_test.pl: !MINIMUM
+TAO/performance-tests/Throughput/run_test.pl
+TAO/performance-tests/POA/Object_Creation_And_Registration/run_test.pl
+TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: !MINIMUM
+TAO/examples/POA/Adapter_Activator/run_test.pl: !MINIMUM !SUNCC5_1
+TAO/examples/POA/POA_BiDir/run_test.pl: !MINIMUM
+TAO/examples/POA/DSI/run_test.pl: !MINIMUM
+TAO/examples/POA/Default_Servant/run_test.pl: !MINIMUM
+TAO/examples/POA/Explicit_Activation/run_test.pl: !MINIMUM
+TAO/examples/POA/FindPOA/run_test.pl: !MINIMUM
+TAO/examples/POA/Forwarding/run_test.pl: !MINIMUM
+TAO/examples/POA/NewPOA/run_test.pl: !MINIMUM
+TAO/examples/POA/On_Demand_Activation/run_test.pl: !MINIMUM !STATIC
+TAO/examples/POA/On_Demand_Loading/run_test.pl: !MINIMUM !STATIC !KCC_Linux
+TAO/examples/POA/Reference_Counted_Servant/run_test.pl: !SUNCC5_1
+TAO/examples/POA/Loader/run_test.pl: !MINIMUM !STATIC !KCC_Linux
+TAO/examples/POA/RootPOA/run_test.pl
+TAO/examples/Simple/bank/run_test.pl
+TAO/examples/Simple/grid/run_test.pl
+TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC
+TAO/examples/Simple/time/run_test.pl
+TAO/examples/Quoter/run_test.pl: !MINIMUM
+TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !SUNCC5_1
+TAO/examples/PluggableUDP/tests/Basic/run_test.pl: !STATIC !ST
+TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl
+TAO/examples/AMH/Sink_Server/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl: !MINIMUM
+#TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Multicast/run_test.pl: !MINIMUM
+#TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: !MINIMUM
+#TAO/orbsvcs/tests/AVStreams/Latency/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Component_Switching/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST !SUNCC5_1
+TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM !SUNCC5_1
+TAO/orbsvcs/tests/Event/Basic/run_test.pl: !ST !MINIMUM
+TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST !MINIMUM
+TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl: !ST !MINIMUM
+TAO/orbsvcs/tests/EC_Throughput/run_test.pl: !ST !MINIMUM
+TAO/orbsvcs/tests/EC_MT_Mcast/run_test.pl:!ST !MINIMUM !STATIC
+TAO/orbsvcs/tests/ImplRepo/run_test.pl: SANDBOX
+TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: SANDBOX
+TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.reactive.conf
+TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.mt.conf: !ST
+TAO/orbsvcs/tests/Notify/Blocking/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/Discarding/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/MT_Dispatching/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/Ordering/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/performance-tests/Filter/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/Structured_Filter/run_test.pl: !ST
+TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl: !ST
+# BREAKS !linux 'TAO/orbsvcs/tests/EC_Mcast/run_test.pl
+# FAILS 'TAO/orbsvcs/tests/EC_Multiple/run_test.pl
+# NO REDIRECTION TAO/examples/Simple/echo/run_test.pl < Echo.idl
+# INTERACTIVE 'TAO/examples/Simple/chat/run_test.pl
+TAO/orbsvcs/tests/Property/run_test.pl
+#HANGS TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane
+#HANGS'TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane_ir
+TAO/orbsvcs/tests/Security/Big_Request/run_test.pl: SSL !STATIC
+TAO/orbsvcs/tests/Security/Callback/run_test.pl: SSL !STATIC
+TAO/orbsvcs/tests/Security/MT_SSLIOP/run_test.pl: !ST SSL !STATIC
+TAO/orbsvcs/tests/Security/MT_IIOP_SSL/run_test.pl: !ST SSL !STATIC
+TAO/orbsvcs/tests/Security/Secure_Invocation/run_test.pl: SSL !STATIC
+TAO/orbsvcs/tests/Security/SecurityLevel1/run_test.pl: SSL !STATIC
+TAO/orbsvcs/tests/Security/Crash_Test/run_test.pl: SSL !STATIC
+TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !STATIC !SUNCC5_1
+TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/Two_Objects/run_test.pl: !ST
+TAO/examples/RTCORBA/Activity/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/Notify/Lanes/run_test.pl: !ST !Linux
+TAO/orbsvcs/tests/Notify/ThreadPool/run_test.pl: !ST !Linux

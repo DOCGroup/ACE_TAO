@@ -1,0 +1,19 @@
+project(client): namingexe {
+  exename = client
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    all:
+    "	@echo This will only build on Windows"
+    else
+  }
+
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
+  Source_Files {
+    w32_testC.cpp
+    client.cpp
+  }
+}

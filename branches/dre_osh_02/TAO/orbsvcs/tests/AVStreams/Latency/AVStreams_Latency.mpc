@@ -1,0 +1,24 @@
+project(ping): avstreamsexe, strategies {
+  exename  = ping
+
+  Source_Files {
+    ping.cpp
+  }
+}
+
+project(pong): avstreamsexe, strategies {
+  exename  = pong
+
+  Source_Files {
+    pong.cpp
+  }
+}
+
+project(control): avstreamsexe, strategies {
+  exename  = control
+
+  Source_Files {
+    control.cpp
+  }
+}
+
