@@ -54,7 +54,7 @@ spawn (void)
 {
   char *name = "hello";
 
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined (VXWORKS)
   switch (ACE_OS::fork ())
     {
     case -1:
