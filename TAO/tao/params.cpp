@@ -23,7 +23,8 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
     use_dotted_decimal_addresses_ (0),
     std_profile_components_ (1),
     sched_policy_ (THR_SCHED_DEFAULT),
-    scope_policy_ (THR_SCOPE_PROCESS)
+    scope_policy_ (THR_SCOPE_PROCESS),
+    single_read_optimization_ (1)
 {
   for (int i = 0; i <= TAO_NO_OF_MCAST_SERVICES; ++i)
     this->service_port_[i] = 0;

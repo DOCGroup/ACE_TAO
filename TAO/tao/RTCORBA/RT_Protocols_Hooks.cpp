@@ -178,8 +178,7 @@ TAO_RT_Protocols_Hooks::add_rt_service_context_hook (TAO_Service_Context &servic
 }
 
 void
-TAO_RT_Protocols_Hooks::get_selector_hook (
-                                           CORBA::Policy *model_policy,
+TAO_RT_Protocols_Hooks::get_selector_hook (CORBA::Policy *model_policy,
                                            CORBA::Boolean &is_client_propagated,
                                            CORBA::Short &server_priority)
 {
@@ -203,9 +202,9 @@ TAO_RT_Protocols_Hooks::get_selector_hook (
 
 void
 TAO_RT_Protocols_Hooks::get_selector_bands_policy_hook (CORBA::Policy *bands_policy,
+                                                        CORBA::Short priority,
                                                         CORBA::Short &min_priority,
                                                         CORBA::Short &max_priority,
-                                                        CORBA::Short &p,
                                                         int &in_range)
 {
   RTCORBA::PriorityBandedConnectionPolicy_var bands_policy_ptr =
@@ -220,7 +219,7 @@ TAO_RT_Protocols_Hooks::get_selector_bands_policy_hook (CORBA::Policy *bands_pol
     priority_bands_policy->priority_bands_rep ();
 
   for (CORBA::ULong i = 0; i < bands.length (); ++i)
-    if (bands[i].low <= p && bands[i].high >= p)
+    if (bands[i].low <= priority && bands[i].high >= priority)
       {
         min_priority = bands[i].low;
         max_priority = bands[i].high;
@@ -384,7 +383,7 @@ TAO_RT_Protocols_Hooks::set_default_policies (ACE_ENV_SINGLE_ARG_DECL)
     client_protocol_policy;
 
   this->orb_core_->get_default_policies ()->set_policy (client_protocol_policy
-                                                 ACE_ENV_ARG_PARAMETER);
+                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;

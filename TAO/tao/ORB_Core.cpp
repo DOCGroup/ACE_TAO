@@ -780,6 +780,14 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), -1);
         }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBSingleReadOptimization"))))
+        {
+          this->orb_params ()->single_read_optimization
+            (ACE_OS::atoi (current_arg));
+
+          arg_shifter.consume_arg ();
+        }
       ////////////////////////////////////////////////////////////////
       // catch any unknown -ORB args                                //
       ////////////////////////////////////////////////////////////////

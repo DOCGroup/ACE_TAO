@@ -23,7 +23,8 @@ DIRS  = \
 	Persistent_IOR \
 	Policy_Combinations \
 	Private_Connection \
-        RTMutex \
+        Profile_And_Endpoint_Selection \
+	RTMutex \
 	Server_Declared \
         Server_Protocol \
 	Thread_Pool

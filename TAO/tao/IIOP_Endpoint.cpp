@@ -17,7 +17,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
     host_ (),
     port_ (683),  // default port (IANA assigned)
     object_addr_ (addr),
-    /* hint_ (0), */
+    object_addr_set_ (0),
     next_ (0)
 {
   this->set (addr, use_dotted_decimal_addresses);
@@ -30,13 +30,11 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
     host_ (),
     port_ (port),
     object_addr_ (addr),
-    /*    hint_ (0), */
+    object_addr_set_ (0),
     next_ (0)
 {
   if (host != 0)
     this->host_ = host;
-
-  this->object_addr_.set_type (-1);
 }
 
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (void)
@@ -44,10 +42,9 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (void)
     host_ (),
     port_ (683),  // default port (IANA assigned)
     object_addr_ (),
-    /*    hint_ (0), */
+    object_addr_set_ (0),
     next_ (0)
 {
-  this->object_addr_.set_type (-1);
 }
 
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
@@ -57,19 +54,17 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
     host_ (),
     port_ (port),
     object_addr_ (),
-    /*    hint_ (0),*/
+    object_addr_set_ (0),
     next_ (0)
 {
   if (host != 0)
     this->host_ = host;
 
-  this->object_addr_.set_type (-1);
   this->priority (priority);
 }
 
 TAO_IIOP_Endpoint::~TAO_IIOP_Endpoint (void)
 {
-
 }
 
 int

@@ -58,7 +58,7 @@ TAO_Default_Protocols_Hooks::get_selector_hook (CORBA::Policy *,
 
 void
 TAO_Default_Protocols_Hooks::get_selector_bands_policy_hook (CORBA::Policy *,
-                                                             CORBA::Short &,
+                                                             CORBA::Short,
                                                              CORBA::Short &,
                                                              CORBA::Short &,
                                                              int &)

@@ -1244,11 +1244,22 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
   // Align the message block
   ACE_CDR::mb_align (&message_block);
 
+  size_t recv_size = 0;
+  if (this->orb_core_->orb_params ()->single_read_optimization ())
+    {
+      recv_size =
+        message_block.space ();
+    }
+  else
+    {
+      recv_size =
+        this->messaging_object ()->header_length ();
+    }
 
   // Read the message into the  message block that we have created on
   // the stack.
   ssize_t n = this->recv (message_block.rd_ptr (),
-                          message_block.space (),
+                          recv_size,
                           max_wait_time);
 
   // If there is an error return to the reactor..

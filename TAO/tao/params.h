@@ -145,6 +145,10 @@ public:
   long scope_policy (void) const;
   void scope_policy (long x);
 
+  /// Single read optimization.
+  int single_read_optimization (void) const;
+  void single_read_optimization (int x);
+
 private:
   // Each "endpoint" is of the form:
   //
@@ -210,6 +214,9 @@ private:
 
   /// Thread scope policy.
   long scope_policy_;
+
+  /// Single read optimization.
+  int single_read_optimization_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -171,6 +171,18 @@ TAO_ORB_Parameters::scope_policy (long x)
   this->scope_policy_ = x;
 }
 
+ACE_INLINE int
+TAO_ORB_Parameters::single_read_optimization (void) const
+{
+  return this->single_read_optimization_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::single_read_optimization (int x)
+{
+  this->single_read_optimization_ = x;
+}
+
 
 #if 0
 

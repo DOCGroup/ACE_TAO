@@ -4,7 +4,7 @@
 #include "testS.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
-#include "./readers.cpp"
+#include "../common_args.cpp"
 
 class test_i :
   public POA_test,
@@ -70,6 +70,7 @@ static CORBA::ULong max_request_buffer_size = 0;
 static CORBA::Boolean allow_borrowing = 0;
 
 static const char *ior = "ior";
+static int debug = 1;
 
 static const char *bands_file = "bands";
 static const char *lanes_file = "lanes";
@@ -77,7 +78,7 @@ static const char *lanes_file = "lanes";
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:l:");
+  ACE_Get_Opt get_opts (argc, argv, "b:d:l:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -85,6 +86,10 @@ parse_args (int argc, char **argv)
       {
       case 'b':
         bands_file = get_opts.opt_arg ();
+        break;
+
+      case 'd':
+        debug = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'l':
@@ -96,6 +101,7 @@ parse_args (int argc, char **argv)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-b <bands_file> "
+                           "-d <debug> "
                            "-l <lanes_file> "
                            "\n",
                            argv [0]),
@@ -183,7 +189,8 @@ main (int argc, char **argv)
         get_priority_bands ("server",
                             bands_file,
                             rt_orb.in (),
-                            policies
+                            policies,
+                            debug
                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result != 0)
@@ -200,7 +207,8 @@ main (int argc, char **argv)
                             max_buffered_requests,
                             max_request_buffer_size,
                             allow_borrowing,
-                            policies
+                            policies,
+                            debug
                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result != 0)

@@ -52,6 +52,7 @@ TAO/tests/RTCORBA/ORB_init/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Persistent_IOR/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Policy_Combinations/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/Private_Connection/run_test.pl:  !MINIMUM !ST
+TAO/tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:  !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/RTMutex/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Server_Declared/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !MINIMUM
