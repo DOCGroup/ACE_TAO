@@ -8,7 +8,10 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "DynamicC.h"
-
+// Added
+#include "tao/ORB.h"
+#include "tao/IOPC.h"
+#include "tao/DynAnyC.h"
 #if !defined (__ACE_INLINE__)
 #include "DynamicC.i"
 #endif /* !defined INLINE */
