@@ -1,3 +1,9 @@
+Sun  Mar 2 15:10:02 3003 Pradeep Gore <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Admin.h:
+	  Removed extra ";" on line 85 that is foxing the BCB compiler.
+	  Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for spotting this.	
+
 Sun Mar  2 10:04:54 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/DynamicAny/DynStruct_i.cpp (current_member_kind):
