@@ -1,3 +1,24 @@
+Fri Jan 19 11:22:42 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* docs/tutorials/022/client_handler.cpp : 
+	* docs/tutorials/022/client_hander.h :
+	* docs/tutorials/022/Acceptor_Service.cpp : 	
+	* docs/tutorials/022/Acceptor_Service.h : 	
+	* docs/tutorials/022/server.cpp : 	
+	* docs/tutorials/022/Makefile : 	
+
+	* docs/tutorials/022/client/Makefile: 
+	* docs/tutorials/022/client/client.cpp: 
+
+	* docs/tutorials/022/page01.html: 
+	* docs/tutorials/022/page02.html: 
+	* docs/tutorials/022/page03.html: 
+	* docs/tutorials/022/page04.html: 
+	* docs/tutorials/022/page05.html: 
+
+	  Developed a new tutorial for the ACE_Service_Configurator.
+	  Based on the ACE tutorial 005. 
+	  
 Fri Jan 19 10:50:11 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.cpp:
