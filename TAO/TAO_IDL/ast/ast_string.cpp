@@ -81,6 +81,8 @@ AST_String::AST_String (void)
  : pd_max_size (0),
    pd_width (sizeof (char))
 {
+  // Always the case.
+  this->size_type (AST_Type::VARIABLE);
 }
 
 AST_String::AST_String (AST_Decl::NodeType nt,
@@ -93,6 +95,8 @@ AST_String::AST_String (AST_Decl::NodeType nt,
    pd_max_size (ms),
    pd_width (wide)
 {
+  // Always the case.
+  this->size_type (AST_Type::VARIABLE);
 }
 
 AST_String::~AST_String (void)

@@ -4940,11 +4940,14 @@ case 355:
               if (nt == AST_Decl::NT_struct_fwd 
                   || nt == AST_Decl::NT_union_fwd)
                 {
-                  idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_ADD,
-                                              d);
+                  if (! AST_Type::narrow_from_decl (d)->is_defined ())
+                    {
+                      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_ADD,
+                                                  d);
 
-                  /* If we don't return here, we'll crash later.*/
-                  return 1;
+                      /* If we don't return here, we'll crash later.*/
+                      return 1;
+                    }
                 }
             }
 
