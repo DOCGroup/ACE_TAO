@@ -18,6 +18,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_HAS_VIRTUAL_TIME)
+#include <sys/times.h>
+#endif /*ACE_HAS_VIRTUAL_TIME*/
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -28,6 +32,8 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_TLI.h"
 #include "ace/OS_Errno.h"
+
+class ACE_Timeout_Manager;
 
 /// States of a recyclable object.
 enum ACE_Recyclable_State
@@ -3167,7 +3173,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 
 // Need to work around odd glitches with NT.
 #   if !defined (ACE_MAX_DEFAULT_PORT)
-#     define ACE_MAX_DEFAULT_PORT 0
+#     define ACE_MAX_DEFAULT_PORT 65535
 #   endif /* ACE_MAX_DEFAULT_PORT */
 
 // We're on WinNT or Win95
@@ -5280,6 +5286,7 @@ class ACE_OS_Export ACE_OS
 
   ACE_CLASS_IS_NAMESPACE (ACE_OS);
 public:
+  friend class ACE_Timeout_Manager;
 
 # if defined (CHORUS) && !defined (CHORUS_4)
   // We must format this code as follows to avoid confusing OSE.
@@ -6632,6 +6639,8 @@ public:
 # endif /* ACE_LACKS_NATIVE_STRPTIME */
 #endif /* ACE_HAS_STRPTIME */
 
+  
+
 private:
 
 #if defined (ACE_LACKS_WRITEV)
@@ -6671,6 +6680,62 @@ private:
   static HINSTANCE win32_resource_module_;
 
 # endif /* ACE_WIN32 */
+
+#if defined (ACE_HAS_VIRTUAL_TIME)
+  static clock_t times (struct tms *buf);
+#endif /* ACE_HAS_VIRTUAL_TIME */
+
+  //changed for ACE_HAS_VIRTUAL_TIME changes.
+
+  static int cond_timedwait_i (ACE_cond_t *cv,
+                       ACE_mutex_t *m,
+                       ACE_Time_Value *); 
+  
+  static u_int alarm_i (u_int secs);
+
+  static u_int ualarm_i (u_int usecs, u_int interval = 0);
+  
+  static u_int ualarm_i (const ACE_Time_Value &tv,
+                         const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
+  
+  static int sleep_i (u_int seconds);
+
+  static int sleep_i (const ACE_Time_Value &tv);
+  
+  static int nanosleep_i (const struct timespec *requested,
+                          struct timespec *remaining = 0);
+  
+  static int select_i (int width,
+                       fd_set *rfds,
+                       fd_set *wfds,
+                       fd_set *efds,
+                       const ACE_Time_Value *tv = 0);
+
+  static int select_i (int width,
+                       fd_set *rfds,
+                       fd_set *wfds,
+                       fd_set *efds,
+                       const ACE_Time_Value &tv);
+  
+  static int poll_i (struct pollfd *pollfds,
+                     u_long len,
+                     const ACE_Time_Value *tv = 0);
+    
+  static int poll_i (struct pollfd *pollfds,
+                     u_long len,
+                     const ACE_Time_Value &tv);
+
+  static int sema_wait_i (ACE_sema_t *s);
+
+  static int sema_wait_i (ACE_sema_t *s,
+                          ACE_Time_Value &tv);
+
+  static int sigtimedwait_i (const sigset_t *set,
+                             siginfo_t *info,
+                             const ACE_Time_Value *timeout);
+
+  static ACE_Time_Value gettimeofday_i (void);
+
 };
 
 /**
