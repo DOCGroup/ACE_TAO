@@ -22,6 +22,11 @@ Mon Feb 16 10:18:25 1998  David L. Levine  <levine@cs.wustl.edu>
           problem in Irix, which doesn't have a thread priority of 0
           with ACE_SCHED_OTHER.
 
+        * tao/corbacom.h (CORBA_SEQUENCE): replaced CORBA::B_FALSE with 0
+          because some compilers, such as egcs, can't handle its use before
+          definition below in class CORBA.  Thanks to Todd Pack
+          <todd@rwii.com> for reporting this.
+
 Mon Feb 16 10:14:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO_IDL/be/be_array.cpp:
