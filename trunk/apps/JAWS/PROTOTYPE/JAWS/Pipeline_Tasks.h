@@ -22,6 +22,7 @@ public:
 class JAWS_Pipeline_Accept_Task : public JAWS_Pipeline_Handler
 {
 public:
+  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
   virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
 };
 
