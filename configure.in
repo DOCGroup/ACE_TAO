@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.77 $)dnl
+AC_REVISION($Revision 0.78 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -904,9 +904,6 @@ AC_CHECK_HEADER(stdexcept, dnl
     AC_DEFINE(ACE_HAS_EXCEPTION_H))
   ])
 
-AC_CHECK_HEADER(iomanip, dnl
-  AC_DEFINE(ACE_HAS_IOMANIP_NO_H))
-
 dnl ace/OS.i can #include <cstring>, not #include <cstring.h>
 dnl "cstring" is the correct form.
 dnl TODO: Double check the above comment.
@@ -1169,11 +1166,64 @@ ACE_CHECK_TYPE(key_t, sys/types.h, ,AC_DEFINE(ACE_LACKS_KEY_T))
 ACE_CHECK_TYPE(ssize_t, sys/types.h, AC_DEFINE(ACE_HAS_SSIZE_T),)
 ACE_CHECK_TYPE(u_longlong_t, sys/types.h, , AC_DEFINE(ACE_LACKS_U_LONGLONG_T))
 ACE_CHECK_TYPE(pri_t, sys/types.h, ,AC_DEFINE(ACE_LACKS_PRI_T))
-ACE_CHECK_TYPE(socklen_t, sys/socket.h, AC_DEFINE(ACE_HAS_SOCKLEN_T),)
 ACE_CHECK_TYPE(ucontext_t, ucontext.h, AC_DEFINE(ACE_HAS_UCONTEXT_T),)
 ACE_CHECK_TYPE(wchar_t, wchar.h, AC_DEFINE(ACE_HAS_XPG4_MULTIBYTE_CHAR),
   [
    ACE_CHECK_TYPE(wchar_t, sys/types.h,,AC_DEFINE(ACE_LACKS_WCHAR_T))
+  ])
+
+ACE_CHECK_TYPE(socklen_t, sys/socket.h, AC_DEFINE(ACE_HAS_SOCKLEN_T),
+  [
+   dnl The compiler in linux just issues a warning, and the test
+   dnl passes!!!
+   dnl
+   dnl FIXED by adding "-Werror" to compiler flags when using GNU C++
+   dnl                                 -Ossama
+   ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
+   [
+    dnl Check if socket size is denoted by size_t
+    ACE_CACHE_CHECK(if socket size is denoted by size_t,
+      ace_cv_lib_posix_socket_len_size_t,[
+        AC_TRY_COMPILE(
+         [
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <sys/socket.h>
+         ],
+         [
+          int s = 0;
+          struct sockaddr* addr = 0;
+          int* addrlen = 0;
+          accept(s, addr, addrlen);
+         ],
+         [
+          ace_cv_lib_posix_socket_len_size_t=no
+         ],
+         [
+          dnl Now see if it really does take a size_t socket size
+          AC_TRY_COMPILE(
+            [
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <sys/socket.h>
+            ],
+            [
+             int s = 0;
+             struct sockaddr* addr = 0;
+             size_t* addrlen = 0;
+             accept(s, addr, addrlen);
+            ],
+            [
+             ace_cv_lib_posix_socket_len_size_t=yes
+            ],
+            [
+             ace_cv_lib_posix_socket_len_size_t=no
+            ])
+         ])
+      ], AC_DEFINE(ACE_HAS_SIZET_SOCKET_LEN),)
+    ])
   ])
 
 dnl Check for sig_atomic_t
@@ -3136,13 +3186,13 @@ class Foo
 public:
   typedef TYPENAME T::Y Y;
   Foo(T* foo) : foo_(foo) {}
-  void print(Y y);
+  void print(Y);
 private:
   T* foo_;
 };
 
 template <class T>
-void Foo<T>::print(TYPENAME T::Y y)
+void Foo<T>::print(TYPENAME T::Y)
 {
 }
                    ],
@@ -3786,7 +3836,7 @@ AC_CHECK_FUNC(setregid, dnl
      ace_cv_lib_has_setregid_prototype,
      [
       ace_save_CPPFLAGS="$CPPFLAGS"
-      ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+      ace_no_xopen="-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
       CPPFLAGS="$CPPFLAGS $ace_no_xopen"
       AC_EGREP_HEADER([[^_]+setregid], time.h,
         [
@@ -3797,7 +3847,7 @@ AC_CHECK_FUNC(setregid, dnl
         ])
       dnl Reset the compiler flags
       CPPFLAGS="$ace_save_CPPFLAGS"
-     ],, AC_DEFINE(ACE_LACKS_SETREGID_PROTO))
+     ],, AC_DEFINE(ACE_LACKS_SETREGID_PROTOTYPE))
   ],
   [
    AC_DEFINE(ACE_LACKS_SETREGID)
@@ -3811,7 +3861,7 @@ AC_CHECK_FUNC(setreuid, dnl
      ace_cv_lib_has_setreuid_prototype,
      [
       ace_save_CPPFLAGS="$CPPFLAGS"
-      ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+      ace_no_xopen=-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
       CPPFLAGS="$CPPFLAGS $ace_no_xopen"
       AC_EGREP_HEADER([[^_]+setreuid], time.h,
         [
@@ -3822,7 +3872,7 @@ AC_CHECK_FUNC(setreuid, dnl
         ])
       dnl Reset the compiler flags
       CPPFLAGS="$ace_save_CPPFLAGS"
-     ],, AC_DEFINE(ACE_LACKS_SETREUID_PROTO))
+     ],, AC_DEFINE(ACE_LACKS_SETREUID_PROTOTYPE))
   ],
   [
    AC_DEFINE(ACE_LACKS_SETREUID)
@@ -5012,56 +5062,6 @@ dnl Check if writev omits the const from the iovec argument
  ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 fi dnl $ac_cv_header_sys_uio_h = yes && $ac_cv_func_writev = yes
 
-
-dnl The compiler in linux just issues a warning, and the test passes!!!
-dnl
-dnl FIXED by adding "-Werror" to compiler flags when using GNU C++
-dnl                                 -Ossama
-ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
-[
-dnl Check if socket size is denoted by size_t
-ACE_CACHE_CHECK(if socket size is denoted by size_t,
-  ace_cv_lib_posix_socket_len_size_t,[
-    AC_TRY_COMPILE(
-     [
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <sys/socket.h>
-     ],
-     [
-      int s = 0;
-      struct sockaddr* addr = 0;
-      int* addrlen = 0;
-      accept(s, addr, addrlen);
-     ],
-     [
-      ace_cv_lib_posix_socket_len_size_t=no
-     ],
-     [
-dnl Now see if it really does take a size_t socket size
-      AC_TRY_COMPILE(
-        [
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <sys/socket.h>
-        ],
-        [
-         int s = 0;
-         struct sockaddr* addr = 0;
-         size_t* addrlen = 0;
-         accept(s, addr, addrlen);
-        ],
-        [
-         ace_cv_lib_posix_socket_len_size_t=yes
-        ],
-        [
-         ace_cv_lib_posix_socket_len_size_t=no
-        ])
-     ])
-  ], AC_DEFINE(ACE_HAS_SIZET_SOCKET_LEN),)
-]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
 ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
 [
