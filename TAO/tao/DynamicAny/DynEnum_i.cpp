@@ -48,6 +48,7 @@ TAO_DynEnum_i::init (const CORBA::Any &any
   this->type_ = tc;
 
   ACE_Message_Block *mb = any._tao_get_cdr ();
+  bool type_known = false;
 
   if (mb == 0)
     {
@@ -56,13 +57,18 @@ TAO_DynEnum_i::init (const CORBA::Any &any
       TAO_OutputCDR out;
       any.impl ()->marshal_value (out);
       ACE_CDR::consolidate (mb, out.begin ());
+      type_known = true;
     }
 
   TAO_InputCDR cdr (mb,
                     any._tao_byte_order ());
 
-  cdr.read_ulong (this->value_);
+  if (type_known)
+    {
+      mb->release ();
+    }
 
+  cdr.read_ulong (this->value_);
   this->init_common ();
 }
 
@@ -108,8 +114,9 @@ TAO_DynEnum_i::get_as_string (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::SystemException
     ))
 {
-  const char *retval = this->type_.in ()->member_name (this->value_
-                                                       ACE_ENV_ARG_PARAMETER);
+  const char *retval = 
+    this->type_.in ()->member_name (this->value_
+                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return CORBA::string_dup (retval);
@@ -123,7 +130,8 @@ TAO_DynEnum_i::set_as_string (const char *value_as_string
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  CORBA::ULong count = this->type_.in ()->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong count = 
+    this->type_.in ()->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::ULong i;
@@ -169,7 +177,8 @@ TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  CORBA::ULong max = this->type_.in ()->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong max = 
+    this->type_.in ()->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (value_as_ulong < max)
@@ -202,6 +211,7 @@ TAO_DynEnum_i::from_any (const CORBA::Any& any
     {
       // Get the CDR stream of the argument.
       ACE_Message_Block* mb = any._tao_get_cdr ();
+      bool type_known = false;
 
       if (mb == 0)
         {
@@ -210,10 +220,16 @@ TAO_DynEnum_i::from_any (const CORBA::Any& any
           TAO_OutputCDR out;
           any.impl ()->marshal_value (out);
           ACE_CDR::consolidate (mb, out.begin ());
+          type_known = true;
         }
 
       TAO_InputCDR cdr (mb,
                         any._tao_byte_order ());
+
+      if (type_known)
+        {
+          mb->release ();
+        }
 
       cdr.read_ulong (this->value_);
     }
@@ -274,6 +290,7 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs
   ACE_CHECK_RETURN (0);
 
   ACE_Message_Block *mb = any->_tao_get_cdr ();
+  bool type_known = false;
 
   if (mb == 0)
     {
@@ -283,10 +300,16 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs
       TAO_OutputCDR out;
       any->impl ()->marshal_value (out);
       ACE_CDR::consolidate (mb, out.begin ());
+      type_known = true;
     }
 
   TAO_InputCDR cdr (mb,
                     any->_tao_byte_order ());
+
+  if (type_known)
+    {
+      mb->release ();
+    }
 
   CORBA::ULong value;
   cdr.read_ulong (value);

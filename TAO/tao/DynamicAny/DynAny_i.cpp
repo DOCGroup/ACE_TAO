@@ -442,7 +442,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
                                           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        CORBA::ULong bound = unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+        CORBA::ULong bound = 
+          unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         const char *rhs_v, *lhs_v;
@@ -480,7 +481,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
                                           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        CORBA::ULong bound = unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+        CORBA::ULong bound = 
+          unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         const CORBA::WChar *rhs_v, *lhs_v;

@@ -51,6 +51,7 @@ TAO_DynSequence_i::init (const CORBA::Any& any
 
   // Get the CDR stream of the argument.
   ACE_Message_Block *mb = any._tao_get_cdr ();
+  bool type_known = false;
 
   if (mb == 0)
     {
@@ -59,10 +60,16 @@ TAO_DynSequence_i::init (const CORBA::Any& any
       TAO_OutputCDR out;
       any.impl ()->marshal_value (out);
       ACE_CDR::consolidate (mb, out.begin ());
+      type_known = true;
     }
 
   TAO_InputCDR cdr (mb,
                     any._tao_byte_order ());
+
+  if (type_known)
+    {
+      mb->release ();
+    }
 
   CORBA::ULong length;
 
@@ -162,7 +169,8 @@ TAO_DynSequence_i::get_element_type (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   // Return the content type.
-  CORBA::TypeCode_ptr retval = element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_ptr retval = 
+    element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return retval;
@@ -479,7 +487,8 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
       this->da_members_.size (length);
     }
 
-  CORBA::TypeCode_var element_type = this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var element_type = 
+    this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::TypeCode_var val_type;
@@ -504,7 +513,8 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
               ACE_CHECK;
             }
 
-          this->da_members_[i] = values[i]->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->da_members_[i] = 
+            values[i]->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
       else
@@ -547,14 +557,16 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
     }
 
   CORBA::TypeCode_var tc = any.type ();
-  CORBA::Boolean equivalent = this->type_.in ()->equivalent (tc.in ()
-                                                             ACE_ENV_ARG_PARAMETER);
+  CORBA::Boolean equivalent = 
+    this->type_.in ()->equivalent (tc.in ()
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (equivalent)
     {
       // Get the CDR stream of the argument.
       ACE_Message_Block *mb = any._tao_get_cdr ();
+      bool type_known = false;
 
       if (mb == 0)
         {
@@ -563,10 +575,16 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
           TAO_OutputCDR out;
           any.impl ()->marshal_value (out);
           ACE_CDR::consolidate (mb, out.begin ());
+          type_known = true;
         }
 
       TAO_InputCDR cdr (mb,
                         any._tao_byte_order ());
+
+      if (type_known)
+        {
+          mb->release ();
+        }
 
       CORBA::ULong arg_length;
 
@@ -656,6 +674,8 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
     this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
+  bool type_known = false;
+
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
       // Recursive step
@@ -673,10 +693,17 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
           TAO_OutputCDR out;
           field_any->impl ()->marshal_value (out);
           ACE_CDR::consolidate (field_mb, out.begin ());
+          type_known = true;
         }
 
       TAO_InputCDR field_cdr (field_mb,
                               field_any->_tao_byte_order ());
+
+      if (type_known)
+        {
+          field_mb->release ();
+          type_known = false;
+        }
 
       (void) TAO_Marshal_Object::perform_append (field_tc.in (),
                                                  &field_cdr,

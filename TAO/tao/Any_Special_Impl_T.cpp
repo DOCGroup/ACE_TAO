@@ -77,6 +77,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::insert (CORBA::Any & any,
                                bounded_tc,
                                value,
                                bound));
+  CORBA::release (bounded_tc);
   any.replace (new_impl);
 }
 
