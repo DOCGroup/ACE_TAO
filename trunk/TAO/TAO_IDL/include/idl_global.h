@@ -612,6 +612,12 @@ public:
   virtual idl_bool gen_tie_classes (void);
   // Return the flag.
 
+  virtual void gen_except_ostream_op (idl_bool value);
+  // Toggle the generation of ostream operators for exceptions.
+
+  virtual idl_bool gen_except_ostream_op (void);
+  // Return the flag.
+
 private:
   // Data
   UTL_ScopeStack             *pd_scopes;             // Store scopes stack
@@ -773,6 +779,10 @@ private:
   idl_bool gen_tie_classes_;
   // Flag to indicate whether we generate the tie classes and
   // files or not.
+
+  idl_bool gen_except_ostream_op_;
+  // Flag to indicate whether or not ostream operatos are
+  // generated for exceptions.
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH

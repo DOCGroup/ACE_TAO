@@ -157,6 +157,7 @@ DRV_usage (void)
   cerr << GTDEVEL (" -Sc\t\t\tsuppress tie class (and file) generation (enabled by default)\n");
   cerr << GTDEVEL (" -Sp\t\t\tsuppress generating Thru POA collocated stubs (enabled by default)\n");
   cerr << GTDEVEL (" -Sd\t\t\tsuppress generating Direct collocated stubs (disable by default)\n");
+  cerr << GTDEVEL (" -So\t\t\tsuppress generating ostream operators for exceptions (enabled by default)\n");
 #ifdef IDL_HAS_VALUETYPE
   cerr << GTDEVEL (" -Sv\t\t\tdisable OBV (Valuetype) support (disabled by default)\n");
 #endif /* IDL_HAS_VALUETYPE */
@@ -564,6 +565,11 @@ DRV_parse_args (long ac, char **av)
                 {
                   // suppress generating tie classes and files
                   idl_global->gen_tie_classes (0);
+                }
+              else if (av[i][2] == 'o')
+                {
+                  // suppress generating ostream operators for exceptions
+                  idl_global->gen_except_ostream_op (0);
                 }
               else if (av[i][2] == 'v')
                 {
