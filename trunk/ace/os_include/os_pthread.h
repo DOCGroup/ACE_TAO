@@ -236,11 +236,13 @@ extern "C" pthread_t pthread_self (void);
    typedef pthread_t ACE_hthread_t;
    typedef pthread_t ACE_thread_t;
 
+   // native TSS key type
+   typedef pthread_key_t ACE_OS_thread_key_t;
+   // TSS key type to be used by application
 #  if defined (ACE_HAS_TSS_EMULATION)
-     typedef pthread_key_t ACE_OS_thread_key_t;
-     typedef u_long ACE_thread_key_t;
+     typedef u_int ACE_thread_key_t;
 #  else  /* ! ACE_HAS_TSS_EMULATION */
-     typedef pthread_key_t ACE_thread_key_t;
+     typedef ACE_OS_thread_key_t ACE_thread_key_t;
 #  endif /* ! ACE_HAS_TSS_EMULATION */
 
 #  if !defined (ACE_LACKS_COND_T)
