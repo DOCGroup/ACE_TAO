@@ -1,3 +1,12 @@
+Sun Oct 19 13:19:11 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tests/Conn_Test.h: 
+	* tests/Conn_Test.cpp: 
+	  The Svc_Handler was cached, but it had the default
+	  handle_close() method, which destroys the object.
+	  The new version leaks a bit of memory, but it seems that it
+	  never crashes.
+
 Sat Oct 18 09:13:29 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Synch_T.cpp (lock): Moved the frigging lock method of
