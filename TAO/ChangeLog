@@ -1,3 +1,8 @@
+Wed Jun 16 11:52:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Updated old link
+
 Sun Jun 13 00:38:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp (push_structured_events):
