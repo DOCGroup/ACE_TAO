@@ -1,3 +1,14 @@
+Thu Jun 17 11:17:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_generator.cpp:
+	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/marshal_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
+	* TAO_IDL/be/be_visitor_typecodet/typecode_defn.cpp:
+	  Removed unused arg warnings from AIX 4.3 w/ egcs 1.1.2.
+
 Thu Jun 17 10:48:15 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/default_server.cpp:
