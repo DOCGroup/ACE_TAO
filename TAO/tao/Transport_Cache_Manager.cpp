@@ -137,6 +137,13 @@ TAO_Transport_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
                   "TAO (%P|%t) - Transport_Cache_Manager::bind_i, "
                   "unable to bind\n"));
     }
+  else if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport_Cache_Manager::bind_i, "
+                  " size is [%d] \n",
+                  this->current_size ()));
+    }
 
   return retval;
 }
@@ -216,9 +223,6 @@ TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
         {
           CORBA::Boolean idle =
             this->is_entry_idle (entry);
-  if (entry == 0)
-    return -1;
-
 
           if (idle)
             {
@@ -228,6 +232,8 @@ TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
               //       lock operations since it duplicates and releases
               //       TAO_Transport objects.
               value = entry->int_id_;
+
+              entry->int_id_.recycle_state (ACE_RECYCLABLE_BUSY);
 
               if (TAO_debug_level > 4)
                 {
@@ -418,15 +424,7 @@ TAO_Transport_Cache_Manager::is_entry_idle (HASH_MAP_ENTRY *&entry)
     }
   if (entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
       entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
-    {
-      // Save that in the transport
-      entry->int_id_.transport ()->cache_map_entry (entry);
-
-      // Mark the connection as busy
-      entry->int_id_.recycle_state (ACE_RECYCLABLE_BUSY);
-
-      return 1;
-    }
+    return 1;
 
   return 0;
 }
@@ -473,10 +471,11 @@ TAO_Transport_Cache_Manager::purge (void)
 
         if (TAO_debug_level > 0)
           {
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
-                                  ACE_TEXT ("Purging %d of %d cache entries\n"),
-                                  amount,
-                                  sorted_size));
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::purge, ")
+                        ACE_TEXT ("purging %d of %d cache entries\n"),
+                        amount,
+                        sorted_size));
           }
 
         int count = 0;
@@ -484,6 +483,8 @@ TAO_Transport_Cache_Manager::purge (void)
           {
             if (this->is_entry_idle(sorted_set[i]))
               {
+                sorted_set[i]->int_id_.recycle_state (ACE_RECYCLABLE_BUSY);
+
                 TAO_Transport* transport = sorted_set[i]->int_id_.transport ();
                 if (transports_to_be_closed.push (TAO_Transport::_duplicate(transport)) != 0)
                   {
@@ -606,57 +607,6 @@ TAO_Transport_Cache_Manager::fill_set_i (DESCRIPTOR_SET& sorted_set)
   return current_size;
 }
 
-
-#if 0
-void
-TAO_Transport_Cache_Manager::close_entries (DESCRIPTOR_SET& sorted_set,
-                                            int sorted_size)
-{
-  // Calculate the number of entries to purge
-  const int amount = (sorted_size * this->percent_) / 100;
-
-  if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport_Cache_Manager::close_entries, "
-                  "purging %d of %d cache entries\n",
-                  amount, sorted_size));
-    }
-
-  int count = 0;
-  for(int i = 0; count < amount && i < sorted_size; i++)
-    {
-      if (this->is_entry_idle(sorted_set[i]))
-        {
-          TAO_Transport* transport = sorted_set[i]->int_id_.transport ();
-          if (TAO_debug_level > 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - Transport_Cache_Manager::close_entries, "
-                          "found idle transport in cache: "
-                          "0x%x Transport[%d]\n",
-                          transport, transport->id() ));
-            }
-
-          // We need to save the cache_map_entry before we
-          // set it to zero, so we can call purge_entry_i()
-          // after we call close_connection_i().
-          HASH_MAP_ENTRY* entry = transport->cache_map_entry ();
-
-          // This is a bit ugly, but we must do this to
-          // avoid taking and giving locks inside this loop.
-          transport->cache_map_entry (0);
-          transport->close_connection_no_purge ();
-
-          // Count this as a successful purged entry
-          count++;
-        }
-    }
-
-  delete [] sorted_set;
-  sorted_set = 0;
-}
-#endif
 
 int
 TAO_Transport_Cache_Manager::wait_for_connection (TAO_Cache_ExtId &extid)
