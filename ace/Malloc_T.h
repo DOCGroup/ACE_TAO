@@ -41,29 +41,6 @@
      else { new (POINTER) CONSTRUCTOR; } \
    } while (0)
 
-#if defined (ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR)
-// Although this template function is enclosed by this "broken"
-// directive, it is really a more elegant way of calling
-// destructor explicitly.  However, we can't use it for
-// portability issues.
-template <class T> inline void ACE_Destructor_Template_For_HPUX_aCC_Only (T *obj)
-{
-  obj->T::~T ();
-}
-
-#define ACE_DES_NOFREE (POINTER,CLASS) \
-   ACE_Destructor_Template_For_HPUX_aCC_Only (POINTER)
-#define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
-   do { ACE_Destructor_Template_For_HPUX_aCC_Only (POINTER); \
-        DEALLOCATOR (POINTER); \
-      } while (0)
-#define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
-   ACE_Destructor_Template_For_HPUX_aCC_Only (POINTER)
-#define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
-   do { ACE_Destructor_Template_For_HPUX_aCC_Only (POINTER); \
-        DEALLOCATOR (POINTER); \
-      } while (0)
-#else
 #define ACE_DES_NOFREE (POINTER,CLASS) POINTER->CLASS::~CLASS ()
 #define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
    do { POINTER->CLASS::~CLASS (); DEALLOCATOR (POINTER); } while (0)
@@ -73,7 +50,6 @@ template <class T> inline void ACE_Destructor_Template_For_HPUX_aCC_Only (T *obj
    do { POINTER-> T_CLASS T_PARAMETER ::~ T_CLASS (); \
         DEALLOCATOR (POINTER); \
       } while (0)
-#endif /* ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR */
 
 #include "ace/ACE.h"
 #include "ace/Synch.h"

@@ -183,9 +183,6 @@ class ACE_Node
   friend class ACE_Unbounded_Stack_Iterator<T>;
 
 public:
-  // This should really be private, but has to be publicly accessible
-  // for the ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR fix.
-
   ~ACE_Node (void);
   // This isn't necessary, but it keeps the compiler happy.
 

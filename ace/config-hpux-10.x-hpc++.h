@@ -36,7 +36,7 @@
 
 // Necessary with some compilers to pass ACE_TTY_IO as parameter to
 // DEV_Connector.
-#define ACE_NEEDS_DEV_IO_CONVERSION
+#  define ACE_NEEDS_DEV_IO_CONVERSION
 
 // Compiler's template mechanism must see source code (i.e., .C files).
 #  define ACE_TEMPLATES_REQUIRE_SOURCE
@@ -49,6 +49,9 @@
 #  define volatile
 
 #else  // aC++ definitions
+
+// Compiler supports to-be-ANSI casts
+#  define ACE_HAS_ANSI_CASTS
 
 // Compiler can't handle calls like foo->operator T *()
 #  define ACE_HAS_BROKEN_CONVERSIONS
@@ -70,9 +73,6 @@
 
 // Compiler supports template specialization.
 #  define ACE_HAS_TEMPLATE_SPECIALIZATION
-
-// Compiler doesn't handle calling to destructor of a template class explicitly correctly.
-#  define ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR
 
 #endif /* __cplusplus < 199707L */
 
