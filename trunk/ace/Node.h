@@ -63,7 +63,6 @@ private:
 
   /// Current value of the item in this node.
   T item_;
-  bool deleted_;
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
