@@ -93,20 +93,29 @@ Latency_Query_Client::init (int argc,
 int
 Latency_Query_Client::run (void)
 {
-  CORBA::DefinitionKind dk;
+//  CORBA::DefinitionKind dk;
+  CORBA::AttributeMode am;
 
   ACE_TRY_NEW_ENV
     {
       for (int j = 0; j < 100; ++j)
         {
+          am = this->attr_->mode (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (am != CORBA::ATTR_NORMAL)
+            {
+              return -1;
+            }
+/*
           dk = this->tdef_->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
           if (dk != CORBA::dk_Alias)
             {
               return -1;
             }
-
-          ACE_TRY_CHECK;
+*/
         }
 
       ACE_Sample_History history (this->iterations_);
@@ -116,7 +125,8 @@ Latency_Query_Client::run (void)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          dk = this->tdef_->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+          am = this->attr_->mode (ACE_ENV_SINGLE_ARG_PARAMETER);
+//          dk = this->tdef_->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -202,6 +212,52 @@ Latency_Query_Client::parse_args (int argc,
 int
 Latency_Query_Client::populate_ifr (ACE_ENV_SINGLE_ARG_DECL)
 {
+  CORBA::Contained_var irobj = this->repo_->lookup_id ("IDL:dummy/attr:1.0"
+                                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (! CORBA::is_nil (irobj.in ()))
+    {
+      this->attr_ = CORBA::AttributeDef::_narrow (irobj.in ()
+                                                  ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      if (CORBA::is_nil (this->attr_.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Latency_Query_Client::populate_ifr - "
+                             "AttributeDef::_narrow returned null\n"),
+                            -1);
+        }
+
+      return 0;
+    }
+
+  CORBA::InterfaceDefSeq in_bases (0);
+  in_bases.length (0);
+
+  CORBA::InterfaceDef_var iface =
+    this->repo_->create_interface ("IDL:dummy:1.0",
+                                   "dummy",
+                                   "1.0",
+                                   in_bases
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  CORBA::PrimitiveDef_var p_long =
+    this->repo_->get_primitive (CORBA::pk_long
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  this->attr_ =
+    iface->create_attribute ("IDL:dummt/attr:1.0",
+                             "attr",
+                             "1.0",
+                             p_long.in (),
+                             CORBA::ATTR_NORMAL
+                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+/*
   CORBA::Contained_var irobj = this->repo_->lookup_id ("IDL:longtype:1.0"
                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -251,7 +307,7 @@ Latency_Query_Client::populate_ifr (ACE_ENV_SINGLE_ARG_DECL)
                          "create_alias returned null\n"),
                         -1);
     }
-
+*/
   return 0;
 }
 

@@ -28,7 +28,7 @@ CORBA::Any::~Any (void)
 {
   if (this->impl_ != 0)
     {
-      this->impl_->free_value ();
+      this->impl_->_remove_ref ();
     }
 }
 
@@ -247,12 +247,14 @@ TAO::Any_Impl::_remove_ref (void)
 // =======================================================================
 
 TAO::Unknown_IDL_Type::Unknown_IDL_Type (CORBA::TypeCode_ptr tc,
-                                         ACE_Message_Block *mb,
-                                         int byte_order)
+                                         const ACE_Message_Block *mb,
+                                         int byte_order,
+                                         CORBA::Boolean release_tc)
   : TAO::Any_Impl (0,
                    tc),
-    cdr_ (mb),
-    byte_order_ (byte_order)
+    cdr_ (ACE_Message_Block::duplicate (mb)),
+    byte_order_ (byte_order),
+    release_tc_ (release_tc)
 {
 }
 
@@ -292,8 +294,11 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
 void
 TAO::Unknown_IDL_Type::free_value (void)
 {
-//  CORBA::release (this->type_);
-//  this->type_ = CORBA::TypeCode::_nil ();
+  if (this->release_tc_ == 1)
+    {
+      CORBA::release (this->type_);
+    }
+
   ACE_Message_Block::release (this->cdr_);
 }
 
@@ -399,21 +404,18 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
       // space in the message block.
       size_t size = end - begin;
 
-      ACE_Message_Block *mb = 0;
-      ACE_NEW_RETURN (mb,
-                      ACE_Message_Block (size + 2 * ACE_CDR::MAX_ALIGNMENT),
-                      0);
+      ACE_Message_Block mb (size + 2 * ACE_CDR::MAX_ALIGNMENT);
 
-      ACE_CDR::mb_align (mb);
+      ACE_CDR::mb_align (&mb);
       ptr_arith_t offset = ptr_arith_t (begin) % ACE_CDR::MAX_ALIGNMENT;
-      mb->rd_ptr (offset);
-      mb->wr_ptr (offset + size);
-      ACE_OS::memcpy (mb->rd_ptr (), begin, size);
+      mb.rd_ptr (offset);
+      mb.wr_ptr (offset + size);
+      ACE_OS::memcpy (mb.rd_ptr (), begin, size);
 
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW_RETURN (impl,
                       TAO::Unknown_IDL_Type (tc,
-                                             mb,
+                                             &mb,
                                              cdr.byte_order ()),
                       0);
 
@@ -615,9 +617,12 @@ operator<<= (CORBA::Any &any, CORBA::TypeCode_ptr tc)
 void
 operator<<= (CORBA::Any &any, const CORBA::Exception &exception)
 {
-  TAO::Any_Dual_Impl_T<CORBA::Exception>::insert_copy (any,
-                                                       exception._type (),
-                                                       exception);
+  TAO::Any_Dual_Impl_T<CORBA::Exception>::insert_copy (
+      any,
+      CORBA::Exception::_tao_any_destructor,
+      exception._type (),
+      exception
+    );
 }
 
 // Insertion of CORBA::Exception - non-copying.
@@ -971,6 +976,17 @@ TAO::Any_Basic_Impl_T<CORBA::LongDouble>::create_empty (
 // =======================================================================
 
 // Specializations for CORBA::Exception
+
+TAO::Any_Dual_Impl_T<CORBA::Exception>::Any_Dual_Impl_T (
+    _tao_destructor destructor,
+    CORBA::TypeCode_ptr tc,
+    const CORBA::Exception & val
+  )
+  : Any_Impl (destructor,
+              tc)
+{
+  this->value_ = val._tao_duplicate ();
+}
 
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<CORBA::Exception>::marshal_value (TAO_OutputCDR &cdr)

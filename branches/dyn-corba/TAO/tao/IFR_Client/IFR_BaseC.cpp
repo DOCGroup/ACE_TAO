@@ -190,7 +190,7 @@ static const CORBA::Long _oc_CORBA_DefinitionKind[] =
   ACE_NTOHL (0x6e697469), 
   ACE_NTOHL (0x6f6e4b69), 
   ACE_NTOHL (0x6e640000),  // name = DefinitionKind
-  26, // member count
+  36, // member count
   8,
   ACE_NTOHL (0x646b5f6e), 
   ACE_NTOHL (0x6f6e6500),  // name = dk_none
@@ -304,6 +304,46 @@ static const CORBA::Long _oc_CORBA_DefinitionKind[] =
   ACE_NTOHL (0x496e7465), 
   ACE_NTOHL (0x72666163), 
   ACE_NTOHL (0x65000000),  // name = dk_LocalInterface
+  13,
+  ACE_NTOHL (0x646b5f43), 
+  ACE_NTOHL (0x6f6d706f), 
+  ACE_NTOHL (0x6e656e74), 
+  ACE_NTOHL (0x0),  // name = dk_Component
+  8,
+  ACE_NTOHL (0x646b5f48), 
+  ACE_NTOHL (0x6f6d6500),  // name = dk_Home
+  11,
+  ACE_NTOHL (0x646b5f46), 
+  ACE_NTOHL (0x6163746f), 
+  ACE_NTOHL (0x72790000),  // name = dk_Factory
+  10,
+  ACE_NTOHL (0x646b5f46), 
+  ACE_NTOHL (0x696e6465), 
+  ACE_NTOHL (0x72000000),  // name = dk_Finder
+  9,
+  ACE_NTOHL (0x646b5f45), 
+  ACE_NTOHL (0x6d697473), 
+  ACE_NTOHL (0x0),  // name = dk_Emits
+  13,
+  ACE_NTOHL (0x646b5f50), 
+  ACE_NTOHL (0x75626c69), 
+  ACE_NTOHL (0x73686573), 
+  ACE_NTOHL (0x0),  // name = dk_Publishes
+  12,
+  ACE_NTOHL (0x646b5f43), 
+  ACE_NTOHL (0x6f6e7375), 
+  ACE_NTOHL (0x6d657300),  // name = dk_Consumes
+  12,
+  ACE_NTOHL (0x646b5f50), 
+  ACE_NTOHL (0x726f7669), 
+  ACE_NTOHL (0x64657300),  // name = dk_Provides
+  8,
+  ACE_NTOHL (0x646b5f55), 
+  ACE_NTOHL (0x73657300),  // name = dk_Uses
+  9,
+  ACE_NTOHL (0x646b5f45), 
+  ACE_NTOHL (0x76656e74), 
+  ACE_NTOHL (0x0),  // name = dk_Event
   };
 
 static CORBA::TypeCode _tc_TAO_tc_CORBA_DefinitionKind (
@@ -5402,7 +5442,7 @@ static const CORBA::Long _oc_CORBA_Contained_Description[] =
   ACE_NTOHL (0x6b696e64), 
   ACE_NTOHL (0x0),  // name = kind
     CORBA::tk_enum, // typecode kind
-  524, // encapsulation length
+  684, // encapsulation length
 TAO_ENCAP_BYTE_ORDER, // byte order
     37,
     ACE_NTOHL (0x49444c3a), 
@@ -5420,7 +5460,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
     ACE_NTOHL (0x6e697469), 
     ACE_NTOHL (0x6f6e4b69), 
     ACE_NTOHL (0x6e640000),  // name = DefinitionKind
-    26, // member count
+    36, // member count
     8,
     ACE_NTOHL (0x646b5f6e), 
     ACE_NTOHL (0x6f6e6500),  // name = dk_none
@@ -5534,6 +5574,46 @@ TAO_ENCAP_BYTE_ORDER, // byte order
     ACE_NTOHL (0x496e7465), 
     ACE_NTOHL (0x72666163), 
     ACE_NTOHL (0x65000000),  // name = dk_LocalInterface
+    13,
+    ACE_NTOHL (0x646b5f43), 
+    ACE_NTOHL (0x6f6d706f), 
+    ACE_NTOHL (0x6e656e74), 
+    ACE_NTOHL (0x0),  // name = dk_Component
+    8,
+    ACE_NTOHL (0x646b5f48), 
+    ACE_NTOHL (0x6f6d6500),  // name = dk_Home
+    11,
+    ACE_NTOHL (0x646b5f46), 
+    ACE_NTOHL (0x6163746f), 
+    ACE_NTOHL (0x72790000),  // name = dk_Factory
+    10,
+    ACE_NTOHL (0x646b5f46), 
+    ACE_NTOHL (0x696e6465), 
+    ACE_NTOHL (0x72000000),  // name = dk_Finder
+    9,
+    ACE_NTOHL (0x646b5f45), 
+    ACE_NTOHL (0x6d697473), 
+    ACE_NTOHL (0x0),  // name = dk_Emits
+    13,
+    ACE_NTOHL (0x646b5f50), 
+    ACE_NTOHL (0x75626c69), 
+    ACE_NTOHL (0x73686573), 
+    ACE_NTOHL (0x0),  // name = dk_Publishes
+    12,
+    ACE_NTOHL (0x646b5f43), 
+    ACE_NTOHL (0x6f6e7375), 
+    ACE_NTOHL (0x6d657300),  // name = dk_Consumes
+    12,
+    ACE_NTOHL (0x646b5f50), 
+    ACE_NTOHL (0x726f7669), 
+    ACE_NTOHL (0x64657300),  // name = dk_Provides
+    8,
+    ACE_NTOHL (0x646b5f55), 
+    ACE_NTOHL (0x73657300),  // name = dk_Uses
+    9,
+    ACE_NTOHL (0x646b5f45), 
+    ACE_NTOHL (0x76656e74), 
+    ACE_NTOHL (0x0),  // name = dk_Event
     
   6,
   ACE_NTOHL (0x76616c75), 
@@ -14620,7 +14700,7 @@ static const CORBA::Long _oc_CORBA_Container_Description[] =
   ACE_NTOHL (0x6b696e64), 
   ACE_NTOHL (0x0),  // name = kind
     CORBA::tk_enum, // typecode kind
-  524, // encapsulation length
+  684, // encapsulation length
 TAO_ENCAP_BYTE_ORDER, // byte order
     37,
     ACE_NTOHL (0x49444c3a), 
@@ -14638,7 +14718,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
     ACE_NTOHL (0x6e697469), 
     ACE_NTOHL (0x6f6e4b69), 
     ACE_NTOHL (0x6e640000),  // name = DefinitionKind
-    26, // member count
+    36, // member count
     8,
     ACE_NTOHL (0x646b5f6e), 
     ACE_NTOHL (0x6f6e6500),  // name = dk_none
@@ -14752,6 +14832,46 @@ TAO_ENCAP_BYTE_ORDER, // byte order
     ACE_NTOHL (0x496e7465), 
     ACE_NTOHL (0x72666163), 
     ACE_NTOHL (0x65000000),  // name = dk_LocalInterface
+    13,
+    ACE_NTOHL (0x646b5f43), 
+    ACE_NTOHL (0x6f6d706f), 
+    ACE_NTOHL (0x6e656e74), 
+    ACE_NTOHL (0x0),  // name = dk_Component
+    8,
+    ACE_NTOHL (0x646b5f48), 
+    ACE_NTOHL (0x6f6d6500),  // name = dk_Home
+    11,
+    ACE_NTOHL (0x646b5f46), 
+    ACE_NTOHL (0x6163746f), 
+    ACE_NTOHL (0x72790000),  // name = dk_Factory
+    10,
+    ACE_NTOHL (0x646b5f46), 
+    ACE_NTOHL (0x696e6465), 
+    ACE_NTOHL (0x72000000),  // name = dk_Finder
+    9,
+    ACE_NTOHL (0x646b5f45), 
+    ACE_NTOHL (0x6d697473), 
+    ACE_NTOHL (0x0),  // name = dk_Emits
+    13,
+    ACE_NTOHL (0x646b5f50), 
+    ACE_NTOHL (0x75626c69), 
+    ACE_NTOHL (0x73686573), 
+    ACE_NTOHL (0x0),  // name = dk_Publishes
+    12,
+    ACE_NTOHL (0x646b5f43), 
+    ACE_NTOHL (0x6f6e7375), 
+    ACE_NTOHL (0x6d657300),  // name = dk_Consumes
+    12,
+    ACE_NTOHL (0x646b5f50), 
+    ACE_NTOHL (0x726f7669), 
+    ACE_NTOHL (0x64657300),  // name = dk_Provides
+    8,
+    ACE_NTOHL (0x646b5f55), 
+    ACE_NTOHL (0x73657300),  // name = dk_Uses
+    9,
+    ACE_NTOHL (0x646b5f45), 
+    ACE_NTOHL (0x76656e74), 
+    ACE_NTOHL (0x0),  // name = dk_Event
     
   6,
   ACE_NTOHL (0x76616c75), 
@@ -14926,10 +15046,10 @@ static const CORBA::Long _oc_CORBA_Container_DescriptionSeq[] =
   ACE_NTOHL (0x696f6e53), 
   ACE_NTOHL (0x65710000),  // name = DescriptionSeq
     CORBA::tk_sequence, // typecode kind
-  736, // encapsulation length
+  896, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_struct, // typecode kind
-    720, // encapsulation length
+    880, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       44,
       ACE_NTOHL (0x49444c3a), 
@@ -14975,7 +15095,7 @@ static const CORBA::Long _oc_CORBA_Container_DescriptionSeq[] =
       ACE_NTOHL (0x6b696e64), 
       ACE_NTOHL (0x0),  // name = kind
             CORBA::tk_enum, // typecode kind
-      524, // encapsulation length
+      684, // encapsulation length
 TAO_ENCAP_BYTE_ORDER, // byte order
         37,
         ACE_NTOHL (0x49444c3a), 
@@ -14993,7 +15113,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
         ACE_NTOHL (0x6e697469), 
         ACE_NTOHL (0x6f6e4b69), 
         ACE_NTOHL (0x6e640000),  // name = DefinitionKind
-        26, // member count
+        36, // member count
         8,
         ACE_NTOHL (0x646b5f6e), 
         ACE_NTOHL (0x6f6e6500),  // name = dk_none
@@ -15107,6 +15227,46 @@ TAO_ENCAP_BYTE_ORDER, // byte order
         ACE_NTOHL (0x496e7465), 
         ACE_NTOHL (0x72666163), 
         ACE_NTOHL (0x65000000),  // name = dk_LocalInterface
+        13,
+        ACE_NTOHL (0x646b5f43), 
+        ACE_NTOHL (0x6f6d706f), 
+        ACE_NTOHL (0x6e656e74), 
+        ACE_NTOHL (0x0),  // name = dk_Component
+        8,
+        ACE_NTOHL (0x646b5f48), 
+        ACE_NTOHL (0x6f6d6500),  // name = dk_Home
+        11,
+        ACE_NTOHL (0x646b5f46), 
+        ACE_NTOHL (0x6163746f), 
+        ACE_NTOHL (0x72790000),  // name = dk_Factory
+        10,
+        ACE_NTOHL (0x646b5f46), 
+        ACE_NTOHL (0x696e6465), 
+        ACE_NTOHL (0x72000000),  // name = dk_Finder
+        9,
+        ACE_NTOHL (0x646b5f45), 
+        ACE_NTOHL (0x6d697473), 
+        ACE_NTOHL (0x0),  // name = dk_Emits
+        13,
+        ACE_NTOHL (0x646b5f50), 
+        ACE_NTOHL (0x75626c69), 
+        ACE_NTOHL (0x73686573), 
+        ACE_NTOHL (0x0),  // name = dk_Publishes
+        12,
+        ACE_NTOHL (0x646b5f43), 
+        ACE_NTOHL (0x6f6e7375), 
+        ACE_NTOHL (0x6d657300),  // name = dk_Consumes
+        12,
+        ACE_NTOHL (0x646b5f50), 
+        ACE_NTOHL (0x726f7669), 
+        ACE_NTOHL (0x64657300),  // name = dk_Provides
+        8,
+        ACE_NTOHL (0x646b5f55), 
+        ACE_NTOHL (0x73657300),  // name = dk_Uses
+        9,
+        ACE_NTOHL (0x646b5f45), 
+        ACE_NTOHL (0x76656e74), 
+        ACE_NTOHL (0x0),  // name = dk_Event
         
       6,
       ACE_NTOHL (0x76616c75), 
@@ -17343,6 +17503,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::Contained::Description>::insert_copy (
       _tao_any,
+      CORBA::Contained::Description::_tao_any_destructor,
       CORBA::Contained::_tc_Description,
       _tao_elem
     );
@@ -17400,6 +17561,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::ContainedSeq>::insert_copy (
       _tao_any,
+      CORBA::ContainedSeq::_tao_any_destructor,
       CORBA::_tc_ContainedSeq,
       _tao_elem
     );
@@ -17457,6 +17619,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::InterfaceDefSeq>::insert_copy (
       _tao_any,
+      CORBA::InterfaceDefSeq::_tao_any_destructor,
       CORBA::_tc_InterfaceDefSeq,
       _tao_elem
     );
@@ -17514,6 +17677,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::ValueDefSeq>::insert_copy (
       _tao_any,
+      CORBA::ValueDefSeq::_tao_any_destructor,
       CORBA::_tc_ValueDefSeq,
       _tao_elem
     );
@@ -17571,6 +17735,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::AbstractInterfaceDefSeq>::insert_copy (
       _tao_any,
+      CORBA::AbstractInterfaceDefSeq::_tao_any_destructor,
       CORBA::_tc_AbstractInterfaceDefSeq,
       _tao_elem
     );
@@ -17628,6 +17793,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::LocalInterfaceDefSeq>::insert_copy (
       _tao_any,
+      CORBA::LocalInterfaceDefSeq::_tao_any_destructor,
       CORBA::_tc_LocalInterfaceDefSeq,
       _tao_elem
     );
@@ -17685,6 +17851,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::StructMember>::insert_copy (
       _tao_any,
+      CORBA::StructMember::_tao_any_destructor,
       CORBA::_tc_StructMember,
       _tao_elem
     );
@@ -17742,6 +17909,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::StructMemberSeq>::insert_copy (
       _tao_any,
+      CORBA::StructMemberSeq::_tao_any_destructor,
       CORBA::_tc_StructMemberSeq,
       _tao_elem
     );
@@ -17799,6 +17967,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::Initializer>::insert_copy (
       _tao_any,
+      CORBA::Initializer::_tao_any_destructor,
       CORBA::_tc_Initializer,
       _tao_elem
     );
@@ -17856,6 +18025,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::InitializerSeq>::insert_copy (
       _tao_any,
+      CORBA::InitializerSeq::_tao_any_destructor,
       CORBA::_tc_InitializerSeq,
       _tao_elem
     );
@@ -17913,6 +18083,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::UnionMember>::insert_copy (
       _tao_any,
+      CORBA::UnionMember::_tao_any_destructor,
       CORBA::_tc_UnionMember,
       _tao_elem
     );
@@ -17970,6 +18141,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::UnionMemberSeq>::insert_copy (
       _tao_any,
+      CORBA::UnionMemberSeq::_tao_any_destructor,
       CORBA::_tc_UnionMemberSeq,
       _tao_elem
     );
@@ -18027,6 +18199,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::EnumMemberSeq>::insert_copy (
       _tao_any,
+      CORBA::EnumMemberSeq::_tao_any_destructor,
       CORBA::_tc_EnumMemberSeq,
       _tao_elem
     );
@@ -18136,6 +18309,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::Container::Description>::insert_copy (
       _tao_any,
+      CORBA::Container::Description::_tao_any_destructor,
       CORBA::Container::_tc_Description,
       _tao_elem
     );
@@ -18193,6 +18367,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::Container::DescriptionSeq>::insert_copy (
       _tao_any,
+      CORBA::Container::DescriptionSeq::_tao_any_destructor,
       CORBA::Container::_tc_DescriptionSeq,
       _tao_elem
     );
@@ -18354,6 +18529,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::TypeDescription>::insert_copy (
       _tao_any,
+      CORBA::TypeDescription::_tao_any_destructor,
       CORBA::_tc_TypeDescription,
       _tao_elem
     );
@@ -18401,7 +18577,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -18444,7 +18620,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -18487,7 +18663,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -18554,7 +18730,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -18621,7 +18797,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -18688,7 +18864,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -18755,7 +18931,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -18822,7 +18998,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -18888,7 +19064,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -18954,7 +19130,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -19020,7 +19196,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -19086,7 +19262,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -19152,7 +19328,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -19195,7 +19371,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -19238,7 +19414,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

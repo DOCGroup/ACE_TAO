@@ -36102,6 +36102,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::ModuleDescription>::insert_copy (
       _tao_any,
+      CORBA::ModuleDescription::_tao_any_destructor,
       CORBA::_tc_ModuleDescription,
       _tao_elem
     );
@@ -36211,6 +36212,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::ConstantDescription>::insert_copy (
       _tao_any,
+      CORBA::ConstantDescription::_tao_any_destructor,
       CORBA::_tc_ConstantDescription,
       _tao_elem
     );
@@ -36840,6 +36842,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::ExceptionDescription>::insert_copy (
       _tao_any,
+      CORBA::ExceptionDescription::_tao_any_destructor,
       CORBA::_tc_ExceptionDescription,
       _tao_elem
     );
@@ -36897,6 +36900,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::ExceptionDefSeq>::insert_copy (
       _tao_any,
+      CORBA::ExceptionDefSeq::_tao_any_destructor,
       CORBA::_tc_ExceptionDefSeq,
       _tao_elem
     );
@@ -36954,6 +36958,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::ExcDescriptionSeq>::insert_copy (
       _tao_any,
+      CORBA::ExcDescriptionSeq::_tao_any_destructor,
       CORBA::_tc_ExcDescriptionSeq,
       _tao_elem
     );
@@ -37091,6 +37096,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::AttributeDescription>::insert_copy (
       _tao_any,
+      CORBA::AttributeDescription::_tao_any_destructor,
       CORBA::_tc_AttributeDescription,
       _tao_elem
     );
@@ -37176,6 +37182,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::ParameterDescription>::insert_copy (
       _tao_any,
+      CORBA::ParameterDescription::_tao_any_destructor,
       CORBA::_tc_ParameterDescription,
       _tao_elem
     );
@@ -37233,6 +37240,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::ParDescriptionSeq>::insert_copy (
       _tao_any,
+      CORBA::ParDescriptionSeq::_tao_any_destructor,
       CORBA::_tc_ParDescriptionSeq,
       _tao_elem
     );
@@ -37290,6 +37298,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::ContextIdSeq>::insert_copy (
       _tao_any,
+      CORBA::ContextIdSeq::_tao_any_destructor,
       CORBA::_tc_ContextIdSeq,
       _tao_elem
     );
@@ -37399,6 +37408,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::OperationDescription>::insert_copy (
       _tao_any,
+      CORBA::OperationDescription::_tao_any_destructor,
       CORBA::_tc_OperationDescription,
       _tao_elem
     );
@@ -37456,6 +37466,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::RepositoryIdSeq>::insert_copy (
       _tao_any,
+      CORBA::RepositoryIdSeq::_tao_any_destructor,
       CORBA::_tc_RepositoryIdSeq,
       _tao_elem
     );
@@ -37513,6 +37524,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::OpDescriptionSeq>::insert_copy (
       _tao_any,
+      CORBA::OpDescriptionSeq::_tao_any_destructor,
       CORBA::_tc_OpDescriptionSeq,
       _tao_elem
     );
@@ -37570,6 +37582,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::AttrDescriptionSeq>::insert_copy (
       _tao_any,
+      CORBA::AttrDescriptionSeq::_tao_any_destructor,
       CORBA::_tc_AttrDescriptionSeq,
       _tao_elem
     );
@@ -37679,6 +37692,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::InterfaceDef::FullInterfaceDescription>::insert_copy (
       _tao_any,
+      CORBA::InterfaceDef::FullInterfaceDescription::_tao_any_destructor,
       CORBA::InterfaceDef::_tc_FullInterfaceDescription,
       _tao_elem
     );
@@ -37736,6 +37750,7 @@ void operator<<= (
 {
   TAO::Any_Dual_Impl_T<CORBA::InterfaceDescription>::insert_copy (
       _tao_any,
+      CORBA::InterfaceDescription::_tao_any_destructor,
       CORBA::_tc_InterfaceDescription,
       _tao_elem
     );
@@ -37887,7 +37902,7 @@ operator>>= (
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -37930,7 +37945,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -37973,7 +37988,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38016,7 +38031,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38059,7 +38074,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38102,7 +38117,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38145,7 +38160,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38188,7 +38203,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38231,7 +38246,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38274,7 +38289,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38317,7 +38332,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38360,7 +38375,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38403,7 +38418,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38446,7 +38461,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38489,7 +38504,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38556,7 +38571,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38622,7 +38637,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38665,7 +38680,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38731,7 +38746,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38797,7 +38812,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38840,7 +38855,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38906,7 +38921,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -38972,7 +38987,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -39038,7 +39053,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -39081,7 +39096,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -39124,7 +39139,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:94
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

@@ -63,6 +63,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "TAO::Any_Dual_Impl_T<" << node->name () << ">::insert_copy ("
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
+      << node->name () << "::_tao_any_destructor," << be_nl
       << node->tc_name () << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl

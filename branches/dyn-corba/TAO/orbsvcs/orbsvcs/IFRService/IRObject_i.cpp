@@ -6,8 +6,8 @@
 #include "IDLType_i.h"
 #include "Contained_i.h"
 
-#include "tao/Object_KeyC.h"
 #include "tao/PortableServer/POA.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID (IFR_Service, 
            IRObject_i, 
@@ -33,12 +33,22 @@ void
 TAO_IRObject_i::update_key (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableServer::ObjectId_var oid =
-    this->repo_->poa_current ()->get_object_id ();
-  ACE_CHECK;
+  TAO_POA_Current_Impl *pc_impl =
+    ACE_static_cast (TAO_POA_Current_Impl *,
+                     TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 
-  CORBA::String_var oid_string =
-    PortableServer::ObjectId_to_string (oid.in ());
+  TAO_ObjectKey object_key = pc_impl->object_key ();
+  PortableServer::ObjectId object_id;
+  int status = TAO_POA::parse_ir_object_key (object_key,
+                                             object_id);
+  if (status != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "update_key - parse_ir_object_key failed\n"));
+      return;
+    }
+
+  char *oid_string = this->oid_to_string (object_id);
 
   if (oid_string[0U] == '\0')
     {
@@ -46,9 +56,9 @@ TAO_IRObject_i::update_key (ACE_ENV_SINGLE_ARG_DECL)
       return;
     }
 
-  int status = 
+  status = 
     this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                         oid_string.in (),
+                                         oid_string,
                                          this->section_key_,
                                          0);
 
@@ -60,21 +70,21 @@ TAO_IRObject_i::update_key (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 char *
-TAO_IRObject_i::int_to_string (CORBA::ULong number) const
+TAO_IRObject_i::int_to_string (CORBA::ULong number)
 {
-  char retval[9];
-
-  ACE_OS::sprintf (retval, "%8.8X", number);
-
-  return CORBA::string_dup (retval);
+  static char hex_string[9];
+  ACE_OS::sprintf ((char *) hex_string, 
+                   "%8.8X", 
+                   number);
+  return (char *) hex_string;
 }
 
 char *
 TAO_IRObject_i::reference_to_path (CORBA::IRObject_ptr obj)
 {
   PortableServer::ObjectId object_id;
-  TAO_ObjectKey_var object_key = obj->_key ();
-  int status = TAO_POA::parse_ir_object_key (object_key.in (),
+  TAO_ObjectKey object_key = obj->_object_key ();
+  int status = TAO_POA::parse_ir_object_key (object_key,
                                              object_id);
   if (status != 0)
     {
@@ -83,7 +93,7 @@ TAO_IRObject_i::reference_to_path (CORBA::IRObject_ptr obj)
       return 0;
     }
 
-  return PortableServer::ObjectId_to_string (object_id);
+  return this->oid_to_string (object_id);
 }
 
 CORBA::DefinitionKind
@@ -114,8 +124,7 @@ TAO_IRObject_i::path_to_def_kind (ACE_TString &path)
 CORBA::DefinitionKind 
 TAO_IRObject_i::reference_to_def_kind (CORBA::IRObject_ptr obj)
 {
-  CORBA::String_var tmp = this->reference_to_path (obj);
-  ACE_TString path (tmp.in ());
+  ACE_TString path (this->reference_to_path (obj));
   return this->path_to_def_kind (path);
 }
 
@@ -305,3 +314,18 @@ TAO_IRObject_i::create_objref (CORBA::DefinitionKind def_kind,
                                         ACE_ENV_ARG_PARAMETER);
 }
 
+char *
+TAO_IRObject_i::oid_to_string (PortableServer::ObjectId &oid)
+{
+  static char oid_string[2 * 1024];
+  CORBA::ULong length = oid.length ();
+
+  // Copy the data.
+  ACE_OS::memcpy (oid_string, 
+                  oid.get_buffer (), 
+                  length);
+
+  // Null terminate the string.
+  oid_string[length] = '\0';
+  return oid_string;
+}

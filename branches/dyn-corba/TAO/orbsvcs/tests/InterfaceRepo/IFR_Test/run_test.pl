@@ -8,12 +8,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "../../../../../bin";
 use PerlACE::Run_Test;
 
-$locking = "-m";
+$locking = "";
 
 $iorfile = "if_repo.ior";
 
 $status = 0;
 
+$nice = "-ORBDottedDecimalAddresses 1";
 $debug = "";
 $test = "";
 $iterations = "";
@@ -38,7 +39,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("../../../IFR_Service/IFR_Service", " $locking");
+$SV = new PerlACE::Process ("../../../IFR_Service/IFR_Service", " $nice " . " $locking");
 $CL = new PerlACE::Process ("IFR_Test", 
                             "-ORBInitRef InterfaceRepository=file://$iorfile"
                             . " $debug $test $iterations");

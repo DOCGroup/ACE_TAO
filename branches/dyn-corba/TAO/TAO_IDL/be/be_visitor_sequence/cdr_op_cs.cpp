@@ -122,7 +122,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
   this->ctx_->node (node);
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-    << "// " << __FILE__ << ":" << __LINE__;
+    << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // If we're an anonymous sequence, we must protect against
   // being declared more than once.

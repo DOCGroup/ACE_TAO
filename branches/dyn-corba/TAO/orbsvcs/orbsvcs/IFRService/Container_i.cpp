@@ -446,11 +446,10 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
 
       for (u_int i = 0; i < count; ++i)
         {
-          CORBA::String_var section_name = this->int_to_string (i);
           ACE_Configuration_Section_Key defn_key;
           status =
             this->repo_->config ()->open_section (defns_key,
-                                                  section_name.in (),
+                                                  this->int_to_string (i),
                                                   0,
                                                   defn_key);
 
@@ -674,9 +673,7 @@ TAO_Container_i::describe_contents_i (CORBA::DefinitionKind limit_type,
 
   for (CORBA::ULong i = 0; i < ret_len; ++i)
     {
-      tmp = this->reference_to_path (contents[i]);
-
-      ACE_TString contained_path (tmp.in ());
+      ACE_TString contained_path (this->reference_to_path (contents[i]));
       impl = this->path_to_contained (contained_path);
 
       desc = impl->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -839,11 +836,11 @@ TAO_Container_i::create_constant_i (const char *id,
 
 
   // Get the path to our type and store it.
-  CORBA::String_var type_path = this->reference_to_path (type);
+  char *type_path = this->reference_to_path (type);
 
   this->repo_->config ()->set_string_value (new_key,
                                             "type_path",
-                                            type_path.in ());
+                                            type_path);
 
   // Store the value.
   ACE_Message_Block *mb = value._tao_get_cdr ();
@@ -962,16 +959,15 @@ TAO_Container_i::create_struct_i (const char *id,
   this->repo_->config ()->set_integer_value (refs_key,
                                              "count",
                                              count);
+  char *member_path = 0;
 
   // Create a section for each member. We just store the
   // member name and the path to its database entry.
   for (CORBA::ULong i = 0; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
-      CORBA::String_var section_name = this->int_to_string (i);
-
       this->repo_->config ()->open_section (refs_key,
-                                            section_name.in (),
+                                            this->int_to_string (i),
                                             1,
                                             member_key);
 
@@ -979,12 +975,12 @@ TAO_Container_i::create_struct_i (const char *id,
                                                 "name",
                                                 members[i].name.in ());
 
-      CORBA::String_var member_path = 
+      member_path = 
         this->reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
                                                 "path",
-                                                member_path.in ());
+                                                member_path);
     }
 
   CORBA::DefinitionKind def_kind = 
@@ -1078,11 +1074,11 @@ TAO_Container_i::create_union_i (const char *id,
                                           CORBA::dk_Union);
 
   // Add a field to hold the path to the discriminator type.
-  CORBA::String_var disc_path = this->reference_to_path (discriminator_type);
+  char *disc_path = this->reference_to_path (discriminator_type);
 
   this->repo_->config ()->set_string_value (new_key,
                                             "disc_path",
-                                            disc_path.in ());
+                                            disc_path);
 
   ACE_Configuration_Section_Key refs_key;
 
@@ -1096,15 +1092,15 @@ TAO_Container_i::create_union_i (const char *id,
   this->repo_->config ()->set_integer_value (refs_key,
                                              "count",
                                              count);
+  char *member_path = 0;
 
   // Create a section for each member. We store the member
   // name, its label value, and the path to its database entry.
   for (CORBA::ULong i = 0; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
-      CORBA::String_var section_name = this->int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
-                                            section_name.in (),
+                                            this->int_to_string (i),
                                             1,
                                             member_key);
 
@@ -1112,12 +1108,12 @@ TAO_Container_i::create_union_i (const char *id,
                                                 "name",
                                                 members[i].name.in ());
 
-      CORBA::String_var member_path =
+      member_path =
         this->reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
                                                 "path",
-                                                member_path.in ());
+                                                member_path);
 
       this->store_label (member_key,
                          members[i].label
@@ -1222,9 +1218,8 @@ TAO_Container_i::create_enum_i (const char *id,
   for (CORBA::ULong i = 0; i < count; i++)
     {
       ACE_Configuration_Section_Key member_key;
-      CORBA::String_var section_name = this->int_to_string (i);
       this->repo_->config ()->open_section (new_key,
-                                            section_name.in (),
+                                            this->int_to_string (i),
                                             1,
                                             member_key);
 
@@ -1321,11 +1316,11 @@ TAO_Container_i::create_alias_i (const char *id,
                                           CORBA::dk_Alias);
 
   // Get the path to our original type and store it.
-  CORBA::String_var unalias_path = this->reference_to_path (original_type);
+  char *unalias_path = this->reference_to_path (original_type);
 
   this->repo_->config ()->set_string_value (new_key,
                                             "original_type",
-                                            unalias_path.in ());
+                                            unalias_path);
 
   // Create the object reference.
   CORBA::Object_var obj =
@@ -1413,18 +1408,17 @@ TAO_Container_i::create_interface_i (const char *id,
                                             "inherited",
                                             1,
                                             inherited_key);
+      char *inherited_path = 0;
 
       // Store the path to each base interface.
       for (CORBA::ULong i = 0; i < length; ++i)
         {
-          CORBA::String_var inherited_path = 
+          inherited_path = 
             this->reference_to_path (base_interfaces[i]);
 
-          CORBA::String_var section_name = this->int_to_string (i);
-
           this->repo_->config ()->set_string_value (inherited_key,
-                                                    section_name.in (),
-                                                    inherited_path.in ());
+                                                    this->int_to_string (i),
+                                                    inherited_path);
         }
     }
 
@@ -1554,11 +1548,11 @@ TAO_Container_i::create_value_box_i (const char *id,
                                           CORBA::dk_ValueBox);
 
   // Get the path to our original type and store it.
-  CORBA::String_var boxed_path = this->reference_to_path (original_type_def);
+  char *boxed_path = this->reference_to_path (original_type_def);
 
   this->repo_->config ()->set_string_value (new_key,
                                             "boxed_type",
-                                            boxed_path.in ());
+                                            boxed_path);
 
   // Create the object reference.
   CORBA::Object_var obj =
@@ -1645,15 +1639,15 @@ TAO_Container_i::create_exception_i (const char *id,
   this->repo_->config ()->set_integer_value (refs_key,
                                              "count",
                                              count);
+  char *member_path = 0;
 
   // Create a section for each member. We just store the
   // member name and the path to its database entry.
   for (CORBA::ULong i = 0; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
-      CORBA::String_var section_name = this->int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
-                                            section_name.in (),
+                                            this->int_to_string (i),
                                             1,
                                             member_key);
 
@@ -1661,12 +1655,12 @@ TAO_Container_i::create_exception_i (const char *id,
                                                 "name",
                                                 members[i].name.in ());
 
-      CORBA::String_var member_path = 
+      member_path = 
         this->reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
                                                 "path",
-                                                member_path.in ());
+                                                member_path);
     }
 
   // Create the object reference.
@@ -1833,18 +1827,17 @@ TAO_Container_i::create_abstract_interface_i (
                                             "inherited",
                                             1,
                                             inherited_key);
+      char *inherited_path = 0;
 
       // Store the path to each base interface.
       for (CORBA::ULong i = 0; i < length; ++i)
         {
-          CORBA::String_var inherited_path = 
+          inherited_path = 
             this->reference_to_path (base_interfaces[i]);
 
-          CORBA::String_var section_name = this->int_to_string (i);
-
           this->repo_->config ()->set_string_value (inherited_key,
-                                                    section_name.in (),
-                                                    inherited_path.in ());
+                                                    this->int_to_string (i),
+                                                    inherited_path);
         }
     }
 
@@ -1938,18 +1931,17 @@ TAO_Container_i::create_local_interface_i (
                                             "inherited",
                                             1,
                                             inherited_key);
+      char *inherited_path = 0;
 
       // Store the path to each base interface.
       for (CORBA::ULong i = 0; i < length; ++i)
         {
-          CORBA::String_var inherited_path =
+          inherited_path =
             this->reference_to_path (base_interfaces[i]);
 
-          CORBA::String_var section_name = this->int_to_string (i);
-
           this->repo_->config ()->set_string_value (inherited_key,
-                                                    section_name.in (),
-                                                    inherited_path.in ());
+                                                    this->int_to_string (i),
+                                                    inherited_path);
         }
     }
 
@@ -2470,9 +2462,9 @@ TAO_Container_i::create_common (
                                              "count",
                                              defn_count);
 
-  CORBA::String_var section_name = this->int_to_string (defn_count);
+  char *section_name = this->int_to_string (defn_count);
   this->repo_->config ()->open_section (sub_key,
-                                        section_name.in (),
+                                        section_name,
                                         1,
                                         new_key);
 
@@ -2544,7 +2536,7 @@ TAO_Container_i::create_common (
     }
 
   path += sub_section;
-  path += section_name.in ();
+  path += section_name;
 
   // Store our path under our global repo id for fast lookup.
   this->repo_->config ()->set_string_value (this->repo_->repo_ids_key (),
@@ -2781,9 +2773,8 @@ TAO_Container_i::update_refs (const char *path,
 
   // Add a new reference.
   ACE_Configuration_Section_Key new_key;
-  CORBA::String_var new_section_name = this->int_to_string (count);
   this->repo_->config ()->open_section (refs_key,
-                                        new_section_name.in (),
+                                        this->int_to_string (count),
                                         1,
                                         new_key);
 

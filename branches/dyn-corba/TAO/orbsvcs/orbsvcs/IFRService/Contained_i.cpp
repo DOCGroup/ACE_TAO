@@ -523,12 +523,10 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
     }
   else
     {
-      CORBA::String_var tmp = this->reference_to_path (new_container);
-
       // The only case where a container is not also a contained is
       // CORBA::Repository, which is covered by the other IF branch, so
       // we're ok here.
-      ACE_TString container_path (tmp.in ());
+      ACE_TString container_path (this->reference_to_path (new_container));
       contained_impl = this->path_to_contained (container_path);
 
       CORBA::Repository_var your_repo =
@@ -992,11 +990,11 @@ TAO_Contained_i::move_pre_process (CORBA::Container_ptr container,
                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::String_var container_path = this->reference_to_path (container);
+  char *container_path = this->reference_to_path (container);
 
   ACE_Configuration_Section_Key container_key;
   this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                       container_path.in (),
+                                       container_path,
                                        container_key,
                                        0);
 
@@ -1066,10 +1064,9 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container
       for (u_int i = 0; i < count; ++i)
         {
           ACE_Configuration_Section_Key defn_key;
-          CORBA::String_var section_name = this->int_to_string (i);
           status =
             this->repo_->config ()->open_section (defns_key,
-                                                  section_name.in (),
+                                                  this->int_to_string (i),
                                                   0,
                                                   defn_key);
 

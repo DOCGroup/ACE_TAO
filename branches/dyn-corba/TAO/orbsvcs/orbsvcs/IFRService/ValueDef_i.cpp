@@ -195,7 +195,8 @@ TAO_ValueDef_i::supported_interfaces_i (
                                         1,
                                         supports_key);
 
-  CORBA::String_var supported_name, supported_path;
+  CORBA::String_var supported_name;
+  char *supported_path = 0;
   PortableServer::ObjectId_var oid;
   ACE_Configuration_Section_Key supported_key;
 
@@ -204,7 +205,7 @@ TAO_ValueDef_i::supported_interfaces_i (
       supported_path = this->reference_to_path (supported_interfaces[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                           supported_path.in (),
+                                           supported_path,
                                            supported_key,
                                            1);
 
@@ -223,7 +224,7 @@ TAO_ValueDef_i::supported_interfaces_i (
 
       this->repo_->config ()->set_string_value (supported_key,
                                                 supported_name.in (),
-                                                supported_path.in ());
+                                                supported_path);
     }
 }
 
@@ -286,9 +287,8 @@ TAO_ValueDef_i::initializers_i (ACE_ENV_SINGLE_ARG_PARAMETER)
 
       for (CORBA::ULong j = 0; j < member_count; ++j)
         {
-          CORBA::String_var section_name = this->int_to_string (j);
           this->repo_->config ()->open_section (initializer_key,
-                                                section_name.in (),
+                                                this->int_to_string (j),
                                                 0,
                                                 member_key);
           this->repo_->config ()->get_string_value (

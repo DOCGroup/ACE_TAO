@@ -140,12 +140,12 @@ TAO_AttributeDef_i::type_def_i (CORBA::IDLType_ptr type_def
                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::String_var type_path =
+  char *type_path =
     this->reference_to_path (type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "type_path",
-                                            type_path.in ());
+                                            type_path);
 }
 
 CORBA::AttributeMode
