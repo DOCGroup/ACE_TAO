@@ -1,6 +1,12 @@
+
+Sat Oct 10 22:31:00 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Client_i.cpp:
+	 added the part where the consumer keys in information.
+
 Sat Oct 10 16:19:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/CDR/tc.cpp: 
+	* tests/CDR/tc.cpp:
 	  This file was still referencing CORBA::_tc_Bounds and
 	  CORBA::_tc_BadKind
 
@@ -288,6 +294,7 @@ Tue Oct  6 20:28:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
           examples/Callback_Quoter/Client_i.cpp: Removed instantiations of
           TAO_TRY_ENV because TAO_TRY does it for us.  Thanks to Tom
           Dobridge <dobridge@persimmon.com> for pointing this out.
+
 
 Tue Oct  6 20:05:55 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
