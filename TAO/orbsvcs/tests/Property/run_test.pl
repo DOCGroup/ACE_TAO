@@ -22,13 +22,13 @@ sub name_server
 {
     my $args = " -o $nsior";
     my $prog =
-    print STDERR ("\nNaming_Server: $args\n");
+    print STDERR ("\nNaming_Service: $args\n");
 
     unlink $nsior;
     $NS = Process::Create ("..".$DIR_SEPARATOR
 			   ."..".$DIR_SEPARATOR
 			   ."Naming_Service".$DIR_SEPARATOR
-			   ."Naming_Server".$EXE_EXT, $args);
+			   ."Naming_Service".$EXE_EXT, $args);
     if (ACE::waitforfile_timed ($nsior, 5) == -1) {
       print STDERR "ERROR: cannot find naming service IOR file\n";
       $NS->Kill (); $NS->TimedWait (1);

@@ -24,8 +24,8 @@ sub name_server
       ."..".$DIR_SEPARATOR
 	."..".$DIR_SEPARATOR
 	  ."Naming_Service".$DIR_SEPARATOR
-	."Naming_Server ".$EXE_EXT;
-    print ("\nNaming_Server $args\n");
+	."Naming_Service ".$EXE_EXT;
+    print ("\nNaming_Service $args\n");
     $NS = Process::Create ($prog, $args);
     if (ACE::waitforfile_timed ($nsior, 5) == -1) {
       print STDERR "ERROR: cannot find naming service IOR file\n";
