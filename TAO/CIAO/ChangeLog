@@ -1,3 +1,12 @@
+2003-08-04  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
+
+	* performance-tests/Benchmark/RountTripClient/run_test.pl:
+	* performance-tests/Benchmark/RountTripClient/RoundTripClient_exec.cpp:
+	* performance-tests/Benchmark/RountTrip/RoundTrip_exec.cpp:
+	Fixed errors in the perl file for running the example. Corrected the way
+	in which throughput is measured within the client component. Also added 
+	code to enable tests to be run in the super user mode.
+
 2003-08-04  Diego Sevilla  <dsevilla@ditec.um.es>
 
 	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
