@@ -14,14 +14,13 @@ $sleeptime = 6;
 $status = 0;
 
 $nsior = PerlACE::LocalFile ("ns.ior");
-$testfile = PerlACE::LocalFile ("test");
-$makefile = PerlACE::LocalFile ("Makefile");
+$outfile = PerlACE::LocalFile ("output");
 
 unlink $nsior;
 
 $NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
-$SV = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $testfile");
-$CL = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior -f $makefile");
+$SV = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior");
+$CL = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior");
 
 print STDERR "Starting Naming Service\n";
 
@@ -63,6 +62,6 @@ if ($nserver != 0) {
 }
 
 unlink $nsior;
-unlink $testfile;
+unlink $output;
 
 exit $status;
