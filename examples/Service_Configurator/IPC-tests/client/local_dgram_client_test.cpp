@@ -2,6 +2,7 @@
 
 // Tests out the UNIX domain IPC-SAP abstraction.
 
+#include "ace/OS.h"
 #include "ace/LSOCK_CODgram.h"
 #include "ace/LSOCK_Dgram.h"
 #include "ace/UNIX_Addr.h"
