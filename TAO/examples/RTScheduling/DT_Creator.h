@@ -87,7 +87,6 @@ class DT_Creator : public ACE_Service_Object
   POA_LIST poa_list_;
   JOB_LIST job_list_;
   //Fixed_Priority_Scheduler* scheduler_;
-  ACE_Barrier* barrier_;
   int dt_count_;
   int poa_count_;
   int job_count_;
@@ -99,7 +98,6 @@ class DT_Creator : public ACE_Service_Object
   int active_job_count_;
   char** log;
   ACE_Time_Value* base_time_;
-  ACE_hrtime_t base_hr_time_;
   RTScheduling::Current_var current_; 
   /// RT ORB
   RTCORBA::RTORB_var rt_orb_;

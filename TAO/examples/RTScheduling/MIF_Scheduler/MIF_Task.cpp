@@ -24,6 +24,11 @@ MIF_Task::MIF_Task (int importance,
 
 }
 
+MIF_Task::~MIF_Task (void)
+{
+  delete task_stats_;
+}
+
 void
 MIF_Task::pre_activate (void)
 {
