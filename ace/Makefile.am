@@ -201,7 +201,8 @@ libACE_Demux_la_SOURCES = \
   TP_Reactor.cpp \
   TkReactor.cpp \
   WFMO_Reactor.cpp \
-  XtReactor.cpp
+  XtReactor.cpp \
+  QtReactor.cpp
 
 libACE_Connection_la_SOURCES = \
   Asynch_IO.cpp \
@@ -322,6 +323,8 @@ libACE_Other_la_SOURCES = \
   Naming_Context.cpp \
   Registry_Name_Space.cpp \
   Remote_Name_Space.cpp
+  QoS_Session_Impl.cpp \
+  QoS_Session_Factory.cpp
 
 libACE_la_SOURCES = \
   $(libACE_OS_la_SOURCES) \
@@ -553,6 +556,7 @@ HEADER_FILES = \
   Message_Queue_T.h \
   Method_Object.h \
   Method_Request.h \
+  Min_Max.h \
   Module.h \
   Msg_WFMO_Reactor.h \
   Multiplexor.h \
@@ -576,6 +580,9 @@ HEADER_FILES = \
   Process.h \
   Process_Manager.h \
   Profile_Timer.h \
+  QoS_Session.h \
+  QoS_Session_Factory.h \
+  QoS_Session_Impl.h \
   QtReactor.h \
   RB_Tree.h \
   Reactor.h \
@@ -795,6 +802,7 @@ INLINE_FILES = \
   Process.i \
   Process_Manager.i \
   Profile_Timer.i \
+  QoS_Session_Impl.i \
   RB_Tree.i \
   Reactor.i \
   Read_Buffer.i \
