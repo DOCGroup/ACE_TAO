@@ -150,14 +150,14 @@ protected:
   // Get the local ATM address.
 
 private:
-#if defined (ACE_HAS_FORE_ATM_XTI)
+#if 1 // defined (ACE_HAS_FORE_ATM_XTI)
   ATMSAPAddress atm_addr_;
   // Underlying representation - this may be very
   // vendor-implementation specific. Other vendors (besides FORE) may
   // name and define this structure differently. We can work around
   // that problem when we run into other vendors supporting XTI on top
   // of ATM. Is this class specific to XTI?  Not sure.
-#elif defined (ACE_HAS_FORE_ATM_WS2)
+#elif 0 // defined (ACE_HAS_FORE_ATM_WS2)
   struct sockaddr_atm atm_addr_;
 #endif // ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2
 };
