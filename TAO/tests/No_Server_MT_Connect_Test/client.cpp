@@ -4,6 +4,7 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "tao/Messaging/Messaging.h"
 
 ACE_RCSID(MT_Client, client, "$Id$")
 
@@ -58,14 +59,10 @@ class Client : public ACE_Task_Base
   //
 public:
   Client (Simple_Server_ptr server, int niterations);
-  // ctor
 
+
+  /// The thread entry point.
   virtual int svc (void);
-  // The thread entry point.
-
-private:
-  void validate_connection (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
-  // Validate the connection
 
 private:
   Simple_Server_var server_;
@@ -145,31 +142,11 @@ Client::Client (Simple_Server_ptr server,
 {
 }
 
-void
-Client::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
-{
-  // Ping the object 100 times, ignoring all exceptions.
-  // It would be better to use validate_connection() but the test must
-  // run on minimum CORBA builds too!
-  for (int j = 0; j != 100; ++j)
-    {
-      ACE_TRY
-        {
-          this->server_->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY {} ACE_ENDTRY;
-    }
-}
-
 int
 Client::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       for (int i = 0; i < this->niterations_; ++i)
         {
           this->server_->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
