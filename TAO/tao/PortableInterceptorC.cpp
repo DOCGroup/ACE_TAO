@@ -47,14 +47,14 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for PortableInterceptor::Interceptor.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::Interceptor_ptr
 TAO::Objref_Traits<PortableInterceptor::Interceptor>::tao_duplicate (
     PortableInterceptor::Interceptor_ptr p
@@ -63,7 +63,7 @@ TAO::Objref_Traits<PortableInterceptor::Interceptor>::tao_duplicate (
   return PortableInterceptor::Interceptor::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableInterceptor::Interceptor>::tao_release (
     PortableInterceptor::Interceptor_ptr p
@@ -72,14 +72,14 @@ TAO::Objref_Traits<PortableInterceptor::Interceptor>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::Interceptor_ptr
 TAO::Objref_Traits<PortableInterceptor::Interceptor>::tao_nil (void)
 {
   return PortableInterceptor::Interceptor::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::Interceptor>::tao_marshal (
     PortableInterceptor::Interceptor_ptr p,
@@ -90,7 +90,7 @@ TAO::Objref_Traits<PortableInterceptor::Interceptor>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*PortableInterceptor__TAO_Interceptor_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -101,7 +101,7 @@ PortableInterceptor::Interceptor::Interceptor (void)
 PortableInterceptor::Interceptor::~Interceptor (void)
 {}
 
-void 
+void
 PortableInterceptor::Interceptor::_tao_any_destructor (void *_tao_void_pointer)
 {
   Interceptor *_tao_tmp_pointer =
@@ -119,10 +119,10 @@ PortableInterceptor::Interceptor::_narrow (
     {
       return Interceptor::_nil ();
     }
-  
+
   Interceptor_ptr proxy =
     dynamic_cast<Interceptor_ptr> (_tao_objref);
-  
+
   return Interceptor::_duplicate (proxy);
 }
 
@@ -133,7 +133,7 @@ PortableInterceptor::Interceptor::_duplicate (Interceptor_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -184,20 +184,20 @@ static const CORBA::Long _oc_PortableInterceptor_Interceptor[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   48,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x496e7465), 
-  ACE_NTOHL (0x72636570), 
-  ACE_NTOHL (0x746f722f), 
-  ACE_NTOHL (0x496e7465), 
-  ACE_NTOHL (0x72636570), 
-  ACE_NTOHL (0x746f723a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f723a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableInterceptor/Interceptor:1.0
     12,
-  ACE_NTOHL (0x496e7465), 
+  ACE_NTOHL (0x496e7465),
   ACE_NTOHL (0x72636570), 
   ACE_NTOHL (0x746f7200),  // name = Interceptor
   };

@@ -64,7 +64,7 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_ch.cpp:63
 
 namespace TAO
@@ -79,111 +79,111 @@ namespace TAO
 
 namespace GIOP
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
-  
+
   typedef CORBA::Short AddressingDisposition;
   typedef CORBA::Short_out AddressingDisposition_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AddressingDisposition;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::Short KeyAddr = 0;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::Short ProfileAddr = 1;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::Short ReferenceAddr = 2;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
-  
+
   struct Version;
-  
+
   typedef
     TAO_Fixed_Var_T<
         Version
       >
     Version_var;
-  
+
   typedef
     Version &
     Version_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export Version
   {
     typedef Version_var _var_type;
-    
-    
+
+
     CORBA::Octet major;
     CORBA::Octet minor;
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Version;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
-  
+
   struct IORAddressingInfo;
-  
+
   typedef
     TAO_Var_Var_T<
         IORAddressingInfo
       >
     IORAddressingInfo_var;
-  
+
   typedef
     TAO_Out_T<
         IORAddressingInfo,
         IORAddressingInfo_var
       >
     IORAddressingInfo_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export IORAddressingInfo
   {
     typedef IORAddressingInfo_var _var_type;
-    
-    
+
+
     CORBA::ULong selected_profile_index;
     IOP::IOR ior;
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IORAddressingInfo;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
-  
+
   class TargetAddress;
-  
+
   typedef
     TAO_Var_Var_T<
         TargetAddress
       >
     TargetAddress_var;
-  
+
   typedef
     TAO_Out_T<
         TargetAddress,
@@ -193,7 +193,7 @@ namespace GIOP
 
 #if !defined (_GIOP_TARGETADDRESS_CH_)
 #define _GIOP_TARGETADDRESS_CH_
-  
+
   class TAO_Export TargetAddress
   {
   public:
@@ -201,47 +201,47 @@ namespace GIOP
     TargetAddress (const TargetAddress &);
     ~TargetAddress (void);
     TargetAddress &operator= (const TargetAddress &);
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union/discriminant_ch.cpp:114
-    
+
     void _d (CORBA::Short);
     CORBA::Short _d (void) const;
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union/union_ch.cpp:108
-    
+
     typedef TargetAddress_var _var_type;
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union_branch/public_ch.cpp:507
-    
+
     void object_key (const CORBA::OctetSeq &);
     const CORBA::OctetSeq &object_key (void) const;
     CORBA::OctetSeq &object_key (void);
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union_branch/public_ch.cpp:615
-    
+
     void profile (const IOP::TaggedProfile &);
     const IOP::TaggedProfile &profile (void) const;
     IOP::TaggedProfile &profile (void);
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union_branch/public_ch.cpp:615
-    
+
     void ior (const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &);
     const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void) const;
     ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void);
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union/union_ch.cpp:142
-    
+
     void _default (void);
   private:
     CORBA::Short disc_;
     CORBA::Short holder_;
-    
+
     union
     {
       // TAO_IDL - Generated from
@@ -254,14 +254,14 @@ namespace GIOP
       // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union_branch/private_ch.cpp:482
       ACE_NESTED_CLASS (GIOP, IORAddressingInfo) *ior_;
     } u_;
-    
+
     // TAO extension - frees any allocated storage.
     void _reset (CORBA::Short, CORBA::Boolean /* finalize */);
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TargetAddress;
 
 #endif /* end #if !defined */
@@ -277,7 +277,7 @@ namespace GIOP
 // Traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48

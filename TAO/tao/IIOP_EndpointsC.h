@@ -72,53 +72,53 @@
 
 namespace TAO
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
-  
+
   struct IIOP_Endpoint_Info;
-  
+
   typedef
     TAO_Var_Var_T<
         IIOP_Endpoint_Info
       >
     IIOP_Endpoint_Info_var;
-  
+
   typedef
     TAO_Out_T<
         IIOP_Endpoint_Info,
         IIOP_Endpoint_Info_var
       >
     IIOP_Endpoint_Info_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export IIOP_Endpoint_Info
   {
     typedef IIOP_Endpoint_Info_var _var_type;
-    
-    
+
+
     TAO_String_Manager host;
     CORBA::Short port;
     CORBA::Short priority;
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_TAO_IIOPENDPOINTSEQUENCE_CH_)
 #define _TAO_IIOPENDPOINTSEQUENCE_CH_
-  
+
   class IIOPEndpointSequence;
-  
+
   typedef
     TAO_VarSeq_Var_T<
         IIOPEndpointSequence,
         IIOP_Endpoint_Info
       >
     IIOPEndpointSequence_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         IIOPEndpointSequence,
@@ -126,7 +126,7 @@ namespace TAO
         IIOP_Endpoint_Info
       >
     IIOPEndpointSequence_out;
-  
+
   class TAO_Export IIOPEndpointSequence
     : public
         TAO_Unbounded_Sequence<
@@ -139,12 +139,12 @@ namespace TAO
     IIOPEndpointSequence (
         CORBA::ULong max,
         CORBA::ULong length,
-        IIOP_Endpoint_Info* buffer, 
+        IIOP_Endpoint_Info* buffer,
         CORBA::Boolean release = 0
       );
     IIOPEndpointSequence (const IIOPEndpointSequence &);
     ~IIOPEndpointSequence (void);
-    
+
     typedef IIOPEndpointSequence_var _var_type;
   };
 
@@ -161,7 +161,7 @@ namespace TAO
 // Traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48

@@ -47,14 +47,14 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for IOP::Codec.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IOP::Codec_ptr
 TAO::Objref_Traits<IOP::Codec>::tao_duplicate (
     IOP::Codec_ptr p
@@ -63,7 +63,7 @@ TAO::Objref_Traits<IOP::Codec>::tao_duplicate (
   return IOP::Codec::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<IOP::Codec>::tao_release (
     IOP::Codec_ptr p
@@ -72,14 +72,14 @@ TAO::Objref_Traits<IOP::Codec>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IOP::Codec_ptr
 TAO::Objref_Traits<IOP::Codec>::tao_nil (void)
 {
   return IOP::Codec::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<IOP::Codec>::tao_marshal (
     IOP::Codec_ptr p,
@@ -90,12 +90,12 @@ TAO::Objref_Traits<IOP::Codec>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*IOP__TAO_Codec_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/exception_cs.cpp:63
 
 IOP::Codec::InvalidTypeForEncoding::InvalidTypeForEncoding (void)

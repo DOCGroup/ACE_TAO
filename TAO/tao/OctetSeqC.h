@@ -76,16 +76,16 @@ namespace CORBA
 
 #if !defined (_CORBA_OCTETSEQ_CH_)
 #define _CORBA_OCTETSEQ_CH_
-  
+
   class OctetSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
         OctetSeq,
         CORBA::Octet
       >
     OctetSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         OctetSeq,
@@ -93,7 +93,7 @@ namespace CORBA
         CORBA::Octet
       >
     OctetSeq_out;
-  
+
   class TAO_Export OctetSeq
     : public
         TAO_Unbounded_Sequence<
@@ -106,14 +106,14 @@ namespace CORBA
     OctetSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::Octet* buffer, 
+        CORBA::Octet* buffer,
         CORBA::Boolean release = 0
       );
     OctetSeq (const OctetSeq &);
     ~OctetSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef OctetSeq_var _var_type;
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -126,10 +126,10 @@ namespace CORBA
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_OctetSeq;
 
 // TAO_IDL - Generated from
@@ -143,7 +143,7 @@ namespace CORBA
 // Traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48

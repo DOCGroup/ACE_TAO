@@ -46,7 +46,7 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
@@ -55,18 +55,18 @@ static const CORBA::Long _oc_CORBA_PolicyType[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x54797065), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x54797065),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/PolicyType:1.0
     11,
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63795479), 
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63795479),
   ACE_NTOHL (0x70650000),  // name = PolicyType
     CORBA::tk_ulong,
 
@@ -86,7 +86,7 @@ namespace CORBA
     &_tc_TAO_tc_CORBA_PolicyType;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_POLICYLIST_CS_)
@@ -149,18 +149,18 @@ static const CORBA::Long _oc_CORBA_PolicyList[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x4c697374), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x4c697374),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/PolicyList:1.0
     11,
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63794c69), 
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63794c69),
   ACE_NTOHL (0x73740000),  // name = PolicyList
     CORBA::tk_sequence, // typecode kind
   68, // encapsulation length
@@ -169,18 +169,18 @@ static const CORBA::Long _oc_CORBA_PolicyList[] =
     52, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       29,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x434f5242), 
-      ACE_NTOHL (0x412f506f), 
-      ACE_NTOHL (0x6c696379), 
-      ACE_NTOHL (0x3a312e30), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x434f5242),
+      ACE_NTOHL (0x412f506f),
+      ACE_NTOHL (0x6c696379),
+      ACE_NTOHL (0x3a312e30),
       ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Policy:1.0
             7,
-      ACE_NTOHL (0x506f6c69), 
+      ACE_NTOHL (0x506f6c69),
       ACE_NTOHL (0x63790000),  // name = Policy
-      
+
     0U,
 
 };

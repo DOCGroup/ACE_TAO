@@ -46,7 +46,7 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
@@ -55,17 +55,17 @@ static const CORBA::Long _oc_IOP_ProfileId[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x494f502f), 
-  ACE_NTOHL (0x50726f66), 
-  ACE_NTOHL (0x696c6549), 
-  ACE_NTOHL (0x643a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x494f502f),
+  ACE_NTOHL (0x50726f66),
+  ACE_NTOHL (0x696c6549),
+  ACE_NTOHL (0x643a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/ProfileId:1.0
     10,
-  ACE_NTOHL (0x50726f66), 
-  ACE_NTOHL (0x696c6549), 
+  ACE_NTOHL (0x50726f66),
+  ACE_NTOHL (0x696c6549),
   ACE_NTOHL (0x64000000),  // name = ProfileId
     CORBA::tk_ulong,
 
@@ -92,19 +92,19 @@ static const CORBA::Long _oc_IOP_TaggedProfile[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   34,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x494f502f), 
-  ACE_NTOHL (0x54616767), 
-  ACE_NTOHL (0x65645072), 
-  ACE_NTOHL (0x6f66696c), 
-  ACE_NTOHL (0x653a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x494f502f),
+  ACE_NTOHL (0x54616767),
+  ACE_NTOHL (0x65645072),
+  ACE_NTOHL (0x6f66696c),
+  ACE_NTOHL (0x653a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/TaggedProfile:1.0
     14,
-  ACE_NTOHL (0x54616767), 
-  ACE_NTOHL (0x65645072), 
-  ACE_NTOHL (0x6f66696c), 
+  ACE_NTOHL (0x54616767),
+  ACE_NTOHL (0x65645072),
+  ACE_NTOHL (0x6f66696c),
   ACE_NTOHL (0x65000000),  // name = TaggedProfile
   2, // member count
     4,
@@ -113,41 +113,41 @@ static const CORBA::Long _oc_IOP_TaggedProfile[] =
   60, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     30,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x494f502f), 
-    ACE_NTOHL (0x50726f66), 
-    ACE_NTOHL (0x696c6549), 
-    ACE_NTOHL (0x643a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x494f502f),
+    ACE_NTOHL (0x50726f66),
+    ACE_NTOHL (0x696c6549),
+    ACE_NTOHL (0x643a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/ProfileId:1.0
         10,
-    ACE_NTOHL (0x50726f66), 
-    ACE_NTOHL (0x696c6549), 
+    ACE_NTOHL (0x50726f66),
+    ACE_NTOHL (0x696c6549),
     ACE_NTOHL (0x64000000),  // name = ProfileId
         CORBA::tk_ulong,
 
 
   13,
-  ACE_NTOHL (0x70726f66), 
-  ACE_NTOHL (0x696c655f), 
-  ACE_NTOHL (0x64617461), 
+  ACE_NTOHL (0x70726f66),
+  ACE_NTOHL (0x696c655f),
+  ACE_NTOHL (0x64617461),
   ACE_NTOHL (0x0),  // name = profile_data
     CORBA::tk_alias, // typecode kind for typedefs
   76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4f63), 
-    ACE_NTOHL (0x74657453), 
-    ACE_NTOHL (0x65713a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4f63),
+    ACE_NTOHL (0x74657453),
+    ACE_NTOHL (0x65713a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
         9,
-    ACE_NTOHL (0x4f637465), 
-    ACE_NTOHL (0x74536571), 
+    ACE_NTOHL (0x4f637465),
+    ACE_NTOHL (0x74536571),
     ACE_NTOHL (0x0),  // name = OctetSeq
         CORBA::tk_sequence, // typecode kind
     12, // encapsulation length
@@ -173,10 +173,10 @@ namespace IOP
     &_tc_TAO_tc_IOP_TaggedProfile;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 IOP::TaggedProfile::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -193,11 +193,11 @@ static const CORBA::Long _oc_IOP_IOR[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   24,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x494f502f), 
-  ACE_NTOHL (0x494f523a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x494f502f),
+  ACE_NTOHL (0x494f523a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IOP/IOR:1.0
     4,
   ACE_NTOHL (0x494f5200),  // name = IOR

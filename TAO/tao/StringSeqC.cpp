@@ -47,9 +47,9 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_STRINGSEQ_CS_)
@@ -103,22 +103,22 @@ static const CORBA::Long _oc_CORBA_StringSeq[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   32,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5374), 
-  ACE_NTOHL (0x72696e67), 
-  ACE_NTOHL (0x5365713a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f5374),
+  ACE_NTOHL (0x72696e67),
+  ACE_NTOHL (0x5365713a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/StringSeq:1.0
     10,
-  ACE_NTOHL (0x53747269), 
-  ACE_NTOHL (0x6e675365), 
+  ACE_NTOHL (0x53747269),
+  ACE_NTOHL (0x6e675365),
   ACE_NTOHL (0x71000000),  // name = StringSeq
     CORBA::tk_sequence, // typecode kind
   16, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
     0U,
 
@@ -138,7 +138,7 @@ namespace CORBA
     &_tc_TAO_tc_CORBA_StringSeq;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_WSTRINGSEQ_CS_)
@@ -192,12 +192,12 @@ static const CORBA::Long _oc_CORBA_WStringSeq[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5753), 
-  ACE_NTOHL (0x7472696e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f5753),
+  ACE_NTOHL (0x7472696e),
   ACE_NTOHL (0x67536571), 
   ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/WStringSeq:1.0
