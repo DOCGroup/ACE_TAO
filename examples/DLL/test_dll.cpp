@@ -13,14 +13,14 @@ ACE_RCSID(DLL, test_dll, "$Id$")
 typedef Magazine* (*Magazine_Creator) (void);
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
   ACE_DLL dll;
 
-  int retval = dll.open ("./" ACE_DLL_PREFIX "Today");
+  int retval = dll.open (ACE_TEXT("./") ACE_DLL_PREFIX ACE_TEXT("Today"));
 
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -29,7 +29,7 @@ main (int argc, char *argv[])
                       -1);
   Magazine_Creator mc;
 
-  mc = (Magazine_Creator) dll.symbol ("create_magazine");
+  mc = (Magazine_Creator) dll.symbol (ACE_TEXT("create_magazine"));
 
   if (mc == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -46,7 +46,7 @@ main (int argc, char *argv[])
 
   // The other library is now loaded on demand.
 
-  retval = dll.open ("./" ACE_DLL_PREFIX "Newsweek");
+  retval = dll.open (ACE_TEXT("./") ACE_DLL_PREFIX ACE_TEXT("Newsweek"));
 
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -54,7 +54,7 @@ main (int argc, char *argv[])
                        "dll.open"),
                       -1);
 
-  mc = (Magazine_Creator) dll.symbol ("create_magazine");
+  mc = (Magazine_Creator) dll.symbol (ACE_TEXT("create_magazine"));
 
   if (mc == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
