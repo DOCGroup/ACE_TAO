@@ -226,6 +226,7 @@ namespace TAO
 #endif
 
     }
+    cout << "Got here " << endl;
     return TAO_INVOKE_SUCCESS;
   }
 
@@ -334,6 +335,7 @@ namespace TAO
       this->detail_.response_flags ();
 
     if (response_flags == CORBA::Octet (Messaging::SYNC_NONE)
+        || response_flags == CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT)
         || response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING)
         || response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
       {
@@ -356,10 +358,20 @@ namespace TAO
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
 
-        this->send_message (TAO_Transport::TAO_ONEWAY_REQUEST,
-                            cdr
-                            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+        if (response_flags != CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT))
+          {
+            this->send_message (TAO_Transport::TAO_ONEWAY_REQUEST,
+                                cdr
+                                ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+          }
+        else
+          {
+            this->send_message (TAO_Transport::TAO_TWOWAY_REQUEST,
+                                cdr
+                                ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+          }
       }
     else
       {

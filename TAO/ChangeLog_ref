@@ -1,3 +1,8 @@
+Wed Jul  9 12:43:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Synch_Invocation.cpp (TAO): Got the semantics of
+	  SYNC_WITH_TRANSPORT right.
+
 Wed Jul  9 12:14:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Invocation_Base.cpp (TAO): Fixed a logic problem in the loop
