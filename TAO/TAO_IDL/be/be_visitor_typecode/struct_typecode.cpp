@@ -42,6 +42,8 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
 
   if (node->nfields () == 0)
     {
+      // Should only be possible for user exceptions with no fields.
+
       os << " * const " << fields_name.c_str () << " = 0;" << be_nl;
     }
   else
