@@ -1,3 +1,24 @@
+Sat Jul 17 17:29:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_union.cpp:
+	  Changed compute_size_type() for unions to always return VARIABLE.
+	  This fixes a bug found when a union contains a struct which
+	  contains a different union composed of simple types. The inside 
+	  union's size type comes back as FIXED, so it (rather than a
+	  pointer to it) becomes a struct member. Then the struct's size
+	  type also comes back as FIXED, so the outside union makes the
+	  struct (rather than a pointer to the struct) a member. Then
+	  the C++ compiler bails because the outside union contains
+	  a member with a copy constructor (the inside union). The previous
+	  version of the compute_size_type() function returns FIXED when
+	  the union contains, say, a short and a long, so it is actually,
+	  as far as marshaling is concerned, variable. This way, the function
+	  returns VARIABLE always, and incurs extra indirection only when
+	  the union contains, say, a long and an unsigned long. Nothing
+	  seems to get broken by this fix, and if that remains true over
+	  time, some of the union's _var and _out code generation sections
+	  can be trimmed.
+
 Sat Jul 17 15:00:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB.cpp (resolve_initial_references):
