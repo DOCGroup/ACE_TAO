@@ -680,9 +680,9 @@ nobase_include_HEADERS += \
   BoundsC.inl \
   Buffering_Constraint_Policy.i \
   CDR.i \
-  CONV_FRAMEC.i \
-  CONV_FRAMES.i \
-  CONV_FRAMES_T.i \
+  CONV_FRAMEC.inl \
+  CONV_FRAMES.inl \
+  CONV_FRAMES_T.inl \
   CORBALOC_Parser.i \
   CORBANAME_Parser.i \
   CORBA_String.inl \
