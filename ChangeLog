@@ -7,6 +7,9 @@ Fri Dec 21 14:39:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 	* examples/ASX/CCM_App/CCM_App_static.dsp:
 	* examples/ASX/CCM_App/SC_Client.dsp:
 	* examples/ASX/CCM_App/SC_Server.dsp:
+	* examples/Connection/misc/Connection_Handler.dsp:
+	* examples/Connection/misc/misc.dsw:
+	* examples/Connection/misc/test_upipe.dsp:
 	  Add missing project files and workspaces.
 
 Fri Dec 21 16:22:39 2001  Steve Huston  <shuston@riverace.com>
