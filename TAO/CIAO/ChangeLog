@@ -1,9 +1,61 @@
+Sat Nov 13 18:04:36 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/examples/Hello/Hello_Base/Hello_Base.idl:
+        * DAnCE/examples/Hello/Hello_Base/Hello_Base.mpc:
+        * DAnCE/examples/Hello/Hello_Base/Hello_Base_stub_export.h:
+        * DAnCE/examples/Hello/Hello_Base/Hello_Base_svnt_export.h:
+        * DAnCE/examples/Hello/Receiver/Receiver.cidl:
+        * DAnCE/examples/Hello/Receiver/Receiver.idl:
+        * DAnCE/examples/Hello/Receiver/Receiver.mpc:
+        * DAnCE/examples/Hello/Receiver/Receiver_exec.cpp:
+        * DAnCE/examples/Hello/Receiver/Receiver_exec.h:
+        * DAnCE/examples/Hello/Receiver/Receiver_exec_export.h:
+        * DAnCE/examples/Hello/Receiver/Receiver_stub_export.h:
+        * DAnCE/examples/Hello/Receiver/Receiver_svnt_export.h:
+        * DAnCE/examples/Hello/Sender/Sender.cidl:
+        * DAnCE/examples/Hello/Sender/Sender.idl:
+        * DAnCE/examples/Hello/Sender/Sender.mpc:
+        * DAnCE/examples/Hello/Sender/Sender_exec.cpp:
+        * DAnCE/examples/Hello/Sender/Sender_exec.h:
+        * DAnCE/examples/Hello/Sender/Sender_exec_export.h:
+        * DAnCE/examples/Hello/Sender/Sender_stub_export.h:
+        * DAnCE/examples/Hello/Sender/Sender_svnt_export.h:
+        * DAnCE/examples/Hello/Sender/starter.cpp:
+        * DAnCE/examples/Hello/descriptors/Deployment.xsd:
+        * DAnCE/examples/Hello/descriptors/Domain.cdd:
+        * DAnCE/examples/Hello/descriptors/Hello.cdp:
+        * DAnCE/examples/Hello/descriptors/Hello.cid:
+        * DAnCE/examples/Hello/descriptors/Hello.cpd:
+        * DAnCE/examples/Hello/descriptors/Hello.pcd:
+        * DAnCE/examples/Hello/descriptors/Libraries.iad:
+        * DAnCE/examples/Hello/descriptors/Receiver.ccd:
+        * DAnCE/examples/Hello/descriptors/Receiver.cid:
+        * DAnCE/examples/Hello/descriptors/Receiver.cpd:
+        * DAnCE/examples/Hello/descriptors/Receiver_Exec.iad:
+        * DAnCE/examples/Hello/descriptors/Receiver_Stub.iad
+        * DAnCE/examples/Hello/descriptors/Receiver_Svnt.iad:
+        * DAnCE/examples/Hello/descriptors/Sender.ccd:
+        * DAnCE/examples/Hello/descriptors/Sender.cid:
+        * DAnCE/examples/Hello/descriptors/Sender.cpd:
+        * DAnCE/examples/Hello/descriptors/Sender_Exec.iad:
+        * DAnCE/examples/Hello/descriptors/Sender_Stub.iad:
+        * DAnCE/examples/Hello/descriptors/Sender_Svnt.iad:
+        * DAnCE/examples/Hello/descriptors/XMI.xsd:
+        * DAnCE/examples/Hello/descriptors/hello.dat:
+        * DAnCE/examples/Hello/descriptors/package.tpd:
+
+          Added another version of the Hello example
+          in the DanCE/examples directory.
+
+          This example will use the DanCE framework for
+          deploying the components used in the example.
+
 Sat Nov 13 13:17:48 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * NEWS
- 
+
           Added the Real-time Event Channel integration plan into
-          the NEWS file. 
+          the NEWS file.
 
 Fri Nov 12 06:21:03 2004  Chad Elliott  <elliott_c@ociweb.com>
 
