@@ -1,3 +1,9 @@
+Thu Nov 06 19:55:35 1997    <irfan@TWOSTEP>
+
+	* ace/Synch_T.h: Fixed all the ACE_SYNCH_* defines.  Thanks to
+ 	  Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing the
+ 	  problems.
+
 Thu Nov 06 18:30:42 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/Connector.cpp (connect_n): return -1 if any of the connect
