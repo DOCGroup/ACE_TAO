@@ -348,52 +348,54 @@ main (int argc, char *argv[])
                            "the TAO_Naming_Client. \n"),
                           -1);
 
-      if (ACE_Scheduler_Factory::use_config (my_name_client.get_context (),
+      CosNaming::NamingContext_var context =
+        my_name_client.get_context ();
+
+      if (ACE_Scheduler_Factory::use_config (context.in (),
                                              service_name) < 0)
-      {
         ACE_ERROR_RETURN ((LM_ERROR,
-                          " (%P|%t) Unable to bind to the scheduling service.\n"),
+                           " (%P|%t) Unable to bind to the scheduling service.\n"),
                           1);
-          }
-          // create and initialize RT_Infos in the scheduler,
-          // make second half of array depend on first half.
-          for (int i = 0; i < operation_count; ++i)
-          {
-            // create the RT_Info
-            config_infos[i].handle =
-                  ACE_Scheduler_Factory::server ()->create (config_infos[i].entry_point,
-                                                            ACE_TRY_ENV);
-            ACE_TRY_CHECK;
 
-            // initialize the RT_Info
-            ACE_Scheduler_Factory::server ()->
-              set (config_infos[i].handle,
-                  ACE_static_cast (RtecScheduler::Criticality_t, config_infos[i].criticality),
-               config_infos[i].worst_case_execution_time,
-               config_infos[i].typical_execution_time,
-               config_infos[i].cached_execution_time,
-               config_infos[i].period,
-               ACE_static_cast (RtecScheduler::Importance_t, config_infos[i].importance),
-               config_infos[i].quantum,
-               config_infos[i].threads,
-               ACE_static_cast (RtecScheduler::Info_Type_t, config_infos[i].info_type),
-                           ACE_TRY_ENV);
-            ACE_TRY_CHECK;
+      // Create and initialize RT_Infos in the scheduler, make second
+      // half of array depend on first half.
+      for (int i = 0; i < operation_count; ++i)
+        {
+          // create the RT_Info
+          config_infos[i].handle =
+            ACE_Scheduler_Factory::server ()->create (config_infos[i].entry_point,
+                                                      ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
-            // make operations in second half dependant on
-            // operations in the first half of the array,
-            // and have each called twice as a oneway call
-            if (i >= (operation_count / 2))
-              {
-                ACE_Scheduler_Factory::server ()->
-                  add_dependency (config_infos[i].handle,
-                                  config_infos[i - (operation_count / 2)].handle,
-                                                    2,                             // number of calls
-                                                    RtecScheduler::ONE_WAY_CALL,   // type of dependency
-                                  ACE_TRY_ENV);
-                ACE_TRY_CHECK;
-              }
-      }
+          // initialize the RT_Info
+          ACE_Scheduler_Factory::server ()->
+            set (config_infos[i].handle,
+                 ACE_static_cast (RtecScheduler::Criticality_t, config_infos[i].criticality),
+                 config_infos[i].worst_case_execution_time,
+                 config_infos[i].typical_execution_time,
+                 config_infos[i].cached_execution_time,
+                 config_infos[i].period,
+                 ACE_static_cast (RtecScheduler::Importance_t, config_infos[i].importance),
+                 config_infos[i].quantum,
+                 config_infos[i].threads,
+                 ACE_static_cast (RtecScheduler::Info_Type_t, config_infos[i].info_type),
+                 ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          // make operations in second half dependant on
+          // operations in the first half of the array,
+          // and have each called twice as a oneway call
+          if (i >= (operation_count / 2))
+            {
+              ACE_Scheduler_Factory::server ()->
+                add_dependency (config_infos[i].handle,
+                                config_infos[i - (operation_count / 2)].handle,
+                                2,                             // number of calls
+                                RtecScheduler::ONE_WAY_CALL,   // type of dependency
+                                ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+        }
 
       RtecScheduler::RT_Info_Set_var infos;
       RtecScheduler::Config_Info_Set_var configs;

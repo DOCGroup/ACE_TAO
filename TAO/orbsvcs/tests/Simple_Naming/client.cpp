@@ -386,14 +386,17 @@ MT_Test::execute (TAO_Naming_Client &root_context)
       test_obj_impl->_remove_ref (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Get the IOR for the Naming Service.  Each thread
-      // can use it in <string_to_object> to create its own stub for
-      // the Naming Service.  This 'trick' is necessary, because
-      // multiple threads cannot be using the same stub - bad things
-      // happen...  This is just a way to give each thread its own stub.
+      // Get the IOR for the Naming Service.  Each thread can use it
+      // in <string_to_object> to create its own stub for the Naming
+      // Service.  This 'trick' is necessary, because multiple threads
+      // cannot be using the same stub - bad things happen...  This is
+      // just a way to give each thread its own stub.
+
+      CosNaming::NamingContext_var context =
+        root_context.get_context ();
 
       name_service_ior_ =
-        orb_->object_to_string (root_context.get_context (),
+        orb_->object_to_string (context.in (),
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
