@@ -1,3 +1,15 @@
+Fri Dec  3 09:20:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+
+	  Updated.
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	  Removed unnecessary/unused #include "tao/IORTable/IORTable.h".
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+	  Removed inheritance from iortable.
+
 Fri Dec  3 09:13:46 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Admin.cpp:

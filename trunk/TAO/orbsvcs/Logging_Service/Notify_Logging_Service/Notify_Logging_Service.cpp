@@ -4,7 +4,6 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "tao/debug.h"
-#include "tao/IORTable/IORTable.h"
 #include "orbsvcs/Notify/Service.h"
 
 ACE_RCSID (Notify_Logging_Service,
