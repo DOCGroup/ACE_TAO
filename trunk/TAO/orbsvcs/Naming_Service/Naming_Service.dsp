@@ -5,24 +5,24 @@
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 # TARGTYPE "Win32 (ALPHA) Console Application" 0x0603
 
-CFG=Naming_Service - Win32 Alpha Debug
+CFG=Naming_Service - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "Naming_Service.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
-!MESSAGE NMAKE /f "Naming_Service.mak" CFG="Naming_Service - Win32 Alpha Debug"
-!MESSAGE 
+!MESSAGE
+!MESSAGE NMAKE /f "Naming_Service.mak" CFG="Naming_Service - Win32 Debug"
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "Naming_Service - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "Naming_Service - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE "Naming_Service - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
 !MESSAGE "Naming_Service - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -141,7 +141,7 @@ LINK32=link.exe
 # ADD BASE LINK32 orbsvcs.lib TAO.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # ADD LINK32 orbsvcs.lib TAO.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -164,7 +164,7 @@ SOURCE=.\Naming_Server.cpp
 
 !ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -417,7 +417,7 @@ DEP_CPP_NAMIN=\
 	"..\orbsvcs\Naming\Naming_Utils.h"\
 	"..\orbsvcs\orbsvcs_export.h"\
 	".\Naming_Service.h"\
-	
+
 NODEP_CPP_NAMIN=\
 	"..\..\..\ace\sys_conf.h"\
 	"..\..\tao\align.h"\
@@ -432,11 +432,11 @@ NODEP_CPP_NAMIN=\
 	"..\..\tao\ORB_Strategies_T.h"\
 	"..\..\tao\ORB_Strategies_T.i"\
 	"..\orbsvcs\Naming\CosNaming_i.h"\
-	
+
 
 !ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Release"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group
