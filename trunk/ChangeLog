@@ -1,3 +1,13 @@
+Mon Apr 12 12:54:37 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-win32-common.h:
+
+          Only define ACE_HAS_WINSOCK2_GQOS if ACE_HAS_QOS is defined.
+
+        * bin/MakeProjectCreator/config/qos.mpb:
+
+          If the qos feature is enabled, add ACE_HAS_QOS to the macros.
+
 Mon Apr 12 13:51:42 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace.mpc:
@@ -14,46 +24,46 @@ Mon Apr 12 13:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Apr  1 15:40:55 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Strategies_T.cpp (activate_svc_handler): Make sure to
-	  store/restore errno when calling svc_handler->destroy ().
-  	  Thanks to Ewald Dieterich <ewald.dieterich@fun.de> for reporting
- 	  this.  This fixes bugid 1776.
+        * ace/Strategies_T.cpp (activate_svc_handler): Make sure to
+          store/restore errno when calling svc_handler->destroy ().
+          Thanks to Ewald Dieterich <ewald.dieterich@fun.de> for reporting
+          this.  This fixes bugid 1776.
 
 Sun Apr 11 18:33:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* */*.icc:
+        * */*.icc:
 
-	  Axed them from the repo. Thanks to Johnny for reminding me to do
-	  this.
+          Axed them from the repo. Thanks to Johnny for reminding me to do
+          this.
 
 Sun Apr 11 18:22:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* apps/JAWS2/HTTPU/HTTPU.DSP:
-	* java/gjt/GJT.DSP:
-	* java/src/JACE.DSP:
+        * apps/JAWS2/HTTPU/HTTPU.DSP:
+        * java/gjt/GJT.DSP:
+        * java/src/JACE.DSP:
 
-	  Axed them from the repo.
+          Axed them from the repo.
 
 Sun Apr 11 18:19:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* apps/JAWS2/HTTPU/HTTPU.DSW:
-	* java/gjt/GJT.DSW:
-	* java/src/JACE.DSW:
+        * apps/JAWS2/HTTPU/HTTPU.DSW:
+        * java/gjt/GJT.DSW:
+        * java/src/JACE.DSW:
 
-	  Removed these.
+          Removed these.
 
 Sat Apr 10 23:39:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* */*.ds[p,w]:
+        * */*.ds[p,w]:
 
-	  Removed.
+          Removed.
 
 Thu Apr  8 20:12:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* */*.bor:
+        * */*.bor:
 
-	  Removed all the borland makefiles files from the
-	  repository. Files in include/makeinclude have not been removed.
+          Removed all the borland makefiles files from the
+          repository. Files in include/makeinclude have not been removed.
 
 Thu Apr  8 08:03:13 2004  Chad Elliott  <elliott_c@ociweb.com>
 
