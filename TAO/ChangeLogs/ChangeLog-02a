@@ -1,3 +1,50 @@
+Sun Apr 22 16:27:20 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Server_Request.h:
+	* tao/TAO_Server_Request.i (operation):
+
+	  Change the "operation_" member from an "ACE_CString" to a "const
+	  char *".  The buffer that contains the operation name will out
+	  live the TAO_ServerRequest object so there is no reason to copy
+	  the operation name into an ACE_CString.  [Bug 870]
+
+	* tao/TAO_Server_Request.cpp (TAO_ServerRequest):
+
+	  This constructor now accepts a "const char *" instead of an
+	  ACE_CString.  There is no longer any need to use an ACE_CString.
+
+	  (_tao_send_reply_exception):
+
+	  Initialize the static buffer using aggregate initialization
+	  instead of memset().  It's cleaner.
+
+	* tao/GIOP_Message_Generator_Parser_10.cpp (parse_request_header):
+	* tao/GIOP_Message_Generator_Parser_12.cpp (parse_request_header):
+	* tao/GIOP_Message_Lite.cpp (parse_request_header):
+
+	  Don't bother creating a temporary ACE_CString.  Just pass the
+	  operation name string to The TAO_ServerRequest object.
+	  TAO_ServerRequest now does the "Right Thing"tm in terms of
+	  managing the operation name string.  This removes one heap
+	  allocation from the criticial path (i.e. zero allocations in the
+	  common case (no character set translator) and one allocation in
+	  the case where a character set translator is used. [Bug 870]
+
+	* tao/LocalObject.cpp:
+
+	  Removed inclusion of "ace/Auto_Ptr.h."  There was no need to
+	  include it.
+
+	  (_hash):
+
+	  Implemented this method.  Simply base the hash on the address of
+	  the object.
+
+	* tao/Makefile:
+	* tao/*/Makefile:
+
+	  Updated dependencies.
+
 Sun Apr 22 14:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
