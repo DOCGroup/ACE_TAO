@@ -57,6 +57,9 @@ Dgram_Endpoint::handle_close (ACE_HANDLE handle,
   ACE_UNUSED_ARG (handle);
 
   this->endpoint_.close ();
+
+  delete this;
+
   return 0;
 }
 
@@ -96,11 +99,11 @@ run_test (u_short localport,
                              remotehost);
   ACE_INET_Addr local_addr (localport);
 
-  Dgram_Endpoint endpoint (local_addr);
+  Dgram_Endpoint *endpoint = new Dgram_Endpoint (local_addr);
 
   // Read data from other side.
   if (ACE_Reactor::instance ()->register_handler
-      (&endpoint, ACE_Event_Handler::READ_MASK) == -1)
+      (endpoint, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_Reactor::register_handler"),
                       -1);
@@ -115,7 +118,7 @@ run_test (u_short localport,
 
       for (size_t i = 0; i < 20; i++)
         {
-          endpoint.send (buf, len, remote_addr);
+          endpoint->send (buf, len, remote_addr);
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) .\n"));
           ACE_OS::sleep (1);
         }
@@ -135,14 +138,14 @@ run_test (u_short localport,
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) return from handle events\n"));
 
-      endpoint.send (buf, len, remote_addr);
+      endpoint->send (buf, len, remote_addr);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) .\n"));
     }
 
   if (ACE_Reactor::instance ()->remove_handler
-      (&endpoint, ACE_Event_Handler::READ_MASK) == -1)
+      (endpoint, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_Reactor::remove_handler"),
                       -1);
