@@ -358,6 +358,17 @@ TAO_Connector::make_mprofile (const char *string,
       // Add the length of the colon and the two forward slashes `://'
       // to the IOR string index (i.e. 3)
     }
+
+  const int objkey_index =
+    ior.find (this->object_key_delimiter (), ior_index) + ior_index;
+  // Find the object key
+
+  if (objkey_index == 0 || objkey_index == ACE_CString::npos)
+    {
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+      // Failure: No endpoints specified or no object key specified.
+    }
+
   const char endpoint_delimiter = ',';
   // The delimiter used to seperate inidividual addresses.
 
@@ -365,9 +376,11 @@ TAO_Connector::make_mprofile (const char *string,
   // of entries in the MProfile.
 
   CORBA::ULong profile_count = 1;
-  // Number of endpoints in the IOR  (initialized to 1)
+  // Number of endpoints in the IOR  (initialized to 1).
 
-  for (size_t i = 0; i < ior.length (); ++i)
+  // Only check for endpoints after the protocol specification and
+  // before the object key.
+  for (int i = ior_index; i < objkey_index; ++i)
     {
       if (ior[i] == endpoint_delimiter)
         profile_count++;
@@ -394,16 +407,6 @@ TAO_Connector::make_mprofile (const char *string,
   //    `1.3@moo/arf'
   //    `shu/arf'
   //    `1.1@chicken/arf'
-
-  int objkey_index =
-    ior.find (this->object_key_delimiter (), ior_index) + ior_index;
-  // Find the object key
-
-  if (objkey_index == 0 || objkey_index == ACE_CString::npos)
-    {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
-      // Failure: No endpoints specified or no object key specified.
-    }
 
   int begin = 0;
   int end = ior_index - 1;
