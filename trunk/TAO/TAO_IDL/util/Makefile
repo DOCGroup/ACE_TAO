@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 MAKEFILE = Makefile
-LIBNAME  = libutil
+LIBNAME  = libtao_idl_util
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 IDL_CFE_VERSION	= \"1.3.0\"

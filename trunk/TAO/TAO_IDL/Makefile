@@ -39,7 +39,7 @@ INFO	=
 # LIBS	= -lACE
 DIRS	= driver fe ast util narrow be
 BIN	= tao_idl
-TAOLIBS	= -L$(ACE_ROOT)/ace -ldrv -lfe -last -lutil -lnarrow -lbe -lACE
+TAOLIBS	= -L$(ACE_ROOT)/ace -ldrv -lfe -last -ltao_idl_util -lnarrow -lbe -lACE
 CLONE	=
 BUILD	= $(VBIN)
 
