@@ -9,7 +9,7 @@
 #define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Malloc.h"
+#include "ace/Malloc_Base.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Cache_Map_Manager_T.i"

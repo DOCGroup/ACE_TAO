@@ -36,9 +36,7 @@
 # define ACE_INLINE inline
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch.h"
-#include "ace/Service_Config.h"
-#include "ace/Malloc.h"
+#include "ace/Malloc_Base.h"
 
 ACE_RCSID(ace, Hash_Map_Manager_T, "$Id$")
 

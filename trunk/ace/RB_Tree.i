@@ -2,7 +2,7 @@
 // $Id$
 
 #include "ace/Synch.h"
-#include "ace/Malloc.h"
+#include "ace/Malloc_Base.h"
 
 /////////////////////////////////////////////////////
 // template class ACE_RB_Tree_Node<EXT_ID, INT_ID> //
