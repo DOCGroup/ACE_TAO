@@ -1,3 +1,40 @@
+Fri Mar 30 22:06:02 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	These changes were first given out as a custom patch to TAO
+	1.1.14 to Oresis.  They've been tested there, and seem to minimize 
+	ORB leaks.
+
+	* tao/IIOP_Connection_Handler.h:
+ 	* tao/Strategies/SHMIOP_Connection_Handler.h:
+	* tao/Strategies/UIOP_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.h:
+	
+	Changed pending_upcalls_ to be a signed quantity rather than
+ 	unsigned.  There still seems to be a lingering condition whereby
+ 	this value can get decremented "below" zero.  It's much easier to
+ 	detect this situation when it's signed than unsigned.
+
+	* tao/IIOP_Connection_Handler.cpp:
+ 	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+
+	(open) Added code to set the transport's id.
+
+	(handle_close) Changed conditional on pending_upcalls_ from "equal
+	to zero" to "less than or equal to zero" in order to accomodate
+	the lingering condition outlined above.
+
+	(handle_input_i) This now returns -1 when pending_upcalls_ falls
+	below or equal to zero.  This takes care of the situation outlined 
+	in the header file entry above.
+
+	* tao/Invocation.cpp (close_connection): Reverted the change made
+ 	by Carlos in ChangeLogTag "Sat Mar 24 22:15:23 2001 Carlos O'Ryan
+ 	<coryan@uci.edu>"
+	
 Fri Mar 30 19:57:14 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/Makefile:

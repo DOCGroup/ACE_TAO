@@ -122,6 +122,9 @@ TAO_SHMIOP_Connection_Handler::open (void*)
                   client, this->peer ().get_handle ()));
     }
 
+  // Set the id in the transport now that we're active.
+  this->transport ()->id ((int) this->get_handle ());
+
   return 0;
 }
 
@@ -195,7 +198,7 @@ TAO_SHMIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                  rm));
 
   --this->pending_upcalls_;
-  if (this->pending_upcalls_ == 0)
+  if (this->pending_upcalls_ <= 0)
     {
       if (this->is_registered ())
         {
@@ -307,7 +310,8 @@ TAO_SHMIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
     }
 
   // The upcall is done. Bump down the reference count
-  --this->pending_upcalls_;
+  if (--this->pending_upcalls_ <= 0)
+    result = -1;
 
   if (result == 0 || result == -1)
     {
