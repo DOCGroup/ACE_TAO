@@ -53,7 +53,7 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
                                         const char *flow_protocol,
                                         const char *carrier_protocol,
                                         ACE_Addr *fwd_address,
-                                        ACE_Addr *peer_address,
+                                        //ACE_Addr *peer_address,
                                         ACE_Addr *control_address)
   :address_ (fwd_address),
    clean_up_address_ (0),
@@ -68,7 +68,7 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    use_flow_protocol_ (0),
    entry_ (),
    is_multicast_ (0),
-   peer_addr_ (peer_address),
+   peer_addr_ (0),
    peer_control_addr_ (0),
    local_addr_ (0),
    local_control_addr_ (0),
@@ -89,14 +89,13 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
                                         const char *direction,
                                         const char *format_name,
                                         const char *flow_protocol,
-                                        const char *fwd_address,
-                                        const char *peer_address)
+                                        const char *address)
+                                        //const char *peer_address)
   :address_ (0),
    clean_up_address_ (0),
    control_address_ (0),
    clean_up_control_address_ (0),
-   fwd_address_str_ ( address ),
-   peer_address_str_ ( address ),
+   address_str_ ( address ),
    format_ ( format_name ),
    direction_str_ ( direction ),
    flowname_ ( flowname ),
@@ -484,13 +483,19 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
     if (this->parse_address (tokenizer [TAO_AV_ADDRESS], TAO_AV_Core::TAO_AV_BOTH) < 0)
       return -1;
 
-  if (tokenizer [TAO_AV_PEER_ADDRESS] != 0)
+  if (tokenizer [TAO_AV_PEER_ADDR] != 0)
     {
-      ACE_Addr *addr;
+      ACE_INET_Addr *addr;
       ACE_NEW_RETURN (addr,
-		      ACE_Addr (tokenizer [TAO_AV_PEER_ADDR]),
+		      ACE_INET_Addr (tokenizer [TAO_AV_PEER_ADDR]),
 		      0);
       this->peer_addr_ = addr;
+
+      char buf [BUFSIZ];
+      addr->addr_to_string (buf, BUFSIZ);
+      ACE_DEBUG ((LM_DEBUG,
+		  "Peer Address %s \n",
+		  buf));
     }
 	
   if (tokenizer [TAO_AV_FLOW_PROTOCOL] != 0)
@@ -597,7 +602,8 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         }
     }
 
-if (this->peer_addr_ != 0)
+
+  if (this->peer_addr_ != 0)
     {
       switch (this->protocol_)
         {
@@ -613,17 +619,19 @@ if (this->peer_addr_ != 0)
         case TAO_AV_Core::TAO_AV_TCP:
           {
 	    ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->peer_addr_);
-            inet_addr->addr_to_string (address,BUFSIZ);
+            //inet_addr->addr_to_string (address,BUFSIZ);
+	    inet_addr->get_host_name (address, BUFSIZ);
+	    ACE_CString cstring (address);
+	    cstring += ACE_OS::itoa (address, BUFSIZ, inet_addr->get_port_number ());
+	    //peer_address_str = this->carrier_protocol_;
+	    //peer_address_str += "=";
+	    peer_address_str += cstring;
           }
           break;
         default:
           break;
         }
-      ACE_CString cstring (address);
 
-      peer_address_str = this->carrier_protocol_;
-      peer_address_str += "=";
-      peer_address_str += cstring;
     }
 
   if (this->control_address_ != 0)
@@ -756,7 +764,7 @@ TAO_Reverse_FlowSpec_Entry::parse (const char *flowSpec_entry)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_Reverse_FlowSpec_Entry::parse %s\n",
                 flowSpec_entry));
-
+  
   if (tokenizer [TAO_AV_ADDRESS] != 0)
     if (this->parse_address (tokenizer [TAO_AV_ADDRESS], TAO_AV_Core::TAO_AV_BOTH) < 0)
       return -1;

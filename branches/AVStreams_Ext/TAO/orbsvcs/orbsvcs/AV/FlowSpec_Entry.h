@@ -121,15 +121,15 @@ public:
   void flow_protocol_str (const char *flow_protocol_str);
 
   /// accessor to address of the carrier protocol.
-  ACE_Addr *fwd_address (void);
-  ACE_Addr *rev_address (void);
+  //ACE_Addr *fwd_address (void);
+  ACE_Addr *address (void);
   ACE_Addr *control_address (void);
   void address (ACE_Addr *address);
   void control_address (ACE_Addr *address);
 
   /// Address in string format i. hostname:port.
-  const char * fwd_address_str (void) const;
-  const char * peer_address_str (void) const;
+  const char *address_str (void) const;
+  //  const char * peer_address_str (void) const;
 
   /// accessor to carrier protocol i.e TCP,UDP,RTP/UDP.
   TAO_AV_Core::Protocol carrier_protocol (void);
@@ -198,7 +198,7 @@ protected:
   int clean_up_control_address_; // added to clean up a memory leak
 
   /// Fwd Addr in string format i.e hostname:port.
-  ACE_CString fwd_address_str_;
+  ACE_CString address_str_;
 
   /// Peer Addr in string format i.e hostname:port.
   ACE_CString peer_address_str_;
@@ -257,7 +257,7 @@ public:
                  TAO_AV_FORMAT = 2,
                  TAO_AV_FLOW_PROTOCOL = 3,
                  TAO_AV_ADDRESS = 4,
-		 TAO_AV_PEER_ADDRESS = 5};
+		 TAO_AV_PEER_ADDR = 5};
 
   /// default constructor.
   TAO_Forward_FlowSpec_Entry (void);
