@@ -22,7 +22,7 @@
 
 class ACE_Export ACE_Dynamic
   // = TITLE
-  //     Checks to see if a Svc_Handler was dynamically allocated.
+  //     Checks to see if an object was dynamically allocated.
   //
   // = DESCRIPTION
   //     This class holds the pointer in a thread-safe manner between
@@ -31,17 +31,22 @@ class ACE_Export ACE_Dynamic
 public:
   ACE_Dynamic (void);
 
-  void *set (void *x);
-  // Assign the new pointer to <instance_> in order to keep it safe
-  // until we can compare it in the constructor.
+  void set (void);
+  // Sets a flag that indicates that the object was dynamically
+  // created. This method is usually called in operator new and then
+  // checked and reset in the constructor.
 
-  int is_dynamic (void *x);
+  int is_dynamic (void);
   // 1 if we were allocated dynamically, else 0.
 
+  void reset (void);
+  // Resets state flag.
+
 private:
-  void *instance_;
-  // Holds the pointer in a thread-safe manner between the call to
-  // operator new and the call to the constructor.
+  int is_dynamic_;
+  // Flag that indicates that the object was dynamically created. This
+  // method is usually called in operator new and then checked and
+  // reset in the constructor.
 };
 
 #if defined (__ACE_INLINE__)

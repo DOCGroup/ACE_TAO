@@ -1,3 +1,14 @@
+Thu Sep 18 09:04:40 1997    <irfan@TWOSTEP>
+
+	* ace/Dynamic: Changed the way ACE_Dynamic worked. Instead of
+ 	  keeping the "this" pointer of the object in question, we are now
+ 	  simply keeping a flag that indicates whether the object was
+ 	  dynamically created. The trick to this approach is to make sure
+ 	  to reset the flag in the constructor. The "this" pointer
+ 	  approach was broken when used with multiple inheritance, because
+ 	  of "shearing" of the "this" pointer to get to the base
+ 	  Svc_Handler class.
+
 Thu Sep 18 01:12:36 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.8, released Thu Sep 18 01:12:36 1997.
