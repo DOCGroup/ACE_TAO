@@ -1,3 +1,9 @@
+Mon Oct 12 10:31:35 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/CosNaming_i: Removed the need to allocate
+ 	  HASH_MAP dynamically.  This helps improve performance and also
+ 	  eliminates another point of failure in the constructor.
+
 Mon Oct 12 09:52:46 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (TAO_NamingContext ctor):
