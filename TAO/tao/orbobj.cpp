@@ -36,7 +36,9 @@ CORBA_ORB::CORBA_ORB (void)
     server_factory_ (0),
     server_factory_from_service_config_ (CORBA::B_FALSE),
     should_shutdown_(CORBA::B_FALSE),
-    name_service_ (CORBA_Object::_nil ())
+    name_service_ (CORBA_Object::_nil ()),
+    schedule_service_ (CORBA_Object::_nil ()),
+    event_service_ (CORBA_Object::_nil ())
 {
 }
 
@@ -451,10 +453,60 @@ CORBA_ORB::resolve_name_service (void)
 }
 
 CORBA_Object_ptr 
+CORBA_ORB::resolve_schedule_service (void)
+{
+  // First check to see if we've already initialized this.
+  if (this->schedule_service_ != CORBA_Object::_nil ())
+    // @@ Someone please double-check this ;-)
+    return CORBA_Object::_duplicate (this->schedule_service_);
+
+  char *schedule_service_ior =
+    TAO_ORB_Core_instance ()->orb_params ()->schedule_service_ior ();
+
+  // Second, check to see if the user has give us a parameter on
+  // the command-line.
+  if (schedule_service_ior != 0)
+    {
+      CORBA::Environment env;
+      this->schedule_service_ =
+        this->string_to_object (schedule_service_ior, env);
+    }
+
+  return this->schedule_service_;
+}
+
+CORBA_Object_ptr 
+CORBA_ORB::resolve_event_service (void)
+{
+  // First check to see if we've already initialized this.
+  if (this->event_service_ != CORBA_Object::_nil ())
+    // @@ Someone please double-check this ;-)
+    return CORBA_Object::_duplicate (this->event_service_);
+
+  char *event_service_ior =
+    TAO_ORB_Core_instance ()->orb_params ()->event_service_ior ();
+
+  // Second, check to see if the user has give us a parameter on
+  // the command-line.
+  if (event_service_ior != 0)
+    {
+      CORBA::Environment env;
+      this->event_service_ =
+        this->string_to_object (event_service_ior, env);
+    }
+
+  return this->event_service_;
+}
+
+CORBA_Object_ptr 
 CORBA_ORB::resolve_initial_references (CORBA::String name)
 {
   if (ACE_OS::strcmp (name, "NameService") == 0)
     return this->resolve_name_service ();
+  if (ACE_OS::strcmp (name, "ScheduleService") == 0)
+    return this->resolve_schedule_service ();
+  if (ACE_OS::strcmp (name, "EventService") == 0)
+    return this->resolve_event_service ();
   else if (ACE_OS::strcmp (name, "RootPOA") == 0)
     return this->resolve_poa ();
   else

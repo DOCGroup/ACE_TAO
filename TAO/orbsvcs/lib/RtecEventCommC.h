@@ -77,9 +77,15 @@ static CORBA::TypeCode_ptr _tc_Disconnected;
 
   typedef CORBA::Long EventSourceID;typedef CORBA::Long_out EventSourceID_out;
 
+  static CORBA::TypeCode_ptr _tc_EventSourceID;
+
   typedef CORBA::Long Time;typedef CORBA::Long_out Time_out;
 
+  static CORBA::TypeCode_ptr _tc_Time;
+
   typedef CORBA::Long EventType;typedef CORBA::Long_out EventType_out;
+
+  static CORBA::TypeCode_ptr _tc_EventType;
 
   struct Event
   {
@@ -125,23 +131,23 @@ static CORBA::TypeCode_ptr _tc_Disconnected;
   static CORBA::TypeCode_ptr _tc_Event;
 
 
-#if !defined (_RTECEVENTCOMM_EVENTSET_CH_)
-#define _RTECEVENTCOMM_EVENTSET_CH_
+#if !defined (_RTECEVENTCOMM__TAO__SEQ_EVENTSET_CH_)
+#define _RTECEVENTCOMM__TAO__SEQ_EVENTSET_CH_
 
 // *************************************************************
-  // class EventSet
+  // class _tao__seq_EventSet
   // *************************************************************
 
-  class EventSet
+  class _tao__seq_EventSet
   {
   public:
-    EventSet (void); // default constructor
-    EventSet (CORBA::ULong max);
-    EventSet (CORBA::ULong max, CORBA::ULong length, 
+    _tao__seq_EventSet (void); // default constructor
+    _tao__seq_EventSet (CORBA::ULong max);
+    _tao__seq_EventSet (CORBA::ULong max, CORBA::ULong length, 
     	ACE_NESTED_CLASS (RtecEventComm,Event) *value, CORBA::Boolean release=CORBA::B_FALSE);
-    EventSet(const EventSet &); // copy constructor
-    ~EventSet (void);
-    EventSet &operator= (const EventSet &);
+    _tao__seq_EventSet(const _tao__seq_EventSet &); // copy constructor
+    ~_tao__seq_EventSet (void);
+    _tao__seq_EventSet &operator= (const _tao__seq_EventSet &);
     CORBA::ULong maximum (void) const;
     void length (CORBA::ULong);
     CORBA::ULong length (void) const;
@@ -155,76 +161,82 @@ static CORBA::TypeCode_ptr _tc_Disconnected;
     ACE_NESTED_CLASS (RtecEventComm,Event) *buffer_;
     CORBA::Boolean release_;
   };
-  typedef EventSet* EventSet_ptr;
-  static CORBA::TypeCode_ptr _tc_EventSet;
+  typedef _tao__seq_EventSet* _tao__seq_EventSet_ptr;
+  static CORBA::TypeCode_ptr _tc__tao__seq_EventSet;
 
 
 #endif // end #if !defined
 
 
-#if !defined (_RTECEVENTCOMM_EVENTSET___VAR_CH_)
-#define _RTECEVENTCOMM_EVENTSET___VAR_CH_
+#if !defined (_RTECEVENTCOMM__TAO__SEQ_EVENTSET___VAR_CH_)
+#define _RTECEVENTCOMM__TAO__SEQ_EVENTSET___VAR_CH_
 
 // *************************************************************
-  // class RtecEventComm::EventSet_var
+  // class RtecEventComm::_tao__seq_EventSet_var
   // *************************************************************
 
-  class EventSet_var
+  class _tao__seq_EventSet_var
   {
   public:
-    EventSet_var (void); // default constructor
-    EventSet_var (EventSet *);
-    EventSet_var (const EventSet_var &); // copy constructor
-    ~EventSet_var (void); // destructor
+    _tao__seq_EventSet_var (void); // default constructor
+    _tao__seq_EventSet_var (_tao__seq_EventSet *);
+    _tao__seq_EventSet_var (const _tao__seq_EventSet_var &); // copy constructor
+    ~_tao__seq_EventSet_var (void); // destructor
     
-    EventSet_var &operator= (EventSet *);
-    EventSet_var &operator= (const EventSet_var &);
-    EventSet *operator-> (void);
-    const EventSet *operator-> (void) const;
+    _tao__seq_EventSet_var &operator= (_tao__seq_EventSet *);
+    _tao__seq_EventSet_var &operator= (const _tao__seq_EventSet_var &);
+    _tao__seq_EventSet *operator-> (void);
+    const _tao__seq_EventSet *operator-> (void) const;
     
-    operator const EventSet &() const;
-    operator EventSet &();
-    operator EventSet &() const;
+    operator const _tao__seq_EventSet &() const;
+    operator _tao__seq_EventSet &();
+    operator _tao__seq_EventSet &() const;
     ACE_NESTED_CLASS (RtecEventComm,Event) &operator[] (CORBA::ULong index);
     // in, inout, out, _retn 
-    const EventSet &in (void) const;
-    EventSet &inout (void);
-    EventSet *&out (void);
-    EventSet *_retn (void);
-    EventSet *ptr (void) const;
+    const _tao__seq_EventSet &in (void) const;
+    _tao__seq_EventSet &inout (void);
+    _tao__seq_EventSet *&out (void);
+    _tao__seq_EventSet *_retn (void);
+    _tao__seq_EventSet *ptr (void) const;
 
   private:
-    EventSet *ptr_;
+    _tao__seq_EventSet *ptr_;
   };
 
 
 #endif // end #if !defined
 
 
-#if !defined (_RTECEVENTCOMM_EVENTSET___OUT_CH_)
-#define _RTECEVENTCOMM_EVENTSET___OUT_CH_
+#if !defined (_RTECEVENTCOMM__TAO__SEQ_EVENTSET___OUT_CH_)
+#define _RTECEVENTCOMM__TAO__SEQ_EVENTSET___OUT_CH_
 
-  class EventSet_out
+  class _tao__seq_EventSet_out
   {
   public:
-    EventSet_out (EventSet *&);
-    EventSet_out (EventSet_var &);
-    EventSet_out (EventSet_out &);
-    EventSet_out &operator= (EventSet_out &);
-    EventSet_out &operator= (EventSet *);
-    operator EventSet *&();
-    EventSet *&ptr (void);
-    EventSet *operator-> (void);
+    _tao__seq_EventSet_out (_tao__seq_EventSet *&);
+    _tao__seq_EventSet_out (_tao__seq_EventSet_var &);
+    _tao__seq_EventSet_out (_tao__seq_EventSet_out &);
+    _tao__seq_EventSet_out &operator= (_tao__seq_EventSet_out &);
+    _tao__seq_EventSet_out &operator= (_tao__seq_EventSet *);
+    operator _tao__seq_EventSet *&();
+    _tao__seq_EventSet *&ptr (void);
+    _tao__seq_EventSet *operator-> (void);
     ACE_NESTED_CLASS (RtecEventComm,Event) &operator[] (CORBA::ULong index);
     
   private:
-    EventSet *&ptr_;
+    _tao__seq_EventSet *&ptr_;
     // assignment from T_var not allowed
-    void operator= (const EventSet_var &);
+    void operator= (const _tao__seq_EventSet_var &);
   };
 
 
 #endif // end #if !defined
+
+  typedef ACE_NESTED_CLASS (RtecEventComm,_tao__seq_EventSet) EventSet;
+  typedef ACE_NESTED_CLASS (RtecEventComm,_tao__seq_EventSet_var) EventSet_var;
+  typedef ACE_NESTED_CLASS (RtecEventComm,_tao__seq_EventSet_out) EventSet_out;
+
+  static CORBA::TypeCode_ptr _tc_EventSet;
 
   
 #if !defined (_RTECEVENTCOMM_PUSHCONSUMER___PTR_CH_)
@@ -246,7 +258,7 @@ class PushConsumer: public virtual ACE_CORBA_1 (Object)
     static PushConsumer_ptr _duplicate (PushConsumer_ptr obj);
     static PushConsumer_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static PushConsumer_ptr _nil (void);
-    static PushConsumer_ptr _bind (const char *host, CORBA::ULong port, const char *key, CORBA::Environment &env);
+    static PushConsumer_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual void push (const ACE_NESTED_CLASS (RtecEventComm,EventSet) & data, CORBA::Environment &env);
     virtual void disconnect_push_consumer (CORBA::Environment &env);
@@ -340,7 +352,7 @@ class PushSupplier: public virtual ACE_CORBA_1 (Object)
     static PushSupplier_ptr _duplicate (PushSupplier_ptr obj);
     static PushSupplier_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static PushSupplier_ptr _nil (void);
-    static PushSupplier_ptr _bind (const char *host, CORBA::ULong port, const char *key, CORBA::Environment &env);
+    static PushSupplier_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual void disconnect_push_supplier (CORBA::Environment &env);
   protected:
@@ -433,7 +445,7 @@ class PullSupplier: public virtual ACE_CORBA_1 (Object)
     static PullSupplier_ptr _duplicate (PullSupplier_ptr obj);
     static PullSupplier_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static PullSupplier_ptr _nil (void);
-    static PullSupplier_ptr _bind (const char *host, CORBA::ULong port, const char *key, CORBA::Environment &env);
+    static PullSupplier_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual ACE_NESTED_CLASS (RtecEventComm,Event) pull (CORBA::Environment &env);
     virtual ACE_NESTED_CLASS (RtecEventComm,Event) try_pull (CORBA::Boolean_out has_event, CORBA::Environment &env);
@@ -528,7 +540,7 @@ class PullConsumer: public virtual ACE_CORBA_1 (Object)
     static PullConsumer_ptr _duplicate (PullConsumer_ptr obj);
     static PullConsumer_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static PullConsumer_ptr _nil (void);
-    static PullConsumer_ptr _bind (const char *host, CORBA::ULong port, const char *key, CORBA::Environment &env);
+    static PullConsumer_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual void disconnect_pull_consumer (CORBA::Environment &env);
   protected:

@@ -16,6 +16,8 @@ public:
   typedef CORBA::String_var Istring_var;
   typedef CORBA::String_out Istring_out;
 
+  static CORBA::TypeCode_ptr _tc_Istring;
+
   struct NameComponent
   {
     ACE_NESTED_CLASS (CosNaming,Istring_var) id;
@@ -72,23 +74,23 @@ public:
   static CORBA::TypeCode_ptr _tc_NameComponent;
 
 
-#if !defined (_COSNAMING_NAME_CH_)
-#define _COSNAMING_NAME_CH_
+#if !defined (_COSNAMING__TAO__SEQ_NAME_CH_)
+#define _COSNAMING__TAO__SEQ_NAME_CH_
 
 // *************************************************************
-  // class Name
+  // class _tao__seq_Name
   // *************************************************************
 
-  class Name
+  class _tao__seq_Name
   {
   public:
-    Name (void); // default constructor
-    Name (CORBA::ULong max);
-    Name (CORBA::ULong max, CORBA::ULong length, 
+    _tao__seq_Name (void); // default constructor
+    _tao__seq_Name (CORBA::ULong max);
+    _tao__seq_Name (CORBA::ULong max, CORBA::ULong length, 
     	ACE_NESTED_CLASS (CosNaming,NameComponent) *value, CORBA::Boolean release=CORBA::B_FALSE);
-    Name(const Name &); // copy constructor
-    ~Name (void);
-    Name &operator= (const Name &);
+    _tao__seq_Name(const _tao__seq_Name &); // copy constructor
+    ~_tao__seq_Name (void);
+    _tao__seq_Name &operator= (const _tao__seq_Name &);
     CORBA::ULong maximum (void) const;
     void length (CORBA::ULong);
     CORBA::ULong length (void) const;
@@ -102,76 +104,82 @@ public:
     ACE_NESTED_CLASS (CosNaming,NameComponent) *buffer_;
     CORBA::Boolean release_;
   };
-  typedef Name* Name_ptr;
-  static CORBA::TypeCode_ptr _tc_Name;
+  typedef _tao__seq_Name* _tao__seq_Name_ptr;
+  static CORBA::TypeCode_ptr _tc__tao__seq_Name;
 
 
 #endif // end #if !defined
 
 
-#if !defined (_COSNAMING_NAME___VAR_CH_)
-#define _COSNAMING_NAME___VAR_CH_
+#if !defined (_COSNAMING__TAO__SEQ_NAME___VAR_CH_)
+#define _COSNAMING__TAO__SEQ_NAME___VAR_CH_
 
 // *************************************************************
-  // class CosNaming::Name_var
+  // class CosNaming::_tao__seq_Name_var
   // *************************************************************
 
-  class Name_var
+  class _tao__seq_Name_var
   {
   public:
-    Name_var (void); // default constructor
-    Name_var (Name *);
-    Name_var (const Name_var &); // copy constructor
-    ~Name_var (void); // destructor
+    _tao__seq_Name_var (void); // default constructor
+    _tao__seq_Name_var (_tao__seq_Name *);
+    _tao__seq_Name_var (const _tao__seq_Name_var &); // copy constructor
+    ~_tao__seq_Name_var (void); // destructor
     
-    Name_var &operator= (Name *);
-    Name_var &operator= (const Name_var &);
-    Name *operator-> (void);
-    const Name *operator-> (void) const;
+    _tao__seq_Name_var &operator= (_tao__seq_Name *);
+    _tao__seq_Name_var &operator= (const _tao__seq_Name_var &);
+    _tao__seq_Name *operator-> (void);
+    const _tao__seq_Name *operator-> (void) const;
     
-    operator const Name &() const;
-    operator Name &();
-    operator Name &() const;
+    operator const _tao__seq_Name &() const;
+    operator _tao__seq_Name &();
+    operator _tao__seq_Name &() const;
     ACE_NESTED_CLASS (CosNaming,NameComponent) &operator[] (CORBA::ULong index);
     // in, inout, out, _retn 
-    const Name &in (void) const;
-    Name &inout (void);
-    Name *&out (void);
-    Name *_retn (void);
-    Name *ptr (void) const;
+    const _tao__seq_Name &in (void) const;
+    _tao__seq_Name &inout (void);
+    _tao__seq_Name *&out (void);
+    _tao__seq_Name *_retn (void);
+    _tao__seq_Name *ptr (void) const;
 
   private:
-    Name *ptr_;
+    _tao__seq_Name *ptr_;
   };
 
 
 #endif // end #if !defined
 
 
-#if !defined (_COSNAMING_NAME___OUT_CH_)
-#define _COSNAMING_NAME___OUT_CH_
+#if !defined (_COSNAMING__TAO__SEQ_NAME___OUT_CH_)
+#define _COSNAMING__TAO__SEQ_NAME___OUT_CH_
 
-  class Name_out
+  class _tao__seq_Name_out
   {
   public:
-    Name_out (Name *&);
-    Name_out (Name_var &);
-    Name_out (Name_out &);
-    Name_out &operator= (Name_out &);
-    Name_out &operator= (Name *);
-    operator Name *&();
-    Name *&ptr (void);
-    Name *operator-> (void);
+    _tao__seq_Name_out (_tao__seq_Name *&);
+    _tao__seq_Name_out (_tao__seq_Name_var &);
+    _tao__seq_Name_out (_tao__seq_Name_out &);
+    _tao__seq_Name_out &operator= (_tao__seq_Name_out &);
+    _tao__seq_Name_out &operator= (_tao__seq_Name *);
+    operator _tao__seq_Name *&();
+    _tao__seq_Name *&ptr (void);
+    _tao__seq_Name *operator-> (void);
     ACE_NESTED_CLASS (CosNaming,NameComponent) &operator[] (CORBA::ULong index);
     
   private:
-    Name *&ptr_;
+    _tao__seq_Name *&ptr_;
     // assignment from T_var not allowed
-    void operator= (const Name_var &);
+    void operator= (const _tao__seq_Name_var &);
   };
 
 
 #endif // end #if !defined
+
+  typedef ACE_NESTED_CLASS (CosNaming,_tao__seq_Name) Name;
+  typedef ACE_NESTED_CLASS (CosNaming,_tao__seq_Name_var) Name_var;
+  typedef ACE_NESTED_CLASS (CosNaming,_tao__seq_Name_out) Name_out;
+
+  static CORBA::TypeCode_ptr _tc_Name;
 
   enum BindingType
   {
@@ -237,23 +245,23 @@ public:
   static CORBA::TypeCode_ptr _tc_Binding;
 
 
-#if !defined (_COSNAMING_BINDINGLIST_CH_)
-#define _COSNAMING_BINDINGLIST_CH_
+#if !defined (_COSNAMING__TAO__SEQ_BINDINGLIST_CH_)
+#define _COSNAMING__TAO__SEQ_BINDINGLIST_CH_
 
 // *************************************************************
-  // class BindingList
+  // class _tao__seq_BindingList
   // *************************************************************
 
-  class BindingList
+  class _tao__seq_BindingList
   {
   public:
-    BindingList (void); // default constructor
-    BindingList (CORBA::ULong max);
-    BindingList (CORBA::ULong max, CORBA::ULong length, 
+    _tao__seq_BindingList (void); // default constructor
+    _tao__seq_BindingList (CORBA::ULong max);
+    _tao__seq_BindingList (CORBA::ULong max, CORBA::ULong length, 
     	ACE_NESTED_CLASS (CosNaming,Binding) *value, CORBA::Boolean release=CORBA::B_FALSE);
-    BindingList(const BindingList &); // copy constructor
-    ~BindingList (void);
-    BindingList &operator= (const BindingList &);
+    _tao__seq_BindingList(const _tao__seq_BindingList &); // copy constructor
+    ~_tao__seq_BindingList (void);
+    _tao__seq_BindingList &operator= (const _tao__seq_BindingList &);
     CORBA::ULong maximum (void) const;
     void length (CORBA::ULong);
     CORBA::ULong length (void) const;
@@ -267,76 +275,82 @@ public:
     ACE_NESTED_CLASS (CosNaming,Binding) *buffer_;
     CORBA::Boolean release_;
   };
-  typedef BindingList* BindingList_ptr;
-  static CORBA::TypeCode_ptr _tc_BindingList;
+  typedef _tao__seq_BindingList* _tao__seq_BindingList_ptr;
+  static CORBA::TypeCode_ptr _tc__tao__seq_BindingList;
 
 
 #endif // end #if !defined
 
 
-#if !defined (_COSNAMING_BINDINGLIST___VAR_CH_)
-#define _COSNAMING_BINDINGLIST___VAR_CH_
+#if !defined (_COSNAMING__TAO__SEQ_BINDINGLIST___VAR_CH_)
+#define _COSNAMING__TAO__SEQ_BINDINGLIST___VAR_CH_
 
 // *************************************************************
-  // class CosNaming::BindingList_var
+  // class CosNaming::_tao__seq_BindingList_var
   // *************************************************************
 
-  class BindingList_var
+  class _tao__seq_BindingList_var
   {
   public:
-    BindingList_var (void); // default constructor
-    BindingList_var (BindingList *);
-    BindingList_var (const BindingList_var &); // copy constructor
-    ~BindingList_var (void); // destructor
+    _tao__seq_BindingList_var (void); // default constructor
+    _tao__seq_BindingList_var (_tao__seq_BindingList *);
+    _tao__seq_BindingList_var (const _tao__seq_BindingList_var &); // copy constructor
+    ~_tao__seq_BindingList_var (void); // destructor
     
-    BindingList_var &operator= (BindingList *);
-    BindingList_var &operator= (const BindingList_var &);
-    BindingList *operator-> (void);
-    const BindingList *operator-> (void) const;
+    _tao__seq_BindingList_var &operator= (_tao__seq_BindingList *);
+    _tao__seq_BindingList_var &operator= (const _tao__seq_BindingList_var &);
+    _tao__seq_BindingList *operator-> (void);
+    const _tao__seq_BindingList *operator-> (void) const;
     
-    operator const BindingList &() const;
-    operator BindingList &();
-    operator BindingList &() const;
+    operator const _tao__seq_BindingList &() const;
+    operator _tao__seq_BindingList &();
+    operator _tao__seq_BindingList &() const;
     ACE_NESTED_CLASS (CosNaming,Binding) &operator[] (CORBA::ULong index);
     // in, inout, out, _retn 
-    const BindingList &in (void) const;
-    BindingList &inout (void);
-    BindingList *&out (void);
-    BindingList *_retn (void);
-    BindingList *ptr (void) const;
+    const _tao__seq_BindingList &in (void) const;
+    _tao__seq_BindingList &inout (void);
+    _tao__seq_BindingList *&out (void);
+    _tao__seq_BindingList *_retn (void);
+    _tao__seq_BindingList *ptr (void) const;
 
   private:
-    BindingList *ptr_;
+    _tao__seq_BindingList *ptr_;
   };
 
 
 #endif // end #if !defined
 
 
-#if !defined (_COSNAMING_BINDINGLIST___OUT_CH_)
-#define _COSNAMING_BINDINGLIST___OUT_CH_
+#if !defined (_COSNAMING__TAO__SEQ_BINDINGLIST___OUT_CH_)
+#define _COSNAMING__TAO__SEQ_BINDINGLIST___OUT_CH_
 
-  class BindingList_out
+  class _tao__seq_BindingList_out
   {
   public:
-    BindingList_out (BindingList *&);
-    BindingList_out (BindingList_var &);
-    BindingList_out (BindingList_out &);
-    BindingList_out &operator= (BindingList_out &);
-    BindingList_out &operator= (BindingList *);
-    operator BindingList *&();
-    BindingList *&ptr (void);
-    BindingList *operator-> (void);
+    _tao__seq_BindingList_out (_tao__seq_BindingList *&);
+    _tao__seq_BindingList_out (_tao__seq_BindingList_var &);
+    _tao__seq_BindingList_out (_tao__seq_BindingList_out &);
+    _tao__seq_BindingList_out &operator= (_tao__seq_BindingList_out &);
+    _tao__seq_BindingList_out &operator= (_tao__seq_BindingList *);
+    operator _tao__seq_BindingList *&();
+    _tao__seq_BindingList *&ptr (void);
+    _tao__seq_BindingList *operator-> (void);
     ACE_NESTED_CLASS (CosNaming,Binding) &operator[] (CORBA::ULong index);
     
   private:
-    BindingList *&ptr_;
+    _tao__seq_BindingList *&ptr_;
     // assignment from T_var not allowed
-    void operator= (const BindingList_var &);
+    void operator= (const _tao__seq_BindingList_var &);
   };
 
 
 #endif // end #if !defined
+
+  typedef ACE_NESTED_CLASS (CosNaming,_tao__seq_BindingList) BindingList;
+  typedef ACE_NESTED_CLASS (CosNaming,_tao__seq_BindingList_var) BindingList_var;
+  typedef ACE_NESTED_CLASS (CosNaming,_tao__seq_BindingList_out) BindingList_out;
+
+  static CORBA::TypeCode_ptr _tc_BindingList;
 
   class BindingIterator;
   
@@ -423,7 +437,7 @@ class NamingContext: public virtual ACE_CORBA_1 (Object)
     static NamingContext_ptr _duplicate (NamingContext_ptr obj);
     static NamingContext_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static NamingContext_ptr _nil (void);
-    static NamingContext_ptr _bind (const char *host, CORBA::ULong port, const char *key, CORBA::Environment &env);
+    static NamingContext_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     enum NotFoundReason
     {
@@ -654,7 +668,7 @@ class BindingIterator: public virtual ACE_CORBA_1 (Object)
     static BindingIterator_ptr _duplicate (BindingIterator_ptr obj);
     static BindingIterator_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
     static BindingIterator_ptr _nil (void);
-    static BindingIterator_ptr _bind (const char *host, CORBA::ULong port, const char *key, CORBA::Environment &env);
+    static BindingIterator_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
     virtual CORBA::Boolean next_one (ACE_NESTED_CLASS (CosNaming,Binding_out)  b, CORBA::Environment &env);
     virtual CORBA::Boolean next_n (CORBA::ULong how_many, ACE_NESTED_CLASS (CosNaming,BindingList_out)  bl, CORBA::Environment &env);

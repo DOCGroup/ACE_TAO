@@ -137,20 +137,20 @@ RtecEventChannelAdmin::Dependency_var::ptr (void) const
 }
 
 ACE_INLINE RtecEventChannelAdmin::Dependency *
-RtecEventChannelAdmin::DependencySet::allocbuf (CORBA::ULong nelems)
+RtecEventChannelAdmin::_tao__seq_DependencySet::allocbuf (CORBA::ULong nelems)
 {
   return new RtecEventChannelAdmin::Dependency[nelems]; // allocate from heap
 }
 
 ACE_INLINE void
-RtecEventChannelAdmin::DependencySet::freebuf (RtecEventChannelAdmin::Dependency *seq)
+RtecEventChannelAdmin::_tao__seq_DependencySet::freebuf (RtecEventChannelAdmin::Dependency *seq)
 {
   delete [] seq;
 }
 
 //default constructor
 ACE_INLINE 
-RtecEventChannelAdmin::DependencySet::DependencySet (void)
+RtecEventChannelAdmin::_tao__seq_DependencySet::_tao__seq_DependencySet (void)
 	: maximum_ (0),
 	  length_ (0),
 	  buffer_ (0),
@@ -159,16 +159,16 @@ RtecEventChannelAdmin::DependencySet::DependencySet (void)
 
 // constructor for unbounded seq
 ACE_INLINE 
-RtecEventChannelAdmin::DependencySet::DependencySet(CORBA::ULong max )
+RtecEventChannelAdmin::_tao__seq_DependencySet::_tao__seq_DependencySet(CORBA::ULong max )
 	: maximum_ (max),
 	  length_ (0),
-	  buffer_ (RtecEventChannelAdmin::DependencySet::allocbuf (max)),
+	  buffer_ (RtecEventChannelAdmin::_tao__seq_DependencySet::allocbuf (max)),
 	  release_ (1) // owns
 {}
 
 // constructor from data buffer
 ACE_INLINE 
-RtecEventChannelAdmin::DependencySet::DependencySet (CORBA::ULong max, CORBA::ULong length, 
+RtecEventChannelAdmin::_tao__seq_DependencySet::_tao__seq_DependencySet (CORBA::ULong max, CORBA::ULong length, 
 	RtecEventChannelAdmin::Dependency *value, CORBA::Boolean release)
 	: maximum_ (max),
 	  length_ (length),
@@ -177,167 +177,161 @@ RtecEventChannelAdmin::DependencySet::DependencySet (CORBA::ULong max, CORBA::UL
 {}
 
 ACE_INLINE CORBA::ULong
-RtecEventChannelAdmin::DependencySet::maximum (void) const
+RtecEventChannelAdmin::_tao__seq_DependencySet::maximum (void) const
 {
   return this->maximum_;
 }
 
 ACE_INLINE CORBA::ULong
-RtecEventChannelAdmin::DependencySet::length  (void) const
+RtecEventChannelAdmin::_tao__seq_DependencySet::length  (void) const
 {
   return this->length_;
 }
 
-ACE_INLINE void
-RtecEventChannelAdmin::DependencySet::length (CORBA::ULong length)
-{
-  this->length_ = length;
-}
-
 ACE_INLINE RtecEventChannelAdmin::Dependency &
-RtecEventChannelAdmin::DependencySet::operator[] (CORBA::ULong index) // read/write
+RtecEventChannelAdmin::_tao__seq_DependencySet::operator[] (CORBA::ULong index) // read/write
 {
   return this->buffer_[index];
 }
 
 ACE_INLINE const RtecEventChannelAdmin::Dependency &
-RtecEventChannelAdmin::DependencySet::operator[] (CORBA::ULong index) const // read
+RtecEventChannelAdmin::_tao__seq_DependencySet::operator[] (CORBA::ULong index) const // read
 {
   return this->buffer_[index];
 }
 
 // *************************************************************
-// Inline operations for class RtecEventChannelAdmin::DependencySet_var
+// Inline operations for class RtecEventChannelAdmin::_tao__seq_DependencySet_var
 // *************************************************************
 
 ACE_INLINE
-RtecEventChannelAdmin::DependencySet_var::DependencySet_var (void) // default constructor
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::_tao__seq_DependencySet_var (void) // default constructor
 	: ptr_ (0)
 {}
 
 ACE_INLINE
-RtecEventChannelAdmin::DependencySet_var::DependencySet_var (RtecEventChannelAdmin::DependencySet_ptr p)
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::_tao__seq_DependencySet_var (RtecEventChannelAdmin::_tao__seq_DependencySet_ptr p)
 	: ptr_ (p)
 {}
 
 ACE_INLINE
-RtecEventChannelAdmin::DependencySet_var::DependencySet_var (const RtecEventChannelAdmin::DependencySet_var &p) // copy constructor
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::_tao__seq_DependencySet_var (const RtecEventChannelAdmin::_tao__seq_DependencySet_var &p) // copy constructor
 {
   if (p.ptr_)
-  	this->ptr_ = new RtecEventChannelAdmin::DependencySet(*p.ptr_);
+  	this->ptr_ = new RtecEventChannelAdmin::_tao__seq_DependencySet(*p.ptr_);
   else
   	this->ptr_ = 0;
 }
 
 ACE_INLINE
-RtecEventChannelAdmin::DependencySet_var::~DependencySet_var (void) // destructor
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::~_tao__seq_DependencySet_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE RtecEventChannelAdmin::DependencySet_var &
-RtecEventChannelAdmin::DependencySet_var::operator= (RtecEventChannelAdmin::DependencySet *p)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_DependencySet_var &
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::operator= (RtecEventChannelAdmin::_tao__seq_DependencySet *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE RtecEventChannelAdmin::DependencySet_var &
-RtecEventChannelAdmin::DependencySet_var::operator= (const RtecEventChannelAdmin::DependencySet_var &p) // deep copy
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_DependencySet_var &
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::operator= (const RtecEventChannelAdmin::_tao__seq_DependencySet_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new RtecEventChannelAdmin::DependencySet (*p.ptr_);
+    this->ptr_ = new RtecEventChannelAdmin::_tao__seq_DependencySet (*p.ptr_);
   }
   return *this;
 }
 
-ACE_INLINE const RtecEventChannelAdmin::DependencySet *
-RtecEventChannelAdmin::DependencySet_var::operator-> (void) const
+ACE_INLINE const RtecEventChannelAdmin::_tao__seq_DependencySet *
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecEventChannelAdmin::DependencySet *
-RtecEventChannelAdmin::DependencySet_var::operator-> (void)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_DependencySet *
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-RtecEventChannelAdmin::DependencySet_var::operator const RtecEventChannelAdmin::DependencySet &() const // cast
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::operator const RtecEventChannelAdmin::_tao__seq_DependencySet &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-RtecEventChannelAdmin::DependencySet_var::operator RtecEventChannelAdmin::DependencySet &() // cast 
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::operator RtecEventChannelAdmin::_tao__seq_DependencySet &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-RtecEventChannelAdmin::DependencySet_var::operator RtecEventChannelAdmin::DependencySet &() const// cast 
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::operator RtecEventChannelAdmin::_tao__seq_DependencySet &() const// cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE RtecEventChannelAdmin::Dependency&
-RtecEventChannelAdmin::DependencySet_var::operator[] (CORBA::ULong index)
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const RtecEventChannelAdmin::DependencySet &
-RtecEventChannelAdmin::DependencySet_var::in (void) const
+ACE_INLINE const RtecEventChannelAdmin::_tao__seq_DependencySet &
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE RtecEventChannelAdmin::DependencySet &
-RtecEventChannelAdmin::DependencySet_var::inout (void)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_DependencySet &
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE RtecEventChannelAdmin::DependencySet *&
-RtecEventChannelAdmin::DependencySet_var::out (void)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_DependencySet *&
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE RtecEventChannelAdmin::DependencySet *
-RtecEventChannelAdmin::DependencySet_var::_retn (void)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_DependencySet *
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::_retn (void)
 {
-  RtecEventChannelAdmin::DependencySet *tmp = this->ptr_;
+  RtecEventChannelAdmin::_tao__seq_DependencySet *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE RtecEventChannelAdmin::DependencySet *
-RtecEventChannelAdmin::DependencySet_var::ptr (void) const
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_DependencySet *
+RtecEventChannelAdmin::_tao__seq_DependencySet_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class RtecEventChannelAdmin::DependencySet_out
+// Inline operations for class RtecEventChannelAdmin::_tao__seq_DependencySet_out
 // *************************************************************
 
 ACE_INLINE
-RtecEventChannelAdmin::DependencySet_out::DependencySet_out (RtecEventChannelAdmin::DependencySet *&p)
+RtecEventChannelAdmin::_tao__seq_DependencySet_out::_tao__seq_DependencySet_out (RtecEventChannelAdmin::_tao__seq_DependencySet *&p)
 	: ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-RtecEventChannelAdmin::DependencySet_out::DependencySet_out (RtecEventChannelAdmin::DependencySet_var &p) // constructor from _var
+RtecEventChannelAdmin::_tao__seq_DependencySet_out::_tao__seq_DependencySet_out (RtecEventChannelAdmin::_tao__seq_DependencySet_var &p) // constructor from _var
 	: ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -345,44 +339,44 @@ RtecEventChannelAdmin::DependencySet_out::DependencySet_out (RtecEventChannelAdm
 }
 
 ACE_INLINE
-RtecEventChannelAdmin::DependencySet_out::DependencySet_out (RtecEventChannelAdmin::DependencySet_out &p) // copy constructor
+RtecEventChannelAdmin::_tao__seq_DependencySet_out::_tao__seq_DependencySet_out (RtecEventChannelAdmin::_tao__seq_DependencySet_out &p) // copy constructor
 	: ptr_ (p.ptr_)
 {}
 
-ACE_INLINE RtecEventChannelAdmin::DependencySet_out &
-RtecEventChannelAdmin::DependencySet_out::operator= (RtecEventChannelAdmin::DependencySet_out &p)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_DependencySet_out &
+RtecEventChannelAdmin::_tao__seq_DependencySet_out::operator= (RtecEventChannelAdmin::_tao__seq_DependencySet_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-ACE_INLINE RtecEventChannelAdmin::DependencySet_out &
-RtecEventChannelAdmin::DependencySet_out::operator= (RtecEventChannelAdmin::DependencySet *p)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_DependencySet_out &
+RtecEventChannelAdmin::_tao__seq_DependencySet_out::operator= (RtecEventChannelAdmin::_tao__seq_DependencySet *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-RtecEventChannelAdmin::DependencySet_out::operator RtecEventChannelAdmin::DependencySet *&() // cast
+RtecEventChannelAdmin::_tao__seq_DependencySet_out::operator RtecEventChannelAdmin::_tao__seq_DependencySet *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecEventChannelAdmin::DependencySet *&
-RtecEventChannelAdmin::DependencySet_out::ptr (void) // ptr
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_DependencySet *&
+RtecEventChannelAdmin::_tao__seq_DependencySet_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecEventChannelAdmin::DependencySet *
-RtecEventChannelAdmin::DependencySet_out::operator-> (void)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_DependencySet *
+RtecEventChannelAdmin::_tao__seq_DependencySet_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE RtecEventChannelAdmin::Dependency& 
-RtecEventChannelAdmin::DependencySet_out::operator[] (CORBA::ULong index)
+RtecEventChannelAdmin::_tao__seq_DependencySet_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -660,20 +654,20 @@ RtecEventChannelAdmin::Publication_var::ptr (void) const
 }
 
 ACE_INLINE RtecEventChannelAdmin::Publication *
-RtecEventChannelAdmin::PublicationSet::allocbuf (CORBA::ULong nelems)
+RtecEventChannelAdmin::_tao__seq_PublicationSet::allocbuf (CORBA::ULong nelems)
 {
   return new RtecEventChannelAdmin::Publication[nelems]; // allocate from heap
 }
 
 ACE_INLINE void
-RtecEventChannelAdmin::PublicationSet::freebuf (RtecEventChannelAdmin::Publication *seq)
+RtecEventChannelAdmin::_tao__seq_PublicationSet::freebuf (RtecEventChannelAdmin::Publication *seq)
 {
   delete [] seq;
 }
 
 //default constructor
 ACE_INLINE 
-RtecEventChannelAdmin::PublicationSet::PublicationSet (void)
+RtecEventChannelAdmin::_tao__seq_PublicationSet::_tao__seq_PublicationSet (void)
 	: maximum_ (0),
 	  length_ (0),
 	  buffer_ (0),
@@ -682,16 +676,16 @@ RtecEventChannelAdmin::PublicationSet::PublicationSet (void)
 
 // constructor for unbounded seq
 ACE_INLINE 
-RtecEventChannelAdmin::PublicationSet::PublicationSet(CORBA::ULong max )
+RtecEventChannelAdmin::_tao__seq_PublicationSet::_tao__seq_PublicationSet(CORBA::ULong max )
 	: maximum_ (max),
 	  length_ (0),
-	  buffer_ (RtecEventChannelAdmin::PublicationSet::allocbuf (max)),
+	  buffer_ (RtecEventChannelAdmin::_tao__seq_PublicationSet::allocbuf (max)),
 	  release_ (1) // owns
 {}
 
 // constructor from data buffer
 ACE_INLINE 
-RtecEventChannelAdmin::PublicationSet::PublicationSet (CORBA::ULong max, CORBA::ULong length, 
+RtecEventChannelAdmin::_tao__seq_PublicationSet::_tao__seq_PublicationSet (CORBA::ULong max, CORBA::ULong length, 
 	RtecEventChannelAdmin::Publication *value, CORBA::Boolean release)
 	: maximum_ (max),
 	  length_ (length),
@@ -700,167 +694,161 @@ RtecEventChannelAdmin::PublicationSet::PublicationSet (CORBA::ULong max, CORBA::
 {}
 
 ACE_INLINE CORBA::ULong
-RtecEventChannelAdmin::PublicationSet::maximum (void) const
+RtecEventChannelAdmin::_tao__seq_PublicationSet::maximum (void) const
 {
   return this->maximum_;
 }
 
 ACE_INLINE CORBA::ULong
-RtecEventChannelAdmin::PublicationSet::length  (void) const
+RtecEventChannelAdmin::_tao__seq_PublicationSet::length  (void) const
 {
   return this->length_;
 }
 
-ACE_INLINE void
-RtecEventChannelAdmin::PublicationSet::length (CORBA::ULong length)
-{
-  this->length_ = length;
-}
-
 ACE_INLINE RtecEventChannelAdmin::Publication &
-RtecEventChannelAdmin::PublicationSet::operator[] (CORBA::ULong index) // read/write
+RtecEventChannelAdmin::_tao__seq_PublicationSet::operator[] (CORBA::ULong index) // read/write
 {
   return this->buffer_[index];
 }
 
 ACE_INLINE const RtecEventChannelAdmin::Publication &
-RtecEventChannelAdmin::PublicationSet::operator[] (CORBA::ULong index) const // read
+RtecEventChannelAdmin::_tao__seq_PublicationSet::operator[] (CORBA::ULong index) const // read
 {
   return this->buffer_[index];
 }
 
 // *************************************************************
-// Inline operations for class RtecEventChannelAdmin::PublicationSet_var
+// Inline operations for class RtecEventChannelAdmin::_tao__seq_PublicationSet_var
 // *************************************************************
 
 ACE_INLINE
-RtecEventChannelAdmin::PublicationSet_var::PublicationSet_var (void) // default constructor
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::_tao__seq_PublicationSet_var (void) // default constructor
 	: ptr_ (0)
 {}
 
 ACE_INLINE
-RtecEventChannelAdmin::PublicationSet_var::PublicationSet_var (RtecEventChannelAdmin::PublicationSet_ptr p)
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::_tao__seq_PublicationSet_var (RtecEventChannelAdmin::_tao__seq_PublicationSet_ptr p)
 	: ptr_ (p)
 {}
 
 ACE_INLINE
-RtecEventChannelAdmin::PublicationSet_var::PublicationSet_var (const RtecEventChannelAdmin::PublicationSet_var &p) // copy constructor
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::_tao__seq_PublicationSet_var (const RtecEventChannelAdmin::_tao__seq_PublicationSet_var &p) // copy constructor
 {
   if (p.ptr_)
-  	this->ptr_ = new RtecEventChannelAdmin::PublicationSet(*p.ptr_);
+  	this->ptr_ = new RtecEventChannelAdmin::_tao__seq_PublicationSet(*p.ptr_);
   else
   	this->ptr_ = 0;
 }
 
 ACE_INLINE
-RtecEventChannelAdmin::PublicationSet_var::~PublicationSet_var (void) // destructor
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::~_tao__seq_PublicationSet_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE RtecEventChannelAdmin::PublicationSet_var &
-RtecEventChannelAdmin::PublicationSet_var::operator= (RtecEventChannelAdmin::PublicationSet *p)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_PublicationSet_var &
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::operator= (RtecEventChannelAdmin::_tao__seq_PublicationSet *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE RtecEventChannelAdmin::PublicationSet_var &
-RtecEventChannelAdmin::PublicationSet_var::operator= (const RtecEventChannelAdmin::PublicationSet_var &p) // deep copy
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_PublicationSet_var &
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::operator= (const RtecEventChannelAdmin::_tao__seq_PublicationSet_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new RtecEventChannelAdmin::PublicationSet (*p.ptr_);
+    this->ptr_ = new RtecEventChannelAdmin::_tao__seq_PublicationSet (*p.ptr_);
   }
   return *this;
 }
 
-ACE_INLINE const RtecEventChannelAdmin::PublicationSet *
-RtecEventChannelAdmin::PublicationSet_var::operator-> (void) const
+ACE_INLINE const RtecEventChannelAdmin::_tao__seq_PublicationSet *
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecEventChannelAdmin::PublicationSet *
-RtecEventChannelAdmin::PublicationSet_var::operator-> (void)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_PublicationSet *
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-RtecEventChannelAdmin::PublicationSet_var::operator const RtecEventChannelAdmin::PublicationSet &() const // cast
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::operator const RtecEventChannelAdmin::_tao__seq_PublicationSet &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-RtecEventChannelAdmin::PublicationSet_var::operator RtecEventChannelAdmin::PublicationSet &() // cast 
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::operator RtecEventChannelAdmin::_tao__seq_PublicationSet &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-RtecEventChannelAdmin::PublicationSet_var::operator RtecEventChannelAdmin::PublicationSet &() const// cast 
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::operator RtecEventChannelAdmin::_tao__seq_PublicationSet &() const// cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE RtecEventChannelAdmin::Publication&
-RtecEventChannelAdmin::PublicationSet_var::operator[] (CORBA::ULong index)
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const RtecEventChannelAdmin::PublicationSet &
-RtecEventChannelAdmin::PublicationSet_var::in (void) const
+ACE_INLINE const RtecEventChannelAdmin::_tao__seq_PublicationSet &
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE RtecEventChannelAdmin::PublicationSet &
-RtecEventChannelAdmin::PublicationSet_var::inout (void)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_PublicationSet &
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE RtecEventChannelAdmin::PublicationSet *&
-RtecEventChannelAdmin::PublicationSet_var::out (void)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_PublicationSet *&
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE RtecEventChannelAdmin::PublicationSet *
-RtecEventChannelAdmin::PublicationSet_var::_retn (void)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_PublicationSet *
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::_retn (void)
 {
-  RtecEventChannelAdmin::PublicationSet *tmp = this->ptr_;
+  RtecEventChannelAdmin::_tao__seq_PublicationSet *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE RtecEventChannelAdmin::PublicationSet *
-RtecEventChannelAdmin::PublicationSet_var::ptr (void) const
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_PublicationSet *
+RtecEventChannelAdmin::_tao__seq_PublicationSet_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class RtecEventChannelAdmin::PublicationSet_out
+// Inline operations for class RtecEventChannelAdmin::_tao__seq_PublicationSet_out
 // *************************************************************
 
 ACE_INLINE
-RtecEventChannelAdmin::PublicationSet_out::PublicationSet_out (RtecEventChannelAdmin::PublicationSet *&p)
+RtecEventChannelAdmin::_tao__seq_PublicationSet_out::_tao__seq_PublicationSet_out (RtecEventChannelAdmin::_tao__seq_PublicationSet *&p)
 	: ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-RtecEventChannelAdmin::PublicationSet_out::PublicationSet_out (RtecEventChannelAdmin::PublicationSet_var &p) // constructor from _var
+RtecEventChannelAdmin::_tao__seq_PublicationSet_out::_tao__seq_PublicationSet_out (RtecEventChannelAdmin::_tao__seq_PublicationSet_var &p) // constructor from _var
 	: ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -868,44 +856,44 @@ RtecEventChannelAdmin::PublicationSet_out::PublicationSet_out (RtecEventChannelA
 }
 
 ACE_INLINE
-RtecEventChannelAdmin::PublicationSet_out::PublicationSet_out (RtecEventChannelAdmin::PublicationSet_out &p) // copy constructor
+RtecEventChannelAdmin::_tao__seq_PublicationSet_out::_tao__seq_PublicationSet_out (RtecEventChannelAdmin::_tao__seq_PublicationSet_out &p) // copy constructor
 	: ptr_ (p.ptr_)
 {}
 
-ACE_INLINE RtecEventChannelAdmin::PublicationSet_out &
-RtecEventChannelAdmin::PublicationSet_out::operator= (RtecEventChannelAdmin::PublicationSet_out &p)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_PublicationSet_out &
+RtecEventChannelAdmin::_tao__seq_PublicationSet_out::operator= (RtecEventChannelAdmin::_tao__seq_PublicationSet_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-ACE_INLINE RtecEventChannelAdmin::PublicationSet_out &
-RtecEventChannelAdmin::PublicationSet_out::operator= (RtecEventChannelAdmin::PublicationSet *p)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_PublicationSet_out &
+RtecEventChannelAdmin::_tao__seq_PublicationSet_out::operator= (RtecEventChannelAdmin::_tao__seq_PublicationSet *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-RtecEventChannelAdmin::PublicationSet_out::operator RtecEventChannelAdmin::PublicationSet *&() // cast
+RtecEventChannelAdmin::_tao__seq_PublicationSet_out::operator RtecEventChannelAdmin::_tao__seq_PublicationSet *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecEventChannelAdmin::PublicationSet *&
-RtecEventChannelAdmin::PublicationSet_out::ptr (void) // ptr
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_PublicationSet *&
+RtecEventChannelAdmin::_tao__seq_PublicationSet_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE RtecEventChannelAdmin::PublicationSet *
-RtecEventChannelAdmin::PublicationSet_out::operator-> (void)
+ACE_INLINE RtecEventChannelAdmin::_tao__seq_PublicationSet *
+RtecEventChannelAdmin::_tao__seq_PublicationSet_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE RtecEventChannelAdmin::Publication& 
-RtecEventChannelAdmin::PublicationSet_out::operator[] (CORBA::ULong index)
+RtecEventChannelAdmin::_tao__seq_PublicationSet_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }

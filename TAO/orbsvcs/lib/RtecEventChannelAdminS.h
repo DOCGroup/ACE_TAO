@@ -8,9 +8,9 @@
 #if !defined (_TAO_IDL_RTECEVENTCHANNELADMINS_H_)
 #define _TAO_IDL_RTECEVENTCHANNELADMINS_H_
 
-#include "RtecEventChannelAdminC.h"
 #include "RtecEventCommS.h"
 #include "RtecSchedulerS.h"
+#include "RtecEventChannelAdminC.h"
 
 class POA_RtecEventChannelAdmin
 {

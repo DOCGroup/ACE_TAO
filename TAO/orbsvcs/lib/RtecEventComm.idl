@@ -1,7 +1,6 @@
 //
 // $Id$
 //
-// #include "orb.idl"
 
 module RtecEventComm {
   exception Disconnected {};
