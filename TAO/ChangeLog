@@ -247,7 +247,6 @@ Thu Sep  2 22:21:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  as it was previously, and will be enabled once we reduce
 	  included headers in tao/ORB.h.
 
-	* TAO_IDL/be/be_codegen.cpp:
 	* TAO_IDL/be/be_visitor_traits.cpp:
 	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
 	* TAO_IDL/be/be_visitor_component/component_cs.cpp:
