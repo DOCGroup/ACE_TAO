@@ -1,3 +1,23 @@
+Thu Nov 18 13:17:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        
+          Removed code generation of Any and CDR operator declarations
+          for undefined forward declared interfaces. Since this issue
+          was last addressed, we have added other features to code
+          generation that may enable us to eliminate this unnecessary
+          bit of code generation.
+          
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+        
+          Added error for use of local type in a non-local interface's
+          operation signature. Formerly we had just an ACE_DEBUG message,
+          which is easily overlooked.
+
 Thu Nov 18 19:08:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* rules.tao.GNU:
